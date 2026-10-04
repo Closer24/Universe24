@@ -125,8 +125,8 @@ their statuses.
   engine's interval labels and in the physical ones), the meeting round's file
   with its source face open, the Huygens blind of the expectation file, the
   central maximum against the first minima in the draw's scatter, the arrival's
-  spread sigma_t from the band and the lay's widths, and the same file scaled
-  toward the continuum.
+  spread sigma_t from the band and the lay's widths, the same file scaled
+  toward the continuum, and the integer step's walk per band mode and per Node.
 
 The paper carries one experiment, the two slits, and no experiment against nature: until a run has worked and the advisor and
 the reviewer have confirmed it, no click count of a run stands in it beside

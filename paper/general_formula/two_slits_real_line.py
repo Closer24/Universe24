@@ -804,20 +804,27 @@ def main(argv: list[str] | None = None) -> None:
         f" {found[max(found)][1]:.1f}, {found[max(found)][2]:.1f}"
     )
 
-    walk_sigma = math.sqrt((6 * line.read**2 + line.self_over_wall**2) / 12)
-    walk = walk_sigma * math.sqrt(board.ticks)
+    carrier_cos = line.cos_omega(k)
+    per_mode = math.sqrt(board.ticks / (12 * (1 + carrier_cos)))
+    cells = 192
+    midpoints = [-math.pi + (cell + 0.5) * 2 * math.pi / cells for cell in range(cells)]
+    zone_mean = sum(1 / (1 + line.cos_omega(kx, ky)) for kx in midpoints for ky in midpoints) / cells**2
+    per_node = math.sqrt(zone_mean * board.ticks / 12)
+    total = sum(physical.regions)
     print(
-        "\n7. The integer budget's bound on the run (the law's clause, the integer budget of a derived row): the"
-        " integer step differs from the line by the remainder term alone, a walk of sigma sqrt(n) levels over n"
-        " intervals with sigma^2 = (SUM over the six Ports of (R_a / w)^2 + (S / w)^2) / 12"
+        "\n7. The integer budget's walk on the run (the law's clause): the integer step differs from the line"
+        " applied to the integer levels by below one level per Node per interval, n levels over the run the hard"
+        " bound; under the model of independent uniform remainders the deviation walks per band mode as"
+        " sqrt(n / (12 (1 + cos omega_k))), the plane's per-Node figure the zone's mean of 1 / (1 + cos omega)"
+        " over (k_x, k_y) with k_z folded (the midpoint rule on 192^2 cells)"
     )
     print(
-        f"  sigma = {walk_sigma:.4f} levels per interval at the vacuum's paces; over the run's n = {board.ticks}"
-        f" intervals the walk is {walk:.2f} levels against the amplitude b = {p.amplitude:.0f},"
-        f" {100 * walk / p.amplitude:.2f} percent of the amplitude and {200 * walk / p.amplitude:.2f} percent of"
-        f" the share, {sum(physical.regions) * 2 * walk / p.amplitude:.2f} units of N = {sum(physical.regions):.2f}"
-        f" (the physical labels); the run's integer N stands within this bound of the line's or the difference"
-        " is named"
+        f"  at the carrier cos omega = {carrier_cos:.4f}: {per_mode:.2f} levels per mode over n = {board.ticks};"
+        f" the zone's mean {zone_mean:.3f}, {per_node:.2f} levels per Node; against b = {p.amplitude:.0f}:"
+        f" {200 * per_mode / p.amplitude:.2f} to {200 * per_node / p.amplitude:.2f} percent of the share,"
+        f" {total * 2 * per_mode / p.amplitude:.2f} to {total * 2 * per_node / p.amplitude:.2f} units of"
+        f" N = {total:.2f} (the physical labels); the run's integer N stands within this walk of the line's or"
+        " the difference is named"
     )
 
 
