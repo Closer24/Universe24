@@ -1,4 +1,4 @@
-"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time line at the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
+"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level of a record of a family of quanta 0, the time line of a held row of the content at the face's own level (the face layer copied outward, its rest continued through the face as the arrival reads it, ALGEBRA.md #the-line, the arrival; #what-is-open, item 22) with the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import node
+from event_universe.core.ports import OWN_LEVEL
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
@@ -19,11 +20,16 @@ Growth = tuple[int, int, int, int]  # a growth: the interval it served, the axis
 ONE = (1, 1, 1)  # the shape of one Node, at which an act's origin is read
 
 
-def padded(a: Any, axis: int, side: int, layers: int, value: int = 0) -> Any:
-    """The array with `layers` layers of `value` beyond its face on `side` (+1 or -1) of `axis`, the dtype kept."""
+def padded(a: Any, axis: int, side: int, layers: int, value: Any = 0) -> Any:
+    """The array with `layers` layers of `value` beyond its face on `side` (+1 or -1) of `axis`, the dtype kept; the face layer copied outward where `value` is `OWN_LEVEL` (core/ports.py)."""
     width = [(0, 0)] * 3
     width[axis] = (layers, 0) if side < 0 else (0, layers)
-    return np.pad(a, width, constant_values=value)
+    if value is not OWN_LEVEL:
+        return np.pad(a, width, constant_values=value)
+    face = [slice(None)] * 3
+    face[axis] = slice(None, 1) if side < 0 else slice(-1, None)
+    grown = np.repeat(a[tuple(face)], layers, axis=axis)  # the face layer copied outward
+    return np.concatenate((grown, a) if side < 0 else (a, grown), axis=axis)
 
 
 def shrunk(a: Any, axis: int, side: int, layers: int) -> Any:
@@ -33,7 +39,7 @@ def shrunk(a: Any, axis: int, side: int, layers: int) -> Any:
     return a[tuple(kept)]
 
 
-def sized(a: Any, axis: int, side: int, layers: int, direction: int, value: int = 0) -> Any:
+def sized(a: Any, axis: int, side: int, layers: int, direction: int, value: Any = 0) -> Any:
     """The array grown by `layers` layers of `value` (direction +1) or the same layers taken off (-1)."""
     if direction == 1:
         return padded(a, axis, side, layers, value)
@@ -73,15 +79,16 @@ def resized(
     kind: type,
     half: int = 0,
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), born for a held row of the content at the face's own level (the face layer copied outward, `OWN_LEVEL`, both levels, as the arrival reads it beyond the face) and for a record of a family of quanta at 0, with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
 
-    def grown(a: Any, value: int = 0) -> Any:
+    def grown(a: Any, value: Any = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
 
+    born = OWN_LEVEL if not family.quanta else 0  # the time line's level in a grown layer
     state.lines = [
         node.Record(
-            grown(record.now, family.rest if number % family.width == 0 else 0),
-            grown(record.before, family.rest if number % family.width == 0 else 0),
+            grown(record.now, born if number % family.width == 0 else 0),
+            grown(record.before, born if number % family.width == 0 else 0),
             grown(
                 record.remainder, origin if number % family.width == 0 else half
             ),  # born at the half wall

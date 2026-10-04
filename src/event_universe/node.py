@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import AXES, PORTS, SIDES, Wrap, arrival
+from event_universe.core.ports import AXES, OWN_LEVEL, PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
@@ -53,8 +53,8 @@ from event_universe.records import zeros as zeros
 Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order, in the unit G^2
 
 
-def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
-    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0, or the row's rest for the massless row holding the content: the vacuum beyond the face is the same vacuum, ALGEBRA.md #what-is-open, item 22), the Node itself on a folded axis."""
+def ports(a: np.ndarray, wrap: Wrap, fill: Any = 0) -> tuple[np.ndarray, ...]:
+    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0 for a record of a family of quanta, the vacuum, and the face Node's own level, `OWN_LEVEL`, for the time line of a held row of the content, its rest continued through the face with no reflection, ALGEBRA.md #the-line, the arrival; #what-is-open, item 22), the Node itself on a folded axis."""
     return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
 
 
@@ -177,9 +177,9 @@ def rule_of(
 
 
 def step(
-    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0, faces: Faces = NO_FACE
+    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: Any = 0, faces: Faces = NO_FACE
 ) -> Record:
-    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (the row's rest), and where the click act presents a face at a Node its value in the place of that Port's arrival (features/click, `presented`), forward computed and kept, backward the kept one."""
+    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (0, or the face Node's own level for a held row of the content, `OWN_LEVEL`), and where the click act presents a face at a Node its value in the place of that Port's arrival (features/click, `presented`), forward computed and kept, backward the kept one."""
     reads, self_coefficient, wall = rule
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
     arrived = ports(level, wrap, fill)
@@ -256,7 +256,7 @@ def step_family(
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its own level at the face beyond every face (`OWN_LEVEL`, its rest continued through the face; every other line, a record of a family of quanta and the axis lines, 0), or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
@@ -269,7 +269,7 @@ def step_family(
                 rule,
                 wrap,
                 direction,
-                family.rest if number == 0 else 0,
+                OWN_LEVEL if number == 0 and not family.quanta else 0,
                 faced.get(number, NO_FACE),
             )
             for number, line in enumerate(own, span.start)

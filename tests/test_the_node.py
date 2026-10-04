@@ -459,9 +459,13 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     board = GameBoard(load_world(tmp_path / "kick.json"), (lines := []).append)
     assert abs(board.states[gravity].lines[0].now[4, 0, 0] - 60) == 12
     for _ in range(40):
+        line, was = board.states[gravity].lines[0], board.shape[0]
+        face = int(line.now[-1, 0, 0]), int(line.before[-1, 0, 0])
         board.step()
+        if board.shape[0] > was:  # the grown layers born at the face's own two levels, stepped once
+            assert board.states[gravity].lines[0].now[-1, 0, 0] == 2 * face[0] - face[1]
     grown = board.states[gravity].lines[0].now[24:, 0, 0]
-    assert board.shape[0] > 24 and (grown[-1] == 60) and (grown != 60).any()
+    assert board.shape[0] > 24 and (grown != 60).any()
     assert max(x["reading"] for x in lines if x["event"] == "density" and x["family"] == "gravity") > 0
     assert BACK.verdict(GameBoard(load_world(tmp_path / "kick.json")), 40)["verdict"] == "MATCH"
     output = RUN.run_input(str(world), str(tmp_path))

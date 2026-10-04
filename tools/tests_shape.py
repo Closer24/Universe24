@@ -260,6 +260,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "5983514044): the return from e is the pulse's click 'g by pulse' and the probe finds g from g alone, 'g by probe', "
         "one draw per close",
     ),
+    "tests/test_the_held_row_beyond_the_face.py::test_a_held_row_reads_its_own_level_beyond_an_open_face_and_the_content_never_falls_below_zero": (
+        60,
+        "F2's fix (#1827 comment 5983321848; the owner's decision of 2026-10-04, way (ii), #1793 comment 5984369198; the Boss's "
+        "grant of 60 lines there): matter_alone's open 25-cube stepped by the engine's own step, the content every row reads at "
+        "or above 0 at every Node and interval, the guard's edge 2 cos omega(pi) >= -2 never crossed, binding's face Node within "
+        "one level of its rest, the two slits' world 40 intervals bit for bit against the fill 0 or the first differing Node named",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

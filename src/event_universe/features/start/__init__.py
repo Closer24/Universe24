@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
+from event_universe.core.ports import OWN_LEVEL, PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import NO_READ, Reads, coefficients, rule3
 
 Pair = tuple[int, int]
@@ -44,9 +44,14 @@ def division(numerator: object, wall: object, value: object) -> np.ndarray:
     return np.asarray(rule3(NO_READ, NO_READ, numerator, wall, value, 0, 0)[0])
 
 
-def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The six arrivals as Rule3 reads them, the two of each axis summed: the wrap on a periodic axis, 0 beyond a face, the Node itself on a folded axis (core/ports.py)."""
-    return tuple(arrival(a, axis, 1, wrap) + arrival(a, axis, -1, wrap) for axis in range(3))
+def arrivals(a: np.ndarray, wrap: Wrap, fill: Any = 0) -> tuple[np.ndarray, ...]:
+    """The six arrivals as Rule3 reads them, the two of each axis summed: the wrap on a periodic axis, `fill` beyond a face (0, or the face Node's own level, `OWN_LEVEL`, the run's own read for a held row of the content, `rest_fill`), the Node itself on a folded axis (core/ports.py)."""
+    return tuple(arrival(a, axis, 1, wrap, fill) + arrival(a, axis, -1, wrap, fill) for axis in range(3))
+
+
+def rest_fill(pair: Pair) -> Any:
+    """The fill a held row of the content's rest reads beyond a face, the run's step's own read where the line has a fixed point under it (ALGEBRA.md #the-line, the arrival; the reviewer's precision, #1793 round 79 B): the face Node's own level, `OWN_LEVEL`, for a gapped row (num below den), whose screened line sinks its own sources, so the rest laid is the step's fixed point on the face shell too; 0 for the massless row (num = den), the six Ports' Green's function 1 / r with the face as its sink, since under its own level beyond every face the massless line has no fixed point with a net source, the sum of 6 a - S_6(a) over the board being 0 (the sum's rest needs a sink, as on a board periodic on every axis), and the run's step then carries the row as the law's closed board does."""
+    return OWN_LEVEL if pair[0] < pair[1] else 0
 
 
 def tent_of(counts: np.ndarray, divisor: int) -> int:
@@ -85,12 +90,12 @@ def unit_of(
 
 
 def settled(
-    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, wrap: Wrap, iterations: int
+    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, wrap: Wrap, iterations: int, fill: Any = 0
 ) -> tuple[np.ndarray, int]:
     """The line at fixed paces, b <- (SUM over the three axes of read x the two arrivals + source) div divisor, iterated by the division act to its fixed point, the first state the act returns unchanged (the line's residual then in [0, divisor) at every Node, the state below the line by up to the bound `bound_of` in the lowest mode, which `refined` takes off); where the act cycles (the floors of a line at the massless pair can swing between two states), the cycle's elementwise highest state is a floor of the line, from which the act, monotone in the levels, only rises to a fixed point, so the iteration goes on from it; refused by name where it cycles again."""
 
     def act(state: np.ndarray) -> np.ndarray:
-        return np.asarray(rule3(reads, arrivals(state, wrap), 0, divisor, state, 0, source)[0])
+        return np.asarray(rule3(reads, arrivals(state, wrap, fill), 0, divisor, state, 0, source)[0])
 
     seen: set[int] = set()
     resolved = 0
@@ -116,10 +121,13 @@ def settled(
         fine = after
 
 
-def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any) -> int:
-    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, (6 div 2) ((n + 2) div 2)^2 + 1, the six reads over the axis's two Ports times the half-extent squared, plus one (`PORTS`, `SIDES`; no three of the axes in it), at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), the inverse of 6 b - S_6(b) = 6 along the axis, 2 b_x - b_(x-1) - b_(x+1) = 6, which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis needs a sink, which `rest` refuses before)."""
-    open_axes = [n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]]
-    longest = max(open_axes if open_axes or wrap.beyond is None else fine.shape, default=0) + 1
+def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any, fill: Any = 0) -> int:
+    """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, (6 div 2) ((n + 2) div 2)^2 + 1, the six reads over the axis's two Ports times the half-extent squared, plus one (`PORTS`, `SIDES`; no three of the axes in it), at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), the inverse of 6 b - S_6(b) = 6 along the axis, 2 b_x - b_(x-1) - b_(x+1) = 6, which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; a face read as the Node's own level (`fill` `OWN_LEVEL`) is no sink, so the gap alone bounds a row reading itself beyond its faces; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis, or reading its own level beyond every face, needs a sink, which `rest` refuses before)."""
+    sunk = fill is not OWN_LEVEL  # a face reading 0 is a sink; one reading the Node itself is none
+    open_axes = [n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]] if sunk else []
+    longest = (
+        max(open_axes if open_axes or wrap.beyond is None or not sunk else fine.shape, default=0) + 1
+    )
     half = int(division(1, 2, longest + 1))  # (n + 2) div 2, at or above (n + 1) / 2
     peak = int(
         division(PORTS, SIDES, half * half)
@@ -131,7 +139,7 @@ def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any) -> int:
     if not bounds:
         raise ValueError(
             "the rest's miss has no bound: a massless row on a board that wraps on every axis of more than one "
-            "Node is sunk by an inner face alone (ALGEBRA.md, The start)"
+            "Node, or reads its own level beyond every face, is sunk by an inner face reading 0 alone (ALGEBRA.md, The start)"
         )
     return min(bounds)
 
@@ -149,19 +157,21 @@ def refined(
     unit: int,
     iterations: int,
     seed: Correction | None = None,
+    fill: Any = 0,
 ) -> tuple[np.ndarray, int, Correction | None]:
     """The rest refined to its line within one level at every Node, the law's rest, by the scaled residual where the stop can miss it, within one fine unit where it is refined (the law's rest is the static solution of the row's line, ALGEBRA.md, The start; the advisor's finding and remedy with the mathematician's hand beside it: the floored iteration stops below the line by up to K fine units, `bound_of`, in the board's lowest mode, 137 on the open 25-cube at the massless pair, 9 levels at the row's unit 15 there): the line's residual is read exactly in integers at the stop, rho = SUM over the Ports of read x arrival + source - divisor x b, in [0, divisor) at every Node, the same line is solved for the correction with F rho as its source by the same act to its own stop (`settled` from nothing), delta within K of F times the miss, and the correction is added rounded half up, b + (delta + F div 2) div F; F a power of two, the least at or above 2 K the width admits for the round, else the largest it admits (the act's numerator at most 6 R (2 F B + K) + F |rho| inside half the width's largest integer, B the miss's bound in fine units, K before the first round and 1 + K div F after a round at F), the rounds repeated while F is below 2 K, after which the miss lies in [-1 / 2, 1 / 2 + K / F), within one fine unit; one round on the 25-cube and three on the chain of 128 at the width 63, each round's passes about ln(F K) over 1 - rho from nothing (a Richardson refinement in integers, nothing of the law, every number the width's and the board's); the first round's correction is returned with its scale and seeds the first round of the next call (`seed`, the pass before's correction brought to this round's scale: the floored stop lies the same K below the line at every pass, so the correction barely moves and the act from it stops in a fraction of the passes, the same fixed-point property at the stop whatever the start); refused by name where the width leaves no room for a round. Nothing is refined where the stop is the line itself (the residual 0 at every Node) or where the stop's miss cannot reach half a level, 2 K at or below the unit: the fine levels then lie within half a level of the line and the levels, rounded half up, within one level of it, the law's rest at the stop's own cost (a small body's rest has a large unit, the look's chains and the tests' chain bodies, whose lays stand as before; the 25-cube's bodies, the unit 15 against K 508, and the chain of 128 at the unit 306 against K 12,676 are refined)."""
     found: Correction | None = None
     bound = miss = 0
     six = 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
     while True:
-        total = rule3(reads, arrivals(fine, wrap), 0, 1, fine, 0, source)[0]  # the numerator, the wall 1
+        arrived = arrivals(fine, wrap, fill)
+        total = rule3(reads, arrived, 0, 1, fine, 0, source)[0]  # the numerator, the wall 1
         residual = np.asarray(total, dtype=object) - np.asarray(divisor, dtype=object) * fine
         residual = residual.astype(fine.dtype)  # within the divisor, the fine levels' kind
         if not residual.any():  # the stop is the line itself: nothing to refine, no bound needed
             return fine, iterations, found
         if not bound:
-            bound = miss = bound_of(fine, wrap, reads, divisor)
+            bound = miss = bound_of(fine, wrap, reads, divisor, fill)
             if (
                 2 * bound <= unit
             ):  # the miss within half a level: the levels within one level of the line
@@ -177,7 +187,7 @@ def refined(
             scales.bit_length() - 1, (2 * bound - 1).bit_length()
         )  # the least at 2 K or above
         start = np.zeros_like(fine) if seed is None else division(scale, seed[1], seed[0])
-        delta, iterations = settled(start, reads, divisor, scale * residual, wrap, iterations)
+        delta, iterations = settled(start, reads, divisor, scale * residual, wrap, iterations, fill)
         fine = fine + division(1, scale, delta + int(division(1, 2, scale)))
         found, seed = found or (delta, scale), None  # the later rounds correct another residual
         if scale >= 2 * bound:
@@ -228,19 +238,20 @@ def rest(
     intervals: int,
     own_weight: int,
     seed: FieldAtRest | None = None,
+    fill: Any = 0,
 ) -> FieldAtRest:
-    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' weighted levels with their rests and `own_weight` x the row's own level b div unit among them (the weight its declaration names for itself, 0 where it does not read its own level: the holder of the sign), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and refined to the line within one fine unit at every Node (`settled`, `refined`), and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; `seed` a rest found before under other sources or paces, the fine levels (at this call's unit) and the content the iteration starts from in place of nothing, the same fixed point reached from nearer (the start's passes seed each row with the pass before, `settled_rows`, `held_rests`), none in a first pass; the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
+    """The rest by the line itself at the row's own paces: the fine levels b <- (num p_i^2 S_6(b) + Gamma^2 x 3 den x (source x unit div divisor) x the write's factor) div (6 (den - num) p_0^2 + 6 num p_i^2), `divisor` the wall of the source's booking (the row's level weight E_s on a count in quanta, the write's wall E_s T on the form the hold books), the paces from the content the row reads, `others` the other holders' weighted levels with their rests and `own_weight` x the row's own level b div unit among them (the weight its declaration names for itself, 0 where it does not read its own level: the holder of the sign), the source scaled per proper volume and per proper interval at those paces as the write scales it, `intervals` the proper-interval powers of the source's kind, 2 on a count and 1 on a Wronskian (`paces.write_factor`; The write per proper volume and per proper interval), by Rule3's division act from nothing, the line at the paces of the row's own level as last rounded iterated to its fixed point and refined to the line within one fine unit at every Node (`settled`, `refined`), and the paces re-read from it until the levels repeat the content they were read at, the fixed point, or repeat an earlier state one unit off at most at every Node, a rounding tie (the content then one unit off at that Node; a return further off refused by name, `returned`), the remainder at the half of `wall`, the wall of the rule the row steps by; `seed` a rest found before under other sources or paces, the fine levels (at this call's unit) and the content the iteration starts from in place of nothing, the same fixed point reached from nearer (the start's passes seed each row with the pass before, `settled_rows`, `held_rests`), none in a first pass; `fill` what the line reads beyond a face, 0 or the face Node's own level (`rest_fill`, the run's own read for a gapped holder of the content); the sources of either sign or both (the iteration converges wherever the board has a sink); refused by name where a board periodic on its every axis at [1, 1] with no Node beyond it, or one read as its own level beyond every face, gives the sources no sink, where the divisor is below 1, and where the content reaches the Link's zero at a Node, the row's own pace rounded to 0, the rest collapsing (a frozen clock, ALGEBRA.md #the-paces)."""
     num, den = pair
     if divisor < 1:
         raise ValueError(
             f"the start's divisor, the row's level weight or its write's wall, is from 1, got {divisor}"
         )
     long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
-    closed = all(wrap[axis] for axis in long) and wrap.beyond is None
+    closed = fill is OWN_LEVEL or (all(wrap[axis] for axis in long) and wrap.beyond is None)
     if num == den and closed and bool(counts.any()):
         raise ValueError(
-            f"the sum's rest needs a sink: a board periodic on every axis at [1, 1] has no rest under the "
-            f"source total {int(counts.sum())}"
+            f"the sum's rest needs a sink: a board periodic on every axis at [1, 1], or read as its own level "
+            f"beyond every face, has no rest under the source total {int(counts.sum())}"
         )
     unit, largest = unit_of(counts, pair, divisor, width, gamma, wrap), min(width, MAX_WORK_INT)
     source = division(3 * den * unit, divisor, counts) * gamma * gamma
@@ -262,9 +273,9 @@ def rest(
         reads = (num * pace * pace,) * 3
         line_wall = 6 * (den - num) * clock * clock + 6 * num * pace * pace
         scaled = scaled_source(source, clock, pace, gamma, intervals)
-        fine, iterations = settled(fine, reads, line_wall, scaled, wrap, iterations)
+        fine, iterations = settled(fine, reads, line_wall, scaled, wrap, iterations, fill)
         fine, iterations, correction = refined(
-            fine, reads, line_wall, scaled, wrap, largest, unit, iterations, correction
+            fine, reads, line_wall, scaled, wrap, largest, unit, iterations, correction, fill
         )
         rounded = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
         if returned([rounded], [own], seen, f"the rest of the pair {list(pair)}"):
@@ -296,7 +307,7 @@ def settled_rows(
     unit: int,
     seeds: Sequence[FieldAtRest] = (),
 ) -> list[FieldAtRest]:
-    """Every holder of the content at its rest under its sources, each reading the holders its declaration names at their weights, its own level among them where it names itself (`read_content`; ALGEBRA.md #the-paces): the rows' rests taken in turn, each at the others' levels as last found with their rests (`rest`), until every row's levels repeat the state the pass began from, or the rows together repeat an earlier state one unit off at most, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule), the remainder of each at the half wall of the rule the row steps by, w = 6 den Gamma^2 G^2; each pass seeds every row's rest with its rest of the pass before (`seeds` those of an earlier call, none in the first), the fixed point the same and reached from nearer; the engine's start and the generator share it."""
+    """Every holder of the content at its rest under its sources, each reading the holders its declaration names at their weights, its own level among them where it names itself (`read_content`; ALGEBRA.md #the-paces): the rows' rests taken in turn, each at the others' levels as last found with their rests (`rest`), until every row's levels repeat the state the pass began from, or the rows together repeat an earlier state one unit off at most, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule), the remainder of each at the half wall of the rule the row steps by, w = 6 den Gamma^2 G^2; each pass seeds every row's rest with its rest of the pass before (`seeds` those of an earlier call, none in the first), the fixed point the same and reached from nearer; each row reads beyond a face what the run's step reads for it, its own level for a gapped row and 0 for the massless one (`rest_fill`); the engine's start and the generator share it."""
     levels = [np.zeros_like(row[0]) for row in rows]
     fields: list[FieldAtRest] = list(seeds)
     seen: dict[bytes, int] = {}
@@ -319,6 +330,7 @@ def settled_rows(
                 intervals=paces.COUNT_POWER,
                 own_weight=own_weight,
                 seed=seed,
+                fill=rest_fill(pair),
             )
             levels[number] = field.levels
             fields.append(field)
