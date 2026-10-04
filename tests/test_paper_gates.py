@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 GATES = ROOT / "paper" / "general_formula" / "paper_gates.py"
 FENCELESS_MARKS_TONIGHT = 0  # every derived or theorem mark carries its fence since ecf653d
 SCRIPTLESS_MARKS_TONIGHT = (
-    123  # the derived and computed marks naming no derivation script; part 4's map brings this to 0
+    122  # the derived and computed marks naming no derivation script; part 4's map brings this to 0
 )
 
 

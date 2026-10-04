@@ -83,6 +83,10 @@ their statuses.
 - `general_formula/invariant_check.py`: S.14's check of the adiabatic invariant, the one-Node
   line stepped over 20,000 intervals with the rotation lowered from 0.841 to 0.600, D / sin(omega)
   within 4e-5 of its start (Section 7.4). Run with `python paper/general_formula/invariant_check.py`.
+- `general_formula/schroedinger_check.py`: S.63's check of Schroedinger's equation as the
+  slow limit of the line, a Gaussian packet stepped by the line without the remainder on a
+  chain against Schroedinger's centre and spread with the band's inertia 3 tan omega_0
+  (Section 3.3). Run with `python paper/general_formula/schroedinger_check.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.
@@ -138,9 +142,9 @@ the marks (every `\claimmark` one of the key's eight words, every `\fence` one o
 beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
-scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
-text, 4 name a Python script beside them (`invariant_check.py`, `surplus_check.py`, `test_the_draw.py`, `test_the_meeting.py`) and
-123 name none; the count may only fall, and the paper claims nothing beyond it (the supplement
+scripts' count is a ratchet the same test holds: of the 126 derived and computed marks of the main
+text, 4 name a Python script beside them (`invariant_check.py`, `schroedinger_check.py`, `surplus_check.py`, `test_the_draw.py`) and
+122 name none; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
 ## Submission rules and status
