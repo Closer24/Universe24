@@ -132,3 +132,66 @@ shares, chi-square 8.1 on 7 regions (PASS); the two slits' minimum at the region
 within the scatter (19 against 25) and above the two gaps' 13, the visibility about the regions 6 and 8
 below half the two slits' (PASS); the two-gaps row the two slits' gate row at this lay, N 270 against the
 blind's 273. The night's table above stands as history at its commit.
+
+## The gate's table
+
+Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
+compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
+lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
+reading in the gate's words and the value as its report prints it.
+
+| label | world | by | reading | value |
+| --- | --- | --- | --- | --- |
+| GAMEBOARD | which_way.json | run_inputs | verdict | LAWFUL |
+| GAMEBOARD | which_way.json | run_inputs | ticks | 130 |
+| NODEREADER | which_way.json | run_inputs | clicks | 269 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_0 | 0 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_1 | 0 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_2 | 0 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_3 | 0 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_5 | 13 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_6 | 32 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_7 | 16 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_8 | 19 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_9 | 25 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_10 | 9 |
+| NODEREADER | which_way.json | run_inputs | clicks screen_11 | 13 |
+| NODEREADER | which_way.json | run_inputs | clicks which_way | 142 |
+| GAMEBOARD | which_way.json | run_inputs | lines click | 1062 |
+| GAMEBOARD | which_way.json | run_inputs | lines credit | 269 |
+| GAMEBOARD | one_gap.json | run_inputs | verdict | LAWFUL |
+| GAMEBOARD | one_gap.json | run_inputs | ticks | 130 |
+| NODEREADER | one_gap.json | run_inputs | clicks | 135 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_0 | 0 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_1 | 0 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_2 | 0 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_3 | 0 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_5 | 14 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_6 | 36 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_7 | 9 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_8 | 25 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_9 | 16 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_10 | 16 |
+| NODEREADER | one_gap.json | run_inputs | clicks screen_11 | 19 |
+| NODEREADER | one_gap.json | run_inputs | clicks which_way | 0 |
+| GAMEBOARD | one_gap.json | run_inputs | lines click | 888 |
+| GAMEBOARD | one_gap.json | run_inputs | lines credit | 135 |
+| GAMEBOARD | two_gaps.json | run_inputs | verdict | LAWFUL |
+| GAMEBOARD | two_gaps.json | run_inputs | ticks | 130 |
+| NODEREADER | two_gaps.json | run_inputs | clicks | 270 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_0 | 28 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_1 | 15 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_2 | 24 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_3 | 18 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_4 | 7 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_5 | 37 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_6 | 44 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_7 | 13 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_8 | 13 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_9 | 25 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_10 | 24 |
+| NODEREADER | two_gaps.json | run_inputs | clicks screen_11 | 22 |
+| GAMEBOARD | two_gaps.json | run_inputs | lines click | 1086 |
+| GAMEBOARD | two_gaps.json | run_inputs | lines credit | 270 |
+| GAMEBOARD | which_way.json | back_in_time | intervals 40 | MATCH |
