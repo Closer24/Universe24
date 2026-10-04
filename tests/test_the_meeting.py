@@ -18,10 +18,7 @@ from event_universe.loader.draw import (
     pattern_of,
     patterns_of_the_law,
 )
-from event_universe.loader.node_reader_declaration import (
-    Transition,
-    node_reader_of,
-)
+from event_universe.loader.node_reader_declaration import Transition, node_reader_of
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import node_readers_of
 from event_universe.world_files import load_world
@@ -245,12 +242,8 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
         (f, k) for f, m in zip(names[1:], (6, 2, 1), strict=True) for k in range(m)
     ]  # the record's lines once per Node of its region, the records out at the drawn Node
     board.step(), board.step()
-    others = (
-        "click",
-        "lay",
-        "density",
-        "parts",
-    )  # the region `around` holds the record's second Node: its parts read
+    # the region `around` holds the record's second Node: its parts read
+    others = ("click", "lay", "density", "parts")
     assert [x["event"] for x in lines if x["event"] not in others] == ["conversion"]
     assert BACK.verdict(GameBoard(load_world(path)), 3)["verdict"] == "MATCH"  # across the conversion
 
@@ -282,11 +275,8 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
     sign = next(k for k, f in enumerate(board.families) if f.wronskian)
 
-    at = (
-        4,
-        4,
-        4,
-    )  # the records out at the one Node of the region the conversion's draw picks, read below
+    # the records out at the one Node of the region the conversion's draw picks, read below
+    at = (4, 4, 4)
 
     def levels(k):
         return [(int(r.now[at]), int(r.before[at])) for r in board.states[k].lines]
@@ -552,8 +542,34 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
     assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert all(
-        line["event"] == "erasure"
-        for line in lines
-        if line["tick"] > 48 and line["event"] not in ("face", "credit", "lay")
-    )
+    assert {line["event"] for line in lines if line["tick"] > 48} <= {"erasure", "face", "credit", "lay"}
+
+
+def test_the_controls_two_records_each_fall_to_zero_at_their_own_taking_with_a_front_each(tmp_path):
+    """The control's two photons as two records (ALGEBRA.md, The click writes on the GameBoard (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre with their windows apart, the right atom's at 44 and the left atom's at 56, the +x packet `photon` passing the right atom and the -x packet `photon_b` the left one (the engine draws each drive's taking in the families' order at the part's label, so the atom closing first reads the first family); after the first taking that record's count is 0 with its front from the taker's Node at the taking's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 44 - 3, the margin of T3 in test_the_draw.py), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 56 the left atom takes the other record and both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every taking a hole to 0)."""
+    world = json.loads((EVENTS / "anticoincidence" / "two_photons.json").read_text(encoding="utf-8"))
+    for body, at, window in zip(world["bodies"], (15, 47), (56, 44), strict=True):
+        body["nodes"] = [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}]
+        body["node_reader"] = {**body["node_reader"], "window": window}
+    for message, x in zip(world["messages"], (32, 31), strict=True):
+        message["top"] = {**message["top"], "x": [x, x]}
+    (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
+    TOOL.main(["--input", str(path)])
+    board = GameBoard(load_world(path), (lines := []).append)
+    photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
+    for tick in (47, 52, 55, 56, 60):
+        while board.tick < tick:
+            board.step()
+        took = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+        taken = [(c["tick"], c["node_reader"], c["taken"]) for c in took]
+        books = {name: (b["quanta"], b["count"], b["deficit"]) for name, b in board.books().items()}
+        second = tick >= 56  # the left atom's taking at its window's close, photon_b's record then at 0
+        assert taken == [(44, "body 1", "photon"), (56, "body 0", "photon_b")][: 1 + second]
+        fronts = [(f.family, f.since) for f in board.credit.fronts]
+        assert fronts == [(photon, 44), (photon_b, 56)][: 1 + second]
+        assert books["photon"][1:] == (0, 0) and books["photon_b"][1:] == (1 - second, 0)
+        assert second or books["photon_b"][0] == 1  # the other record stands whole until its taking
+        origin = board.credit.fronts[0].origin[0] + board.offset[0]  # the hole's Node as the board grew
+        reach = np.abs(np.arange(board.shape[0]) - origin) <= tick - 44 - 3  # the shells faced by now
+        line = board.states[photon].lines[0]
+        assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()

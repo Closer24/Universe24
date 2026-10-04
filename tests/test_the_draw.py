@@ -30,20 +30,8 @@ SLITS, WAY, RESONANCE, PACKET = (
     for n in ("two_slits", "which_way", "resonance", "packet_giving")
 )
 SRC = ROOT / "src" / "event_universe"
-GATE_ROW = [
-    28,
-    15,
-    24,
-    18,
-    7,
-    37,
-    44,
-    13,
-    13,
-    25,
-    24,
-    22,
-]  # the two slits' gate, N = 270, at the seed 24
+# the two slits' gate, N = 270, at the seed 24
+GATE_ROW = [28, 15, 24, 18, 7, 37, 44, 13, 13, 25, 24, 22]
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -450,10 +438,8 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
-    drawn_x = {
-        17,
-        18,
-    }  # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    # the giver's region, two Nodes along x: the packet from the one Node the draw picked
+    drawn_x = {17, 18}
     assert len(along) == 1 and (drawn_x if along[0] == 0 else {17}) & {
         spans[along[0]][0],
         spans[along[0]][-1],
