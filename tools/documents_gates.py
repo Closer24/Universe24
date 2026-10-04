@@ -90,7 +90,7 @@ def numbers(root: Path = ROOT) -> list[str]:
 
 
 def derived() -> list[str]:
-    """The departures of gate (3): a table number its script does not return to the digits named."""
+    """The departures of gate (3): a table number its script does not return to the digits named; a rule's `arguments`, where it has them, are the table's own inputs passed to the function (a run's reading among them, which no derivation module holds)."""
     table, departures = json.loads(NUMBERS.read_text(encoding="utf-8")), []
     for entry in (e for e in table if "derivation" in e):
         rule: dict[str, Any] = entry["derivation"]
@@ -98,7 +98,8 @@ def derived() -> list[str]:
         assert spec is not None and spec.loader is not None
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        values = [round(float(v), rule["digits"]) for v in getattr(module, rule["function"])()]
+        found = getattr(module, rule["function"])(*rule.get("arguments", []))
+        values = [round(float(v), rule["digits"]) for v in found]
         expected = [round(float(v), rule["digits"]) for v in rule["expected"]]
         if values != expected:
             departures.append(
