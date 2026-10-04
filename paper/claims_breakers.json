@@ -1,7 +1,7 @@
 {
   "So Lorentzs group and the continuums rotations are no symmet": {
     "kind": "a",
-    "breaker": "Rule3 on a 3x3x3 periodic board with random integer levels under each of the cube's 48 maps commutes with the map (0 misses expected); a rotation outside the group, the band's cos omega at k = 0.5 along an axis against the face diagonal and the body diagonal, differs by the lattice's anisotropy (the fourth order of S.21): the claim holds if the three differ and would break only if they agreed.",
+    "breaker": "Rule3 on a 3x3x3 periodic board with random integer levels under each of the cube's 48 maps commutes with the map (0 misses expected); a rotation outside the group: the band's cos omega at k = 0.5 per Link on a massless family reads 0.9592 along an axis, 0.9588 along a face diagonal and 0.9586 along the body diagonal (the mathematician's hand, 5982319424), the lattice's anisotropy at the fourth order of S.21: the claim holds since the three differ and would break only if they agreed.",
     "state": "to write"
   },
   "Beyond P the mode at wave number pi on every axis grows with": {
