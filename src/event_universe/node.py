@@ -22,6 +22,7 @@ from event_universe.features.read import (
     paces_guard,
     plain,
 )
+from event_universe.features.start import reads_itself_beyond_the_face
 from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
 from event_universe.plane import NO_FACE, Angles, Faces, Rule, step_plane
 from event_universe.records import (  # the lines, their readings and their states, the Node's own
@@ -56,6 +57,13 @@ Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order
 def ports(a: np.ndarray, wrap: Wrap, fill: Any = 0) -> tuple[np.ndarray, ...]:
     """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0 for a record of a family of quanta, the vacuum, and the face Node's own level, `OWN_LEVEL`, for the time line of a held row of the content, its rest continued through the face with no reflection, ALGEBRA.md #the-line, the arrival; #what-is-open, item 22), the Node itself on a folded axis."""
     return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
+
+
+def face_fill(family: FamilyRule) -> Any:
+    """The fill a family's time line reads beyond a face, the one rule of the step, the growth and the start (ALGEBRA.md #the-line, the arrival; #what-is-open, item 22): the face Node's own level, `OWN_LEVEL`, for a gapped held row of the content (`features.start.reads_itself_beyond_the_face`, the binding holder), the row's declared rest for the massless held row of the content (gravity, the face its sink) and 0 for a record of a family of quanta, the vacuum."""
+    if not family.quanta and reads_itself_beyond_the_face(family.pair):
+        return OWN_LEVEL
+    return family.rest
 
 
 def read_lines(
@@ -256,7 +264,7 @@ def step_family(
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its own level at the face beyond every face (`OWN_LEVEL`, its rest continued through the face; every other line, a record of a family of quanta and the axis lines, 0), or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line reading its family's fill beyond every face (`face_fill`: a gapped holder of the content its own level at the face, the massless holder its declared rest, a record of a family of quanta 0; the axis lines 0), or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
@@ -269,7 +277,7 @@ def step_family(
                 rule,
                 wrap,
                 direction,
-                OWN_LEVEL if number == 0 and not family.quanta else 0,
+                face_fill(family) if number == 0 else 0,
                 faced.get(number, NO_FACE),
             )
             for number, line in enumerate(own, span.start)

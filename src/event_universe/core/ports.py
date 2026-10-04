@@ -1,4 +1,4 @@
-"""The six Ports of every Node: the arrival of an array through one Port, the one shift of a level across a Link in the package, under the board's face rule (the fill beyond an open or closed face, 0 for a record of a family of quanta, the vacuum, and the face Node's own level for a held row of the content, `OWN_LEVEL`, its rest continued through the face with no reflection; the wrap on a periodic axis; the Node itself on a folded axis; and the same fill through every Port of a Node the file declares beyond the board inside it, an inner face); the arrays' own methods alone, no numeric library (ALGEBRA.md #the-line, the arrival)."""
+"""The six Ports of every Node: the arrival of an array through one Port, the one shift of a level across a Link in the package, under the board's face rule (the fill beyond an open or closed face, 0 for a record of a family of quanta, the vacuum, the face Node's own level for a gapped held row of the content, `OWN_LEVEL`, its rest continued through the face with no reflection, and the declared rest for the massless row; the wrap on a periodic axis; the Node itself on a folded axis; and the same fill through every Port of a Node the file declares beyond the board inside it, an inner face); the arrays' own methods alone, no numeric library (ALGEBRA.md #the-line, the arrival)."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ class Wrap(NamedTuple):
 
 
 class OwnLevel:
-    """The fill that reads the face Node's own level through a Port whose far Node is beyond the board, the held rows of the content's rule (ALGEBRA.md #the-line, the arrival; #what-is-open, item 22): the face layer kept from the array itself, as the folded axis keeps the Node, so a holder's tail meets itself beyond the face and no reflection with the sign flipped is made; a record of a family of quanta reads 0 there, the vacuum."""
+    """The fill that reads the face Node's own level through a Port whose far Node is beyond the board, the gapped held rows of the content's rule (ALGEBRA.md #the-line, the arrival; #what-is-open, item 22; the massless row reads its declared rest, the face its sink): the face layer kept from the array itself, as the folded axis keeps the Node, so a holder's tail meets itself beyond the face and no reflection with the sign flipped is made; a record of a family of quanta reads 0 there, the vacuum."""
 
 
 OWN_LEVEL = OwnLevel()

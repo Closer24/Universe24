@@ -1,4 +1,4 @@
-"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level of a record of a family of quanta 0, the time line of a held row of the content at the face's own level (the face layer copied outward, its rest continued through the face as the arrival reads it, ALGEBRA.md #the-line, the arrival; #what-is-open, item 22) with the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
+"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level of a record of a family of quanta 0, the time line of a gapped held row of the content at the face's own level (the face layer copied outward, its rest continued through the face as the arrival reads it) and the massless row's at its declared rest (`node.face_fill`; ALGEBRA.md #the-line, the arrival; #what-is-open, item 22) with the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
 
 from __future__ import annotations
 
@@ -79,12 +79,14 @@ def resized(
     kind: type,
     half: int = 0,
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), born for a held row of the content at the face's own level (the face layer copied outward, `OWN_LEVEL`, both levels, as the arrival reads it beyond the face) and for a record of a family of quanta at 0, with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), born at the family's fill beyond a face (`node.face_fill`: a gapped held row of the content at the face's own level, the face layer copied outward, `OWN_LEVEL`, both levels, as the arrival reads it; the massless row at its declared rest; a record of a family of quanta at 0), with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
 
     def grown(a: Any, value: Any = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
 
-    born = OWN_LEVEL if not family.quanta else 0  # the time line's level in a grown layer
+    born = node.face_fill(
+        family
+    )  # the time line's level in a grown layer: the family's fill beyond a face
     state.lines = [
         node.Record(
             grown(record.now, born if number % family.width == 0 else 0),

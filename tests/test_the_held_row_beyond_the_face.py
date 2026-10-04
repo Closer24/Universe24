@@ -1,7 +1,7 @@
 def test_a_held_row_reads_its_own_level_beyond_an_open_face_and_the_content_never_falls_below_zero(
     monkeypatch,
 ):
-    """F2 of the bug hunt (#1827 comment 5983321848; the owner's decision of 2026-10-04, way (ii), #1793 comment 5984369198; ALGEBRA.md, the arrival of The law in one line): on matter_alone's open 25-cube stepped by the engine's own `GameBoard.step`, (1) the content every row reads, gravity + binding, is at or above 0 at every Node and interval (the shipped engine read 24 Nodes below 0 at interval 3, the first [0, 0, 1] at -1, and 24 again at interval 5, the witness), (2) the guard's edge is never crossed, 2 cos omega(pi) = (S - SUM over the six Ports of R_ij) / w >= -2 at every Node and interval for every row, exactly in Fractions (the repeated root -2 at the content 0 admitted), (3) binding's row at the face Node [0, 12, 12] stays within one level of its rest, the witness that the start and the step agree at the face, and (4) a GameBoard of the two slits' world stepped 40 intervals is bit for bit the shipped engine's, the fill 0 for its held rows at the start, the step and the growth, else the first differing interval and Node are named; the readings printed are GAMEBOARD diagnostics."""
+    """F2 of the bug hunt (#1827 comment 5983321848; the owner's decision of 2026-10-04, way (ii), #1793 comment 5984369198; ALGEBRA.md, the arrival of The law in one line): on matter_alone's open 25-cube stepped by the engine's own `GameBoard.step`, (1) the content every row reads, gravity + binding, is at or above 0 at every Node and interval (the shipped engine read 24 Nodes below 0 at interval 3, the first [0, 0, 1] at -1, and 24 again at interval 5, the witness), (2) the guard's edge is never crossed, 2 cos omega(pi) = (S - SUM over the six Ports of R_ij) / w >= -2 at every Node and interval for every row, exactly in Fractions (the repeated root -2 at the content 0 admitted), (3) binding's and gravity's rows at the face Node [0, 12, 12] stay within one level of their rests, the witness that the start and the step agree at the face and that the massless row's sink holds, and (4) a GameBoard of the two slits' world stepped 40 intervals is bit for bit the shipped engine's, the fill 0 for its held rows at the start, the step and the growth, else the first differing interval and Node are named; the readings printed are GAMEBOARD diagnostics."""
     from fractions import Fraction
 
     import numpy as np
@@ -16,7 +16,8 @@ def test_a_held_row_reads_its_own_level_beyond_an_open_face_and_the_content_neve
     intervals, face = 60, (0, 12, 12)  # the CI clock; the 400 a GAMEBOARD diagnostic of the tool
     board = GameBoard(load_world(EVENTS / "matter_alone" / "pixel.json"))
     gamma, unit, names = board.world.node_clock, board.unit, [f.name for f in board.families]
-    rest, levels = int(board.states[names.index("binding")].lines[0].now[face]), set()
+    rows = {n: board.states[names.index(n)].lines[0] for n in ("binding", "gravity")}
+    rest, levels = {n: int(row.now[face]) for n, row in rows.items()}, {n: set() for n in rows}
     lowest, edge = (0, "the start"), (Fraction(2), "the start")
     for tick in range(1, intervals + 1):
         board.step()
@@ -26,13 +27,13 @@ def test_a_held_row_reads_its_own_level_beyond_an_open_face_and_the_content_neve
             lowest = min(lowest, (int(np.min(content)), tick, family.name, int(np.argmin(content))))
             pi_mode = Fraction(int(np.min(self_coefficient - sum(reads))), int(wall))  # 2 cos omega(pi)
             edge = min(edge, (pi_mode, f"interval {tick}, {family.name}"))
-        levels.add(int(board.states[names.index("binding")].lines[0].now[face]))
-    print(
-        "GAMEBOARD matter_alone: content min", lowest, "| pi min", edge, "| face", sorted(levels), rest
-    )
+        for name in rows:
+            levels[name].add(int(board.states[names.index(name)].lines[0].now[face]))
+    print("GAMEBOARD matter_alone: content min", lowest, "| pi min", edge, "| face levels", levels, rest)
     assert lowest[0] >= 0, (lowest, np.unravel_index(lowest[3], board.shape))  # (1) no hill by a face
     assert edge[0] >= -2, edge  # (2) the guard's edge never crossed in the run
-    assert max(abs(level - rest) for level in levels) <= 1, (rest, sorted(levels))  # (3)
+    for name, found in levels.items():  # (3) the start and the step agree at the face, no drift
+        assert max(abs(level - rest[name]) for level in found) <= 1, (name, rest[name], sorted(found))
     own, slits, kept = ports.OWN_LEVEL, EVENTS / "two_slits" / "two_slits.json", []
     with monkeypatch.context() as shipped_fill:  # the shipped engine: the fill 0 in place of OWN_LEVEL
         for module, name in ((node, "arrival"), (start, "arrival"), (growth, "sized")):

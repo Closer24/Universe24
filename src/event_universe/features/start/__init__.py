@@ -49,9 +49,14 @@ def arrivals(a: np.ndarray, wrap: Wrap, fill: Any = 0) -> tuple[np.ndarray, ...]
     return tuple(arrival(a, axis, 1, wrap, fill) + arrival(a, axis, -1, wrap, fill) for axis in range(3))
 
 
+def reads_itself_beyond_the_face(pair: Pair) -> bool:
+    """The one predicate of the fill a held row of the content reads beyond a face (ALGEBRA.md #the-line, the arrival; #what-is-open, item 22; the reviewer's precision, #1793 round 79 B): True for a gapped row (num below den, the binding holder), whose screened line sinks its own sources, so it reads its own level at the face Node in the step, in the start and in a grown layer, the rest laid the step's fixed point on the face shell too; False for the massless row (num = den, gravity), which reads its declared rest, the face its sink, since under its own level beyond every face the massless line has no fixed point with a net source, the sum of 6 a - S_6(a) over the board being 0 and the total then growing as t^2 (the sum's rest needs a sink, as on a board periodic on every axis); the step and the growth take it through `node.face_fill`, a family of quanta reading 0."""
+    return pair[0] < pair[1]
+
+
 def rest_fill(pair: Pair) -> Any:
-    """The fill a held row of the content's rest reads beyond a face, the run's step's own read where the line has a fixed point under it (ALGEBRA.md #the-line, the arrival; the reviewer's precision, #1793 round 79 B): the face Node's own level, `OWN_LEVEL`, for a gapped row (num below den), whose screened line sinks its own sources, so the rest laid is the step's fixed point on the face shell too; 0 for the massless row (num = den), the six Ports' Green's function 1 / r with the face as its sink, since under its own level beyond every face the massless line has no fixed point with a net source, the sum of 6 a - S_6(a) over the board being 0 (the sum's rest needs a sink, as on a board periodic on every axis), and the run's step then carries the row as the law's closed board does."""
-    return OWN_LEVEL if pair[0] < pair[1] else 0
+    """The fill a held row of the content's rest reads beyond a face: the face Node's own level, `OWN_LEVEL`, for a gapped row, 0 for the massless row (`reads_itself_beyond_the_face`; its declared rest is added after the iteration, `GameBoard.start`)."""
+    return OWN_LEVEL if reads_itself_beyond_the_face(pair) else 0
 
 
 def tent_of(counts: np.ndarray, divisor: int) -> int:
