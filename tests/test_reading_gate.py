@@ -101,3 +101,36 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     ]
     document.write_text("# A copy\n", encoding="utf-8")
     assert report(1)[0]["verdict"] == "UNFILLED"
+
+
+def test_the_trials_seed_each_record_by_a_hash_and_not_by_an_arithmetic_progression():
+    """The trials tool's seeding (tools/meeting_trials.py, `hashed_state`; the mathematician's finding of 2026-10-04 on #1827 at the advisor's second): the generator of the files is affine, so trial labels in arithmetic progression (the seed times the records' number plus the record's number, the tool's rule before the fix) stay one progression at every depth of the draw and the trials' variates at a fixed depth are one Weyl sequence; with the files' generator and the control's labels_unit the second draw of 200 such trials falls in the even tenths alone. The state from a hash of the label breaks the progression: over the same 200 trials the tenth each of the first four draws falls in is flat within the binomial band, and no three consecutive states share a difference. The engine's `drawn` is the generator read; the tool holds no number of the law."""
+    from event_universe.features.click import drawn
+    from tests.laws import ROOT, load_file
+
+    trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
+    multiplier, increment, width = 6364136223846793005, 1442695040888963407, (1 << 63) - 1
+    labels_unit, modulus = 16305915721555161 + 2094318374976, 1 << 63
+    tenths = [labels_unit // 10] * 10  # the draw's variate x mod unit read by its tenth
+
+    def histograms(states):
+        found = []
+        for depth in range(1, 5):
+            counts = [0] * 10
+            for state in states:
+                for _ in range(depth):
+                    index, state = drawn(state, multiplier, increment, modulus, tenths)
+                counts[index] += 1
+            found.append(counts)
+        return found
+
+    affine = histograms([seed * 2 for seed in range(1, 201)])  # the rule before the fix
+    hashed = histograms([trials.hashed_state(seed * 2, width) for seed in range(1, 201)])
+    print(
+        f"the affine seeding's second draw over 200 trials {affine[1]}; the hash's four draws {hashed}"
+    )
+    assert affine[1][1::2] == [0] * 5 and sum(affine[1]) == 200  # the even tenths alone, the finding
+    assert all(abs(count - 20) <= 17 for counts in hashed for count in counts)  # four sigma of 4.24
+    states = [trials.hashed_state(label, width) for label in range(400)]
+    assert all(0 <= state < modulus for state in states)
+    assert all(b - a != c - b for a, b, c in zip(states, states[1:], states[2:], strict=False))

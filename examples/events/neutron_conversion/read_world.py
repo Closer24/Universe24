@@ -33,12 +33,24 @@ def back_in_time() -> Any:
     return module
 
 
+def trials_tool() -> Any:
+    """The trials tool's module, loaded from tools/ by its path, for the one seeding rule of a trial (`hashed_state`)."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("meeting_trials", TOOLS / "meeting_trials.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def loaded(path: Path, seed: int) -> GameBoard:
-    """The world loaded with every record's generator at the trial's state (tools/meeting_trials.py), the lines kept on the board."""
+    """The world loaded with every record's generator at the trial's state, the trials tool's own rule (tools/meeting_trials.py, `hashed_state`: the hash of the seed times the records' number plus the record's number, never the label itself, which with one body would make the trials' states the seeds in arithmetic progression and their draws one Weyl sequence), the lines kept on the board."""
     board = GameBoard(load_world(path), (lines := []).append)
     board.read_lines = lines  # type: ignore[attr-defined]
+    hashed_state = trials_tool().hashed_state
     for books in board.credit.bodies:
-        books.state = seed * len(board.credit.bodies) + books.number
+        books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
     return board
 
 
