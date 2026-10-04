@@ -254,6 +254,20 @@ def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarr
     return np.asarray(seen)
 
 
+def weighted(
+    facing: Sequence[np.ndarray], pieces: Sequence[tuple[tuple[Any, ...], tuple[Any, ...]]]
+) -> np.ndarray:
+    """Per Node of a region, the conserved form's own current through its front boundary Ports (`facing`, the region's front per Port as `entering` reads it), inward positive, 0 at every other Node: per record its current through each front Port times that Link's factor Q_ij, summed over the family's records, `pieces` per record its six currents and its six Links' factors in Port order at the pair the step starts from (`node_reader.weighed_currents`), in the unit G^2 of the Link's factor and in Python's integers at the front Nodes alone; what a NodeReader books (`credit.booked`, `node_reader.booked_inflow`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j) through each front Port, the Link's factor squared the one weight, no rounding per Link), equal to the plain current times G^2 where no tension stands on the Link; the click line keeps the plain current, `entering`."""
+    seen = np.zeros(facing[0].shape, dtype=object)
+    for through, factors in pieces:
+        for port in range(PORTS):
+            at = facing[port]
+            flow = np.asarray(through[port])[at].astype(object)
+            factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
+            seen[at] += flow * factor
+    return seen
+
+
 def inflow(
     nodes: np.ndarray,
     through: tuple[Any, ...],
