@@ -133,6 +133,35 @@ within the scatter (19 against 25) and above the two gaps' 13, the visibility ab
 below half the two slits' (PASS); the two-gaps row the two slits' gate row at this lay, N 270 against the
 blind's 273. The night's table above stands as history at its commit.
 
+## The statement, 2026-10-04 (main d00aa9e; the advisor's first hand, #1827 comment 5976031061)
+
+When everything that passes the lower gap is credited in the channel, the screen reads the lower gap
+open and read as it reads the lower gap closed, two draws at the same shares, and both differ from the
+two gaps' row at the two slits' extrema: the two-slit interference term is gone when the way is known
+(the experimenter's statement, #1827 comment 5975980838 item 1; the advisor's (a) to (d)). The
+statement does not say the screen is flat: the one gap's own row has its minimum near the region 8
+(the gap's diffraction with the channel's upper wall as its image), so the which-way row's visibility
+0.25 about the regions 6 and 8 is the one gap's shape and no remnant of the two slits' interference;
+and it does not say the way was measured: the channel is a declared NodeReader that credits
+everything passing the lower gap.
+
+The fence is the test's and no wider (`tests/test_the_draw.py`, the which-way test): the shadowed
+regions 0 exactly; the channel and the which-way screen each within three scatters (24.8) of the
+blind's 136.5; the two rows' chi-square over the regions 5 to 11 under the one percent band 18.5 on 7
+degrees (the reading 8.1 at the seed 24); the region-8 minimum above the two gaps' and within three
+scatters of the one gap's (13 against 19 and 25); the visibility about the regions 6 and 8 under half
+the two slits' (0.25 against 0.54); one quantum one click exact. The chi-squares against the two-gaps
+row (24.0 and 19.5) are the reading and no fence.
+
+The two rows over thirty seeds (the advisor's (d); the world's generator at each seed, `credit.state`,
+the seed 24 reproducing the rows above; the worlds and the blind untouched; GAMEBOARD over the seeds,
+each seed's rows NODEREADER): the which-way screen row against the one-gap row, two draws at the same
+shares, chi-square on 7 degrees per seed [8.1, 2.8, 10.5, 4.6, 3.0, 6.3, 7.8, 15.5, 5.9, 3.1, 3.4, 5.8, 7.4, 1.4, 4.8, 6.4, 10.2, 11.8, 11.5, 3.7, 5.5, 7.1, 3.7, 7.2, 3.3, 1.1, 5.6, 4.4, 9.2, 9.1], the mean 6.33 against the expectation 7 (the
+scatter 3.35 against sqrt 14 = 3.74), none above the one percent band 18.5; the channel 135.0 on the mean against the
+blind's 136.5 (the seeds' least 116 and most 144); the shadowed regions 0 at every
+seed in both worlds; N 269 and 135 at every seed (N is the shares', the draw places it). The one seed's
+8.1 is the folder's fence, the thirty seeds' mean its reading beside it.
+
 ## The gate's table
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
