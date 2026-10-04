@@ -13,6 +13,7 @@ points at the law, the law's line governs and no formula is restated here.
 ## The engine
 
 - The engine is green and locked on main at the lay's fix, at the owner's word that it is not touched any more: no change to the engine enters; a defect found by a run is named in its folder's reading and in the law with its number, and the hands' derivations behind a change stand as the law's lines until the owner reopens the engine, when a change enters only on a hand's branch with a dedicated test, two hands and CI.
+- The law changes and the engine does not: a rule the engine lacks enters the law as its line (the massless row's zero mode woken by no write from outside Rule3, the one division act its integer form), and the engine's problems against the law at the lock are declared by name, each with its number and its folder, in the law and in the engine's document, never fixed in the engine until the owner reopens it.
 - Every engine change enters by its dedicated test and CI alone; the full gate is abolished and the unit tests are the gate.
 - Every test runs under 30 seconds and the suite's CI under ten minutes; a slower test is split or dropped.
 - The engine holds no number but Rule3's own and the world's keys; every physical value comes from the run's files and every primitive is one folder found by its name.
