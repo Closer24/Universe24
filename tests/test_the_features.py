@@ -1,4 +1,4 @@
-"""The read, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed at their weights; the axis content rounded at the read; the guard at load on squares (the checkerboard factor at -2) admits and refuses by name, and the read in the interval carries no guard. The write's folder and the hold's (ALGEBRA.md #the-primitives, a family's write is one act; the row "the hold"): (numerator + r) div wall at every Node by Rule3's carried division, the remainder kept at the Node, forward then back exact, over many intervals the written total the numerator's within one unit; a held part gains the same division each interval and loses it back; the refusals by name. The start, its own folder (ALGEBRA.md #the-generator (g), the start): a held family's rest is the division act iterated from nothing until the levels repeat, 6 den b = num S_6(b) + 3 den sigma at the fine unit from the width, the levels its nearest integers; the refusals by name."""
+"""The read, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed at their weights; the axis content rounded at the read; the guard at load on squares (the checkerboard factor at -2) admits and refuses by name, and the read in the interval carries no guard. The write's folder and the held write's (ALGEBRA.md #the-primitives, a family's write is one act; the row "the held write"): (numerator + r) div wall at every Node by Rule3's carried division, the remainder kept at the Node, forward then back exact, over many intervals the written total the numerator's within one unit; a held part gains the same division each interval and loses it back; the refusals by name. The start, its own folder (ALGEBRA.md #the-generator (g), the start): a held family's rest is the division act iterated from nothing until the levels repeat, 6 den b = num S_6(b) + 3 den sigma at the fine unit from the width, the levels its nearest integers; the refusals by name."""
 
 import json
 
@@ -12,7 +12,7 @@ from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
-from event_universe.features.hold import hold
+from event_universe.features.held_write import held_write
 from event_universe.features.read import (
     content_of,
     edge_squared,
@@ -31,7 +31,7 @@ OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own
 
 
 def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_name():
-    """No floor and no clamp: a hill of 150 on [800, 850] (the edge's square 2 den Gamma^2 div (den + num) between 10,150^2 and 10,151^2) takes the clock's square to 10,151^2 and the load refuses it naming the Node; 75 passes as it is, the content -75, and the read alone never refuses; the same hill on one Link's content alone is caught on that Port as an integer pace; for den = num the edge is p <= Gamma exactly: a content of -1 refuses by name, a content at Gamma div 2 at both ends of every Link (the Link's pace at 0) refuses on the lower side and Gamma div 2 - 1 passes; for a negative numerator the band's lowest mode is at wave number 0 and the edge's square is 2 den Gamma^2 div (den + |num|), 21 for the pair [-1, 2] at Gamma = 4, so the audit's witness (#1583 B2), the content -1 with the clock's square 26 and 2 cos omega = -23 / 8 at k = 0, is refused by name where the edge of den + num (64) admitted it, and the vacuum of that pair passes. Three reads (2 a - 3 b + 4 c) sum per Node exactly; no reads give the integer 0 (the plain rule at Gamma); the Link's tension is SUM over the reads of (weight x (aa_i + aa_j) + 1) div 2, the mean of its two ends' parts, one division per read per Link: the ends 7 and 7 at the weight 1 give 7 and -7 and -7 give -7 (the Node's own part in a uniform level), the ends 7 and -7 give 0 and a second read of the ends 3 and 4 beside it 0 + 4. Forward the quotient and the remainder of numerator + r; back from the remainder after, the same quotient and the remainder before (the hold's write forward and back on numerators of both signs, the declaration's test below); a wall below 1 and a direction other than +1 or -1 are refused by name. The hold's write forward and back, with its weights, is the declaration's test below; a wall below 1 is refused by name."""
+    """No floor and no clamp: a hill of 150 on [800, 850] (the edge's square 2 den Gamma^2 div (den + num) between 10,150^2 and 10,151^2) takes the clock's square to 10,151^2 and the load refuses it naming the Node; 75 passes as it is, the content -75, and the read alone never refuses; the same hill on one Link's content alone is caught on that Port as an integer pace; for den = num the edge is p <= Gamma exactly: a content of -1 refuses by name, a content at Gamma div 2 at both ends of every Link (the Link's pace at 0) refuses on the lower side and Gamma div 2 - 1 passes; for a negative numerator the band's lowest mode is at wave number 0 and the edge's square is 2 den Gamma^2 div (den + |num|), 21 for the pair [-1, 2] at Gamma = 4, so the audit's witness (#1583 B2), the content -1 with the clock's square 26 and 2 cos omega = -23 / 8 at k = 0, is refused by name where the edge of den + num (64) admitted it, and the vacuum of that pair passes. Three reads (2 a - 3 b + 4 c) sum per Node exactly; no reads give the integer 0 (the plain rule at Gamma); the Link's tension is SUM over the reads of (weight x (aa_i + aa_j) + 1) div 2, the mean of its two ends' parts, one division per read per Link: the ends 7 and 7 at the weight 1 give 7 and -7 and -7 give -7 (the Node's own part in a uniform level), the ends 7 and -7 give 0 and a second read of the ends 3 and 4 beside it 0 + 4. Forward the quotient and the remainder of numerator + r; back from the remainder after, the same quotient and the remainder before (the held write's write forward and back on numerators of both signs, the declaration's test below); a wall below 1 and a direction other than +1 or -1 are refused by name. The held write's write forward and back, with its weights, is the declaration's test below; a wall below 1 is refused by name."""
     (left, right), edge = stability_bound((800, 850), GAMMA), edge_squared((800, 850), GAMMA)
     assert (left, right) == (1_650, GAMMA * GAMMA * 1_700) and edge == right // left
     assert 10_150**2 <= edge < 10_151**2 and GAMMA % 2 == 0
@@ -72,7 +72,7 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert link_tension([(1, level, level)]).ravel().tolist() == [7, -7]
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
     refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
-    refused("wall E_s T is from 1", hold, 0, 1, 0, 0)
+    refused("wall E_s T is from 1", held_write, 0, 1, 0, 0)
 
 
 OPEN_CHAIN, OPEN_CUBE = Wrap(False, True, True), Wrap(False, False, False)
@@ -179,10 +179,10 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         before, wall = states[held].lines[0], writes[held].walls[0]
         remainder = [draw.integers(0, wall, SHAPE)]
-        (after,), (kept,) = node.held_write([before], numerators, [wall], remainder)
+        (after,), (kept,) = node.held_write_at([before], numerators, [wall], remainder)
         increment, left = np.divmod(by_hand + remainder[0], wall)
         assert np.array_equal(after.now, before.now + increment) and np.array_equal(kept, left)
-        (back,), (origin,) = node.held_write([after], numerators, [wall], [kept], -1)
+        (back,), (origin,) = node.held_write_at([after], numerators, [wall], [kept], -1)
         assert np.array_equal(back.now, before.now) and np.array_equal(origin, remainder[0])
     found, own_weight = read_content(((0, 1), (1, 3)), levels, [0, 60], 1)
     assert np.array_equal(found, levels[0] + 3 * 60) and own_weight == 3

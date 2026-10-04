@@ -309,7 +309,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         stress = node.stresses_of(matter.pair[0], [record], wrap)
         vacuum = {(i, 0): (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}
         found = node.write_sources(GRAVITY, FAMILIES, {}, {(MATTER, 0): stress}, write, vacuum, GAMMA)
-        written = node.held_write(held.lines, found, write.walls, held.write_remainders)
+        written = node.held_write_at(held.lines, found, write.walls, held.write_remainders)
         (held.lines, held.write_remainders), xx = written, written[0][1].now
         assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any())
         assert np.array_equal(held.write_remainders[1], write.walls[1] // 2 + found[1])
@@ -355,7 +355,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         own = node.rule_of(binding, GAMMA, state.lines[0].now)  # the row reads its own level
         increment, state.lines[0] = [scaled(state.lines[0].now)], node.step(state.lines[0], own, wrap)
         kept = state.write_remainders
-        state.lines, state.write_remainders = node.held_write(state.lines, increment, walls, kept)
+        state.lines, state.write_remainders = node.held_write_at(state.lines, increment, walls, kept)
         moved = np.abs(state.lines[0].now - field.levels)
         if interval == 0:
             kicked = int((moved > 0).sum())

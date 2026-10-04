@@ -129,7 +129,7 @@ class Lattice:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, the four lines (a) and (c)): every held family's time line at the rest of its line, with or without a gap, under the sources the laid records write, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the form of the laid record as the hold's write books it, D_i = now^2 - next x before over the record's lines with next the step of Rule3 at the paces of the held rows' rests, for a row sourced by the form, and the Wronskian of the step's booking for the holder of the sign (`node.form`, `node.wronskian` on the booking of `stepped`), each at the weight with which the record's family reads the row (the hold's reciprocity, `readers_of`, `weight_of`), over the write's wall E_s T, scaled per proper volume and per proper interval at the paces of the rest as the write scales it (`rest`, `paces.write_factor`; no tension stands at the start); the lay and the rest iterated to the fixed point where the sources return themselves (features/start, `held_rests`): the rests laid, every record stepped once at their paces and booked as the hold books it, the rests solved again from those bookings, until the levels repeat (or repeat an earlier state one unit off at most, a rounding tie; a cycle refused by name), from nothing, so the hold's first write is the start's source within Rule3's rounding; both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start its laid packet plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid packet a travelling one, so their sum is the record; the holder of the sign keeps its laid light where nothing sources it); the declared count stays the body's, read from the laid record by the gate."""
+        """The start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, the four lines (a) and (c)): every held family's time line at the rest of its line, with or without a gap, under the sources the laid records write, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the form of the laid record as the held write's write books it, D_i = now^2 - next x before over the record's lines with next the step of Rule3 at the paces of the held rows' rests, for a row sourced by the form, and the Wronskian of the step's booking for the holder of the sign (`node.form`, `node.wronskian` on the booking of `stepped`), each at the weight with which the record's family reads the row (the held write's reciprocity, `readers_of`, `weight_of`), over the write's wall E_s T, scaled per proper volume and per proper interval at the paces of the rest as the write scales it (`rest`, `paces.write_factor`; no tension stands at the start); the lay and the rest iterated to the fixed point where the sources return themselves (features/start, `held_rests`): the rests laid, every record stepped once at their paces and booked as the held write books it, the rests solved again from those bookings, until the levels repeat (or repeat an earlier state one unit off at most, a rounding tie; a cycle refused by name), from nothing, so the held write's first write is the start's source within Rule3's rounding; both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `node.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start its laid packet plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid packet a travelling one, so their sum is the record; the holder of the sign keeps its laid light where nothing sources it); the declared count stays the body's, read from the laid record by the gate."""
         holders = [(i, 0) for i in self.held if not self.families[i].wronskian]
         signs = [
             (i, row)
@@ -314,14 +314,14 @@ class Lattice:
             state.lines = lines
         self.report(currents, weighed, forms, begun)
         for index in self.held:
-            self.hold(index, forms, turns, 1, stresses, senses, rulers)
+            self.held_write(index, forms, turns, 1, stresses, senses, rulers)
         credit.counted_windows(self)
         meeting.jumped(self)
         conversion.drawn_conversions(self)
         emission.sourced(self)
         front.advanced_fronts(self)
 
-    def hold(
+    def held_write(
         self,
         index: int,
         forms: Bookings,
@@ -331,13 +331,13 @@ class Lattice:
         senses: Stresses,
         rulers: Rulers,
     ) -> None:
-        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, each scaled by the write's factor at the sourcing family's paces of the interval's start (`rulers`), and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content and the sign currents for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write`)."""
+        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, each scaled by the write's factor at the sourcing family's paces of the interval's start (`rulers`), and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content and the sign currents for the holder of the sign under the rotation (`node.write_sources`), each line's division at its wall with its one remainder (`node.held_write_at`)."""
         family, state = self.families[index], self.states[index]
         bookings, axes = turns if family.wronskian else forms, senses if family.rotation else stresses
         numerators = node.write_sources(
             index, self.families, bookings, axes, self.writes[index], rulers, self.world.node_clock
         )
-        state.lines, state.write_remainders = node.held_write(
+        state.lines, state.write_remainders = node.held_write_at(
             state.lines, numerators, self.walls(index), state.write_remainders, direction
         )
         for line in state.lines:
@@ -450,7 +450,7 @@ class Lattice:
                 break
             assert ready, "the held rows' sources form a cycle"
             for held in ready:
-                self.hold(held, forms, turns, -1, stresses, senses, rulers)
+                self.held_write(held, forms, turns, -1, stresses, senses, rulers)
             pending = [held for held in pending if held not in ready]
         for index in (held for held in self.held if held not in books):
             books[index] = self.stepped(index, -1)[0]

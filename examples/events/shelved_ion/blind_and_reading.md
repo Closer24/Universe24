@@ -110,7 +110,7 @@ which this round does not make: the gate worlds' bits); (b) is the law's own lin
 (the levels taken whatever they are, two hands) and has no remedy in the law as written: on this
 lattice the telegraph's 12,000 holes cannot run on a periodic box. Named beside it, not seen in
 these prefixes: the empty wave's form keeps writing into the holders it sources after the click
-(features/hold, the Boss's note); this universe has no holder of the content, so nothing of it
+(features/held_write, the Boss's note); this universe has no holder of the content, so nothing of it
 shows here.
 
 **What the two prefixes say of the law's line**: the exchange at one Node runs as the four hands

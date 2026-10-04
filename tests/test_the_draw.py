@@ -1,4 +1,4 @@
-"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the hold's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's emission as a packet along a drawn axis (step 5 of the emitter/node_reader)."""
+"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the held write's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's emission as a packet along a drawn axis (step 5 of the emitter/node_reader)."""
 
 import ast
 import copy
@@ -13,7 +13,7 @@ from event_universe.core.rule3 import division_fixed_point, division_forward, ru
 from event_universe.credit import record_unit
 from event_universe.emission import born_unit, radiated_total
 from event_universe.features.click import along_cosine, envelope, exact_total, line_total
-from event_universe.features.hold import hold
+from event_universe.features.held_write import held_write
 from event_universe.features.write import carried
 from event_universe.front import Front
 from event_universe.lattice import Lattice
@@ -77,9 +77,14 @@ def test_borns_rule_is_the_proportionality_to_whole_shares_over_two_seeds(tmp_pa
 
 
 def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
-    """T6 (the mathematician's 189, two hands; the advisor's matrix row 9, one act at three storeys): the hold's write (`features/hold.hold`), the write's carried division (`features/write.carried`) and the credit's count (`share.quanta_of`, the credit's `counted`) compute by Rule3's division act and by nothing else, their modules naming no floor division, remainder or divmod of their own (the engine's gate on hand division beside it) and each equal to `division_forward` on the same integers: the hold (numerator + r) div wall with the remainder kept, the count (share + W_c div 2) div W_c."""
+    """T6 (the mathematician's 189, two hands; the advisor's matrix row 9, one act at three storeys): the held write's write (`features/held_write.hold`), the write's carried division (`features/write.carried`) and the credit's count (`share.quanta_of`, the credit's `counted`) compute by Rule3's division act and by nothing else, their modules naming no floor division, remainder or divmod of their own (the engine's gate on hand division beside it) and each equal to `division_forward` on the same integers: the held write (numerator + r) div wall with the remainder kept, the count (share + W_c div 2) div W_c."""
     acts = {"division_forward", "division_back", "rule3", "quanta_of"}
-    for name in ("features/hold/__init__.py", "features/write/__init__.py", "share.py", "credit.py"):
+    for name in (
+        "features/held_write/__init__.py",
+        "features/write/__init__.py",
+        "share.py",
+        "credit.py",
+    ):
         nodes = list(ast.walk(ast.parse((SRC / name).read_text(encoding="utf-8"))))
         hands = [
             n
@@ -89,10 +94,10 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
         names = {getattr(n, "id", None) or getattr(n, "attr", None) for n in nodes}
         assert not hands and "divmod" not in names and names & acts, name
     for numerator, wall, remainder in ((7, 3, 2), (-11, 4, 3), (0, 5, 4), (123456789, 1000, 999)):
-        level, kept = hold(10, numerator, wall, remainder)
+        level, kept = held_write(10, numerator, wall, remainder)
         act = division_forward(numerator, wall, remainder)
         assert (level - 10, kept) == act == carried(numerator, wall, remainder) and 0 <= kept < wall
-        assert hold(level, numerator, wall, kept, -1) == (10, remainder)
+        assert held_write(level, numerator, wall, kept, -1) == (10, remainder)
     shares, wall = np.array([0, 5, 6, 7, 11, 12, 13, -1, 24], dtype=object), 12
     half = division_forward(wall, 2, 0)[0]
     assert list(quanta_of(shares, wall, object)) == [

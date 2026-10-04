@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the lattice, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
+"""The Node: every family's NodeState over the lattice, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the held write"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from event_universe.core.ports import AXES, PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
-from event_universe.features.hold import hold
+from event_universe.features.held_write import held_write
 from event_universe.features.read import (
     axis_paces,
     content_of,
@@ -340,7 +340,7 @@ def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.nd
 
 
 def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
+    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
     tensions: currents.Vector = (0, 0, 0)
     for record in lines:
         found = currents.stress(weight, axis_neighbours(record.now, wrap))
@@ -351,23 +351,23 @@ def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Ve
 def axis_neighbours(
     now: np.ndarray, wrap: Wrap
 ) -> tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]:
-    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
+    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
     arrived = ports(now, wrap)
     found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
 
 
-def held_write(
+def held_write_at(
     lines: Sequence[Record],
     numerators: Sequence[Any],
     walls: Sequence[int],
     remainders: Sequence[np.ndarray],
     direction: int = 1,
 ) -> tuple[list[Record], list[np.ndarray]]:
-    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the hold"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
+    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the held write"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/held_write) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
     found, after = [], []
     for line, numerator, wall, remainder in zip(lines, numerators, walls, remainders, strict=True):
-        level, kept = hold(line.now, numerator, wall, remainder, direction)
+        level, kept = held_write(line.now, numerator, wall, remainder, direction)
         found.append(replace(line, now=np.asarray(level)))
         after.append(np.asarray(kept))
     return found, after

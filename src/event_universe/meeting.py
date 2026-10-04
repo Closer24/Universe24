@@ -400,7 +400,7 @@ def jumped(board: Lattice) -> None:
     for books in closing:
         turned_labels(board, books)
         books.windows += 1
-    closed, emitted = {books.number for books in closing}, set()
+    closed, lit_numbers = {books.number for books in closing}, set()
     for books in board.credit.bodies:
         if books.declared.draw is None:
             continue
@@ -408,8 +408,8 @@ def jumped(board: Lattice) -> None:
         books.lit += lit
         spans = ([] if lit else [1]) + ([books.lit] if books.number in closed and books.lit else [])
         if any(emitted(board, books, span) for span in spans):
-            emitted.add(books.number)
-    quiet = [books for books in closing if books.number not in emitted]
+            lit_numbers.add(books.number)
+    quiet = [books for books in closing if books.number not in lit_numbers]
     read = {books.number for books in quiet if probe_arrived(books, laid)}
     for books in quiet:
         if books.number in read:

@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the hold's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the held write's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ class Row:
 
 @dataclass(frozen=True)
 class Read:
-    """One read of a family as its declaration names it: the held family whose time line it reads and the weight it reads with, by the plain read into its paces or, where the holder declares the rotation, as the turn of its record; by the hold's reciprocity the weight it sources that holder with."""
+    """One read of a family as its declaration names it: the held family whose time line it reads and the weight it reads with, by the plain read into its paces or, where the holder declares the rotation, as the turn of its record; by the held write's reciprocity the weight it sources that holder with."""
 
     family: int
     weight: int
@@ -48,13 +48,13 @@ class Read:
 
 @dataclass(frozen=True)
 class FamilyRule(Row):
-    """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the hold's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
+    """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the held write's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
 
     reads: tuple[Read, ...] = ()
 
     @property
     def held(self) -> bool:
-        """Whether the family is held: a row with a level weight, written by the hold and read by others."""
+        """Whether the family is held: a row with a level weight, written by the held write and read by others."""
         return self.level_weight is not None
 
     @property
@@ -142,7 +142,7 @@ def quanta_records(families: tuple[FamilyRule, ...], index: int) -> range:
 
 
 def row_sources(families: tuple[FamilyRule, ...], held: int, row: int) -> list[tuple[int, int]]:
-    """The records that source one row of a held family, (reader, record) pairs (ALGEBRA.md #the-primitives, the hold's reciprocity; No record reads its own write of the sign): every record of every reader for a holder of the content, whose one row is the sum of its readers' forms; for a holder of the sign the one record that owns the row, and none for the row 0, which no record writes."""
+    """The records that source one row of a held family, (reader, record) pairs (ALGEBRA.md #the-primitives, the held write's reciprocity; No record reads its own write of the sign): every record of every reader for a holder of the content, whose one row is the sum of its readers' forms; for a holder of the sign the one record that owns the row, and none for the row 0, which no record writes."""
     sources = [
         (reader, record)
         for reader in readers_of(families, held)
@@ -197,7 +197,7 @@ def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
 
 
 def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The loader's gate of the energy line (ALGEBRA.md, energy conservation between a body and its light; the owner's word, the advisor's hand), one function with the line written once: for every plane family (dimension 2, of any parts) whose reads name a holder under the rotation h at a weight above 0, the file's integers satisfy E_h x T x num_f = k_w,h x Gamma x den_f exactly, [num_f, den_f] the family's pair (cos omega_s = num / den), E_h the holder's level weight, k_w,h its write weight, T the quantum action and Gamma the Node clock; the family's read weight multiplies its turn and, by the hold's reciprocity, its write, and cancels in the balance (it is the family's charge in units of the unit charge), so every plane family of one universe shares num / den or the universe is refused by name with the family, the holder and the four integers; a family of real lines and light (the holder's own record) read no turn and stand outside the line, as does the plain read (the act `pace`); a frozen row, a plane family at num = 0 (cos omega_s = 0 at every wave number, R_ij = 0 on every Link: its record never moves and gives no light), stands outside the line too, the balance of a body's light against its loss having nothing to balance, so the constraint that the plane families of one universe share num / den is lifted for num = 0 by name (the two hands)."""
+    """The loader's gate of the energy line (ALGEBRA.md, energy conservation between a body and its light; the owner's word, the advisor's hand), one function with the line written once: for every plane family (dimension 2, of any parts) whose reads name a holder under the rotation h at a weight above 0, the file's integers satisfy E_h x T x num_f = k_w,h x Gamma x den_f exactly, [num_f, den_f] the family's pair (cos omega_s = num / den), E_h the holder's level weight, k_w,h its write weight, T the quantum action and Gamma the Node clock; the family's read weight multiplies its turn and, by the held write's reciprocity, its write, and cancels in the balance (it is the family's charge in units of the unit charge), so every plane family of one universe shares num / den or the universe is refused by name with the family, the holder and the four integers; a family of real lines and light (the holder's own record) read no turn and stand outside the line, as does the plain read (the act `pace`); a frozen row, a plane family at num = 0 (cos omega_s = 0 at every wave number, R_ij = 0 on every Link: its record never moves and gives no light), stands outside the line too, the balance of a body's light against its loss having nothing to balance, so the constraint that the plane families of one universe share num / den is lifted for num = 0 by name (the two hands)."""
     for family in families:
         frozen = family.pair[0] == 0  # the frozen row: its record never moves and gives no light
         for read in family.reads:

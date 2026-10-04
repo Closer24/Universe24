@@ -296,13 +296,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         """Rows E.1 to E.3, "The engine holds no number, no formula, no family name and no flag, and every primitive is one folder found by its name", "Each act is a call of Rule3 on whole-board arrays of integers at a declared width, every neighbour read through a Port" and "It holds no number of physics, no formula, no family's name and no flag"; the breaker, the owner's rule (#1793 comment 5982567335): every act of the engine on a Node's levels is Rule3's one line or the division act with the half, and logic found at a Node that is not of Rule3's form is shouted; here the inventory of every function of src/event_universe that writes a Node's levels or remainder outside core/rule3, an assignment into a line's `now`, `before` or `remainder` or into a NodeState's `lines` or `write_remainders`, a `Record(...)` built or a `replace(...)` of those fields (an ast walk over the state's own names, no arithmetic read), each with the law's line its own docstring stands on; a site the inventory does not name fails by the function's name, the shout, a named site that is gone fails too, and tools/record_code_shape.py counts the same sites per file."""
         inventory = {
             "bookings.py::booked_sources": "ALGEBRA.md #what-a-body-is, the four lines (a) and (c)",
-            "lattice.py::Lattice.hold": 'ALGEBRA.md #the-primitives, the row "the hold"',
+            "lattice.py::Lattice.held_write": 'ALGEBRA.md #the-primitives, the row "the held write"',
             "lattice.py::Lattice.start": "ALGEBRA.md #the-generator (g), the start",
             "lattice.py::Lattice.step": "ALGEBRA.md #the-interval",
             "lattice.py::Lattice.step_inverse": "ALGEBRA.md #the-direction",
             "growth.py::resized": "the NodeState of a Node with no level",
             "lay.py::written": "the one place a level is written from outside Rule3",
-            "node.py::held_write": 'ALGEBRA.md #the-primitives, the row "the hold"',
+            "node.py::held_write_at": 'ALGEBRA.md #the-primitives, the row "the held write"',
             "node.py::step": "ALGEBRA.md #the-line, #the-direction",
             "node.py::turned_before": "ALGEBRA.md, The sign holder rotates the two-part record",
             "plane.py::step_plane": "The sign holder rotates the two-part record",

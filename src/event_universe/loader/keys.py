@@ -79,7 +79,7 @@ def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int,
 
 
 def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
-    """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the hold's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
+    """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the held write's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be an object, each holder's name to the weight it is read with")
     found = []

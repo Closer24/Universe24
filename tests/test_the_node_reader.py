@@ -346,7 +346,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
                 targets = n.targets if isinstance(n, ast.Assign) else [n.target]
                 if isinstance(f, ast.FunctionDef) and any(".lines" in ast.unparse(t) for t in targets):
                     writers.add((module.stem, f.name))
-    rule3 = {("lattice", "step"), ("lattice", "step_inverse"), ("lattice", "hold")}
+    rule3 = {("lattice", "step"), ("lattice", "step_inverse"), ("lattice", "held_write")}
     lay = {("lattice", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
     lay |= {("lay", "written")}  # the one lay act's write step, every door's (ALGEBRA.md, the principle)
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
