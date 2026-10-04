@@ -8,7 +8,7 @@ from __future__ import annotations
 HBAR_C = 197.327  # MeV fm
 ALPHA = 1 / 137.036
 THRESHOLD = 0.840  # the screened Coulomb well's first bound state, in mu g R / (hbar c)^2
-RANGE_FM, REDUCED_MASS_MEV = 1.414, 469.5
+RANGE_FM, REDUCED_MASS_MEV = 1.414, 469.46  # the proton-neutron reduced mass m_p m_n / (m_p + m_n)
 
 
 def yukawa_threshold() -> list[float]:
