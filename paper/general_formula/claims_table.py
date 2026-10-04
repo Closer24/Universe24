@@ -241,7 +241,10 @@ def build() -> str:
         " `tools/derivations/counterexamples.py`, the law's, which the paper's gate imports; a break is narrowed and"
         " never reworded quietly, a theorem's or derived mark's narrowing at the mathematician's second, a"
         " computed number's re-run or a run reading's label at one hand's line. The state column: `to write`,"
-        " `green` (holds inside, breaks outside), `BROKE Rnnn` (the ledger's row).",
+        " `green` (holds inside, breaks outside), `BROKE Rnnn` (the ledger's row). One rule stands over every row of"
+        " kind (e), the owner's word of 2026-10-04: every act of the engine on a Node's levels is Rule3's one line or"
+        " the division act with the half, as the law has them; logic found at a Node that is not of Rule3's form is a"
+        " red row by itself and a finding shouted on the reviewer's ledger, whatever the sentence it stands under.",
         "",
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
@@ -267,7 +270,26 @@ def build() -> str:
     ]
     for index, (number, place, word, sentence) in enumerate(candidates, 1):
         lines.append(f"| {index} | {number} | {place} | {word} | {sentence} |")
+    marked = {row["key"] for row in rows}
+    named = [
+        (number, labels.get(number, ""), key_of(sentence), plain(sentence))
+        for number, sentence in sentences(main)
+        if key_of(sentence) in breakers and key_of(sentence) not in marked
+    ]
     tables = table_rows(main)
+    lines += [
+        "",
+        "## E. Unmarked sentences named by hand as claims (the engine's own rule among them)",
+        "",
+        "| # | line | place | kind | the sentence | the breaker | state |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for index, (number, place, key, sentence) in enumerate(named, 1):
+        breaker = breakers[key]
+        lines.append(
+            f"| {index} | {number} | {place} | {breaker.get('kind', '')} | {sentence} | {breaker.get('breaker', '')} |"
+            f" {breaker.get('state', '')} |"
+        )
     lines += [
         "",
         "## D. The tables' rows (Tables 1, 3 and 5), the status column their kind",
