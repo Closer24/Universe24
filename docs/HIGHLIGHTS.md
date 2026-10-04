@@ -12,14 +12,16 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The engine
 
-- The engine is green and locked at the owner's word on main 7401d9c2; it takes only a defect found by a run, on a hand's branch with a dedicated test, two hands and CI.
+- The engine is green and locked on main at the lay's fix, at the owner's word that it is not touched any more: no change to the engine enters; a defect found by a run is named in its folder's reading and in the law with its number, and the hands' derivations behind a change stand as the law's lines until the owner reopens the engine, when a change enters only on a hand's branch with a dedicated test, two hands and CI.
 - Every engine change enters by its dedicated test and CI alone; the full gate is abolished and the unit tests are the gate.
 - Every test runs under 30 seconds and the suite's CI under ten minutes; a slower test is split or dropped.
 - The engine holds no number but Rule3's own and the world's keys; every physical value comes from the run's files and every primitive is one folder found by its name.
 - Rule3 is not changed; a problem is solved with Rule3 as it stands, and floor division and modulo live in Rule3's module alone.
 - Three acts write a NodeState: Rule3, the lay and the face; nothing is kept at a Node beyond the law's own numbers.
+- The message lay carries no uniform mode: the sums of the levels now and of the levels before over the board are both 0, by the division act at the lay, and the loader refuses a massless message otherwise; an edge of one wavelength with a top of one Node reaches it with no correction and is the design's guidance; the shipped worlds' mode files are rebuilt and their readings re-read when a lay rule changes.
 - NodeReader is the one name of a reader: a seed and a connected region of two Nodes or more for a reader with Nodes alone, one Node allowed for a reader with a record of its own; the click line names no Node; the nouns detector, instrument, emitter, absorber, observer and measurer are out of the engine, the law and the paper.
 - A click writes on the GameBoard: a hole at one Node, an erasing front one shell per interval, the count at the record's root read through the root; no record reads its own write of the sign.
+- The front's taper (the shells written to 0 over L declared shells, so that the page shows no flash) and the giving's no uniform mode (the one division act, in time on the source's increments where the span holds its period and over the packet's Nodes for the open board's packet; the second difference of the moment, nature's dipole, is not the line on the lattice) are the law's lines, declared and not built: the engine on main lays them as it stands, and the folders' readings and the paper name the flash, the giving's uniform mode and the control's lingering packet by their numbers.
 - There is no limit on clicks per window, and a bound body has no window of its own.
 - A family's dimension is generic, any integer from 1; a family of quanta is a shape list of real or plane lines; the masses are families, the proton and the neutron one quantum each of its own family.
 - The world's integers are the file's (node_clock, quantum_action, width, link_unit) and the energy line is the loader's gate; the engine derives none and defaults none.
@@ -40,8 +42,10 @@ points at the law, the law's line governs and no formula is restated here.
 - The law's fill proceeds in numbered parts, each its own pull request read by both hands.
 - The law's lines are split into the statement (docs/ALGEBRA.md keeps the algebraic line, its inputs and numbers, status, fence and the engine's place) and the provenance (docs/PROVENANCE.md keeps who said it when and where, under the line's name), as the fill's last part, by the advisor's tool in one pull request read by both hands, then the hands' second pass section by section.
 - A count is one quantum of the invariant T sin omega_0; the law's line on the count governs.
-- The vacuum's content is 0; the vacuum's writes (Lambda) are a hypothesis under its own name; there is no field, only events.
+- The vacuum's content is 0; there is no field, only events.
+- The vacuum's write at a declared Lambda is a hypothesis under its own name, opened as a declaration at the hands' lines; the cross term's write waits for a derivation; the nuclear holder's declared weights are not opened.
 - The forces are the law's holders by name: the weak force is the conversion click, confinement the record's indivisibility, nuclear binding the declared holder, the electromagnetic force the sign holder, gravity the massless holder; the nucleus is a bound body of the nuclear holder and the atom a bound body of the sign holder, each a hypothesis by name until shown.
+- The pair of two bound records, one record of two parts (the centre's with the inertias' sum and the relative part with the reduced inertia, each a family of its own), is open as a hypothesis under its own name, with its folder, test, blind and derivation script; it enters the law's line and the paper only after its world has run at two hands, printed "declared" and never "derived".
 - Universe24's clicks are the mechanism's own; nature is not said to have clicks.
 - HIGHLIGHTS is the decisions in force, one line each, no diary; the night's narrative lives in the issues and the git history and the findings' states in the reviewer's ledger in the repository; nothing is a decision until it is a line here.
 - A change to a document replaces what it touches and deletes what no longer holds in the same pull request; the documents are English and ASCII, simple and precise, every symbol named at its first use.
@@ -51,6 +55,7 @@ points at the law, the law's line governs and no formula is restated here.
 - The experimenter alone runs worlds: one shipped world at a time, on main, each run under a minute.
 - Every run is blind first: the statement with its formula and blind expectation is approved by two hands before the run, and the result is read against it; the next experiment does not start before the statement of the previous one is posted.
 - Every world passes the back-in-time gate (the tool says MATCH across the world's clicks) before its run, and its readings carry the labels NODEREADER for a click's count and GAMEBOARD for a board reading.
+- A reading of a world is re-read, its blind untouched, whenever the lay or the engine changes under it.
 - The pages of a run are built from the output file outside the repository, in dark mode only, with a fixed camera, the moving quanta green, every part of a run a graphic beside its blind table.
 - The experimenter keeps a bug ledger on his issue and reports every problem the moment it is seen, looking at every run physically, frame by frame, and not only at the data; a difference from a blind or a folder's note is a report for the hands, who decide whether it is the engine's.
 - When the experimenter finds a bug he stops on it until it is gone completely and the experiment reads what nature gives; no next experiment before.
@@ -76,7 +81,8 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The paper
 
-- The paper's one claim is the method: the main text claims the method and the derivations stand in the supplement.
+- The paper's one claim is that Universe24 helps compute things in nature: the main text states what the model computes of nature against measurement, each quantity with its status and its number, the method being how it computes and not the claim, and the derivations stand in the supplement.
+- The paper takes nothing of the open bins: the pair of two bound records, the vacuum's write at a declared Lambda and the cross term are hypotheses under their own names in the law and outside the paper until a world has run at two hands; the radiated share's coefficient and the holders' balance stand in the supplement as named open items with their status; what is printed stays as it is.
 - The paper claims nowhere beyond what was shown and names which experiments ran by Rule3.
 - The paper claims only what cannot be killed; what does not endanger us is the guideline for every sentence.
 - The title is "Universe24: an integer cellular automaton read through clicks, and the formulas it shares with nature", with six keywords, the field Foundations of Physics, arXiv quant-ph with gr-qc and nlin.CG as cross-lists, in the author's voice.
