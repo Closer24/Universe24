@@ -55,12 +55,14 @@ points at the law, the law's line governs and no formula is restated here.
 - The experimenter keeps a bug ledger on his issue and reports every problem the moment it is seen, looking at every run physically, frame by frame, and not only at the data; a difference from a blind or a folder's note is a report for the hands, who decide whether it is the engine's.
 - The one approved experiment is the two slits; the next is the click's world, anticoincidence, at ticks 72 with the window 40; the gate to which-way opens after the two slits.
 - Bell and GHZ are gates, not experiments.
+- The Zeno gate's seeds take the jump-ahead substreams, as both hands agreed.
 - The removed worlds (the atom's worlds, the cloud, the four charge worlds at 10,000 quanta per record, through_neutral, the free light world, like_or_unlike, matter_and_binding and its pair, frozen_proton, matter_and_gravity's well, nuclide, three_lines, parallel_charges, standing_17 and standing_19, the matter_alone variants, the train, the earlier which-way and dilute worlds, the comb Bell, the two speeds, the polarisation row) are removed because none was in the paper or on a test, loaded, or passed the count-1 gate; their rows stand in the law as dated clauses.
 
 ## The team and the method
 
 - Two hands, the first hand and the confirm, before anything enters the law, the engine or the paper.
 - The Boss writes no code: workers, decision lines, issue comments, briefs and pull request bodies alone; the Boss opens every pull request, with "HANDED BY Boss" and the files when a worker wrote it.
+- A hand may fix a defect of the engine on a branch from main with its dedicated test, at the owner's word, for the other hand's second at the sha and the Boss's merge at two hands and CI green; the Boss writes no code.
 - The team works by one method written in [skills/workflow.md](../skills/workflow.md) (one source per fact; one loop per finding in the repository's ledger; one gate set on every pull request, nothing merges red; whole reads until silence, zero read from the ledger and never declared; one pace, no restructuring while a fill is open); this document points at it and does not restate it.
 - The priorities are the algebra first, then the paper and its supplement on it; everyone works on these and on bug fixing but the experimenter, who runs the worlds.
 - A definition is named in one clause on every sign, factor and normalization.
