@@ -32,6 +32,7 @@
   "increment": 1442695040888963407
  },
  "intervals": 40,
+ "ticks": 72,
  "seeds": [
   1,
   2,

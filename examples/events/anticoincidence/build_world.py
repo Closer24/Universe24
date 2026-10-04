@@ -1,4 +1,4 @@
-"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeReaders at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record taking it into e at the transition's declared weight over its one window, the run; and `two_photons.json`, the control, the same packets at the amplitude of two quanta; and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
+"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeReaders at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record taking it into e at the transition's declared weight over its one window of `intervals`, the run going on for `ticks` past the window's close so that the taking's hole and the erasing front stand in the output interval by interval (the owner's word of 2026-10-04, the click's experiment); and `two_photons.json`, the control, the same packets at the amplitude of two quanta; and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/anticoincidence/build_world.py --modes [--folder <folder>]
 """
@@ -62,7 +62,9 @@ def world_of(design: dict, amplitude: int) -> dict:
         "shape": [length, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
-        "ticks": design["intervals"],
+        "ticks": design[
+            "ticks"
+        ],  # the run goes on past the window's close, so that the front spreads in the output
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": records,
