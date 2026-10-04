@@ -1,0 +1,107 @@
+{
+  "So Lorentzs group and the continuums rotations are no symmet": {
+    "kind": "a",
+    "breaker": "Rule3 on a 3x3x3 periodic board with random integer levels under each of the cube's 48 maps commutes with the map (0 misses expected); a rotation outside the group, the band's cos omega at k = 0.5 along an axis against the face diagonal and the body diagonal, differs by the lattice's anisotropy (the fourth order of S.21): the claim holds if the three differ and would break only if they agreed.",
+    "state": "to write"
+  },
+  "Beyond P the mode at wave number pi on every axis grows with": {
+    "kind": "a",
+    "breaker": "Random paces p at or below P on 2x2x2 to 4x4x4 periodic boards, the coefficients fixed, 200 steps at every pair up to [4000, 6000]: the largest level bounded, no mode growing; p = P + 1: the pi mode grows (the claim's first half). Outside the fence: the coefficients changing in time (the parametric sequence of #1901, R326) with every instant's pace below P: one solution grows, so the fence 'at coefficients fixed in time' is where the sentence says.",
+    "state": "to write"
+  },
+  "In the clicks there are conservations other than the boards ": {
+    "kind": "a",
+    "breaker": "The board's conservations: the weighted form and Wronskian on random boards at static paces in exact rationals (the rows of Theorem 3 and 5.5); no total energy: the clicks' energy T sin omega and the holder's form move together (R316), a world where a body's level grows and the form falls, both read; the credit's conservation of the count the engine's own act (kind (e): one quantum one click on the tests' universe, the count before and after).",
+    "state": "to write"
+  },
+  "The backintime gate is exact between clicks and runs across ": {
+    "kind": "e",
+    "breaker": "The engine's gate on the tests' universe: forward n and back n bit for bit between clicks; across a click with its erasure intervals, the values presented at the Ports treated as given: MATCH; outside: a draw inside the reversed span without the crossing fails (the draw forward only), so the fence 'between clicks, across a click with the crossing' is the engine's. tools/back_in_time.py at 7756546d.",
+    "state": "to write"
+  },
+  "The whole run therefore goes back N intervals forward and N ": {
+    "kind": "e",
+    "breaker": "Random states on 2x2x2 to 4x4x4 boards (every face kind, pairs [1, 1] to [4000, 6000], uneven Link factors, the width 63): Rule3 forward then its inverse returns every level and remainder bit for bit (the advisor's breaker found 0 misses on 384 boards, 5981736108 A (1)); outside: a state whose read at an interval's start is not kept (a face that moves) breaks it, the proviso of the sentence.",
+    "state": "to write"
+  },
+  "The change is 0 at paces fixed in time uniform or not for th": {
+    "kind": "a",
+    "breaker": "Exact rationals on random boards with uneven static paces: the weighted form's total constant to the remainder term, the plain form's total not (its change the pace's variation across the board); paces moving in time (a deepening well): the weighted total falls, the work term; surplus_check.py re-run at the hash for the printed numbers.",
+    "state": "to write"
+  },
+  "The integer step subtracts the remainder term deltaiDeltaai ": {
+    "kind": "a",
+    "breaker": "Exact integers on random boards: the integer step's momentum flux through a Link minus the line's flux applied to the integer levels equals delta_i Delta_a(now)_i - now_i Delta_a(delta)_i with delta = r - r' per Node, every Link, every pair; a mismatch at one Link breaks the identity.",
+    "state": "to write"
+  },
+  "Over one step of Rule3 the shares rational value before its ": {
+    "kind": "a",
+    "breaker": "Exact rationals on 2x2x2 to 4x4x4 boards with uneven Link factors and paces: the share's rational change per Node equals the six weighted currents plus the Node's own remainder term exactly (S.5), at every pair; the floored share's change differs by the floor alone (the remainders' walk), named.",
+    "state": "to write"
+  },
+  "So over any region the total share changes only by the weigh": {
+    "kind": "a",
+    "breaker": "A region of random shape on a random board: the sum of the shares' rational changes equals the weighted boundary currents plus the remainder terms, the interior Links cancelling pairwise (the Link factor the same from both ends); a region of one Node and a region of the whole periodic board as the two ends; a reader's floor the one further term.",
+    "state": "to write"
+  },
+  "The total share of a closed or periodic GameBoard is nonnega": {
+    "kind": "a",
+    "breaker": "Random integer levels on closed and periodic boards at the vacuum's coefficients for every pair with |num| <= den: the total share non-negative, 0 at a static uniform level of light (the equality); outside: |num| > den (beyond the guard) or a board with an open face reading 0 beyond: the total can go negative, the fence's two conditions each needed.",
+    "state": "to write"
+  },
+  "The direction of time belongs to the clicks and not to the b": {
+    "kind": "a",
+    "breaker": "The step on random states is a bijection (its inverse found for every state, no two states to one); the draw's write is not (two states, the quantum taken from either of two Nodes, map to one board): the arrow is the click's, the step's reversibility the first half of 5.1.",
+    "state": "to write"
+  },
+  "The line without its division conserves it exactly with the ": {
+    "kind": "a",
+    "breaker": "A two-part record on random boards stepped by the line in exact rationals at paces static in time: the weighted Wronskian total constant exactly (S.9), the integer step's defect the remainder term; paces moving in time without the time-Link turn: the total drifts (the work term, S.26 (d')), with the turn booked from the turned levels u_i, v_i: constant again (R334).",
+    "state": "to write"
+  },
+  "Its total over the GameBoard is invariant under any change o": {
+    "kind": "a",
+    "breaker": "The paces changed uniformly over the board between steps (the same factor at every Node): the Wronskian's total unchanged; a non-uniform change (a well deepening at one Node): the weighted total changes by the work term, the plain total by more; the exactness 'at static paces' and 'uniform over the board' each tested on its own side.",
+    "state": "to write"
+  },
+  "The exact angle of the shears is 2arctanL p0 2Gamma2 which i": {
+    "kind": "a",
+    "breaker": "One Node with a sign holder at a level L and clock pace p_0: the two-part record's rotation per interval under the holder's shear, computed exactly, against 2 arctan(L p_0 / (2 Gamma^2)) at random L, p_0, Gamma, including L of the order of Gamma^2 / p_0 where the small-angle form departs; the exactness of the arctan and the approximation's departure both shown.",
+    "state": "to write"
+  },
+  "And a pair is one laid record its phase a shared classical v": {
+    "kind": "a",
+    "breaker": "Random local response functions A(a, lambda), B(b, lambda) in {-1, +1} over random distributions of the shared variable lambda, 10^4 draws: the CHSH sum never above 2 (Bell's bound as a finite-sample identity, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') with each E a mean of products); the credit's non-local draw through the root reaching 478 / 169 is the contrast.",
+    "state": "to write"
+  },
+  "So the rule carries exactly three exact massive rotations 2c": {
+    "kind": "a",
+    "breaker": "Every pair [num, den] with den up to 10^4: 2 cos omega_0 = 2 num / den an integer only at num / den in {1 / 2, 0, -1 / 2}, the orbit of the one-Node line periodic in integers only there (Niven's theorem on the rational cosines, checked by enumeration on the integer recurrence a_next + a_before = (2 num / den) a_now over 1,000 steps); the periods 6, 4 and 3.",
+    "state": "to write"
+  },
+  "i a family is a band of the rule and its row holds only its ": {
+    "kind": "e",
+    "breaker": "(i) the loader on the tests' universe: a family's row with a third key refused by name, with its two keys admitted (kind (e), loader/world.py at 7756546d); (ii) the three exact massive rotations as the row above; the two assumptions in the sentence have no breaker, being declarations.",
+    "state": "to write"
+  },
+  "The record is the top mode of Rule3s symmetric form at the p": {
+    "kind": "a",
+    "breaker": "The symmetric form's matrix on a chain and a small box at random static paces: its top eigenvector against the fixed point of dF / d phi = 2 lambda phi on the sphere, found by the floored Jacobi iteration of S.13, the two equal to the iteration's stop; 2 cos omega_b the eigenvalue; a non-top mode as the start converges to the top or to none, named.",
+    "state": "to write"
+  },
+  "The binding rows fixed point has two branches a wide cloud a": {
+    "kind": "b",
+    "breaker": "pixel_mode.py re-run at the frozen commit on the shipped matter worlds: the two branches from two start widths, their numbers the printed ones (the compact pixel's and the wide cloud's clock pairs); a start width between the two lands on one of them and on no third.",
+    "state": "to write"
+  },
+  "itemm Rule3 is invariant under the lattices translations the": {
+    "kind": "a",
+    "breaker": "A plane wave at a rational wave number on a periodic board stepped by the line in exact rationals: its wave number kept exactly at every step (the Fourier component's modulus constant); the integer step's remainders add their walk, so a mode's amplitude at another k grows at the walk's size and no faster (the fence 'in the rational line before the rounding', 6 (m)).",
+    "state": "to write"
+  },
+  "The two parts of one beam laid equal are two records of one": {
+    "kind": "e",
+    "breaker": "Two records of one family laid equal on the tests' universe and stepped by the engine over 50 intervals: every array equal bit for bit at every interval (the engine's determinism); laid one level apart at one Node: they differ, and the difference propagates at one Link per interval, the causal bound.",
+    "state": "to write"
+  }
+}

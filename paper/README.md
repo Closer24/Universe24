@@ -40,6 +40,10 @@ their statuses.
 - `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
   the implementation at the frozen commit 7756546d and the three documents (the law,
   the engine's document, the decisions) at ed1a3b5d, both of 2026-10-04.
+- `claims.md`: the paper's claims table, one row per marked sentence of the paper (its place,
+  marks, fence, kind, the source the sentence gives, the breaker that could break it and its state),
+  built by `general_formula/claims_table.py` at every print; `claims_breakers.json` holds the
+  breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
