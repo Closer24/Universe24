@@ -80,6 +80,9 @@ their statuses.
   after `PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --ticks 130`)
   by `python paper/general_formula/two_slits_frames.py`. The folder holds
   these eight figures, that recording and nothing else.
+- `general_formula/invariant_check.py`: S.14's check of the adiabatic invariant, the one-Node
+  line stepped over 20,000 intervals with the rotation lowered from 0.841 to 0.600, D / sin(omega)
+  within 4e-5 of its start (Section 7.4). Run with `python paper/general_formula/invariant_check.py`.
 - `general_formula/einstein_check.py`: the Einstein rows computed from Rule3's
   coefficients by the geometric optics of the band (the bending, the perihelion),
   by no run of the engine; the law cites it under `the paces`.

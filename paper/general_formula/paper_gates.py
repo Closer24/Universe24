@@ -65,6 +65,16 @@ STALE = [
     ("No body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
     ("no body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
 ]
+# the history forms the paper may not carry undated (R228): each dated to the pinned commit or struck; the engine's
+# "level at now" stands, so "now" is listed in its verb-led forms alone
+STALE_PATTERNS = [
+    (r"\bpending\b", "R228"),
+    (r"\bnot yet\b", "R228"),
+    (r"\byet\b", "R228"),
+    (r"\bearlier versions?\b", "R228"),
+    (r"\buntil then\b", "R228"),
+    (r"\bnow (refuses|stands|reads|holds|carries|gives|writes|lays|runs)\b|\blaid now\b", "R228"),
+]
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
 STALE_ALLOWED = {
     "never one Node": [
@@ -201,15 +211,16 @@ def gate_marks(texts: dict[str, str]) -> list[str]:
 def gate_stale(texts: dict[str, str]) -> list[str]:
     misses = []
     for name, text in texts.items():
-        for phrase, finding in STALE:
-            for m in re.finditer(re.escape(phrase), text):
+        struck = [(re.escape(p), p, f) for p, f in STALE] + [(p, p, f) for p, f in STALE_PATTERNS]
+        for pattern, phrase, finding in struck:
+            for m in re.finditer(pattern, text):
                 line_start = text.rfind("\n", 0, m.start()) + 1
                 line_end = text.find("\n", m.end())
                 line = text[line_start : line_end if line_end > 0 else len(text)]
                 if any(allowed in line for allowed in STALE_ALLOWED.get(phrase, [])):
                     continue
                 misses.append(
-                    f"{name}:{line_of(text, m.start())}: the struck phrase {phrase!r} ({finding})"
+                    f"{name}:{line_of(text, m.start())}: the struck phrase {m.group(0)!r} ({finding})"
                 )
     return misses
 
@@ -230,7 +241,7 @@ def gate_scripts(texts: dict[str, str]) -> list[str]:
     text = texts["main.tex"]
     for m in re.finditer(r"\\claimmark\{(derived|computed)\}", text):
         around = enclosing_parenthesis(text, m.start())
-        if not re.search(r"\\texttt\{[a-z_]+\\?_?[a-z_]*\.py\}", around):
+        if not re.search(r"\\texttt\{(?:[a-z]+(?:\\_)?)+\.py\}", around):
             misses.append(f"main.tex:{line_of(text, m.start())}: {m.group(0)} names no script")
     return misses
 

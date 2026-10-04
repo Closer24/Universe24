@@ -146,7 +146,7 @@ def draw(output: Path) -> None:
     frames = {frame["tick"]: frame for frame in recording["frames"]}
     width_in = 174 / 25.4
     fig, axes = plt.subplots(1, 3, figsize=(width_in, 2.45))
-    for ax, tick, letter in zip(axes, TICKS, "abc"):
+    for ax, tick, letter in zip(axes, TICKS, "abc", strict=True):
         panel(ax, frames[tick], letter)
     axes[0].set_ylabel("$y$, the row (Links)", labelpad=1)
     for ax in axes[1:]:
