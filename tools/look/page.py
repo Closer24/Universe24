@@ -460,7 +460,7 @@ for (let t = 0; t <= T; t++) {
   const fr = frameOf(t);
   for (const f of FAMILIES) {
     const a = fr[f.name], m = MOST[f.name];
-    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); m.form = Math.max(m.form, a.form ? peak(a.form) : 0); TOTALS[f.name][t] = sum(a.count); }
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); m.form = Math.max(m.form, a.form ? peak(a.form) : 0); TOTALS[f.name][t] = a.share == null ? sum(a.count) : a.share / f.wall; }
     else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
   }
 }
@@ -835,7 +835,7 @@ function drawGraphs() {
   const box = byId('graphs'); box.innerHTML = '';
   const at = named ? indexOf(...named) : null, reading = 'GameBoard reading';
   const add = (title, series) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, series, reading); };
-  add('The total count per family', QUANTA.map(f => seriesOf(f.name, f.name, TOTALS[f.name], ROLES[f.name].dashed)));
+  add('The share per family over the GameBoard, in quanta (the books per interval, GAMEBOARD; the counts per Node summed where the look holds no share)', QUANTA.map(f => seriesOf(f.name, f.name, TOTALS[f.name], ROLES[f.name].dashed)));
   if (at === null) return;
   const over = key => f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => (frameOf(k)[f.name][key] || [])[at] || 0), ROLES[f.name].dashed);  // frame 0 holds no form
   add('The count at the Node', QUANTA.map(over('count')));
