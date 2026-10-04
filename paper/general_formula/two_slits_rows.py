@@ -6,7 +6,7 @@ laid over the columns 4 to 16, the wall at the column 20 with its two gaps of th
 apart, the screen at the column 44, twelve declared NodeReaders of four rows each. (b) The screen's
 row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
-world by the paper's script two_slits_real_line.py at the lay as main holds it (N = 269.18 in the
+world by the paper's script two_slits_real_line.py at the lay as the frozen commit 7756546d holds it (N = 284.50 in the
 engine's labels). The
 numbers are typed from those two files; nothing is read from a run of the engine.
 
@@ -49,8 +49,8 @@ INK, GREY, LIGHT, PALE = "#000000", "#7a7a7a", "#c8c8c8", "#efefef"
 BLIND = (21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25)
 BLIND_N = 273.0
 # two_slits_real_line.txt: the law's real line on the same file, the window 45 to 130, the engine's labels
-REAL = (19.52, 18.98, 26.29, 16.11, 8.67, 38.87, 45.70, 13.54, 12.10, 26.18, 20.92, 22.31)
-REAL_N = 269.18
+REAL = (19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57)
+REAL_N = 284.50
 # the file's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
 LENGTH, HEIGHT = 45, 48
 PACKET_X, PACKET_Y = (4, 16), (4, 44)
