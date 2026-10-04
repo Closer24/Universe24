@@ -115,9 +115,10 @@ def ion_universe_beside(folder: Path) -> None:
     (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
-def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600) -> Path:  # type: ignore[no-untyped-def]
-    """The ion-like world on a periodic box of 8 by 6 by 4: the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its giving to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator."""
+def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]
+    """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its giving to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
     ion_universe_beside(folder)
+    shape = (8, 6, 5)
     at, beside = [3, 3, 2], [4, 3, 2]
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
     draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
@@ -134,37 +135,17 @@ def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600) -> Path
         "phase": [0, 1],
         "amplitude": amplitude,
     }
-    drive.update(top={"x": [0, 7], "y": [0, 5], "z": [0, 3]}, edge={"x": 0, "y": 0, "z": 0})
-    counter = {"name": "counter", "positions": [[0, y, z] for y in range(6) for z in range(4)]}
-    world = dict(shape=[8, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=ticks)
-    world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
-    world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
-    (path := folder / "ion_like.json").write_text(json.dumps(world), encoding="utf-8")
+    top = {axis: [0, extent - 1] for axis, extent in zip("xyz", shape, strict=True)}
+    drive.update(top=top, edge={"x": 0, "y": 0, "z": 0})
+    plane = [[0, y, z] for y in range(shape[1]) for z in range(shape[2])]
+    world = dict(shape=list(shape), boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=ticks)
+    world.update(universe="u.json", engine="e.json", bodies=[record] if body else [], messages=[drive])
+    world.update(
+        node_readers=[{"name": "counter", "positions": plane}], draw={**draw, "window": 18, "seed": 24}
+    )
+    (path := folder / ("ion_like.json" if body else "beam_alone.json")).write_text(json.dumps(world))
     tool.main(["--input", str(path)])
     return path
-
-
-def packet_box(folder: Path, tool, amplitude: int = 110) -> Path:  # type: ignore[no-untyped-def]
-    """A massless packet of several quanta alone on the periodic box of 8 by 6 by 4: the fluorescence row's packet along x at k = pi / 2, the top x in [2, 5] with the edge 2 over the full cross-section, at `amplitude` (22 quanta at 110), no body and no reader; its mode file written by the generator."""
-    ion_universe_beside(folder)
-    message = {
-        "family": "fluorescence",
-        "along": "x",
-        "wave": [1, 2],
-        "phase": [0, 1],
-        "amplitude": amplitude,
-    }
-    message.update(top={"x": [2, 5], "y": [0, 5], "z": [0, 3]}, edge={"x": 2, "y": 0, "z": 0})
-    world = dict(shape=[8, 6, 4], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=200)
-    world.update(universe="u.json", engine="e.json", bodies=[], messages=[message], node_readers=[])
-    (path := folder / "packet_box.json").write_text(json.dumps(world), encoding="utf-8")
-    tool.main(["--input", str(path)])
-    return path
-
-
-def link_distance(a, b, shape) -> int:  # type: ignore[no-untyped-def]
-    """The Link-metric distance of two Nodes on a periodic box, per axis the shorter way round."""
-    return sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(a, b, shape, strict=True))
 
 
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
