@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from event_universe.loader.draw import Draw
 from event_universe.meeting import Item, written
-from event_universe.node_reader import NodeBooks, drawn_node, picked
+from event_universe.node_reader import NodeBooks, drawn_node, picked, share_weights
 from event_universe.reports import conversion
 
 if TYPE_CHECKING:
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 def converted(board: GameBoard, books: NodeBooks) -> bool:
-    """The conversion drawn at a record's window's end: while the record's count stands, for each conversion its declaration names, one draw of the act between the conversion's list (the record whole at -1, each family out at +1 by the count at its massless pair, a plane at the sense the table declares) and nothing, at the weights [window, rate - window] (the window capped at the rate), the record's own generator; the first conversion drawn is taken, its line written, and the window ends; returns whether one was drawn."""
+    """The conversion drawn at a record's window's end: while the record's count stands, for each conversion its declaration names, one draw of the act between the conversion's list (the record whole at -1, each family out at +1 by the count at its massless pair, a plane at the sense the table declares) and nothing, at the weights [window, rate - window] (the window capped at the rate), the record's own generator; the first conversion drawn is taken, its records out laid at the one Node of the region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), its line written, and the window ends; returns whether one was drawn."""
     assert isinstance(books.declared.draw, Draw)  # a record converted whole declares its window
     window = books.declared.draw.window
     for table in books.declared.conversions:
@@ -27,7 +27,7 @@ def converted(board: GameBoard, books: NodeBooks) -> bool:
             pick == 0
         ):  # realised: the records out at one Node of the region drawn now, by the record's own share
             items = [Item(books.index, books.number, books.part, -1, books.nodes)]
-            laid_at = drawn_node(board, books, list(books.weights))
+            laid_at = drawn_node(board, books, share_weights(board, books))
             for out, sense in zip(table.outs, table.senses, strict=True):
                 den = board.families[out].pair[1]
                 items.append(Item(out, None, None, 1, (laid_at,), (den, den), sense=sense))
