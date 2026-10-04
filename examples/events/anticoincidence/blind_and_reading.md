@@ -174,3 +174,71 @@ erased, the far one the empty wave in the grown layers), 0.10 at 170 as the fron
 shell per interval on both sides until the left shell leaves the declared board; `tools/back_in_time.py
 --intervals 170` MATCH; the control both atoms at 48. The two transients are the hands' known one, named
 by their numbers until the front's taper at the owner's word.
+
+## The gate's table
+
+Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
+compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
+lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
+reading in the gate's words and the value as its report prints it.
+
+| label | world | by | reading | value |
+| --- | --- | --- | --- | --- |
+| GAMEBOARD | one_photon.json | run_inputs | verdict | LAWFUL |
+| GAMEBOARD | one_photon.json | run_inputs | ticks | 170 |
+| NODEREADER | one_photon.json | run_inputs | clicks | 1 |
+| NODEREADER | one_photon.json | run_inputs | clicks body 0 | 1 |
+| NODEREADER | one_photon.json | run_inputs | clicks body 1 | 0 |
+| NODEREADER | one_photon.json | run_inputs | takings body 0 | 1 |
+| NODEREADER | one_photon.json | run_inputs | takings body 1 | 0 |
+| GAMEBOARD | one_photon.json | run_inputs | lines lay | 8 |
+| GAMEBOARD | one_photon.json | run_inputs | lines face | 323 |
+| GAMEBOARD | one_photon.json | run_inputs | lines erasure | 122 |
+| GAMEBOARD | one_photon.json | run_inputs | lines credit | 1 |
+| GAMEBOARD | one_photon.json | run_inputs | books photon quanta | 0 |
+| GAMEBOARD | one_photon.json | run_inputs | books photon share | 61284000 |
+| GAMEBOARD | one_photon.json | run_inputs | books atom quanta | 2 |
+| GAMEBOARD | one_photon.json | meeting_trials | trials | 200 |
+| GAMEBOARD | one_photon.json | meeting_trials | refused | 0 |
+| NODEREADER | one_photon.json | meeting_trials | A only | 99 |
+| NODEREADER | one_photon.json | meeting_trials | B only | 101 |
+| NODEREADER | one_photon.json | meeting_trials | both | 0 |
+| NODEREADER | one_photon.json | meeting_trials | neither | 0 |
+| NODEREADER | one_photon.json | meeting_trials | alpha | 0 |
+| NODEREADER | one_photon.json | meeting_trials | ends in e body 0 | 99 |
+| NODEREADER | one_photon.json | meeting_trials | ends in g body 0 | 101 |
+| NODEREADER | one_photon.json | meeting_trials | ends in e body 1 | 101 |
+| NODEREADER | one_photon.json | meeting_trials | ends in g body 1 | 99 |
+| NODEREADER | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
+| NODEREADER | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
+| GAMEBOARD | two_photons.json | run_inputs | verdict | LAWFUL |
+| GAMEBOARD | two_photons.json | run_inputs | ticks | 170 |
+| NODEREADER | two_photons.json | run_inputs | clicks | 2 |
+| NODEREADER | two_photons.json | run_inputs | clicks body 0 | 1 |
+| NODEREADER | two_photons.json | run_inputs | clicks body 1 | 1 |
+| NODEREADER | two_photons.json | run_inputs | takings body 0 | 1 |
+| NODEREADER | two_photons.json | run_inputs | takings body 1 | 1 |
+| GAMEBOARD | two_photons.json | run_inputs | lines lay | 16 |
+| GAMEBOARD | two_photons.json | run_inputs | lines face | 325 |
+| GAMEBOARD | two_photons.json | run_inputs | lines erasure | 122 |
+| GAMEBOARD | two_photons.json | run_inputs | lines credit | 2 |
+| GAMEBOARD | two_photons.json | run_inputs | books photon quanta | 0 |
+| GAMEBOARD | two_photons.json | run_inputs | books photon share | 36954000 |
+| GAMEBOARD | two_photons.json | run_inputs | books atom quanta | 2 |
+| GAMEBOARD | two_photons.json | meeting_trials | trials | 200 |
+| GAMEBOARD | two_photons.json | meeting_trials | refused | 0 |
+| NODEREADER | two_photons.json | meeting_trials | A only | 5 |
+| NODEREADER | two_photons.json | meeting_trials | B only | 0 |
+| NODEREADER | two_photons.json | meeting_trials | both | 195 |
+| NODEREADER | two_photons.json | meeting_trials | neither | 0 |
+| NODEREADER | two_photons.json | meeting_trials | alpha | 1 |
+| NODEREADER | two_photons.json | meeting_trials | ends in e body 0 | 200 |
+| NODEREADER | two_photons.json | meeting_trials | ends in g body 0 | 0 |
+| NODEREADER | two_photons.json | meeting_trials | ends in e body 1 | 195 |
+| NODEREADER | two_photons.json | meeting_trials | ends in g body 1 | 5 |
+| NODEREADER | two_photons.json | meeting_trials | clicks body 0 e by photon | 200 |
+| NODEREADER | two_photons.json | meeting_trials | clicks body 1 e by photon | 195 |
+| GAMEBOARD | one_photon.json | back_in_time | intervals 170 | MATCH |
+| GAMEBOARD | one_photon.json | back_in_time | intervals 72 | MATCH |
+| GAMEBOARD | two_photons.json | back_in_time | intervals 170 | MATCH |
