@@ -121,6 +121,56 @@ def kind_of(marks: list[str]) -> str:
     return "declaration"
 
 
+TABLES = {
+    "tab:results": (1, 2),
+    "tab:clicks": (1, None),
+    "tab:adds": (2, None),
+}  # the status column, the fence column
+
+
+def table_rows(text: str) -> list[dict[str, str]]:
+    """The rows of the tables whose status column is a claim's kind: the results (Table 1), the formulas of clicks
+    (Table 3) and the formulas the paper adds (Table 5); one row per table line between the rules."""
+    found: list[dict[str, str]] = []
+    for label, (status_at, fence_at) in TABLES.items():
+        start = text.find("\\label{" + label + "}")
+        if start < 0:
+            continue
+        body = text[text.find("\\midrule", start) : text.find("\\bottomrule", start)]
+        first_line = text[:start].count("\n") + 1
+        for offset, line in enumerate(body.split("\n")):
+            if not line.rstrip().endswith("\\\\") or "&" not in line:
+                continue
+            cells = [cell.strip() for cell in line.rstrip()[:-2].split(" & ")]
+            if len(cells) < 3:
+                continue
+            status = cells[status_at] if status_at < len(cells) else ""
+            word = status.lower()
+            kind = (
+                "a"
+                if word.startswith(("theorem", "derived"))
+                else "b"
+                if word.startswith("computed")
+                else "d"
+                if word.startswith("experiment")
+                else "declaration"
+            )
+            found.append(
+                {
+                    "table": label,
+                    "line": str(first_line + offset + body[: body.find(line)].count("\n") * 0),
+                    "status": plain(status, 90),
+                    "fence": plain(cells[fence_at], 30)
+                    if fence_at is not None and fence_at < len(cells)
+                    else "",
+                    "kind": kind,
+                    "text": plain(cells[0], 150),
+                    "key": label + ": " + key_of(cells[0]),
+                }
+            )
+    return found
+
+
 def build() -> str:
     main = MAIN.read_text(encoding="utf-8")
     supplement = SUPPLEMENT.read_text(encoding="utf-8")
@@ -195,7 +245,8 @@ def build() -> str:
         "",
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
-        f" {len(candidates)}; derivations of the supplement: {len(derivations)}.",
+        f" {len(candidates)}; rows of Tables 1, 3 and 5: {len(table_rows(main))}; derivations of the supplement:"
+        f" {len(derivations)}.",
         "",
         "## A. The marked claims of main.tex",
         "",
@@ -216,6 +267,20 @@ def build() -> str:
     ]
     for index, (number, place, word, sentence) in enumerate(candidates, 1):
         lines.append(f"| {index} | {number} | {place} | {word} | {sentence} |")
+    tables = table_rows(main)
+    lines += [
+        "",
+        "## D. The tables' rows (Tables 1, 3 and 5), the status column their kind",
+        "",
+        "| # | table | status | fence | kind | the row | the breaker | state |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for index, row in enumerate(tables, 1):
+        breaker = breakers.get(row["key"], {})
+        lines.append(
+            f"| {index} | {row['table']} | {row['status']} | {row['fence']} | {breaker.get('kind', row['kind'])} |"
+            f" {row['text']} | {breaker.get('breaker', '')} | {breaker.get('state', '')} |"
+        )
     lines += [
         "",
         "## C. The supplement's derivations and their Status lines",

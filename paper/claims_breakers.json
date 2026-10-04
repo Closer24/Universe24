@@ -203,5 +203,215 @@
     "kind": "c",
     "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeReader for the counts and GameBoard for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
     "state": "run"
+  },
+  "tab:adds: The bands inertia and kinetic scale m 3tanomega0 cm2 omega0": {
+    "kind": "a",
+    "breaker": "The band's expansion at small k on the exact band: m* from the curvature, c_m^2 from the Lorentz form's inversion (S.21), E = omega_0 at k = 0; the three read on one band at [2, 3], [9, 10], [999, 1000], c_m / c = 0.867 at [2, 3] and 1 as the gap closes; outside: k near the band's top where no quadratic form fits.",
+    "state": "to write"
+  },
+  "tab:adds: The postNewtonian parameters with the gap gammaK den num bet": {
+    "kind": "a",
+    "breaker": "S.19's conversion of the exponential metric's forms to Kepler's potential at the pair: gamma_K = den / num, beta_K = (den + num) / (2 num), 1 + alpha_K = tan omega_0 / omega_0 at [2, 3] (1.5, 1.25, 1.329) and at [999, 1000] (1.001, 1.0005, 1.0000003); the orbit step of S.19 against the formula's precession at both pairs; outside: the band's k^4 term at the computed pair's k, the ten percent named.",
+    "state": "to write"
+  },
+  "tab:adds: Yilmazs exponential metric N2 e2U h2 e2U gamma beta 1 exactl": {
+    "kind": "a",
+    "breaker": "The composed paces N^2 = e^{-2U}, h^2 = e^{2U} expanded to second order in U against the PPN form: gamma = beta = 1 at every order in U (exact), the spatial second order 2 against Schwarzschild's 1.5 (the isotropic chart); the redshift's factor f(omega_0) = 1 + alpha_U, 1.063 at [2, 3]; outside: the plain (unassumed) read of the Link gives another metric, the one assumption's fence.",
+    "state": "to write"
+  },
+  "tab:adds: The shadows capture radius b 2em against Schwarzschilds 3sqr": {
+    "kind": "a",
+    "breaker": "Root-finding on b(r) = r e^{2U}, U = m / r: the minimum at r = 2m, b = 2 e m = 5.44 m exactly, against 3 sqrt 3 m = 5.20 m; the general lens equation at finite k reproduces it as k -> 0 (S.30); the 4.6 percent and the two EHT standard deviations as printed.",
+    "state": "to write"
+  },
+  "tab:adds: The gravity of light a light packet pulls at 1 times E c2 ag": {
+    "kind": "a",
+    "breaker": "S.41's write of a light packet into the sign holder's source against a matter quantum of the same E on one Node and on a chain in exact rationals: the factor 1 against general relativity's 2 (the pressure's share absent); outside: a packet whose form is not the conserved one (a plain read) writes another factor, named.",
+    "state": "to write"
+  },
+  "tab:adds: The lens Eq one formula for light and matter for light exact": {
+    "kind": "a",
+    "breaker": "Eq. (lens) at [2, 3], k = 0.3, N = 0.9: light's k_in from sin(k_in / 2) = sin(k / 2) / N^2 against the general equation (R329's witness), matter's rest term kept; the index e^{2U} and n_m^2 proportional to 1 / k^2 at long wavelength; the chromatic term k^2 (e^{6U} - e^{2U}) / 24 at k = 0.3, 0.6, 0.9 against the exact equation.",
+    "state": "to write"
+  },
+  "tab:adds: The finestructure constants form alpha 3sqrt 3 8pik Gamma Es": {
+    "kind": "a",
+    "breaker": "S.26's chain: the write weight k, E_s and Gamma into alpha = (3 sqrt 3 / 8 pi) k / (Gamma E_s) at the rule's file (constants.py re-run at the hash), the one click that fixes k / (Gamma E_s) = 1 / 28.33 at nature's alpha; outside: the energy read as T omega instead of the clock's, S.27's other bound; the switch-on check of S.26 (d') not re-run (R322).",
+    "state": "to write"
+  },
+  "tab:adds: The moving clocks fourth order omega0suma na4tanomega0 cotom": {
+    "kind": "a",
+    "breaker": "S.21's fourth order at [2, 3] along an axis (1.6926), a face diagonal (1.2224) and the body diagonal (1.0657), by the exact band's inversion at v = 0.1 to 0.4 c_m (moving_clock.py); the second order one number in all three directions; outside: v above the band's top speed where the inversion has no root.",
+    "state": "to write"
+  },
+  "tab:adds: The frozen content Uf tfrac12ln2Gamma Gamma 2ln 2Gamma level": {
+    "kind": "a",
+    "breaker": "The clock's pace p_0 = Gamma e^{-U} rounding to 0 at U_f = (1 / 2) ln(2 Gamma) by the division act (28,178 levels at Gamma = 6,000 by the composed paces' integers); the loader's refusal of a frozen content at that level (kind (e), loader/world.py); outside: a level one unit under U_f admitted.",
+    "state": "to write"
+  },
+  "tab:adds: The clusters deceleration q0 Omegam 2 0 at z ll 1 bound or f": {
+    "kind": "a",
+    "breaker": "S.29's ball of dust under the law's forms: q_0 = Omega_m / 2 for a bound or a free ball at z << 1 (the sign positive in both), Hubble's law at first order; outside: the vacuum row's declared uniform write (Newton's Lambda) would turn the sign, a declaration and no line; the supernovae's acceleration a finding by name.",
+    "state": "to write"
+  },
+  "tab:adds: A bodys binding per quantum bounded by 076CW Gamma E at one": {
+    "kind": "a",
+    "breaker": "S.38's bound by Watson's integral: 3 G(0) = 0.7582 at one Node and 0.29 CW / (Gamma E r) for a ball of r Links, against the nuclear binding 8.8 MeV per nucleon for every derived body at the rule's file (stable_body_check.py); the bound tested on a body of 1 and of 1,000 quanta; the miss named.",
+    "state": "to write"
+  },
+  "tab:adds: The clicks booking identity Delta Q wx vx b with the records": {
+    "kind": "a",
+    "breaker": "The one-Node identity Delta Q = w (x - v)(x - b) in exact integers at random x, v, b and any paces (S.50, three derivations), the remainders' term (x - v)(r - r') beside it (#1908 (5)), the most one write removes w (v - b)^2 / 4 at the midpoint; the record's unit W_rec in the credit's division.",
+    "state": "to write"
+  },
+  "tab:results: Rule3s step is reversible to the bit the interval under the": {
+    "kind": "e",
+    "breaker": "The theorem row's breaker (5.1): random boards forward and back bit for bit; the interval's condition (every number an act reads kept) tested by a moving face outside it.",
+    "state": "to write"
+  },
+  "tab:results: The rules acts form no product of levels": {
+    "kind": "a",
+    "breaker": "The four acts on random integer boards in exact arithmetic: every output a linear form of the levels with integer coefficients plus the division act's remainder, no term bilinear in two levels (the acts' Jacobians constant in the levels); the share and the form are readings, not acts, and are the bilinear ones.",
+    "state": "to write"
+  },
+  "tab:results: A conserved form at static paces with the weights 1 pi2 its": {
+    "kind": "a",
+    "breaker": "Theorem 3's breaker (5.3): the weighted form constant at uneven static paces in exact rationals, the plain one not; the current per Link with the factor (q_ij / Gamma)^2 summing to the form's change; moving paces: the work term.",
+    "state": "to write"
+  },
+  "tab:results: The count is the records share the rational total share is n": {
+    "kind": "a",
+    "breaker": "S.5 and S.6's breakers (5.4): the share's rational change the six weighted currents plus the remainder; the total share non-negative on closed and periodic boards at |num| <= den, the two fence conditions each tested outside.",
+    "state": "to write"
+  },
+  "tab:results: Three exact massive rotations": {
+    "kind": "a",
+    "breaker": "The enumeration of the pairs to den 10^4 (6.1): integer periodicity only at 2 cos omega_0 in {1, 0, -1}.",
+    "state": "to write"
+  },
+  "tab:results: Lights speed 1 sqrt 3 Links per interval its dispersion and": {
+    "kind": "a",
+    "breaker": "The massless band cos omega = (1 / 3) SUM cos k_a at the vacuum's paces: the speed 1 / sqrt 3 at long wavelength along every direction (bands.py), the dispersion to k^4 along an axis and a diagonal; the two speeds of S.12 (the phase speed's fall to 0.392 at the zone's edge); outside: a pace below the vacuum's where the speed is N^2 / sqrt 3.",
+    "state": "to write"
+  },
+  "tab:results: A holders reach from its gap Yukawas form": {
+    "kind": "a",
+    "breaker": "S.11's static tail on a chain and a 3D box at [2400, 2401] (R = 20.00) and [1, 2] (e^{-kappa} = 0.127) in exact rationals; the domain 0 < num <= den with the alternating tail at [-1, 2] and the zero support at [0, 1] outside it (#1908's addendum).",
+    "state": "to write"
+  },
+  "tab:results: The stability of a body under the dilation to first order in": {
+    "kind": "a",
+    "breaker": "The proposition's breaker (7.2): the virial and the second variation along the dilation on S.13's functional at power-law kernels; the Hessian's mixed block on H = [[1, 2], [2, 1]] showing why no full minimum is claimed (R327).",
+    "state": "to write"
+  },
+  "tab:results: A bodys clicks no light from a steady rotation light at a br": {
+    "kind": "a",
+    "breaker": "S.42: a body at rest with a steady rotation writes a constant source (no travelling event) on a chain in exact rationals; a breathing body writes at the breathing's frequency; the monopole constant exactly where the paces are uniform over the body, its departure 2 Delta p / p outside (R328).",
+    "state": "to write"
+  },
+  "tab:results: The gravitational redshift z fomega0U": {
+    "kind": "a",
+    "breaker": "weak_field.py: a clock's rate in a level against e^{-U} and the factor f(omega_0) at the pair and as the gap closes; the redshift read on the clock, not on T omega.",
+    "state": "to write"
+  },
+  "tab:results: The bending which fixed the one assumption the perihelion th": {
+    "kind": "a",
+    "breaker": "weak_field.py: the bending 4 U_b (the one click that fixed hN = 1), Shapiro's delay and the perihelion from the exponential metric at the pair; the second order of the metric (2 against 1.5) named; outside: the plain read without the assumption gives 2 U_b.",
+    "state": "to write"
+  },
+  "tab:results: The same forms against Keplers potential gammaK betaK and al": {
+    "kind": "a",
+    "breaker": "S.19's gamma_K, beta_K, alpha_K at [2, 3] and as the gap closes (Table 5's row's breaker); Cassini's bound on den / num - 1 as the click.",
+    "state": "to write"
+  },
+  "tab:results: The moving clock its fourth order and its kinetic scale cm L": {
+    "kind": "a",
+    "breaker": "S.21's breaker (Table 5's row): the second order one speed c_m, the fourth order's three coefficients along the three directions; Lorentz's form recovered as the gap closes.",
+    "state": "to write"
+  },
+  "tab:results: The force between moving charges Coulombs over gamma": {
+    "kind": "a",
+    "breaker": "S.33's covector: the force between two charges moving at v on the holder's line, Coulomb's over gamma(v) at v = 0.1 to 0.5 c in exact rationals; outside: v above the holder's phase speed where the retarded form fails.",
+    "state": "to write"
+  },
+  "tab:results: De Broglie the fall Newtons pull the contents index for ever": {
+    "kind": "a",
+    "breaker": "S.22, S.18, S.28: k = m* v at small k; the fall 2 nu / (3 (1 + nu)) grad U per family at finite gaps (#1908 (4)); the content's index e^{2U} for light and the arcsine ratio for every family at k = 0.3 and 0.9 against the exact band at a pace.",
+    "state": "to write"
+  },
+  "tab:results: Newtons pull the clocks G and Keplers G": {
+    "kind": "a",
+    "breaker": "S.18 and S.25: the clock's G from the level's write and Kepler's G from the orbits at the pair, their ratio 1 as the gap closes and f(omega_0) apart at [2, 3]; a circular orbit's period against Kepler's third law.",
+    "state": "to write"
+  },
+  "tab:results: alpha 3sqrt 3 8pik Gamma Es between two quanta k the sign ho": {
+    "kind": "a",
+    "breaker": "S.26's chain (Table 5's row's breaker): alpha's form from the write weight; the switch-on check named and not re-run (R322).",
+    "state": "to write"
+  },
+  "tab:results: The twoslit fringe row and the lattices arrival interval": {
+    "kind": "b",
+    "breaker": "two_slits_real_line.py re-run at the frozen commit: the row 19.7 ... 22.6, N = 284.7, the arrival's peak 69.0; the continuum per laid quantum (the per-quantum table) in the sweep's first print; the run's 284 at both seeds the experimenter's (kind (c)).",
+    "state": "to write"
+  },
+  "tab:results: The two clocks shift alike the findings against nature of Se": {
+    "kind": "a",
+    "breaker": "S.31's two clocks under the principle: the Node's clock and the body's clock shifting alike in a level at the pair in exact rationals; the findings against nature (alpha_1, alpha_2, the running of alpha, the nuclear binding) are misses by name, no breaker.",
+    "state": "to write"
+  },
+  "tab:clicks: The twoslit row": {
+    "kind": "b",
+    "breaker": "two_slits_real_line.py's row and N at the frozen commit; the Huygens blind's 273 and the near-field minima 15 and 33 (two_slits.py).",
+    "state": "to write"
+  },
+  "tab:clicks: The arrival and its spread": {
+    "kind": "b",
+    "breaker": "two_slits_real_line.py section 5: sigma_t = 4.13 by the band's curvature, the paths' rms 7.3, the real line's 10.9, the centre's 62.2 against the refined lattice's 62.0 (69.0 at s = 1 under the exact lay).",
+    "state": "to write"
+  },
+  "tab:clicks: GHZ three quanta": {
+    "kind": "a",
+    "breaker": "bell.py's GHZ rows at the Mermin settings: M = -4 exactly in the shares; off the settings |M| below 4.",
+    "state": "to write"
+  },
+  "tab:clicks: The clocks click rate": {
+    "kind": "a",
+    "breaker": "S.15: a body's click rate against its clock's pace e^{-U} in a level, in exact rationals on one Node; the rate read by a NodeReader over all its Nodes equals the share's change.",
+    "state": "to write"
+  },
+  "tab:clicks: The bendings clicks": {
+    "kind": "a",
+    "breaker": "The bending's angle 4 U_b read as the click pattern's shift on a screen behind a well (weak_field.py's ray against a screen of regions); the chromatic term at finite k.",
+    "state": "to write"
+  },
+  "tab:clicks: The absorption line": {
+    "kind": "a",
+    "breaker": "The two-mode line's resonance at omega_e - omega_g (S.43): the transfer against the detuning on one Node, the line's width 2 pi / n at a window of n intervals (the uncertainty relation's second declaration).",
+    "state": "to write"
+  },
+  "tab:clicks: Emission": {
+    "kind": "a",
+    "breaker": "S.48 (3): one quantum laid at SUM A_t^2 = (2 / 3) T sin k on a width-one guide, the increments' squares half of it for a narrow-band envelope (R335), a short envelope departing; the radiated form T sin Omega.",
+    "state": "to write"
+  },
+  "tab:clicks: The whichway sum": {
+    "kind": "a",
+    "breaker": "The which-way world's screen row against the one-gap world's at the same shares (test_the_draw T2): the two slits' minimum at the region 8 filled, the visibility below half; the sum of the two one-gap rows against the two slits' row.",
+    "state": "to write"
+  },
+  "tab:clicks: No signalling": {
+    "kind": "a",
+    "breaker": "The marginals at every setting: a body's marginal its own share whatever the other's (meeting.took on two bodies, kind (e)); a region's count moving with the others' inflows through the rounding of the total alone, by at most one quantum per window (credit.credited), the one named non-local place (R333).",
+    "state": "to write"
+  },
+  "tab:clicks: A bodys count in clicks": {
+    "kind": "a",
+    "breaker": "S.42's inputs and R307: the credit books the conserved form's own current with the Link's factor squared; a static well with tension on a region's front: the weighted inflow over a passage equal to W_rec, the plain short by 2 t_a / Gamma per Link (the law's unit test).",
+    "state": "to write"
+  },
+  "tab:clicks: Magnetism": {
+    "kind": "a",
+    "breaker": "S.33's covector and the force between moving charges (Table 1's row's breaker): the magnetic term from the holder's line at v = 0.1 to 0.5 c.",
+    "state": "to write"
   }
 }
