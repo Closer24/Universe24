@@ -307,23 +307,23 @@ def separation(readings: list[dict[str, object]], centres: list[Node]) -> Fracti
 
 
 def rest(path: Path, intervals: int | None, reach: int) -> dict[str, Any]:
-    """One world's reading: the bodies at the start and after `intervals` intervals (the world's ticks without it), each read about one interval, so the board steps once more than the window; the separation for two bodies; the books at the end with the two terms of their drift's identity summed over every step, the work term of L510 and Rule3's remainder term (`work_books`); labelled LATTICE."""
+    """One world's reading: the bodies at the start and after `intervals` intervals (the world's intervals without it), each read about one interval, so the board steps once more than the window; the separation for two bodies; the books at the end with the two terms of their drift's identity summed over every step, the work term of L510 and Rule3's remainder term (`work_books`); labelled LATTICE."""
     board = Lattice(load_world(path))
     if len(board.world.bodies) not in (1, 2):
         raise ValueError(
             f"{path.name} declares {len(board.world.bodies)} bodies: the rest reads one or two"
         )
-    steps = board.world.ticks if intervals is None else intervals
+    steps = board.world.intervals if intervals is None else intervals
     centres = [centre_of(board, number) for number in range(len(board.world.bodies))]
     terms = {index: {"work_term": 0, "remainder_term": 0} for index in board.order}
     start = read_about_one_interval(board, centres, reach, terms)
-    while board.tick < steps and board.ended is None:
+    while board.interval < steps and board.ended is None:
         stepped(board, terms)
     end = read_about_one_interval(board, centres, reach, terms) if board.ended is None else None
     found: dict[str, Any] = {
         "label": LABEL,
         "input": path.name,
-        "intervals": board.tick,
+        "intervals": board.interval,
         "ended": board.ended,
         "amplitude_bound": board.world.amplitude_bound,
         "largest_integer": board.world.width,
@@ -349,30 +349,30 @@ def field_series(
     for line in lines:
         if line.get("event") != "density" or line.get("reading") is None:
             continue
-        tick = int(str(line["tick"]))
-        if window[0] <= tick <= window[1]:
+        interval = int(str(line["interval"]))
+        if window[0] <= interval <= window[1]:
             key = (str(line["node_reader"]), str(line["family"]))
-            found.setdefault(key, {})[tick] = int(str(line["reading"]))
+            found.setdefault(key, {})[interval] = int(str(line["reading"]))
     return found
 
 
 def swing(series: dict[int, int], window: tuple[int, int]) -> dict[str, object]:
     """A region's reading over the window: carried forward where it was not rewritten, its least and largest with the first interval of each, and the count of its local maxima (above the reading before, at or above the one after)."""
     filled, last = [], None
-    for tick in range(window[0], window[1] + 1):
-        last = series.get(tick, last)
+    for interval in range(window[0], window[1] + 1):
+        last = series.get(interval, last)
         if last is not None:
-            filled.append((tick, last))
+            filled.append((interval, last))
     if not filled:
         return {"least": None, "largest": None, "maxima": 0}
-    values = [value for _tick, value in filled]
+    values = [value for _interval, value in filled]
     maxima = sum(
         1 for i in range(1, len(values) - 1) if values[i] > values[i - 1] and values[i] >= values[i + 1]
     )
     least, largest = min(values), max(values)
     return {
-        "least": {"tick": next(t for t, v in filled if v == least), "reading": least},
-        "largest": {"tick": next(t for t, v in filled if v == largest), "reading": largest},
+        "least": {"interval": next(t for t, v in filled if v == least), "reading": least},
+        "largest": {"interval": next(t for t, v in filled if v == largest), "reading": largest},
         "maxima": maxima,
     }
 
@@ -382,7 +382,9 @@ def densities_read(output: Path, expected: dict[str, Any] | None) -> dict[str, A
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = [line for line in document.get("lines", []) if isinstance(line, dict)]
     named = (expected or {}).get("density", {})
-    window = tuple(int(v) for v in (expected or {}).get("window", [0, int(document.get("ticks", 0))]))
+    window = tuple(
+        int(v) for v in (expected or {}).get("window", [0, int(document.get("intervals", 0))])
+    )
     series = field_series(lines, (window[0], window[1]))
     wanted = [
         key
@@ -412,7 +414,7 @@ def main(argv: list[str] | None = None) -> None:
         "worlds", type=Path, nargs="*", help="the world files, each with its mode file beside it"
     )
     parser.add_argument(
-        "--intervals", type=int, default=None, help="the intervals read (the world's ticks)"
+        "--intervals", type=int, default=None, help="the intervals read (the world's intervals)"
     )
     parser.add_argument(
         "--reach", type=int, default=6, help="the Links read along each axis from a centre"

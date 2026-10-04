@@ -22,7 +22,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     design["seeds"] = design["seeds"][:3]
     (folder / "design.json").write_text(json.dumps(design), encoding="utf-8")
     board = Lattice(load_world(folder / world), (lines := []).append)
-    for _ in range(board.world.ticks):
+    for _ in range(board.world.intervals):
         board.step()
     clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEREADER"]
     takings, quanta = sum(1 for line in clicks if line["taken"]), board.books()["pulse"]["quanta"]
@@ -36,14 +36,14 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         ("NODEREADER", "run_inputs", "takings body 0", takings),
         ("NODEREADER", "run_inputs", "clicks", takings),
         ("LATTICE", "run_inputs", "books pulse quanta", quanta),
-        ("LATTICE", "run_inputs", "ticks", board.world.ticks),
-        ("LATTICE", "back_in_time", f"intervals {board.world.ticks}", "MATCH"),
+        ("LATTICE", "run_inputs", "intervals", board.world.intervals),
+        ("LATTICE", "back_in_time", f"intervals {board.world.intervals}", "MATCH"),
         ("NODEREADER", "meeting_trials", "ends in e body 0", ends),
         ("LATTICE", "meeting_trials", "trials", 3),
     ]
     wrong = [
         ("NODEREADER", "run_inputs", "takings body 0", takings + 1),
-        ("NODEREADER", "run_inputs", "ticks", 48),
+        ("NODEREADER", "run_inputs", "intervals", 48),
     ]
     head = (
         "# A copy of the Zeno world\n\n## The gate's table\n\n| label | world | by | reading | value |\n"

@@ -70,14 +70,14 @@ def rotation(
 
 
 def rotations_read(found: list[tuple[int, int, int]]) -> dict[str, Any]:
-    """The per-interval rotation readings over the window, (numerator, weight, tick) per interval, kept for the record and labelled: cos omega_read's least and largest over the intervals whose weight is at least half the largest weight (the record away from its zero crossings) with their ticks and the spread, the count of those intervals, the window's accumulated ratio SUM numerators / SUM weights, and the first interval's 2 cos omega; for a real mode the per-interval read is near-singular twice a period (172 (3)), so its spread is those intervals' and no drift."""
+    """The per-interval rotation readings over the window, (numerator, weight, interval) per interval, kept for the record and labelled: cos omega_read's least and largest over the intervals whose weight is at least half the largest weight (the record away from its zero crossings) with their intervals and the spread, the count of those intervals, the window's accumulated ratio SUM numerators / SUM weights, and the first interval's 2 cos omega; for a real mode the per-interval read is near-singular twice a period (172 (3)), so its spread is those intervals' and no drift."""
     heaviest = max(weight for _n, weight, _t in found)
     strong = [(Fraction(n, w), t) for n, w, t in found if 2 * w >= heaviest]
     least, largest = min(strong), max(strong)
     return {
         "label": "per interval, near-singular twice a period for a real mode (172 (3))",
-        "cos_omega_least": {"reading": pair(least[0]), "tick": least[1]},
-        "cos_omega_largest": {"reading": pair(largest[0]), "tick": largest[1]},
+        "cos_omega_least": {"reading": pair(least[0]), "interval": least[1]},
+        "cos_omega_largest": {"reading": pair(largest[0]), "interval": largest[1]},
         "spread": pair(largest[0] - least[0]),
         "intervals_read": len(strong),
         "accumulated_cos_omega": pair(
@@ -247,7 +247,7 @@ def clock_of(path: Path) -> Fraction:
 
 
 def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict[str, Any]:
-    """One world's reads over the window (the world's ticks, or `intervals`; `beat` the beat's period in intervals for the Fourier line, None for none): the body's declared Nodes read, the lay's share and form kept, the board stepped interval by interval with the record's level before each step kept as z_(t - 1); the rotation's pair at every interval, the form's and the share's deviations at the quarters of the window and at every interval, the centroids at its ends, the 48 images after every interval, labelled LATTICE."""
+    """One world's reads over the window (the world's intervals, or `intervals`; `beat` the beat's period in intervals for the Fourier line, None for none): the body's declared Nodes read, the lay's share and form kept, the board stepped interval by interval with the record's level before each step kept as z_(t - 1); the rotation's pair at every interval, the form's and the share's deviations at the quarters of the window and at every interval, the centroids at its ends, the 48 images after every interval, labelled LATTICE."""
     board = Lattice(load_world(path))
     if len(board.world.bodies) != 1:
         raise ValueError(
@@ -255,7 +255,7 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
         )
     row = board.world.bodies[0]
     index, nodes, action = row.family, board.mask(row.nodes), board.world.quantum_action
-    steps = board.world.ticks if intervals is None else intervals
+    steps = board.world.intervals if intervals is None else intervals
     quarters = sorted({steps * part // (2 * 2) for part in (1, 2, 3, 2 * 2)} - {0})
     centres = sorted({steps * part // (2 * 2) for part in (1, 2, 3)} | {steps - 1}) if steps else []
     period = period_of(clock_of(path), steps)
@@ -268,10 +268,13 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
     form_series: list[Fraction] = []  # rho_D^2 at every form centre from 1
     turns: list[tuple[int, int]] = []  # the rotation's pair at every interval, read 3's windows
     rotations: list[tuple[int, int, int]] = []
-    images: dict[str, Any] = {"departed": images_kept(board), "tick": 0}  # the lay's own images
+    images: dict[str, Any] = {"departed": images_kept(board), "interval": 0}  # the lay's own images
     for _ in range(steps):
         record = board.record(index)[0]
-        previous, current = record.before.copy(), record.now.copy()  # z_(t - 1) and z_t at the tick t
+        previous, current = (
+            record.before.copy(),
+            record.now.copy(),
+        )  # z_(t - 1) and z_t at the interval t
         board.step()
         if board.ended is not None:
             break
@@ -279,8 +282,8 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
         turned = rotation(previous, current, after, nodes)
         turns.append(turned)
         if turned[1]:
-            rotations.append((*turned, board.tick))
-        here, centre = form(previous, current, after, nodes), board.tick - 1  # D centred at t
+            rotations.append((*turned, board.interval))
+        here, centre = form(previous, current, after, nodes), board.interval - 1  # D centred at t
         if laid_form is None:
             laid_form = here
         else:
@@ -289,16 +292,16 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
             if centre in centres:
                 forms[str(centre)] = {"squared": pair(square), "rho": rooted(square, action)}
         if not images["departed"]:
-            images = {"departed": images_kept(board), "tick": board.tick}
+            images = {"departed": images_kept(board), "interval": board.interval}
         square = deviation(board.share_of(index)[0], laid, nodes)
         series.append(square)
-        if board.tick in quarters:
-            deviations[str(board.tick)] = {"squared": pair(square), "rho": rooted(square, action)}
+        if board.interval in quarters:
+            deviations[str(board.interval)] = {"squared": pair(square), "rho": rooted(square, action)}
     end = centroids(board.share_of(index)[0], nodes)
     return {
         "label": LABEL,
         "input": path.name,
-        "intervals": board.tick,
+        "intervals": board.interval,
         "ended": board.ended,
         "quantum_action": action,
         "amplitude_bound": board.world.amplitude_bound,
@@ -312,7 +315,7 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
                 None if a is None or b is None else pair(b - a) for a, b in zip(start, end, strict=True)
             ],
         },
-        "form_deviation": form_read(form_series, forms, period, action, board.tick - 1, beat),
+        "form_deviation": form_read(form_series, forms, period, action, board.interval - 1, beat),
         "share_deviation": {
             "label": "the levels' squares, 167's convention; a real mode's own breathing at 2 omega",
             "at": deviations,
@@ -321,10 +324,12 @@ def standing(path: Path, intervals: int | None, beat: int | None = None) -> dict
         "rotation_windows": windows_read(turns, period, beat, action),
         "rotation": rotations_read(rotations),
         "images": {
-            "kept_to_the_bit_through": board.tick if not images["departed"] else images["tick"] - 1,
+            "kept_to_the_bit_through": board.interval
+            if not images["departed"]
+            else images["interval"] - 1,
             "first_departure": None
             if not images["departed"]
-            else {"tick": images["tick"], "named": images["departed"][: 2 + 1]},
+            else {"interval": images["interval"], "named": images["departed"][: 2 + 1]},
         },
         "books": board.books(),
     }
@@ -336,7 +341,7 @@ def main(argv: list[str] | None = None) -> None:
         "worlds", type=Path, nargs="+", help="the world files, each with its mode file beside it"
     )
     parser.add_argument(
-        "--intervals", type=int, default=None, help="the intervals read (the world's ticks)"
+        "--intervals", type=int, default=None, help="the intervals read (the world's intervals)"
     )
     parser.add_argument("--expectation", type=Path, default=None, help="the blind expectation file")
     parser.add_argument(

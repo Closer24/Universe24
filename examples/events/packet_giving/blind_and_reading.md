@@ -8,7 +8,7 @@ drawn axis, read in the engine. On the Zeno atom's universe (`examples/events/ze
 T = 32,768) an open board of 627 x 4 x 4 Nodes, the one board of this lay the machine runs in minutes:
 the resonance world's giver at the centre [313, 2, 2], standing in its upper part, its transition at
 the resonance [2, 3] and its giving at the lifetime 48 with the window 48 (drawn per interval at the hazard
-1 / 48 in the dark, the dark grain, its tick the click line's), its packet's `width` 4, the one new number; the loader holds the packet along x alone (the
+1 / 48 in the dark, the dark grain, its interval the click line's), its packet's `width` 4, the one new number; the loader holds the packet along x alone (the
 train fits neither y nor z), so the giver draws between +x and -x. The lay (`src/event_universe/giving.py`,
 `laid_packet`): the one-line packet's root T / sin Omega = 43,962, twice S = 21,981, the plane's share
 per line (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands; the packet laid on the light record's first line alone), the envelope in the energy
@@ -33,12 +33,12 @@ levels lattice readings, labelled so); a miss is a finding by name and never an 
    worker's expectation) within the window of the packet's passage, over the seeds whose drawn direction meets it (one
    quantum one click by the count's line, the advisor's clause (iii)); re-read on the one-line root, half
    of the NodeReader's inflow at the half root having been the lay's (242 section 1).
-2. The share at the lay: the light's share over the board at the giving's tick, sin Omega x 1.055 = 0.786
+2. The share at the lay: the light's share over the board at the giving's interval, sin Omega x 1.055 = 0.786
    of the top's unit W_c under the top-hat (the edges' 5 percent), 0.745 with the sine mode across (the
    hands' derivation at T = 2^22 on the one-line root with the exact phase, 242 section 1 and the advisor's
    second); at the shipped T the rounded levels' residue is a finding by name. A lattice reading.
 3. The far reading of cos Omega at the Node [327, 2, 2], half way to the NodeReader, over the window 2 to 17
-   intervals after the giving's tick, cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2),
+   intervals after the giving's interval, cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2),
    within 2 / A_far of 2 / 3, A_far the largest |n_t| over the window (the mathematician's 220, the
    advisor's second).
 4. The fraction of seeds whose drawn direction meets the NodeReader 1 / 2, the directions the board holds
@@ -48,7 +48,7 @@ levels lattice readings, labelled so); a miss is a finding by name and never an 
 
 The readings ran on the engine of this branch with main 7033a6aa merged (the dark grain, the resonant act,
 the generic NodeReader), the packet on the one-line root with the carrier's phase exact: the giver draws its giving per interval at the hazard 1 / 48 in the dark, so the
-giving's tick is the click line's, 2 to 138 over the seeds, and two seeds (2 and 15) gave no quantum within
+giving's interval is the click line's, 2 to 138 over the seeds, and two seeds (2 and 15) gave no quantum within
 the run of 168 intervals ((47 / 48)^168 = 0.029 per seed, 0.6 expected over 20).
 
 1. The count: 0 clicks in every one of the 7 seeds whose direction meets the NodeReader (and 0 in the 11
@@ -57,7 +57,7 @@ the run of 168 intervals ((47 / 48)^168 = 0.029 per seed, 0.6 expected over 20).
    item 49: a quantum carried as a wave occupies at most T / (2 sin Omega) Nodes and Rule3 carries no
    sub-level wave); the NodeReader's unit is the record's own share per quantum read from the books, and
    under Rule3 at the floor the light's share over the board grows from the lay on, 0.834 at the giving's
-   tick to 4.25 of the top's unit at 168 for a giving at the tick 2 (3.3 for a giving at 50, 1.4 for one at
+   interval to 4.25 of the top's unit at 168 for a giving at the interval 2 (3.3 for a giving at 50, 1.4 for one at
    138), the count in the books standing at 1: the roundings' walk, one unit per Node per interval at
    most, not a wave. Checked beside it at the half root on a scratch board (not shipped): the same lay at
    T = 2^22 (a_0 = 395, tau 2, w 3) kept its share to 0.0004 over 9 intervals, so the growth is the floor's
@@ -106,8 +106,8 @@ Row 1 is the NodeReader's: the `credit` lines of the region `reach` over the run
 the giver's `jump` lines (`build_world.py --read`, the trials over the design's seeds, the giver's
 generator at the trial's seed); the `lay` lines it counts are labelled a lattice diagnostic by the
 engine. Rows 2, 3 and 4 are lattice readings and their verdicts rest on them: the share at the lay from
-the light's record over the board at the click line's tick, the far Node's cosine from the light's levels
+the light's record over the board at the click line's interval, the far Node's cosine from the light's levels
 at the Node [327, 2, 2] per interval, and the drawn direction from the `lay` lines' Nodes against the
 body's. The lines carry
-the board's `tick` and the `window` in board intervals; the giver's lifetime 48 is in board intervals, the
+the board's `interval` and the `window` in board intervals; the giver's lifetime 48 is in board intervals, the
 hazard per proper interval at the body's own clock, Gamma in the vacuum (`meeting.hazard_weights`).

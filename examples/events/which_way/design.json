@@ -43,7 +43,7 @@
    "layers": 16
   }
  },
- "ticks": 130,
+ "intervals": 130,
  "draw": {
   "window": 130,
   "seed": 24,

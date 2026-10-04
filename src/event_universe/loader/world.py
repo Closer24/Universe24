@@ -1,4 +1,4 @@
-"""The world's files read into the lattice's world: the universe file (the integers and the families), the world file (the lattice with its inner faces, the bodies, the messages, the node_readers) and the generator's mode file beside it (every body's and message's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The world's files read into the lattice's world: the universe file (the integers and the families), the world file (the lattice with its inner faces, the bodies, the packets, the node_readers) and the generator's mode file beside it (every body's and packet's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -30,7 +30,6 @@ from event_universe.loader.faces import (
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
-from event_universe.loader.messages import MessageRow, WholeMessage, messages_of, wholes_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 from event_universe.loader.node_reader_declaration import (
     READER_RECORD_KEYS,
@@ -39,13 +38,22 @@ from event_universe.loader.node_reader_declaration import (
     packet_form,
 )
 from event_universe.loader.node_reader_rows import reader_count
+from event_universe.loader.packets import PacketRow, WholePacket, packets_of, wholes_of
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_reader of the open faces' layer
-WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "ticks", "universe", "engine")
-WORLD_KEYS += ("bodies", "messages", "node_readers", "receding", "draw", "lay", "erasure")
-WORLD_REQUIRED = ("shape", "boundary", "ticks", "universe", "engine", "bodies", "node_readers")
+WORLD_KEYS: tuple[str, ...] = (
+    "shape",
+    "boundary",
+    "face_depth",
+    "faces",
+    "intervals",
+    "universe",
+    "engine",
+)
+WORLD_KEYS += ("bodies", "packets", "node_readers", "receding", "draw", "lay", "erasure")
+WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "engine", "bodies", "node_readers")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes", "weights", "count", *READER_RECORD_KEYS),
     ("family", "nodes"),
@@ -91,14 +99,14 @@ class NodeReaderRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the lattice's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the messages laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the messages laid whole at a tick of the run (`wholes`, `loader/messages.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
+    """The world as loaded: the lattice's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the packets laid at the start, the node_readers, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeReaders' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the packets laid whole at an interval of the run (`wholes`, `loader/packets.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
     open_axes: tuple[bool, bool, bool]
     face_depth: int
     beyond: tuple[Node, ...]
-    ticks: int
+    intervals: int
     node_clock: int
     quantum_action: int
     width: int
@@ -107,14 +115,14 @@ class World:
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
     bodies: tuple[BodyRow, ...]
-    messages: tuple[MessageRow, ...]
+    packets: tuple[PacketRow, ...]
     node_readers: tuple[NodeReaderRow, ...]
     receding: tuple[RecedingFace, ...]
     draw: Draw | None
     lay: Lay | None  # the lay the world declares for its bodies and its tolerance (`loader/lay.py`)
     wholes: tuple[
-        WholeMessage, ...
-    ] = ()  # the messages laid whole at a tick of the run (`loader/messages.py`)
+        WholePacket, ...
+    ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
     erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
 
 
@@ -259,12 +267,12 @@ def node_readers_of(
 
 def regions_of_the_law(
     node_readers: tuple[NodeReaderRow, ...],
-    messages: tuple[MessageRow, ...],
+    packets: tuple[PacketRow, ...],
     shape: Node,
     periodic: tuple[bool, bool, bool],
     families: tuple[FamilyRule, ...],
 ) -> None:
-    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every message of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the message travels along: one Node, a Node named twice (the refusal naming the reader and the Node, as `bodies_of` refuses a body naming one Node twice; the size rule reads the distinct Nodes), a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate on an open or closed axis and through the wrap on a periodic axis, the smallest arc of the ring that covers its coordinates (`loader/faces.extent_across`), is under q / p (extent x |p| < q) are refused by name (the advisor's breaker over the engine at 7756546d, #1793: a region naming one Node twice was admitted as two Nodes, and a region two Nodes wide through the wrap was read as five); a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
+    """The size rule of a node_reader's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a reader with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a reader with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every packet of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the packet travels along: one Node, a Node named twice (the refusal naming the reader and the Node, as `bodies_of` refuses a body naming one Node twice; the size rule reads the distinct Nodes), a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate on an open or closed axis and through the wrap on a periodic axis, the smallest arc of the ring that covers its coordinates (`loader/faces.extent_across`), is under q / p (extent x |p| < q) are refused by name (the advisor's breaker over the engine at 7756546d, #1793: a region naming one Node twice was admitted as two Nodes, and a region two Nodes wide through the wrap was read as five); a node_reader reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
     for node_reader in node_readers:
         if not node_reader.declared:
             continue
@@ -287,17 +295,17 @@ def regions_of_the_law(
                 f"node_reader {node_reader.name!r} is not one connected region: its Nodes fall into pieces with "
                 "no Link between them"
             )
-        for message in messages:
-            p, q = message.wave
+        for packet in packets:
+            p, q = packet.wave
             for axis in range(3):
-                if axis == message.along or shape[axis] < 2:
+                if axis == packet.along or shape[axis] < 2:
                     continue
                 extent = extent_across([node[axis] for node in nodes], shape[axis], periodic[axis])
                 if extent * abs(p) < q:
                     wrapped = ", read through its wrap" if periodic[axis] else ""
                     raise ValueError(
                         f"node_reader {node_reader.name!r} is {extent} Node(s) across the {AXES[axis]} axis{wrapped}, under half "
-                        f"the wavelength of the {families[message.family].name!r} message's wave [{p}, {q}], "
+                        f"the wavelength of the {families[packet.family].name!r} packet's wave [{p}, {q}], "
                         f"{q} / {abs(p)} Nodes: no click names a position finer than the amplitudes carry"
                     )
 
@@ -349,14 +357,14 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         action,
         (periodic[0], periodic[1], periodic[2]),
     )
-    messages = messages_of(world.get("messages", []), mode, digest, families, shape, bound, beyond)
-    ticks = integer(world["ticks"], "ticks", 0)
-    wholes = wholes_of(world.get("messages", []), families, shape, beyond, ticks)
+    packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
+    intervals = integer(world["intervals"], "intervals", 0)
+    wholes = wholes_of(world.get("packets", []), families, shape, beyond, intervals)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     node_readers = node_readers_of(world["node_readers"], shape, len(bodies), beyond, layer)
-    regions_of_the_law(node_readers, messages, shape, (periodic[0], periodic[1], periodic[2]), families)
-    laid = [message.family for message in messages] + [body.family for body in bodies]
+    regions_of_the_law(node_readers, packets, shape, (periodic[0], periodic[1], periodic[2]), families)
+    laid = [packet.family for packet in packets] + [body.family for body in bodies]
     laid += [whole.family for whole in wholes]
     patterns_of_the_law([(d.name, d.pattern) for d in node_readers], laid, families)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
@@ -366,14 +374,14 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     draw = draw_of(world["draw"], "draw") if "draw" in world else None
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
-    budget_gate(lay, pairs, [max(b.counts) for b in bodies], ticks, action)
+    budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)
     return World(
         shape,
         (periodic[0], periodic[1], periodic[2]),
         (open_axes[0], open_axes[1], open_axes[2]),
         depth,
         beyond,
-        ticks,
+        intervals,
         gamma,
         action,
         derived.largest_of(width),
@@ -382,7 +390,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         bound,
         families,
         bodies,
-        messages,
+        packets,
         node_readers,
         receding,
         draw,

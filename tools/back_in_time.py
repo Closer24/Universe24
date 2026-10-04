@@ -66,15 +66,15 @@ def faces_from(board: Lattice, lines: Lines) -> None:
     board.credit.faces = {}
     for line in [line for line in lines if line["event"] == "face"]:
         index, at = node_of(board, line)
-        tick, port, value = (int(str(line[key])) for key in ("tick", "port", "value"))
-        found = Face(index, int(str(line["line"])), at, port, tick, value)
-        board.credit.faces.setdefault(tick, []).append(found)
+        interval, port, value = (int(str(line[key])) for key in ("interval", "port", "value"))
+        found = Face(index, int(str(line["line"])), at, port, interval, value)
+        board.credit.faces.setdefault(interval, []).append(found)
 
 
 def crossed(board: Lattice, lines: Lines) -> None:
     """The lays of the lattice's interval undone from their `lay` lines before the step back: every line a lay changed at a Node set back to its levels [now, before, remainder] before the lay, the interval's lines in reverse order (two lays on one Node in one interval are two lines, the second's `before` the first's `after`), every other Node as it stands."""
     for line in reversed(
-        [line for line in lines if line["event"] == "lay" and line["tick"] == board.tick]
+        [line for line in lines if line["event"] == "lay" and line["interval"] == board.interval]
     ):
         index, at = node_of(board, line)
         here = (at[0] + board.offset[0], at[1] + board.offset[1], at[2] + board.offset[2])
@@ -96,24 +96,24 @@ def verdict(board: Lattice, intervals: int) -> dict[str, object]:
 
     board.output = observed
     board.step()
-    snapshots, run = {board.tick: snapshot(board)}, 0
+    snapshots, run = {board.interval: snapshot(board)}, 0
     for _ in range(intervals):
         board.step()
         if board.ended is not None:
             break
         run += 1
-        snapshots[board.tick] = snapshot(board)
+        snapshots[board.interval] = snapshot(board)
     ended = board.ended
     faces_from(board, lines)
     for _ in range(run):
         crossed(board, lines)
         board.step_inverse()
-        found = first_difference(snapshots[board.tick], snapshot(board))
+        found = first_difference(snapshots[board.interval], snapshot(board))
         if found is not None:
             label, at = found
-            return {"verdict": "MISS", "interval": board.tick, "array": label, "node": at}
+            return {"verdict": "MISS", "interval": board.interval, "array": label, "node": at}
     board.output = kept
-    return {"verdict": "MATCH", "intervals": run, "interval": board.tick, "ended": ended}
+    return {"verdict": "MATCH", "intervals": run, "interval": board.interval, "ended": ended}
 
 
 def main(argv: list[str] | None = None) -> None:

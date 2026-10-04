@@ -112,7 +112,7 @@ def readings(board: Lattice, here: tuple[int, int, int], quanta: list[int]) -> d
     action = board.world.quantum_action
     rotations = {name: r["rotation"] for name, r in found.items()}
     return {
-        "interval": board.tick,
+        "interval": board.interval,
         "families": found,
         "sign_rows": sign_rows(board, here),
         "node_reader_counts": [list(b.counts) for b in board.credit.bodies],
@@ -140,7 +140,7 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
             conversion = readings(board, node_at, quanta)
             conversion["line"] = next(line for line in lines if line["event"] == "conversion")
         rows_by_interval.append(
-            [board.tick, {n: r["at_the_node"] for n, r in sign_rows(board, node_at).items()}]
+            [board.interval, {n: r["at_the_node"] for n, r in sign_rows(board, node_at).items()}]
         )
         if board.ended is not None:
             break
@@ -208,9 +208,9 @@ def trials(path: Path, seeds: list[int], intervals: int) -> dict[str, Any]:
             if board.ended is not None:
                 break
         lines: list[dict[str, Any]] = board.read_lines  # type: ignore[attr-defined]
-        ticks = [int(line["tick"]) for line in lines if line["event"] == "conversion"]
-        when[seed] = ticks[0] if ticks else None
-        several += len(ticks) > 1
+        intervals = [int(line["interval"]) for line in lines if line["event"] == "conversion"]
+        when[seed] = intervals[0] if intervals else None
+        several += len(intervals) > 1
     realised = [k for k in when.values() if k is not None]
     return {
         "trials": len(seeds),

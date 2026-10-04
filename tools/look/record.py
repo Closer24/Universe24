@@ -2,7 +2,7 @@
 
 Run with PYTHONPATH set to the checkout's src:
 
-    PYTHONPATH=src python tools/look/record.py <world>.json [--ticks N] [--out <world>.look.json]
+    PYTHONPATH=src python tools/look/record.py <world>.json [--intervals N] [--out <world>.look.json]
 """
 
 from __future__ import annotations
@@ -81,7 +81,7 @@ def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
         "face_depth": world.face_depth,
         "faces": document.get("faces", []),
         "receding": document.get("receding", {}),
-        "declared_ticks": world.ticks,
+        "declared_intervals": world.intervals,
         "node_clock": world.node_clock,
         "quantum_action": world.quantum_action,
         "largest_integer": str(world.width),
@@ -133,7 +133,7 @@ def frame(board: Lattice, kept: dict[int, list[node.Record]] | None) -> dict[str
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}
         families[family.name] = row
     bodies = [nodes_of(board.body_nodes(number), board.offset) for number in range(len(world.bodies))]
-    found: dict[str, object] = {"tick": board.tick, "families": families, "bodies": bodies}
+    found: dict[str, object] = {"interval": board.interval, "families": families, "bodies": bodies}
     return {**found, "shape": list(board.shape), "offset": list(board.offset), "lines": []}
 
 
@@ -145,14 +145,14 @@ def copied(record: node.Record) -> node.Record:
 def grown(record: node.Record, board: Lattice) -> node.Record:
     """A kept line over the lattice as the interval grew it (the layers a receding face added before this interval's acts, 0 at the interval's start), so the form is read at every Node of the frame."""
     for served, axis, side, layers in board.growths:
-        if served == board.tick:
+        if served == board.interval:
             now, before = (growth.padded(a, axis, side, layers) for a in (record.now, record.before))
             record = node.Record(now, before, record.remainder)
     return record
 
 
-def record(path: Path, ticks: int | None) -> dict[str, object]:
-    """The look of one world: loaded, stepped `ticks` intervals (the world's own where None) by the engine's own step, every frame read after its interval; a refusal is written with its reason and the frames before it."""
+def record(path: Path, intervals: int | None) -> dict[str, object]:
+    """The look of one world: loaded, stepped `intervals` intervals (the world's own where None) by the engine's own step, every frame read after its interval; a refusal is written with its reason and the frames before it."""
     lines: list[dict[str, object]] = []
     world = load_world(path)
     board = Lattice(world, lines.append)
@@ -161,7 +161,7 @@ def record(path: Path, ticks: int | None) -> dict[str, object]:
     frames: list[dict[str, object]] = []
     try:
         frames.append(frame(board, None))
-        for _ in range(world.ticks if ticks is None else ticks):
+        for _ in range(world.intervals if intervals is None else intervals):
             kept = {index: [copied(line) for line in board.states[index].lines] for index in board.order}
             board.step()
             if board.ended is not None:
@@ -173,12 +173,14 @@ def record(path: Path, ticks: int | None) -> dict[str, object]:
     document["ended"] = board.ended
     for line in lines:
         if line["event"] in LINES:
-            tick = int(str(line["tick"]))
-            if tick < len(frames):
-                frame_lines = frames[tick]["lines"]
+            interval = int(str(line["interval"]))
+            if interval < len(frames):
+                frame_lines = frames[interval]["lines"]
                 assert isinstance(frame_lines, list)
                 frame_lines.append(line)
-    document.update(ticks=board.tick, frames=frames, books=board.books() if board.tick else {})
+    document.update(
+        intervals=board.interval, frames=frames, books=board.books() if board.interval else {}
+    )
     return document
 
 
@@ -209,16 +211,16 @@ def written(document: dict[str, object], target: Path) -> tuple[str, int]:
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("world", type=Path, help="the world file, its mode file beside it")
-    parser.add_argument("--ticks", type=int, default=None, help="the intervals (the world's own)")
+    parser.add_argument("--intervals", type=int, default=None, help="the intervals (the world's own)")
     parser.add_argument("--out", type=Path, default=None, help="the look's file (<world>.look.json)")
     args = parser.parse_args(argv)
     target: Path = args.out or args.world.with_suffix(".look.json")
-    document = record(args.world, args.ticks)
+    document = record(args.world, args.intervals)
     arrays, length = written(document, target)
     summary: dict[str, Any] = {
         "world": args.world.name,
         "verdict": document["verdict"],
-        "ticks": document["ticks"],
+        "intervals": document["intervals"],
         "arrays": arrays,
         "bytes": length,
         "look": str(target),

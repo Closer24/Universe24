@@ -1,4 +1,4 @@
-"""The two slits' world (ALGEBRA.md row (g); the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191, with the fixes of the owner's word of 2026-10-01, 04:50) from the design file beside this script: the bright world as run, the screen declared as regions of four rows backed by a receding face, the source's face receding too, and a bare region behind one gap read beside the screen; its mode file by the message lay (tools/pixel_mode.py); and its blind expectation file, per region, written before any run: the blind row with its central maximum and the first minima about it, the blind visibility, the arrival wager and the wings from the design, `laid` the generator's count of the lay from the mode file. Every number is the design's or the generator's and stands in the files, none in this script or the engine.
+"""The two slits' world (ALGEBRA.md row (g); the advisor's design at the owner's word of 2026-09-30, #1515 comment 5912573191, with the fixes of the owner's word of 2026-10-01, 04:50) from the design file beside this script: the bright world as run, the screen declared as regions of four rows backed by a receding face, the source's face receding too, and a bare region behind one gap read beside the screen; its mode file by the packet lay (tools/pixel_mode.py); and its blind expectation file, per region, written before any run: the blind row with its central maximum and the first minima about it, the blind visibility, the arrival wager and the wings from the design, `laid` the generator's count of the lay from the mode file. Every number is the design's or the generator's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -35,7 +35,7 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and taking no share), the receding face, the ticks."""
+    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and taking no share), the receding face, the intervals."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
     node_readers = screen_regions(design)
     region = design["aside"]
@@ -55,11 +55,11 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "boundary": {"x": "open", "y": "open", "z": "periodic"},
         "face_depth": 1,
         "faces": [{"axis": "x", "at": int(design["wall"]), "gaps": gaps}],
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [],
-        "messages": [
+        "packets": [
             {
                 "family": design["family"],
                 "along": "x",
@@ -166,7 +166,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     print(json.dumps({"world": str(path), "node_readers": len(document["node_readers"])}))
     mode = json.loads((args.folder / "two_slits.mode.json").read_text(encoding="utf-8"))
-    laid = sum(int(message["count"]) for message in mode["messages"])  # the generator's count
+    laid = sum(int(packet["count"]) for packet in mode["packets"])  # the generator's count
     blind = expectation(design, laid)
     (args.folder / "expectation.json").write_text(json.dumps(blind, indent=1) + "\n", encoding="utf-8")
     print(

@@ -53,7 +53,7 @@ From a clone to the two slits' page, six commands from the checkout's root:
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment: Python 3.14 and the package
 PYTHONPATH=src python tools/run_inputs.py --out runs/two_slits examples/events/two_slits/two_slits.json   # the run, headless: one line per world with its verdict and intervals, the output file into --out
 PYTHONPATH=src python tools/click_counts.py --world examples/events/two_slits/two_slits.json --output runs/two_slits/two_slits.output.json --expectation examples/events/two_slits/expectation.json   # the reading: the clicks per region beside the blind's row
-PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --ticks 130 --out runs/two_slits/two_slits.look.json   # the look: every family's arrays per interval, a lattice reading labelled so
+PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --intervals 130 --out runs/two_slits/two_slits.look.json   # the look: every family's arrays per interval, a lattice reading labelled so
 PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --blind examples/events/two_slits/expectation.json --out runs/two_slits/two_slits.look.html   # the page: the board frame by frame, the NodeReaders' bars beside the dashed blind curve
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 ```

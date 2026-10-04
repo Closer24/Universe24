@@ -80,7 +80,7 @@ class FamilyRule(Row):
 
     @property
     def laid(self) -> int:
-        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a message's `weights` (`keys.weights_of`, `Lattice.lay`)."""
+        """The lines of one part the laid pair goes to, one per real line and one per plane (its first line, the second line its sense): the count of a body's or a packet's `weights` (`keys.weights_of`, `Lattice.lay`)."""
         return self.planes if self.plane else self.width
 
     @property
@@ -122,7 +122,7 @@ def row_of(families: tuple[FamilyRule, ...], index: int, record: int) -> int | N
 
 
 def with_records(families: tuple[FamilyRule, ...], laid: Sequence[int]) -> tuple[FamilyRule, ...]:
-    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order; a message of such a family, a packet and no standing record, adds into its first record), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
+    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order; a packet of such a family, a packet and no standing record, adds into its first record), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
     rows = 1 + sum(max(1, laid[index]) for index in range(len(families)) if charged(families, index))
     found = []
     for index, family in enumerate(families):

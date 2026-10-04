@@ -8,18 +8,18 @@ parts (g, e) of the near-flat pair [1, 1299] declared a NodeReader at the centre
 box of 8 x 8 x 4, its six Link factors 0 so that it stays; the same continuous drive, the holder of
 the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 392 read into the record's phase at
 the weight 1 in both directions at the resonance [2, 3]; the Node clock 96,000 with the Link unit 1,
-at which the drive's levels at the Node are the shipped universe's tick for tick (Gamma^2 G^2
+at which the drive's levels at the Node are the shipped universe's interval for interval (Gamma^2 G^2
 unchanged, read before the build) and the pi pulse at the fixed amplitude lengthens to T_pi = 768
-ticks (768 x 2 arctan(196 / 192,000) = 1.568), so that every window W = 768 / n holds the resonant
+intervals (768 x 2 arctan(196 / 192,000) = 1.568), so that every window W = 768 / n holds the resonant
 act's two sums (W at or above 12, the counter-rotating residue at most 6.9 percent); the probe, a
 record of the neutral family `probe` of one real line, laid whole by the count (one quantum, (128,
-128) on its line) at the body's own Node at the ticks 768 k / n, k = 1 to n, Itano's protocol of n
+128) on its line) at the body's own Node at the intervals 768 k / n, k = 1 to n, Itano's protocol of n
 pulses over the pi time; the body's transition of g into itself at the drive `probe`, the probe's:
 taken by the part g with no turn, the body's window bounded by the probe's lays, opened at the
-body's last write and closed at the tick of the probe's lay at its Node, no declared window and no
+body's last write and closed at the interval of the probe's lay at its Node, no declared window and no
 level read; at the close the body's one draw by its labels' squares as the shears carried them from
 the part it stood in, [cos^2 (theta_W / 2), sin^2 (theta_W / 2)] for (the part it stands in, the
-other): the probe's click re-lays the body whole in g (the probe taken and given back at one tick
+other): the probe's click re-lays the body whole in g (the probe taken and given back at one interval
 and one Node, no write on its record, the fluorescence by name its own wave continuing), the
 drive's taking exchanges the parts (the hole of round A), the rest the null window, the body whole
 in its part. The reading is the part the body stands in at the run's end over the trials, each the
@@ -34,21 +34,21 @@ window the probe that is not laid; the anticoincidence and the telegraph keep th
 ## The form built, by name
 
 Of the two forms the hands wrote on the morning of 2026-10-03 (the advisor's first, 5967698811, and
-the mathematician's 243 agreeing on the probe's click at its tick with the labels' weights; the
+the mathematician's 243 agreeing on the probe's click at its interval with the labels' weights; the
 advisor's second on 242, 5967838095, a third part aux with the probe's own NodeReader at the body's
 Node), the one text is 244's: 243's form. The aux form needs a body's window alternating between
 the drive's segment and the probe's two intervals, which no primitive gives, and a one-Node region
 crediting a quantum laid at its own Node, which the inflow through the front Ports never sees; the
 form built adds one declaration (a transition of a part into itself) and one act (the close at the
-probe's lay with the body's one draw), the message laid whole at a declared tick beside them. The
-engine holds no number of it: the family, the ticks, the count and the pair are the files'.
+probe's lay with the body's one draw), the packet laid whole at a declared interval beside them. The
+engine holds no number of it: the family, the intervals, the count and the pair are the files'.
 
 ## The probe's pair, a finding by name before any trial (2026-10-03, branch pulsed-zeno)
 
 The hands wrote the probe as a massless neutral line. A lone quantum of a massless real line laid
 whole by the count at one Node of the periodic box grows without bound under Rule3: the level about
-as the square of the ticks (128 at the lay, 346 at the tick 50, 1,484 at 100, 6,268 at 200), the
-share over W_c 2.6 at 50 and 33 at 200, the amplitude bound 9,266 reached at the tick 242, the same
+as the square of the intervals (128 at the lay, 346 at the interval 50, 1,484 at 100, 6,268 at 200), the
+share over W_c 2.6 at 50 and 33 at 200, the amplitude bound 9,266 reached at the interval 242, the same
 numbers at the Node clock 6000 with the Link unit 16 and at 96,000 with 1. The mechanism at the
 advisor's hand (#1572 comment 5968266050, the mathematician's asked): the box is periodic with even
 sides, so k = pi on every axis is an allowed mode, and at the massless pair that mode has cos omega =
@@ -56,9 +56,9 @@ sides, so k = pi on every axis is an allowed mode, and at the massless pair that
 - a(t - 1), whose solutions are (-1)^t (c1 + c2 t); the one-Node lay with the two time levels alike
 puts c2 = 2 c1 into that mode, which grows linearly in reals, and the integer rule's carried remainder
 at an alternating mode is an alternating forcing on the double root, which grows as the square of
-the ticks, the 128, 346, 1,484 and 6,268 read. The cause is the even periodic box and the massless
+the intervals, the 128, 346, 1,484 and 6,268 read. The cause is the even periodic box and the massless
 pair's band edge together, not the lay alone; matter's pair has its edge at -2 / 3 and no double
-root. At the pairs [4000, 6000] and [2, 3] the same lay stays within the level 91 over 800 ticks, its
+root. At the pairs [4000, 6000] and [2, 3] the same lay stays within the level 91 over 800 intervals, its
 share within 0.93 to 1.28 of a quantum; at [5999, 6000] and [5990, 6000] the level swings to 2,964
 and returns. So the probe is declared at matter's pair [4000, 6000], a neutral real line inside the
 band (the law's own neutral matter row, `examples/events/rule.json`), the advisor's yes on the
@@ -67,16 +67,16 @@ in this round. Two consequences by name (the advisor's): the conversion's massle
 the count at one Node meet the same edge wherever the board is periodic with even sides (the neutron
 world's open cube is safe, a periodic one is not until round C lays them as packets); and the same
 lone massless quantum in a 9 x 9 x 5 periodic box or on a board with open faces is bounded. The
-check, read before the trials (lattice, the same lay over 800 ticks): with open faces the level
+check, read before the trials (lattice, the same lay over 800 intervals): with open faces the level
 stays between 40 and 45 and the share between 1.07 and 1.41 of a quantum, bounded; in the 9 x 9 x 5
-periodic box the level reads 35, 49, 82, 153 and 285 at the ticks 50, 100, 200, 400 and 800 and the
-share 1.01, 1.08, 1.19, 1.44 and 2.06, no longer the square of the ticks but a slow growth still, the
+periodic box the level reads 35, 49, 82, 153 and 285 at the intervals 50, 100, 200, 400 and 800 and the
+share 1.01, 1.08, 1.19, 1.44 and 2.06, no longer the square of the intervals but a slow growth still, the
 odd box's modes nearest the edge (k = 8 pi / 9) by name; so the massless pair's one-Node lay is for
 an open board, and a periodic box takes a pair inside the band. The mathematician's second (249,
-#1572 comment 5968344874, section 2) confirms the linear growth in reals (242 at the tick 200) and
-does not reproduce the square with the carried integer rule on his lattice (172 at the tick 200
+#1572 comment 5968344874, section 2) confirms the linear growth in reals (242 at the interval 200) and
+does not reproduce the square with the carried integer rule on his lattice (172 at the interval 200
 against the engine's 6,268), so he asked two runs to localise the cause in the engine's act, read on
-the branch before the trials (the level at the ticks 0, 50, 100, 200, the largest over the board):
+the branch before the trials (the level at the intervals 0, 50, 100, 200, the largest over the board):
 (a) the same lay with no body, the Node uncut, 128, 346, 1,484, 6,268, and with the Zeno body at the
 Node (its Link factors 0 for the atom's family alone, the probe's open), the same numbers bit for
 bit, so the cut is not the cause; (b) the same lay with the probe record's remainder set to 0 after
@@ -87,10 +87,10 @@ exactly, the double root; the growth stands in Rule3's integer step on this latt
 localise against the engine's division act (#1572, Worker PULSE's finding); no change to the engine
 from this round.
 Beside it, lattice matters named and not adjusted: the drive's holes excite the same growth
-slowly (the drive's level 3,155 at the tick 768 under twelve takings at the Node clock 6000, 840
+slowly (the drive's level 3,155 at the interval 768 under twelve takings at the Node clock 6000, 840
 under fifteen on another seed), one or two takings per pulsed run leaving it far below the bound; the
 antineutrino of the neutron conversion world is laid by the count at the massless pair over 40
-ticks, its share 1.13 of a quantum at the tick 20 by the same growth, unread there; at [96,000,
+intervals, its share 1.13 of a quantum at the interval 20 by the same growth, unread there; at [96,000,
 96,000] the universe's amplitude bound would read 578 against 9,266 (the currents' room grows with
 num), so the massless pair's den is the files' 6000 at any Node clock. A trial the guard refuses
 inside is read and counted by the tool under `refused`, never hidden.
@@ -103,7 +103,7 @@ of (1 + cos^j(pi / n)) / 2: in this form the g outcome at a probe is the probe's
 jump "g by probe", or the drive's return from e, the jump "g by pulse", and every close is a probe's)
 and the windows closed per run, n exactly:
 
-| n | the probe's ticks | W | P(e at T_pi) | standard error | passed of 480 | fluorescence clicks per run | windows per run |
+| n | the probe's intervals | W | P(e at T_pi) | standard error | passed of 480 | fluorescence clicks per run | windows per run |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 768 | 768 | 1.000 | 0 | 480 | 0 | 1 |
 | 2 | 384, 768 | 384 | 0.500 | 0.023 | 240.0 | 1.00 | 2 |
@@ -125,9 +125,9 @@ the part realised and the family taken or given).
 
 The acceptance: every row within two standard errors after round A (the hole of a dense record,
 branch partial-hole) lands on main; before it the rows n >= 2 carry the hole's bias by name (the
-return e to g weakened for two ticks after each taking, the shipped n = 2 row's 0.615 at 480 seeds
+return e to g weakened for two intervals after each taking, the shipped n = 2 row's 0.615 at 480 seeds
 on main), the n = 2 row the same 0.500 within 0.023 as that round's blind; the first window of n = 2
-alone, the part at the tick 384 over 480 seeds, 0.500 within 0.023 (its window of 384 holds no
+alone, the part at the interval 384 over 480 seeds, 0.500 within 0.023 (its window of 384 holds no
 hole); the windows closed n exactly in every trial; the stray share of earlier probes at the body's
 Node at most n / 256 quanta (n quanta spread over the box's 256 Nodes), the draw's weights untouched
 by it; the walk of the body's levels under the rounding a lattice diagnostic (the body re-laid at
@@ -144,7 +144,7 @@ from the checkout of the branch's sha, nothing of the law in the tool:
 
     PYTHONPATH=src python tools/meeting_trials.py --world examples/events/zeno_pulsed/zeno_pulsed_<n>.json --design examples/events/zeno_pulsed/design.json --expectation examples/events/zeno_pulsed/expectation.json
 
-for n in 1, 2, 4, 8, 16, 32 and 64 (one run of 768 ticks per seed, about 20 seconds on a quiet
+for n in 1, 2, 4, 8, 16, 32 and 64 (one run of 768 intervals per seed, about 20 seconds on a quiet
 core, so 480 seeds take about 2.7 hours per row; the seeds may be split over cores by copies of the
 design with disjoint `seeds` lists and the counts summed). The reading per row: `ends_in_part`
 (`body 0`, the trials ending in e over the trials, P(e at T_pi) against the blind's row),

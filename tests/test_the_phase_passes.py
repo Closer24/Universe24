@@ -46,16 +46,16 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
 
     def held(board, books):
         pairs = zip(books.declared.transitions, books.references, strict=True)
-        arrivals[board.tick] = [(t.leaves, t.enters, r.in_phase, r.quadrature) for t, r in pairs]
+        arrivals[board.interval] = [(t.leaves, t.enters, r.in_phase, r.quadrature) for t, r in pairs]
         turned_labels(board, books)
 
     def spied(board, books, part, count, phase, sense):
-        laid.append((board.tick, part, count, phase, sense))
+        laid.append((board.interval, part, count, phase, sense))
         relaid(board, books, part, count, phase, sense)
 
     def read(board, item):
         found = leaving_phase(board, item)
-        left.append((board.tick, item.part, found))
+        left.append((board.interval, item.part, found))
         return found
 
     monkeypatch.setattr(meeting, "turned_labels", held)
@@ -63,24 +63,24 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     monkeypatch.setattr(meeting, "leaving_phase", read)
     board = Lattice(load_world(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
     taken: list[dict] = []
-    while not taken and board.tick < 96:
+    while not taken and board.interval < 96:
         board.step()
         taken = [
             c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]
         ]
-    tick = board.tick
-    assert taken and taken[0]["tick"] == tick
-    leaves, ((re, im), sense) = next((part, found) for t, part, found in left if t == tick)
+    interval = board.interval
+    assert taken and taken[0]["interval"] == interval
+    leaves, ((re, im), sense) = next((part, found) for t, part, found in left if t == interval)
     enters = 1 - leaves
-    x, y = next((x, y) for low, up, x, y in arrivals[tick] if (low, up) == (leaves, enters))
-    entered = next((c, phase, s) for t, p, c, phase, s in laid if t == tick and p == enters)
+    x, y = next((x, y) for low, up, x, y in arrivals[interval] if (low, up) == (leaves, enters))
+    entered = next((c, phase, s) for t, p, c, phase, s in laid if t == interval and p == enters)
     print(
-        f"the Zeno world's first taking at {tick}: the leaving part {leaves} stands at {(re, im)}, the arrival "
+        f"the Zeno world's first taking at {interval}: the leaving part {leaves} stands at {(re, im)}, the arrival "
         f"(X, Y') = {(x, y)}, atan2 = {math.degrees(math.atan2(y, x)):.3f} degrees, the entered part laid at {entered[1]}"
     )
     assert y != 0 and entered == (1, turned_direction(re, im, x, y), sense) and entered[1] != (re, im)
     assert all(abs(f - e) <= 1 for f, e in zip(entered[1], float_turn(re, im, x, y), strict=True))
-    assert next((c, phase, s) for t, p, c, phase, s in laid if t == tick and p == leaves) == (
+    assert next((c, phase, s) for t, p, c, phase, s in laid if t == interval and p == leaves) == (
         0,
         (re, im),
         sense,

@@ -100,13 +100,13 @@ Every number of the reading above is the NodeReader's: the clicks are the `credi
 region and the shares are the `click` lines' window inflows over 3 den T, both lines the NodeReader's
 report by the engine's label (ENGINE.md section 5, `reports.click` and `reports.credit`; the folder's
 own words call the shares a lattice reading beside the clicks, a stricter label than the engine's).
-No number is read from a Node. The lines carry the board's `tick` and the `window` in board intervals
+No number is read from a Node. The lines carry the board's `interval` and the `window` in board intervals
 and nothing of the NodeReader's own clock. The crude Huygens rows of item 4 are the design's.
 
 ## On the lay without the uniform mode, 2026-10-04 (branch click-share-fix, PR #1862)
 
-The message lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md, The
-message lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0 and
+The packet lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md, The
+packet lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0 and
 -24,442 for now and before, a velocity of the uniform mode that Rule3 carries exactly, the level's mean
 growing by 11 per interval over the board; the fix takes the uniform content out of each level at the
 lay, so both sums are 0, and the lay's count moves from 1,998 to 1,805 at the world file's amplitude
@@ -169,14 +169,14 @@ seed in both worlds; N 269 and 135 at every seed (N is the shares', the draw pla
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
 | LATTICE | which_way.json | run_inputs | verdict | LAWFUL |
-| LATTICE | which_way.json | run_inputs | ticks | 130 |
+| LATTICE | which_way.json | run_inputs | intervals | 130 |
 | NODEREADER | which_way.json | run_inputs | clicks | 269 |
 | NODEREADER | which_way.json | run_inputs | clicks screen_0 | 0 |
 | NODEREADER | which_way.json | run_inputs | clicks screen_1 | 0 |
@@ -193,7 +193,7 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | which_way.json | run_inputs | lines click | 1062 |
 | LATTICE | which_way.json | run_inputs | lines credit | 269 |
 | LATTICE | one_gap.json | run_inputs | verdict | LAWFUL |
-| LATTICE | one_gap.json | run_inputs | ticks | 130 |
+| LATTICE | one_gap.json | run_inputs | intervals | 130 |
 | NODEREADER | one_gap.json | run_inputs | clicks | 135 |
 | NODEREADER | one_gap.json | run_inputs | clicks screen_0 | 0 |
 | NODEREADER | one_gap.json | run_inputs | clicks screen_1 | 0 |
@@ -210,7 +210,7 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | one_gap.json | run_inputs | lines click | 888 |
 | LATTICE | one_gap.json | run_inputs | lines credit | 135 |
 | LATTICE | two_gaps.json | run_inputs | verdict | LAWFUL |
-| LATTICE | two_gaps.json | run_inputs | ticks | 130 |
+| LATTICE | two_gaps.json | run_inputs | intervals | 130 |
 | NODEREADER | two_gaps.json | run_inputs | clicks | 270 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_0 | 28 |
 | NODEREADER | two_gaps.json | run_inputs | clicks screen_1 | 15 |

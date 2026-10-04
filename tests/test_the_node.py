@@ -93,7 +93,7 @@ def test_every_act_of_the_interval_reaches_one_link(tmp_path, monkeypatch):
     charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")  # the energy line's T and k_w
     world = dict(shape=[9, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(ticks=2, universe="u.json", engine="e.json", bodies=[], node_readers=[])
+    world.update(intervals=2, universe="u.json", engine="e.json", bodies=[], node_readers=[])
     (reach := tmp_path / "reach.json").write_text(json.dumps(world), encoding="utf-8")
 
     def centre(board: Lattice) -> list[int]:
@@ -148,7 +148,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     """(b) A body on a closed cube of 9^3: the gate refuses a declared count off the share by name and admits the one it reads; at the start every holder of the content with a level stands at an isotropic rest about the body, its level at the six neighbours of the centre one number below the centre's (the vector test of the two rows); each interval the matter's levels change and are Rule3 from the interval's start at every Node with every holder of the content read once as its stepped time part (a family of quanta with a gap steps; the guard on the gap that froze matter on main is gone with the laid row), the share read at the start's paces changes by the net currents plus the paces' anisotropy term and Rule3's remainder term exactly up to the division act's floors while the paces' own change (the well breathing about the body) moves the books' total beside, and every part of every NodeState keeps the cube's 48 about the body; the back-in-time gate (tools/back_in_time.py) over twelve intervals forward and twelve back returns every array bit for bit, MATCH (the tension's act has no count in its divisor and dumps nothing). (c) On the chain, one quantum of the charged family by hand (a plane rotating in the sense +1 at the band's rest rotation, the level now the envelope L over ten Nodes with the level before (L cos omega, L sin omega) and 2 SUM L^2 sin omega = T, the law's one quantum, its Wronskian T / 2 within the rounding, declared at the count 1 and admitted as declared: the count-1 gate, ALGEBRA.md, No record reads its own write of the sign) writes its Wronskian's quanta into the sign holder's record each interval, the record it started from at 0: a wave leaves it (the charge's levels nonzero away from the body), the charge's share in quanta stays within the Nodes' rounding and the body's share read at each interval's paces changes by the net currents plus the anisotropy and the remainder terms exactly up to the floors over 24 intervals (the gate and the identity are per step, and the born light reaches the chain's far Nodes within them; the well it digs moves the paces, and the share read at the moving paces with them, the paces' part printed beside; no quantum changes family), the body reads the light it writes plainly into its paces (its family a plane; ALGEBRA.md #the-paces, the dimension's table) and every output line is a click of an end node_reader (the light's inflow there); a real body of matter writes nothing into it and no light is born; both runs go back in time whole, the back-in-time gate MATCH over 24 intervals forward and 24 back, every held row a stepped record whose level at the interval's start the state after it still holds and no coefficient read from a Node's own state (ALGEBRA.md #what-is-open, item 21). (c, d) The generator's one quantum of the charged family on the chain (a plane rotating in the sense +1, the one-Node record of its quantum, the design's `pixels`, admitted at the count 1 as declared, the count-1 gate): the Wronskian's quanta it writes into the sign holder each interval move within the rounding over its period at its Node (a static record writes a static level); its share in quanta over the board, read at the paces of the read, is printed as the books' reading (the owner's word of 2026-10-01: the share stays the count, its drift under a moving well a reading and no line), over 60 intervals with no frozen Node (a test runs under 30 seconds, the owner's word of 2026-10-03); the tail's mean tension on x, a reading of the 50-quanta body that #43 (1) no longer declares, is not read (one Node, no tail); a second body, the taker, a real body of matter, is read by the node_reader `taker`, whose clicks are the charge's inflow into its Nodes, signed and never 0, the net light that entered it over the run printed as its reading (a bare region passes the light on). (e) The gate runs (#1579): on the committed world bell_a_b over its first four intervals the laid family's drift (the books') stays within the sum over the intervals of Rule3's remainder terms, the paces' parts and the floors, the bound the share's identity gives, asserted as a bound and never as exactness (the identity is per step; the rest of the run to the window's end plain, for the click; the GHZ world's own test is in test_the_meeting.py). On the chain every click names an end node_reader or the open faces' layer at the same Nodes."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)  # the closed cube of 9^3, one body of matter at its centre
-    world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), ticks=8)
+    world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), intervals=8)
     world.update(universe="u.json", engine="e.json", node_readers=[])
     d = np.abs(np.indices((9, 9, 9)) - 4).sum(axis=0)
     levels = np.select([d == 0, d == 1, d == 2], [1200, 600, 200], 0).ravel().tolist()
@@ -187,7 +187,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
                     assert all(np.array_equal(turned(t[axes[a]], axes, signs), t[a]) for a in range(3))
     back = BACK.verdict(board, 12)
     axis, carried = gravity.lines[1:], {int(r[centre]) for r in gravity.write_remainders[1:]}
-    assert (back["verdict"], board.tick) == ("MATCH", 5) and not any(p.now.any() for p in axis)
+    assert (back["verdict"], board.interval) == ("MATCH", 5) and not any(p.now.any() for p in axis)
     assert len(carried) == 1 and WALLS[GRAVITY][1] // 2 < carried.pop() < WALLS[GRAVITY][1]
     sine = math.isqrt(6000**2 - 4000**2)  # one quantum of charge by hand: 2 SUM L^2 sin omega = T
     quantum = math.isqrt(T * 6000 * 1000 * 1000 // (2 * sine * sum(v * v for v in PROFILE[3:13])))
@@ -204,7 +204,9 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         mode = {"family": family, "pair": [4000, 6000], "moving": moving}
         ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
         ends += [{"name": "right", "positions": [[CHAIN - 2, 0, 0], [CHAIN - 1, 0, 0]]}]
-        world = dict(shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), ticks=24)
+        world = dict(
+            shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), intervals=24
+        )
         world.update(face_depth=1, universe="u.json", engine="e.json", node_readers=ends)
         body = {"family": family, "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
         world = hand_world(tmp_path, "hand", world, body, mode, quantum=turn != 0)
@@ -219,7 +221,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8], born, moved = False, 0, 0
         for _ in range(23):
             moved += laws.booked(board, monkeypatch, body)[0][0]
-            born = born or (board.tick if board.record(CHARGE)[0].now[away].any() else 0)
+            born = born or (board.interval if board.record(CHARGE)[0].now[away].any() else 0)
             assert abs(int(board.books()[board.families[CHARGE].name]["quanta"])) <= CHAIN
         clicks = [e for e in lines if e["family"] == "charge" and e["event"] == "click"]
         assert all(e["node_reader"] in ("left", "right", "face") for e in lines if e["event"] == "click")
@@ -245,11 +247,11 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     for name in ("bell/bell_a_b",):  # the gate's world, the click at the window's end
         board = Lattice(load_world(EVENTS / f"{name}.json"), (lines := []).append)
-        left = board.credit.counts[laid := board.world.messages[0].family] - 1  # after the click
+        left = board.credit.counts[laid := board.world.packets[0].family] - 1  # after the click
         steps = [laws.booked(board, monkeypatch, laid)[0] for _ in range(4)]  # the identity per step
         books, slack = board.books()[board.families[laid].name], sum(b + abs(m) for m, b in steps)
         assert books["drift"] is not None and abs(books["drift"]) <= slack
-        for _ in range(board.world.ticks - 4):
+        for _ in range(board.world.intervals - 4):
             board.step()  # to the window's end, the click
         lefts = [e["left"] for e in lines if e["event"] == "credit"]  # one write per side, one count
         assert lefts == [left] * len(board.credit.sides) and board.credit.counts[laid] == left
@@ -365,8 +367,8 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
     universe_beside(folder, drop=tuple(name for name in NAMES if name != "charge"))
     world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(ticks=200, universe="u.json", engine="e.json", bodies=[], **keys)
-    world["messages"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
+    world.update(intervals=200, universe="u.json", engine="e.json", bodies=[], **keys)
+    world["packets"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
     world["node_readers"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
     (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
@@ -374,7 +376,7 @@ def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: 
 
 
 def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_returns(tmp_path, monkeypatch):
-    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the lattice grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes (the larger chain started from the grown chain's laid levels at the offset: the message lay's two sums are 0 over the board as declared, so the exact lay's tails beyond the smaller board, 4 units of the amplitude 665 here, are taken out by the division act on it and not on the larger, and the lay depends on the declared board by that much), the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size (at the interval 40: the exact lay's tails stand on the layer before each face from the lay, so the board grows from the first interval, a lattice diagnostic read at this commit, re-read at the frozen hash), the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew. (h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line. The frozen Node (ALGEBRA.md #the-count-is-the-records-share; The paces compose): the row set by hand to the Link's zero (28,206 at Gamma 6,000, where the Node's pace rounds to 0, far beyond any body and inside the bound A at the Link unit 1) at three Nodes freezes light there, every pace 0, so the books read None for the share, its quanta and its drift with the frozen count 3 (a Node whose x Link stands at the factor 0 by its xx line's standing tension keeps its share), the step runs and the region's field line reads None with the frozen Nodes' wells 0 as `well`."""
+    """(g) The receding face (ALGEBRA.md #the-objects, the unbounded board) on a chain of 16 in a universe of light alone, both faces receding to the largest size 64 by 4 layers at a time: the loader refuses by name a receding face on a periodic axis, a largest size within the shape and a side by another word; the lattice grows by 4 layers of zeros beyond a face whenever a level stands on the layer before it (the front spreads one Link an interval each way), every grown Node at the state of a Node with no level, so the run is the run of the larger chain it grew into, bit for bit at every interval over the shared Nodes (the larger chain started from the grown chain's laid levels at the offset: the packet lay's two sums are 0 over the board as declared, so the exact lay's tails beyond the smaller board, 4 units of the amplitude 665 here, are taken out by the division act on it and not on the larger, and the lay depends on the declared board by that much), the books the same and every declared coordinate the file's (the mask, the click lines at the file's Node 15); the light's share over the original 16 Nodes reads 0 at the end where the fixed chain holds the reflected packet; the run ends, lawful and named, with the front on the layer before the face at the largest size (at the interval 40: the exact lay's tails stand on the layer before each face from the lay, so the board grows from the first interval, a lattice diagnostic read at this commit, re-read at the frozen hash), the runner and the look writing the end and the look every frame's shape and offset; the back-in-time gate says MATCH over the intervals run, each step back taking off the layers its forward step grew. (h) The vacuum content (ALGEBRA.md #what-is-open, item 22): the massless row's `rest` in the universe file, refused by name on a holder of the sign and on a row with a gap; on a chain (x open at the origin, receding beyond 24) with an inner face at x = 10 the row starts at 60 at every Node, the beyond Node's among them, its remainder at the half wall, and stays there bit for bit with no growth and no field line but 0; a kick of 12 laid on the row travels (the field line at the region rises, no count in it), the layers grown before its front stand at 60 and the gate says MATCH; light's share over a region is its field line. The frozen Node (ALGEBRA.md #the-count-is-the-records-share; The paces compose): the row set by hand to the Link's zero (28,206 at Gamma 6,000, where the Node's pace rounds to 0, far beyond any body and inside the bound A at the Link unit 1) at three Nodes freezes light there, every pace 0, so the books read None for the share, its quanta and its drift with the frozen count 3 (a Node whose x Link stands at the factor 0 by its xx line's standing tension keeps its share), the step runs and the region's field line reads None with the frozen Nodes' wells 0 as `well`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     both = {"x": {"sides": ["low", "high"], "largest": 64, "layers": 4}}
     wrong = [("y", "sides", ["high"]), ("x", "largest", 16), ("x", "sides", ["far"])]
@@ -391,21 +393,21 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
             fixed.step(), history.append((grows.shape[0], grows.offset[0], BACK.snapshot(grows)[0]))
     low, end = grows.offset[0], {"interval": 40, "axis": "x", "side": "high", "largest": 64}
     large_world = light_alone_world(tmp_path, "large", 64, 8 + low)
-    laid = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["messages"][0]
+    laid = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"][0]
     for word in ("now", "before"):  # the grown chain's laid levels at the offset: the lay is the board's
         laid["moving"][word]["at"] = [x + low for x in laid["moving"][word]["at"]]
     mode = json.loads(large_world.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    large_world.with_suffix(".mode.json").write_text(json.dumps({**mode, "messages": [laid]}), "utf-8")
+    large_world.with_suffix(".mode.json").write_text(json.dumps({**mode, "packets": [laid]}), "utf-8")
     large = Lattice(load_world(large_world))
     for extent, offset, snapshot in history:
         large.step()
         at, wide = slice(low - offset, low - offset + extent), BACK.snapshot(large)[0]
         assert all(np.array_equal(a, b[at]) for (_, a), (_, b) in zip(snapshot, wide, strict=True))
-    assert grows.ended == end and grows.tick == 40
+    assert grows.ended == end and grows.interval == 40
     assert grows.books()["charge"]["share"] == large.books()["charge"]["share"]
     assert grows.mask(((15, 0, 0),))[15 + low, 0, 0] and all("node" not in e for e in lines)
     assert not grows.quanta(0)[0][low : low + 16].any() and fixed.quanta(0)[0].any()
-    assert RUN.run_input(str(world), str(tmp_path))["ticks"] == 40
+    assert RUN.run_input(str(world), str(tmp_path))["intervals"] == 40
     written = json.loads((tmp_path / "grows.output.json").read_text(encoding="utf-8"))
     look = RECORD.record(world, None)
     assert written["verdict"] == "LAWFUL" and written["ended"] == end == look["ended"]
@@ -426,7 +428,7 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     universe["integers"]["link_unit"] = 1  # the bound A at G = 1 admits a level at the Link's zero
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     still = json.loads(world.read_text(encoding="utf-8"))
-    still.update(messages=[], faces=[{"axis": "x", "at": 10, "gaps": []}], ticks=30)
+    still.update(packets=[], faces=[{"axis": "x", "at": 10, "gaps": []}], intervals=30)
     (tmp_path / "still.json").write_text(json.dumps(still), encoding="utf-8")
     board = Lattice(load_world(tmp_path / "still.json"), (lines := []).append)
     gravity = board.families.index(next(f for f in board.families if f.rest))
@@ -448,12 +450,15 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     board.step()
     cold = [line for line in lines if line["event"] == "density" and line["reading"] is None]
     assert (
-        len(cold) == 1 and cold[0]["node_reader"] == "post" and cold[0]["well"] == 0 and board.tick == 31
+        len(cold) == 1
+        and cold[0]["node_reader"] == "post"
+        and cold[0]["well"] == 0
+        and board.interval == 31
     )
     kick = json.loads((tmp_path / "still.json").read_text(encoding="utf-8"))
     packet = {**PACKET, "family": "gravity", "amplitude": 12, "edge": {"x": 3, "y": 0, "z": 0}}
     packet["top"] = {"x": [4, 4], "y": [0, 0], "z": [0, 0]}
-    kick.update(faces=[], ticks=40, messages=[packet])
+    kick.update(faces=[], intervals=40, packets=[packet])
     (tmp_path / "kick.json").write_text(json.dumps(kick), encoding="utf-8")
     TOOL.main(["--input", str(tmp_path / "kick.json")])
     board = Lattice(load_world(tmp_path / "kick.json"), (lines := []).append)
@@ -471,7 +476,7 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
 
 
 def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_path, monkeypatch):
-    """The dimension generic (the Boss's line, #1572 comment 5963599079 (B), with the two hands' amendments, the advisor's 5963681796 and the mathematician's 5963662072 part C): a family of quanta declares any dimension from 1, its record that many real lines but for 2, the one plane (3 three real lines, [2, 5] ten real lines in two parts, 0 refused by name); a family of real lines names no holder of the sign, refused by name as no plane (the sign a plane's, read plainly or by the turn and written by the Wronskian), so the sign holder keeps its one row beside it; on a periodic 5-cube of the rule's universe with a family of three real lines beside it, random levels on every line and every write remainder, each of the cube's 48 signed axis permutations commutes with the interval line by line (every real line imaged as a scalar, gravity's axis lines as a tensor's diagonal: Rule3 mixes lines never and a rotation of the cube maps each line to itself), the inverse returning every array; the record's NodeState is its three lines and nothing else, its form the plain sum of the three lines' forms and its share the sum of theirs, one quantum one unit of the form over every line (the dimension adds no mass); a body or a message is laid at its declared weights over the three lines (`weights`), the pair times each line's weight."""
+    """The dimension generic (the Boss's line, #1572 comment 5963599079 (B), with the two hands' amendments, the advisor's 5963681796 and the mathematician's 5963662072 part C): a family of quanta declares any dimension from 1, its record that many real lines but for 2, the one plane (3 three real lines, [2, 5] ten real lines in two parts, 0 refused by name); a family of real lines names no holder of the sign, refused by name as no plane (the sign a plane's, read plainly or by the turn and written by the Wronskian), so the sign holder keeps its one row beside it; on a periodic 5-cube of the rule's universe with a family of three real lines beside it, random levels on every line and every write remainder, each of the cube's 48 signed axis permutations commutes with the interval line by line (every real line imaged as a scalar, gravity's axis lines as a tensor's diagonal: Rule3 mixes lines never and a rotation of the cube maps each line to itself), the inverse returning every array; the record's NodeState is its three lines and nothing else, its form the plain sum of the three lines' forms and its share the sum of theirs, one quantum one unit of the form over every line (the dimension adds no mass); a body or a packet is laid at its declared weights over the three lines (`weights`), the pair times each line's weight."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path), universe_beside(tmp_path)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     triple = {**CHARGED, "name": "triple", "reads": {"gravity": 1, "binding": 1}, "dimension": 3}
@@ -482,7 +487,7 @@ def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_pat
     refused("from 1", shape_of, {"dimension": 0}, "x")
     triple["reads"]["charge"] = 1  # three real lines naming the holder of the sign: no plane
     refused("no plane", universe_of, rows)
-    world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), ticks=1, bodies=[])
+    world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), intervals=1, bodies=[])
     world.update(universe="u.json", engine="e.json", node_readers=[])
     (cube := tmp_path / "cube.json").write_text(json.dumps(world))
 

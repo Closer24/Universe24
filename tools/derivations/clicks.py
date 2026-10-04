@@ -80,7 +80,7 @@ def one_draw_per_record() -> list[int]:
 
 
 def arrival_window() -> list[float]:
-    """[the probe's arrival at a NodeReader 34 Links from its lay at k = pi / 4, in intervals]: 62.2; the window closes at the tick of the probe's lay, and the arrival is derived from the lay by the band's group velocity, from click times and from no level read (the paper's Section 5.4)."""
+    """[the probe's arrival at a NodeReader 34 Links from its lay at k = pi / 4, in intervals]: 62.2; the window closes at the interval of the probe's lay, and the arrival is derived from the lay by the band's group velocity, from click times and from no level read (the paper's Section 5.4)."""
     return [TWO_SLITS_DISTANCE / rule3.group_velocity(TWO_SLITS_WAVE_NUMBER, *LIGHT_PAIR)]
 
 

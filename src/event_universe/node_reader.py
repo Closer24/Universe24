@@ -65,7 +65,7 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
         draw = row.reader.draw
-        longest = draw.window if isinstance(draw, Draw) else max(board.world.ticks, 1)
+        longest = draw.window if isinstance(draw, Draw) else max(board.world.intervals, 1)
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         seed = draw.seed
         references = references_of(scale, row.reader.transitions)
@@ -156,7 +156,7 @@ def own_clock(board: Lattice, books: NodeBooks) -> int:
 
 
 def clock_advanced(board: Lattice, books: NodeBooks) -> None:
-    """The body's own clock, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second; the two hands' click line of the pulsed gate): its clock p_0 at its Node (`own_clock`) added to the carried remainder and divided once by Gamma, the whole intervals to its proper time and the remainder kept, as the credit keeps a region's (`credit.clocked_regions`); the board's tick in the vacuum, slower in a well."""
+    """The body's own clock, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second; the two hands' click line of the pulsed gate): its clock p_0 at its Node (`own_clock`) added to the carried remainder and divided once by Gamma, the whole intervals to its proper time and the remainder kept, as the credit keeps a region's (`credit.clocked_regions`); the board's interval in the vacuum, slower in a well."""
     whole, rest = division_forward(books.clock[1] + own_clock(board, books), board.world.node_clock, 0)
     books.clock[0], books.clock[1] = books.clock[0] + int(whole), int(rest)
 
@@ -216,14 +216,14 @@ def reported(
     if board.output is None:
         return
     names, families = books.declared.names, board.families
-    window = [board.tick - books.elapsed + 1, board.tick]
+    window = [board.interval - books.elapsed + 1, board.interval]
     taken, light = (families[k].name if k is not None else None for k in exchanged)
     moved = next((k for k in exchanged if k is not None), None)
     left = board.credit.counts[moved] if moved is not None else None
     name, reader, own = families[books.index].name, f"{BODY} {books.number}", books.clock[0]
     after, before = names[parts[0]], names[parts[1]]
     line = credit(
-        board.tick,
+        board.interval,
         name,
         reader,
         window,

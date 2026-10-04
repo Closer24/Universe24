@@ -34,8 +34,8 @@ def converted(board: Lattice, books: NodeBooks) -> bool:
             written(board, items)
             if board.output is not None:
                 name, *into = [board.families[i].name for i in (books.index, *table.outs)]
-                over, at = [board.tick - window + 1, board.tick], list(laid_at)
-                board.output(conversion(board.tick, name, books.number, over, into, at))
+                over, at = [board.interval - window + 1, board.interval], list(laid_at)
+                board.output(conversion(board.interval, name, books.number, over, into, at))
             return True
     return False
 

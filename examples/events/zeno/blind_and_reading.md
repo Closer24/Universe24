@@ -89,7 +89,7 @@ from the reader's own books on the board object (`meeting.NodeBooks.part`, the N
 content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
 are the `jump` lines labelled by the NodeReader. The pulse's count of 413 in the books, the turn per
 window named beside the blind and the pi pulse's tuning are lattice matters. The lines carry the
-board's `tick` and the `window` in board intervals; the turn itself is taken per proper interval at the
+board's `interval` and the `window` in board intervals; the turn itself is taken per proper interval at the
 record's Node (`meeting.turned_labels`) and no line carries that clock.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act)

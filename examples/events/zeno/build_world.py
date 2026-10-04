@@ -50,7 +50,7 @@ def world_of(design: dict, n: int) -> dict:
         },
     }
     drive = design["drive"]
-    message = {
+    packet = {
         "family": drive["family"],
         "along": "x",
         "wave": drive["wave"],
@@ -62,11 +62,11 @@ def world_of(design: dict, n: int) -> dict:
     return {
         "shape": shape,
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
-        "ticks": design["intervals"],
+        "intervals": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [record],
-        "messages": [message],
+        "packets": [packet],
         "node_readers": [],
     }
 

@@ -47,16 +47,16 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the chain, no message (the light born by the giving alone), the giver and the taker at the world's resonance, no region node_reader."""
+    """One world of the design: the chain, no packet (the light born by the giving alone), the giver and the taker at the world's resonance, no region node_reader."""
     taker = record(design, "taker", list(design["worlds"][name]["resonance"]))
     return {
         "shape": list(design["shape"]),
         "boundary": dict(design["boundary"]),
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [record(design, "giver", list(design["giver"]["resonance"])), taker],
-        "messages": [],
+        "packets": [],
         "node_readers": [],
     }
 

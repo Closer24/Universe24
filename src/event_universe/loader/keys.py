@@ -62,7 +62,7 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
 
 
 def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int, ...]:
-    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a message, `Lattice.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
+    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a packet, `Lattice.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
     if value is None:
         return (1,) * lines
     if plane:

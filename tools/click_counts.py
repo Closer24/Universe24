@@ -1,4 +1,4 @@
-"""The credit per node_reader over a window of intervals, read from a run's output file against an expectation file (NODEREADER, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the node_reader a declared NodeReader and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's node_reader (or node_readers, a list) and one family within the window are summed per node_reader, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each node_reader saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the NodeReader's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are the quanta the draw credited inside the run, per region the `credit` lines' counts within the window (the click written on the lattice with the world's declared seed and generator, `src/event_universe/credit.py`; one quantum to one node_reader by the draw's construction; None for a world declaring no draw), the tool drawing nothing (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at tick t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the node_readers, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
+"""The credit per node_reader over a window of intervals, read from a run's output file against an expectation file (NODEREADER, the one measurement; ALGEBRA.md #the-count-is-the-records-share, the node_reader a declared NodeReader and the click its report; #the-click-is-the-meeting, the share's sign and the credit's floor): the `click` lines of the expectation's node_reader (or node_readers, a list) and one family within the window are summed per node_reader, each one reporter placed at the least coordinate of its Nodes on the axis the expectation names (`across`), so a region across the beam stands at its first row (a click reports its region and never a Node, the owner's word of 2026-09-30). What each node_reader saw, the net inflow through its front boundary summed over the window (the density that entered it from the declared board), floored at 0, the NodeReader's declaration (the owner's word of 2026-10-01, 09:00, on the mathematician's #1572 comment 5925377771: a region's credit is max(s_R, 0) where a window is cut or a record returns through the front, the window the whole passage where it can be), gives its share of the screen's total; N, the quanta the screen absorbed, is the total inflow over the family's count wall W_c to the nearest whole, (total + W_c div 2) div W_c, the share's own rounding, and the expectation's declared total less N (`elsewhere`, the expectation's `laid`) is the part that left the board elsewhere; the rounded shares are N times the shares apportioned by the largest remainders (a tie of remainders broken by the lower index), the expectation and no sample, and the clicks are the quanta the draw credited inside the run, per region the `credit` lines' counts within the window (the click written on the lattice with the world's declared seed and generator, `src/event_universe/credit.py`; one quantum to one node_reader by the draw's construction; None for a world declaring no draw), the tool drawing nothing (the advisor's design at the owner's word, #1515 comment 5912573191, with his corrections 5912958018; the rows named by the owner's word of 2026-10-01, 04:50). Both rows are read beside the blind counts with their local maxima and minima within the pattern's range (`extrema`, the one rule of the builder and the reader), the visibility at the blind central maximum (the expectation's `central`) against the blind first minima, (most - least) over (most + least), as integers, and the summed absolute deviation from the blind row's shares over the total, sum |n_g B - T b_g| over T B (T the row's total, B the blind row's), as a fraction; a bare region named in the expectation's `aside` is read beside the screen (what it saw and that over W_c) and takes no share. The arrival (the wager, the lattice's own number): the screen's inflow summed over its regions per interval within the window, its peak interval (the first at the largest), its centroid over every interval of the window, the negative ones included, as an exact fraction and its half-maximum span, in the engine's interval labels (the click at interval t reports the state after t - 1 steps), beside the expectation's blind arrival; the wings the expectation names are read from both rows. The window, the node_readers, the family, the axis, the pattern's range and the seed are the expectation file's; the tool holds no number.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -31,7 +31,7 @@ def inflows(
     for line in lines:
         if line.get("event") != "click" or line.get("family") != family:
             continue
-        if line.get("node_reader") in found and window[0] <= int(str(line["tick"])) <= window[1]:
+        if line.get("node_reader") in found and window[0] <= int(str(line["interval"])) <= window[1]:
             found[str(line["node_reader"])] += int(str(line["inflow"]))
     return found
 
@@ -39,14 +39,14 @@ def inflows(
 def per_interval(
     lines: list[dict[str, object]], node_readers: list[str], family: str, window: tuple[int, int]
 ) -> dict[int, int]:
-    """The screen's inflow per interval within the window, the named node_readers' `click` lines summed at each tick, in the current's units."""
+    """The screen's inflow per interval within the window, the named node_readers' `click` lines summed at each interval, in the current's units."""
     found: dict[int, int] = {}
     for line in lines:
         if line.get("event") != "click" or line.get("family") != family:
             continue
-        tick = int(str(line["tick"]))
-        if line.get("node_reader") in node_readers and window[0] <= tick <= window[1]:
-            found[tick] = found.get(tick, 0) + int(str(line["inflow"]))
+        interval = int(str(line["interval"]))
+        if line.get("node_reader") in node_readers and window[0] <= interval <= window[1]:
+            found[interval] = found.get(interval, 0) + int(str(line["inflow"]))
     return found
 
 
@@ -55,9 +55,11 @@ def arrival(profile: dict[int, int]) -> dict[str, object]:
     if not profile or max(profile.values()) <= 0 or sum(profile.values()) <= 0:
         return {"peak": None, "centroid": None, "span": None}
     largest = max(profile.values())
-    peak = min(tick for tick, value in profile.items() if value == largest)
-    centroid = Fraction(sum(tick * value for tick, value in profile.items()), sum(profile.values()))
-    high = [tick for tick, value in profile.items() if 2 * value >= largest]
+    peak = min(interval for interval, value in profile.items() if value == largest)
+    centroid = Fraction(
+        sum(interval * value for interval, value in profile.items()), sum(profile.values())
+    )
+    high = [interval for interval, value in profile.items() if 2 * value >= largest]
     return {
         "peak": peak,
         "centroid": [centroid.numerator, centroid.denominator],
@@ -92,7 +94,7 @@ def credited(
         if line.get("event") != "credit" or line.get("family") != family:
             continue
         seen = True
-        if line.get("node_reader") in found and window[0] <= int(str(line["tick"])) <= window[1]:
+        if line.get("node_reader") in found and window[0] <= int(str(line["interval"])) <= window[1]:
             found[str(line["node_reader"])] += int(str(line["count"]))
     return found if seen else None
 
@@ -144,8 +146,8 @@ def read_row(row: list[int], expected: dict[str, object]) -> dict[str, object]:
 
 
 def photons(loaded: World, family: str, quanta: int, blind: object) -> dict[str, object]:
-    """The photon count at the light's own frequency beside N, a lattice reading labelled so (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267): the screen's regions declare the band's top, so N counts the energy in units of T, while one quantum of the laid light at its own omega carries the energy T sin omega, cos omega = (cos(pi p / q) + 2) / 3 along the axis for the wave [p, q] of the family's first message; the count N over sin omega is the number of the laid light's own quanta, 645 at N = 278 and k = pi / 4; the blind's value, where the expectation holds one, beside it."""
-    waves = [m.wave for m in loaded.messages if loaded.families[m.family].name == family]
+    """The photon count at the light's own frequency beside N, a lattice reading labelled so (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267): the screen's regions declare the band's top, so N counts the energy in units of T, while one quantum of the laid light at its own omega carries the energy T sin omega, cos omega = (cos(pi p / q) + 2) / 3 along the axis for the wave [p, q] of the family's first packet; the count N over sin omega is the number of the laid light's own quanta, 645 at N = 278 and k = pi / 4; the blind's value, where the expectation holds one, beside it."""
+    waves = [m.wave for m in loaded.packets if loaded.families[m.family].name == family]
     if not waves:
         return {"label": "LATTICE", "value": None}
     p, q = waves[0]
@@ -177,7 +179,7 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
         raise ValueError(
             f"the expectation names the node_readers {names}; the world declares {[d.name for d in loaded.node_readers]}"
         )
-    spanned = expected.get("window", [0, document.get("ticks", 0)])
+    spanned = expected.get("window", [0, document.get("intervals", 0)])
     window = (int(spanned[0]), int(spanned[1]))
     placed = reporters(rows, axis)
     family = next(f for f in loaded.families if f.name == expected["family"])

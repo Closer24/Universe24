@@ -33,11 +33,16 @@ def shown(world, monkeypatch, at, blind):
             super().step()
             charge = next(f for f in self.families if f.name == "charge")
             wall = count_wall(charge, self.world.quantum_action)
-            for name in at.get(self.tick, []):
-                line = {"event": "click", "tick": self.tick, "family": "charge", "node_reader": name}
+            for name in at.get(self.interval, []):
+                line = {
+                    "event": "click",
+                    "interval": self.interval,
+                    "family": "charge",
+                    "node_reader": name,
+                }
                 self.output({**line, "inflow": wall})
 
-    monkeypatch.setattr(RECORD, "lattice", Clicking), RECORD.main([str(world), "--ticks", "3"])
+    monkeypatch.setattr(RECORD, "Lattice", Clicking), RECORD.main([str(world), "--intervals", "3"])
     world.with_suffix(".blind.json").write_text(json.dumps(blind), encoding="utf-8")
     PAGE.main([str(world.with_suffix(".look.json")), "--blind", str(world.with_suffix(".blind.json"))])
     look = json.loads(world.with_suffix(".look.json").read_text(encoding="utf-8"))
@@ -53,7 +58,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     gate.update(blind={"S": [1, 1]}, combination={"name": "S", "signs": [1]})
     look, html = shown(world, monkeypatch, {t: ["taker"] for t in (1, 2, 3)}, gate)
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))["families"]
-    assert look["label"] == "lattice reading" and look["verdict"] == "LAWFUL" and look["ticks"] == 3
+    assert look["label"] == "lattice reading" and look["verdict"] == "LAWFUL" and look["intervals"] == 3
     assert [f["name"] for f in look["families"]] == [f["name"] for f in universe] and look["faces"] == []
     assert len(look["frames"]) == 4 and look["shape"] == [CHAIN, 1, 1] and look["arrays"] == "dense"
     rows = [row for fr in look["frames"] for row in fr["families"].values()]
@@ -62,7 +67,9 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     laid = [look["frames"][0]["families"][f["name"]]["count"] for f in look["families"] if f["quanta"]]
     declared, read = sum(b["declared"] for b in look["bodies"]), sum(x[0][0] for a in laid for x in a)
     assert ((abs(declared - read) - 1) // 2) ** 2 <= declared and "holds" not in look["bodies"][0]
-    assert all(line["tick"] == t for t, frame in enumerate(look["frames"]) for line in frame["lines"])
+    assert all(
+        line["interval"] == t for t, frame in enumerate(look["frames"]) for line in frame["lines"]
+    )
     wall, frames = next(f["wall"] for f in look["families"] if f["name"] == "charge"), look["frames"]
     own = [
         [x for x in fr["lines"] if x["node_reader"] == "taker" and x["inflow"] == wall] for fr in frames
@@ -112,7 +119,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     grouped.update(maxima=[1], minima=[0], visibility=1)
     measure = PAGE.measurement(look, grouped)
     assert [measure[k] for k in ("at", "labels", "rounded_shares")] == [[0, 4], ["g0", "g4"], [1, 1]]
-    (output := tmp_path / "slit.output.json").write_text(json.dumps({"ticks": 3, "lines": flat}))
+    (output := tmp_path / "slit.output.json").write_text(json.dumps({"intervals": 3, "lines": flat}))
     (tmp_path / "grouped.json").write_text(json.dumps(grouped))
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [0, 4] and read["seen"] == [wall, wall] and read["quanta"] == 2

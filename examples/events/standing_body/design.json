@@ -30,7 +30,7 @@
     12
    ],
    "quanta": 10000,
-   "ticks": 1000,
+   "intervals": 1000,
    "stop": 2
   },
   "standing_17": {
@@ -51,7 +51,7 @@
     12
    ],
    "quanta": 10000,
-   "ticks": 1000,
+   "intervals": 1000,
    "stop": 4
   },
   "standing_19": {
@@ -72,7 +72,7 @@
     12
    ],
    "quanta": 10000,
-   "ticks": 1000,
+   "intervals": 1000,
    "stop": 8
   }
  },

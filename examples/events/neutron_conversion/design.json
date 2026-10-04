@@ -179,7 +179,7 @@
   "sigma": "sqrt(N p (1 - p)) = 3.78",
   "rate_not_a_power_of_two": "the declared generator's low bits cycle with the period of a power of two, so a rate of 32 would convert every trial deterministically; 30 is declared"
  },
- "ticks": 32,
+ "intervals": 32,
  "worlds": {
   "neutron_conversion": "the neutron of count 1 at the centre with its table and rate"
  },

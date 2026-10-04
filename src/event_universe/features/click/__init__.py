@@ -39,7 +39,7 @@ class Face:
     line: int
     at: tuple[int, int, int]
     port: int
-    tick: int
+    interval: int
     value: int | None = None
     fraction: tuple[int, int] | None = None
 
@@ -201,7 +201,7 @@ def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> lis
 
 
 def transverse_cosine(width: int, unit: int) -> int:
-    """unit cos(pi / (width + 1)), the lowest mode of a top-hat of `width` Nodes with zero ends, by the rotation act: the doubled cosine of the step pi / (2 (width + 1)) is the largest integer at which the rotation from the unit reaches 0 within width + 1 steps (bisection on the integers, no root and no table, as the message lay's generator finds its cosines), and two steps of it are the mode's cosine."""
+    """unit cos(pi / (width + 1)), the lowest mode of a top-hat of `width` Nodes with zero ends, by the rotation act: the doubled cosine of the step pi / (2 (width + 1)) is the largest integer at which the rotation from the unit reaches 0 within width + 1 steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and two steps of it are the mode's cosine."""
     lower, upper = 0, 2 * unit
     while upper - lower > 1:
         middle = int(division_forward(lower + upper, 2, 0)[0])

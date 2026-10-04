@@ -159,7 +159,7 @@ replaces it.
 | `families.py` | 6 | the universe table's columns, the holder's rest, the gap as the inverse reach, the two speeds, the gapped kernel |
 | `frame.py` | 6 | the lattice's frame: alpha_1, the polarisations, no g_0a, the five forms, Gravity Probe B |
 | `bodies.py` | 5 | the four statements, the functional's barrier, the kinds of binding, the binding bound |
-| `moving_clock.py` | 4 | the tick's factor from the band, the Lorentz form, Michelson-Morley |
+| `moving_clock.py` | 4 | the interval's factor from the band, the Lorentz form, Michelson-Morley |
 | `atom.py` | 3 | Bohr's levels, the orbital Zeeman g = 1, the nuclear holder's exclusion |
 | `nuclear.py` | 3 | confinement, the nuclear findings, the explicit finding |
 | `rule3.py` | 3 | the band at a pace, the form's walk with the rounding, the backward reading |

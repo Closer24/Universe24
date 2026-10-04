@@ -60,7 +60,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         ]
         faces += [{"axis": "y", "at": int(at), "gaps": open_x} for at in design["channel"]["walls"]]
     packet = design["packet"]
-    message = {
+    packet = {
         "family": design["family"],
         "along": "x",
         "wave": list(design["wave"]),
@@ -74,11 +74,11 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "boundary": {"x": "open", "y": "open", "z": "periodic"},
         "face_depth": 1,
         "faces": faces,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [],
-        "messages": [message],
+        "packets": [packet],
         "node_readers": regions(design, bool(kind["channel"])),
         "receding": design["receding"],
         "draw": design["draw"],
@@ -119,7 +119,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     return {
         "verdict": "NODEREADER",
         "family": design["family"],
-        "window": [1, int(design["ticks"])],
+        "window": [1, int(design["intervals"])],
         "across": "y",
         "seed": design["draw"]["seed"],
         "comment": design["comment"],

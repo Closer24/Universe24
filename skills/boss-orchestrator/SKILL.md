@@ -111,7 +111,7 @@ mathematician's #1836 (the second hand on the law and the paper). The state of
 every finding is its row in docs/REVIEW_LEDGER.md, changed by the pull request
 that prints; the decisions are docs/HIGHLIGHTS.md's, one line each. A finding or
 approval of one pull request is a comment on it; a list across pull requests is
-one issue with a checklist, each pull request ticking its item. Messages are two
+one issue with a checklist, each pull request ticking its item. Packets are two
 lines and a link. The Boss reads the issues it was sent at every check-in.
 
 ## The Routines to the hands
@@ -132,7 +132,7 @@ sets a check-in by send_later, about fifteen minutes ahead, reads its checks and
 comments, merges on green with `main` merged in, or sends the red shard back to
 the worker with the failing line; a documents, tests or paper pull request merges
 by auto-merge on green and needs no check-in (234, proposal 5). No blocking wait
-on CI longer than two minutes, so that the owner's message is seen.
+on CI longer than two minutes, so that the owner's packet is seen.
 
 ## What the Boss never does
 

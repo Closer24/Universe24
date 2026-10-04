@@ -85,7 +85,9 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
     ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
     node_readers = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
-    world = dict(shape=[chain, 1, 1], node_readers=node_readers, bodies=bodies, ticks=400, face_depth=1)
+    world = dict(
+        shape=[chain, 1, 1], node_readers=node_readers, bodies=bodies, intervals=400, face_depth=1
+    )
     world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     pixels = [n for n, c in enumerate(charged) if c]  # the charged body a one-Node record
@@ -95,20 +97,22 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     return path
 
 
-SLIT = dict(shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, ticks=24)
+SLIT = dict(
+    shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, intervals=24
+)
 SLIT.update(universe="u.json", engine="e.json", bodies=[], node_readers=[])
 SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
 PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
 
 
-def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, ticks: int = 60) -> Path:  # type: ignore[no-untyped-def]
+def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
     """The open board's packet world cut small: the shipped packet giving's giver over two Nodes of a 160 by 5 by 5 board with one giving at `lifetime` and `width`, its window 2, no reader and no draw, its mode file written by the generator."""
     world = json.loads((EVENTS / "packet_giving" / "packet_giving.json").read_text(encoding="utf-8"))
     giver = world["bodies"][0]
     rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
     nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
-    small = {**world, "shape": [160, 5, 5], "ticks": ticks, "node_readers": []}
+    small = {**world, "shape": [160, 5, 5], "intervals": intervals, "node_readers": []}
     reader = {**giver["node_reader"], "window": 2}
     small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_reader": reader}]
     del small["draw"]
@@ -123,7 +127,7 @@ def ion_universe_beside(folder: Path) -> None:
     (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
-def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]
+def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]
     """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its giving to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
     ion_universe_beside(folder)
     shape = (8, 6, 5)
@@ -146,8 +150,10 @@ def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600, body: b
     top = {axis: [0, extent - 1] for axis, extent in zip("xyz", shape, strict=True)}
     drive.update(top=top, edge={"x": 0, "y": 0, "z": 0})
     plane = [[0, y, z] for y in range(shape[1]) for z in range(shape[2])]
-    world = dict(shape=list(shape), boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=ticks)
-    world.update(universe="u.json", engine="e.json", bodies=[record] if body else [], messages=[drive])
+    world = dict(
+        shape=list(shape), boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=intervals
+    )
+    world.update(universe="u.json", engine="e.json", bodies=[record] if body else [], packets=[drive])
     world.update(
         node_readers=[{"name": "counter", "positions": plane}], draw={**draw, "window": 18, "seed": 24}
     )
@@ -159,13 +165,13 @@ def ion_world(folder: Path, tool, ticks: int = 23, amplitude: int = 600, body: b
 def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
     universe_beside(folder)
     path = folder / f"{name}.json"
-    path.write_text(json.dumps({**SLIT, "messages": [PACKET], **changes}), encoding="utf-8")
+    path.write_text(json.dumps({**SLIT, "packets": [PACKET], **changes}), encoding="utf-8")
     tool.main(["--input", str(path)])
     return path
 
 
 def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-def]
-    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the ticks 3 and 7, no node_readers; the world's path."""
+    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_readers; the world's path."""
     (folder / "u.json").write_bytes((EVENTS / "zeno_pulsed" / "pulsed_atom.json").read_bytes())
     (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
@@ -176,9 +182,9 @@ def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-
     region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
     record = {"family": "atom", "nodes": region, "parts": parts, "rates": [], "node_reader": draw}
     record["transitions"] = [*turns, {**probe, "drive": "probe"}]
-    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
-    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
-    world.update(universe="u.json", engine="e.json", bodies=[record], messages=lays, node_readers=[])
+    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "interval": t} for t in (3, 7)]
+    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=9)
+    world.update(universe="u.json", engine="e.json", bodies=[record], packets=lays, node_readers=[])
     (path := folder / "w.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -230,7 +236,7 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
             carried = (now.remainder.astype(object) - was.remainder.astype(object)).ravel()  # r' - r
             pairs = zip(step * carried, squares.ravel(), strict=True)
             terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
-        for face in [f for f in board.credit.faces.get(board.tick, []) if f.family == index]:
+        for face in [f for f in board.credit.faces.get(board.interval, []) if f.family == index]:
             here, read_at = tuple(np.add(face.at, board.offset)), reads[face.port]  # the face term
             read_at = int(np.asarray(read_at)[here]) if np.ndim(read_at) else int(read_at)
             fill = board.families[index].rest if face.line == 0 else 0

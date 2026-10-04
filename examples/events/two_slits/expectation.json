@@ -66,7 +66,7 @@
    63,
    77
   ],
-  "labels": "the engine's interval labels: the click at tick t reports the state after t - 1 steps, so the law's real line's 68 and 73 read 69 and 74 here",
+  "labels": "the engine's interval labels: the click at interval t reports the state after t - 1 steps, so the law's real line's 68 and 73 read 69 and 74 here",
   "real_line": {
    "peak": 68,
    "centroid": 73

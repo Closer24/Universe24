@@ -93,7 +93,7 @@ the neutron reads 0 from the start (a finding by name below).
 | 9, not a blind | the electron's spectrum | not read; the electron's and the antineutrino's one-Node lays spread from the next interval (their click lines into the region `around` from the interval 30, the antineutrino's inflow 32,256,000 then -28,164,000 in the current's units), no wave number; the proton at [0, 6000] stays at its Node by its row alone (R = 0 on every Link; (129, 128) at the end of the run) | by name |
 | 10, the caution | the act's test, nothing of the neutron's mass or Q | the pair [-4800, 6000] past pi / 2; the counts, the rate and the books read above; nothing claimed of the neutron's mass or its excess | by name |
 
-The lines of seed 2's run: one `conversion` line (`{"event": "conversion", "label": "NODEREADER", "tick":
+The lines of seed 2's run: one `conversion` line (`{"event": "conversion", "label": "NODEREADER", "interval":
 28, "family": "neutron", "node_reader": "body 0", "window": [28, 28], "into": ["proton", "electron",
 "antineutrino"], "node": {"label": "LATTICE", "at": [4, 4, 4]}}`); six `click` lines of the electron
 and the antineutrino into the region `around` at the intervals 30 to 32 (their waves leaving the
@@ -118,12 +118,12 @@ no momentum, the body cut).
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Row 4, the rate, is the NodeReader's: the `conversion` lines' ticks per seed (`read_world.py`,
+Row 4, the rate, is the NodeReader's: the `conversion` lines' intervals per seed (`read_world.py`,
 `trials`). Row 9's six `click` lines into `around` are the NodeReader's and enter no verdict. Every
 other row is read on the lattice or in the books and its verdict rests there: row 1 on the
 reader's and the credit's books and the books' quanta (the `conversion` line the act's evidence),
 rows 2, 3, 5, 7 and 8 on the levels, the Wronskian and the share at the Node, row 6 on the
-back-in-time gate over the arrays. The `conversion` line carries the board's `tick` and the `window`
+back-in-time gate over the arrays. The `conversion` line carries the board's `interval` and the `window`
 [28, 28] in board intervals; the rate 30 is a count of board intervals, and no line carries the
 record's own clock.
 

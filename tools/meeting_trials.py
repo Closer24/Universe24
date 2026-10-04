@@ -29,7 +29,7 @@ def hashed_state(label: int, width: int) -> int:
 def one_trial(
     path: Path, seed: int, intervals: int
 ) -> tuple[list[str], list[int], list[dict[str, object]], str | None]:
-    """One run from the lay with every record's generator at `seed`: the parts the records stand in at the end, by their declared names, their windows closed, the click lines, and the guard's refusal where the run was refused inside (its message, naming the interval; None otherwise)."""
+    """One run from the lay with every record's generator at `seed`: the parts the records stand in at the end, by their declared names, their windows closed, the click lines, and the guard's refusal where the run was refused inside (its packet, naming the interval; None otherwise)."""
     lines: list[dict[str, object]] = []
     board = Lattice(load_world(path), lines.append)
     for books in board.credit.bodies:  # every record its own state, distinct per record and per trial
@@ -79,11 +79,11 @@ def coincidence_rows(took: Counter[tuple[int, ...]], bodies: int, trials: int) -
 
 
 def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, object]:
-    """The trials' readings against the design's seeds and intervals (its keys `seeds` and `intervals`, or the world's `ticks`), the blind beside them where given."""
+    """The trials' readings against the design's seeds and intervals (its keys `seeds` and `intervals`, or the world's `intervals`), the blind beside them where given."""
     declared = json.loads(design.read_text(encoding="utf-8"))
     world = json.loads(path.read_text(encoding="utf-8"))
     seeds = [int(seed) for seed in declared["seeds"]]
-    intervals = int(declared.get("intervals", world["ticks"]))
+    intervals = int(declared.get("intervals", world["intervals"]))
     ends: list[Counter[str]] = []
     closed: list[Counter[int]] = []
     kinds: Counter[str] = Counter()
@@ -118,7 +118,7 @@ def reading(path: Path, design: Path, expectation: Path | None) -> dict[str, obj
         "intervals": intervals,
         "ends_in_part": fractions,
         "windows_closed": windows_closed,
-        "refused": {str(seed): message for seed, message in sorted(refusals.items())},
+        "refused": {str(seed): packet for seed, packet in sorted(refusals.items())},
         "clicks": dict(sorted(kinds.items())),
         "coincidence": coincidence,
         "label": "NODEREADER",

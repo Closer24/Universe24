@@ -213,7 +213,7 @@ its index (`p_x`). In code the identifier's name says the kind where it matters.
 
 ## Short sentences, one idea each (the owner, 2026-09-25)
 
-Every message, answer, brief and report is written in short sentences, one idea
+Every packet, answer, brief and report is written in short sentences, one idea
 each, the central ideas first. Short lists where there are several items. A
 question, if there is one, on its own line at the end. The repository's documents
 keep their own form.
@@ -287,7 +287,7 @@ after each batch, by a hand who did not write (the one method).
 ## The language
 
 Every repository file, commit and pull request body is in English, simple and
-precise; every message to the owner is in Hebrew (AGENTS.md, the language rule).
+precise; every packet to the owner is in Hebrew (AGENTS.md, the language rule).
 Every heading and every name is in sentence case: a capital first letter, never
 all caps (the owner, 2026-09-30). The words of the engine are the words of
 docs/ENGINE.md: a Node, a Link, a Port, an Event, the lattice, a Family, a
@@ -369,7 +369,7 @@ relayed to the Boss verbatim and recorded by him.
 The owner's standing authorization covers the Boss's commits, pushes, pull
 requests and merges of requested work on the branches of its tasks; it is not
 permission for unrelated changes, force pushes, a push to `main`, a bypassed gate
-or a message to another person. The advisor reads, computes and answers; it
+or a packet to another person. The advisor reads, computes and answers; it
 writes nothing to the law, the engine, the paper or HIGHLIGHTS.md, opens no pull
 request and grants no permission; at the owner's word of 2026-10-04 its tests
 and tools go on a branch from `main` for the Boss's HANDED BY pull request,

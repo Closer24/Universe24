@@ -85,8 +85,8 @@ made in this folder. The cloud's lay and reading of that night stand in HIGHLIGH
    intervals the tail is 1797, 1651, 1367, 1035, 728, 480, 341, 175, 116, 92, 43, 27, 21 (the
    sign of the levels at that phase), the ratios no longer monotone beyond 5 Links (0.71,
    0.51, 0.66, 0.79, 0.47): the outer record carries waves.
-4. **The drift.** The books' drift of the matter share +65.3 quanta at tick 400 (the runner) and
-   +56.4 at tick 401 (the reader), 0.5 to 0.6 percent of the laid 10,400, oscillating with the
+4. **The drift.** The books' drift of the matter share +65.3 quanta at interval 400 (the runner) and
+   +56.4 at interval 401 (the reader), 0.5 to 0.6 percent of the laid 10,400, oscillating with the
    rotation's phase by about 10 quanta; the Nodes' rounded counts 10,137 to 10,174; the open
    faces' layer reports 0.018 quanta of matter in all over 400 intervals (400 `click` lines,
    each a small fraction of a quantum); the centroid at the laid Node [12, 12, 12] exactly at
@@ -189,8 +189,8 @@ the lay); the reader stepped the same world 401 intervals.
    0.814), against the read 0.25 to 0.52 at 2 to 4 Links: the fall is the body's own width (the
    rms 3.1 Links) and the faces' pull, steeper than the chain's. After 400 intervals 1917, 1715,
    1332, 916, 523, 262, the ratios 0.895, 0.777, 0.688, 0.571, 0.501.
-4. **The drift.** The books' drift of the matter share +29.1 quanta at tick 400 (the runner) and
-   +32.8 at tick 401 (the reader), 0.36 to 0.41 percent of the Nodes' 8,023 at the start (the
+4. **The drift.** The books' drift of the matter share +29.1 quanta at interval 400 (the runner) and
+   +32.8 at interval 401 (the reader), 0.36 to 0.41 percent of the Nodes' 8,023 at the start (the
    books' share 8,063 at the start and 8,092 at the end; the Nodes' rounded counts 8,023 to
    7,962 over the region); the open faces' layer reports 1.75 quanta of matter in all over 400
    intervals (400 `click` lines); the centroid at the laid Node [5, 5, 5] exactly at both ends;
@@ -342,8 +342,8 @@ factors at every count is the mathematician's hand, the advisor's (1)(c), #1563 
    against the read 0.43 to 0.69 at 2 to 4 Links. After 400 intervals 2578, 2180, 1444, 802,
    419, 177 along +x (y and z within 2 percent of x to 4 Links, 152 to 177 at 5), the ratios
    0.846, 0.662, 0.555, 0.522, 0.422.
-4. **The drift.** The books' drift of the matter share +31.6 quanta at tick 400 (the runner) and
-   +26.9 at tick 401 (the reader), 0.19 to 0.23 percent of the laid 13,999 (the books' share
+4. **The drift.** The books' drift of the matter share +31.6 quanta at interval 400 (the runner) and
+   +26.9 at interval 401 (the reader), 0.19 to 0.23 percent of the laid 13,999 (the books' share
    14,097 and 14,092 quanta; the Nodes' rounded counts 13,999 to 14,012 over the region); the
    open faces' layer reports 12.5 quanta of matter in all over 400 intervals (400 `click` lines,
    0.09 percent); the centroid at the laid Node [5, 5, 5] exactly at both ends; the centre's

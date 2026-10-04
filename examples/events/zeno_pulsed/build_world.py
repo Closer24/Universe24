@@ -1,4 +1,4 @@
-"""The pulsed quantum Zeno gate's builder (the paper's S.59; ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): from `design.json` it writes one world per probe count n, `zeno_pulsed_<n>.json`, the shipped Zeno body (two parts, g at the count 1 and e at 0) declared a NodeReader at one Node of a periodic box under the continuous drive's plane wave whose turn over the run is a pi pulse at the Node clock 96,000, with a probe, a record of a neutral family of one real line laid whole by the count at the body's Node at the ticks T_pi k / n, k = 1 to n (Itano's protocol), the body's transition of g into itself at the probe's family (taken by g, no turn) and its generator alone under `node_reader`, no declared window: the window is bounded by the probe's lays; and the blind `expectation.json`, Itano's column P(e at T_pi) = (1 - cos^n(pi / n)) / 2 with its standard error at the design's seeds, the passed probes and the fluorescence clicks per run. With `--modes` it lays the drive by the generator (the probe takes no mode entry). Every number is the design's; the engine reads none of it.
+"""The pulsed quantum Zeno gate's builder (the paper's S.59; ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): from `design.json` it writes one world per probe count n, `zeno_pulsed_<n>.json`, the shipped Zeno body (two parts, g at the count 1 and e at 0) declared a NodeReader at one Node of a periodic box under the continuous drive's plane wave whose turn over the run is a pi pulse at the Node clock 96,000, with a probe, a record of a neutral family of one real line laid whole by the count at the body's Node at the intervals T_pi k / n, k = 1 to n (Itano's protocol), the body's transition of g into itself at the probe's family (taken by g, no turn) and its generator alone under `node_reader`, no declared window: the window is bounded by the probe's lays; and the blind `expectation.json`, Itano's column P(e at T_pi) = (1 - cos^n(pi / n)) / 2 with its standard error at the design's seeds, the passed probes and the fluorescence clicks per run. With `--modes` it lays the drive by the generator (the probe takes no mode entry). Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/zeno_pulsed/build_world.py --modes [--folder <folder>]
 """
@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 
 def world_of(design: dict, n: int) -> dict:
-    """One pulsed Zeno world: the probe laid at the body's Node at the ticks T_pi k / n, k = 1 to n."""
+    """One pulsed Zeno world: the probe laid at the body's Node at the intervals T_pi k / n, k = 1 to n."""
     shape, at, probe = design["shape"], design["record"]["node"], design["probe"]
     record = {
         "family": design["record"]["family"],
@@ -47,7 +47,7 @@ def world_of(design: dict, n: int) -> dict:
         "node_reader": {**design["generator"], "seed": design["record"]["seed"]},
     }
     drive = design["drive"]
-    messages = [
+    packets = [
         {
             "family": drive["family"],
             "along": "x",
@@ -58,24 +58,24 @@ def world_of(design: dict, n: int) -> dict:
             "edge": {"x": 0, "y": 0, "z": 0},
         }
     ]
-    messages += [
-        {"family": probe["family"], "whole": at, "count": probe["count"], "tick": tick}
-        for tick in ticks_of(design, n)
+    packets += [
+        {"family": probe["family"], "whole": at, "count": probe["count"], "interval": interval}
+        for interval in intervals_of(design, n)
     ]
     return {
         "shape": shape,
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
-        "ticks": design["intervals"],
+        "intervals": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [record],
-        "messages": messages,
+        "packets": packets,
         "node_readers": [],
     }
 
 
-def ticks_of(design: dict, n: int) -> list[int]:
-    """The probe's ticks, T_pi k / n for k = 1 to n, the last at T_pi."""
+def intervals_of(design: dict, n: int) -> list[int]:
+    """The probe's intervals, T_pi k / n for k = 1 to n, the last at T_pi."""
     return [design["intervals"] * k // n for k in range(1, n + 1)]
 
 
@@ -86,7 +86,7 @@ def blind_of(n: int, trials: int) -> dict:
     fluorescence = sum((1 + math.cos(math.pi / n) ** j) / 2 for j in range(1, n + 1))
     return {
         "n": n,
-        "ticks": None,
+        "intervals": None,
         "reading": "the fraction of the trials whose body stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
         "blind": f"P(e at T_pi) = (1 - cos^n(pi / n)) / 2 = {value:.4f}",
         "value": round(value, 4),
@@ -115,10 +115,10 @@ def main(argv: list[str] | None = None) -> None:
             import pixel_mode
 
             pixel_mode.main(["--input", str(path)])
-        blind[f"zeno_pulsed_{n}"] = {**blind_of(n, len(design["seeds"])), "ticks": ticks_of(design, n)}
+        blind[f"zeno_pulsed_{n}"] = {**blind_of(n, len(design["seeds"])), "intervals": intervals_of(design, n)}
     expectation = {
         "verdict": "NODEREADER",
-        "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 ticks, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
+        "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 intervals, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],
         "blind": blind,

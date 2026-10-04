@@ -154,7 +154,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=40)
+    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
     world.update(engine="e.json", bodies=[], node_readers=[])
     paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
     for name, path in paths.items():

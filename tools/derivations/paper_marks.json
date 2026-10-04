@@ -192,7 +192,7 @@
       "event_universe.core.rule3.coefficients": "the law's line at the vacuum's paces: w = 6 den Gamma^2, R = 2 num Gamma^2, S = 12 num Gamma^2 - 6 R = 0 (ALGEBRA.md, The line; The conventions and the units, row 3)",
       "event_universe.loader.derived.count_wall": "W_c = 3 den T for a massless family (ALGEBRA.md, The conventions and the units, row 11)",
       "event_universe.loader.world.World": "the files are JSON: the world, the universe it names and the mode file beside it, read with json",
-      "event_universe.world_files.load_world": "the same JSON read, the mode file's levels the message lay's",
+      "event_universe.world_files.load_world": "the same JSON read, the mode file's levels the packet lay's",
       "click_counts.apportioned, drawn, extrema, nearest": "the reader's arithmetic on the regions' inflows: the credit N = (sum s + W_rec div 2) div W_rec and the draw by the shares (row 16), a pure-Python copy of the reader's own formulas"
      },
      "status": "the advisor's #1538 comment 5976619027, item 5: the three formulas are the law's own lines and the files are JSON, so the imports can drop; the writer re-pins the paper"
@@ -707,7 +707,7 @@
    "existing_script": "tools/derivations/zeno.py",
    "proposed_module": "zeno.py",
    "status": "scripted",
-   "note": "P(e) at n = 1, the body's period 2 pi / omega_b at the computed pair's rest rotation, and P(e) with that period as the window over the pulsed gate's T_pi = 768 ticks (103 windows; ALGEBRA.md, What is open, item 46, 'the pi pulse 768 ticks'; S.59 (a)'s T_pi = pi / (2 Omega_R))",
+   "note": "P(e) at n = 1, the body's period 2 pi / omega_b at the computed pair's rest rotation, and P(e) with that period as the window over the pulsed gate's T_pi = 768 intervals (103 windows; ALGEBRA.md, What is open, item 46, 'the pi pulse 768 intervals'; S.59 (a)'s T_pi = pi / (2 Omega_R))",
    "script": "tools/derivations/zeno.py",
    "function": "own_period_as_window",
    "expected": [
@@ -1516,7 +1516,7 @@
    "line": 519,
    "mark": "derived",
    "main_section": "sec:forms",
-   "excerpt": "\\item[(e)] \\emph{The moving clock: the band's kinetic scale and the fourth order} (\\claimmark{derived}, \\fence{clicks}; S.21). The tick's factor of a packet moving at the velocity $v$ is $f = \\Omega(k) / \\omega_0$, where $\\Omega(k) = \\omega(k) - k\\,\\omega'(k)$ is the rotation at the moving centre. F ...",
+   "excerpt": "\\item[(e)] \\emph{The moving clock: the band's kinetic scale and the fourth order} (\\claimmark{derived}, \\fence{clicks}; S.21). The interval's factor of a packet moving at the velocity $v$ is $f = \\Omega(k) / \\omega_0$, where $\\Omega(k) = \\omega(k) - k\\,\\omega'(k)$ is the rotation at the moving centre. F ...",
    "numbers": [
     "[2, 3]",
     "1.6926",
@@ -1714,7 +1714,7 @@
    "existing_script": "paper/general_formula/moving_clock.py",
    "proposed_module": "moving_clock.py",
    "status": "scripted",
-   "note": "the figure's dot, the axis's largest group speed, and c_m / c at [2, 3]; the curve is tick_factor on rule3's band",
+   "note": "the figure's dot, the axis's largest group speed, and c_m / c at [2, 3]; the curve is interval_factor on rule3's band",
    "script": "tools/derivations/moving_clock.py",
    "function": "figure",
    "expected": [

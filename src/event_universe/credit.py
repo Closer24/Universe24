@@ -37,7 +37,7 @@ Clock = list[
 
 @dataclass
 class Books:
-    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's ticks, `clocked_regions`), the count of the windows closed, the node_readers' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `meeting.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left untaken (`untaken`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `meeting.took`, `meeting.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each untaken share is kept in (`untaken_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `untaken_in`; ALGEBRA.md, The taking, the draw (b))."""
+    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeReaders with their own books (`meeting.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `giving.given_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_readers' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `meeting.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left untaken (`untaken`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `meeting.took`, `meeting.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each untaken share is kept in (`untaken_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `untaken_in`; ALGEBRA.md, The taking, the draw (b))."""
 
     declaration: Draw | None
     elapsed: int
@@ -76,10 +76,10 @@ class Books:
         self.untaken.pop(family, None)
         self.untaken_units.pop(family, None)
 
-    def window_of(self, tick: int) -> list[int]:
-        """The window closing at `tick`, [first, last], the declaration's length of intervals."""
+    def window_of(self, interval: int) -> list[int]:
+        """The window closing at `interval`, [first, last], the declaration's length of intervals."""
         assert self.declaration is not None
-        return [tick - self.declaration.window + 1, tick]
+        return [interval - self.declaration.window + 1, interval]
 
     @classmethod
     def of(cls, board: Lattice) -> Books:
@@ -129,7 +129,7 @@ def quanta_through(books: Books, index: int, inflow: int, link_unit: int) -> int
 
 
 def clocked_regions(board: Lattice) -> None:
-    """The node_readers' own clocks, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a node_reader's proper interval per board tick at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's tick, in a well it runs slower."""
+    """The node_readers' own clocks, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a node_reader's proper interval per board interval at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's interval, in a well it runs slower."""
     books, gamma = board.credit, board.world.node_clock
     if books.declaration is None:
         return
@@ -253,17 +253,17 @@ def click_node(
     kept: list[int],
     quantum: int,
 ) -> list[Node]:
-    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_reader.drawn_weights`; none where nothing entered: no Node, no write); one credit line, its result the window, the node_reader's own proper time at the close and the index of the window closed (`clocked_regions`, the node_reader's two clocks beside the board's tick, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, and no Node (the owner's words: the node_reader gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`meeting.click_act`, the face at that Node); returns the Node, none where nothing entered."""
+    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_reader.drawn_weights`; none where nothing entered: no Node, no write); one credit line, its result the window, the node_reader's own proper time at the close and the index of the window closed (`clocked_regions`, the node_reader's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, and no Node (the owner's words: the node_reader gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`meeting.click_act`, the face at that Node); returns the Node, none where nothing entered."""
     nodes = list(book)
     weights = drawn_weights(board, (book[at] for at in nodes))
     if sum(weights) <= 0:
         return []
     at = nodes[draw(board, weights)]
     books = board.credit
-    left, window = books.counts[index] - quantum, books.window_of(board.tick)
+    left, window = books.counts[index] - quantum, books.window_of(board.interval)
     if board.output is not None:
         family, proper = board.families[index].name, books.clocks.get((index, name), [0, 0])[0]
         board.output(
-            credit(board.tick, family, name, window, proper, books.windows, realised, kept, 1, left)
+            credit(board.interval, family, name, window, proper, books.windows, realised, kept, 1, left)
         )
     return [at]

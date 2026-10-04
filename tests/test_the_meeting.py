@@ -40,7 +40,7 @@ MERMIN = (((X, Y, Y), (Y, X, Y), (Y, Y, X), (X, X, X)), (1, 1, 1, -1))  # Mermin
 
 
 def side(*parts: tuple[int, int]) -> dict[int, list[list[int]]]:
-    return {tick: [list(part) for part in parts] for tick in range(1, 4)}
+    return {interval: [list(part) for part in parts] for interval in range(1, 4)}
 
 
 def credits(sides, order, patterns, form=GATE.joint):  # type: ignore[no-untyped-def]
@@ -58,7 +58,7 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         parts = [line for line in lines if line["event"] == "parts"]
         equal = all(len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "NODEREADER" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
-        assert parts and equal and credits and all(c["tick"] == c["window"][1] for c in credits)
+        assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
         board = Lattice(load_world(folder / f"{name}.json"))
         assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
     outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
@@ -97,7 +97,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     path = tmp_path / f"{expected['runs'][expected['order'][0]]}.json"
     board = Lattice(load_world(path), (lines := []).append)
     board.states[-1].lines[1].now[board.shape[0] // 2, 0, 0] += 1  # the pair's one part a level off
-    for _ in range(board.world.ticks):
+    for _ in range(board.world.intervals):
         board.step()
     assert (board.states[-1].lines[0].now != board.states[-1].lines[1].now).any()
     assert GATE.one_world(path, lines, expected)["mismatch"]["ratios"] != [[1, 1]]
@@ -136,7 +136,7 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_reader's proper time at the close (the board's tick in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `draw` key refused by name with a window of 0 and without its seed."""
+    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_reader's proper time at the close (the board's interval in the vacuum) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `draw` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["draw"]["window"], draw = 40, dict(world["draw"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -146,22 +146,22 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     board, plain = Lattice(load_world(cut), (lines := []).append), Lattice(load_world(twin))
     kept = {}
     for _ in range(100):
-        board.step(), kept.__setitem__(board.tick, BACK.snapshot(board))
-        board.tick <= 41 and plain.step()
+        board.step(), kept.__setitem__(board.interval, BACK.snapshot(board))
+        board.interval <= 41 and plain.step()
     credits = [line for line in lines if line["event"] == "credit"]
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
-    at = [(c["tick"], c["node_reader"], c["count"], c["window"][0], c["left"]) for c in credits]
+    at = [(c["interval"], c["node_reader"], c["count"], c["window"][0], c["left"]) for c in credits]
     left = board.credit.counts[pair]
     assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
     assert [(c["proper"], c["windows"]) for c in credits] == [(40, 1), (40, 1), (80, 2), (80, 2)]
     report = set(
-        "event label tick family node_reader window proper windows before realised kept count left taken given".split()
+        "event label interval family node_reader window proper windows before realised kept count left taken given".split()
     )
     assert all(set(c) == report and c["label"] == "NODEREADER" for c in credits)  # never a Node
     holes = [
-        f for f in lines if f["event"] == "face" and f["tick"] == 41
+        f for f in lines if f["event"] == "face" and f["interval"] == 41
     ]  # the hole's Nodes, the tool's
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
     assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
@@ -175,13 +175,13 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
             BACK.crossed(board, lines),
             board.step_inverse(),
         )  # lines: the inverse crosses the clicks bit for bit
-        assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
+        assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
     assert BACK.verdict(Lattice(load_world(twin)), 39)["verdict"] == "MATCH"
     empty = Lattice(load_world(cut), (none := []).append)
     empty.credit.counts[pair] = 0
     for _ in range(40):
         empty.step()
-    before = [line for line in lines if line["tick"] <= 40 and line["event"] != "credit"]
+    before = [line for line in lines if line["interval"] <= 40 and line["event"] != "credit"]
     assert none == before and empty.credit.state == draw["seed"]  # no credit line, no draw consumed
     refused("window", draw_of, {**draw, "window": 0}, "draw")
     refused("lacks", draw_of, {"window": 1}, "draw")
@@ -193,7 +193,7 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     families = universe_of(json.loads((folder / "nucleons.json").read_text(encoding="utf-8")))[1]
     world = json.loads((folder / "neutron_conversion.json").read_text(encoding="utf-8"))
     table = (body := world["bodies"][0])["conversion"]
-    body["conversion"]["rate"], body["node_reader"]["window"], world["ticks"] = 1, 2, 4
+    body["conversion"]["rate"], body["node_reader"]["window"], world["intervals"] = 1, 2, 4
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     quanta = {f.name: k for k, f in enumerate(families) if f.quanta}
     rows = {"from 1": {"rate": 0}, "other than": {"to": ["neutron"]}, "lists the": {"to": []}}
@@ -269,7 +269,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     for word, outs in wrong.items():
         entry = {**body, "conversion": {**body["conversion"], "to": outs}}
         refused(word, node_reader_of, entry, "bodies[0]", families, quanta["neutron"], quanta, 1)
-    body["conversion"]["rate"], body["node_reader"]["window"], world["ticks"] = 1, 1, 6
+    body["conversion"]["rate"], body["node_reader"]["window"], world["intervals"] = 1, 1, 6
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path), (lines := []).append)
     p, e, nu = outs = [quanta[row["family"] if isinstance(row, dict) else row] for row in table]
@@ -288,7 +288,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
     board.step()  # the first window closes at the first interval and the conversion is drawn
     [converted] = [x for x in lines if x["event"] == "conversion"]
     at = tuple(converted["node"]["at"])  # the drawn Node, a diagnostic of the line
-    assert converted["tick"] == 1 and at in region and sign_rows() == [0, 0, 0]
+    assert converted["interval"] == 1 and at in region and sign_rows() == [0, 0, 0]
     assert levels(p) == [(73, 0), (0, -73)] * 3 and levels(e) == [(128, 0), (0, 128)]
     assert levels(nu) == [(128, 128)] and [board.credit.counts[k] for k in outs] == [1, 1, 1]
     wronskians = [int(np.asarray(node.wronskian(board.states[k].lines, True))[at]) for k in (p, e)]
@@ -352,11 +352,11 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking(
     tmp_path, monkeypatch
 ):
-    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/messages.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the ticks 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `tick`, a tick beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's tick: no close before it, the generator at its seed, the body dark under the probe alone; at the tick the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's ticks' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's ticks are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
+    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/packets.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the intervals 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `interval`, an interval beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's interval: no close before it, the generator at its seed, the body dark under the probe alone; at the interval the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's intervals' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's intervals are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
     path, folder = pulsed_world(tmp_path, monkeypatch), EVENTS / "zeno_pulsed"
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    (record,), lays = world["bodies"], world["messages"]
+    (record,), lays = world["bodies"], world["packets"]
     (*turns, probe), draw = record["transitions"], record["node_reader"]
     families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
     wrong = {"beside a probe": {**record, "node_reader": {**draw, "window": 1}}}
@@ -366,10 +366,10 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
         refused(word, node_reader_of, body, "bodies[0]", families, 0, quanta, 1)
     assert node_reader_of(record, "bodies[0]", families, 0, quanta, 1).draw == Generator(**draw)
     assert isinstance(draw_of({**draw, "window": 1}, "node_reader"), Draw)
-    untimed = {k: v for k, v in lays[0].items() if k != "tick"}
-    for word, message in (("without `tick`", untimed), ("tick", {**lays[0], "tick": 10})):
+    untimed = {k: v for k, v in lays[0].items() if k != "interval"}
+    for word, packet in (("without `interval`", untimed), ("interval", {**lays[0], "interval": 10})):
         bad = tmp_path / "bad.json"
-        bad.write_text(json.dumps({**world, "messages": [message]}), encoding="utf-8")
+        bad.write_text(json.dumps({**world, "packets": [packet]}), encoding="utf-8")
         refused(word, load_world, bad)
     board = Lattice(load_world(path), (lines := []).append)
     names = [f.name for f in board.families]
@@ -377,19 +377,19 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     here, books = tuple(np.add([1, 1, 1], board.offset)), board.credit.bodies[0]
     room, bound = board.world.width, board.world.amplitude_bound
     assert books.references[0].scale == resonance.scale_of(room, bound, 9)
-    for tick in (1, 2):  # the window stands: no close, no draw, no lay
+    for interval in (1, 2):  # the window stands: no close, no draw, no lay
         board.step()
-        assert (books.elapsed, books.state, books.windows) == (tick, 25, 0)
+        assert (books.elapsed, books.state, books.windows) == (interval, 25, 0)
     assert not lines and meeting.dark(board, books) and board.credit.counts[probed] == 0
-    board.step()  # the probe's tick: the lay by the count, the close, the probe's click certain from g
+    board.step()  # the probe's interval: the lay by the count, the close, the probe's click certain from g
     line, wall = board.states[probed].lines[0], books.labels[0]
     assert (int(line.now[here]), int(line.before[here])) == (128, 128)
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
     jumps = [x for x in lines if x["event"] == "credit"]
-    keys = ("label", "tick", "window", "proper", "windows", "realised", "before", "taken", "given")
+    keys = ("label", "interval", "window", "proper", "windows", "realised", "before", "taken", "given")
     click = ("NODEREADER", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
-    laid = [(x["family"], x["tick"]) for x in lines if x["event"] == "lay"]
+    laid = [(x["family"], x["interval"]) for x in lines if x["event"] == "lay"]
     assert laid == [
         ("probe", 3),
         ("atom", 3),
@@ -405,12 +405,12 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     taking = ("NODEREADER", 7, [4, 7], 7, 2, "e", "g", "pulse", None)
     assert [tuple(x[k] for k in keys) for x in jumps[1:]] == [taking] and state != books.state
     assert (books.part, board.credit.counts[pulse], board.credit.counts[probed]) == (1, 0, 2)
-    faces = {(f.family, f.tick) for faces in board.credit.faces.values() for f in faces}
+    faces = {(f.family, f.interval) for faces in board.credit.faces.values() for f in faces}
     assert faces == {(pulse, 8), (pulse, 9)} and (books.windows, books.clock) == (2, [7, 0])
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     pulsed = folder / "zeno_pulsed_4.json"
     shipped = json.loads(pulsed.read_text(encoding="utf-8"))
-    assert [m["tick"] for m in shipped["messages"] if "tick" in m] == [192, 384, 576, 768]
+    assert [m["interval"] for m in shipped["packets"] if "interval" in m] == [192, 384, 576, 768]
     assert BACK.verdict(Lattice(load_world(pulsed)), 200)["verdict"] == "MATCH"
 
 
@@ -423,14 +423,14 @@ def test_the_pulsed_closes_two_keys_are_g_by_pulse_from_e_and_g_by_probe_from_g(
     board.credit.counts[pulse], board.credit.units[pulse] = 1, -1  # the drive in the books alone
     closes = {3: ([("body 0 g by pulse", "e", "pulse", None)], wall * wall)}
     closes[7] = ([*closes[3][0], ("body 0 g by probe", "g", "probe", "probe")], 0)
-    for tick, (expected, share) in closes.items():
-        while board.tick < tick:
+    for interval, (expected, share) in closes.items():
+        while board.interval < interval:
             board.step()
         clicks = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER"]
         keyed = [(click_key(x), x["before"], x["given"], x["taken"]) for x in clicks]
         assert keyed == expected and (books.part, books.counts) == (0, [1, 0])
         assert list(books.shares.values()) == [share] and meeting.dark(board, books)
-    first = [x for x in lines if x["event"] == "credit" and x["tick"] == 3]
+    first = [x for x in lines if x["event"] == "credit" and x["interval"] == 3]
     assert len(first) == 1 and "probe" not in (first[0]["taken"], first[0]["given"])
     assert not [x for x in lines if x["event"] == "lay" and x["family"] == "pulse"]
 
@@ -446,16 +446,16 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
     booked_share = int(board.share_of(pulse)[0][at])
     assert booked_share > unit  # dense: the booked share at the Node above the record's quantum
     returns: list[dict] = []
-    while board.tick < 480 and not returns:
+    while board.interval < 480 and not returns:
         board.step(), twin.step()
         for key in ("now", "before", "remainder"):
             mine, its = (getattr(b.states[pulse].lines[0], key) for b in (board, twin))
             assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
-        if board.tick == 84:
+        if board.interval == 84:
             books, its_books = board.books()["pulse"], twin.books()["pulse"]
         returns = [x for x in lines if x["event"] == "credit" and x["given"] == "pulse"]
     jumps = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER" and x["taken"]]
-    assert [x["tick"] for x in jumps][:1] == [72] and jumps[0]["taken"] == "pulse"
+    assert [x["interval"] for x in jumps][:1] == [72] and jumps[0]["taken"] == "pulse"
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
     assert not board.credit.fronts and not board.credit.sources
     print(
@@ -467,12 +467,12 @@ def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
     assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
     cycled = board.books()["pulse"]
-    print(f"the return at {returns[0]['tick']} after {len(jumps)} takings: the books {cycled}")
+    print(f"the return at {returns[0]['interval']} after {len(jumps)} takings: the books {cycled}")
     assert (cycled["count"], cycled["deficit"]) == (count - len(jumps) + 1, len(jumps) - 1)
     gate = Lattice(load_world(zeno))
     gate.credit.bodies[0].state = 2
     assert (
-        BACK.verdict(gate, returns[0]["tick"])["verdict"] == "MATCH"
+        BACK.verdict(gate, returns[0]["interval"])["verdict"] == "MATCH"
     )  # across the taking and the return
 
 
@@ -480,7 +480,7 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
     """The undepleted beam at the giving (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `meeting.written`, `meeting.faced`, `giving.given_quantum`): the Zeno n = 2 world with a rate e to g at the lifetime 8 giving to the pulse itself, the dense record at the reader's Node, at the trial seed 2, beside the pulse alone (the return by the rate or by the transition's descent, `meeting.exchange`, both givings into the beam): the takings and the giving write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per taking and up by one per giving, the deficit the takings less the givings (the books' line printed); the sparse giving's own tests stand in `tests/test_the_giving.py`."""
     world = json.loads((EVENTS / "zeno" / "zeno_2.json").read_text(encoding="utf-8"))
     world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
-    world["ticks"] = 480
+    world["intervals"] = 480
     (path := tmp_path / "zeno_rate.json").write_text(json.dumps(world), encoding="utf-8")
     (alone := tmp_path / "pulse_alone.json").write_text(
         json.dumps({**world, "bodies": []}), encoding="utf-8"
@@ -489,11 +489,13 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
     board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
     board.credit.bodies[0].state, pulse = 2, [f.name for f in board.families].index("pulse")
     count, given = board.credit.counts[pulse], []
-    while board.tick < world["ticks"] and not given:
+    while board.interval < world["intervals"] and not given:
         board.step(), twin.step()
         given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
     taken = [c for c in lines if c["event"] == "credit" and c["taken"] == "pulse"]
-    assert given and taken and given[0]["tick"] > taken[0]["tick"]  # a taking, then the giving back
+    assert (
+        given and taken and given[0]["interval"] > taken[0]["interval"]
+    )  # a taking, then the giving back
     for key in ("now", "before", "remainder"):
         assert np.array_equal(
             getattr(board.states[pulse].lines[0], key), getattr(twin.states[pulse].lines[0], key)
@@ -503,7 +505,7 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
     )
     books = board.books()["pulse"]
     print(
-        f"the Zeno pulse after {len(taken)} takings and {len(given)} giving at {board.tick}: the books {books}"
+        f"the Zeno pulse after {len(taken)} takings and {len(given)} giving at {board.interval}: the books {books}"
     )
     assert (books["count"], books["deficit"]) == (
         count - len(taken) + len(given),
@@ -518,7 +520,7 @@ def test_a_giving_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
     """The law's line of the start (the owner's word of 2026-10-03, #1572 comment 5968627499 (255); the mathematician's 254 with the advisor's 5968491596, two hands): every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2), the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor. A Node holding no level and the half wall steps to itself exactly; and one massless quantum laid whole by the count at one Node of the shipped Zeno box, 8 by 8 by 5 periodic on all three axes (one odd extent; the uniform mode is a double root of the rule on any periodic board), stays bounded: the lattice's half-up rule reads the largest level 50 at the interval 200, printed from the run (on the former 8 by 8 by 4 box it read 172, the reals 242 and the floor grew as t^2 to 6,268, Worker PULSE's 5968413761)."""
     world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
-    world.update(bodies=[], messages=[], node_readers=[], ticks=200)
+    world.update(bodies=[], packets=[], node_readers=[], intervals=200)
     path = tmp_path / "box.json"
     path.write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path))
@@ -549,9 +551,14 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
         board.step()
         shares.append(board.books()["photon"]["share"])
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-    assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {line["event"] for line in lines if line["tick"] > 48} <= {"erasure", "face", "credit", "lay"}
+    assert {line["event"] for line in lines if line["interval"] > 48} <= {
+        "erasure",
+        "face",
+        "credit",
+        "lay",
+    }
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
@@ -577,15 +584,15 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
             body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
             body["node_reader"] = {**body["node_reader"], "window": window}
             body["transitions"] = [{**body["transitions"][0], "drive": d} for d in drives]
-        for message, x, family in zip(world["messages"], (32, 31), ("photon", "photon_b"), strict=True):
-            message.update(top={**message["top"], "x": [x, x]}, family=family)
-        world["messages"] = [m for m in world["messages"] if m["family"] in drives]
+        for packet, x, family in zip(world["packets"], (32, 31), ("photon", "photon_b"), strict=True):
+            packet.update(top={**packet["top"], "x": [x, x]}, family=family)
+        world["packets"] = [m for m in world["packets"] if m["family"] in drives]
         (path := tmp_path / f"{len(drives)}.json").write_text(json.dumps(world), encoding="utf-8")
         TOOL.main(["--input", str(path)])
         board = Lattice(load_world(path), (lines := []).append)
-        while board.tick < 56:
+        while board.interval < 56:
             board.step()
-        clicks[drives] = [(c["tick"], c["node_reader"], c["taken"]) for c in lines if c.get("taken")]
+        clicks[drives] = [(c["interval"], c["node_reader"], c["taken"]) for c in lines if c.get("taken")]
     assert clicks["photon", "photon_b"] == [(44, "body 0", "photon_b"), (56, "body 1", "photon")]
     assert clicks[("photon",)] == [(56, "body 1", "photon")]
     two, one = seen[:2], seen[2:]  # the closes at 44 and 56 per world; the drives photon 1, photon_b 2

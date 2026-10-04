@@ -85,7 +85,7 @@ written).
 
 ## The beam form of 221, tried and named (the mathematician's 221, #1572 comment 5965498522)
 
-The mathematician's T10 found the frequency travels with the message in a guide and dies in the open
+The mathematician's T10 found the frequency travels with the packet in a guide and dies in the open
 board below one level per Node within about 0.28 A_source Links, and asked for the born quantum as a
 beam from the body's Node along a drawn axis. Tried in this chain before the push, at the owner's
 word: the source's head moving one Link per interval along a drawn axis with the on-shell phase
@@ -96,7 +96,7 @@ against 0.667; the travelling pair (the level before the wave one interval earli
 Omega / k = 0.535 and the increments do not add in one wave. The standing source at the Node inside
 the guide reads the frequency (the plateau's 0.6682 above) and lays one quantum; it is what the tree
 holds, with the direction undrawn (a draw with no act is not declared). The beam's lay with the
-message lay's transverse envelope, or the guide declared, is a round of its own with two hands; a
+packet lay's transverse envelope, or the guide declared, is a round of its own with two hands; a
 giving at a resonance above the axis band's top is refused by name at the loader (221 (2a)).
 
 ## The hands' seconds on 221 (the advisor's #1572 comment 5965700585 and #1563 comment 5965700890)
@@ -215,7 +215,7 @@ test's `jump` lines). The 48 `lay` lines of row 1 are labelled a lattice diagnos
 Rows 2 and 3 are lattice readings and their verdicts rest on them: the far Node's cosine is read
 from the light's levels at the Node [8, 0, 0] per interval (`tests/test_the_draw.py`, the levels
 series) and the count at the span's end from the share over the board. The lines carry the board's
-`tick` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are board
+`interval` and the `window` in board intervals; the giver's window 48 and the lifetime 48 are board
 intervals, and no line carries a record's own clock.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
@@ -373,7 +373,7 @@ S = 0.671 T already was one quantum within the rounding. The unit stands as the 
 
 The blind, before any run: the born quantum 1.00 within 0.01 quanta in the record's own unit at every
 pair, [2, 3], [4, 5] and [9, 10] (the three readings 1.0, 1.4 and 2.43 falling to 1.0); the resonance
-world's count 1 in both units; the gate worlds bit for bit (they lay by messages, no giving); the Zeno
+world's count 1 in both units; the gate worlds bit for bit (they lay by packets, no giving); the Zeno
 worlds re-read (no giving there, unmoved by construction; the resonance and Zeno numbers may move within
 their blinds under the quadratic factor of the same branch: what moves is recorded); the injected form
 summed at the lay as delta^2 + delta (a_t - a_(t-2)) kept beside as a lattice diagnostic labelled so.

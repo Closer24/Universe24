@@ -71,7 +71,7 @@ def numbers(design: dict[str, Any]) -> dict[str, Any]:
 def world(design: dict[str, Any]) -> dict[str, object]:
     """The world of the design: the board long on x and `width` across, the giver at the centre with its packet's width, the region node_reader of the band's top across x at the reach on the +x side, the draw's window the run."""
     found, row, light = numbers(design), design["giver"], design["light"]
-    ticks = int(row["window"]) + int(design["passage_intervals"])
+    intervals = int(row["window"]) + int(design["passage_intervals"])
     giver = {
         "family": row["family"],
         "nodes": [
@@ -109,22 +109,22 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "shape": found["shape"],
         "boundary": dict(design["boundary"]),
         "face_depth": int(design["face_depth"]),
-        "ticks": ticks,
+        "intervals": intervals,
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [giver],
-        "messages": [],
+        "packets": [],
         "node_readers": [node_reader],
         "draw": {
             **design["generator"],
-            "window": ticks,
+            "window": intervals,
             "seed": int(design["node_reader"]["seed"]),
         },
     }
 
 
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind, from the design alone: the count 1 read by the node_reader in its own unit within the window of the passage, the share at the lay in the top's unit (sin Omega times the top-hat's excess, the hands' derivation), the far reading of cos Omega within 2 / A_far of the resonance over the window after the giving's tick, and the fraction of seeds whose drawn direction meets the node_reader; written before any lay, rewritten at two hands on the one-line root (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands) before the re-run."""
+    """The blind, from the design alone: the count 1 read by the node_reader in its own unit within the window of the passage, the share at the lay in the top's unit (sin Omega times the top-hat's excess, the hands' derivation), the far reading of cos Omega within 2 / A_far of the resonance over the window after the giving's interval, and the fraction of seeds whose drawn direction meets the node_reader; written before any lay, rewritten at two hands on the one-line root (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands) before the re-run."""
     found = numbers(design)
     num, den = design["giver"]["resonance"]
     first, last = design["reading_window_after_giving"]
@@ -136,7 +136,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "family": design["light"],
         "lay": {
             "lifetime": int(design["giver"]["lifetime"]),
-            "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the record's click line's tick",
+            "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the record's click line's interval",
             "width": int(design["width"]),
             "total": found["total"],
             "total_formula": "T / sin Omega = isqrt(T^2 den^2 div (den^2 - num^2)), the one-line packet's root, twice S = T / (2 sin Omega), the plane's share per line (the mathematician's 242 section 1, #1572 comment 5967687794; the advisor's second, 5967838095 section 1)",
@@ -157,7 +157,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "value": sine * excess,
             "sine_mode": sine,
             "top_hat_excess": excess,
-            "reading": "the light's share over the board in the top's unit W_c at the giving's interval, the jump line's tick, a lattice reading",
+            "reading": "the light's share over the board in the top's unit W_c at the giving's interval, the jump line's interval, a lattice reading",
             "status": "sin Omega of the top's unit with the sine mode across, times the top-hat's excess at its edges (the hands' derivation at T = 2^22, the mathematician's 242 section 1 and the advisor's second); at the shipped T the rounded levels' residue is a finding by name",
         },
         "count": {
@@ -186,7 +186,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
 
 
 def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
-    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's tick from the record's click line, the drawn direction from the lay lines, the node_reader's clicks, the light's count in the books, its share in the top's unit at the giving's tick and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
+    """The readings over the design's seeds (the giver's generator at the trial's seed as `tools/meeting_trials.py` sets it, the region's untouched): per seed the giving's interval from the record's click line, the drawn direction from the lay lines, the node_reader's clicks, the light's count in the books, its share in the top's unit at the giving's interval and the far Node's cosine over the blind's window after the giving; the blind's numbers computed from the design beside them."""
     from event_universe.lattice import Lattice
     from event_universe.world_files import load_world
 
@@ -205,11 +205,11 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
         wall = count_wall(board.families[pulse], board.world.quantum_action)
         series: dict[int, int] = {}
         given_at, share_at_lay = None, None
-        for _ in range(int(world_file["ticks"])):
+        for _ in range(int(world_file["intervals"])):
             board.step()
-            series[board.tick] = int(board.states[pulse].lines[0].now[node])
+            series[board.interval] = int(board.states[pulse].lines[0].now[node])
             if given_at is None and any(c["event"] == "credit" and c["given"] for c in lines):
-                given_at, laid = board.tick, board.total_share(pulse)[0]
+                given_at, laid = board.interval, board.total_share(pulse)[0]
                 share_at_lay = None if laid is None else laid / wall
             if board.ended is not None:
                 break
@@ -239,7 +239,7 @@ def reading(design: dict[str, Any], folder: Path) -> dict[str, object]:
                 "share_at_lay": share_at_lay,
                 "lay_lines": len(lays),
                 "clicks": len(credits),
-                "click_ticks": [c["tick"] for c in credits],
+                "click_intervals": [c["interval"] for c in credits],
                 "count_in_books": board.credit.counts[pulse],
                 "share_over_wall": None if total is None else total / wall,
                 "cos_omega_read": cosine,

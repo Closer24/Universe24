@@ -9,8 +9,8 @@ arrival's peak at the interval 69. A reading that misses the blind is a finding,
 
 ## The reading (branch click-share-fix, fb2c14c, 2026-10-04, the lay without the uniform mode)
 
-The message lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md,
-The message lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0
+The packet lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md,
+The packet lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0
 and -24,442 for now and before, a velocity of the uniform mode that Rule3 carries exactly, the
 level's mean growing by 11 per interval; the fix takes the uniform content out of each level at the
 lay (both sums 0, the before field moved by +3 to +97 at the laid Nodes, 8 percent of the amplitude
@@ -67,14 +67,14 @@ lay.
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
 | LATTICE | two_slits.json | run_inputs | verdict | LAWFUL |
-| LATTICE | two_slits.json | run_inputs | ticks | 130 |
+| LATTICE | two_slits.json | run_inputs | intervals | 130 |
 | NODEREADER | two_slits.json | run_inputs | clicks | 270 |
 | NODEREADER | two_slits.json | run_inputs | clicks screen_0 | 28 |
 | NODEREADER | two_slits.json | run_inputs | clicks screen_1 | 15 |

@@ -59,7 +59,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
         "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
     ),
-    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
+    "tests/test_the_loader.py::test_a_massless_packet_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
         24,
         "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
         "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
@@ -88,7 +88,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "after #1788's lay defect in the committed worlds that the test without a board did not catch): one lattice per "
         "folder, no interval, the long-loading folders the runner's gate by name",
     ),
-    "tests/test_pixel_mode.py::test_a_messages_mode_count_is_the_books_count_read_once_over_the_board": (
+    "tests/test_pixel_mode.py::test_a_packets_mode_count_is_the_books_count_read_once_over_the_board": (
         16,
         "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
         "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
@@ -129,7 +129,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_giving.py::test_the_open_boards_packet_lays_no_uniform_mode": (
         20,
-        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the message lay's "
+        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
         "division act, each summing to 0 over the board after the lay, the quantum standing",
     ),
     "tests/test_the_giving.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
@@ -203,7 +203,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
         70,
         "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
-        "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
+        "window bounded by the probe's lays, the lay by the count at the declared interval, the probe's click and the "
         "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
         "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
@@ -211,7 +211,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         172,
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
-        "budget's least T, the faces and the open faces' layer, the messages, the universe",
+        "budget's least T, the faces and the open faces' layer, the packets, the universe",
     ),
     "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
         289,

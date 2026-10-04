@@ -46,7 +46,7 @@ class Front:
 
 def started(board: Lattice, index: int, nodes: list[Node]) -> None:
     """A record's count at 0 in the books: a front begun at this interval from every Node written in the draw, kept in the books (`credit.Books.fronts`)."""
-    board.credit.fronts.extend(Front(index, at, board.tick) for at in nodes)
+    board.credit.fronts.extend(Front(index, at, board.interval) for at in nodes)
 
 
 def inward(mask: np.ndarray, inner: np.ndarray, board: Lattice) -> np.ndarray:
@@ -64,7 +64,7 @@ def advanced_fronts(board: Lattice) -> None:
     """Every front one shell further at the end of an interval: the faces of the record's every line at the shell at the Link-metric distance of the intervals since the click, the shell wrapped on the periodic axes and read at the file's coordinates by the offset of the layers grown before the origin; at L = 1 (`World.erasure`, the file's `erasure`, 1 as built) the two faces to 0 at each shell Node's inward Port for the next two intervals, as built, bit for bit; above 1 the taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells): at every interval the shells within the last L before the reach d are faced for the next interval alone, each on the board as it stands then (a layer grown beside a tapering shell is faced with it, where a booking made at the reach would have missed it), the shell at distance s at the fraction (L - (d - s + 1)) / L of Rule3's own level while that is above 0 (`Face.fraction`) and at 0 for its two faces after, so that its pair reaches (0, 0) as its outer neighbour's level now does and the free step keeps it there, and the hole's own Node faced to 0 through the first shell's taper, its two faces of the taking having left it at (0, 0) beside tapered neighbours; a front ends when its new shell and, above L = 1, its tapering shells lie beyond the board; one erasure line per front while a shell of it holds a Node, with the record's share standing on it and the record's unit, the faces' take in quanta."""
     kept = []
     for front in board.credit.fronts:
-        distance = board.tick - front.since
+        distance = board.interval - front.since
         if distance == 0:  # the click's own interval: the first shell at the interval after the click
             kept.append(front)
         elif erased(board, front, distance):
@@ -82,25 +82,33 @@ def erased(board: Lattice, front: Front, distance: int) -> bool:
     holds = bool(mask.any())
     if taper == 1:
         if holds:
-            faced(board, index, family.record, where, distance, [board.tick + 1, board.tick + 2], None)
+            faced(
+                board,
+                index,
+                family.record,
+                where,
+                distance,
+                [board.interval + 1, board.interval + 2],
+                None,
+            )
     else:
         for s in range(max(1, distance - taper), distance + 1):
             reached = distance - s + 1  # the intervals since the reach passed the shell s
             fraction = (taper - reached, taper) if reached < taper else None
-            holds |= faced(board, index, family.record, where, s, [board.tick + 1], fraction)
+            holds |= faced(board, index, family.record, where, s, [board.interval + 1], fraction)
         if 2 <= distance <= taper:  # the hole's Node kept at 0 while its first shell tapers
             for line in range(family.record):
-                board.credit.faces.setdefault(board.tick + 1, []).append(
-                    Face(index, line, (origin[0], origin[1], origin[2]), 0, board.tick + 1)
+                board.credit.faces.setdefault(board.interval + 1, []).append(
+                    Face(index, line, (origin[0], origin[1], origin[2]), 0, board.interval + 1)
                 )
     if not holds:  # the shells beyond the declared board: the front ends, one line
         if board.output is not None:
-            board.output(erasure(board.tick, family.name, list(origin), distance, 0, 0, unit))
+            board.output(erasure(board.interval, family.name, list(origin), distance, 0, 0, unit))
         return False
     standing = int(board.share_of(index, 1, mask)[0].sum(dtype=object)) if bool(mask.any()) else 0
     if board.output is not None:
         board.output(
-            erasure(board.tick, family.name, list(origin), distance, int(mask.sum()), standing, unit)
+            erasure(board.interval, family.name, list(origin), distance, int(mask.sum()), standing, unit)
         )
     return True
 
@@ -111,10 +119,10 @@ def faced(
     lines: int,
     at: tuple[int, int, int],
     distance: int,
-    ticks: list[int],
+    intervals: list[int],
     fraction: tuple[int, int] | None,
 ) -> bool:
-    """The faces of a record's lines at the shell at `distance` from the click's Node `at` (the board's coordinates), one per Node and line at each tick named, at the Node's inward Port (the first whose neighbour lies on the inner shell), at the taper's fraction or the target 0 (None); whether the shell holds a Node on the board (a shell beyond it books none)."""
+    """The faces of a record's lines at the shell at `distance` from the click's Node `at` (the board's coordinates), one per Node and line at each interval named, at the Node's inward Port (the first whose neighbour lies on the inner shell), at the taper's fraction or the target 0 (None); whether the shell holds a Node on the board (a shell beyond it books none)."""
     mask = shell(board.shape, at, distance, board.world.periodic)
     if not bool(mask.any()):
         return False
@@ -123,8 +131,8 @@ def faced(
         node_at = declared(board, here)
         port = int(ports[tuple(here)])
         for line in range(lines):
-            for tick in ticks:
-                board.credit.faces.setdefault(tick, []).append(
-                    Face(index, line, node_at, port, tick, fraction=fraction)
+            for interval in intervals:
+                board.credit.faces.setdefault(interval, []).append(
+                    Face(index, line, node_at, port, interval, fraction=fraction)
                 )
     return True

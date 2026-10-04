@@ -30,20 +30,20 @@ LINES = (
 def run_input(path: str, out_dir: str) -> dict[str, object]:
     """One world in this process: the verdict at load, the run, the output file; its summary returned."""
     source, lines = Path(path), []
-    output: dict[str, object] = {"input": source.name, "verdict": "LAWFUL", "ticks": 0}
+    output: dict[str, object] = {"input": source.name, "verdict": "LAWFUL", "intervals": 0}
     try:
         board = Lattice(load_world(source), lambda line: lines.append(line))
-        for _ in range(board.world.ticks):
+        for _ in range(board.world.intervals):
             board.step()
             if board.ended is not None:
                 break
-        output.update(ticks=board.tick, ended=board.ended, books=board.books())
+        output.update(intervals=board.interval, ended=board.ended, books=board.books())
     except (ValueError, RuntimeError) as refusal:
         output.update(verdict="REFUSED", reason=str(refusal))
     output["lines"] = [line for line in lines if line["event"] in LINES]
     target = Path(out_dir) / f"{source.stem}.output.json"
     target.write_text(json.dumps(output, indent=1) + "\n", encoding="utf-8")
-    return {"input": source.name, "verdict": output["verdict"], "ticks": output["ticks"]}
+    return {"input": source.name, "verdict": output["verdict"], "intervals": output["intervals"]}
 
 
 def main(argv: list[str] | None = None) -> None:

@@ -36,7 +36,7 @@ own, is the one declaration kind; do not reintroduce them.
 ## Repository language: English
 
 All repository comments, docstrings, documentation, contributor instructions,
-test descriptions, diagnostic messages and newly written identifiers are in
+test descriptions, diagnostic packets and newly written identifiers are in
 English, in every directory and by every contributor, including files brought in
 from an older branch and external documents of the project. Keep English simple
 and precise; mathematical symbols and established technical names are allowed.
@@ -48,7 +48,7 @@ letter or number stands for a thing. Use portable ASCII file names, `snake_case`
 Python modules and functions and explicit class names.
 
 Use Hebrew for conversation with the user unless he explicitly requests another
-language; a message written in another language alone is not a request to switch.
+language; a packet written in another language alone is not a request to switch.
 Before submitting a change, translate any non-English prose it introduces and run
 `tests/test_repository_language.py`; reviewers check the language as well. Do not
 exempt a directory, disable the gate or encode non-English prose as escapes.

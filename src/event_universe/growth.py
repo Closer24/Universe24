@@ -115,10 +115,10 @@ def grow(board: Lattice) -> bool:
             continue
         layers = min(face.layers, face.largest - board.shape[face.axis])
         if layers < 1:
-            board.ended = ended(face, board.tick)
+            board.ended = ended(face, board.interval)
             return False
         resize(board, face.axis, face.side, layers, 1)
-        board.growths.append((board.tick + 1, face.axis, face.side, layers))
+        board.growths.append((board.interval + 1, face.axis, face.side, layers))
     return True
 
 
@@ -157,6 +157,6 @@ def declared(at: object, offset: Node) -> list[int]:
     return [int(index) - before for index, before in zip(list(at), offset, strict=True)]  # type: ignore[call-overload]
 
 
-def ended(face: RecedingFace, tick: int) -> dict[str, object]:
+def ended(face: RecedingFace, interval: int) -> dict[str, object]:
     """The lawful end, named by the reports' words (`reports.end`): the interval, the axis and the side of the receding face grown to its largest size."""
-    return end(tick, AXES[face.axis], SIDES[1] if face.side > 0 else SIDES[0], face.largest)
+    return end(interval, AXES[face.axis], SIDES[1] if face.side > 0 else SIDES[0], face.largest)

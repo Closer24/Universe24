@@ -6,7 +6,7 @@
   "tests/test_integer_algebra.py::test_floor_division_and_modulo_are_refused_outside_core_rule3": 0.1,
   "tests/test_integer_algebra.py::test_the_module_list_names_every_module_that_runs_a_step": 0.0,
   "tests/test_look.py::test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles": 5.0,
-  "tests/test_pixel_mode.py::test_a_message_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it": 7.9,
+  "tests/test_pixel_mode.py::test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it": 7.9,
   "tests/test_repository_language.py::test_every_text_file_holds_ascii_letters_only": 0.2,
   "tests/test_rule3.py::test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools": 0.5,
   "tests/test_rule3.py::test_no_other_file_of_src_writes_the_rules_arithmetic": 0.0,

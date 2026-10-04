@@ -4,23 +4,23 @@ import json
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
-from event_universe.loader import faces, keys, lay, messages, mode, universe
+from event_universe.loader import faces, keys, lay, mode, packets, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_beside
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
-    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the messages (the list, a lay by the count on a holder of the content, whole or count without tick, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (a held row with a dimension, its sources and act, the rotation without the Wronskian, a family without a dimension, its lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, a row without reads, the pair's form, |num| = den on a massive pair, a rest on the holder of the sign)."""
+    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (a held row with a dimension, its sources and act, the rotation without the Wronskian, a family without a dimension, its lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, a row without reads, the pair's form, |num| = den on a massive pair, a rest on the holder of the sign)."""
     universe_beside(tmp_path, charged=True)
     document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     families = universe.universe_of(document)[1]
     matter, charged = (next(f for f in families if f.name == name) for name in ("matter", "charged"))
-    shape, zeros, beside = (4, 2, 1), [0] * 8, {"world_digest": "d", "bodies": [], "messages": []}
+    shape, zeros, beside = (4, 2, 1), [0] * 8, {"world_digest": "d", "bodies": [], "packets": []}
     held, one = {"sources": ["form"], "level_weight": 1, "write_weight": 1, "act": "pace"}, [1, *[0] * 7]
     packet = {"family": "matter", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 1}
     packet.update(top={"x": [0, 0], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})
-    pulse = {"family": "gravity", "whole": [0, 0, 0], "count": 1, "tick": 1}  # a holder, no quanta
+    pulse = {"family": "gravity", "whole": [0, 0, 0], "count": 1, "interval": 1}  # a holder, no quanta
     face = {"sides": ["low"], "largest": 9, "layers": 1}
 
     def level(family=matter, read=None, beyond=(), **moving):
@@ -39,11 +39,11 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         return universe.universe_of({**document, "families": list(entries)})
 
     def sent(**keys):
-        return messages.messages_of([{**packet, **keys}], beside, "d", families, shape, 10, ())
+        return packets.packets_of([{**packet, **keys}], beside, "d", families, shape, 10, ())
 
-    def unphased():  # a message without its phase: refused by name, no phase by omission
+    def unphased():  # a packet without its phase: refused by name, no phase by omission
         bare = {k: v for k, v in packet.items() if k != "phase"}
-        return messages.messages_of([bare], beside, "d", families, shape, 10, ())
+        return packets.packets_of([bare], beside, "d", families, shape, 10, ())
 
     def unacted():  # a held row without its act: refused by name, no act by omission
         return universe.shape_of({"held": {k: v for k, v in held.items() if k != "act"}}, "r")
@@ -103,14 +103,14 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
             "faces leave no Node",
             lambda: faces.faces_of([{"axis": "x", "at": x, "gaps": []} for x in range(4)], shape),
         ),
-        ("messages must be a list", lambda: messages.wholes_of({}, families, shape, (), 10)),
+        ("packets must be a list", lambda: packets.wholes_of({}, families, shape, (), 10)),
         (
             "a family of quanta for a lay by the count",
-            lambda: messages.wholes_of([pulse], families, shape, (), 10),
+            lambda: packets.wholes_of([pulse], families, shape, (), 10),
         ),
         (
-            "without `tick`",
-            lambda: messages.messages_of(
+            "without `interval`",
+            lambda: packets.packets_of(
                 [{"family": "matter", "whole": [0, 0, 0]}], None, "d", families, shape, 10, ()
             ),
         ),
@@ -184,10 +184,10 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone
 
 
-def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does(
+def test_a_massless_packet_lays_no_uniform_mode_and_the_board_refuses_one_that_does(
     tmp_path, monkeypatch
 ):
-    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The message lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`Lattice.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
+    """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The packet lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`Lattice.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
     for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
         board = Lattice(load_world(EVENTS / f"{world}.json"), lambda line: None)
         for index, family in enumerate(board.families):
@@ -202,7 +202,7 @@ def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_
     assert int(laid.now.sum(dtype=object)) == 0 and int(laid.before.sum(dtype=object)) == 0
     for word in ("now", "before"):  # one level moved by 2 at one Node: the act's guard refuses by name
         moved = json.loads(json.dumps(mode))
-        moved["messages"][0]["moving"][word]["values"][0] += 2
+        moved["packets"][0]["moving"][word]["values"][0] += 2
         mode_path.write_text(json.dumps(moved), encoding="utf-8")
         refusal = refused("wakes the zero mode", lambda: Lattice(load_world(path)))
         assert f"SUM {word} by 2" in str(refusal) and "'charge'" in str(refusal)
@@ -211,11 +211,11 @@ def test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
     tmp_path, monkeypatch
 ):
-    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose gravity and charge rows are massless (the first named), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the message naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
+    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose gravity and charge rows are massless (the first named), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the packet naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
-    world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=1, universe="u.json")
-    world.update(engine="e.json", bodies=[], messages=[], node_readers=[])
+    world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1, universe="u.json")
+    world.update(engine="e.json", bodies=[], packets=[], node_readers=[])
 
     def written(name, **changes):
         (path := tmp_path / f"{name}.json").write_text(
@@ -265,10 +265,10 @@ def test_the_loader_derives_the_pair_of_two_bound_records(tmp_path):
 def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through_the_wrap(
     tmp_path, monkeypatch
 ):
-    """The loader's region rule against two admissions the advisor's breaker found over the engine at 7756546d (#1793; `loader/world.regions_of_the_law` with `loader/faces.extent_across`): (a) a region naming one Node twice, [[2, 2, 2], [2, 2, 2]], admitted before as a region of two Nodes while it stands on one, is refused by name with the reader and the Node, and a region of two distinct Nodes is admitted; (b) under the slit world's message, the wave [1, 4] along x and so a half wavelength of 4 Nodes across y, a region at y = 0 and y = 4 of a board 5 Nodes on y periodic on y is 2 Nodes across through the wrap, read before as 5 from its least to its greatest coordinate, and is refused by name with the extent 2, while on y open the two Nodes meet through no wrap and the region is refused as one in pieces, the connection rule standing before the extent's; the extent's arithmetic on the ring of 5 written by hand: 0 and 4 are 2 Nodes across wrapped and 5 open, 1, 2 and 3 are 3 either way, the whole ring 5 and one coordinate 1 (every refusal's words printed)."""
+    """The loader's region rule against two admissions the advisor's breaker found over the engine at 7756546d (#1793; `loader/world.regions_of_the_law` with `loader/faces.extent_across`): (a) a region naming one Node twice, [[2, 2, 2], [2, 2, 2]], admitted before as a region of two Nodes while it stands on one, is refused by name with the reader and the Node, and a region of two distinct Nodes is admitted; (b) under the slit world's packet, the wave [1, 4] along x and so a half wavelength of 4 Nodes across y, a region at y = 0 and y = 4 of a board 5 Nodes on y periodic on y is 2 Nodes across through the wrap, read before as 5 from its least to its greatest coordinate, and is refused by name with the extent 2, while on y open the two Nodes meet through no wrap and the region is refused as one in pieces, the connection rule standing before the extent's; the extent's arithmetic on the ring of 5 written by hand: 0 and 4 are 2 Nodes across wrapped and 5 open, 1, 2 and 3 are 3 either way, the whole ring 5 and one coordinate 1 (every refusal's words printed)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
-    world = dict(shape=[4, 4, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=1)
+    world = dict(shape=[4, 4, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1)
     world.update(universe="u.json", engine="e.json", bodies=[])
     for name, positions in (("twice", [[2, 2, 2], [2, 2, 2]]), ("two", [[2, 2, 2], [2, 2, 1]])):
         readers = [{"name": name, "positions": positions}]
@@ -278,7 +278,7 @@ def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through
     assert "'twice'" in refusal and "[[2, 2, 2]] twice" in refusal
     assert load_world(tmp_path / "two.json").node_readers[0].positions == ((2, 2, 2), (2, 2, 1))
     narrow = {**PACKET, "top": {**PACKET["top"], "y": [0, 4]}}  # the slit's packet over 5 Nodes of y
-    board = dict(shape=[24, 5, 1], messages=[narrow])
+    board = dict(shape=[24, 5, 1], packets=[narrow])
     board["node_readers"] = [{"name": "ring", "positions": [[20, 0, 0], [20, 4, 0]]}]
     wrapped = slit_world(
         tmp_path, TOOL, "wrap", boundary=dict(x="open", y="periodic", z="periodic"), **board

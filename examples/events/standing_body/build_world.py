@@ -26,7 +26,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "shape": [int(v) for v in row["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(row["ticks"]),
+        "intervals": int(row["intervals"]),
         "universe": row["universe"],
         "engine": design["engine"],
         "bodies": [

@@ -1,4 +1,4 @@
-"""The GHZ gate's worlds (ALGEBRA.md #the-click-is-the-meeting, The GHZ gate; HIGHLIGHTS.md, One experiment and one gate) from the design file beside this script: four square worlds, one per combination of settings, the GHZ family's four parts laid equal as one event at the centre, three beams to the three declared regions at the board's ends, each region's `basis` the side's setting (p, q) and its `pattern` the side's, one integer pair per part; their mode files by the message lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings and the patterns in exact fractions before any run and never touched after, by the reader's own algebra on equal parts (tools/bell_gate.py, `blind_of`): the eight shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), every marginal 1 / 2, every pairwise E 0, Mermin's M = E(x, y, y) + E(y, x, y) + E(y, y, x) - E(x, x, x) = -4 at x = (1, 0) and y = (1, 1) (local realism at most 2), and the three local credits as the fence, M = -1 each, with its status and its fence label. Every number is the design's and stands in the files, none in this script or the engine.
+"""The GHZ gate's worlds (ALGEBRA.md #the-click-is-the-meeting, The GHZ gate; HIGHLIGHTS.md, One experiment and one gate) from the design file beside this script: four square worlds, one per combination of settings, the GHZ family's four parts laid equal as one event at the centre, three beams to the three declared regions at the board's ends, each region's `basis` the side's setting (p, q) and its `pattern` the side's, one integer pair per part; their mode files by the packet lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings and the patterns in exact fractions before any run and never touched after, by the reader's own algebra on equal parts (tools/bell_gate.py, `blind_of`): the eight shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), every marginal 1 / 2, every pairwise E 0, Mermin's M = E(x, y, y) + E(y, x, y) + E(y, y, x) - E(x, x, x) = -4 at x = (1, 0) and y = (1, 1) (local realism at most 2), and the three local credits as the fence, M = -1 each, with its status and its fence label. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -34,15 +34,15 @@ AXES = ("x", "y", "z")
 
 
 def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object]:
-    """One world: the square board (z folded), the record laid as one event at the centre toward the three sides, each beam's flat top across it with its raised-cosine edges, the three regions at the board's ends with their settings as their bases and their declared patterns, the receding faces, the ticks."""
+    """One world: the square board (z folded), the record laid as one event at the centre toward the three sides, each beam's flat top across it with its raised-cosine edges, the three regions at the board's ends with their settings as their bases and their declared patterns, the receding faces, the intervals."""
     length, source, depth = int(design["length"]), int(design["source"]), int(design["screen"])
     p, q = (int(v) for v in design["wave"])
     first, last = (int(v) for v in design["top_across"])
-    messages, node_readers = [], []
+    packets, node_readers = [], []
     for label, setting in zip(design["sides"], settings, strict=True):
         along, toward = str(design["beams"][label][0]), int(design["beams"][label][1])
         across = next(name for name in AXES[:2] if name != along)
-        messages.append(
+        packets.append(
             {
                 "family": design["family"],
                 "along": along,
@@ -70,11 +70,11 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
         "shape": [length, length, 1],
         "boundary": {"x": "open", "y": "open", "z": "periodic"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [],
-        "messages": messages,
+        "packets": packets,
         "node_readers": node_readers,
         "receding": design["receding"],
         "draw": design["draw"],

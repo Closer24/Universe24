@@ -59,8 +59,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         "name": "counter",
         "positions": [[0, y, z] for y in range(6) for z in range(5)],
     }
-    world = dict(shape=[8, 6, 5], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=23)
-    world.update(universe="u.json", engine="e.json", bodies=[record], messages=[drive])
+    world = dict(shape=[8, 6, 5], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=23)
+    world.update(universe="u.json", engine="e.json", bodies=[record], packets=[drive])
     world.update(node_readers=[counter], draw={**draw, "window": 18, "seed": 24})
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     twin = {k: v for k, v in world.items() if k != "draw"}
@@ -85,7 +85,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     counted = {**record, "nodes": [{"node": at, "count": 1}, nodes[1]]}  # a count on a reader's Node
     for word, body in (("in pieces", apart), ("unknown key 'count'", counted)):
         refused(word, bodies_of, [body], None, "", families, (6, 6, 4), 9000, (), action)
-    alone = {**twin, "messages": [], "node_readers": []}  # the record alone: its uniform mode
+    alone = {**twin, "packets": [], "node_readers": []}  # the record alone: its uniform mode
     (rest := tmp_path / "r.json").write_text(json.dumps(alone), encoding="utf-8")
     TOOL.main(["--input", str(rest)])
     quiet, pair = Lattice(load_world(rest)), universe["families"][0]["pair"]
@@ -158,12 +158,12 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )
 
     def counted_draw(*args):  # type: ignore[no-untyped-def]
-        draws.append(board.tick)
+        draws.append(board.interval)
         return real_draw(*args)
 
     def noted_node(b, books, weights):  # type: ignore[no-untyped-def]
         found = real_node(b, books, weights)
-        node_draws.append((board.tick, list(weights), found))
+        node_draws.append((board.interval, list(weights), found))
         return found
 
     def kept_book(b, books, drive, came):  # type: ignore[no-untyped-def]
@@ -185,28 +185,30 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     total = sum(d * a for d, a in zip(read, reader.amplitudes, strict=True))
     assert (list(reader.amplitudes), reader.norm) == ([90, 90], 127)  # A_i = 90, A = isqrt(2 x 90^2)
     assert meeting.arriving(other, reader, drv) == (1 if total >= 0 else -1) * ((abs(total) + 63) // 127)
-    assert draws.count(board.tick) == 2 and [t for t, _, _ in node_draws] == [
-        board.tick
+    assert draws.count(board.interval) == 2 and [t for t, _, _ in node_draws] == [
+        board.interval
     ]  # one draw per click
     assert node_draws[0][1] == [
         max(w, 0) // unit**2 for w in book[drv]
     ]  # the Node by the inflow per Node
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "taken", "given", "count", "node_reader")
-    assert tuple(first[k] for k in words) == click and first["tick"] == board.tick
+    assert tuple(first[k] for k in words) == click and first["interval"] == board.interval
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys
-        := "event label tick family node_reader window proper windows before realised kept count left taken given".split()
+        := "event label interval family node_reader window proper windows before realised kept count left taken given".split()
     )
     hole_at = tuple(node_draws[0][2])  # the taking's one drawn Node, written nowhere: the drive is dense
     assert hole_at in region and not any(
-        f.family == drv for f in board.credit.faces.get(board.tick + 1, [])
+        f.family == drv for f in board.credit.faces.get(board.interval + 1, [])
     )
     assert (
         book[drv][region.index(hole_at)] > 0
     )  # the Node the quantum entered through, its inflow booked
-    written = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["tick"] == board.tick}
+    written = {
+        tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["interval"] == board.interval
+    }
     assert written == set(region)  # the LATTICE lay lines of the write name the Nodes, the click none
     was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
     assert {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])} == set(region)
@@ -229,14 +231,15 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         )
     assert board.credit.deficits[drv] == 1 and board.books()[names[drv]]["deficit"] == 1
     still = Lattice(load_world(path))  # the same run without the front: its fronts dropped each step
-    [still.step() for _ in range(still.tick, board.tick)]
-    for _ in range(board.tick, 23):
+    [still.step() for _ in range(still.interval, board.interval)]
+    for _ in range(board.interval, 23):
         booked(board, monkeypatch, ion, drv, light), still.step(), still.credit.fronts.clear()
         for found in board.credit.fronts:  # the theorem: nothing differs beyond the ball
             index, origin, since = found.family, found.origin, found.since
             gap = np.abs(np.indices(board.shape) - np.reshape(origin, (3, 1, 1, 1)))
             far = (
-                np.minimum(gap, np.reshape(board.shape, (3, 1, 1, 1)) - gap).sum(0) > board.tick - since
+                np.minimum(gap, np.reshape(board.shape, (3, 1, 1, 1)) - gap).sum(0)
+                > board.interval - since
             )
             for a, b in zip(board.states[index].lines, still.states[index].lines, strict=True):
                 assert (a.now[far] == b.now[far]).all() and (a.before[far] == b.before[far]).all()
@@ -249,7 +252,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     gave_at = {
         tuple(x["node"]["at"])
         for x in lines
-        if x["event"] == "lay" and x["tick"] == given[0]["tick"] and x["family"] == "fluorescence"
+        if x["event"] == "lay"
+        and x["interval"] == given[0]["interval"]
+        and x["family"] == "fluorescence"
     }
     assert len(gave_at) == 1 and gave_at <= set(
         region
@@ -263,15 +268,20 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert all(e["nodes"] > 0 for e in erased)
     lays, faces = [x for x in lines if x["event"] == "lay"], [x for x in lines if x["event"] == "face"]
     kinds = {
-        t: {(x["family"], x["line"]) for x in lays if x["tick"] == t} for t in {x["tick"] for x in lays}
+        t: {(x["family"], x["line"]) for x in lays if x["interval"] == t}
+        for t in {x["interval"] for x in lays}
     }
-    assert kinds[first["tick"]] == {("ion", k) for k in range(4)}  # the taking: two parts, four lines
-    assert all(("fluorescence", 0) in kinds[g["tick"]] for g in given)  # every giving laid its quantum
+    assert kinds[first["interval"]] == {
+        ("ion", k) for k in range(4)
+    }  # the taking: two parts, four lines
+    assert all(
+        ("fluorescence", 0) in kinds[g["interval"]] for g in given
+    )  # every giving laid its quantum
     assert {x["label"] for x in lays} == {"LATTICE"} and board.credit.counts[light] >= 1  # none refused
-    key, kept = ("line", "port", "tick", "value"), sum(board.credit.faces.values(), [])
+    key, kept = ("line", "port", "interval", "value"), sum(board.credit.faces.values(), [])
     faced = {(f.family, f.at, *(getattr(f, k) for k in key)) for f in kept}
     logged = {(names.index(x["family"]), tuple(x["node"]["at"]), *(x[k] for k in key)) for x in faces}
-    assert logged == {f for f in faced if f[4] <= board.tick} == set()  # no face: the drive a beam
+    assert logged == {f for f in faced if f[4] <= board.interval} == set()  # no face: the drive a beam
     assert BACK.verdict(Lattice(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
     fresh = Lattice(load_world(path), (conv := []).append)  # the conversion's list through the one act
     counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
@@ -295,7 +305,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     zeno, photon = EVENTS / "zeno" / "zeno_4.json", EVENTS / "anticoincidence" / "one_photon.json"
     loaded = BACK.snapshot(z := Lattice(load_world(zeno), (zlines := []).append))
     assert BACK.verdict(z, 72)["verdict"] == "MATCH" and z.step_inverse() is None  # the taking at 72
-    assert BACK.first_difference(loaded, BACK.snapshot(z)) is None and z.tick == 0
+    assert BACK.first_difference(loaded, BACK.snapshot(z)) is None and z.interval == 0
     assert any(x["event"] == "credit" and x["taken"] for x in zlines) and not any(
         x.get("given") for x in zlines
     )
@@ -319,7 +329,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
             [f.name for f in b.families].index("photon"),
             [141, 0, 0],
         )  # the far packet's top at 170
-        took = [(x["tick"], x["node_reader"]) for x in sl if x["event"] == "credit" and x["taken"]]
+        took = [(x["interval"], x["node_reader"]) for x in sl if x["event"] == "credit" and x["taken"]]
         level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
         runs.append((took, [k.state for k in b.credit.bodies], b.credit.counts[ph], level))
     assert runs[0][:3] == runs[1][:3] and len(runs[0][0]) == 1  # one taking, the generators alike
@@ -345,7 +355,7 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     at = tuple(world["bodies"][0]["nodes"][0]["node"])
     record = {k: v for k, v in world["bodies"][0].items() if k in ("family", "nodes", "parts")}
     files = {"one": world, "plain": {**world, "bodies": [record]}}
-    files["alone"] = {**world, "bodies": [record], "messages": []}  # the record alone
+    files["alone"] = {**world, "bodies": [record], "packets": []}  # the record alone
     files["bare"] = {**world, "bodies": [], "node_readers": [{"name": "bare", "positions": [list(at)]}]}
     paths = {name: tmp_path / f"{name}.json" for name in files}
     for name, content in files.items():
@@ -372,7 +382,7 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     residues = [den * (levels[t + 1] + levels[t - 1]) - 2 * num * levels[t] for t in range(1, 12)]
     assert max(map(abs, residues)) <= den  # the uniform mode at the cut Node, cos omega_0 = num / den
     clicks = [x for x in lines if x["event"] == "credit" and x["count"]]  # none before the run
-    while board.tick < 72 and not clicks:
+    while board.interval < 72 and not clicks:
         board.step(), plain.step()
         level = int(plain.states[drv].lines[0].now[here])  # d, the drive's level at the Node
         assert meeting.arriving(plain, reader, drv) == level  # the turn reads |d| exactly, signed
@@ -380,7 +390,9 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
     first = clicks[0]
     assert "node" not in first and (first["node_reader"], first["label"]) == ("body 0", "NODEREADER")
     assert (first["before"], first["realised"], first["taken"], first["count"]) == ("g", "e", "pulse", 1)
-    written = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["tick"] == board.tick}
+    written = {
+        tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["interval"] == board.interval
+    }
     assert (
         written == {at} and board.credit.deficits[drv] == 1
     )  # the write at the only Node, the click none
@@ -424,7 +436,7 @@ def test_the_node_reader_books_the_conserved_forms_own_current_through_its_front
     chain = dict(shape=[24, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), faces=[])
     readers = [{"name": "near", "positions": region}]
     world = slit_world(
-        tmp_path, TOOL, "chain", messages=[packet], node_readers=readers, draw=draw, **chain
+        tmp_path, TOOL, "chain", packets=[packet], node_readers=readers, draw=draw, **chain
     )
     boards = [Lattice(load_world(world)) for _ in (0, 1)]  # the tension's board and its twin without
     names, square = [f.name for f in boards[0].families], boards[0].unit ** 2
@@ -464,7 +476,7 @@ def test_the_node_reader_books_the_conserved_forms_own_current_through_its_front
                 )
             change = int(shares_of(b, light, read, moved)[at].sum()) - start - remainder
             print(
-                f"interval {b.tick}, Q - G^2 on the front Links {fronts}: plain {plain}, weighted {weighted} (plain x G^2 {plain * square}), booked {booked_now}, the region's share change less the remainder term {float(change):.3f}, the identity's residual {float(change - Fraction(weighted, square)):.3f}"
+                f"interval {b.interval}, Q - G^2 on the front Links {fronts}: plain {plain}, weighted {weighted} (plain x G^2 {plain * square}), booked {booked_now}, the region's share change less the remainder term {float(change):.3f}, the identity's residual {float(change - Fraction(weighted, square)):.3f}"
             )
             assert (
                 booked_now == weighted and abs(change - Fraction(weighted, square)) < 2

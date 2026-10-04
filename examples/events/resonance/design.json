@@ -13,7 +13,7 @@
   "y": "periodic",
   "z": "periodic"
  },
- "ticks": 96,
+ "intervals": 96,
  "light": "pulse",
  "quantum_action": 32768,
  "giver": {

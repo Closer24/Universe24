@@ -1,4 +1,4 @@
-"""The giving lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the message lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
+"""The giving lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
 
 import json
 
@@ -44,16 +44,18 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
     given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
     line = board.states[pulse].lines[0]
     sums = (int(line.now.sum(dtype=object)), int(line.before.sum(dtype=object)))
-    assert len(given) == 1 and given[0]["tick"] == 61 and max(map(abs, sums)) <= 48
+    assert len(given) == 1 and given[0]["interval"] == 61 and max(map(abs, sums)) <= 48
     share, wall = board.total_share(pulse)[0], count_wall(board.families[pulse], 32768)
     assert share is not None and 74 * wall <= 100 * share <= 76 * wall  # sin Omega = 0.745, the quantum
 
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
-    """The packet's two levels take the message lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The message lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
+    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `giving.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
     board = Lattice(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
-    while board.tick < 60 and not any(c["event"] == "credit" and c["given"] == "pulse" for c in lines):
+    while board.interval < 60 and not any(
+        c["event"] == "credit" and c["given"] == "pulse" for c in lines
+    ):
         board.step()
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
     assert len(lays) > 500 and board.credit.counts[pulse] == 1  # the train of 69 slices by 9 across
@@ -82,15 +84,18 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     for _ in range(48):
         board.step()
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-    assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     origin = next(f.at for f in board.credit.faces[49] if f.family == photon)
     tapered = 0
-    for tick in range(49, 231):  # the band of eight shells leaves the grown board by about 210
+    for interval in range(49, 231):  # the band of eight shells leaves the grown board by about 210
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
-        inside, taper = distance <= tick - 48 - 9, (distance > tick - 48 - 9) & (distance <= tick - 48)
+        inside, taper = (
+            distance <= interval - 48 - 9,
+            (distance > interval - 48 - 9) & (distance <= interval - 48),
+        )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
             tapered += int(np.abs(line.now[taper]).sum(dtype=object) > 0)

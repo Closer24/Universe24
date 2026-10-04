@@ -250,7 +250,7 @@ def check_the_post_newtonian_parameters() -> Check:
 
 
 def check_the_moving_clock_to_the_fourth_order() -> Check:
-    """S.21, the moving clock to the second order: from cos omega = c_0 (2 + cos k), omega(k) = omega_0 + alpha k^2 - beta k^4 + O(k^6) with alpha = c_0 / (2 s), beta = c_0 / (24 s) + c c_0^2 / (8 s^3); the rotation at the moving centre Omega = omega - k omega' and v = omega' give Omega / omega_0 = 1 - v^2 / (2 c_m^2) - (2 omega_0 / sin 2 omega_0) v^4 / (8 c_m^4) + O(v^6) with c_m^2 = omega_0 / (3 tan omega_0): Lorentz's factor at c_m to the second order exactly, the fourth order's factor 2 omega_0 / sin 2 omega_0, 1.69 at [2, 3] and 1 as the gap closes; along n the factor omega_0 [(SUM n_a^4) tan omega_0 + cot omega_0], 1.2224 on a face diagonal and 1.0657 on the body diagonal; the check (f - 1 + v^2 / (2 c_m^2)) / v^4 = -3.37 at v = 0.02 along an axis against 1.6926 x (-1.988) = -3.365, -2.12 along the body diagonal against -2.119; the band's series by the residual's order 6, the tick's by its order 6 in k, the numbers recomputed; the far end num / den = 0.01 for the factor."""
+    """S.21, the moving clock to the second order: from cos omega = c_0 (2 + cos k), omega(k) = omega_0 + alpha k^2 - beta k^4 + O(k^6) with alpha = c_0 / (2 s), beta = c_0 / (24 s) + c c_0^2 / (8 s^3); the rotation at the moving centre Omega = omega - k omega' and v = omega' give Omega / omega_0 = 1 - v^2 / (2 c_m^2) - (2 omega_0 / sin 2 omega_0) v^4 / (8 c_m^4) + O(v^6) with c_m^2 = omega_0 / (3 tan omega_0): Lorentz's factor at c_m to the second order exactly, the fourth order's factor 2 omega_0 / sin 2 omega_0, 1.69 at [2, 3] and 1 as the gap closes; along n the factor omega_0 [(SUM n_a^4) tan omega_0 + cot omega_0], 1.2224 on a face diagonal and 1.0657 on the body diagonal; the check (f - 1 + v^2 / (2 c_m^2)) / v^4 = -3.37 at v = 0.02 along an axis against 1.6926 x (-1.988) = -3.365, -2.12 along the body diagonal against -2.119; the band's series by the residual's order 6, the interval's by its order 6 in k, the numbers recomputed; the far end num / den = 0.01 for the factor."""
     num, den = 2, 3
     omega_0 = rest_rotation(num, den)
     c, s, c0 = math.cos(omega_0), math.sin(omega_0), num / (3 * den)
@@ -261,7 +261,7 @@ def check_the_moving_clock_to_the_fourth_order() -> Check:
     c_m2 = omega_0 / (3 * math.tan(omega_0))
     factor = 2 * omega_0 / math.sin(2 * omega_0)
 
-    def tick(k: float, direction=(1.0, 0.0, 0.0)) -> tuple[float, float]:
+    def interval(k: float, direction=(1.0, 0.0, 0.0)) -> tuple[float, float]:
         """(v, Omega / omega_0) at the wave number k along the unit vector n, from the exact band by a centred difference."""
         h = 1e-4
 
@@ -277,14 +277,14 @@ def check_the_moving_clock_to_the_fourth_order() -> Check:
         return v, (full(k) - k * v) / omega_0
 
     def residual(k: float) -> float:
-        v, f = tick(k)
+        v, f = interval(k)
         return f - (1 - v * v / (2 * c_m2) - factor * v**4 / (8 * c_m2**2))
 
-    tick_order, tick_orders = has_order(residual, 6, step=0.4)
+    interval_order, interval_orders = has_order(residual, 6, step=0.4)
     checks = []
     for direction, n4 in (((1.0, 0.0, 0.0), 1.0), ((1 / SQRT3,) * 3, 1 / 3)):
         k = 0.02 * 3 * math.tan(omega_0) * 1.0  # k with v near 0.02: v = k / m* at first order
-        v, f = tick(k, direction)
+        v, f = interval(k, direction)
         directional = omega_0 * (n4 * math.tan(omega_0) + 1 / math.tan(omega_0))
         checks.append(
             (
@@ -309,14 +309,14 @@ def check_the_moving_clock_to_the_fourth_order() -> Check:
     )
     hold = (
         band_order
-        and tick_order
+        and interval_order
         and numbers == (1.6926, 1.2224, 1.0657, 0.2508, -1.988)
         and checks[0][1:] == (-3.37, 1.6926, -3.365)
         and abs(checks[1][1] + 2.12) < 0.02
     )
     return hold, {
         "band series orders": band_orders,
-        "tick series orders": tick_orders,
+        "interval series orders": interval_orders,
         "factor, face, body, c_m^2, Lorentz's v^4": numbers,
         "S.21's check (v, residual / v^4, factor, factor x Lorentz)": checks,
         "the factor at num / den = 0.01 and at 999999 / 1000000": (far_factor, limit_factor),

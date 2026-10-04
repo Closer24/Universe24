@@ -36,12 +36,12 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
     light = [f.name for f in board.families].index(design["light"])
     far, levels = tuple(np.add(design["reading_node"], board.offset)), {}
     beyond = (far[0] + 1, *far[1:])  # the reading Node eight Nodes from either Node of the reader
-    intervals, lifetime = int(design["ticks"]), int(design["giver"]["lifetime"])
+    intervals, lifetime = int(design["intervals"]), int(design["giver"]["lifetime"])
     for _ in range(intervals):
         board.step()
-        levels[board.tick] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
+        levels[board.interval] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
     clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
-    given = [c["tick"] for c in clicks if c["given"] == design["light"]]
+    given = [c["interval"] for c in clicks if c["given"] == design["light"]]
     taken = [f"{c['node_reader']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
     found: dict[str, Any] = {"given": given[0] if given else None, "takings": taken}
     found["lay_lines"] = len(

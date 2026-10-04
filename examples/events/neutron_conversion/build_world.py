@@ -39,7 +39,7 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "shape": [int(v) for v in design["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [body],
@@ -62,7 +62,7 @@ def expectation(design: dict[str, Any]) -> dict[str, Any]:
         "excess": design["excess"],
         "trials": design["trials"],
         "rate_expectation": design["rate_expectation"],
-        "window": [1, int(design["ticks"])],
+        "window": [1, int(design["intervals"])],
         "worlds": design["worlds"],
         "blind": design["blind"],
     }

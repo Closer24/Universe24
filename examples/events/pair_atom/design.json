@@ -6,7 +6,7 @@
  "write_weight": 5237,
  "shape": [31, 31, 31],
  "centre": [15, 15, 15],
- "ticks": 1000,
+ "intervals": 1000,
  "lay": {"kind": "fixed_point", "stop": 2, "passes": 30, "tolerance": [1, 100], "confidence": [32, 1], "seed": "one_node"},
  "senses": [1, -1],
  "pixels": [0, 1],

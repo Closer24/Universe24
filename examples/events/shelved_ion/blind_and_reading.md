@@ -215,7 +215,7 @@ of the strong drive). Row 9's count half (the ion's count 1 at every interval, o
 books' and the parts' counts, a lattice reading as the blind's own fence says; row 10's levels (the
 strong drive's row at 10,314 above the bound, the uniform mode's drift) are lattice readings, as is
 every number of the finding on the uniform mode. The refusal's interval is the run's verdict. The
-lines carry the board's `tick` and the `window` in board intervals (the ion's window 1, the counter's
+lines carry the board's `interval` and the `window` in board intervals (the ion's window 1, the counter's
 160); the ion's own clock enters only the two-mode turn at its Node and no line carries it.
 
 the ion, else nothing is credited.

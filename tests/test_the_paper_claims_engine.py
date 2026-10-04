@@ -30,7 +30,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     packet = {**PACKET, "top": {"x": [3, 3], "y": [0, 4], "z": [0, 4]}, "edge": {"x": 2, "y": 0, "z": 0}}
     wrapped = dict(x="open", y="periodic", z="periodic")  # the box: x open, y and z of extent 5 wrapping
     box = slit_world(
-        tmp_path, TOOL, "box", shape=[12, 5, 5], boundary=wrapped, faces=[], messages=[packet]
+        tmp_path, TOOL, "box", shape=[12, 5, 5], boundary=wrapped, faces=[], packets=[packet]
     )
 
     def seen(frame, event, _arg):  # the engine functions a run calls, S.61's rows read under the profile
@@ -83,12 +83,12 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         assert off[0] > shape[1] * shape[2] and off[1] == 1  # outside: the read not kept
         with profiled():  # the load, the start and the guard under the profile as well
             board = Lattice(load_world(box))
-            kept = {board.tick: BACK.snapshot(board)}
+            kept = {board.interval: BACK.snapshot(board)}
             for _ in range(4):
-                board.step(), kept.__setitem__(board.tick, BACK.snapshot(board))
+                board.step(), kept.__setitem__(board.interval, BACK.snapshot(board))
             for _ in range(4):
                 board.step_inverse()
-                assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
+                assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
         return (
             f"{tried} random boards, {misses} misses; the face's value {face.value} presented again returns; "
             f"the face moved from closed to periodic: {off[0]} of {now.size} Nodes' level before differ, "
@@ -111,29 +111,29 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
         with profiled():  # the reader's books made at the load, S.61's line 27, under the profile too
             board = Lattice(load_world(paths["drawn"]), (lines := []).append)
-            kept = {board.tick: BACK.snapshot(board)}
+            kept = {board.interval: BACK.snapshot(board)}
             for _ in range(75):
                 board.step(), twin.step()
-                kept[board.tick] = BACK.snapshot(board)
-                between = copy.deepcopy(board) if board.tick == 60 else between
-                undrawn = BACK.snapshot(twin) if twin.tick == 72 else undrawn
+                kept[board.interval] = BACK.snapshot(board)
+                between = copy.deepcopy(board) if board.interval == 60 else between
+                undrawn = BACK.snapshot(twin) if twin.interval == 72 else undrawn
                 drive.append([int(twin.states[pulse].lines[0].now[n]) for n in at])  # d_i, a_t's read
         clicks, lays = ([x for x in lines if x["event"] == event] for event in ("credit", "lay"))
-        assert [c["tick"] for c in clicks] == [72] and len(lays) == 8
-        assert {x["tick"] for x in lays} == {72}
+        assert [c["interval"] for c in clicks] == [72] and len(lays) == 8
+        assert {x["interval"] for x in lays} == {72}
         for _ in range(60):  # between clicks: nothing crossed, bit for bit
             between.step_inverse()
-            assert BACK.first_difference(kept[between.tick], BACK.snapshot(between)) is None
+            assert BACK.first_difference(kept[between.interval], BACK.snapshot(between)) is None
         blind, miss = copy.deepcopy(board), None  # outside: back across the click with nothing crossed
         for _ in range(75):
             blind.step_inverse()
-            if (found := BACK.first_difference(kept[blind.tick], BACK.snapshot(blind))) is not None:
-                miss = (blind.tick, *found)
+            if (found := BACK.first_difference(kept[blind.interval], BACK.snapshot(blind))) is not None:
+                miss = (blind.interval, *found)
                 break
         assert miss is not None and miss[0] == 71 and miss[1].startswith("atom.lines[")
         for _ in range(75):  # across the click with the lays crossed from their lines
             BACK.crossed(board, lines), board.step_inverse()
-            assert BACK.first_difference(kept[board.tick], BACK.snapshot(board)) is None
+            assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
         atom = [f.name for f in board.families].index(body["family"])
         (num, den), action = board.families[atom].pair, board.world.quantum_action
         first, second = (
@@ -150,10 +150,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         cosine = (scale, (scale * rn + rd // 2) // rd)  # (r_0, r_-1)
         sine = (0, -(isqrt(scale * scale * (rd * rd - rn * rn)) // rd))  # (r'_0, r'_-1)
         sums = [0, 0]
-        for tick, levels in enumerate(drive, 1):
+        for interval, levels in enumerate(drive, 1):
             total = sum(d * amp for d in levels)
             arrived = (abs(total) + norm // 2) // norm * (1 if total >= 0 else -1)
-            if 72 - window < tick <= 72:
+            if 72 - window < interval <= 72:
                 sums = [sums[0] + arrived * cosine[0], sums[1] + arrived * sine[0]]
             cosine, sine = (((2 * rn * r + rd // 2) // rd - p, r) for r, p in (cosine, sine))
         size = isqrt(sums[0] ** 2 + sums[1] ** 2)
@@ -174,7 +174,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             assert all(int(written[f"atom.lines[{k}].remainder"][here]) == half for k in range(4))
         assert sums[1] != 0 and entered != (re, im)  # the arrival's phase is not 0: the direction turned
         return (
-            f"the click at {clicks[0]['tick']} with {len(lays)} lay lines; between clicks 60 forward and 60 "
+            f"the click at {clicks[0]['interval']} with {len(lays)} lay lines; between clicks 60 forward and 60 "
             f"back bit for bit; across it with the lays crossed MATCH; without the crossing MISS at "
             f"{miss[0]}, {miss[1]} at {miss[2]}; the re-lay of one quantum over {len(at)} Nodes: the leaving "
             f"direction ({re}, {im}) at the sense {sense} turned by the arrival (X, Y') = {tuple(sums)} at R = "
@@ -188,7 +188,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         draw["increment"] = 1442695040888963407
         regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
         regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
-        world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, ticks=4, universe="u.json")
+        world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, intervals=4, universe="u.json")
         world.update(engine="e.json", bodies=[], draw=draw, node_readers=regions)
         (chain := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
         agreed, plain_too = 0, {}

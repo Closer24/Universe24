@@ -117,7 +117,7 @@ def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
 def patterns_of_the_law(
     patterns: list[tuple[str, Pattern]], laid: list[int], families: tuple[FamilyRule, ...]
 ) -> None:
-    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its messages' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
+    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its packets' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
     parts = sorted({families[index].parts for index in laid if families[index].parts > 1})
     for name, pattern in patterns:
         if pattern and len(pattern) not in parts:

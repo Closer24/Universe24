@@ -113,25 +113,25 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
 
     def nodes_of(c: dict) -> list:  # the write's Nodes from the LATTICE lines beside the click line
         if c["given"]:  # the giving's quantum laid at one Node: the lay lines of the family given to
-            laid = (f for f in lines if f["event"] == "lay" and f["tick"] == c["tick"])
+            laid = (f for f in lines if f["event"] == "lay" and f["interval"] == c["interval"])
             return [f["node"]["at"] for f in laid if f["family"] == c["given"]]
         taken = c["taken"] or c["family"]  # the hole's Nodes: the face lines of the record taken from
-        holes = (f for f in lines if f["event"] == "face" and f["tick"] == c["tick"] + 1)
+        holes = (f for f in lines if f["event"] == "face" and f["interval"] == c["interval"] + 1)
         return [f["node"]["at"] for f in holes if f["family"] == taken]
 
     def inside(a: dict, b: dict) -> bool:  # the click b inside the cone of the click a
         return all(
             sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(p, q, shape, strict=True))
-            <= b["tick"] - a["tick"]
+            <= b["interval"] - a["interval"]
             for p in nodes_of(a)
             for q in nodes_of(b)
         )
 
     clicks = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER"]
     clicks = [
-        c for c in clicks if c["tick"] < board.tick
+        c for c in clicks if c["interval"] < board.interval
     ]  # the last interval's hole faces after the run
-    clicks.sort(key=lambda c: int(c["tick"]))
+    clicks.sort(key=lambda c: int(c["interval"]))
     beams = [
         c for c in clicks if c["taken"] in ("strong_drive", "weak_drive")
     ]  # read in the books alone
@@ -141,12 +141,14 @@ def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
     assert all(not nodes_of(c) for c in beams)
     clicks = [c for c in clicks if c not in beams]
     assert clicks and all(nodes_of(c) for c in clicks)
-    assert all(inside(a, b) for a, b in zip(clicks, clicks[1:], strict=False) if b["tick"] > a["tick"])
+    assert all(
+        inside(a, b) for a, b in zip(clicks, clicks[1:], strict=False) if b["interval"] > a["interval"]
+    )
     givings = [c for c in clicks if c["given"] == "fluorescence"]
     credits = [c for c in clicks if c["family"] == "fluorescence" and not c["given"]]
     assert givings and credits and all(inside(givings[0], c) for c in credits)
     assert all(
-        g["tick"] < c["tick"] for g in givings[:1] for c in credits
+        g["interval"] < c["interval"] for g in givings[:1] for c in credits
     )  # the first giving precedes every credit
 
 
@@ -190,7 +192,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
     jumps = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-    assert len(jumps) == 1 and jumps[0]["tick"] == 48 and board.credit.counts[light] == 0
+    assert len(jumps) == 1 and jumps[0]["interval"] == 48 and board.credit.counts[light] == 0
     holes = {
         f.at for f in board.credit.faces[49] if f.family == light
     }  # the hole's one Node, the face books'
@@ -200,25 +202,25 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     checked = 0
 
     def ball(
-        tick: int,
+        interval: int,
     ) -> tuple[np.ndarray, list]:  # the ball's mask at the board's offset now, the record's lines
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
-        inside = np.abs(np.indices(board.shape) - at).sum(axis=0) <= tick - since - 3
+        inside = np.abs(np.indices(board.shape) - at).sum(axis=0) <= interval - since - 3
         return inside, board.states[light].lines[: board.families[light].record]
 
-    for tick in range(since + 4, since + 16):
-        while board.tick < tick:
+    for interval in range(since + 4, since + 16):
+        while board.interval < interval:
             board.step()
-        inside, own = ball(tick)
+        inside, own = ball(interval)
         kept = [line.remainder[inside].copy() for line in own]
         for line in own:
             assert not line.now[inside].any() and not line.before[inside].any()
             assert (line.remainder[inside] >= 0).all() and (line.remainder[inside] < read).all()
         board.step()  # the board may grow at a receding face: the ball read again at the new offset
-        inside, own = ball(tick)
+        inside, own = ball(interval)
         assert all((a == line.remainder[inside]).all() for a, line in zip(kept, own, strict=True))
         checked += int(inside.sum())
-    erased = [e["tick"] - since for e in lines if e["event"] == "erasure"]
+    erased = [e["interval"] - since for e in lines if e["event"] == "erasure"]
     assert (
         checked > 100
         and erased[:3] == [1, 2, 3]
@@ -292,7 +294,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
         assert hazard_weights(1, 48, gamma, gamma, 9) == [
             9,
             47 * 9,
-        ]  # the vacuum: the hazard per board tick
+        ]  # the vacuum: the hazard per board interval
         assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
             9,
             47 * 9,
@@ -304,7 +306,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
         beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
         for _ in range(96):
             board.step()
-            series[board.tick] = (
+            series[board.interval] = (
                 int(board.states[pulse].lines[0].now[at]),
                 int(board.states[pulse].lines[0].now[beyond]),
             )
@@ -314,12 +316,16 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
                 assert giver.state == expected
         if not given:
             continue
-        t = given[0]["tick"]
+        t = given[0]["interval"]
         given_at.append(t)
         lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
         span = list(range(t, min(t + 48, 97)))  # the span from t, cut by the run's end
-        ticks = [c["tick"] for c in lays]  # one lay line per interval whose increment is not 0
-        assert ticks == sorted(set(ticks)) and set(ticks) <= set(span) and len(ticks) >= len(span) - 3
+        intervals = [c["interval"] for c in lays]  # one lay line per interval whose increment is not 0
+        assert (
+            intervals == sorted(set(intervals))
+            and set(intervals) <= set(span)
+            and len(intervals) >= len(span) - 3
+        )
         laid_at = {tuple(c["node"]["at"]) for c in lays}
         assert len(laid_at) == 1 and laid_at <= {
             (0, 0, 0),
@@ -349,11 +355,9 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
     assert 8 <= by_tau <= 24 and len(set(given_at)) > 1, (
         given_at
     )  # not the degenerate corner's one interval
-    lit = {**world, "messages": [{"family": "pulse", "along": "x", "wave": [1, 2], "amplitude": 308}]}
-    lit["messages"][0]["phase"] = [0, 1]
-    lit["messages"][0].update(
-        top={"x": [0, 47], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0}
-    )
+    lit = {**world, "packets": [{"family": "pulse", "along": "x", "wave": [1, 2], "amplitude": 308}]}
+    lit["packets"][0]["phase"] = [0, 1]
+    lit["packets"][0].update(top={"x": [0, 47], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})
     (path := tmp_path / "lit.json").write_text(json.dumps(lit), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3):  # the light at its Node: a window stands and its draw at 48 stands as it is
@@ -371,7 +375,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
         assert hazard_weights(1, 48, gamma, gamma, 9) == [
             9,
             47 * 9,
-        ]  # the vacuum: the hazard per board tick
+        ]  # the vacuum: the hazard per board interval
         assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
             9,
             47 * 9,
@@ -379,7 +383,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_c
         for books in board.credit.bodies:
             books.state = seed * len(board.credit.bodies) + books.number
         [board.step() for _ in range(48)]
-        assert [c["tick"] for c in lines if c["event"] == "credit" and c["given"] == "pulse"] == [48]
+        assert [c["interval"] for c in lines if c["event"] == "credit" and c["given"] == "pulse"] == [48]
 
 
 def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
@@ -418,7 +422,7 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     small = {
         **world,
         "shape": [90, 35, 35],
-        "ticks": 40,
+        "intervals": 40,
         "node_readers": [],
         "bodies": body([17, 17, 17], width=3, lifetime=8),
     }
@@ -431,11 +435,13 @@ def test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry(tm
     board = Lattice(load_world(tmp_path / "small.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
     given: list = []
-    while board.tick < 40 and not given:  # until the first giving: the body in g gives no more
+    while board.interval < 40 and not given:  # until the first giving: the body in g gives no more
         board.step()
         given = [c for c in lines if c["event"] == "credit" and c["given"] == "pulse"]
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
-    assert len(given) == 1 and {c["tick"] for c in lays} == {given[0]["tick"]} and len(lays) > 100
+    assert (
+        len(given) == 1 and {c["interval"] for c in lays} == {given[0]["interval"]} and len(lays) > 100
+    )
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
@@ -471,7 +477,9 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
         [9, 10],
         {**giver["node_reader"], "window": 240},
     )
-    (path := tmp_path / "low.json").write_text(json.dumps({**world, "bodies": [giver], "ticks": 240}))
+    (path := tmp_path / "low.json").write_text(
+        json.dumps({**world, "bodies": [giver], "intervals": 240})
+    )
     TOOL.main(["--input", str(path)])
     for seed in (1, 2, 3, 4):  # the first trial whose giving leaves the whole span inside the run
         board, series = Lattice(load_world(path), (lines := []).append), {}
@@ -481,9 +489,9 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
         board.credit.bodies[0].state = seed
         for _ in range(240):
             board.step()
-            series[board.tick] = board.total_share(pulse)[0]
+            series[board.interval] = board.total_share(pulse)[0]
         jumps = [
-            (c["tick"], c["given"])
+            (c["interval"], c["given"])
             for c in lines
             if c["event"] == "credit" and c["label"] == "NODEREADER" and (c["taken"] or c["given"])
         ]
@@ -517,26 +525,30 @@ def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_
     for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
         body["nodes"] = [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}]
         body["node_reader"] = {**body["node_reader"], "window": window}
-    for message, x in zip(world["messages"], (32, 31), strict=True):
-        message["top"] = {**message["top"], "x": [x, x]}
+    for packet, x in zip(world["packets"], (32, 31), strict=True):
+        packet["top"] = {**packet["top"], "x": [x, x]}
     (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
     TOOL.main(["--input", str(path)])
     board = Lattice(load_world(path), (lines := []).append)
     photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
-    for tick in (47, 52, 55, 56, 60):
-        while board.tick < tick:
+    for interval in (47, 52, 55, 56, 60):
+        while board.interval < interval:
             board.step()
         took = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
-        taken = [(c["tick"], c["node_reader"], c["taken"]) for c in took]
+        taken = [(c["interval"], c["node_reader"], c["taken"]) for c in took]
         books = {name: (b["quanta"], b["count"], b["deficit"]) for name, b in board.books().items()}
-        second = tick >= 56  # the right atom's taking at its window's close, photon's record then at 0
+        second = (
+            interval >= 56
+        )  # the right atom's taking at its window's close, photon's record then at 0
         assert taken == [(44, "body 0", "photon_b"), (56, "body 1", "photon")][: 1 + second]
         fronts = [(f.family, f.since) for f in board.credit.fronts]
         assert fronts == [(photon_b, 44), (photon, 56)][: 1 + second]
         assert books["photon_b"][1:] == (0, 0) and books["photon"][1:] == (1 - second, 0)
         assert second or books["photon"][0] == 1  # the other record stands whole until its taking
         origin = board.credit.fronts[0].origin[0] + board.offset[0]  # the hole's Node as the board grew
-        reach = np.abs(np.arange(board.shape[0]) - origin) <= tick - 44 - 3  # the shells faced by now
+        reach = (
+            np.abs(np.arange(board.shape[0]) - origin) <= interval - 44 - 3
+        )  # the shells faced by now
         line = board.states[photon_b].lines[0]
         assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()
     assert {c["node_reader"]: c["taken"] for c in took} == {"body 0": "photon_b", "body 1": "photon"}
@@ -551,7 +563,7 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
         for transition, share in books.shares.items():
             if board.credit.counts[transition.drive] > 0:
                 unit = sum(label * label for label in books.labels)
-                seen.setdefault((board.tick, books.number), set()).add((unit, share))
+                seen.setdefault((board.interval, books.number), set()).add((unit, share))
 
     monkeypatch.setattr(meeting, "turned_labels", kept)
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
@@ -559,10 +571,10 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     (tmp_path / "u.json").write_bytes((folder / "two_atoms.json").read_bytes())
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
-    packet = world["messages"][0]
-    world.update(shape=[72, 1, 1], universe="u.json", engine="e.json", ticks=68)
+    packet = world["packets"][0]
+    world.update(shape=[72, 1, 1], universe="u.json", engine="e.json", intervals=68)
     top, edge = {**packet["top"], "x": [14, 14]}, dict(x=16, y=0, z=0)  # the packet over 16 Nodes at 14
-    world["messages"] = [{**packet, "top": top, "edge": edge}]
+    world["packets"] = [{**packet, "top": top, "edge": edge}]
     for body, at, window in zip(world["bodies"], (30, 32), (48, 52), strict=True):
         body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
         body["node_reader"] = {**body["node_reader"], "window": window}
@@ -572,14 +584,14 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
     laid, trials, clicks, left = Lattice(load_world(path)), 400, [], {}
     photon = [f.name for f in laid.families].index("photon")
-    while laid.tick < 47:  # the interval before A's close: the same lay and steps in every trial
+    while laid.interval < 47:  # the interval before A's close: the same lay and steps in every trial
         laid.step()
     assert laid.credit.counts[photon] == 1 and photon not in laid.credit.untaken
     for seed in range(trials):
         (board := copy.deepcopy(laid)).output = (lines := []).append
         for books in board.credit.bodies:  # every record's generator at the trial's hashed state (R342)
             books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
-        while board.tick < 52:
+        while board.interval < 52:
             board.step()
         clicks.append(tuple(c["node_reader"] for c in lines if c["event"] == "credit" and c["taken"]))
         left[clicks[-1]] = (board.credit.counts[photon], board.credit.untaken.get(photon))

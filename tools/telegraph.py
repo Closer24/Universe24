@@ -22,7 +22,7 @@ def bins(
     window: tuple[int, int],
     width: int,
 ) -> list[int]:
-    """The counts per bin: the counter's credit lines of the family within the window, summed per window of `width` intervals (the bin of the credit at the tick t is (t - first) div width)."""
+    """The counts per bin: the counter's credit lines of the family within the window, summed per window of `width` intervals (the bin of the credit at the interval t is (t - first) div width)."""
     first, last = window
     found = [0] * ((last - first) // width + 1)
     for line in lines:
@@ -32,9 +32,9 @@ def bins(
             or line.get("node_reader") not in node_readers
         ):
             continue
-        tick = int(str(line["tick"]))
-        if first <= tick <= last:
-            found[(tick - first) // width] += int(str(line["count"]))
+        interval = int(str(line["interval"]))
+        if first <= interval <= last:
+            found[(interval - first) // width] += int(str(line["count"]))
     return found
 
 
@@ -72,7 +72,7 @@ def reading(output: Path, expectation: Path) -> dict[str, object]:
     lines = document["lines"]
     node_readers = [str(d) for d in expected["node_reader"]]
     family, width = str(expected["family"]), int(expected["bin"])
-    reached = int(document.get("ticks") or 0)
+    reached = int(document.get("intervals") or 0)
     reason = str(document.get("reason", ""))
     if not reached and (found := re.search(r"interval (\d+)", reason)):
         reached = int(found.group(1))
@@ -89,7 +89,7 @@ def reading(output: Path, expectation: Path) -> dict[str, object]:
         and (line.get("taken") or line.get("given"))
     ]  # the record's own clicks: the takings and the givings
     kinds = Counter((str(j["realised"]), str(j.get("taken") or j.get("given"))) for j in clicks)
-    givings = [int(str(j["tick"])) for j in clicks if j.get("given") == family]
+    givings = [int(str(j["interval"])) for j in clicks if j.get("given") == family]
     gaps = [b - a for a, b in zip(givings, givings[1:], strict=False)]
     returns = [
         line

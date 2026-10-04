@@ -96,7 +96,7 @@ readings above. PASS and unchanged.
 The table's numbers (A only, B only, both, neither, alpha) are the NodeReader's: the `jump` lines'
 `taken` per trial, read by `tools/meeting_trials.py`. The finding's levels at the two records' Nodes
 (-98 and -157 at 8, -146 and -149 at 28, -141 and -141 at 32) are a lattice reading of one trial,
-labelled so, and no number of the blind. The lines carry the board's `tick` and the `window` in board
+labelled so, and no number of the blind. The lines carry the board's `interval` and the `window` in board
 intervals and nothing of the records' own clocks.
 
 ## On the resonant act, 2026-10-03 (branch resonant-act, on main's dark grain)
@@ -131,7 +131,7 @@ by the resonant form. The first build of the act (one shear of the window's sum)
 ## On the lay without the uniform mode and the redesign, 2026-10-04 (branch click-share-fix)
 
 The experimenter's bug report (#1827 comment 5975131359; the hands' lines 5975317261, 5975334043 and
-5975371441; the Boss's 5975430859 and 5975547149): the message lay wrote the packets with a uniform-mode
+5975371441; the Boss's 5975430859 and 5975547149): the packet lay wrote the packets with a uniform-mode
 content, the sum of now -563 and of before -406 over the chain of 24, and Rule3 carries their difference
 exactly on the massless row (the double root at wave number 0), so the mean level fell by 157 every
 interval, the records read that standing level in place of the passing packet (the finding named
@@ -139,8 +139,8 @@ above), and the click act's hole, written to 0 into it, left two kinks worth a q
 front carried outward (the photon's share 1 quantum to 2 after the one taking, 2 to 5 in the control).
 The fix: the generator takes the uniform mode's content out of a massless packet's two levels (each sums
 to 0 over the board, the sum divided among the packet's Nodes in proportion to the envelope by the
-division act) and the loader refuses a massless message whose sums are not 0; nothing of Rule3, the
-hole, the front or the books moves (ALGEBRA.md, The message lay, the sentence of 2026-10-04). The old
+division act) and the loader refuses a massless packet whose sums are not 0; nothing of Rule3, the
+hole, the front or the books moves (ALGEBRA.md, The packet lay, the sentence of 2026-10-04). The old
 lay at top 1 and edge 3 on the chain of 24 was mostly uniform mode: what the correction leaves is a
 three-Node wiggle of no wave number near pi / 4, off the atoms' resonance, whose reading contradicts
 this folder's blind (the advisor's finding, 5975512075: at the amplitudes that keep the count, 36 of 50
@@ -180,14 +180,14 @@ by their numbers until the front's taper at the owner's word.
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
 compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, LATTICE for the verdict, the ticks, the line counts, the
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
 | LATTICE | one_photon.json | run_inputs | verdict | LAWFUL |
-| LATTICE | one_photon.json | run_inputs | ticks | 170 |
+| LATTICE | one_photon.json | run_inputs | intervals | 170 |
 | NODEREADER | one_photon.json | run_inputs | clicks | 1 |
 | NODEREADER | one_photon.json | run_inputs | clicks body 0 | 1 |
 | NODEREADER | one_photon.json | run_inputs | clicks body 1 | 0 |
@@ -214,7 +214,7 @@ reading in the gate's words and the value as its report prints it.
 | NODEREADER | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
 | NODEREADER | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
 | LATTICE | two_photons.json | run_inputs | verdict | LAWFUL |
-| LATTICE | two_photons.json | run_inputs | ticks | 170 |
+| LATTICE | two_photons.json | run_inputs | intervals | 170 |
 | NODEREADER | two_photons.json | run_inputs | clicks | 2 |
 | NODEREADER | two_photons.json | run_inputs | clicks body 0 | 1 |
 | NODEREADER | two_photons.json | run_inputs | clicks body 1 | 1 |

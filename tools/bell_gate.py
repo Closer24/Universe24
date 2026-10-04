@@ -55,21 +55,24 @@ def reports(
     for line in lines:
         if line.get("event") != "parts" or line.get("family") != family:
             continue
-        if line.get("node_reader") == node_reader and window[0] <= int(str(line["tick"])) <= window[1]:
+        if (
+            line.get("node_reader") == node_reader
+            and window[0] <= int(str(line["interval"])) <= window[1]
+        ):
             levels = line["levels"]
             assert isinstance(levels, list)
-            found[int(str(line["tick"]))] = [[int(v) for v in part] for part in levels]
+            found[int(str(line["interval"]))] = [[int(v) for v in part] for part in levels]
     return found
 
 
-def at(levels: Levels, tick: int, parts: int) -> list[list[int]]:
+def at(levels: Levels, interval: int, parts: int) -> list[list[int]]:
     """A region's parts at one interval, zeros where nothing was reported."""
-    return levels.get(tick, [[0, 0]] * parts)
+    return levels.get(interval, [[0, 0]] * parts)
 
 
-def ticks_of(*sides: Levels) -> list[int]:
+def intervals_of(*sides: Levels) -> list[int]:
     """Every interval at which a side reported, sorted."""
-    return sorted({tick for side in sides for tick in side})
+    return sorted({interval for side in sides for interval in side})
 
 
 def keys_of(sides: int) -> list[Key]:
@@ -81,8 +84,8 @@ def credited(sides: list[Levels], ports: list[Ports], joined: bool) -> Joint:
     """The shares of every combination of ports accumulated over the window on both members of the level pair: per interval and member the parts' terms, each the product over the sides of e_k(port) times the part's sum there, summed over the parts and then squared where `joined` (the meeting: the parts paired by their label through the root across every side, then summed, then squared), or each squared alone (the local credit by the parts' shares)."""
     parts = len(ports[0][PORTS[0]])
     found = {key: Fraction(0) for key in keys_of(len(sides))}
-    for tick in ticks_of(*sides):
-        levels = [at(side, tick, parts) for side in sides]
+    for interval in intervals_of(*sides):
+        levels = [at(side, interval, parts) for side in sides]
         for key in found:
             for member in range(2):
                 terms = [
@@ -110,8 +113,8 @@ def side_sums(levels: Levels, ports: Ports) -> dict[str, Fraction]:
     """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one node_reader could read alone."""
     parts = len(ports[PORTS[0]])
     found = {port: Fraction(0) for port in PORTS}
-    for tick in ticks_of(levels):
-        here = at(levels, tick, parts)
+    for interval in intervals_of(levels):
+        here = at(levels, interval, parts)
         for port in PORTS:
             for member in range(2):
                 total = sum(ports[port][k] * here[k][member] for k in range(parts))
@@ -205,8 +208,8 @@ def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
     """The parts' mismatch, LATTICE diagnostics from the same reports: M_k the cross-side products of the part k (the product over the sides of its sums) accumulated over the window on both members, the ratios M_k / M_1 of the parts after the first (1 at equal parts; the pair's r), the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2) from the first two parts (S = (238 + 240 rho) / 169 at Bell's settings), and per side the parts' squares' ratios to the first part's; None where a divisor is 0."""
     products = [Fraction(0)] * parts
     squares = [[Fraction(0)] * parts for _ in sides]
-    for tick in ticks_of(*sides):
-        levels = [at(side, tick, parts) for side in sides]
+    for interval in intervals_of(*sides):
+        levels = [at(side, interval, parts) for side in sides]
         for k in range(parts):
             for member in range(2):
                 products[k] += prod(now[k][member] for now in levels)
@@ -231,7 +234,10 @@ def realised(
     for line in lines:
         if line.get("event") != "credit" or line.get("family") != family:
             continue
-        if line.get("node_reader") in node_readers and window[0] <= int(str(line["tick"])) <= window[1]:
+        if (
+            line.get("node_reader") in node_readers
+            and window[0] <= int(str(line["interval"])) <= window[1]
+        ):
             found[str(line["node_reader"])] = str(line["realised"])
     return (
         [found[name] for name in node_readers] if all(name in found for name in node_readers) else None
@@ -248,7 +254,7 @@ def inflow_of(
         if line.get("event") == "click"
         and line.get("family") == family
         and line.get("node_reader") == node_reader
-        and window[0] <= int(str(line["tick"])) <= window[1]
+        and window[0] <= int(str(line["interval"])) <= window[1]
     )
 
 
@@ -276,7 +282,7 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
         "patterns": {
             label: [list(part) for part in row.pattern] for label, row in zip(labels, rows, strict=True)
         },
-        "intervals_reported": len(ticks_of(*sides)),
+        "intervals_reported": len(intervals_of(*sides)),
         **written(credits_of(sides, ports), labels),
         "drawn": realised(lines, family.name, [row.name for row in rows], window),
         "mismatch": mismatch(sides, family.parts),

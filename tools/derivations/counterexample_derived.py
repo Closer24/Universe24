@@ -349,7 +349,7 @@ def light_speed_and_dispersion() -> Row:
 
 
 def moving_clock_fourth_order() -> Row:
-    """Table 5's row, Section 8 (e), S.21: the tick of a free quantum is Lorentz's factor at c_m to the second order and at the fourth order carries omega_0 [(SUM_a n_a^4) tan omega_0 + cot omega_0]: 1.6926 along an axis, 1.2224 along a face diagonal, 1.0657 along the body diagonal at [2, 3], the axis's read on the exact band's inversion at v = 0.02 (moving_clock), c_m / c = 0.867, and 1 in every direction as the gap closes; outside: above the band's largest group speed (0.2501 Links per interval along an axis at [2, 3]) the inversion v(k) has no root."""
+    """Table 5's row, Section 8 (e), S.21: the interval of a free quantum is Lorentz's factor at c_m to the second order and at the fourth order carries omega_0 [(SUM_a n_a^4) tan omega_0 + cot omega_0]: 1.6926 along an axis, 1.2224 along a face diagonal, 1.0657 along the body diagonal at [2, 3], the axis's read on the exact band's inversion at v = 0.02 (moving_clock), c_m / c = 0.867, and 1 in every direction as the gap closes; outside: above the band's largest group speed (0.2501 Links per interval along an axis at [2, 3]) the inversion v(k) has no root."""
     factors = moving_clock.fourth_order_over_lorentz(2, 3)
     holds = [round(f, 4) for f in factors[:3]] == [1.6926, 1.2224, 1.0657] and abs(
         factors[3] - factors[0]

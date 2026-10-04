@@ -677,7 +677,7 @@
   {
    "id": "L37",
    "name": "The exact lay's operator line",
-   "place": "ALGEBRA.md, The message lay (The generator)",
+   "place": "ALGEBRA.md, The packet lay (The generator)",
    "statement": "With L the line's own read, (L f)_i = (S f_i + SUM over the six Ports of R f_j) / (2 w), of eigenvalue cos omega(q) on e^(i q x), the record one interval earlier is z_(-1) = (L + i sqrt(1 - L^2)) z, so before = L a - sqrt(1 - L^2) s exactly with the backward root 0; the expansion about c = cos omega_k, before_i = (c a_i - s_k s_i) + [(L a)_i - c a_i] + (c / s_k) [(L s)_i - c s_i] + O((L - c)^2), its remainder (1 / 2) f'' (L - c)^2 with f = sqrt(1 - L^2), f'' = -1 / s_k^3 and L - c = -s_k v_g delta, -v_g^2 delta^2 / (2 s_k); the plain lay's backward root 0.02991 at delta = 0.05 and 0.05662 at 0.10 against the first order 0.03173 and 0.06345.",
    "ground": "the eigenvalue and the addition formula exact at rational angles; the expansion by the residual's order 2 and its coefficient; the roots recomputed",
    "kind": "A",
@@ -788,7 +788,7 @@
    "name": "The moving clock to the fourth order",
    "place": "S.21; main.tex 8 (e); ALGEBRA.md, The rows against nature (e)",
    "statement": "omega(k) = omega_0 + alpha k^2 - beta k^4 + O(k^6) with alpha = c_0 / (2 s) and beta = c_0 / (24 s) + c c_0^2 / (8 s^3); Omega / omega_0 = 1 - v^2 / (2 c_m^2) - (2 omega_0 / sin 2 omega_0) v^4 / (8 c_m^4) + O(v^6), c_m^2 = omega_0 / (3 tan omega_0): Lorentz's factor at c_m to the second order exactly, the fourth order's factor 2 omega_0 / sin 2 omega_0 = 1.6926 at [2, 3], along n omega_0 [(SUM n_a^4) tan omega_0 + cot omega_0], 1.2224 on a face diagonal, 1.0657 on the body diagonal, 1 as the gap closes; S.21's check -3.37 and -2.12 against -3.365 and -2.119.",
-   "ground": "the band's series by the residual's order 6, the tick's by its order 6; the numbers recomputed",
+   "ground": "the band's series by the residual's order 6, the interval's by its order 6; the numbers recomputed",
    "kind": "B",
    "check": {
     "module": "tools/derivations/proofs_paces.py",
@@ -841,7 +841,7 @@
    "id": "L49",
    "name": "The two clocks under the principle",
    "place": "S.31; main.tex Table 4 and 3.4; ALGEBRA.md, The same clock and the same ruler for every act",
-   "statement": "omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)]; the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at equal rotations: 0.3916 against 0.4 and 0.3920 at N = 0.8, omega = 0.4, 0.9; 2.5 x 10^-38 at nature's gap; the rest line's rate in omega -2 tan(omega_0 / 2) / omega_0 = -f(omega_0); a cavity of bodies ticks at N exactly.",
+   "statement": "omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)]; the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at equal rotations: 0.3916 against 0.4 and 0.3920 at N = 0.8, omega = 0.4, 0.9; 2.5 x 10^-38 at nature's gap; the rest line's rate in omega -2 tan(omega_0 / 2) / omega_0 = -f(omega_0); a cavity of bodies intervals at N exactly.",
    "ground": "the series by the residual's order 5, the half-angle identity exact, the numbers recomputed",
    "kind": "B",
    "check": {

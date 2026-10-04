@@ -86,7 +86,7 @@ def world(design: dict[str, Any], folder: Path) -> dict[str, Any]:
         "shape": design["shape"],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": str((folder / UNIVERSE).relative_to(ROOT))
         if folder.is_relative_to(ROOT)
         else UNIVERSE,
