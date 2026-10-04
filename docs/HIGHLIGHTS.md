@@ -31,7 +31,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 - The law is docs/ALGEBRA.md, one algebraic line per rule, and the engine is its implementation and nothing else; every rule passes the three tests (generic, vector, local) before it enters, and a hypothesis that needs more is stated under its own name.
 - Every claim in the paper and in the law has one sentence with its status mark and its fence; every derived or computed mark names its derivation script.
-- Every derived or computed claim has a Python derivation script under tools/derivations/ whose output a test compares to the printed number and to tests/numbers.json, the numbers table, where every number printed in more than one place is defined once with its forbidden variants.
+- Every derived or computed claim has a Python derivation script under tools/derivations/ whose output a test compares to the printed number and to tests/numbers.json, the numbers table, where every number printed in more than one place is defined once with its forbidden variants; the whole law is the target, and the derived and computed lines that name no script are counted by the test as a ratchet that only falls, reaching zero with part 4.
 - A theorem's proof stays in words beside its mark, and its script checks the claim on the engine's integers.
 - The stale-phrase gate in the documents test asserts the struck phrases absent from the law, the engine's document and the paper.
 - The conventions and units table is a section of the law (the one orientation, the tension's sign, the step's phase, the matrices and the energy, T and the walls, form against share against inflow), drafted by the first hand and confirmed by the second, its identities asserted in the integer algebra test.
