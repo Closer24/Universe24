@@ -22,7 +22,7 @@ from event_universe.loader.node_reader_declaration import Transition, node_reade
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import node_readers_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, load_file, refused
+from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, click_key, load_file, pulsed_world, refused
 
 TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
 
@@ -353,23 +353,11 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     tmp_path, monkeypatch
 ):
     """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/messages.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the ticks 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `tick`, a tick beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's tick: no close before it, the generator at its seed, the body dark under the probe alone; at the tick the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEREADER with the window [1, 3], the body's proper time 3 and the window's index 1, `taken` and `given` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's taking is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's ticks' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's ticks are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click."""
-    folder = EVENTS / "zeno_pulsed"
-    universe = json.loads((folder / "pulsed_atom.json").read_text(encoding="utf-8"))
-    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    draw = {"seed": 25, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
-    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
-    ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
-    turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
-    probe["drive"] = "probe"
-    region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
-    record = {"family": "atom", "nodes": region, "parts": parts}
-    record.update(transitions=[*turns, probe], rates=[], node_reader=draw)
-    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "tick": t} for t in (3, 7)]
-    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=9)
-    world.update(universe="u.json", engine="e.json", bodies=[record], messages=lays, node_readers=[])
-    (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
+    path, folder = pulsed_world(tmp_path, monkeypatch), EVENTS / "zeno_pulsed"
+    world = json.loads(path.read_text(encoding="utf-8"))
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    (record,), lays = world["bodies"], world["messages"]
+    (*turns, probe), draw = record["transitions"], record["node_reader"]
     families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
     wrong = {"beside a probe": {**record, "node_reader": {**draw, "window": 1}}}
     wrong["no weight"] = {**record, "transitions": [*turns, {**probe, "weight": 1}]}
@@ -424,6 +412,27 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     shipped = json.loads(pulsed.read_text(encoding="utf-8"))
     assert [m["tick"] for m in shipped["messages"] if "tick" in m] == [192, 384, 576, 768]
     assert BACK.verdict(GameBoard(load_world(pulsed)), 200)["verdict"] == "MATCH"
+
+
+def test_the_pulsed_closes_two_keys_are_g_by_pulse_from_e_and_g_by_probe_from_g(tmp_path, monkeypatch):
+    """The F4 pin of the two keys of a pulsed body's close (#1793 comments 5983460299 and 5983478474, the Boss's grant 5983514044; `meeting.probe_click`, one draw per close): on the minimal pulsed world the body set in e with the entered label the unit and the drive's count 1 in the books at a unit below the Node's share (the quantum given back read in the books alone and nothing laid, `meeting.faced`; at the unit's default the return is laid whole at the Node and lights the second window faintly), the return at 3 is the pulse's click "g by pulse", the probe's finding of g in that same click, certain at the full share; the second window dark, theta_W = 0, so the probe finds g from g alone at 7, "g by probe", at cos^2 0 the unit; the body in g after each close, no pulse laid, no line of the first close carrying the probe's name."""
+    board = GameBoard(load_world(pulsed_world(tmp_path, monkeypatch)), (lines := []).append)
+    pulse, books = [f.name for f in board.families].index("pulse"), board.credit.bodies[0]
+    wall = books.labels[0]
+    books.part, books.counts, books.labels = 1, [0, 1], [wall, 0]  # in e, the entered label the unit
+    board.credit.counts[pulse], board.credit.units[pulse] = 1, -1  # the drive in the books alone
+    closes = {3: ([("body 0 g by pulse", "e", "pulse", None)], wall * wall)}
+    closes[7] = ([*closes[3][0], ("body 0 g by probe", "g", "probe", "probe")], 0)
+    for tick, (expected, share) in closes.items():
+        while board.tick < tick:
+            board.step()
+        clicks = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEREADER"]
+        keyed = [(click_key(x), x["before"], x["given"], x["taken"]) for x in clicks]
+        assert keyed == expected and (books.part, books.counts) == (0, [1, 0])
+        assert list(books.shares.values()) == [share] and meeting.dark(board, books)
+    first = [x for x in lines if x["event"] == "credit" and x["tick"] == 3]
+    assert len(first) == 1 and "probe" not in (first[0]["taken"], first[0]["given"])
+    assert not [x for x in lines if x["event"] == "lay" and x["family"] == "pulse"]
 
 
 def test_a_taking_from_a_dense_record_is_read_in_the_books_and_writes_nothing():

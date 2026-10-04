@@ -254,6 +254,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
     ),
+    "tests/test_the_meeting.py::test_the_pulsed_closes_two_keys_are_g_by_pulse_from_e_and_g_by_probe_from_g": (
+        30,
+        "the F4 pin of the two keys of a pulsed body's close (#1793 comments 5983460299, 5983478474; the Boss's grant "
+        "5983514044): the return from e is the pulse's click 'g by pulse' and the probe finds g from g alone, 'g by probe', "
+        "one draw per close",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
