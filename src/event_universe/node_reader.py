@@ -16,7 +16,7 @@ from event_universe.features.click import drawn, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
-from event_universe.loader.node_reader_declaration import NodeReaderDeclaration
+from event_universe.loader.node_reader_declaration import NodeReaderDeclaration, Transition
 from event_universe.loader.world import BodyRow
 from event_universe.reports import BODY, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of
@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, and `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the taking's draw weights."""
+    """The books of a record declared a reader over a region (ALGEBRA.md, The NodeReader is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window, the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the taking's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its taking (`meeting.turned_labels`, `meeting.took`)."""
 
     number: int
     index: int
@@ -50,6 +50,7 @@ class NodeBooks:
     amplitudes: tuple[int, ...] = ()
     norm: int = 1
     intake: dict[int, list[int]] = field(default_factory=dict)
+    shares: dict[Transition, int] = field(default_factory=dict)
 
 
 def books_of(board: GameBoard) -> list[NodeBooks]:

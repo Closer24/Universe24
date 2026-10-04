@@ -557,3 +557,44 @@ def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
         for line in lines
         if line["tick"] > 48 and line["event"] not in ("face", "credit", "lay")
     )
+
+
+def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
+    """The taking among several drives (ALGEBRA.md, The click writes on the GameBoard (f); The two-mode line; `meeting.turned_labels`, `took`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands: a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
+    seen, turned = [], meeting.turned_labels
+
+    def kept(board, books):  # the labels and the shares at the window's close, before the click
+        turned(board, books)
+        shares = getattr(books, "shares", {})  # none before the fix: the clicks' assertion fails
+        seen.append((list(books.labels), {t.drive: s for t, s in shares.items()}))
+
+    monkeypatch.setattr(meeting, "turned_labels", kept)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    folder, clicks = EVENTS / "anticoincidence", {}
+    for drives in (("photon", "photon_b"), ("photon",)):
+        universe = json.loads((folder / "two_atoms.json").read_text(encoding="utf-8"))
+        universe["families"] += [{**universe["families"][1], "name": d} for d in drives[1:]]
+        (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+        world = json.loads((folder / "two_photons.json").read_text(encoding="utf-8"))
+        world.update(shape=[64, 1, 1], universe="u.json", engine="e.json")
+        for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
+            body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
+            body["node_reader"] = {**body["node_reader"], "window": window}
+            body["transitions"] = [{**body["transitions"][0], "drive": d} for d in drives]
+        for message, x, family in zip(world["messages"], (32, 31), ("photon", "photon_b"), strict=True):
+            message.update(top={**message["top"], "x": [x, x]}, family=family)
+        world["messages"] = [m for m in world["messages"] if m["family"] in drives]
+        (path := tmp_path / f"{len(drives)}.json").write_text(json.dumps(world), encoding="utf-8")
+        TOOL.main(["--input", str(path)])
+        board = GameBoard(load_world(path), (lines := []).append)
+        while board.tick < 56:
+            board.step()
+        clicks[drives] = [(c["tick"], c["node_reader"], c["taken"]) for c in lines if c.get("taken")]
+    assert clicks["photon", "photon_b"] == [(44, "body 0", "photon_b"), (56, "body 1", "photon")]
+    assert clicks[("photon",)] == [(56, "body 1", "photon")]
+    two, one = seen[:2], seen[2:]  # the closes at 44 and 56 per world; the drives photon 1, photon_b 2
+    print(f"takings by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
+    assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
+    assert [shares[1] for _, shares in two] == [shares[1] for _, shares in one]  # photon's own share
+    assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]
