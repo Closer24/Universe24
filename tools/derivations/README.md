@@ -5,8 +5,9 @@ Rule3's line as `docs/ALGEBRA.md` states it and leaning on no run of the
 engine (the owner's order of 2026-10-04, 04:20 UTC: every derived mark's
 script, everything from Rule3, nothing from the simulator). A module is pure
 Python, integers and fractions where the law is exact and floats where a
-cosine is asked for; it imports nothing of `event_universe`, reads no file of
-`runs/` and holds no number of nature. Its root is `rule3.py`, the line and
+cosine is asked for; it imports nothing of `event_universe` and reads no file of
+`runs/`; no number of nature enters a derivation, and nature's numbers enter the
+comparison columns alone, named as such at the module's head. Its root is `rule3.py`, the line and
 its invariants transcribed sentence by sentence (the coefficients, the step
 and its backward act, the band at the vacuum's paces and at a Node's paces,
 the group velocity, the conserved form with the remainders' walk, the paces'
@@ -19,9 +20,10 @@ the engine.
 
 - Documents gate (3), `tools/documents_gates.py` `derived()`, run by
   `tests/test_documents.py`: every number of `tools/numbers.json` that carries
-  a `derivation` rule (`module`, `function`, `expected`, `digits`) is that
-  function's output to the digits named, so a number of the documents is its
-  script's.
+  a `derivation` rule (`module`, `function`, `expected`, `digits`, and
+  `arguments` where the function takes the table's own inputs, a run's reading
+  among them, which no module holds) is that function's output to the digits
+  named, compared positionally, so a number of the documents is its script's.
 - `tests/test_derivations_lean_on_rule3_alone.py`: (a) every module here
   imports nothing of the engine and names no run's file, a hard rule, and the
   paper-side scripts of `paper/general_formula/` that lean on the engine or
@@ -40,7 +42,10 @@ the engine.
   `reason` named, a finding for the hands), and the scriptless count is a
   ratchet that only falls (`SCRIPTLESS_MARKS`, at most 18); (e) every scripted
   entry's function returns its printed numbers in order, a `num/den` string as
-  an exact Fraction, an int as it stands and a float to `digits` decimal places.
+  an exact Fraction, an int as it stands and a float to `digits` decimal places;
+  the comparer matches the printed numbers as an in-order subsequence of the
+  function's output, so a function returns its mark's numbers first and names
+  every output in its docstring.
 
 ## The inventory
 

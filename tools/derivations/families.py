@@ -58,7 +58,7 @@ def gapped_green(kappa: float, reach: int = 1, points: int = QUADRATURE) -> floa
 
 
 def universe_table() -> list[float]:
-    """The universe table's derived columns from each row's pair and shape (line 395): [gravity's inverse reach kappa at [1, 1], 0, no gap; the binding holder's range R = 1 / kappa at [2400, 2401], 20 Links; matter's rest cos omega_0 = num / den at [4000, 6000], 2 / 3; the parts a holder read into the paces carries at most, 1 + 3]."""
+    """The universe table's derived columns from each row's pair and shape (line 395; ALGEBRA.md, A family's declaration, the pair [num, den] and the shape; The line, cos omega_0 = num / den at wave number zero; The well, the rest's fall e^(-kappa) per Link with cosh kappa = 3 den / num - 2): [gravity's inverse reach kappa at [1, 1], 0, no gap; the binding holder's range R = 1 / kappa at [2400, 2401], 20 Links; matter's rest cos omega_0 = num / den at [4000, 6000], 2 / 3; the parts a holder read into the paces carries at most, 1 + 3]."""
     return [
         inverse_reach(*GRAVITY),
         1 / inverse_reach(*BINDING),
@@ -68,7 +68,7 @@ def universe_table() -> list[float]:
 
 
 def what_rule3_reads() -> list[float]:
-    """What a family carries is set by what Rule3 reads and what a record can write (line 410): the line's coefficients read one clock pace p_0, in S alone, and three Link paces p_a, one read coefficient per axis; [the clock's count, the Link paces' count, 1 + 3 the most parts of a holder]."""
+    """What a family carries is set by what Rule3 reads and what a record can write (line 410; ALGEBRA.md, The line, the coefficients w = 6 den Gamma^2, R_a = 2 num p_a^2 and S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num (p_x^2 + p_y^2 + p_z^2)): the line's coefficients read one clock pace p_0, in S alone, and three Link paces p_a, one read coefficient per axis; [the clock's count, the Link paces' count, 1 + 3 the most parts of a holder]."""
     wall, reads, self_coefficient = rule3.coefficients(2, 3, 10, clock=7, links=(5, 6, 7))
     clocks = 1  # p_0 enters S once: 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM_a p_a^2
     assert (
@@ -95,7 +95,7 @@ def gap_is_the_inverse_reach() -> list[float]:
 
 
 def two_speeds(gamma: int = GAMMA, content: int = 300, links: int = 1000) -> list[float]:
-    """Under Every row reads the content the massless holder's travelling events have light's paces identically, so gamma_GW = gamma_EM and the two Shapiro delays differ by 0, inside GW170817's bounds (line 430; S.12): light and the holder's events both run on rule3's band at the paces p_0 = Gamma N, p_a = Gamma N^2, N^2 / sqrt 3 at long wavelength; [their speeds' difference, their arrivals' difference over the Links in intervals, the superseded version's separation L sqrt 3 (1 / N^2 - 1) with the holder at 1 / sqrt 3, whether 0 lies within GW170817's bounds]."""
+    """Under Every row reads the content the massless holder's travelling events have light's paces identically, so gamma_GW = gamma_EM and the two Shapiro delays differ by 0, inside GW170817's bounds (line 430; S.12): light and the holder's events both run on rule3's band at the paces p_0 = Gamma N, p_a = Gamma N^2, N^2 / sqrt 3 at long wavelength; [their speeds' difference, their arrivals' difference over the Links in intervals, the superseded version's separation L sqrt 3 (1 / N^2 - 1) with the holder at 1 / sqrt 3, exact in x (182.2 over 1,000 Links at x = 0.05), where S.12's written formula L sqrt 3 [1 / (1 - 2 x) - 1] is its first order in x (192.5); whether 0 lies within GW170817's bounds]."""
     clock = rule3.clock_pace(gamma, content)
     pace = rule3.node_pace(clock, gamma)
     k = 1e-3

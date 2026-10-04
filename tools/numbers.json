@@ -131,6 +131,7 @@
         "derivation": {
             "module": "tools/derivations/zeno.py",
             "function": "reading_against_the_formula",
+            "arguments": [[120, 61, 44, 28, 16], 120],
             "expected": [0.18, -0.19, -0.03, 0.0],
             "digits": 2
         }
@@ -140,6 +141,7 @@
         "derivation": {
             "module": "tools/derivations/zeno.py",
             "function": "column_b_excluded",
+            "arguments": [[120, 61, 44, 28, 16], 120],
             "expected": [2.6, 4.8, 5.9, 4.3],
             "digits": 1
         }

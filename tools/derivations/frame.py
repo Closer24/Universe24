@@ -24,10 +24,13 @@ GENERAL_RELATIVITY_MAS_PER_YEAR = (
 PULSAR_ALPHA_1_BOUND = 4e-5  # nature's |alpha_1| from PSR J1738+0333 (Shao and Wex)
 
 
-def preferred_frame_parameters(gamma_ppn: float = PPN_GAMMA) -> list[float]:
-    """S.35: a metric with g_0j = 0 in its preferred frame has both g_0j coefficients 0, so the gauge-invariant sum 4 gamma + 4 + alpha_1 vanishes: [alpha_1 = -4 (1 + gamma), -8; alpha_2 from the second coefficient 1 + alpha_2 - zeta_1 + 2 xi = 0 with zeta_1 = 2 xi = 0, -1; the invariant sum, 0]."""
-    alpha_1 = -4 * (1 + gamma_ppn)
-    return [alpha_1, -1.0, 4 * gamma_ppn + 4 + alpha_1]
+def preferred_frame_parameters(
+    gamma_ppn: float = PPN_GAMMA, zeta_1: float = 0.0, xi: float = 0.0
+) -> list[float]:
+    """S.35: a metric with g_0j = 0 in its preferred frame has both g_0j coefficients of the parametrised post-Newtonian metric 0, the V_j coefficient (4 gamma + 3 + alpha_1 - alpha_2 + zeta_1 - 2 xi) / 2 and the W_j coefficient (1 + alpha_2 - zeta_1 + 2 xi) / 2 (Will's form), so the gauge-invariant sum 4 gamma + 4 + alpha_1 vanishes: [alpha_1 from the first, -4 (1 + gamma) at the standard gauge zeta_1 = xi = 0, -8 at gamma = 1; alpha_2 from the second, -1; the invariant sum, 0]."""
+    alpha_2 = -(1 - zeta_1 + 2 * xi)  # the W_j coefficient vanishing
+    alpha_1 = -(4 * gamma_ppn + 3 - alpha_2 + zeta_1 - 2 * xi)  # the V_j coefficient vanishing
+    return [alpha_1, alpha_2, 4 * gamma_ppn + 4 + alpha_1]
 
 
 def frame_dragging(gamma_ppn: float = PPN_GAMMA) -> list[float]:
@@ -64,7 +67,7 @@ def no_cross_terms(
 def five_forms(
     gamma: int = GAMMA, k: float = 0.3, mixed_over_wall: float = 1e-2, n_factor: float = 0.9
 ) -> list[float]:
-    """S.36: (i) the one-sided real mixed term C [(a_+ - a_-)_now - (a_+ - a_-)_before] added to light's line gives 2 w cos omega = S + 2 SUM_a R_a cos k_a + 2 i C sin k (1 - e^(i omega)), solved for the complex omega by Newton from the band's omega, with w, R and S rule3's coefficients at Gamma = 6,000: [Re omega, Im omega, the band's omega] = [0.16984, -2.47 x 10^-4, 0.17277] at k = 0.3 and C / w = 10^-2, the imaginary part a growth or decay that breaks the form; (v) the staggered clock's rest rotation in a content, omega / omega_0 = N sqrt(3 / (4 - N^4)) at nu -> 1, [sqrt(3 / (4 - N^4)) at N = 0.9, 0.9472; the redshift's factor 5 / 3]."""
+    """S.36: (i) the one-sided real mixed term C [(a_+ - a_-)_now - (a_+ - a_-)_before] added to light's line gives 2 w cos omega = S + 2 SUM_a R_a cos k_a + 2 i C sin k (1 - e^(i omega)), solved for the complex omega by Newton from the band's omega, with w, R and S rule3's coefficients at Gamma = 6,000: [Re omega, Im omega, the band's omega] = [0.16984, -2.47 x 10^-4, 0.17277] at k = 0.3 and C / w = 10^-2, the imaginary part a growth or decay that breaks the form; (v) the staggered clock: S.36 (v)'s closed forms written in and not derived here, the rest rotation in a content omega / omega_0 = N sqrt(3 / (4 - N^4)) at nu -> 1 and its first order N (1 - 2 U / 3), a clock in a well at omega_0 (1 - 5 U / 3); [sqrt(3 / (4 - N^4)) at N = 0.9, S.36's check, 0.9472; the redshift's factor 5 / 3]."""
     wall, reads, self_coefficient = rule3.coefficients(1, 1, gamma)
     mixed = mixed_over_wall * wall
     right_fixed = self_coefficient + 2 * reads[0] * math.cos(k) + 2 * reads[1] + 2 * reads[2]

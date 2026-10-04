@@ -707,7 +707,7 @@
    "existing_script": "tools/derivations/zeno.py",
    "proposed_module": "zeno.py",
    "status": "scripted",
-   "note": "P(e) at n = 1, the body's period 2 pi / omega_b at the computed pair's rest rotation, and P(e) with that period as the window over S.59's T_pi = 768 ticks (103 windows)",
+   "note": "P(e) at n = 1, the body's period 2 pi / omega_b at the computed pair's rest rotation, and P(e) with that period as the window over the pulsed gate's T_pi = 768 ticks (103 windows; ALGEBRA.md, What is open, item 46, 'the pi pulse 768 ticks'; S.59 (a)'s T_pi = pi / (2 Omega_R))",
    "script": "tools/derivations/zeno.py",
    "function": "own_period_as_window",
    "expected": [
@@ -2184,7 +2184,7 @@
    "expected": [
     0.5,
     0.5,
-    1
+    1.0
    ],
    "digits": 4,
    "closure_note": "the Wronskian over T at two pairs by the integer lay, 1 / 2 to the root's rounding; nature's 10^-21 is a comparison"
@@ -2204,7 +2204,7 @@
    "function": "alpha_law",
    "expected": [
     0.20675,
-    1
+    1.0
    ],
    "digits": 4,
    "closure_note": "the prefactor 3 sqrt 3 / (8 pi) of the law and the gap's cancellation"
@@ -2506,8 +2506,8 @@
    "script": "tools/derivations/constants.py",
    "function": "universality_and_equivalence",
    "expected": [
-    1,
-    1
+    1.0,
+    1.0
    ],
    "digits": 4
   },
@@ -2749,27 +2749,16 @@
    "existing_script": "tools/derivations/nuclear.py",
    "proposed_module": "nuclear.py",
    "status": "scripted",
-   "note": "S.45's numbers: 1.6798 x 4 pi / 9 = 2.35, W at the threshold by the small-gap form 1,183 (1,182.6; the exact inertia 1.5 tan omega_p and sin omega_p give 1,004 instead, the paper naming the small-gap formula), the binding fractions at nature's radii and the size law 28 and 784 ('800')",
+   "note": "S.45 (a)'s numbers at R287 (both hands, 5977339067 and 5977386611): the law's reading mu = m* about the pinned centre (postulate 2), W >= 1.17 Gamma kappa / omega_p^3, 591 at [2, 3] by the small-gap formula and 502 by the exact inertia, then the pair hypothesis' mu = m* / 2, 2.35 Gamma kappa / omega_p^3, 1,183 and 1,004, the four printed in that order; the binding fractions at nature's radii and the size law 28 and 784 ('800') follow in `findings` from `binding_at_a_size`",
    "script": "tools/derivations/nuclear.py",
    "function": "findings",
    "expected": [
-    2.35,
+    591.0,
+    502.0,
     1183.0,
-    0.031,
-    0.0049,
-    0.0016,
-    28.0,
-    800.0
+    1004.0
    ],
-   "digits": [
-    2,
-    0,
-    3,
-    4,
-    4,
-    0,
-    -2
-   ]
+   "digits": 0
   },
   {
    "line": 612,

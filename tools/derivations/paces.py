@@ -33,14 +33,14 @@ def clock(gamma: int, content: int) -> float:
 
 
 def not_conformal(gamma: int = 12000, content: int = 3000) -> list[float]:
-    """[P_0, P_a, the k = pi mode's measure on one axis, on three axes] at [2, 3] (R168)."""
+    """[P_0 = (p_0 / Gamma)^2, P_a = (p_a / Gamma)^2, the k = pi mode's measure on one axis, on three axes] at [2, 3] and c = 3,000 of 12,000 under the composed paces (ALGEBRA.md, The line, "The line is not conformal": a light record at a fixed wave number scales with (p_a / Gamma)^2 and a bound mode at rest with (p_0 / Gamma)^2, 0.607 for the rest mode against 0.470 on one axis and 0.416 on three; R168 the record)."""
     p0 = (clock(gamma, content) / gamma) ** 2
     pa = p0 * p0
     return [p0, pa, (p0 / 3 + 4 * pa / 9) / (7 / 9), (p0 / 3 + 4 * pa / 3) / (5 / 3)]
 
 
 def quadratic_against_composed(gamma: int = 6000, content: int = 600) -> list[float]:
-    """[the quadratic clock Gamma - c + c^2 div 2 Gamma less the composition, Gamma U^3 / 6] (R169 (h))."""
+    """[the quadratic clock Gamma - c + c^2 div 2 Gamma less the composition, Gamma U^3 / 6] (ALGEBRA.md, The paces: p_0 = Gamma (1 - 1 / Gamma)^c, its square Gamma^2 - 2 Gamma c + 2 c^2 to the second order, "The paces compose", the quadratic clock its truncation; R169 (h) the record)."""
     quadratic = gamma - content + content * content // (2 * gamma)
     return [quadratic - clock(gamma, content), gamma * (content / gamma) ** 3 / 6]
 
@@ -51,13 +51,13 @@ def mirror_thresholds(gamma: int = 10000) -> list[float]:
 
 
 def deceleration_range() -> list[float]:
-    """[s at H = 5 x 10^-4 and 1.3 x 10^-3 per interval with t = 1,000, q = 1 / s - 1 for each, the clocks' ratio at Rosenband's bound in 10^6] (R186)."""
+    """[s at H = 5 x 10^-4 and 1.3 x 10^-3 per interval with t = 1,000, q = 1 / s - 1 for each, the clocks' ratio at Rosenband's bound in 10^6] (ALGEBRA.md, A family's declaration, "Gamma is not constant", a hypothesis under its own name: q = +1.0 to -0.23, excluded by the atomic clocks and lunar ranging at 3.2 x 10^6 and 700 times the rate it needs, alpha proportional to 1 / Gamma against Rosenband's bound; R186 the record)."""
     exponents = [h * 1000 for h in (5e-4, 1.3e-3)]
     return [*exponents, *(1 / s - 1 for s in exponents), 7.25e-11 / 2.3e-17 / 1e6]
 
 
 def newton_coefficients(num: int = 2, den: int = 3) -> list[float]:
-    """[1 / m* = nu / (3 sin omega_0), d omega_0 / d l times Gamma = 2 tan(omega_0 / 2), their product, Eq. (14)'s c^2 2 cos omega_0 / (1 + cos omega_0), the band's largest group speed, that speed times the derivative] (R179)."""
+    """[1 / m* = nu / (3 sin omega_0), d omega_0 / d l times Gamma = 2 tan(omega_0 / 2), their product, Eq. (14)'s c^2 2 cos omega_0 / (1 + cos omega_0), the band's largest group speed, that speed times the derivative] (ALGEBRA.md, A family's declaration, the band's inertia m* = 3 tan omega_0; The method of derivation, the derived list's (1), U_K = [2 cos omega_0 / (1 + cos omega_0)] U, the potential the orbits measure; R179 the record)."""
     nu = num / den
     omega0 = math.acos(nu)
     curvature, slope = nu / (3 * math.sin(omega0)), 2 * math.tan(omega0 / 2)
@@ -171,7 +171,7 @@ def mirror_threshold(gamma: int = 10000, wavelengths: tuple[float, ...] = (4, 4.
 
 
 def no_horizon(gamma: int = 6000) -> list[float]:
-    """A deep well freezes a clock and closes nothing; the horizon of the quadratic form at Gamma / 2 is the truncation's (line 196; S.3): [the composed Link pace p_0^2 / Gamma at c = Gamma div 2, Gamma / e, the quadratic truncation's Gamma - 2 c there, the frozen content (Gamma / 2) ln 2 Gamma where the integer booking alone rounds the Link's pace to 0]."""
+    """A deep well freezes a clock and closes nothing; the horizon of the quadratic form at Gamma / 2 is the truncation's (line 196; S.3): [the composed Link pace p_0^2 / Gamma at c = Gamma div 2, Gamma / e to the composition's rounding, 2,207; the quadratic truncation's Gamma - 2 c there, 0; the frozen content (Gamma / 2) ln 2 Gamma where the integer booking alone rounds the Link's pace to 0, 28,178]."""
     content = gamma // 2
     return [
         float(rule3.node_pace(rule3.clock_pace(gamma, content), gamma)),

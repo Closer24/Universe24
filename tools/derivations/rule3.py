@@ -147,27 +147,28 @@ def conserved_form(
     num: int,
     den: int,
     gamma: int = 1,
-    node_paces: Sequence[Number] | None = None,
+    clocks: Sequence[Number] | None = None,
     link_factors: Sequence[Sequence[Number]] | None = None,
 ) -> Fraction:
-    """E of The conserved form: E = SUM_i [w (now_i^2 + before_i^2) - S_i now_i before_i] / p_i^2 - 2 num SUM_i SUM_(j ~ i) (q_ij^2 / Gamma^2) now_i before_j, the weight 1 / p_i^2 on the Node terms and the Link's factor squared on each Link's current; `arrivals[i]` the six neighbour indices of the Node i in Port order (a folded axis returns i itself), `node_paces` p_i and `link_factors` q_ij both Gamma at the vacuum's paces, the defaults, where S_i = 0."""
+    """E of The conserved form: E = SUM_i [w (now_i^2 + before_i^2) - S_i now_i before_i] / p_i^2 - 2 num SUM_i SUM_(j ~ i) (q_ij^2 / Gamma^2) now_i before_j, the weight 1 / p_i^2 on the Node terms and the Link's factor squared on each Link's current; `arrivals[i]` the six neighbour indices of the Node i in Port order (a folded axis returns i itself); `clocks[i]` the clock p_0(i) of the Node i, its pace p_i = p_0(i)^2 / Gamma (The paces, the clock twice), and `link_factors[i][port]` the factor q_ij = Gamma - t_a(i, j) of the Link through that Port, both Gamma at the vacuum's paces, the defaults. S_i is the line's own self coefficient at the Node's paces (The line): 12 den Gamma^2 - 12 (den - num) p_0(i)^2 less the six reads R(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 (`link_coefficient`; `coefficients`' 4 num SUM_a p_a^2 where the two Ports of an axis share a pace), 0 at the vacuum's paces; so E is the form of the line `step_exact` steps at those paces and holds at any paces, D M symmetric (the proof), where a self coefficient built from any other pace drifts."""
     count = len(now)
-    paces = [gamma] * count if node_paces is None else list(node_paces)
+    p_0s = [Fraction(gamma)] * count if clocks is None else [Fraction(c) for c in clocks]
     factors = (
         [[gamma] * PORTS for _ in range(count)]
         if link_factors is None
         else [list(f) for f in link_factors]
     )
+    wall, _, _ = coefficients(num, den, gamma)
     total = Fraction(0)
     for i in range(count):
-        p_i = paces[i]
-        wall, _, self_coefficient = coefficients(
-            num, den, gamma, clock=None if node_paces is None else p_i, links=None
-        )
+        p_0 = p_0s[i]
+        p_i = node_pace(p_0, gamma)
+        reads = [link_coefficient(num, p_i, q, gamma) for q in factors[i]]
+        self_coefficient = 12 * den * gamma * gamma - 12 * (den - num) * p_0 * p_0 - sum(reads)
         node_term = (
             wall * (now[i] * now[i] + before[i] * before[i]) - self_coefficient * now[i] * before[i]
         )
-        total += Fraction(node_term) / Fraction(p_i * p_i)
+        total += Fraction(node_term) / (p_i * p_i)
         for port, j in enumerate(arrivals[i]):
             q = factors[i][port]
             total -= Fraction(2 * num * q * q * now[i] * before[j]) / Fraction(gamma * gamma)

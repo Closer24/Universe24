@@ -35,7 +35,7 @@ def doppler_times_moving_clock(
 
 
 def deceleration(matter: float = 0.3, vacuum: float = 0.7) -> list[float]:
-    """[q_0 of the ball of dust alone, Omega_m / 2; q_0 with the vacuum's write, Omega_m / 2 - Omega_Lambda] at the fitted fractions."""
+    """[q_0 of the ball of dust alone, Omega_m / 2; q_0 with the vacuum's write, Omega_m / 2 - Omega_Lambda] at Omega_m = 0.3 and Omega_Lambda = 0.7, nature's fitted fractions (flat Lambda-CDM's), the comparison column and no number of the law."""
     return [matter / 2, matter / 2 - vacuum]
 
 

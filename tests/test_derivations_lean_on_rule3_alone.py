@@ -104,7 +104,7 @@ def test_the_modules_without_the_rule3_root_only_fall():
 
 
 def test_a_plane_wave_at_the_derived_omega_satisfies_the_line_and_the_form_is_conserved():
-    """(c) rule3.py: the plane wave at cos omega = (num / (3 den)) (2 + cos k) satisfies the line to rounding on a chain; the band at the vacuum's paces is the same number; the conserved form is exact over 50 intervals on a periodic chain of 24 Nodes from integer levels, the integer step's walk of E the law's term exactly, and the backward act returns the state bit for bit."""
+    """(c) rule3.py: the plane wave at cos omega = (num / (3 den)) (2 + cos k) satisfies the line to rounding on a chain; the band at the vacuum's paces is the same number; the conserved form is exact over 50 intervals on a periodic chain of 24 Nodes from integer levels, the integer step's walk of E the law's term exactly, and the backward act returns the state bit for bit; on a six-Node chain whose clocks differ, E built from each Node's own clock and the line's own S_i is exact over six intervals."""
     law = rule3()
     for num, den in ((1, 1), (2, 3), (4000, 6000)):
         assert law.plane_wave_residual(math.pi / 4, num, den) < 1e-6
@@ -140,6 +140,30 @@ def test_a_plane_wave_at_the_derived_omega_satisfies_the_line_and_the_form_is_co
         ]
         assert [b[0] for b in back] == before and [b[1] for b in back] == remainders
         now, before, remainders = levels, now, carried
+    # the witness at non-vacuum paces: six Nodes at Gamma = 10 with the contents 0, 1, 2, 3, 2, 1
+    clocks = [law.clock_pace(10, c) for c in (0, 1, 2, 3, 2, 1)]
+    paces, arrivals = [law.node_pace(p, 10) for p in clocks], law.chain_arrivals(6)
+    now = [Fraction(draw.randint(-50, 50)) for _ in range(6)]
+    before = [Fraction(draw.randint(-50, 50)) for _ in range(6)]
+    witness = law.conserved_form(now, before, arrivals, num, den, 10, clocks)
+    for _ in range(6):
+        now, before = (
+            [
+                law.step_exact(
+                    now[i],
+                    before[i],
+                    [now[j] for j in arrivals[i]],
+                    num,
+                    den,
+                    10,
+                    clocks[i],
+                    (paces[i],) * 3,
+                )
+                for i in range(6)
+            ],
+            now,
+        )
+        assert law.conserved_form(now, before, arrivals, num, den, 10, clocks) == witness
 
 
 def test_the_inventory_loads_and_its_scriptless_marks_only_fall():

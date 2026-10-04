@@ -62,14 +62,14 @@ def declaration_costs() -> list[float]:
 
 
 def own_clock_and_units() -> list[float]:
-    """[omega of the two slits' light at k = pi / 4, the photons per unit of count 1 / sin omega, the NodeReader's own clock per interval at the vacuum's content p_0 / Gamma]: 0.4456, 2.3204 and 1; one unit of count is one wall W_c of inflow, a photon's share at omega is W_c sin omega, so N units are N / sin omega photons (S.61, line 12), and the click line carries the NodeReader's own clock, the carried sum of p_0 / Gamma over the window (S.61, lines 13 and 17)."""
+    """[omega of the two slits' light at k = pi / 4, the photons per unit of count 1 / sin omega, the NodeReader's own clock per interval at the vacuum's content p_0 / Gamma]: 0.4456, 2.3204 and 1; one unit of count is one wall W_c = 3 den T of inflow (The conventions and the units, row 11), a photon's share at omega is W_c sin omega (row 12), so N units are N / sin omega photons, the factor 1 / sin omega the convention of three units of one quantum (row 17), and the click line carries the NodeReader's own clock, the carried sum of p_0 / Gamma over the window (The click is the meeting, the click line naming the NodeReader, the family, the count, its own clock and the window)."""
     omega = math.acos(rule3.plane_wave_dispersion(TWO_SLITS_WAVE_NUMBER, *LIGHT_PAIR))
     return [omega, 1 / math.sin(omega), float(rule3.clock_pace(GAMMA, 0)) / GAMMA]
 
 
 def credit(shares: list[Fraction], count: int) -> int:
-    """N = SUM s_R capped by the record's count, the clicks the credit draws from the shares s_R = Q_R / W_c of every NodeReader reading one record (The click, algebraically)."""
-    return min(count, math.floor(sum(shares)))
+    """N = SUM s_R rounded half up and capped by the record's count, the clicks the credit draws from the shares s_R = Q_R / W_c of every NodeReader reading one record (The click, algebraically; The conventions and the units, row 16: N = (SUM s + W_rec div 2) div W_rec; S.50)."""
+    return min(count, math.floor(sum(shares) + Fraction(1, 2)))
 
 
 def one_draw_per_record() -> list[int]:
@@ -85,7 +85,7 @@ def arrival_window() -> list[float]:
 
 
 def decision_form() -> list[float]:
-    """[the largest |D - A^2 sin^2 omega| / A^2 for a plane wave at the band's omega, sin^2 omega at k = pi / 4]: 0 and 0.1858; the share is the form D = now^2 - next x before, the now against the future times the past, A^2 sin^2 omega for a plane wave (the paper's Section 5.1; S.14)."""
+    """[the largest |D - A^2 sin^2 omega| / A^2 for a plane wave at the band's omega, sin^2 omega at k = pi / 4]: 0 and 0.1857; the share is the form D = now^2 - next x before, the now against the future times the past, A^2 sin^2 omega for a plane wave (the paper's Section 5.2; S.14)."""
     num, den = LIGHT_PAIR
     omega = math.acos(rule3.plane_wave_dispersion(TWO_SLITS_WAVE_NUMBER, num, den))
     worst = 0.0
@@ -98,7 +98,7 @@ def decision_form() -> list[float]:
 
 
 def counts_move_only_at_clicks(intervals: int = 50, nodes: int = 24) -> list[Fraction]:
-    """[the change of the conserved form over 50 intervals of a record stepped by Rule3's line in exact rationals]: 0; between clicks nothing writes a record's lines but Rule3, whose form E, the count's measure, is kept exactly (The conserved form)."""
+    """[the change of the conserved form over 50 intervals of a record stepped by Rule3's line in exact rationals]: 0; Theorem 3's statement (The conserved form): the form E, the count's measure, is exact in the line where the paces stand, so a count stepped by Rule3 alone is constant between clicks; that nothing but Rule3 writes a record's lines between clicks is the engine's structure, shown by its tests and not here."""
     draw = random.Random(24)
     num, den = MATTER_PAIR
     arrivals = rule3.chain_arrivals(nodes)
@@ -115,7 +115,7 @@ def counts_move_only_at_clicks(intervals: int = 50, nodes: int = 24) -> list[Fra
 
 
 def a_quantum_never_breaks() -> list[int]:
-    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 gives one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.1)."""
+    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 gives one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.3)."""
     whole = [Fraction(1)]
     taken = credit(whole, 1)
     body_count, clicks = 5, 0

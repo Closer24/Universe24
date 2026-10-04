@@ -215,9 +215,26 @@ def shadow(mass: float = 1.0) -> list[float]:
     return [best / mass, capture / mass, schwarzschild / mass, (capture / schwarzschild - 1) * 100]
 
 
-def gravity_of_light() -> list[float]:
-    """S.41 (2), row (p2): a light packet of count n writes n quanta per interval into the massless row as a static body does, so its clock's well is G_clock n / r^2 and a static body falls at [1] x E / c^2; general relativity's pencil pulls at rho + 3 p / c^2 with p = rho c^2 / 3 along the beam, [2] x E / c^2 (Tolman): [the law's factor, general relativity's]."""
-    return [1.0, 1 + 3 * (1 / 3)]
+def gravity_of_light(k: float = math.pi / 4, nodes: int = 24, intervals: int = 50) -> list[float]:
+    """S.41 (2), row (p2): the one write, a holder of the content gains the form D = now^2 - next x before of every record over its wall (Section 3.5), and S.5's identity, D = A^2 sin^2 omega at every Node for a travelling wave as for a standing one, so a travelling light record's form summed over its Nodes is its share, its count n; a light packet of count n therefore writes n quanta per interval into the massless row as a static body of count n does, its clock's well is G_clock n / r^2 and a static body falls toward it at [1] x E / c^2; general relativity's pencil pulls at rho + 3 p / c^2 with p = rho c^2 / 3 along the beam, [2] x E / c^2 (Tolman). Computed from the three levels: a one-quantum light record a = A cos(k x - Omega t) travelling at rule3's Omega and a one-quantum matter record a = A cos(omega_0 t) resting at [2, 3], each on two lines (re and im, The conventions and the units, row 9) laid by the count over `nodes` Nodes, 2 A^2 sin omega = T per line (row 13), D summed over the lines, the Nodes and `intervals` intervals, per interval, against one quantum's form T sin omega (row 17); [the travelling record's quanta over the resting record's, the law's factor; general relativity's]: 1 and 2."""
+    action = 32768  # T, the unit of action (row 10); the quanta below are ratios in which T cancels
+
+    def quanta(wave_number: float, omega: float) -> float:
+        amplitude_squared = action / (2 * math.sin(omega) * nodes)  # the lay per Node per line
+        form = 0.0
+        for t in range(intervals):
+            for x in range(nodes):
+                for line in (0.0, math.pi / 2):  # the two lines, re and im
+                    phase = wave_number * x + line
+                    now = math.cos(phase - omega * t)
+                    nxt = math.cos(phase - omega * (t + 1))
+                    before = math.cos(phase - omega * (t - 1))
+                    form += amplitude_squared * (now * now - nxt * before)
+        return form / intervals / (action * math.sin(omega))
+
+    travelling = quanta(k, math.acos(rule3.plane_wave_dispersion(k, 1, 1)))
+    resting = quanta(0.0, rest_rotation(*COMPUTED_PAIR))
+    return [travelling / resting, 1 + 3 * (1 / 3)]
 
 
 def clock_in_two_places() -> list[float]:

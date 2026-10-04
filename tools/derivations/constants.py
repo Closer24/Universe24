@@ -23,6 +23,12 @@ ACTION = 32768  # T = 2^15, the rule's universe (the paper's line 408)
 MATTER = (2, 3)  # the rule's matter pair (line 170)
 SHIPPED_MATTER = (4000, 6000)  # the shipped matter pair over Gamma = 6,000 (line 395)
 SMALL_GAP = (999, 1000)  # a pair near the closing gap, the paper's second pair (moving_clock.py)
+WIDE_GAP = (
+    1,
+    2,
+)  # the pair of the paper's contact well, cosh kappa = 4 (families.py): with SMALL_GAP the two families a between-family check compares, their gaps a thousandfold apart
+# the lay A^2 = isqrt(...) at T = 32,768 (units.py) floors by below one unit of 18,919 at [1, 2], a relative 5 x 10^-5 at most
+# and 3.2 x 10^-5 as it falls: the tolerance of every between-family identity below that reads the lay
 # the charged universe's integers and the turning file's, the energy line held exactly (line 571; S.26 (d'))
 CHARGED = {"action": 36000, "gamma": 6000, "e_s": 1, "k_w": 4, "pair": (4000, 6000)}
 TURNING = {"action": 36000, "gamma": 6000, "e_s": 100, "k_w": 400, "pair": (4000, 6000)}
@@ -32,7 +38,7 @@ RULE_FILE = {
     "k_w": 1,
     "pair": (2, 3),
 }  # the file before the line (line 571)
-CHARGED_RECORD_COUNT = 1  # the loader refuses a charged body at a count above 1 (line 571; S.26)
+CHARGED_RECORD_COUNT = 1  # every record reading the sign holder is one quantum of its family, count 1, writing its own held row (the law's line No record reads its own write of the sign, the hypotheses under their own names; S.60, line (1)); the loader's refusal of a higher count is that line's engine form and no ground
 # nature's inputs the marks rest on, each named at the paper's line
 FINE_STRUCTURE_INVERSE = 137.036  # 1 / alpha (line 571; S.26 (d))
 MAGIC_QUANTUM_GRAVITY_GEV = (
@@ -63,7 +69,7 @@ def rest_rotation(num: int, den: int) -> float:
 
 
 def inertia(num: int, den: int) -> float:
-    """m* = 3 tan omega_0, the band's curvature at rest: sin omega_0 omega''(0) = num / (3 den) from cos omega = cos omega_0 - (num / (3 den)) (1 - cos k)."""
+    """m* = 3 tan omega_0, the band's curvature at rest (S.18): sin omega_0 omega''(0) = num / (3 den) from cos omega = cos omega_0 - (num / (3 den)) (1 - cos k)."""
     k = math.pi / 2
     coefficient = (
         rule3.plane_wave_dispersion(0.0, num, den) - rule3.plane_wave_dispersion(k, num, den)
@@ -145,18 +151,18 @@ def kepler_factor(num: int = 2, den: int = 3) -> list[float]:
 
 
 def charge_universality() -> list[float]:
-    """Charge universality from two definitions, the quantum one unit of the invariant 2 A^2 sin omega = T and the sign holder's source the Wronskian A^2 sin omega = T / 2 for every family, so |q_p| = |q_e| by construction (line 571; S.26 (a)): [the Wronskian over T at [2, 3], at [4000, 6000], their ratio], 1 / 2, 1 / 2 and 1 to the root's rounding."""
-    first, second = wronskian_per_quantum(*MATTER), wronskian_per_quantum(*SHIPPED_MATTER)
+    """Charge universality from two definitions, the quantum one unit of the invariant 2 A^2 sin omega = T and the sign holder's source the Wronskian A^2 sin omega = T / 2 for every family, so |q_p| = |q_e| by construction (line 571; S.26 (a)): [the Wronskian over T at [999, 1000], at [1, 2], their ratio], 1 / 2, 1 / 2 and 1 to the integer root's rounding, 3.2 x 10^-5 at [1, 2] (below one unit of A^2 = 18,919, 5 x 10^-5 at most), two families a thousandfold apart in their gaps, so the identity is tested across families and not by equal inputs."""
+    first, second = wronskian_per_quantum(*SMALL_GAP), wronskian_per_quantum(*WIDE_GAP)
     return [first, second, second / first]
 
 
 def alpha_law() -> list[float]:
-    """alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), independent of the family's gap (line 571; S.26 (a), (b)): one quantum writes s = W / (E_s T) = 1 / (2 E_s) per interval for every family, the angle at r is theta = 3 k s / (4 pi r Gamma) with the rest line's 3 and the far kernel, a reader's wave number changes by -grad theta = 3 k / (8 pi r^2 Gamma E_s), and Coulomb's dk / dt = alpha c / r^2 with c = 1 / sqrt 3 gives alpha = (3 sqrt 3 / 8 pi) k / (Gamma E_s); [the prefactor at k = Gamma E_s = 1, 0.20675; the write s at [2, 3] over the write at [4000, 6000], 1, the gap cancelling]."""
+    """alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s), independent of the family's gap (line 571; S.26 (a), (b)): one quantum writes s = W / (E_s T) = 1 / (2 E_s) per interval for every family, the angle at r is theta = 3 k s / (4 pi r Gamma) with the rest line's 3 and the far kernel, a reader's wave number changes by -grad theta = 3 k / (8 pi r^2 Gamma E_s), and Coulomb's dk / dt = alpha c / r^2 with c = 1 / sqrt 3 gives alpha = (3 sqrt 3 / 8 pi) k / (Gamma E_s); [the prefactor at k = Gamma E_s = 1, 0.20675; the write s at [999, 1000] over the write at [1, 2], 1 to the integer root's rounding 3.2 x 10^-5 at [1, 2], the gap cancelling across families]."""
     k, gamma, e_s, r = 1, 1, 1, 1.0
     source = 1 / (2 * e_s)  # W / (E_s T) with W = T / 2
     angle_slope = source_coefficient() * k * source / (4 * math.pi * r * r * gamma)  # -grad theta
     alpha = angle_slope * r * r / math.sqrt(light_speed_squared())
-    return [alpha, wronskian_per_quantum(*MATTER) / wronskian_per_quantum(*SHIPPED_MATTER)]
+    return [alpha, wronskian_per_quantum(*SMALL_GAP) / wronskian_per_quantum(*WIDE_GAP)]
 
 
 def reciprocal_pair(first: int = 3, second: int = 5) -> list[float]:
@@ -192,23 +198,33 @@ def energy_line() -> list[float]:
 
 
 def charge_per_record(records: int = 5) -> list[float]:
-    """Many quanta of charge are that many records of count 1, the charge rows' derivations per record and additive over records (line 571; S.26): each record writes s = 1 / (2 E_s) per interval, so n records write n times the level and the angle; [the count a charged record carries, the angle of n records over one's], 1 and n."""
+    """Many quanta of charge are that many records of count 1, the charge rows' derivations per record and additive over records (line 571; S.26; the law's line No record reads its own write of the sign, S.60 (1): every record reading the sign holder is one quantum of its family, count 1, writing its own held row): each record writes s = 1 / (2 E_s) per interval into its row, and the rest line is linear in its source, Delta a = -(w / R) sigma at the vacuum's paces (S.25; `source_coefficient`), so the rest of n records' writes is n times one record's and so is the angle it turns; [the count a charged record carries, the rest at n records' write over the rest at one's], 1 and n."""
     e_s = 1
     one = CHARGED_RECORD_COUNT / (2 * e_s)
-    return [float(CHARGED_RECORD_COUNT), records * one / one]
+    wall, reads, _ = rule3.coefficients(1, 1)
+
+    def rest(source: float) -> float:
+        return -wall / reads[0] * source  # Delta a = -(w / R) sigma, the rest line, linear in the source
+
+    return [float(CHARGED_RECORD_COUNT), rest(records * one) / rest(one)]
 
 
 def two_forces_ratio() -> list[float]:
-    """(F_e / F_g)_e / (F_e / F_g)_p = (m_p / m_e)^2 with no number, an identity forced by charge universality and F_g proportional to m^2 (line 571; S.44): F_e / F_g = k E_g / (2 E_s sin^2 omega_s) at one family, the weights cancelling between two; [the identity's residual with the shipped weights k = 4, E_g = 1,000, E_s = 1 at [2, 3] against [4000, 6000], 0; (m_p / m_e)^2 in 10^6 from nature's ratio, 3.3714; nature's two force ratios' quotient in 10^6, 3.3713]."""
+    """(F_e / F_g)_e / (F_e / F_g)_p = (m_p / m_e)^2 with no number, an identity forced by charge universality and F_g proportional to m^2 (line 571; S.44): F_e / F_g = k E_g / (2 E_s sin^2 omega_s) at one family, the weights cancelling between two; [the identity's residual with the shipped weights k = 4, E_g = 1,000, E_s = 1 at [999, 1000] against [1, 2], two families a thousandfold apart in their gaps, exact in the rationals with sin^2 omega_0 = 1 - (num / den)^2, 0; (m_p / m_e)^2 in 10^6 from nature's ratio, 3.3714; nature's two force ratios' quotient in 10^6, 3.3713]."""
     k, e_g, e_s = 4, 1000, 1
 
-    def electric_over_gravity(num: int, den: int) -> float:
-        return k * e_g / (2 * e_s * math.sin(rest_rotation(num, den)) ** 2)
+    def sine_squared(num: int, den: int) -> Fraction:
+        return (
+            1 - Fraction(num, den) ** 2
+        )  # sin^2 omega_0 at cos omega_0 = num / den, exact in the rationals
 
-    between = electric_over_gravity(*MATTER) / electric_over_gravity(*SHIPPED_MATTER)
-    masses = (math.sin(rest_rotation(*SHIPPED_MATTER)) / math.sin(rest_rotation(*MATTER))) ** 2
+    def electric_over_gravity(num: int, den: int) -> Fraction:
+        return Fraction(k * e_g, 2 * e_s) / sine_squared(num, den)
+
+    between = electric_over_gravity(*SMALL_GAP) / electric_over_gravity(*WIDE_GAP)
+    masses = sine_squared(*WIDE_GAP) / sine_squared(*SMALL_GAP)
     return [
-        between - masses,
+        float(between - masses),
         PROTON_ELECTRON_MASS_RATIO**2 / 1e6,
         FORCE_RATIO_ELECTRON / FORCE_RATIO_PROTON / 1e6,
     ]
@@ -267,7 +283,7 @@ def masses_from_the_click(num: int = 2, den: int = 3) -> list[float]:
 
 
 def universality_and_equivalence(gamma: int = 6000, content: int = 600) -> list[float]:
-    """Charge universality and the equivalence between families follow from the writes (line 602): every family's quantum writes the Wronskian T / 2 into the sign holder, and every family's rest shifts by one factor at a Node, 1 - cos omega_b = (p_0 / Gamma)^2 (1 - cos omega_0) by the band at a pace (The clocks shift alike); [|q| at [4000, 6000] over |q| at [2, 3], the clock's factor on 2 sin(omega_b / 2) at [4000, 6000] over the factor at [2, 3]], both 1."""
+    """Charge universality and the equivalence between families follow from the writes (line 602): every family's quantum writes the Wronskian T / 2 into the sign holder, and every family's rest shifts by one factor at a Node, 1 - cos omega_b = (p_0 / Gamma)^2 (1 - cos omega_0) by the band at a pace (The clocks shift alike); [|q| at [1, 2] over |q| at [999, 1000], 1 to the integer root's rounding 3.2 x 10^-5 at [1, 2]; the clock's factor on 2 sin(omega_b / 2) at [1, 2] over the factor at [999, 1000], 1 exactly, each factor p_0 / Gamma], two families a thousandfold apart in their gaps."""
     clock = rule3.clock_pace(gamma, content)
     pace = rule3.node_pace(clock, gamma)
 
@@ -278,8 +294,8 @@ def universality_and_equivalence(gamma: int = 6000, content: int = 600) -> list[
         return math.sin(shifted / 2) / math.sin(rest_rotation(num, den) / 2)
 
     return [
-        wronskian_per_quantum(*SHIPPED_MATTER) / wronskian_per_quantum(*MATTER),
-        factor(*SHIPPED_MATTER) / factor(*MATTER),
+        wronskian_per_quantum(*WIDE_GAP) / wronskian_per_quantum(*SMALL_GAP),
+        factor(*WIDE_GAP) / factor(*SMALL_GAP),
     ]
 
 
