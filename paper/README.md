@@ -20,14 +20,16 @@ journal's name leaves the supplement's title. The paper is kept to about 35 page
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
-hypotheses by name where they stand (Sections 7.5 and 10.2), and the three
-files derived and read by the gates, whose runs Section 3.7 reports; the
-compact pixel's numbers stand only in the long version. The runs the
-paper reports are the gates' (Section 3.7): the back-in-time gate's MATCH on
-every file, taken by the owner's word of 2026-10-01 ("if there is a run of
-the reversal that looks good and agrees with nature, take it"), and the two
-slits', Bell's and GHZ's gates, the blind written first and the runs of Bell's and
-the GHZ's identical to theirs, the two slits' 270 against its Huygens blind 273 (the law's line 269.3), the engine's check of the algebra and no experiment against nature;
+hypotheses by name where they stand (Sections 7.5 and 10.2), and the one
+run the paper reports, the two slits' at the frozen commit (Section 3.7), and Bell's and the GHZ's
+values as evaluations of the declared credit, exact in the shares; the
+compact pixel's numbers stand only in the long version. The one run the
+paper reports is the two slits' (Section 3.7): the back-in-time gate's MATCH on its
+file, taken by the owner's word of 2026-10-01 ("if there is a run of
+the reversal that looks good and agrees with nature, take it"), and its screen's
+row against the blind written first, the engine's check of the algebra and no experiment
+against nature; Bell's and the GHZ's values are evaluations of the declared credit, exact in
+the shares, and the folder's runs of them are the repository's and no claim of the paper;
 only a NodeReader's click is a measurement, and a number read off the GameBoard
 is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
@@ -44,8 +46,7 @@ their statuses.
   cited in the paper as (S.n), S.61 the engine's derivation ledger and S.62 the
   implementation's versions of the click's write and their readings, which stand
   there and not in the main text (the owner's word of 2026-10-03: a derivation
-  is shown as a derivation, and the main text reports no run but the two slits
-  with Bell's and the GHZ's gates); submitted as supplementary material to the
+  is shown as a derivation, and the main text reports no run but the two slits'); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
