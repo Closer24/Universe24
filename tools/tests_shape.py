@@ -47,6 +47,16 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
         "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
     ),
+    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_loader_refuses_one_that_does": (
+        24,
+        "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
+        "packet's two levels each sum to 0 on the committed worlds, and the loader refuses a mode entry whose sums are not 0",
+    ),
+    "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
+        14,
+        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's taking at 48, the share never "
+        "above the lay's by more than the known transient, and 0 exactly once the front has swept both packets",
+    ),
     "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
         10,
         "the documents' gates (the owner's word of 2026-10-04, a perfect algebra; #1793 comment 5974938542): no undated history "

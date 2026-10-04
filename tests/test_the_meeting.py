@@ -524,3 +524,21 @@ def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_b
     assert largest < 300, (
         largest
     )  # bounded: 172 by the lattice's rule, 242 in reals, 6,268 under the floor
+
+
+def test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark():
+    """The committed one-photon world at the lay without the uniform mode (ALGEBRA.md, The click writes on the GameBoard (3) and (6)): one atom takes at the window's close and the count falls to 0; the light's share over the GameBoard never rises above the lay's by more than the hole's and the front's transient (one part in seven, the known one), and once the front has swept both packets the share is 0 exactly, the board dark."""
+    board = GameBoard(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
+    photon, shares = [f.name for f in board.families].index("photon"), []
+    laid = board.books()["photon"]["share"]
+    for _ in range(200):
+        board.step()
+        shares.append(board.books()["photon"]["share"])
+    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEREADER" and c["taken"]]
+    assert len(credits) == 1 and credits[0]["tick"] == 48 and board.credit.counts[photon] == 0
+    assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
+    assert all(
+        line["event"] == "erasure"
+        for line in lines
+        if line["tick"] > 48 and line["event"] not in ("face", "credit", "lay")
+    )
