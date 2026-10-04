@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
+        93,
+        "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
+        "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
+        "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
+    ),
     "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
         25,
         "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
