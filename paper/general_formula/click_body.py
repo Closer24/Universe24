@@ -11,9 +11,11 @@ one shell per interval at the causal bound; inside the click's light cone the
 record that gave is erased, its levels beyond the front an empty wave with
 count 0. (b) The NodeReader's region before the window's close and after the
 one write: two Nodes side by side, the NodeReader's own record laid over both
-with its parts g and e, the write at the drawn Node. (c) The hole at the drawn
-Node by the faces' booking identity, each face writing one level, no factor.
-(d) The ledger in whole numbers, the click line, the NodeReader's report, and
+with its parts g and e, the write at the drawn Node. (c) The taking's write at
+the drawn Node: one comparison of the record's booked share there against its
+own quantum W_rec, two cases and no partial hole; the sparse Node (share at most
+W_rec) zeroed by the face Rule3 presents, the dense record (share above W_rec)
+undepleted, its count moving in the books. (d) The ledger in whole numbers, the click line, the NodeReader's report, and
 the declaration in the file. Nothing here is a number of a run.
 
     python paper/general_formula/click_body.py --output paper/general_formula/figures
@@ -508,7 +510,7 @@ def the_hole(ax: Axes) -> None:
             10.15,
             BLUE,
             (
-                "sparse: share at the Node $\\geq W_{\\mathrm{rec}}$:",
+                "sparse: share at the Node $\\leq W_{\\mathrm{rec}}$:",
                 "the hole to 0 by the face Rule3",
                 "presents; the count down by one",
             ),
@@ -518,7 +520,7 @@ def the_hole(ax: Axes) -> None:
             8.55,
             ORANGE,
             (
-                "dense: share at the Node $< W_{\\mathrm{rec}}$:",
+                "dense: share at the Node $> W_{\\mathrm{rec}}$:",
                 "nothing written, the levels stand;",
                 "the quantum moves in the books",
             ),
