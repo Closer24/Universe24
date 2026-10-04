@@ -161,8 +161,8 @@ TWINS = [
         ],
     ),
     (
-        "the lock at d00aa9e2",
-        [("main.tex", "The engine is locked at d00aa9e2 at the owner's word of 2026-10-04"), ("supplement.tex", "The engine is locked at d00aa9e2 at the owner's word of 2026-10-04")],
+        "the engine's open items point to the engine's document",
+        [("main.tex", "stand in the engine's document and in the law's open section, each with its number, and not here"), ("supplement.tex", "stand in the engine's document and in the law's open section and not in this paper")],
     ),
     (
         "the two slits at the fixed lay",
