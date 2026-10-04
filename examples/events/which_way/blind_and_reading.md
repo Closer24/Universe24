@@ -109,8 +109,9 @@ The message lay's uniform mode (the experimenter's bug report, #1827 comment 597
 message lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0 and
 -24,442 for now and before, a velocity of the uniform mode that Rule3 carries exactly, the level's mean
 growing by 11 per interval over the board; the fix takes the uniform content out of each level at the
-lay, so both sums are 0, and the lay's count moves from 1,998 to 1,805 at the design's amplitude 996
-(the amplitude the design's number, the count a reading). The three worlds re-run on the branch, the
+lay, so both sums are 0, and the lay's count moves from 1,998 to 1,805 at the world file's amplitude
+1,328, the design's number; 996 the largest level the mode file lays under the envelope (the amplitude
+the design's number, the count a reading; R252). The three worlds re-run on the branch, the
 blind untouched, the seed 24 of the design (`tools/run_inputs.py`, the clicks per region from the
 output files as `tests/test_the_draw.py` reads them, NODEREADER):
 
