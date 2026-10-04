@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from typing import Any
 
 import numpy as np
@@ -36,17 +36,20 @@ def share(
     factors: tuple[Any, ...] | None = None,
     unit: int = 1,
     nodes: np.ndarray | None = None,
+    turned: Record | None = None,
 ) -> np.ndarray:
-    """One level pair's weighted share at every Node in the current's units: the conserved form's term at the Node, w (now^2 + before^2) - S now before less now x SUM over the six Ports of R_ij x the neighbour's before by the read act, over 2 p_i^2 G^2 by the division act (`over_pace`); Rule3's integers at the paces of the read (the Node's content and its Links' factors, None no tension), exact at any size in Python's integers, computed at the Nodes `nodes` names (a mask; None: every Node where the pair holds a level, the term being 0 at a Node whose two levels are 0 whatever its neighbours hold) and 0 at every other Node."""
+    """One level pair's weighted share at every Node in the current's units: the conserved form's term at the Node, w (now^2 + before^2) - S now before less now x SUM over the six Ports of R_ij x the neighbour's before by the read act, over 2 p_i^2 G^2 by the division act (`over_pace`); Rule3's integers at the paces of the read (the Node's content and its Links' factors, None no tension), exact at any size in Python's integers, computed at the Nodes `nodes` names (a mask; None: every Node where the pair holds a level, the term being 0 at a Node whose two levels are 0 whatever its neighbours hold) and 0 at every other Node. Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker; two hands): `turned`, the line as the step reads it, its level before turned by the holder's angle of the previous interval, u = e^(-i theta_(t-1)) z_before (`node.turned_before`, the gauge of What the GameBoard conserves), stands in the Node term's cross product S now x before and in the Link term's six arrivals alike, the squares now^2 and before^2 unturned: the plain form's term less now x S x (u - before) at the Node, the arrivals read from u, exact in the integers, the form of the turned pair so read the flat form the step conserves; None, the plain read, the level before itself, bit for bit where no family turns (the plain read of a turned pair is no conserved form)."""
     num, den = pair
     at = (record.now != 0) | (record.before != 0) if nodes is None else nodes
+    read = record if turned is None else turned
     now, before = record.now[at].astype(object), record.before[at].astype(object)
     clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
     links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
     reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
-    arrived = tuple(value[at].astype(object) for value in ports(record.before, wrap))
+    arrived = tuple(value[at].astype(object) for value in ports(read.before, wrap))
     link = rule3(reads, arrived, 0, 1, 0, 0, 0)[0]
-    found = form_term(self_coefficient, wall, now, before) - now * link
+    turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn
+    found = form_term(self_coefficient, wall, now, before) - now * (link + turn)
     everywhere = np.zeros(record.now.shape, dtype=object)
     everywhere[at] = over_pace(found, gamma, paces.at_nodes(content, at), unit)
     return everywhere
@@ -61,11 +64,14 @@ def family_share(
     factors: tuple[Any, ...] | None = None,
     unit: int = 1,
     nodes: np.ndarray | None = None,
+    turned: Sequence[Record] | None = None,
 ) -> np.ndarray:
-    """A family's share at every Node, its level pairs' shares summed (the form of (re, im) is the sum of the two forms), at the paces of the read, computed at the Nodes `nodes` names (`share`; None: where a level stands) and 0 elsewhere."""
+    """A family's share at every Node, its level pairs' shares summed (the form of (re, im) is the sum of the two forms), at the paces of the read, computed at the Nodes `nodes` names (`share`; None: where a level stands) and 0 elsewhere; `turned`, the lines as the step reads them under the rotation, one per line of `records` in their order, each plane's level before turned by the previous interval's angle (`share`, `node.lines_as_read`), None the plain read."""
     total: Any = 0
-    for record in records:
-        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes)
+    lines = list(records)
+    reads = [None] * len(lines) if turned is None else list(turned)
+    for record, read in zip(lines, reads, strict=True):
+        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes, read)
     return np.asarray(total)
 
 

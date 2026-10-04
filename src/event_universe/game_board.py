@@ -86,8 +86,7 @@ class GameBoard:
 
     def half_wall(self, index: int) -> int:
         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`coefficients`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
-        num, den = self.families[index].pair
-        clock = self.world.node_clock
+        (num, den), clock = self.families[index].pair, self.world.node_clock
         wall = coefficients(num, den, clock, clock, clock, None, self.unit)[2]
         return int(division_forward(wall, 2, 0)[0])
 
@@ -216,15 +215,16 @@ class GameBoard:
         }
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's read on the pair as the step reads it, its level before turned by the previous interval's angle (`node.lines_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
         family, gamma = self.families[index], self.world.node_clock
         found: Any = 0
         frozen = np.zeros(self.shape, dtype=bool)
         for record in quanta_records(self.families, index):
             content, factors = self.read(index, direction, record)
             lines = self.lines_of(index, record)
+            turned = node.lines_as_read(index, self.families, self.states, gamma, record, lines)
             found = found + share.family_share(
-                family, lines, self.wrap, gamma, content, factors, self.unit, at
+                family, lines, self.wrap, gamma, content, factors, self.unit, at, turned
             )
             frozen |= np.broadcast_to(share.frozen(gamma, content), self.shape)
         return np.asarray(found), frozen
@@ -232,9 +232,8 @@ class GameBoard:
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
         """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
         found, frozen = self.share_of(index, 1, at)
-        return share.quanta_of(
-            found, count_wall(self.families[index], self.world.quantum_action), self.kind
-        ), frozen
+        wall = count_wall(self.families[index], self.world.quantum_action)
+        return share.quanta_of(found, wall, self.kind), frozen
 
     def total_share(self, index: int) -> tuple[int | None, int]:
         """A family's share summed over the GameBoard in the current's units, a reading, None over a GameBoard holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
@@ -266,15 +265,16 @@ class GameBoard:
         """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension, every sign row but the record's own, the Links the world cuts at 0), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`meeting.stepped`, `node.step_records`), with one booking per record its form and its Wronskian are read from."""
         return meeting.stepped(self, index, direction)
 
-    def record(self, index: int) -> list[node.Record]:
-        """A family's record, the lines its share, its currents, its tension, its form and its Wronskian are read from: every line of a family of quanta (every record's), the time line of a held row of the content, and for a holder of the sign its light, the sum of its rows (`node.rows_total`)."""
-        family, lines = self.families[index], self.states[index].lines
-        return [node.rows_total(family, lines)] if family.wronskian else lines[: family.record]
+    def record(self, index: int, turned: bool = False) -> list[node.Record]:
+        """A family's record, the lines its share, its currents, its tension, its form and its Wronskian are read from: every line of a family of quanta (every record's), the time line of a held row of the content, and for a holder of the sign its light, the sum of its rows (`node.rows_total`); where `turned`, as the step reads it, a turned record's level before turned by the previous interval's angle (`node.record_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation)."""
+        family, lines, gamma = self.families[index], self.states[index].lines, self.world.node_clock
+        found = [node.rows_total(family, lines)] if family.wronskian else lines[: family.record]
+        return node.record_as_read(index, self.families, self.states, gamma, found) if turned else found
 
     def currents(self) -> Currents:
-        """Every family of quanta's plain current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; the click line's number and every diagnostic's, the credit booking the weighted current (`node_reader.weighed_currents`)."""
+        """Every family of quanta's plain current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; a turned record's from the same turned pair its share reads, its level before turned by the previous interval's angle (`record`, `node.record_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation); the click line's number and every diagnostic's, the credit booking the weighted current (`node_reader.weighed_currents`)."""
         return {
-            index: node.currents_of(self.families[index].pair[0], self.record(index), self.wrap)
+            index: node.currents_of(self.families[index].pair[0], self.record(index, True), self.wrap)
             for index in self.order
         }
 

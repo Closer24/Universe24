@@ -1,10 +1,11 @@
 """The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_reader's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
+import json
 from fractions import Fraction
 
 import numpy as np
 
-from event_universe import credit, node, share
+from event_universe import credit, node, share, world_files
 from event_universe.core import paces, ports
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule3
@@ -14,7 +15,7 @@ from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, real_rows
+from tests.laws import EVENTS, real_rows, universe_beside
 
 RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at the rule's Gamma
 
@@ -55,9 +56,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
         assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
     rule = coefficients(1, 1, GAMMA, GAMMA, GAMMA)
     assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
-    paces_guard(
-        (1, 1), GAMMA, 1, 0, (1,) * 6, "light"
-    )  # the edge admitted: the clock and the paces at Gamma
+    paces_guard((1, 1), GAMMA, 1, 0, (1,) * 6, "light")  # the edge admitted at the paces Gamma
     record = node.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
     for t in range(1, 7):
         record = node.step(record, rule, RING)
@@ -140,6 +139,95 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
             beyond[axis] = slice(-1, None) if sigma == 1 else slice(None, 1)
             rolled[tuple(beyond)] = 7
             assert np.array_equal(ports.shifted(a, axis, sigma, False, 7), rolled)
-    assert ports.shifted(a[:1], 0, 1, False, 7) is a[:1] or np.array_equal(
-        ports.shifted(a[:1], 0, 1, False, 7), a[:1]
-    )
+    folded = ports.shifted(a[:1], 0, 1, False, 7)  # a folded axis returns the array
+    assert folded is a[:1] or np.array_equal(folded, a[:1])
+
+
+def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(
+    tmp_path, monkeypatch
+):
+    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `GameBoard.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the level before turned by the previous interval's angle (`node.lines_as_read`), v the stepped level before this interval's turn (the booking's second), the currents from the same turned pair, Rule3's remainder term and the turn's floors on the unturned squares, wall = 2 p_i^2 G^2. (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (tan(theta / 2) 0.08, 0.20 and 0.41) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), where the plain read of the turned pair drifts by percent (his numbers +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the turned read moves by a few 10^-3 at the tops 2,400 and 4,920 whatever the amplitude, the next interval's Link term reading the two ends' angles apart (a gradient of the holder's level, the field's work and no rounding), against the plain read's percent; GAMEBOARD readings, printed."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_beside(tmp_path, drop=("gravity", "binding"), charged=True)
+    rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    charge = next(row for row in rows["families"] if row["name"] == "charge")["held"]
+    charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
+    rows["integers"]["link_unit"] = 1
+    (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
+    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=40)
+    world.update(engine="e.json", bodies=[], node_readers=[])
+    paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
+    for name, path in paths.items():
+        path.write_text(json.dumps({**world, "universe": f"{name}.json"}), encoding="utf-8")
+
+    def ring(path, level, amplitude=6000):  # the plane at random levels, the free row at the level
+        board, draw = GameBoard(load_world(path)), np.random.default_rng(10)
+        charged, sign = ([f.name for f in board.families].index(n) for n in ("charged", "charge"))
+        half = np.full(board.shape, board.half_wall(charged), dtype=board.kind)
+        for line in range(2):
+            now, before = draw.integers(-amplitude, amplitude, (2, *board.shape)).astype(board.kind)
+            board.states[charged].lines[line] = node.Record(now, before, half)
+        held = np.asarray(level, dtype=board.kind).reshape(board.shape)
+        board.states[sign].lines[0] = node.Record(held, held.copy(), half)
+        return board, charged
+
+    board, charged = ring(paths["u"], np.full(48, 2400), 2000)  # the bound 9,266 at G = 16
+    assert not board.turning
+    for _ in range(3):
+        board.step()
+    (content, factors), gamma, unit = board.read(charged), board.world.node_clock, board.unit
+    pair, clock, pace = board.families[charged].pair, *paces.node_paces(gamma, content)
+    reads, self_coefficient, wall = coefficients(*pair, gamma, clock, pace, factors, unit)
+    by_hand = np.zeros(board.shape, dtype=object)
+    for line in board.lines_of(charged, 0):
+        now, before = line.now.astype(object), line.before.astype(object)
+        arrived = [a.astype(object) for a in node.ports(line.before, board.wrap)]
+        link = sum(r * a for r, a in zip(reads, arrived, strict=True))
+        numerator = form_term(self_coefficient, wall, now, before) - now * link
+        by_hand += share.over_pace(numerator, gamma, content, unit)
+    assert np.array_equal(board.share_of(charged)[0], by_hand)
+
+    def run(level, label):
+        board, charged = ring(paths["turn"], level)
+        family, read = board.families[charged], board.read(charged)
+        gamma, unit = board.world.node_clock, board.unit
+        w = coefficients(*family.pair, gamma, *paces.node_paces(gamma, read[0]), read[1], unit)[2]
+        wall = 2 * paces.link_pace_of(gamma, read[0]) ** 2 * unit * unit
+
+        def shares(lines, turned=None):
+            found = share.family_share(family, lines, board.wrap, gamma, *read, unit, None, turned)
+            return found.astype(object)
+
+        start, drifts = board.total_share(charged)[0], []
+        plain_start = int(shares(board.lines_of(charged, 0)).sum())
+        for _ in range(40):
+            lines = board.lines_of(charged, 0)
+            turned = node.lines_as_read(charged, board.families, board.states, gamma, 0, lines)
+            flows = sum(c.astype(object) for c in node.currents_of(family.pair[0], turned, board.wrap))
+            first, second = board.stepped(charged, 1)[1][0]
+            terms = wall * (shares(second) - shares(lines, turned)) - wall * flows
+            for k in range(2):
+                u, v = first[k].before.astype(object), second[k].now.astype(object)
+                before, carried = lines[k].before.astype(object), lines[k].remainder.astype(object)
+                terms += (v - u) * (second[k].remainder.astype(object) - carried)
+                terms -= w * (u * u - before * before)
+            assert not terms.any()  # the step's identity exact at every Node
+            assert level.any() or np.array_equal(shares(lines, turned), shares(lines))  # L = 0
+            board.step()
+            plain = int(shares(board.lines_of(charged, 0)).sum()) - plain_start
+            drifts.append((board.total_share(charged)[0] - start, plain))
+        moved, plain = max(abs(d) for d, _ in drifts) / start, drifts[-1][1] / plain_start
+        print(
+            f"GAMEBOARD {label}: the share {start}, the turned read's largest |drift| {moved:.1e} of it, the plain read's drift at the end {plain:+.2%}"
+        )
+        return moved, plain
+
+    x = np.arange(48)
+    assert run(np.zeros(48, dtype=int), "the level 0")[0] < 1e-4
+    for top, percent in ((960, 0.3), (2400, 2), (4920, 6)):
+        label = f"the uniform level {top}, tan(theta / 2) {top / 12000:.2f}"
+        moved, plain = run(np.full(48, top), label)
+        assert moved < 5e-4 and plain > percent / 100, (top, moved, plain)
+        if top > 960:
+            moved, plain = run(np.minimum(x, 48 - x) * top // 24, f"the ramp 0 to {top} and back")
+            assert moved < 5e-3 and plain > percent / 400, (top, moved, plain)

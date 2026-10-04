@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it": (
+        88,
+        "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
+        "pair read as the step reads it, the step's identity exact at every Node with its three walk terms, the turned read "
+        "standing within the integer walk on the ring where the plain read drifts by percent, the plain read bit for bit where no family turns",
+    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
