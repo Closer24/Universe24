@@ -21,7 +21,7 @@ ROOT = HERE.parents[2]
 
 
 def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
-    """The screen's detectors, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
+    """The screen's node_readers, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
     rows, column, height = int(design["rows_per_region"]), int(design["screen"]), int(design["height"])
     low, high = (int(r) for r in design["channel"]["rows"])
     found: list[dict[str, object]] = []
@@ -48,7 +48,7 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the detectors, the receding face and the instrument."""
+    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the node_readers, the receding face and the draw."""
     kind = design["worlds"][name]
     gaps = [{"y": list(design["gaps"][k]), "z": [0, 0]} for k in kind["gaps"]]
     faces: list[dict[str, object]] = [{"axis": "x", "at": int(design["wall"]), "gaps": gaps}]
@@ -64,6 +64,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "family": design["family"],
         "along": "x",
         "wave": list(design["wave"]),
+        "phase": [0, 1],
         "amplitude": int(design["amplitude"]),
         "top": {"x": [packet["column"], packet["column"]], "y": list(packet["across"]), "z": [0, 0]},
         "edge": {"x": int(packet["edge_along"]), "y": int(packet["edge_across"]), "z": 0},
@@ -76,11 +77,11 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [],
+        "bodies": [],
         "messages": [message],
-        "detectors": regions(design, bool(kind["channel"])),
+        "node_readers": regions(design, bool(kind["channel"])),
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 
@@ -116,11 +117,11 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     half = float(design["blind_through"]) / 2
     shadowed = [index for index, first in enumerate(range(0, height, rows)) if first + rows - 1 < low]
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "family": design["family"],
         "window": [1, int(design["ticks"])],
         "across": "y",
-        "seed": design["instrument"]["seed"],
+        "seed": design["draw"]["seed"],
         "comment": design["comment"],
         "rows": {"two_gaps": per_region(two), "one_gap": per_region(one), "which_way": per_region(one)},
         "channel_region": [

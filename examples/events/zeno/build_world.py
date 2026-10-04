@@ -1,4 +1,4 @@
-"""The quantum Zeno world's builder (the paper's S.59; ALGEBRA.md, The click writes on the GameBoard (j), the record's re-lay read n times is the quantum Zeno effect; the owner's words of 2026-10-02, 12:38, and 2026-10-03): from `design.json` it writes one world per probe count n, `zeno_<n>.json`, a record of two parts (g at the count 1, e at 0) declared an instrument at one Node of a periodic box under a drive's plane wave whose turn over the run is a pi pulse (the Rabi angle pi / 2 in the labels), the record's own window the run over n, so that it reads its own parts n times (the null window's write at each), and the blind `expectation.json`, Itano's column: P(e at T_pi) = (1 - cos^n(pi / n)) / 2. With `--modes` it lays the drives by the generator. Every number is the design's; the engine reads none of it.
+"""The quantum Zeno world's builder (the paper's S.59; ALGEBRA.md, The click writes on the GameBoard (j), the record's re-lay read n times is the quantum Zeno effect; the owner's words of 2026-10-02, 12:38, and 2026-10-03): from `design.json` it writes one world per probe count n, `zeno_<n>.json`, a record of two parts (g at the count 1, e at 0) declared a NodeReader at one Node of a periodic box under a drive's plane wave whose turn over the run is a pi pulse (the Rabi angle pi / 2 in the labels), the record's own window the run over n, so that it reads its own parts n times (the null window's write at each), and the blind `expectation.json`, Itano's column: P(e at T_pi) = (1 - cos^n(pi / n)) / 2. With `--modes` it lays the drives by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/zeno/build_world.py --modes [--folder <folder>]
 """
@@ -21,7 +21,7 @@ def world_of(design: dict, n: int) -> dict:
     shape, at = design["shape"], design["record"]["node"]
     record = {
         "family": design["record"]["family"],
-        "nodes": [{"node": at, "count": 1}],
+        "nodes": [{"node": at, "weight": 1}, {"node": [at[0] + 1, at[1], at[2]], "weight": 1}],
         "parts": [
             {"part": 0, "name": "g", "role": "ground", "count": 1},
             {"part": 1, "name": "e", "role": "excited", "count": 0},
@@ -43,7 +43,7 @@ def world_of(design: dict, n: int) -> dict:
             },
         ],
         "rates": [],
-        "instrument": {
+        "node_reader": {
             **design["generator"],
             "window": design["intervals"] // n,
             "seed": design["record"]["seed"],
@@ -54,6 +54,7 @@ def world_of(design: dict, n: int) -> dict:
         "family": drive["family"],
         "along": "x",
         "wave": drive["wave"],
+        "phase": [0, 1],
         "amplitude": drive["amplitude"],
         "top": {"x": [0, shape[0] - 1], "y": [0, shape[1] - 1], "z": [0, shape[2] - 1]},
         "edge": {"x": 0, "y": 0, "z": 0},
@@ -64,9 +65,9 @@ def world_of(design: dict, n: int) -> dict:
         "ticks": design["intervals"],
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [record],
+        "bodies": [record],
         "messages": [message],
-        "detectors": [],
+        "node_readers": [],
     }
 
 
@@ -97,8 +98,8 @@ def main(argv: list[str] | None = None) -> None:
             "fence": "clicks",
         }
     expectation = {
-        "verdict": "DETECTOR",
-        "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared an instrument at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
+        "verdict": "NODEREADER",
+        "comment": "The quantum Zeno world (S.59; the mathematician's 146 and 148, the advisor's second hand, the owner's word of 2026-10-02, 12:38, 'Yes, both of them'): one record of two parts declared a NodeReader at one Node, a drive whose accumulated turn over the run is a pi pulse in the labels, the record reading its own parts n times over the run; written before any run and never edited after.",
         "trials": len(design["seeds"]),
         "intervals": design["intervals"],
         "blind": blind,

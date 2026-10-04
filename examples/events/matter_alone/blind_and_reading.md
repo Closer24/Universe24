@@ -6,8 +6,8 @@ on the engine and seen to work**). The blind below is the advisor's, GitHub issu
 5928483084 (2026-10-01, 12:19), its formulas and numbers restated here before any run of this
 round and never edited after; `expectation.json` beside it carries the same blind with the
 design's restatements under the law's lines as they stand. The reading is appended after the
-run, every number a GameBoard reading labelled so (only a detector's click is a measurement,
-and this world declares no detector); a reading that misses the blind is a finding, written as
+run, every number a GameBoard reading labelled so (only a NodeReader's click is a measurement,
+and this world declares no NodeReader); a reading that misses the blind is a finding, written as
 such and never adjusted.
 
 ## The blind (the advisor, #1563 comment 5928483084)
@@ -30,42 +30,33 @@ three times it along the compact branch (`design.json`, The count's unit).
 4. **The drift.** The count's drift at rest is 0 to the rounding.
 5. **The form.** D = b^2 (2 - 2 cos omega_b) with b the largest whose square is at most
    c T den div (2 den - a), for the clock pair [a, den] of 2 cos omega_b.
-6. **The cloud** on the wide branch: 4,000 quanta on a 41-cube, 2 cos omega_b = 1.351 above the
-   band's top (1.3333), the rms radius 8.7 Links, 2.6 quanta at the centre Node, its well 0.985 of
-   its count, its inertia 1.06, its fall 0.92 of a free packet's (the generator's computed
-   numbers, now the run's blind; the inertia and the fall are not read in a world of one body
-   at rest).
+6. **The cloud** on the wide branch, 4,000 quanta on a 41-cube: deleted at the owner's word of 2026-10-03 ("delete it now", #1572 comment 5973474075): it did not load under the family's quantum, and its re-lay is hours;
+   its blind (2 cos omega_b = 1.351, the rms radius 8.7 Links, 2.6 quanta at the centre Node,
+   the well 0.985 of the count) and its reading stand in HIGHLIGHTS.md by name.
 7. **The screening.** The binding holder's screening at R = 20 changes the one-Node Green's
    function by under one percent (kappa_b = 0.05 per Link).
 
-The reader: `tools/body_rest.py` with `--expectation expectation.json` on `pixel.json` (and on
-`cloud.json` where the generator lays it), over the window [1, 400]: 2 cos omega_b at the centre
+The reader: `tools/body_rest.py` with `--expectation expectation.json` on `pixel.json`, over
+the window [1, 400]: 2 cos omega_b at the centre
 as an exact fraction, the tail's levels and ratios along each axis, the quanta at the centre and
 over the board with the books' drift, the centroid and the second moment (the rms radius
 squared), the well over the board in quanta, and every held row's level along the axes.
 
 ## The reading (main d924798b)
 
-Every number below is a GameBoard reading (`tools/body_rest.py` with `--reach 12` on the pixel
-and `--reach 20` on the cloud, the books, the `click` lines of the open faces' layer); the
-worlds declare no detector. Both worlds were laid anew by the builder on this engine (the
+Every number below is a GameBoard reading (`tools/body_rest.py` with `--reach 12` on the pixel, the books, the `click` lines of the open faces' layer); the
+worlds declare no NodeReader. The pixel was laid anew by the builder on this engine (the
 generator, four folders laying beside it on four cores): `pixel.json` in a few minutes, the body
 of 10,000 quanta standing as one bound record over 1,363 declared Nodes carrying 10,137 quanta
 at the paces of the read (the share's total over the board 10,400, the record's faint tail
 reaching 10,733 Nodes), 85 at the centre Node, the rms radius 3.91 Links, the mode file's clock
 [2647, 1922]: a wide bound body and no one-Node pixel (the lay of the first round, 823 Nodes
 with 298 at the centre, differed: the start now sources the form; the lay of PR #1623, 1,387
-Nodes with 83 at the centre and the clock [2625, 1907], differed by the rounding); and
-`cloud.json`, which the generator refused as a cloud on the two earlier engines, laid in 2,232
-s: 4,000 quanta on the open 41-cube standing as a bound record whose rotation 925 / 688 =
-1.3445 is above the band's top 1.3333, the record over 36,521 Nodes, the declared Nodes (a
-quantum or more) 1,483 carrying 4,001 quanta with 9 at the Node of the largest count, the share
-over the board 5,047 quanta by the Nodes' rounded counts and 5,930 by the books. The runs:
+Nodes with 83 at the centre and the clock [2625, 1907], differed by the rounding). The run:
 `tools/run_inputs.py`, LAWFUL over the 400 intervals, no frozen Node; the back-in-time gate
-MATCH over 40 intervals on the pixel (the cloud's 400 intervals ran 448 s, its gate not run).
-The owner's word of 2026-10-02, 19:28 (cut what takes long): both worlds had run at their
-declared boards and intervals before the word, and no cut was made in this folder; the one
-thing left undone for time is the cloud's back-in-time gate, proposed.
+MATCH over 40 intervals on the pixel. The owner's word of 2026-10-02, 19:28 (cut what takes
+long): the world had run at its declared board and intervals before the word, and no cut was
+made in this folder. The cloud's lay and reading of that night stand in HIGHLIGHTS.md by name.
 
 1. **The window.** The engine's declared count 10,000 is about 3,200 in the advisor's unit, 0.53
    Gamma, above the window's upper edge Gamma div 2 (the horizon of the quadratic forms, gone
@@ -112,25 +103,9 @@ thing left undone for time is the cloud's back-in-time gate, proposed.
    nearer the cloud's; the one-Node form b^2 (2 - 2 cos omega_b) with b = 1922 gives 2,301,000
    over T = 70 quanta at the centre Node against the centre's count 85 (0.83 again), the form
    per Node the law's to the share's unit. MISS against the pixel's 0.70, by the branch laid.
-6. **The cloud.** 2 cos omega_b at the Node of the largest count, 82 / 61 = 1.3443 (omega_b
-   0.834) at the start against the blind 1.351: above the band's top as the blind says, the
-   margin over the top 0.011 against the blind's 0.018 (within 0.5 percent of 2 cos omega_b, 60
-   percent of the margin); 431 / 317 = 1.3596 after 400 intervals (the rotation moving up by
-   0.015). The rms radius 6.64 Links at the start against the blind 8.7 (MISS by 24 percent,
-   the body tighter), 7.30 at the end (+10 percent). The count at the centre Node 9 (the counts
-   9 to 10 over the central Nodes, the record's peak level 688 at [20, 20, 20]) against the
-   blind 2.6: MISS by 3.5 (the engine's count unit about 1.1 times the advisor's at this
-   content, U = 0.03, so the unit explains little of it). The well 5,543 quanta over T against
-   the count: 1.10 over the Nodes' rounded counts 5,047, 0.93 over the books' share 5,930, 1.39
-   over the declared 4,000, against the blind 0.985: within 7 percent on the books' share. Over
-   400 intervals the share drifts by +240 quanta (3.9 percent), 3.3 quanta leave through the
-   faces, the centroid stays at [20, 20, 20], the binding holder's rest about the body (184,
-   189, 184, 175, 159, 140, 120, 102, 85, 69, 56, 45, 35, 28, 21, 16, 12, 8, 5, 3, 2 along +x
-   at the start, the ratios 0.81 to 0.85 from 6 to 10 Links against Yukawa's 0.82 to 0.86) is
-   not static at the end (199, 213, 199, 186, 188, 162, 150, 116, 86, 91, 80, 47, 62, 28, 69,
-   28, 0, ...) and gravity's row at the weight 1,000, 0 at the start, swings by up to 36 levels
-   at the end: the laid cloud is not a standing record on this engine over 400 intervals, a
-   finding by name (the inertia and the fall not read).
+6. **The cloud.** Not read: the world is deleted at the owner's word of 2026-10-03 ("delete it now", #1572 comment 5973474075): it did not load under the family's quantum, and its re-lay is hours. Its reading of 2026-10-02 (the
+   rotation above the band's top as the blind said, the rms radius and the centre count MISSED,
+   the laid cloud not a standing record over 400 intervals) stands in HIGHLIGHTS.md by name.
 7. **The screening.** Read in world (ii) (`examples/events/matter_and_gravity/`): gravity's row
    and the binding holder's stand in the ratio of their level weights, 1.000, 1.006, 1.002,
    0.986, 1.000 (x 10) at 0 to 4 Links, the screening at R = 20 under one percent within the
@@ -179,7 +154,7 @@ and the world is run and read as laid.
 ### The reading (the branch families-two on the engine of the reading above)
 
 Every number below is a GameBoard reading (`tools/body_rest.py --reach 5`, the books, the
-`click` lines of the open faces' layer); the world declares no detector. The lay:
+`click` lines of the open faces' layer); the world declares no NodeReader. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact.json`, 20 s on one core,
 the generator from the one-Node seed of 8,000 quanta at [5, 5, 5] on the open 11-cube: twelve
 rounds, the content at the centre 1,111 to 453, the count at the centre 304 to 101, the clock
@@ -315,7 +290,7 @@ once at most (one more world at 20,000 only if this lay takes under 10 minutes) 
 ### The reading (the branch pixel-compact-two on the engine of main 337eac09)
 
 Every number below is a GameBoard reading (`tools/body_rest.py --reach 5 --expectation`, the
-books, the `click` lines of the open faces' layer); the world declares no detector. The lay:
+books, the `click` lines of the open faces' layer); the world declares no NodeReader. The lay:
 `tools/pixel_mode.py --input examples/events/matter_alone/pixel_compact_14000.json`, 29 s on one
 core, the generator from the one-Node seed of 14,000 quanta at [5, 5, 5] on the open 11-cube:
 fourteen rounds, the content at the centre 1,770 to 885, the count at the centre 532 to 435 of
@@ -819,6 +794,6 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
 Every line of every world in this file is a GameBoard reading (`tools/body_rest.py`: the three
 levels at the centre, the tail along the axes, the share and its centroid and second moment, the
 well, the held rows, the books; the generator's own lines for the lays and the refusals). The worlds
-declare no detector but the open faces' layer, whose `click` lines (labelled the detector's by the
+declare no NodeReader but the open faces' layer, whose `click` lines (labelled the NodeReader's by the
 engine) are read only as the total of matter that left the board (0.018, 1.75, 12.5 and 0.47
 quanta); no verdict rests on them. The intervals are the board's.

@@ -10,7 +10,7 @@ from event_universe import node
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
-from event_universe.reports import Detector, end
+from event_universe.reports import NodeReader, end
 
 if TYPE_CHECKING:
     from event_universe.game_board import GameBoard
@@ -71,6 +71,7 @@ def resized(
     walls: tuple[int, ...],
     direction: int,
     kind: type,
+    half: int = 0,
 ) -> None:
     """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
 
@@ -81,7 +82,9 @@ def resized(
         node.Record(
             grown(record.now, family.rest if number % family.width == 0 else 0),
             grown(record.before, family.rest if number % family.width == 0 else 0),
-            grown(record.remainder, origin if number % family.width == 0 else 0),
+            grown(
+                record.remainder, origin if number % family.width == 0 else half
+            ),  # born at the half wall
         )
         for number, record in enumerate(state.lines)
     ]
@@ -91,15 +94,17 @@ def resized(
     ]
 
 
-def resized_detector(detector: Detector, axis: int, side: int, layers: int, direction: int) -> Detector:
-    """A detector's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
-    if detector.nodes is None:
-        return detector
-    return Detector(
-        detector.name,
-        sized(detector.nodes, axis, side, layers, direction, False),
-        detector.body,
-        detector.declared,
+def resized_node_reader(
+    node_reader: NodeReader, axis: int, side: int, layers: int, direction: int
+) -> NodeReader:
+    """A node_reader's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
+    if node_reader.nodes is None:
+        return node_reader
+    return NodeReader(
+        node_reader.name,
+        sized(node_reader.nodes, axis, side, layers, direction, False),
+        node_reader.body,
+        node_reader.declared,
     )
 
 
@@ -118,13 +123,24 @@ def grow(board: GameBoard) -> bool:
 
 
 def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) -> None:
-    """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
+    """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_readers' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         kind = board.world.kind
         resized(
-            state, family, axis, side, layers, board.origins[index], board.walls(index), direction, kind
+            state,
+            family,
+            axis,
+            side,
+            layers,
+            board.origins[index],
+            board.walls(index),
+            direction,
+            kind,
+            board.half_wall(index),
         )
-    board.detectors = [resized_detector(d, axis, side, layers, direction) for d in board.detectors]
+    board.node_readers = [
+        resized_node_reader(d, axis, side, layers, direction) for d in board.node_readers
+    ]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)
         board.wrap = board.wrap._replace(beyond=beyond)

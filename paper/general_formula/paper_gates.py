@@ -130,7 +130,10 @@ TWINS = [
     (
         "the two slits at the fixed lay",
         [
-            ("main.tex", "$N = 270$ units of $W_c$ ($626.5$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$"),
+            (
+                "main.tex",
+                "$N = 270$ units of $W_c$ ($626.5$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$",
+            ),
             ("main.tex", "the run $N = 270$ in the NodeReader's unit"),
             ("main.tex", "the two slits' $270$ stands against the blind $273$"),
             ("main.tex", "The run of the implementation gives $N = 270$"),

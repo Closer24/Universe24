@@ -3,7 +3,7 @@
 The paper's S.59 (the mathematician's 146 and 148; the advisor's 5949173532 column A; the owner's
 words of 2026-10-02, 12:38, "Yes, both of them", and of 2026-10-03, 03:25, "Both Zeno and
 anticoincidence must be obtained"): one record of two parts (g, e) of the near-flat pair [1, 1299]
-declared an instrument at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
+declared a NodeReader at the centre Node of a periodic box of 8 x 8 x 4, its six Link factors 0 so
 that it stays; one drive, the holder of the sign `pulse`, a plane wave at k = pi / 2 and the amplitude 308, read into the record's
 phase at the weight 1 in both directions, so that the accumulated turn over the run of 48 intervals
 is a pi pulse in the labels (48 x (2 / pi) x 308 / 6000 = 1.568 against pi / 2 = 1.571); one world
@@ -24,7 +24,7 @@ and column C (no write) 1 at every n beside it, what the law would give without 
 
 The tree at the reading: the one draw over the records reading one arriving record
 (`meeting.took`) and the erasing front (`front.py`); the trials `tools/meeting_trials.py`, the
-part each record stands in at the end and its `jump` lines labelled DETECTOR.
+part each record stands in at the end and its `jump` lines labelled NODEREADER.
 
 | n | window | trials ending in e | P(e at T_pi) | blind | column B | column C |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -67,17 +67,17 @@ face, the atom's parts at +1 and -1 by the lay) and the null window as its list 
 
 ## What is not built, by name
 
-The record's own detector region around its Node (the mathematician's 180); the booking of the
+The record's own NodeReader region around its Node (the mathematician's 180); the booking of the
 share's difference at a giving (no giving in this world); the trials' seeds as a key of the world
 file (one world file holds one seed; the trials set each record's generator from the design's
 seeds, the host's declaration, `tools/meeting_trials.py`).
 
 ## On the own quantum, 2026-10-03 (branch own-quantum, 8382b8b9)
 
-The round of the detector's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
+The round of the NodeReader's own quantum (the mathematician's 213, 214, 220, 221 and 223 and the
 advisor's seconds, the ids in `examples/events/resonance/blind_and_reading.md`) declares the atom's two
 transitions at the resonance [2, 3] (the pulse's rotation at k = pi / 2) and lays no light here (the
-atom has no rates); the worlds declare no region detector. Re-run by `tools/meeting_trials.py` on
+atom has no rates); the worlds declare no region NodeReader. Re-run by `tools/meeting_trials.py` on
 8382b8b9 over the 120 seeds: P(e at T_pi) 1.000, 0.508, 0.367, 0.233, 0.133 at n = 1, 2, 4, 8, 16, the
 jumps 120; 95 and 34; 62 and 18; 32 and 4; 16 and 0, bit for bit the readings through the one click
 act above. PASS against column A at every n and unchanged.
@@ -85,9 +85,9 @@ act above. PASS against column A at every n and unchanged.
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 P(e at T_pi) is the part the record stands in at the trial's end, read by `tools/meeting_trials.py`
-from the instrument's own books on the board object (`meeting.NodeBooks.part`, the detector's own
+from the reader's own books on the board object (`meeting.NodeBooks.part`, the NodeReader's own
 content, not a written line; the same part is the last `jump` line's `realised`). The jumps per kind
-are the `jump` lines labelled by the detector. The pulse's count of 413 in the books, the turn per
+are the `jump` lines labelled by the NodeReader. The pulse's count of 413 in the books, the turn per
 window named beside the blind and the pi pulse's tuning are GameBoard matters. The lines carry the
 board's `tick` and the `window` in board intervals; the turn itself is taken per proper interval at the
 record's Node (`meeting.turned_labels`) and no line carries that clock.
@@ -191,7 +191,7 @@ and not the draw. The two windows separated: the first window alone flips 221 of
 the 221 in e flipped back to g, 0.385 against 0.5, 3.5 standard errors low. The asymmetry is the
 finding by name: after a taking, the return e to g is suppressed. The cause by one hand, the
 advisor's reading: the taking's write is the hole, the arriving record's levels at the Node to 0 by
-the face with its count down by one, and the Zeno drive at A = 392 holds at the instrument's Node
+the face with its count down by one, and the Zeno drive at A = 392 holds at the reader's Node
 the share 3 den A^2 sin^2 omega = 1.54 x 10^9 against one quantum's W_c sin omega = 4.40 x 10^8 at
 T = 32,768, 3.5 quanta's share per Node, so the hole of one taking removes three and a half quanta's
 worth of the drive at the Node, which Rule3 refills from the neighbours over the following intervals,
@@ -207,7 +207,7 @@ The diagnostic the advisor asked, run before any change, labelled GAMEBOARD (a r
 and no measurement): `zeno_2.json` at the seed 2 (the record's generator at the state 2, as the trials
 set it), whose record takes at the first window's close, the interval 24, g to e, and ends in e; beside
 it the same seed with the taking suppressed (`meeting.took` returning no taking, so the record writes
-its null window at 24 and ends in g, the drive untouched). The drive's level at the instrument's Node
+its null window at 24 and ends in g, the drive untouched). The drive's level at the reader's Node
 [4, 4, 2] (`meeting.arriving`, the pulse's time line) at the intervals 22 to 48, with the taking and
 with it suppressed: 22: 361, 361; 23: 337, 337; 24: 82, 82; 25: 0, -234; 26: 0, -400; 27: -384, -305;
 28: -147, -14; 29: 312, 279; 30: 433, 379; 31: 230, 219; 32: -74, -95; 33: -340, -353; 34: -368,
@@ -250,7 +250,7 @@ return e to g at n = 2: 130 of the 381 that flipped g to e flipped back (0.34 ag
 for bit (the two slits' and Bell's four and the GHZ's four output files byte-identical to main's at
 7033a6aa, their records below one quantum per Node at every click, so the hole to 0 stands there).
 A GameBoard diagnostic beside the run, labelled so (the seed 2 of n = 2, the drive's first line at
-the instrument's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
+the reader's Node): at the click the twin's share at the Node reads 2.564 quanta; after the
 face's two intervals the levels are the twin's scaled by 0.781 (-183 and -313 against -234 and -400),
 their ratio the twin's within 0.001, and the share at the Node reads 0.975 of a quantum against the
 twin's 2.674, more than one quantum gone at the Node itself, since the booked form's cross term with
@@ -280,3 +280,34 @@ squash): n = 2 PASS at one standard error; n = 4 the finding by name that stands
 the quadratic factor's branch, pull request #1730, where it reads 0.415 at 480 seeds; the advisor's
 line: 960 seeds before any cause is named); n = 1, 8 and 16 within one standard error of the column.
 Nothing adjusted.
+
+## On the quadratic factor, 2026-10-03 (branch partial-hole-quadratic)
+
+The mathematician's 244 (#1572 comment 5967913000, section 1, the advisor's second asked) derives the
+first pass's diagnostic (0.975 of a quantum left at the Node against the twin's 2.674): the Node's share
+as the form holds it is s = O + C, O = w (a^2 + b^2) - S a b the Node's own terms and C its Link terms
+with the six neighbours, which the face does not scale, so the exact factor is the root of
+f^2 O + f C = s - W_rec. Built: the first face by that root on its own interval's numbers, recording
+exactly what left by the booking identity's face term; the second face removing the rest of the quantum
+exactly (one factor for both faces took 1.95 quanta, the pair's own form O nearly doubling over the two
+intervals at this drive). The record's share drops by 0.9965 of a quantum at the seed 2 (the blind: one
+quantum within one level's share, met); the share the engine reads at the Node alone stays 1.85 against
+s - W_rec = 1.67, the Link terms landing on the neighbours, a finding by name.
+
+The blind (244): n = 2 at 0.500 within 0.023 and n = 4 at 0.375 within 0.022, both centred (the n = 4
+excess the hole's second order under this blind); the gates bit for bit.
+
+| world | ends in e | fraction | Itano | standard error | against the column | the first pass | the jumps g to e / e to g |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| n = 1 | 480 of 480 | 1.000 | 1.000 | 0.000 | the column exactly | 480 of 480 | 480 / 0 |
+| n = 2 | 251 of 480 | 0.523 | 0.500 | 0.023 | 1.00 standard errors, within the blind's 0.023, not centred | 0.523 | 381 / 130 |
+| n = 4 | 199 of 480 | 0.415 | 0.375 | 0.022 | 1.80 standard errors: MISS, named | 0.408 | 259 / 60 |
+| n = 8 | 108 of 480 | 0.225 | 0.235 | 0.019 | 0.52 standard errors | 0.227 | 121 / 13 |
+| n = 16 | 57 of 480 | 0.119 | 0.133 | 0.016 | 0.90 standard errors | 0.119 | 60 / 3 |
+
+The reading: n = 2 reads 0.523 as under the first pass (the same 381 and 130 jumps at these seeds), at
+one standard error of 0.500 and within the blind's 0.023 but not centred; n = 4 reads 0.415, 1.8 standard
+errors above 0.375 where the blind asked for the column centred, so the n = 4 excess is not the hole's
+second order: a finding by name, not adjusted (the exact removal of one quantum at the record moves it
+from 0.408 to 0.415, within the draw). The nine gate worlds are byte-identical to main's at 7033a6aa
+(the two slits, Bell x 4, GHZ x 4); the resonance world's reading stands in its own folder.

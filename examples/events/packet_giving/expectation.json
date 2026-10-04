@@ -1,0 +1,79 @@
+{
+ "verdict": "NODEREADER",
+ "comment": "The packet giving world (the owner's word of 2026-10-03, 09:46 Israel, 'a new emitter detector also needs to enter'; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the open board's giving as a packet along a drawn axis, read in the engine. On the Zeno atom's universe (examples/events/zeno/zeno_atom.json, T = 32,768, the light `pulse` the massless holder of the sign) an open board of `width` Nodes across on y and z and long on x, the one board of this lay the machine runs in minutes: the giver, the resonance world's atom standing in its upper part e, its transition g to e by `pulse` at the resonance [2, 3] and its giving e to g at the lifetime 48 with the window 48 (drawn per interval at the hazard 1 / 48 in the dark, the dark grain, its tick the jump line's), declares the packet's width 4, the one new number; the loader finds the board open (three axes above one Node) and holds the packet along x alone (the train of L slices from the body's Node fits neither y nor z), so the giver draws between +x and -x with its own generator. The lay: the one-line packet's root T / sin Omega = isqrt(T^2 den^2 div (den^2 - num^2)), twice S = T / (2 sin Omega), the plane's share per line (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands; the packet laid on the light record's first line alone), the envelope in the energy form (a_t = isqrt((R_t div tau) div w^2), R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1), the wave number along x from the band's line with the transverse mode, cos k_x = 3 cos Omega - 2 cos(pi / (w + 1)), the level before a_t cos(k_x z + Omega) with the sine's root on the large number at the reference scale, isqrt(R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root isqrt(den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the top-hat of w across; the body at the centre of x with L + 1 Nodes on either side. The detector: a region, the 4 x 4 slice across x at the derived reach from the body on the +x side, z_reach = (pi w / lambda) sqrt(S / L), its unit the record's own share per quantum read from the books, its window the run (one draw at the end). The share at the lay: sin Omega times the top-hat's excess 1.055 at its edges, 0.786 of the top's unit (the hands' derivation at T = 2^22), a GameBoard reading. The far reading: the light's level at the Node on the axis half way to the detector over the window of the passage after the giving's tick, cos Omega as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2), a GameBoard reading labelled so. The blind in expectation.json, written by build_world.py from this design before any lay and never touched after; the reading in blind_and_reading.md, a miss a finding by name.",
+ "family": "pulse",
+ "lay": {
+  "lifetime": 48,
+  "giving": "drawn per interval at the hazard 1 / lifetime in the dark, the record's click line's tick",
+  "width": 4,
+  "total": 43962,
+  "total_formula": "T / sin Omega = isqrt(T^2 den^2 div (den^2 - num^2)), the one-line packet's root, twice S = T / (2 sin Omega), the plane's share per line (the mathematician's 242 section 1, #1572 comment 5967687794; the advisor's second, 5967838095 section 1)",
+  "length": 312,
+  "length_formula": "the envelope in the energy form from tau and T, a_t = isqrt((R_t div tau) div w^2), R_(t+1) = R_t - w^2 a_t^2, ending where a_t falls below 1",
+  "first_amplitude": 7,
+  "deficit": 762,
+  "lay_lines_at_most": 4992,
+  "cos_k_x": 0.38196601125010515,
+  "k_x_over_pi": 0.37524713778565744,
+  "wavelength": 5.329820799705626,
+  "reach": 27.98715033446159,
+  "shape": [
+   627,
+   4,
+   4
+  ],
+  "body": [
+   313,
+   2,
+   2
+  ],
+  "node_reader_x": 341
+ },
+ "share": {
+  "value": 0.786350572087426,
+  "sine_mode": 0.7453559924999299,
+  "top_hat_excess": 1.055,
+  "reading": "the light's share over the board in the top's unit W_c at the giving's interval, the jump line's tick, a GameBoard reading",
+  "status": "sin Omega of the top's unit with the sine mode across, times the top-hat's excess at its edges (the hands' derivation at T = 2^22, the mathematician's 242 section 1 and the advisor's second); at the shipped T the rounded levels' residue is a finding by name"
+ },
+ "count": {
+  "value": 1,
+  "reading": "the node_reader's credit lines (NODEREADER) in its own unit, the record's own share per quantum read from the books, over its window, the run, the packet's passage",
+  "status": "one quantum one click by the count's line (the advisor's clause (iii)); read over the seeds whose drawn direction meets the node_reader; re-read on the one-line root, half of the node_reader's inflow at the half root having been the lay's (242 section 1)"
+ },
+ "cos_omega": {
+  "value": 0.6666666666666666,
+  "pair": [
+   2,
+   3
+  ],
+  "node": [
+   327,
+   2,
+   2
+  ],
+  "window_after_giving": [
+   2,
+   17
+  ],
+  "estimator": "SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2)",
+  "gate": "|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second); a GameBoard reading"
+ },
+ "direction": {
+  "fraction": [
+   1,
+   2
+  ],
+  "held": [
+   "+x",
+   "-x"
+  ],
+  "meeting": [
+   "+x"
+  ],
+  "reading": "the fraction of seeds whose lay lines extend from the body toward the node_reader (the equivalent directions the board holds, each at the giving's weight)",
+  "gate": "within sqrt(N p (1 - p)) of N p over the seeds"
+ },
+ "seeds": 20,
+ "status": "the two hands' lines (224, 229, the advisor's seconds; the root 242 section 1, the advisor's second); fence: clicks for the count, a GameBoard reading for the cosine, the lay lines for the direction"
+}

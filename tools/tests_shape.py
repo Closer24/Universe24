@@ -41,11 +41,61 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_meeting.py::test_the_hole_of_a_dense_record_removes_one_quantums_share_and_the_phase_stands": (
-        36,
-        "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the hole of a "
-        "dense record, the face's target the scaled level where the share at the Node exceeds the record's own quantum, "
-        "the phase and the sense standing, the back-in-time gate across a dense taking",
+    "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
+        93,
+        "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
+        "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
+        "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
+    ),
+    "tests/test_the_loader.py::test_a_massless_message_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
+        24,
+        "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
+        "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
+    ),
+    "tests/test_the_meeting.py::test_the_taking_removes_the_photon_and_the_front_leaves_the_board_dark": (
+        14,
+        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's taking at 48, the share never "
+        "above the lay's by more than the known transient, and 0 exactly once the front has swept both packets",
+    ),
+    "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
+        10,
+        "the documents' gates (the owner's word of 2026-10-04, a perfect algebra; #1793 comment 5974938542): no undated history "
+        "clause in the law or the engine's document beyond tools/history_allowed.json, which only shrinks; the loader of the gates with it",
+    ),
+    "tests/test_documents.py::test_every_shared_number_stands_in_its_one_form": (
+        4,
+        "the documents' gates: every number of tools/numbers.json in its canonical form and in none of its forbidden forms",
+    ),
+    "tests/test_documents.py::test_every_derived_number_is_its_scripts_output": (
+        4,
+        "the documents' gates: every derived number of the table the output of its script under tools/derivations/",
+    ),
+    "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
+        25,
+        "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
+        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one GameBoard per "
+        "folder, no interval, the long-loading folders the runner's gate by name",
+    ),
+    "tests/test_pixel_mode.py::test_a_messages_mode_count_is_the_books_count_read_once_over_the_board": (
+        16,
+        "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
+        "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
+    ),
+    "tests/test_the_node_reader.py::test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall": (
+        26,
+        "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
+        "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
+    ),
+    "tests/test_the_draw.py::test_the_open_boards_giving_is_a_packet_along_a_drawn_axis_with_the_carry": (
+        79,
+        "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
+        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
+        "carrier's phase at Omega, the blind",
+    ),
+    "tests/test_the_draw.py::test_the_source_in_time_lays_the_form_it_radiates": (
+        30,
+        "the partial hole's second pass (the mathematician's 245 with the advisor's second): the source in time's "
+        "total (2 / 3) T sin k in the law's integers at [2, 3], [4, 5] and [9, 10], the root on the large number",
     ),
     "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
         24,
@@ -53,22 +103,136 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "record empty at the books' origin set at its first lay to the giving's own W_c sin Omega, a born quantum "
         "below the half-top energy credited 1 and not 0",
     ),
-    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_detector_counts_in_its_own_quantum": (
+    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_reader_counts_in_its_own_quantum": (
         90,
-        "the generic detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
+        "the generic node_reader round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
         "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
         "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
+    ),
+    "tests/test_the_giving.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
+        33,
+        'the giving lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
+        "mathematician's 5975866852 and 5975925032): the source's increments corrected by the division act in time where the "
+        "span holds a period, the period by the rotation act, a short span laid as built, the resonance world's sums and share",
+    ),
+    "tests/test_the_giving.py::test_the_open_boards_packet_lays_no_uniform_mode": (
+        20,
+        "the giving lays no uniform mode (2026-10-04): the open board's packet's two levels through the message lay's "
+        "division act, each summing to 0 over the board after the lay, the quantum standing",
+    ),
+    "tests/test_the_giving.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
+        38,
+        "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
+        "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
+        "line's take and unit, the board dark at 200 and the back-in-time gate MATCH across the tapered faces",
     ),
     "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
         36,
         "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
         "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
     ),
+    "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
+        35,
+        "the step's speed's dedicated test (the owner's word of 2026-10-03, 15:12 Israel, let them do it): every "
+        "shortened read of the step, the share at the Nodes with a level, the write factor in the hardware's "
+        "integers inside the width and the Port's fill on the face layer, equals the full read bit for bit",
+    ),
+    "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
+        12,
+        "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
+        "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
+    ),
+    "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
+        60,
+        "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
+        "everything now and in parallel): the conversion table's sense per record out and its refusals, the given "
+        "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
+        "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
+    ),
+    "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
+        104,
+        "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
+        "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
+        "declared integers, the hold's first write returning the start's rest within one unit at every Node, the deviation from the exact line a GAMEBOARD reading, the count the record's share within "
+        "the gate, the standing read over one period against the twin without the holder, the remainders at the "
+        "half wall and the back-in-time gate across two periods",
+    ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
         "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
         "numbers, the two reference records by the giving's recurrence, A W / 2 at every arrival phase, the "
         "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
+    ),
+    "tests/test_integer_algebra.py::test_a_composed_product_of_literals_is_refused_outside_core_rule3": (
+        11,
+        "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
+        "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
+    ),
+    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
+        51,
+        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
+        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
+        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
+        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
+    ),
+    "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
+        48,
+        "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
+        "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
+        "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
+    ),
+    "tests/test_the_bound_body.py::test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused": (
+        64,
+        "the count-1 gate's dedicated test (the Boss, 2026-10-03; ALGEBRA.md, No record reads its own write of "
+        "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
+        "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
+        "self-read 0 to the bit over three intervals, a count above 1 refused by name",
+    ),
+    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_taking": (
+        70,
+        "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
+        "window bounded by the probe's lays, the lay by the count at the declared tick, the probe's click and the "
+        "drive's taking by the labels' squares, the body's clock and the window's index on the click line, the "
+        "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
+    ),
+    "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
+        172,
+        "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
+        "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
+        "budget's least T, the faces and the open faces' layer, the messages, the universe",
+    ),
+    "tests/test_the_node_reader.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
+        289,
+        "the NodeReader round (the owner's word of 2026-10-03, a reader with Nodes alone is never on one Node; the "
+        "Boss's brief): the ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, "
+        "the share credited 1, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
+        "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
+        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the giving's Node by "
+        "the record's share (the mathematician's 299 with the advisor's second, two hands)",
+    ),
+    "tests/test_the_node_reader.py::test_a_reader_with_its_own_record_stands_on_one_node": (
+        46,
+        "the relation seen from its two ends (the owner's decision of 2026-10-03, 16:30 UTC, on the mathematician's 323 "
+        "with the advisor's yes): the shipped Zeno reader declared at one Node, its lay A_1 = A, the turn reading the "
+        "drive's level exactly, its six Links cut, the uniform mode's recurrence, the click line naming no Node with "
+        "the hole and the lay at the only Node, the back-in-time gate across the run, and a reader with Nodes alone "
+        "at one Node still refused by name",
+    ),
+    "tests/test_reading_gate.py::test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit": (
+        100,
+        "the reading gate's dedicated test in its own file (the owner's word of 2026-10-04 relayed by the advisor on "
+        "#1793, the Boss's brief): the gate's table of a copy of the shipped Zeno world re-read row by row, the run, "
+        "the trials over three seeds and the back-in-time pass, MATCH on the numbers the test reads from the same run, "
+        "DIFFERS on a wrong value and on a wrong label, the shipped screen table in the block's place, UNFILLED without "
+        "either, the report's shape and the exit code; the imports stand inside the test so the file is the test alone",
+    ),
+    "tests/test_proofs_check_the_law.py::test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked_only_fall": (
+        77,
+        "the proofs' gate (the owner's order of 2026-10-04, 07:50 UTC, that all the proofs be checked by machine; the "
+        "advisor's design lines, #1793 comment 5977935062): every row of tools/derivations/proofs_inventory.json with a "
+        "check runs to its verdict, every check_ function of the proofs_ modules is a row's, the rows of the kinds A, B "
+        "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
+        "a run's file; the imports stand inside the test so the file is the test alone",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")
@@ -168,9 +332,7 @@ def test_imports(snapshot: Snapshot) -> list[str]:
             modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [module or ""]
             for imported in modules:
                 if imported.split(".")[-1].startswith("test_"):
-                    found.append(
-                        f"{name} imports {imported}: move the helper to tests/worlds.py or tests/running.py"
-                    )
+                    found.append(f"{name} imports {imported}: move the helper to tests/laws.py")
     return found
 
 
@@ -241,9 +403,7 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     base_groups = duplicate_groups(base)
     for digest, names in duplicate_groups(head).items():
         if len(names) > len(base_groups.get(digest, [])):
-            found.append(
-                f"copied setup: {', '.join(names)} share one body; keep one in tests/worlds.py or tests/running.py"
-            )
+            found.append(f"copied setup: {', '.join(names)} share one body; keep one in tests/laws.py")
     for name in sorted(uncalled(head) - uncalled(base)):
         found.append(f"{name} is called nowhere in src/, tools/ or examples/: delete it with its tests")
     return found

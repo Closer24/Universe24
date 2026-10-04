@@ -2,21 +2,28 @@
 
 import ast
 import io
+import random
 import tokenize
+from fractions import Fraction
 from pathlib import Path
 
 import pytest
+
+from event_universe.core.rule3 import coefficients, rule3
+from event_universe.features.currents import Levels, Neighbours, current, tension
+from event_universe.features.read import link_tension
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "game_board.py", "share.py", "reports.py", "credit.py", "world_files.py")
 PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "conversion.py", "front.py", "plane.py")
-PHYSICAL_MODULES += ("giving.py",)
+PHYSICAL_MODULES += ("giving.py", "lay.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "messages"))
-PHYSICAL_MODULES += ("loader/derived.py", "loader/instrument.py", "loader/universe.py", "loader/lay.py")
-PHYSICAL_MODULES += ("resonance.py",)
+PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
+PHYSICAL_MODULES += ("resonance.py", "node_reader.py", "loader/node_reader_rows.py")
+PHYSICAL_MODULES += ("loader/node_reader_declaration.py",)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
@@ -156,6 +163,31 @@ def test_the_module_list_names_every_module_that_runs_a_step() -> None:
 
 
 RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
+
+
+def literal_products(tree: ast.AST) -> list[int]:
+    """Every product, sum, difference or power of two integer literals (`2 * 2`, `1 + 3`, `2 ** 10`), by line: a number composed in the engine and named nowhere."""
+    return [
+        node.lineno
+        for node in ast.walk(tree)
+        if isinstance(node, ast.BinOp)
+        and all(isinstance(x, ast.Constant) and type(x.value) is int for x in (node.left, node.right))
+    ]
+
+
+def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
+    """No number in the engine (the owner's word of 2026-10-03, "where there are numbers, throw them out or close them"; PR D): outside core/rule3.py no two integer literals are multiplied, added, subtracted or raised to each other, since the product would be a number the engine should take from a name of the Ports and the levels or from the run's files; Rule3's own 2, 3, 6 and 12 stand in its home."""
+    offenders = [
+        f"{path.relative_to(SRC).as_posix()}:{line}"
+        for path in sorted(SRC.rglob("*.py"))
+        if path.relative_to(SRC).as_posix() != RULE3
+        for line in literal_products(ast.parse(path.read_text(encoding="utf-8")))
+    ]
+    assert offenders == [], offenders
+    assert literal_products(ast.parse("x = 2 * 2\ny = 1 + 3\nz = 2**10\n")) == [1, 2, 3]
+    assert literal_products(ast.parse("x = 2 * a\ny = -3\nz = (1, 2)\n")) == []
+
+
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
@@ -201,3 +233,90 @@ def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
     REFUSED = ("x = a // b\n", "x %= b\n", "q, r = divmod(a, b)\n", "y = np.floor_divide(a, b)\n")
     assert all(divisions(ast.parse(text)) for text in (*REFUSED, "y = np.mod(a, b)\n", "x = a % b\n"))
     assert divisions(ast.parse("x = a * b + c\ny = np.pad(a, w)\n")) == []
+
+
+def ring_step(now, before, carry, reads, self_coefficient, wall):  # type: ignore[no-untyped-def]
+    """One interval of Rule3 on a ring folded to one axis: the two axis neighbours read, the four folded Ports read the Node itself."""
+    n = len(now)
+    nexts, carries = [], []
+    for i in range(n):
+        arrivals = (now[(i + 1) % n], now[(i - 1) % n], now[i], now[i], now[i], now[i])
+        value, rest = rule3(reads, arrivals, self_coefficient, wall, now[i], before[i], carry[i])
+        nexts.append(int(value))
+        carries.append(int(rest))
+    return nexts, carries
+
+
+def two_level_form(a, b, reads, self_coefficient, wall):  # type: ignore[no-untyped-def]
+    """Q(a, b) = SUM_i (a_i^2 + b_i^2) - (1 / w) SUM_i (SUM_j R_ij a_j + S a_i) b_i at uniform paces (row 7 of the conventions)."""
+    n = len(a)
+    total = Fraction(0)
+    for i in range(n):
+        linked = (
+            reads[0] * (a[(i + 1) % n] + a[(i - 1) % n])
+            + sum(reads[2:]) * a[i]
+            + self_coefficient * a[i]
+        )
+        total += a[i] * a[i] + b[i] * b[i] - Fraction(linked * b[i], wall)
+    return total
+
+
+def momentum(num, now, before):  # type: ignore[no-untyped-def]
+    """P_a(i) = (F_(i, i-a) - F_(i, i+a)) / num on the ring, F_ij = num (now_i before_j - before_i now_j) (row 5 of the conventions)."""
+    n = len(now)
+    flux = [
+        current(num, Levels(now[i], before[i]), Levels(now[(i + d) % n], before[(i + d) % n]))
+        for i in range(n)
+        for d in (-1, 1)
+    ]
+    return [Fraction(flux[2 * i] - flux[2 * i + 1], num) for i in range(n)]
+
+
+def test_the_conventions_tables_identities_hold_on_small_integers() -> None:
+    """Rows 5 to 8 of the conventions table (ALGEBRA.md, The conventions and the units) on small integers at the toy pair [2, 3]: (5) the momentum identity with the carried remainders, w [P_a(t+1) - P_a(t)] = R [G(i) - G(i-1)] - [delta_i Delta now_i - now_i Delta delta_i], delta = r - r', on a nine-Node ring, every Node of forty random states; (6) the Node's own tension on the axis wave [2, 0, -2, 0] is +4 x the weight at every Node and the Link's reading the mean of its two ends, their sum the Link's booking; (7) with the rounding the two-level form Q walks by SUM epsilon_i (next_i - before_i) and the three-level form E_3 by SUM [epsilon_i(t) next_i - epsilon_i(t+1) now_i], epsilon = (r - r') / w, exactly; (8) the weighted coefficients R_ij / p_i^2 are the same from both ends of a Link at different paces, D M symmetric."""
+    num, den, gamma, ring = 2, 3, 20, 9
+    wave = [2, 0, -2, 0]
+    for i in range(4):
+        n = Neighbours(now=wave[i], ahead=wave[(i + 1) % 4], behind=wave[(i - 1) % 4])
+        assert tension(1, n) == 4 and tension(3, n) == 12
+    assert (
+        link_tension([(1, 4, 4)]) == 4
+    )  # the mean of the two ends' parts, their sum 8 the Link's booking
+    reads, self_coefficient, wall = coefficients(num, den, gamma, gamma, gamma)
+    draw = random.Random(24)
+    for _ in range(40):
+        before = [draw.randint(-50, 50) for _ in range(ring)]
+        now = [draw.randint(-50, 50) for _ in range(ring)]
+        carry = [draw.randrange(wall) for _ in range(ring)]
+        nexts, carry_next = ring_step(now, before, carry, reads, self_coefficient, wall)
+        after, carry_after = ring_step(nexts, now, carry_next, reads, self_coefficient, wall)
+        epsilon = [Fraction(r - r_next, wall) for r, r_next in zip(carry, carry_next, strict=True)]
+        epsilon_next = [
+            Fraction(r - r_after, wall) for r, r_after in zip(carry_next, carry_after, strict=True)
+        ]
+        walk_q = two_level_form(nexts, now, reads, self_coefficient, wall) - two_level_form(
+            now, before, reads, self_coefficient, wall
+        )
+        assert walk_q == sum(e * (x - b) for e, x, b in zip(epsilon, nexts, before, strict=True))
+        three = [Fraction(n * n - x * b) for n, x, b in zip(now, nexts, before, strict=True)]
+        three_next = [Fraction(x * x - a * n) for x, a, n in zip(nexts, after, now, strict=True)]
+        assert sum(three_next) - sum(three) == sum(
+            e * x - e2 * n for e, e2, x, n in zip(epsilon, epsilon_next, nexts, now, strict=True)
+        )
+        delta = [r - r_next for r, r_next in zip(carry, carry_next, strict=True)]
+        p_now, p_next = momentum(num, now, before), momentum(num, nexts, now)
+        for i in range(ring):
+            h = [now[(j - 1) % ring] * now[(j + 1) % ring] - now[j] * now[j] for j in range(ring)]
+            stress = [h[j] + h[(j + 1) % ring] for j in range(ring)]  # G_aa(j) = h(j) + h(j + 1)
+            centred_now = now[(i + 1) % ring] - now[(i - 1) % ring]
+            centred_delta = delta[(i + 1) % ring] - delta[(i - 1) % ring]
+            remainder_term = delta[i] * centred_now - now[i] * centred_delta
+            assert (
+                wall * (p_next[i] - p_now[i])
+                == reads[0] * (stress[i] - stress[(i - 1) % ring]) - remainder_term
+            )
+    for clock_i, clock_j in ((gamma, gamma - 3), (gamma - 2, gamma - 7)):
+        pace_i, pace_j = clock_i * clock_i // gamma, clock_j * clock_j // gamma
+        reads_i = coefficients(num, den, gamma, clock_i, pace_i, factors=(5,) * 6, unit=2)[0]
+        reads_j = coefficients(num, den, gamma, clock_j, pace_j, factors=(5,) * 6, unit=2)[0]
+        assert Fraction(reads_i[0], pace_i * pace_i) == Fraction(reads_j[0], pace_j * pace_j)

@@ -1,0 +1,40 @@
+{
+ "integers": {
+  "node_clock": 6000,
+  "quantum_action": 32768,
+  "width": 63,
+  "link_unit": 16
+ },
+ "families": [
+  {
+   "name": "charge",
+   "pair": [
+    6000,
+    6000
+   ],
+   "reads": {},
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1,
+    "write_weight": 1,
+    "act": "pace"
+   }
+  },
+  {
+   "name": "nuclide",
+   "pair": [
+    4004,
+    6000
+   ],
+   "reads": {
+    "charge": 1
+   },
+   "dimension": [
+    2,
+    2
+   ]
+  }
+ ]
+}

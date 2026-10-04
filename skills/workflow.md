@@ -1,12 +1,22 @@
 # The shared way of working
 
-The team is two sessions and the owner (the owner, 2026-09-30). The Boss leads,
-decides within the owner's words, records his decisions and runs the workers;
-its card is [the Boss's card](boss-orchestrator/SKILL.md). The advisor answers
-from the current documents, judges every line by its status, computes the blind
-numbers and writes nothing; its card is [the advisor's card](advisor/SKILL.md).
-The owner decides. This file is what the two sessions share. A skill is an
-instruction, not a grant of permission: the user's scope binds every session.
+The team is the Boss, the advisor, the mathematician, the reviewer, the writer
+and the experimenter, each with its issue, and the owner decides (the owner,
+2026-09-30 and 2026-10-04). The Boss leads, decides within the owner's words,
+records his decisions and runs the workers; its card is
+[the Boss's card](boss-orchestrator/SKILL.md). The advisor answers from the
+current documents, judges every line by its status, computes the blind numbers
+and writes nothing to the law, the engine, the paper or HIGHLIGHTS.md; at the
+owner's word of 2026-10-04 it builds tests and tools on a branch from `main` for
+the Boss's HANDED BY pull request, nothing of src/event_universe/; its card is
+[the advisor's card](advisor/SKILL.md). The mathematician is the second hand on
+every derivation and at every sha, and the first hand where the Boss routes it
+(#1836). The reviewer reads the paper, the supplement and the law whole and
+keeps the ledger (#1793). The writer holds the paper (#1538). The experimenter
+runs the shipped worlds against their blinds and keeps each folder's reading
+(#1827).
+This file is what the team shares. A skill is an instruction, not a grant of
+permission: the user's scope binds every session.
 
 ## Repository knowledge and restart
 
@@ -16,10 +26,10 @@ task needs. One definition per concept: a skill links to the law and never copie
 it. Temporary state (the task in hand, a blocked check, the next action) lives on
 the GitHub issue or the pull request, never in a skill.
 
-## The three documents only (the owner, 2026-09-26 and 2026-09-30)
+## The three documents and the two records (the owner, 2026-09-26, 2026-09-30 and 2026-10-04)
 
-The project keeps three current documents, the skills and the entry files, and
-nothing else:
+The project keeps three current documents, two records, the skills and the
+entry files, and nothing else:
 
 | Document | What it holds |
 | --- | --- |
@@ -27,23 +37,85 @@ nothing else:
 | [docs/ENGINE.md](../docs/ENGINE.md), the engine | The engine as the code holds it on `main`: the words, the interval, the folders, the loader, the output, the gates, how to run a world |
 | [docs/HIGHLIGHTS.md](../docs/HIGHLIGHTS.md), the decisions | The decisions in force, one line each; a decision of the owner replaces the line it changes |
 
-The skills are this file and the two role cards. The entry files are README.md,
-AGENTS.md and CONTRIBUTING.md. No log, no status page and no fourth document.
+The two records are not documents of the law; they are the files the one method
+needs (the owner's word of 2026-10-04: one method that brings zero bugs, with
+all the project's documents synchronized):
 
-## The documents rule (the owner, 2026-09-30)
+| Record | What it holds |
+| --- | --- |
+| docs/REVIEW_LEDGER.md, the reviewer's ledger | Every finding with its state, one row each: its place, its station, its hand and the hash it was checked at; changed by the pull request that prints |
+| docs/PROVENANCE.md, the provenance | Who said what and when, under the law's line names: the hands' comments, the owner's dated words, the pull requests; the law's lines give it up in part 4 of the fill and keep the statement |
 
-HIGHLIGHTS.md is updated at once, with the owner's word, so that it always states
-where the project is. ALGEBRA.md is updated when the law or its numbers change.
+The skills are this file and the two role cards that exist, the Boss's
+(`skills/boss-orchestrator/SKILL.md`) and the advisor's (`skills/advisor/SKILL.md`);
+the other four hands, the mathematician, the reviewer, the writer and the
+experimenter, have their issues as their cards until their cards are written.
+The entry files are README.md, AGENTS.md and CONTRIBUTING.md. No log and no
+status page: the two records are the only files beside the three documents, and
+HIGHLIGHTS.md holds the decisions only, one line each, no diary.
+
+## The documents rule (the owner, 2026-09-30 and 2026-10-04)
+
+HIGHLIGHTS.md is updated at once, with the owner's word, and holds the decisions
+in force, one line each: not a diary, and not the state of the findings, which
+is the ledger's. ALGEBRA.md is updated when the law or its numbers change.
 Every hypothesis is declared under its own name, outside the law, until it passes
 the three tests or the owner admits it. A change to a document replaces what it
 touches and deletes what no longer holds in the same pull request; the body names
 what was deleted. No history note, record number or superseded line stays: git
 keeps the history. Nothing is a decision until it is in HIGHLIGHTS.md.
 
+## The one method (the owner, 2026-10-04)
+
+The owner's word of 2026-10-04, about 03:35 Israel: converge on one method that
+simply brings zero bugs, in the paper, in the algebra and in the supplement, with
+all the project's documents synchronized. The method is five lines, the
+advisor's, adopted by the Boss (#1793 comments 5975048351 and 5975055409).
+
+1. **One source per fact.** The engine's behaviour is its tests. The law's
+   statements are docs/ALGEBRA.md. Signs and units are the law's conventions and
+   units table. Every shared number is a row of tools/numbers.json with its
+   script under tools/derivations/. Who said what and when is docs/PROVENANCE.md.
+   A run's reading is its folder's blind_and_reading.md. The paper, the
+   supplement and docs/ENGINE.md cite these and restate none of them.
+2. **One loop per finding, in the repository's ledger.** Every finding is one
+   row of docs/REVIEW_LEDGER.md (its place, its station, its hand, the hash) and
+   goes through one loop: found by a whole read; the first hand's answer from the
+   quoted definitions, with a script where there is a number; a blind confirm by
+   a second method; printed, the law first and the paper in the same batch; the
+   gates; re-checked at the hash; closed. A station held over an hour (a first
+   hand owed, a confirm owed, a print owed, a re-check owed) is a finding of the
+   method, named with its station and its hand.
+3. **One gate set on every pull request.** The language; the documents (stale
+   phrases, numbers, derivations, headings and paths); the paper's marks checker;
+   the readings gate for the runs (the gate worlds re-run and compared bit for
+   bit with their folders' blind_and_reading.md); the shapes and the ownership.
+   `python tools/check.py` runs the set locally and CI runs it on the pull
+   request. Nothing merges red; nothing is ticked by memory.
+4. **Whole reads until silence.** After each batch a hand who did not write
+   reads each document whole. A whole read that finds nothing closes it. Zero is
+   read from the ledger file and never declared.
+5. **One pace.** Prints per batch, distributions per round. No restructuring
+   while a fill is open; the structural work (the split of the law's statements
+   from their provenance, the statements' rewrite) is its own numbered part, with
+   both hands and the gates green at every push.
+
+The rules of the hands under the method (the owner's word of 2026-10-04, #1793
+comment 5974938542):
+
+- The second hand writes its own number from the quoted definitions before
+  reading the first hand's.
+- A number takes two methods where two exist (an analytic form against a
+  numeric one).
+- Every derived or computed claim has a Python derivation script, and a test
+  compares the script's output with the printed number; every such mark names
+  its script. A theorem's proof stays in words beside its mark.
+
 ## The three tests of every rule: generic, vector, local (the owner, 2026-09-21)
 
-A rule enters the law only if it passes all three. Both sessions apply them: the
-advisor when judging a line, the Boss when briefing a build.
+A rule enters the law only if it passes all three. The hands apply them: the
+advisor and the mathematician when judging a line, the Boss when briefing a
+build.
 
 1. **Generic.** One primitive with declared integers and no family name or kind;
    the same primitive serves every family; its special cases are values, not
@@ -87,8 +159,8 @@ outside its band with no defect found names the missing law, as a hypothesis
 under its own name. No expectation is rewritten after a look, and no body's
 number is tuned to a result.
 
-Only a detector's click is a measurement. Every number reported is labelled
-DETECTOR or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
+Only a NodeReader's click is a measurement. Every number reported is labelled
+NODEREADER or GAMEBOARD; a GameBoard reading is a diagnostic, never compared with
 nature and never a result on its own.
 
 ## The method of derivation (the owner, 2026-10-01)
@@ -104,10 +176,10 @@ the paper explains it as its own:
 3. The bridge to nature is a body's clicks and nothing else: a bound body's
    rotation reading the content once is the clock; its click rate against
    nature's identifies the law's level with nature's potential. The source is a
-   body's well, the clock a body, the detector a body, an orbit a body's chain
+   body's well, the clock a body, the NodeReader a body, an orbit a body's chain
    of clicks. The body enters through its clicks, never through its generator's
    equations.
-4. Every observable is a click formula: the instrument's form over the
+4. Every observable is a click formula: the NodeReader's form over the
    quantum's measure on the forward orbit, or a ratio of two such. Every other
    formula is of the GameBoard, a diagnostic, and is labelled so beside its
    status (the fence: GameBoard or clicks).
@@ -124,7 +196,7 @@ the paper explains it as its own:
 Every experiment, rule, folder and file is called by its plain name: "the two
 slits", "the moving lamp's redshift", "the signed read". No code letter or
 number stands for a thing, not even in parentheses after its name. A block is
-named by what it is on the GameBoard (an emitter, a body, a detector, a clock);
+named by what it is on the GameBoard (a source, a body, a NodeReader, a clock);
 the laboratory's word for it may be said once to explain what it models. A new
 word enters the words of docs/ENGINE.md with its one definition before it is
 used; a word already taken is not reused.
@@ -160,7 +232,7 @@ unread or wrong if it is not done; (5) the decisions: which lines of
 docs/HIGHLIGHTS.md the item keeps, and whether one should now change, a change
 being a proposal made on the owner's word; (6) the implementation: what changes
 in the tree, the time end to end, and what it can break. The evidence follows the
-six lines. Every number in them is labelled DETECTOR or GAMEBOARD.
+six lines. Every number in them is labelled NODEREADER or GAMEBOARD.
 
 ## Writing to the owner (the owner, 2026-09-30)
 
@@ -209,7 +281,8 @@ the whole fill; it merges by auto-merge on green CI, the branch rule enforcing a
 up-to-date base, the Boss arming it after the check (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposals 3 and 5). The engine's branches merge one
 at a time; documents, paper and engine branches on disjoint file sets merge
 independently (234, proposal 6). A green check on an old base is no evidence
-about the merged tree.
+about the merged tree. The Boss's check is a diff; the whole read is the hands',
+after each batch, by a hand who did not write (the one method).
 
 ## The language
 
@@ -218,31 +291,39 @@ precise; every message to the owner is in Hebrew (AGENTS.md, the language rule).
 Every heading and every name is in sentence case: a capital first letter, never
 all caps (the owner, 2026-09-30). The words of the engine are the words of
 docs/ENGINE.md: a Node, a Link, a Port, an Event, the GameBoard, a Family, a
-Record, a Body, a Detector, a Click, a Primitive, an Interval, and no other noun
-for them.
+Record, a Body, a NodeReader, a Click, a Primitive, an Interval, and no other noun
+for them. The old nouns detector, instrument, emitter, absorber, observer and
+measurer have left (the owner's word of 2026-10-03, "no field, only events"): a
+NodeReader with Nodes alone or with a record of its own is the one declaration
+kind, and none of them returns.
 
 ## The short procedure: from the owner's word to the merge
 
-1. The owner speaks, in either session. The session that hears him relays his
-   words verbatim to the other; the Boss records them.
+1. The owner speaks, in any session. The hand that hears him relays his words
+   verbatim on its issue; the Boss records them.
 2. The Boss records a decision at once as one line in docs/HIGHLIGHTS.md,
    replacing the line it changes, and in docs/ALGEBRA.md when the law or its
-   numbers change; a hypothesis under its own name. HIGHLIGHTS.md is the only
-   record of the hands' answers; the Boss writes no relay comments (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 2).
-3. The Boss asks both hands at once, in one comment on one thread (#1572 for
-   derivations), and fires their triggers the moment the ask is posted; while any
-   ask is open each hand's cadence is 15 minutes, the second hand seconding the
-   first's text in the same thread, the 45-minute check-in the fallback only.
-   Every closure's comment ends with its final paragraph for docs/ALGEBRA.md in
-   the law's words and, where the paper is touched, the paper's sentence (234,
-   proposals 1 to 3). The advisor computes the blind number from the engine's own
-   lines and states the three verdicts; the Boss writes them in the brief.
+   numbers change; a hypothesis under its own name. A hand's answer is its
+   comment on its issue, cited by its id; the Boss writes no relay comments, and
+   HIGHLIGHTS.md takes the decision's line only (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 2; the owner, 2026-10-04).
+3. The Boss asks both hands at once, in one comment on one thread (the hand's
+   issue: the mathematician's for a derivation, the reviewer's for a finding),
+   and fires their triggers the moment the ask is posted; while any ask is open
+   each hand's cadence is 15 minutes, the second hand writing its own number
+   from the quoted definitions before reading the first's text and then
+   seconding or differing in the same thread, the 45-minute check-in the
+   fallback only. Every closure's comment ends with its final paragraph for
+   docs/ALGEBRA.md in the law's words and, where the paper is touched, the
+   paper's sentence (234, proposals 1 to 3). The advisor computes the blind
+   number from the engine's own lines and states the three verdicts; the Boss
+   writes them in the brief.
 4. The Boss's worker builds on one short branch from `main`, with a dedicated
    test, no number in the engine, and reports the numbers and the sentences it
    removed; the brief grants the tests' ratchet's room for the round, "this round
    adds N test lines" (234, proposal 7). Workers run on parallel branches by
    disjoint file set; the engine's branches one at a time (234, proposal 6).
-5. The gates: `python tools/check.py`, then CI on the pull request.
+5. The gates: the one gate set, `python tools/check.py` locally, then CI on the
+   pull request; nothing merges red.
 6. The Boss opens the pull request; its body carries "HANDED BY Boss: ..." and
    the Boss's session link, the problem, the change, the validation and what was
    deleted from the documents. The fills are batched: one documents pull request
@@ -265,15 +346,18 @@ waits idle on a question he can answer himself.
 
 ## The channels
 
-The two sessions discuss on the GitHub issues, where the owner reads: #1509
-holds the relayed decisions and their discussion, #1495 the findings and the
-advisor's answers with numbers. A finding or approval of one pull request is a
-comment on it; a list across pull requests is one issue with a checklist. A
-session calls the other by a Routine bound to the receiver's session
-(create_trigger with the receiver's session, then fire_trigger with the text),
-only to say that a comment is waiting. The Boss's workers report inside the
-Boss's session. A decision given in one session is relayed to the other and
-recorded by the Boss.
+The team discusses on the GitHub issues, where the owner reads: the writer's
+#1538 (the paper), the reviewer's #1793 (the findings on the paper, the
+supplement and the law, and the advisor's answers to what is asked there), the
+experimenter's #1827 (the shipped worlds against their blinds) and the
+mathematician's #1836 (the second hand on the law and the paper). The state of
+every finding is its row in the ledger, docs/REVIEW_LEDGER.md, and no issue. A
+finding or approval of one pull request is a comment on it; a list across pull
+requests is one issue with a checklist. A hand calls another by a Routine bound
+to the receiver's session (create_trigger with the receiver's session, then
+fire_trigger with the text), only to say that a comment is waiting. The Boss's
+workers report inside the Boss's session. A decision given in any session is
+relayed to the Boss verbatim and recorded by him.
 
 ## Tools and authority
 
@@ -281,5 +365,8 @@ The owner's standing authorization covers the Boss's commits, pushes, pull
 requests and merges of requested work on the branches of its tasks; it is not
 permission for unrelated changes, force pushes, a push to `main`, a bypassed gate
 or a message to another person. The advisor reads, computes and answers; it
-writes nothing to the repository and grants no permission. A skill supplies no
-authorization that the owner's word does not.
+writes nothing to the law, the engine, the paper or HIGHLIGHTS.md, opens no pull
+request and grants no permission; at the owner's word of 2026-10-04 its tests
+and tools go on a branch from `main` for the Boss's HANDED BY pull request,
+nothing of src/event_universe/. A skill supplies no authorization that the
+owner's word does not.

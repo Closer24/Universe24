@@ -1,4 +1,4 @@
-"""The composed paces, the law's two functions of the content and the two factors they scale (ALGEBRA.md #the-paces; the principle C, the same clock and the same ruler for every act, the owner's word of 2026-10-01, 17:02 and 17:10): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, in exact integers (Gamma - 1)^c over Gamma^(c - 1) with one division rounded half up (c = 0 gives Gamma; a negative content, a hill, the same fraction turned over, Gamma^(1 - c) over (Gamma - 1)^(-c)), and the Link's pace the clock twice, p_a(c) = p_0(c)^2 / Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root; the group law p_0(c_1 + c_2) = p_0(c_1) p_0(c_2) / Gamma exact in the rationals and within the roundings' floor here (one and a half units on the clock, four and a half on the Link's pace). Each value is computed exactly once per (Gamma, content) in the run and kept in a memo like the loader's constants, cleared per run (`clear_memo`), no table in any file and no number here: per Gamma two sides, the hollows (c >= 0) and the hills (c < 0), each filled lazily through the largest size |c| seen by a running fraction, the numerator and the wall each grown by one factor per content (Gamma - 1 and Gamma for a hollow, Gamma and Gamma - 1 for a hill) with one rounded division per content, bit for bit the independent power rounded once (`clock_alone`, the oracle) at a fortieth of its cost over a deep well; the vectorised entries look every Node's content up through the memo in the array's own kind. The write's factor on a held row's source, the source per proper volume and the act per proper interval booked once on each, p_x p_y p_z / (p_0 Gamma^2) on a count and p_x p_y p_z / (p_0^2 Gamma) on a Wronskian, which carries one N of its own (the mathematician's vector form, #1572 comment 5933195756; the advisor's rule, #1563 comment 5933967219), is one rounding of the count times the three paces over the one wall, the product exact in Python's integers beyond the width (the advisor's and the mathematician's lines, #1563 comments 5959617991 and 5960096992 and #1572 comment 5959853571: one write, one act, a symmetric function of the three axes), and the turn's factor p_0 / Gamma on the angle one division rounded half up at the read, each 1 at the vacuum's paces. In the rationals the clock is above 0 at every content, so the guard's lower side, a pace below 0, is never met and a collapse ends in a frozen clock; in the integers the Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2, at the content about (Gamma div 2) ln(2 Gamma), and the clock itself where Gamma (1 - 1 / Gamma)^c falls below 1 / 2, at about Gamma ln(2 Gamma) (`frozen_content` computes the first; 28,206 and 56,352 at Gamma 6,000, 3,793 and 7,598 at 1,000, both beyond 3 Gamma): the loader refuses a content at or beyond the Link's zero as it refuses the pace 0 today, and the guard's upper side on the squares stands for a hill as it stands."""
+"""The composed paces, the law's two functions of the content and the two factors they scale (ALGEBRA.md #the-paces; the principle C, the same clock and the same ruler for every act, the owner's word): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, in exact integers (Gamma - 1)^c over Gamma^(c - 1) with one division rounded half up (c = 0 gives Gamma; a negative content, a hill, the same fraction turned over, Gamma^(1 - c) over (Gamma - 1)^(-c)), and the Link's pace the clock twice, p_a(c) = p_0(c)^2 / Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root; the group law p_0(c_1 + c_2) = p_0(c_1) p_0(c_2) / Gamma exact in the rationals and within the roundings' floor here (one and a half units on the clock, four and a half on the Link's pace). Each value is computed exactly once per (Gamma, content) in the run and kept in a memo like the loader's constants, cleared per run (`clear_memo`), no table in any file and no number here: per Gamma two sides, the hollows (c >= 0) and the hills (c < 0), each filled lazily through the largest size |c| seen by a running fraction, the numerator and the wall each grown by one factor per content (Gamma - 1 and Gamma for a hollow, Gamma and Gamma - 1 for a hill) with one rounded division per content, bit for bit the independent power rounded once (`clock_alone`, the oracle) at a fortieth of its cost over a deep well; the vectorised entries look every Node's content up through the memo in the array's own kind. The write's factor on a held row's source, the source per proper volume and the act per proper interval booked once on each, p_x p_y p_z / (p_0 Gamma^2) on a count and p_x p_y p_z / (p_0^2 Gamma) on a Wronskian, which carries one N of its own (the mathematician's vector form; the advisor's rule), is one rounding of the count times the three paces over the one wall, the product exact in Python's integers beyond the width (the advisor's and the mathematician's lines: one write, one act, a symmetric function of the three axes), and the turn's factor p_0 / Gamma on the angle one division rounded half up at the read, each 1 at the vacuum's paces. In the rationals the clock is above 0 at every content, so the guard's lower side, a pace below 0, is never met and a collapse ends in a frozen clock; in the integers the Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2, at the content about (Gamma div 2) ln(2 Gamma), and the clock itself where Gamma (1 - 1 / Gamma)^c falls below 1 / 2, at about Gamma ln(2 Gamma) (`frozen_content` computes the first; 28,206 and 56,352 at Gamma 6,000, 3,793 and 7,598 at 1,000, both beyond 3 Gamma): the loader refuses a content at or beyond the Link's zero as it refuses the pace 0 today, and the guard's upper side on the squares stands for a hill as it stands."""
 
 from __future__ import annotations
 
@@ -9,7 +9,11 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
+
+COUNT_POWER = 2  # the proper-interval powers of a count's write, p_x p_y p_z / (p_0 Gamma^2)
+WRONSKIAN_POWER = 1  # the proper-interval power of a Wronskian's write, p_x p_y p_z / (p_0^2 Gamma)
 
 
 def rounded(numerator: Any, wall: Any) -> Any:
@@ -81,28 +85,34 @@ def frozen_content(gamma: int) -> int:
     return high
 
 
-def looked_up(function: Callable[[int, int], int], gamma: int, contents: Any) -> Any:
-    """A function of the content at every Node: a scalar content as it is; an array looked up through the memo and spread back over the Nodes in the array's own kind (the hardware's integers or Python's, the loader's choice by the width), on every value from its least to its largest where that range is narrower than the board (one table indexed by the content, no sort) and on its distinct values otherwise (a sparse spread, sorted once); the same integers either way."""
+def looked_up(found: Callable[[Side], list[int]], gamma: int, contents: Any) -> Any:
+    """One of the memo's two functions of the content at every Node (`found`, a side's clocks or its Links' paces): a scalar content as it is; an empty array as it is; an array looked up through the memo and spread back over the Nodes in the array's own kind (the hardware's integers or Python's, the loader's choice by the width), on every value from its least to its largest where that range is narrower than the board (one table indexed by the content, the hills' side read downward through the contents below 0 and the hollows' side upward from 0, each filled through the farthest content once and sliced, no call per value and no sort) and on its distinct values otherwise (a sparse spread, sorted once); the same integers either way."""
     values = np.asarray(contents)
     if values.ndim == 0:
-        return function(gamma, int(values))
+        return found(side_of(gamma, int(values)))[abs(int(values))]
+    if values.size == 0:
+        return values
     low, high = int(values.min()), int(values.max())
     if high - low < values.size:
-        table = [function(gamma, c) for c in range(low, high + 1)]
+        hollows, hills = sides(gamma)
+        hollows.reach(gamma, max(high, 0))
+        hills.reach(gamma, max(-low, 0))
+        below = found(hills)[-low : max(-high - 1, 0) : -1] if low < 0 else []
+        table = below + found(hollows)[max(low, 0) : high + 1]
         return np.array(table, dtype=values.dtype)[(values - low).astype(int)]
     distinct, inverse = np.unique(values, return_inverse=True)
-    table = [function(gamma, int(c)) for c in distinct.tolist()]
+    table = [found(side_of(gamma, int(c)))[abs(int(c))] for c in distinct.tolist()]
     return np.array(table, dtype=values.dtype)[np.asarray(inverse).reshape(values.shape)]
 
 
 def clock_of(gamma: int, contents: Any) -> Any:
     """The clock's pace at every Node from the Node's content, `clock` through the memo (the read's p_0, whose square enters the self coefficient S)."""
-    return looked_up(clock, gamma, contents)
+    return looked_up(lambda side: side.clocks, gamma, contents)
 
 
 def link_pace_of(gamma: int, contents: Any) -> Any:
     """The Link's pace at every Node from the content read on the Link, `link_pace` through the memo (the read's p_a per Port, whose square enters R_ij; the share's weights and the least pace read the same)."""
-    return looked_up(link_pace, gamma, contents)
+    return looked_up(lambda side: side.links, gamma, contents)
 
 
 def node_paces(gamma: int, contents: Any) -> tuple[Any, Any]:
@@ -116,11 +126,39 @@ def axis_pace(pace: Any, gamma: int, ahead: Any, behind: Any) -> Any:
 
 
 def write_factor(count: Any, p_x: Any, p_y: Any, p_z: Any, p_0: Any, gamma: int, intervals: int) -> Any:
-    """A held row's write per proper volume and per proper interval (the advisor's rule, #1563 comment 5933967219: the source per proper volume, 1 / (h_x h_y h_z) = p_x p_y p_z / p_0^3, and the act per proper interval, N = p_0 / Gamma, booked once on each): the source scaled by N^intervals p_x p_y p_z / p_0^3, the product of the three axes' rulers over the clock (the vector form; a count source, the form D of the pace-act holders, takes two proper-interval powers, N^2 / h^3 = p_x p_y p_z / (p_0 Gamma^2), a Wronskian source, the sign's row, carrying one N of its own, takes one, N / h^3 = p_x p_y p_z / (p_0^2 Gamma), the caller choosing by the holder's declared act), booked as one rounding half up of the count times p_x p_y p_z over the one wall Gamma^intervals p_0^(3 - intervals), no remainder, a symmetric function of the three paces to the bit, so that a lay with the cube's symmetry keeps its 48 images under the write (ALGEBRA.md, The write per proper volume and per proper interval and The cube's symmetry; the body round's reading departed at the interval 516 under the three roundings in the order x, y, z, #1563 comment 5959617991 and #1572 comment 5959853571); the product in Python's integers, exact beyond the width (at the amplitude bound the numerator 2 A^2 P^3 passes 63 bits on every shipped universe, 3.7 x 10^19 at Gamma 6,000: the loader's width gate holds the factor's value, the booking times at most (P / Gamma)^3, inside the width, `derived.write_rooms`), and the value back in the count's own kind; the count itself at the vacuum's paces (every factor 1); at a frozen clock, p_0 at 0, the clock's wall is 1 as the share's is, the numerator 0 with the Link's pace."""
+    """A held row's write per proper volume and per proper interval (the advisor's rule: the source per proper volume, 1 / (h_x h_y h_z) = p_x p_y p_z / p_0^3, and the act per proper interval, N = p_0 / Gamma, booked once on each): the source scaled by N^intervals p_x p_y p_z / p_0^3, the product of the three axes' rulers over the clock (the vector form; a count source, the form D of the pace-act holders, takes two proper-interval powers, N^2 / h^3 = p_x p_y p_z / (p_0 Gamma^2), a Wronskian source, the sign's row, carrying one N of its own, takes one, N / h^3 = p_x p_y p_z / (p_0^2 Gamma), the caller choosing by the holder's declared act), booked as one rounding half up of the count times p_x p_y p_z over the one wall Gamma^intervals p_0^(3 - intervals), no remainder, a symmetric function of the three paces to the bit, so that a lay with the cube's symmetry keeps its 48 images under the write (ALGEBRA.md, The write per proper volume and per proper interval and The cube's symmetry; the body round's reading departed at the interval 516 under the three roundings in the order x, y, z); the product in Python's integers, exact beyond the width (at the amplitude bound the numerator 2 A^2 P^3 passes 63 bits on every shipped universe, 3.7 x 10^19 at Gamma 6,000: the loader's width gate holds the factor's value, the booking times at most (P / Gamma)^3, inside the width, `derived.write_rooms`), and the value back in the count's own kind; the count itself at the vacuum's paces (every factor 1); at a frozen clock, p_0 at 0, the clock's wall is 1 as the share's is, the numerator 0 with the Link's pace."""
     clock = p_0 + (p_0 == 0)
     wall = gamma**intervals * clock ** (3 - intervals)
     kind = np.asarray(count).dtype  # the count's own kind, the run's
-    return np.asarray(rounded(np.asarray(count, dtype=object) * p_x * p_y * p_z, wall)).astype(kind)
+    if within_width(kind, wall, count, p_x, p_y, p_z):
+        product = np.asarray(count, dtype=kind)
+        for pace in (p_x, p_y, p_z):
+            product = product * np.asarray(pace, dtype=kind)
+        return np.asarray(rounded(product, wall)).astype(kind)
+    at = np.asarray(count) != 0  # the factor is 0 where the count is: Python's integers where it is not
+    if at.ndim == 0:
+        return np.asarray(rounded(np.asarray(count, dtype=object) * p_x * p_y * p_z, wall)).astype(kind)
+    product = np.asarray(count)[at].astype(object)
+    for pace in (p_x, p_y, p_z):
+        product = product * at_nodes(pace, at)
+    found = np.zeros(at.shape, dtype=kind)
+    found[at] = rounded(product, at_nodes(wall, at))
+    return found
+
+
+def at_nodes(value: Any, nodes: np.ndarray) -> Any:
+    """A read integer at the Nodes a mask names, one per Node named, in the mask's order; a scalar as it is."""
+    return value[nodes] if np.ndim(value) else value
+
+
+def within_width(kind: Any, wall: Any, *factors: Any) -> bool:
+    """Whether one rounding of the factors' product over the wall (`rounded`, twice the product plus the wall over twice the wall) is computed in the hardware's integers of `kind`, the count's own: where the rounding's total at its largest, twice the product of the factors' largest sizes plus the largest wall, lies inside the host's width (core/integer.py, `MAX_WORK_INT`, the working bound), every intermediate product below it, so that the hardware's floor is Python's; False where it does not or where the kind is Python's already, and the product is taken in Python's integers, exact beyond the width; the same integers either way, the width's room read as the loader reads it and no number of the law."""
+    if kind == np.dtype(object):  # Python's integers already, exact beyond the width
+        return False
+    bound = 2
+    for factor in factors:
+        bound *= int(np.abs(np.asarray(factor)).max())
+    return bool(bound + int(np.asarray(wall).max()) <= MAX_WORK_INT)
 
 
 def turn_factor(angle: Any, p_0: Any, gamma: int) -> Any:

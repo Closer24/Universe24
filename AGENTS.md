@@ -1,13 +1,14 @@
 # Instructions for every contributor
 
-The project keeps three current documents, the skills and the entry files, and
-nothing else. Start from the current checkout, never from a previous conversation.
+The project keeps three current documents, the reviewer's ledger, the skills and
+the entry files, and nothing else. Start from the current checkout, never from a previous conversation.
 
 | What | Where |
 | --- | --- |
 | The law: one algebraic line per rule, the families, the bodies, the clicks, every experiment's formula and blind expectation | [docs/ALGEBRA.md](docs/ALGEBRA.md) |
 | The engine as the code holds it on `main`: the words, the main loop and Rule3, the folders and the register, the loader and the files, the output, the gates, how to run a world and how to add a feature | [docs/ENGINE.md](docs/ENGINE.md) |
 | The decisions in force, one line each; a decision of the model owner replaces the line it changes | [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) |
+| The reviewer's ledger: every finding of the paper and the law with its state, changed by the pull request that prints it | [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md) |
 | The team's roles, the short procedure and every shared way of working | [skills/workflow.md](skills/workflow.md), [the Boss's card](skills/boss-orchestrator/SKILL.md) and [the advisor's card](skills/advisor/SKILL.md) |
 | Every edit, check and Git operation | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
@@ -24,8 +25,11 @@ The physical location is a **Node**; its complete local information is its
 the **GameBoard** (`GameBoard` in code, `game_board` in module and function
 names). Do not introduce `Site`, board, lattice, grid or any other noun for these;
 new location identifiers use `node`, `nodes` and `NodeState`. The words of the
-engine (Family, Record, Body, Detector, Click, Primitive, Interval) are defined in
-[docs/ENGINE.md](docs/ENGINE.md#1-the-words).
+engine (Family, Record, Body, NodeReader, Click, Primitive, Interval) are defined in
+[docs/ENGINE.md](docs/ENGINE.md#1-the-words). The nouns detector, instrument,
+emitter, absorber, observer and measurer have left the repository (the owner's
+word of 2026-10-03): the NodeReader, with Nodes alone or with a record of its
+own, is the one declaration kind; do not reintroduce them.
 
 ## Repository language: English
 
@@ -57,7 +61,7 @@ exempt a directory, disable the gate or encode non-English prose as escapes.
   found by its name ([docs/ENGINE.md](docs/ENGINE.md)).
 - Physical calculations use bounded integers, fixed local NodeState and the six
   neighbouring Nodes; nothing is kept at a Node beyond the law's own numbers.
-- Only a detector's click is a measurement; a GameBoard reading is a diagnostic
+- Only a NodeReader's click is a measurement; a GameBoard reading is a diagnostic
   and is labelled so. Runs and tests are headless.
 - A behavior change needs a dedicated test; a physics change needs the law's line
   first and the procedure in [CONTRIBUTING.md](CONTRIBUTING.md).

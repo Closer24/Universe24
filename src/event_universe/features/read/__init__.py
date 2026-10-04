@@ -13,7 +13,7 @@ from event_universe.core.rule3 import division_fixed_point, division_forward, li
 
 
 def plain(level: Any, sign: bool) -> Any:
-    """A holder's level as the plain read takes it into a pace: a holder of the content's as it is, of either sign (a level below 0 a hill, the clock above the vacuum's), and a holder of the sign's as its size |L|, a hollow whatever the reader's sense, so that charge conjugation, the sense flipped and the level with it, leaves the physics (ALGEBRA.md row (f), The sign holder rotates the two-part record: a plane reads the holder of the sign plainly into its pace, a hollow whatever its sense, under the act pace; the advisor's hand, #1563 comment 5945859368); under the rotation the turn takes the signed level and this read is not made."""
+    """A holder's level as the plain read takes it into a pace: a holder of the content's as it is, of either sign (a level below 0 a hill, the clock above the vacuum's), and a holder of the sign's as its size |L|, a hollow whatever the reader's sense, so that charge conjugation, the sense flipped and the level with it, leaves the physics (ALGEBRA.md row (f), The sign holder rotates the two-part record: a plane reads the holder of the sign plainly into its pace, a hollow whatever its sense, under the act pace; the advisor's hand); under the rotation the turn takes the signed level and this read is not made."""
     return np.abs(level) if sign else level
 
 
@@ -80,7 +80,7 @@ def at_the_node(value: Any, node: tuple[Any, ...]) -> int:
     return int(np.asarray(value)[node]) if np.ndim(value) else int(value)
 
 
-def guard(
+def paces_guard(
     pair: tuple[int, int], gamma: int, unit: int, content: Any, factors: tuple[Any, ...], name: str
 ) -> None:
     """The guard at load, two-sided and on squares (ALGEBRA.md #the-paces, The guard): the content below the Link's zero at every Node (the lower side: at `paces.frozen_content` the Node's pace p_0^2 / Gamma rounds to 0, a frozen clock, where under the composed paces no pace is ever below 0) and every Link's factor above 0 (a Link's factor 0 the Link closed, its tension at Gamma); the clock's square, the Node's pace squared and each Link's pace squared, p_i^2 Q_ij over G^2, at or below the edge's square (the upper side, p^2 (den + num) <= 2 den Gamma^2 read as p_i^2 Q_ij (den + num) <= 2 den Gamma^2 G^2 on a Link, no division; a hill's clock above Gamma); a state outside refuses the run naming the Node, the Port and the family."""

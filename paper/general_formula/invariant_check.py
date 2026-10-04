@@ -41,8 +41,12 @@ def main() -> None:
     for phase in PHASES:
         worst, ratio = worst_drift(phase)
         overall = max(overall, worst)
-        print(f"  phase {phase}: D / sin(omega) within {worst:.1e} of its start; D's end over its start {ratio:.3f}")
-    print(f"the worst drift over the phases: {overall:.1e} (the paper's bound 4e-5); sin(0.600) / sin(0.841) = {math.sin(0.600) / math.sin(0.841):.3f}")
+        print(
+            f"  phase {phase}: D / sin(omega) within {worst:.1e} of its start; D's end over its start {ratio:.3f}"
+        )
+    print(
+        f"the worst drift over the phases: {overall:.1e} (the paper's bound 4e-5); sin(0.600) / sin(0.841) = {math.sin(0.600) / math.sin(0.841):.3f}"
+    )
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ written as such and never adjusted.
 
 ## The blind (167 with the advisor's second hand)
 
-1. **The drift** (read 1, the centroid as `tools/body_drift.py` reads it): each component below
+1. **The drift** (read 1, the centroid of the share): each component below
    3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); for this body from the lay's profile
    1.0 x 10^-3 Links at n = 1000 and T = 2^15; one draw, loose, no test.
 2. **The share's deviation over the body** (read 2): rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 /
@@ -350,6 +350,6 @@ that reading ran on (the branch before its squash), by name; every number below 
 
 Every number of every reading in this file is a GameBoard reading (`tools/body_standing.py`: the
 centroids of the share, the deviations of the share and of the form over the body's Nodes, the
-rotation from the levels, the 48 images of every line, the books). The world declares no detector,
-so no number is a detector's line and no verdict rests on one. Nothing here is stamped by a
-detector's clock; the intervals are the board's.
+rotation from the levels, the 48 images of every line, the books). The world declares no NodeReader,
+so no number is a NodeReader's line and no verdict rests on one. Nothing here is stamped by a
+NodeReader's clock; the intervals are the board's.

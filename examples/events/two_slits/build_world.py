@@ -23,7 +23,7 @@ from click_counts import extrema  # noqa: E402  # the one extrema rule, the read
 
 
 def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
-    """The screen's detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
+    """The screen's node_readers: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
     rows, column = int(design["rows_per_region"]), int(design["screen"])
     return [
         {
@@ -37,9 +37,9 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 def world(design: dict[str, Any]) -> dict[str, object]:
     """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and taking no share), the receding face, the ticks."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
-    detectors = screen_regions(design)
+    node_readers = screen_regions(design)
     region = design["aside"]
-    detectors.append(
+    node_readers.append(
         {
             "name": str(region["name"]),
             "positions": [
@@ -58,12 +58,13 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [],
+        "bodies": [],
         "messages": [
             {
                 "family": design["family"],
                 "along": "x",
                 "wave": list(design["wave"]),
+                "phase": [0, 1],
                 "amplitude": int(design["amplitude"]),
                 "top": {
                     "x": [packet["column"], packet["column"]],
@@ -73,9 +74,9 @@ def world(design: dict[str, Any]) -> dict[str, object]:
                 "edge": {"x": int(packet["edge_along"]), "y": int(packet["edge_across"]), "z": 0},
             }
         ],
-        "detectors": detectors,
+        "node_readers": node_readers,
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 
@@ -96,9 +97,9 @@ def first_minima(blind: list[float], maxima: list[int], minima: list[int]) -> tu
 
 
 def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
-    """The blind expectation file, per region (DETECTOR, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total N's blind, its maxima within the pattern's range, the central maximum with the first minima about it and the blind visibility there, the arrival wager and the wings from the design, `laid` the generator's count of the lay and the bare region read beside the screen."""
+    """The blind expectation file, per region (NODEREADER, written before the run, as tools/click_counts.py reads it): the advisor's per-Node row summed per region, its total N's blind, its maxima within the pattern's range, the central maximum with the first minima about it and the blind visibility there, the arrival wager and the wings from the design, `laid` the generator's count of the lay and the bare region read beside the screen."""
     rows = int(design["rows_per_region"])
-    names = [detector["name"] for detector in screen_regions(design)]
+    names = [node_reader["name"] for node_reader in screen_regions(design)]
     blind = per_region([float(v) for v in design["blind_per_node"]], rows)
     through = float(design["blind_through"])
     first, last = design["pattern"]
@@ -106,15 +107,15 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
     central, first_two = first_minima(blind, maxima, minima)
     most, low = blind[central], sum(blind[at] for at in first_two)
     return {
-        "verdict": "DETECTOR",
-        "detector": names,
+        "verdict": "NODEREADER",
+        "node_reader": names,
         "family": design["family"],
         "window": list(design["window"]),
         "across": "y",
         "pattern": [first, last],
         "spacing": design["spacing"],
         "seed": design["seed"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the instrument's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,
@@ -163,7 +164,7 @@ def main(argv: list[str] | None = None) -> None:
         check=True,
         cwd=ROOT,
     )
-    print(json.dumps({"world": str(path), "detectors": len(document["detectors"])}))
+    print(json.dumps({"world": str(path), "node_readers": len(document["node_readers"])}))
     mode = json.loads((args.folder / "two_slits.mode.json").read_text(encoding="utf-8"))
     laid = sum(int(message["count"]) for message in mode["messages"])  # the generator's count
     blind = expectation(design, laid)

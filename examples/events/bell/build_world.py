@@ -38,13 +38,14 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
             "family": design["family"],
             "along": "x",
             "wave": [sign * p, q],
+            "phase": [0, 1],
             "amplitude": int(design["amplitude"]),
             "top": {"x": [source, source], "y": [0, 0], "z": [0, 0]},
             "edge": {"x": int(design["edge_along"]), "y": 0, "z": 0},
         }
         for sign in (-1, 1)
     ]
-    detectors = [
+    node_readers = [
         {
             "name": design["sides"]["a"],
             "positions": [[x, 0, 0] for x in range(depth)],
@@ -65,11 +66,11 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [],
+        "bodies": [],
         "messages": messages,
-        "detectors": detectors,
+        "node_readers": node_readers,
         "receding": design["receding"],
-        "instrument": design["instrument"],
+        "draw": design["draw"],
     }
 
 
@@ -125,7 +126,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/bell_gate.py reads it: the family, the window, the sides' regions, the settings and the patterns, the four worlds in CHSH order with the combination's name and signs, the credit's rule named, the seed and the blind."""
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

@@ -19,7 +19,7 @@ ROOT = HERE.parents[2]
 
 
 def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str, object]:
-    """One atom declared an instrument at its Node: the giver standing in e with its giving, or the taker standing in g; the transition g to e by the light at the resonance given."""
+    """One atom declared a NodeReader at its Node: the giver standing in e with its giving, or the taker standing in g; the transition g to e by the light at the resonance given."""
     row, light = design[which], design["light"]
     upper = which == "giver"
     parts = [
@@ -35,16 +35,19 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     draw = {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])}
     return {
         "family": row["family"],
-        "nodes": [{"node": list(row["node"]), "count": 1}],
+        "nodes": [
+            {"node": list(row["node"]), "weight": 1},
+            {"node": [int(row["node"][0]) + 1, *row["node"][1:]], "weight": 1},
+        ],
         "parts": parts,
         "transitions": transitions,
         "rates": rates,
-        "instrument": draw,
+        "node_reader": draw,
     }
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the chain, no message (the light born by the giving alone), the giver and the taker at the world's resonance, no region detector."""
+    """One world of the design: the chain, no message (the light born by the giving alone), the giver and the taker at the world's resonance, no region node_reader."""
     taker = record(design, "taker", list(design["worlds"][name]["resonance"]))
     return {
         "shape": list(design["shape"]),
@@ -52,9 +55,9 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(design["ticks"]),
         "universe": design["universe"],
         "engine": design["engine"],
-        "measured": [record(design, "giver", list(design["giver"]["resonance"])), taker],
+        "bodies": [record(design, "giver", list(design["giver"]["resonance"])), taker],
         "messages": [],
-        "detectors": [],
+        "node_readers": [],
     }
 
 
@@ -62,7 +65,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind, from the design alone: the source's total and amplitudes, the far Node's cosine with its gate, the light's count at the span's end, the resonant taker's share and the detuned one's ratio, and the dark grain's chances (`dark_grain`); written before any lay and re-derived before any run under the dark grain."""
     num, den = design["giver"]["resonance"]
     return {
-        "verdict": "DETECTOR",
+        "verdict": "NODEREADER",
         "comment": design["comment"],
         "family": design["light"],
         "giving": {
@@ -76,6 +79,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "value": num / den,
             "pair": [num, den],
             "node": list(design["reading_node"]),
+            "node_from_the_lay": "the design's reading Node is eight Nodes along x from the giver's first Node; the reader stands over the Nodes 0 and 1 and its giving is laid at the Node drawn by the record's share, so the reading Node is the one eight Nodes along x from the laid Node, 8 or 9",
             "window": list(design["reading_window"]),
             "estimator": "SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2)",
             "gate": "|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second)",
@@ -87,7 +91,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         },
         "resonant": {
             "share": 1.0,
-            "reading": "the fraction of the seeds with a taking at the taker (the jump lines, DETECTOR), gate sqrt(N p (1 - p)) over the seeds",
+            "reading": "the fraction of the seeds with a taking at the taker (the record's click lines, NODEREADER), gate sqrt(N p (1 - p)) over the seeds",
             "status": "the mathematician's 220: the resonant record's share 1 at delta = 0",
         },
         "detuned": {

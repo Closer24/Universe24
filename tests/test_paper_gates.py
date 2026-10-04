@@ -1,7 +1,6 @@
-"""The paper's mechanical gates (paper/general_formula/paper_gates.py; the advisor's proposal of 2026-10-04 and the owner's
-word "everything tonight"): the struck phrases stand nowhere in main.tex and supplement.tex, the numbers printed in two
-places agree, and no mark or fence stands outside the key; the derived and theorem marks with no fence beside them are the
-25 places listed on #1793 for the hands' word, and the count may only fall."""
+"""The paper's mechanical gates (paper/general_formula/paper_gates.py): the struck phrases stand nowhere in main.tex and
+supplement.tex, the numbers printed in two places agree, no mark or fence stands outside the key, and the derived or
+computed marks naming no script and the fenceless marks are counted, a count that may only fall."""
 
 import importlib.util
 from pathlib import Path
@@ -10,9 +9,7 @@ from types import ModuleType
 ROOT = Path(__file__).resolve().parents[1]
 GATES = ROOT / "paper" / "general_formula" / "paper_gates.py"
 FENCELESS_MARKS_TONIGHT = 0  # every derived or theorem mark carries its fence since ecf653d
-SCRIPTLESS_MARKS_TONIGHT = (
-    10  # the derived and computed marks naming no script: the qualitative statements and one integer witness, after part 4's map
-)
+SCRIPTLESS_MARKS_TONIGHT = 10  # the derived and computed marks naming no script: the qualitative statements and one integer witness, after part 4's map
 
 
 def gates() -> tuple[ModuleType, dict[str, str]]:

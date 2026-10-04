@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `GameBoard.start`: the form of the record as the hold books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body named by `--pixel` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the atom's nucleus, examples/events/atom_gate/design.json). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `GameBoard.start`: the form of the record as the hold books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round taking the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body named by `--pixel` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the tests' one-quantum charged body, tests/laws.py; the frozen proton's world left the repository on 2026-10-03 at the owner's word). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
 
 from __future__ import annotations
 
@@ -36,7 +36,8 @@ from event_universe.features.start import (
     returned,
     settled_rows,
 )
-from event_universe.loader.derived import FamilyRule, held_write, turns, with_records
+from event_universe.lay import corrected
+from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
@@ -171,9 +172,19 @@ def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: n
     return np.asarray(found, dtype=board.kind)
 
 
-def read_quanta(share_now: np.ndarray | int, den: int, action: int, kind: type = np.int64) -> np.ndarray:
-    """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W_c div 2) div W_c with W_c = 3 den T by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share), in the arrays' kind."""
-    return np.asarray(quanta_of(share_now, 3 * den * action, kind))
+def count_wall_of(pair: tuple[int, int], action: int) -> int:
+    """The wall of one quantum of a family at the pair, as the engine reads it (`loader.derived.count_wall`): isqrt(9 T^2 (den^2 - num^2)), W_c sin omega_0 to the unit, for a family with a gap, 3 den T for a massless one (the two hands' word on R8, #1793)."""
+    num, den = pair
+    gap = den * den - num * num
+    wall = 3 * action
+    return division_fixed_point(wall * wall * gap) if gap else 3 * den * action
+
+
+def read_quanta(
+    share_now: np.ndarray | int, pair: tuple[int, int], action: int, kind: type = np.int64
+) -> np.ndarray:
+    """A share read in quanta at every Node, the engine's own reading (`share.quanta_of`): (share + W div 2) div W with W the family's quantum (`count_wall_of`) by Rule3's division act (ALGEBRA.md #the-count-is-the-records-share)."""
+    return np.asarray(quanta_of(share_now, count_wall_of(pair, action), kind))
 
 
 def period_reading(
@@ -536,10 +547,10 @@ def standing(
     )
     summed = int(np.where(region, total_share, 0).sum(dtype=object))
     if angles is None:  # the quanta at the Nodes, each rounded, summed: the body's counts as laid
-        quanta = read_quanta(total_share, board.pair[1], board.action, board.kind)
+        quanta = read_quanta(total_share, board.pair, board.action, board.kind)
         carried = int(np.where(region, quanta, 0).sum())
     else:  # the law's count 1 over the mode's Nodes: the summed share rounded once
-        carried = int(read_quanta(summed, board.pair[1], board.action, object))
+        carried = int(read_quanta(summed, board.pair, board.action, object))
     amplitude = max(int(np.abs(a).max()) for a, _b in pairs)
     return Standing(carried, window, amplitude, clock, now, before, nxt, summed, second)
 
@@ -611,7 +622,7 @@ def start_content(
 ) -> tuple[np.ndarray, Angles]:
     """The content a body's record reads at the engine's own start, by the engine's own act and no copy of it (`GameBoard.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its record's lines and the other bodies' and the messages' on theirs (`others`, each its family and its record, `node.record_slice`; the symmetric lay over a record's parts, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and every row of the holders of the sign a laid plane sources (the form of every record and its Wronskian as the hold books them, the Wronskian into the record's own row, over the write's wall E_s T, the fine form and no whole quanta), and the record's read of those rests (every holder of the content, and for a plane every row of the holders of the sign but its own, plainly), the content the engine steps its record in (ALGEBRA.md, No record reads its own write of the sign); beside it the angles the record is turned by where a holder declares the rotation (`node.turning`: the time angle's numerators from every sign row but the record's own at the record's own clock, and the odd lines), None where no holder turns it."""
     walls = {
-        number: held_write(families, number, board.action).walls
+        number: held_write_of(families, number, board.action).walls
         for number, f in enumerate(families)
         if f.held
     }
@@ -743,7 +754,7 @@ def scaled_record(
     """The standing record scaled so its form over the region carries the body's quanta: the scale bracketed from the centre's own count (the form there is its count times T) by halving and doubling, a scale too large to stand halved back toward the last that stood, then bisected on the quanta carried at the Nodes (each Node's share rounded, summed, the counts as laid) or, for a record a holder turns, on the summed share against the quanta's wall W_c = 3 den T (the share itself and not its rounding to whole quanta, so that a record of count 1, whose share at every Node is below a quantum, is scaled to one quantum over its region); the reading closest to the quanta; refused by name when no reading stands. The mode is iterated once per fine unit in this content and scaled to each trial amplitude (`Modes`)."""
     readings: dict[int, Standing] = {}
     modes: Modes = {}
-    target = quanta if angles is None else quanta * 3 * board.pair[1] * board.action
+    target = quanta if angles is None else quanta * count_wall_of(board.pair, board.action)
 
     def measure(found: Standing) -> int:  # the share over the lines the pair is laid on at their weights
         return found.carried * squares if angles is None else found.share
@@ -787,7 +798,7 @@ def scaled_record(
 def pixel_record(
     board: Board, counts: np.ndarray, centre: Axis, sense: int, planes: int = 1
 ) -> tuple[Standing, Pairs]:
-    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (examples/events/atom_gate/design.json, the nucleus; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den])."""
+    """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (the proton; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den])."""
     num, den = board.pair
     sine = division_fixed_point(den * den - num * num)
     quanta = int(counts.sum())
@@ -803,7 +814,7 @@ def pixel_record(
     total = sum((share_of(board, 0, a, b) for a, b in pairs), zero.copy())
     summed = int(total.sum(dtype=object))
     record = Standing(
-        int(read_quanta(summed, den, board.action, object)),
+        int(read_quanta(summed, (num, den), board.action, object)),
         0,
         amplitude,
         (2 * num, den),
@@ -865,7 +876,7 @@ def body_fixed_point(
         a, level = record.clock
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
         total = sum((share_of(board, found, now, before) for now, before in pairs), zero)
-        laid = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+        laid = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
         agreed = bool(np.all(within(laid - counts, np.maximum(laid, counts))))
         print(
             f"GAMEBOARD the body about {list(centre)}, round {round_number}: the content at the centre "
@@ -1008,7 +1019,7 @@ def unit_fixed_point(
         region = keep if angles is not None else region_of(counts, content, centre, board.wrap)
         zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
         total = sum((share_of(board, found, now, before) for now, before in pairs), zero)
-        laid = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+        laid = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
         moved = max(
             int(np.abs(a - b).max())
             for a, b in zip(angled(found, turned_by), angled(content, angles), strict=True)
@@ -1136,7 +1147,7 @@ def read_at_the_start(
     content, angles = start_content(board, families, index, slot, pairs, others)
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
     total = sum((share_of(board, content, now, before) for now, before in pairs), zero)
-    weighted = np.where(region, read_quanta(total, board.pair[1], board.action, board.kind), 0)
+    weighted = np.where(region, read_quanta(total, board.pair, board.action, board.kind), 0)
     return weighted, content, angles
 
 
@@ -1226,11 +1237,11 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
 
 
 def message_levels(
-    board: Board, message: dict[str, Any], beyond: np.ndarray
+    board: Board, message: dict[str, Any], beyond: np.ndarray, massless: bool
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board."""
+    """The message's two levels (ALGEBRA.md #the-generator, the message lay): now_i = b e_i cos(k x_i + phi) and before_i = b e_i cos(k x_i + phi + omega), the wave one interval earlier, k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`), cos omega the vacuum's band, the mean over the three axes of cos k_a, sin omega the fixed point of the division act; every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is taken out of each level (`features.start.uniform_removed`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The message lay; the experimenter's bug report, #1827 comment 5975131359)."""
     along, (turns, halves) = AXES.index(str(message["along"])), message["wave"]
-    turned, whole_turn = message.get("phase", [0, 1])
+    turned, whole_turn = message["phase"]
     sideways = {
         AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in message.get("transverse", {}).items()
     }
@@ -1270,11 +1281,17 @@ def message_levels(
     before = envelope_here * (wave * cosine - quadrature * sine)
     scale = unit * unit * unit * unit * unit
     half = int(division_forward(scale, 2, 0)[0])
-    found = []
-    for numerator in (now, before):
-        levels = np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0])
-        found.append(np.where(beyond, 0, levels.astype(board.kind)))
-    return found[0], found[1]
+    levels = [
+        np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, numerator + half)[0]))
+        for numerator in (now, before)
+    ]
+    # the one lay act's correction (`lay.corrected`): for a massless family the uniform mode's content
+    # out of each level in proportion to the envelope, so that each sums to 0 over the board, guarded
+    found = corrected(
+        str(message["family"]), massless, (levels[0], levels[1]), np.where(beyond, 0, envelope_here)
+    )
+    now, before = (np.asarray(level, dtype=object).astype(board.kind) for level in found)
+    return now, before
 
 
 def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[int, ...]:
@@ -1285,16 +1302,22 @@ def laid_weights(row: dict[str, Any], label: str, family: FamilyRule) -> tuple[i
 def message_entry(
     board: Board, message: dict[str, Any], beyond: np.ndarray, family: FamilyRule, label: str
 ) -> dict[str, Any]:
-    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta, a reading, over every part of the family and over the lines of a part as the engine lays them, the one event laid on each part alike and on each real line at its weight, `laid_weights`, the share summed over the lines before it is read in quanta, as the engine's books read it) and its two levels as their nonzero Nodes."""
-    now, before = message_levels(board, message, beyond)
+    """One message's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `GameBoard.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
+    massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
+    now, before = message_levels(board, message, beyond, massless)
     weights = (1,) if family.plane else laid_weights(message, label, family)
-    total = sum(share_of(board, 0, w * now, w * before) for w in weights)
-    laid = read_quanta(total, board.pair[1], board.action)
+    counted = (
+        weights[:1] if family.wronskian else weights
+    )  # the books read a sign holder's time line alone
+    total = sum(share_of(board, 0, w * now, w * before) for w in counted)
+    whole = (
+        int(np.asarray(total, dtype=object).sum()) * family.parts
+    )  # the board's total, the parts laid alike
     return {
         "family": message["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(laid.sum()) * family.parts,
+        "count": int(read_quanta(whole, board.pair, board.action, object)),
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 
@@ -1317,16 +1340,15 @@ def pixel_mode(
     designed: list[int | None] | None = None,
     pixels: Sequence[int] = (),
 ) -> dict[str, Any]:
-    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per measured event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
+    """The mode document of a world of bodies and messages: `world_digest`, `bodies`, one entry per declared event in the world's order, each the standing record of the whole body, rotating in the sense `senses` names for it (+1 or -1; 0 or none a real record), laid at the design's count `designed` where given (the input of every re-lay, `designed_quanta`; the declared counts' sum otherwise), its first pass seeded by the world's `lay.seed` by name (`compact_seed` for the compact profile, else the declared count spread over its cube), or, for a body numbered in `pixels`, the one-Node record of its quanta at its declared Node, a declaration by name (`pixel_record`, laid with a sense, no fixed point, no standing check, its Nodes no other body's cut and no sharing check: it stands inside the body it binds), and `messages`, one entry per message, its packet laid; the document's bodies are rewritten in place to the fixed point's Nodes and counts (the digest is the rewritten world's); a body no Node of which carries a whole quantum (the law's count 1 over its mode's Nodes) keeps its declared Node and count, which the gate admits within its rounding."""
     universe = cast(dict[str, Any], world_files(document)[document["universe"]])
     integers = universe["integers"]
     if "quantum_action" not in integers:
         raise ValueError(
             "the universe file declares no quantum_action T: the count c = D div T needs it"
         )
-    pairs = {
-        family["name"]: (int(family["pair"][0]), int(family["pair"][1]))
-        for family in universe["families"]
+    pairs = {  # the loader's pairs, a derived pair among them (`loader/universe.pair_of`)
+        family.name: family.pair for family in universe_of(universe)[1]
     }
     shape = (int(document["shape"][0]), int(document["shape"][1]), int(document["shape"][2]))
     beyond = np.zeros(shape, dtype=bool)
@@ -1337,20 +1359,18 @@ def pixel_mode(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
-    measured = cast(list[dict[str, Any]], document.get("measured", []))
-    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/instrument.py)
-    kept = [n for n, body in enumerate(measured) if not any(k in body for k in ("parts", "conversion"))]
-    bodies = [measured[number] for number in kept]
+    rows = cast(list[dict[str, Any]], document.get("bodies", []))
+    # a body declaring its parts, or converted whole, is laid by the engine at its one Node (loader/node_reader_declaration.py)
+    kept = [n for n, body in enumerate(rows) if not any(k in body for k in ("parts", "conversion"))]
+    bodies = [rows[number] for number in kept]
     lay = lay_of(document["lay"], "lay") if "lay" in document else None  # the lay by name
     lays: list[tuple[np.ndarray, Pairs, Axis, int]] = []
     zero = np.zeros(shape, dtype=np.int64)
     for number, body in enumerate(bodies):
-        counts, centre, quanta = declared(
-            body, shape, (designed or [None] * len(measured))[kept[number]]
-        )
+        counts, centre, quanta = declared(body, shape, (designed or [None] * len(rows))[kept[number]])
         if bool(counts[beyond].any()):
             raise ValueError(
-                f"measured[{number}] declares a Node beyond the board's inner face: nothing stands there"
+                f"bodies[{number}] declares a Node beyond the board's inner face: nothing stands there"
             )
         board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
         rows = held_rows(universe, str(body["family"]))
@@ -1370,7 +1390,11 @@ def pixel_mode(
         zero,
     )
     names = [family.name for family in universe_of(universe)[1]]
-    document_messages = cast(list[dict[str, Any]], document.get("messages", []))
+    document_messages = [  # the start's messages: one laid whole at a tick of the run takes no mode entry
+        message
+        for message in cast(list[dict[str, Any]], document.get("messages", []))
+        if "tick" not in message
+    ]
     events = [names.index(str(row["family"])) for row in bodies]
     families = with_records(universe_of(universe)[1], [events.count(i) for i in range(len(names))])
     records = []  # each body's record number within its family; a message lays on the first record, 0
@@ -1382,7 +1406,11 @@ def pixel_mode(
         family = str(message["family"])
         board = board_of(shape, wrap, gamma, integers, pairs[family])
         slot = records[len(bodies) + number]
-        laid_messages.append((names.index(family), slot, [message_levels(board, message, beyond)]))
+        rule = families[names.index(family)]
+        massless = rule.quanta and rule.pair[0] == rule.pair[1]
+        laid_messages.append(
+            (names.index(family), slot, [message_levels(board, message, beyond, massless)])
+        )
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
     # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
@@ -1403,16 +1431,16 @@ def pixel_mode(
             rows = held_rows(universe, str(body["family"]))
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
-                raise ValueError(f"measured[{number}]: a sense is +1 or -1 (0: none), got {sense}")
+                raise ValueError(f"bodies[{number}]: a sense is +1 or -1 (0: none), got {sense}")
             if sense and not family_of(universe, str(body["family"])).plane:
                 raise ValueError(
-                    f"measured[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
+                    f"bodies[{number}]: a body of {body['family']!r}, a family of dimension one, is laid with "
                     "no sense: a rotating record is a plane, dimension two (ALGEBRA.md #a-familys-declaration)"
                 )
             if number in pixels:
                 if not sense:
                     raise ValueError(
-                        f"measured[{number}] is laid as a one-Node record with no sense: the declaration is one "
+                        f"bodies[{number}] is laid as a one-Node record with no sense: the declaration is one "
                         "quantum of a plane, its Wronskian sense x T / 2 (ALGEBRA.md, the quantum of a family)"
                     )
                 record, pairs_kept = pixel_record(board, counts, centre, sense, families[index].planes)
@@ -1425,7 +1453,7 @@ def pixel_mode(
                     for x, y, z in zip(*np.nonzero(counts), strict=True)
                 ]
                 print(
-                    f"GAMEBOARD measured[{number}] is laid as the one-Node record of {quanta} quanta at the Node "
+                    f"GAMEBOARD bodies[{number}] is laid as the one-Node record of {quanta} quanta at the Node "
                     f"{list(centre)}, a declaration: the amplitude {record.amplitude}, its share {record.carried} "
                     "quanta at the Node, no fixed point and no standing check",
                     file=sys.stderr,
@@ -1439,7 +1467,7 @@ def pixel_mode(
                 entries.append(entry)
                 continue
             arguments = (board, families, index, records[number], rows, (all_counts - counts, others))
-            weights = laid_weights(body, f"measured[{number}]", families[index])  # the lines' weights
+            weights = laid_weights(body, f"bodies[{number}]", families[index])  # the lines' weights
             trajectory: Trajectory = []
             try:
                 if lay is not None and lay.kind == FIXED_POINT:
@@ -1480,7 +1508,7 @@ def pixel_mode(
             for other, taken in enumerate(regions):
                 if other not in pixels and bool(np.any(taken & region)):
                     raise ValueError(
-                        f"measured[{number}] and measured[{other}] share a Node in their regions: two bodies stand apart or are one body"
+                        f"bodies[{number}] and bodies[{other}] share a Node in their regions: two bodies stand apart or are one body"
                     )
             regions.append(region)
             all_counts = all_counts - counts + laid
@@ -1510,7 +1538,7 @@ def pixel_mode(
             family_of(universe, str(message["family"])),
             f"messages[{number}]",
         )
-        for number, message in enumerate(cast(list[dict[str, Any]], document.get("messages", [])))
+        for number, message in enumerate(document_messages)
     ]
     return {"world_digest": input_digest(document), "bodies": entries, "messages": messages}
 
@@ -1544,7 +1572,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     args = parser.parse_args(argv)
     document = json.loads(args.input.read_text(encoding="utf-8"))
-    designed = designed_quanta(args.input, len(cast(list[Any], document.get("measured", []))))
+    designed = designed_quanta(args.input, len(cast(list[Any], document.get("bodies", []))))
     mode = pixel_mode(document, list(args.sense), designed, tuple(args.pixel))
     args.input.write_text(json.dumps(document) + "\n", encoding="utf-8")
     out = args.out if args.out is not None else args.input.with_suffix(".mode.json")

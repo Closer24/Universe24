@@ -20,7 +20,7 @@ ROOT = HERE.parents[2]
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared detector, the universe the world's row names, the lay of the design with the world's stop and tolerance."""
+    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared node_reader, the universe the world's row names, the lay of the design with the world's stop and tolerance."""
     row = design["worlds"][name]
     return {
         "shape": [int(v) for v in row["shape"]],
@@ -29,17 +29,18 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "ticks": int(row["ticks"]),
         "universe": row["universe"],
         "engine": design["engine"],
-        "measured": [
+        "bodies": [
             {
                 "family": design["family"],
                 "nodes": [{"node": [int(v) for v in row["centre"]], "count": int(row["quanta"])}],
             }
         ],
-        "detectors": [],
+        "node_readers": [],
         "lay": {
             **design["lay"],
             "stop": int(row["stop"]),
             "tolerance": [int(v) for v in row["tolerance"]],
+            "confidence": [32, 1],
         },
     }
 
@@ -50,7 +51,7 @@ def from_the_lay(design: dict[str, Any], name: str, mode: Path) -> dict[str, obj
         return None
     body = json.loads(mode.read_text(encoding="utf-8"))["bodies"][0]
     declared = json.loads(mode.with_suffix("").with_suffix(".json").read_text(encoding="utf-8"))
-    counts = [int(node["count"]) for node in declared["measured"][0]["nodes"]]
+    counts = [int(node["count"]) for node in declared["bodies"][0]["nodes"]]
     shape, centre = design["worlds"][name]["shape"], design["worlds"][name]["centre"]
     amplitude = int(body["amplitude"])
     f2 = f4 = x2 = 0.0

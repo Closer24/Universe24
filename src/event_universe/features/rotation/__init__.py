@@ -6,6 +6,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.ports import SIDES
 from event_universe.core.rule3 import division_forward
 
 TURNED_REACH = 2  # a turned level within twice a level's bound: the rotation's root of two, rounded up
@@ -15,6 +16,16 @@ TURNED_SLACK = 2  # the three shears' floors beside it: a turned level below 2^(
 def shear(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> Any:
     """One shear, x' = x + (numerator x y) div wall by the division act with no remainder kept; direction -1 subtracts the same number (the shear leaves y as it is), the exact inverse."""
     return x + direction * division_forward(numerator * y, wall, 0)[0]
+
+
+def turn_wall(gamma: int) -> int:
+    """The time turn's wall, tan(theta / 2) = n / (2 Gamma): the clock Gamma doubled, since the turn is by the tangent half-angle (ALGEBRA.md, The sign holder rotates the two-part record)."""
+    return 2 * gamma
+
+
+def link_wall(gamma: int) -> int:
+    """The Link's turn wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma): the time turn's wall once per end of the Link, the two ends summed (`turn_wall`, `SIDES`)."""
+    return SIDES * turn_wall(gamma)
 
 
 def turned(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> tuple[Any, Any]:
@@ -29,7 +40,7 @@ def turned(x: Any, y: Any, numerator: Any, wall: Any, direction: int = 1) -> tup
     return shear(x1, y0, -numerator, wall, -1), y0
 
 
-def guard(numerator: Any, wall: int, name: str, axis: int | None) -> None:
+def turn_guard(numerator: Any, wall: int, name: str, axis: int | None) -> None:
     """The turn's guard at load (the one place the loader bounds a turn, as it bounds a pace): the tangent half-angle at most 1 at every Node, |numerator| <= wall, a quarter turn per interval (the time angle, `axis` None) or per Link (the odd line of `axis`), within which a turned level stays inside the loader's room (`TURNED_REACH`); refused by name beyond it, naming the Node."""
     size = np.abs(np.asarray(numerator))
     high = int(size.max()) if size.ndim else int(size)

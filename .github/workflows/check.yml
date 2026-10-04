@@ -51,7 +51,7 @@ jobs:
       - run: python -m pip install -e '.[dev]'
       - run: python tools/check.py --shard "${{ matrix.shard }}"
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: failure()
         with:
           name: diagnostics-${{ strategy.job-index }}
           path: artifacts/

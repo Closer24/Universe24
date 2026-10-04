@@ -1,15 +1,15 @@
 {
- "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): a chain of 24 Nodes open on x with both faces receding (largest 400 by 16 layers), y and z folded; two records of the family `atom` ([1, 1299], the shape [2, 2], g and e) declared instruments at the Nodes 6 and 17, 5.5 Links from the centre each, their Link factors 0 so they stay; the light `photon` (light's pair, one real line) laid at the centre as two packets, toward +x from the Node 12 and toward -x from the Node 11, at k = pi / 4 with the raised cosine of 3 beyond the top, the amplitude chosen so that the laid share reads one whole quantum over the board (the books' count 1, read from the loaded world), 2 quanta for the control; each record takes the light into e at the transition's weight over one window of the run, 40 intervals, the packets passing the records at light's pace by then; the trials the same lay with the records' generators at the declared seeds (tools/meeting_trials.py). Every number stands here and the engine reads none.",
+ "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25; the redesign of 2026-10-04 at the lay without the uniform mode, #1827 comments 5975451010, 5975470305 and 5975568700, two hands): a chain of 96 Nodes open on x with both faces receding (largest 400 by 16 layers), y and z folded; two records of the family `atom` ([1, 1299], the shape [2, 2], g and e) declared NodeReaders at the Nodes 23 to 24 and 71 to 72, 24 Links from the centre each, their Link factors 0 so they stay; the light `photon` (light's pair, one real line) laid at the centre as two packets, toward +x from the Node 48 and toward -x from the Node 47, at k = pi / 4 with the raised cosine of 8 beyond the top (one wavelength, so that the packet carries no uniform mode), the amplitude chosen so that the laid share reads one whole quantum over the board (the books' count 1, read from the loaded world), 2 quanta for the control; each record takes the light into e at the transition's weight over one window of 48 intervals, the passage ending about 45, and the run goes on to 170 so that the front reaches both packets; the trials the same lay with the records' generators at the declared seeds (tools/meeting_trials.py). Every number stands here and the engine reads none.",
  "universe": "examples/events/anticoincidence/two_atoms.json",
  "engine": "examples/events/engine_start.json",
- "length": 24,
+ "length": 96,
  "largest": 400,
  "layers": 16,
  "records": {
   "family": "atom",
   "nodes": [
-   6,
-   17
+   23,
+   71
   ],
   "weight": 6,
   "seed": 25
@@ -17,21 +17,22 @@
  "light": {
   "family": "photon",
   "centre": [
-   11,
-   12
+   47,
+   48
   ],
   "quarters": 4,
-  "edge": 3
+  "edge": 8
  },
  "worlds": {
-  "one_photon": 160,
-  "two_photons": 226
+  "one_photon": 116,
+  "two_photons": 165
  },
  "generator": {
   "multiplier": 6364136223846793005,
   "increment": 1442695040888963407
  },
- "intervals": 40,
+ "intervals": 48,
+ "ticks": 170,
  "seeds": [
   1,
   2,
@@ -234,7 +235,7 @@
   199,
   200
  ],
- "status": "declared, laid and run on the night of 2026-10-03 (branch ion-world, 200 trials per world): one photon A only 101, B only 99, both 0, alpha 0; two photons both 28 of 200, alpha 1.44; the reading in blind_and_reading.md",
+ "status": "declared, laid and run on 2026-10-04 at the lay without the uniform mode (branch click-share-fix): the reading in blind_and_reading.md",
  "resonance": [
   5414,
   6000

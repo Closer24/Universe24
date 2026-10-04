@@ -4,20 +4,12 @@ import argparse
 import ast
 import io
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-# These consumers build resource paths at runtime rather than importing modules.
-# Every row names a kept test; main() still skips a selected test that does not exist.
-RESOURCE_CONSUMERS: dict[str, tuple[str, ...]] = {
-    # The registers, worlds and generators a living test reads by path (the ray law's
-    # rows were deleted with their tests on 2026-09-26, docs/CANCELLED_WORLDS.md).
-    # The law document's words and links (#1198, gate 5).
-}
-
-
 EVERY_PULL_REQUEST = Path(__file__).with_name("every_pull_request.txt")
 
 
@@ -33,7 +25,19 @@ SECONDS = Path(__file__).with_name("test_seconds.json")
 # equal shards (the owner's ceiling of 2026-10-02: every CI run ends under ten minutes)
 SUITE_SHARDS = 5
 UNRECORDED_SECONDS = 5.0
+# the suite's bound (the owner's word of 2026-10-03: a test runs under 30 seconds): a test function above
+# it fails the plan by name, on the recorded table at --plan and on the run's own junit after every pytest
+TEST_SECONDS_BOUND = 30.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
+# the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
+# tools/ run by its path and failing with its own message: on every selection, with --full and
+# in the lint shard
+RATCHETS = [
+    ["tools/engine_gates.py"],
+    ["tools/record_code_shape.py"],
+    ["tools/tests_shape.py"],
+    ["tools/ownership.py"],
+]
 
 
 def balanced(seconds, count):
@@ -47,12 +51,9 @@ def balanced(seconds, count):
     return [sorted(group) for _, group in sorted(zip(loads, groups, strict=True), key=lambda x: -x[0])]
 
 
-def shards():
-    """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
-    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
-    whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
-    a function the table does not hold, or holds under a name the file no longer has, runs with its
-    file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
+def recorded_seconds():
+    """The test files and the table's seconds per test function the files still hold
+    (`tests/<file>.py::<function>`; a name a file no longer has is left out)."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     recorded = {}
@@ -61,6 +62,16 @@ def shards():
         for target, seconds in table["tests"].items():
             if target.startswith(file + "::") and f"\ndef {target.partition('::')[2]}(" in text:
                 recorded[target] = seconds
+    return files, recorded
+
+
+def shards():
+    """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
+    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
+    whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
+    a function the table does not hold, or holds under a name the file no longer has, runs with its
+    file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
+    files, recorded = recorded_seconds()
     whole = {file: UNRECORDED_SECONDS for file in files}  # the file's own target: its other tests
     for target in sorted(recorded, key=lambda t: recorded[t]):
         whole[target.partition("::")[0]] = target  # the file stands with its longest function
@@ -85,8 +96,9 @@ def shards():
     return jobs
 
 
-def record_seconds(junit):
-    """The seconds per test function read from a junit file, written to the table."""
+def seconds_of(junit):
+    """The seconds per test function read from a junit file (`tests/<file>.py::<function>`, its
+    parametrizations summed)."""
     import xml.etree.ElementTree as ElementTree
 
     tests = {}
@@ -94,9 +106,24 @@ def record_seconds(junit):
         path = case.get("classname", "").replace(".", "/") + ".py"
         target = path + "::" + case.get("name", "").partition("[")[0]  # the function, its parts summed
         tests[target] = round(tests.get(target, 0.0) + float(case.get("time", 0)), 1)
+    return tests
+
+
+def record_seconds(junit):
+    """The seconds per test function read from a junit file, written to the table."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    table.update(tests=dict(sorted(tests.items())))
+    table.update(tests=dict(sorted(seconds_of(junit).items())))
     SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
+
+
+def above_the_bound(seconds, clock):
+    """The test functions above the suite's bound on the `clock` named, each with its seconds, the
+    slowest first; the message that fails the plan by name, or None."""
+    slow = sorted(((n, s) for n, s in seconds.items() if s > TEST_SECONDS_BOUND), key=lambda x: -x[1])
+    if not slow:
+        return None
+    names = ", ".join(f"{name} ({seconds:.1f} s)" for name, seconds in slow)
+    return f"above the bound of {TEST_SECONDS_BOUND:.0f} seconds per test on {clock}: {names}"
 
 
 def git(*args):
@@ -235,7 +262,6 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.startswith("src/") and path.endswith(".py"):
             # The algebra gate reads the physical modules by their path.
             tests.add("tests/test_integer_algebra.py")
@@ -267,7 +293,9 @@ def select(changed, sources):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--base", default="origin/main", help="Compare against the merge base of this Git revision"
+        "--base",
+        default=os.environ.get("CHECK_BASE") or "origin/main",
+        help="Compare against the merge base of this Git revision (CHECK_BASE, else origin/main)",
     )
     parser.add_argument(
         "--tests", nargs="*", default=[], help="Additional related pytest paths or node IDs"
@@ -288,24 +316,22 @@ def main():
         record_seconds(args.record_seconds)
         return
     if args.plan:
+        slow = above_the_bound(recorded_seconds()[1], "the recorded clock of tools/test_seconds.json")
+        if slow:
+            sys.exit(slow)
         print("shards=" + json.dumps(list(shards())))
         return
     for target in args.tests:
         if not (ROOT / target.split("::")[0]).exists():
             parser.error(f"additional test target does not exist: {target}")
     if args.shard:
-        targets = shards()[args.shard]  # the lint runs in the lightest part, the last
-        commands = (LINT if args.shard == list(shards())[-1] else []) + [
+        targets = shards()[args.shard]  # the lint and the ratchets run in the lightest part, the last
+        commands = (LINT + RATCHETS if args.shard == list(shards())[-1] else []) + [
             ["pytest", "-n", "auto", *targets, "--junitxml=artifacts/junit.xml"]
         ]
         changed = []
     elif args.full:
-        commands = [
-            ["ruff", "check", "."],
-            ["ruff", "format", "--check", "."],
-            ["mypy"],
-            ["pytest", "-n", "auto", "--junitxml=artifacts/junit.xml"],
-        ]
+        commands = [*LINT, *RATCHETS, ["pytest", "-n", "auto", "--junitxml=artifacts/junit.xml"]]
         changed = []
     else:
         base = git("merge-base", args.base, "HEAD")
@@ -335,6 +361,8 @@ def main():
             commands += [["ruff", "check", *python], ["ruff", "format", "--check", *python]]
         if typed:
             commands.append(["mypy", "--follow-imports=silent", *typed])
+        if changed:
+            commands += RATCHETS  # the gates every pull request runs, whatever it changes
         if tests:
             commands.append(["pytest", "-n", "auto", *tests, "--junitxml=artifacts/junit.xml"])
         if {"pyproject.toml", "MANIFEST.in"} & set(changed):
@@ -349,8 +377,19 @@ def main():
         report_path = ROOT / "artifacts/check-scope.json"
         report_path.parent.mkdir(exist_ok=True)
         report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        environment = {**os.environ, "CHECK_BASE": args.base}
         for command in commands:
-            subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
+            # a script of tools/ runs by its path, a package by its module name
+            run = (
+                [sys.executable, *command]
+                if command[0].endswith(".py")
+                else [sys.executable, "-m", *command]
+            )
+            subprocess.run(run, cwd=ROOT, env=environment, check=True)
+            if command[0] == "pytest":  # the suite's bound on this run's own clock, by name
+                slow = above_the_bound(seconds_of(ROOT / "artifacts/junit.xml"), "this run's clock")
+                if slow:
+                    sys.exit(slow)
 
 
 if __name__ == "__main__":

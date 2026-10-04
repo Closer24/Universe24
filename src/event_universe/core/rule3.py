@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe.core.ports import PORTS
+
 # the rule's reads, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij on
 # the Link to that neighbour; the arrivals through the same Ports; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 
-PORTS = 6  # a Node's six Ports, the three axes twice (Rule3's 6)
 NO_READ: tuple[int, ...] = (0,) * PORTS
 
 
@@ -33,7 +34,7 @@ def coefficients(
 
 
 def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
-    """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends, so the step's operator is exactly symmetric in integers; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
+    """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform paces alone, and D M is symmetric at every pace with D = diag(1 / p_i^2), so the weighted form is exact at paces fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
     pace = gamma - tension
     wall = gamma * gamma
     half = division_forward(wall, 2, 0)[0]

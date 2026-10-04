@@ -408,7 +408,7 @@ def region(ax: Axes, x1: float, cy: float, s: float, upper: bool, drawn: bool) -
         ax.plot([x1 - 0.5, x2 + 0.5], [y, y], color=INK, lw=1.0, zorder=4)
         ax.text(x2 + s / 2 + 0.12, y, lab, ha="left", va="center", fontstyle="italic", zorder=5)
         if filled:
-            for cx in ((x2,) if drawn else (x1, x2)):
+            for cx in (x2,) if drawn else (x1, x2):
                 ax.plot(cx + 0.12, y + 0.16, "o", ms=5.0, color=INK, zorder=6)
     if drawn:
         arrow(ax, (x2 - 0.3, cy - 0.2), (x2 - 0.3, cy + 0.2), color=ORANGE, lw=1.2)

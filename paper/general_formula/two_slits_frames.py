@@ -70,7 +70,15 @@ def record(look_path: Path) -> None:
     for tick in TICKS:
         frame = frames[tick]
         now = frame["families"]["charge"]["now"]
-        kept.append({"tick": tick, "shape": frame["shape"], "offset": frame["offset"], "at": now["at"], "values": now["values"]})
+        kept.append(
+            {
+                "tick": tick,
+                "shape": frame["shape"],
+                "offset": frame["offset"],
+                "at": now["at"],
+                "values": now["values"],
+            }
+        )
     RECORDING.write_text(
         json.dumps(
             {
@@ -138,7 +146,9 @@ def panel(ax: Axes, frame: dict, letter: str) -> None:
     ax.tick_params(length=2, width=0.5, pad=1.5)
     ax.set_xlabel("$x$, the column (Links)", labelpad=1)
     ax.text(0.0, 1.02, letter, transform=ax.transAxes, ha="left", va="bottom", fontweight="bold")
-    ax.text(0.5, 1.02, f"interval {frame['tick']} of 130", transform=ax.transAxes, ha="center", va="bottom")
+    ax.text(
+        0.5, 1.02, f"interval {frame['tick']} of 130", transform=ax.transAxes, ha="center", va="bottom"
+    )
 
 
 def draw(output: Path) -> None:
@@ -170,7 +180,12 @@ def draw(output: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--look", type=Path, default=None, help="a look file of the two slits; records its three frames first")
+    parser.add_argument(
+        "--look",
+        type=Path,
+        default=None,
+        help="a look file of the two slits; records its three frames first",
+    )
     parser.add_argument("--output", type=Path, default=FIGURES / "two_slits_frames.pdf")
     args = parser.parse_args()
     if args.look is not None:
