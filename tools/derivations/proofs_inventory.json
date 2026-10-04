@@ -1,0 +1,1763 @@
+{
+ "header": {
+  "title": "The proofs' inventory: every theorem and identity of the law and the supplement with its machine check",
+  "rule": "A check replaces a hand with a machine and changes no claim of the paper or the law; the paper's marks do not move by it. Every row quotes a statement with its place, names its ground and its kind, and names the check that holds it, exactly or to its stated order, or says why none does. A row whose statement as printed fails its check is a finding, reported to the Boss and never smoothed in the files; its check reproduces the discrepancy and returns False.",
+  "order": "the owner's 2026-10-04, 07:50 UTC, through the Boss; the advisor's design lines, #1793 comment 5977935062; the far-regime witnesses the owner's 08:20 UTC",
+  "law": {
+   "file": "docs/ALGEBRA.md",
+   "branch": "main",
+   "head": "3a334eeb1d49c6be256b39e92e875d6cd64dd9e4"
+  },
+  "paper": {
+   "files": [
+    "paper/general_formula/main.tex",
+    "paper/general_formula/supplement.tex"
+   ],
+   "branch": "paper",
+   "head": "f83fe8e719e344ce6523b6aa947cbb194bb65322"
+  },
+  "kinds": {
+   "A": "an exact identity, polynomial or trigonometric in the law's integers, checked exactly in Python's integers, Fractions and Gaussian rationals at random rational witnesses with the symmetric cases forced (a trigonometric identity at the Pythagorean rational points of the circle is a polynomial identity), or a derivative identity by the centred difference's order 2",
+   "B": "a series expansion with its order, checked by the residual against the exact function at two step sizes, the ratio 2^order the test of the order, with the far end of the claim's domain computed beside the claim",
+   "C": "a hand proof with a numerical witness only: the witness recomputed where a script exists, counted by the ratchet as unchecked",
+   "D": "a statement of the engine's structure that only a test of the engine shows: no check here, the engine's tests named"
+  },
+  "verdicts": {
+   "holds": "the check returns True: the statement holds exactly or to its stated order",
+   "witness only": "a hand proof whose numerical witness the check recomputes; counted as unchecked",
+   "finding": "the statement as printed fails; the check reproduces the discrepancy and returns False",
+   "none": "no check applies; the row says why"
+  },
+  "first_ten": "the rows A01 to A10 are the ten items of the external audit #1876 (the writer's #1793 comment 5977872784, the advisor's 5977935062), each with the witness those posts give",
+  "far_regime_witnesses": "a row with the field far_regime_witness carries the claim's quantity at the far end of its stated domain beside the claim's value (the owner's order of 08:20 UTC)",
+  "checks": "tools/derivations/proofs_<module>.py, each check a function check_<name>() returning (held, computed); proofs_ground.py the shared ground, rule3.py the one Rule3; `python tools/derivations/proofs_<module>.py` prints the module's verdicts; tests/test_proofs_check_the_law.py runs every row's check to its verdict",
+  "counts": {
+   "rows": 130,
+   "by_kind": {
+    "A": 90,
+    "B": 21,
+    "C": 13,
+    "D": 6
+   },
+   "by_verdict": {
+    "holds": 104,
+    "witness only": 3,
+    "none": 16,
+    "finding": 7
+   },
+   "with_far_regime_witness": 23,
+   "without_machine_check": 13,
+   "without_machine_check_rows": [
+    "A06",
+    "A09",
+    "L73",
+    "L84",
+    "L85",
+    "N03",
+    "N04",
+    "N05",
+    "N06",
+    "N07",
+    "N08",
+    "N12",
+    "N13"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "A01",
+   "name": "Theorem 4's Yukawa exponent",
+   "place": "main.tex 7.2, Theorem 4; S.13; the writer's (1), the advisor's (1)",
+   "statement": "A Yukawa kernel's log-derivative at one separation is 1 + kappa R; a body's integrated well energy has the running exponent s(R) = 1 + kappa R <u^2> / <u> in the body's own weights, 1.0176, 2.130, 2.971, 2.9997 at kappa R = 0.01, 1, 10, 100, from 1 at kappa R << 1 to the contact kernel's 3 at kappa R >> 1 through 2 at 0.821; the virial and the second variation stand with s the integrated exponent, and R^2 F'' carries R s'(R) W.",
+   "ground": "the Gaussian body's well moments in closed form through erfc (I = 2 - 2 sqrt pi z erfcx z, J = -4 z + (2 + 4 z^2) sqrt pi erfcx z), the asymptotes by the residual's order",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_theorem_4s_integrated_exponent"
+   },
+   "verdict": "holds",
+   "note": "The paper's printed sentence, 's(R) = 1 + kappa R ... holds in the two asymptotic regimes', holds at kappa R << 1 and fails at kappa R >> 1: the far-regime witness.",
+   "far_regime_witness": "kappa R = 100: the integrated exponent 2.9997 against the printed 1 + kappa R = 101; the small end 1 + sqrt pi kappa R + O(z^2) and the large end 3 - 3 / z^2 + O(z^-4) both to their orders"
+  },
+  {
+   "id": "A02",
+   "name": "The time-Link recurrence's Wronskian",
+   "place": "main.tex 5.5 against S.43 and ALGEBRA.md row 9 of The conventions and the units; the writer's (2), the advisor's (2)",
+   "statement": "The law's step e^(i theta_t) z_next + e^(-i theta_(t-1)) z_before = M z_now / w conserves W_i = Im(conj(z_now) e^(-i theta_(t-1)) z_before) under the per-Node continuity identity for any paces, Link phases and time angles, and the weighted total SUM W_i / p_i^2 exactly; the one-theta form of 5.5 conserves W at a static angle only, |z_2| = 1.93 against the law's 1.00 at the audit's one-Node witness.",
+   "ground": "exact Gaussian rationals on four periodic boards with Link factors; the audit's witness in floats",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_wronskian_under_the_time_link_turn_for_any_angle_in_time"
+   },
+   "verdict": "holds",
+   "note": "The slip is the paper's 5.5 sentence (one theta on both levels); the engine's rotation act and the law's row 9 step the two-angle form."
+  },
+  {
+   "id": "A03",
+   "name": "S.42's monopole",
+   "place": "S.42, inputs and (c); the writer's (3), the advisor's (3)",
+   "statement": "At static non-uniform paces the conserved monopole is the weighted sum SUM_i W_i / p_i^2 (S.33 (a), S.9's D M symmetric), the plain sum its uniform-pace case; at the audit's two-Node witness, paces squared (1, 2) and couplings (a, 2 a), the weighted sum stands exactly while the plain sum moves.",
+   "ground": "exact Gaussian rationals at random levels and self coefficients",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_the_weighted_monopole_at_the_two_node_witness"
+   },
+   "verdict": "holds",
+   "note": "S.42's input as printed, the plain sum 'exactly conserved for a static self-level', is row F05."
+  },
+  {
+   "id": "A04",
+   "name": "S.39 (b)'s band is real for every pair",
+   "place": "S.39 (b); the writer's (4), the advisor's (4)",
+   "statement": "kappa is the static kernel's fall per Link, cosh kappa = 3 den / num - 2; with S = 0 at the vacuum's paces 2 cos omega = (2 num / 3 den) SUM_a cos k_a runs from 2 num / den to -2 num / den, within [-2, 2] for every pair with num <= den, so no quantum stands 'above the band's top' and the clause does not follow from kappa > 1; [1, 2] has cosh kappa = 4 and the band from 60 to 120 degrees.",
+   "ground": "exact rationals at the zone's corners and random cosines for every pair to den = 39",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_s39s_band_is_real_for_every_pair"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "A05",
+   "name": "S.43 (e)'s Stark sentence",
+   "place": "S.43 (e); the writer's (5), the advisor's (5)",
+   "statement": "A uniform static Link phase is a gauge on an open domain (the step with the phases is conjugate to the plain one by the diagonal e^(i theta x), the modes unchanged) and a holonomy on the periodic board (the conjugation fails at the wrap unless N theta is a multiple of 2 pi; it shifts the allowed k and mixes no mode of a body); Stark's shift needs a holder level with a gradient across the body at omega_L = 0.",
+   "ground": "exact Gaussian rationals on an open and a periodic chain of six",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_a_uniform_link_phase_is_a_gauge"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "A06",
+   "name": "S.17's beat",
+   "place": "S.17; main.tex 7.5; the writer's (6), the advisor's (6)",
+   "statement": "The finite window's mean of the cross current of two standing records is the sum-frequency term's, bounded by 2 / ((omega_1 + omega_2) n T_b) for n beats of length T_b: 0.0083 over one beat at A = B = num = 1, omega_1 = 0.4, omega_2 = 0.4 + 2 pi / 20, and 1.1 x 10^-4 over 100 beats (the bounds 0.09 and 0.0009), falling as 1 / n and never 0 at a finite window.",
+   "ground": "a hand bound on the oscillating sum; the means and the bounds recomputed, the inequality at random phases",
+   "kind": "C",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_s17s_beat_mean_bound"
+   },
+   "verdict": "witness only",
+   "note": "S.17's printed 'its mean over the beat is 0' holds to the order of the fast term over the window, the advisor's clause."
+  },
+  {
+   "id": "A07",
+   "name": "S.24's orientation",
+   "place": "S.24 and main.tex 10.2; the writer's (7), the advisor's (7)",
+   "statement": "The directional k^4 coefficient C(n) = (3 SUM_a n_a^4 - 1) / 24 is 1 / 12 on an axis, 1 / 48 on a face diagonal and 0 on the body diagonal, continuous toward it (C / C_axis = 4.4 x 10^-11 at n proportional to (1.00001, 1, 1), the Link bound weakening by 1.5 x 10^5 there); the mean over directions, <SUM n_a^4> = 3 / 5, gives C_mean / C_axis = 2 / 5; the bound weakens tenfold only within about 4 degrees of a body diagonal, one percent of the sky, and a hundredfold within 0.4 degrees.",
+   "ground": "C(n) as the band's own fourth order (proofs_band), the caps by bisection over the azimuths",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_the_orientation_coefficient"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "the eight body diagonals, where the bound is void: the caps of 4.1 and 0.41 degrees, 1.0 and 0.01 percent of the sky"
+  },
+  {
+   "id": "A08",
+   "name": "S.57's wall",
+   "place": "S.57 (a); the writer's (8), the advisor's (8)",
+   "statement": "One quantum's inflow is Phi_A + Phi_B <= W_c sin Omega, the born unit, and s_X = eta Phi_X / (W_c sin Omega), so complete equal absorption gives s = eta / 2 and P(neither) = 1 - eta, where the printed rule s_X = eta Phi_X / W_c would leave 1 - eta sin Omega; alpha = 0 for one quantum under the one draw, and for two quanta 1 / 2 by the mean counts and 2 / (2 - s)^2 per trial, 8 / 9 at s = 1 / 2.",
+   "ground": "exact rationals",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_anticoincidences_algebra_and_s57s_wall"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "A09",
+   "name": "10.2's 'hence'",
+   "place": "main.tex 10.2; the writer's (9), the advisor's (9)",
+   "statement": "Reversibility to the bit with no loops does not by itself give no running of alpha and no Lamb shift; the ground is S.37's 'no pair is created and no coupling runs' from the count's conservation between clicks, the writer's word 'and, with no pair created between clicks (S.37),'.",
+   "ground": "a sentence's ground; no quantity to compute",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "No machine check applies to a sentence's logical ground."
+  },
+  {
+   "id": "A10",
+   "name": "S.26 (d')'s balance at every step",
+   "place": "S.26 (d'); the writer's (10), the advisor's (10)",
+   "statement": "The gain side is exact: the discrete form H_t = (1 / 2) |l_(t+1) - l_t|^2 - (1 / 2) l_(t+1) . L l_t of the holder's line with L symmetric changes per step by exactly (1 / 2) s_t . (l_(t+1) - l_(t-1)); the loss side is the finite sine difference T [sin omega - sin(omega - Delta theta)] = 2 T cos(omega - Delta theta / 2) sin(Delta theta / 2); their ratio is kappa (1 + (Delta theta / 2) tan omega_s + O(Delta theta^2)), so the balance closes to first order in the turn with the remainder (Delta theta / 2) tan omega_s, below 10^-18 at nature's turn and not 0.",
+   "ground": "the gain identity exact with a random symmetric L, the sine difference exact at rational half-angles, the remainder by the residual's order",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_s26_d_primes_finite_step_remainder"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "the largest turn the law allows (the tangent half-angle at most 1, Delta theta = pi / 2): the exact ratio at [2, 3] is 1.348 against the first order's 1.878, so 'at every step and for every motion' is first order in the turn"
+  },
+  {
+   "id": "L01",
+   "name": "The line's band identity",
+   "place": "ALGEBRA.md, The line; row 3 of The conventions and the units; S.1",
+   "statement": "A plane wave A cos(k . x - omega t) in the line without its remainder leaves the residual a_now [2 w cos omega - S - 2 SUM_a R_a cos k_a], so it solves the line iff 2 w cos omega = S + 2 SUM_a R_a cos k_a.",
+   "ground": "rule3.coefficients and rule3.numerator at random integer paces, exact at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_band_identity_of_a_plane_wave"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L02",
+   "name": "The band at a pace, the Lorentz form",
+   "place": "ALGEBRA.md, The line (The clock once and the Link twice), The band at a pace; the paper's Eq. (4); S.1",
+   "statement": "cos omega = 1 - (1 - num / den) (p_0 / Gamma)^2 - (num / (3 den)) SUM_a (p_a / Gamma)^2 (1 - cos k_a) equals (S + 2 SUM_a R_a cos k_a) / (2 w) with the law's coefficients.",
+   "ground": "a polynomial identity in the paces and the cosines, exact",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_band_at_a_pace_is_the_lorentz_form"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L03",
+   "name": "The vacuum's band and light's dispersion",
+   "place": "row 3 of The conventions and the units; S.1; main.tex 3.3",
+   "statement": "At the vacuum's paces S = 12 num Gamma^2 - 6 R = 0 and cos omega = (num / (3 den)) SUM_a cos k_a, the gap cos omega_0 = num / den; light has cos omega = (2 + cos k) / 3 along an axis; rule3.plane_wave_dispersion is the same number.",
+   "ground": "exact rationals; the derivations' rule3 in floats",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_vacuum_band_and_lights_dispersion"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L04",
+   "name": "The clocks shift alike",
+   "place": "ALGEBRA.md, The line (i)",
+   "statement": "At k = 0 every massive band's rest rotation obeys 1 - cos omega_b = (p_0 / Gamma)^2 (1 - cos omega_0), one factor for every family.",
+   "ground": "exact rationals from the band at a pace",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_clocks_shift_alike"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L05",
+   "name": "The guard's edge",
+   "place": "ALGEBRA.md, The guard; S.3; S.61 row 4; main.tex 3.4",
+   "statement": "The mode at wave number pi on every axis has the factor (S - 2 SUM_a R_a) / w = 2 - 2 (1 - num / den) (p_0 / Gamma)^2 - 4 (num / den) (p_a / Gamma)^2, -2 num / den in the vacuum, at or above -2 exactly when p^2 (den + |num|) <= 2 den Gamma^2 (the k = 0 mode for a negative numerator), the edge P^2 = 2 den Gamma^2 div (den + |num|), Gamma^2 for light.",
+   "ground": "exact rationals over every pace to 2 Gamma; rule3.guard_edge_squared",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_guards_edge"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L06",
+   "name": "The total mirror of light",
+   "place": "ALGEBRA.md, The band at a pace; the derivation script paces.py",
+   "statement": "Light's record is evanescent where cosh kappa = (Gamma / p_a)^2 (1 - cos k) - 1 > 1, that is p_a < Gamma sin(k / 2), e^(-2 U) below sin(k / 2) under the composed paces: c above 1,733 at lambda = 4 Links and 2,464 at 4.78 at Gamma = 10^4.",
+   "ground": "the half-angle identity exact at Pythagorean angles; the thresholds by the exact power",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_total_mirror_of_light"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L07",
+   "name": "The three exact bands",
+   "place": "ALGEBRA.md, The exact bands; main.tex 6.1",
+   "statement": "The one-Node line at rest is exact in integers only where 2 cos omega_0 is an integer, so the rule carries exactly three exact rotations, 2 cos omega_0 = 1, 0 and -1, the periods 6, 4 and 3, the pairs [1, 2], [0, 1] and [-1, 2].",
+   "ground": "the integer matrix [[m, -1], [1, 0]] and its orders",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_three_exact_bands"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L08",
+   "name": "The band's top on the diagonal and the axis",
+   "place": "S.27",
+   "statement": "Along the body diagonal light's band is omega = q exactly, no dispersion; along an axis the top at k = pi has cos omega = 1 / 3, omega = 1.231, sin omega = 0.943.",
+   "ground": "exact at rational cosines; the axis's numbers in floats",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_band_top_along_the_diagonal_and_the_axis"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L09",
+   "name": "The largest group speed",
+   "place": "S.21",
+   "statement": "On the full band v_g is largest at k = (pi / 2, pi / 2, pi / 2), (num / den) / sqrt 3 = c cos omega_0, 0.3849 at [2, 3].",
+   "ground": "the value exact; the maximum over a grid of the zone a witness",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_largest_group_speed"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L10",
+   "name": "The content's index for every family",
+   "place": "S.28; main.tex 8 (p); The paces compose",
+   "statement": "A stationary boundary conserving omega gives 1 - cos k_in = [1 - cos k + 3 (den - num) (1 - N^2) / num] / N^4 exactly; for light sin(k_in / 2) = sin(k / 2) / s with s = N^2; the phase index (2 / k) arcsin(sin(k / 2) / s) = 1 / s + k^2 (1 / s^3 - 1 / s) / 24 + O(k^4), to first order in U 1 + [4 tan(k / 2) / k] U, 1.380 at k = pi / 2 and s = 0.8.",
+   "ground": "the exact lines in Fractions; the expansions by the residual's orders 4 and 2",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_contents_index"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "k = pi / 2 at s = 0.8: the exact ratio 1.380 against the ray limit's 1 / s = 1.25, the chromatic dispersion the ray limit lacks"
+  },
+  {
+   "id": "L11",
+   "name": "The slow matter's index limit",
+   "place": "S.28's check",
+   "statement": "The 1 / k^2 term of the slow index, 12 (den - num) U / (num m*^2 v^2) = [4 (1 - cos omega_0) / (3 cos omega_0 tan^2 omega_0)] U / v^2, tends to (2 / 3) U / v^2 = 2 Phi / v^2 as omega_0 -> 0, nature's index for a slow body.",
+   "ground": "the identity in floats to 10^-9, the limit by the residual's order 2",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_slow_matters_index_limit"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "the coefficient 0.533 at [2, 3] against the small-gap 2 / 3"
+  },
+  {
+   "id": "L12",
+   "name": "The reach of a holder with a gap",
+   "place": "ALGEBRA.md, The well; S.11; S.39's check",
+   "statement": "cosh kappa = 3 den / num - 2 from 6 den = num (2 cosh kappa + 4); kappa^2 = 6 den / num - 6 to the second order in the gap; [1, 2] has cosh kappa = 4, e^(-kappa) = 0.127; R = sqrt(num / (6 (den - num))) = 20.00 at [2400, 2401]; inside a thick body the rest is 3 den sigma / (num kappa^2); Yukawa's identity c / omega_g = R sqrt(den / num) to the gap's first order.",
+   "ground": "exact rationals; the two expansions by the residual's orders 2 and 1",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_reach_of_a_holder"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L13",
+   "name": "The group velocity",
+   "place": "ALGEBRA.md, The band at a pace; S.1; rule3.group_velocity",
+   "statement": "d omega / dk = (R_a / w) sin k / sin omega = (num / (3 den)) (p_a / Gamma)^2 sin k / sin omega along an axis, the vacuum's (num / (3 den)) sin k / sin omega.",
+   "ground": "the centred difference quotient of the band's omega(k), order 2 at halving",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_group_velocity"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L14",
+   "name": "Light's speed and dispersion",
+   "place": "S.1; ALGEBRA.md, The lattice constants; main.tex 10.2",
+   "statement": "For [1, 1] along an axis cos omega = 1 - k^2 / 6 + k^4 / 72 + O(k^6), omega = (k / sqrt 3) (1 - k^2 / 36 + O(k^4)) and d omega / dk = (1 / sqrt 3) (1 - k^2 / 12 + O(k^4)): the speed 1 / sqrt 3 at long wavelength and the group speed falling as 1 - 0.083 k^2; S.1's check -0.0833, -0.0834, -0.0835 at k = 0.05, 0.1, 0.2.",
+   "ground": "the residuals' orders 6, 5 and 4; the numbers recomputed",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_lights_speed_and_dispersion_series"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L15",
+   "name": "The fourth order of light's band",
+   "place": "S.24; ALGEBRA.md, The law's own formulas B (11)",
+   "statement": "The k^4 coefficient of omega^2 along n is 1 / 108 - SUM_a n_a^4 / 36: -1 / 54 on an axis, 0 on the body diagonal, -1 / 135 on the directional mean (<n_a^4> = 1 / 5); the anisotropies, an axis against the face diagonal k^2 / 48 in phase and k^2 / 16 in group, against the body diagonal k^2 / 36 and k^2 / 12.",
+   "ground": "each coefficient by the residual's order 6 along its direction, the mean exact",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_band.py",
+    "function": "check_the_fourth_order_of_lights_band"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L16",
+   "name": "Rule3's coefficients are the read's own without tension",
+   "place": "ALGEBRA.md, The paces (The clock is the Node's, the tension is the Link's); rule3.coefficients",
+   "statement": "At q_ij = Gamma the Link's read coefficient 2 num p_i^2 q_ij^2 / Gamma^2 is rule3's R_a = 2 num p_a^2 at p_a = p_i = p_0^2 / Gamma and the self coefficient 12 den Gamma^2 - 12 (den - num) p_0^2 - SUM over the six Ports of R_ij is rule3's S: the general read and the derivations' Rule3 are one line where no tension stands.",
+   "ground": "exact rationals on four periodic boards",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_rule3s_coefficients_are_the_reads_own_without_tension"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L17",
+   "name": "Theorem 3, the conserved form",
+   "place": "ALGEBRA.md, The conserved form; the paper's Theorem 3; S.48",
+   "statement": "With D = diag(1 / p_i^2), p_i = p_0(i)^2 / Gamma, D M is symmetric under R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 with q_ij = q_ji, and Q(x, y) = x . D x + y . D y - x . D M y satisfies Q(a_next, a_now) = Q(a_now, a_before); E = w Q is exact for any field and any tensions before the integer remainders.",
+   "ground": "exact fractions on four periodic boards over several intervals, the vacuum's paces and the no-tension cases forced",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_theorem_3_the_weighted_form_is_exact_in_the_line"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L18",
+   "name": "The plain form fails under a tension, S.32's two witnesses",
+   "place": "S.32; ALGEBRA.md, The conserved form",
+   "statement": "Three Nodes at [1, 1], Gamma = 4, q = 2 (R = 8, w = 96, S = 144), now = (1, 0, 0): next = (11 / 6, 1 / 12, 1 / 12), the plain form from 6 to -21 / 4 and Eq. (6) 6; 3^3 Nodes at [2, 3], Gamma = 10, q = 5 (R = 100, w = 1,800, S = 1,800), a uniform 3 over 0: next = 4 with the remainder 0, the plain form per Node 162 to -54 and Eq. (6) 162 (4,374 over the board); at q = Gamma the two forms coincide.",
+   "ground": "exact fractions and integers",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_plain_form_fails_under_a_tension_the_two_witnesses_of_s32"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L19",
+   "name": "The remainders' walk of the form",
+   "place": "ALGEBRA.md, The conserved form (the proof's last sentence), row 7 of The conventions and the units; the paper's 4.3",
+   "statement": "The integer step's next = next* + (r - r') / w adds to Q the walk SUM_i epsilon_i (next_i - before_i), epsilon_i = (r_i - r_i') / w, so E walks by SUM_i (r_i - r_i') (next_i - before_i) / p_i^2 (rule3.form_walk), each term below one unit of the level's change; E_3 walks by SUM_i [epsilon_i(t) next_i - epsilon_i(t + 1) now_i] / p_i^2.",
+   "ground": "exact integers on four boards with tensions, 40 intervals each",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_remainders_walk_of_the_form"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L20",
+   "name": "The three-level form equals the two-level form",
+   "place": "row 7 of The conventions and the units; main.tex 4.3",
+   "statement": "Q = SUM_i (now_i^2 + before_i^2) / p_i^2 - (1 / w) SUM_i (SUM_j R_ij now_j + S_i now_i) before_i / p_i^2 equals E_3 = SUM_i (now_i^2 - next_i before_i) / p_i^2 exactly under the line, and D_i = b^2 sin^2 omega on a plane wave.",
+   "ground": "exact fractions on four boards with tensions and at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_three_level_form_equals_the_two_level_form"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L21",
+   "name": "The form's change under moving paces",
+   "place": "main.tex 4.3",
+   "statement": "Where the paces move, D = |a_now|^2 - <a_next, a_before> changes exactly by D(t + 1) - D(t) = <a_next, (M(t) - M(t + 1)^T) a_now>, and the weighted E with the weights of the paces at t + 1 by a_next^T D (M(t) - M(t + 1)) a_now.",
+   "ground": "exact fractions, two reads with different contents on three boards",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_forms_change_under_moving_paces"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L22",
+   "name": "Theorem 1, the direction",
+   "place": "ALGEBRA.md, The direction; the paper's Theorem 1; S.48",
+   "statement": "The forward call (a_now, a_before, r) gives (a_next, r') and the backward call (a_now, a_next, r') gives (a_before, r) bit for bit; the proof's identities -floor(u / w) = ceil(-u / w) and ceil((w a - r) / w) = a for 0 <= r < w.",
+   "ground": "the identities over every residue at every wall to 40 (both sides shift by one with u + w); rule3.step and rule3.step_backward round trips at random integers",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_theorem_1_the_direction"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L23",
+   "name": "The cube's symmetry: the complement identity",
+   "place": "ALGEBRA.md, The direction (The cube's symmetry), the proof's act (1)",
+   "statement": "floor((w - 1 - u) / w) = -floor(u / w) for every integer u, the ones' complement commuting with the floor division by a positive wall, its remainder w - 1 - r'; the zero-remainder lay's floor(-u / w) = -ceil(u / w) differs wherever w does not divide u.",
+   "ground": "every residue at every wall to 60",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_complement_identity_of_the_cubes_symmetry"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L24",
+   "name": "The cube's symmetry act by act",
+   "place": "ALGEBRA.md, The direction (The cube's symmetry), the proof's acts (2) to (6)",
+   "statement": "A lay invariant under one of the cube's 48 with the complement remainders is invariant to the bit under every act of the step, so one fundamental domain steps the whole.",
+   "ground": "the engine's acts (the write, the reads, the time and Link turns); the integer identity of act (1) is row L23",
+   "kind": "D",
+   "check": null,
+   "verdict": "none",
+   "note": "A statement of the engine's acts; tests/test_the_node.py and the symmetric lay's runs show it."
+  },
+  {
+   "id": "L25",
+   "name": "The Wronskian with the form's weights",
+   "place": "ALGEBRA.md, The paces (The sign is the rotation sense); S.9",
+   "statement": "W = re_now^T D im_before - im_now^T D re_before is invariant under the line with D M symmetric; per Node W_i / p_i^2 changes by (2 num / w) (q_ij^2 / Gamma^2) (im_i re_j - re_i im_j) over the six Ports, (num / (3 den)) per Port for the integer W_i at the vacuum; S.9's chain of three at Gamma = 2 (W_0 from 0 to 3, the current 3 / 4) and the integer counterexample at [2, 3], (1, 3) over zeros to (1, 4), W from 0 to -1.",
+   "ground": "exact fractions on four boards with tensions; rule3.step for the witnesses",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_wronskian_is_conserved_with_the_forms_weights"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L26",
+   "name": "The sign current's flux over density",
+   "place": "S.33 (b); S.61 row 8",
+   "statement": "For the plane record the density is w A^2 sin omega and the flux through a Link R_a A^2 sin k_a, so flux over density is (R_a / w) sin k_a / sin omega = d omega / dk_a, the current rho v exactly; J_a = g_(i, i+a) + g_(i-a, i) = 2 A^2 sin k_a = (6 den / num) W v at the vacuum's paces.",
+   "ground": "exact Gaussian rationals at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_sign_currents_flux_over_density"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L27",
+   "name": "The velocity invariant of the massless row",
+   "place": "ALGEBRA.md, The click writes on the GameBoard (the restoring front's third test); ENGINE.md, the face's kicks",
+   "statement": "For a record at uniform paces with S + SUM R = 2 w the velocity sum SUM now - SUM before is kept by the line and the integer V = w (SUM now - SUM before) + SUM r is exactly invariant on a periodic board; for a gapped pair it moves by -12 (den - num) Gamma^2 SUM now per interval.",
+   "ground": "exact integers by rule3.step on four periodic boards, 100 intervals",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_velocity_invariant_of_the_massless_row"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L28",
+   "name": "The write's total is exact over any window",
+   "place": "ALGEBRA.md, The integer-exact constructions (4); The integer budget of a derived row",
+   "statement": "The sum over n intervals of the written q_t is (the sum of the numerators + r_0 - r_n) / w exactly, in (-1, 1) of the line's sum; the remainders' terms telescope to (r_0 - r_n) / w.",
+   "ground": "exact integers at random numerators and walls",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_writes_total_is_exact_over_any_window"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L29",
+   "name": "The booking identity of the hole",
+   "place": "S.50 (R289); ALGEBRA.md, The click is the meeting",
+   "statement": "Q(p, q) = SUM_i [w p_i^2 + w q_i^2 - p_i (S q_i + SUM_j R_ij q_j)] at uniform coefficients satisfies Q(next, now) = Q(now, before) and Q(now, before) = w SUM_i D_i; a face writing x for the level v the step would write changes Q by (x - v) [w (x + v) - (S now_i + SUM_j R_ij now_j)] = w (x - v) (x - b), at most w (v - b)^2 / 4 removed at the midpoint.",
+   "ground": "exact fractions on three periodic boards",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_booking_identity_of_the_hole"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L30",
+   "name": "The share identity at any paces",
+   "place": "ALGEBRA.md, The share's change is the currents; the paper's Eq. (10); S.5",
+   "statement": "e_i(next*, now) - e_i(now, before) = SUM_j (q_ij^2 / Gamma^2) F_ij, since R_ij / (2 p_i^2) = num q_ij^2 / Gamma^2 is the same from both ends; the integer step adds -(next_i - before_i) (r'_i - r_i) / (2 p_i^2); S.5's witnesses, the chain of five at [2, 3] and the uniform 3 over 0 reading 81 where the mean-of-paces form read 324.",
+   "ground": "exact fractions and integers with Link factors",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_share_identity_at_any_paces"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L31",
+   "name": "The share is conserved at standing paces",
+   "place": "ALGEBRA.md, The count is the record's share (Theorem); main.tex 4.4",
+   "statement": "Over any region whose paces stand, SUM e_i changes in one step by the weighted currents through the region's boundary Links and the remainder terms alone, the interior Links cancelling by F_ji = -F_ij and q_ji = q_ij.",
+   "ground": "exact fractions on a chain of five with a region of two and the whole board",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_share_is_conserved_over_a_region"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L32",
+   "name": "The vacuum's share",
+   "place": "ALGEBRA.md, The count is the record's share; main.tex Eq. (9)",
+   "statement": "At the vacuum's paces the share is exactly 3 den (now_i^2 + before_i^2) - num now_i S_6(before)_i.",
+   "ground": "exact integers on a chain and a box",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_vacuum_share"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L33",
+   "name": "The plane wave's current and form",
+   "place": "ALGEBRA.md, The booking; The velocity",
+   "statement": "A plane record travelling from i to j has F_ij = -2 num |psi|^2 sin omega sin k summed over its two lines; one real line has F = -num A^2 sin omega sin k exactly at every Node with no oscillating part, and D = A^2 sin^2 omega.",
+   "ground": "exact at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_plane_waves_current_and_form"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L34",
+   "name": "The momentum flux identity with the remainders",
+   "place": "ALGEBRA.md, The tension; the paper's Eq. (7); row 5 of The conventions and the units; S.48",
+   "statement": "At uniform coefficients w [P_a(t + 1) - P_a(t)] = SUM_b R_b [G_ab(i) - G_ab(i - b)] with G_ab(i) = now_i (now_(i+a+b) - now_(i-a+b)) - now_(i+b) (now_(i+a) - now_(i-a)); with the rounding the identity holds up to -[delta_i Delta_a now_i - now_i Delta_a delta_i], delta = r - r', exactly; and G_aa(i) = h_a(i) + h_a(i + a).",
+   "ground": "exact integers on a periodic 5-box at every Node and axis by rule3.step, anisotropic uniform paces included",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_momentum_flux_identity_with_the_remainders"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L35",
+   "name": "The tension of a plane wave",
+   "place": "S.7; row 6 of The conventions and the units",
+   "statement": "For now_i = b cos(k x_i + phi) along the axis G_aa = -2 b^2 sin^2 k at every Node, the Link's booking 2 num b^2 sin^2 k and the Node's tension T_aa = -num h_a = num b^2 sin^2 k; the cross reading G_ab = -2 b^2 sin k_a sin k_b.",
+   "ground": "exact at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_plane_waves_stress"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L36",
+   "name": "The two share forms summed over the board",
+   "place": "row 14 of The conventions and the units",
+   "statement": "The share's one-sided form and the hole's symmetric form agree summed over the board with the share's weight 1 / p_i^2 inside, SUM_i a_i SUM_j R_ij b_j / p_i^2 = SUM_i b_i SUM_j R_ij a_j / p_i^2, and differ at a Node; without the weight they agree at uniform paces.",
+   "ground": "exact fractions on three boards with tensions",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_two_share_forms_summed_over_the_board"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L37",
+   "name": "The exact lay's operator line",
+   "place": "ALGEBRA.md, The message lay (The generator)",
+   "statement": "With L the line's own read, (L f)_i = (S f_i + SUM over the six Ports of R f_j) / (2 w), of eigenvalue cos omega(q) on e^(i q x), the record one interval earlier is z_(-1) = (L + i sqrt(1 - L^2)) z, so before = L a - sqrt(1 - L^2) s exactly with the backward root 0; the expansion about c = cos omega_k, before_i = (c a_i - s_k s_i) + [(L a)_i - c a_i] + (c / s_k) [(L s)_i - c s_i] + O((L - c)^2), its remainder (1 / 2) f'' (L - c)^2 with f = sqrt(1 - L^2), f'' = -1 / s_k^3 and L - c = -s_k v_g delta, -v_g^2 delta^2 / (2 s_k); the plain lay's backward root 0.02991 at delta = 0.05 and 0.05662 at 0.10 against the first order 0.03173 and 0.06345.",
+   "ground": "the eigenvalue and the addition formula exact at rational angles; the expansion by the residual's order 2 and its coefficient; the roots recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_the_exact_lays_operator_line"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L38",
+   "name": "The paces compose",
+   "place": "ALGEBRA.md, The paces compose; S.34 (a)",
+   "statement": "p_0(c + 1) = p_0(c) (1 - 1 / Gamma), so p_0 = Gamma (1 - 1 / Gamma)^c and P(U + l) = P(U) P(l) exactly; p_i = p_0^2 / Gamma.",
+   "ground": "exact fractions by rule3.clock_pace and rule3.node_pace",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_paces_compose_exactly"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L39",
+   "name": "The clock's exponential and its readings",
+   "place": "ALGEBRA.md, The paces compose; S.34 (a), (e); The paces",
+   "statement": "p_0 is Gamma e^(-U) to O(1 / Gamma), the relative departure U / (2 Gamma) (0.951225 against 0.951229 at Gamma = 6,000, c = 300); its square is Gamma^2 - 2 Gamma c + 2 c^2 to the second order, the composition differing at -4 U^3 / 3 (0.905000 against 0.904837 at U = 0.05) while the Link's (Gamma - 2 c)^2 is e^(-4 U) to the first order only (0.8100 against 0.8187); the quadratic reading Gamma - c + c^2 div 2 Gamma within Gamma U^3 / 6 of a unit (1.02 at Gamma = 6,000 and 2.0 at 12,000 at U = 0.10) and the cubic within Gamma U^4 / 24 of a unit (0.05 and 0.13 at U = 0.15).",
+   "ground": "the orders by the residual at two step sizes, the numbers exact",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_clocks_exponential_and_its_readings"
+   },
+   "verdict": "holds",
+   "note": "The printed 0.41 at Gamma = 2,400 is row F03."
+  },
+  {
+   "id": "L40",
+   "name": "The acts' factors",
+   "place": "ALGEBRA.md, The write per proper volume and per proper interval; S.34 (d)",
+   "statement": "With N = p_0 / Gamma and h = p_0 / p_a = 1 / N under p_a = p_0^2 / Gamma, a count source carries N^2 / (h_x h_y h_z) = N^5 = p_x p_y p_z / (p_0 Gamma^2) and the Wronskian N / (h_x h_y h_z) = N^4 = p_x p_y p_z / (p_0^2 Gamma); with a tension the rulers differ and the volume is h_x h_y h_z.",
+   "ground": "exact fractions",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_acts_factors"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L41",
+   "name": "The exponential metric's post-Newtonian orders",
+   "place": "S.34 (c); S.19; main.tex 3.4 and 8",
+   "statement": "g_00 = -e^(-2 U) = -(1 - 2 U + 2 U^2) + O(U^3) and g_ij = e^(2 U) delta_ij = (1 + 2 U + 2 U^2) delta_ij + O(U^3): gamma = 1 exactly and beta = 1 in U; the remainders -4 U^3 / 3 and 4 U^3 / 3.",
+   "ground": "the residuals' order 3 and their coefficients",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_exponential_metrics_post_newtonian_orders"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "U = 0.5: e^-1 = 0.368 against the truncation's 0.500 and e^1 = 2.718 against 2.500, the orders holding and the values parting"
+  },
+  {
+   "id": "L42",
+   "name": "The clock's click rate",
+   "place": "S.15; main.tex 7.4 and 8 (a); The method of derivation, step 3",
+   "statement": "cos omega(U) = cos omega_0 + 2 g U - 2 g U^2 exactly at the quadratic clock; d omega / omega_0 = -f(omega_0) dU with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0), 1.063 at [2, 3]; f = 1 + omega_0^2 / 12 + O(omega_0^4), 5.9 percent at the computed pair (6.3 exactly), 1 as the gap closes.",
+   "ground": "exact fractions for the quadratic clock; the residual's orders 2 in U and 4 in omega_0",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_clocks_click_rate"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "num / den = 0.01: f = 1.269 against the series' 1.203; [999999, 1000000]: f = 1.0000002"
+  },
+  {
+   "id": "L43",
+   "name": "The fall and Kepler's potential",
+   "place": "S.18; the paper's Eq. (14); ALGEBRA.md, The method of derivation",
+   "statement": "m* = 3 den sin omega_0 / num = 3 tan omega_0; a = [num / (3 den sin omega_0)] [2 g / sin omega_0] |grad U| = 2 cos omega_0 / (3 (1 + cos omega_0)) |grad U| = [(1 - epsilon) / (3 (1 - epsilon / 2))] |grad U| in the gap epsilon, 4 / 15 at [2, 3] and 1 / 3 as the gap closes; U_K = [2 cos omega_0 / (1 + cos omega_0)] U, 4 / 5 at [2, 3] and 1 as the gap closes.",
+   "ground": "exact rationals in cos omega_0 = num / den",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_fall_and_keplers_potential"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "[999999, 1000000]: 0.3333332 and 0.9999995; num / den = 0.01: 0.0066 and 0.0198"
+  },
+  {
+   "id": "L44",
+   "name": "The post-Newtonian parameters of the Kepler column",
+   "place": "S.19; ALGEBRA.md, The rows against nature (a)",
+   "statement": "lambda = (den + num) / (2 num); gamma_K = den / num from the bending 4 lambda U_K = (1 + gamma) 2 U_K; beta_K = 2 + 2 den / num - 3 lambda = (den + num) / (2 num) from the periapsis; 1 + alpha_K = f lambda = tan omega_0 / omega_0 from the redshift; 1.5, 1.25 and 1.329 at [2, 3], 1 as the gap closes.",
+   "ground": "exact rationals; f lambda = tan omega_0 / omega_0 exact in (cos, sin) at rational points",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_post_newtonian_parameters"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "[999999, 1000000]: 1.000001, 1.0000005, 1.0000007; num / den = 0.01: 100, 50.5, 64.1"
+  },
+  {
+   "id": "L45",
+   "name": "The moving clock to the fourth order",
+   "place": "S.21; main.tex 8 (e); ALGEBRA.md, The rows against nature (e)",
+   "statement": "omega(k) = omega_0 + alpha k^2 - beta k^4 + O(k^6) with alpha = c_0 / (2 s) and beta = c_0 / (24 s) + c c_0^2 / (8 s^3); Omega / omega_0 = 1 - v^2 / (2 c_m^2) - (2 omega_0 / sin 2 omega_0) v^4 / (8 c_m^4) + O(v^6), c_m^2 = omega_0 / (3 tan omega_0): Lorentz's factor at c_m to the second order exactly, the fourth order's factor 2 omega_0 / sin 2 omega_0 = 1.6926 at [2, 3], along n omega_0 [(SUM n_a^4) tan omega_0 + cot omega_0], 1.2224 on a face diagonal, 1.0657 on the body diagonal, 1 as the gap closes; S.21's check -3.37 and -2.12 against -3.365 and -2.119.",
+   "ground": "the band's series by the residual's order 6, the tick's by its order 6; the numbers recomputed",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_moving_clock_to_the_fourth_order"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "the factor at num / den = 0.01 is 156 on an axis and 1.0000003 at [999999, 1000000]"
+  },
+  {
+   "id": "L46",
+   "name": "De Broglie and the three speeds",
+   "place": "S.22; S.53; main.tex 3.3",
+   "statement": "k = m* v with m* = 3 tan omega_0, c_m^2 = omega_0 / (3 tan omega_0) = 0.2508 at [2, 3], and m* c_m^2 = omega_0 exactly for every pair; c_s^2 = num / (3 den), c_m^2 and light's 1 / 3 are one as the gap closes, c_m / c = 0.867 at [2, 3] and 0.9997 at [999, 1000].",
+   "ground": "exact identity in floats to 10^-12 relative, the limits recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_de_broglie_and_the_three_speeds"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "num / den = 0.01: c_s^2 = 0.0033, c_m^2 = 0.0052 against light's 1 / 3"
+  },
+  {
+   "id": "L47",
+   "name": "The push on a moving record",
+   "place": "S.58; ALGEBRA.md, The push on a moving record; the paper's Eq. (16)",
+   "statement": "With E^2 = m^2 + P^2, m = N omega_0, P = c N^2 k, -(d omega / dU)_k = (E^2 + P^2) / E = E (1 + beta^2); the exact line F_perp = grad U [2 (1 - nu) e^(-2 U) + (4 nu / 3) e^(-4 U) SUM_a (1 - cos k_a)] / sin omega; at [2, 3] the rest push over E is f(omega_0) = 1.0634 and the coefficient of beta^2 over it 1.3354 = gamma_K - alpha_K / 2; at [999, 1000] 1.00017 and 1.00067.",
+   "ground": "the derivative identities by the centred difference's order 2; the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_push_on_a_moving_record"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L48",
+   "name": "The shadow's capture radius",
+   "place": "S.30; ALGEBRA.md, The paces compose",
+   "statement": "In the index n = e^(2 m / r) a circular ray stands where d(n r) / dr = e^(2 m / r) (1 - 2 m / r) = 0, r = 2 m, and b = 2 e m = 5.437 m, 0.046 above Schwarzschild's 3 sqrt 3 m; the quadratic index 1 / (1 - 2 U) gives r = 4 m and b = 8 m.",
+   "ground": "the derivative by the centred difference, the roots and numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_shadows_capture_radius"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L49",
+   "name": "The two clocks under the principle",
+   "place": "S.31; main.tex Table 4 and 3.4; ALGEBRA.md, The same clock and the same ruler for every act",
+   "statement": "omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)]; the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at equal rotations: 0.3916 against 0.4 and 0.3920 at N = 0.8, omega = 0.4, 0.9; 2.5 x 10^-38 at nature's gap; the rest line's rate in omega -2 tan(omega_0 / 2) / omega_0 = -f(omega_0); a cavity of bodies ticks at N exactly.",
+   "ground": "the series by the residual's order 5, the half-angle identity exact, the numbers recomputed",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_two_clocks_under_the_principle"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "omega = 2 and 3 at N = 0.8: the exact beat 0.372 against N Delta = 0.8 and the series 0.572, outside the small-rotation domain"
+  },
+  {
+   "id": "L50",
+   "name": "Light's index to first order",
+   "place": "S.2; S.12; main.tex 8 (p)",
+   "statement": "n = e^(2 x) = 1 / (1 - 2 x) + O(x^2) and n - 1 = 2 x + O(x^2); two events over L Links arrive L sqrt 3 [1 / (1 - 2 x) - 1] = 2 x L sqrt 3 + O(x^2) intervals apart.",
+   "ground": "the residuals' order 2",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_lights_index_to_first_order"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "x = 0.4: e^0.8 = 2.23 against 5.0 and 1.8; x = 0.5: the quadratic form's 1 / (1 - 2 x) diverges where e^1 = 2.72, the truncation's horizon (S.3)"
+  },
+  {
+   "id": "L51",
+   "name": "The mass defect's first order",
+   "place": "S.38 (b); ALGEBRA.md, The mass defect is the form's fall at a kept count",
+   "statement": "M sin(N omega_0) = M sin omega_0 - M omega_0 x cos omega_0 + O(x^2) with N = e^(-x).",
+   "ground": "the residual's order 2",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_mass_defects_first_order"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "x = 1 at [2, 3]: 0.304 against the first order's 0.185"
+  },
+  {
+   "id": "L52",
+   "name": "The preferred-frame parameter of a diagonal metric",
+   "place": "S.35; main.tex 10.3",
+   "statement": "4 gamma + 4 + alpha_1 = 0, alpha_1 = -4 (1 + gamma) = -8 at gamma = 1; the drag (4 gamma + 4 + alpha_1) / 8 of Lense-Thirring's is 0; a covariant boost would give g_0i = gamma_L^2 v (N^2 - h^2) = -4 U v to first order.",
+   "ground": "exact arithmetic; the cross term's residual order 3",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_preferred_frame_parameter"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L53",
+   "name": "The staggered clock's redshift",
+   "place": "S.36 (v)",
+   "statement": "omega / omega_0 = N sqrt(3 / (4 - N^4)) = N (1 - 2 U / 3 + O(U^2)), a redshift 5 / 3 of general relativity's; sqrt(3 / (4 - 0.9^4)) = 0.9472; P_0 (4 - nu) = N^2 (4 - nu P_a) for all nu forces P_0 = N^2 and P_a = 1.",
+   "ground": "the residual's order 2, the forcing exact",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_staggered_clocks_redshift"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L54",
+   "name": "The frozen content",
+   "place": "S.41 (3); ALGEBRA.md, The paces compose; row 4 of The conventions and the units",
+   "statement": "p_i = p_0^2 / Gamma rounds to 0 where Gamma e^(-2 U) < 1 / 2, U > (1 / 2) ln(2 Gamma), the frozen content (Gamma / 2) ln(2 Gamma), 4.70 Gamma, 28,206 at Gamma = 6,000 with p_0 rounded before squaring (paces.frozen_content) against the formula's 28,178.",
+   "ground": "the inequality exact, the numbers by the derivation script",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_frozen_content"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L55",
+   "name": "The bounds from the photon and the dispersion",
+   "place": "S.27; S.24; main.tex 10.1 and 10.2",
+   "statement": "One interval is omega_0 x 1.288 x 10^-21 s and one Link omega_0 x 6.69 x 10^-13 m; a photon of 1.4 PeV gives sin omega_0 <= 3.65 x 10^-10 (3.44 x 10^-10 on an axis), den > 1.5 x 10^19 and gamma_K - 1 < 6.7 x 10^-20; MAGIC's 3.8 x 10^-16 gives k < 6.7 x 10^-8 per Link, the Link below 1.3 x 10^-26 m on an axis and 2.1 x 10^-26 m on the mean, omega_e < 2.0 x 10^-14 (3.1 x 10^-14) and gamma_K - 1 < 2.0 x 10^-28.",
+   "ground": "every number recomputed from the constants",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_bounds_from_the_photon_and_the_dispersion"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L56",
+   "name": "The bending of light and Shapiro's delay",
+   "place": "S.20; the paper's Eq. (15); ALGEBRA.md, The rows against nature (b), (c)",
+   "statement": "The delay along a straight path is 2 sqrt 3 mu [arsinh(x_2 / b) + arsinh(x_1 / b)], 2 sqrt 3 mu ln(4 x_1 x_2 / b^2) far away; the bending's transverse integral is integral b dl / (b^2 + l^2)^(3 / 2) = 2 / b, so with n - 1 = 2 U the turn is 4 U_b, twice the Newtonian 2 U_b.",
+   "ground": "the antiderivative at its limits exact, the quadratures against the closed forms, the logarithm's remainder of order 2",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_bending_and_shapiros_integrals"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L57",
+   "name": "The rest rotation at a content to first order",
+   "place": "S.63's input; S.15",
+   "statement": "omega_0(U) = omega_0 - omega_0 f(omega_0) U + O(U^2).",
+   "ground": "the residual's order 2 at [2, 3] with the composed clock",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_slow_limits_rest_rotation"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "U = 0.5 at [2, 3]: 0.500 exact against the first order's 0.394"
+  },
+  {
+   "id": "L58",
+   "name": "Bell's correlation under the declared credit",
+   "place": "S.10; S.51; ALGEBRA.md, The pair family and Bell's gate; main.tex 9.3 and 9.4",
+   "statement": "The four sums' squares add to M_1^2 + M_2^2 (Lagrange's identity); E(a, b) = cos 2a cos 2b + rho sin 2a sin 2b with rho = 2 M_1 M_2 / (M_1^2 + M_2^2); P(A+) = (M_1^2 c_a^2 + M_2^2 s_a^2) / (M_1^2 + M_2^2) independent of b; equal parts give cos 2(a - b); at (1, 0), (1, 1), (12, 5), (5, 12): 119 / 169, -119 / 169, 120 / 169, 120 / 169, S = 478 / 169 = 2.8284 below 2 sqrt 2, and S = (238 + 240 rho) / 169 at unequal parts.",
+   "ground": "exact rationals at random angles and parts, the integer settings exact",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_bells_correlation_under_the_declared_credit"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L59",
+   "name": "The two local credits and the sawtooth",
+   "place": "S.10; S.51b; main.tex 9.4; ALGEBRA.md (h)",
+   "statement": "A credit by the shares gives E = (1 / 2) cos 2(a - b) and S = sqrt 2 at the ideal angles; a credit by the sign of the larger port gives the sawtooth E = 1 - 4 |a - b| / pi, whose sum at four settings ordered a < b < a' < b' within a quarter turn is exactly 2, Bell's bound, at the ideal and at the file's integer settings alike.",
+   "ground": "the product-to-sum identity exact, the means by the discrete average over 64 phases (exact for the shares), the sawtooth's measure exact",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_local_credits_and_the_sawtooth"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L60",
+   "name": "The contrast credit",
+   "place": "S.10's check",
+   "statement": "<cos x sgn cos(x - 2 delta)> = (2 / pi) cos 2 delta, so the contrast credit gives E = cos 2(a - b) exactly at one side's efficiency 2 / pi; the symmetric |cos| reading gives E(pi / 8) = 0.88 and S = 3.52.",
+   "ground": "the integral in closed form against a quadrature, the symmetric numbers by quadrature",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_contrast_credit"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L61",
+   "name": "The GHZ correlation under the declared credit",
+   "place": "S.40; ALGEBRA.md, The GHZ gate; main.tex 9.4",
+   "statement": "With the patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p) the + ports' sum is cos(a + b + c), a - port -sin(a + b + c); the eight shares sum to 4, E_3 = cos 2(a + b + c), every pairwise E is 0 and every marginal 1 / 2; Mermin's M = -4 exactly at the integer settings (1, 0) and (1, 1).",
+   "ground": "exact Gaussian rationals at random angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_ghz_correlation"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L62",
+   "name": "The instruments' rational angles and the turn's three shears",
+   "place": "ALGEBRA.md, The integer-exact constructions (3), row 9; S.61 row 9",
+   "statement": "sin theta = 2 p q / (p^2 + q^2) and cos theta = (p^2 - q^2) / (p^2 + q^2) exactly on the circle; R(theta) = S_x S_y S_x with t = tan(theta / 2) and sin theta = 2 t / (1 + t^2), an identity of 2 x 2 matrices.",
+   "ground": "exact fractions at random pairs",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_instruments_rational_angles_and_the_three_shears"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L63",
+   "name": "The units of one quantum",
+   "place": "rows 12, 13, 17 and 18 of The conventions and the units; S.49 (4), (5); S.26 (a)",
+   "statement": "(W_c sin omega_0)^2 = 9 T^2 (den^2 - num^2), the count wall; A^2 = count T den / (2 laid sqrt(den^2 - num^2)) gives 2 A^2 sin omega = (count / laid) T; one quantum's share 6 den A^2 sin^2 omega = W_c sin omega; the Wronskian A^2 sin omega = T / 2 for every family, so one quantum writes 1 / (2 E_s) and |q_p| = |q_e|; |W| / (count T) = 1 / (2 sin omega_0) = 0.6708 for a record laid by share at [2, 3] and 1 / 2 for a record of count 1.",
+   "ground": "exact rationals in the squares, rule3's isqrt",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_units_of_one_quantum"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L64",
+   "name": "The region's reading factor",
+   "place": "S.8; main.tex 5.3",
+   "statement": "|SUM_(y = 0)^(n - 1) e^(2 pi i y / Lambda)| = sin(pi n / Lambda) / sin(pi / Lambda), the factor sin(pi n / Lambda) / (n sin(pi / Lambda)), 0.91 at n = 4, Lambda = 16, and 0 at Lambda = n.",
+   "ground": "the geometric sum's modulus exact at rational unit angles; the number recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_regions_reading_factor"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L65",
+   "name": "The Zeno formula",
+   "place": "S.59",
+   "statement": "P(e at T_pi) = (1 - cos^n(pi / n)) / 2: 1, 0.500, 0.375, 0.235, 0.133, 0.072 and 0.037 at n = 1, 2, 4, 8, 16, 32 and 64.",
+   "ground": "the recurrence and the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_credit.py",
+    "function": "check_the_zeno_formula"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L66",
+   "name": "Theorem 4, the stable body",
+   "place": "the paper's Theorem 4; ALGEBRA.md, The functional and the dilation; S.48",
+   "statement": "F(R) = K / R^2 - SUM_r sigma_r W_r R^(-s_r): F'(1) = 0 is the virial 2 K = SUM sigma s W and F''(1) = SUM sigma s (2 - s) W under it; s (2 - s) = +1, 0, -3 at s = 1, 2, 3; Pekar's F = a / R^2 - c / R has one critical point 2 a / c, a minimum for every mass.",
+   "ground": "the Taylor remainder's order 3 with K set by the virial, F'' exact, Pekar's exact",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_stable_body_theorem"
+   },
+   "verdict": "holds",
+   "note": "The theorem's domain is power-law kernels; the Yukawa kernel's integrated exponent is row A01."
+  },
+  {
+   "id": "L67",
+   "name": "The hollow's barrier",
+   "place": "ALGEBRA.md 7.2 (b); S.13; main.tex 7.2",
+   "statement": "F = a / R^2 - b / R^3 - c / R has F' = (c R^2 - 2 a R + 3 b) / R^4, the roots R_+- = (a +- sqrt(a^2 - 3 b c)) / c, none where 3 b c > a^2; F'' = 2 (a R - 3 b) / R^5 at a root, the wide point the minimum and the narrow the saddle.",
+   "ground": "exact rationals at (5, 1, 3) and the derivative identity at random points",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_hollows_barrier"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L68",
+   "name": "The functional's gradient is the fixed point's equation",
+   "place": "S.13; ALGEBRA.md, The functional (Proof); the paper's Eq. (12)",
+   "statement": "dF / dphi_i = (2 num / (3 den)) (-Delta^2 phi)_i - (8 g / Gamma) Phi_i phi_i with Phi the wells of the record's own counts, so dF / dphi = -2 (M(Phi) phi - 2 cos omega_0 phi) and dF / dphi = 2 lambda phi on the sphere is the fixed point's equation with lambda = 2 cos omega_0 - 2 cos omega_b.",
+   "ground": "exact rationals on a periodic chain of five with two symmetric kernels, the derivative by exact interpolation of the quartic",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_functionals_gradient_is_the_fixed_points_equation"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L69",
+   "name": "The adiabatic invariant and the count's drift",
+   "place": "S.14; the paper's Eq. (13); invariant_check.py",
+   "statement": "At fixed omega D_t = a_t^2 - a_(t+1) a_(t-1) = a_t^2 + a_(t-1)^2 - 2 cos omega a_t a_(t-1) is conserved and equals A^2 sin^2 omega; the orbits are ellipses of area pi D / sin omega, so D / sin omega = A^2 sin omega is the adiabatic invariant, the slowly varying ansatz with the midpoint phase satisfying the line to the first order in the ramp; the recurrence stepped 20,000 intervals from 0.841 to 0.600 keeps D / sin omega within 4 x 10^-5 while D falls by a quarter; N(t_2) / N(t_1) = [sin omega_b(t_2) / sin omega_b(t_1)] [p_i^2(t_1) / p_i^2(t_2)].",
+   "ground": "exact rationals; the ansatz by the residual's order 2; the stepped recurrence a witness",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_adiabatic_invariant_and_the_drift"
+   },
+   "verdict": "holds",
+   "note": "The ansatz's phase as printed is row F04."
+  },
+  {
+   "id": "L70",
+   "name": "The body's click share",
+   "place": "S.14, the body's click; main.tex 5.4 and 7.4",
+   "statement": "sin omega_j - sin omega_i = 2 cos((omega_i + omega_j) / 2) sin((omega_j - omega_i) / 2) = sin(omega_j - omega_i) [1 - omega_i omega_j / 2 + O(omega^4)]: one photon's share T sin omega_L at the line, to a relative omega_0^2 / 2 at nature's gap.",
+   "ground": "the identity exact at rational half-angles, the expansion by the residual's order 5",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_bodys_click_share"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "omega = 1 and 2: the exact share difference 0.068 against the first order's 0"
+  },
+  {
+   "id": "L71",
+   "name": "Schroedinger's equation as the slow limit",
+   "place": "S.63; main.tex 3.3",
+   "statement": "Re[e^(-i omega_0 (t + 1)) (psi + psi' + psi'' / 2) + e^(-i omega_0 (t - 1)) (psi - psi' + psi'' / 2)] = Re[e^(-i omega_0 t) (2 cos omega_0 psi - 2 i sin omega_0 psi' + cos omega_0 psi'')] exactly; (num / (3 den)) 6 = 2 cos omega_0; i psi' = -Delta psi / (2 m*) with m* = 3 den sin omega_0 / num = 3 tan omega_0; the three conditions, the band's k^4 term of relative size k^2 / 12 and psi'' against 2 sin omega_0 psi' of relative size (omega - omega_0) / (2 tan omega_0).",
+   "ground": "the expansion exact in Gaussian rationals; the orders by the residual",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_schroedingers_slow_limit"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L72",
+   "name": "The resonance's exponents",
+   "place": "S.16; ALGEBRA.md, The law's own formulas A (6)",
+   "statement": "zeta' = -i (Delta / 2) zeta - i mu e^(i theta) conj(zeta) has the exponents +- sqrt(mu^2 - Delta^2 / 4): growth for |Delta| < 2 mu, a full width epsilon / sin omega_b with mu = epsilon / (4 sin omega_b).",
+   "ground": "the real 2 x 2 generator squares to (mu^2 - Delta^2 / 4) times the identity, exact",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_resonances_exponents"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L73",
+   "name": "The resonant growth rate",
+   "place": "S.16's check",
+   "statement": "The recurrence stepped 20,000 intervals at 2 cos omega_b = 1.4317 and epsilon = 0.013 grows at 0.004653 to 0.004656 per interval, the first-order mu = epsilon / (4 sin omega_b) = 0.004654 to four digits.",
+   "ground": "the slowly varying method a hand derivation; the stepped recurrence a witness",
+   "kind": "C",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_resonant_growth_witness"
+   },
+   "verdict": "witness only"
+  },
+  {
+   "id": "L74",
+   "name": "The cross current of two standing records",
+   "place": "S.17; main.tex 7.5",
+   "statement": "num (a_t b_(t-1) - a_(t-1) b_t) for A cos(omega_1 t + alpha), B cos(omega_2 t + beta) is a sum of cosines of (omega_1 - omega_2) t and (omega_1 + omega_2) t with constant parts only when omega_1 = omega_2.",
+   "ground": "exact at rational angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_cross_current_of_two_standing_records"
+   },
+   "verdict": "holds",
+   "note": "The finite window's mean is row A06."
+  },
+  {
+   "id": "L75",
+   "name": "The integer budget's walk",
+   "place": "ALGEBRA.md, The integer budget of a derived row; main.tex 9.2",
+   "statement": "The response kernel G_m - G_(m-1) = cos(omega (m + 1 / 2)) / cos(omega / 2) with G_m = sin(omega (m + 1)) / sin omega, of mean square 1 / (1 + cos omega), so the walk is sqrt(n / (12 (1 + cos omega_k))): 0.224 sqrt n at [2, 3]'s rest, 0.209 at light's k = pi / 4, 0.289 at a band's centre; G_(t-1) = t at the uniform mode and (-1)^t t at the checkerboard; the zone means 0.354, 0.259, 0.226 and 0.302 sqrt n.",
+   "ground": "the kernel identity exact at rational half-angles, the double roots exact in integers, the numbers recomputed, the zone means by quadrature",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_budgets_walk"
+   },
+   "verdict": "holds",
+   "note": "The walk is statistics under the model of independent uniform remainders, named so in the law."
+  },
+  {
+   "id": "L76",
+   "name": "The guide's lay",
+   "place": "S.48; row 18 of The conventions and the units",
+   "statement": "|C| = 3 den s / (2 num sin k) for the source at one Node of a width-one guide; the two trains' form (3 / 2) (SUM_t A_t^2) sin Omega / sin k from B = 3 A / (2 sin k), D = B^2 sin^2 Omega and v_g = sin k / (3 sin Omega); one quantum is laid at SUM_t A_t^2 = (2 / 3) T sin k, the increments' own squares summing to half of it.",
+   "ground": "exact at rational angles; the half by the discrete sum over a period",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_guides_lay"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L77",
+   "name": "What a body writes into the holder of the sign",
+   "place": "S.42; main.tex 7.4",
+   "statement": "z_(t+1) + z_(t-1) = 2 cos omega_t z_t with any real omega_t keeps W = Im(conj(z_t) z_(t-1)) exactly; a steady rotation has W_i = phi_i^2 sin omega_b constant and g_ij = 0, writing nothing travelling; the quanta radiated through a far sphere are (3 sqrt 3 / 4 pi) s^2 sin^2 Omega / T, the coefficient 0.4135.",
+   "ground": "exact Gaussian rationals, the number recomputed; the retarded multipole expansion a hand derivation",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_what_a_body_writes_into_the_holder_of_the_sign"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L78",
+   "name": "The two-mode line under the rotation",
+   "place": "S.43; main.tex 7.4",
+   "statement": "(a) a uniform time turn is a gauge, z_t = e^(-i Phi_t) u_t with u on the plain line for any theta_t; (b) a constant turn shifts both senses by theta; (c) K_jm antisymmetric, K_mm = 0; (d) the transfer generator squares to -(g^2 + Delta^2 / 4), P(t) = [g^2 / (g^2 + Delta^2 / 4)] sin^2(sqrt(g^2 + Delta^2 / 4) t), the full width 4 Omega_R; (e) SUM_i x_i [phi_j (M phi_m) - (M phi_j) phi_m]_i = -K_jm on an open chain, so K_jm = 2 w (cos omega_j - cos omega_m) d_jm = -4 w sin((omega_j + omega_m) / 2) sin((omega_j - omega_m) / 2) d_jm and Omega_R = theta_L omega_L |d_jm| / 2 for a small line.",
+   "ground": "exact Gaussian rationals and Fractions, the small line by the residual's order 2",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_two_mode_line_under_the_rotation"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L79",
+   "name": "The two forces between quanta",
+   "place": "S.44; main.tex 10.1",
+   "statement": "F_e / F_g = k E_g / (2 E_s sin^2 omega_s) at one family and (F_e / F_g)_e / (F_e / F_g)_p = sin^2 omega_p / sin^2 omega_e = (m_p / m_e)^2 between two; nature's 4.17 x 10^42 and 1.24 x 10^36, the ratio 3.37 x 10^6 = 1836.15^2.",
+   "ground": "exact rationals, the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_two_forces_between_quanta"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L80",
+   "name": "The nuclear holder's threshold",
+   "place": "S.45 (a), (b)",
+   "statement": "2 mu g^2 / kappa >= 1.6798 is W >= 1.17 Gamma kappa / omega_p^3 (1.6798 x 4 pi / 18 = 1.173): 591 at [2, 3] (502 at the exact inertia), doubling under the pair hypothesis to 1,183 and 1,004 (1.6798 x 4 pi / 9 = 2.345); lambda_p = 0.210 fm and the binding fractions 3.1 x 10^-2, 4.9 x 10^-3, 1.6 x 10^-3 at 0.84, 2.13, 3.75 fm.",
+   "ground": "the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_nuclear_holders_threshold"
+   },
+   "verdict": "holds",
+   "note": "The threshold 1.6798 of Yukawa's well is a known number of that equation, taken as input."
+  },
+  {
+   "id": "L81",
+   "name": "The atom's self-term",
+   "place": "S.46 (c); main.tex 7.3",
+   "statement": "epsilon = x^2 - 2 x + (1.25 / Z) x; Hartree's fixed point is the minimum of E_tot = x^2 - 2 x + (0.625 / Z) x at x = 1 - 0.3125 / Z, E_tot = -(1 - 0.3125 / Z)^2 and epsilon = E_tot + 0.625 (1 - 0.3125 / Z) / Z: (-0.473, -0.043, 1.45), (-0.712, -0.448, 1.19), (-0.938, -0.878, 1.03), (-0.979, -0.959, 1.01) at Z = 1, 2, 10, 30; the Rydberg ratios 1 - 1.25 / Z, 95.9 percent at Z = 30.",
+   "ground": "exact rationals",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_atoms_self_term"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L82",
+   "name": "The equivalence principle between families",
+   "place": "S.47; main.tex 8 (i)",
+   "statement": "2 nu / (1 + nu) = 1 - tan^2(omega_s / 2) exactly with nu = cos omega_s; two families fall apart by tan^2(omega_n / 2) - tan^2(omega_p / 2), (omega_n^2 - omega_p^2) / 4 at small gaps; 0.0139 x 9,297 / 4 = 32.3, eta = 32.3 omega_e^2 below 4.4 x 10^-18.",
+   "ground": "the identity exact at rational points, the small-gap difference by the residual's order 4, the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_equivalence_principle_between_families"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L83",
+   "name": "The quanta a cloud gives to settle",
+   "place": "ALGEBRA.md, The surplus leaves",
+   "statement": "f = (4 f / (1 + 4 f^2))^3 in a box (23 percent leaving), f = 4 f^(1 / 3) / (4 f^(2 / 3) + 1) on a chain (17.1 percent), f = 16 f / (4 f + 1)^2 on a plane with the root f = 3 / 4 exactly (25.0 percent); the brackets 1 - (4 / 5)^d, 20, 36 and 49 percent.",
+   "ground": "the plane's root exact, the others by bisection",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_quanta_a_cloud_gives_to_settle"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "L84",
+   "name": "The total share is non-negative",
+   "place": "S.6; ALGEBRA.md, The share's sign and the credit's floor; main.tex 4.4",
+   "statement": "SUM_i e_i >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and the even board's checkerboard with before = -now; a Node's share has the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|.",
+   "ground": "the inequality a hand proof by the norm of S_6, its witness on random integer boards; the equality cases and the minimum exact",
+   "kind": "C",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_the_total_share_is_non_negative"
+   },
+   "verdict": "witness only"
+  },
+  {
+   "id": "L85",
+   "name": "Theorem 2, what the acts can form",
+   "place": "ALGEBRA.md, The four acts; the paper's Theorem 2; S.48",
+   "statement": "Every fixed finite composition of the four acts is an affine form of the levels plus a term bounded by a constant of the composition, so no product of two levels is written by the step on the whole lattice.",
+   "ground": "a hand proof by the growth of a floor of an affine form against a product's",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "No numerical witness is printed; a machine check would be a proof assistant's."
+  },
+  {
+   "id": "R01",
+   "name": "The computed pair's limits",
+   "place": "main.tex, Introduction",
+   "statement": "Replacing [2, 3] by [999, 1000] moves c_m / c from 0.867 to 0.9997 and gamma_K, beta_K from 1.5, 1.25 to 1.001, 1.0005, approaching 1 as the gap closes.",
+   "ground": "the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_computed_pairs_limits"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "num / den = 0.01: c_m / c = 0.125, gamma_K = 100, beta_K = 50.5"
+  },
+  {
+   "id": "R02",
+   "name": "The clock's rate is exact in 2 sin(omega / 2)",
+   "place": "main.tex 3.4; S.31",
+   "statement": "2 sin(omega(U) / 2) = N 2 sin(omega_0 / 2) exactly for every N, from 1 - cos omega(U) = (1 - nu) N^2; in omega up to the finite-rotation correction omega_0^2 / 12, 5.9 percent at the computed pair.",
+   "ground": "exact rationals in the half-sines squared",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_clocks_rate_is_exact_in_the_half_sine"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "U = 4.7, the frozen content: omega(U) / omega_0 = 0.0091 against N = 0.0091, exact in the half sine"
+  },
+  {
+   "id": "R03",
+   "name": "The cut region's uniform mode",
+   "place": "main.tex 5.3",
+   "statement": "A region with its outer Links cut and its inner Links open has its uniform mode at cos omega_0 = num / den exactly whatever the region's size, (S_i + SUM over the open Ports of R_ij) / w = 2 num / den.",
+   "ground": "exact rationals on chains of one to five Nodes",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_cut_regions_uniform_mode"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R04",
+   "name": "The folded axis carries the band",
+   "place": "main.tex 9.1",
+   "statement": "A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly.",
+   "ground": "exact at rational angles on the folded chain by rule3.numerator",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_folded_axis_carries_the_band"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R05",
+   "name": "Friedmann's dust equations and the redshift",
+   "place": "main.tex 7.5; S.29",
+   "statement": "a'' = -(4 pi G_K / 3) rho a with rho a^3 constant integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, q_0 = Omega_m / 2 positive for every rho > 0; 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), the classical 1 / (1 - beta) differing at the second order; z_t = (2 Omega_Lambda / Omega_m)^(1 / 3) - 1 = 0.67 at 0.7.",
+   "ground": "the invariant's derivative exact and a fourth-order integration to 10^-12; the series by the residual's order 3",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_friedmanns_dust_equations_and_the_redshift"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "beta = 0.9: 4.36 exact against the second order's 2.31 and the classical 10"
+  },
+  {
+   "id": "R06",
+   "name": "The content to first order in the clock",
+   "place": "main.tex 8 (a); ALGEBRA.md, The ledger of exactness",
+   "statement": "p_0 / Gamma = (1 - 1 / Gamma)^l = e^(-U) exactly with U = -l ln(1 - 1 / Gamma), which is l / Gamma to the first order in 1 / Gamma, U - l / Gamma = l / (2 Gamma^2) + ...",
+   "ground": "the residual's order 2 in 1 / Gamma",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_contents_first_order_in_the_clock"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "Gamma = 2: U = 0.693 l against l / 2"
+  },
+  {
+   "id": "R07",
+   "name": "The two readings of beta",
+   "place": "main.tex 8 (b)",
+   "statement": "P / E with p = E v and v / c_local agree as the gap closes: on the exact band P / E = c k / omega(k) and v / c = (d omega / dk) / c read 0.203 and 0.151 at [2, 3] and k = 0.3, and agree to 10^-6 at [999999, 1000000].",
+   "ground": "the readings recomputed",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_two_readings_of_beta"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "[999, 1000] at k = 0.3: 0.971 against 0.960"
+  },
+  {
+   "id": "R08",
+   "name": "gamma_K - 1 is half the gap squared",
+   "place": "main.tex 10.1; S.27",
+   "statement": "den / num - 1 = 1 / cos omega_0 - 1 = omega_0^2 / 2 + 5 omega_0^4 / 24 + O(omega_0^6), below 6.7 x 10^-20 at omega_e < 3.7 x 10^-10.",
+   "ground": "the residual's order 4 and its coefficient",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_gamma_k_minus_one_is_half_the_gap_squared"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "[1, 2], omega_0 = pi / 3: 1 against omega_0^2 / 2 = 0.548"
+  },
+  {
+   "id": "R09",
+   "name": "The lattice's half-sine variable",
+   "place": "S.31",
+   "statement": "s(k)^2 = (2 sin(k / 2))^2 = k^2 [1 - k^2 / 12 + O(k^4)], every mode scaling by N in s(omega) exactly at long wavelength and to the lattice's k^2 / 12 at finite k.",
+   "ground": "the residual's order 6",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_lattices_half_sine_variable"
+   },
+   "verdict": "holds",
+   "far_regime_witness": "k = pi: s^2 = 4 against the truncation's 1.75"
+  },
+  {
+   "id": "R10",
+   "name": "The ports are exactly orthogonal",
+   "place": "main.tex 9.3; S.51; main.tex 10.1",
+   "statement": "e(+) = (p, q) and e(-) = (-q, p) are exactly orthogonal with equal norms, so each side's marginal is one half for any setting; in nature cos omega differs from 1 by under 10^-18 for every family (6.8 x 10^-20 at omega_e = 3.7 x 10^-10).",
+   "ground": "exact integers, the number recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_ports_are_exactly_orthogonal"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R11",
+   "name": "The fringe's spacing and the near-field minima",
+   "place": "S.23",
+   "statement": "The far-field spacing is lambda L / d = 16 Links; the near-field minima solve sqrt(L^2 + (y - 18)^2) - sqrt(L^2 + (y - 30)^2) = +- 4 at y = 15.28 and 32.72, the rows 15 and 33.",
+   "ground": "the roots by bisection",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_fringes_near_field_minima"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R12",
+   "name": "Newton's constant and alpha_law's numbers",
+   "place": "S.25, Eq. (20); S.26 (b)",
+   "statement": "G_clock = 1 / (4 pi Gamma E_g) from U = 3 s / (4 pi r Gamma E_g) against G M / (c^2 r) with c^2 = 1 / 3; alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.20675 k / (Gamma E_s), 137.036 x 0.20675 = 28.33, 28 giving 1 / 135.43 and 29 giving 1 / 140.27.",
+   "ground": "the algebra exact with pi cancelled, the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_newtons_constant_and_alpha_laws_numbers"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R13",
+   "name": "The rule's total at the width",
+   "place": "ALGEBRA.md, The bound",
+   "statement": "6 A |R| + A |S| + w (A + 1) is 4.4 x 10^15 at [2, 3] and 8.8 x 10^18 at [4000, 6000] with Gamma = 10^4 and A = 2^20, 0.96 of 2^63 (0.955 exactly).",
+   "ground": "exact integers by rule3.rule_total",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_rules_total_at_the_width"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R14",
+   "name": "A body stands, in integers",
+   "place": "ALGEBRA.md, The integer budget of a derived row; main.tex 9.2",
+   "statement": "A = sqrt(T c_i / (2 sin omega_s)) is 852 at T = 2^15 and 3,407 at 2^19 for c_i = 33 at [2, 3]; the deviation 2 sqrt 8 sigma sqrt n / A is 4.7 percent per mode at n = 10^3; at the two slits over 130 intervals the walk is 2.4 levels per mode, 3.0 per Node over the plane's zone and 4.0 over a cube's.",
+   "ground": "the numbers recomputed",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_a_body_stands_in_integers"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "R15",
+   "name": "The one-sided mixed term's dispersion",
+   "place": "S.36 (i)",
+   "statement": "C_a (2 i sin k_a) (1 - e^(i omega)) = 2 C_a sin k_a sin omega + 4 i C_a sin k_a sin^2(omega / 2), by 1 - e^(i omega) = -2 i sin(omega / 2) e^(i omega / 2): a g_0a part beside an imaginary part.",
+   "ground": "exact Gaussian rationals at rational half-angles",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_one_sided_mixed_terms_dispersion"
+   },
+   "verdict": "holds"
+  },
+  {
+   "id": "F01",
+   "name": "The law's form change without the transpose",
+   "place": "ALGEBRA.md, The mass defect is the form's fall at a kept count",
+   "statement": "As printed: D(t + 1) - D(t) = <a_next, (M(t) - M(t + 1)) a_now>, from the line by substitution. The exact change carries M(t + 1)^T (the paper's 4.3); the printed form holds at paces uniform over the board, where M is symmetric, and departs where the paces differ.",
+   "ground": "exact fractions on three boards, two reads with different contents",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_form.py",
+    "function": "check_the_laws_form_change_without_the_transpose"
+   },
+   "verdict": "finding",
+   "note": "The law's line to carry the transpose or the clause 'at paces uniform over the board'; the check (10^-15) was run at uniform paces."
+  },
+  {
+   "id": "F02",
+   "name": "Row 14's unweighted sum as printed",
+   "place": "row 14 of The conventions and the units",
+   "statement": "As printed: SUM_i a_i SUM_j R_ij b_j = SUM_i b_i SUM_j R_ij a_j by R's symmetry from both ends. R_ij carries the reading Node's p_i^2 and is not symmetric where the paces differ; the equality holds with the share's weight 1 / p_i^2 inside (row L36).",
+   "ground": "exact fractions",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_booking.py",
+    "function": "check_row_14s_unweighted_sum_as_printed"
+   },
+   "verdict": "finding",
+   "note": "A wording finding: the row's equality is the weighted one, the share's own."
+  },
+  {
+   "id": "F03",
+   "name": "The quadratic reading at Gamma = 2,400 as printed",
+   "place": "ALGEBRA.md, The paces compose (R169 (h))",
+   "statement": "As printed: the quadratic reading is within Gamma U^3 / 6 of a unit of the composition, 1.02 units at c = 600 and Gamma = 6,000, 0.41 at Gamma = 2,400 and 2.0 at 12,000. The exact power gives 0.44 at 2,400 (0.436), the 1.02 and 2.0 recomputed.",
+   "ground": "exact fractions by rule3.clock_pace",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_paces.py",
+    "function": "check_the_quadratic_reading_at_gamma_2400_as_printed"
+   },
+   "verdict": "finding",
+   "note": "A numeric finding on one printed digit: 0.41 against 0.44."
+  },
+  {
+   "id": "F04",
+   "name": "S.14's ansatz phase as printed",
+   "place": "S.14",
+   "statement": "As printed: the ansatz a_t = C cos(SUM_(s <= t) omega_s + phi) / sqrt(sin omega_t) satisfies the line to the first order in omega_(t+1) - omega_t. With the phase's increment omega_(t+1), as the sum reads, the residual is of the first order in the ramp; with the midpoint increment (omega_t + omega_(t+1)) / 2 it is of the second order, the statement's content.",
+   "ground": "the residual's order at two step sizes",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_bodies.py",
+    "function": "check_s14s_ansatz_as_printed"
+   },
+   "verdict": "finding",
+   "note": "A wording finding on the phase: the midpoint increment makes the sentence exact to its order."
+  },
+  {
+   "id": "F05",
+   "name": "S.42's plain monopole as printed",
+   "place": "S.42, inputs",
+   "statement": "As printed: SUM_i W_i over a body is exactly conserved for a static self-level. At static non-uniform paces the plain sum moves and the weighted SUM_i W_i / p_i^2 stands (the audit's item 3, row A03).",
+   "ground": "exact Gaussian rationals at the two-Node witness",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_audit.py",
+    "function": "check_s42s_plain_monopole_as_printed"
+   },
+   "verdict": "finding",
+   "note": "The audit's finding; the hands' line given in 5977935062 (3)."
+  },
+  {
+   "id": "F06",
+   "name": "The momentum identity at non-uniform paces as printed",
+   "place": "main.tex 4.3",
+   "statement": "As printed: at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings. Computed, the clause's residual on a 5-box is of the size of the identity's terms; the exact identity is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i, whose extra terms against Eq. (7) are the differences of the reading Node's coefficients along the momentum's axis, [R_b(i + a) - R_b(i)] and [S_(i + a) - S_i], times the levels; the share's identity gains nothing (row L30).",
+   "ground": "exact fractions on a periodic 5-box with per-Node coefficients",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_momentum_identity_at_non_uniform_paces_as_printed"
+   },
+   "verdict": "finding",
+   "note": "A finding of the far-regime sweep on the paper's Section 4.3 sentence."
+  },
+  {
+   "id": "F07",
+   "name": "S.42 (b)'s Fourier weight for every body",
+   "place": "S.42 (b)",
+   "statement": "As printed: a body smooth over many Links sources zone-edge light only by its Fourier weight there, below e^-100 for every body of the paper. A Gaussian body of rms width R has the weight e^(-pi^2 R^2 / 2) at k = pi, below e^-100 for R above 4.5 Links; the paper's bodies on the chain are 2.1 to 3.4 Links wide (e^-22 to e^-57), and an exponential tail's weight falls as a power of k.",
+   "ground": "the weights computed",
+   "kind": "B",
+   "check": {
+    "module": "tools/derivations/proofs_far_regime.py",
+    "function": "check_the_fourier_weight_of_a_smooth_body"
+   },
+   "verdict": "finding",
+   "note": "A finding of the far-regime sweep on 'for every body of the paper'."
+  },
+  {
+   "id": "N01",
+   "name": "S.4, the cube's group of 48",
+   "place": "S.4",
+   "statement": "The 48 signed permutations of the three axes commute with the step, R_a being even in the axis's sign; D, F and W are a scalar, a Link quantity and a scalar; the time reversal carries the step to its inverse; a boost is not in the group.",
+   "ground": "the engine's acts and the cube's group",
+   "kind": "D",
+   "check": null,
+   "verdict": "none",
+   "note": "The integer identity of the complement is row L23; the commutation act by act is the engine's, tests/test_the_node.py."
+  },
+  {
+   "id": "N02",
+   "name": "S.37, confinement",
+   "place": "S.37",
+   "statement": "A record of dimension 3 clicks whole or not at all; the partons' three fractions; Bjorken scaling exact in the declared row.",
+   "ground": "the click's one form under the dimension-3 hypothesis",
+   "kind": "D",
+   "check": null,
+   "verdict": "none"
+  },
+  {
+   "id": "N03",
+   "name": "S.38 (c), the binding bound",
+   "place": "S.38 (c), (d)",
+   "statement": "defect / rest <= 0.76 C W / (Gamma E) per quantum at one Node from Watson's 3 G(0) = 0.7582.",
+   "ground": "the lattice Green's function's value, the derivation script greens_function.py",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "The number 0.7582 is the output of tools/derivations/greens_function.py three_g, held by the documents gate."
+  },
+  {
+   "id": "N04",
+   "name": "S.39 (a), the gapped kernel",
+   "place": "S.39 (a)",
+   "statement": "G_kappa(1) = G_0(1) (1 - 0.92 kappa + O(kappa^2)), the ratio 0.9546 at R = 20.",
+   "ground": "the exact lattice Yukawa integral",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "A quadrature of the three-dimensional lattice integral; no script here."
+  },
+  {
+   "id": "N05",
+   "name": "S.41 (1), (2), the prediction and the gravity of light",
+   "place": "S.41",
+   "statement": "The strontium clock's visibility 0.989 at one metre and one second; a light packet's active mass 1 x E / c^2 against general relativity's 2.",
+   "ground": "arithmetic on nature's constants and the one write",
+   "kind": "C",
+   "check": null,
+   "verdict": "none"
+  },
+  {
+   "id": "N06",
+   "name": "S.45 (b) to (e), the nuclear well's binding, capture and size law",
+   "place": "S.45",
+   "statement": "b = (lambda_s / R)^2 / 2 by the virial of the slow limit; the capture at the beat; Bethe and Peierls's shape; R* proportional to 1 / n.",
+   "ground": "hand derivations of the slow limit's equation",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "The threshold's numbers are row L80."
+  },
+  {
+   "id": "N07",
+   "name": "S.46 (a), (b), (d), the atom's levels and the holders the electron does not read",
+   "place": "S.46",
+   "statement": "E_n = -m* (Z alpha)^2 / (6 n^2) and a_0 = sqrt 3 / (m* Z alpha); the orbital g = 1; the finite-size shift and the muonic radii.",
+   "ground": "the slow limit's hydrogen-like problem, standard mathematics",
+   "kind": "C",
+   "check": null,
+   "verdict": "none"
+  },
+  {
+   "id": "N08",
+   "name": "S.60, the atom under the two lines",
+   "place": "S.60",
+   "statement": "The pinned nucleus reproduces -1 / (2 n^2) to 10^-4 on a grid of 2,000 points; helium -2.8617 Ha; positronium -0.110 Ha.",
+   "ground": "a radial grid solve and a two-record Hartree iteration",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "Computed by the paper's hand; no script in the tree."
+  },
+  {
+   "id": "N09",
+   "name": "S.61, the engine's derivation ledger",
+   "place": "S.61",
+   "statement": "Every act of the engine with its derivation or its stated reason.",
+   "ground": "the engine's acts",
+   "kind": "D",
+   "check": null,
+   "verdict": "none",
+   "note": "The engine's tests show the acts; the rows of the ledger with an identity are carried above (rows 1, 2, 4, 7, 8, 9, 11, 12, 17)."
+  },
+  {
+   "id": "N10",
+   "name": "S.62, the implementation's versions of the click's write",
+   "place": "S.62",
+   "statement": "The paper reports no reading of the implementation but the two slits'.",
+   "ground": "a statement of the paper's scope",
+   "kind": "D",
+   "check": null,
+   "verdict": "none"
+  },
+  {
+   "id": "N11",
+   "name": "S.49, S.52 to S.56, the words, the bodies, the masses, the lattice's properties, the conservation picture, the findings",
+   "place": "S.49, S.52, S.53, S.54, S.55, S.56",
+   "statement": "Definitions and the tables of the paper's statements with their marks.",
+   "ground": "no quantity beyond the rows above",
+   "kind": "D",
+   "check": null,
+   "verdict": "none",
+   "note": "m* c_m^2 = omega_0 (S.53) is row L46; the conservation table's theorems are rows L17, L25, L27."
+  },
+  {
+   "id": "N12",
+   "name": "S.19's orbit step and S.21's orbit on the exact band",
+   "place": "S.19; ALGEBRA.md, The push on a moving record",
+   "statement": "The periapsis on the exact band at [2, 3] is 13 to 15 percent above 6 pi U_p in a coordinate plane and 8 to 10 percent in the (111) plane, vanishing as tan^2 omega_0.",
+   "ground": "the rays of the exact band on the orbit, computed twice by the hands",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "A computed row of the paper; the geometric-optics integration is not reproduced here."
+  },
+  {
+   "id": "N13",
+   "name": "The lattice constants",
+   "place": "ALGEBRA.md, The lattice constants; S.38's check",
+   "statement": "3 G(0) = 0.7582 at the Node and 0.2582, 0.1287, 0.0826, 0.0609, 0.0483 at 1 to 5 Links; 4 pi r G(r) toward 1.",
+   "ground": "the lattice Green's function by quadrature, tools/derivations/greens_function.py",
+   "kind": "C",
+   "check": null,
+   "verdict": "none",
+   "note": "Held by the documents gate (3) through tools/numbers.json."
+  }
+ ]
+}
