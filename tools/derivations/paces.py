@@ -51,8 +51,22 @@ def newton_coefficients(num: int = 2, den: int = 3) -> list[float]:
 
 
 def frozen_content(gamma: int = 6000) -> list[float]:
-    """(Gamma / 2) ln 2 Gamma, the content past which the Node's integer pace rounds to 0."""
-    return [gamma / 2 * math.log(2 * gamma)]
+    """The least content at which the Link's pace p_0^2 / Gamma rounds to 0 in the engine's integers, the clock p_0 = Gamma (Gamma - 1)^c / Gamma^c rounded half up and p_0^2 < Gamma / 2, found by doubling and bisection on the exact fraction; beside it the formula's approximation (Gamma / 2) ln 2 Gamma: 28,206 and 28,178 at Gamma 6,000 (the law's R205 and R208)."""
+
+    def clock(content: int) -> int:
+        numerator, wall = gamma * (gamma - 1) ** content, gamma**content
+        return int((2 * numerator + wall) // (2 * wall))
+
+    def frozen(content: int) -> bool:
+        return 2 * clock(content) ** 2 < gamma
+
+    low, high = 0, 1
+    while not frozen(high):
+        low, high = high, 2 * high
+    while high - low > 1:
+        middle = (low + high) // 2
+        low, high = (low, middle) if frozen(middle) else (middle, high)
+    return [float(high), gamma / 2 * math.log(2 * gamma)]
 
 
 if __name__ == "__main__":
@@ -61,4 +75,4 @@ if __name__ == "__main__":
     print("mirror thresholds U:", [round(v, 4) for v in mirror_thresholds()])
     print("deceleration:", [round(v, 2) for v in deceleration_range()])
     print("Newton's coefficients:", [round(v, 3) for v in newton_coefficients()])
-    print("frozen content:", [round(v) for v in frozen_content()])
+    print("frozen content, exact and (Gamma / 2) ln 2 Gamma:", [round(v) for v in frozen_content()])

@@ -201,9 +201,11 @@
         "derivation": {
             "module": "tools/derivations/paces.py",
             "function": "frozen_content",
-            "expected": [28178],
+            "expected": [28206, 28178],
             "digits": 0
-        }
+        },
+        "canonical": ["28,206"],
+        "forbidden": ["28206", "28178"]
     },
     {
         "name": "the pion-gap well binds no state (R184)",
