@@ -10,6 +10,9 @@ script exits non-zero on any.
 3. The second places: a number or a word that one print changed in one place and not in its twin (R180's column,
    R61's convention, W4's count, W1's intervals): each pair asserted equal where both documents print it.
 
+4. The derivations' Inputs graph: no cycle among the supplement's Inputs lines beyond the ones named in
+   claims_table.KNOWN_CYCLES, a set that may only shrink (the owner's question of 2026-10-04 on circularity).
+
     python paper/general_formula/paper_gates.py
 """
 
@@ -21,6 +24,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FILES = {"main.tex": HERE / "main.tex", "supplement.tex": HERE / "supplement.tex"}
+sys.path.insert(0, str(HERE))
+# the derivations' Inputs graph (check 7 of 2026-10-04) lives beside the claims table
+from claims_table import gate_inputs_graph  # noqa: E402
 
 MARKS = {
     "theorem",
@@ -118,7 +124,7 @@ TWINS = [
         "the neutron's lifetime",
         [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
-    ("the draw's bound", [("main.tex", "$2 \\times 10^{-8}$ at the width $63$")]),
+    ("the draw's bound", [("main.tex", "$1.1 \\times 10^{-19}$ at the width $63$")]),
     (
         "the wall of a massless family",
         [
@@ -279,6 +285,7 @@ def main() -> int:
         ("the marks", gate_marks),
         ("the stale phrases", gate_stale),
         ("the twins", gate_twins),
+        ("the derivations' Inputs graph", lambda texts: gate_inputs_graph(texts["supplement.tex"])),
     ):
         misses = run(texts)
         print(f"{gate}: {len(misses)} miss{'es' if len(misses) != 1 else ''}")

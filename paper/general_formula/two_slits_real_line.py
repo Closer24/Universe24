@@ -151,6 +151,7 @@ class Line:
     read: float
     self_over_wall: float
     weight: int
+    pair: tuple[int, int]
 
     def cos_omega(self, *wave_numbers: float) -> float:
         """The band: a plane wave at the wave numbers k_a obeys 2 w cos omega = 2 SUM_a R_a cos k_a
@@ -191,7 +192,7 @@ def line_of(world: World, family: int) -> Line:
     )
     if len(set(reads)) != 1:
         raise ValueError(f"the vacuum's reads differ by axis: {reads}")
-    return Line(reads[0] / wall, self_coefficient / wall, num)
+    return Line(reads[0] / wall, self_coefficient / wall, num, (num, den))
 
 
 def board_of(world: World, screen: list[str]) -> Board:
@@ -270,8 +271,9 @@ def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
     for x_wall, y_wall in board.beyond:
         now[x_wall, y_wall] = quadrature[x_wall, y_wall] = envelope[x_wall, y_wall] = 0.0
     # the exact before level, the generator's own act at the frozen commit (the law's line (c)): the packet
-    # a + i s over the board's transform, every mode advanced by its own band phase omega(q), the real part
-    before = advanced_real_part(now[:, :, None], quadrature[:, :, None])[:, :, 0]
+    # a + i s over the board's transform, every mode advanced by its own band phase omega(q) at the family's
+    # pair (R370), the real part
+    before = advanced_real_part(now[:, :, None], quadrature[:, :, None], line.pair)[:, :, 0]
     weight = envelope / envelope.sum()
     now -= weight * now.sum()
     before -= weight * before.sum()
