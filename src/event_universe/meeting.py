@@ -212,9 +212,7 @@ def written(board: Lattice, items: list[Item]) -> None:
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
     for family, absorbed in sorted(holes.items()):
-        if (
-            board.credit.counts[family] <= 0 and absorbed
-        ):  # the count at 0: its front from every Node faced
+        if board.credit.counts[family] <= 0 and absorbed:  # the count at 0: its front from every Node
             front.started(board, family, absorbed)
 
 
@@ -232,10 +230,8 @@ def leaving_phase(board: Lattice, item: Item) -> Phase:
 
 def faced(board: Lattice, item: Item) -> list[Node]:
     """The one comparison of the absorption and the emission at a spread record's Nodes (features/click, `Face`; ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam): at each Node named the record's booked share, the share the credit reads there (`Lattice.share_of`, the conserved form's density at the Node, `share.share`, read at the click from the levels the next step reads), against the record's own quantum W_rec (`credit.Books.units`); the Nodes where it is at most W_rec, the record there local and whole, are returned, the Nodes the click writes, and for an absorption the hole to 0 is booked there: for every line of the record one face at the next two intervals, the first Port preferred, so that Rule3 writes the level 0 and then the level before 0 with its own remainder (the mathematician's hand; the front erasing what spread beyond the Node where the count reaches 0); at a Node where the share is above W_rec a record of many quanta per Node is a beam, nature's undepleted beam, exact as the count per Node grows: no face, no lay and no front there, the levels standing (a one-Node lay into a beam would be the same point defect the hole of a dense record was), the quantum passing in the books alone (`written`: the count and the deficit); nothing assigned at any Node."""
-    lines, intervals = (
-        range(board.families[item.family].record),
-        (board.interval + 1, board.interval + 2),
-    )
+    lines = range(board.families[item.family].record)
+    intervals = (board.interval + 1, board.interval + 2)
     unit = board.credit.units[item.family]
     shares = board.share_of(item.family, 1, board.mask(item.nodes))[0]
     nodes = [(int(n[0]), int(n[1]), int(n[2])) for n in item.nodes]
@@ -310,10 +306,10 @@ def emitted(board: Lattice, books: NodeBooks, grain: int) -> bool:
             if pick < len(directions):
                 laid_at = drawn_node(board, books, share_weights(board, books))
                 e, g = (levels_at(board, books, p)[:2] for p in (rate.leaves, rate.enters))
-                emitted = Item(
+                quantum = Item(
                     rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime
                 )
-                light = replace(emitted, width=rate.width, direction=directions[pick], levels=(e, g))
+                light = replace(quantum, width=rate.width, direction=directions[pick], levels=(e, g))
                 written(board, exchange(board, books, rate.leaves, rate.enters) + [light])
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True

@@ -43,16 +43,8 @@ from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
-WORLD_KEYS: tuple[str, ...] = (
-    "shape",
-    "boundary",
-    "face_depth",
-    "faces",
-    "intervals",
-    "universe",
-    "engine",
-)
-WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
+WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
+WORLD_KEYS += ("engine", "bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "engine", "bodies", "node_detectors")
 BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
     ("family", "nodes", "weights", "count", *READER_RECORD_KEYS),

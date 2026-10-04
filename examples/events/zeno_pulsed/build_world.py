@@ -115,7 +115,10 @@ def main(argv: list[str] | None = None) -> None:
             import pixel_mode
 
             pixel_mode.main(["--input", str(path)])
-        blind[f"zeno_pulsed_{n}"] = {**blind_of(n, len(design["seeds"])), "intervals": intervals_of(design, n)}
+        blind[f"zeno_pulsed_{n}"] = {
+            **blind_of(n, len(design["seeds"])),
+            "intervals": intervals_of(design, n),
+        }
     expectation = {
         "verdict": "NODEDETECTOR",
         "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 intervals, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",

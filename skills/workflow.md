@@ -43,7 +43,7 @@ all the project's documents synchronized):
 
 | Record | What it holds |
 | --- | --- |
-| docs/REVIEW_LEDGER.md, the reviewer's ledger | Every finding with its state, one row each: its place, its station, its hand and the hash it was checked at; changed by the pull request that prints |
+| docs/REVIEW_LEDGER.md, the reviewer's ledger | Every finding with its state, one row each: its place, its station, its hand and the hash it was checked at; changed by the pull request that prints, and by the reviewer's own pull request, the file alone in it, merged at CI green without the hands' re-read (the owner, 2026-10-04) |
 | docs/PROVENANCE.md, the provenance | Who said what and when, under the law's line names: the hands' comments, the owner's dated words, the pull requests; the law's lines give it up in part 4 of the fill and keep the statement |
 
 The skills are this file and the two role cards that exist, the Boss's
@@ -277,8 +277,11 @@ no number and no name in the engine, English and sentence case, and `main` merge
 in. A documents, tests or paper pull request carries the hands' final paragraphs,
 pasted by the documents worker or the writer from the closures' comments; the Boss
 checks each paste against its comment id, a diff of two texts, and does not read
-the whole fill; it merges by auto-merge on green CI, the branch rule enforcing an
-up-to-date base, the Boss arming it after the check (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposals 3 and 5). The engine's branches merge one
+the whole fill (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 3); the hands read the pull
+request in parallel while CI runs, their lines comments on it, and the Boss
+squashes it at CI green with both hands' lines at its sha, the reviewer's ledger
+file alone, docs/REVIEW_LEDGER.md, merging by the reviewer's own pull request
+without the hands' re-read (the owner, 2026-10-04). The engine's branches merge one
 at a time; documents, paper and engine branches on disjoint file sets merge
 independently (234, proposal 6). A green check on an old base is no evidence
 about the merged tree. The Boss's check is a diff; the whole read is the hands',
@@ -329,19 +332,24 @@ kind, and none of them returns.
    engine's branches one at a time (234, proposal 6).
 5. The gates: the one gate set, `python tools/check.py` locally, then CI on the
    pull request; nothing merges red.
-6. The Boss opens the pull request; its body carries "HANDED BY Boss: ..." and
-   the Boss's session link, the problem, the change, the validation and what was
-   deleted from the documents. The fills are batched: one documents pull request
-   and one paper pull request per hour or per three closures, the law's and the
-   paper's two-hands passes in parallel in the same batch, the documents worker
-   and the writer pasting the hands' final paragraphs (234, proposals 3 and 4).
+6. The Boss opens the pull request at the first push; its body carries
+   "HANDED BY Boss: ..." and the Boss's session link, the problem, the change, the
+   validation and what was deleted from the documents. Documents, paper sentences,
+   tool fixes and pin tests travel bundled, one push per holder per hour at most
+   and three or four items in one read; an engine fix (anything under src/)
+   travels alone in its own pull request. The hands read the pull request in
+   parallel while CI runs, each hand's line a comment on it (the owner,
+   2026-10-04).
 7. The Boss, the only merger, merges the engine's rounds and `core/` on green CI
    with `main` merged in, one at a time, after reading the diff against the law's
-   lines; a documents, tests or paper pull request merges by auto-merge on green
-   CI, the branch rule enforcing an up-to-date base, after the Boss's check of the
-   pastes against their comment ids (234, proposal 5); the branch is deleted.
-   `main` is the one version that works; no one pushes to it directly; there are
-   no tags.
+   lines; every change, a bundle or a single fix, has both hands' lines at its sha
+   before the Boss squashes it at CI green, a documents, tests or paper pull
+   request after the Boss's check of the pastes against their comment ids (234,
+   proposal 3); the one exception is the reviewer's ledger file,
+   docs/REVIEW_LEDGER.md, which merges at CI green by the reviewer's own pull
+   request, the file alone in it, without the hands' re-read; every branch is
+   deleted at the merge (the owner, 2026-10-04). `main` is the one version that
+   works; no one pushes to it directly; there are no tags.
 8. The Boss reports to the owner in Hebrew: the numbers, the list of removed or
    rewritten sentences, and what stands with him.
 

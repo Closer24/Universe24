@@ -24,11 +24,11 @@ The physical location is a **Node**; its complete local information is its
 **Event** and configured local logic is a **LocalRule**. The lattice of Nodes is
 the **Lattice** (`Lattice` in code, `lattice` in module and function names; the
 readings' label `LATTICE`), the paper's word and the code's, one vocabulary (the
-owner's word of 2026-10-04). Do not introduce `Site`, GameBoard, board, grid or
+owner's word of 2026-10-04). Do not introduce `Site`, lattice, board, grid or
 any other noun for these; new location identifiers use `node`, `nodes` and
 `NodeState`. The words of the engine (Family, Record, Body, NodeDetector, Click,
 Primitive, Interval) are defined in [docs/ENGINE.md](docs/ENGINE.md#1-the-words).
-The **NodeDetector** is the one declaration kind of every experiment, with Nodes alone or with a record of its own (the owner's word of 2026-10-04, replacing NodeReader); the free nouns detector, instrument, emitter, absorber, observer and measurer stay out of the repository (the owner's word of 2026-10-03): write "a NodeDetector", never "a detector" alone, and a NodeDetector absorbs and emits.
+The **NodeDetector** is the one declaration kind of every experiment, with Nodes alone or with a record of its own (the owner's word of 2026-10-04, replacing NodeDetector); the free nouns detector, instrument, emitter, absorber, observer and measurer stay out of the repository (the owner's word of 2026-10-03): write "a NodeDetector", never "a detector" alone, and a NodeDetector absorbs and emits.
 
 ## Repository language: English
 

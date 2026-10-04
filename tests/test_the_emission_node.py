@@ -75,3 +75,21 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     standing = node_detector.share_weights(neutron, whole)
     assert conversion.converted(neutron, whole) and converted == [standing]
     assert converted[0] != list(whole.weights)
+
+
+def test_the_neutron_readers_rows_stand_at_the_conversions_drawn_node(tmp_path):
+    """The folder's reader at the drawn Node (the experimenter's tool note, #1827 comment 5984864554; examples/events/neutron_conversion/read_world.py): the shipped neutron conversion world at the rate 1 and the window 1 converts at the first interval at one of the body's two Nodes, A2's draw by the record's share; at the first seed whose draw picks the second Node the reader's rows stand there and the output names the Node as the conversion line's: the Wronskians -15,987, 16,384 and 0 (row 1), one quantum per record out (row 3) and the rotations' sum pi (row 5); with no conversion the body's first Node, named so."""
+    reader = load_file("neutron_read_world", EVENTS / "neutron_conversion" / "read_world.py")
+    world = json.loads((EVENTS / "neutron_conversion" / "neutron_conversion.json").read_text("utf-8"))
+    body, path = world["bodies"][0], tmp_path / "w.json"
+    body["conversion"]["rate"], body["node_detector"]["window"], world["intervals"] = 1, 1, 3
+    path.write_text(json.dumps(world), encoding="utf-8")
+    runs, second = (reader.first_trial(path, s, 3) for s in range(1, 64)), body["nodes"][1]["node"]
+    found = next(r for r in runs if r["conversion"]["line"]["node"]["at"] == second)
+    assert found["node"]["at"] == second and "conversion line" in found["node"]["source"]
+    out = [found["conversion"]["families"][n] for n in ("proton", "electron", "antineutrino")]
+    assert [f["wronskian"] for f in out] == [-15987, 16384, 0]  # row 1 at the drawn Node
+    assert [round(f["quanta_at_the_node"]) for f in out] == [1, 1, 1]  # row 3
+    assert round(found["rotations_sum"]["out_at_the_conversion"], 4) == 3.1416  # row 5
+    none = reader.first_trial(path, 1, 0)  # no conversion: the body's first Node, named so
+    assert none["node"]["at"] == body["nodes"][0]["node"] and "first Node" in none["node"]["source"]
