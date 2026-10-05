@@ -110,7 +110,7 @@ def number(ax: Axes, x: float, y: float, n: int, color: str = INK) -> None:
 
 
 def spacetime(ax: Axes) -> None:
-    """(a) The future from the root, the meeting at the region, the click, the write at the drawn Node, the front."""
+    """(a) The future from the source Node, the meeting at the region, the click, the write at the drawn Node, the front."""
     ax.set_xlim(-1.1, 11.6)
     ax.set_ylim(-1.3, 15.7)
     ax.set_aspect("equal")
@@ -206,7 +206,7 @@ def spacetime(ax: Axes) -> None:
             lw=0.5,
             zorder=4,
         )
-    # the world lines: the giver's root, the region's two Nodes, the drawn Node written at the click
+    # the world lines: the giver's source Node, the region's two Nodes, the drawn Node written at the click
     ax.plot([x0, x0], [-0.3, top], color=GREY, lw=0.8, zorder=4)
     ax.plot([xb, xb], [-0.3, top], color=INK, lw=0.8, zorder=6)
     ax.plot([xr, xr], [-0.3, tc], color=INK, lw=0.8, zorder=6)
@@ -312,13 +312,13 @@ def spacetime(ax: Axes) -> None:
     ax.text(
         xr + 0.4,
         2.6,
-        "the NodeDetector's\nregion: two Nodes,\nits record in g",
+        "the NodeDetector's\nregion: two Nodes,\nits configuration in $g$",
         ha="left",
         va="center",
         zorder=9,
         bbox=BOX,
     )
-    ax.text(x0 - 0.35, -0.5, "root", ha="right", va="center", zorder=9)
+    ax.text(x0 + 0.35, -0.45, "source Node", ha="left", va="center", zorder=9)
     number(ax, x0 - 0.55, 0.0, 1)
     number(ax, 5.5, 6.75, 2)
     number(ax, xr + 0.85, tc - 1.45, 3)
@@ -406,7 +406,7 @@ def region(ax: Axes, x1: float, cy: float, s: float, upper: bool, drawn: bool) -
 
 
 def wave(ax: Axes, x1: float, x2: float, y: float, color: str, n: int = 4, amp: float = 0.16) -> None:
-    """A short wavy line, the record's quantum on its way."""
+    """A short wavy line, the field's quantum on its way."""
     xs = [x1 + (x2 - x1) * i / 60 for i in range(61)]
     ys = [y + amp * math.sin(2 * math.pi * n * (x - x1) / (x2 - x1)) for x in xs]
     ax.plot(xs, ys, color=color, lw=1.1, zorder=5)
@@ -430,7 +430,7 @@ def the_region(ax: Axes) -> None:
     ax.text(
         (xa + xb) / 2,
         y - s / 2 - 0.75,
-        "the arriving record,\ncount 1, at the\nregion's boundary",
+        "the arriving field,\ncount 1, at the\nregion's boundary",
         color=BLUE,
         ha="center",
         va="top",
@@ -479,7 +479,7 @@ def the_region(ax: Axes) -> None:
 
 
 def the_hole(ax: Axes) -> None:
-    """(c) The absorption's write at the drawn Node: one comparison of the record's booked share there against its own
+    """(c) The absorption's write at the drawn Node: one comparison of the field's booked share there against its own
     quantum W_rec; the sparse Node zeroed by the face Rule3 presents, the dense record undepleted with its count in
     the books (the advisor's words of 2026-10-04, #1793 comment 5985040913)."""
     ax.text(-0.3, 12.5, "c", ha="left", va="top", fontweight="bold", fontsize=9)
@@ -559,9 +559,9 @@ def the_books(ax: Axes) -> None:
     """(d) The books in whole numbers, the click line to the file and the declaration."""
     ax.text(-0.3, 6.85, "d", ha="left", va="top", fontweight="bold", fontsize=9)
     rows = (
-        ("the arriving record's count", "1", "0"),
+        ("the arriving field's count", "1", "0"),
         ("its levels and remainder at the drawn Node", "$v$, $b$, $r$", "0, 0, 0"),
-        ("the NodeDetector's record, its parts g / e", "1 / 0", "0 / 1"),
+        ("the NodeDetector's configuration, its parts $g$ / $e$", "1 / 0", "0 / 1"),
     )
     yt = 6.4
     ax.text(0.4, yt, "the books", ha="left", va="center", fontweight="bold")
@@ -585,7 +585,7 @@ def the_books(ax: Axes) -> None:
         (
             -0.3,
             "the declaration in the NodeDetector's file: its Nodes,\n"
-            "two or more connected (one Node with a record of its\n"
+            "two or more connected (one Node with a configuration of its\n"
             "own: its parts g, e and the lifetime); the world's draw,\n"
             "a body's NodeDetector's own seed",
         ),

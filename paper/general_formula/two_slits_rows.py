@@ -65,7 +65,7 @@ def save(fig: Figure, path: Path) -> None:
 
 
 def world(ax: Axes) -> None:
-    """(a) The declared file: the board, the packet, the wall with its gaps, the screen's regions."""
+    """(a) The declared file: the board, the wave packet, the wall with its gaps, the screen's regions."""
     ax.set_xlim(-1.5, LENGTH + 1.5)
     ax.set_ylim(-12.0, HEIGHT + 7.5)
     ax.set_aspect("equal")
@@ -83,7 +83,7 @@ def world(ax: Axes) -> None:
     ax.annotate(
         "", xy=(19.0, 24), xytext=(13.5, 24), arrowprops={"arrowstyle": "-|>", "lw": 0.8, "color": INK}
     )
-    ax.text(6.5, -1.2, "the packet,\n$\\lambda = 8$", ha="center", va="top", fontsize=8)
+    ax.text(6.5, -1.2, "the wave\npacket,\n$\\lambda = 8$", ha="center", va="top", fontsize=8)
     # the wall at the column 20 with the two gaps
     ax.add_patch(Rectangle((WALL_X, 0), 1, HEIGHT, facecolor=INK, edgecolor="none"))
     for lo, hi in GAPS:
@@ -131,7 +131,7 @@ def world(ax: Axes) -> None:
 
 
 def rows(ax: Axes) -> None:
-    """(b) The screen's row per region: the blind with its scatter, the real line beside it."""
+    """(b) The screen's row per region: the prediction with its scatter, the real line beside it."""
     xs = list(range(12))
     w = 0.38
     scatter = [math.sqrt(BLIND_N * (c / BLIND_N) * (1 - c / BLIND_N)) for c in BLIND]
@@ -142,7 +142,7 @@ def rows(ax: Axes) -> None:
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the blind: Huygens, written before the run ($N = 273$)",
+        label="the prediction: Huygens, written before the run ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5
@@ -159,7 +159,7 @@ def rows(ax: Axes) -> None:
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])
     ax.set_xlabel("the screen's region, from the row 0 across $y$")
-    ax.set_ylabel("quanta over the window")
+    ax.set_ylabel("quanta over the counting window")
     ax.set_ylim(0, 66)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
