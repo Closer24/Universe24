@@ -1,26 +1,14 @@
 """The click at a NodeDetector, drawn from the definitions, by no run of the engine, in black and grey.
 
-Four parts at the page's width. (a) Space and time: the arriving record runs
-forward from its root, every path at once, the future (solid lines); it meets
-the NodeDetector's region, two adjacent Nodes, at the region's boundary; the
-NodeDetector draws at the window's close, the click, the now; from the click the
-same line is read backward, Rule3 at -1, the past (dashed lines), a reading and
-never a write; the one write is at the Node the draw picked, the drawn Node,
-and its change spreads forward by Rule3 at one Link per interval, the front,
-one shell per interval at the causal bound; inside the click's light cone the
-absorbed record is erased, its levels beyond the front an empty wave with
-count 0. (b) The NodeDetector's region before the window's close and after the
-one write: two Nodes side by side, the NodeDetector's own record laid over both
-with its parts g and e, the write at the drawn Node. (c) The absorption's write at
-the drawn Node: one comparison of the record's booked share there against its
-own quantum W_rec, two cases and no partial hole; the sparse Node (share at most
-W_rec) zeroed by the face Rule3 presents, the dense record (share above W_rec)
-undepleted, its count moving in the books. (d) The books in whole numbers, the click line, the NodeDetector's report, and
-the declaration in the file. Nothing here is a number of a run.
-
-    python paper/general_formula/click_body.py --output paper/general_formula/figures
-
-Needs matplotlib.
+Two panels side by side at the text width of Springer's sn-jnl (131 mm), every lettering 8 pt at the printed
+size. (a) Space and time: the arriving record runs forward from its root, every path at once; the click is the
+meeting of the forward record with the transition read backward from the click; the write at the drawn Node;
+the front, one shell per interval, erases the absorbed record inside the click's causal cone, the empty wave
+beyond it at count 0. (b) The NodeDetector's region before the window's close and after the one write at the
+drawn Node, the draw at the close between them, the front leaving by Rule3 at one Link per interval. The
+absorption's write (the hole, two cases) and the books in whole numbers, the long version's panels (c) and
+(d), are the text of the short paper's Section 2.5; the functions that drew them, the_hole and the_books,
+stay in this file for the long version's record and are not called.
 """
 
 from __future__ import annotations
@@ -123,7 +111,7 @@ def number(ax: Axes, x: float, y: float, n: int, color: str = INK) -> None:
 
 def spacetime(ax: Axes) -> None:
     """(a) The future from the root, the meeting at the region, the click, the write at the drawn Node, the front."""
-    ax.set_xlim(-0.4, 11.6)
+    ax.set_xlim(-1.1, 11.6)
     ax.set_ylim(-1.3, 15.7)
     ax.set_aspect("equal")
     ax.axis("off")
@@ -433,7 +421,7 @@ def the_region(ax: Axes) -> None:
     wave(ax, -0.3, xa - s / 2 - 0.5, y, BLUE)
     ax.text(
         xa - s / 2 - 0.05,
-        y + s / 2 + 0.75,
+        y + s / 2 + 1.7,
         "before the close",
         ha="left",
         va="bottom",
@@ -456,7 +444,7 @@ def the_region(ax: Axes) -> None:
     xc, xd = region(ax, x_after, y, s, upper=True, drawn=True)
     ax.text(
         xc - s / 2 - 0.55,
-        y + s / 2 + 0.75,
+        y + s / 2 + 1.7,
         "after the write",
         ha="left",
         va="bottom",
@@ -478,16 +466,16 @@ def the_region(ax: Axes) -> None:
     ax.plot([xd, xd], [y - s / 2 - 0.5, y - s / 2 - 0.9], color=INK, lw=0.8, zorder=6)
     ax.plot(xd, y - s / 2 - 0.5, "^", ms=4.5, color=INK, zorder=7)
     ax.text(
-        (xc + xd) / 2 + 0.3,
+        (xc + xd) / 2 - 0.1,
         y - s / 2 - 1.0,
         "the drawn Node, by the share;\nthe front by Rule3,\none Link per interval",
         ha="center",
         va="top",
     )
-    number(ax, xa - s / 2 - 0.55, y + s / 2 + 1.0, 2)
+    number(ax, xa - s / 2 - 0.55, y + s / 2 + 1.95, 2)
     number(ax, xm, y - 0.65, 3)
     number(ax, xd + s / 2 + 0.75, y - s / 2 - 0.5, 4)
-    ax.text(-0.3, 18.85, "b", ha="left", va="top", fontweight="bold", fontsize=9)
+    ax.text(-0.3, 19.6, "b", ha="left", va="top", fontweight="bold", fontsize=9)
 
 
 def the_hole(ax: Axes) -> None:
@@ -618,21 +606,19 @@ def the_books(ax: Axes) -> None:
 
 
 def the_node(ax: Axes) -> None:
-    """(b), (c) and (d) in one frame: the region, the hole and the books."""
-    ax.set_xlim(-0.3, 13.2)
-    ax.set_ylim(-0.3, 18.9)
+    """(b) alone in its frame: the region before the close and after the write (the long version's (c) and (d) are the text of the short paper)."""
+    ax.set_xlim(-0.3, 14.3)
+    ax.set_ylim(12.9, 19.7)
     ax.set_aspect("equal")
     ax.axis("off")
     the_region(ax)
-    the_hole(ax)
-    the_books(ax)
 
 
 def click_body(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(6.85, 4.8), gridspec_kw={"width_ratios": (3.35, 3.4)})
+    fig, axes = plt.subplots(1, 2, figsize=(5.16, 3.3), gridspec_kw={"width_ratios": (2.47, 2.69)})
     spacetime(axes[0])
     the_node(axes[1])
-    fig.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005, wspace=0.03)
+    fig.subplots_adjust(left=0.005, right=0.995, top=0.995, bottom=0.005, wspace=0.02)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "click_body.pdf")
     plt.close(fig)
