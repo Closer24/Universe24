@@ -155,7 +155,10 @@ TWINS = [
     (
         "Compton's factor at the computed pair",
         [
-            ("main.tex", "$0.752$ at $[2, 3]$ exactly and $1$ at nature's gap"),
+            (
+                "main.tex",
+                "$0.752$ at $[2, 3]$ exactly, the beat rule's number (S.55 (f)), and $1$ at nature's gap",
+            ),
             ("supplement.tex", "$0.752$ at $[2, 3]$ and $1$ at nature's gap"),
         ],
     ),
