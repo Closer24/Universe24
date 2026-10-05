@@ -141,7 +141,7 @@ TWINS = [
                 "main.tex",
                 "$284.7$ units of $\\Wc$ through the screen in the physical labels ($284.5$ in the implementation's labels",
             ),
-            ("main.tex", "$N = 284.50$ in the engine's labels"),
+            ("main.tex", "$N = 284.50$ in the implementation's labels"),
         ],
     ),
     (
@@ -169,7 +169,7 @@ TWINS = [
                 "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
             ),
             ("main.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
-            ("main.tex", "The run of the implementation gives $N = 285$ at both seeds"),
+            ("main.tex", "The run gives $N = 285$ at both seeds"),
             ("supplement.tex", "The two slits' $285$ units are $674$ photons"),
         ],
     ),
@@ -196,7 +196,7 @@ TWINS = [
     (
         "the gate on the one file",
         [
-            ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
+            ("main.tex", "returns every array bit for bit over $40$ intervals"),
             (
                 "supplement.tex",
                 "the two slits' \\textsc{match} over $40$ intervals at the commit 1fe3790a at both seeds",
