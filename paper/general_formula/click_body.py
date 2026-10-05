@@ -1,21 +1,21 @@
-"""The click at a NodeReader, drawn from the definitions, by no run of the engine, in black and grey.
+"""The click at a NodeDetector, drawn from the definitions, by no run of the engine, in black and grey.
 
 Four parts at the page's width. (a) Space and time: the arriving record runs
 forward from its root, every path at once, the future (solid lines); it meets
-the NodeReader's region, two adjacent Nodes, at the region's boundary; the
-NodeReader draws at the window's close, the click, the now; from the click the
+the NodeDetector's region, two adjacent Nodes, at the region's boundary; the
+NodeDetector draws at the window's close, the click, the now; from the click the
 same line is read backward, Rule3 at -1, the past (dashed lines), a reading and
 never a write; the one write is at the Node the draw picked, the drawn Node,
 and its change spreads forward by Rule3 at one Link per interval, the front,
 one shell per interval at the causal bound; inside the click's light cone the
-record that gave is erased, its levels beyond the front an empty wave with
-count 0. (b) The NodeReader's region before the window's close and after the
-one write: two Nodes side by side, the NodeReader's own record laid over both
-with its parts g and e, the write at the drawn Node. (c) The taking's write at
+absorbed record is erased, its levels beyond the front an empty wave with
+count 0. (b) The NodeDetector's region before the window's close and after the
+one write: two Nodes side by side, the NodeDetector's own record laid over both
+with its parts g and e, the write at the drawn Node. (c) The absorption's write at
 the drawn Node: one comparison of the record's booked share there against its
 own quantum W_rec, two cases and no partial hole; the sparse Node (share at most
 W_rec) zeroed by the face Rule3 presents, the dense record (share above W_rec)
-undepleted, its count moving in the books. (d) The ledger in whole numbers, the click line, the NodeReader's report, and
+undepleted, its count moving in the books. (d) The books in whole numbers, the click line, the NodeDetector's report, and
 the declaration in the file. Nothing here is a number of a run.
 
     python paper/general_formula/click_body.py --output paper/general_formula/figures
@@ -171,7 +171,7 @@ def spacetime(ax: Axes) -> None:
     t_erased = (xr - x0 - bound * tc) / (pace - bound)  # where the front overtakes the record's edge
     ax.plot([x0, x0 + pace * t_erased], [0, t_erased], color=BLUE, lw=0.9, zorder=3)
     arrow(ax, (x0 + pace * 2.0, 2.0), (x0 + pace * 3.4, 3.4), color=BLUE, lw=0.9)
-    # the NodeReader's region: two adjacent Nodes, a strip of two world lines
+    # the NodeDetector's region: two adjacent Nodes, a strip of two world lines
     ax.add_patch(
         Rectangle(
             (xb, -0.3),
@@ -314,7 +314,7 @@ def spacetime(ax: Axes) -> None:
     ax.text(
         xr + 0.45,
         12.5,
-        "giving, per window:\none quantum at\n$\\Omega = \\omega_e - \\omega_g$",
+        "emission, per window:\none quantum at\n$\\Omega = \\omega_e - \\omega_g$",
         color=BLUE,
         ha="left",
         va="center",
@@ -324,7 +324,7 @@ def spacetime(ax: Axes) -> None:
     ax.text(
         xr + 0.4,
         2.6,
-        "the NodeReader's\nregion: two Nodes,\nits record in g",
+        "the NodeDetector's\nregion: two Nodes,\nits record in g",
         ha="left",
         va="center",
         zorder=9,
@@ -340,7 +340,7 @@ def spacetime(ax: Axes) -> None:
 
 
 def node_box(ax: Axes, cx: float, cy: float, s: float, lw: float = 0.9) -> None:
-    """A Node of the GameBoard: a rounded square with its six Ports, four in the plane, two out of it."""
+    """A Node of the lattice: a rounded square with its six Ports, four in the plane, two out of it."""
     ax.add_patch(
         FancyBboxPatch(
             (cx - s / 2, cy - s / 2),
@@ -385,8 +385,8 @@ def node_box(ax: Axes, cx: float, cy: float, s: float, lw: float = 0.9) -> None:
 
 
 def region(ax: Axes, x1: float, cy: float, s: float, upper: bool, drawn: bool) -> tuple[float, float]:
-    """The NodeReader's region: two adjacent Nodes with the Link between them, the dotted boundary of the
-    declaration, and the NodeReader's own record laid over both, equal levels on both, its parts g and e a
+    """The NodeDetector's region: two adjacent Nodes with the Link between them, the dotted boundary of the
+    declaration, and the NodeDetector's own record laid over both, equal levels on both, its parts g and e a
     ladder with the laid part filled. With drawn, the second Node is the drawn Node, written by the click, and the
     record stands in the drawn part at that Node alone.
     Returns the two Nodes' centres."""
@@ -426,7 +426,7 @@ def wave(ax: Axes, x1: float, x2: float, y: float, color: str, n: int = 4, amp: 
 
 
 def the_region(ax: Axes) -> None:
-    """(b) The NodeReader's region before the close and after the one write at the drawn Node."""
+    """(b) The NodeDetector's region before the close and after the one write at the drawn Node."""
     s = 1.6
     y = 15.9
     xa, xb = region(ax, 1.7, y, s, upper=False, drawn=False)
@@ -491,14 +491,14 @@ def the_region(ax: Axes) -> None:
 
 
 def the_hole(ax: Axes) -> None:
-    """(c) The taking's write at the drawn Node: one comparison of the record's booked share there against its own
+    """(c) The absorption's write at the drawn Node: one comparison of the record's booked share there against its own
     quantum W_rec; the sparse Node zeroed by the face Rule3 presents, the dense record undepleted with its count in
     the books (the advisor's words of 2026-10-04, #1793 comment 5985040913)."""
     ax.text(-0.3, 12.5, "c", ha="left", va="top", fontweight="bold", fontsize=9)
     ax.text(
         0.4,
         12.3,
-        "the taking's write: one comparison,\ntwo cases, no partial hole",
+        "the absorption: one comparison,\ntwo cases, no partial hole",
         ha="left",
         va="top",
         fontweight="bold",
@@ -553,7 +553,7 @@ def the_hole(ax: Axes) -> None:
             )
         for k, line in enumerate(lines):
             ax.text(
-                6.4,
+                6.25,
                 y0 + 0.55 - k * 0.46,
                 line,
                 ha="left",
@@ -568,15 +568,15 @@ def the_hole(ax: Axes) -> None:
 
 
 def the_books(ax: Axes) -> None:
-    """(d) The ledger in whole numbers, the click line to the file and the declaration."""
+    """(d) The books in whole numbers, the click line to the file and the declaration."""
     ax.text(-0.3, 6.7, "d", ha="left", va="top", fontweight="bold", fontsize=9)
     rows = (
         ("the arriving record's count", "1", "0"),
         ("its levels and remainder at the drawn Node", "$v$, $b$, $r$", "0, 0, 0"),
-        ("the NodeReader's record, its parts g / e", "1 / 0", "0 / 1"),
+        ("the NodeDetector's record, its parts g / e", "1 / 0", "0 / 1"),
     )
     yt = 6.25
-    ax.text(0.4, yt, "the ledger", ha="left", va="center", fontweight="bold")
+    ax.text(0.4, yt, "the books", ha="left", va="center", fontweight="bold")
     ax.text(9.6, yt, "before", ha="center", va="center", fontweight="bold")
     ax.text(12.0, yt, "after", ha="center", va="center", fontweight="bold")
     ax.plot([0.0, 13.0], [yt - 0.35, yt - 0.35], color=INK, lw=0.6)
@@ -585,19 +585,19 @@ def the_books(ax: Axes) -> None:
         ax.text(0.0, yy, name, ha="left", va="center")
         ax.text(9.6, yy, before, ha="center", va="center", color=BLUE if i < 2 else INK)
         ax.text(12.0, yy, after, ha="center", va="center", color=ORANGE if i == 2 else INK)
-    # the click line: the NodeReader's report, the only measurement
+    # the click line: the NodeDetector's report, the only measurement
     for ybox, text in (
         (
             1.95,
-            "the click line, the NodeReader's report, the only measurement:\n"
-            "the window's index, the NodeReader, the family and the part,\n"
-            "the count before and after, the NodeReader's own clock; no Node",
+            "the click line, the NodeDetector's report, the one measurement:\n"
+            "the window's index, the NodeDetector, the family, the part, the\n"
+            "count before and after, the NodeDetector's own clock; no Node",
         ),
         (
             -0.1,
-            "the declaration in the NodeReader's file: its Nodes, two or more\n"
+            "the declaration in the NodeDetector's file: its Nodes, two or more\n"
             "connected (one Node with a record of its own: its parts g, e and\n"
-            "the lifetime); the world's one draw, a body's reader's own seed",
+            "the lifetime); the world's draw, a body's NodeDetector's own seed",
         ),
     ):
         ax.add_patch(

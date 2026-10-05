@@ -31,7 +31,7 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         rows.guard_bounds_the_pi_mode_at_fixed_coefficients,
     ),
     (
-        "In the clicks there are conservations other than the GameBoa",
+        "In the clicks there are conservations other than the lattice",
         forms.boards_conservations_are_the_form_and_the_wronskian,
     ),
     (
@@ -51,16 +51,16 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         forms.regions_share_changes_by_boundary_currents,
     ),
     (
-        "The total share of any GameBoard whose Links read the same f",
+        "The total share of any lattice whose Links read the same fro",
         forms.total_share_nonnegative_inside_the_guard,
     ),
-    ("The direction of time belongs to the clicks and not to the G", rows.the_step_is_a_bijection),
+    ("The direction of time belongs to the clicks and not to the l", rows.the_step_is_a_bijection),
     (
         "The line without its division conserves it exactly with the",
         forms.wronskian_conserved_by_the_line_at_static_paces,
     ),
     (
-        "Its total over the GameBoard is invariant under any change o",
+        "Its total over the lattice is invariant under any change of",
         forms.wronskian_total_under_a_change_of_paces,
     ),
     ("The exact angle of the shears is 2arctanL p0 2Gamma2 which i", rows.shears_exact_angle),

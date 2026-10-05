@@ -8,7 +8,7 @@ script, a cited section of a document, a section of the paper), and the breaker:
 could break it, written by hand in `paper/claims_breakers.json` and keyed by the sentence's opening words, so
 that a sentence changed in the paper changes its row and a row's breaker survives a reprint. The kinds: (a)
 derived from the law's line, with the line named; (b) computed by a named script, its output the number printed;
-(c) read from a run at the frozen commit, labelled NodeReader or GameBoard; (d) nature's measurement with its
+(c) read from a run at the frozen commit, labelled NodeDetector or lattice; (d) nature's measurement with its
 citation; (e) what the engine does, sourced to the engine's document and a function; a declaration, hypothesis,
 assumption or inspiration mark is a row of its own kind, with no breaker. A row with no source is marked NO
 SOURCE, a finding for the hands. The unmarked sentences carrying a strong word are listed as candidates, and

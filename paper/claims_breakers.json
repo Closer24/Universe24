@@ -4,7 +4,7 @@
     "breaker": "Rule3 on a 3x3x3 periodic board with random integer levels under each of the cube's 48 maps commutes with the map (0 misses expected); a rotation outside the group: the band's cos omega at k = 0.5 per Link on a massless family reads 0.9592 along an axis, 0.9588 along a face diagonal and 0.9586 along the body diagonal (the mathematician's hand, 5982319424), the lattice's anisotropy at the fourth order of S.21: the claim holds since the three differ and would break only if they agreed.",
     "state": "to write"
   },
-  "In the clicks there are conservations other than the GameBoa": {
+  "In the clicks there are conservations other than the lattice": {
     "kind": "a",
     "breaker": "The board's conservations: the weighted form and Wronskian on random boards at static paces in exact rationals (the rows of Theorem 3 and 5.5); no total energy: the clicks' energy T sin omega and the holder's form move together (R316), a world where a body's level grows and the form falls, both read; the credit's conservation of the count the engine's own act (kind (e): one quantum one click on the tests' universe, the count before and after).",
     "state": "to write"
@@ -39,12 +39,12 @@
     "breaker": "A region of random shape on a random board: the sum of the shares' rational changes equals the weighted boundary currents plus the remainder terms, the interior Links cancelling pairwise (the Link factor the same from both ends); a region of one Node and a region of the whole periodic board as the two ends; a reader's floor the one further term.",
     "state": "to write"
   },
-  "The total share of any GameBoard whose Links read the same f": {
+  "The total share of any lattice whose Links read the same fro": {
     "kind": "a",
     "breaker": "Random integer levels on closed and periodic boards at the vacuum's coefficients for every pair with |num| <= den: the total share non-negative, 0 at a static uniform level of light (the equality); outside: |num| > den (beyond the guard) or a board with an open face reading 0 beyond: the total can go negative, the fence's two conditions each needed.",
     "state": "to write"
   },
-  "The direction of time belongs to the clicks and not to the G": {
+  "The direction of time belongs to the clicks and not to the l": {
     "kind": "a",
     "breaker": "The step on random states is a bijection (its inverse found for every state, no two states to one); the draw's write is not (two states, the quantum taken from either of two Nodes, map to one board): the arrow is the click's, the step's reversibility the first half of 5.1.",
     "state": "to write"
@@ -54,7 +54,7 @@
     "breaker": "A two-part record on random boards stepped by the line in exact rationals at paces static in time: the weighted Wronskian total constant exactly (S.9), the integer step's defect the remainder term; paces moving in time without the time-Link turn: the total drifts (the work term, S.26 (d')), with the turn booked from the turned levels u_i, v_i: constant again (R334).",
     "state": "to write"
   },
-  "Its total over the GameBoard is invariant under any change o": {
+  "Its total over the lattice is invariant under any change of": {
     "kind": "a",
     "breaker": "The paces changed uniformly over the board between steps (the same factor at every Node): the Wronskian's total unchanged; a non-uniform change (a well deepening at one Node): the weighted total changes by the work term, the plain total by more; the exactness 'at static paces' and 'uniform over the board' each tested on its own side.",
     "state": "to write"
@@ -84,7 +84,7 @@
     "breaker": "The symmetric form's matrix on a chain and a small box at random static paces: its top eigenvector against the fixed point of dF / d phi = 2 lambda phi on the sphere, found by the floored Jacobi iteration of S.13, the two equal to the iteration's stop; 2 cos omega_b the eigenvalue; a non-top mode as the start converges to the top or to none, named.",
     "state": "to write"
   },
-  "The binding rows fixed point has two branches a wide cloud a": {
+  "The binding holders fixed point has two branches a wide clou": {
     "kind": "b",
     "breaker": "pixel_mode.py re-run at the frozen commit on the shipped matter worlds: the two branches from two start widths, their numbers the printed ones (the compact pixel's and the wide cloud's clock pairs); a start width between the two lands on one of them and on no third.",
     "state": "to write"
@@ -191,12 +191,12 @@
   },
   "The one run this paper reports is the two slits the Huygens": {
     "kind": "c",
-    "breaker": "A run's reading (3.7's run sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeReader for the counts and GameBoard for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "breaker": "A run's reading (3.7's run sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
     "state": "run"
   },
   "The implementation checks this as a test it runs a file forw": {
     "kind": "c",
-    "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeReader for the counts and GameBoard for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
     "state": "run"
   },
   "tab:adds: The bands inertia and kinetic scale m 3tanomega0 cm2 omega0": {
@@ -371,7 +371,7 @@
   },
   "tab:clicks: The clocks click rate": {
     "kind": "a",
-    "breaker": "S.15: a body's click rate against its clock's pace e^{-U} in a level, in exact rationals on one Node; the rate read by a NodeReader over all its Nodes equals the share's change.",
+    "breaker": "S.15: a body's click rate against its clock's pace e^{-U} in a level, in exact rationals on one Node; the rate read by a NodeDetector over all its Nodes equals the share's change.",
     "state": "to write"
   },
   "tab:clicks: The bendings clicks": {
@@ -724,7 +724,7 @@
     "breaker": "Schroedinger's slow limit: the three conditions each tested outside its order (the budget's bound per laid mode (R325), the spatial second difference's k^2 / 12 and the band's own 1 / (12 sin^2 omega_0) (#1908 (7)), the envelope's second difference); the Gaussian packet's centre 71.4 against 71.6 and the width 32.38 against 32.40 (schroedinger_check.py re-run).",
     "state": "to write"
   },
-  "Each act is a call of Rule3 on wholeGameBoard arrays of inte": {
+  "Each act is a call of Rule3 on wholelattice arrays of intege": {
     "kind": "e",
     "breaker": "The owner's rule (2026-10-04): every act of the engine on a Node's levels is Rule3's one line or the division act with the half, as the law has them (the lay, the write, the hole, the start, the credit's division); the breaker scans src/event_universe for arithmetic on a Node's levels outside core/rule3 and the division act, and every per-Node computation found there that is not of Rule3's form is a red row by itself and a finding shouted on the reviewer's ledger (the alignment audit's A1 to A3 and S.61's 26 rows the first list); kind (e), the advisor's engine breaker and the mathematician's audit.",
     "state": "to write"

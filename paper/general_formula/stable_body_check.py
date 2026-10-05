@@ -12,7 +12,7 @@ G = (DEN - NUM) / DEN
 KAPPA = np.arccosh(3 * DB / NB - 2)
 CONTACT = (
     3 * DB / (6 * (DB - NB))
-)  # the binding kernel's weight per unit source, summed over the GameBoard
+)  # the binding kernel's weight per unit source, summed over the lattice
 A = NUM / (
     2 * DEN
 )  # the pressure per quantum of a Gaussian of width R in three dimensions, times 1 / R^2
@@ -25,7 +25,7 @@ print(
 )
 print(f"M_max = a / sqrt(3 b c) x sqrt(E_b E_g) = {A / np.sqrt(3 * B_UNIT * C_UNIT):,.0f} sqrt(E_b E_g)")
 
-# the GameBoard check of the constants: s_b -> 3 and s_g -> 1 with the constants above, on 128^3 at widths 3 to 6
+# the lattice check of the constants: s_b -> 3 and s_g -> 1 with the constants above, on 128^3 at widths 3 to 6
 N, D = 128, 3
 ks = [2 * np.pi * np.fft.fftfreq(N) for _ in range(D)]
 grid = np.meshgrid(*ks, indexing="ij")
@@ -36,7 +36,7 @@ with np.errstate(divide="ignore"):
 coords = np.meshgrid(*[np.arange(N) - N // 2 for _ in range(D)], indexing="ij")
 r2 = sum(c.astype(float) ** 2 for c in coords)
 print(
-    "GameBoard 128^3: width, pressure x R^2 / a, contact well x R^3 / b, Poisson well x R / c (each 1 in the continuum)"
+    "lattice 128^3: width, pressure x R^2 / a, contact well x R^3 / b, Poisson well x R / c (each 1 in the continuum)"
 )
 for R in (3.0, 4.0, 6.0):
     phi = np.exp(-r2 / (2 * R * R))
