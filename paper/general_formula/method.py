@@ -222,7 +222,7 @@ def method(ax: Axes) -> None:
     ax.text(
         xs[2] + w / 2,
         0.3,
-        "the board's rules:\nRule3 fixed,\nthe file's rows free",
+        "the lattice's rules:\nRule3 fixed,\nthe file's rows free",
         ha="center",
         va="top",
         fontsize=6.3,

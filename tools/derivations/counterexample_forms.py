@@ -556,7 +556,7 @@ def acts_form_no_product_of_levels() -> Row:
         )
         share_quadratic &= doubled == 4 * single
     return Row(
-        "tab:results: The rules acts form no product of levels",
+        "tab:results: The rules acts form no product of levels on the infinite lat",
         linear and within_one,
         share_quadratic,
         "the line is linear in its eight inputs exactly at 4 pairs and random paces; the integer step within one unit of it; the share, a reading, scales as the square",

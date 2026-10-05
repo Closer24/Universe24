@@ -129,7 +129,7 @@
     "breaker": "weak_field.py: Shapiro's delay by the index e^{2U} integrated along the ray against the known form 2 (r_s / c) ln(4 r_1 r_2 / b^2) at first order; the second-order difference of the exponential metric named.",
     "state": "to write"
   },
-  "itemd The perihelion weakfieldpy": {
+  "itemd The perihelion under the one assumption whose end this": {
     "kind": "b",
     "breaker": "weak_field.py: the orbit step of S.19 at the computed pair: the precession per orbit against 6 pi m / (a (1 - e^2)) with gamma_K = den / num and beta_K at the pair, and with the gap closed (the PPN values 1, 1); the k^4 caveat's size at the pair's k.",
     "state": "to write"
@@ -214,7 +214,7 @@
     "breaker": "The composed paces N^2 = e^{-2U}, h^2 = e^{2U} expanded to second order in U against the PPN form: gamma = beta = 1 at every order in U (exact), the spatial second order 2 against Schwarzschild's 1.5 (the isotropic chart); the redshift's factor f(omega_0) = 1 + alpha_U, 1.063 at [2, 3]; outside: the plain (unassumed) read of the Link gives another metric, the one assumption's fence.",
     "state": "to write"
   },
-  "tab:adds: The shadows capture radius b 2em against Schwarzschilds 3sqr": {
+  "tab:adds: The shadows capture radius b 2em the exponential metrics own": {
     "kind": "a",
     "breaker": "Root-finding on b(r) = r e^{2U}, U = m / r: the minimum at r = 2m, b = 2 e m = 5.44 m exactly, against 3 sqrt 3 m = 5.20 m; the general lens equation at finite k reproduces it as k -> 0 (S.30); the 4.6 percent and the two EHT standard deviations as printed.",
     "state": "to write"
@@ -264,7 +264,7 @@
     "breaker": "The theorem row's breaker (5.1): random boards forward and back bit for bit; the interval's condition (every number an act reads kept) tested by a moving face outside it.",
     "state": "to write"
   },
-  "tab:results: The rules acts form no product of levels": {
+  "tab:results: The rules acts form no product of levels on the infinite lat": {
     "kind": "a",
     "breaker": "The four acts on random integer boards in exact arithmetic: every output a linear form of the levels with integer coefficients plus the division act's remainder, no term bilinear in two levels (the acts' Jacobians constant in the levels); the share and the form are readings, not acts, and are the bilinear ones.",
     "state": "to write"
@@ -309,9 +309,9 @@
     "breaker": "weak_field.py: a clock's rate in a level against e^{-U} and the factor f(omega_0) at the pair and as the gap closes; the redshift read on the clock, not on T omega.",
     "state": "to write"
   },
-  "tab:results: The bending which fixed the one assumption the perihelion th": {
+  "tab:results: The bending and the perihelion which fixed the one assumptio": {
     "kind": "a",
-    "breaker": "weak_field.py: the bending 4 U_b (the one click that fixed hN = 1), Shapiro's delay and the perihelion from the exponential metric at the pair; the second order of the metric (2 against 1.5) named; outside: the plain read without the assumption gives 2 U_b.",
+    "breaker": "weak_field.py: the bending 4 U_b and the perihelion's beta = 1 (the two clicks that fixed hN = 1's two halves), Shapiro's delay from the exponential metric at the pair; the second order of the metric (2 against 1.5) named; outside: the plain read without the assumption gives 2 U_b.",
     "state": "to write"
   },
   "tab:results: The same forms against Keplers potential gammaK betaK and al": {
