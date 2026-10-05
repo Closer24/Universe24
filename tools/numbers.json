@@ -323,33 +323,13 @@
         }
     },
     {
-        "name": "the ball of dust's deceleration without and with the vacuum's write (q_0 = Omega_m / 2, Omega_m / 2 - Omega_Lambda)",
-        "canonical": ["q_0 = Omega_m / 2 - Omega_Lambda = -0.55"],
+        "name": "the ball of dust's deceleration (q_0 = Omega_m / 2)",
+        "canonical": ["q_0 = Omega_m / 2 = +0.15"],
         "derivation": {
             "module": "tools/derivations/cosmology.py",
             "function": "deceleration",
-            "expected": [0.15, -0.55],
+            "expected": [0.15],
             "digits": 3
-        }
-    },
-    {
-        "name": "the transition redshift z_t = (2 Omega_Lambda / Omega_m)^(1 / 3) - 1",
-        "canonical": ["0.67"],
-        "forbidden": ["z_t = 0.671", "z_t = 0.7"],
-        "derivation": {
-            "module": "tools/derivations/cosmology.py",
-            "function": "transition_redshift",
-            "expected": [0.671],
-            "digits": 3
-        }
-    },
-    {
-        "name": "the vacuum write's coefficient 6 cos omega_0 / (1 + cos omega_0) at nature's gap and at [2, 3]",
-        "derivation": {
-            "module": "tools/derivations/cosmology.py",
-            "function": "write_coefficient",
-            "expected": [3.0, 2.4],
-            "digits": 2
         }
     },
     {

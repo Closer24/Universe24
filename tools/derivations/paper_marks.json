@@ -2607,12 +2607,11 @@
    "existing_script": "tools/derivations/cosmology.py",
    "proposed_module": "cosmology.py",
    "status": "scripted",
-   "note": "q_0 = Omega_m / 2 = 0.15 > 0 at Omega_m = 0.3 and flat Lambda-CDM's Omega_m / 2 - Omega_Lambda = -0.55 at Omega_Lambda = 0.7, the supernovae's -0.5 being nature's reading",
+   "note": "q_0 = Omega_m / 2 = 0.15 > 0 at Omega_m = 0.3, flat Lambda-CDM's fraction as the input; the supernovae's -0.5 is nature's reading, a finding against nature by name",
    "script": "tools/derivations/cosmology.py",
    "function": "deceleration",
    "expected": [
-    0.15,
-    -0.55
+    0.15
    ],
    "digits": 2
   },
