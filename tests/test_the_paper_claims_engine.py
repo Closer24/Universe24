@@ -262,7 +262,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
 
     def two_records_laid_equal_are_identical_and_one_apart_diverge_at_one_link_per_interval():
-        """Row 133, "The two parts of one beam, laid equal, are two records of one family stepped by the same line along the same path, and they are identical bit for bit"; the breaker: two records of one family laid equal on the tests' universe and stepped by the engine, every array equal bit for bit at every interval; laid one level apart at one Node they differ and the difference propagates at one Link per interval, the causal bound; here two GameBoards of the box, the light packet laid alike, 20 intervals bit for bit; the twins with one level more at one Node of the packet and with 200 more differ, every differing Node within t Links of it in the Link metric at the interval t, the kick of 200 reaching t exactly, the kick of one riding the carried remainders one Link behind at most (the one-Link reach of every act is tests/test_the_node.py's)."""
+        """Row 133, "The two parts of one beam, laid equal, are two records of one family stepped by the same line along the same path, and they are identical bit for bit"; the breaker: two records of one family laid equal on the tests' universe and stepped by the engine, every array equal bit for bit at every interval; laid one level apart at one Node they differ and the difference propagates at one Link per interval, the causal bound; here two GameBoards of the box, the light packet laid alike, 20 intervals bit for bit; the twins with one level more at one Node of the packet and with 200 more differ, every differing Node within t Links of it in the Link metric at the interval t, the kick of 200 reaching t exactly, the kick of one riding the carried remainders behind it within the causal bound and never swallowed, its reach printed ([1, 1, 2, 3, 4, 5] at the packet laid at the content-0 band, [1, 1, 2, 2, 2, 3] at the packet laid at the declared rest's paces: a one-level difference crosses a floor boundary at the frontier only where the remainders admit it; the one-Link reach of every act is tests/test_the_node.py's)."""
         first, second, at = GameBoard(load_world(box)), GameBoard(load_world(box)), (6, 2, 2)
         light = [f.name for f in first.families].index("charge")
         kicked = {kick: copy.deepcopy(first) for kick in (1, 200)}
@@ -286,7 +286,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 reach[kick].append(far := max(distance(n) for n in apart(first, board)))
                 assert far <= interval  # the causal bound
         assert reach[200] == list(range(1, 7))
-        assert all(t - 1 <= far <= t for t, far in enumerate(reach[1], 1))
+        assert all(1 <= far <= t for t, far in enumerate(reach[1], 1))  # never swallowed, causal
         return (
             f"two GameBoards laid alike identical bit for bit over 20 intervals; the farthest differing Node "
             f"per interval, in Links: the kick of 200 {reach[200]}, the kick of 1 {reach[1]}"

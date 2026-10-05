@@ -11,8 +11,10 @@ import pytest
 
 from event_universe import credit, growth, node, share, world_files
 from event_universe.core import paces
+from event_universe.core.rule3 import coefficients
 from event_universe.game_board import GameBoard
-from event_universe.loader.derived import Row, quanta_records
+from event_universe.loader.derived import FamilyRule, Row, quanta_records
+from event_universe.loader.world import World
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -32,6 +34,20 @@ def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
     """Rows of real lines as the loader reads them (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the tests' declaration)."""
     held = tuple((name, 1) for name, _pair, _lines, weight in rows if weight is not None)
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
+
+
+def vacuum_content(world: World, family: FamilyRule) -> int:
+    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22; the generator's `vacuum_of`), 60 on the shipped universes with a gravity row and 0 on the atom worlds'."""
+    return sum(world.families[read.family].rest * read.weight for read in family.reads)
+
+
+def band_of(pair, gamma: int, content: int, unit: int, *cosines):  # type: ignore[no-untyped-def]
+    """cos omega(q) in the test's floats from the line's own read at `content` (the law's (h), **L** the line's own read: 2 w cos omega(q) = S + SUM over the six Ports of R_ij cos q_a), Rule3's coefficients at the composed paces of the content with no tension; `cosines` the cos q_a of the three axes, numbers or arrays; (num / den) SUM_a cos q_a / 3 at the content 0."""
+    reads, self_coefficient, wall = coefficients(
+        *pair, gamma, *paces.node_paces(gamma, content), None, unit
+    )
+    arrived = sum(int(read) * cosines[port // 2] for port, read in enumerate(reads))
+    return (int(self_coefficient) + arrived) / (2 * int(wall))
 
 
 def load_file(name: str, path: Path):
