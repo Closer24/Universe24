@@ -7,7 +7,7 @@ formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
 claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
-fence (lattice for a reading of the lattice, clicks for a formula of what a
+fence (lattice for a reading of the lattice, clicks for a formula of what
 a NodeDetector reports). Its title is "Universe24: an integer cellular automaton read through clicks,
 the formulas it shares with nature and the ones it adds", the method, the
 Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
@@ -156,12 +156,12 @@ the marks (every `\claimmark` one of the key's eight words, every `\fence` one o
 beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
-scripts' count is a ratchet the same test holds: of the 128 derived and computed marks of the main
-text, 118 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
+scripts' count is a ratchet the same test holds: of the 130 derived and computed marks of the main
+text, 119 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
 line alone with no engine import and no run's file, the paper's own check scripts, or, for a computed
-mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, the stable body's
+mark, the run's reader) and 11 name none: the atoms' ground levels computed by hand (S.60) and the qualitative statements (a body's four statements, the stable body's
 proposition, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
-energy, confinement, the polarisations, the Lorentz form, Bjorken's finding) and the integer Wronskian's
+energy, confinement, the polarisations, the Lorentz form, antimatter's opposite charge (the Wronskian's sign, Section 5.5)) and the integer Wronskian's
 witness of S.9; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
@@ -177,7 +177,7 @@ the journal.
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 242 words
+  and `abstract_journal.txt` beside it are one text of 245 to 248 words
   (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
@@ -216,8 +216,8 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "42 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
-  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,692
+  "42 pages, 7 figures, 6 tables; supplementary material of 38 pages as an
+  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,479
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the

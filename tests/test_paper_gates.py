@@ -9,7 +9,7 @@ from types import ModuleType
 ROOT = Path(__file__).resolve().parents[1]
 GATES = ROOT / "paper" / "general_formula" / "paper_gates.py"
 FENCELESS_MARKS_TONIGHT = 0  # every derived or theorem mark carries its fence since ecf653d
-SCRIPTLESS_MARKS_TONIGHT = 10  # the derived and computed marks naming no script: the qualitative statements and one integer witness, after part 4's map
+SCRIPTLESS_MARKS_TONIGHT = 11  # the ratchet: ten of 2026-10-04 and the atoms' ground levels computed by hand (S.60), named so at the advisor's word of 2026-10-05
 
 
 def gates() -> tuple[ModuleType, dict[str, str]]:

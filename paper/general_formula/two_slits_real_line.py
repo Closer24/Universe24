@@ -285,6 +285,23 @@ def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
     return now, before
 
 
+def lay_count(now: np.ndarray, before: np.ndarray, line: Line, clock: int, wall: float) -> float:
+    """The lay's count in quanta: the record's share summed over the lattice, Eq. (13) of the paper at the
+    vacuum's paces (every pace the clock), e_i = [w (now_i^2 + before_i^2) - now_i (S before_i + sum_j R_ij
+    before_j)] / (2 clock^2) per Node with the folded z axis reading the Node itself through both z Ports, the
+    sum over W_c (the generator's count is this sum rounded at the lay)."""
+    reads, self_coefficient, rule_wall = line.rule
+    neighbours = 2 * before
+    neighbours[1:] += before[:-1]
+    neighbours[:-1] += before[1:]
+    neighbours[:, 1:] += before[:, :-1]
+    neighbours[:, :-1] += before[:, 1:]
+    share = (
+        rule_wall * (now**2 + before**2) - now * (self_coefficient * before + reads[0] * neighbours)
+    ) / (2 * clock**2)
+    return float(share.sum()) / wall
+
+
 def mode_lay(world: World, board: Board) -> tuple[np.ndarray, np.ndarray]:
     """The generator's integer lay from the mode file, the levels the engine's run starts from, as
     real numbers over the declared board (the flat x-major index of the file unfolded)."""
@@ -771,10 +788,17 @@ def main(argv: list[str] | None = None) -> None:
         f" the centroid {arrival(physical.profile)[1]:.2f}, the span {arrival(physical.profile)[2][0]:.1f} to"
         f" {arrival(physical.profile)[2][1]:.1f}, v_g {v_g:.4f}"
     )
+    laid_one = lay_count(now, before, line, world.node_clock, wall)
+    print(
+        f"  the lay at s = 1: {laid_one:.1f} quanta by Eq. (13) over W_c (the generator's integer count"
+        f" {expected['laid']}); the transmission per laid quantum N / lay = {sum(physical.regions) / laid_one:.4f}"
+    )
+    transmission: dict[int, float] = {1: sum(physical.regions) / laid_one}
     found: dict[int, tuple[float, float, float, float, float]] = {}
     for scale in args.scales:
         big = board.scaled(scale)
         big_now, big_before = law_lay(big, line)
+        laid = lay_count(big_now, big_before, line, world.node_clock, wall)
         big_inflow = real_line(big, line, big_now, big_before, source_open=False)
         big_window = (window[0] * scale, window[1] * scale)
         big_reading = read_screen(big_inflow, big.screen, wall, big_window, 0)
@@ -792,6 +816,11 @@ def main(argv: list[str] | None = None) -> None:
             f" {row_text([big_reading.regions[at] for at in wings], 2)}, the peak at {peak:.1f}, the centroid"
             f" {centroid:.2f}, the span {span[0]:.1f} to {span[1]:.1f}, v_g {line.group_velocity(k / scale):.4f}"
         )
+        transmission[scale] = total / laid
+        print(
+            f"    the lay at s = {scale}: {laid:.1f} quanta; the transmission per laid quantum N / lay ="
+            f" {total / laid:.4f}"
+        )
     if len(found) >= 2:
         s1, s2 = sorted(found)[-2:]
         names = (
@@ -808,6 +837,19 @@ def main(argv: list[str] | None = None) -> None:
         print(
             f"  the limit by the corrections falling as 1 / s^2, from s = {s1} and {s2}: "
             + ", ".join(f"{name} {value:.2f}" for name, value in zip(names, limits, strict=True))
+        )
+    if len(transmission) >= 3:
+        scales = sorted(transmission)
+        fits = {
+            (s1, s2): (s2 * transmission[s2] - s1 * transmission[s1]) / (s2 - s1)
+            for s1, s2 in zip(scales[1:-1], scales[2:], strict=True)
+        }
+        print(
+            "  the transmission per laid quantum, the lattice's own number: "
+            + ", ".join(f"{transmission[s]:.4f} at s = {s}" for s in scales)
+            + "; its limit by a correction falling as 1 / s: "
+            + ", ".join(f"{value:.4f} from s = {s1} and {s2}" for (s1, s2), value in fits.items())
+            + f" (the lattice at s = 1 is {100 * (transmission[1] / list(fits.values())[-1] - 1):.0f} percent above it)"
         )
     print(
         f"  the lattice against the continuum at the largest scale, the physical labels: the peak"

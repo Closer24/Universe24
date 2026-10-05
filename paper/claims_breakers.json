@@ -11,7 +11,7 @@
   },
   "The backintime gate is exact between clicks and runs across": {
     "kind": "e",
-    "breaker": "The engine's gate on the tests' universe: forward n and back n bit for bit between clicks; across a click with its erasure intervals, the values presented at the Ports treated as given: MATCH; outside: a draw inside the reversed span without the crossing fails (the draw forward only), so the fence 'between clicks, across a click with the crossing' is the engine's. tools/back_in_time.py at 7756546d.",
+    "breaker": "The engine's gate on the tests' universe: forward n and back n bit for bit between clicks; across a click with its erasure intervals, the values presented at the Ports treated as given: MATCH; outside: a draw inside the reversed span without the crossing fails (the draw forward only), so the fence 'between clicks, across a click with the crossing' is the engine's. tools/back_in_time.py at 1fe3790a.",
     "state": "to write"
   },
   "The whole run therefore goes back N intervals forward and N": {
@@ -76,7 +76,7 @@
   },
   "i a family is a band of the rule and its row holds only its": {
     "kind": "e",
-    "breaker": "(i) the loader on the tests' universe: a family's row with a third key refused by name, with its two keys admitted (kind (e), loader/world.py at 7756546d); (ii) the three exact massive rotations as the row above; the two assumptions in the sentence have no breaker, being declarations.",
+    "breaker": "(i) the loader on the tests' universe: a family's row with a third key refused by name, with its two keys admitted (kind (e), loader/world.py at 1fe3790a); (ii) the three exact massive rotations as the row above; the two assumptions in the sentence have no breaker, being declarations.",
     "state": "to write"
   },
   "The record is the top mode of Rule3s symmetric form at the p": {
@@ -191,12 +191,12 @@
   },
   "The one run this paper reports is the two slits the Huygens": {
     "kind": "c",
-    "breaker": "A run's reading (3.7's run sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "breaker": "A run's reading (3.7's run sentence): the experimenter's #1827 comment 5981024245 at 1fe3790a, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
     "state": "run"
   },
   "The implementation checks this as a test it runs a file forw": {
     "kind": "c",
-    "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 7756546d, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
+    "breaker": "A run's reading (5.1's gate sentence): the experimenter's #1827 comment 5981024245 at 1fe3790a, NodeDetector for the counts and lattice for the gate and the photon count; the re-run at the clean main replaces the number and the comment, no breaker of its own.",
     "state": "run"
   },
   "tab:adds: The bands inertia and kinetic scale m 3tanomega0 cm2 omega0": {
