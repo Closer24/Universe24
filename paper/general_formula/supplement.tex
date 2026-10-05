@@ -1,16 +1,12 @@
-% Supplementary material to the paper: the algebraic steps of every derivation
-% the paper marks derived, in the order of the paper's sections. Standalone.
+% Supplementary material to the paper (Online Resource 1): the algebraic steps of every derivation
+% the paper marks derived, in Springer Nature's class like the article (the owner's word of 2026-10-05: the
+% readable format only, up to 50 pages). Standalone: pdflatex supplement.tex with TEXINPUTS=sn:, three times.
 \pdfoutput=1
-\documentclass[10pt]{article}
-\usepackage[hmargin=0.7in,vmargin=0.6in]{geometry}
-\linespread{0.98}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{longtable,booktabs,array}
-\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
-\usepackage{hyperref}
-\usepackage{microtype}
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,multicol,enumitem,array,microtype,longtable}
+\setlength{\columnsep}{14pt}\setlist{nosep}
 \setlength{\emergencystretch}{1.5em}
-\usepackage{enumitem}\setlist{nosep}
 \renewcommand{\labelitemi}{$\bullet$}
 \hypersetup{colorlinks=true,allcolors=black}
 % The submission build: \submissiontrue drops the journal's name from the title.
@@ -29,21 +25,18 @@
 \newcommand{\ddiv}{\ \mathrm{div}\ }
 \newcommand{\Wc}{W_c}
 \newcommand{\nom}[2]{\item[{#1}] #2}
-\usepackage{multicol}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\theoremstyle{thmstyleone}
 \newtheorem{derivation}{Derivation}
 \renewcommand{\thederivation}{S.\arabic{derivation}}
-\theoremstyle{definition}
-
-\title{Supplementary material (Online Resource 1): the derivations\\ \large to the article ``Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds''}
-\author{Alon Gonen\\
-\small Independent researcher, Haifa, Israel\\
-\small \texttt{alon@defounder.ai} \quad ORCID 0009-0008-2701-4599}
-\date{October 2026}
-
+\raggedbottom
 \begin{document}
+\title{Supplementary material (Online Resource 1): the derivations\\ \large to the article ``Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds''}
+\author*{\fnm{Alon} \sur{Gonen}}\email{alon@defounder.ai}
+\affil{\orgname{Independent researcher}, \orgaddress{\city{Haifa}, \country{Israel}}}
 \maketitle
 
-\noindent This supplement gives the algebraic steps of every result the paper marks \textsc{derived} or \textsc{computed} without a proof in its text, Derivations S.1 to S.56, numbered in their own order, each naming the paper's section it serves; the paper's claims list stands first, every claim with its status, its fence, what it rests on and its derivation, then the two tables of the formulas shared with nature and the formulas the paper adds, then the Nomenclature and the path from Rule3 to each result. The derivations keep the words of the long version of the paper, mapped to the paper's in the glossary below; the long version at the archive's tag \texttt{paper-long-v1.1} carries sixty-five derivations in its own numbering, and a derivation this supplement does not carry is cited as ``S.$n$ of the long version'' by that number. Every statement here about the implementation is of the archive's main branch at the commit 1fe3790a of 2026-10-05, the commit the two slits ran at, as the paper's Statements and Declarations say. The theorems the paper states are proved in S.45; the one-line theorems carry their proof in their sentence. Each derivation names its inputs from the paper, its steps, and, where a number was computed, the computation and its check. The notation is the paper's: Rule3's coefficients at a Node of clock pace $p_0$ and Link paces $p_a$ are $R_a = 2\,\num\,p_a^2$ on the two arrivals of the axis $a$ where the axis's two Links share one pace (the six Port coefficients $R_{ij}$ of Eq.~(1) of the paper in general), $S = 12\,\den\,\Gamma^2 - 12(\den - \num)\,p_0^2 - 4\,\num\sum_a p_a^2$ on the Node's own level, and the wall $w = 6\,\den\,\Gamma^2$; the content read at the Node is $x = c / \Gamma$, also written $U$; $g = (\den - \num) / \den = 1 - \cos\omega_0$. The lattice's own order: every derivation below is exact algebra of the line where it says so; where a continuum tool is used on the lattice (the far field $3 / (4\pi r)$ of a holder's rest, S.25; the retarded solution of the wave equation, S.40; the shell theorem, S.29; the ray integrals along the straight path, S.20 and S.30; the radial grid, S.53), it holds at long wavelength and large $r$ with the lattice's correction of relative order $(\mathrm{Link} / r)^2$ or $k^2 / 12$ along an axis, the order the law's lines name; and the theorems of mathematics cited by name (the discrete Fourier transform's resolution $2\pi / n_w$ in S.8, Watson's constant $G_0(0) = 0.252731$ \cite{watson} in S.36, the post-Newtonian periapsis formula $6\pi U_1 / (1 - e^2)$ in S.19 \cite{will}) are standard results used without proof.
+\noindent This supplement gives the algebraic steps of every result the paper marks \textsc{derived} or \textsc{computed} without a proof in its text, Derivations S.1 to S.56, numbered in their own order, each naming the paper's section it serves; the paper's claims list stands first, every claim with its status, its fence, what it rests on and its derivation, then the Nomenclature and the path from Rule3 to each result. The derivations keep the words of the long version of the paper, mapped to the paper's in the glossary below; the long version at the archive's tag \texttt{paper-long-v1.1} carries sixty-five derivations in its own numbering, and a derivation this supplement does not carry is cited as ``S.$n$ of the long version'' by that number. Every statement here about the implementation is of the archive's main branch at the commit 1fe3790a of 2026-10-05, the commit the two slits ran at, as the paper's Statements and Declarations say. The theorems the paper states are proved in S.45; the one-line theorems carry their proof in their sentence. Each derivation names its inputs from the paper, its steps, and, where a number was computed, the computation and its check. The notation is the paper's: Rule3's coefficients at a Node of clock pace $p_0$ and Link paces $p_a$ are $R_a = 2\,\num\,p_a^2$ on the two arrivals of the axis $a$ where the axis's two Links share one pace (the six Port coefficients $R_{ij}$ of Eq.~(1) of the paper in general), $S = 12\,\den\,\Gamma^2 - 12(\den - \num)\,p_0^2 - 4\,\num\sum_a p_a^2$ on the Node's own level, and the wall $w = 6\,\den\,\Gamma^2$; the content read at the Node is $x = c / \Gamma$, also written $U$; $g = (\den - \num) / \den = 1 - \cos\omega_0$. The lattice's own order: every derivation below is exact algebra of the line where it says so; where a continuum tool is used on the lattice (the far field $3 / (4\pi r)$ of a holder's rest, S.25; the retarded solution of the wave equation, S.40; the shell theorem, S.29; the ray integrals along the straight path, S.20 and S.30; the radial grid, S.53), it holds at long wavelength and large $r$ with the lattice's correction of relative order $(\mathrm{Link} / r)^2$ or $k^2 / 12$ along an axis, the order the law's lines name; and the theorems of mathematics cited by name (the discrete Fourier transform's resolution $2\pi / n_w$ in S.8, Watson's constant $G_0(0) = 0.252731$ \cite{watson} in S.36, the post-Newtonian periapsis formula $6\pi U_1 / (1 - e^2)$ in S.19 \cite{will}) are standard results used without proof.
 
 \paragraph{The use of a large language model.} The derivations of this supplement, like the article's text, software and computations, were worked out with a large language model (Claude, Anthropic, through Claude Code, 2026) used extensively as a tool under the author's direction, as the article's Statements and Declarations state; every step was reviewed by the author, and obtained twice by independent routes where its status says two derivations and once where it says one; the model is not an author, and the author takes full responsibility for the content.
 
@@ -127,71 +120,6 @@ The declarations: the entries, the NodeDetectors, the rates, the conversion's ta
 The hypotheses under their own names: the conversion click, the dimension-$3$ field with its confinement in the model's words, the carrier, the nuclear potentials, the parts as particles, the masses as fields, only a click moves a quantum in nature (the single atom's lifetime its test) & hypothesis; no number of the paper rests on the last & clicks & stated under their names & Section 9; the long version's Section 10.3 and S.36, S.37, S.45, S.53 at its tag\\\\
 The click's algebra beyond the law: the count's change and the booking identity; the draw of whether and which future continues; the momentum's chain; under the twist proposition the wave vector conserved, the recoil $\propto 1 / M$, Compton with the factor $\omega_0 / \tan\omega_0$, nature's at $1$ & derived for the count, the booking and the chain; assumption, the counting rule, for the draw; hypothesis, fitted, for the twist, derived under it for the rest & lattice; clicks for the booking; Compton's factor lattice at the computed pair, nature's by construction, no test & the law's definitions; no run & Section 2.5.2; S.56\\
 \end{longtable}\end{footnotesize}
-
-\section*{The formulas shared with nature and the formulas the paper adds}
-
-\noindent The two tables of the paper's first drafts, whole; the paper carries them as the lists of its Sections 5.1 and 5.2, one item per formula.
-
-\begin{scriptsize}\setlength{\tabcolsep}{3pt}\begin{longtable}{L{5.4cm}L{3.4cm}L{3.6cm}}
-\caption{\label{tab:shared}The formulas shared with nature, each reached from Rule3 in lattice form, with nature's form beside it, its status and fence (the key of Section 1.4 of the paper) and its derivation. $U$ is the clock's share and $U_K$ the Newtonian potential the orbits measure}\\
-\toprule
-The lattice's form & Nature's form beside it & Status, fence, derivation\\
-\midrule
-\endfirsthead
-\toprule
-The lattice's form & Nature's form beside it & Status, fence, derivation\\
-\midrule
-\endhead
-The lattice Klein-Gordon equation, $c_K^2 = \num / (3\den)$, $m^2 = 2(1 - \num / \den)$; Schr\"odinger's slow limit with $m^* = 3\tan\omega_0$ & Klein-Gordon; Schr\"odinger & derived; lattice; S.54\\
-$E = m^* c_m^2 = \omega_0$, $c_m^2 = \omega_0 / (3\tan\omega_0)$ & $E = mc^2$ & derived; clicks; S.18, S.21\\
-The conserved form (Theorem 3) and the count as the quantum share (Theorem 4); the Wronskian as the charge & the conservation of energy and charge & theorem; lattice; S.5, S.6, S.9, S.45\\
-Poisson's rest $3s / (4\pi r)$ of the massless potential; the reach $R = \sqrt{\num / (6(\den - \num))}$ of a gapped one & Poisson; Yukawa & derived; lattice; S.11, S.37\\
-The adiabatic invariant $A^2\sin\omega$ and Planck's relation, Eq.~(7), $T$ for $\hbar$, $\sin\omega$ for $\omega$ & $E = \hbar\omega$ & derived; clicks; S.14\\
-The clock's rate $1 - f(\omega_0)\,U$, $f = 2(1 - \cos\omega_0) / (\omega_0\sin\omega_0)$, $1.063$ at $[2, 3]$; a cavity of bound states and an atom's beat shift alike by $N$ & the gravitational redshift, Pound and Rebka \cite{pound}; $z = (1 + \alpha_K)\,U_K$ with $|\alpha| < 2 \times 10^{-4}$ in nature \cite{will} & derived; clicks; S.15, S.31\\
-The bending $4U_b$, Eq.~(9); against $U_K$, $(1 + \gamma_K)\,2G_K M / (c^2 b)$ & Einstein's $4GM / (c^2 b)$; Cassini's $\gamma - 1 = (2.1 \pm 2.3) \times 10^{-5}$ \cite{bertotti} & derived under the one assumption, which this click fixed (the calibration, no test); clicks; S.20, S.52\\
-The delay $2\sqrt 3\,\mu\ln(4x_1x_2 / b^2)$ intervals at $\gamma = 1$, $\mu = GM / c^2$ in Links, $x_1$ and $x_2$ the signal's two ends' distances & Shapiro's delay \cite{shapiro} & derived under the one assumption; clicks; S.20\\
-The perihelion $6\pi\mu / (a(1 - e^2))$ per orbit at the small gap; against $U_K$, $(2 - \beta_K + 2\gamma_K) / 3$ of Einstein's, the lattice band adding of the order of ten percent at $[2, 3]$ & Einstein's advance, Mercury's $43$ arcseconds per century; $|\beta - 1| < 10^{-4}$ \cite{will} & derived at the small gap under the one assumption, whose end this click selected, the calibration and no test of $\beta$; the quadratic band an assumption at the computed pair; clicks; S.19, S.34\\
-The moving clock $f_v = 1 - v^2 / (2c_m^2) - (2\omega_0 / \sin 2\omega_0)\,v^4 / (8c_m^4) + O(v^6)$, Lorentz's at $c_m$ to the second order; $c_m / c = 0.867$ at $[2, 3]$ & Lorentz's factor; the limiting speeds of matter and light equal: the subluminal case at $6 \times 10^{-20}$ \cite{altschul}, the superluminal at $5 \times 10^{-21}$ \cite{stecker}, the earlier bounds at $10^{-15}$ from photon decay to $10^{-23}$ for the proton \cite{coleman} & derived; clicks; S.21\\
-De Broglie's $k = \omega_0 v / c_m^2$ to second order & $\lambda = h / p$ & derived; clicks; S.22\\
-The fall $a = \Delta\,|d\omega_0 / d\ell|\,\nabla\ell$, universal within a field; between fields $\eta = 32.3\,\omega_e^2$, a free-packet upper estimate, below $1.3 \times 10^{-26}$ at the MAGIC bound and $4.4 \times 10^{-18}$ at LHAASO's & Galileo's fall; E\"otv\"os; $10^{-15}$ for titanium against platinum \cite{microscope} & derived; clicks; S.18, S.44\\
-Newton's pull $1 / r^2$ and $G$ as a reading, Eq.~(11); Kepler's $G$ at $0.8$ of the clock's at $[2, 3]$ & Newton, Kepler & derived; lattice, clicks; S.25\\
-The lens, Eq.~(10), one formula for light and matter & $n = 1 - 2\Phi / c^2$; $n^2 = 1 - 2\Phi / v^2$ & derived, two derivations; lattice, clicks; S.28\\
-Coulomb's force over $\gamma_L$ (the Lorentz factor) between moving charges, $0.995$ at $0.1c$ and $0.866$ at $0.5c$; magnetism as the Link's phase & Coulomb, Lorentz, Peierls' coupling & theorem for the conservation, derived for the force's form under the rotation, not under the plain read; lattice for the identity, clicks for the force; S.33\\
-$\alpha = (3\sqrt 3 / 8\pi)\,k / (\Gamma E_s)$, $k$ declared; charge universality $|q_p| = |q_e|$ by construction; the two forces' ratio $(m_p / m_e)^2$ between fields & $\alpha = 1 / 137.036$; the equality to $10^{-21}$ \cite{bressi} (a comparison); $3.3713 \times 10^6$ against $1836.15^2 = 3.3714 \times 10^6$, to the four digits of the inputs & derived, $k$ an assumption; no test; clicks; S.26, S.42\\
-Rabi's rate $\Omega_R = \epsilon_{ij} / (4\sqrt{\sin\omega_i\sin\omega_j})$; the parametric line at $2\omega_b$ under the pace read alone (none under the rotation, S.41) & Rabi & derived, two derivations (S.16); clicks; S.16, S.41\\
-A steady rotation writes no light; a breathing bound state writes at its beat; a bound state counts photons at Millikan's slope $T$ & Larmor's silence of a static charge; Millikan & derived; clicks; S.40, S.14\\
-Bohr's levels $E_n \propto 1 / n^2$, $a_0 = \sqrt 3 / (m^* Z\alpha)$, with the nucleus's angle alone; Land\'e's $g_L = 1$ & Bohr; the orbital Zeeman effect & derived in the slow limit; clicks; S.43\\
-Hubble's law $1 + z = 1 + \beta$ and Friedmann's dust equations at $z \ll 1$ & Hubble; Friedmann & derived, two derivations; clicks; S.29\\
-The two slits' $284.7$ by the law's line against Huygens's $273$; the near-field minima at $y = 15.3$ and $32.7$ & Young's fringes & computed; clicks; S.23\\
-Bell's $E = \cos 2(a - b)$, $S = 2\sqrt 2$, Tsirelson's $2\sqrt{1 + \rho^2}$, GHZ's $M = -4$; every local counting rule gives at most $2$ & Bell, Clauser-Horne-Shimony-Holt (CHSH), Tsirelson, GHZ & the counting rule declared and fitted, the rest derived under it; clicks; S.10, S.38\\
-$\gamma_{\mathrm{GW}} = \gamma_{\mathrm{EM}}$ (the gravitational wave's and the electromagnetic wave's), gravity's events at light's speed in every level & GW170817's bound between $-2.6 \times 10^{-7}$ and $1.2 \times 10^{-6}$ \cite{gw170817} (a comparison) & derived; clicks; S.12\\\\
-\bottomrule
-\end{longtable}\end{scriptsize}
-
-\begin{scriptsize}\setlength{\tabcolsep}{3pt}\begin{longtable}{L{4.0cm}L{2.7cm}L{2.5cm}L{2.5cm}}
-\caption{\label{tab:adds}The formulas the paper adds, each with its number at the computed pair $[2, 3]$ or at nature's, its status and fence, and the click that would read it; ``untested'' names a prediction no measurement has read}\\
-\toprule
-The formula & Its number & Status, fence & The click that reads it\\
-\midrule
-\endfirsthead
-\toprule
-The formula & Its number & Status, fence & The click that reads it\\
-\midrule
-\endhead
-The band's inertia and kinetic scale, $m^* = 3\tan\omega_0$, $c_m^2 = \omega_0 / (3\tan\omega_0)$, $E = m^* c_m^2 = \omega_0$: one band read three ways (S.18, S.21, S.22) & $c_m / c = 0.867$ at $[2, 3]$, one speed as the gap closes & derived; lattice for the band, clicks for the clock & a matter-armed interferometer shifts at order $v^2$\\
-The post-Newtonian parameters with the gap, for $0 < \num \le \den$, $\gamma_K = \den / \num$, $\beta_K = (\den + \num) / (2\num)$, $1 + \alpha_K = \tan\omega_0 / \omega_0$; at a finite gap the band's $k^4$ term adds $13$ to $15$ percent to the advance, vanishing as $\tan^2\omega_0$, and at nature's gap the closed form is exact (S.19) & $1.5$, $1.25$, $1.329$ at $[2, 3]$; $1$ with the gap & derived under the one assumption; clicks & Cassini's $\gamma_K - 1 = (2.1 \pm 2.3) \times 10^{-5}$ bounds $\den / \num - 1$\\
-The click's identity under a write (the long version's booking identity), $\Delta(wQ) = w\,(x - v)(x - b)$, $Q$ the step's two-level form of now and before (S.45), $x$ the written level, $v$ the level Rule3 would write at the Node and $b$ the level the step leaves, the quantum share's change under any write (S.47) & exact at the Node at any paces, with the configuration's own quantum $W_{\mathrm{rec}}$ & derived; clicks & every click's write\\
-The exponential metric reached from the composed paces, $N^2 = e^{-2U}$, $h^2 = e^{2U}$, $\gamma = \beta = 1$ in $U$; its spatial second order $2$ against the Schwarzschild chart's $1.5$ (S.34) & exact in $U$; $\alpha_U = 0.063$ & derived under the one assumption; lattice, the second order clicks & one click in the deep level\\
-The shadow's capture radius $b = 2e\,m$ against Schwarzschild's $3\sqrt 3\,m$ (S.30) & $5.44\,m$ against $5.20\,m$, $4.6$ percent & derived under the one assumption, bounded by measurement and not confirmed; clicks & the shadow's diameter (Sgr A$^*$ $1.4$, M87$^*$ $0.3$ standard deviations)\\
-The gravity of light, a light packet's integrated write at $1 \times E / c^2$ under the static kernel, against general relativity's $2 \times E / c^2$ (S.39) & the factor $1$ & derived under the static kernel (an assumption named), the packet's field open; untested; clicks & a static bound state's fall toward a light beam (Tolman's pencil), unmeasured\\
-The lens, Eq.~(10), with the chromatic term $k^2 (e^{6U} - e^{2U}) / 24$ (S.28) & light's index $e^{2U}$ and slow matter's $n_m^2 \propto 1 / k^2$ & derived, two derivations; lattice for the index, clicks for the focus & a chromatic bending of light at finite $k$\\
-The fine-structure constant's form, $\alpha = (3\sqrt 3 / 8\pi)\,k / (\Gamma E_s)$, $k$ declared (S.26) & $k / (\Gamma E_s) = 1 / 28.33$ at nature's $\alpha$ & derived form, the weight declared; clicks & the one click that fixes $k$\\
-The moving clock's fourth order, $\omega_0\,[(\sum_a n_a^4)\tan\omega_0 + \cot\omega_0]$, anisotropic by $\sum_a n_a^4$ (S.21) & $1.6926$ along an axis, $1.2224$ along a face diagonal, $1.0657$ along the body diagonal at $[2, 3]$ & derived; clicks & a clock flown along the lattice's axes against its diagonals\\
-Bell's and GHZ's values at rational settings, $S = 478 / 169$ and $M = -4$ (S.10, S.38) & $478 / 169 = 2.82840$ against $2\sqrt 2 = 2.82843$ & an evaluation of the declared counting rule, fitted, no prediction; clicks & the counting rule's own check\\
-The clusters' deceleration $q_0 = \Omega_m / 2 > 0$ at $z \ll 1$, bound or free (S.29) & the sign & derived at $z \ll 1$; clicks & the supernovae's Hubble diagram stands against it, a miss of Section 8 of the paper\\
-Compton's factor at a finite gap, $\lambda_{\mathrm{out}} - \lambda_{\mathrm{in}} = (2\pi / (\sqrt 3\,\omega_0))\,(\omega_0 / \tan\omega_0)\,(1 - \cos\theta)$ in the non-relativistic regime, under the twist proposition of Section 2.5.2 (S.56) & the factor $\omega_0 / \tan\omega_0$, nature's at $1$ & hypothesis, fitted; derived under it; lattice at the computed pair; nature's by construction, no test & Compton's shift at a finite gap, nature's at $1$\\
-\bottomrule
-\end{longtable}\end{scriptsize}
 
 \section*{Nomenclature}
 
@@ -780,15 +708,6 @@ Schr\"odinger's free equation on the lattice, $\hbar = 1$ per interval, the iner
 \begin{thebibliography}{99}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
 \bibitem{watson} G. N. Watson, Three triple integrals, The Quarterly Journal of Mathematics 10, 266 (1939), \href{https://doi.org/10.1093/qmath/os-10.1.266}{doi:\nolinkurl{10.1093/qmath/os-10.1.266}}.
 \bibitem{will} C. M. Will, The confrontation between general relativity and experiment, Living Reviews in Relativity 17, 4 (2014), \href{https://doi.org/10.12942/lrr-2014-4}{doi:\nolinkurl{10.12942/lrr-2014-4}}.
-\bibitem{pound} R. V. Pound and G. A. Rebka, Apparent weight of photons, Physical Review Letters 4, 337 (1960), \href{https://doi.org/10.1103/PhysRevLett.4.337}{doi:\nolinkurl{10.1103/PhysRevLett.4.337}}.
-\bibitem{bertotti} B. Bertotti, L. Iess and P. Tortora, A test of general relativity using radio links with the Cassini spacecraft, Nature 425, 374 (2003), \href{https://doi.org/10.1038/nature01997}{doi:\nolinkurl{10.1038/nature01997}}.
-\bibitem{shapiro} I. I. Shapiro, Fourth test of general relativity, Physical Review Letters 13, 789 (1964), \href{https://doi.org/10.1103/PhysRevLett.13.789}{doi:\nolinkurl{10.1103/PhysRevLett.13.789}}.
-\bibitem{altschul} B. Altschul, Lorentz violation and synchrotron radiation, Physical Review D 72, 085003 (2005), \href{https://doi.org/10.1103/PhysRevD.72.085003}{doi:\nolinkurl{10.1103/PhysRevD.72.085003}}.
-\bibitem{stecker} F. W. Stecker, Limiting superluminal electron and neutrino velocities using the 2010 Crab Nebula flare and the IceCube PeV neutrino events, Astroparticle Physics 56, 16 (2014), \href{https://doi.org/10.1016/j.astropartphys.2014.02.007}{doi:\nolinkurl{10.1016/j.astropartphys.2014.02.007}}.
-\bibitem{coleman} S. Coleman and S. L. Glashow, High-energy tests of Lorentz invariance, Physical Review D 59, 116008 (1999), \href{https://doi.org/10.1103/PhysRevD.59.116008}{doi:\nolinkurl{10.1103/PhysRevD.59.116008}}.
-\bibitem{microscope} P. Touboul et al. (MICROSCOPE Collaboration), MICROSCOPE mission: final results of the test of the equivalence principle, Physical Review Letters 129, 121102 (2022), \href{https://doi.org/10.1103/PhysRevLett.129.121102}{doi:\nolinkurl{10.1103/PhysRevLett.129.121102}}.
-\bibitem{bressi} G. Bressi, G. Carugno, F. Della Valle, G. Galeazzi, G. Ruoso and G. Sartori, Testing the neutrality of matter by acoustic means in a spherical resonator, Physical Review A 83, 052101 (2011), \href{https://doi.org/10.1103/PhysRevA.83.052101}{doi:\nolinkurl{10.1103/PhysRevA.83.052101}}.
-\bibitem{gw170817} B. P. Abbott et al. (LIGO Scientific Collaboration, Virgo Collaboration, Fermi Gamma-ray Burst Monitor and INTEGRAL), Gravitational waves and gamma-rays from a binary neutron star merger: GW170817 and GRB 170817A, The Astrophysical Journal Letters 848, L13 (2017), \href{https://doi.org/10.3847/2041-8213/aa920c}{doi:\nolinkurl{10.3847/2041-8213/aa920c}}.
 \bibitem{zenodo} A. Gonen, Universe24: the implementation of one integer rule on a cubic lattice, read through clicks, version 1.1.0, Zenodo (2026), \href{https://doi.org/10.5281/zenodo.22738746}{doi:\nolinkurl{10.5281/zenodo.22738746}} (the concept DOI, resolving to the latest version; the one run reported here is the archive's at the commit 1fe3790a of 2026-10-05, the documents cited are at the tagged release 1.1.0).
 \bibitem{pekar} S. I. Pekar, Untersuchungen \"uber die Elektronentheorie der Kristalle (Akademie-Verlag, Berlin, 1954).
 \bibitem{lieb} E. H. Lieb, Existence and uniqueness of the minimizing solution of Choquard's nonlinear equation, Studies in Applied Mathematics 57, 93 (1977), \href{https://doi.org/10.1002/sapm197757293}{doi:\nolinkurl{10.1002/sapm197757293}}.
@@ -808,6 +727,7 @@ Schr\"odinger's free equation on the lattice, $\hbar = 1$ per interval, the iner
 \bibitem{tolman} R. C. Tolman, P. Ehrenfest and B. Podolsky, On the gravitational field produced by light, Physical Review 37, 602 (1931), \href{https://doi.org/10.1103/PhysRev.37.602}{doi:\nolinkurl{10.1103/PhysRev.37.602}}.
 \bibitem{bekenstein} J. D. Bekenstein, Black holes and entropy, Physical Review D 7, 2333 (1973), \href{https://doi.org/10.1103/PhysRevD.7.2333}{doi:\nolinkurl{10.1103/PhysRevD.7.2333}}.
 \bibitem{antognini} A. Antognini et al., Proton structure from the measurement of 2S-2P transition frequencies of muonic hydrogen, Science 339, 417 (2013), \href{https://doi.org/10.1126/science.1230016}{doi:\nolinkurl{10.1126/science.1230016}}.
+\bibitem{microscope} P. Touboul et al. (MICROSCOPE Collaboration), MICROSCOPE mission: final results of the test of the equivalence principle, Physical Review Letters 129, 121102 (2022), \href{https://doi.org/10.1103/PhysRevLett.129.121102}{doi:\nolinkurl{10.1103/PhysRevLett.129.121102}}.
 \bibitem{engine} The engine, \texttt{docs/ENGINE.md} of the archive \cite{zenodo} at the tagged release 1.1.0: the words, the NodeState, the interval, the loader and the files, the output, how to run a world, how to add a family, the gates.
 \bibitem{hensen} B. Hensen et al., Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres, Nature 526, 682 (2015), \href{https://doi.org/10.1038/nature15759}{doi:\nolinkurl{10.1038/nature15759}}.
 \bibitem{rowe} M. A. Rowe, D. Kielpinski, V. Meyer, C. A. Sackett, W. M. Itano, C. Monroe and D. J. Wineland, Experimental violation of a Bell's inequality with efficient detection, Nature 409, 791 (2001), \href{https://doi.org/10.1038/35057215}{doi:\nolinkurl{10.1038/35057215}}.

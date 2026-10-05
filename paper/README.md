@@ -50,7 +50,8 @@ their statuses.
   words, the paper's claims list, the two tables of the formulas and the Nomenclature;
   the derivations of the hypotheses under their own names and of the implementation
   stand in the long version at the tag `paper-long-v1.1` in its own numbering, cited
-  as (S.n of the long version); submitted as supplementary material to the
+  as (S.n of the long version); built in Springer Nature's class like the article (the owner's
+  word of 2026-10-05: the readable format only, up to 50 pages); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
