@@ -1,4 +1,4 @@
-"""The Node: every family's NodeState over the GameBoard, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the hold"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
+"""The Node: every family's NodeState over the lattice, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the held write"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from event_universe.core.ports import AXES, PORTS, SIDES, Wrap, arrival
 from event_universe.core.rule3 import coefficients, division_forward, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
-from event_universe.features.hold import hold
+from event_universe.features.held_write import held_write
 from event_universe.features.read import (
     axis_paces,
     content_of,
@@ -89,7 +89,7 @@ def read(
     record: int = 0,
     cut: Factors | None = None,
 ) -> tuple[Any, Factors]:
-    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); `cut`, per Port the mask of the Links the world declares at the factor 0, the six Links of a body that is a NodeReader, read 0 from both ends so that its record stays at its Node (ALGEBRA.md, The click writes on the GameBoard; the frozen Link, the world's declaration as the node_reader's region is); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
+    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); `cut`, per Port the mask of the Links the world declares at the factor 0, the six Links of a body that is a NodeDetector, read 0 from both ends so that its record stays at its Node (ALGEBRA.md, The click writes on the lattice; the frozen Link, the world's declaration as the node_detector's region is); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
     if not any(not families[r.family].rotation for r in families[index].reads):
         factors: Factors = (unit * unit,) * PORTS
         content: Any = 0
@@ -156,7 +156,7 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
-    """The least Node pace p_i = p_0^2 / Gamma of a family's records over the GameBoard as it stands, 0 at a frozen Node, a GameBoard diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
+    """The least Node pace p_i = p_0^2 / Gamma of a family's records over the lattice as it stands, 0 at a frozen Node, a lattice diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
     return min(
         int(
             np.min(
@@ -198,7 +198,7 @@ def step(
 def turned_before(
     index: int, families: Families, states: States, gamma: int, direction: int = 1, record: int = 0
 ) -> list[Record]:
-    """The time Link's phase on a turned record (ALGEBRA.md, The sign holder rotates the two-part record; The turn per proper interval): each plane's level before turned by the previous interval's angle, u = e^(-i theta_(t-1)) z_before with tan(theta_(t-1) / 2) = (L_(t-1) p_0 div Gamma) / (2 Gamma), the numerator `turning` reads at -1, at the levels the previous interval stepped from, the held rows' `before` (the holder's level and the content's clock then); forward before Rule3 steps the plane against u (`step_plane`, `step_family`), backward (direction -1) z_before = e^(i theta_(t-1)) u, bit for bit, the inverse's last act once every held row stands at the previous interval's start again (`GameBoard.step_inverse`); the lines returned, the state untouched."""
+    """The time Link's phase on a turned record (ALGEBRA.md, The sign holder rotates the two-part record; The turn per proper interval): each plane's level before turned by the previous interval's angle, u = e^(-i theta_(t-1)) z_before with tan(theta_(t-1) / 2) = (L_(t-1) p_0 div Gamma) / (2 Gamma), the numerator `turning` reads at -1, at the levels the previous interval stepped from, the held rows' `before` (the holder's level and the content's clock then); forward before Rule3 steps the plane against u (`step_plane`, `step_family`), backward (direction -1) z_before = e^(i theta_(t-1)) u, bit for bit, the inverse's last act once every held row stands at the previous interval's start again (`Lattice.step_inverse`); the lines returned, the state untouched."""
     angles = turning(index, families, states, -1, gamma, record)
     assert angles is not None  # a record under the rotation
     own = states[index].lines[record_slice(families[index], record)]
@@ -226,7 +226,7 @@ def lines_as_read(
 def record_as_read(
     index: int, families: Families, states: States, gamma: int, lines: Sequence[Record]
 ) -> list[Record]:
-    """A family's record as the step reads it, the lines its currents are read from (`GameBoard.record`, `GameBoard.currents`): `lines`, the record as it stands, where the family's record is not turned, light's and every plain family's; every record's lines with the level before turned by the previous interval's angle where it is (`lines_as_read` per record, the records in their order)."""
+    """A family's record as the step reads it, the lines its currents are read from (`Lattice.record`, `Lattice.currents`): `lines`, the record as it stands, where the family's record is not turned, light's and every plain family's; every record's lines with the level before turned by the previous interval's angle where it is (`lines_as_read` per record, the records in their order)."""
     if not turns(families, index):
         return list(lines)
     return [
@@ -328,7 +328,7 @@ def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
 
 
 def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_reader reads at its boundary."""
+    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary."""
     found: list[Any] = [0] * 6
     for record in lines:
         here = currents.Levels(record.now, record.before)
@@ -340,7 +340,7 @@ def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.nd
 
 
 def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
+    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
     tensions: currents.Vector = (0, 0, 0)
     for record in lines:
         found = currents.stress(weight, axis_neighbours(record.now, wrap))
@@ -351,23 +351,23 @@ def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Ve
 def axis_neighbours(
     now: np.ndarray, wrap: Wrap
 ) -> tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]:
-    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the hold", The tension)."""
+    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
     arrived = ports(now, wrap)
     found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
 
 
-def held_write(
+def held_write_at(
     lines: Sequence[Record],
     numerators: Sequence[Any],
     walls: Sequence[int],
     remainders: Sequence[np.ndarray],
     direction: int = 1,
 ) -> tuple[list[Record], list[np.ndarray]]:
-    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the hold"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/hold) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
+    """A held family's one write per line (ALGEBRA.md #the-primitives, the row "the held write"), its lines already stepped by Rule3 in the interval's second act, with or without a gap: each line's level gains (numerator + r) div wall by the write's carried division (features/held_write) with the one remainder kept at the Node; backward the increments taken off and the remainders stepped back, exact; returns the lines and the remainders after."""
     found, after = [], []
     for line, numerator, wall, remainder in zip(lines, numerators, walls, remainders, strict=True):
-        level, kept = hold(line.now, numerator, wall, remainder, direction)
+        level, kept = held_write(line.now, numerator, wall, remainder, direction)
         found.append(replace(line, now=np.asarray(level)))
         after.append(np.asarray(kept))
     return found, after

@@ -1,4 +1,4 @@
-"""Bell's gate and the GHZ gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per combination of settings, each with one record of several parts laid equal (the pair family's two, the GHZ family's four), one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting and whose `pattern`, one integer pair [alpha_k, beta_k] per part, says how each part reads it; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the NodeReader's read). The reader pairs each part with the same part through the root across every side: with e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p the ports of a side and c_k the product over the sides of e_k at their ports, the joint share of one combination of ports is accumulated over the window on both members of the level pair, J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2 (the advisor, #1563 comment 5924731760; the mathematician, #1572 comments 5925374010 and 5927559738), a sum of squares and never negative, so no floor is needed; E_n is the sum of the shares signed by the product of the ports' signs over their sum (for two sides E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four), a side's marginal P(+) its + shares over the sum, a sub-correlation over a subset of the sides the same signed by that subset alone; the four worlds' E combined with the expectation's signs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (CHSH) and M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (Mermin); every combination of ports credited (the efficiency 1 by the draw's construction); the combination realised per world is the reader's own draw inside the run, read from the output's `credit` lines (the click written on the GameBoard, `src/event_universe/credit.py`; None for a world declaring no draw), the reader drawing nothing; every number an exact fraction. At equal parts the pair gives E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)), Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12); the GHZ patterns give the shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), M = -4 at x = (1, 0) and y = (1, 1). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; S = 238 / 169, M = -1), by the local sums (the product of the sides' own squared sums; S = 240 / 169, M = -1) and by the sign (each side's larger port, 0 at a tie; S = 2, M = -1), every one a product form, S at most 2 and |M| at most 2; and the diagnostics `mismatch` (the parts' accumulated cross-side products M_k, their ratios M_k / M_1 and the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number, E = cos 2a cos 2b + rho sin 2a sin 2b for the pair, the mathematician, #1572 comment 5925175652), GAMEBOARD, never in the blind and never in the credit. The settings, the patterns, the window, the regions, the seed and the combination's signs are the files'; the tool holds no number; the builders derive the blind by the same algebra on equal parts (`at_equal_parts`).
+"""Bell's gate and the GHZ gate, the joint-share reader (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment). Four worlds, one per combination of settings, each with one record of several parts laid equal (the pair family's two, the GHZ family's four), one beam to each side and one declared region per side whose `basis` (p, q) is the side's setting and whose `pattern`, one integer pair [alpha_k, beta_k] per part, says how each part reads it; the engine reports per interval the parts' signed level sums at each region (the `parts` lines, the NodeDetector's read). The reader pairs each part with the same part through the root across every side: with e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p the ports of a side and c_k the product over the sides of e_k at their ports, the joint share of one combination of ports is accumulated over the window on both members of the level pair, J = SUM over the window of (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2 (the advisor, #1563 comment 5924731760; the mathematician, #1572 comments 5925374010 and 5927559738), a sum of squares and never negative, so no floor is needed; E_n is the sum of the shares signed by the product of the ports' signs over their sum (for two sides E(a, b) = (J_++ + J_-- - J_+- - J_-+) over the four), a side's marginal P(+) its + shares over the sum, a sub-correlation over a subset of the sides the same signed by that subset alone; the four worlds' E combined with the expectation's signs, S = E(a, b) - E(a, b') + E(a', b) + E(a', b') for two sides (CHSH) and M = E(a, b', c') + E(a', b, c') + E(a', b', c) - E(a, b, c) for three (Mermin); every combination of ports credited (the efficiency 1 by the draw's construction); the combination realised per world is the reader's own draw inside the run, read from the output's `credit` lines (the click written on the lattice, `src/event_universe/credit.py`; None for a world declaring no draw), the reader drawing nothing; every number an exact fraction. At equal parts the pair gives E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)), Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12); the GHZ patterns give the shares cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, E_3 = cos 2(a + b + c), M = -4 at x = (1, 0) and y = (1, 1). Beside it, from the same reports, the local credits as the fence: by the parts' shares (each part's share credited alone, no sum before the square; S = 238 / 169, M = -1), by the local sums (the product of the sides' own squared sums; S = 240 / 169, M = -1) and by the sign (each side's larger port, 0 at a tie; S = 2, M = -1), every one a product form, S at most 2 and |M| at most 2; and the diagnostics `mismatch` (the parts' accumulated cross-side products M_k, their ratios M_k / M_1 and the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2), the mismatch's one number, E = cos 2a cos 2b + rho sin 2a sin 2b for the pair, the mathematician, #1572 comment 5925175652), LATTICE, never in the blind and never in the credit. The settings, the patterns, the window, the regions, the seed and the combination's signs are the files'; the tool holds no number; the builders derive the blind by the same algebra on equal parts (`at_equal_parts`).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -48,28 +48,31 @@ def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
 
 
 def reports(
-    lines: list[dict[str, object]], family: str, node_reader: str, window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_detector: str, window: tuple[int, int]
 ) -> Levels:
     """The `parts` lines of one region and family within the window, per interval the parts' [now, before] sums (an interval with no line reported nothing but zeros)."""
     found: Levels = {}
     for line in lines:
         if line.get("event") != "parts" or line.get("family") != family:
             continue
-        if line.get("node_reader") == node_reader and window[0] <= int(str(line["tick"])) <= window[1]:
+        if (
+            line.get("node_detector") == node_detector
+            and window[0] <= int(str(line["interval"])) <= window[1]
+        ):
             levels = line["levels"]
             assert isinstance(levels, list)
-            found[int(str(line["tick"]))] = [[int(v) for v in part] for part in levels]
+            found[int(str(line["interval"]))] = [[int(v) for v in part] for part in levels]
     return found
 
 
-def at(levels: Levels, tick: int, parts: int) -> list[list[int]]:
+def at(levels: Levels, interval: int, parts: int) -> list[list[int]]:
     """A region's parts at one interval, zeros where nothing was reported."""
-    return levels.get(tick, [[0, 0]] * parts)
+    return levels.get(interval, [[0, 0]] * parts)
 
 
-def ticks_of(*sides: Levels) -> list[int]:
+def intervals_of(*sides: Levels) -> list[int]:
     """Every interval at which a side reported, sorted."""
-    return sorted({tick for side in sides for tick in side})
+    return sorted({interval for side in sides for interval in side})
 
 
 def keys_of(sides: int) -> list[Key]:
@@ -81,8 +84,8 @@ def credited(sides: list[Levels], ports: list[Ports], joined: bool) -> Joint:
     """The shares of every combination of ports accumulated over the window on both members of the level pair: per interval and member the parts' terms, each the product over the sides of e_k(port) times the part's sum there, summed over the parts and then squared where `joined` (the meeting: the parts paired by their label through the root across every side, then summed, then squared), or each squared alone (the local credit by the parts' shares)."""
     parts = len(ports[0][PORTS[0]])
     found = {key: Fraction(0) for key in keys_of(len(sides))}
-    for tick in ticks_of(*sides):
-        levels = [at(side, tick, parts) for side in sides]
+    for interval in intervals_of(*sides):
+        levels = [at(side, interval, parts) for side in sides]
         for key in found:
             for member in range(2):
                 terms = [
@@ -107,11 +110,11 @@ def parts_shares(sides: list[Levels], ports: list[Ports]) -> Joint:
 
 
 def side_sums(levels: Levels, ports: Ports) -> dict[str, Fraction]:
-    """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one node_reader could read alone."""
+    """A side's local shares per port, the square of its own sum over the parts accumulated over the window on both members: what one node_detector could read alone."""
     parts = len(ports[PORTS[0]])
     found = {port: Fraction(0) for port in PORTS}
-    for tick in ticks_of(levels):
-        here = at(levels, tick, parts)
+    for interval in intervals_of(levels):
+        here = at(levels, interval, parts)
         for port in PORTS:
             for member in range(2):
                 total = sum(ports[port][k] * here[k][member] for k in range(parts))
@@ -202,11 +205,11 @@ def written(credits: dict[str, Any], labels: list[str]) -> dict[str, Any]:
 
 
 def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
-    """The parts' mismatch, GAMEBOARD diagnostics from the same reports: M_k the cross-side products of the part k (the product over the sides of its sums) accumulated over the window on both members, the ratios M_k / M_1 of the parts after the first (1 at equal parts; the pair's r), the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2) from the first two parts (S = (238 + 240 rho) / 169 at Bell's settings), and per side the parts' squares' ratios to the first part's; None where a divisor is 0."""
+    """The parts' mismatch, LATTICE diagnostics from the same reports: M_k the cross-side products of the part k (the product over the sides of its sums) accumulated over the window on both members, the ratios M_k / M_1 of the parts after the first (1 at equal parts; the pair's r), the pair's rho = 2 M_1 M_2 / (M_1^2 + M_2^2) from the first two parts (S = (238 + 240 rho) / 169 at Bell's settings), and per side the parts' squares' ratios to the first part's; None where a divisor is 0."""
     products = [Fraction(0)] * parts
     squares = [[Fraction(0)] * parts for _ in sides]
-    for tick in ticks_of(*sides):
-        levels = [at(side, tick, parts) for side in sides]
+    for interval in intervals_of(*sides):
+        levels = [at(side, interval, parts) for side in sides]
         for k in range(parts):
             for member in range(2):
                 products[k] += prod(now[k][member] for now in levels)
@@ -215,7 +218,7 @@ def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
     first, second = products[0], products[1]
     norm = first * first + second * second
     return {
-        "label": "GAMEBOARD",
+        "label": "LATTICE",
         "products": [pair(value) for value in products],
         "ratios": [pair(value / first) if first else None for value in products[1:]],
         "rho": pair(2 * first * second / norm) if norm else None,
@@ -224,22 +227,27 @@ def mismatch(sides: list[Levels], parts: int) -> dict[str, Any]:
 
 
 def realised(
-    lines: list[dict[str, object]], family: str, node_readers: list[str], window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_detectors: list[str], window: tuple[int, int]
 ) -> list[str] | None:
     """The combination of ports the draw realised in the run, one port per side from the output's `credit` lines of the family at the sides' regions within the window (the last of a window per side), the click; None where a side has none (a world declaring no draw)."""
     found: dict[str, str] = {}
     for line in lines:
         if line.get("event") != "credit" or line.get("family") != family:
             continue
-        if line.get("node_reader") in node_readers and window[0] <= int(str(line["tick"])) <= window[1]:
-            found[str(line["node_reader"])] = str(line["realised"])
+        if (
+            line.get("node_detector") in node_detectors
+            and window[0] <= int(str(line["interval"])) <= window[1]
+        ):
+            found[str(line["node_detector"])] = str(line["realised"])
     return (
-        [found[name] for name in node_readers] if all(name in found for name in node_readers) else None
+        [found[name] for name in node_detectors]
+        if all(name in found for name in node_detectors)
+        else None
     )
 
 
 def inflow_of(
-    lines: list[dict[str, object]], family: str, node_reader: str, window: tuple[int, int]
+    lines: list[dict[str, object]], family: str, node_detector: str, window: tuple[int, int]
 ) -> int:
     """A region's `click` lines' inflows of one family summed over the window, in the current's units."""
     return sum(
@@ -247,8 +255,8 @@ def inflow_of(
         for line in lines
         if line.get("event") == "click"
         and line.get("family") == family
-        and line.get("node_reader") == node_reader
-        and window[0] <= int(str(line["tick"])) <= window[1]
+        and line.get("node_detector") == node_detector
+        and window[0] <= int(str(line["interval"])) <= window[1]
     )
 
 
@@ -259,12 +267,12 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
     window = (int(expected["window"][0]), int(expected["window"][1]))
     labels = list(expected["sides"])
     rows = [
-        next(d for d in loaded.node_readers if d.name == expected["sides"][label]) for label in labels
+        next(d for d in loaded.node_detectors if d.name == expected["sides"][label]) for label in labels
     ]
     for row in rows:
         if len(row.pattern) != family.parts:
             raise ValueError(
-                f"node_reader {row.name!r} declares a pattern of {len(row.pattern)} parts, and the family "
+                f"node_detector {row.name!r} declares a pattern of {len(row.pattern)} parts, and the family "
                 f"{family.name!r} has {family.parts}"
             )
     ports = [ports_of(row.basis, row.pattern) for row in rows]
@@ -276,7 +284,7 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
         "patterns": {
             label: [list(part) for part in row.pattern] for label, row in zip(labels, rows, strict=True)
         },
-        "intervals_reported": len(ticks_of(*sides)),
+        "intervals_reported": len(intervals_of(*sides)),
         **written(credits_of(sides, ports), labels),
         "drawn": realised(lines, family.name, [row.name for row in rows], window),
         "mismatch": mismatch(sides, family.parts),
@@ -335,7 +343,7 @@ def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
         return pair(combination((fraction(world[field]) for world in ordered), signs))
 
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "rule": expected["rule"],
         "worlds": {name: worlds[name] for name in sorted(worlds)},
         "correlation": {

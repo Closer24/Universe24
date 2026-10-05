@@ -1,4 +1,4 @@
-"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the GameBoard grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time line at the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
+"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the lattice grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time line at the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
 
 from __future__ import annotations
 
@@ -10,10 +10,10 @@ from event_universe import node
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
-from event_universe.reports import NodeReader, end
+from event_universe.reports import NodeDetector, end
 
 if TYPE_CHECKING:
-    from event_universe.game_board import GameBoard
+    from event_universe.lattice import Lattice
 
 Growth = tuple[int, int, int, int]  # a growth: the interval it served, the axis, the side, the layers
 ONE = (1, 1, 1)  # the shape of one Node, at which an act's origin is read
@@ -94,36 +94,36 @@ def resized(
     ]
 
 
-def resized_node_reader(
-    node_reader: NodeReader, axis: int, side: int, layers: int, direction: int
-) -> NodeReader:
-    """A node_reader's declared Nodes over the grown GameBoard (none grown: nothing is declared there), a body's derived each interval."""
-    if node_reader.nodes is None:
-        return node_reader
-    return NodeReader(
-        node_reader.name,
-        sized(node_reader.nodes, axis, side, layers, direction, False),
-        node_reader.body,
-        node_reader.declared,
+def resized_node_detector(
+    node_detector: NodeDetector, axis: int, side: int, layers: int, direction: int
+) -> NodeDetector:
+    """A node_detector's declared Nodes over the grown lattice (none grown: nothing is declared there), a body's derived each interval."""
+    if node_detector.nodes is None:
+        return node_detector
+    return NodeDetector(
+        node_detector.name,
+        sized(node_detector.nodes, axis, side, layers, direction, False),
+        node_detector.body,
+        node_detector.declared,
     )
 
 
-def grow(board: GameBoard) -> bool:
-    """The receding faces before the interval's acts: where a level other than 0 stands on the layer before a receding face (`reached`) the GameBoard grows by the face's layers of zeros on that side (`resize`), up to the axis's largest size; there, with the front on that layer, the run ends, named (`board.ended`), and no act follows (False)."""
+def grow(board: Lattice) -> bool:
+    """The receding faces before the interval's acts: where a level other than 0 stands on the layer before a receding face (`reached`) the lattice grows by the face's layers of zeros on that side (`resize`), up to the axis's largest size; there, with the front on that layer, the run ends, named (`board.ended`), and no act follows (False)."""
     for face in board.world.receding:
         if not reached(board.states, board.families, face.axis, face.side):
             continue
         layers = min(face.layers, face.largest - board.shape[face.axis])
         if layers < 1:
-            board.ended = ended(face, board.tick)
+            board.ended = ended(face, board.interval)
             return False
         resize(board, face.axis, face.side, layers, 1)
-        board.growths.append((board.tick + 1, face.axis, face.side, layers))
+        board.growths.append((board.interval + 1, face.axis, face.side, layers))
     return True
 
 
-def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) -> None:
-    """The GameBoard grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_readers' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
+def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) -> None:
+    """The lattice grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         kind = board.world.kind
         resized(
@@ -138,8 +138,8 @@ def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) 
             kind,
             board.half_wall(index),
         )
-    board.node_readers = [
-        resized_node_reader(d, axis, side, layers, direction) for d in board.node_readers
+    board.node_detectors = [
+        resized_node_detector(d, axis, side, layers, direction) for d in board.node_detectors
     ]
     if board.wrap.beyond is not None:
         beyond = sized(board.wrap.beyond, axis, side, layers, direction, False)
@@ -153,10 +153,10 @@ def resize(board: GameBoard, axis: int, side: int, layers: int, direction: int) 
 
 
 def declared(at: object, offset: Node) -> list[int]:
-    """A Node of the GameBoard as grown at the file's coordinates: its index less the layers grown before the origin on each axis."""
+    """A Node of the lattice as grown at the file's coordinates: its index less the layers grown before the origin on each axis."""
     return [int(index) - before for index, before in zip(list(at), offset, strict=True)]  # type: ignore[call-overload]
 
 
-def ended(face: RecedingFace, tick: int) -> dict[str, object]:
+def ended(face: RecedingFace, interval: int) -> dict[str, object]:
     """The lawful end, named by the reports' words (`reports.end`): the interval, the axis and the side of the receding face grown to its largest size."""
-    return end(tick, AXES[face.axis], SIDES[1] if face.side > 0 else SIDES[0], face.largest)
+    return end(interval, AXES[face.axis], SIDES[1] if face.side > 0 else SIDES[0], face.largest)

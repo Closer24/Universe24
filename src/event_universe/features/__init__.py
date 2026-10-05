@@ -1,1 +1,1 @@
-"""The folders of the law's acts that the Node calls: the count's line, the hold, the write, the signed read and the start; each a pure function of arrays that calls Rule3 (core/rule3.py) and nothing else, integers only, no family's name and no number of the universe."""
+"""The folders of the law's acts that the Node calls: the count's line, the held write, the write, the signed read and the start; each a pure function of arrays that calls Rule3 (core/rule3.py) and nothing else, integers only, no family's name and no number of the universe."""

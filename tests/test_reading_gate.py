@@ -5,7 +5,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
 
     import pytest
 
-    from event_universe.game_board import GameBoard
+    from event_universe.lattice import Lattice
     from event_universe.world_files import load_world
     from tests.laws import EVENTS, ROOT, load_file
 
@@ -21,29 +21,29 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     design = json.loads((EVENTS / "zeno" / "design.json").read_text(encoding="utf-8"))
     design["seeds"] = design["seeds"][:3]
     (folder / "design.json").write_text(json.dumps(design), encoding="utf-8")
-    board = GameBoard(load_world(folder / world), (lines := []).append)
-    for _ in range(board.world.ticks):
+    board = Lattice(load_world(folder / world), (lines := []).append)
+    for _ in range(board.world.intervals):
         board.step()
-    clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEREADER"]
-    takings, quanta = sum(1 for line in clicks if line["taken"]), board.books()["pulse"]["quanta"]
-    givings = sum(
-        1 for line in clicks if line["given"]
-    )  # the record takes climbing, gives back descending
-    assert takings + givings == sum(int(line["count"]) for line in clicks)
+    clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEDETECTOR"]
+    absorptions, quanta = sum(1 for line in clicks if line["absorbed"]), board.books()["pulse"]["quanta"]
+    emissions = sum(
+        1 for line in clicks if line["emitted"]
+    )  # the record takes climbing, emits descending
+    assert absorptions + emissions == sum(int(line["count"]) for line in clicks)
     trials = gate.trials_reading(folder / world, folder / "design.json", None)
     ends = trials["ends_in_part"]["body 0"].get("e", [0])[0]
     rows = [
-        ("NODEREADER", "run_inputs", "takings body 0", takings),
-        ("NODEREADER", "run_inputs", "clicks", takings),
-        ("GAMEBOARD", "run_inputs", "books pulse quanta", quanta),
-        ("GAMEBOARD", "run_inputs", "ticks", board.world.ticks),
-        ("GAMEBOARD", "back_in_time", f"intervals {board.world.ticks}", "MATCH"),
-        ("NODEREADER", "meeting_trials", "ends in e body 0", ends),
-        ("GAMEBOARD", "meeting_trials", "trials", 3),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions),
+        ("NODEDETECTOR", "run_inputs", "clicks", absorptions),
+        ("LATTICE", "run_inputs", "books pulse quanta", quanta),
+        ("LATTICE", "run_inputs", "intervals", board.world.intervals),
+        ("LATTICE", "back_in_time", f"intervals {board.world.intervals}", "MATCH"),
+        ("NODEDETECTOR", "meeting_trials", "ends in e body 0", ends),
+        ("LATTICE", "meeting_trials", "trials", 3),
     ]
     wrong = [
-        ("NODEREADER", "run_inputs", "takings body 0", takings + 1),
-        ("NODEREADER", "run_inputs", "ticks", 48),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions + 1),
+        ("NODEDETECTOR", "run_inputs", "intervals", 48),
     ]
     head = (
         "# A copy of the Zeno world\n\n## The gate's table\n\n| label | world | by | reading | value |\n"
@@ -79,8 +79,8 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         "table",
     }
     assert (read[0]["read"], read[0]["label"], read[4]["read"], read[6]["read"]) == (
-        str(takings),
-        "NODEREADER",
+        str(absorptions),
+        "NODEDETECTOR",
         "MATCH",
         "3",
     )
@@ -88,11 +88,11 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     read = report(1)
     assert [line["verdict"] for line in read[-2:]] == ["DIFFERS", "DIFFERS"]
     assert (read[-2]["read"], read[-2]["value"]) == (
-        str(takings),
-        str(takings + 1),
+        str(absorptions),
+        str(absorptions + 1),
     ) and "reason" not in read[-2]
-    assert read[-1]["reason"] == "the reading's own label is GAMEBOARD"
-    screen = f"| region | zeno_4 clicks | zeno_4 share |\n| --- | --- | --- |\n| body 0 | {takings} | 1.0 |\n| N | {takings} | |\n"
+    assert read[-1]["reason"] == "the reading's own label is LATTICE"
+    screen = f"| region | zeno_4 clicks | zeno_4 share |\n| --- | --- | --- |\n| body 0 | {absorptions} | 1.0 |\n| N | {absorptions} | |\n"
     document.write_text("# A copy\n\n## The reading\n\n" + screen, encoding="utf-8")
     read = report(0)
     assert [(line["reading"], line["table"]) for line in read] == [
@@ -222,7 +222,7 @@ def test_the_pick_is_the_states_fraction_of_the_weights_total_and_no_low_bit_ent
 
 
 def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_path):
-    """The trials tool's coincidence rows (tools/meeting_trials.py, `coincidence_rows`; the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the rows derived from the records' count and from no fixed key, every record alone and every pair (`itertools.combinations`), neither, and alpha per pair; on the shipped two-record anticoincidence world over three of the design's seeds the report's rows are the keys listed here by hand, A_only, B_only, both, neither and alpha in that order, the four counts summing to the trials and alpha the fraction of the counts; with three records the function gives the three singles, the three pairs by their letters, `all` for the trials where every record took, neither and the three alphas, a taking at the third record alone, which the fixed keys (0,), (1,), (0, 1) never counted, its own row, every trial with a taking in exactly one row; under two records no row."""
+    """The trials tool's coincidence rows (tools/meeting_trials.py, `coincidence_rows`; the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the rows derived from the records' count and from no fixed key, every record alone and every pair (`itertools.combinations`), neither, and alpha per pair; on the shipped two-record anticoincidence world over three of the design's seeds the report's rows are the keys listed here by hand, A_only, B_only, both, neither and alpha in that order, the four counts summing to the trials and alpha the fraction of the counts; with three records the function gives the three singles, the three pairs by their letters, `all` for the trials where every record took, neither and the three alphas, an absorption at the third record alone, which the fixed keys (0,), (1,), (0, 1) never counted, its own row, every trial with an absorption in exactly one row; under two records no row."""
     import json
     from collections import Counter
     from fractions import Fraction
@@ -241,8 +241,8 @@ def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_p
     a, b = a_only + both, b_only + both
     alpha = Fraction(both * run, a * b) if a and b else None
     assert rows["alpha"] == ([alpha.numerator, alpha.denominator] if alpha is not None else None)
-    took = Counter({(2,): 2, (0, 1): 1, (): 1, (0, 1, 2): 1})  # five trials over three records
-    three = trials.coincidence_rows(took, 3, 5)
+    absorbed = Counter({(2,): 2, (0, 1): 1, (): 1, (0, 1, 2): 1})  # five trials over three records
+    three = trials.coincidence_rows(absorbed, 3, 5)
     singles, pairs = ["A_only", "B_only", "C_only"], ["A_B_only", "A_C_only", "B_C_only"]
     assert list(three) == singles + pairs + ["all", "neither", "alpha_A_B", "alpha_A_C", "alpha_B_C"]
     assert [three[key] for key in singles + pairs] == [[0, 5], [0, 5], [2, 5], [1, 5], [0, 5], [0, 5]]

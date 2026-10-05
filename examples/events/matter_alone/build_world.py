@@ -19,13 +19,13 @@ ROOT = HERE.parents[2]
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared node_reader, the universe the design names, and the world's `lay` where its row declares one (the direct lay's fixed-point lay with its compact seed and profile, loader/lay.py)."""
+    """One world: the open box, one body of the design's family declared with one Node carrying its quanta at the centre, no declared node_detector, the universe the design names, and the world's `lay` where its row declares one (the direct lay's fixed-point lay with its compact seed and profile, loader/lay.py)."""
     row = design["worlds"][name]
     return {
         "shape": [int(v) for v in row["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(row["ticks"]),
+        "intervals": int(row["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [
@@ -34,7 +34,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
                 "nodes": [{"node": [int(v) for v in row["centre"]], "count": int(row["quanta"])}],
             }
         ],
-        "node_readers": [],
+        "node_detectors": [],
         **({"lay": row["lay"]} if "lay" in row else {}),
     }
 
@@ -42,8 +42,8 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/body_rest.py prints it beside the readings: the window, the family, the worlds, the reading named, and the blind with its status and fence."""
     return {
-        "verdict": "GAMEBOARD",
-        "label": "GAMEBOARD",
+        "verdict": "LATTICE",
+        "label": "LATTICE",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

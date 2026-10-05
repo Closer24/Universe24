@@ -31,7 +31,7 @@ testpaths = ["tests"]
 addopts = "--import-mode=importlib -ra"
 pythonpath = ["src"]
 markers = [
-    "diagnostic: the test pins a GameBoard reading (a level, a books number, a form, a share), a diagnostic and not a measurement; the count of these tests only falls",
+    "diagnostic: the test pins a lattice reading (a level, a books number, a form, a share), a diagnostic and not a measurement; the count of these tests only falls",
 ]
 
 [tool.ruff]

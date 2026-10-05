@@ -1,11 +1,11 @@
-"""The taking's weights at one denominator (ALGEBRA.md, The taking, the draw (a) and (b): where the shares of the bodies closing one drive's interval sum above the unit the rest is 0 and the drive's one quantum goes to one of them in the proportion of their shares; each body's weight is its own transfer share, its entered label squared over its own norm, the weights of bodies of different counts brought to one denominator, the norms' least common multiple, bodies of one count read as before; the mathematician's line, #1793 comment 5981866600 K4, the advisor's second 5981976271 (3), two hands; `meeting.took`, `credit.Books.untaken_in`)."""
+"""The absorption's weights at one denominator (ALGEBRA.md, The absorption, the draw (a) and (b): where the shares of the bodies closing one drive's interval sum above the unit the rest is 0 and the drive's one quantum goes to one of them in the proportion of their shares; each body's weight is its own transfer share, its entered label squared over its own norm, the weights of bodies of different counts brought to one denominator, the norms' least common multiple, bodies of one count read as before; the mathematician's line, #1793 comment 5981866600 K4, the advisor's second 5981976271 (3), two hands; `meeting.absorbed`, `credit.Books.unabsorbed_in`)."""
 
 import json
 import math
 
 from event_universe import meeting
 from event_universe.features.click import drawn
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file
 
@@ -17,7 +17,7 @@ def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, 
     (path := tmp_path / "two_counts.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
-    board = GameBoard(load_world(path))
+    board = Lattice(load_world(path))
     a, b = board.credit.bodies
     drive, width, trials = a.declared.transitions[0].drive, board.world.width, 1200
     n_a, n_b = (sum(label * label for label in books.labels) for books in (a, b))
@@ -36,7 +36,7 @@ def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, 
             board.credit.account_ended(drive)
             for books, share in zip(closing, shares, strict=True):
                 books.shares = {books.declared.transitions[0]: share}
-            done = meeting.took(board, closing)
+            done = meeting.absorbed(board, closing)
             picks.append(min(done) if done else len(closing))
             for number in done:
                 taken[number] += 1

@@ -141,7 +141,7 @@ def force_between_moving_charges() -> Row:
 
 
 def counts_inflow_with_the_factor_squared() -> Row:
-    """The clicks table's row ('A body's count in clicks: the share summed over the body's Nodes, what a NodeReader over all its Nodes credits'), S.42's inputs: on a chain of eight at Gamma = 50 with a tension t = 1 on the two Links of a region's front, the region's share over six steps of the line changes by exactly the weighted inflow, the Link's factor squared on each boundary current (proofs_booking's share, rule3.link_current); outside: the plain current, the factor dropped, is short of the weighted one by 1 - q^2 / Gamma^2 = 2 t / Gamma - t^2 / Gamma^2 per Link exactly, 2 t / Gamma to the first order."""
+    """The clicks table's row ('A body's count in clicks: the share summed over the body's Nodes, what a NodeDetector over all its Nodes credits'), S.42's inputs: on a chain of eight at Gamma = 50 with a tension t = 1 on the two Links of a region's front, the region's share over six steps of the line changes by exactly the weighted inflow, the Link's factor squared on each boundary current (proofs_booking's share, rule3.link_current); outside: the plain current, the factor dropped, is short of the weighted one by 1 - q^2 / Gamma^2 = 2 t / Gamma - t^2 / Gamma^2 per Link exactly, 2 t / Gamma to the first order."""
     draw = random.Random(SEED)
     gamma, tension, count = 50, 1, 8
     num, den = MATTER

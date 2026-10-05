@@ -22,19 +22,18 @@ The physical location is a **Node**; its complete local information is its
 **NodeState**, the law's own numbers and nothing else. Nodes are connected by
 **Links** through directional **Ports**, six per Node; a local change is an
 **Event** and configured local logic is a **LocalRule**. The lattice of Nodes is
-the **GameBoard** (`GameBoard` in code, `game_board` in module and function
-names). Do not introduce `Site`, board, lattice, grid or any other noun for these;
-new location identifiers use `node`, `nodes` and `NodeState`. The words of the
-engine (Family, Record, Body, NodeReader, Click, Primitive, Interval) are defined in
-[docs/ENGINE.md](docs/ENGINE.md#1-the-words). The nouns detector, instrument,
-emitter, absorber, observer and measurer have left the repository (the owner's
-word of 2026-10-03): the NodeReader, with Nodes alone or with a record of its
-own, is the one declaration kind; do not reintroduce them.
+the **Lattice** (`Lattice` in code, `lattice` in module and function names; the
+readings' label `LATTICE`), the paper's word and the code's, one vocabulary (the
+owner's word of 2026-10-04). Do not introduce `Site`, lattice, board, grid or
+any other noun for these; new location identifiers use `node`, `nodes` and
+`NodeState`. The words of the engine (Family, Record, Body, NodeDetector, Click,
+Primitive, Interval) are defined in [docs/ENGINE.md](docs/ENGINE.md#1-the-words).
+The **NodeDetector** is the one declaration kind of every experiment, with Nodes alone or with a record of its own (the owner's word of 2026-10-04, replacing NodeDetector); the free nouns detector, instrument, emitter, absorber, observer and measurer stay out of the repository (the owner's word of 2026-10-03): write "a NodeDetector", never "a detector" alone, and a NodeDetector absorbs and emits.
 
 ## Repository language: English
 
 All repository comments, docstrings, documentation, contributor instructions,
-test descriptions, diagnostic messages and newly written identifiers are in
+test descriptions, diagnostic packets and newly written identifiers are in
 English, in every directory and by every contributor, including files brought in
 from an older branch and external documents of the project. Keep English simple
 and precise; mathematical symbols and established technical names are allowed.
@@ -46,7 +45,7 @@ letter or number stands for a thing. Use portable ASCII file names, `snake_case`
 Python modules and functions and explicit class names.
 
 Use Hebrew for conversation with the user unless he explicitly requests another
-language; a message written in another language alone is not a request to switch.
+language; a packet written in another language alone is not a request to switch.
 Before submitting a change, translate any non-English prose it introduces and run
 `tests/test_repository_language.py`; reviewers check the language as well. Do not
 exempt a directory, disable the gate or encode non-English prose as escapes.
@@ -61,7 +60,7 @@ exempt a directory, disable the gate or encode non-English prose as escapes.
   found by its name ([docs/ENGINE.md](docs/ENGINE.md)).
 - Physical calculations use bounded integers, fixed local NodeState and the six
   neighbouring Nodes; nothing is kept at a Node beyond the law's own numbers.
-- Only a NodeReader's click is a measurement; a GameBoard reading is a diagnostic
+- Only a NodeDetector's click is a measurement; a lattice reading is a diagnostic
   and is labelled so. Runs and tests are headless.
 - A behavior change needs a dedicated test; a physics change needs the law's line
   first and the procedure in [CONTRIBUTING.md](CONTRIBUTING.md).

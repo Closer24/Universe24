@@ -8,7 +8,7 @@ T = 2^19 (`standing_19.json`, `rule_2_19.json`). The blind is the mathematician'
 comment 5955538687) with the advisor's second hand (#1563 comment 5955658812 (C)), written in
 `design.json` and `expectation.json` before any run and never edited after; the body's own
 expectations from the lay's profile stand under `from_the_lay` in `expectation.json`, written from
-the mode file before any run. The reading is appended here after the run; every number a GameBoard
+the mode file before any run. The reading is appended here after the run; every number a lattice
 reading labelled so (`tools/body_standing.py`); a reading that misses the blind is a finding,
 written as such and never adjusted.
 
@@ -27,7 +27,7 @@ Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: t
    systematic, the lay's or the convention's, a finding by name.
 3. **The rotation** (read 3, the summed form): constant over the run to 10^-5 at both T.
 
-## The lay (GameBoard readings of the generator, before any run)
+## The lay (lattice readings of the generator, before any run)
 
 - At the stop 1 (a fixed point to the unit) the lay at T = 2^15 was refused by name after 30
   passes: from the pass 16 the lay-and-rest map is a 2-cycle, the content's largest change 1 and the
@@ -47,7 +47,7 @@ Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: t
   2^14 at the tolerance [1, 32] and 2^18 at [1, 125], under the worlds' T; the gate refuses by name
   when the tolerance asks more (tests/test_pixel_mode.py).
 
-## The reading at T = 2^15, n = 1000 (GameBoard, `tools/body_standing.py`; 2.8 minutes)
+## The reading at T = 2^15, n = 1000 (lattice, `tools/body_standing.py`; 2.8 minutes)
 
 - **Read 1, the drift:** the centroid along x, y and z 12, 12, 12 at the start and 12, 12, 12 at
   the end, the drift exactly 0 on every axis (below the blind's 3 x 10^-3 Links; a symmetric lay
@@ -73,7 +73,7 @@ Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: t
   interval 102, largest 0.69478 at 989, the spread 7.2 x 10^-3 against the blind's 10^-5 (a
   finding by name); the accumulated ratio over the window 0.69073; the first interval's 2 cos omega
   1.37569 against the lay's clock pair 1.3759.
-- **Read 4, the 48 images** (the body round's part 2, 166's theorem as a GameBoard diagnostic):
+- **Read 4, the 48 images** (the body round's part 2, 166's theorem as a lattice diagnostic):
   every line of every family kept its 48 images about the centre to the bit, levels, remainders and
   write remainders, from the lay through the interval 515; at 516 gravity's row departed under the
   axes permutation (0, 2, 1), y and z exchanged, with and without reflections: its tension lines,
@@ -154,7 +154,7 @@ and the convention's reads stand beside the restated ones in the reader's one ou
    beyond the noise and the beat is a finding by name.
 3. **Reads 1 and 4** stand as written above.
 
-### The reading on today's engine (main 3f2cc9bd), T = 2^15, n = 1000 (GameBoard, `tools/body_standing.py`; 2.6 minutes)
+### The reading on today's engine (main 3f2cc9bd), T = 2^15, n = 1000 (lattice, `tools/body_standing.py`; 2.6 minutes)
 
 - **Read 2 restated, rho_D at the quarters** (the centres 250, 500, 750 and 999): 1.16, 2.85, 4.15
   and 4.13 percent against the lay's own blind from the walk alone, 0.98, 1.39, 1.70 and 1.96;
@@ -256,7 +256,7 @@ and 5960096992, #1572 comment 5959853571), and the start's rest refined to the r
 line within one fine unit at every Node by the scaled residual in integers (`features/start`,
 `refined`; the advisor's finding and remedy, #1563 comments 5958624379 and 5959617991). The
 world re-laid by the generator on this engine and the blind rebuilt byte for byte by the
-builder; every number below a GameBoard reading labelled so (`tools/body_standing.py`); a miss
+builder; every number below a lattice reading labelled so (`tools/body_standing.py`); a miss
 against the blind is a finding by name, never adjusted.
 
 - **The lay** (`standing_15`, the stop 2, the generator's reading before any run): converged at
@@ -350,8 +350,8 @@ that reading ran on (the branch before its squash), by name; every number below 
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
-Every number of every reading in this file is a GameBoard reading (`tools/body_standing.py`: the
+Every number of every reading in this file is a lattice reading (`tools/body_standing.py`: the
 centroids of the share, the deviations of the share and of the form over the body's Nodes, the
-rotation from the levels, the 48 images of every line, the books). The world declares no NodeReader,
-so no number is a NodeReader's line and no verdict rests on one. Nothing here is stamped by a
-NodeReader's clock; the intervals are the board's.
+rotation from the levels, the 48 images of every line, the books). The world declares no NodeDetector,
+so no number is a NodeDetector's line and no verdict rests on one. Nothing here is stamped by a
+NodeDetector's clock; the intervals are the board's.

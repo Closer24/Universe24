@@ -1,4 +1,4 @@
-"""Bell's gate worlds (ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment) from the design file beside this script: four chain worlds, one per pair of settings, the pair family's two parts laid equal as one event at the centre, two beams to the two declared regions at the chain's ends, each region's `basis` the side's setting (p, q) and its `pattern` the pair's, [[1, 0], [0, 1]]; their mode files by the message lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings in exact fractions before any run and never touched after, by the reader's own algebra on equal parts (tools/bell_gate.py, `blind_of`): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at equal parts, Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12), the marginal 1 / 2, and the two local credits as the fence (by the parts' shares 238 / 169 and by the sign 2) with the local sums (240 / 169) beside them, each with its status and its fence label. Every number is the design's and stands in the files, none in this script or the engine.
+"""Bell's gate worlds (ALGEBRA.md #the-click-is-the-meeting, the pair's form; HIGHLIGHTS.md, One experiment and one gate: Bell is the engine's gate and no experiment) from the design file beside this script: four chain worlds, one per pair of settings, the pair family's two parts laid equal as one event at the centre, two beams to the two declared regions at the chain's ends, each region's `basis` the side's setting (p, q) and its `pattern` the pair's, [[1, 0], [0, 1]]; their mode files by the packet lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings in exact fractions before any run and never touched after, by the reader's own algebra on equal parts (tools/bell_gate.py, `blind_of`): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at equal parts, Lagrange's identity, S = 478 / 169 at (1, 0), (1, 1), (12, 5), (5, 12), the marginal 1 / 2, and the two local credits as the fence (by the parts' shares 238 / 169 and by the sign 2) with the local sums (240 / 169) beside them, each with its status and its fence label. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -30,10 +30,10 @@ COMBINATION = {"name": "S", "signs": [1, -1, 1, 1]}  # S = E(a, b) - E(a, b') + 
 
 
 def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
-    """One world: the chain, the pair laid as one event at the centre toward both sides, the two regions at the ends with their settings as their bases and the pair's pattern, the receding faces, the ticks."""
+    """One world: the chain, the pair laid as one event at the centre toward both sides, the two regions at the ends with their settings as their bases and the pair's pattern, the receding faces, the intervals."""
     source, depth, length = int(design["source"]), int(design["screen"]), int(design["length"])
     p, q = (int(v) for v in design["wave"])
-    messages = [
+    packets = [
         {
             "family": design["family"],
             "along": "x",
@@ -45,7 +45,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         }
         for sign in (-1, 1)
     ]
-    node_readers = [
+    node_detectors = [
         {
             "name": design["sides"]["a"],
             "positions": [[x, 0, 0] for x in range(depth)],
@@ -63,12 +63,12 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "shape": [length, 1, 1],
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [],
-        "messages": messages,
-        "node_readers": node_readers,
+        "packets": packets,
+        "node_detectors": node_detectors,
         "receding": design["receding"],
         "draw": design["draw"],
     }
@@ -118,7 +118,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
     found["of_rho"] = {
         "S": f"({s_shares.numerator} + {(s_meeting - s_shares).numerator} rho) / {s_meeting.denominator}",
         "status": "derived (the mathematician, #1572 comment 5925175652): E = cos 2a cos 2b + rho sin 2a sin 2b, rho = 2 r / (1 + r^2) the parts' mismatch, 1 at the equal lay; r and rho are the reader's labelled diagnostics and no number of this blind",
-        "fence": "GameBoard for r and rho, clicks for S",
+        "fence": "lattice for r and rho, clicks for S",
     }
     return found
 
@@ -126,7 +126,7 @@ def blind(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, object]:
     """The blind expectation file, as tools/bell_gate.py reads it: the family, the window, the sides' regions, the settings and the patterns, the four worlds in CHSH order with the combination's name and signs, the credit's rule named, the seed and the blind."""
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "comment": design["comment"],
         "family": design["family"],
         "window": [int(v) for v in design["window"]],

@@ -1,4 +1,4 @@
-"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the GameBoard admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written over the time line's wall E_s T, the same wall as the time level's W, so that the odd level over the time level is the law's 3 den v / num; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's worlds left the repository on 2026-10-03 at the owner's word (the six charged ones had no lay under the energy line's integers and were refused at load by name; the three uncharged ones were their control), its universe turning.json kept at examples/events/ for these tests."""
+"""A bound body (ALGEBRA.md #the-generator, #what-a-body-is, #the-count-is-the-records-share): the generator lays a body, the lattice admits its declared count within the rounding of its family's share in quanta at its Nodes and refuses one beyond it by name, the count is the record's share and stays its family's within Rule3's rounding, the body's Nodes derived from where its share stands. The rotation round (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; #the-rows-against-nature (b2) and (f); HIGHLIGHTS.md, There is no sense): the turn is three exact shears, undone bit for bit and within two units of the real rotation; the angle is the holder's level over Gamma and the record of positive Wronskian rotates faster by it; the Wronskian read with the angle is the conserved one, and a record's Wronskian keeps its sign under Rule3; the odd line on the Link shifts the wave number by its angle with the Port's sign, is sourced by the sign's current, the mean of the Node's two a-Links' Wronskian currents, odd under the sense, and written over the time line's wall E_s T, the same wall as the time level's W, so that the odd level over the time level is the law's 3 den v / num; the act is the file's declaration, refused by name where it is not one of the two or asked of a holder of the content; a one-part reader and the two gates' worlds are untouched; the like-or-unlike look's worlds left the repository on 2026-10-03 at the owner's word (the six charged ones had no lay under the energy line's integers and were refused at load by name; the three uncharged ones were their control), its universe turning.json kept at examples/events/ for these tests."""
 
 import json
 import math
@@ -17,7 +17,7 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features import rotation
 from event_universe.features.start import scaled_source, unit_of
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import (
     amplitude_bound,
     count_wall,
@@ -47,7 +47,7 @@ GATED = (  # the smallest shipped world of each builder whose load is seconds; t
     ("bell", "bell_a_prime_b_prime"),
     ("ghz", "ghz_y_x_y"),
     ("neutron_conversion", "neutron_conversion"),
-    ("packet_giving", "packet_giving"),
+    ("packet_emission", "packet_emission"),
     ("resonance", "detuned"),
     ("shelved_ion", "shelved_ion"),
     ("two_slits", "two_slits"),
@@ -80,7 +80,7 @@ START = int(node.wronskian(wave(0, OMEGA), True).sum(dtype=object))  # the unifo
 
 
 def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
-    """A plane of the charged family on the ring stepped `steps` intervals in the turning universe at the vacuum's rule, the holder of the sign at the time level ramp[t + 1] with ramp[t] the previous interval's at the interval t (its two levels as the hold leaves them, so the turn of the level before is by the previous interval's angle, node.turned_before) and its odd lines `links`; then the same intervals back in the inverse's two stages, the holder's levels stepped back by hand between them, every level and remainder returning bit for bit, asserted; returns the rotation rate at the Node 0 (the phase unwrapped) and the swings of the Wronskian read from the booking and of the plain one."""
+    """A plane of the charged family on the ring stepped `steps` intervals in the turning universe at the vacuum's rule, the holder of the sign at the time level ramp[t + 1] with ramp[t] the previous interval's at the interval t (its two levels as the held write leaves them, so the turn of the level before is by the previous interval's angle, node.turned_before) and its odd lines `links`; then the same intervals back in the inverse's two stages, the holder's levels stepped back by hand between them, every level and remainder returning bit for bit, asserted; returns the rotation rate at the Node 0 (the phase unwrapped) and the swings of the Wronskian read from the booking and of the plain one."""
     states = [node.empty_state(f, SHAPE, (), np.int64) for f in TURNING]
     odd = [node.Record(level, level, ZERO) for level in links]  # the holder's odd lines, static
     time = [node.Record(ramp[t + 1] + ZERO, ramp[t] + ZERO, ZERO) for t in range(steps + 1)]
@@ -101,9 +101,9 @@ def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
 
 
 def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_path, monkeypatch):
-    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; the start sources the binding holder by the form the hold writes, so the hold's first write returns the start's rest within Rule3's rounding, two units at most at any Node; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at A + 2 (the six arrivals and the level before it is stepped against both turned); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under the time level L rotates at omega + L / Gamma within the half-angle's third order for L = 600 and -600 and at omega for 0, and the Wronskian read from the booking, the step's levels before the turn, stands over 400 intervals within the rounding while the plain one swings by the angle; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current the mean of its two x-Links' Wronskian currents, J_x / 2 with J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite within the read's rounding unit (where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes its write weight k_w times w x that mean of each plane reader into its odd line a by the one write with one remainder over the time line's wall E_s T, the same wall as its time line's k_w x w x W (node.write_sources with the sign currents as the axis booked, node.held_write; k_w 400 in turning.json; ALGEBRA.md row (b2)'s arithmetic, the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands): the plane wave at k = pi / 4 and the amplitude 5,000, the files' scale, writes its odd level over its time level at the law's 3 den v / num within the integers' rounding, v the band's group velocity at k (J_a = (6 den / num) W v exactly on a plane record), where over den T the odd level rounded to 0 at every Node and the engine's magnetic sector was absent; a real reader sources none of it, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its four walls one E_s T against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act (light and the pair family, real lines, name no holder of the sign in their reads, and a real line naming one under the rotation is refused by name, tests/test_the_features.py). The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, names no holder of the sign and reads nothing of it. A laid message on a sourced holder is kept (ENGINE.md section 3, the start): on the chain with a rotating body of the charged family, whose Wronskian sources the holder of the sign, and a packet of light laid on the holder's row, the holder's record at tick 0 is the laid message plus a rest static under it, the same in the level now and the level before (the message kept bit for bit), the rest the start lays with the message's own form among the sources (light's form sources the rows of the content, so the rest the start lays on an empty line differs from it, the binding row's by a hump under the packet), that empty line's rest static and positive at the body's Nodes and the remainder the start's."""
+    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; the start sources the binding holder by the form the held write writes, so the held write's first write returns the start's rest within Rule3's rounding, two units at most at any Node; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at A + 2 (the six arrivals and the level before it is stepped against both turned); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under the time level L rotates at omega + L / Gamma within the half-angle's third order for L = 600 and -600 and at omega for 0, and the Wronskian read from the booking, the step's levels before the turn, stands over 400 intervals within the rounding while the plain one swings by the angle; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current the mean of its two x-Links' Wronskian currents, J_x / 2 with J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite within the read's rounding unit (where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes its write weight k_w times w x that mean of each plane reader into its odd line a by the one write with one remainder over the time line's wall E_s T, the same wall as its time line's k_w x w x W (node.write_sources with the sign currents as the axis booked, node.held_write_at; k_w 400 in turning.json; ALGEBRA.md row (b2)'s arithmetic, the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands): the plane wave at k = pi / 4 and the amplitude 5,000, the files' scale, writes its odd level over its time level at the law's 3 den v / num within the integers' rounding, v the band's group velocity at k (J_a = (6 den / num) W v exactly on a plane record), where over den T the odd level rounded to 0 at every Node and the engine's magnetic sector was absent; a real reader sources none of it, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its four walls one E_s T against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act (light and the pair family, real lines, name no holder of the sign in their reads, and a real line naming one under the rotation is refused by name, tests/test_the_features.py). The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, names no holder of the sign and reads nothing of it. A laid packet on a sourced holder is kept (ENGINE.md section 3, the start): on the chain with a rotating body of the charged family, whose Wronskian sources the holder of the sign, and a packet of light laid on the holder's row, the holder's record at interval 0 is the laid packet plus a rest static under it, the same in the level now and the level before (the packet kept bit for bit), the rest the start lays with the packet's own form among the sources (light's form sources the rows of the content, so the rest the start lays on an empty line differs from it, the binding row's by a hump under the packet), that empty line's rest static and positive at the body's Nodes and the remainder the start's."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = GameBoard(load_world(world := chain_body_world(tmp_path, TOOL)))
+    board = Lattice(load_world(world := chain_body_world(tmp_path, TOOL)))
     declared, quanta = board.mask(board.world.bodies[0].nodes), board.quanta(MATTER)[0]
     laid, wall = int(quanta[declared].sum()), count_wall(board.families[MATTER], 32768)
     assert abs(laid - QUANTA) <= 2 * int(QUANTA**0.5) + 1 and int(quanta[declared].min()) >= 1
@@ -122,21 +122,21 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     world.write_text(json.dumps(document), encoding="utf-8")
     mode = {**json.loads(mode_path.read_text(encoding="utf-8")), "world_digest": input_digest(document)}
     mode_path.write_text(json.dumps(mode), encoding="utf-8")
-    refused("a declared count is within the rounding of the share", lambda: GameBoard(load_world(world)))
+    refused("a declared count is within the rounding of the share", lambda: Lattice(load_world(world)))
     world = chain_body_world(tmp_path, TOOL, senses=(1,), mode=False)  # the body sources the holder
     packet = {**PACKET, "amplitude": 400, "top": dict(x=[5, 5], y=[0, 0], z=[0, 0])}
-    document = {**json.loads(world.read_text(encoding="utf-8")), "messages": [packet]}
+    document = {**json.loads(world.read_text(encoding="utf-8")), "packets": [packet]}
     world.write_text(json.dumps(document), encoding="utf-8")
     TOOL.main(["--input", str(world)])  # the one-Node record, the design's `pixels` beside the chain
-    board = GameBoard(load_world(world))
-    message, light = board.world.messages[0], board.states[CHARGE].lines[0]
-    now, before = board.board_array(message.now), board.board_array(message.before)
+    board = Lattice(load_world(world))
+    packet, light = board.world.packets[0], board.states[CHARGE].lines[0]
+    now, before = board.board_array(packet.now), board.board_array(packet.before)
     for index in board.held:  # the start again on empty time lines: every held row's rest alone
         board.states[index].lines[0] = node.empty_record(board.shape, board.kind)
     board.start()
     rest = board.states[CHARGE].lines[0]
     assert now.any() and not np.array_equal(now, before) and (rest.remainder == light.remainder).all()
-    assert np.array_equal(light.now - now, light.before - before)  # the message kept, its rest static
+    assert np.array_equal(light.now - now, light.before - before)  # the packet kept, its rest static
     assert not rest.now.any() and board.record(CHARGE)[0].now[board.body_nodes(0)].min() > 0  # the rows
     draw, shape = np.random.default_rng(1), (4, 3, 2)
     x, y, numerator = (draw.integers(-size, size, shape) for size in (10**6, 10**6, 2 * GAMMA))
@@ -175,12 +175,12 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert np.array_equal(sources[4], TURNING[CHARGE].write * sign[own]) and not sources[6].any()
     assert np.array_equal(sources[5], TURNING[CHARGE].write * flux[0])  # k_w x w x J_x / 2 at w = 1
     held = node.empty_state(TURNING[CHARGE], SHAPE, write.walls, np.int64)
-    lines, remainders = node.held_write(held.lines, sources, write.walls, held.write_remainders)
+    lines, remainders = node.held_write_at(held.lines, sources, write.walls, held.write_remainders)
     assert write.walls == (100 * T,) * 8 and not any(map(np.any, sources[:4] + sources[6:]))  # E_s T
     assert np.array_equal(lines[5].now, (sources[5] + 50 * T) // (100 * T))  # (k_w J / 2 + r) div wall
     speed = (band(k + 1e-6) - band(k - 1e-6)) / 2e-6  # the band's group velocity at k, the law's v
     assert abs(int(lines[5].now.sum()) / int(lines[4].now.sum()) - 3 * PAIR[1] * speed / PAIR[0]) < 1e-3
-    back_lines, before = node.held_write(lines, sources, write.walls, remainders, -1)
+    back_lines, before = node.held_write_at(lines, sources, write.walls, remainders, -1)
     assert all(np.array_equal(a.now, b.now) for a, b in zip(back_lines, held.lines, strict=True))
     assert all(np.array_equal(a, b) for a, b in zip(before, held.write_remainders, strict=True))
     universe = json.loads((EVENTS / "turning.json").read_text(encoding="utf-8"))
@@ -200,14 +200,14 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
 
 
 def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):
-    """Every blind of examples/events is its builder's byte for byte (the builder run on a copy of its folder without --modes, the blind written from the design before any run; the mode files the generator's, the digest binding each to its world). No world runs here: the back-in-time MATCH on the shipped worlds and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03). The count gate (GameBoard's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (matter_alone, standing_body) keep the runner's gate at every run, by name. The like-or-unlike look and the light tube, the controls of experiments removed, left the repository on 2026-10-03 at the owner's word; their universe files turning.json and charged.json stand at examples/events/ for the tests."""
+    """Every blind of examples/events is its builder's byte for byte (the builder run on a copy of its folder without --modes, the blind written from the design before any run; the mode files the generator's, the digest binding each to its world). No world runs here: the back-in-time MATCH on the shipped worlds and the standing world's 48 images through its 1000 intervals (examples/events/standing_body, 166's theorem under the write's factor booked as one rounding) are readings of tools/back_in_time.py and tools/body_standing.py by name (ENGINE.md, section 6), the gate and the 48 asserted as units on small worlds in test_the_node.py and test_the_meeting.py (a test runs under 30 seconds, the owner's word of 2026-10-03). The count gate (lattice's start) runs on the smallest world of every builder whose load is seconds (GATED, the loader's mode file applied to the laid Nodes, the defect of #1788 caught here); the folders whose smallest world is a long load (matter_alone, standing_body) keep the runner's gate at every run, by name. The like-or-unlike look and the light tube, the controls of experiments removed, left the repository on 2026-10-03 at the owner's word; their universe files turning.json and charged.json stand at examples/events/ for the tests."""
     for folder in (p.parent for p in sorted(EVENTS.glob("*/blind_and_reading.md"))):
         build, out = load_file(f"{folder.name}_build", folder / "build_world.py"), tmp_path / folder.name
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
         assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
     for folder, name in GATED:  # the gate on the smallest world of every builder whose load is seconds
-        world = GameBoard(load_world(EVENTS / folder / f"{name}.json")).world
-        assert world.bodies or world.messages, (folder, name)
+        world = Lattice(load_world(EVENTS / folder / f"{name}.json")).world
+        assert world.bodies or world.packets, (folder, name)
 
 
 def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused(
@@ -232,11 +232,11 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     world = dict(shape=[10, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     quanta = [{"family": "charged", "nodes": [{"node": [x, 0, 0], "count": 1}]} for x in (3, 6)]
-    world.update(ticks=3, universe="u.json", engine="e.json", node_readers=[], bodies=quanta)
+    world.update(intervals=3, universe="u.json", engine="e.json", node_detectors=[], bodies=quanta)
     (path := tmp_path / "quanta.json").write_text(json.dumps(world), encoding="utf-8")
     design_beside(tmp_path, "quanta", senses=[1, -1], pixels=[0, 1])  # the design's keys beside
     TOOL.main(["--input", str(path)])  # each its own record
-    board = GameBoard(load_world(path))
+    board = Lattice(load_world(path))
     families, charge, charged = board.families, 1, 2
     sources = [row_sources(families, charge, row) for row in range(3)]  # the free row, one per record
     assert sources == [[], [(charged, 0)], [(charged, 1)]] and families[charge].lines == 4 * 3
@@ -272,7 +272,10 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
         for record in (0, 1):
             line, own = 4 * (record + 1), node.wronskian(bookings[record][1], True)
             expected = node.step(lines[line], rule, board.wrap).now + (k_w * own + remainders[line]) // T
-            assert np.array_equal(board.states[charge].lines[line].now, expected), (board.tick, record)
+            assert np.array_equal(board.states[charge].lines[line].now, expected), (
+                board.interval,
+                record,
+            )
     document, mode_path = json.loads(path.read_text(encoding="utf-8")), path.with_suffix(".mode.json")
     for nodes in ([{"node": [3, 0, 0], "count": 2}], [{"node": [x, 0, 0], "count": 1} for x in (3, 4)]):
         document["bodies"][0]["nodes"] = nodes
@@ -296,7 +299,7 @@ NUCLEUS, CUBE = (
 def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads(
     tmp_path, monkeypatch
 ):
-    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe at the vacuum content 0, the content the four integers were derived at (at the declared 60 the compact lay cycles in the engine's start, 736 and 741 at [3, 4, 4] of the row 2 after six passes, the re-lay the hands'), with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no draw and no node_reader: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest: the hold's first write returns it within one unit at every Node (the mathematician's 293: the integer rest satisfies its line within one rounding, the residual at most half a wall under the half-wall origin, so the first write moves a level by at most 1; the floor origin admitted two), and the nuclear row's deviation from the row's exact line at its own composed paces (the source the laid record's form as the hold books it, scaled per proper volume and per proper interval over the wall E_n T, solved sparse in the test as tests/test_the_features.py solves the massless and binding rows) is printed beside the line as a GAMEBOARD reading and pinned below 0.6 at this seed, a reading of the neighbours' roundings' alignment and no bound: the derived bound is the residual through the inverse operator, 0.5 x 306 / 6 = 25.5 levels. (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (2,547 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.6 against 43.7 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines born at the half wall of the rule they step by, the lay's origin (#1743). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
+    """The nucleon's fixed point in its own nuclear holder's well (ALGEBRA.md, The nucleon is a compact body of its family and The nuclear holder, a hypothesis by name with four declared integers, the file's and not the law's: the holder's pair [50, 51], its level weight E_n = 1, its write weight W_1 = 300 and the read weight 1, printed beside the numbers; the mathematician's 275 (b) with the advisor's second, #1572 comments 5969267087 and 5969197876): the rule's universe at the vacuum content 0, the content the four integers were derived at (at the declared 60 the compact lay cycles in the engine's start, 736 and 741 at [3, 4, 4] of the row 2 after six passes, the re-lay the hands'), with a held row `nuclear` sourced by the form, reading the content holders and itself at 1 as every shipped holder does, and a `nucleon` family of three planes at matter's pair reading gravity 1, binding 1 and `nuclear` 1; one body of 25 quanta at the centre of an open 9-cube laid by `lay.kind` `fixed_point` with the compact seed at the profile [1, 4] (one part at the centre and four at each of the six Ports' Nodes), the stop 2 and 30 passes, the tolerance [1, den] at the largest den whose least T is the universe's 32,768 (the budget's line, loader/lay.py); no draw and no node_detector: the body is read by its share and its standing. (i) The fixed point returns: the generator's passes end with the content and the record repeating within the stop at every Node under the passes (ten passes on the first run, the last within one unit); the engine's start then holds the rest: the held write's first write returns it within one unit at every Node (the mathematician's 293: the integer rest satisfies its line within one rounding, the residual at most half a wall under the half-wall origin, so the first write moves a level by at most 1; the floor origin admitted two), and the nuclear row's deviation from the row's exact line at its own composed paces (the source the laid record's form as the held write books it, scaled per proper volume and per proper interval over the wall E_n T, solved sparse in the test as tests/test_the_features.py solves the massless and binding rows) is printed beside the line as a LATTICE reading and pinned below 0.6 at this seed, a reading of the neighbours' roundings' alignment and no bound: the derived bound is the residual through the inverse operator, 0.5 x 306 / 6 = 25.5 levels. (ii) The count is the record's share: the world's declared counts (the generator's reading, 43 over 33 Nodes from the design's 25, the three planes' per-plane rounding scaling the record above the design's count) against the share read at those Nodes within the gate ((|c - read| - 1) div 2)^2 <= c, every plane's lines alike and the sense lines 0. (iii) The body stands: P = 2 pi / omega_b rounded, cos omega_b the level before over the level now at the centre of the laid record (8 intervals from the pair (227, 158)), and the form D_i = now^2 - next x before summed over the record's lines returns to itself within one quantum of form, |D_i(1 + P) - D_i(1)| < T, at every Node of the region whose form is above T div 100 (2,547 at most against 32,768 on the first run); the twin without the holder (the nucleon's read of `nuclear` dropped, the same lay under the same mode file) spreads: after P intervals its share over the body's Nodes is below the bound body's by more than the gate's rounding at the body's count (20.6 against 43.7 quanta on the first run, the numbers pinned in the assertion's comment) and its centre's share below the body's. (iv) The guard admits the start (the content below the Link's zero at every Node, the laid levels within the amplitude bound as main derives it with the hill's factor; C.14's tension room is not on main), the back-in-time gate MATCH over 2 P intervals, every write remainder at half its wall and every sourced held row's time line at its rest's half wall, the record's lines born at the half wall of the rule they step by, the lay's origin (#1743). Found and not asserted: deeper wells toward the compact branch (W_1 from 325 at this count, from 450 at 13 quanta seeded [1, 2]) are refused in the engine's own start, the lay and the rest of the holders returning to an earlier state three to five units apart at the centre, beyond the rounding tie's two, so the nucleon laid here stands on the wide branch, the content 1,217 = 0.20 Gamma at the centre and 2 cos omega_b = 1.392 above the band's top 1.333."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     rule = json.loads((EVENTS / "rule.json").read_text(encoding="utf-8"))
     action, rows = rule["integers"]["quantum_action"], rule["families"]
@@ -308,8 +311,10 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
         (tmp_path / f"{name}.json").write_text(json.dumps(universe), encoding="utf-8")
     (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     centre = (CUBE // 2,) * 3
-    world = dict(shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, ticks=40)
-    world.update(universe="u.json", engine="e.json", node_readers=[], lay=COMPACT)
+    world = dict(
+        shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, intervals=40
+    )
+    world.update(universe="u.json", engine="e.json", node_detectors=[], lay=COMPACT)
     world["bodies"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
@@ -319,19 +324,19 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
         "trajectory"
     ]  # per pass the content's change, the record's, the count
     assert len(passes) <= COMPACT["passes"] and max(passes[-1][1:3]) <= COMPACT["stop"]
-    nodes, ticks = world["bodies"][0]["nodes"], world["ticks"]
+    nodes, intervals = world["bodies"][0]["nodes"], world["intervals"]
     declared, per_node = sum(n["count"] for n in nodes), max(n["count"] for n in nodes)
-    den = max(d for d in range(1, 1000) if least_action(PAIR, ticks, per_node, (1, d), K2) <= action)
+    den = max(d for d in range(1, 1000) if least_action(PAIR, intervals, per_node, (1, d), K2) <= action)
     assert (
-        least_action(PAIR, ticks, per_node, (1, den), K2) == action
+        least_action(PAIR, intervals, per_node, (1, den), K2) == action
     )  # T the least power of two admitted
-    assert least_action(PAIR, ticks, per_node, (1, den + 1), K2) > action
+    assert least_action(PAIR, intervals, per_node, (1, den + 1), K2) > action
     world["lay"] = {**COMPACT, "tolerance": [1, den], "confidence": list(K2)}
     for name, document in (("w", world), ("tw", {**world, "universe": "t.json"})):  # the twin's lay
         (tmp_path / f"{name}.json").write_text(json.dumps(document), encoding="utf-8")
         laid = {**mode, "world_digest": input_digest(document)}
         (tmp_path / f"{name}.mode.json").write_text(json.dumps(laid), encoding="utf-8")
-    board, twin = (GameBoard(load_world(tmp_path / f"{n}.json")) for n in ("w", "tw"))  # the guard
+    board, twin = (Lattice(load_world(tmp_path / f"{n}.json")) for n in ("w", "tw"))  # the guard
     names, families, gamma = [f.name for f in board.families], board.families, GAMMA
     nucleon, nuclear = names.index("nucleon"), names.index("nuclear")
     lines = board.states[nucleon].lines
@@ -370,13 +375,13 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     period = round(2 * math.pi / math.acos(before / now))  # the record's own rotation at the centre
     kept, hold_before = [[x.now.astype(object) for x in lines]], board.states[nuclear].lines[0].now
     hold_before = hold_before.copy()
-    for tick in range(1, 2 * period + 3):
+    for interval in range(1, 2 * period + 3):
         board.step()
         kept.append([x.now.astype(object) for x in board.states[nucleon].lines])
-        if tick == 1:  # the hold's first write returns the start's rest within one unit
+        if interval == 1:  # the held write's first write returns the start's rest within one unit
             moved = int(np.abs(board.states[nuclear].lines[0].now - hold_before).max())
             assert moved <= 1
-        if tick == period:
+        if interval == period:
             share = board.share_of(nucleon)[0]
             standing, at_centre = int(share[mask].sum(dtype=object)), int(share[centre])
 
@@ -392,11 +397,11 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     deficit = (standing - int(spread[mask].sum(dtype=object))) // wall_c  # 43.7 against 20.6 quanta
     assert ((deficit - 1) // 2) ** 2 > declared and int(spread[centre]) < at_centre
     print(
-        f"GAMEBOARD the nuclear holder's declared integers: the pair {HOLDER['pair']}, E_n "
+        f"LATTICE the nuclear holder's declared integers: the pair {HOLDER['pair']}, E_n "
         f"{HOLDER['held']['level_weight']}, W_1 {HOLDER['held']['write_weight']}, the read weight "
         f"{NUCLEON['reads']['nuclear']}; the lay {declared} quanta over {len(nodes)} Nodes in {len(passes)} "
         f"passes, the period {period}, the body's share {standing / wall_c:.1f} and the twin's "
         f"{int(spread[mask].sum(dtype=object)) / wall_c:.1f} over the body's Nodes after the period; the nuclear "
         f"rest off its exact line by {off_line:.4f} level at most over the body (a reading), the first write moving it {moved}"
     )
-    assert BACK.verdict(GameBoard(load_world(tmp_path / "w.json")), 2 * period)["verdict"] == "MATCH"
+    assert BACK.verdict(Lattice(load_world(tmp_path / "w.json")), 2 * period)["verdict"] == "MATCH"

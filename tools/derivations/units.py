@@ -1,4 +1,4 @@
-"""The units of count-unit (ALGEBRA.md, the lay by the count and the family's quantum; R8, R162): the family's quantum isqrt(9 T^2 (den^2 - num^2)) = W_c sin omega_0 for a gapped pair and 3 den T for a massless one, and the taker's lay A^2 = isqrt(count^2 T^2 den^2 div (4 laid^2 (den^2 - num^2))) with 2 A^2 sin omega = (count / laid) T per line, by the integer formulas here; the engine's agreement with them is the test's, `tests/test_the_node_reader.py` (ALGEBRA.md, The conventions and the units, rows 12 and 13).
+"""The units of count-unit (ALGEBRA.md, the lay by the count and the family's quantum; R8, R162): the family's quantum isqrt(9 T^2 (den^2 - num^2)) = W_c sin omega_0 for a gapped pair and 3 den T for a massless one, and the taker's lay A^2 = isqrt(count^2 T^2 den^2 div (4 laid^2 (den^2 - num^2))) with 2 A^2 sin omega = (count / laid) T per line, by the integer formulas here; the engine's agreement with them is the test's, `tests/test_the_node_detector.py` (ALGEBRA.md, The conventions and the units, rows 12 and 13).
 
 Usage: `python tools/derivations/units.py` prints them at [4000, 6000] and [2, 3] with T = 32,768 and for light at [6000, 6000].
 """

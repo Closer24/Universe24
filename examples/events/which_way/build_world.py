@@ -21,7 +21,7 @@ ROOT = HERE.parents[2]
 
 
 def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
-    """The screen's node_readers, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
+    """The screen's node_detectors, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
     rows, column, height = int(design["rows_per_region"]), int(design["screen"]), int(design["height"])
     low, high = (int(r) for r in design["channel"]["rows"])
     found: list[dict[str, object]] = []
@@ -48,7 +48,7 @@ def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any], name: str) -> dict[str, object]:
-    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the node_readers, the receding face and the draw."""
+    """One world of the design: the board, the wall with the gaps the world opens, the channel's two walls across y where the world has the channel (inner faces at the channel's `walls` rows over the channel's `wall_columns`, from the wall's far side to the column before the screen), the packet, the node_detectors, the receding face and the draw."""
     kind = design["worlds"][name]
     gaps = [{"y": list(design["gaps"][k]), "z": [0, 0]} for k in kind["gaps"]]
     faces: list[dict[str, object]] = [{"axis": "x", "at": int(design["wall"]), "gaps": gaps}]
@@ -60,7 +60,7 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         ]
         faces += [{"axis": "y", "at": int(at), "gaps": open_x} for at in design["channel"]["walls"]]
     packet = design["packet"]
-    message = {
+    packet = {
         "family": design["family"],
         "along": "x",
         "wave": list(design["wave"]),
@@ -74,12 +74,12 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "boundary": {"x": "open", "y": "open", "z": "periodic"},
         "face_depth": 1,
         "faces": faces,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [],
-        "messages": [message],
-        "node_readers": regions(design, bool(kind["channel"])),
+        "packets": [packet],
+        "node_detectors": regions(design, bool(kind["channel"])),
         "receding": design["receding"],
         "draw": design["draw"],
     }
@@ -117,9 +117,9 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
     half = float(design["blind_through"]) / 2
     shadowed = [index for index, first in enumerate(range(0, height, rows)) if first + rows - 1 < low]
     return {
-        "verdict": "NODEREADER",
+        "verdict": "NODEDETECTOR",
         "family": design["family"],
-        "window": [1, int(design["ticks"])],
+        "window": [1, int(design["intervals"])],
         "across": "y",
         "seed": design["draw"]["seed"],
         "comment": design["comment"],

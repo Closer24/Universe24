@@ -16,7 +16,7 @@ from event_universe import node, share
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.rule3 import NO_READ, coefficients, form_term, link_factor, rule3
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, TOOL, chain_body_world
 
@@ -106,7 +106,7 @@ RULE_ARITHMETIC += (r"wall \* now \+ remainder", r"direction \* carry\b")
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
-    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the GameBoard, core and the folders hold no split of their own."""
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the lattice, core and the folders hold no split of their own."""
     offenders = []
     for path in sorted(p for p in SOURCE.rglob("*.py") if p.name != "rule3.py"):
         text = path.read_text(encoding="utf-8")
@@ -128,7 +128,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
     assert {home: found.pop(home) for home in SHIFT_HOME} == SHIFT_HOME and found == {}, found
-    stepping = [SOURCE / "node.py", SOURCE / "game_board.py", *SOURCE.glob("core/*.py")]
+    stepping = [SOURCE / "node.py", SOURCE / "lattice.py", *SOURCE.glob("core/*.py")]
     for path in stepping + list(SOURCE.glob("features/*/*.py")):
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             assert not (isinstance(item, ast.FunctionDef) and "split" in item.name.lower()), path.name
@@ -138,7 +138,7 @@ LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 6}), frozenset({4, 12}
 
 
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
-    """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS: 0 and 1, the identity and the direction, -1 the inverse and the hole; 2, the halves, W_c div 2, the half wall, the axis contents' rounding, two levels; 3, the three axes, 3 den; 6, the six Ports, 6 den; and in Rule3's own line, core/rule3.py alone, 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, RULE_LINE_INTEGERS): every other number is a file's key or the rule's own act, so a number cannot enter the engine again. The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root. The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the messages of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
+    """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS: 0 and 1, the identity and the direction, -1 the inverse and the hole; 2, the halves, W_c div 2, the half wall, the axis contents' rounding, two levels; 3, the three axes, 3 den; 6, the six Ports, 6 den; and in Rule3's own line, core/rule3.py alone, 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, RULE_LINE_INTEGERS): every other number is a file's key or the rule's own act, so a number cannot enter the engine again. The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root. The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the packets of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
     texts = {p: p.read_text(encoding="utf-8") for p in sorted((ROOT / "tools").glob("*.py"))}
     tools = [p for p, text in texts.items() if re.search(r"^(from|import) event_universe\b", text, re.M)]
     assert {"pixel_mode", "back_in_time", "run_inputs", "click_counts"} <= {p.stem for p in tools}
@@ -185,7 +185,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = GameBoard(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
+    board = Lattice(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
@@ -226,10 +226,10 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         monkeypatch.setattr(module, "rule3", original)  # the count is taken; the runs below plain
     for _ in range(60):
         board.step()
-    regions = {row.name for row in board.world.node_readers} | {"face"}
+    regions = {row.name for row in board.world.node_detectors} | {"face"}
     assert lines and {str(line["event"]) for line in lines} <= {"click", "density"}
     clicks = [line for line in lines if line["event"] == "click"]
-    assert clicks and all(line["node_reader"] in regions and "node" not in line for line in clicks)
+    assert clicks and all(line["node_detector"] in regions and "node" not in line for line in clicks)
     engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
     table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
     assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
@@ -243,7 +243,7 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
     runs = []
     for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
-        board = GameBoard(load_world(path), (lines := []).append)
+        board = Lattice(load_world(path), (lines := []).append)
         for _ in range(40):
             board.step()
         arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]

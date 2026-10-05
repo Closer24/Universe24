@@ -9,17 +9,17 @@ arrival's peak at the interval 69. A reading that misses the blind is a finding,
 
 ## The reading (branch click-share-fix, fb2c14c, 2026-10-04, the lay without the uniform mode)
 
-The message lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md,
-The message lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0
+The packet lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; ALGEBRA.md,
+The packet lay, the sentence of 2026-10-04): the charge line's sums over the board at the lay were 0
 and -24,442 for now and before, a velocity of the uniform mode that Rule3 carries exactly, the
 level's mean growing by 11 per interval; the fix takes the uniform content out of each level at the
 lay (both sums 0, the before field moved by +3 to +97 at the laid Nodes, 8 percent of the amplitude
 as an envelope-shaped lump of the velocity, nothing on now), and the lay's count moves from 1,998 to
 1,805 at the design's amplitude 1,328 (the amplitude the design's number, the count a reading). The
 world re-run at the seed 24 of the design (`tools/run_inputs.py`, `tools/click_counts.py`,
-`tools/back_in_time.py --intervals 40` MATCH), NODEREADER unless marked:
+`tools/back_in_time.py --intervals 40` MATCH), NODEDETECTOR unless marked:
 
-| region | two_slits clicks | the rounded shares (GAMEBOARD) |
+| region | two_slits clicks | the rounded shares (LATTICE) |
 | --- | --- | --- |
 | screen_0 | 28 | 20 |
 | screen_1 | 15 | 19 |
@@ -53,7 +53,7 @@ word, PR #1862 comment 5975750797).
 ## The blind file's `laid` field, 2026-10-04 (R248, #1793; the advisor's line 5976077759 item 2)
 
 The blind file `expectation.json` carries a field `laid`, the count of the lay, which the builder
-writes from the mode file's count: a GameBoard reading of the lay and no fence of the blind (the
+writes from the mode file's count: a lattice reading of the lay and no fence of the blind (the
 file's own status line says so). At the lay without the uniform mode (PR #1862, main d00aa9e) the
 builder's re-run in place moved that one field from 1,998 to 1,805, the division act's count at the
 design's amplitude 1,328; every fence of the blind (the counts, N 273.0, the maxima, the minima, the
@@ -66,32 +66,32 @@ lay.
 ## The gate's table
 
 Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEREADER for the credit
-lines' clicks and the trials' coincidences, GAMEBOARD for the verdict, the ticks, the line counts, the
+compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
+lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
 
 | label | world | by | reading | value |
 | --- | --- | --- | --- | --- |
-| GAMEBOARD | two_slits.json | run_inputs | verdict | LAWFUL |
-| GAMEBOARD | two_slits.json | run_inputs | ticks | 130 |
-| NODEREADER | two_slits.json | run_inputs | clicks | 270 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_0 | 28 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_1 | 15 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_2 | 24 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_3 | 18 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_4 | 7 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_5 | 37 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_6 | 44 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_7 | 13 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_8 | 13 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_9 | 25 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_10 | 24 |
-| NODEREADER | two_slits.json | run_inputs | clicks screen_11 | 22 |
-| NODEREADER | two_slits.json | run_inputs | clicks gap | 0 |
-| GAMEBOARD | two_slits.json | run_inputs | lines click | 1209 |
-| GAMEBOARD | two_slits.json | run_inputs | lines credit | 270 |
-| GAMEBOARD | two_slits.json | run_inputs | lines density | 135 |
-| GAMEBOARD | two_slits.json | run_inputs | books charge quanta | 1808 |
-| GAMEBOARD | two_slits.json | run_inputs | books charge share | 1066341144000 |
-| GAMEBOARD | two_slits.json | back_in_time | intervals 40 | MATCH |
+| LATTICE | two_slits.json | run_inputs | verdict | LAWFUL |
+| LATTICE | two_slits.json | run_inputs | intervals | 130 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks | 270 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_0 | 28 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_1 | 15 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_2 | 24 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_3 | 18 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_4 | 7 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_5 | 37 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_6 | 44 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_7 | 13 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_8 | 13 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_9 | 25 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_10 | 24 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_11 | 22 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks gap | 0 |
+| LATTICE | two_slits.json | run_inputs | lines click | 1209 |
+| LATTICE | two_slits.json | run_inputs | lines credit | 270 |
+| LATTICE | two_slits.json | run_inputs | lines density | 135 |
+| LATTICE | two_slits.json | run_inputs | books charge quanta | 1808 |
+| LATTICE | two_slits.json | run_inputs | books charge share | 1066341144000 |
+| LATTICE | two_slits.json | back_in_time | intervals 40 | MATCH |

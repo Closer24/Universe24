@@ -1,6 +1,6 @@
 {
- "verdict": "NODEREADER",
- "node_reader": [
+ "verdict": "NODEDETECTOR",
+ "node_detector": [
   "screen_0",
   "screen_1",
   "screen_2",
@@ -66,7 +66,7 @@
    63,
    77
   ],
-  "labels": "the engine's interval labels: the click at tick t reports the state after t - 1 steps, so the law's real line's 68 and 73 read 69 and 74 here",
+  "labels": "the engine's interval labels: the click at interval t reports the state after t - 1 steps, so the law's real line's 68 and 73 read 69 and 74 here",
   "real_line": {
    "peak": 68,
    "centroid": 73
@@ -99,9 +99,9 @@
   "gap"
  ],
  "photons": {
-  "label": "GAMEBOARD",
+  "label": "LATTICE",
   "per_count": 2.3204,
   "at_the_blind_N": 633.5,
-  "status": "the photon count at the light's own omega beside N, a GameBoard reading and no fence: the screen's regions declare the band's top [0, den], so N counts the energy in units of T, and one quantum of the laid light at k = pi / 4 (cos omega = (cos(pi / 4) + 2) / 3, sin omega = 0.4310) carries T sin omega; N over sin omega is the laid light's own quanta, 645 at N = 278 (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267; the shipped regions keep the band's top so that no gate number moves)"
+  "status": "the photon count at the light's own omega beside N, a lattice reading and no fence: the screen's regions declare the band's top [0, den], so N counts the energy in units of T, and one quantum of the laid light at k = pi / 4 (cos omega = (cos(pi / 4) + 2) / 3, sin omega = 0.4310) carries T sin omega; N over sin omega is the laid light's own quanta, 645 at N = 278 (the mathematician's 214, #1572 comment 5965082449, with the advisor's second, #1563 comment 5965316267; the shipped regions keep the band's top so that no gate number moves)"
  }
 }

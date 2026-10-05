@@ -1,4 +1,4 @@
-"""The telegraph's reader (examples/events/shelved_ion; ALGEBRA.md, The click writes on the GameBoard (j), the shelved ion's telegraph as three clicks): a run's output file read against the blind expectation file, every number from the `credit` lines of the counter (the clicks) and the `credit` lines of the record declared a NodeReader (its clicks, the lines naming `taken` or `given`), nothing from the arrays. The counts per bin: the counter's `credit` lines of the blind's family within the window, one count each, summed per window of `bin` intervals; a bin with 0 counts is dark and a bin with 1 or more bright (the blind's rule); the bright bins' mean and variance (Poisson: the variance the mean); the bright and the dark periods, runs of bins of one kind, the first and the last period dropped as cut by the window, their lengths in intervals, their means and the standard deviation over the mean (1 for an exponential); the dark fraction; the histogram of the counts per bin; the switches, the periods of each kind; the returns, the counter's `credit` lines of the family the design names as the return's row; the record's clicks per kind from its `credit` lines labelled NODEREADER (the part realised, the family taken from or given to; the null window's GAMEBOARD-labelled lines left out), the fluorescence givings' spacing; the intervals the run reached (a run refused inside names its interval). The tool holds no number of the law and compares nothing: the blind is printed beside each reading.
+"""The telegraph's reader (examples/events/shelved_ion; ALGEBRA.md, The click writes on the lattice (j), the shelved ion's telegraph as three clicks): a run's output file read against the blind expectation file, every number from the `credit` lines of the counter (the clicks) and the `credit` lines of the record declared a NodeDetector (its clicks, the lines naming `absorbed` or `emitted`), nothing from the arrays. The counts per bin: the counter's `credit` lines of the blind's family within the window, one count each, summed per window of `bin` intervals; a bin with 0 counts is dark and a bin with 1 or more bright (the blind's rule); the bright bins' mean and variance (Poisson: the variance the mean); the bright and the dark periods, runs of bins of one kind, the first and the last period dropped as cut by the window, their lengths in intervals, their means and the standard deviation over the mean (1 for an exponential); the dark fraction; the histogram of the counts per bin; the switches, the periods of each kind; the returns, the counter's `credit` lines of the family the design names as the return's row; the record's clicks per kind from its `credit` lines labelled NODEDETECTOR (the part realised, the family taken from or given to; the null window's LATTICE-labelled lines left out), the fluorescence emissions' spacing; the intervals the run reached (a run refused inside names its interval). The tool holds no number of the law and compares nothing: the blind is printed beside each reading.
 
 Run with the checkout's root as the working directory:
 
@@ -17,24 +17,24 @@ from pathlib import Path
 
 def bins(
     lines: list[dict[str, object]],
-    node_readers: list[str],
+    node_detectors: list[str],
     family: str,
     window: tuple[int, int],
     width: int,
 ) -> list[int]:
-    """The counts per bin: the counter's credit lines of the family within the window, summed per window of `width` intervals (the bin of the credit at the tick t is (t - first) div width)."""
+    """The counts per bin: the counter's credit lines of the family within the window, summed per window of `width` intervals (the bin of the credit at the interval t is (t - first) div width)."""
     first, last = window
     found = [0] * ((last - first) // width + 1)
     for line in lines:
         if (
             line.get("event") != "credit"
             or line.get("family") != family
-            or line.get("node_reader") not in node_readers
+            or line.get("node_detector") not in node_detectors
         ):
             continue
-        tick = int(str(line["tick"]))
-        if first <= tick <= last:
-            found[(tick - first) // width] += int(str(line["count"]))
+        interval = int(str(line["interval"]))
+        if first <= interval <= last:
+            found[(interval - first) // width] += int(str(line["count"]))
     return found
 
 
@@ -70,14 +70,14 @@ def reading(output: Path, expectation: Path) -> dict[str, object]:
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     document = json.loads(output.read_text(encoding="utf-8"))
     lines = document["lines"]
-    node_readers = [str(d) for d in expected["node_reader"]]
+    node_detectors = [str(d) for d in expected["node_detector"]]
     family, width = str(expected["family"]), int(expected["bin"])
-    reached = int(document.get("ticks") or 0)
+    reached = int(document.get("intervals") or 0)
     reason = str(document.get("reason", ""))
     if not reached and (found := re.search(r"interval (\d+)", reason)):
         reached = int(found.group(1))
     window = (int(expected["window"][0]), min(int(expected["window"][1]), reached))
-    counts = bins(lines, node_readers, family, window, width)
+    counts = bins(lines, node_detectors, family, window, width)
     bright = [c for c in counts if c > 0]
     bright_periods = [p * width for p in periods(counts, True)]
     dark_periods = [p * width for p in periods(counts, False)]
@@ -85,18 +85,18 @@ def reading(output: Path, expectation: Path) -> dict[str, object]:
         line
         for line in lines
         if line.get("event") == "credit"
-        and line.get("label") == "NODEREADER"
-        and (line.get("taken") or line.get("given"))
-    ]  # the record's own clicks: the takings and the givings
-    kinds = Counter((str(j["realised"]), str(j.get("taken") or j.get("given"))) for j in clicks)
-    givings = [int(str(j["tick"])) for j in clicks if j.get("given") == family]
-    gaps = [b - a for a, b in zip(givings, givings[1:], strict=False)]
+        and line.get("label") == "NODEDETECTOR"
+        and (line.get("absorbed") or line.get("emitted"))
+    ]  # the record's own clicks: the absorptions and the emissions
+    kinds = Counter((str(j["realised"]), str(j.get("absorbed") or j.get("emitted"))) for j in clicks)
+    emissions = [int(str(j["interval"])) for j in clicks if j.get("emitted") == family]
+    gaps = [b - a for a, b in zip(emissions, emissions[1:], strict=False)]
     returns = [
         line
         for line in lines
         if line.get("event") == "credit"
         and line.get("family") != family
-        and line.get("node_reader") in node_readers
+        and line.get("node_detector") in node_detectors
     ]
     blind = expected["blind"]
     return {
@@ -135,8 +135,8 @@ def reading(output: Path, expectation: Path) -> dict[str, object]:
             "blind": blind["7_returns"]["blind"],
         },
         "record_clicks": {f"{realised} by {family}": n for (realised, family), n in kinds.items()},
-        "givings_of_the_family": {"n": len(givings), "spacing": shape([float(g) for g in gaps])},
-        "label": "NODEREADER",
+        "emissions_of_the_family": {"n": len(emissions), "spacing": shape([float(g) for g in gaps])},
+        "label": "NODEDETECTOR",
     }
 
 

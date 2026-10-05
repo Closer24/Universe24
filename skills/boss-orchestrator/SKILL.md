@@ -61,8 +61,8 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
 2. **The blind numbers first.** No run and no build without the expected number
    written in the brief. A difference is a defect of the engine, never a
    finding, and the worker fixes it with a test.
-3. **The report.** The worker reports the numbers, labelled NODEREADER or
-   GAMEBOARD, the head commit, the gates' results and every sentence it removed
+3. **The report.** The worker reports the numbers, labelled NODEDETECTOR or
+   LATTICE, the head commit, the gates' results and every sentence it removed
    or rewrote in the documents: a summary, never a log.
 4. **The review.** For the engine's rounds and `core/` the Boss reads the diff
    against the law's lines: the files against the brief, the test, no number and
@@ -94,7 +94,7 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
 
 A brief that asks a worker for a blind number or a derivation names the method
 of derivation of [skills/workflow.md](../workflow.md); a worker's number without
-its status and its fence (GameBoard or clicks) is sent back.
+its status and its fence (lattice or clicks) is sent back.
 
 ## Context economy
 
@@ -115,7 +115,7 @@ mathematician's #1836 (the second hand on the law and the paper). The state of
 every finding is its row in docs/REVIEW_LEDGER.md, changed by the pull request
 that prints; the decisions are docs/HIGHLIGHTS.md's, one line each. A finding or
 approval of one pull request is a comment on it; a list across pull requests is
-one issue with a checklist, each pull request ticking its item. Messages are two
+one issue with a checklist, each pull request ticking its item. Packets are two
 lines and a link. The Boss reads the issues it was sent at every check-in.
 
 ## The Routines to the hands
@@ -138,7 +138,7 @@ the worker with the failing line; a bundle's pull request (documents, paper
 sentences, tool fixes and pin tests) takes the same check-in, and the Boss
 squashes it at CI green once both hands' lines stand at its sha, the reviewer's
 ledger file alone excepted (the owner, 2026-10-04). No blocking wait on CI longer
-than two minutes, so that the owner's message is seen.
+than two minutes, so that the owner's packet is seen.
 
 ## What the Boss never does
 

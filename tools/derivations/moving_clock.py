@@ -1,4 +1,4 @@
-"""The moving clock from Rule3's exact band (docs/ALGEBRA.md, The rows against nature, row (e); the paper's Section 8 (e), Fig. 3 and S.21): the tick's factor f = Omega(k) / omega_0 with Omega(k) = omega(k) - k omega'(k) the rotation at the moving centre, on the free record's band cos omega = (num / (3 den)) (2 + cos k) of rule3; the kinetic scale c_m^2 = omega_0 / (3 tan omega_0), the fourth-order coefficient over Lorentz's omega_0 [(SUM_a n_a^4) tan omega_0 + cot omega_0], the largest group speeds, and the differences of c_m and the diagonal's speed from light's at nature's gap, read from the electron's gap bound sin omega_e <= m_e c^2 / E_LHAASO (The constants) and S.24's axis bound. The numbers of nature stand as named constants where the mark rests on them.
+"""The moving clock from Rule3's exact band (docs/ALGEBRA.md, The rows against nature, row (e); the paper's Section 8 (e), Fig. 3 and S.21): the interval's factor f = Omega(k) / omega_0 with Omega(k) = omega(k) - k omega'(k) the rotation at the moving centre, on the free record's band cos omega = (num / (3 den)) (2 + cos k) of rule3; the kinetic scale c_m^2 = omega_0 / (3 tan omega_0), the fourth-order coefficient over Lorentz's omega_0 [(SUM_a n_a^4) tan omega_0 + cot omega_0], the largest group speeds, and the differences of c_m and the diagonal's speed from light's at nature's gap, read from the electron's gap bound sin omega_e <= m_e c^2 / E_LHAASO (The constants) and S.24's axis bound. The numbers of nature stand as named constants where the mark rests on them.
 
 Usage: `python tools/derivations/moving_clock.py` prints them.
 """
@@ -37,7 +37,7 @@ def rotation(k: float, num: int, den: int) -> float:
     return math.acos(rule3.plane_wave_dispersion(k, num, den))
 
 
-def tick_factor(k: float, num: int, den: int) -> tuple[float, float]:
+def interval_factor(k: float, num: int, den: int) -> tuple[float, float]:
     """(v, f) at the wave number k along an axis: the group velocity v = omega'(k) (rule3.group_velocity) and f = Omega / omega_0 with Omega = omega - k omega' (S.21)."""
     velocity = rule3.group_velocity(k, num, den)
     return velocity, (rotation(k, num, den) - k * velocity) / rest_rotation(num, den)
@@ -61,8 +61,8 @@ def fourth_order_over_lorentz(num: int = 2, den: int = 3, speed: float = 0.02) -
     low, high = 0.0, 1.0
     for _ in range(100):  # invert v(k) on the band's rising side
         mid = (low + high) / 2
-        low, high = (mid, high) if tick_factor(mid, num, den)[0] < speed else (low, mid)
-    velocity, factor = tick_factor(low, num, den)
+        low, high = (mid, high) if interval_factor(mid, num, den)[0] < speed else (low, mid)
+    velocity, factor = interval_factor(low, num, den)
     residual = (factor - 1 + velocity**2 / (2 * c_m_squared)) / velocity**4
     return [*analytic, residual / (-1 / (8 * c_m_squared**2))]
 
@@ -113,7 +113,7 @@ def figure(num: int = 2, den: int = 3) -> list[float]:
     return [
         top,
         kinetic_scale(num, den)[1],
-        tick_factor(k_top, num, den)[1],
+        interval_factor(k_top, num, den)[1],
         math.sqrt(1 - top**2 / c_m**2),
     ]
 

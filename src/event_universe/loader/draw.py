@@ -1,4 +1,4 @@
-"""The draw's declaration (ALGEBRA.md, The NodeReader is one declaration kind for every experiment: a seed, its draw; #the-click-is-the-meeting, the pair's form and the GHZ gate): on the world the `draw`, the window in intervals after which the NodeReaders over regions draw and write their click, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's (`Draw`, `draw_of`); a body with a probe among its transitions (a transition of a part into itself) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate); and on a node_reader's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the draw through the root in the run; every defect refused by name and no default written."""
+"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: a seed, its draw; #the-click-is-the-meeting, the pair's form and the GHZ gate): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's (`Draw`, `draw_of`); a body with a probe among its transitions (a transition of a part into itself) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate); and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the draw through the root in the run; every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ DRAW_KEYS = (
 
 @dataclass(frozen=True)
 class Generator:
-    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `node_reader`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands)."""
+    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `node_detector`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands)."""
 
     seed: int
     multiplier: int
@@ -32,13 +32,13 @@ class Generator:
 
 @dataclass(frozen=True)
 class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_reader's window closes and the NodeReader draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
 
     window: int
 
 
 def generator_of(value: object, label: str) -> Generator:
-    """A body's `node_reader` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name."""
+    """A body's `node_detector` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name."""
     if isinstance(value, dict) and "window" in value:
         raise ValueError(
             f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "
@@ -54,7 +54,7 @@ def generator_of(value: object, label: str) -> Generator:
 
 
 def draw_of(value: object, label: str) -> Draw:
-    """The world's `draw`, and a body's `node_reader` without a probe: its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
+    """The world's `draw`, and a body's `node_detector` without a probe: its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
     found = keyed(value, label, DRAW_KEYS, DRAW_KEYS)
     return Draw(
         integer(found["seed"], f"{label}.seed", 0),
@@ -84,14 +84,14 @@ def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
 
 
 def basis_of(value: object, label: str) -> tuple[int, ...]:
-    """A node_reader's declared basis, its setting: a list of integers not all 0 (the pair's (p, q)); refused by name otherwise."""
+    """A node_detector's declared basis, its setting: a list of integers not all 0 (the pair's (p, q)); refused by name otherwise."""
     if not isinstance(value, list) or not value or not any(value):
         raise ValueError(f"{label} must be a list of integers, the setting's coefficients, not all 0")
     return tuple(integer(v, f"{label}[{i}]", -MAX_WORK_INT) for i, v in enumerate(value))
 
 
 def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
-    """A node_reader's declared pattern: a list of integer pairs [alpha_k, beta_k], one per part of the record it reads, none [0, 0] (a part read with no coefficient at either port is no part of the read), on a setting of two coefficients (p, q); refused by name otherwise."""
+    """A node_detector's declared pattern: a list of integer pairs [alpha_k, beta_k], one per part of the record it reads, none [0, 0] (a part read with no coefficient at either port is no part of the read), on a setting of two coefficients (p, q); refused by name otherwise."""
     if len(basis) != 2:
         raise ValueError(
             f"{label} reads the setting (p, q) of two coefficients into the parts, and the basis has {len(basis)}"
@@ -117,12 +117,12 @@ def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
 def patterns_of_the_law(
     patterns: list[tuple[str, Pattern]], laid: list[int], families: tuple[FamilyRule, ...]
 ) -> None:
-    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its messages' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
+    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its packets' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
     parts = sorted({families[index].parts for index in laid if families[index].parts > 1})
     for name, pattern in patterns:
         if pattern and len(pattern) not in parts:
             raise ValueError(
-                f"node_reader {name!r} declares a pattern of {len(pattern)} parts, and the world lays "
+                f"node_detector {name!r} declares a pattern of {len(pattern)} parts, and the world lays "
                 + (
                     f"records of {parts} parts, one pair per part"
                     if parts
