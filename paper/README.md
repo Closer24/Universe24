@@ -58,7 +58,7 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
-  generative tool, with 6.2 to 8 pt lettering at the drawn size (Figs. 3 and 5 are
+  generative tool, with 7 to 8 pt lettering at the drawn size (Figs. 3 and 5 are
   included at 0.66 of the text width, the other five at the drawn size), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
@@ -157,8 +157,8 @@ the marks (every `\claimmark` one of the key's eight words, every `\fence` one o
 beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
-scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
-text, 117 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
+scripts' count is a ratchet the same test holds: of the 128 derived and computed marks of the main
+text, 118 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
 line alone with no engine import and no run's file, the paper's own check scripts, or, for a computed
 mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, the stable body's
 proposition, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
@@ -200,9 +200,9 @@ the journal.
   and the height at most 234 mm (Springer's general artwork guidelines, as the
   writer holds them; the author checks the journal's page before submitting,
   the venues' pages being unreachable from the writer's session). Met: the
-  four figures drawn 174 mm wide are
-  included at that size, their lettering 7 to 8 pt at the final size (the axes' labels 7 pt), and the four
-  drawn narrower at theirs.
+  figures drawn 174 mm wide are included at that size, their lettering 7 to 8 pt at
+  the final size (the axes' labels 7 pt); Figs. 3 and 5, drawn narrower, at 0.66 of
+  the text width.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
