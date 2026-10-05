@@ -155,15 +155,14 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
     assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
     was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    expected = [
-        (n * clock // board.world.node_clock, w) for n, w in ((40, 1), (40, 1), (80, 2), (80, 2))
-    ]
+    proper = [(n * clock // board.world.node_clock, w) for n, w in ((40, 1), (40, 1), (80, 2), (80, 2))]
     assert [
         (c["proper"], c["windows"]) for c in credits
-    ] == expected  # p_0 = Gamma - c_vac: 39 and 79 at 60
-    report = set(
-        "event label interval family node_detector window proper windows before realised kept count left absorbed emitted".split()
+    ] == proper  # p_0 = Gamma - c_vac: 39 and 79 at 60
+    keys = (
+        "event label interval family node_detector window proper windows before realised kept count left"
     )
+    report = set(f"{keys} absorbed emitted".split())
     assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
     holes = [f for f in lines if f["event"] == "face" and f["interval"] == 41]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
