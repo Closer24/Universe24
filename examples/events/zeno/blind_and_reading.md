@@ -311,3 +311,29 @@ errors above 0.375 where the blind asked for the column centred, so the n = 4 ex
 second order: a finding by name, not adjusted (the exact removal of one quantum at the record moves it
 from 0.408 to 0.415, within the draw). The nine gate worlds are byte-identical to main's at 7033a6aa
 (the two slits, Bell x 4, GHZ x 4); the resonance world's reading stands in its own folder.
+
+## The reading at the clean engine (main 39cc3851 and 1fe3790a, 2026-10-05; 480 trials per world)
+
+The control run (the mathematician's division at 39cc3851, #1827 comment 5987162359, his agent in his
+worktree by the folder's own tool; the advisor the second runner at 1fe3790a, 5987155797, the folder's
+files unchanged between the hashes): `tools/meeting_trials.py` with the design and the blind, 480
+trials of 48 intervals per world (57 to 80 s each); the seeds' generator states the hashed labels of
+the tool (2026-10-04), so the draws are not the draws of the readings dated 2026-10-03 above; the blind
+untouched. NODEDETECTOR: the fraction of the trials whose record stands in e at the run's end against
+Itano's column A, the folder's criterion (the partial hole's blind) the column within one standard error
+at 480 seeds; both runners read the same numbers (the advisor's cross-check, 5987243109: bit for bit):
+
+| world | ends in e of 480 | fraction | the blind | standard error | deviation | windows closed | the jumps g to e / e to g | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| zeno_1 (n = 1, the window 48) | 480 | 1.0000 | 1.0000 | 0 | the column exactly | 1 in every trial | 480 / 0 | MATCH |
+| zeno_2 (n = 2, the window 24) | 243 | 0.5062 | 0.5000 | 0.0228 | +0.27 standard errors | 2 in every trial | 367 / 124 | MATCH |
+| zeno_4 (n = 4, the window 12) | 188 | 0.3917 | 0.3750 | 0.0221 | +0.75 | 4 in every trial | 239 / 51 | MATCH |
+| zeno_8 (n = 8, the window 6) | 110 | 0.2292 | 0.2346 | 0.0193 | -0.28 | 8 in every trial | 129 / 19 | MATCH |
+| zeno_16 (n = 16, the window 3) | 68 | 0.1417 | 0.1334 | 0.0155 | +0.53 | 16 in every trial | 70 / 2 | MATCH |
+
+Every row within one standard error of the column, no trial refused, every window closed n times
+exactly; columns B and C excluded at every n above 1 as before. Beside the blind, the mathematician's
+line: the reading on main of 2026-10-03 (the partial hole's 0.523, 0.408, 0.227, 0.119 at n = 2, 4,
+8, 16) differs from these draws by -0.8, -0.7, +0.1 and +1.5 of its standard errors, and the n = 4
+finding of that reading (0.408, 1.5 standard errors high) does not reappear at these draws (0.392,
++0.75 standard errors).

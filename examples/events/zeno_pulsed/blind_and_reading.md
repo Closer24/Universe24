@@ -179,3 +179,33 @@ took in no trial of 20, the blind's 1.4 trials), the probe's clicks per run 7.10
 against the blind's 6.85, 14.8 and 30.8; the rows to be read at 480 seeds on a quiet machine, with
 the partial hole on main (the protocol above); n = 64 reads 0 of 20 (0.000 against 0.037), the probe's clicks 64.00 per run against the blind's 62.8. Every number a click (the jumps,
 the parts the writes left), labelled NODEDETECTOR.
+
+## The reading at the clean engine (main 39cc3851, 2026-10-05; 480 trials per world)
+
+The control run (the mathematician's division, #1827 comment 5987162359, his agent in his worktree by
+the folder's own tool; the folder's files carry no gravity row, so nothing moves with F8 and the
+reading is final at this hash): `tools/meeting_trials.py` with the design and the blind, 480 trials of
+768 intervals per world (1,250 to 1,355 s each on one core), and the protocol's first window of n = 2
+alone with a design copy whose `intervals` is 384 (the seeds unchanged); the seeds' generator states
+the hashed labels of the tool (2026-10-04), so the draws are not the branch diagnostic's above; the
+blind untouched. NODEDETECTOR: P(e at T_pi) the fraction in e at the run's end, the fluorescence
+clicks per run as the blind's column, (`body 0 g by probe` + `body 0 g by pulse`) / 480, and the
+windows closed per trial; the folder's criterion every row within two standard errors:
+
+| world | ends in e of 480 | P(e at T_pi) | the blind | standard error | deviation (standard errors) | passed of 480, read / blind | fluorescence clicks per run, read / blind | windows closed | g by probe / g by pulse / e by pulse (totals) | refused | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| zeno_pulsed_1 | 480 | 1.0000 | 1.0000 | 0 | the column exactly | 480 / 480 | 0.00 / 0.00 | 1 in every trial | 0 / 0 / 480 | 0 | MATCH |
+| zeno_pulsed_2 | 241 | 0.5021 | 0.5000 | 0.023 | +0.09 | 241 / 240.0 | 1.00 / 1.00 | 2 in every trial | 355 / 123 / 364 | 0 | MATCH |
+| zeno_pulsed_4 | 174 | 0.3625 | 0.3750 | 0.022 | -0.57 | 174 / 180.0 | 2.93 / 2.91 | 4 in every trial | 1350 / 58 / 232 | 0 | MATCH |
+| zeno_pulsed_8 | 101 | 0.2104 | 0.2346 | 0.019 | -1.27 | 101 / 112.6 | 6.91 / 6.85 | 8 in every trial | 3296 / 21 / 122 | 0 | MATCH |
+| zeno_pulsed_16 | 62 | 0.1292 | 0.1334 | 0.016 | -0.26 | 62 / 64.0 | 14.70 / 14.81 | 16 in every trial | 7055 / 3 / 65 | 0 | MATCH |
+| zeno_pulsed_32 | 31 | 0.0646 | 0.0716 | 0.012 | -0.58 | 31 / 34.3 | 30.78 / 30.79 | 32 in every trial | 14774 / 1 / 32 | 0 | MATCH |
+| zeno_pulsed_64 | 14 | 0.0292 | 0.0371 | 0.009 | -0.88 | 14 / 17.8 | 63.15 / 62.78 | 64 in every trial | 30313 / 1 / 15 | 0 | MATCH |
+| zeno_pulsed_2, the first window alone (384 intervals) | 241 | 0.5021 | 0.5000 within 0.023 | 0.023 | +0.09 | 241 / 240.0 | 0.50 (239 g by probe, no g by pulse) / no blind | 1 in every trial | 239 / 0 / 241 | 0 | MATCH |
+
+Every row within two standard errors, the largest deviation n = 8 at -1.27; the windows closed n
+exactly in every trial of every world; the fluorescence clicks per run within 0.4 of the blind's
+column at every n (the largest difference at n = 64, 63.15 against 62.78). The hole's bias the blind
+names for the rows n >= 2 before the partial hole (n = 2 at 0.615) is not in these rows; the branch
+diagnostic of 2026-10-03 at 20 seeds (above) read n = 2 and n = 4 at 0.600 and 0.550, at 480 seeds on
+this main 0.502 and 0.363.

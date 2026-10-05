@@ -227,3 +227,26 @@ sign at the Node is the first write's and the row's later levels are light's, re
 row stands on (row 2). Read as the hands expected: the senses and the Wronskians at the Node, the sign
 rows written, the rate and the counts, the twelve lay lines and the crossing. The first blind's
 findings (1) and (3), the rotations' sum at the Node and the cut body's credit count 0, stand.
+
+## The reading at the clean engine (main fe498fd4 and 1fe3790a, 2026-10-05; the engine of main 39cc3851)
+
+The control run (the experimenter, #1827 comments 5986779703 at 39cc3851, 5987001865 at fe498fd4 and
+5987098184 at 1fe3790a): the shipped run LAWFUL over 32 (`tools/run_inputs.py`), `tools/back_in_time.py
+--intervals 32` MATCH (LATTICE), the folder's own reader `read_world.py --expectation expectation.json
+neutron_conversion.json` over the design's 64 seeds and `--first-only` on the seed 1 (2.4 minutes). At
+39cc3851 the reader's local shadowed the run's length (R397, a tool bug of the rename found by the
+control; fixed at fe498fd4 by #1951, this folder alone), the rows then read by a second method; the
+folder's reader prints the same file at fe498fd4 and at 1fe3790a (the body's lay not re-laid, R396).
+NODEDETECTOR the counts and the clicks, LATTICE the rows at the Node:
+
+| the reading | at fe498fd4 and 1fe3790a | the blind and the hands' lines |
+| --- | --- | --- |
+| conversions of 64 within 32 intervals (NODEDETECTOR) | 35; the mean conversion interval 13.63; runs with more than one conversion 0 | the folder's `rate_expectation` 64 x 0.6620 = 42.4, sigma 3.78: -1.96 standard errors, the report at the band's edge as at e5a7feda and 39cc3851 (row 4) |
+| the conversion intervals by seed, sorted | 1, 2, 2, 2, 3, 3, 4, 5, 5, 6, 7, 7, 8, 9, 9, 10, 10, 11, 12, 14, 15, 17, 18, 19, 20, 21, 21, 22, 22, 25, 27, 28, 29, 31, 32 (the seed 1 at 27, the seed 2 at 5, the seed 45 at 1, the seed 16 at 32) | the second method's list exactly |
+| the conversion's Node | [4, 4, 4] in 17, [5, 4, 4] in 18 | A2's draw over the body's two declared Nodes, the hands' word |
+| the rows at the drawn Node, all 35 (LATTICE) | W -15,987 / +16,384 / 0, the sum 397; the rotations pi / 2 + pi / 2 + 0 = 3.1416 out against 2.508 in; the sines 2.0 against 0.592; the levels (73, 0), (0, -73) x 3, (128, 0), (0, 128), (128, 128) | rows 1, 2 and 5 |
+| the shares at the drawn Node in W_c (LATTICE) | the antineutrino's 1.0000; the electron's 1.039 to 1.044; the proton's 1.014 to 1.019 (the seed 1: 589,824,000 / 613,517,908 / 598,651,782 = 1.000 / 1.040 / 1.015) | row 7 at the content 60's paces (1.0000 / 0.999 / 0.975 at the rest 0): a report |
+| the seed 1, the first-only path | the conversion at 27 at [5, 4, 4]; MATCH before (25), after (4) and across (2); the sign rows [0, -1, 1] at 29 and [0, 0, -1] at 31 | row 6 |
+
+The rate's -1.96 standard errors and the shares above 1 at the content 60's paces stand as reports
+for the hands; nothing adjusted.

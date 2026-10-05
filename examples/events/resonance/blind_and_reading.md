@@ -408,3 +408,64 @@ the born quantum, whose lay changed from 0.671 T to 0.667 T at [2, 3] on this br
 the Node is the quadratic factor's where the share there exceeds W_rec.
 
 The design's `seeds` stay the 100 of the first read; the 480 of this re-read are the re-read's own (`--seeds 480`), a reading beside the design and no change of it.
+
+## The reading at the clean engine (main 39cc3851, 2026-10-05; 480 seeds and the design's 100)
+
+The control run (the mathematician's division, #1827 comment 5987162359, his agent in his worktree by
+the folder's own reader, `read_world.py --seeds 480` (238 s) and `read_world.py` at the design's 100
+(48 s); no gravity row, so nothing moves with F8 and the reading is final at this hash; the seeds'
+generator states the hashed labels of `tools/meeting_trials.py` (2026-10-04), so the draws are not
+the draws of the readings above; the blinds untouched). The blinds compared: the 480-seed re-read's
+items 1 and 2 (the section "The detuned taker re-read at 480 seeds" above, the one numbered fence at
+480 seeds) and the dark grain's `emission` lines beside, read with no number blind beyond their
+deviations; a standard error of a count c of N is sqrt(c (N - c) / N). Every number stands as read; a
+miss is a report for the hands, not adjusted.
+
+At 480 seeds (the seeds 1 to 480, both worlds):
+
+| reading | label | read | the blind | deviation | verdict |
+| --- | --- | --- | --- | --- | --- |
+| the detuned taker at [1, 3], `body 1 e by pulse` (detuned.json) | NODEDETECTOR | 0 of 480 | at most 2 of 480 | within the bound | MATCH |
+| the resonant taker at [2, 3], `body 1 e by pulse` (resonant.json) | NODEDETECTOR | 142 of 480 (the share 0.296, standard error 0.021) | 177.6, standard error 10.6, the band 156 to 199 | -35.6 absorptions, 14 below the band's floor: -3.36 of the blind's standard errors | MISS |
+| the ratio detuned over resonant | NODEDETECTOR | 0 to 142 | the first blind's 1e-4 | not resolved at 480 seeds (the first blind's item 5) | MATCH by the count |
+| emissions within the lifetime, both worlds (the giver's `emitted` interval at or below 48) | NODEDETECTOR | 305 of 480 | 305.3 +/- 10.5 (the chance 0.636) | -0.03 standard errors | MATCH |
+| emissions within the run (96 intervals), both worlds | NODEDETECTOR | 411 of 480 | 416.4 +/- 7.4 (the chance 0.8675) | -0.73 | MATCH |
+| the emission's intervals | NODEDETECTOR | 1 to 96, 88 distinct, the mean 31.9 | the geometric at 1 / 48 (the mean given an emission in the run about 33) | beside, no number blind | - |
+| seeds holding the whole span (the reader's key `whole_span`, lay lines equal to the lifetime 48) | LATTICE (the `lay` lines, a diagnostic by the engine's label) | 2 of 480 | 309.1 +/- 10.5 (0.644 of the seeds) | -29 standard errors | MISS of the tool's key; the row below |
+| seeds whose span is whole by the lay's convention (the click's line and 47 lay lines, the dark grain's item 2; the histogram of the reader's `one_seed` over the 480 seeds of resonant.json) | LATTICE | 307 of 480 (305 with 47 lay lines, 2 with 48, every one an emission at or before the interval 49) | 309.1 +/- 10.5 | -0.20 | MATCH; the reader's `whole_span` counts 48 lay lines where a whole span writes 47 and the click's line, a reading of the tool's column and no adjustment |
+| the far Node's cosine on the plateau [t + 28, t + 42], both worlds | LATTICE | 0.6808 in 328 of 328 seeds read, the gate 2 / A_far passed in 328 of 328 | 2 / 3 = 0.6667 within 2 / A_far (about 0.051) | +0.0141, 0.28 of the gate | MATCH; the number moved from the documents' 0.6682 to 0.6808, the born quantum's lay at (2 / 3) T since the radiated total, named and not adjusted |
+| the light's count at the span's end, (SUM share + W_c div 2) div W_c | LATTICE | 1 in 164 of 164 seeds read (resonant.json), 1 in 305 of 305 (detuned.json) | 1 by the count's line | 0 | MATCH |
+| the giver takes its own light back (`body 0 e by pulse`) | NODEDETECTOR | 3 of 480 in each world | beside the blind, no number (the one-in-flight limit not built) | - | - |
+
+At the design's 100 seeds (the first reading's seeds by number; the draws differ by the hashed states):
+
+| reading | label | read | the blind | deviation | verdict |
+| --- | --- | --- | --- | --- | --- |
+| emissions within the lifetime, both worlds | NODEDETECTOR | 64 of 100 | 63.6 +/- 4.8 (the band 54 to 73) | +0.08 standard errors | MATCH |
+| emissions within the run, both worlds | NODEDETECTOR | 82 of 100 | 86.7 +/- 3.4 | -1.38 | MATCH (within two) |
+| the emission's intervals | NODEDETECTOR | 1 to 90, 52 distinct, the mean 29.7 | the geometric at 1 / 48 | beside, no number blind | - |
+| seeds holding the whole span (`whole_span`, lay lines 48) | LATTICE | 1 of 100 | 64.4 +/- 4.8 | -13 | MISS of the tool's key, as at 480 seeds |
+| the far Node's cosine on the plateau | LATTICE | 0.6808 in 69 of 69 seeds read, the gate passed in 69 of 69 | 2 / 3 within 2 / A_far | +0.0141, 0.28 of the gate | MATCH |
+| the light's count at the span's end | LATTICE | 1 in 30 of 30 (resonant.json), 1 in 64 of 64 (detuned.json) | 1 | 0 | MATCH |
+| the resonant taker's absorptions (resonant.json) | NODEDETECTOR | 35 of 100 (the share 0.35, standard error 0.048) | the first blind's share 1 (named in the folder as a finding of the blind's presumption, no pi pulse tuned); the folder's own readings 39, 37, 33 | -0.4 standard errors against 37 | MISS against the first blind's share 1, as the folder names it; within the folder's own readings |
+| the detuned taker's absorptions (detuned.json) | NODEDETECTOR | 0 of 100 | the first blind's ratio 1e-4; the folder's readings 1 of 100 and 1 of 480 | 0 | MATCH by the count |
+| the giver takes its own light back | NODEDETECTOR | 1 of 100 in each world | beside the blind | - | - |
+
+The one MISS of a numbered fence is the resonant taker at 480 seeds, 142 against the band 156 to 199
+(the reading on main at e62b6651 above read 155, one below the floor, and named the blind's form):
+at these draws the share is 0.296 +/- 0.021, 3.4 of the blind's standard errors below 177.6 and 1.4
+standard errors below the 0.37 the band was built from with both errors combined
+(sqrt(0.048^2 + 0.021^2) = 0.052). Both hands' ruling (the mathematician's 5987162359, the advisor's
+second 5987243109): the band of 2026-10-03 was pinned from one 100-seed source, 37 of 100 = 0.37,
+without that source's own standard error 0.048, so the miss is the band's form and no finding against
+the law, and the band is re-pinned here with the error stated: the source 0.37 +/- 0.048 at 100
+seeds, the 480-seed reading 0.296 +/- 0.021, the two -1.4 of their combined error 0.052 apart; the
+band 156 to 199 above (the draw's error alone) stands as the dated record of the blind as written
+before the run. The reader's `whole_span` key counts seeds with exactly 48 lay lines where the lay's
+convention writes the click's line and 47 lay lines (307 of 480 by the histogram against
+309.1 +/- 10.5; the advisor's 1 of 100 by the key at 1fe3790a): a mismatch of the tool's key and the
+blind's convention, named here by both hands as the documents' line, the tool untouched. The
+advisor's cross-check at 1fe3790a (5987243109, the folder's reader at the design's 100 seeds, 42 s):
+the emissions 64 and 82 of 100, the resonant taker 35 of 100, the plateau's cosine 0.6808 in 69 of
+69, the count 1 in 30 of 30 and in the detuned world 64 of 64, the detuned taker 0, the same counts as
+the table above.

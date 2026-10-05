@@ -63,10 +63,38 @@ change of the folder's tools a reading's field leaves the blind file for the fol
 builder writing fences alone: a blind holds what is written before any run and nothing read from a
 lay.
 
+## The reading at the clean engine (main 1fe3790a, 2026-10-05; the engine of main 39cc3851)
+
+The control run (the experimenter, #1827 comments 5986779703 at 39cc3851 and 5987098184 at 1fe3790a;
+the Boss's 5987042066: the engine `src/` of main 39cc3851, the lays at the declared rest and the
+declaration's words of 1fe3790a): the folder's own tools, `tools/run_inputs.py`, `tools/back_in_time.py
+--intervals 40` first and `tools/click_counts.py`, on the seed 24 of the design and on the seed 25
+built from the design as the draw test builds it, against the folder's blind and the hands' lines.
+The lay at the declared vacuum content 60 (ALGEBRA.md, The vacuum content, item 22; the generator lays
+the packet at the declared rest's paces, the tool row F8 of 1fe3790a) counts 1,809 quanta (`laid`;
+1,804 at 39cc3851, where the packet was laid at the content-0 paces). Every number stands as read; a
+miss is a report for the hands, not adjusted.
+
+| seed | run (LATTICE) | back in time (LATTICE) | N (NODEDETECTOR) | the clicks per region (NODEDETECTOR) | chi-square against the window's shares, 11 degrees | maxima / minima | wings 3, 8 | arrival's peak, span | N over sin omega (0.431) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 24 | LAWFUL, 130 | MATCH over 40 | 285 | [22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25], the draw test's gate row at this hash | 3.7 | [2, 6, 9] / [1, 4, 7, 10] | 16, 12 | 71, [66, 80] | 661.3 |
+| 25 | LAWFUL, 130 | MATCH over 40 | 285 | [23, 21, 30, 14, 8, 49, 53, 8, 18, 17, 22, 22] | 12.4 | [2, 6, 8, 10] / [1, 4, 7, 9] | 14, 18 | 71, [66, 80] | 661.3 |
+
+The move from 39cc3851 (5987098184): N 290 to 285 at both seeds, the lay 1,804 to 1,809 quanta, the
+photons 672.9 to 661.3, the chi-squares 3.1 to 3.7 and 11.2 to 12.4, the rows moved by one or two
+clicks in the regions 0 to 7 and not at all in 8 to 11, the arrival's peak 71 and span [66, 80]
+unchanged, the maxima at 2, 6, 9 and the minima at 4, 7 as before. Against the blind: the Huygens
+273.0 (the folder's `quanta`) and the law's 284 at the rest 0 stand as the folder's text; the
+reviewer's blind under (i) (R393: the count near 1,735, N near 274) is not met at 1,809 and 285, as
+both hands read it on #1949 (5986385624 (2), 5986484965: the count pace-invariant to first order,
+1,809 / 1,804 = 1.003). The gate's table below holds this run's rows as `tools/reading_gate.py`
+re-reads them on the committed files.
+
 ## The gate's table
 
-Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
+Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the lays and the
+tools of main 1fe3790a, 2026-10-05; the clicks the control's, the line counts and the books the gate's own
+re-run on the committed files), re-run and compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
 lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
@@ -75,23 +103,23 @@ reading in the gate's words and the value as its report prints it.
 | --- | --- | --- | --- | --- |
 | LATTICE | two_slits.json | run_inputs | verdict | LAWFUL |
 | LATTICE | two_slits.json | run_inputs | intervals | 130 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks | 270 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_0 | 28 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_1 | 15 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_2 | 24 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_3 | 18 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_4 | 7 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_5 | 37 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_6 | 44 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_7 | 13 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_8 | 13 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_9 | 25 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks | 285 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_0 | 22 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_1 | 21 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_2 | 27 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_3 | 16 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_4 | 9 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_5 | 36 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_6 | 56 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_7 | 11 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_8 | 12 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_9 | 26 |
 | NODEDETECTOR | two_slits.json | run_inputs | clicks screen_10 | 24 |
-| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_11 | 22 |
+| NODEDETECTOR | two_slits.json | run_inputs | clicks screen_11 | 25 |
 | NODEDETECTOR | two_slits.json | run_inputs | clicks gap | 0 |
-| LATTICE | two_slits.json | run_inputs | lines click | 1209 |
-| LATTICE | two_slits.json | run_inputs | lines credit | 270 |
-| LATTICE | two_slits.json | run_inputs | lines density | 135 |
-| LATTICE | two_slits.json | run_inputs | books charge quanta | 1808 |
-| LATTICE | two_slits.json | run_inputs | books charge share | 1066341144000 |
+| LATTICE | two_slits.json | run_inputs | lines click | 1416 |
+| LATTICE | two_slits.json | run_inputs | lines credit | 285 |
+| LATTICE | two_slits.json | run_inputs | lines density | 142 |
+| LATTICE | two_slits.json | run_inputs | books charge quanta | 1812 |
+| LATTICE | two_slits.json | run_inputs | books charge share | 1068675370105 |
 | LATTICE | two_slits.json | back_in_time | intervals 40 | MATCH |

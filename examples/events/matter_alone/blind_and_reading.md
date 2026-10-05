@@ -789,6 +789,44 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
   a self-consistent integer map whose rounding can alternate between two neighbours or walk
   without a repeat at a steep well; no run added for them tonight.
 
+## The reading at the clean engine (main 39cc3851, 2026-10-05; bit for bit at 1fe3790a), `pixel.json` over 400 intervals
+
+The control run (the mathematician's division, #1827 comment 5987162359, his agent in his worktree
+by the folder's own tools: `tools/run_inputs.py` on `pixel.json`, 109 s, and `tools/body_rest.py
+--expectation expectation.json pixel.json` over the window [1, 400]; the folder holds the one world
+`pixel.json` with its committed mode file at the declared vacuum content 60, the clock pair
+[1646, 1202], the other six worlds the design names not in the folder; a body's lay, not re-laid at
+any hash, R396, so the reading is final at 39cc3851). The run LAWFUL over 400, 400 `click` lines of
+the open faces' layer and the books; every number a LATTICE reading (the folder declares no
+NodeDetector but the open faces' layer, whose clicks are read only as the matter that left the
+board; no verdict rests on them). The blind: `expectation.json`, `blind.pixel`, the recomputed lines
+at the committed lay (the rotation, the tail's ratios and the well within the rounding of the lay's;
+the count within its rounding walk, the centroid where it was laid, no frozen Node; the drift a
+lattice reading with no fence, read beside the work term and the remainder term by the identity).
+W_c = 439,628,852 in the current's units at T = 32,768. Every number stands as read; a miss is a
+report for the hands, not adjusted.
+
+| reading | at the start (the interval 1) | at the end (400) | the blind | verdict |
+| --- | --- | --- | --- | --- |
+| the rotation at the centre, 2 cos omega_b = (next + before) / now, the levels [before, now, next] | 1647 / 1202 = 1.3702 ([823, 1202, 824]) | 73 / 54 = 1.3519 ([-33, 864, 1201]) | the lay's 1646 / 1202 = 1.3694 held within the rounding (about 0.001 at these levels) over at least three periods | MISS: -0.0175 over 400 intervals (about 53 periods of 7.6), the folder's earlier readings -0.0074 and -0.0037; a finding by name |
+| the one-Node line at the composed clock at the centre (beside; the Node's rotation and not omega_b) | 1.4152 at the content 393 | 1.4285 at the content 462 | 1.4152 at the lay's content 393 (`rest_rotation`) | beside the blind: the start reads the line, the content grows with the count |
+| the centroid of the share | [12, 12, 12] exactly | [12, 12, 12] exactly | where it was laid | MATCH |
+| the quanta at the centre Node / over the board | 41 / 10,343 | 48 / 10,386 | the count within its rounding walk (0.058 quanta; the design's 10,000, the mode file's 10,007 carried) | MISS: +7 at the centre, +43 over the board (0.4 percent), the drift the finding below |
+| the books' drift of matter at the end (the run's output / the reader's) | - | +74,177,653,505 / +75,429,517,186 in the current's units = +168.7 / +171.6 quanta | no fence; the identity: the work term +117 quanta (51,634,076,275) and the remainder term +54 (23,792,380,450), the sum 171 against the drift 171.6 | a finding by name: +169 quanta (1.7 percent of the count) where the folder's readings read +65 and +133; the growth, docs/ENGINE.md section 10, item 3 (F2's growth) |
+| the matter that left the board, the sum of the 400 `click` lines of the faces' layer (the NodeDetector's lines by the engine's label, read as a total) | - | +555,600,000 = 1.26 quanta | no verdict rests on it (the folder's readings 0.018 and 0.47) | beside the blind |
+| the rms radius about the centroid | sqrt(57,194,548,996,260 / 2,367,724,595,339) = 4.91 Links | sqrt(37,684,181,551,880 / 1,603,208,948,061) = 4.85 Links | the wide branch (the fixed engine's lay 3.96 to 4.13) | beside the blind, -0.07 Links over the run |
+| the well, D = now^2 - next x before summed over the board and divided by T, in quanta | 6,762 | 6,757 | held within the rounding of the lay's (`form`, the committed lay's 6,762) | MATCH: -5 of 6,762 (0.07 percent) |
+| the well over the count | 6,762 / 10,343 = 0.654 | 6,757 / 10,386 = 0.651 | the committed lay's 0.654; the compact branch's 0.70 to 0.39 the quadratic forms' numbers | beside the blind |
+| the tail along +x (= +y = +z) from the centre, the levels and the ratios of successive levels | 1202, 1149, 1011, 827, 638, 470, 334; 0.956, 0.880, 0.818, 0.771, 0.737, 0.711 | 864, 797, 687, 550, 413, 298, 220; 0.922, 0.862, 0.801, 0.751, 0.722, 0.738 | the ratios within the rounding of the lay's; the chain's e^(-kappa) = 0.670 passed between eight and nine Links (`tail`) | MISS: the ratios move by -0.034, -0.018, -0.017, -0.020, -0.015, +0.027 at one to six Links, the percent and not the rounding; a finding by name |
+| gravity's time level along +x from the centre | 60 at every Node | 89, 55, 72, 89, 59, 52, 68 | the screening line: gravity at the level weight 1,000 writes under two levels at the Node and nothing beyond one Link | the row not static under the run, the finding of the fixed engine's reading as before (15, 3, 17, 28, 22, 17, 14 there) |
+| the binding holder's time level along +x | 334, 322, 294, 254, 210, 171, 135 | 358, 346, 305, 252, 219, 190, 126 | the content's holder about the body | beside the blind, +24 at the centre |
+| frozen Nodes / the least Node pace | - | 0 / 5,143 (the run's books), 5,169 (the reader's) | no frozen Node | MATCH |
+
+In sum: the centroid, the well and the frozen count MATCH; the rotation (-0.018), the tail's ratios
+(up to 0.034) and the count (+43 quanta over the board, the books' drift +169 quanta) move beyond
+"the rounding" the blind's lines name, the growth of docs/ENGINE.md section 10, item 3, as the
+mathematician's reading names it; gravity's row is not static, as before. Nothing adjusted.
+
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
 Every line of every world in this file is a lattice reading (`tools/body_rest.py`: the three

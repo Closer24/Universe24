@@ -176,10 +176,35 @@ shell per interval on both sides until the left shell leaves the declared board;
 --intervals 170` MATCH; the control both atoms at 48. The two transients are the hands' known one, named
 by their numbers until the front's taper at the owner's word.
 
+## The reading at the clean engine (main bca9de0c, 2026-10-05, R398; the engine of main 39cc3851)
+
+The control run (the experimenter, #1827 comments 5986779703 at 39cc3851, 5987098184 at 1fe3790a and
+5987102322 at bca9de0c): the worlds declare no rest, so the packet lay at the declared vacuum content
+(the tool row F8 of 1fe3790a) moves nothing here. At 39cc3851 and 1fe3790a the trials' tool read the
+two-photon world's trial length under the renamed design's key `intervals`, 170, the window's and the
+run's lengths colliding after the rename (R398, a tool bug found by the control: 0, 0, 200, 0 at 170,
+every trial both), and the blind's row was read in a design copy at the design's 48; at bca9de0c
+(#1952, the trial length under the one key `trial_intervals` 48, nothing under `src/`) the folder's
+own design and tool give it, every key of both outputs equal to the design copy's at 1fe3790a. The
+shipped runs by `tools/run_inputs.py`, `tools/back_in_time.py` over 170 (one_photon) and 72
+(two_photons), `tools/meeting_trials.py --world ... --design design.json --expectation
+expectation.json` over the design's 200 seeds (37 seconds for both). Every number stands as read; a
+miss is a report for the hands, not adjusted.
+
+| world | run (LATTICE) | back in time (LATTICE) | trials, length | A only, B only, both, neither of 200 (NODEDETECTOR) | alpha | the atoms in e at the end | windows closed | refused | the blind |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| one_photon | LAWFUL, 170 | MATCH over 170 | 200 at 48 | 96, 104, 0, 0 | 0 | 96 / 104 | 1 per record in every trial | none | P(A only) = P(B only) = s, P(both) = 0 exactly, alpha 0: met |
+| two_photons | LAWFUL, 170 | MATCH over 72 | 200 at 48 | 9, 31, 159, 1 | 265 / 266 | 168 / 190 | 1 per record in every trial | none | "both about 163 +/- 7": 159 read; the left atom -2.1 standard errors (the experimenter's line), the same row at e5a7feda, at 39cc3851 (the design copy) and at 1fe3790a |
+
+The gate's table below holds this run's rows as `tools/reading_gate.py` re-reads them at bca9de0c on
+the committed files (the trials' rows the control's, the shipped runs' line counts and books the
+gate's own re-run).
+
 ## The gate's table
 
-Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
+Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the folder's key of
+main bca9de0c, R398, 2026-10-05; the trials' rows the control's, the shipped runs' line counts and books the
+gate's own re-run on the committed files), re-run and compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
 lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
@@ -198,21 +223,21 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | one_photon.json | run_inputs | lines erasure | 122 |
 | LATTICE | one_photon.json | run_inputs | lines credit | 1 |
 | LATTICE | one_photon.json | run_inputs | books photon quanta | 0 |
-| LATTICE | one_photon.json | run_inputs | books photon share | 61284000 |
+| LATTICE | one_photon.json | run_inputs | books photon share | 41304000 |
 | LATTICE | one_photon.json | run_inputs | books atom quanta | 2 |
 | LATTICE | one_photon.json | meeting_trials | trials | 200 |
 | LATTICE | one_photon.json | meeting_trials | refused | 0 |
-| NODEDETECTOR | one_photon.json | meeting_trials | A only | 99 |
-| NODEDETECTOR | one_photon.json | meeting_trials | B only | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | A only | 96 |
+| NODEDETECTOR | one_photon.json | meeting_trials | B only | 104 |
 | NODEDETECTOR | one_photon.json | meeting_trials | both | 0 |
 | NODEDETECTOR | one_photon.json | meeting_trials | neither | 0 |
 | NODEDETECTOR | one_photon.json | meeting_trials | alpha | 0 |
-| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 0 | 99 |
-| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 0 | 101 |
-| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 1 | 101 |
-| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 1 | 99 |
-| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 0 e by photon | 99 |
-| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 1 e by photon | 101 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 0 | 96 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 0 | 104 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in e body 1 | 104 |
+| NODEDETECTOR | one_photon.json | meeting_trials | ends in g body 1 | 96 |
+| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 0 e by photon | 96 |
+| NODEDETECTOR | one_photon.json | meeting_trials | clicks body 1 e by photon | 104 |
 | LATTICE | two_photons.json | run_inputs | verdict | LAWFUL |
 | LATTICE | two_photons.json | run_inputs | intervals | 170 |
 | NODEDETECTOR | two_photons.json | run_inputs | clicks | 2 |
@@ -221,25 +246,25 @@ reading in the gate's words and the value as its report prints it.
 | NODEDETECTOR | two_photons.json | run_inputs | absorptions body 0 | 1 |
 | NODEDETECTOR | two_photons.json | run_inputs | absorptions body 1 | 1 |
 | LATTICE | two_photons.json | run_inputs | lines lay | 16 |
-| LATTICE | two_photons.json | run_inputs | lines face | 325 |
-| LATTICE | two_photons.json | run_inputs | lines erasure | 122 |
+| LATTICE | two_photons.json | run_inputs | lines face | 640 |
+| LATTICE | two_photons.json | run_inputs | lines erasure | 240 |
 | LATTICE | two_photons.json | run_inputs | lines credit | 2 |
 | LATTICE | two_photons.json | run_inputs | books photon quanta | 0 |
-| LATTICE | two_photons.json | run_inputs | books photon share | 36954000 |
+| LATTICE | two_photons.json | run_inputs | books photon share | 0 |
 | LATTICE | two_photons.json | run_inputs | books atom quanta | 2 |
 | LATTICE | two_photons.json | meeting_trials | trials | 200 |
 | LATTICE | two_photons.json | meeting_trials | refused | 0 |
-| NODEDETECTOR | two_photons.json | meeting_trials | A only | 5 |
-| NODEDETECTOR | two_photons.json | meeting_trials | B only | 0 |
-| NODEDETECTOR | two_photons.json | meeting_trials | both | 195 |
-| NODEDETECTOR | two_photons.json | meeting_trials | neither | 0 |
-| NODEDETECTOR | two_photons.json | meeting_trials | alpha | 1 |
-| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 0 | 200 |
-| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 0 | 0 |
-| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 1 | 195 |
-| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 1 | 5 |
-| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 0 e by photon | 200 |
-| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 1 e by photon | 195 |
+| NODEDETECTOR | two_photons.json | meeting_trials | A only | 9 |
+| NODEDETECTOR | two_photons.json | meeting_trials | B only | 31 |
+| NODEDETECTOR | two_photons.json | meeting_trials | both | 159 |
+| NODEDETECTOR | two_photons.json | meeting_trials | neither | 1 |
+| NODEDETECTOR | two_photons.json | meeting_trials | alpha | 265 / 266 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 0 | 168 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 0 | 32 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in e body 1 | 190 |
+| NODEDETECTOR | two_photons.json | meeting_trials | ends in g body 1 | 10 |
+| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 0 e by photon | 0 |
+| NODEDETECTOR | two_photons.json | meeting_trials | clicks body 1 e by photon | 190 |
 | LATTICE | one_photon.json | back_in_time | intervals 170 | MATCH |
 | LATTICE | one_photon.json | back_in_time | intervals 72 | MATCH |
 | LATTICE | two_photons.json | back_in_time | intervals 170 | MATCH |

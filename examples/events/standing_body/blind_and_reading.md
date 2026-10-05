@@ -2,9 +2,10 @@
 
 The body round, part 1 (the owner's words of 2026-10-02, 17:40 to 17:55 and 19:28; HIGHLIGHTS.md):
 the same neutral body of the matter family, 10,000 quanta at the centre of the open 25-cube, laid
-at the integer fixed point under its own paces (`lay` of the kind `fixed_point`) and run for the
-same n = 1000 intervals at T = 2^15 (`standing_15.json`, examples/events/rule.json) and at
-T = 2^19 (`standing_19.json`, `rule_2_19.json`). The blind is the mathematician's 167 (#1572
+at the integer fixed point under its own paces (`lay` of the kind `fixed_point`) and run for
+n = 400 intervals at T = 2^15 (`standing_15.json`, examples/events/rule.json; the declared run since
+the owner's word of 2026-10-04, the paragraph below) and for n = 1000 at T = 2^19 (standing_19 of
+the design, declared and not laid). The blind is the mathematician's 167 (#1572
 comment 5955538687) with the advisor's second hand (#1563 comment 5955658812 (C)), written in
 `design.json` and `expectation.json` before any run and never edited after; the body's own
 expectations from the lay's profile stand under `from_the_lay` in `expectation.json`, written from
@@ -17,12 +18,14 @@ Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: t
 ## The blind (167 with the advisor's second hand)
 
 1. **The drift** (read 1, the centroid of the share): each component below
-   3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); for this body from the lay's profile
-   1.0 x 10^-3 Links at n = 1000 and T = 2^15; one draw, loose, no test.
+   3 x its rms, 2 sigma sqrt(n) rho_x / (A sqrt(N_eff)); for this body from the committed lay's
+   profile 9.2 x 10^-4 Links at n = 400 and T = 2^15 (`centroid_rms_links` under `from_the_lay`); one
+   draw, loose, no test.
 2. **The share's deviation over the body** (read 2): rho_s = (2 sigma sqrt(n) / A) sqrt(SUM f^2 /
-   SUM f^4), 5.66 sigma sqrt(n) / A for the exponential profile; for this body from the lay's
-   profile 0.98 percent at n = 1000 and T = 2^15 (0.49 at n = 250); the two tests: rho_s(2^15) /
-   rho_s(2^19) = 4 within 5 percent at equal n, and within one run rho_s(n) / rho_s(n / 4) = 2
+   SUM f^4), 5.66 sigma sqrt(n) / A for the exponential profile; for this body from the committed
+   lay's profile 1.00 percent at n = 400 and T = 2^15 (0.50 at n = 100; `rho_s_expected`); the two
+   tests: rho_s(2^15) / rho_s(2^19) = 4 within 5 percent at equal n, and within one run
+   rho_s(n) / rho_s(n / 4) = 2
    within 5 percent; a ratio near 1 in either, or a growth faster than sqrt(n), is a T-free
    systematic, the lay's or the convention's, a finding by name.
 3. **The rotation** (read 3, the summed form): constant over the run to 10^-5 at both T.
@@ -46,6 +49,16 @@ Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: t
 - The budget's gate (`loader/lay.py`): at the lay's c_i = 79 over 1000 intervals the least T is
   2^14 at the tolerance [1, 32] and 2^18 at [1, 125], under the worlds' T; the gate refuses by name
   when the tolerance asks more (tests/test_pixel_mode.py).
+- The committed lay at the declared vacuum content 60 (the owner's word of 2026-10-04; ALGEBRA.md, The
+  vacuum content, item 22; the paragraph above), the generator's reading before any run
+  (`standing_15.mode.json`): the amplitude 1,138 (the clock pair [1557, 1138], 2 cos omega_b = 1.3682,
+  the period [16, 2] = 8), 9,982 quanta over 2,373 Nodes, 36 at the centre, N_eff 316.1, the shape
+  factor 1.81, rho_x 2.98 Links; the lay converged at the pass 8 at the stop 2 (the content's largest
+  change 132, 32, 17, 12, 5, 1, 1, 1, the record's 176, 94, 52, 27, 10, 3, 1 from the pass 2, the
+  count laid 9,650, 10,014, 9,999, 9,953, 10,007, 10,012, 9,988, 9,982); the budget's least T at the
+  tolerance [1, 32] 2^14 at 400 intervals and 2^16 at 1,000. The lay was regenerated at the rest 60 by
+  `tools/pixel_mode.py` from the shipped world's laid Nodes and is pinned by the world's digest, never
+  re-laid at a run (R396: the generator is not idempotent on a laid declaration).
 
 ## The reading at T = 2^15, n = 1000 (lattice, `tools/body_standing.py`; 2.8 minutes)
 
@@ -347,6 +360,25 @@ that reading ran on (the branch before its squash), by name; every number below 
   engine worker's claim read and confirmed on 7c9a170e; pass.
 - **The T ratio** stands unread: standing_17 declared and not laid (the Boss's word of 09:10 Israel,
   not tonight), standing_19 not laid.
+
+## The reading at the clean engine (main 39cc3851, 2026-10-05; bit for bit at 1fe3790a), T = 2^15, n = 400 (lattice, `tools/body_standing.py --beat-period 185`)
+
+The control run (the experimenter, #1827 comments 5986779703 at 39cc3851 and 5987098184 at
+1fe3790a): `standing_15` at its declared run 400 (R394) on the committed lay at the declared vacuum
+content 60 (the bullet above; not re-laid, R396), the shipped run LAWFUL over 400; LATTICE, no
+NodeDetector declared; every read at 1fe3790a bit for bit 39cc3851's; the blind's numbers R394's at
+400 (`from_the_lay`: the clock pair [1557, 1138] = 1.36819, the amplitude 1,138, N_eff 316.1, 9,982
+quanta over 2,373 Nodes). Every number stands as read; a miss is a report for the hands, not adjusted.
+
+| read | at 39cc3851 and 1fe3790a | the blind at 400 |
+| --- | --- | --- |
+| 1, the centroid's drift | 0 on every axis | PASS |
+| 2 restated, rho_D at the centres 100, 200, 300, 399 | 4.39, 6.77, 4.50, 8.55 percent | the walk's 1.00, 1.42, 1.73, 2.00 percent: 4.4, 4.8, 2.6 and 4.3 times, the finding by name as the folder has it |
+| 2, rho_s at the quarters | 4.61, 7.08, 3.74, 10.46 percent | 0.50 at 100 and 1.00 at 400 |
+| 3 restated, the windows of 8 | the whole run 1.37064 against the pair 1.36819; the least 1.36874 (from 160), the largest 1.37416 (from 344), the spread 5.4 x 10^-3 | the window noise 2.47 x 10^-6: the finding by name as before |
+| 3 per interval | the least 0.68430 at 166, the largest 0.68733, the spread 3.0 x 10^-3 | the real mode's near-singular intervals |
+| 4, the 48 images | kept to the bit through 400 | PASS |
+| the books | 10,693 quanta, the count 10,483, the drift +210 quanta over 400 (2.0 percent) | no fence; the growth, docs/ENGINE.md section 10, item 3 (F2's growth), the open finding by name |
 
 ## The readings' sources (the owner's word of 2026-10-03, 10:08 Israel)
 
