@@ -224,7 +224,7 @@ Rows with a claim mark: 105, 1 with a breaker written; rows of a derived, comput
 | 104 | 377 | sec:limits > sec:misses | keeps | Neither layer keeps a total energy (a theorem for the step's conservations, an assumption for the clicks'). |
 | 105 | 377 | sec:limits > sec:misses | bound | No standing bound state is claimed from a run; the closed box's filling, the potentials' swing growing linearly over the declared run, is the one open physics finding of ... |
 | 106 | 381 | sec:limits > sec:inputs | bound | What is held to be computable and not computed: the bound states at the closing gap, the moving fixed point of a bound state, and the absorbed fraction with the bound sta... |
-| 107 | 385 | sec:limits > sec:closer | bound | The calculations: (1) the closed box's filling, the one-way face as the law's line; (2) the vacuum level as a derived number, the floor's integer run at a second $\Gamma$... |
+| 107 | 385 | sec:limits > sec:closer | fixed point | The calculations, each of the method or an opening and none a claim of this paper: (1) the closed box's filling and the one-way face as the law's line, (2) the vacuum lev... |
 | 108 | 388 | sec:conclusion | conserved | One line of integer arithmetic, Rule3, with the declarations named beside it and no number of nature put in but the two clicks that fixed the one assumption, the atom's l... |
 
 ## E. Unmarked sentences named by hand as claims (the engine's own rule among them)
