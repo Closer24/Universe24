@@ -33,7 +33,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The law and the documents
 
-- The law is docs/ALGEBRA.md, one algebraic line per rule, and the engine is its implementation and nothing else; every rule passes the three tests (generic, vector, local) before it enters, and a hypothesis that needs more is stated under its own name.
+- The law is docs/ALGEBRA.md, one algebraic line per rule, and the engine is its implementation as of the freeze, the tag paper-long-v1.1 (441b2399), and nothing else, no longer updated, the lines entered after the freeze not in it; every rule passes the three tests (generic, vector, local) before it enters, and a hypothesis that needs more is stated under its own name.
 - Every claim in the paper and in the law has one sentence with its status mark and its fence; every derived or computed mark names its derivation script.
 - Every derived or computed claim has a Python derivation script under tools/derivations/ whose output a test compares to the printed number and to the numbers table, where every number printed in more than one place is defined once with its forbidden variants; the whole law is the target, and the derived and computed lines that name no script are counted by the test as a ratchet that only falls, reaching zero with the fill's last part.
 - A theorem's proof stays in words beside its mark, and its script checks the claim on the engine's integers.
