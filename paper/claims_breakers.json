@@ -206,7 +206,7 @@
   },
   "tab:adds: The postNewtonian parameters with the gap for 0 num le den g": {
     "kind": "a",
-    "breaker": "S.19's conversion of the exponential metric's forms to Kepler's potential at the pair: gamma_K = den / num, beta_K = (den + num) / (2 num), 1 + alpha_K = tan omega_0 / omega_0 at [2, 3] (1.5, 1.25, 1.329) and at [999, 1000] (1.001, 1.0005, 1.0000003); the orbit step of S.19 against the formula's precession at both pairs; outside: the band's k^4 term at the computed pair's k, the ten percent named.",
+    "breaker": "S.19's conversion of the exponential metric's forms to Kepler's potential at the pair: gamma_K = den / num, beta_K = (den + num) / (2 num), 1 + alpha_K = tan omega_0 / omega_0 at [2, 3] (1.5, 1.25, 1.329) and at [999, 1000] (1.001, 1.0005, 1.00067); the orbit step of S.19 against the formula's precession at both pairs; outside: the band's k^4 term at the computed pair's k, the ten percent named.",
     "state": "to write"
   },
   "tab:adds: Yilmazs exponential metric N2 e2U h2 e2U gamma beta 1 exactl": {
@@ -747,5 +747,9 @@
     "kind": "a",
     "breaker": "Random paces p at or below P on 2x2x2 to 4x4x4 periodic boards, the coefficients fixed, 200 steps at every pair up to [4000, 6000]: the largest level bounded, no mode growing; p = P + 1: the pi mode grows (the claim's first half). Outside the fence: the coefficients changing in time (the parametric sequence of #1901, R326) with every instant's pace below P: one solution grows, so the fence 'at coefficients fixed in time' is where the sentence says.",
     "state": "to write"
+  },
+  "S.65": {
+    "kind": "a",
+    "breaker": "The massless band's quartic coefficient per direction by the series -(3 S_4 - 1) / 108 and by the exact arccosine at k = 0.01: -1 / 54 on an axis, -1 / 216 on a face diagonal, 0 on a body diagonal; outside: an isotropic band cos omega = cos(|k| / sqrt 3) has the coefficient 0 in every direction, and a cubic term has no coefficient, the band being even in k."
   }
 }

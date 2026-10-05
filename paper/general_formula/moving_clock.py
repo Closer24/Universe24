@@ -129,7 +129,7 @@ def figure(ax: Axes) -> None:
 def moving_clock_figure(output: Path) -> None:
     fig, ax = plt.subplots(figsize=(4.9, 2.9))
     figure(ax)
-    fig.subplots_adjust(left=0.12, right=0.995, top=0.98, bottom=0.17)
+    fig.subplots_adjust(left=0.12, right=0.975, top=0.98, bottom=0.17)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "moving_clock.pdf")
     plt.close(fig)

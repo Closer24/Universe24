@@ -13,7 +13,7 @@ before_i the exact before level, the packet now + i quadrature advanced mode by 
 phase (the generator's act at the frozen commit, tools/pixel_mode.advanced_real_part), and the screen's twelve regions read exactly as the engine
 reports them: the net current through each region's front boundary Ports, F = num (now_i before_j
 - before_i now_j) into the region's Node i from its neighbour j on the declared board outside the
-instrument, at the pair the step starts from (the engine's click at the tick t reports the state
+instrument, at the pair the step starts from (the engine's click at the interval t reports the state
 after t - 1 steps), summed over the window of the expectation file and divided by the count wall
 W_c. Every number is printed with its definition: the total N over the window, the twelve regions'
 quanta and shares, the visibility and the wings, the arrival of the screen's inflow (its peak, its
@@ -55,7 +55,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
-from click_counts import apportioned, extrema, nearest  # noqa: E402  # the reader's own rules
+from click_counts import apportioned, extrema, nearest  # noqa: E402  # the NodeDetector's own rules
 from pixel_mode import advanced_real_part  # noqa: E402  # the generator's exact before level
 
 Node = tuple[int, int]
@@ -88,7 +88,7 @@ class Board:
     regions: dict[str, tuple[Node, ...]]
     screen: tuple[str, ...]
     packet: Packet
-    ticks: int
+    intervals: int
 
     def scaled(self, scale: int) -> Board:
         """The same world every extent times `scale` (a cell of one Node becomes scale x scale
@@ -133,7 +133,7 @@ class Board:
             regions,
             self.screen,
             packet,
-            self.ticks * scale,
+            self.intervals * scale,
         )
 
 
@@ -152,6 +152,9 @@ class Line:
     self_over_wall: float
     weight: int
     pair: tuple[int, int]
+    rule: tuple[
+        tuple[Any, ...], Any, Any
+    ]  # Rule3's integers (the six reads, S, w) as the lay tool takes them
 
     def cos_omega(self, *wave_numbers: float) -> float:
         """The band: a plane wave at the wave numbers k_a obeys 2 w cos omega = 2 SUM_a R_a cos k_a
@@ -192,7 +195,9 @@ def line_of(world: World, family: int) -> Line:
     )
     if len(set(reads)) != 1:
         raise ValueError(f"the vacuum's reads differ by axis: {reads}")
-    return Line(reads[0] / wall, self_coefficient / wall, num, (num, den))
+    return Line(
+        reads[0] / wall, self_coefficient / wall, num, (num, den), (reads, self_coefficient, wall)
+    )
 
 
 def board_of(world: World, screen: list[str]) -> Board:
@@ -203,25 +208,25 @@ def board_of(world: World, screen: list[str]) -> Board:
         raise ValueError(
             f"the board is {world.shape} with the axes periodic {world.periodic}; the real line steps a flat board, z folded, x and y open"
         )
-    if len(world.messages) != 1:
-        raise ValueError(f"the world lays {len(world.messages)} messages; the real line lays one")
-    message = world.messages[0]
-    if message.along != 0 or message.phase != (0, 1) or any(t != (0, 1) for t in message.transverse):
+    if len(world.packets) != 1:
+        raise ValueError(f"the world lays {len(world.packets)} packets; the real line lays one")
+    packet = world.packets[0]
+    if packet.along != 0 or packet.phase != (0, 1) or any(t != (0, 1) for t in packet.transverse):
         raise ValueError(
-            "the message is not a plain wave along x: its phase or a transverse wave is declared"
+            "the packet is not a plain wave along x: its phase or a transverse wave is declared"
         )
-    turns, halves = message.wave
+    turns, halves = packet.wave
     packet = Packet(
         math.pi * turns / halves,
-        float(message.amplitude),
-        (int(message.top[0][0]), int(message.top[0][1])),
-        int(message.edge[0]),
-        (int(message.top[1][0]), int(message.top[1][1])),
-        int(message.edge[1]),
+        float(packet.amplitude),
+        (int(packet.top[0][0]), int(packet.top[0][1])),
+        int(packet.edge[0]),
+        (int(packet.top[1][0]), int(packet.top[1][1])),
+        int(packet.edge[1]),
     )
     regions = {
         d.name: tuple((int(x), int(y)) for x, y, _z in d.positions)
-        for d in world.node_readers
+        for d in world.node_detectors
         if d.declared
     }
     missing = [name for name in screen if name not in regions]
@@ -236,7 +241,7 @@ def board_of(world: World, screen: list[str]) -> Board:
         regions,
         tuple(screen),
         packet,
-        world.ticks,
+        world.intervals,
     )
 
 
@@ -273,7 +278,7 @@ def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
     # the exact before level, the generator's own act at the frozen commit (the law's line (c)): the packet
     # a + i s over the board's transform, every mode advanced by its own band phase omega(q) at the family's
     # pair (R370), the real part
-    before = advanced_real_part(now[:, :, None], quadrature[:, :, None], line.pair)[:, :, 0]
+    before = advanced_real_part(now[:, :, None], quadrature[:, :, None], line.rule)[:, :, 0]
     weight = envelope / envelope.sum()
     now -= weight * now.sum()
     before -= weight * before.sum()
@@ -284,7 +289,7 @@ def mode_lay(world: World, board: Board) -> tuple[np.ndarray, np.ndarray]:
     """The generator's integer lay from the mode file, the levels the engine's run starts from, as
     real numbers over the declared board (the flat x-major index of the file unfolded)."""
     found = []
-    for pairs in (world.messages[0].now, world.messages[0].before):
+    for pairs in (world.packets[0].now, world.packets[0].before):
         levels = np.zeros((board.length, board.height))
         for flat, level in pairs:
             levels[flat // board.height, flat % board.height] = float(level)
@@ -314,12 +319,12 @@ def fronts(board: Board, offset: int) -> dict[str, tuple[np.ndarray, ...]]:
 def real_line(
     board: Board, line: Line, now: np.ndarray, before: np.ndarray, source_open: bool
 ) -> dict[str, np.ndarray]:
-    """The law's line stepped `ticks` intervals; per declared region the net front inflow in the
-    current's units at the pair after t steps, for t from 0 through ticks (the engine's click at the
-    tick t reports the pair after t - 1 steps). The x faces recede: the lattice is padded with zeros
+    """The law's line stepped `intervals` intervals; per declared region the net front inflow in the
+    current's units at the pair after t steps, for t from 0 through intervals (the engine's click at the
+    interval t reports the pair after t - 1 steps). The x faces recede: the lattice is padded with zeros
     farther than a signal travels in the run (one Link per interval), so nothing returns; with
     `source_open` the low x face is the open face instead, read as 0 (the meeting round's world)."""
-    padding = board.ticks + 1
+    padding = board.intervals + 1
     low = 0 if source_open else padding
     shape = (low + board.length + padding, board.height)
     a_now, a_before = np.zeros(shape), np.zeros(shape)
@@ -328,12 +333,12 @@ def real_line(
     for x, y in board.beyond:
         wall[low + x, y] = True
     front = fronts(board, low)
-    inflow = {name: np.zeros(board.ticks + 1) for name in board.regions}
-    for t in range(board.ticks + 1):
+    inflow = {name: np.zeros(board.intervals + 1) for name in board.regions}
+    for t in range(board.intervals + 1):
         for name, (ix, iy, jx, jy) in front.items():
             current = line.weight * (a_now[ix, iy] * a_before[jx, jy] - a_before[ix, iy] * a_now[jx, jy])
             inflow[name][t] = current.sum()
-        if t == board.ticks:
+        if t == board.intervals:
             break
         arrivals = 2 * a_now  # the folded z axis: the Node itself through both z Ports
         arrivals[1:] += a_now[:-1]
@@ -455,7 +460,7 @@ def row_text(row: list[float], places: int = 2) -> str:
 
 
 def extrema_text(row: list[float], first: int, last: int) -> str:
-    """The row's maxima and minima within the pattern's range by the reader's one rule."""
+    """The row's maxima and minima within the pattern's range by the NodeDetector's one rule."""
     maxima, minima = extrema(row, first, last)
     return f"maxima at the regions {maxima}, minima at {minima}"
 
@@ -468,7 +473,7 @@ def report_reading(
     tail: tuple[float, float],
 ) -> None:
     """One reading of the screen printed: N, the regions, the shares, the extrema, the visibility,
-    the deviation from the blind, the wings and the rounded shares by the reader's rules
+    the deviation from the blind, the wings and the rounded shares by the NodeDetector's rules
     at N rounded, and the arrival."""
     central, minima = int(expected["central"]), [int(at) for at in expected["minima"]]
     wings = [int(at) for at in expected["wings"]["regions"]]
@@ -482,7 +487,7 @@ def report_reading(
         f"  the shares, each region's quanta over N: {row_text([v / total for v in reading.regions], 4)}"
     )
     print(
-        f"  {extrema_text(reading.regions, first, last)} (the reader's rule within the pattern {[first, last]})"
+        f"  {extrema_text(reading.regions, first, last)} (the NodeDetector's rule within the pattern {[first, last]})"
     )
     print(
         f"  the visibility at the blind first minima's regions {minima} against the blind central maximum,"
@@ -543,10 +548,10 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     world = load_world(args.world)
     expected = json.loads(args.expectation.read_text(encoding="utf-8"))
-    screen = [str(name) for name in expected["node_reader"]]
+    screen = [str(name) for name in expected["node_detector"]]
     window = (int(expected["window"][0]), int(expected["window"][1]))
     board = board_of(world, screen)
-    family = world.messages[0].family
+    family = world.packets[0].family
     line = line_of(world, family)
     wall = float(count_wall(world.families[family], world.quantum_action))
     p = board.packet
@@ -574,7 +579,7 @@ def main(argv: list[str] | None = None) -> None:
         f" {[y for y in range(board.height) if (next(iter({x for x, _y in board.beyond})), y) not in board.beyond]}"
     )
     print(
-        f"the packet: k = pi x {world.messages[0].wave[0]} / {world.messages[0].wave[1]} = {k:.6f} per Link"
+        f"the packet: k = pi x {world.packets[0].wave[0]} / {world.packets[0].wave[1]} = {k:.6f} per Link"
         f" (lambda = {2 * math.pi / k:.1f} Links), b = {p.amplitude:.0f}, the top x {list(p.top_x)} with the"
         f" half-width {p.edge_x}, the top y {list(p.top_y)} with the half-width {p.edge_y}"
     )
@@ -586,7 +591,7 @@ def main(argv: list[str] | None = None) -> None:
     print(
         f"the screen: {len(screen)} regions of {len(board.regions[screen[0]])} Nodes each at the column"
         f" {sorted({x for x, _y in board.regions[screen[0]]})}, read over the window {list(window)} of"
-        f" {board.ticks} intervals; the bare regions beside: {[n for n in board.regions if n not in screen]}"
+        f" {board.intervals} intervals; the bare regions beside: {[n for n in board.regions if n not in screen]}"
     )
 
     now, before = law_lay(board, line)
@@ -603,7 +608,7 @@ def main(argv: list[str] | None = None) -> None:
     whole = whole_run(inflow, board.screen, wall, 1)
     report_reading(
         f"1. The world as declared, both x faces receding, the window {list(window)} in the engine's labels"
-        " (the click at the tick t reports the pair after t - 1 steps)",
+        " (the click at the interval t reports the pair after t - 1 steps)",
         engine,
         expected,
         wall,
@@ -756,7 +761,7 @@ def main(argv: list[str] | None = None) -> None:
     print(
         f"\n6. The continuum: the same world scaled by s (every extent times s, lambda = {2 * math.pi / k:.0f} s, the"
         f" wall and the screen one Node thick, the packet's top one column), both x faces receding, the run"
-        f" {board.ticks} s intervals, read in the physical labels over the window [{window[0]} s, {window[1]} s]"
+        f" {board.intervals} s intervals, read in the physical labels over the window [{window[0]} s, {window[1]} s]"
         f" and the labels over s"
     )
     wings = [int(at) for at in expected["wings"]["regions"]]
@@ -813,11 +818,11 @@ def main(argv: list[str] | None = None) -> None:
     )
 
     carrier_cos = line.cos_omega(k)
-    per_mode = math.sqrt(board.ticks / (12 * (1 + carrier_cos)))
+    per_mode = math.sqrt(board.intervals / (12 * (1 + carrier_cos)))
     cells = 192
     midpoints = [-math.pi + (cell + 0.5) * 2 * math.pi / cells for cell in range(cells)]
     zone_mean = sum(1 / (1 + line.cos_omega(kx, ky)) for kx in midpoints for ky in midpoints) / cells**2
-    per_node = math.sqrt(zone_mean * board.ticks / 12)
+    per_node = math.sqrt(zone_mean * board.intervals / 12)
     total = sum(physical.regions)
     print(
         "\n7. The integer budget's walk on the run (the law's clause): the integer step differs from the line"
@@ -827,7 +832,7 @@ def main(argv: list[str] | None = None) -> None:
         " over (k_x, k_y) with k_z folded (the midpoint rule on 192^2 cells)"
     )
     print(
-        f"  at the carrier cos omega = {carrier_cos:.4f}: {per_mode:.2f} levels per mode over n = {board.ticks};"
+        f"  at the carrier cos omega = {carrier_cos:.4f}: {per_mode:.2f} levels per mode over n = {board.intervals};"
         f" the zone's mean {zone_mean:.3f}, {per_node:.2f} levels per Node; against b = {p.amplitude:.0f}:"
         f" {200 * per_mode / p.amplitude:.2f} to {200 * per_node / p.amplitude:.2f} percent of the share,"
         f" {total * 2 * per_mode / p.amplitude:.2f} to {total * 2 * per_node / p.amplitude:.2f} units of"

@@ -16,7 +16,7 @@ for a lattice of integers stepped by one local rule); the meeting of the past wi
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
 are then cited as [1], [2], [3] alone, without their line names, and the
-journal's name leaves the supplement's title. The paper is kept to about 35 pages and to what is safe: the rule, its exact
+journal's name leaves the supplement's title. The paper is kept to about 40 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
@@ -38,8 +38,8 @@ their statuses.
 - `general_formula/main.tex`: the paper. Build it with `pdflatex main.tex`
   twice; it needs only its figures.
 - `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
-  the implementation at the frozen commit 7756546d and the three documents (the law,
-  the engine's document, the decisions) at ed1a3b5d, both of 2026-10-04.
+  the implementation at the frozen commit 1fe3790a and the three documents (the law,
+  the engine's document, the decisions) at 1fe3790a, both of 2026-10-04.
 - `claims.md`: the paper's claims table, one row per marked sentence of the paper (its place,
   marks, fence, kind, the source the sentence gives, the breaker that could break it and its state),
   built by `general_formula/claims_table.py` at every print; `claims_breakers.json` holds the
@@ -58,7 +58,7 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
-  generative tool, with 6 to 8 pt lettering at the drawn size (Figs. 1 and 2 are
+  generative tool, with 6.2 to 8 pt lettering at the drawn size (Figs. 1 and 2 are
   included at that size, the other six at 0.66 to 0.75 of the text width), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
@@ -126,7 +126,7 @@ their statuses.
   rounding of a level; the script prints no draw, the clicks' row being the
   folder's. Run with `PYTHONPATH=src python paper/general_formula/two_slits_real_line.py`,
   from the paper's commit on the folder's files as they stand at the pinned commit
-  7756546d (a worktree of it); the script lays the before level as the generator does at
+  1fe3790a (a worktree of it); the script lays the before level as the generator does at
   that commit (`tools/pixel_mode.advanced_real_part`), so its lay is the mode file's to the
   rounding of the quadrature before the transform (0.4 percent of the amplitude in the
   before level) and its printed output is the line at the engine's own lay. Its
@@ -171,7 +171,7 @@ carries the algebraic steps of every derived mark; the scripts' map is the law's
 The paper goes first to arXiv and then to Foundations of Physics
 (Springer). The rules below were read from the venues' published pages; the
 author checks the live pages before submitting. The order that avoids
-rework: the GitHub release and its Zenodo version DOI, then arXiv, then
+rework: the GitHub release 1.1.0 and its Zenodo version DOI, then arXiv, then
 the journal.
 
 ### Foundations of Physics
@@ -201,7 +201,7 @@ the journal.
   writer holds them; the author checks the journal's page before submitting,
   the venues' pages being unreachable from the writer's session). Met: the
   four figures drawn 174 mm wide are
-  included at that size, their lettering 8 pt at the final size, and the four
+  included at that size, their lettering 7 to 8 pt at the final size (the axes' labels 7 pt), and the four
   drawn narrower at theirs.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
@@ -217,8 +217,8 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "37 pages, 7 figures, 5 tables; supplementary material of 35 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,729
+  "40 pages, 7 figures, 6 tables; supplementary material of 36 pages as an
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,711
   characters counted with its TeX signs, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
@@ -253,8 +253,8 @@ the journal.
 
 1. arXiv: the account, the licence, and whether an earlier paper of the
    project was posted; the endorser is in hand (the author, 2026-10-02).
-2. The archive: a GitHub release of the paper's commit and its Zenodo
-   version DOI.
+2. The archive: the GitHub release 1.1.0 of the paper's commit and its Zenodo
+   version DOI (the paper's version 1.1.0; the version 1.0.0 stays archived).
 3. The cover letter, written for this paper.
 4. The journal: an Editorial Manager account; the preprint declared at
    submission.

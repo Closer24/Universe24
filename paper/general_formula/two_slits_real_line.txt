@@ -6,13 +6,13 @@ the board 45 x 48 x 1 (z folded), x and y open, both x faces receding; the wall 
 the packet: k = pi x 1 / 4 = 0.785398 per Link (lambda = 8.0 Links), b = 1241, the top x [10, 10] with the half-width 6, the top y [4, 44] with the half-width 2
 the band at k: cos omega = 0.902369, omega = 0.445561, the period 14.10 intervals, the group velocity 0.5469 Links per interval, light's speed at long wavelength 0.5774
 the screen: 12 regions of 4 Nodes each at the column [44], read over the window [45, 130] of 130 intervals; the bare regions beside: ['gap']
-the lay against the mode file's integers: the largest difference of a level 0.39 (now) and 5.11 (before); the lay stands on 344 Nodes now and 1271 before; the generator's count of the lay 1804 quanta
+the lay against the mode file's integers: the largest difference of a level 0.39 (now) and 18.80 (before); the lay stands on 344 Nodes now and 1256 before; the generator's count of the lay 1809 quanta
 
-1. The world as declared, both x faces receding, the window [45, 130] in the engine's labels (the click at the tick t reports the pair after t - 1 steps)
+1. The world as declared, both x faces receding, the window [45, 130] in the engine's labels (the click at the interval t reports the pair after t - 1 steps)
   N = 284.50 quanta: the screen's net front inflow summed over the window, over W_c
   the regions' quanta, from the row 0 across y: 19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57
   the shares, each region's quanta over N: 0.0692, 0.0711, 0.1005, 0.0638, 0.0299, 0.1425, 0.1688, 0.0472, 0.0475, 0.1010, 0.0790, 0.0793
-  maxima at the regions [2, 6, 9], minima at [4, 7, 10] (the reader's rule within the pattern [1, 10])
+  maxima at the regions [2, 6, 9], minima at [4, 7, 10] (the NodeDetector's rule within the pattern [1, 10])
   the visibility at the blind first minima's regions [4, 8] against the blind central maximum, the region 6: 0.6270
   the deviation from the blind shares, SUM |n_g B - T b_g| / (T B): 0.0761
   the wings, the regions [3, 8]: 18.16, 13.51
@@ -23,20 +23,20 @@ the lay against the mode file's integers: the largest difference of a level 0.39
   over the meeting round's window [45, 120] (history): N = 282.36, the regions 19.7, 20.2, 28.5, 17.9, 8.1, 40.2, 47.8, 13.1, 13.2, 28.7, 22.5, 22.5, the wings 17.90, 13.23
   in the physical labels (the pair after t steps labelled t), the window [45, 130]: N = 284.66, the arrival's peak at 69, the centroid 73.49, the span 63 to 77, the rms duration 10.88
   over the whole run in the physical labels: N = 284.68, the peak at 69, the centroid 73.49, the span 63 to 77
-  the same from the mode file's integer lay: N = 284.28, the regions 19.69, 20.22, 28.57, 18.16, 8.49, 40.50, 47.97, 13.40, 13.52, 28.72, 22.48, 22.56
+  the same from the mode file's integer lay: N = 278.89, the regions 19.33, 19.84, 28.04, 17.82, 8.32, 39.72, 47.05, 13.14, 13.27, 28.18, 22.06, 22.14
 
 2. The meeting round's world, the source face open (read as 0, reflecting), the window [45, 130] in the engine's labels
   N = 284.71 quanta: the screen's net front inflow summed over the window, over W_c
   the regions' quanta, from the row 0 across y: 19.69, 20.23, 28.59, 18.14, 8.66, 40.51, 48.02, 13.59, 13.47, 28.76, 22.49, 22.55
   the shares, each region's quanta over N: 0.0692, 0.0711, 0.1004, 0.0637, 0.0304, 0.1423, 0.1687, 0.0477, 0.0473, 0.1010, 0.0790, 0.0792
-  maxima at the regions [2, 6, 9], minima at [4, 8, 10] (the reader's rule within the pattern [1, 10])
+  maxima at the regions [2, 6, 9], minima at [4, 8, 10] (the NodeDetector's rule within the pattern [1, 10])
   the visibility at the blind first minima's regions [4, 8] against the blind central maximum, the region 6: 0.6255
   the deviation from the blind shares, SUM |n_g B - T b_g| / (T B): 0.0750
   the wings, the regions [3, 8]: 18.14, 13.47
   N to the nearest whole 285, apportioned by the largest remainders (the rounded shares): [20, 20, 29, 18, 9, 40, 48, 14, 13, 29, 22, 23]
   the arrival in the engine's labels: the peak at 70, the centroid 74.50, the half-maximum span 64 to 78, the rms duration 10.89 intervals
   arrived before the window 0.02 quanta, after it 0.31 (the labels' whole run)
-  the same from the mode file's integer lay: N = 284.49
+  the same from the mode file's integer lay: N = 279.17
   over the window [45, 120]: N = 282.37 in the engine's labels, 282.60 in the physical labels (the engine's [46, 121]), the regions in the physical labels 19.7, 20.2, 28.5, 17.9, 8.2, 40.3, 47.8, 13.1, 13.3, 28.7, 22.5, 22.5
   the second pass inside the window, the open face's N less the receding face's: 0.20 over [45, 130], 0.01 over [45, 120]
 
