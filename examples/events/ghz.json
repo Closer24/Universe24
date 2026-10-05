@@ -23,7 +23,7 @@
     ],
     "level_weight": 1000000,
     "write_weight": 1,
-    "rest": 0,
+    "rest": 60,
     "act": "pace"
    }
   },
