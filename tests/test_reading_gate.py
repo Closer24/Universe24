@@ -235,6 +235,8 @@ def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_p
     (tmp_path / "design.json").write_text(json.dumps({**design, "seeds": design["seeds"][:3]}), "utf-8")
     found = trials.reading(folder / "one_photon.json", tmp_path / "design.json", None)
     rows, run = found["coincidence"], found["trials"]
+    # the trials' length from the design's own key, not the world's run length (the control run of 2026-10-05)
+    assert found["intervals"] == design["trial_intervals"] == 48 != design["intervals"]
     assert list(rows) == ["A_only", "B_only", "both", "neither", "alpha"]  # the keys by hand, in order
     a_only, b_only, both, neither = (rows[key][0] for key in ("A_only", "B_only", "both", "neither"))
     assert a_only + b_only + both + neither == run == 3 and rows["A_only"][1] == run

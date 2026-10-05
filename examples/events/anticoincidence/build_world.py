@@ -1,4 +1,4 @@
-"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeDetectors at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record absorption it into e at the transition's declared weight over its one window of `intervals`, the run going on for `intervals` past the window's close so that the absorption's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same two packets at the control's amplitude on the universe `two_atoms_two_records.json`: two photons, one per record (two massless families of one pair), each atom's transition into e by either, each absorption bringing its record to 0 and its front starting at the absorption's interval (the design's `control`); and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
+"""The anticoincidence world's builder (the paper's S.57, one photon on two bodies; ALGEBRA.md (h2); the mathematician's 144 and 145; the owner's word of 2026-10-03, 03:25): from `design.json` it writes `one_photon.json`, a chain open on x with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeDetectors at one Node each at the same distance on either side of the centre, and one light record of the family `photon` laid at the centre as two packets toward the two records, the whole one quantum, each record absorption it into e at the transition's declared weight over its one window of `trial_intervals` (the trials' length, tools/meeting_trials.py), the run going on for `intervals` past the window's close so that the absorption's hole and the erasing front stand in the output interval by interval and the front reaches both packets (the owner's word of 2026-10-04, the click's experiment; the redesign at the lay without the uniform mode, the edge one wavelength on the chain of 96); and `two_photons.json`, the control, the same two packets at the control's amplitude on the universe `two_atoms_two_records.json`: two photons, one per record (two massless families of one pair), each atom's transition into e by either, each absorption bringing its record to 0 and its front starting at the absorption's interval (the design's `control`); and the blind `expectation.json`: P(A only) = P(B only) = s, P(both) = 0, alpha = 0 for one quantum; the control P(both) above 0. With `--modes` it lays the light by the generator. Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/anticoincidence/build_world.py --modes [--folder <folder>]
 """
@@ -42,7 +42,7 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
                 "rates": [],
                 "node_detector": {
                     **design["generator"],
-                    "window": design["window"],
+                    "window": design["trial_intervals"],  # one window per trial
                     "seed": design["records"]["seed"],
                 },
             }
@@ -97,7 +97,7 @@ def main(argv: list[str] | None = None) -> None:
         "verdict": "NODEDETECTOR",
         "comment": "One photon on two bodies, the anticoincidence (the paper's S.57; ALGEBRA.md (h2); the mathematician's 144 and 145, two hands by the law as it stands): one light record of one whole quantum laid between two records declared NodeDetectors at one Node each, equidistant, each reading the light into its e part over one window, the run; the credit's count per record, one quantum one click; written before any run and never edited after.",
         "trials": len(design["seeds"]),
-        "intervals": design["window"],
+        "intervals": design["trial_intervals"],
         "blind": {
             "one_photon": {
                 "reading": "over the trials the fraction with an absorption at the record A alone, at B alone, at both and at neither (tools/meeting_trials.py, the jump lines), and alpha = P(both) / (P(A) P(B))",
