@@ -194,6 +194,11 @@ def click_key(line: dict[str, object]) -> str:
     return f"{line['node_detector']} {line['realised']} by {line['absorbed'] or line['emitted']}"
 
 
+def credit_lines(lines: list[dict[str, object]], key: str) -> list[dict[str, object]]:
+    """The NodeDetectors' click lines with `key` set: the credit lines labelled NODEDETECTOR whose `key` is not None."""
+    return [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c[key]]
+
+
 def own_lines(board: Lattice, index: int) -> list[node.Record]:
     """A family's record lines as the engine reads them: every record's lines, light the sum of its rows."""
     return [line for r in quanta_records(board.families, index) for line in board.lines_of(index, r)]

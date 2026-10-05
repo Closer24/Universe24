@@ -56,9 +56,7 @@ def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
-        equal = all(
-            len(set(map(tuple, p["levels"]))) == 1 and p["label"] == "NODEDETECTOR" for p in parts
-        )
+        equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
         assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
         board = Lattice(load_world(folder / f"{name}.json"))
@@ -388,17 +386,8 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     assert (int(line.now[here]), int(line.before[here])) == (128, 128)
     assert (board.credit.counts[probed], int(board.quanta(probed)[0][here])) == (1, 1)
     jumps = [x for x in lines if x["event"] == "credit"]
-    keys = (
-        "label",
-        "interval",
-        "window",
-        "proper",
-        "windows",
-        "realised",
-        "before",
-        "absorbed",
-        "emitted",
-    )
+    keys = ("label", "interval", "window", "proper", "windows", "realised", "before")
+    keys += ("absorbed", "emitted")
     click = ("NODEDETECTOR", 3, [1, 3], 3, 1, "g", "g", "probe", "probe")
     assert [tuple(x[k] for k in keys) for x in jumps] == [click] and books.labels == [wall, 0]
     laid = [(x["family"], x["interval"]) for x in lines if x["event"] == "lay"]
@@ -466,9 +455,8 @@ def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothin
         if board.interval == 84:
             books, its_books = board.books()["pulse"], twin.books()["pulse"]
         returns = [x for x in lines if x["event"] == "credit" and x["emitted"] == "pulse"]
-    jumps = [
-        x for x in lines if x["event"] == "credit" and x["label"] == "NODEDETECTOR" and x["absorbed"]
-    ]
+    credits = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEDETECTOR"]
+    jumps = [x for x in credits if x["absorbed"]]
     assert [x["interval"] for x in jumps][:1] == [72] and jumps[0]["absorbed"] == "pulse"
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
     assert not board.credit.fronts and not board.credit.sources
@@ -507,9 +495,7 @@ def test_a_emission_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tm
         board.step(), twin.step()
         given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
-    assert (
-        given and taken and given[0]["interval"] > taken[0]["interval"]
-    )  # an absorption, then the emission back
+    assert given and taken and given[0]["interval"] > taken[0]["interval"]  # absorbed, then emitted
     for key in ("now", "before", "remainder"):
         assert np.array_equal(
             getattr(board.states[pulse].lines[0], key), getattr(twin.states[pulse].lines[0], key)
@@ -564,17 +550,11 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark()
     for _ in range(200):
         board.step()
         shares.append(board.books()["photon"]["share"])
-    credits = [
-        c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
-    ]
+    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
+    credits = [c for c in credits if c["absorbed"]]
     assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {line["event"] for line in lines if line["interval"] > 48} <= {
-        "erasure",
-        "face",
-        "credit",
-        "lay",
-    }
+    assert {x["event"] for x in lines if x["interval"] > 48} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
@@ -608,15 +588,12 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
         board = Lattice(load_world(path), (lines := []).append)
         while board.interval < 56:
             board.step()
-        clicks[drives] = [
-            (c["interval"], c["node_detector"], c["absorbed"]) for c in lines if c.get("absorbed")
-        ]
+        hits = [c for c in lines if c.get("absorbed")]
+        clicks[drives] = [(c["interval"], c["node_detector"], c["absorbed"]) for c in hits]
     assert clicks["photon", "photon_b"] == [(44, "body 0", "photon_b"), (56, "body 1", "photon")]
     assert clicks[("photon",)] == [(56, "body 1", "photon")]
     two, one = seen[:2], seen[2:]  # the closes at 44 and 56 per world; the drives photon 1, photon_b 2
-    print(
-        f"absorptions by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}"
-    )
+    print(f"by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
     assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
     assert [shares[1] for _, shares in two] == [shares[1] for _, shares in one]  # photon's own share
     assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

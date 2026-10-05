@@ -108,11 +108,10 @@ def relaid(
 def laid_record(board: Lattice, number: int, record: int) -> None:
     """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
     row = board.world.bodies[number]
-    assert row.detector is not None
-    books = NodeBooks(
-        number, row.family, record, row.nodes, row.counts, row.detector, 0, [], [], 0, 0, []
-    )
-    for part, count in enumerate(row.detector.counts):
+    kind = row.detector
+    assert kind is not None
+    books = NodeBooks(number, row.family, record, row.nodes, row.counts, kind, 0, [], [], 0, 0, [])
+    for part, count in enumerate(kind.counts):
         relaid(board, books, part, count, (1, 0), 1)
 
 
@@ -306,10 +305,8 @@ def emitted(board: Lattice, books: NodeBooks, grain: int) -> bool:
             if pick < len(directions):
                 laid_at = drawn_node(board, books, share_weights(board, books))
                 e, g = (levels_at(board, books, p)[:2] for p in (rate.leaves, rate.enters))
-                quantum = Item(
-                    rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime
-                )
-                light = replace(quantum, width=rate.width, direction=directions[pick], levels=(e, g))
+                lit = Item(rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime)
+                light = replace(lit, width=rate.width, direction=directions[pick], levels=(e, g))
                 written(board, exchange(board, books, rate.leaves, rate.enters) + [light])
                 reported(board, books, (rate.enters, rate.leaves), (None, rate.light))
                 return True

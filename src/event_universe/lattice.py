@@ -398,19 +398,17 @@ class Lattice:
             else:
                 deviation = state.lines[0].now - family.rest
                 found = deviation * deviation
-            for detector in self.node_detectors:
-                if not detector.declared or detector.nodes is None:
+            for d in self.node_detectors:
+                if not d.declared or d.nodes is None:
                     continue
-                cold = detector.nodes & frozen
-                reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
+                cold = d.nodes & frozen
+                reading = None if cold.any() else int(found[d.nodes].sum(dtype=object))
                 content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
-                if self.densities.get((index, detector.name)) == (reading, content):
+                if self.densities.get((index, d.name)) == (reading, content):
                     continue
-                self.densities[(index, detector.name)] = (reading, content)
+                self.densities[(index, d.name)] = (reading, content)
                 if self.output is not None:
-                    self.output(
-                        reports.density(self.interval, family.name, detector.name, reading, content)
-                    )
+                    self.output(reports.density(self.interval, family.name, d.name, reading, content))
 
     def booked_back(
         self,
