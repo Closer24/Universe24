@@ -165,10 +165,34 @@ blind's 136.5 (the seeds' least 116 and most 144); the shadowed regions 0 at eve
 seed in both worlds; N 269 and 135 at every seed (N is the shares', the draw places it). The one seed's
 8.1 is the folder's fence, the thirty seeds' mean its reading beside it.
 
+## The reading at the clean engine (main 1fe3790a, 2026-10-05; the engine of main 39cc3851)
+
+The control run (the advisor's division, #1827 comments 5986693793 at 39cc3851 and 5987050362 at
+1fe3790a): the folder's own tools, `tools/run_inputs.py` over the 130 intervals at the seed 24 of the
+design, the clicks per screen region as `tests/test_the_draw.py` reads them (NODEDETECTOR),
+`tools/back_in_time.py` on which_way.json MATCH over 40 (LATTICE). The rows move with the packet lay
+at the declared vacuum content 60 (the tool row F8 of 1fe3790a), the two-gaps row the draw test's gate
+row at this hash bit for bit (N 285). Every number stands as read.
+
+| world | the screen regions 0 to 11 at 1fe3790a | sum | channel | sum at 39cc3851 | the blind's quanta |
+| --- | --- | --- | --- | --- | --- |
+| two_gaps | [22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25] | 285 | 0 | 290 | 273 |
+| one_gap | [0, 0, 0, 0, 0, 19, 32, 15, 26, 17, 16, 17] | 142 | 0 | 145 | 136.5 |
+| which_way | [0, 0, 0, 0, 0, 18, 35, 12, 22, 23, 14, 13] | 137 | 149 | 141 and the channel 151 | 136.5 and 136.5 |
+
+The shadowed regions 0 to 4 read 0 in the one-gap and the which-way worlds; the which-way row equals
+the one-gap row region by region within the draw's scatter and both differ from the two-gaps row at
+the two slits' maxima (2, 6, 9) and minima (4, 8); the channel 149 and the which-way screen 137
+against the blind's 136.5 within three scatters (24.8);
+`test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone` passed at the hash
+(12.6 s). The gate's table below holds this run's rows as `tools/reading_gate.py` re-reads them on the
+committed files.
+
 ## The gate's table
 
-Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
+Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the lays and the
+tools of main 1fe3790a, 2026-10-05; the clicks the control's, the line counts and the books the gate's own
+re-run on the committed files), re-run and compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
 lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
@@ -177,53 +201,53 @@ reading in the gate's words and the value as its report prints it.
 | --- | --- | --- | --- | --- |
 | LATTICE | which_way.json | run_inputs | verdict | LAWFUL |
 | LATTICE | which_way.json | run_inputs | intervals | 130 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks | 269 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks | 286 |
 | NODEDETECTOR | which_way.json | run_inputs | clicks screen_0 | 0 |
 | NODEDETECTOR | which_way.json | run_inputs | clicks screen_1 | 0 |
 | NODEDETECTOR | which_way.json | run_inputs | clicks screen_2 | 0 |
 | NODEDETECTOR | which_way.json | run_inputs | clicks screen_3 | 0 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_5 | 13 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_6 | 32 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_7 | 16 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_8 | 19 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_9 | 25 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks screen_10 | 9 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_5 | 18 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_6 | 35 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_7 | 12 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_8 | 22 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_9 | 23 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks screen_10 | 14 |
 | NODEDETECTOR | which_way.json | run_inputs | clicks screen_11 | 13 |
-| NODEDETECTOR | which_way.json | run_inputs | clicks which_way | 142 |
-| LATTICE | which_way.json | run_inputs | lines click | 1062 |
-| LATTICE | which_way.json | run_inputs | lines credit | 269 |
+| NODEDETECTOR | which_way.json | run_inputs | clicks which_way | 149 |
+| LATTICE | which_way.json | run_inputs | lines click | 1312 |
+| LATTICE | which_way.json | run_inputs | lines credit | 286 |
 | LATTICE | one_gap.json | run_inputs | verdict | LAWFUL |
 | LATTICE | one_gap.json | run_inputs | intervals | 130 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks | 135 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks | 142 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks screen_0 | 0 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks screen_1 | 0 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks screen_2 | 0 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks screen_3 | 0 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_5 | 14 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_6 | 36 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_7 | 9 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_8 | 25 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_9 | 16 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_5 | 19 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_6 | 32 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_7 | 15 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_8 | 26 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_9 | 17 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks screen_10 | 16 |
-| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_11 | 19 |
+| NODEDETECTOR | one_gap.json | run_inputs | clicks screen_11 | 17 |
 | NODEDETECTOR | one_gap.json | run_inputs | clicks which_way | 0 |
-| LATTICE | one_gap.json | run_inputs | lines click | 888 |
-| LATTICE | one_gap.json | run_inputs | lines credit | 135 |
+| LATTICE | one_gap.json | run_inputs | lines click | 1179 |
+| LATTICE | one_gap.json | run_inputs | lines credit | 142 |
 | LATTICE | two_gaps.json | run_inputs | verdict | LAWFUL |
 | LATTICE | two_gaps.json | run_inputs | intervals | 130 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks | 270 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_0 | 28 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_1 | 15 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_2 | 24 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_3 | 18 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_4 | 7 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_5 | 37 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_6 | 44 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_7 | 13 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_8 | 13 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_9 | 25 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks | 285 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_0 | 22 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_1 | 21 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_2 | 27 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_3 | 16 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_4 | 9 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_5 | 36 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_6 | 56 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_7 | 11 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_8 | 12 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_9 | 26 |
 | NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_10 | 24 |
-| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_11 | 22 |
-| LATTICE | two_gaps.json | run_inputs | lines click | 1086 |
-| LATTICE | two_gaps.json | run_inputs | lines credit | 270 |
+| NODEDETECTOR | two_gaps.json | run_inputs | clicks screen_11 | 25 |
+| LATTICE | two_gaps.json | run_inputs | lines click | 1289 |
+| LATTICE | two_gaps.json | run_inputs | lines credit | 285 |
 | LATTICE | which_way.json | back_in_time | intervals 40 | MATCH |

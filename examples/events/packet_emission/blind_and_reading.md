@@ -111,3 +111,18 @@ at the Node [327, 2, 2] per interval, and the drawn direction from the `lay` lin
 body's. The lines carry
 the board's `interval` and the `window` in board intervals; the giver's lifetime 48 is in board intervals, the
 hazard per proper interval at the body's own clock, Gamma in the vacuum (`meeting.hazard_weights`).
+
+## The reading at the clean engine (main 39cc3851 and 1fe3790a, 2026-10-05)
+
+The control run (the experimenter, #1827 comments 5986779703 at 39cc3851 and 5987098184 at 1fe3790a):
+`build_world.py --read` over the design's 20 seeds; the universe declares no gravity row, so the
+shipped world is not re-laid and the reading at 1fe3790a is 39cc3851's bit for bit. Every number
+stands as read; a miss is a report for the hands, not adjusted.
+
+| the reading | read | the blind |
+| --- | --- | --- |
+| the drawn directions (LATTICE, the `lay` lines' Nodes against the body's) | +x 14, -x 6, no emission 0 | 10 +/- 2.2: +1.8 standard errors |
+| the region `reach`'s own clicks over the 14 meeting seeds (NODEDETECTOR) | 0 in every one | the folder's finding by name, the packet at the floor |
+| the emitter's own credit lines (NODEDETECTOR) | 2 or 1 per seed | the fixed reader's own column |
+| the share at the lay in W_c (LATTICE) | 0.8353 / 0.8359 | 0.786, the item-5 finding by name |
+| cos Omega at the far Node (LATTICE) | 0.6286 in 11 seeds, 0.6460 in 2, 0.6282 in 1 | within 2 / A_far of 2 / 3 |

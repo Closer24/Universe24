@@ -67,10 +67,22 @@ in the before level, bring the backward share to 6 x 10^-5 at the same envelope:
 when the owner reopens the engine, nothing of the engine or the worlds tonight. The design's other
 road, the x beams laid apart by the packet's 13 Nodes, is a world file's change and also waits.
 
+## The reading at the clean engine (main 1fe3790a, 2026-10-05; the engine of main 39cc3851)
+
+The control run (the advisor's division, #1827 comments 5986693793 at 39cc3851 and 5987050362 at
+1fe3790a; the folder's own tools, `tools/run_inputs.py` and `tools/bell_gate.py`, the same command at
+both hashes; 60 intervals per world), NODEDETECTOR: E_3 = -1, -1, -1, +1 for x y y, y x y, y y x and
+x x x, M = -4, the blind's; every marginal 1 / 2 and every pairwise correlation 0 at both hashes.
+`tools/back_in_time.py` on ghz_x_y_y.json MATCH over 40 (LATTICE). The packet lay at the declared
+vacuum content 60 (the tool row F8 of 1fe3790a) moves the lines' counts (the gate's table below: 170
+`click` and 160 `parts` lines per world against 156 and 156 at the lay of 2026-10-04) and no number
+of the gate.
+
 ## The gate's table
 
-Every row is a reading of the experimenter's run on the current tree (main d00aa9e, 2026-10-04), re-run and
-compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
+Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the lays and the
+tools of main 1fe3790a, 2026-10-05; the clicks the control's, the line counts and the books the gate's own
+re-run on the committed files), re-run and compared bit for bit by `tools/reading_gate.py`: the label the reading's own (NODEDETECTOR for the credit
 lines' clicks and the trials' coincidences, LATTICE for the verdict, the intervals, the line counts, the
 end's books and the back-in-time pass), the world the folder's file, `by` the tool that re-runs it, the
 reading in the gate's words and the value as its report prints it.
@@ -83,8 +95,8 @@ reading in the gate's words and the value as its report prints it.
 | NODEDETECTOR | ghz_x_y_y.json | run_inputs | clicks left | 1 |
 | NODEDETECTOR | ghz_x_y_y.json | run_inputs | clicks right | 1 |
 | NODEDETECTOR | ghz_x_y_y.json | run_inputs | clicks top | 1 |
-| LATTICE | ghz_x_y_y.json | run_inputs | lines click | 156 |
-| LATTICE | ghz_x_y_y.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_x_y_y.json | run_inputs | lines click | 170 |
+| LATTICE | ghz_x_y_y.json | run_inputs | lines parts | 160 |
 | LATTICE | ghz_x_y_y.json | run_inputs | lines credit | 3 |
 | LATTICE | ghz_y_x_y.json | run_inputs | verdict | LAWFUL |
 | LATTICE | ghz_y_x_y.json | run_inputs | intervals | 60 |
@@ -92,8 +104,8 @@ reading in the gate's words and the value as its report prints it.
 | NODEDETECTOR | ghz_y_x_y.json | run_inputs | clicks left | 1 |
 | NODEDETECTOR | ghz_y_x_y.json | run_inputs | clicks right | 1 |
 | NODEDETECTOR | ghz_y_x_y.json | run_inputs | clicks top | 1 |
-| LATTICE | ghz_y_x_y.json | run_inputs | lines click | 156 |
-| LATTICE | ghz_y_x_y.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_y_x_y.json | run_inputs | lines click | 170 |
+| LATTICE | ghz_y_x_y.json | run_inputs | lines parts | 160 |
 | LATTICE | ghz_y_x_y.json | run_inputs | lines credit | 3 |
 | LATTICE | ghz_y_y_x.json | run_inputs | verdict | LAWFUL |
 | LATTICE | ghz_y_y_x.json | run_inputs | intervals | 60 |
@@ -101,8 +113,8 @@ reading in the gate's words and the value as its report prints it.
 | NODEDETECTOR | ghz_y_y_x.json | run_inputs | clicks left | 1 |
 | NODEDETECTOR | ghz_y_y_x.json | run_inputs | clicks right | 1 |
 | NODEDETECTOR | ghz_y_y_x.json | run_inputs | clicks top | 1 |
-| LATTICE | ghz_y_y_x.json | run_inputs | lines click | 156 |
-| LATTICE | ghz_y_y_x.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_y_y_x.json | run_inputs | lines click | 170 |
+| LATTICE | ghz_y_y_x.json | run_inputs | lines parts | 160 |
 | LATTICE | ghz_y_y_x.json | run_inputs | lines credit | 3 |
 | LATTICE | ghz_x_x_x.json | run_inputs | verdict | LAWFUL |
 | LATTICE | ghz_x_x_x.json | run_inputs | intervals | 60 |
@@ -110,7 +122,7 @@ reading in the gate's words and the value as its report prints it.
 | NODEDETECTOR | ghz_x_x_x.json | run_inputs | clicks left | 1 |
 | NODEDETECTOR | ghz_x_x_x.json | run_inputs | clicks right | 1 |
 | NODEDETECTOR | ghz_x_x_x.json | run_inputs | clicks top | 1 |
-| LATTICE | ghz_x_x_x.json | run_inputs | lines click | 156 |
-| LATTICE | ghz_x_x_x.json | run_inputs | lines parts | 156 |
+| LATTICE | ghz_x_x_x.json | run_inputs | lines click | 170 |
+| LATTICE | ghz_x_x_x.json | run_inputs | lines parts | 160 |
 | LATTICE | ghz_x_x_x.json | run_inputs | lines credit | 3 |
 | LATTICE | ghz_x_y_y.json | back_in_time | intervals 60 | MATCH |
