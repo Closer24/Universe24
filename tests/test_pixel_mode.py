@@ -2,7 +2,6 @@
 
 import json
 import math
-from dataclasses import replace
 
 import numpy as np
 
@@ -18,11 +17,20 @@ from tests.laws import (
     PACKET,
     SLIT,
     TOOL,
+    band_of,
     chain_body_world,
     design_beside,
     refused,
     slit_world,
+    vacuum_content,
 )
+
+
+def vacuum_of(path, family: str) -> tuple[tuple[int, int], int, int, int]:  # type: ignore[no-untyped-def]
+    """A world's packet family as the loader reads it: its pair, the universe's Gamma, the content it reads where nothing is laid (`vacuum_content`) and the Link unit, the band's inputs (`band_of`)."""
+    world = load_world(path)
+    rule = next(f for f in world.families if f.name == family)
+    return rule.pair, world.node_clock, vacuum_content(world, rule), world.link_unit
 
 
 def dense(levels: dict[str, list[int]], shape: tuple[int, ...] = (24, 9, 1)) -> np.ndarray:
@@ -45,7 +53,8 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
     def exact(packet: np.ndarray) -> tuple[np.ndarray, np.ndarray]:  # the law's lay in the test's floats
         """The real pair of the packet z = b e e^(i k x) over the board's shape: now its real part, before the real part of z with every component advanced by its own omega(q), the uniform content of each out in proportion to the envelope (ALGEBRA.md, The packet lay)."""
         bins = [2 * np.pi * np.fft.fftfreq(n) for n in packet.shape]
-        omega = np.arccos((np.cos(bins[0])[:, None] + np.cos(bins[1])[None, :] + 1) / 3)
+        cosines = (np.cos(bins[0])[:, None], np.cos(bins[1])[None, :], 1)  # the band at the file's rest
+        omega = np.arccos(band_of(*vacuum_of(path, "charge"), *cosines))
         advanced = np.real(np.fft.ifft2(np.fft.fft2(packet) * np.exp(1j * omega)))
         weights, beyond = np.broadcast_to(envelope, packet.shape), (x == 12) & (y != 4)  # the inner face
         now_line, before_line = (
@@ -170,13 +179,12 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
 
 
 def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_path, monkeypatch):
-    """The generator's `count` of a packet is the books' count of its record at the lay (`Lattice.credit.counts`; the mathematician's finding of 2026-10-03): the lines the books count summed over the board and the total read in quanta once, never per Node, so the shipped two slits' 1,804 and the Zeno world's 833 are the books' own at the content the generator counts at, 0 (`packet_entry` reads no rest: at the declared rest 60 the engine's books read the same lay at 1,844, the share at the paces Gamma - 2 c_vac), and a dilute wave below half a quantum at every Node reads its one quantum over the board while the per-Node reading sums to 0."""
+    """The generator's `count` of a packet is the books' count of its record at the lay (`Lattice.credit.counts`; the mathematician's finding of 2026-10-03): the lines the books count summed over the board and the total read in quanta once, never per Node, so the shipped two slits' 1,809 and the Zeno world's 833 are the books' own at the loaded universe's paces (the generator lays and counts a packet at the declared rests of the holders its family reads, `packet_entry` and `vacuum_of`, as the bodies' lays are laid; the two hands' way (i), #1793 comment 5985967677 (4)), and a dilute wave below half a quantum at every Node reads its one quantum over the board while the per-Node reading sums to 0."""
     for folder, name in (("two_slits", "two_slits"), ("zeno", "zeno_1")):
         world = EVENTS / folder / f"{name}.json"
         entries = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"]
-        loaded = load_world(world)  # the generator counts at the content 0, no rest read
-        board = Lattice(replace(loaded, families=tuple(replace(f, rest=0) for f in loaded.families)))
-        names, books = [family.name for family in board.families], board.credit.counts  # the lay's paces
+        board = Lattice(load_world(world))  # the books at the loaded universe's own paces
+        names, books = [family.name for family in board.families], board.credit.counts
         assert [e["count"] for e in entries] == [books[names.index(e["family"])] for e in entries]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     dilute = slit_world(tmp_path, TOOL, "dilute", packets=[{**PACKET, "amplitude": 80}])
@@ -189,7 +197,7 @@ def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_pa
 def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rounding():
     """The exact packet lay (ALGEBRA.md, The packet lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)) on the shipped worlds whose packets carry an envelope, the two slits, the which-way, the GHZ and Bell worlds (the anticoincidence's photons at the amplitudes 116 and 112 are left out: their rounding bound is 7 x 10^-2, above the bound that means something): each packet laid by the generator as the mode file holds it (`pixel_mode`, through the division act) and read mode by mode against the law's exact lay in real numbers, the test's own floats from the file's keys (a_i = b e_i cos(k x_i + phi) and s_i = b e_i sin(k x_i + phi), the band cos omega(q) = (cos q_x + cos q_y + cos q_z) / 3 at the board's wave numbers, the before level the real part of the packet z = a + i s with every component advanced by its own omega(q), the uniform content of each level out in proportion to the envelope). The roots per bin, N_q = fftn(now) and B_q = fftn(before), u_q = (B_q - N_q e^(-i omega_q)) / (2 i sin omega_q) forward in time and v_q = (N_q e^(i omega_q) - B_q) / (2 i sin omega_q) backward, the bins with sin omega_q = 0 skipped (the uniform mode the division act removed, the staggered mode); a real pair's mirror bins carry the conjugate roots, u_(-q) = conj(v_q), so the backward root is read over the carrier's half-space, 0 < sign(p) q_along < pi, as its departure from the exact lay's own v*_q (the packet's mirror content, 0 beyond it before the rounding): misplaced = SUM_q |v_q - v*_q|^2 sin omega_q over the exact lay's forward form F* = SUM_q |u*_q|^2 sin omega_q. The backward root's absolute share, SUM_q |v_q|^2 sin omega_q over F*, stays at the analytic packet's own leakage into the mirror bins (a + i s of a finite envelope is not one-sided; the advisor's remark, #1793 comment 5980093560 (2)), 3.6 x 10^-4 of the form at the two slits at the weight sin omega and 2.3 x 10^-4 at sin^2 omega (Bell's 3.1 x 10^-4 and 2.7 x 10^-4, the GHZ's 6.8 x 10^-3 with its envelope across the beam), and the misplaced share is the integer lay's departure from it, the rounding's. The same number for the plain lay's pair, before_i = b e_i cos(k x_i + phi + omega_k) from the same a and s (the engine's lay before this commit, the law's beta per component), rounded the same way. The bound from the rounding alone, from the file's own numbers: every laid level is off the real line by at most one half at every Node (the exact before level's tails reach every Node of the board, sqrt(1 - **L**^2) being no local read), so each level's error has the form at most N^2 / 4 over the bins (Parseval, N the board's Nodes) and the two levels' errors add in amplitude, SUM_q |R_q e^(i omega_q) - T_q|^2 <= N^2, the backward form from the error at most N^2 / (4 sin omega_min), sin omega_min the board's smallest nonzero sin omega_q: bound = N^2 / (4 sin omega_min F*). The transform runs over the board at its largest declared extents (a receding axis's `largest`, the packet at its coordinates, the before level cropped to the board), as the generator's does. Printed per file, the plain lay's share, the exact lay's and the bound (a lattice diagnostic read at this commit, re-read at the frozen hash): the two slits 6.6 x 10^-2, 6.8 x 10^-6 and 2.3 x 10^-4, the which-way 6.6 x 10^-2, 6.2 x 10^-6 and 2.3 x 10^-4, the GHZ's three beams 2.8 x 10^-2, 4.3 x 10^-6 and 3.4 x 10^-4, Bell's two 7.6 x 10^-2, 9.5 x 10^-6 and 6.5 x 10^-6 and 3.1 x 10^-4 (the law's first-order estimate of the plain lay's share, 3.4 percent at the top 1 and the edge 6, is the band's narrow-width line; the exact per-component share at the shipped widths is larger); asserted: the exact lay's share below the bound and below the plain lay's by two orders, the bound below 10^-3. A single plane wave over a whole periodic box (the shipped Zeno drive, no edge, the top the whole axis) has one component, so its before level is the plain lay's, b cos(k x + phi + omega_k) by the same rounding, at every Node exactly."""
 
-    def real_line(document, packet):
+    def real_line(document, packet, path):
         """The law's a and s in the test's floats from the file's keys, the envelope b e_i and the carrier's omega_k."""
         shape = tuple(document["shape"])
         numbers = {name: (0, 1) for name in "xyz"}
@@ -204,7 +212,7 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
             envelope = envelope * taper.reshape([-1 if a == axis else 1 for a in range(3)])
         turned, whole = packet["phase"]
         phase = sum(k[a] * np.indices(shape)[a] for a in range(3)) + 2 * math.pi * turned / whole
-        carrier = math.acos(sum(map(math.cos, k)) / 3)
+        carrier = math.acos(band_of(*vacuum_of(path, packet["family"]), *map(math.cos, k)))
         return envelope * np.cos(phase), envelope * np.sin(phase), envelope, carrier
 
     def roots(now, before, omega):
@@ -221,15 +229,16 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
     def rounded(level):
         return np.floor(level + 0.5)
 
-    def band(shape):
-        """The board's bins per axis and omega(q) over a shape."""
+    def band(shape, path, family):
+        """The board's bins per axis and omega(q) over a shape at the world's own vacuum (`band_of`)."""
         bins = [
             2 * np.pi * np.fft.fftfreq(n).reshape([-1 if a == axis else 1 for a in range(3)])
             for axis, n in enumerate(shape)
         ]
-        return bins, np.arccos(np.clip(sum(np.cos(q) for q in bins) / 3, -1, 1))
+        cosine = band_of(*vacuum_of(path, family), *(np.cos(q) for q in bins))
+        return bins, np.arccos(np.clip(cosine, -1, 1))
 
-    def laid_by(document):
+    def laid_by(document, path):
         """The world's packets as the generator lays them, dense over the board, with omega(q), the bins and the largest extents (a receding axis's `largest`, else the shape's)."""
         shape = tuple(document["shape"])
         receding = document.get("receding", {})
@@ -238,7 +247,7 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
         pairs = [
             tuple(dense(entry["moving"][word], shape) for word in ("now", "before")) for entry in entries
         ]
-        return pairs, *band(shape), largest
+        return pairs, *band(shape, path, document["packets"][0]["family"]), largest
 
     worlds = (
         ("two_slits", "two_slits"),
@@ -247,10 +256,11 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
         ("bell", "bell_a_b"),
     )
     for folder, name in worlds:
-        document = json.loads((EVENTS / folder / f"{name}.json").read_text(encoding="utf-8"))
-        pairs, bins, omega, largest = laid_by(document)
+        path = EVENTS / folder / f"{name}.json"
+        document = json.loads(path.read_text(encoding="utf-8"))
+        pairs, bins, omega, largest = laid_by(document, path)
         for number, (packet, pair) in enumerate(zip(document["packets"], pairs, strict=True)):
-            a, s, envelope, omega_k = real_line(document, packet)
+            a, s, envelope, omega_k = real_line(document, packet, path)
             q_along = bins["xyz".index(packet["along"])]
             half = np.broadcast_to(
                 (np.sign(packet["wave"][0]) * q_along > 0) & (np.abs(q_along) < np.pi), a.shape
@@ -259,7 +269,9 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
             packet[within] = (
                 a + 1j * s
             )  # the packet at its coordinates on the board at its largest extents
-            advanced = np.real(np.fft.ifftn(np.fft.fftn(packet) * np.exp(1j * band(largest)[1])))[within]
+            family = document["packets"][number]["family"]  # `packet` is the array by now
+            advance = np.exp(1j * band(largest, path, family)[1])
+            advanced = np.real(np.fft.ifftn(np.fft.fftn(packet) * advance))[within]
             beyond = np.zeros(a.shape, dtype=bool)  # the Nodes beyond an inner face, 0 before the act
             for at in faces_of(document["faces"], a.shape) if "faces" in document else ():
                 beyond[at] = True
@@ -281,11 +293,12 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
                 f"the exact lay's {shares['exact']:.3e}, the rounding's bound {bound:.3e}"
             )
             assert shares["exact"] < bound < 1e-3 and 100 * shares["exact"] < shares["plain"]
-    document = json.loads(
-        (EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8")
-    )  # one plane wave
-    a, s, _envelope, omega_k = real_line(document, document["packets"][0])
-    assert (laid_by(document)[0][0][1] == rounded(a * math.cos(omega_k) - s * math.sin(omega_k))).all()
+    path = EVENTS / "zeno" / "zeno_1.json"  # one plane wave at the content 0: no gravity row
+    document = json.loads(path.read_text(encoding="utf-8"))
+    a, s, _envelope, omega_k = real_line(document, document["packets"][0], path)
+    assert (
+        laid_by(document, path)[0][0][1] == rounded(a * math.cos(omega_k) - s * math.sin(omega_k))
+    ).all()
 
 
 def test_the_generators_count_is_the_designs_and_a_re_lay_without_the_designs_key_is_refused(
@@ -382,13 +395,25 @@ def test_the_generators_sense_and_one_node_declaration_are_the_design_files_and_
 def test_a_packet_of_a_gapped_family_is_advanced_by_its_own_band_and_a_massless_one_by_the_vacuums(
     tmp_path, monkeypatch
 ):
-    """R370 (the reviewer's #1793 comment 5984295586 section C, the advisor's 5984314233 (3); the law's (h), **L** the line's own read of the packet's family): the generator's exact before level advances every component of a packet by its family's own band, cos omega(q) = (num / den) (cos q_x + cos q_y + cos q_z) / 3, the massless band its case at num = den; a plane wave cos(k x) at k = pi / 4 over a periodic box of 8 Nodes has one component, so its before level is A cos(k x + omega) rounded once half up, omega from that formula in the test's own floats, at matter's pair [4000, 6000] and at the charge's [6000, 6000]."""
+    """R370 (the reviewer's #1793 comment 5984295586 section C, the advisor's 5984314233 (3); the law's (h), **L** the line's own read of the packet's family): the generator's exact before level advances every component of a packet by its family's own band at the vacuum its family reads, the line's own read 2 w cos omega(q) = S + SUM over the six Ports of R cos q_a at the content of the declared rests (`vacuum_of`, `band_of`), which is (num / den) (cos q_x + cos q_y + cos q_z) / 3 at the content 0 and moves with the rest, the massless band its case at num = den; laid at the tests' universe's rest 60 and again at a rest 0 written beside; a plane wave cos(k x) at k = pi / 4 over a periodic box of 8 Nodes has one component, so its before level is A cos(k x + omega) rounded once half up, omega from that formula in the test's own floats, at matter's pair [4000, 6000] and at the charge's [6000, 6000]."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     plane = {**PACKET, "top": {"x": [0, 7], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 0, "y": 0, "z": 0}}
     box = {"shape": [8, 1, 1], "boundary": {axis: "periodic" for axis in "xyz"}, "faces": []}
     for family, (num, den) in (("matter", (4000, 6000)), ("charge", (6000, 6000))):
-        path = slit_world(tmp_path, TOOL, family, packets=[{**plane, "family": family}], **box)
-        entry = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"][0]
-        omega = math.acos(num / den * (math.cos(math.pi / 4) + 2) / 3)  # the family's own band
-        before = np.floor(1328 * np.cos(math.pi / 4 * np.arange(8) + omega) + 0.5).astype(int)
-        assert dense(entry["moving"]["before"], (8, 1, 1)).ravel().tolist() == before.tolist()
+        for rest in (None, 0):  # the file's rest, then the vacuum content 0 declared beside
+            path = slit_world(tmp_path, TOOL, family, packets=[{**plane, "family": family}], **box)
+            if rest is not None:
+                universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+                universe["families"][0]["held"]["rest"] = rest
+                (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+                TOOL.main(["--input", str(path)])
+            entry = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"][0]
+            pair, gamma, content, unit = vacuum_of(path, family)
+            plain = num / den * (math.cos(math.pi / 4) + 2) / 3  # the band at the content 0
+            cosine = band_of(pair, gamma, content, unit, math.cos(math.pi / 4), 1, 1)  # the line's read
+            assert pair == (num, den) and math.isclose(cosine, plain) == (content == 0) == (rest == 0)
+            before = np.floor(1328 * np.cos(math.pi / 4 * np.arange(8) + math.acos(cosine)) + 0.5)
+            assert (
+                dense(entry["moving"]["before"], (8, 1, 1)).ravel().tolist()
+                == before.astype(int).tolist()
+            )

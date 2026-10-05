@@ -4,7 +4,7 @@
  "family": "matter",
  "window": [
   1,
-  1000
+  400
  ],
  "lay": {
   "kind": "fixed_point",
@@ -30,7 +30,7 @@
     12
    ],
    "quanta": 10000,
-   "intervals": 1000,
+   "intervals": 400,
    "stop": 2
   },
   "standing_17": {

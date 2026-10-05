@@ -1279,17 +1279,20 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
     return found
 
 
-def advanced_real_part(
-    real_now: np.ndarray, real_quadrature: np.ndarray, pair: tuple[int, int]
-) -> np.ndarray:
-    """The exact lay's before level in the tool's floats (ALGEBRA.md, The packet lay, the law's (h): **L** the line's own read of the packet's family; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3); the family's pair, R370, the reviewer's 5984295586 section C and the advisor's 5984314233 (3)): the packet z = a + i s over the board, a the now level and s its quadrature on the real line, its transform over the board's shape (the board's periodic extension; numpy's bin m is the component e^(+i 2 pi m x / L)), every component advanced by its own omega(q), **L**'s eigenvalue on e^(i q x) at the vacuum's paces, cos omega(q) = (num / den) (cos q_x + cos q_y + cos q_z) / 3 at the family's pair [num, den] (`pair`, the Board's) and the board's wave numbers q_a = 2 pi m_a / L_a, the massless band its case at num = den, and sin omega(q) the positive root, omega(q) in [0, pi] (the lay's sense, (**L** + i sqrt(1 - **L**^2)) z), and the real part of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, the backward root 0; one plane wave over a periodic box has one component and gives b cos(k x + phi + omega), the plain lay at its family's own band."""
+def advanced_real_part(real_now: np.ndarray, real_quadrature: np.ndarray, rule: node.Rule) -> np.ndarray:
+    """The exact lay's before level in the tool's floats (ALGEBRA.md, The packet lay, the law's (h): **L** the line's own read of the packet's family at the paces of the vacuum the packet is laid in; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3); the family's pair, R370, the reviewer's 5984295586 section C and the advisor's 5984314233 (3); the declared rest's paces, the mathematician's 5985967677 (4) with the advisor's second 5986066894 (6)): the packet z = a + i s over the board, a the now level and s its quadrature on the same envelope, transformed over the board's shape, every component advanced by its own omega(q) and the real part returned; cos omega(q) the line's dispersion from `rule` (Rule3's integers at the content the packet's family reads where nothing is laid, the declared rests of its content holders, `rule_of`; the six reads R, the self coefficient S and the wall w, one number each at a uniform content): 2 w cos omega(q) = S + SUM over the six Ports of R_ij cos q_a, each Port's read times the cosine of its axis's wave number, which is (num / den) (cos q_x + cos q_y + cos q_z) / 3 at the content 0 and the same band at the effective Gamma of the declared rest (ALGEBRA.md, The vacuum content, item 22: every reader's paces are Gamma - 2 c_vac), clipped to [-1, 1] (a component above the band's top is advanced as the top, none in a packet of the shipped designs)."""
     imaginary = complex(0, 1)
     wave_numbers = [
         (2 * np.pi * np.fft.fftfreq(extent)).reshape([-1 if a == axis else 1 for a in range(3)])
         for axis, extent in enumerate(real_now.shape)
     ]
-    num, den = pair
-    omega = np.arccos(np.clip(num / den * sum(np.cos(q) for q in wave_numbers) / 3, -1, 1))
+    reads, self_coefficient, wall = rule
+    ports = (
+        int(np.asarray(read).ravel()[0]) for read in reads
+    )  # the six Ports, [+X, -X, +Y, -Y, +Z, -Z]
+    arrived = sum(read * np.cos(wave_numbers[port // 2]) for port, read in enumerate(ports))
+    doubled = int(np.asarray(self_coefficient).ravel()[0]) + arrived  # 2 w cos omega(q)
+    omega = np.arccos(np.clip(doubled / (2 * int(np.asarray(wall).ravel()[0])), -1, 1))
     packet = np.fft.fftn(real_now + imaginary * real_quadrature)
     advanced = packet * (np.cos(omega) + imaginary * np.sin(omega))
     return np.asarray(np.real(np.fft.ifftn(advanced)))
@@ -1313,6 +1316,20 @@ def wave_of(packet: dict[str, Any], label: str) -> tuple[int, int]:
     return turns, halves
 
 
+def vacuum_of(universe: dict[str, Any], family: str, board: Board) -> int:
+    """The content a packet's record reads where nothing is laid, the paces its lay is exact at (ALGEBRA.md, The vacuum content, item 22; the law's (h), **L** the line's own read at the vacuum's paces): the held rows of the content its family reads at their declared rests, each row's rest from nothing plus its vacuum content, summed as the bodies' lays read them (`rests`, the same act on no counts), one number over the board; 0 where the family reads no holder of the content (the drives and the photons of the atom worlds). A packet is laid in the vacuum and reads no body's well: a packet laid in a well is laid at the well's paces by no act of the generator."""
+    rows = rows_read(universe, family, False)
+    if not rows:
+        return 0
+    content = rests(rows, np.zeros(board.shape, dtype=np.int64), board)
+    if int(content.min()) != int(content.max()):
+        raise ValueError(
+            f"the rests the family {family!r} reads are not one content over the board, {int(content.min())} to "
+            f"{int(content.max())}: a packet is laid at one vacuum (ALGEBRA.md, The packet lay)"
+        )
+    return int(content.max())
+
+
 def packet_levels(
     board: Board,
     packet: dict[str, Any],
@@ -1320,8 +1337,9 @@ def packet_levels(
     massless: bool,
     largest: Axis,
     label: str,
+    content: int = 0,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The packet's two levels (ALGEBRA.md #the-generator, The packet lay): now_i = b e_i cos(k x_i + phi), k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`); every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. The before level is the exact lay (ALGEBRA.md, The packet lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): with a = b e cos(k x + phi) the now level and s = b e sin(k x + phi) its quadrature (the cosine a quarter turn back), z = a + i s is the packet, every component e^(i q x) of z is advanced by its own omega(q), and the before level is Re of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; the generator lays it mode by mode in real arithmetic (the tool's floats, exact to 10^-13 of the amplitude), a and s read at the lay's scale over the whole board and the packet advanced through its transform over the board at its largest declared extents (`largest`: along an axis with a receding face the extent the board grows to, the file's `receding.largest`, the packet at its coordinates and the before level cropped to the board as declared, so that a world growing by its receding face lays the levels of the same world declared at the full extent up to the division act on the board's own sums, and no tail wraps across a receding face; an axis without one keeps its extent, a periodic axis wrapping as it should; `advanced_real_part`), rounded once half up to integers (`half_up`) as the now level is by the division act with the half. The exact before level is not compactly supported (sqrt(1 - **L**^2) is no local read), so a packet whose quadrature sums to S level units carries a tail of order S / (2 pi sqrt 3 r^3) at r Links, one unit at twenty Links for the two slits. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is then taken out of each level, the division act last on the finished shape (`lay.corrected`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The packet lay; the experimenter's bug report, #1827 comment 5975131359)."""
+    """The packet's two levels (ALGEBRA.md #the-generator, The packet lay): now_i = b e_i cos(k x_i + phi), k = pi p / q per Link along its axis (`wave`, p below 0 the packet toward the axis's lower side) with a wave number per axis across the beam (`transverse`, 0 without the key; k x_i then stands for the wave vector's product with the Node's coordinates), phi = 2 pi r / s its phase (`phase`, 0 without the key), b the amplitude, e_i the envelope (the product of the three axes' raised cosines, `top` and `edge`); every cosine by the rotation act at a unit derived from the width, the turn cut into the least steps that hold every fraction (a multiple of 2 x 2 q on each axis and of s); 0 beyond the board. The before level is the exact lay (ALGEBRA.md, The packet lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)): with a = b e cos(k x + phi) the now level and s = b e sin(k x + phi) its quadrature (the cosine a quarter turn back), z = a + i s is the packet, every component e^(i q x) of z is advanced by its own omega(q), and the before level is Re of the advanced packet, before = **L** a - sqrt(1 - **L**^2) s exactly, **L** the line's own read whose eigenvalue on e^(i q x) is cos omega(q), the backward root 0; the generator lays it mode by mode in real arithmetic (the tool's floats, exact to 10^-13 of the amplitude), a and s read at the lay's scale over the whole board and the packet advanced through its transform over the board at its largest declared extents (`largest`: along an axis with a receding face the extent the board grows to, the file's `receding.largest`, the packet at its coordinates and the before level cropped to the board as declared, so that a world growing by its receding face lays the levels of the same world declared at the full extent up to the division act on the board's own sums, and no tail wraps across a receding face; an axis without one keeps its extent, a periodic axis wrapping as it should; `advanced_real_part`), rounded once half up to integers (`half_up`) as the now level is by the division act with the half. The exact before level is not compactly supported (sqrt(1 - **L**^2) is no local read), so a packet whose quadrature sums to S level units carries a tail of order S / (2 pi sqrt 3 r^3) at r Links, one unit at twenty Links for the two slits. For a massless family of quanta (`massless`, the pair [den, den]; a holder of the content's kick is laid as declared) the uniform mode's content is then taken out of each level, the division act last on the finished shape (`lay.corrected`: the level's sum over the board divided among the packet's Nodes in proportion to the envelope by the division act, the leftover one unit each at the heaviest Nodes), so that now and before each sum to 0 exactly and the massless row's double root at wave number 0 carries neither level nor velocity (ALGEBRA.md, The packet lay; the experimenter's bug report, #1827 comment 5975131359). `content` is the vacuum the packet is laid in, the declared rests of the content holders its family reads (`vacuum_of`, 0 where it reads none): the before level's advance is the line's own read at that content's paces (`rule_of`, `advanced_real_part`), so the lay is the step's exact two-level state at the paces of its world (the mathematician's #1793 comment 5985967677 (4), the advisor's second on #1948, 5986066894 (6))."""
     along, (turns, halves) = AXES.index(str(packet["along"])), wave_of(packet, label)
     turned, whole_turn = packet["phase"]
     sideways = {
@@ -1370,7 +1388,11 @@ def packet_levels(
         whole[within] = np.vectorize(lambda numerator: numerator / scale, otypes=[float])(level)
     levels = [
         np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, now + half)[0])),
-        np.where(beyond, 0, half_up(advanced_real_part(extended[0], extended[1], board.pair)[within])),
+        np.where(
+            beyond,
+            0,
+            half_up(advanced_real_part(extended[0], extended[1], rule_of(board, content))[within]),
+        ),
     ]
     # the one lay act's correction last (`lay.corrected`): for a massless family the uniform mode's
     # content out of each level in proportion to the envelope, so that each sums to 0 over the board
@@ -1393,15 +1415,16 @@ def packet_entry(
     family: FamilyRule,
     label: str,
     largest: Axis,
+    content: int = 0,
 ) -> dict[str, Any]:
-    """One packet's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `Lattice.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes."""
+    """One packet's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `Lattice.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes. The vacuum's paces are those of `content`, the declared rests the packet's family reads (`vacuum_of`): the lay and its count at the paces of the world it is laid in, the books' count at the start."""
     massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
-    now, before = packet_levels(board, packet, beyond, massless, largest, label)
+    now, before = packet_levels(board, packet, beyond, massless, largest, label, content)
     weights = (1,) if family.plane else laid_weights(packet, label, family)
     counted = (
         weights[:1] if family.wronskian else weights
     )  # the books read a sign holder's time line alone
-    total = sum(share_of(board, 0, w * now, w * before) for w in counted)
+    total = sum(share_of(board, content, w * now, w * before) for w in counted)
     whole = (
         int(np.asarray(total, dtype=object).sum()) * family.parts
     )  # the board's total, the parts laid alike
@@ -1507,7 +1530,10 @@ def pixel_mode(
         slot = records[len(bodies) + number]
         rule = families[names.index(family)]
         massless = rule.quanta and rule.pair[0] == rule.pair[1]
-        laid_pair = packet_levels(board, packet, beyond, massless, largest, f"packets[{number}]")
+        content = vacuum_of(universe, family, board)  # the declared rests the packet reads
+        laid_pair = packet_levels(
+            board, packet, beyond, massless, largest, f"packets[{number}]", content
+        )
         laid_packets.append((names.index(family), slot, [laid_pair]))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
@@ -1629,17 +1655,21 @@ def pixel_mode(
             entries.append(entry)
     for body, entry in zip(bodies, entries, strict=True):
         body["nodes"] = entry.pop("nodes")
-    packets = [
-        packet_entry(
-            board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])]),
-            packet,
-            beyond,
-            family_of(universe, str(packet["family"])),
-            f"packets[{number}]",
-            largest,
+    packets = []
+    for number, packet in enumerate(document_packets):
+        board = board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])])
+        content = vacuum_of(universe, str(packet["family"]), board)  # the declared rests it reads
+        packets.append(
+            packet_entry(
+                board,
+                packet,
+                beyond,
+                family_of(universe, str(packet["family"])),
+                f"packets[{number}]",
+                largest,
+                content,
+            )
         )
-        for number, packet in enumerate(document_packets)
-    ]
     return {"world_digest": input_digest(document), "bodies": entries, "packets": packets}
 
 
