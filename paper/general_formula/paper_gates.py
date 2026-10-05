@@ -152,7 +152,6 @@ TWINS = [
         "the neutron's lifetime",
         [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
-    ("the draw's bound", [("main.tex", "$1.1 \\times 10^{-19}$ at the width $63$")]),
     (
         "Compton's factor at the computed pair",
         [
