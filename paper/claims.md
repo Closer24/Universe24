@@ -181,7 +181,7 @@ Rows with a claim mark: 105, 1 with a breaker written; rows of a derived, comput
 | 61 | 240 | sec:builds > sec:body | bound | \begin{proposition}[the stable bound state, under the dilation and to first order in the well]\label{th:stable} |
 | 62 | 241 | sec:builds > sec:body | fixed point | For power-law kernels, at a fixed point of the binding potential the virial $2K = \sum_r \sigma_r s_r V_r$ holds, $\sigma_r = +1$ for a hollow and $-1$ for a hill, and th... |
 | 63 | 241 | sec:builds > sec:body | bound | A bound state is stable along the dilation only where this sum is positive; the statement is along the dilation alone, and a full minimum of $F$ would need the Hessian's ... |
-| 64 | 244 | sec:builds > sec:body | bound | The factor $s(2 - s)$ is $+1$ at $s = 1$, $0$ at $s = 2$ and $-3$ at $s = 3$: a massless potential holds the bound state, Poisson's well in a box having one minimum for e... |
+| 64 | 244 | sec:builds > sec:body | bound | Derived in S.45 by Derrick's scaling and Pohozaev's identity on the lattice, for the continuous functional and to first order in the well, the integer step's version open... |
 | 65 | 246 | sec:builds > sec:body | bound | The criterion is a rule of reading: what nature splits with energy is read as a bound state, and what no energy splits as a quantum of a field, a quantum itself never bre... |
 | 66 | 248 | sec:builds > sec:bodyclicks | bound | \subsection{A bound state's clicks}\label{sec:bodyclicks} |
 | 67 | 250 | sec:builds > sec:bodyclicks | bound | What a NodeDetector reads of a bound state follows from its configuration and the paces, with no further line, and none of it is the result of a run. |
