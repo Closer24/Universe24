@@ -200,8 +200,10 @@ the journal.
   writer holds them; the author checks the journal's page before submitting,
   the venues' pages being unreachable from the writer's session). Met for the five
   figures the short version keeps (the lattice and the octahedron, the bands, the click,
-  the two slits' rows, the moving clock): drawn 174 mm or 129 mm wide with every
-  lettering 8 pt or above at the drawn size (the panel letters 9 pt), redrawn on 2026-10-05;
+  the two slits' rows, the moving clock): drawn 131 mm (the text width of `sn-jnl`'s
+  `sn-mathphys-num`, 372 pt, one column) or 129 mm wide with every lettering 8 pt or
+  above at the drawn size (the panel letters 9 pt), redrawn on 2026-10-05, the click
+  figure still at 174 mm until its two panels are laid out again for 131 mm;
   the method figure (6.2 to 8 pt) and the frames leave for the report and the supplement.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.

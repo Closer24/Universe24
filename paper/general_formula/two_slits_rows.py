@@ -88,7 +88,7 @@ def world(ax: Axes) -> None:
     ax.add_patch(Rectangle((WALL_X, 0), 1, HEIGHT, facecolor=INK, edgecolor="none"))
     for lo, hi in GAPS:
         ax.add_patch(Rectangle((WALL_X, lo), 1, hi - lo + 1, facecolor="white", edgecolor="none"))
-    ax.text(WALL_X + 2.0, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=8)
+    ax.text(WALL_X + 1.2, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=8)
     # the screen: twelve regions of four rows
     for r in range(12):
         y = r * ROWS_PER_REGION
@@ -180,7 +180,7 @@ def rows(ax: Axes) -> None:
 
 
 def two_slits_rows(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(6.85, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
+    fig, axes = plt.subplots(1, 2, figsize=(5.16, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
     world(axes[0])
     rows(axes[1])
     fig.subplots_adjust(left=0.01, right=0.995, top=0.95, bottom=0.17, wspace=0.18)
