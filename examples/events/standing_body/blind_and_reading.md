@@ -12,6 +12,8 @@ the mode file before any run. The reading is appended here after the run; every 
 reading labelled so (`tools/body_standing.py`); a reading that misses the blind is a finding,
 written as such and never adjusted.
 
+Since the owner's word of 2026-10-04 (ALGEBRA.md, The vacuum content, item 22: the vacuum content 60 declared in every universe file above the holders' swing over the declared run, a fence for the declared run and not a cure) `standing_15.json` declares its run at n = 400 intervals and not 1000: the fence of 60 covers about 470 intervals on this 25-cube (the advisor's run of the lay regenerated at the rest 60 by `tools/pixel_mode.py`, the first Node at or below the content 0 at interval 475, as at 471 on matter_alone; over 400 the lowest content 19 and no Node at or below 0), and the integer budget's least T for this lay (2,373 Nodes carrying 9,982 quanta, the largest count at a Node 36) at the tolerance [1, 32] is 16,384 at 400 intervals against the file's 32,768 (65,536 at 1,000), so the declared run moves and the vacuum content does not; the blind's numbers at n = 400 are re-derived at the control run and not here.
+
 ## The blind (167 with the advisor's second hand)
 
 1. **The drift** (read 1, the centroid of the share): each component below

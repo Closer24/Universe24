@@ -417,7 +417,9 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
 def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_path, monkeypatch):
     """A count is one quantum of the invariant, the form T sin omega_0 of the family's gap (the two hands' word on #1793's R8): the taker's lay carries 2 A^2 sin omega = T per quantum per line to the unit, the family's wall is W_c sin omega_0 by one root on the whole product and 3 den T for a massless family, the [1, 1299] amplitude is unchanged, and the generator lays a body's declared count in that unit (the books' count of a bound body at the lay is the share at the Nodes' paces under its own well, a reading above the declaration on main before this branch, 13 for 6 on the tests' chain, and no part of this change)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = chain_body_world(tmp_path, TOOL, 7)
+    world = chain_body_world(
+        tmp_path, TOOL, 8
+    )  # a body of 8: at the declared rest 60 the lay of 7 cycles
     board = Lattice(load_world(world))
     names, action = [family.name for family in board.families], board.world.quantum_action
     matter, light = board.families[names.index("matter")], board.families[names.index("charge")]
@@ -438,7 +440,7 @@ def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_pat
     )  # W_c sin omega_0 to the unit
     laid_body = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["bodies"][0]
     assert (
-        laid_body["count"] == laid_body["carried"] == 7
+        laid_body["count"] == laid_body["carried"] == 8
     )  # the generator lays the declaration in that unit
 
 

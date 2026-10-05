@@ -1,9 +1,9 @@
 """The two slits: the declared file and its screen's row, the blind beside the law's real line.
 
-(a) The GameBoard as the file declares it (examples/events/two_slits/two_slits.json, read through
-design.json): the flat GameBoard of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
+(a) The lattice as the file declares it (examples/events/two_slits/two_slits.json, read through
+design.json): the flat lattice of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
 laid over the columns 4 to 16, the wall at the column 20 with its two gaps of three rows 12 Links
-apart, the screen at the column 44, twelve declared NodeReaders of four rows each. (b) The screen's
+apart, the screen at the column 44, twelve declared NodeDetectors of four rows each. (b) The screen's
 row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
 world by the paper's script two_slits_real_line.py at the lay as the frozen commit 7756546d holds it (N = 284.50 in the
@@ -103,7 +103,12 @@ def world(ax: Axes) -> None:
             )
         )
     ax.text(
-        SCREEN_X + 0.5, -1.2, "the screen:\n12 NodeReaders\nof 4 rows", ha="center", va="top", fontsize=7
+        SCREEN_X + 0.5,
+        -1.2,
+        "the screen:\n12 NodeDetectors\nof 4 rows",
+        ha="center",
+        va="top",
+        fontsize=7,
     )
     ax.annotate(
         "",
@@ -149,7 +154,7 @@ def rows(ax: Axes) -> None:
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label="the law's real line on the same file ($N = 269.18$)",
+        label=f"the law's real line on the same file ($N = {REAL_N:.2f}$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])

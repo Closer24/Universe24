@@ -50,6 +50,7 @@ def universe(design: dict[str, Any]) -> dict[str, Any]:
                     "sources": ["form", "tensions"],
                     "level_weight": 1000,
                     "write_weight": 1,
+                    "rest": 60,
                     "act": "pace",
                 },
             },

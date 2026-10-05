@@ -3,7 +3,7 @@
 script exits non-zero on any.
 
 1. The marks: every \\claimmark carries one of the key's words of Section 1 (theorem, derived, computed, assumption,
-   hypothesis, experiment, fitted, inspiration) and every \\fence one of its two fences (clicks, GameBoard); a derived
+   hypothesis, experiment, fitted, inspiration) and every \\fence one of its two fences (clicks, lattice); a derived
    or theorem mark stands beside a fence inside its own parenthesis (R191 (g)).
 2. The stale phrases: the words tonight's prints struck (R162 to R196, W1 to W29) stand nowhere; a hand adds a phrase
    to the list when a print strikes it, and the gate keeps it struck.
@@ -12,6 +12,8 @@ script exits non-zero on any.
 
 4. The derivations' Inputs graph: no cycle among the supplement's Inputs lines beyond the ones named in
    claims_table.KNOWN_CYCLES, a set that may only shrink (the owner's question of 2026-10-04 on circularity).
+5. The bare board: the lattice is named by its one noun; a bare "board" or the implementation's old "GameBoard"
+   stands only inside a cited document's title (the owner's question of 2026-10-04 on two names for one thing).
 
     python paper/general_formula/paper_gates.py
 """
@@ -38,7 +40,7 @@ MARKS = {
     "fitted",
     "inspiration",
 }
-FENCES = {"clicks", "gameboard"}
+FENCES = {"clicks", "lattice"}
 
 # the phrases the prints struck, with the finding that struck each (the hands add a line with its finding)
 STALE = [
@@ -92,7 +94,7 @@ STALE_PATTERNS = [
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
 STALE_ALLOWED = {
     "never one Node": [
-        "A NodeReader with Nodes alone is one connected region of two Nodes or more declared in the file, never one Node"
+        "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the file, never one Node"
     ],
 }
 
@@ -140,7 +142,7 @@ TWINS = [
                 "main.tex",
                 "$N = 284$ units of $W_c$ at both seeds ($659$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$",
             ),
-            ("main.tex", "the run $N = 284$ at both of its seeds in the NodeReader's unit"),
+            ("main.tex", "the run $N = 284$ at both of its seeds in the NodeDetector's unit"),
             ("main.tex", "the two slits' $284$ at both seeds stands against it"),
             ("main.tex", "The run of the implementation gives $N = 284$ at both seeds"),
             ("supplement.tex", "The two slits' $284$ units are $659$ photons"),
@@ -266,6 +268,24 @@ def gate_twins(texts: dict[str, str]) -> list[str]:
     return misses
 
 
+BOARD = re.compile(r"\b(?:Game)?[Bb]oard('s)?\b")
+
+
+def gate_board(texts: dict[str, str]) -> list[str]:
+    """The misses: a bare "board" or "GameBoard" for the lattice outside a cited document title (the paper's one noun)."""
+    misses = []
+    for name, text in texts.items():
+        for match in BOARD.finditer(text):
+            before = text[: match.start()]
+            opened = before.rfind("\\cite[")
+            if opened >= 0 and "]" not in before[opened:]:
+                continue
+            misses.append(
+                f"{name}: a bare 'board' or 'GameBoard' at line {line_of(text, match.start())}: {text[max(0, match.start() - 40) : match.end() + 20]!r}"
+            )
+    return misses
+
+
 def gate_scripts(texts: dict[str, str]) -> list[str]:
     """The derived and computed marks of the main text that name no derivation script (the Boss's rule of 2026-10-04,
     #1793 comment 5975147735): a ratchet, the count may only fall; it reaches 0 with part 4's map of marks to scripts."""
@@ -286,6 +306,7 @@ def main() -> int:
         ("the stale phrases", gate_stale),
         ("the twins", gate_twins),
         ("the derivations' Inputs graph", lambda texts: gate_inputs_graph(texts["supplement.tex"])),
+        ("the bare board", gate_board),
     ):
         misses = run(texts)
         print(f"{gate}: {len(misses)} miss{'es' if len(misses) != 1 else ''}")

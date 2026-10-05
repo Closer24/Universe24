@@ -72,7 +72,7 @@ def faces() -> list[list[tuple[int, int, int]]]:
 
 def lattice(output: Path) -> None:
     panel = "(a)"
-    """The GameBoard in space: 6 x 6 x 6 Nodes, the Links faint, one Node and its six neighbours marked."""
+    """The lattice in space: 6 x 6 x 6 Nodes, the Links faint, one Node and its six neighbours marked."""
     n = 6
     fig = plt.figure(figsize=(SIDE, SIDE))
     ax = fig.add_subplot(111, projection="3d")

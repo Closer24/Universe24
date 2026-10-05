@@ -240,7 +240,7 @@ def gravity_of_light_factor_one() -> Row:
     chain = weak_field.gravity_of_light()
     plain_ratio = plain_travelling / resting[1] ** 2
     return Row(
-        "tab:adds: The gravity of light a light packet pulls at 1 times E c2 ag",
+        "tab:adds: The gravity of light a light packets integrated write at 1 t",
         worst < 1e-9 and abs(factor - 1) < 1e-12 and abs(chain[0] - 1) < 1e-9 and chain[1] == 2,
         abs(plain_ratio - 0.5) < 1e-12,
         f"D = A^2 sin^2 omega at every Node over 12 intervals to {worst:.1e}; the write per quantum travelling over resting {factor:.12f} (weak_field's {chain[0]:.9f}), general relativity's {chain[1]}; the plain read now^2: travelling over resting {plain_ratio:.3f} at t = 0",

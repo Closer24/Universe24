@@ -27,11 +27,11 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         rows.cube_group_commutes_with_rule3,
     ),
     (
-        "Beyond P the mode at wave number pi on every axis grows with",
+        "Beyond P the extreme mode grows without bound the mode at wa",
         rows.guard_bounds_the_pi_mode_at_fixed_coefficients,
     ),
     (
-        "In the clicks there are conservations other than the boards",
+        "In the clicks there are conservations other than the lattice",
         forms.boards_conservations_are_the_form_and_the_wronskian,
     ),
     (
@@ -51,16 +51,16 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         forms.regions_share_changes_by_boundary_currents,
     ),
     (
-        "The total share of a closed or periodic GameBoard is nonnega",  # the paper's key, verbatim
+        "The total share of any lattice whose Links read the same fro",
         forms.total_share_nonnegative_inside_the_guard,
     ),
-    ("The direction of time belongs to the clicks and not to the b", rows.the_step_is_a_bijection),
+    ("The direction of time belongs to the clicks and not to the l", rows.the_step_is_a_bijection),
     (
         "The line without its division conserves it exactly with the",
         forms.wronskian_conserved_by_the_line_at_static_paces,
     ),
     (
-        "Its total over the GameBoard is invariant under any change o",  # the paper's key, verbatim
+        "Its total over the lattice is invariant under any change of",
         forms.wronskian_total_under_a_change_of_paces,
     ),
     ("The exact angle of the shears is 2arctanL p0 2Gamma2 which i", rows.shears_exact_angle),
@@ -92,7 +92,7 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         derived.bands_inertia_and_kinetic_scale,
     ),
     (
-        "tab:adds: The postNewtonian parameters with the gap gammaK den num bet",
+        "tab:adds: The postNewtonian parameters with the gap for 0 num le den g",
         derived.ppn_parameters_against_kepler,
     ),
     (
@@ -219,7 +219,7 @@ REGISTRY_TWO: tuple[tuple[str, Callable[[], Row]], ...] = (
     ),
     ("S.28", derived_two.lens_one_formula_for_light_and_matter),
     (
-        "tab:adds: The gravity of light a light packet pulls at 1 times E c2 ag",
+        "tab:adds: The gravity of light a light packets integrated write at 1 t",
         derived_two.gravity_of_light_factor_one,
     ),
     (

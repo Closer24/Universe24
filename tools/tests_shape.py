@@ -266,6 +266,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "(the law's (h), L the line's own read), the massless band its case at num = den (#1793 comments 5984295586, "
         "5984314233; the Boss's grant 5984406201)",
     ),
+    "tests/test_the_vacuum_content_above_the_swing.py::test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content_inside_the_edge": (
+        60,
+        "F2 fenced by way (alpha), the owner's words of 2026-10-04: the vacuum content at 60 above the holders' swing over "
+        "the declared run; the Boss's grant of 60 lines",
+    ),
     "tests/test_the_emission_node.py::test_the_neutron_readers_rows_stand_at_the_conversions_drawn_node": (
         16,
         "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (the experimenter's tool notes, #1827 "

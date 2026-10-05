@@ -8,7 +8,7 @@ light at the vacuum's paces in real arithmetic (floating point: no integer divis
 remainder) on the same declared world: the flat board with its third axis folded (the Node itself
 through both z Ports), the wall's Nodes beyond the board read as 0, the y faces open (read as 0),
 the x faces receding (zeros without end, by a padding no signal crosses within the run), the
-emitter the law's message lay now_i = b e_i cos(k x_i) under the raised-cosine envelope e_i and
+emitter the law's packet lay now_i = b e_i cos(k x_i) under the raised-cosine envelope e_i and
 before_i the exact before level, the packet now + i quadrature advanced mode by mode by its own band
 phase (the generator's act at the frozen commit, tools/pixel_mode.advanced_real_part), and the screen's twelve regions read exactly as the engine
 reports them: the net current through each region's front boundary Ports, F = num (now_i before_j
@@ -65,7 +65,7 @@ PORTS: tuple[tuple[int, int], ...] = ((0, 1), (0, -1), (1, 1), (1, -1))
 
 @dataclass(frozen=True)
 class Packet:
-    """The message as the file lays it along x: its wave number k per Link, its amplitude b and the
+    """The packet as the file lays it along x: its wave number k per Link, its amplitude b and the
     raised cosine's flat top and half-width on each axis of the plane."""
 
     wave_number: float
@@ -197,7 +197,7 @@ def line_of(world: World, family: int) -> Line:
 
 def board_of(world: World, screen: list[str]) -> Board:
     """The flat board from the loaded world: refused by name where the world is not the two slits'
-    kind of world (a flat board with z folded, one message along x with no phase and no transverse
+    kind of world (a flat lattice with z folded, one packet along x with no phase and no transverse
     wave, regions with declared Nodes)."""
     if world.shape[2] != 1 or not world.periodic[2] or world.periodic[0] or world.periodic[1]:
         raise ValueError(
@@ -251,12 +251,12 @@ def raised_cosine(extent: int, top: tuple[int, int], edge: int) -> np.ndarray:
 
 
 def law_lay(board: Board, line: Line) -> tuple[np.ndarray, np.ndarray]:
-    """The message lay in real arithmetic over the declared board, the law's (h) with the generator's exact
+    """The packet lay in real arithmetic over the declared lattice, the law's (h) with the generator's exact
     before level (the law's line (c)): now_i = b e_i cos(k x_i), and before_i the real part of the packet
     b e_i (cos k x_i + i sin k x_i) advanced mode by mode by its own band phase omega(q) over the board's
     transform (`tools/pixel_mode.advanced_real_part`, the generator's own function), the plane record's
     level one interval earlier; e_i the product of the two axes' raised cosines; 0 at every Node beyond
-    the board. The message lay carries no uniform mode: the sums over the board of
+    the lattice. The packet lay carries no uniform mode: the sums over the lattice of
     the levels now and of the levels before are each 0, the uniform component taken out of each level at
     the lay by the division act (the level's sum divided among the packet's Nodes in proportion to the
     envelope), here in real arithmetic and with no remainder."""
@@ -316,7 +316,7 @@ def real_line(
 ) -> dict[str, np.ndarray]:
     """The law's line stepped `ticks` intervals; per declared region the net front inflow in the
     current's units at the pair after t steps, for t from 0 through ticks (the engine's click at the
-    tick t reports the pair after t - 1 steps). The x faces recede: the board is padded with zeros
+    tick t reports the pair after t - 1 steps). The x faces recede: the lattice is padded with zeros
     farther than a signal travels in the run (one Link per interval), so nothing returns; with
     `source_open` the low x face is the open face instead, read as 0 (the meeting round's world)."""
     padding = board.ticks + 1

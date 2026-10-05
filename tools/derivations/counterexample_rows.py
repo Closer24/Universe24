@@ -195,7 +195,7 @@ def guard_bounds_the_pi_mode_at_fixed_coefficients() -> Row:
             f"[{num}, {den}] Gamma {gamma} P {edge}: beyond P {float(lowest):.3f}, parametric {float(alternating):.2e}"
         )
     return Row(
-        "Beyond P the mode at wave number pi on every axis grows with",
+        "Beyond P the extreme mode grows without bound the mode at wa",
         inside,
         beyond and parametric,
         "; ".join(witnesses[:3]) + " ...",
@@ -255,7 +255,7 @@ def the_step_is_a_bijection() -> Row:
             now, before, remainders = before, [b[0] for b in back], [b[1] for b in back]
         returns &= (before, now, remainders) == start
     return Row(
-        "The direction of time belongs to the clicks and not to the b",
+        "The direction of time belongs to the clicks and not to the l",
         returns and injective,
         None,
         "10 steps forward and 10 back on 3x3x3 at 3 pairs return the state bit for bit; the 10 images distinct; the click's draw is the engine's act, no outside here",

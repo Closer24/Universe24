@@ -157,7 +157,10 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     board = Lattice(load_world(hand_world(tmp_path, "cube", world, body, mode)))
     matter, gravity, centre, moved = board.states[MATTER], board.states[GRAVITY], (4, 4, 4), []
     holders = [s for f, s in zip(FAMILIES, board.states, strict=True) if f.held and not f.wronskian]
-    for level in (holder.lines[0].now for holder in holders if holder.lines[0].now[centre] > 0):
+    rests = [f.rest for f in FAMILIES if f.held and not f.wronskian]  # the well is above the rest
+    for level in (
+        t - r for t, r in zip((s.lines[0].now for s in holders), rests, strict=True) if t[centre] > r
+    ):
         near = by_hand(level, centre)
         assert len(set(near)) == 1 and 0 < near[0] < int(level[centre]), near
     for _ in range(4):
