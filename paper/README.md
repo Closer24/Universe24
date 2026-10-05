@@ -23,7 +23,7 @@ potentials and the magnetic force (Section 8, Tables 1 and 2), the two
 hypotheses by name where they stand (Sections 7.5 and 10.2), and the one
 run the paper reports, the two slits' at the frozen commit (Section 3.7), and Bell's and the GHZ's
 values as evaluations of the declared credit, exact in the shares; the
-compact pixel's numbers stand only in the long version. The one run the
+compact pixel's numbers stand in the repository and not in the paper. The one run the
 paper reports is the two slits' (Section 3.7): the back-in-time gate's MATCH on its
 file, taken by the owner's word of 2026-10-01 ("if there is a run of
 the reversal that looks good and agrees with nature, take it"), and its screen's
@@ -39,14 +39,14 @@ their statuses.
   twice; it needs only its figures.
 - `general_formula/main.pdf`: the compiled paper at the same commit. The paper's pins:
   the implementation at the frozen commit 1fe3790a and the three documents (the law,
-  the engine's document, the decisions) at 1fe3790a, both of 2026-10-04.
+  the engine's document, the decisions) at the tagged release 1.1.0; the commit is of 2026-10-05.
 - `claims.md`: the paper's claims table, one row per marked sentence of the paper (its place,
   marks, fence, kind, the source the sentence gives, the breaker that could break it and its state),
   built by `general_formula/claims_table.py` at every print; `claims_breakers.json` holds the
   breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
+  its proof, Derivations S.1 to S.65, numbered independently of the paper's order, each naming its section,
   cited in the paper as (S.n), S.61 the engine's derivation table and S.62 the
   implementation's versions of the click's write and their readings, which stand
   there and not in the main text (the owner's word of 2026-10-03: a derivation
@@ -58,8 +58,8 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
-  generative tool, with 6.2 to 8 pt lettering at the drawn size (Figs. 1 and 2 are
-  included at that size, the other six at 0.66 to 0.75 of the text width), within the
+  generative tool, with 7 to 8 pt lettering at the drawn size (Figs. 3 and 5 are
+  included at 0.66 of the text width, the other five at the drawn size), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
@@ -86,7 +86,7 @@ their statuses.
   recorded in `figures/two_slits_frames.json` by `python paper/general_formula/two_slits_frames.py --look <world>.look.json`
   after `PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --ticks 130`)
   by `python paper/general_formula/two_slits_frames.py`. The folder holds
-  these eight figures, that recording and nothing else.
+  these seven figures (eight files), that recording and nothing else.
 - `general_formula/invariant_check.py`: S.14's check of the adiabatic invariant, the one-Node
   line stepped over 20,000 intervals with the rotation lowered from 0.841 to 0.600, D / sin(omega)
   within 4e-5 of its start (Section 7.4). Run with `python paper/general_formula/invariant_check.py`.
@@ -157,8 +157,8 @@ the marks (every `\claimmark` one of the key's eight words, every `\fence` one o
 beside every derived or theorem mark of the main text), the struck phrases (the words earlier prints
 removed, with the history forms "pending", "not yet", "earlier version" and their kin, none allowed
 back), and the twins (a number or a word printed in two places asserted equal). The derivation
-scripts' count is a ratchet the same test holds: of the 127 derived and computed marks of the main
-text, 117 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
+scripts' count is a ratchet the same test holds: of the 128 derived and computed marks of the main
+text, 118 name a script beside them (the derivation modules of `tools/derivations/`, each from Rule3's
 line alone with no engine import and no run's file, the paper's own check scripts, or, for a computed
 mark, the run's reader) and 10 name none: the qualitative statements (a body's four statements, the stable body's
 proposition, the three kinds of binding, the k^4 term's ten percent, the seat of the electromagnetic binding
@@ -179,13 +179,13 @@ the journal.
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
   and `abstract_journal.txt` beside it are one text of 250 words of prose
-  (273 tokens with the TeX signs), every formula in it the paper's.
+  (278 tokens in the plain-text copy), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
   Met; the system asks for the same at submission.
 - Data availability is stated (the Springer Nature policy). Met by the
-  Zenodo concept DOI; the version DOI is added at the release.
+  Zenodo concept DOI; the version DOI is added at the release. The code's licence is MIT, the preprint's CC BY 4.0.
 - A large language model is never an author; its use is documented in the
   method (the paragraph on how to read the paper) and in the statements; no figure is
   made by a generative tool. Met.
@@ -200,9 +200,9 @@ the journal.
   and the height at most 234 mm (Springer's general artwork guidelines, as the
   writer holds them; the author checks the journal's page before submitting,
   the venues' pages being unreachable from the writer's session). Met: the
-  four figures drawn 174 mm wide are
-  included at that size, their lettering 7 to 8 pt at the final size (the axes' labels 7 pt), and the four
-  drawn narrower at theirs.
+  figures drawn 174 mm wide are included at that size, their lettering 7 to 8 pt at
+  the final size (the axes' labels 7 pt); Figs. 3 and 5, drawn narrower, at 0.66 of
+  the text width.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
@@ -217,9 +217,9 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "40 pages, 7 figures, 6 tables; supplementary material of 36 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,711
-  characters counted with its TeX signs, below the cap, and is the paper's own abstract.
+  "41 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
+  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,692
+  characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
   scripts; it compiles under pdflatex in a clean directory, and no `.bbl`
@@ -227,8 +227,9 @@ the journal.
 - The licence: CC BY 4.0, the author's choice, irrevocable for a version;
   an announced paper is never removed.
 - The category: `quant-ph` as primary, since the paper's claim is about
-  measurement and Bell, with `gr-qc` (the weak-field forms) and `nlin.CG`
-  (a reversible cellular automaton) as cross-lists; the moderators may move
+  measurement and Bell, with `nlin.CG`
+  (a reversible cellular automaton) as the cross-list; `gr-qc` is not asked, the paper's
+  gravity standing against the tests at the rule's own pair; the moderators may move
   a foundational lattice model to `physics.gen-ph`, which is their call.
 - The discipline: foundations of physics, the journal's own scope; the paper is
   not a general-relativity paper (its gravity stands against the tests at

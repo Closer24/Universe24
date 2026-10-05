@@ -312,7 +312,7 @@ def build() -> str:
         "",
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
-        f" {len(candidates)}; rows of Tables 1, 3 and 5: {len(table_rows(main))}; derivations of the supplement:"
+        f" {len(candidates)}; rows of Tables 1, 2 and 6: {len(table_rows(main))}; derivations of the supplement:"
         f" {len(derivations)}.",
         "",
         "## A. The marked claims of main.tex",
@@ -356,7 +356,7 @@ def build() -> str:
         )
     lines += [
         "",
-        "## D. The tables' rows (Tables 1, 3 and 5), the status column their kind",
+        "## D. The tables' rows (Tables 1, 2 and 6), the status column their kind",
         "",
         "| # | table | status | fence | kind | the row | the breaker | state |",
         "|---|---|---|---|---|---|---|---|",
