@@ -41,7 +41,7 @@
   },
   "The total share of any lattice whose Links read the same fro": {
     "kind": "a",
-    "breaker": "Random integer levels on closed and periodic boards at the vacuum's coefficients for every pair with |num| <= den: the total share non-negative, 0 at a static uniform level of light (the equality); outside: |num| > den (beyond the guard) or a board with an open face reading 0 beyond: the total can go negative, the fence's two conditions each needed.",
+    "breaker": "Random integer levels on closed and periodic boards at the vacuum's coefficients for every pair with |num| <= den: the total share non-negative, 0 at a static uniform level of light (the equality); outside: |num| > den (beyond the guard) or an open face with a nonzero declared beyond (the massless holder's rest 60): the total can go negative, the fence's two conditions each needed.",
     "state": "to write"
   },
   "The direction of time belongs to the clicks and not to the l": {
@@ -106,7 +106,7 @@
   },
   "A body with two bound modes omegai omegaj transfers between": {
     "kind": "a",
-    "breaker": "Rabi's transfer sin^2(Omega_R tau) between two modes under the two-mode line (S.43) at random couplings and detunings on one Node: the full transfer at resonance, the detuned transfer sinc^2 at delta tau / 2 (the resonance folder's 5 x 10^-5); outside: a drive at the alias omega = pi / 2 (R338 (b)) where the averaging fails.",
+    "breaker": "Rabi's transfer sin^2(Omega_R tau) between two modes under the two-mode line (S.43) at random couplings and detunings on one Node: the full transfer at resonance, the detuned transfer sinc^2(delta tau / 2) in the weak-turn limit g tau << 1, g << delta, S.43's P = [g^2 / (g^2 + delta^2 / 4)] sin^2(sqrt(g^2 + delta^2 / 4) tau) in general (the resonance folder's 5 x 10^-5; the exact ratio at the folder's turn 2 to 4 x 10^-5); outside: a drive at the alias omega = pi / 2 (R338 (b)) where the averaging fails.",
     "state": "to write"
   },
   "itema The redshift weakfieldpy": {
@@ -241,7 +241,7 @@
   },
   "tab:adds: The frozen content Uf tfrac12ln2Gamma Gamma 2ln 2Gamma level": {
     "kind": "a",
-    "breaker": "The clock's pace p_0 = Gamma e^{-U} rounding to 0 at U_f = (1 / 2) ln(2 Gamma) by the division act (28,178 levels at Gamma = 6,000 by the composed paces' integers); the loader's refusal of a frozen content at that level (kind (e), loader/world.py); outside: a level one unit under U_f admitted.",
+    "breaker": "The Link's pace p_i = p_0^2 / Gamma rounding to 0 at U_f = (1 / 2) ln(2 Gamma), 28,206 by the law's integers (p_0 rounded before squaring), (Gamma / 2) ln 2 Gamma = 28,178 by the formula; the loader's refusal of a frozen content at that level (kind (e), loader/world.py); outside: a level one unit under U_f admitted.",
     "state": "to write"
   },
   "tab:adds: The clusters deceleration q0 Omegam 2 0 at z ll 1 bound or f": {
@@ -336,7 +336,7 @@
   },
   "tab:results: Newtons pull the clocks G and Keplers G": {
     "kind": "a",
-    "breaker": "S.18 and S.25: the clock's G from the level's write and Kepler's G from the orbits at the pair, their ratio 1 as the gap closes and f(omega_0) apart at [2, 3]; a circular orbit's period against Kepler's third law.",
+    "breaker": "S.18 and S.25: the clock's G from the level's write and Kepler's G from the orbits at the pair, their ratio G_K / G_clock = 2 cos omega_0 / (1 + cos omega_0), 1 as the gap closes and 0.8 at [2, 3]; a circular orbit's period against Kepler's third law.",
     "state": "to write"
   },
   "tab:results: alpha 3sqrt 3 8pik Gamma Es between two quanta k the sign ho": {
@@ -436,12 +436,12 @@
   },
   "S.6": {
     "kind": "a",
-    "breaker": "The total share non-negative on closed and periodic boards at |num| <= den (random levels, every pair), zero at the static uniform level and the checkerboard; the Node's minimum 3 den b^2 - num^2 s^2 / (12 den) with the |num| test and the num = 0 case (the addendum); outside: |num| > den or an open face, negative.",
+    "breaker": "The total share non-negative on closed and periodic boards at |num| <= den (random levels, every pair), zero at the static uniform level and the checkerboard; the Node's minimum 3 den b^2 - num^2 s^2 / (12 den) with the |num| test and the num = 0 case (the addendum); outside: |num| > den, or an open face with a nonzero beyond, negative.",
     "state": "to write"
   },
   "S.7": {
     "kind": "a",
-    "breaker": "The stress reading G_aa on a plane wave equals -A^2 sin^2 k at every Node and interval in exact rationals at k = pi / 4 and pi / 3; the mixed-axis product on a wave along a diagonal; outside: a packet's envelope, where G_aa varies.",
+    "breaker": "The stress reading G_aa on a plane wave equals -2 A^2 sin^2 k, and the Node's tension's h_a = G_aa / 2 equals -A^2 sin^2 k, at every Node and interval in exact rationals at k = pi / 4 and pi / 3; the mixed-axis product on a wave along a diagonal; outside: a packet's envelope, where G_aa varies.",
     "state": "to write"
   },
   "S.8": {
@@ -481,7 +481,7 @@
   },
   "S.15": {
     "kind": "a",
-    "breaker": "Eq. (4) at k = 0 with the quadratic paces to first order in U: the clock's rate e^{-U} f(omega_0) with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0) at [2, 3] (1.0634) and as the gap closes (1); outside: second order in U, the quadratic and the exponential paces differing.",
+    "breaker": "Eq. (4) at k = 0 with the quadratic paces to first order in U: the clock's rate 1 - f(omega_0) U to first order, its logarithmic slope -d ln omega / dU = f(omega_0) = 2 (1 - cos omega_0) / (omega_0 sin omega_0) against the pace's slope 1 (e^{-U}), at [2, 3] (1.0634) and as the gap closes (1); the exact local rate omega(U) / omega_0 from cos omega(U) = 1 - (1 - cos omega_0) e^{-2U} at the composed paces; outside: second order in U, the quadratic and the exponential paces differing.",
     "state": "to write"
   },
   "S.16": {
@@ -576,7 +576,7 @@
   },
   "S.34": {
     "kind": "a",
-    "breaker": "The composed paces from the one premise (a level a count of units, every act in the Node's own units): N^2 = e^{-2U}, h^2 = e^{2U} to every order against the composition in exact rationals at Gamma = 6,000; the acts' factors; the metric's second order 2 against Schwarzschild's 1.5 by the series; outside: the plain read, the one assumption's fence.",
+    "breaker": "The composed paces from the one premise (a level a count of units, every act in the Node's own units): N = (1 - 1/Gamma)^c against e^{-U} in exact rationals at Gamma = 6,000: the relative difference U/(2 Gamma) = 4 x 10^-6 at c = 300 and exact equality in U_log = -c ln(1 - 1/Gamma); hN = 1 exact; the acts' factors; the metric's second order 2 against Schwarzschild's 1.5 by the series; outside: the plain read, the one assumption's fence.",
     "state": "to write"
   },
   "S.35": {
