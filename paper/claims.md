@@ -2,7 +2,7 @@
 
 Built from `paper/general_formula/main.tex` and `supplement.tex` by `paper/general_formula/claims_table.py` at every print; the breaker column is written by hand in `paper/claims_breakers.json` and keyed by the sentence's opening words. The kinds: (a) derived from the law's line; (b) computed by a named script; (c) read from a run at the frozen commit; (d) nature's measurement with its citation; (e) what the engine does, sourced to the engine's document and a function; a declaration, hypothesis, assumption or inspiration is a row of its own kind. The breaker is the smallest configuration that could break the claim, tried inside the claim's stated condition and outside it: the strong word stays only where the claim holds inside and breaks outside (a fence nothing breaks outside is struck too). The breakers run in `tools/derivations/counterexamples.py`, the law's, which the paper's gate imports; a break is narrowed and never reworded quietly, a theorem's or derived mark's narrowing at the mathematician's second, a computed number's re-run or a run reading's label at one hand's line. The state column: `to write`, `green` (holds inside, breaks outside), `BROKE Rnnn` (the ledger's row). One rule stands over every row of kind (e), the owner's word of 2026-10-04: every act of the engine on a Node's levels is Rule3's one line or the division act with the half, as the law has them; logic found at a Node that is not of Rule3's form is a red row by itself and a finding shouted on the reviewer's ledger, whatever the sentence it stands under.
 
-Rows with a claim mark: 104, 1 with a breaker written; rows of a derived, computed, run or engine kind without a source pointer: 5; candidate sentences with a strong word and no mark: 109; rows of the tables: 71; rows of Table 1 without a marked sentence: 0; derivations of the supplement: 56.
+Rows with a claim mark: 104, 1 with a breaker written; rows of a derived, computed, run or engine kind without a source pointer: 5; candidate sentences with a strong word and no mark: 109; rows of the tables: 71; rows of Table 1 without a marked sentence: 0; marks outside the key: 3; derivations of the supplement: 56.
 
 ## A. The marked claims of main.tex
 
@@ -235,6 +235,9 @@ Rows with a claim mark: 104, 1 with a breaker written; rows of a derived, comput
 
 ## D. The tables' rows, the status column their kind; the rows of Table 1 without a marked sentence first
 
+- line 97: a mark outside the key, 'postulate': (postulate 4, an assumption, the step's reach; lattice)
+- line 180: a mark outside the key, 'two': (two witnesses, S.32)
+- line 301: a mark outside the key, 'none': (none under the rotation, S.41)
 
 | # | table | status | fence | kind | the row | the breaker | state |
 |---|---|---|---|---|---|---|---|

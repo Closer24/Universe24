@@ -255,6 +255,27 @@ def _text_holding(label: str, found_in: tuple[str, ...]) -> str:
     return ""
 
 
+MARK_LIKE = re.compile(
+    r"\(([a-z]+)[^()]*(?:;\s*(?:lattice|clicks)\b|\bS\.\d+)[^()]*\)"
+)  # a parenthesis shaped like a mark, a fence or a derivation's pointer inside it, whatever its first word
+
+
+def marks_outside_the_key(main: str) -> list[str]:
+    """The plain marks whose first word is not the key's (the writer's gate 1 note of 2026-10-05): a parenthesis
+    that carries a fence or an S.n pointer and opens with a word outside KEY_WORDS is a mark the reader would pass
+    over in silence, so it is printed as a miss with its line and its word."""
+    misses: list[str] = []
+    for number, sentence in sentences(main):
+        if sentence.startswith(("%", "\\bibitem")):
+            continue
+        for match in MARK_LIKE.finditer(sentence):
+            if match.group(1) not in KEY_WORDS and match.group(1) not in ("the", "a", "an", "see", "cf"):
+                misses.append(
+                    f"line {number}: a mark outside the key, '{match.group(1)}': {match.group(0)[:70]}"
+                )
+    return misses
+
+
 def unmatched_rows(main: str, supplement: str = "") -> list[str]:
     """The gate of the claims table's move into the supplement (the advisor's word of 2026-10-05, 5996437774 (C)):
     every row of the claims table has a marked sentence in the main at the row's "where" (a section the sentence
@@ -439,6 +460,7 @@ def build() -> str:
 
     tables = table_rows(main, supplement)
     misses = unmatched_rows(main, supplement)
+    outside = marks_outside_the_key(main)
     filled = sum(1 for row in rows if row["breaker"])
     unsourced = sum(1 for row in rows if row["source"] == "NO SOURCE" and row["kind"] in "abce")
     lines = [
@@ -463,7 +485,7 @@ def build() -> str:
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
         f" {len(candidates)}; rows of the tables: {len(tables)}; rows of Table 1 without a marked sentence:"
-        f" {len(misses)}; derivations of the supplement: {len(derivations)}.",
+        f" {len(misses)}; marks outside the key: {len(outside)}; derivations of the supplement: {len(derivations)}.",
         "",
         "## A. The marked claims of main.tex",
         "",
@@ -508,6 +530,7 @@ def build() -> str:
         "## D. The tables' rows, the status column their kind; the rows of Table 1 without a marked sentence first",
         "",
         *[f"- {miss}" for miss in misses],
+        *[f"- {miss}" for miss in outside],
         "",
         "| # | table | status | fence | kind | the row | the breaker | state |",
         "|---|---|---|---|---|---|---|---|",

@@ -166,6 +166,90 @@ energy, confinement, the polarisations, the Lorentz form, antimatter's opposite 
 witness of S.9; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
+## The automation for the short version and the supplement
+
+The long version's tools, handed to the editor for the short main text and the rebuilt supplement
+(the owner's word of 2026-10-05); each line says what the tool checks, how it runs and what the
+short version changes in it. Run them in the order of the last paragraph after every push.
+
+**The gates on every pull request** (`tools/every_pull_request.txt`: the paper gates, the documents
+gate and the language gate; `python tools/check.py` selects the changed files and their consumers,
+`--full` runs everything, every test under 30 s). `general_formula/paper_gates.py` runs ten gates on
+`main.tex` and `supplement.tex` together and exits non-zero on any miss:
+
+- The marks: every `\claimmark` one of the key's words and every `\fence` one of the two. The short
+  main carries no macro; its mark is the sentence's last parenthesis opening with a key word (the
+  key's eight words and the tables' four: calibration, declaration, definition, untested), the fence
+  after the first semicolon, then the pointers, and `claims_table.py` reads that form (below).
+- The struck phrases: the words earlier prints removed never return; a hand adds a phrase to the list
+  when a cut strikes it for good.
+- The twins: a number or a word printed in two places asserted equal across the two documents. A cut
+  that removes one side of a pair fails the gate; the pair is re-keyed to where the number still
+  stands, or removed, in the same push.
+- The derivations' Inputs graph: no cycle beyond `claims_table.KNOWN_CYCLES`, a set that may only
+  shrink; its numbers take the supplement's renumbering map.
+- The bare board: the lattice by its one noun.
+- The nomenclature: every letter in math mode in either document has its `\nom` row in the
+  supplement's Nomenclature; a row leaves only with the last use of its letter.
+- The units and the abbreviations: a bare number after a named quantity carries its unit, every
+  abbreviation is expanded at its first use in the same document; a cut that deletes a first use
+  moves the expansion to the next.
+- The team's idioms: the hands' names, the ledger's rows and the comment ids stand nowhere in the paper.
+- The pointers: every `\ref` has its `\label`, an equation is cited by `\eqref` alone, every literal
+  pointer of the supplement, the captions and this README names a number the paper has, counted from
+  `main.tex`'s source order; every `\cite` has its `\bibitem` in the same document, every `\bibitem`
+  is cited, none doubled, the list in the order of first citation. Every section, equation, figure or
+  table that leaves or moves renumbers the literal pointers, and the gate lists each by line; after an
+  edit that moves a citation, `cut_tools/reorder_bib.py` restores the order.
+- The captions and the names: no caption ends with punctuation; no author-year parenthesis outside `\cite`.
+
+**The claims reader**, `python paper/general_formula/claims_table.py`, writes `paper/claims.md` at
+every print: the marked sentences (the plain parenthesis or the macro; the itemised lists' items read
+as sentences; a sentence inside an assumption or theorem environment marked by the environment), each
+with its place, marks, fence, kind, the sources it names, its breaker and state; the candidates (a strong
+word in an unmarked sentence, a report and no gate); the tables' rows by the short version's labels,
+read from the main or, once a table has moved, from the supplement; the supplement's derivations with
+their Status lines. Its two gates of the move, held as ratchets in `tests/test_paper_gates.py`: no row
+of the claims list without a marked sentence at the row's place (a sentence in the row's section, at any
+level, carrying the row's first status word, and a sentence there naming one of the row's derivations),
+and no plain mark opening with a word outside the key; both counts may only fall. Beside them the
+breakers' gate, `tests/test_counterexamples.py`, runs every row of `tools/derivations/counterexamples.py`
+(a claim tried inside its condition and outside it in the algebra of Rule3's line) and asserts its key
+is a row of `paper/claims_breakers.json`; the keys are the long version's sentences, table labels and
+derivation numbers, and they take the short version's rows and the renumbering map in one commit.
+
+**The numbers' provenance.** Every computed number of the main is one a script prints from Rule3's
+lines or the one run the paper reports: the derivation modules of `tools/derivations/` (each from the
+line alone, no engine import; `tools/derivations/README.md` the map) and the paper's own checks in
+`general_formula/` (`einstein_check.py`, `schroedinger_check.py`, `invariant_check.py`,
+`stable_body_check.py`, `surplus_check.py`, `dark_matter_check.py`, `dimension_check.py`,
+`two_slits_real_line.py` with its printed row). The scripts' names left the short text at the owner's
+word; the provenance stays theirs, and the supplement's derivations keep the modules' names.
+`short_checker.py` audits every number of the short files against the long version at the tag and
+prints the accepted misses and the weak places; `claims_triage.py` wrote `paper/claims_triage.md`, the
+map of what is core, support and out that the cut follows.
+
+**The cut tools** (`general_formula/cut_tools/README.md`): the bibliography's order, the build in
+Springer's class with the page each section starts on, the abstract's counts, the doubled passages,
+the DOI check against Crossref, a sentence-level grep.
+
+**The figures.** Each figure's script writes its PDF, EPS and PNG into `figures/`, committed; the
+lattice and the octahedron, the two slits' rows, the method, the run's frames; the click, the bands and
+the moving clock stay for the long version. Drawn at 131 mm with 8 pt lettering in the glossary's words.
+
+**The supplement at the rebuild.** Every derivation in its environment with its Inputs, Steps and Status
+lines (the reader and the Inputs gate read that form); the Status line in the key's words; the
+Nomenclature at the front; its own bibliography in the order of first citation; the claims list whole
+under its label, where the reader finds it once the main no longer holds it; the main's citations of
+the long version's numbers kept apart from the new numbering, as the front note states.
+
+**The run at every push:** the claims reader (the two counts at their ratchets, the NO SOURCE marks
+read); the paper gates; the bibliography's order after an edit that moves a citation; the five paper
+tests (`test_paper_gates`, `test_documents`, `test_repository_language`, `test_counterexamples`,
+`test_the_paper_claims_engine`); `python tools/check.py`; the build of both documents in Springer's
+class three times with no error and no undefined reference, the page counts posted; `short_checker.py`;
+the build's by-products deleted before the commit.
+
 ## Submission rules and status
 
 The paper goes first to arXiv and then to Foundations of Physics
