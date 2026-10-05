@@ -176,7 +176,12 @@ INPUTS = re.compile(r"\\emph\{Inputs:\}(.*?)\\emph\{Steps:\}", re.S)
 # the cycles of the Inputs graph known tonight, each named until its fix prints; the set may only shrink (the breakers'
 # RED_ROWS rule): S.1 and S.63 (the budget clause borrowed forward; S.21 and S.22 ride in through S.22's body, which has
 # no Inputs line), S.40 and S.51 (the parts' amplitudes borrowed forward; S.51 has no Inputs line)
-KNOWN_CYCLES: frozenset[tuple[int, ...]] = frozenset({(1, 21, 22, 63), (40, 51)})
+KNOWN_CYCLES: frozenset[tuple[int, ...]] = frozenset({(1, 21, 22, 54), (38, 48)})
+# a derivation of the long version at the tag paper-long-v1.1 that the short supplement does not carry is cited
+# "S.n of the long version"; such a mention names no derivation of this supplement
+LONG_VERSION_CITATION = re.compile(
+    r"S\.\d+(?: \([^)]*\))?(?:(?: to \([^)]*\))|(?:,? ?\(?row \d+\)?))? of the long version"
+)
 
 
 def inputs_graph(supplement: str) -> dict[int, set[int]]:
@@ -184,7 +189,7 @@ def inputs_graph(supplement: str) -> dict[int, set[int]]:
     graph: dict[int, set[int]] = {}
     for number, match in enumerate(DERIVATION.finditer(supplement), 1):
         body = match.group(2)
-        inputs = " ".join(INPUTS.findall(body)) or body
+        inputs = LONG_VERSION_CITATION.sub("", " ".join(INPUTS.findall(body)) or body)
         graph[number] = {int(x) for x in re.findall(r"S\.(\d+)", inputs)} - {number}
     return {i: {m for m in rests if m in graph} for i, rests in graph.items()}
 

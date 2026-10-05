@@ -160,7 +160,7 @@ TWINS = [
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
-    ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$"), ("supplement.tex", "$\\Delta = 1 / m^*$")]),
+    ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$")]),
     (
         "the two slits at the fixed lay",
         [
@@ -168,18 +168,11 @@ TWINS = [
                 "main.tex",
                 "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
             ),
-            ("main.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
+            ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("main.tex", "The run gives $N = 285$ at both seeds"),
-            ("supplement.tex", "The two slits' $285$ units are $674$ photons"),
         ],
     ),
-    (
-        "the one run",
-        [
-            ("main.tex", "The one run this paper reports is the two slits'"),
-            ("supplement.tex", "which reports one run, the two slits'"),
-        ],
-    ),
+    ("the one run", [("main.tex", "The one run this paper reports is the two slits'")]),
     (
         "the pins",
         [
@@ -193,22 +186,12 @@ TWINS = [
             ),
         ],
     ),
-    (
-        "the gate on the one file",
-        [
-            ("main.tex", "returns every array bit for bit over $40$ intervals"),
-            (
-                "supplement.tex",
-                "the two slits' \\textsc{match} over $40$ intervals at the commit 1fe3790a at both seeds",
-            ),
-        ],
-    ),
+    ("the gate on the one file", [("main.tex", "returns every array bit for bit over $40$ intervals")]),
     (
         "the walk and not a bound",
         [
             ("main.tex", "stands within that walk of the line's $284.7$"),
-            ("main.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
-            ("supplement.tex", "within the integer step's walk"),
+            ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
         ],
     ),
 ]
@@ -490,6 +473,17 @@ LITERAL_POINTERS = [
 ]
 
 
+# the long version of the paper at the tag paper-long-v1.1 numbers its derivations S.1 to S.65; a pointer the text cites
+# "of the long version" (or after "the long version's", or before "at its tag") names that document, not the supplement
+LONG_VERSION_DERIVATIONS = 65
+
+
+def cited_of_the_long_version(text: str, m: re.Match) -> bool:
+    before = text[max(0, m.start() - 70) : m.start()]
+    after = text[m.end() : m.end() + 45]
+    return "long version" in before or "long version" in after or "at its tag" in after
+
+
 def gate_pointers(texts: dict[str, str]) -> list[str]:
     misses = []
     counts = numbering(texts["main.tex"])
@@ -510,6 +504,8 @@ def gate_pointers(texts: dict[str, str]) -> list[str]:
         literal_text = body if name != "main.tex" else "\n".join(re.findall(r"\\caption\{.*", body))
         for pattern, kind in LITERAL_POINTERS:
             for m in re.finditer(pattern, literal_text):
+                if cited_of_the_long_version(literal_text, m):
+                    continue
                 if kind == "subsection":
                     section, sub = int(m.group(1)), int(m.group(2))
                     if (
@@ -527,7 +523,15 @@ def gate_pointers(texts: dict[str, str]) -> list[str]:
                             f"{name}: the pointer {m.group(0)!r} names a {kind} the paper has not"
                         )
         for m in re.finditer(r"\bS\.(\d+)\b", body):
-            if int(m.group(1)) == 0 or int(m.group(1)) > derivations:
+            n = int(m.group(1))
+            if cited_of_the_long_version(body, m):
+                if n == 0 or n > LONG_VERSION_DERIVATIONS:
+                    misses.append(
+                        f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} of the long version names a "
+                        f"derivation the tag has not (S.1 to S.{LONG_VERSION_DERIVATIONS})"
+                    )
+                continue
+            if n == 0 or n > derivations:
                 misses.append(
                     f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} names a derivation the supplement has not"
                 )

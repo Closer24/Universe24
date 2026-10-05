@@ -1,4 +1,4 @@
-"""The click's algebra beyond the law, S.66's witnesses (Section 2.5.2): the identities and the numbers of the
+"""The click's algebra beyond the law, S.56's witnesses (Section 2.5.2): the identities and the numbers of the
 derivation checked in floating point, one Node and one Link, no run. Lemma A (the Wronskian of a
 plane configuration is A^2 sin omega at every Node and free of the wave vector; the Link current of a real line
 along an axis is -num A^2 sin omega sin k), the one-Node quadratic Q = x_t^2 + x_{t-1}^2 - 2 cos omega x_t x_{t-1}

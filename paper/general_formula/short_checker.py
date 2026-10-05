@@ -241,6 +241,17 @@ POINTER = re.compile(
 )
 # a supplement pointer S.n, with the numbered line or row it may name in a parenthesis
 SUPPLEMENT_POINTER = re.compile(r"(?<![A-Za-z])S\.~?\s?(\d+)(?:\s*\((?:row\s+)?\d+\))?")
+# the long version of the paper at the tag paper-long-v1.1 numbers its derivations S.1 to S.65; a pointer the short
+# text cites "of the long version" (or after "the long version's", or before "at its tag") names that document
+LONG_VERSION_DERIVATIONS = 65
+
+
+def cited_of_the_long_version(text: str, m: re.Match) -> bool:
+    before = text[max(0, m.start() - 70) : m.start()]
+    after = text[m.end() : m.end() + 45]
+    return "long version" in before or "long version" in after or "at its tag" in after
+
+
 SECTION_NUMBER = re.compile(
     r"(\\(?:part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\{\s*)"
     r"((?:S\.)?\d+(?:\.\d+)*\.?)"
@@ -679,6 +690,13 @@ def check_pointers(
         for m in SUPPLEMENT_POINTER.finditer(text):
             n = int(m.group(1))
             result.checked += 1
+            if cited_of_the_long_version(text, m):
+                if n == 0 or n > LONG_VERSION_DERIVATIONS:
+                    result.unresolved.append(
+                        f"UNRESOLVED {name}:{lines.number(m.start())} the pointer S.{n} of the long version names a "
+                        f"derivation the tag has not (S.1 to S.{LONG_VERSION_DERIVATIONS})"
+                    )
+                continue
             if n == 0 or n > count or (numbers is not None and n not in numbers):
                 result.unresolved.append(
                     f"UNRESOLVED {name}:{lines.number(m.start())} the pointer S.{n} names a derivation "

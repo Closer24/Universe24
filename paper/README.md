@@ -45,11 +45,12 @@ their statuses.
   breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.65, numbered independently of the paper's order, each naming its section,
-  cited in the paper as (S.n), S.61 the engine's derivation table and S.62 the
-  implementation's versions of the click's write and their readings, which stand
-  there and not in the main text (the owner's word of 2026-10-03: a derivation
-  is shown as a derivation, and the main text reports no run but the two slits'); submitted as supplementary material to the
+  its proof, Derivations S.1 to S.56 in their own order, each naming its section,
+  cited in the paper as (S.n); its front carries the glossary of the long version's
+  words, the paper's claims list, the two tables of the formulas and the Nomenclature;
+  the derivations of the hypotheses under their own names and of the implementation
+  stand in the long version at the tag `paper-long-v1.1` in its own numbering, cited
+  as (S.n of the long version); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
