@@ -316,12 +316,12 @@
   },
   "tab:results: The same forms against Keplers potential gammaK betaK and al": {
     "kind": "a",
-    "breaker": "S.19's gamma_K, beta_K, alpha_K at [2, 3] and as the gap closes (Table 5's row's breaker); Cassini's bound on den / num - 1 as the click.",
+    "breaker": "S.19's gamma_K, beta_K, alpha_K at [2, 3] and as the gap closes (Table 6's row's breaker); Cassini's bound on den / num - 1 as the click.",
     "state": "to write"
   },
   "tab:results: The moving clock its fourth order and its kinetic scale cm L": {
     "kind": "a",
-    "breaker": "S.21's breaker (Table 5's row): the second order one speed c_m, the fourth order's three coefficients along the three directions; Lorentz's form recovered as the gap closes.",
+    "breaker": "S.21's breaker (Table 6's row): the second order one speed c_m, the fourth order's three coefficients along the three directions; Lorentz's form recovered as the gap closes.",
     "state": "to write"
   },
   "tab:results: The force between moving charges Coulombs over gamma": {
@@ -341,7 +341,7 @@
   },
   "tab:results: alpha 3sqrt 3 8pik Gamma Es between two quanta k the sign ho": {
     "kind": "a",
-    "breaker": "S.26's chain (Table 5's row's breaker): alpha's form from the write weight; the switch-on check named and not re-run (R322).",
+    "breaker": "S.26's chain (Table 6's row's breaker): alpha's form from the write weight; the switch-on check named and not re-run (R322).",
     "state": "to write"
   },
   "tab:results: The twoslit fringe row and the lattices arrival interval": {
