@@ -54,7 +54,8 @@ BLIND_N = 273.0
 REAL = (19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57)
 REAL_N = 284.50
 # tests/test_the_draw.py, GATE_ROW: the seed-24 clicks per region of the one run, the archived row the gate asserts bit
-# for bit at every run of the tests (N = 285); the seed-25 row is not archived in the repository
+# for bit at every run of the tests (N = 285); the seed-25 row stands in examples/events/two_slits/blind_and_reading.md
+# (N = 285, chi-square 12.4) and is not drawn, the figure carrying seed 24 alone at the owner's word
 SEED24 = (22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25)
 SEED24_N = 285
 # the file's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
@@ -148,7 +149,7 @@ def rows(ax: Axes) -> None:
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the blind row, the law's line at the design's initial data ($N = 273$)",
+        label="the blind: the law's line in real arithmetic at the design's initial data, before the run ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5

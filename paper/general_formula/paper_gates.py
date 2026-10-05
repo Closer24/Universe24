@@ -175,7 +175,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons",
+                "$N = 285$ in the region's unit $\\Wc$ at both seeds, $24$ and $25$ ($674$ photons",
             ),
             ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("main.tex", "The run gives $N = 285$ at both seeds"),
@@ -199,7 +199,7 @@ TWINS = [
     (
         "the walk and not a bound",
         [
-            ("main.tex", "stands within that walk of the line's $284.7$"),
+            ("main.tex", "stands within the walk of both the line's $284.7$"),
             ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
         ],
     ),
