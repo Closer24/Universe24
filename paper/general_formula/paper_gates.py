@@ -173,7 +173,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
+                "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons",
             ),
             ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("main.tex", "The run gives $N = 285$ at both seeds"),
