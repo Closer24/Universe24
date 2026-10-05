@@ -139,7 +139,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$284.7$ in the paper's labelling, the pair after $t$ steps labelled $t$ ($284.5$ in the engine's labels",
+                "$284.7$ units of $\\Wc$ through the screen in the physical labels ($284.5$ in the implementation's labels",
             ),
             ("main.tex", "$N = 284.50$ in the engine's labels"),
         ],
@@ -156,7 +156,7 @@ TWINS = [
     (
         "the wall of a massless family",
         [
-            ("main.tex", "$W_c = 3\\,\\den\\,T$ itself for a massless family"),
+            ("main.tex", "a massless field's quantum $\\Wc$ itself"),
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
@@ -166,10 +166,9 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 285$ units of $W_c$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
+                "$N = 285$ in the region's unit $\\Wc$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
             ),
-            ("main.tex", "the run $N = 285$ at both of its seeds in the NodeDetector's unit"),
-            ("main.tex", "the two slits' $285$ at both seeds stands against it"),
+            ("main.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("main.tex", "The run of the implementation gives $N = 285$ at both seeds"),
             ("supplement.tex", "The two slits' $285$ units are $674$ photons"),
         ],
@@ -178,7 +177,6 @@ TWINS = [
         "the one run",
         [
             ("main.tex", "The one run this paper reports is the two slits'"),
-            ("main.tex", "What ran on the implementation for this paper is that one file"),
             ("supplement.tex", "which reports one run, the two slits'"),
         ],
     ),
@@ -209,7 +207,7 @@ TWINS = [
         "the walk and not a bound",
         [
             ("main.tex", "stands within that walk of the line's $284.7$"),
-            ("main.tex", "stands against it within the integer step's walk"),
+            ("main.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("supplement.tex", "within the integer step's walk"),
         ],
     ),
@@ -370,10 +368,14 @@ def nomenclature_letters(text: str) -> set[str]:
 
 
 def gate_nomenclature(texts: dict[str, str]) -> list[str]:
-    """The misses: a letter in math mode, in either document, with no row in the paper's Nomenclature table."""
-    named = nomenclature_letters(texts["main.tex"])
+    """The misses: a letter in math mode, in either document, with no row in the Nomenclature table of either document."""
+    named = set()
+    for text in texts.values():
+        named |= set(nomenclature_letters(text))
     if not named:
-        return ["main.tex: no Nomenclature row (\\nom{symbols}{senses}) found"]
+        return [
+            "main.tex, supplement.tex: no Nomenclature row (\\nom{symbols}{senses}) found in either document"
+        ]
     misses = []
     for name, text in texts.items():
         seen: dict[str, int] = {}
