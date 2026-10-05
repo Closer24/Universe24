@@ -45,7 +45,7 @@ their statuses.
   breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.56 in their own order, each naming its section,
+  its proof, Derivations S.1 to S.55 in their own order, each naming its section,
   cited in the paper as (S.n); its front carries the glossary of the long version's
   words, the paper's claims list, the two tables of the formulas and the Nomenclature;
   the derivations of the hypotheses under their own names and of the implementation

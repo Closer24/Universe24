@@ -325,7 +325,7 @@ INPUTS = re.compile(r"\\emph\{Inputs:\}(.*?)\\emph\{Steps:\}", re.S)
 # the cycles of the Inputs graph known tonight, each named until its fix prints; the set may only shrink (the breakers'
 # RED_ROWS rule): S.1 and S.63 (the budget clause borrowed forward; S.21 and S.22 ride in through S.22's body, which has
 # no Inputs line), S.40 and S.51 (the parts' amplitudes borrowed forward; S.51 has no Inputs line)
-KNOWN_CYCLES: frozenset[tuple[int, ...]] = frozenset({(1, 21, 22, 54), (38, 48)})
+KNOWN_CYCLES: frozenset[tuple[int, ...]] = frozenset({(1, 21, 22, 53), (38, 47)})
 # a derivation of the long version at the tag paper-long-v1.1 that the short supplement does not carry is cited
 # "S.n of the long version"; such a mention names no derivation of this supplement
 LONG_VERSION_CITATION = re.compile(
