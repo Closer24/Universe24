@@ -78,15 +78,19 @@ disjoint file sets, the engine's branches one at a time (the owner's decision 23
 7. **The pull request.** Opened by the Boss, ready, to `main`. The body carries
    "HANDED BY Boss: <files>", the session link, the problem, the change, the
    validation, the lines added and deleted in `src/` and `tests/`, and what was
-   deleted from the documents. Documents and paper fills are batched, one pull
-   request of each per hour or per three closures (234, proposal 4); on a
-   documents, tests or paper pull request the Boss arms auto-merge on green after
-   the check (234, proposal 5). The Boss subscribes to its activity.
+   deleted from the documents. Documents, paper sentences, tool fixes and pin
+   tests travel bundled, one push per holder per hour at most and three or four
+   items in one read; an engine fix (anything under `src/`) travels alone in its
+   own pull request; the pull request opens at the first push and the hands read
+   it in parallel while CI runs, each hand's line a comment on it (the owner,
+   2026-10-04). The Boss subscribes to its activity.
 8. **The merge.** The engine's rounds and `core/` on green CI with `main` merged
-   in (a merge, never a rebase), one at a time, its base `main`; documents, tests
-   and paper by auto-merge on green with the up-to-date base enforced by the
-   branch rule, branches on disjoint file sets merging independently (234,
-   proposals 5 and 6); the branch deleted; the next branch restarted from `main`.
+   in (a merge, never a rebase), one at a time, its base `main`; every change, a
+   bundle or a single fix, squashed by the Boss at CI green with both hands' lines
+   at its sha, the reviewer's ledger file alone, docs/REVIEW_LEDGER.md, merging at
+   CI green by the reviewer's own pull request without the hands' re-read (the
+   owner, 2026-10-04); branches on disjoint file sets merging independently (234,
+   proposal 6); the branch deleted; the next branch restarted from `main`.
 
 A brief that asks a worker for a blind number or a derivation names the method
 of derivation of [skills/workflow.md](../workflow.md); a worker's number without
@@ -130,9 +134,11 @@ fires the hands' triggers the moment the ask is posted, never waiting for a
 check-in; the 45-minute check-in is the fallback only (the owner's decision 234 of 2026-10-03, #1572 comment 5966659068, proposal 1). While an engine pull request is open the Boss
 sets a check-in by send_later, about fifteen minutes ahead, reads its checks and
 comments, merges on green with `main` merged in, or sends the red shard back to
-the worker with the failing line; a documents, tests or paper pull request merges
-by auto-merge on green and needs no check-in (234, proposal 5). No blocking wait
-on CI longer than two minutes, so that the owner's message is seen.
+the worker with the failing line; a bundle's pull request (documents, paper
+sentences, tool fixes and pin tests) takes the same check-in, and the Boss
+squashes it at CI green once both hands' lines stand at its sha, the reviewer's
+ledger file alone excepted (the owner, 2026-10-04). No blocking wait on CI longer
+than two minutes, so that the owner's message is seen.
 
 ## What the Boss never does
 

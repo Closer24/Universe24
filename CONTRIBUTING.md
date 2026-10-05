@@ -36,19 +36,25 @@ the short procedure of [the shared workflow](skills/workflow.md).
    `--full` only for an explicitly justified complete audit). Never drop a related
    failing test or disable a gate (Ruff, strict mypy, the integer audits, the layer
    checks, the language gate, the document gates, the ratchets on the code's shape).
-6. Open a pull request to `main` stating the problem, the change, the validation,
-   the lines it adds and deletes in `src/` and `tests/`, what it deleted from the
-   documents, and which tests were not run. If `main` advances, merge it in (a merge
-   commit, never a rebase) and recheck. Documents fills and paper fills are batched:
-   one documents pull request and one paper pull request per hour or per three
-   closures, the hands' final paragraphs pasted from the closures' comments (234).
+6. Open a pull request to `main` at the first push, stating the problem, the
+   change, the validation, the lines it adds and deletes in `src/` and `tests/`,
+   what it deleted from the documents, and which tests were not run; the hands read
+   it in parallel while CI runs, each hand's line a comment on it. If `main`
+   advances, merge it in (a merge commit, never a rebase) and recheck. Documents,
+   paper sentences, tool fixes and pin tests travel bundled, one push per holder
+   per hour at most and three or four items in one read; an engine fix (anything
+   under `src/`) travels alone in its own pull request (the owner, 2026-10-04).
 7. Only the Boss merges into `main`, only on green CI and with `main` merged in;
    never bypass a failing check. The Boss reads a change to the engine's rounds, a
    physics folder or `core/` against the law's lines before the merge; a documents,
    tests or paper pull request carries the hands' final paragraphs pasted, which the
-   Boss checks against their comment ids, and merges by auto-merge on green CI with
-   the branch rule enforcing an up-to-date base (234). Every result names the `main`
-   commit it ran on; there are no tags.
+   Boss checks against their comment ids (234). Every change, a bundle or a single
+   fix, has both hands' lines at its sha before the Boss squashes it at CI green,
+   and every branch is deleted at the merge; the one exception is the reviewer's
+   ledger file, [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md), which merges at CI
+   green by the reviewer's own pull request, the file alone in it, without the
+   hands' re-read (the owner, 2026-10-04). Every result names the `main` commit it
+   ran on; there are no tags.
 8. One owner per area (`tools/owners.json`): the Boss owns every area and the
    advisor writes nothing. A pull request from a session that is not the Boss's
    carries the line `HANDED BY Boss: <files>` in its body, covering any area;

@@ -88,7 +88,7 @@ def ppn_parameters_against_kepler() -> Row:
     kepler = weak_field.kepler_column(2, 3)
     exact &= [round(v, 3) for v in kepler[:3]] == [1.5, 1.25, 1.329]
     return Row(
-        "tab:adds: The postNewtonian parameters with the gap gammaK den num bet",
+        "tab:adds: The postNewtonian parameters with the gap for 0 num le den g",
         exact,
         None,
         "; ".join(printed),

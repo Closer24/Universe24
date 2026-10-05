@@ -271,6 +271,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "F2 fenced by way (alpha), the owner's words of 2026-10-04: the vacuum content at 60 above the holders' swing over "
         "the declared run; the Boss's grant of 60 lines",
     ),
+    "tests/test_the_giving_node.py::test_the_neutron_readers_rows_stand_at_the_conversions_drawn_node": (
+        16,
+        "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (the experimenter's tool notes, #1827 "
+        "comment 5984864554): the neutron reader's rows 1, 3 and 5 read at the conversion line's Node, the body's second "
+        "where the draw picks it and the first where no conversion happened, the Node named with its source",
+    ),
+    "tests/test_the_node_reader.py::test_the_packet_readers_clicks_column_counts_the_regions_click_lines_and_not_the_givers": (
+        9,
+        "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (#1827 comment 5984864554): the packet "
+        "reader's `clicks` column the region's click lines within the draw's window, the giver's credit lines in their own column",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

@@ -11,9 +11,11 @@ one shell per interval at the causal bound; inside the click's light cone the
 record that gave is erased, its levels beyond the front an empty wave with
 count 0. (b) The NodeReader's region before the window's close and after the
 one write: two Nodes side by side, the NodeReader's own record laid over both
-with its parts g and e, the write at the drawn Node. (c) The hole at the drawn
-Node by the faces' booking identity, each face writing one level, no factor.
-(d) The ledger in whole numbers, the click line, the NodeReader's report, and
+with its parts g and e, the write at the drawn Node. (c) The taking's write at
+the drawn Node: one comparison of the record's booked share there against its
+own quantum W_rec, two cases and no partial hole; the sparse Node (share at most
+W_rec) zeroed by the face Rule3 presents, the dense record (share above W_rec)
+undepleted, its count moving in the books. (d) The ledger in whole numbers, the click line, the NodeReader's report, and
 the declaration in the file. Nothing here is a number of a run.
 
     python paper/general_formula/click_body.py --output paper/general_formula/figures
@@ -489,68 +491,80 @@ def the_region(ax: Axes) -> None:
 
 
 def the_hole(ax: Axes) -> None:
-    """(c) The hole at the drawn Node by the booking identity: each of the two faces writes one level."""
-    y0 = 9.65  # the level axis
-    b, v, x1, x2, zero = (
-        2.2,
-        4.9,
-        4.28,
-        1.35,
-        0.9,
-    )  # the past, the present, face 1's root, face 2's level, 0
-    depth, w_rec = 1.35, 0.9  # the parabola's depth at the midpoint and the quantum's line, schematic
+    """(c) The taking's write at the drawn Node: one comparison of the record's booked share there against its own
+    quantum W_rec; the sparse Node zeroed by the face Rule3 presents, the dense record undepleted with its count in
+    the books (the advisor's words of 2026-10-04, #1793 comment 5985040913)."""
     ax.text(-0.3, 12.5, "c", ha="left", va="top", fontweight="bold", fontsize=9)
     ax.text(
         0.4,
         12.3,
-        "the hole at the drawn Node,\none level per face",
+        "the taking's write: one comparison,\ntwo cases, no partial hole",
         ha="left",
         va="top",
         fontweight="bold",
     )
-    arrow(ax, (0.3, y0), (6.2, y0), lw=0.7)
-    ax.text(6.3, y0, "$x$", ha="left", va="center", color=GREY)
-    for x, lab in ((zero, "0"), (b, "$b$, past"), (v, "$v$, present")):
-        ax.plot([x, x], [y0 - 0.12, y0 + 0.12], color=INK, lw=0.7, zorder=5)
-        ax.text(x, y0 + 0.22, lab, ha="center", va="bottom")
-    # the identity dQ = w (x - v)(x - b) below the axis between b and v, the line at one quantum, the root
-    xs = [b - 0.35 + (v - b + 0.7) * i / 80 for i in range(81)]
-    ys = [y0 - depth * 4 * (x - b) * (v - x) / (v - b) ** 2 for x in xs]
-    ax.plot(xs, ys, color=GREY, lw=0.8, zorder=4)
-    ax.plot([zero + 0.3, v + 0.5], [y0 - w_rec, y0 - w_rec], color=INK, lw=0.6, ls=(0, (3, 2)), zorder=4)
-    ax.text(zero + 0.25, y0 - w_rec - 0.1, "$dQ = -W_{\\mathrm{rec}}$", ha="left", va="top")
-    ax.plot([x1, x1], [y0 - w_rec, y0], color=INK, lw=0.6, ls=(0, (1, 1.2)), zorder=4)
-    ax.plot(x1, y0 - w_rec, "o", ms=3.6, color=INK, zorder=6)
-    for x, lab in ((x1, "$x_1$"), (x2, "$x_2$")):
-        ax.plot(x, y0, "o", ms=4.2, color="white", markeredgecolor=INK, markeredgewidth=0.9, zorder=6)
-        ax.text(x + 0.14, y0 - 0.2, lab, ha="left", va="top")
-    # face 1 writes the present level to the root nearest v, face 2 writes the past level, the rest
-    arrow(ax, (v - 0.1, y0 + 0.85), (x1 + 0.1, y0 + 0.85), lw=0.9)
-    ax.text((v + x1) / 2 + 0.1, y0 + 0.98, "face 1", ha="center", va="bottom", fontweight="bold")
-    arrow(ax, (b - 0.1, y0 + 0.85), (x2 + 0.1, y0 + 0.85), lw=0.9)
-    ax.text((b + x2) / 2, y0 + 0.98, "face 2", ha="center", va="bottom", fontweight="bold")
-    lines = (
-        "$dQ = w\\,(x - v)(x - b)$, per face:",
-        "face 1: one quantum exactly,",
-        "at the root nearest $v$, where",
-        "$w\\,(v - b)^2 \\geq 4\\,W_{\\mathrm{rec}}$; else the",
-        "most it can, $w\\,(v - b)^2 / 4$,",
-        "at the midpoint",
-        "face 2: the rest",
-        "hole to 0, the levels and the",
-        "remainder, where the share",
-        "$O + C/2 \\leq W_{\\mathrm{rec}}$; the record's",
-        "count down by one",
-    )
-    for i, line in enumerate(lines):
-        ax.text(7.1, 11.95 - i * 0.48, line, ha="left", va="baseline")
+    zero, b, v = 0.9, 2.3, 4.6
+    for case, y0, colour, lines in (
+        (
+            "sparse",
+            10.15,
+            BLUE,
+            (
+                "sparse: share at the Node $\\leq W_{\\mathrm{rec}}$:",
+                "the hole to 0 by the face Rule3",
+                "presents; the count down by one",
+            ),
+        ),
+        (
+            "dense",
+            8.55,
+            ORANGE,
+            (
+                "dense: share at the Node $> W_{\\mathrm{rec}}$:",
+                "nothing written, the levels stand;",
+                "the quantum moves in the books",
+            ),
+        ),
+    ):
+        arrow(ax, (0.3, y0), (5.6, y0), lw=0.7)
+        ax.text(5.7, y0, "$x$", ha="left", va="center", color=GREY)
+        for x, lab in ((zero, "0"), (b, "$b$"), (v, "$v$")):
+            ax.plot([x, x], [y0 - 0.12, y0 + 0.12], color=INK, lw=0.7, zorder=5)
+            ax.text(x, y0 - 0.2, lab, ha="center", va="top")
+        if case == "sparse":
+            arrow(ax, (v - 0.1, y0 + 0.5), (zero + 0.1, y0 + 0.5), lw=0.9)
+            ax.text(
+                (v + zero) / 2,
+                y0 + 0.62,
+                "the face: $v, b, r \\to 0$",
+                ha="center",
+                va="bottom",
+                color=colour,
+            )
+        else:
+            ax.text(
+                (v + zero) / 2,
+                y0 + 0.62,
+                "nothing written",
+                ha="center",
+                va="bottom",
+                color=colour,
+                fontweight="bold",
+            )
+        for k, line in enumerate(lines):
+            ax.text(
+                6.4,
+                y0 + 0.55 - k * 0.46,
+                line,
+                ha="left",
+                va="top",
+                fontweight="bold" if k == 0 else None,
+                color=colour if k == 0 else INK,
+            )
     ax.text(
-        0.4,
-        8.0,
-        "$W_{\\mathrm{rec}}$ = (the laid share\n+ count div 2) div count",
-        ha="left",
-        va="top",
+        0.4, 7.5, "$W_{\\mathrm{rec}}$ = (the laid share + count div 2) div count", ha="left", va="top"
     )
+    ax.text(0.4, 7.1, "$v$: the level Rule3 would write without the face", ha="left", va="top")
 
 
 def the_books(ax: Axes) -> None:
@@ -581,9 +595,9 @@ def the_books(ax: Axes) -> None:
         ),
         (
             -0.1,
-            "the declaration in the NodeReader's file: its seed; its Nodes,\n"
-            "two or more, connected; its own record with the parts g and e\n"
-            "and the lifetime where declared",
+            "the declaration in the NodeReader's file: its Nodes, two or more\n"
+            "connected (one Node with a record of its own: its parts g, e and\n"
+            "the lifetime); the world's one draw, a body's reader's own seed",
         ),
     ):
         ax.add_patch(
