@@ -115,7 +115,7 @@ their statuses.
   (`examples/events/two_slits/two_slits.json` with its mode file, the universe
   file it names and the blind `expectation.json` beside it) and steps Rule3's
   line for light at the vacuum's paces in floating point, with no integer
-  division and no remainder, on the same declared board, wall, gaps, laid packet and
+  division and no remainder, on the same declared lattice, wall, gaps, laid packet and
   screen regions, reading what the engine's click lines report, the net current
   through each region's front boundary Ports over the expectation's window over
   the count wall, so that the integer run is checked against it to the rounding.
@@ -177,7 +177,7 @@ the journal.
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 245 to 248 words
+  and `abstract_journal.txt` beside it are one text of 243 to 246 words
   (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
@@ -216,8 +216,8 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "42 pages, 7 figures, 6 tables; supplementary material of 38 pages as an
-  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,479
+  "42 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
+  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,472
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
