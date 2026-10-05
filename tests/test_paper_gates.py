@@ -64,3 +64,12 @@ def test_every_plain_mark_opens_with_the_keys_word_or_the_count_falls() -> None:
     claims_table = sys.modules["claims_table"]
     outside = claims_table.marks_outside_the_key(texts["main.tex"])
     assert len(outside) <= MARKS_OUTSIDE_THE_KEY_TONIGHT, outside
+
+
+def test_no_breaker_is_keyed_to_another_derivation_after_a_renumbering() -> None:
+    import json
+
+    _, texts = gates()
+    claims_table = sys.modules["claims_table"]
+    breakers = json.loads((ROOT / "paper" / "claims_breakers.json").read_text(encoding="utf-8"))
+    assert claims_table.misattached_breakers(texts["supplement.tex"], breakers) == []

@@ -276,6 +276,25 @@ def marks_outside_the_key(main: str) -> list[str]:
     return misses
 
 
+def misattached_breakers(supplement: str, breakers: dict[str, dict[str, str]]) -> list[str]:
+    """The breakers keyed to a derivation by its number must name that derivation (the "derivation" field, the
+    title's opening words written at the re-key of 2026-10-05): after a renumbering of the supplement a key that
+    names another derivation's title is a silent reattachment, printed as a miss (the audit's ask, #2021)."""
+    titles = [plain(match.group(1), 120) for match in DERIVATION.finditer(supplement)]
+    misses: list[str] = []
+    for key, row in breakers.items():
+        if not key.startswith("S.") or "derivation" not in row:
+            continue
+        index = int(key[2:])
+        if index > len(titles):
+            misses.append(f"{key}: no such derivation in the supplement ({row['derivation'][:50]})")
+        elif titles[index - 1][:40] != row["derivation"][:40]:
+            misses.append(
+                f"{key}: keyed to '{row['derivation'][:40]}' but the derivation is '{titles[index - 1][:40]}'"
+            )
+    return misses
+
+
 def unmatched_rows(main: str, supplement: str = "") -> list[str]:
     """The gate of the claims table's move into the supplement (the advisor's word of 2026-10-05, 5996437774 (C)):
     every row of the claims table has a marked sentence in the main at the row's "where" (a section the sentence
@@ -461,6 +480,8 @@ def build() -> str:
     tables = table_rows(main, supplement)
     misses = unmatched_rows(main, supplement)
     outside = marks_outside_the_key(main)
+    misattached = misattached_breakers(supplement, breakers)
+    long_keys = sorted(key for key in breakers if key.startswith("long:"))
     filled = sum(1 for row in rows if row["breaker"])
     unsourced = sum(1 for row in rows if row["source"] == "NO SOURCE" and row["kind"] in "abce")
     lines = [
@@ -485,7 +506,9 @@ def build() -> str:
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
         f" {len(candidates)}; rows of the tables: {len(tables)}; rows of Table 1 without a marked sentence:"
-        f" {len(misses)}; marks outside the key: {len(outside)}; derivations of the supplement: {len(derivations)}.",
+        f" {len(misses)}; marks outside the key: {len(outside)}; breakers keyed to another derivation:"
+        f" {len(misattached)}; breakers keyed to the long version at the tag: {len(long_keys)}; derivations of the"
+        f" supplement: {len(derivations)}.",
         "",
         "## A. The marked claims of main.tex",
         "",
@@ -531,6 +554,7 @@ def build() -> str:
         "",
         *[f"- {miss}" for miss in misses],
         *[f"- {miss}" for miss in outside],
+        *[f"- {miss}" for miss in misattached],
         "",
         "| # | table | status | fence | kind | the row | the breaker | state |",
         "|---|---|---|---|---|---|---|---|",
@@ -542,6 +566,16 @@ def build() -> str:
             f" {row['text']} | {breaker.get('breaker', '')} | {breaker.get('state', '')} |"
         )
     lines += [
+        "",
+        "## F. Breakers keyed to the long version at the tag (`long:`), their sentence or row not in the short version",
+        "",
+        "| key | kind | the breaker | state |",
+        "|---|---|---|---|",
+        *[
+            f"| {key} | {breakers[key].get('kind', '')} | {breakers[key].get('breaker', '')[:120]} |"
+            f" {breakers[key].get('state', '')} |"
+            for key in long_keys
+        ],
         "",
         "## C. The supplement's derivations and their Status lines (the key `S.n`)",
         "",
