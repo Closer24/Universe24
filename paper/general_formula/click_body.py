@@ -1,7 +1,7 @@
 """The click at a NodeDetector, drawn from the definitions, by no run of the engine, in black and grey.
 
 Two panels side by side at the text width of Springer's sn-jnl (131 mm), every lettering 8 pt at the printed
-size. (a) Space and time: the arriving record runs forward from its root, every path at once; the click is the
+size. (a) Space and time: the arriving configuration runs forward from its source Node, every path at once; the click is the
 meeting of the forward record with the transition read backward from the click; the write at the drawn Node;
 the front, one shell per interval, erases the absorbed record inside the click's causal cone, the empty wave
 beyond it at count 0. (b) The NodeDetector's region before the window's close and after the one write at the
@@ -406,7 +406,7 @@ def region(ax: Axes, x1: float, cy: float, s: float, upper: bool, drawn: bool) -
 
 
 def wave(ax: Axes, x1: float, x2: float, y: float, color: str, n: int = 4, amp: float = 0.16) -> None:
-    """A short wavy line, the field's quantum on its way."""
+    """A short wavy line, the configuration's quantum on its way."""
     xs = [x1 + (x2 - x1) * i / 60 for i in range(61)]
     ys = [y + amp * math.sin(2 * math.pi * n * (x - x1) / (x2 - x1)) for x in xs]
     ax.plot(xs, ys, color=color, lw=1.1, zorder=5)
@@ -430,7 +430,7 @@ def the_region(ax: Axes) -> None:
     ax.text(
         (xa + xb) / 2,
         y - s / 2 - 0.75,
-        "the arriving field,\ncount 1, at the\nregion's boundary",
+        "the arriving\nconfiguration, count 1,\nat the region's boundary",
         color=BLUE,
         ha="center",
         va="top",
@@ -479,7 +479,7 @@ def the_region(ax: Axes) -> None:
 
 
 def the_hole(ax: Axes) -> None:
-    """(c) The absorption's write at the drawn Node: one comparison of the field's booked share there against its own
+    """(c) The absorption's write at the drawn Node: one comparison of the configuration's booked share there against its own
     quantum W_rec; the sparse Node zeroed by the face Rule3 presents, the dense record undepleted with its count in
     the books (the advisor's words of 2026-10-04, #1793 comment 5985040913)."""
     ax.text(-0.3, 12.5, "c", ha="left", va="top", fontweight="bold", fontsize=9)
@@ -559,7 +559,7 @@ def the_books(ax: Axes) -> None:
     """(d) The books in whole numbers, the click line to the file and the declaration."""
     ax.text(-0.3, 6.85, "d", ha="left", va="top", fontweight="bold", fontsize=9)
     rows = (
-        ("the arriving field's count", "1", "0"),
+        ("the arriving configuration's count", "1", "0"),
         ("its levels and remainder at the drawn Node", "$v$, $b$, $r$", "0, 0, 0"),
         ("the NodeDetector's configuration, its parts $g$ / $e$", "1 / 0", "0 / 1"),
     )
