@@ -251,10 +251,12 @@ author confirms each of them in the submission system, and the paper and
 the supplement are uploaded under the author's own accounts at arXiv and at
 the journal.
 
-1. arXiv: the account, the licence, and whether an earlier paper of the
-   project was posted; the endorser is in hand (the author, 2026-10-02).
+1. arXiv: the account and the licence. This is the project's first paper and a
+   new submission; no earlier paper of the project was posted, and the endorsement
+   is the author's own step at arXiv.
 2. The archive: the GitHub release 1.1.0 of the paper's commit and its Zenodo
-   version DOI (the paper's version 1.1.0; the version 1.0.0 stays archived).
-3. The cover letter, written for this paper.
+   version DOI (the archive's version 1.1.0).
+3. The cover letter, `cover_letter.md` beside this file, with its two placeholders
+   (the arXiv identifier, the date) filled by the author.
 4. The journal: an Editorial Manager account; the preprint declared at
    submission.
