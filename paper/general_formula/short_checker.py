@@ -1,4 +1,4 @@
-"""The short version's checker: three checks of a short main text and a short supplement against the
+"""The short version's checker: four checks of a short main text and a short supplement against the
 frozen long version of the paper, one plain-text report, exit code 0 when every check passes.
 
 1. The number audit. Every number written in the short files' text (integers, thousands groups,
@@ -6,7 +6,8 @@ frozen long version of the paper, one plain-text report, exit code 0 when every 
    is found in the long version's two files, after both are normalised to one form: a thousands
    group loses its separators, \\frac{a}{b}, \\tfrac ab, a / b and a/b are the fraction a/b, and
    10^{-21}, 10^-21, 2 \\times 10^{28}, 2 \\cdot 10^{28} and 1.3e11 are the power forms 1e-21, 2e28
-   and 1.3e11. A composed number whose parts (the mantissa and the bare power, the numerator and the
+   and 1.3e11; a number's own sign (glued to it, not a binary minus) is part of it, -0.0833 one
+   number. A composed number whose parts (the mantissa and the bare power, the numerator and the
    denominator) both stand in the long version is found by its parts and listed as such. TeX layout
    is not a number of the text and is ignored: the preamble, the comments and the bibliography; the
    pointer, URL, identity and layout macros; dimensions such as 8pt or 0.66\\textwidth; a digit run
@@ -24,21 +25,35 @@ frozen long version of the paper, one plain-text report, exit code 0 when every 
 3. The labels of the long main text's theorems, propositions, assumptions and equations: a table
    saying whether the short main text or the short supplement still carries each label. This is
    information for the editor, not a failure.
+4. The locality check. Membership is not enough: two numbers swapped within a sentence are both
+   still found. So every number of the short files must stand in the long version with the same
+   neighbour on at least one side, the neighbour being the token right before or right after it in
+   the cleaned text (a word, a number, \\%, a row's end or a macro such as \\Gamma or \\sin); the
+   punctuation, the braces, the math delimiters, the formatting macros, the relations and the
+   operators are transparent, so that the neighbour of 6{,}000 in \\Gamma = 6{,}000 is \\Gamma and of
+   44\\% is \\%. A number found in the long version only with different neighbours on both sides is
+   printed as WEAK with both windows and fails the check like a miss; a number whose neighbour
+   matches while the token one further out differs is printed as NEAR, information only.
 
     python paper/general_formula/short_checker.py --short-main PATH --short-supplement PATH
         [--long-ref COMMIT] [--long-main PATH --long-supplement PATH] [--xr-aux PATH] [--bib PATH]
         [--verbose]
     python paper/general_formula/short_checker.py --self-test [--verbose]
 
-The self-test runs the long version against itself (short = long) and must report 0 misses and
-0 unresolved pointers; with --verbose it prints the inventory of the numbers found and every ignored
-token by rule, so that the ignore rules can be read off the long version itself.
+The self-test has two parts. The first runs the long version against itself (short = long) and
+must report 0 misses, 0 weak numbers and 0 unresolved pointers; with --verbose it prints the
+inventory of the numbers found and every ignored token by rule, so that the ignore rules can be
+read off the long version itself. The second takes the long main text, swaps the two numbers of
+the first sentence that carries two distinct numbers with different neighbours, audits the modified
+text against the long version and must find exactly those two WEAK lines, the checker's verdict
+FAIL (exit code 1). The self-test's own exit code is 0 only when both parts behave so.
 """
 
 from __future__ import annotations
 
 import argparse
 import bisect
+import functools
 import re
 import subprocess
 import sys
@@ -206,8 +221,10 @@ LENGTHS = (
 )
 DIMENSION = re.compile(rf"[-+]?(?:\d+\.?\d*|\.\d+)(?:{UNITS}|\s*{LENGTHS})")
 HEX_NAME = re.compile(r"(?<![A-Za-z0-9])(?=[0-9a-f]*[a-f])(?=[0-9a-f]*\d)[0-9a-f]{7,40}(?![A-Za-z0-9])")
-# a macro glued to digits is not a name: \tfrac12 is the fraction 1/2 and \sqrt2 the root of 2
-MACRO_BEFORE_DIGITS = re.compile(r"\\(?!(?:d|t|s|nice|c)?frac\d)[A-Za-z@]+(?=\d)")
+# a macro glued to digits is not a name: \tfrac12 is the fraction 1/2 and \sqrt2 the root of 2; the
+# macro is blanked so that the digits stand, except the fraction macros (one number) and \times
+# and \cdot (the glue of 3\times10^{-29}, which the number pattern accepts)
+MACRO_BEFORE_DIGITS = re.compile(r"\\(?!(?:d|t|s|nice|c)?frac\d|times\d|cdot\d)[A-Za-z@]+(?=\d)")
 # a digit run glued to a letter is a name (Universe24, Rule3, M87, GW170817, J1738+0333)
 GLUED_DIGITS = re.compile(r"(\\?)[A-Za-z@]+(\d+(?:[-+]\d+)?)")
 POINTER_WORDS = (
@@ -235,11 +252,13 @@ COMMENT = re.compile(r"(?<!\\)%[^\n]*")
 SIGN = r"[-+\u2212]?"  # a hyphen-minus, a plus or the Unicode minus sign
 SPACING = r"(?:\s|\\[,;!:]|~|\\quad|\\qquad)*"
 TIMES = r"(?:\\times|\\cdot|\u00d7)"  # \times, \cdot or the Unicode multiplication sign
-# the alternatives in the order tried at one position: a power of ten with its mantissa, a
-# scientific form, a fraction a / b (not after an exponent's caret), a thousands group, a decimal,
-# an integer; then the fraction macros, braced or glued
+# a number's own sign is glued to its first digit and does not follow a letter, a digit or a
+# closing bracket (there it is a binary minus, t-1 or a date); the alternatives in the order tried
+# at one position: a power of ten with its mantissa, a scientific form, a fraction a / b (not after
+# an exponent's caret), a thousands group, a decimal, an integer; then the fraction macros, braced
+# or glued
 NUMBER = re.compile(
-    r"(?<![A-Za-z0-9.])(?:"
+    r"(?:(?<![A-Za-z0-9.)\]}])(?P<sign>[-+\u2212])(?=\d)|(?<![A-Za-z0-9.])|(?<=\\times)|(?<=\\cdot))(?:"
     rf"(?P<power>(?:(?P<mantissa>\d+(?:\.\d+)?){SPACING}{TIMES}{SPACING})?"
     rf"10\^(?:\{{\s*(?P<exponent>{SIGN}\s*\d+)\s*\}}|(?P<digit>{SIGN}\d))(?![0-9.]))"
     r"|(?P<scientific>(?P<smantissa>\d+(?:\.\d+)?)[eE](?P<sexponent>[-+]?\d+)(?![A-Za-z0-9.]))"
@@ -274,13 +293,29 @@ class Cleaned:
 
     text: str
     ignored: dict[str, list[str]] = field(default_factory=dict)
+    pending: list[tuple[int, int]] = field(default_factory=list)
+    numbers: list[Token] | None = None
+    stream: list[Place] | None = None
 
     def blank(self, start: int, end: int, rule: str) -> None:
-        """Blank the span, keeping newlines so that every offset still names its line."""
+        """Record the span to blank (applied by `flush` at the pass's end) and, when it holds a digit,
+        the token it removes under its rule."""
         removed = self.text[start:end]
         if re.search(r"\d", removed):
             self.ignored.setdefault(rule, []).append(" ".join(removed.split())[:80])
-        self.text = self.text[:start] + re.sub(r"[^\n]", " ", removed) + self.text[end:]
+        self.pending.append((start, end))
+
+    def flush(self) -> None:
+        """Blank the recorded spans, keeping newlines so that every offset still names its line."""
+        if not self.pending:
+            return
+        chars = list(self.text)
+        for start, end in self.pending:
+            for i in range(start, end):
+                if chars[i] != "\n":
+                    chars[i] = " "
+        self.text = "".join(chars)
+        self.pending = []
 
 
 def group_end(text: str, start: int) -> int:
@@ -366,11 +401,14 @@ def drop_environment_arguments(cleaned: Cleaned) -> None:
         position = m.end()
 
 
+@functools.lru_cache(maxsize=16)
 def clean(text: str) -> Cleaned:
-    """The text with everything that is not a number of the text blanked, offsets kept."""
+    """The text with everything that is not a number of the text blanked, offsets kept; the passes
+    in order, each applied before the next searches the text."""
     cleaned = Cleaned(text)
     for m in COMMENT.finditer(text):
         cleaned.blank(m.start(), m.end(), "comments")
+    cleaned.flush()
     begin = cleaned.text.find("\\begin{document}")
     if begin >= 0:
         cleaned.blank(0, begin, "preamble")
@@ -381,32 +419,44 @@ def clean(text: str) -> Cleaned:
     if begin >= 0:
         end = cleaned.text.find("\\end{thebibliography}", begin)
         cleaned.blank(begin, len(cleaned.text) if end < 0 else end, "bibliography")
+    cleaned.flush()
     for m in re.finditer(r"\\def\s*\\[A-Za-z@]+", cleaned.text):
         end, _ = macro_span(cleaned.text, m.end(), 1)
         cleaned.blank(m.start(), end, "layout macros")
     for m in re.finditer(r"\\cmidrule(?:\([^)]*\))?\s*\{[^}]*\}", cleaned.text):
         cleaned.blank(m.start(), m.end(), "layout macros")
+    cleaned.flush()
     drop_macros(cleaned, POINTER_MACROS, "pointer macros", keep_last=False)
+    cleaned.flush()
     drop_macros(cleaned, LAYOUT_MACROS, "layout macros", keep_last=False)
+    cleaned.flush()
     drop_macros(cleaned, KEEP_LAST_MACROS, "layout macros", keep_last=True)
+    cleaned.flush()
     drop_environment_arguments(cleaned)
+    cleaned.flush()
     for m in re.finditer(r"\\\\\s*\[[^\]]*\]", cleaned.text):
         cleaned.blank(m.start(), m.end(), "layout macros")
     for m in SECTION_NUMBER.finditer(cleaned.text):
         cleaned.blank(m.start(2), m.end(2), "section numbers")
+    cleaned.flush()
     for m in DIMENSION.finditer(cleaned.text):
         cleaned.blank(m.start(), m.end(), "dimensions")
+    cleaned.flush()
     for m in HEX_NAME.finditer(cleaned.text):
         cleaned.blank(m.start(), m.end(), "names")
     for m in MACRO_BEFORE_DIGITS.finditer(cleaned.text):
         cleaned.blank(m.start(), m.end(), "names")
+    cleaned.flush()
     for m in GLUED_DIGITS.finditer(cleaned.text):
         if not m.group(1):
             cleaned.blank(m.start(2), m.end(2), "names")
+    cleaned.flush()
     for m in SUPPLEMENT_POINTER.finditer(cleaned.text):
         cleaned.blank(m.start(), m.end(), "pointers")
+    cleaned.flush()
     for m in POINTER.finditer(cleaned.text):
         cleaned.blank(m.start(), m.end(), "pointers")
+    cleaned.flush()
     return cleaned
 
 
@@ -426,30 +476,36 @@ def exponent(text: str) -> int:
 def tokens(text: str | Cleaned) -> list[Token]:
     """Every number of a text, in the order written, the layout cleaned away first."""
     cleaned = text if isinstance(text, Cleaned) else clean(text)
+    if cleaned.numbers is not None:
+        return cleaned.numbers
     found = []
     for m in NUMBER.finditer(cleaned.text):
         kind = m.lastgroup
+        sign = "-" if m.group("sign") in ("-", "\u2212") else ""
         parts: tuple[str, ...] = ()
         if m.group("power"):
-            mantissa = plain(m.group("mantissa")) if m.group("mantissa") else "1"
+            mantissa = sign + (plain(m.group("mantissa")) if m.group("mantissa") else "1")
             power = exponent(m.group("exponent") or m.group("digit"))
             normalised = f"{mantissa}e{power}"
             parts = (mantissa, f"1e{power}") if m.group("mantissa") else ()
         elif m.group("scientific"):
-            mantissa = plain(m.group("smantissa"))
+            mantissa = sign + plain(m.group("smantissa"))
             power = exponent(m.group("sexponent"))
             normalised = f"{mantissa}e{power}"
             parts = (mantissa, f"1e{power}")
         elif m.group("fraction") or m.group("fracmacro") or m.group("fracglued"):
-            numerator = plain(m.group("numerator") or m.group("mnumerator") or m.group("gnumerator"))
+            numerator = sign + plain(
+                m.group("numerator") or m.group("mnumerator") or m.group("gnumerator")
+            )
             denominator = plain(
                 m.group("denominator") or m.group("mdenominator") or m.group("gdenominator")
             )
             normalised = f"{numerator}/{denominator}"
             parts = (numerator, denominator)
         else:
-            normalised = plain(m.group(kind or "integer"))
+            normalised = sign + plain(m.group(kind or "integer"))
         found.append(Token(m.start(), m.end(), m.group(0), normalised, parts))
+    cleaned.numbers = found
     return found
 
 
@@ -505,13 +561,19 @@ class Audit:
     ignored: dict[str, dict[str, list[str]]] = field(default_factory=dict)
 
 
-def audit_numbers(short: dict[str, str], long: dict[str, str]) -> Audit:
-    """Every number of the short texts against the long texts' numbers and their parts."""
+def known_numbers(long: dict[str, str]) -> set[str]:
+    """The long texts' numbers in their normalised forms, with the parts of the composed ones."""
     known: set[str] = set()
     for text in long.values():
         for token in tokens(text):
             known.add(token.normalised)
             known.update(token.parts)
+    return known
+
+
+def audit_numbers(short: dict[str, str], long: dict[str, str], known: set[str] | None = None) -> Audit:
+    """Every number of the short texts against the long texts' numbers and their parts."""
+    known = known_numbers(long) if known is None else known
     audit = Audit()
     distinct: dict[str, bool] = {}
     for name, text in short.items():
@@ -695,6 +757,203 @@ def guard_labels(long_main: str, short_main: str, short_supplement: str) -> list
     return sorted(rows, key=lambda row: row.line)
 
 
+# --- check 4: the locality check -------------------------------------------------------------
+
+# the macros transparent when choosing a number's neighbour: formatting and spacing, delimiters,
+# relations and operators; a macro that names a symbol, a function or a unit (\Gamma, \sin, \circ)
+# is a neighbour
+TRANSPARENT_MACROS = frozenset(
+    (
+        "emph textbf textit texttt textsc textrm textsf text mathrm mathit mathbf mathsf mathtt mathcal "
+        "boldsymbol operatorname ensuremath mbox hbox left right bigl bigr Bigl Bigr biggl biggr Biggl "
+        "Biggr big Big bigg Bigg displaystyle textstyle scriptstyle scriptscriptstyle nonumber notag "
+        "allowbreak noindent indent newline linebreak par item centering raggedright raggedleft small "
+        "footnotesize scriptsize tiny normalsize large Large LARGE huge Huge bfseries itshape em "
+        "normalfont quad qquad hline toprule midrule bottomrule addlinespace relax protect strut "
+        "le ge leq geq ne neq approx sim simeq equiv propto to rightarrow leftarrow Rightarrow Leftarrow "
+        "leftrightarrow mapsto pm mp times cdot ll gg cup cap in notin subset supset mid colon dots "
+        "ldots cdots vdots vert lvert rvert langle rangle lfloor rfloor lceil rceil setminus ast star "
+        "dagger prime"
+    ).split()
+)
+# the stream's pieces: an environment's begin or end (transparent), a macro, a word
+STREAM = re.compile(r"\\(?:begin|end)\s*\{[^}]*\}|\\(?:[A-Za-z@]+|.)|[A-Za-z]+(?:'[A-Za-z]+)?")
+Side = tuple[str | None, str | None]
+
+
+@dataclass
+class Place:
+    """One token of the neighbour stream: a number (with its Token), a word, \\%, a row's end or a
+    macro; `key` is what two neighbours are compared by (a word in lower case, a number normalised)."""
+
+    start: int
+    end: int
+    key: str
+    text: str
+    token: Token | None = None
+
+
+def places(cleaned: Cleaned) -> list[Place]:
+    """The neighbour stream of a cleaned text, in order: its numbers, words, \\%, row ends and the
+    macros that are not transparent. Punctuation, braces, math delimiters, relations and operators
+    are left out, so that a number's neighbour is the symbol or the word it stands with."""
+    if cleaned.stream is not None:
+        return cleaned.stream
+    found: list[Place] = []
+    position = 0
+    for token in [*tokens(cleaned), None]:
+        stop = len(cleaned.text) if token is None else token.start
+        for m in STREAM.finditer(cleaned.text, position, stop):
+            text = m.group(0)
+            if text.startswith(("\\begin", "\\end")):
+                continue
+            if text.startswith("\\"):
+                name = text[1:]
+                if text in ("\\\\", "\\%"):
+                    found.append(Place(m.start(), m.end(), text, text))
+                elif re.fullmatch(r"[A-Za-z@]+", name) and name not in TRANSPARENT_MACROS:
+                    found.append(Place(m.start(), m.end(), text, text))
+                continue
+            found.append(Place(m.start(), m.end(), text.lower(), text))
+        if token is not None:
+            found.append(Place(token.start, token.end, token.normalised, token.written, token))
+            position = token.end
+    cleaned.stream = found
+    return found
+
+
+def sides(stream: list[Place], i: int) -> tuple[Side, Side]:
+    """The two neighbours' keys on each side of the stream's i-th place: ((left, left but one),
+    (right, right but one)), None past the text's ends."""
+
+    def key(j: int) -> str | None:
+        return stream[j].key if 0 <= j < len(stream) else None
+
+    return (key(i - 1), key(i - 2)), (key(i + 1), key(i + 2))
+
+
+@dataclass
+class Occurrence:
+    """One number of the long version with its neighbours and its window."""
+
+    file: str
+    line: int
+    left: Side
+    right: Side
+    window: str
+
+
+def locality_index(long: dict[str, str]) -> dict[str, list[Occurrence]]:
+    """Every number of the long texts by its normalised form, each occurrence with its neighbours."""
+    index: dict[str, list[Occurrence]] = {}
+    for name, text in long.items():
+        lines = Lines(text)
+        stream = places(clean(text))
+        for i, place in enumerate(stream):
+            if place.token is None:
+                continue
+            left, right = sides(stream, i)
+            index.setdefault(place.key, []).append(
+                Occurrence(
+                    name, lines.number(place.start), left, right, lines.window(place.start, place.end)
+                )
+            )
+    return index
+
+
+@dataclass
+class Weak:
+    """A number of the short files whose neighbours are not the long version's: WEAK when neither
+    side matches any occurrence, NEAR when a side matches but the token beyond it differs."""
+
+    file: str
+    line: int
+    written: str
+    normalised: str
+    left: Side
+    right: Side
+    window: str
+    long: Occurrence
+
+
+@dataclass
+class Locality:
+    checked: int = 0
+    weak: list[Weak] = field(default_factory=list)
+    near: list[Weak] = field(default_factory=list)
+
+
+def check_locality(short: dict[str, str], index: dict[str, list[Occurrence]]) -> Locality:
+    """Every number of the short texts that the long version holds, against the neighbours the long
+    version holds it with: the same neighbour on one side at least, else WEAK; the same neighbour
+    with the token beyond it different, NEAR."""
+    result = Locality()
+    seen: set[tuple[str, int, str, str | None, str | None]] = set()
+    for name, text in short.items():
+        lines = Lines(text)
+        stream = places(clean(text))
+        for i, place in enumerate(stream):
+            if place.token is None or place.key not in index:
+                continue  # a word, or a number the audit reports as a miss or found by its parts
+            result.checked += 1
+            left, right = sides(stream, i)
+            best, best_occurrence = 0, index[place.key][0]
+            for occurrence in index[place.key]:
+                for mine, theirs in ((left, occurrence.left), (right, occurrence.right)):
+                    if mine[0] == theirs[0]:
+                        level = 2 if mine[1] == theirs[1] else 1
+                        if level > best:
+                            best, best_occurrence = level, occurrence
+                if best == 2:
+                    break
+            if best == 2:
+                continue
+            line = lines.number(place.start)
+            mark = (name, line, place.key, left[0], right[0])
+            if mark in seen:
+                continue
+            seen.add(mark)
+            record = Weak(
+                name,
+                line,
+                place.text,
+                place.key,
+                left,
+                right,
+                lines.window(place.start, place.end),
+                best_occurrence,
+            )
+            (result.near if best == 1 else result.weak).append(record)
+    return result
+
+
+def show(key: str | None) -> str:
+    return "(none)" if key is None else key
+
+
+def weak_line(record: Weak) -> list[str]:
+    """The WEAK lines of a record: the pointer line and the two windows."""
+    return [
+        f"WEAK {record.file}:{record.line} {record.written} | short: {show(record.left[0])} _ "
+        f"{show(record.right[0])} | long: {show(record.long.left[0])} _ {show(record.long.right[0])}",
+        f"    short: {record.window}",
+        f"    long {record.long.file}:{record.long.line}: {record.long.window}",
+    ]
+
+
+def near_line(record: Weak) -> str:
+    """The NEAR line of a record: both neighbours on each side, the short's and the long's."""
+    mine = f"{show(record.left[1])} {show(record.left[0])} _ {show(record.right[0])} {show(record.right[1])}"
+    theirs = (
+        f"{show(record.long.left[1])} {show(record.long.left[0])} _ "
+        f"{show(record.long.right[0])} {show(record.long.right[1])}"
+    )
+    return (
+        f"NEAR {record.file}:{record.line} {record.written} | short: {mine} "
+        f"| long {record.long.file}:{record.long.line}: {theirs}"
+    )
+
+
 # --- the report -------------------------------------------------------------------------------
 
 
@@ -708,10 +967,11 @@ def report(
     audit: Audit,
     pointers: Pointers,
     rows: list[LabelRow],
+    locality: Locality,
     sources: dict[str, str],
     verbose: bool,
 ) -> str:
-    """The plain-text report of the three checks."""
+    """The plain-text report of the four checks."""
     out = ["The short version's checker"]
     out.extend(f"  {name}: {source}" for name, source in sources.items())
     out += ["", "1. The number audit"]
@@ -774,10 +1034,18 @@ def report(
         )
     else:
         out.append("  no labelled theorem, proposition, assumption or equation in the long main text")
-    passed = not audit.misses and not pointers.unresolved
+    out += ["", "4. The locality check"]
+    for record in locality.weak:
+        out.extend(weak_line(record))
+    out.extend(near_line(record) for record in locality.near)
+    out.append(
+        f"numbers checked for their neighbours: {locality.checked}; weak: {len(locality.weak)}"
+        f" (a failure); near: {len(locality.near)} (information)"
+    )
+    passed = not audit.misses and not locality.weak and not pointers.unresolved
     out += [
         "",
-        f"Result: {'PASS' if passed else 'FAIL'} ({len(audit.misses)} misses, "
+        f"Result: {'PASS' if passed else 'FAIL'} ({len(audit.misses)} misses, {len(locality.weak)} weak, "
         f"{len(pointers.unresolved)} unresolved pointers)",
     ]
     return "\n".join(out)
@@ -835,12 +1103,96 @@ def run(
     supplement_name: str,
     labels: set[str],
     keys: set[str],
-) -> tuple[Audit, Pointers, list[LabelRow]]:
-    """The three checks on the given texts."""
+) -> tuple[Audit, Pointers, list[LabelRow], Locality]:
+    """The four checks on the given texts."""
     audit = audit_numbers(short, long)
     pointers = check_pointers(short, supplement_name, labels, keys)
     rows = guard_labels(long["long main"], short[main_name], short[supplement_name])
-    return audit, pointers, rows
+    locality = check_locality(short, locality_index(long))
+    return audit, pointers, rows, locality
+
+
+# --- the self-tests ---------------------------------------------------------------------------
+
+
+@dataclass
+class Swap:
+    """The second self-test: the long main text with two numbers of one sentence swapped, audited
+    against the long version."""
+
+    line: int
+    written: tuple[str, str]
+    normalised: tuple[str, str]
+    weak: list[Weak]
+    misses: int
+    failed: bool  # the checker's verdict on the modified text is FAIL (exit code 1)
+    as_required: bool  # exactly the swapped pair's two WEAK lines, no miss, the verdict FAIL
+
+
+def swapped_self_test(
+    long: dict[str, str], known: set[str], index: dict[str, list[Occurrence]]
+) -> Swap | None:
+    """The long main text with the two numbers of one sentence swapped: the first sentence, in the
+    text's order, carrying two distinct numbers whose neighbours differ on both sides and whose swap
+    gives exactly those two WEAK lines; None when no sentence does."""
+    main = long["long main"]
+    lines = Lines(main)
+    stream = places(clean(main))
+    numbers = [(i, place) for i, place in enumerate(stream) if place.token is not None]
+    last: Swap | None = None
+    for (i, a), (j, b) in zip(numbers, numbers[1:], strict=False):
+        line = lines.number(a.start)
+        if line != lines.number(b.start) or a.key == b.key:
+            continue
+        if re.search(r"\.\s+[A-Z]", main[a.end : b.start]):
+            continue  # a sentence's end stands between them
+        (left_a, right_a), (left_b, right_b) = sides(stream, i), sides(stream, j)
+        if left_a[0] == left_b[0] or right_a[0] == right_b[0]:
+            continue
+        # the neighbours the two take after the swap (adjacent numbers take each other), none a
+        # number so that no third number's neighbour moves; the swap is tried when the long version
+        # holds neither number with its new neighbour on either side
+        after_a = (b.key, right_b[0]) if j == i + 1 else (left_b[0], right_b[0])
+        after_b = (left_a[0], a.key) if j == i + 1 else (left_a[0], right_a[0])
+        if any(side in index for side in (left_a[0], right_a[0], left_b[0], right_b[0])):
+            continue
+        if any(
+            o.left[0] == after[0] or o.right[0] == after[1]
+            for place, after in ((a, after_a), (b, after_b))
+            for o in index[place.key]
+        ):
+            continue
+        modified = main[: a.start] + b.text + main[a.end : b.start] + a.text + main[b.end :]
+        short = {"short main": modified}
+        audit = audit_numbers(short, long, known)
+        locality = check_locality(short, index)
+        found = {(record.line, record.normalised) for record in locality.weak}
+        failed = bool(audit.misses or locality.weak)
+        last = Swap(
+            line,
+            (a.text, b.text),
+            (a.key, b.key),
+            locality.weak,
+            len(audit.misses),
+            failed,
+            found == {(line, a.key), (line, b.key)}
+            and len(locality.weak) == 2
+            and not audit.misses
+            and failed,
+        )
+        if last.as_required:
+            return last
+    return last
+
+
+@dataclass
+class SelfTest:
+    audit: Audit
+    pointers: Pointers
+    locality: Locality
+    swap: Swap | None
+    text: str
+    ok: bool
 
 
 def self_test(
@@ -848,18 +1200,50 @@ def self_test(
     main_path: str | None = None,
     supplement_path: str | None = None,
     verbose: bool = False,
-) -> tuple[Audit, Pointers, str]:
-    """The long version against itself: the audit, the pointers and the report."""
+) -> SelfTest:
+    """The two self-tests: the long version against itself (every check clean) and the long main
+    text with one sentence's two numbers swapped (exactly those two WEAK lines, the verdict FAIL)."""
     long, sources = long_version(ref, main_path, supplement_path)
     short = {"short main": long["long main"], "short supplement": long["long supplement"]}
-    audit, pointers, rows = run(short, long, "short main", "short supplement", set(), set())
+    known, index = known_numbers(long), locality_index(long)
+    audit = audit_numbers(short, long, known)
+    pointers = check_pointers(short, "short supplement", set(), set())
+    rows = guard_labels(long["long main"], short["short main"], short["short supplement"])
+    locality = check_locality(short, index)
     sources.update(
         {
             "short main": "the long main (self-test)",
             "short supplement": "the long supplement (self-test)",
         }
     )
-    return audit, pointers, report(audit, pointers, rows, sources, verbose)
+    out = ["Self-test 1: the long version against itself", ""]
+    out.append(report(audit, pointers, rows, locality, sources, verbose))
+    swap = swapped_self_test(long, known, index)
+    out += ["", "Self-test 2: the long main text with the two numbers of one sentence swapped"]
+    if swap is None:
+        out.append(
+            "  no sentence of the long main text carries two distinct numbers with different neighbours"
+        )
+    else:
+        out.append(
+            f"  line {swap.line}: {swap.written[0]} ({swap.normalised[0]}) and {swap.written[1]} "
+            f"({swap.normalised[1]}) swapped, the text audited against the long version"
+        )
+        for record in swap.weak:
+            out.extend(weak_line(record))
+        out.append(
+            f"  misses: {swap.misses}; weak: {len(swap.weak)}; the checker's verdict for it: "
+            f"{'FAIL (exit code 1)' if swap.failed else 'PASS (exit code 0)'}; "
+            f"{'as required' if swap.as_required else 'NOT as required'}"
+        )
+    first = not audit.misses and not locality.weak and not pointers.unresolved
+    second = swap is not None and swap.as_required
+    out += [
+        "",
+        f"Self-tests: {'PASS' if first and second else 'FAIL'} (the first {'clean' if first else 'not clean'}, "
+        f"the second {'as required' if second else 'not as required'})",
+    ]
+    return SelfTest(audit, pointers, locality, swap, "\n".join(out), first and second)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -880,7 +1264,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--verbose", action="store_true", help="print the inventory and the ignored tokens"
     )
-    parser.add_argument("--self-test", action="store_true", help="run the long version against itself")
+    parser.add_argument("--self-test", action="store_true", help="run the two self-tests")
     args = parser.parse_args(argv)
     if bool(args.long_main) != bool(args.long_supplement):
         parser.error("--long-main and --long-supplement go together")
@@ -888,30 +1272,28 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--short-main and --short-supplement are required (or --self-test)")
     try:
         if args.self_test:
-            audit, pointers, text = self_test(
-                args.long_ref, args.long_main, args.long_supplement, args.verbose
-            )
-        else:
-            long, sources = long_version(args.long_ref, args.long_main, args.long_supplement)
-            short = {
-                "short main": Path(args.short_main).read_text(encoding="utf-8"),
-                "short supplement": Path(args.short_supplement).read_text(encoding="utf-8"),
-            }
-            sources.update({"short main": args.short_main, "short supplement": args.short_supplement})
-            audit, pointers, rows = run(
-                short,
-                long,
-                "short main",
-                "short supplement",
-                aux_labels(args.xr_aux),
-                bib_keys(args.bib),
-            )
-            text = report(audit, pointers, rows, sources, args.verbose)
+            result = self_test(args.long_ref, args.long_main, args.long_supplement, args.verbose)
+            print(result.text)
+            return 0 if result.ok else 1
+        long, sources = long_version(args.long_ref, args.long_main, args.long_supplement)
+        short = {
+            "short main": Path(args.short_main).read_text(encoding="utf-8"),
+            "short supplement": Path(args.short_supplement).read_text(encoding="utf-8"),
+        }
+        sources.update({"short main": args.short_main, "short supplement": args.short_supplement})
+        audit, pointers, rows, locality = run(
+            short,
+            long,
+            "short main",
+            "short supplement",
+            aux_labels(args.xr_aux),
+            bib_keys(args.bib),
+        )
     except (OSError, UnicodeDecodeError) as error:
         print(f"the checker could not read its files: {error}", file=sys.stderr)
         return 2
-    print(text)
-    return 0 if not audit.misses and not pointers.unresolved else 1
+    print(report(audit, pointers, rows, locality, sources, args.verbose))
+    return 0 if not audit.misses and not locality.weak and not pointers.unresolved else 1
 
 
 if __name__ == "__main__":
