@@ -45,7 +45,7 @@ def quadratic_plane(amplitude: float, omega: float, phase: float) -> float:
 
 
 def compton_out(omega_in: float, theta: float, beta: float, omega_0: float) -> float:
-    """The outgoing rotation from the two bands in the Klein-Gordon form, beta = c_m^2 / c^2 (1 at nature's gap)."""
+    """The outgoing rotation from the two bands in the Klein-Gordon form, the ratio c_m^2 / c^2, named beta here (1 at nature's gap)."""
     a = 1 - beta
     b = -2 * omega_in * (1 - beta * math.cos(theta)) - 2 * omega_0
     c = (1 - beta) * omega_in**2 + 2 * omega_0 * omega_in
@@ -81,7 +81,7 @@ def main() -> None:
     shift_nature = omega_in - compton_out(omega_in, theta, 1.0, omega_0)
     shift_gap = omega_in - compton_out(omega_in, theta, beta, omega_0)
     print(
-        f"Compton at theta = pi/2, Omega_in = {omega_in}: the shift at the finite gap over the shift at nature's gap "
+        f"Compton at theta = pi/2, omega_L,in = {omega_in}: the shift at the finite gap over the shift at nature's gap "
         f"= {shift_gap / shift_nature:.3f} (the factor {beta:.3f}; the rest the relativistic term); "
         f"2 pi / (m* c) = {2 * math.pi / (3 * math.tan(omega_0) * C):.3f} Links against 2 pi / (sqrt 3 omega_0) = {2 * math.pi * C / omega_0:.3f}"
     )
@@ -92,8 +92,8 @@ def main() -> None:
         f"gives one whole kick per Link at the clicks {[i + 1 for i, kick in enumerate(kicks) if kick]} of seven"
     )
     print(
-        f"absorption alone: K (c^2 - c_m^2) = -2 c omega_0 gives K = {-2 * C * omega_0 / (C * C - c_m * c_m):.2f} < 0, forbidden; "
-        f"the pair threshold K = 2 omega_0 / sqrt(c^2 - c_m^2) = {2 * omega_0 / math.sqrt(C * C - c_m * c_m):.2f} "
+        f"absorption alone: k_L (c^2 - c_m^2) = -2 c omega_0 gives k_L = {-2 * C * omega_0 / (C * C - c_m * c_m):.2f} < 0, forbidden; "
+        f"the pair threshold k_L = 2 omega_0 / sqrt(c^2 - c_m^2) = {2 * omega_0 / math.sqrt(C * C - c_m * c_m):.2f} "
         f"against the zone's pi sqrt 3 = {math.pi * math.sqrt(3):.2f}"
     )
 
