@@ -217,8 +217,8 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "40 pages, 7 figures, 6 tables; supplementary material of 36 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,692
+  "41 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
+  ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,692
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
@@ -227,8 +227,9 @@ the journal.
 - The licence: CC BY 4.0, the author's choice, irrevocable for a version;
   an announced paper is never removed.
 - The category: `quant-ph` as primary, since the paper's claim is about
-  measurement and Bell, with `gr-qc` (the weak-field forms) and `nlin.CG`
-  (a reversible cellular automaton) as cross-lists; the moderators may move
+  measurement and Bell, with `nlin.CG`
+  (a reversible cellular automaton) as the cross-list; `gr-qc` is not asked, the paper's
+  gravity standing against the tests at the rule's own pair; the moderators may move
   a foundational lattice model to `physics.gen-ph`, which is their call.
 - The discipline: foundations of physics, the journal's own scope; the paper is
   not a general-relativity paper (its gravity stands against the tests at
