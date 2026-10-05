@@ -11,7 +11,7 @@ PORT_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # 
 
 
 class Wrap(NamedTuple):
-    """The board's face rule: which of the three axes wrap (the others read 0 beyond their two faces), and the Nodes declared beyond the board inside it (`beyond`, a mask over the GameBoard, None where the file declares none): a Node beyond the board reads 0 through every Port and is read as 0 through every Port, so no level, current or source crosses its Links."""
+    """The board's face rule: which of the three axes wrap (the others read 0 beyond their two faces), and the Nodes declared beyond the board inside it (`beyond`, a mask over the lattice, None where the file declares none): a Node beyond the board reads 0 through every Port and is read as 0 through every Port, so no level, current or source crosses its Links."""
 
     x: bool
     y: bool

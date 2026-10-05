@@ -27,7 +27,7 @@ SHELVING_HAZARD, DARK_PERIOD, BRIGHT_RATE, BIN = Fraction(1, 1000), 500, 0.1, 10
 
 
 def frozen_node() -> list[float]:
-    """[R_a at a Node whose pace is 0, the content U = (1 / 2) ln(2 Gamma) above which p_i = p_0^2 / Gamma rounds to 0 at Gamma = 6,000, the same from the clock's exact formula]: 0, 4.70, 4.70; the frozen Node reads nothing through its six Ports (The paces: R_a = 2 num p_i^2 q^2 / Gamma^2 at p_i = 0), stands in no NodeReader's front and is never clicked (The frozen Node has no share)."""
+    """[R_a at a Node whose pace is 0, the content U = (1 / 2) ln(2 Gamma) above which p_i = p_0^2 / Gamma rounds to 0 at Gamma = 6,000, the same from the clock's exact formula]: 0, 4.70, 4.70; the frozen Node reads nothing through its six Ports (The paces: R_a = 2 num p_i^2 q^2 / Gamma^2 at p_i = 0), stands in no NodeDetector's front and is never clicked (The frozen Node has no share)."""
     num, den = MATTER_PAIR
     read = rule3.link_coefficient(num, 0, GAMMA, GAMMA)
     # the first content at which Gamma (1 - 1 / Gamma)^(2c) < 1 / 2, checked exactly on both sides
@@ -62,25 +62,25 @@ def declaration_costs() -> list[float]:
 
 
 def own_clock_and_units() -> list[float]:
-    """[omega of the two slits' light at k = pi / 4, the photons per unit of count 1 / sin omega, the NodeReader's own clock per interval at the vacuum's content p_0 / Gamma]: 0.4456, 2.3204 and 1; one unit of count is one wall W_c = 3 den T of inflow (The conventions and the units, row 11), a photon's share at omega is W_c sin omega (row 12), so N units are N / sin omega photons, the factor 1 / sin omega the convention of three units of one quantum (row 17), and the click line carries the NodeReader's own clock, the carried sum of p_0 / Gamma over the window (The click is the meeting, the click line naming the NodeReader, the family, the count, its own clock and the window)."""
+    """[omega of the two slits' light at k = pi / 4, the photons per unit of count 1 / sin omega, the NodeDetector's own clock per interval at the vacuum's content p_0 / Gamma]: 0.4456, 2.3204 and 1; one unit of count is one wall W_c = 3 den T of inflow (The conventions and the units, row 11), a photon's share at omega is W_c sin omega (row 12), so N units are N / sin omega photons, the factor 1 / sin omega the convention of three units of one quantum (row 17), and the click line carries the NodeDetector's own clock, the carried sum of p_0 / Gamma over the window (The click is the meeting, the click line naming the NodeDetector, the family, the count, its own clock and the window)."""
     omega = math.acos(rule3.plane_wave_dispersion(TWO_SLITS_WAVE_NUMBER, *LIGHT_PAIR))
     return [omega, 1 / math.sin(omega), float(rule3.clock_pace(GAMMA, 0)) / GAMMA]
 
 
 def credit(shares: list[Fraction], count: int) -> int:
-    """N = SUM s_R rounded half up and capped by the record's count, the clicks the credit draws from the shares s_R = Q_R / W_c of every NodeReader reading one record (The click, algebraically; The conventions and the units, row 16: N = (SUM s + W_rec div 2) div W_rec; S.50)."""
+    """N = SUM s_R rounded half up and capped by the record's count, the clicks the credit draws from the shares s_R = Q_R / W_c of every NodeDetector reading one record (The click, algebraically; The conventions and the units, row 16: N = (SUM s + W_rec div 2) div W_rec; S.50)."""
     return min(count, math.floor(sum(shares) + Fraction(1, 2)))
 
 
 def one_draw_per_record() -> list[int]:
-    """[the clicks from a record of count 1 whose one quantum is shared over three NodeReaders, the coincidences between them]: 1 and 0; the one draw over all the NodeReaders reading one record gives one click per record, antibunching (the paper's Section 5.4)."""
+    """[the clicks from a record of count 1 whose one quantum is shared over three NodeDetectors, the coincidences between them]: 1 and 0; the one draw over all the NodeDetectors reading one record gives one click per record, antibunching (the paper's Section 5.4)."""
     shares = [Fraction(1, 2), Fraction(1, 3), Fraction(1, 6)]
     clicks = credit(shares, 1)
     return [clicks, clicks - 1]
 
 
 def arrival_window() -> list[float]:
-    """[the probe's arrival at a NodeReader 34 Links from its lay at k = pi / 4, in intervals]: 62.2; the window closes at the tick of the probe's lay, and the arrival is derived from the lay by the band's group velocity, from click times and from no level read (the paper's Section 5.4)."""
+    """[the probe's arrival at a NodeDetector 34 Links from its lay at k = pi / 4, in intervals]: 62.2; the window closes at the interval of the probe's lay, and the arrival is derived from the lay by the band's group velocity, from click times and from no level read (the paper's Section 5.4)."""
     return [TWO_SLITS_DISTANCE / rule3.group_velocity(TWO_SLITS_WAVE_NUMBER, *LIGHT_PAIR)]
 
 
@@ -115,7 +115,7 @@ def counts_move_only_at_clicks(intervals: int = 50, nodes: int = 24) -> list[Fra
 
 
 def a_quantum_never_breaks() -> list[int]:
-    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 gives one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.3)."""
+    """[the clicks a record of count 1 gives, its count after, the clicks a body of count 5 emits one quantum at a time]: 1, 0 and 5; a click at a body's front parts one quantum, and a quantum of count 1 has no part the click credits (the paper's Section 7.3)."""
     whole = [Fraction(1)]
     taken = credit(whole, 1)
     body_count, clicks = 5, 0

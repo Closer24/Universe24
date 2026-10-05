@@ -34,7 +34,7 @@ def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> 
 
 
 def node_of(value: object, label: str, shape: Node, beyond: tuple[Node, ...] = ()) -> Node:
-    """A Node's address on the GameBoard, three integers inside the shape and not beyond the board's inner faces, refused by name otherwise."""
+    """A Node's address on the lattice, three integers inside the shape and not beyond the board's inner faces, refused by name otherwise."""
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{label} must be a Node [x, y, z]")
     found = tuple(integer(value[axis], f"{label}[{axis}]", 0, shape[axis] - 1) for axis in range(3))
@@ -62,7 +62,7 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
 
 
 def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int, ...]:
-    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a message, `GameBoard.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
+    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a packet, `Lattice.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
     if value is None:
         return (1,) * lines
     if plane:
@@ -79,7 +79,7 @@ def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int,
 
 
 def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
-    """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the hold's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
+    """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the held write's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be an object, each holder's name to the weight it is read with")
     found = []

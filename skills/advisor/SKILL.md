@@ -76,7 +76,7 @@ nor a finding (a click outside its band: it names the missing law).
 Every derivation follows the method of derivation of
 [skills/workflow.md](../workflow.md): Rule3's line first, a body's clicks as the
 only bridge to nature, every observable a click formula and every other formula
-labelled GameBoard, a re-derivation at every change, and the six statuses of the
+labelled lattice, a re-derivation at every change, and the six statuses of the
 paper (theorem, derived, computed from the law, the owner's declaration,
 hypothesis, to be determined by an experiment).
 
@@ -89,7 +89,7 @@ are the acts of [the interval](../../docs/ALGEBRA.md#the-interval):
 | --- | --- | --- | --- |
 | The read | B's time line at the Node and its axis lines at the Link's two ends (the content and the Link's tension); under the rotation the holder's time level and odd lines as angles | Multiplies: the level enters A's paces, the clock once and the Link twice; the angles turn A's two-part record and its arrivals through the Ports | (i) |
 | The write | A's form D (its Wronskian W for the holder of the sign) and its tension's part -num h_a at the Node, at the weight A reads B with | Adds: one write per line of B over the wall E_s T (E_s W_c for an axis line), the one remainder carried at the Node | (iv) |
-| The click | One whole quantum, at the one Node the credit's draw picked: the arriving record's levels and remainder there to 0 (the hole) and its count down by one, the record present there raised by one (the taking) or, at the giving, lowered by one with one whole quantum of light laid at that Node; the one measurement | Writes at that one Node and nowhere else in the click's interval, Rule3 carrying the change one Link per interval; the draw the instrument's, inside the run, with its declared seed, once per window over all the Nodes that read one record, through the root | (iii) |
+| The click | One whole quantum, at the one Node the credit's draw picked: the arriving record's levels and remainder there to 0 (the hole) and its count down by one, the record present there raised by one (the absorption) or, at the emission, lowered by one with one whole quantum of light laid at that Node; the one measurement | Writes at that one Node and nowhere else in the click's interval, Rule3 carrying the change one Link per interval; the draw the instrument's, inside the run, with its declared seed, once per window over all the Nodes that read one record, through the root | (iii) |
 
 No composition of Rule3's acts writes a product of two levels (the theorem of
 [the four acts](../../docs/ALGEBRA.md#the-four-acts)); whoever reads with w
@@ -122,4 +122,4 @@ it retracts.
   computed from the documents' lines, by hand or by a derivation script, and
   labelled as the advisor's.
 - Never grants a permission or relaxes a gate; never presents a hypothesis as
-  law or a GameBoard reading as a measurement.
+  law or a lattice reading as a measurement.

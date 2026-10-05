@@ -71,7 +71,7 @@ def check_the_clocks_rate_is_exact_in_the_half_sine() -> Check:
 
 
 def check_the_cut_regions_uniform_mode() -> Check:
-    """main.tex Section 5.3 (the NodeReader with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
+    """main.tex Section 5.3 (the NodeDetector with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 30)
@@ -103,7 +103,7 @@ def check_the_cut_regions_uniform_mode() -> Check:
 
 
 def check_the_folded_axis_carries_the_band() -> Check:
-    """main.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
+    """main.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 20)
@@ -260,7 +260,7 @@ def check_the_fringes_near_field_minima() -> Check:
 
 
 def check_newtons_constant_and_alpha_laws_numbers() -> Check:
-    """S.25, Eq. (20): the massless holder's rest far from a static source of s quanta per interval is 3 s / (4 pi r) over E_g, so U = 3 s / (4 pi r Gamma E_g), and nature's U = G M / (c^2 r) with M = s and c^2 = 1 / 3 gives G_clock = 1 / (4 pi Gamma E_g); S.26 (b): alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.20675 k / (Gamma E_s), and nature's 1 / 137.036 fixes k / (Gamma E_s) = 1 / 28.33, no integer Gamma E_s giving it at k = 1 (28 gives 1 / 135.43 and 29 gives 1 / 140.27); the algebra exact with pi as a symbol cancelled, the numbers recomputed."""
+    """S.25, Eq. (20): the massless holder's rest far from a static source of s quanta per interval is 3 s / (4 pi r) over E_g, so U = 3 s / (4 pi r Gamma E_g), and nature's U = G M / (c^2 r) with M = s and c^2 = 1 / 3 gives G_clock = 1 / (4 pi Gamma E_g); S.26 (b): alpha_law = (3 sqrt 3 / 8 pi) k / (Gamma E_s) = 0.20675 k / (Gamma E_s), and nature's 1 / 137.036 fixes k / (Gamma E_s) = 1 / 28.33, no integer Gamma E_s emission it at k = 1 (28 gives 1 / 135.43 and 29 gives 1 / 140.27); the algebra exact with pi as a symbol cancelled, the numbers recomputed."""
     for s, r, gamma, e_g in ((3, 7, 11, 5), (1, 2, 6000, 10)):
         level = Fraction(3 * s, 4 * r * gamma * e_g)  # U times pi
         g_over_c2 = level * r / s  # G / c^2 times pi

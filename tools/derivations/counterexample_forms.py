@@ -175,7 +175,7 @@ def wronskian_conserved_by_the_line_at_static_paces() -> Row:
 
 
 def wronskian_total_under_a_change_of_paces() -> Row:
-    """Section 5.5, 'Its total over the GameBoard is invariant under any change of the paces that keeps them uniform over the GameBoard, the weighted total exact at any paces fixed in time, and where the paces move it changes by SUM_i (d_i(t + 1) - d_i(t)) W_i(t + 1)': the plain total under uniform paces changing every step; the weighted total at static uneven paces; the weighted total's change under moving uneven paces against the formula, all exact; outside: a non-uniform change moves the plain total."""
+    """Section 5.5, 'Its total over the lattice is invariant under any change of the paces that keeps them uniform over the lattice, the weighted total exact at any paces fixed in time, and where the paces move it changes by SUM_i (d_i(t + 1) - d_i(t)) W_i(t + 1)': the plain total under uniform paces changing every step; the weighted total at static uneven paces; the weighted total's change under moving uneven paces against the formula, all exact; outside: a non-uniform change moves the plain total."""
     draw = random.Random(SEED)
     uniform_holds, static_holds, formula_holds, plain_moves = True, True, True, False
     for (num, den), shape in zip(pairs(draw, 3), SHAPES, strict=True):
@@ -480,7 +480,7 @@ def vacuum_total_share(
 
 
 def total_share_nonnegative_inside_the_guard() -> Row:
-    """Section 4.4, S.6, 'The total share of a closed or periodic GameBoard is non-negative for |num| <= den at the vacuum's coefficients, with equality for a static uniform level of light and, on an even periodic board, for its checkerboard': random integer levels on periodic boards and on a folded chain for pairs with |num| <= den, negative numerators included, 60 draws each; the two equalities at [1, 1]; outside: |num| > den gives a negative total (a uniform static level). A board with an open face reading 0 beyond is also tried: S_6 keeps its norm at or under 6 there and the total stays non-negative, so the fence's 'closed or periodic' is not what the sign needs (a note for the hands, the breaker's expectation and not the claim's)."""
+    """Section 4.4, S.6, 'The total share of a closed or periodic lattice is non-negative for |num| <= den at the vacuum's coefficients, with equality for a static uniform level of light and, on an even periodic board, for its checkerboard': random integer levels on periodic boards and on a folded chain for pairs with |num| <= den, negative numerators included, 60 draws each; the two equalities at [1, 1]; outside: |num| > den gives a negative total (a uniform static level). A board with an open face reading 0 beyond is also tried: S_6 keeps its norm at or under 6 there and the total stays non-negative, so the fence's 'closed or periodic' is not what the sign needs (a note for the hands, the breaker's expectation and not the claim's)."""
     draw = random.Random(SEED)
     boards = {
         "2x2x2": box_arrivals((2, 2, 2)),

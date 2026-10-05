@@ -1,4 +1,4 @@
-"""Universe24: the one engine, a GameBoard of Nodes stepped by Rule3, defined by a world file, a universe file and an engine start file (ALGEBRA.md, docs/ENGINE.md)."""
+"""Universe24: the one engine, a lattice of Nodes stepped by Rule3, defined by a world file, a universe file and an engine start file (ALGEBRA.md, docs/ENGINE.md)."""
 
 from __future__ import annotations
 

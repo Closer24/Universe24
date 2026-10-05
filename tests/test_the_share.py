@@ -1,4 +1,4 @@
-"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_reader's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
+"""The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
 import json
 from fractions import Fraction
@@ -10,7 +10,7 @@ from event_universe.core import paces, ports
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule3
 from event_universe.features.read import edge_squared, paces_guard
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.reports import inflow
@@ -90,7 +90,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a node_reader's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
+    """The currents the engine reads (`node.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a node_detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
     (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = node.zeros(shape, kind_of(63))
@@ -108,13 +108,13 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
 
 
 def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_readers' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `GameBoard.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
+    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
     worlds = (("zeno", "zeno_1"), ("resonance", "resonant"), ("shelved_ion", "shelved_ion"))
     for folder, name in (*worlds, ("anticoincidence", "one_photon")):
-        board = GameBoard(load_world(EVENTS / folder / f"{name}.json"))
+        board = Lattice(load_world(EVENTS / folder / f"{name}.json"))
         for _ in range(24):
             board.step()  # the board may grow beyond a receding face: the masks at its shape now
-            union, everywhere = credit.node_reader_nodes(board), np.ones(board.shape, dtype=bool)
+            union, everywhere = credit.node_detector_nodes(board), np.ones(board.shape, dtype=bool)
             for index in range(len(board.families)):
                 full, frozen = board.share_of(index, 1, everywhere)
                 short, frozen_short = board.share_of(index)
@@ -146,7 +146,7 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
 def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(
     tmp_path, monkeypatch
 ):
-    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `GameBoard.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the level before turned by the previous interval's angle (`node.lines_as_read`), v the stepped level before this interval's turn (the booking's second), the currents from the same turned pair, Rule3's remainder term and the turn's floors on the unturned squares, wall = 2 p_i^2 G^2. (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (tan(theta / 2) 0.08, 0.20 and 0.41) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), where the plain read of the turned pair drifts by percent (his numbers +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the turned read moves by a few 10^-3 at the tops 2,400 and 4,920 whatever the amplitude, the next interval's Link term reading the two ends' angles apart (a gradient of the holder's level, the field's work and no rounding), against the plain read's percent; GAMEBOARD readings, printed."""
+    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `Lattice.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the level before turned by the previous interval's angle (`node.lines_as_read`), v the stepped level before this interval's turn (the booking's second), the currents from the same turned pair, Rule3's remainder term and the turn's floors on the unturned squares, wall = 2 p_i^2 G^2. (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (tan(theta / 2) 0.08, 0.20 and 0.41) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), where the plain read of the turned pair drifts by percent (his numbers +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the turned read moves by a few 10^-3 at the tops 2,400 and 4,920 whatever the amplitude, the next interval's Link term reading the two ends' angles apart (a gradient of the holder's level, the field's work and no rounding), against the plain read's percent; LATTICE readings, printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "binding"), charged=True)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
@@ -154,14 +154,14 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), ticks=40)
-    world.update(engine="e.json", bodies=[], node_readers=[])
+    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
+    world.update(engine="e.json", bodies=[], node_detectors=[])
     paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
     for name, path in paths.items():
         path.write_text(json.dumps({**world, "universe": f"{name}.json"}), encoding="utf-8")
 
     def ring(path, level, amplitude=6000):  # the plane at random levels, the free row at the level
-        board, draw = GameBoard(load_world(path)), np.random.default_rng(10)
+        board, draw = Lattice(load_world(path)), np.random.default_rng(10)
         charged, sign = ([f.name for f in board.families].index(n) for n in ("charged", "charge"))
         half = np.full(board.shape, board.half_wall(charged), dtype=board.kind)
         for line in range(2):
@@ -218,7 +218,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
             drifts.append((board.total_share(charged)[0] - start, plain))
         moved, plain = max(abs(d) for d, _ in drifts) / start, drifts[-1][1] / plain_start
         print(
-            f"GAMEBOARD {label}: the share {start}, the turned read's largest |drift| {moved:.1e} of it, the plain read's drift at the end {plain:+.2%}"
+            f"LATTICE {label}: the share {start}, the turned read's largest |drift| {moved:.1e} of it, the plain read's drift at the end {plain:+.2%}"
         )
         return moved, plain
 

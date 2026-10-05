@@ -354,7 +354,7 @@ def newtons_pull_and_the_two_g() -> Row:
 
 
 def two_clocks_shift_alike() -> Row:
-    """Table 1's row ('The two clocks shift alike'), the clicks table's clock rate row, S.31 and S.41 (1): every family's rest at the composed paces has 1 - cos omega_b = N^2 (1 - cos omega_0) exactly in rationals (rule3.coefficients at p_0 = Gamma N, p_a = Gamma N^2), so the Node's clock and a body's beat shift alike in 2 sin(omega / 2); in omega the rest line's rate is -2 tan(omega_0 / 2) / omega_0 = -f(omega_0), 1.0634 at [2, 3], the clock's click rate 1 - f(omega_0) U; the beat Delta' = N Delta [1 - (1 - N^2)(omega_1^2 + omega_1 omega_2 + omega_2^2) / 24] at N = 0.8: 0.3916 exact against 0.4 and the series 0.3920 (paces.two_clocks), the correction's order 5 (proofs_paces); outside the bodies: a cavity of declared faces, a NodeReader's region and no body, ticks at N^2 against the bodies' N (0.64 against 0.8); the plain read p_a = p_0 moves nothing of the rest's factor N here, so it is no breaker of this row (a note for the hands)."""
+    """Table 1's row ('The two clocks shift alike'), the clicks table's clock rate row, S.31 and S.41 (1): every family's rest at the composed paces has 1 - cos omega_b = N^2 (1 - cos omega_0) exactly in rationals (rule3.coefficients at p_0 = Gamma N, p_a = Gamma N^2), so the Node's clock and a body's beat shift alike in 2 sin(omega / 2); in omega the rest line's rate is -2 tan(omega_0 / 2) / omega_0 = -f(omega_0), 1.0634 at [2, 3], the clock's click rate 1 - f(omega_0) U; the beat Delta' = N Delta [1 - (1 - N^2)(omega_1^2 + omega_1 omega_2 + omega_2^2) / 24] at N = 0.8: 0.3916 exact against 0.4 and the series 0.3920 (paces.two_clocks), the correction's order 5 (proofs_paces); outside the bodies: a cavity of declared faces, a NodeDetector's region and no body, intervals at N^2 against the bodies' N (0.64 against 0.8); the plain read p_a = p_0 moves nothing of the rest's factor N here, so it is no breaker of this row (a note for the hands)."""
     draw = random.Random(SEED)
     exact = True
     for num, den in pairs(draw, 8):
@@ -576,7 +576,7 @@ def atom_with_the_nucleus_angle() -> Row:
 
 
 def zeno_curve() -> Row:
-    """S.59 (Section 5.4): with the window's outcome written the share in e after n windows during a pi pulse is (1 - cos^n(pi / n)) / 2, 1, 0.500, 0.375, 0.235, 0.133 at n = 1, 2, 4, 8, 16 (zeno.formula_column, proofs_credit's recurrence); outside: a reading with no write, where the n rotations by pi / (2 n) compose to pi / 2 and P(e) = 1 at every n, and a body reading itself at its own period 7.47 intervals, whose P(e) over the 768-tick pulse would be 0.023 against nature's full transfer at n = 1 (zeno.own_period_as_window)."""
+    """S.59 (Section 5.4): with the window's outcome written the share in e after n windows during a pi pulse is (1 - cos^n(pi / n)) / 2, 1, 0.500, 0.375, 0.235, 0.133 at n = 1, 2, 4, 8, 16 (zeno.formula_column, proofs_credit's recurrence); outside: a reading with no write, where the n rotations by pi / (2 n) compose to pi / 2 and P(e) = 1 at every n, and a body reading itself at its own period 7.47 intervals, whose P(e) over the 768-interval pulse would be 0.023 against nature's full transfer at n = 1 (zeno.own_period_as_window)."""
     column = [round(v, 3) for v in zeno.formula_column()]
     recurrence = proofs_credit.check_the_zeno_formula()[0]
     no_write = all(abs(math.sin(n * (math.pi / (2 * n))) ** 2 - 1) < 1e-12 for n in zeno.PULSES)

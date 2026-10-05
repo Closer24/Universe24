@@ -1,4 +1,4 @@
-"""The reading gate (the owner's word of 2026-10-04, relayed by the advisor on #1793, comments 5974878000 and 5974938542: the experimenter's readings are kept in each folder's document and a gate re-runs the gate worlds and compares bit for bit): for every folder named under examples/events/ the gate reads the block `## The gate's table` of the folder's `blind_and_reading.md`, a markdown table of five columns, `label`, `world`, `by`, `reading` and `value`, one row per number the experimenter read on the current tree, re-runs the world as the row's `by` says (`run_inputs`, the world once over its `ticks` by tools/run_inputs.py, its output file read back as the experimenter reads it; `meeting_trials`, the design's seeds by tools/meeting_trials.py; `back_in_time`, tools/back_in_time.py over the row's `intervals N`), reads the number the row names (RUN_READINGS and TRIAL_READINGS below: the NodeReader's lines, the clicks, labelled NODEREADER, the one measurement; the books, the ticks, the verdict, the line counts, the trials' count and the back-in-time verdict labelled GAMEBOARD, diagnostics) and compares it with the row's value bit for bit: one JSON line per row with both values, the label and the verdict, MATCH or DIFFERS (a row whose label is not the reading's own DIFFERS by name; a row the gate cannot read DIFFERS with the reason), then one summary line per folder. A folder whose document holds no table is UNFILLED, for the experimenter to fill; the gate invents no number. Where the document holds no gate's table but a reading table in one of two shipped shapes, the screen table (`region`, then `<world> clicks` columns, the which-way folder; the shares beside them are a GameBoard reading and not read) or the trials table (`world`, then `A only`, `B only`, `both`, `neither` and `alpha`, the anticoincidence folder), the last such table is read in its place. Exit code 0 where every row is MATCH, 1 otherwise. A host tool: it holds no number of the law and writes nothing to the engine.
+"""The reading gate (the owner's word of 2026-10-04, relayed by the advisor on #1793, comments 5974878000 and 5974938542: the experimenter's readings are kept in each folder's document and a gate re-runs the gate worlds and compares bit for bit): for every folder named under examples/events/ the gate reads the block `## The gate's table` of the folder's `blind_and_reading.md`, a markdown table of five columns, `label`, `world`, `by`, `reading` and `value`, one row per number the experimenter read on the current tree, re-runs the world as the row's `by` says (`run_inputs`, the world once over its `intervals` by tools/run_inputs.py, its output file read back as the experimenter reads it; `meeting_trials`, the design's seeds by tools/meeting_trials.py; `back_in_time`, tools/back_in_time.py over the row's `intervals N`), reads the number the row names (RUN_READINGS and TRIAL_READINGS below: the NodeDetector's lines, the clicks, labelled NODEDETECTOR, the one measurement; the books, the intervals, the verdict, the line counts, the trials' count and the back-in-time verdict labelled LATTICE, diagnostics) and compares it with the row's value bit for bit: one JSON line per row with both values, the label and the verdict, MATCH or DIFFERS (a row whose label is not the reading's own DIFFERS by name; a row the gate cannot read DIFFERS with the reason), then one summary line per folder. A folder whose document holds no table is UNFILLED, for the experimenter to fill; the gate invents no number. Where the document holds no gate's table but a reading table in one of two shipped shapes, the screen table (`region`, then `<world> clicks` columns, the which-way folder; the shares beside them are a lattice reading and not read) or the trials table (`world`, then `A only`, `B only`, `both`, `neither` and `alpha`, the anticoincidence folder), the last such table is read in its place. Exit code 0 where every row is MATCH, 1 otherwise. A host tool: it holds no number of the law and writes nothing to the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -16,7 +16,7 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -27,7 +27,7 @@ from run_inputs import run_input  # noqa: E402
 DOCUMENT = "blind_and_reading.md"
 TABLE = "The gate's table"  # the heading of the block the gate reads
 COLUMNS = ("label", "world", "by", "reading", "value")  # the block's columns, in this order
-MEASUREMENT, DIAGNOSTIC = "NODEREADER", "GAMEBOARD"  # the output's labels (reports.py)
+MEASUREMENT, DIAGNOSTIC = "NODEDETECTOR", "LATTICE"  # the output's labels (reports.py)
 MATCH, DIFFERS, UNFILLED = (
     "MATCH",
     "DIFFERS",
@@ -39,7 +39,10 @@ RUN, TRIALS, BACK = (
     "back_in_time",
 )  # the row's `by`: the tool that re-runs
 NONE = "none"  # a reading that is None, as the document writes it
-EXCHANGES = {"takings": "taken", "givings": "given"}  # a record's clicks by the family exchanged
+EXCHANGES = {
+    "absorptions": "absorbed",
+    "emissions": "emitted",
+}  # a record's clicks by the family exchanged
 COINCIDENCE = {
     "A only": "A_only",
     "B only": "B_only",
@@ -48,18 +51,18 @@ COINCIDENCE = {
     "alpha": "alpha",
 }
 RUN_READINGS = (
-    "ticks",
+    "intervals",
     "verdict",
     "lines <event>",
     "books <family> <key>",
-    "density <node_reader> <family>",
-    "clicks [<node_reader>]",
-    "inflow <node_reader> <family>",
-    "takings <node_reader>",
-    "givings <node_reader>",
-    "conversions <node_reader>",
+    "density <node_detector> <family>",
+    "clicks [<node_detector>]",
+    "inflow <node_detector> <family>",
+    "absorptions <node_detector>",
+    "emissions <node_detector>",
+    "conversions <node_detector>",
 )  # the readings of one run's output file
-TRIAL_READINGS = ("trials", "refused", "ends in <part> <node_reader>", *COINCIDENCE, "clicks <kind>")
+TRIAL_READINGS = ("trials", "refused", "ends in <part> <node_detector>", *COINCIDENCE, "clicks <kind>")
 SEPARATOR = re.compile(r":?-+:?")  # a cell of a markdown table's separator row
 SCREEN, TRIAL_COLUMNS = "region", tuple(COINCIDENCE)  # the two shipped table shapes, by their headers
 Row = dict[str, str]
@@ -111,7 +114,7 @@ def numeric(cell: str) -> bool:
 
 
 def shipped_rows(tables: list[Table]) -> list[Row]:
-    """The rows of the last reading table in a shipped shape, as gate rows labelled NODEREADER, the clicks: the screen table (`region`, then `<world> clicks` columns, every other column left out; the row `N` the clicks of every region) and the trials table (`world`, then `A only` to `alpha`; a count `n of m` read as n and alpha's fraction before its decimal)."""
+    """The rows of the last reading table in a shipped shape, as gate rows labelled NODEDETECTOR, the clicks: the screen table (`region`, then `<world> clicks` columns, every other column left out; the row `N` the clicks of every region) and the trials table (`world`, then `A only` to `alpha`; a count `n of m` read as n and alpha's fraction before its decimal)."""
     found: list[Row] = []
     for _heading, rows in tables:
         header = rows[0]
@@ -162,20 +165,20 @@ def printed(value: Value) -> str:
     return value
 
 
-def credits(output: dict[str, Any], node_reader: str | None, exchanged: str | None = None) -> int:
-    """The quanta the `credit` lines labelled NODEREADER count (the null window's GAMEBOARD lines left out), every reader's or one reader's by name, and among them those exchanging a quantum with another family where `exchanged` is `taken` or `given`."""
+def credits(output: dict[str, Any], node_detector: str | None, exchanged: str | None = None) -> int:
+    """The quanta the `credit` lines labelled NODEDETECTOR count (the null window's LATTICE lines left out), every reader's or one reader's by name, and among them those exchanging a quantum with another family where `exchanged` is `absorbed` or `emitted`."""
     lines = [
         line for line in output["lines"] if line["event"] == "credit" and line["label"] == MEASUREMENT
     ]
-    lines = [line for line in lines if node_reader is None or line["node_reader"] == node_reader]
+    lines = [line for line in lines if node_detector is None or line["node_detector"] == node_detector]
     lines = [line for line in lines if exchanged is None or line[exchanged] is not None]
     return sum(int(line["count"]) for line in lines)
 
 
 def run_reading(output: dict[str, Any], words: list[str]) -> tuple[str, object]:
-    """One reading of a run's output by the row's words (RUN_READINGS), with the reading's own label: the clicks from the NodeReader's lines, labelled NODEREADER; the ticks, the verdict, a line count, a books entry and a region's last density labelled GAMEBOARD."""
+    """One reading of a run's output by the row's words (RUN_READINGS), with the reading's own label: the clicks from the NodeDetector's lines, labelled NODEDETECTOR; the intervals, the verdict, a line count, a books entry and a region's last density labelled LATTICE."""
     kind, rest, lines = words[0], words[1:], output["lines"]
-    if kind in ("ticks", "verdict") and not rest:
+    if kind in ("intervals", "verdict") and not rest:
         return DIAGNOSTIC, output[kind]
     if kind == "lines" and len(rest) == 1:
         return DIAGNOSTIC, sum(line["event"] == rest[0] for line in lines)
@@ -183,7 +186,7 @@ def run_reading(output: dict[str, Any], words: list[str]) -> tuple[str, object]:
         return DIAGNOSTIC, output["books"][rest[0]][rest[1]]
     if kind == "density" and len(rest) >= 2:
         name, family = " ".join(rest[:-1]), rest[-1]
-        at = [line for line in lines if line["event"] == kind and line["node_reader"] == name]
+        at = [line for line in lines if line["event"] == kind and line["node_detector"] == name]
         readings = [line["reading"] for line in at if line["family"] == family]
         return DIAGNOSTIC, readings[-1] if readings else None
     if kind == "clicks":
@@ -193,17 +196,17 @@ def run_reading(output: dict[str, Any], words: list[str]) -> tuple[str, object]:
     if kind == "conversions" and rest:
         name = " ".join(rest)
         return MEASUREMENT, sum(
-            line["event"] == "conversion" and line["node_reader"] == name for line in lines
+            line["event"] == "conversion" and line["node_detector"] == name for line in lines
         )
     if kind == "inflow" and len(rest) >= 2:
         name, family = " ".join(rest[:-1]), rest[-1]
-        at = [line for line in lines if line["event"] == "click" and line["node_reader"] == name]
+        at = [line for line in lines if line["event"] == "click" and line["node_detector"] == name]
         return MEASUREMENT, sum(int(line["inflow"]) for line in at if line["family"] == family)
     raise ValueError(f"the reading {' '.join(words)!r} is none of a run's: {', '.join(RUN_READINGS)}")
 
 
 def trial_reading(found: dict[str, Any], words: list[str]) -> tuple[str, object]:
-    """One reading of the trials by the row's words (TRIAL_READINGS), with the reading's own label: the parts the records end in, the coincidences and the clicks per kind labelled NODEREADER; the trials' count and the refused seeds' count labelled GAMEBOARD."""
+    """One reading of the trials by the row's words (TRIAL_READINGS), with the reading's own label: the parts the records end in, the coincidences and the clicks per kind labelled NODEDETECTOR; the trials' count and the refused seeds' count labelled LATTICE."""
     text = " ".join(words)
     if text == "trials":
         return DIAGNOSTIC, found["trials"]
@@ -239,7 +242,7 @@ def read(folder: Path, row: Row, cache: dict[tuple[str, str], Any], out: Path) -
     if by == BACK and words[:1] == ["intervals"] and len(words) == 2:
         key = (BACK, f"{world} {words[1]}")
         if key not in cache:
-            cache[key] = back_in_time_verdict(GameBoard(load_world(path)), int(words[1]))
+            cache[key] = back_in_time_verdict(Lattice(load_world(path)), int(words[1]))
         return DIAGNOSTIC, cache[key]["verdict"]
     raise ValueError(
         f"the row's by {by!r} with the reading {row['reading']!r} is none the gate runs: "

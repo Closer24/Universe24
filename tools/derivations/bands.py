@@ -1,4 +1,4 @@
-"""Light's band and the guide's: light's speed at long wavelength and its group velocity at the two slits' k = pi / 4 with the arrival over 34 Links (ALGEBRA.md, The lattice constants; the two slits' blind); the width-one guide's wave number k_z = arccos(3 cos Omega - 2 cos(pi / (w + 1))) at cos Omega = 2 / 3, its wavelength and the reach (pi w / lambda) sqrt(S / L) with S = 43,963 (ALGEBRA.md, The giving's lay); the born quantum's closed form 3 / (4 sin k sin Omega) on the width-one guide at the pairs [2, 3], [4, 5] and [9, 10].
+"""Light's band and the guide's: light's speed at long wavelength and its group velocity at the two slits' k = pi / 4 with the arrival over 34 Links (ALGEBRA.md, The lattice constants; the two slits' blind); the width-one guide's wave number k_z = arccos(3 cos Omega - 2 cos(pi / (w + 1))) at cos Omega = 2 / 3, its wavelength and the reach (pi w / lambda) sqrt(S / L) with S = 43,963 (ALGEBRA.md, The emission's lay); the born quantum's closed form 3 / (4 sin k sin Omega) on the width-one guide at the pairs [2, 3], [4, 5] and [9, 10].
 
 Since the derivations' map (the owner's order of 2026-10-04) the module roots in rule3.py and holds the paper's marks on the band along an axis and the diagonal, the slow limit, the rest energy's departure, the one pair, de Broglie, the folded axis and light's speed under the causal bound.
 
@@ -175,7 +175,7 @@ def de_broglie(num: int = 2, den: int = 3, k: float = 0.01) -> list[float]:
 
 
 def folded_axis_band(k: float = math.pi / 4) -> list[float]:
-    """A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat GameBoard carries the file's band exactly (line 538): on a folded axis the arrival is the Node's own level (The line), the two arrivals summing to 2 a_now as cos k_z = 1 does; [k_z, |cos omega at (k, 0, 0) - cos omega along one axis|, the plane wave's residual against the line on a chain with y and z folded], all 0."""
+    """A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly (line 538): on a folded axis the arrival is the Node's own level (The line), the two arrivals summing to 2 a_now as cos k_z = 1 does; [k_z, |cos omega at (k, 0, 0) - cos omega along one axis|, the plane wave's residual against the line on a chain with y and z folded], all 0."""
     difference = abs(
         rule3.dispersion_at_paces((k, 0.0, 0.0), 1, 1, 1, 1, (1, 1, 1))
         - rule3.plane_wave_dispersion(k, 1, 1)

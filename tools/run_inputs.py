@@ -1,4 +1,4 @@
-"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the GameBoard for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval; a run whose front reaches a receding face's largest size ends there, LAWFUL, the end named under `ended` with the intervals run), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the end if the run ended, the output lines `click` (the node_readers' reports, the measurements: each the region's name, the family and its net inflow through the region's front boundary Ports in the current's units, never a Node), `parts` (the NodeReader's read of a record of several parts, the pair family: per part the signed sums of its two levels over the region, the reader's input for the credit), `credit` (the click written on the GameBoard, the one click line kind of every reader, a declared region's credit and a record's taking and giving alike: the interval, the record, the reader, the window and the reader's own clock, the part before and after where the record has parts, the port realised and the parts kept, the count moved and the count left, the family taken from or given to, never a Node), `field` (a GameBoard reading, labelled so), `erasure` (the front's shell), `lay` and `face` (the acts from outside the Node, the levels laid at one Node and the value presented at one Port, the diagnostics the back-in-time tool crosses from) and the books (a GameBoard diagnostic, the least Node pace of the final state among them). The output carries no time.
+"""The one command: a list of world files in, one output file per world out, each world in its own process. A world is loaded (LAWFUL, or REFUSED with the loader's reason, the guard's among them), run on the lattice for its declared intervals, headless (a refusal inside the run is written too, REFUSED with its reason and interval; a run whose front reaches a receding face's largest size ends there, LAWFUL, the end named under `ended` with the intervals run), and `<name>.output.json` is written into `--out`: the world's name, the verdict, the intervals run, the end if the run ended, the output lines `click` (the node_detectors' reports, the measurements: each the region's name, the family and its net inflow through the region's front boundary Ports in the current's units, never a Node), `parts` (the NodeDetector's read of a record of several parts, the pair family: per part the signed sums of its two levels over the region, the reader's input for the credit), `credit` (the click written on the lattice, the one click line kind of every reader, a declared region's credit and a record's absorption and emission alike: the interval, the record, the reader, the window and the reader's own clock, the part before and after where the record has parts, the port realised and the parts kept, the count moved and the count left, the family taken from or given to, never a Node), `field` (a lattice reading, labelled so), `erasure` (the front's shell), `lay` and `face` (the acts from outside the Node, the levels laid at one Node and the value presented at one Port, the diagnostics the back-in-time tool crosses from) and the books (a lattice diagnostic, the least Node pace of the final state among them). The output carries no time.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -12,7 +12,7 @@ import json
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
 LINES = (
@@ -30,20 +30,20 @@ LINES = (
 def run_input(path: str, out_dir: str) -> dict[str, object]:
     """One world in this process: the verdict at load, the run, the output file; its summary returned."""
     source, lines = Path(path), []
-    output: dict[str, object] = {"input": source.name, "verdict": "LAWFUL", "ticks": 0}
+    output: dict[str, object] = {"input": source.name, "verdict": "LAWFUL", "intervals": 0}
     try:
-        board = GameBoard(load_world(source), lambda line: lines.append(line))
-        for _ in range(board.world.ticks):
+        board = Lattice(load_world(source), lambda line: lines.append(line))
+        for _ in range(board.world.intervals):
             board.step()
             if board.ended is not None:
                 break
-        output.update(ticks=board.tick, ended=board.ended, books=board.books())
+        output.update(intervals=board.interval, ended=board.ended, books=board.books())
     except (ValueError, RuntimeError) as refusal:
         output.update(verdict="REFUSED", reason=str(refusal))
     output["lines"] = [line for line in lines if line["event"] in LINES]
     target = Path(out_dir) / f"{source.stem}.output.json"
     target.write_text(json.dumps(output, indent=1) + "\n", encoding="utf-8")
-    return {"input": source.name, "verdict": output["verdict"], "ticks": output["ticks"]}
+    return {"input": source.name, "verdict": output["verdict"], "intervals": output["intervals"]}
 
 
 def main(argv: list[str] | None = None) -> None:

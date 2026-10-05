@@ -1,4 +1,4 @@
-"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own NodeReader, with a region node_reader of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
+"""The neutron conversion's builder (the two hands of 2026-10-03, the advisor's (c), #1572 comment 5963954612, and the mathematician's 204, 5964082980; ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate): from `design.json` beside it this script writes the world `neutron_conversion.json`, one body of the neutron family of count 1 at the centre of an open cube, declared with its conversion's table (the records out, a plane family with the sense of its lay as the design declares it) and rate and its own NodeDetector, with a region node_detector of two Nodes beside it, and the blind `expectation.json` from the design alone, before any run and never from one; with `--modes` it calls the generator for the mode file beside the world (the body, converted whole, takes no mode entry: its lay is the engine's own at its Node). Every number is the design's and the engine reads none of it.
 
 PYTHONPATH=src python examples/events/neutron_conversion/build_world.py --modes [--folder <folder>]
 """
@@ -34,16 +34,16 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
         "count": int(design["neutron"]["count"]),  # the record's count, declared once over its region
     }
     body["conversion"] = {"rate": int(table["rate"]), "to": outs}
-    body["node_reader"] = {k: int(v) for k, v in design["generator"].items()}
+    body["node_detector"] = {k: int(v) for k, v in design["generator"].items()}
     return {
         "shape": [int(v) for v in design["shape"]],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": design["universe"],
         "engine": design["engine"],
         "bodies": [body],
-        "node_readers": [
+        "node_detectors": [
             {
                 "name": "around",
                 "positions": [[int(v) for v in node] for node in design["around"]],
@@ -55,21 +55,21 @@ def world_of(design: dict[str, Any]) -> dict[str, Any]:
 def expectation(design: dict[str, Any]) -> dict[str, Any]:
     """The blind expectation file, from the design alone: the neutron's row, the table, the excess, the trials, the rate's expectation and the hands' rows verbatim."""
     return {
-        "verdict": "GAMEBOARD",
+        "verdict": "LATTICE",
         "comment": design["comment"],
         "neutron": design["neutron"],
         "table": design["table"],
         "excess": design["excess"],
         "trials": design["trials"],
         "rate_expectation": design["rate_expectation"],
-        "window": [1, int(design["ticks"])],
+        "window": [1, int(design["intervals"])],
         "worlds": design["worlds"],
         "blind": design["blind"],
     }
 
 
 def laid(path: Path) -> None:
-    """The generator's mode file beside the world (no body of it laid by the generator, the record converted whole taking no mode entry); a refusal by name is printed and the world stays declared without a mode file."""
+    """The generator's mode file beside the world (no body of it laid by the generator, the record converted whole absorption no mode entry); a refusal by name is printed and the world stays declared without a mode file."""
     command = [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)]
     found = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     if found.returncode:

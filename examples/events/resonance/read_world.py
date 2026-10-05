@@ -1,4 +1,4 @@
-"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the giving's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a GameBoard reading), the light's count at the span's end where the whole span lies in the run and no taking emptied the record (a GameBoard reading), and the takings (clicks); the counts over the seeds beside the blind.
+"""The resonance world's reader under the dark grain (examples/events/resonance; the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands): both worlds of the design run once per seed as tools/meeting_trials.py runs them, every record's generator at its own state from the seed, and read per seed: the emission's interval from the record's click lines, the lay lines on the light's first line, the far Node's cosine over the plateau [t + 28, t + 42] where it lies in the run (a lattice reading), the light's count at the span's end where the whole span lies in the run and no absorption emptied the record (a lattice reading), and the absorptions (clicks); the counts over the seeds beside the blind.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -16,7 +16,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.game_board import GameBoard
+from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
 
@@ -24,26 +24,26 @@ HERE = Path(__file__).resolve().parent
 AFTER, PLATEAU = (
     28,
     15,
-)  # the plateau of a giving at t: [t + 28, t + 42], after the front, before the stop
+)  # the plateau of an emission at t: [t + 28, t + 42], after the front, before the stop
 
 
 def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
-    """One run from the lay, every record's generator at its own state from the seed: the giving's interval, the lay lines, the cosine on the plateau, the count at the span's end and the takings."""
+    """One run from the lay, every record's generator at its own state from the seed: the emission's interval, the lay lines, the cosine on the plateau, the count at the span's end and the absorptions."""
     lines: list[dict[str, Any]] = []
-    board = GameBoard(load_world(path), lines.append)
+    board = Lattice(load_world(path), lines.append)
     for books in board.credit.bodies:
         books.state = seed * len(board.credit.bodies) + books.number
     light = [f.name for f in board.families].index(design["light"])
     far, levels = tuple(np.add(design["reading_node"], board.offset)), {}
     beyond = (far[0] + 1, *far[1:])  # the reading Node eight Nodes from either Node of the reader
-    intervals, lifetime = int(design["ticks"]), int(design["giver"]["lifetime"])
+    intervals, lifetime = int(design["intervals"]), int(design["giver"]["lifetime"])
     for _ in range(intervals):
         board.step()
-        levels[board.tick] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
-    clicks = [c for c in lines if c["event"] == "credit" and (c["taken"] or c["given"])]
-    given = [c["tick"] for c in clicks if c["given"] == design["light"]]
-    taken = [f"{c['node_reader']} {c['realised']} by {c['taken']}" for c in clicks if c["taken"]]
-    found: dict[str, Any] = {"given": given[0] if given else None, "takings": taken}
+        levels[board.interval] = tuple(int(board.states[light].lines[0].now[n]) for n in (far, beyond))
+    clicks = [c for c in lines if c["event"] == "credit" and (c["absorbed"] or c["emitted"])]
+    given = [c["interval"] for c in clicks if c["emitted"] == design["light"]]
+    taken = [f"{c['node_detector']} {c['realised']} by {c['absorbed']}" for c in clicks if c["absorbed"]]
+    found: dict[str, Any] = {"emitted": given[0] if given else None, "absorptions": taken}
     found["lay_lines"] = len(
         [c for c in lines if c["event"] == "lay" and c["family"] == design["light"]]
     )
@@ -71,22 +71,22 @@ def one_seed(path: Path, seed: int, design: dict[str, Any]) -> dict[str, Any]:
 
 
 def world_reading(path: Path, design: dict[str, Any]) -> dict[str, Any]:
-    """One world over the design's seeds: the counts of the givings within the lifetime and the run, the intervals' summary, the cosine's passes, the counts at the span's end and the takings."""
+    """One world over the design's seeds: the counts of the emissions within the lifetime and the run, the intervals' summary, the cosine's passes, the counts at the span's end and the absorptions."""
     seeds = [one_seed(path, int(seed), design) for seed in design["seeds"]]
-    given = [s["given"] for s in seeds if s["given"] is not None]
+    given = [s["emitted"] for s in seeds if s["emitted"] is not None]
     cosines = [s["cosine"] for s in seeds if "cosine" in s]
     counts = [s["count_at_the_spans_end"] for s in seeds if "count_at_the_spans_end" in s]
     lifetime, trials = int(design["giver"]["lifetime"]), len(seeds)
-    takings: dict[str, int] = {}
+    absorptions: dict[str, int] = {}
     for s in seeds:
-        for word in s["takings"]:
-            takings[word] = takings.get(word, 0) + 1
+        for word in s["absorptions"]:
+            absorptions[word] = absorptions.get(word, 0) + 1
     return {
         "world": path.name,
         "trials": trials,
         "given_within_the_lifetime": [sum(t <= lifetime for t in given), trials],
         "given_within_the_run": [len(given), trials],
-        "giving_intervals": {
+        "emission_intervals": {
             "mean": round(sum(given) / len(given), 1) if given else None,
             "least": min(given) if given else None,
             "largest": max(given) if given else None,
@@ -102,8 +102,8 @@ def world_reading(path: Path, design: dict[str, Any]) -> dict[str, Any]:
             "reads": sorted({c["read"] for c in cosines}),
         },
         "count_at_the_spans_end": {"read": len(counts), "ones": sum(1 for c in counts if c == 1)},
-        "takings": dict(sorted(takings.items())),
-        "label": "NODEREADER for the givings and the takings; GAMEBOARD for the cosine and the count",
+        "absorptions": dict(sorted(absorptions.items())),
+        "label": "NODEDETECTOR for the emissions and the absorptions; LATTICE for the cosine and the count",
     }
 
 
@@ -122,7 +122,7 @@ def main(argv: list[str] | None = None) -> None:
     blind = json.loads(args.expectation.read_text(encoding="utf-8"))
     found = {
         "worlds": [world_reading(args.folder / f"{name}.json", design) for name in design["worlds"]],
-        "blind": {"giving": blind["giving"], "cos_omega": blind["cos_omega"]},
+        "blind": {"emission": blind["emission"], "cos_omega": blind["cos_omega"]},
     }
     print(json.dumps(found, indent=1))
 

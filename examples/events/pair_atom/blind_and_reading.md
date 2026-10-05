@@ -11,7 +11,7 @@ product, so that the bound modes of the atom (ALGEBRA.md, The atom is a bound bo
 of the sign; the paper's S.60 (a)) hold with m* replaced by mu. The loader derives the parts'
 pairs from the two records' pairs at a declared den (`loader/universe.pair_of`,
 `loader/universe.composed_pair`; ENGINE.md section 4). Nothing of this folder has run; every
-number below is the law's line and the generator's lay, labelled GAMEBOARD where it is a reading
+number below is the law's line and the generator's lay, labelled LATTICE where it is a reading
 of the board, and the blind is written before any run and never edited after.
 
 ## The blind of the line against nature (the derivation script, two hands)
@@ -54,9 +54,9 @@ rotation at the level weight 1: alpha_law = (3 sqrt 3 / 8 pi) k_w k_r / (Gamma E
 = 5.72 Links on the open 31-cube; the 1s binding m*_mu (alpha_law c)^2 / 2 = m*_mu alpha_law^2 / 6 =
 0.00910 rad per interval, the 2s a quarter of it; the ratio of the 1s binding to a single
 record's at the same alpha_law is mu / m* = 1 / 2 exactly in the formula, the one number the toy
-world reads against the line when it runs (the rotation's beat at the body, a GameBoard reading).
+world reads against the line when it runs (the rotation's beat at the body, a lattice reading).
 
-The lay (GAMEBOARD, the generator's own lines): both bodies laid as the one-Node record of one
+The lay (LATTICE, the generator's own lines): both bodies laid as the one-Node record of one
 quantum at their declared Nodes by the design's `pixels` [0, 1] and `senses` [1, -1], the amplitude 6073, the record's
 share at the Node 4 quanta by the generator's reading (1 / sin omega_s of its quanta over the
 plane's two lines, admitted by the gate within its rounding), no fixed point and no standing

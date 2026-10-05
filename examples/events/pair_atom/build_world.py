@@ -80,14 +80,14 @@ def universe(design: dict[str, Any]) -> dict[str, Any]:
 
 
 def world(design: dict[str, Any], folder: Path) -> dict[str, Any]:
-    """The toy world: the open cube, the pinned centre's one quantum at the centre and the relative part's beside it along x, no NodeReader, the fixed-point lay."""
+    """The toy world: the open cube, the pinned centre's one quantum at the centre and the relative part's beside it along x, no NodeDetector, the fixed-point lay."""
     centre = [int(v) for v in design["centre"]]
     beside = [centre[0] + 1, centre[1], centre[2]]
     return {
         "shape": design["shape"],
         "boundary": {"x": "open", "y": "open", "z": "open"},
         "face_depth": 1,
-        "ticks": int(design["ticks"]),
+        "intervals": int(design["intervals"]),
         "universe": str((folder / UNIVERSE).relative_to(ROOT))
         if folder.is_relative_to(ROOT)
         else UNIVERSE,
@@ -96,7 +96,7 @@ def world(design: dict[str, Any], folder: Path) -> dict[str, Any]:
             {"family": "pinned", "nodes": [{"node": centre, "count": 1}]},
             {"family": "relative", "nodes": [{"node": beside, "count": 1}]},
         ],
-        "node_readers": [],
+        "node_detectors": [],
         "lay": design["lay"],
     }
 

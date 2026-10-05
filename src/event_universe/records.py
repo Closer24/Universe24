@@ -1,4 +1,4 @@
-"""The records' lines and the sign's rows (ALGEBRA.md #the-count-is-the-records-share; No record reads its own write of the sign): a line of dimension one over the GameBoard, the lines of one record of a family (its bodies each a record where the family reads a holder of the sign), light as the sum of a holder of the sign's rows, the sum of every row but the reader's own, and the readings of the lines kept nowhere, the form, the Wronskian, the well, the write's factor, the turn's factor and the one write's numerators row by row; every one a pure function of arrays, no state of its own."""
+"""The records' lines and the sign's rows (ALGEBRA.md #the-count-is-the-records-share; No record reads its own write of the sign): a line of dimension one over the lattice, the lines of one record of a family (its bodies each a record where the family reads a holder of the sign), light as the sum of a holder of the sign's rows, the sum of every row but the reader's own, and the readings of the lines kept nowhere, the form, the Wronskian, the well, the write's factor, the turn's factor and the one write's numerators row by row; every one a pure function of arrays, no state of its own."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ States = list[NodeState]  # every family's NodeState, in the families' order
 
 @dataclass(frozen=True)
 class Record:
-    """One line of dimension one over the GameBoard: the level now, the level before and the remainder r at every Node."""
+    """One line of dimension one over the lattice: the level now, the level before and the remainder r at every Node."""
 
     now: np.ndarray
     before: np.ndarray
@@ -53,7 +53,7 @@ def record_slice(family: FamilyRule, record: int) -> slice:
 
 
 def rows_total(family: FamilyRule, lines: Sequence[Record], direction: int = 1) -> Record:
-    """A holder of the sign's record, light: the sum of its rows' time lines at every Node, both levels (a node_reader or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign), the remainder the free row's; the row's own line where it has one row, bit for bit."""
+    """A holder of the sign's record, light: the sum of its rows' time lines at every Node, both levels (a node_detector or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign), the remainder the free row's; the row's own line where it has one row, bit for bit."""
     rows = [lines[row * family.width] for row in range(family.records)]
     if len(rows) == 1:
         return rows[0]
@@ -92,7 +92,7 @@ def wronskian(lines: Sequence[Record], plane: bool) -> Any:
 
 
 def well(booking: Any, action: int) -> np.ndarray:
-    """A reading, the well of one interval (ALGEBRA.md #the-primitives, the rows "the hold" and "the source"; row (u), a body's well is gravity's source as a number): a booking of the record at every Node (its form D_i, or its Wronskian W_i) in quanta, booking div T by the division act, no remainder kept; the run writes the booking itself through the one wall of the held line."""
+    """A reading, the well of one interval (ALGEBRA.md #the-primitives, the rows "the held write" and "the source"; row (u), a body's well is gravity's source as a number): a booking of the record at every Node (its form D_i, or its Wronskian W_i) in quanta, booking div T by the division act, no remainder kept; the run writes the booking itself through the one wall of the held line."""
     return np.asarray(carried(booking, action, 0)[0])
 
 
@@ -119,7 +119,7 @@ def write_sources(
     rulers: dict[Sourcing, Rulers],
     gamma: int,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the hold"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     family = families[held]
     intervals = paces.WRONSKIAN_POWER if family.wronskian else paces.COUNT_POWER
     found: list[Any] = []
@@ -149,12 +149,12 @@ def largest(record: Record) -> int:
 
 
 def zeros(shape: tuple[int, int, int], kind: type) -> np.ndarray:
-    """An array of zeros over the GameBoard, of the run's kind of integers (the loader's choice by the file's width, `World.kind`)."""
+    """An array of zeros over the lattice, of the run's kind of integers (the loader's choice by the file's width, `World.kind`)."""
     return np.zeros(shape, dtype=kind)
 
 
 def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
-    """An array over the GameBoard at one value, of the run's kind of integers."""
+    """An array over the lattice at one value, of the run's kind of integers."""
     return np.full(shape, value, dtype=kind)
 
 

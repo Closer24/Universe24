@@ -4,7 +4,7 @@ through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline fil
 For every Python file under `src/` the counts: total lines, docstring lines, comment lines,
 references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
 outside its one function, sites that shift an array across Nodes and sites that write a level onto
-the GameBoard (an item of, or the attribute, `now`, `before` or `remainder`
+the lattice (an item of, or the attribute, `now`, `before` or `remainder`
 assigned or augmented: the write's gate, the model owner's word of 2026-09-28: every level written
 is one act of the write, features/write, or Rule3's own step, applied by the loop at its sites at
 the merge base and nowhere new); for every Python file of
@@ -36,9 +36,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
-LOOP = PACKAGE / "game_board.py"
-LOOP_MODULE = "event_universe.game_board"
-LOOP_PUBLIC = frozenset({"GameBoard"})
+LOOP = PACKAGE / "lattice.py"
+LOOP_MODULE = "event_universe.lattice"
+LOOP_PUBLIC = frozenset({"Lattice"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
@@ -295,7 +295,7 @@ def record(root: Path) -> dict[str, Any]:
 
 
 def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
-    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic, of a shift across Nodes or of a write of a level onto the GameBoard."""
+    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic, of a shift across Nodes or of a write of a level onto the lattice."""
     found: list[str] = []
     if shape["multi_line_docstrings"]:
         found.append(f"{rel} has {shape['multi_line_docstrings']} docstring(s) beyond one line")

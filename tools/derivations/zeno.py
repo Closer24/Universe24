@@ -22,8 +22,8 @@ COLUMN_B = (
     0.0,
 )  # the click alone written, nothing on a null window (S.59 (c))
 MATTER_PAIR = (2, 3)  # the paper's computed pair, the body's rest rotation cos omega_b = 2 / 3
-# T_pi of the pulsed gate's world, 768 ticks (ALGEBRA.md, What is open, item 46: "the drive's pi pulse lengthens
-# with the Node clock Gamma at a fixed amplitude", "The world: Gamma = 96,000, ..., the pi pulse 768 ticks"; S.59 (a)
+# T_pi of the pulsed gate's world, 768 intervals (ALGEBRA.md, What is open, item 46: "the drive's pi pulse lengthens
+# with the Node clock Gamma at a fixed amplitude", "The world: Gamma = 96,000, ..., the pi pulse 768 intervals"; S.59 (a)
 # on the paper branch gives T_pi = pi / (2 Omega_R), the full transfer from g to e)
 PI_PULSE_TICKS = 768
 
@@ -34,7 +34,7 @@ def probability_excited(n: int) -> float:
 
 
 def own_period_as_window() -> list[float]:
-    """[P(e) at n = 1, the body's own period 2 pi / omega_b in intervals, P(e) with that period as the window over the pulsed gate's T_pi = 768 ticks]: 1, 7.47 and 0.023; a body reading itself at its own period would suppress every Rabi oscillation longer than it, which nature's full transfer at n = 1 shows it does not, so a bound body's period is not its window (S.59 (b')); omega_b the band's rest rotation at the vacuum's paces, cos omega_b = num / den (The band at a pace); T_pi the pulsed gate's world's (ALGEBRA.md, What is open, item 46, "the pi pulse 768 ticks"; S.59 (a), T_pi = pi / (2 Omega_R))."""
+    """[P(e) at n = 1, the body's own period 2 pi / omega_b in intervals, P(e) with that period as the window over the pulsed gate's T_pi = 768 intervals]: 1, 7.47 and 0.023; a body reading itself at its own period would suppress every Rabi oscillation longer than it, which nature's full transfer at n = 1 shows it does not, so a bound body's period is not its window (S.59 (b')); omega_b the band's rest rotation at the vacuum's paces, cos omega_b = num / den (The band at a pace); T_pi the pulsed gate's world's (ALGEBRA.md, What is open, item 46, "the pi pulse 768 intervals"; S.59 (a), T_pi = pi / (2 Omega_R))."""
     num, den = MATTER_PAIR
     omega_b = math.acos(rule3.dispersion_at_paces((0.0, 0.0, 0.0), num, den, 1, 1, (1, 1, 1)))
     period = 2 * math.pi / omega_b

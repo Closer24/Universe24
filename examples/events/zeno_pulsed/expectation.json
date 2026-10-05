@@ -1,12 +1,12 @@
 {
- "verdict": "NODEREADER",
- "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 ticks, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
+ "verdict": "NODEDETECTOR",
+ "comment": "The pulsed quantum Zeno gate with the probe laid (S.59; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000): the shipped Zeno body at the Node clock 96,000 under the continuous drive, the pi pulse 768 intervals, a probe laid whole by the count at its Node n times over the pi time, the body's window bounded by the probe's lays and its write at every close; written before any run and never edited after.",
  "trials": 480,
  "intervals": 768,
  "blind": {
   "zeno_pulsed_1": {
    "n": 1,
-   "ticks": [
+   "intervals": [
     768
    ],
    "reading": "the fraction of the trials whose body stands in e at the run's end (tools/meeting_trials.py, the books' part as the last write left it, a click)",
@@ -21,7 +21,7 @@
   },
   "zeno_pulsed_2": {
    "n": 2,
-   "ticks": [
+   "intervals": [
     384,
     768
    ],
@@ -37,7 +37,7 @@
   },
   "zeno_pulsed_4": {
    "n": 4,
-   "ticks": [
+   "intervals": [
     192,
     384,
     576,
@@ -55,7 +55,7 @@
   },
   "zeno_pulsed_8": {
    "n": 8,
-   "ticks": [
+   "intervals": [
     96,
     192,
     288,
@@ -77,7 +77,7 @@
   },
   "zeno_pulsed_16": {
    "n": 16,
-   "ticks": [
+   "intervals": [
     48,
     96,
     144,
@@ -107,7 +107,7 @@
   },
   "zeno_pulsed_32": {
    "n": 32,
-   "ticks": [
+   "intervals": [
     24,
     48,
     72,
@@ -153,7 +153,7 @@
   },
   "zeno_pulsed_64": {
    "n": 64,
-   "ticks": [
+   "intervals": [
     12,
     24,
     36,
