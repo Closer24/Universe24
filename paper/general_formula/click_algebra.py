@@ -6,7 +6,11 @@ with the norm factor 2 (a real line of amplitude 2A carries the two plane quanta
 inertia m* = 3 tan omega_0 and kinetic scale c_m^2 = c^2 omega_0 / tan omega_0 at [2, 3] (c_m / c = 0.867),
 Compton's factor omega_0 / tan omega_0 = 0.752 at [2, 3] against the exact quadratic of the two bands in the
 Klein-Gordon form, absorption alone forbidden for c_m <= c, and the single-quantum pair threshold outside the
-zone at [2, 3]. Every number here is the formula's; nothing is read from a run.
+zone at [2, 3]; the twist's division on the magnitude with the sign carried, odd under an axis's inversion (the
+accumulation of (i) at k_a = +-3 and at the boundary +-7 against M = 7), and the two recoils of (e), in rotation and
+in the click's unit, their ratio cos omega_0, with the two Compton factors they give, 0.752 under the beat and 0.501
+under the energy, distinct at [2, 3] and one at the closing gap. Every number here is the formula's; nothing is read
+from a run.
 
     python paper/general_formula/click_algebra.py
 """
@@ -42,6 +46,32 @@ def quadratic_plane(amplitude: float, omega: float, phase: float) -> float:
     """Q of a plane configuration A e^{i phi} at one Node, 2 A^2 sin^2 omega."""
     z, zb = amplitude * cmath.exp(1j * phase), amplitude * cmath.exp(1j * (phase + omega))
     return abs(z) ** 2 + abs(zb) ** 2 - 2 * math.cos(omega) * (z * zb.conjugate()).real
+
+
+def symmetric_divmod(k: int, count: int) -> tuple[int, int]:
+    """The proposition's twist and remainder, the magnitude's floor division with the sign carried: delta k =
+    sgn(k) (|k| div M) and r = sgn(k) (|k| mod M), so that k = M delta k + r with |r| < M and r of k's sign."""
+    sign = (k > 0) - (k < 0)
+    return sign * (abs(k) // count), sign * (abs(k) % count)
+
+
+def kicks(k: int, count: int, clicks: int) -> list[int]:
+    """The twist written at each of the first clicks, the accumulated remainder carried: the whole part of the
+    accumulated wave number after each click less the one before."""
+    whole = [symmetric_divmod(step * k, count)[0] for step in range(clicks + 1)]
+    return [whole[step] - whole[step - 1] for step in range(1, clicks + 1)]
+
+
+def band_omega(k: float, num: int, den: int) -> float:
+    """The band along one axis, cos omega = (num / den)(1 - (1 - cos k) / 3)."""
+    return math.acos((num / den) * (1 - (1 - math.cos(k)) / 3))
+
+
+def compton_factors(num: int, den: int) -> tuple[float, float]:
+    """Compton's non-relativistic factor under the beat rule, omega_0 / tan omega_0, and under a balance of the
+    click's energy T sin omega, omega_0 cos^2 omega_0 / sin omega_0."""
+    omega_0 = math.acos(num / den)
+    return omega_0 / math.tan(omega_0), omega_0 * math.cos(omega_0) ** 2 / math.sin(omega_0)
 
 
 def compton_out(omega_in: float, theta: float, beta: float, omega_0: float) -> float:
@@ -86,10 +116,56 @@ def main() -> None:
         f"2 pi / (m* c) = {2 * math.pi / (3 * math.tan(omega_0) * C):.3f} Links against 2 pi / (sqrt 3 omega_0) = {2 * math.pi * C / omega_0:.3f}"
     )
     k_q, count = 3, 7
-    kicks = [(step * k_q) // count - ((step - 1) * k_q) // count for step in range(1, 8)]
+    for k_signed in (k_q, -k_q):
+        kicked = kicks(k_signed, count, 7)
+        at = [i + 1 for i, kick in enumerate(kicked) if kick]
+        assert at == [3, 5, 7] and all(kick == (1 if k_signed > 0 else -1) for kick in kicked if kick), (
+            k_signed,
+            kicked,
+        )
+        print(
+            f"the integer recoilless condition: k_a = {k_signed:+d}, M = {count}, the twist sgn(k_a) (|k_a| div M) = "
+            f"{symmetric_divmod(k_signed, count)[0]}; the accumulated remainder gives one whole kick of {kicked[2]:+d} "
+            f"per Link at the clicks {at} of seven"
+        )
+    assert kicks(count, count, 3) == [1, 1, 1] and kicks(-count, count, 3) == [-1, -1, -1], (
+        "the boundary |k_a| = M"
+    )
+    for k_odd in (3, 7, 10):
+        twist, rest = symmetric_divmod(k_odd, count)
+        assert (
+            symmetric_divmod(-k_odd, count) == (-twist, -rest)
+            and k_odd == count * twist + rest
+            and abs(rest) < count
+        )
     print(
-        f"the integer recoilless condition: k_q = {k_q} < M = {count}, k_q div M = {k_q // count}; the accumulated remainder "
-        f"gives one whole kick per Link at the clicks {[i + 1 for i, kick in enumerate(kicks) if kick]} of seven"
+        f"the rule odd under k_a -> -k_a at +-3, +-7 and +-10 against M = {count}: "
+        f"{[symmetric_divmod(k_odd, count) for k_odd in (3, -3, 7, -7, 10, -10)]}; the law's floor division would give "
+        f"divmod(-3, 7) = {divmod(-3, 7)} against divmod(3, 7) = {divmod(3, 7)}"
+    )
+    k_small, count_large = 0.03, 1000
+    recoil_rotation = count_large * (band_omega(k_small / count_large, num, den) - omega_0)
+    recoil_energy = count_large * (
+        math.sin(band_omega(k_small / count_large, num, den)) - math.sin(omega_0)
+    )
+    printed = k_small**2 / (2 * count_large * 3 * math.tan(omega_0))
+    assert (
+        abs(recoil_rotation / printed - 1) < 1e-5
+        and abs(recoil_energy / recoil_rotation - math.cos(omega_0)) < 1e-6
+    )
+    beat_factor, energy_factor = compton_factors(num, den)
+    closing = compton_factors(999_999, 1_000_000)
+    assert abs(beat_factor - energy_factor) > 0.2 and abs(closing[0] - closing[1]) < 1e-5, (
+        beat_factor,
+        energy_factor,
+        closing,
+    )
+    print(
+        f"the two recoils at k = {k_small}, M = {count_large}: in rotation M [omega(k / M) - omega_0] = {recoil_rotation:.5e} "
+        f"against k^2 / (2 M m*) = {printed:.5e}; in the click's unit M [sin omega(k / M) - sin omega_0] = {recoil_energy:.4e} "
+        f"at T = 1, the ratio {recoil_energy / recoil_rotation:.6f} = cos omega_0 = {math.cos(omega_0):.6f}; the factors "
+        f"{beat_factor:.4f} under the beat and {energy_factor:.4f} under the energy at [{num}, {den}], "
+        f"{closing[0]:.6f} and {closing[1]:.6f} at [999999, 1000000]"
     )
     print(
         f"absorption alone: k_L (c^2 - c_m^2) = -2 c omega_0 gives k_L = {-2 * C * omega_0 / (C * C - c_m * c_m):.2f} < 0, forbidden; "
