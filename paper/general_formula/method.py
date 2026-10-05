@@ -1,10 +1,10 @@
 """The method's three layers and the way from nature's measurements to the paper's row, by no run.
 
-Drawn from the paper's words (Section 1.1, the three layers; Section 5.3, the NodeReader's
+Drawn from the paper's words (Section 1.1, the three layers; Section 5.3, the NodeDetector's
 declaration; Section 10.1, the calibration series; Section 2.4, the implementation): the clicks of
 nature on bound bodies are read, one click per coefficient, into the files' integers; the files
-declare the world; the GameBoard is stepped by Rule3, one interval of acts, and writes the
-NodeReaders' click lines; the reader prints the run's row beside the blind row written before the
+declare the world; the lattice is stepped by Rule3, one interval of acts, and writes the
+NodeDetectors' click lines; the reader prints the run's row beside the blind row written before the
 run; and only there the computed world meets the clicks it approaches. What is fixed and what is
 free is written at each layer as the paper states it. Nothing here is a number of a run.
 
@@ -107,7 +107,7 @@ def method(ax: Axes) -> None:
         w,
         h,
         "nature's measurements",
-        "measured numbers of bound bodies\nagainst a declared clock;\nnever a GameBoard reading",
+        "measured numbers of bound bodies\nagainst a declared clock;\nnever a lattice reading",
         shaded=True,
     )
     box(
@@ -117,7 +117,7 @@ def method(ax: Axes) -> None:
         w,
         h,
         "the files",
-        "the universe file: the pairs\n$[\\mathrm{num}, \\mathrm{den}]$, $\\Gamma$, $T$, the\nholders' weights; the run's file:\nthe Nodes, the lays, the faces;\nthe NodeReaders' four declarations",
+        "the universe file: the pairs\n$[\\mathrm{num}, \\mathrm{den}]$, $\\Gamma$, $T$, the\nholders' weights; the run's file:\nthe Nodes, the lays, the faces;\nthe NodeDetectors' four declarations",
     )
     box(
         ax,
@@ -125,7 +125,7 @@ def method(ax: Axes) -> None:
         y,
         w,
         h,
-        "the GameBoard",
+        "the lattice",
         "a NodeState at every Node;\none interval: Rule3 on the\nsix Ports, the read, the write;\nreversible, integers, no draw",
     )
     box(
@@ -135,7 +135,7 @@ def method(ax: Axes) -> None:
         w,
         h,
         "the click lines",
-        "the only measurement:\nregion, the NodeReader's clock\nand window, family, count;\nthe NodeReader's draw by\nthe shares, its declared seed",
+        "the only measurement:\nregion, the NodeDetector's clock\nand window, family, count;\nthe NodeDetector's draw by\nthe shares, its declared seed",
     )
     box(
         ax,
@@ -172,7 +172,7 @@ def method(ax: Axes) -> None:
     ax.text(
         xs[2] + w + gap / 2,
         y + h + 0.1,
-        "the NodeReader's\nwindow closes",
+        "the NodeDetector's\nwindow closes",
         ha="center",
         va="bottom",
         fontsize=6.5,

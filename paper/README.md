@@ -7,8 +7,8 @@ formula is taken from `docs/ALGEBRA.md`, `docs/ENGINE.md` or
 claim carries its mark (theorem, derived, computed, assumption, hypothesis or
 experiment, the last for a number the model does not fix with the experiment
 named, and fitted where an input was chosen with the result known) and its
-fence (GameBoard for a reading of the lattice, clicks for a formula of what a
-a NodeReader reports). Its title is "Universe24: an integer cellular automaton read through clicks,
+fence (lattice for a reading of the lattice, clicks for a formula of what a
+a NodeDetector reports). Its title is "Universe24: an integer cellular automaton read through clicks,
 the formulas it shares with nature and the ones it adds", the method, the
 Universe24 it computes and the comparison, by the owner's word (2026-10-03, the
 title chosen in the writer's session; "cellular automaton" the literature's name
@@ -30,7 +30,7 @@ the reversal that looks good and agrees with nature, take it"), and its screen's
 row against the blind written first, the engine's check of the algebra and no experiment
 against nature; Bell's and the GHZ's values are evaluations of the declared credit, exact in
 the shares, and the folder's runs of them are the repository's and no claim of the paper;
-only a NodeReader's click is a measurement, and a number read off the GameBoard
+only a NodeDetector's click is a measurement, and a number read off the lattice
 is a diagnostic. Table 1 of the paper lists every result with its
 kind, its fence and what it rests on, and Table 2 the formulas of clicks with
 their statuses.
@@ -47,7 +47,7 @@ their statuses.
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
   its proof, Derivations S.1 to S.63, numbered as added, each naming its section,
-  cited in the paper as (S.n), S.61 the engine's derivation ledger and S.62 the
+  cited in the paper as (S.n), S.61 the engine's derivation table and S.62 the
   implementation's versions of the click's write and their readings, which stand
   there and not in the main text (the owner's word of 2026-10-03: a derivation
   is shown as a derivation, and the main text reports no run but the two slits'); submitted as supplementary material to the
@@ -57,20 +57,20 @@ their statuses.
   source.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
-  engine's own look of the shipped two-slits file, labelled a GameBoard reading, and none by a
+  engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
   generative tool, with 6 to 8 pt lettering at the drawn size (Figs. 1 and 2 are
   included at that size, the other six at 0.66 to 0.75 of the text width), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
   beside each PDF for the journal. The paper uses eight: `lattice.pdf` and `octahedron.pdf` (the two panels
-  of Fig. 2, the GameBoard and the octahedron of the Nodes one interval away
+  of Fig. 2, the lattice and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 4,
-  the click at a NodeReader: space and time with the NodeReader's region of
+  the click at a NodeDetector: space and time with the NodeDetector's region of
   two Nodes, the past meeting the future, the region before the close and
   after the write at the drawn Node, the hole by the faces' identity, and
-  the ledger, schematically, in black and grey) by `python paper/general_formula/click_body.py`;
+  the books, schematically, in black and grey) by `python paper/general_formula/click_body.py`;
   `bands.pdf` (light's and matter's bands along one axis, from the law's line)
   by `python paper/general_formula/bands.py`; `two_slits_rows.pdf` (the two
   slits' declared file and its screen's row, the Huygens blind of the
@@ -82,7 +82,7 @@ their statuses.
   clock's factor from the band against Lorentz's) by
   `python paper/general_formula/moving_clock.py`; and `two_slits_frames.pdf` (Fig. 7,
   the two slits mid-run: the light record's level at the intervals 18, 40 and 62
-  of the 130, a GameBoard reading and no measurement, from the three frames
+  of the 130, a lattice reading and no measurement, from the three frames
   recorded in `figures/two_slits_frames.json` by `python paper/general_formula/two_slits_frames.py --look <world>.look.json`
   after `PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --ticks 130`)
   by `python paper/general_formula/two_slits_frames.py`. The folder holds
@@ -116,11 +116,11 @@ their statuses.
   (`examples/events/two_slits/two_slits.json` with its mode file, the universe
   file it names and the blind `expectation.json` beside it) and steps Rule3's
   line for light at the vacuum's paces in floating point, with no integer
-  division and no remainder, on the same declared board, wall, gaps, laid message and
+  division and no remainder, on the same declared board, wall, gaps, laid packet and
   screen regions, reading what the engine's click lines report, the net current
   through each region's front boundary Ports over the expectation's window over
   the count wall, so that the integer run is checked against it to the rounding.
-  The message lay carries the law's division act (the uniform component taken
+  The packet lay carries the law's division act (the uniform component taken
   out of each level in proportion to the envelope, in real arithmetic), so the
   lay is the one the pinned commit's mode file holds, within the integer
   rounding of a level; the script prints no draw, the clicks' row being the
@@ -217,8 +217,8 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "37 pages, 7 figures, 5 tables; supplementary material of 34 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,630
+  "37 pages, 7 figures, 5 tables; supplementary material of 35 pages as an
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The abstract has 1,729
   characters counted with its TeX signs, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the

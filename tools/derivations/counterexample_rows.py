@@ -255,7 +255,7 @@ def the_step_is_a_bijection() -> Row:
             now, before, remainders = before, [b[0] for b in back], [b[1] for b in back]
         returns &= (before, now, remainders) == start
     return Row(
-        "The direction of time belongs to the clicks and not to the G",
+        "The direction of time belongs to the clicks and not to the l",
         returns and injective,
         None,
         "10 steps forward and 10 back on 3x3x3 at 3 pairs return the state bit for bit; the 10 images distinct; the click's draw is the engine's act, no outside here",

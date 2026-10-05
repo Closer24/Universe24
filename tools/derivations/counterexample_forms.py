@@ -221,7 +221,7 @@ def wronskian_total_under_a_change_of_paces() -> Row:
                 re[t], im[t], re[t - 1], im[t - 1], None
             )
     return Row(
-        "Its total over the GameBoard is invariant under any change o",
+        "Its total over the lattice is invariant under any change of",
         uniform_holds and static_holds and formula_holds,
         plain_moves,
         "plain W constant under uniform paces changing each step; weighted W constant at static uneven paces; moving uneven paces: change = SUM (d(t+1) - d(t)) W(t+1) exactly; the plain total moves there",
@@ -259,7 +259,7 @@ def boards_conservations_are_the_form_and_the_wronskian() -> Row:
         reads_d, selves_d, wall_d, paces_d, arrivals, re_m[3], re_m[2], num, gamma
     ) != weighted_form(reads, selves, wall, paces, arrivals, re_m[2], re_m[1], num, gamma)
     return Row(
-        "In the clicks there are conservations other than the GameBoa",
+        "In the clicks there are conservations other than the lattice",
         form_holds and wronskian_holds,
         moving_form,
         "weighted E and weighted W constant over 8 steps on a 3x3x2 uneven board; the form moves under moving paces (no total energy on the board); the credit's count is the engine's act, not tested here",
@@ -507,7 +507,7 @@ def total_share_nonnegative_inside_the_guard() -> Row:
     checker = [(-1) ** sum(x) for x in box_nodes((2, 2, 2))]
     checkerboard = vacuum_total_share(1, 1, boards["2x2x2"], checker, [-c for c in checker]) == 0
     return Row(
-        "The total share of any GameBoard whose Links read the same f",
+        "The total share of any lattice whose Links read the same fro",
         inside and uniform_light and checkerboard,
         beyond_negative,
         f"non-negative over {len(boards)} boards x 8 pairs x 60 draws; equality at uniform light and at the checkerboard; |num| > den negative; an open face negative: {open_negative} (S_6's norm stays at or under 6 there)",

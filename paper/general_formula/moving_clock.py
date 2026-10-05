@@ -1,7 +1,7 @@
 """The moving clock's factor from the band, against Lorentz's, by no run.
 
 A packet of a matter family moving at the velocity v = omega'(k) along one axis ticks at the
-rotation at its moving centre, Omega(k) = omega(k) - k omega'(k), so its tick's factor is
+rotation at its moving centre, Omega(k) = omega(k) - k omega'(k), so its clock's factor is
 f = Omega(k) / omega_0 (the paper's Section 8 (e); S.21), with omega(k) from the band
 cos omega = (num / (3 den)) (2 + cos k). Drawn exactly from that band for the pairs [2, 3] and
 [999, 1000], against Lorentz's factor sqrt(1 - v^2 / c^2) at light's speed c = 1 / sqrt 3 and
@@ -55,7 +55,7 @@ def band(num: int, den: int, k: float) -> float:
 
 
 def moving_clock(num: int, den: int) -> tuple[list[float], list[float]]:
-    """The tick's factor f = Omega / omega_0 against beta = v / c, up to the band's largest group speed."""
+    """The moving clock's factor f = Omega / omega_0 against beta = v / c, up to the band's largest group speed."""
     w0 = band(num, den, 0.0)
     h = 1e-5
     betas, fs = [], []
@@ -100,7 +100,7 @@ def figure(ax: Axes) -> None:
     ax.set_xlim(0, 1.0)
     ax.set_ylim(0, 1.05)
     ax.set_xlabel("the packet's speed over light's, $v / c$")
-    ax.set_ylabel("the tick's factor $f = \\Omega / \\omega_0$")
+    ax.set_ylabel("the moving clock's factor $f = \\Omega / \\omega_0$")
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.tick_params(length=2, labelsize=7)
