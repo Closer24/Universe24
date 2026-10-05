@@ -177,7 +177,7 @@ the journal.
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 248 words
+  and `abstract_journal.txt` beside it are one text of 242 words
   (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
@@ -216,7 +216,7 @@ the journal.
 - The metadata: the title, the author, the abstract as plain ASCII of at
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
-  "41 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
+  "42 pages, 7 figures, 6 tables; supplementary material of 37 pages as an
   ancillary file; submitted to Foundations of Physics; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,692
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
