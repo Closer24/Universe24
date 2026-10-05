@@ -391,24 +391,23 @@ class Lattice:
             frozen, well = np.zeros(self.shape, dtype=bool), None
             if family.quanta:
                 found, frozen = self.quanta(index, at)
-                form: Any = sum(
-                    forms[(index, record)] for record in quanta_records(self.families, index)
-                )
+                records = quanta_records(self.families, index)
+                form: Any = sum(forms[(index, record)] for record in records)
                 well = node.well(form, self.world.quantum_action)
             else:
                 deviation = state.lines[0].now - family.rest
                 found = deviation * deviation
-            for d in self.node_detectors:
-                if not d.declared or d.nodes is None:
+            for detector in self.node_detectors:
+                if not detector.declared or detector.nodes is None:
                     continue
-                cold = d.nodes & frozen
-                reading = None if cold.any() else int(found[d.nodes].sum(dtype=object))
+                name, cold = detector.name, detector.nodes & frozen
+                reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
                 content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
-                if self.densities.get((index, d.name)) == (reading, content):
+                if self.densities.get((index, name)) == (reading, content):
                     continue
-                self.densities[(index, d.name)] = (reading, content)
+                self.densities[(index, name)] = (reading, content)
                 if self.output is not None:
-                    self.output(reports.density(self.interval, family.name, d.name, reading, content))
+                    self.output(reports.density(self.interval, family.name, name, reading, content))
 
     def booked_back(
         self,
