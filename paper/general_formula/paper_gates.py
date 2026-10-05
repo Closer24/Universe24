@@ -14,6 +14,14 @@ script exits non-zero on any.
    claims_table.KNOWN_CYCLES, a set that may only shrink (the owner's question of 2026-10-04 on circularity).
 5. The bare board: the lattice is named by its one noun; a bare "board" or the implementation's old "GameBoard"
    stands only inside a cited document's title (the owner's question of 2026-10-04 on two names for one thing).
+6. The nomenclature: every letter that stands in math mode in either document has its row in the paper's
+   Nomenclature table (the rows written \nom{symbols}{senses}), the table naming each of its senses; a letter the
+   table does not hold is a miss (the owner's word of 2026-10-05: the symbols' cleanliness made mechanical).
+7. The units and the abbreviations: a bare number in a parenthesis after a named quantity (the swing, the floor, a
+   width) carries its unit word, and every abbreviation of ABBREVIATIONS is expanded in the same document at or
+   before its first use (the venue's rule; the organisations' and the missions' names are not abbreviations).
+8. The team's idioms: the words of the team's own work (the reference asides, the archive's gate documentation, the
+   hands' names, the ledger's row numbers, the comment ids) stand nowhere in the paper (STALE, the fourth sweep).
 
     python paper/general_formula/paper_gates.py
 """
@@ -74,6 +82,15 @@ STALE = [
     ("no body stands within rounding", "(16), the hands' 5975194901 and 5975225540"),
     ("the hole raising the light's share", "the re-pin at d00aa9e2 (the Boss's 5975843075)"),
     ("suspended until its fix", "the re-pin at d00aa9e2"),
+    ("the paper's reference", "the fourth sweep's editor"),
+    ("gate documentation", "the fourth sweep's editor"),
+    ("claims S.", "the fourth sweep's editor"),
+    ("is history", "the fourth sweep's editor"),
+    ("round item", "the team's idiom"),
+    ("the Boss", "the team's idiom"),
+    ("the advisor", "the team's idiom"),
+    ("the mathematician", "the team's idiom"),
+    ("the experimenter", "the team's idiom"),
 ]
 # the history forms the paper may not carry undated (R228): each dated to the pinned commit or struck; the engine's
 # "level at now" stands, so "now" is listed in its verb-led forms alone
@@ -90,9 +107,12 @@ STALE_PATTERNS = [
         "R228, the supplement's side",
     ),
     (r"on \\texttt\{main\}", "R228, the supplement's side (the pinned commit, not the branch)"),
+    (r"\bcomment \d{6,}\b", "the team's idiom (a comment id)"),
+    (r"\bR\d{3}\b", "the team's idiom (a ledger row)"),
 ]
 # a struck phrase allowed in one named sentence, by a fragment of that sentence
 STALE_ALLOWED = {
+    r"\bR\d{3}\b": ["Physical Review A 47, R747"],
     "never one Node": [
         "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the file, never one Node"
     ],
@@ -286,6 +306,138 @@ def gate_board(texts: dict[str, str]) -> list[str]:
     return misses
 
 
+# 6. the nomenclature: the letters of math mode against the table's rows
+GREEK = (
+    r"alpha|beta|gamma|Gamma|delta|Delta|epsilon|varepsilon|zeta|eta|theta|Theta|vartheta|iota|kappa|lambda|Lambda|mu"
+    r"|nu|xi|Xi|pi|Pi|rho|sigma|Sigma|tau|upsilon|phi|Phi|varphi|chi|psi|Psi|omega|Omega|ell|hbar|nabla"
+)
+MATH_WORDS = (
+    r"sin|cos|tan|cot|ln|log|exp|sqrt|sum|int|prod|frac|tfrac|dfrac|left|right|bigl|bigr|Bigl|Bigr|biggl|biggr|big|Big"
+    r"|cdot|cdots|ldots|dots|times|pm|mp|le|ge|ne|approx|propto|to|infty|partial|quad|qquad|ddiv|dmod|num|den|Wc|bM|bD|bK"
+    r"|operatorname|mathrm|text|textsc|textit|mathit|arccos|arcsin|arctan|asinh|max|min|langle|rangle|lfloor|rfloor"
+    r"|lceil|rceil|prime|boxed|displaystyle|scriptstyle|textstyle|limits|nolimits|setminus|cup|cap|in|notin|subset"
+    r"|forall|exists|equiv|sim|simeq|cong|ll|gg|neq|leq|geq|mapsto|rightarrow|leftarrow|Rightarrow|Leftarrow"
+    r"|leftrightarrow|circ|star|ast|dagger|vert|Vert|lvert|rvert|mid|colon|mathbf|mathcal|boldsymbol|bar|hat|tilde"
+    r"|vec|dot|ddot|overline|underline|label|ref|eqref|cite|texttt|mbox|hspace|vspace|nonumber|tag|phantom"
+)
+MATH_ENVIRONMENTS = (
+    r"\\\[(.*?)\\\]|\\begin\{(equation\*?|align\*?|aligned|gather\*?|multline\*?)\}(.*?)\\end\{\2\}"
+)
+
+
+def math_segments(text: str) -> list[tuple[int, str]]:
+    """Every piece of math mode with the offset of its start: the displayed environments, then the inline $...$."""
+    text = re.sub(r"(?<!\\)%.*", "", text)
+    body_end = text.find("\\begin{thebibliography}")
+    if body_end > 0:
+        text = text[:body_end]
+    segments = [
+        (m.start(), m.group(1) or m.group(3)) for m in re.finditer(MATH_ENVIRONMENTS, text, re.S)
+    ]
+    inline = re.sub(MATH_ENVIRONMENTS, " ", text, flags=re.S)
+    segments.extend((m.start(), m.group(1)) for m in re.finditer(r"(?<!\\)\$([^$]+)\$", inline))
+    return segments
+
+
+def math_letters(segment: str) -> list[str]:
+    """The letters of one piece of math: a Latin letter standing alone, or a Greek macro; words, operators and
+    the text macros' arguments are not letters."""
+    s = re.sub(
+        r"\\(text|mathrm|textsc|textsf|textit|mathit|operatorname|texttt|mbox|label|ref|eqref|cite)\{[^{}]*\}",
+        " ",
+        segment,
+    )
+    s = re.sub(r"\\(" + MATH_WORDS + r")\b", " ", s)
+    letters = []
+    for m in re.finditer(r"\\(" + GREEK + r")\b|(?<![\\A-Za-z])([A-Za-z])(?![A-Za-z])", s):
+        letters.append("\\" + m.group(1) if m.group(1) else m.group(2))
+    return letters
+
+
+def nomenclature_letters(text: str) -> set[str]:
+    """The letters the Nomenclature table's rows name, each row \\nom{symbols}{senses}."""
+    named: set[str] = set()
+    for m in re.finditer(r"\\nom\{((?:[^{}]|\{[^{}]*\})*)\}\{", text):
+        for _, segment in math_segments(m.group(1) + " "):
+            named.update(math_letters(segment))
+    return named
+
+
+def gate_nomenclature(texts: dict[str, str]) -> list[str]:
+    """The misses: a letter in math mode, in either document, with no row in the paper's Nomenclature table."""
+    named = nomenclature_letters(texts["main.tex"])
+    if not named:
+        return ["main.tex: no Nomenclature row (\\nom{symbols}{senses}) found"]
+    misses = []
+    for name, text in texts.items():
+        seen: dict[str, int] = {}
+        for offset, segment in math_segments(text):
+            for letter in math_letters(segment):
+                if letter not in named:
+                    seen.setdefault(letter, line_of(text, offset))
+        for letter, line in sorted(seen.items(), key=lambda kv: kv[1]):
+            misses.append(f"{name}:{line}: the letter {letter} has no row in the Nomenclature table")
+    return misses
+
+
+# 7. the units and the abbreviations
+QUANTITY_WORDS = (
+    r"swing|floor|kick|content|defect|depth|width|range|reach|span|lifetime|period|duration|wavelength|spacing|margin"
+    r"|ceiling|dip|gap|binding|well|rest"
+)
+BARE_NUMBER = re.compile(
+    r"\b("
+    + QUANTITY_WORDS
+    + r")\b([^.;()\n]{0,60})\((\$?[-+]?\d[\d,.{}]*\$?(?:\s*(?:to|and|or|,)\s*\$?[\d,.{}]+\$?)*)\)"
+)
+NOT_A_QUANTITY = re.compile(r"postulate|item|row|step|line|Table|Fig|Section|S\.|Eq|column|part|\(\w\)")
+# (the abbreviation as it is printed, the words that expand it); each expanded in the same document at or before
+# its first use, within the sentence allowed; the organisations' and missions' names (LIGO, MAGIC, LHAASO, SLAC, HERA,
+# CODATA, MICROSCOPE, INTEGRAL, ORCID, MIT, DOI) are names and not listed
+ABBREVIATIONS = [
+    (r"\\Lambda\$CDM|\\Lambda\\mathrm\{CDM\}", r"cold dark matter"),
+    (r"\brms\b|\\mathrm\{rms\}", r"root-mean-square"),
+    (r"\bGRB\b", r"gamma-ray burst"),
+    (r"\ba\.u\.", r"atomic units"),
+    (r"\bHa\b", r"hartree"),
+    (r"Fermi-LAT", r"Large Area Telescope"),
+    (r"\bEHT\b", r"Event Horizon Telescope"),
+    (r"\bGHZ\b", r"Greenberger-Horne-Zeilinger"),
+    (r"\bCHSH\b", r"Clauser"),
+    (r"\bPPN\b", r"parametri[sz]ed post-Newtonian"),
+    (r"G_F\b", r"Fermi constant"),
+    (r"E_\{\\mathrm\{QG\}", r"Lorentz-violation scale"),
+    (r"_\{\\mathrm\{GW\}\}|\bGW\b(?!\d)", r"gravitational wave"),
+    (r"_\{\\mathrm\{EM\}\}|\bEM\b", r"electromagnetic"),
+    (r"\bGR\b", r"general relativity"),
+    (r"\bQED\b", r"quantum electrodynamics"),
+]
+SENTENCE_REACH = 300
+
+
+def gate_units(texts: dict[str, str]) -> list[str]:
+    misses = []
+    for name, text in texts.items():
+        body_end = text.find("\\begin{thebibliography}")
+        body = text[:body_end] if body_end > 0 else text
+        for m in BARE_NUMBER.finditer(body):
+            if NOT_A_QUANTITY.search(m.group(2)):
+                continue
+            misses.append(
+                f"{name}:{line_of(body, m.start())}: a bare number with no unit word after '{m.group(1)}': {m.group(0)[-80:]!r}"
+            )
+        for abbreviation, expansion in ABBREVIATIONS:
+            first = re.search(abbreviation, body)
+            if not first:
+                continue
+            expanded = re.search(expansion, body, re.I)
+            if expanded is None or expanded.start() > first.start() + SENTENCE_REACH:
+                misses.append(
+                    f"{name}:{line_of(body, first.start())}: the abbreviation {first.group(0)!r} is not expanded at or before its first use"
+                )
+    return misses
+
+
 def gate_scripts(texts: dict[str, str]) -> list[str]:
     """The derived and computed marks of the main text that name no derivation script (the Boss's rule of 2026-10-04,
     #1793 comment 5975147735): a ratchet, the count may only fall; it reaches 0 with part 4's map of marks to scripts."""
@@ -307,6 +459,8 @@ def main() -> int:
         ("the twins", gate_twins),
         ("the derivations' Inputs graph", lambda texts: gate_inputs_graph(texts["supplement.tex"])),
         ("the bare board", gate_board),
+        ("the nomenclature", gate_nomenclature),
+        ("the units and the abbreviations", gate_units),
     ):
         misses = run(texts)
         print(f"{gate}: {len(misses)} miss{'es' if len(misses) != 1 else ''}")
