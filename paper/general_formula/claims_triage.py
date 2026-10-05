@@ -168,7 +168,7 @@ MAIN_MAP = [
         125,
         "Related work / How a Universe24 file is built and tested",
         SUPPORT,
-        "supp section: the procedure of a file",
+        "supp S.8 (the procedure of a file, from this paragraph)",
         "the procedure and the [999, 1000] example to the supplement; the commands and the install line to report R1",
     ),
     (
@@ -707,7 +707,7 @@ MAIN_MAP = [
         "Findings / The lattice's frame, and its mend as a hypothesis",
         CORE,
         "main 8.1",
-        "two sentences; the five forms tried to supp S.55 (old S.36)",
+        "two sentences; the finding's sentence in 8.1 points to supp S.54 (old S.35) and to report R4, where the five forms tried stand (old S.36)",
     ),
     (
         739,
@@ -735,7 +735,7 @@ MAIN_MAP = [
         747,
         "Findings / Open",
         SUPPORT,
-        "supp S.57 (the open items)",
+        "supp S.55 (the open items, from this paragraph)",
         "the Fermi-LAT width finding one line in 8.1; the telegraph to report R5",
     ),
     (
@@ -876,15 +876,27 @@ SUPP_MAP = {
     ),
     "S.55": (SUPPORT, "supp S.7", "the conservation picture"),
     "S.56": (SUPPORT, "supp S.56", "the explicit findings with their numbers, behind 7.1"),
-    "S.57": (OUT, "report R5", "the anticoincidence, a gate of the repository"),
+    "S.57": (
+        OUT,
+        "report R5",
+        "the anticoincidence, a gate of the repository; the Nomenclature's rows that exist for it alone leave with it",
+    ),
     "S.58": (SUPPORT, "supp S.31", "the push on a moving record"),
-    "S.59": (OUT, "report R5", "the Zeno effect, a gate of the repository"),
+    "S.59": (
+        OUT,
+        "report R5",
+        "the Zeno effect, a gate of the repository; the Nomenclature's rows that exist for it alone leave with it",
+    ),
     "S.60": (
         SUPPORT,
         "supp S.48",
         "the atom under two lines, with hydrogen's, helium's and positronium's numbers; the atoms' table beyond them to report R7",
     ),
-    "S.61": (OUT, "report R3", "the engine's derivation table"),
+    "S.61": (
+        OUT,
+        "report R3",
+        "the engine's derivation table; every citation of it that survives the cut becomes a pointer to R3 and its row (no number), the two slits' 674 photons keeping its lattice label with the R3 pointer",
+    ),
     "S.62": (OUT, "report R3", "the implementation's versions of the click's write"),
     "S.63": (SUPPORT, "supp S.22", "Schroedinger's equation as the slow limit"),
     "S.64": (OUT, "report R4", "the closure candidate, a side track"),
@@ -914,7 +926,11 @@ TABLE_ROWS = {
     "A body's count in clicks": (CORE, "main Table 3", "Millikan's slope"),
     "Magnetism": (CORE, "main Table 3", ""),
     "The frozen content": (SUPPORT, "supp S.41", ""),
-    "The clusters' deceleration": (SUPPORT, "supp S.46", "its sign a miss of 8.1"),
+    "The clusters' deceleration": (
+        CORE,
+        "main 4.4 and Table 4",
+        "stays in the main by the advisor's word: the abstract names the decelerating cosmology among the misses; its derivation supp S.46",
+    ),
     "A body's binding per quantum": (SUPPORT, "supp S.49", "its miss one line of 8.1"),
     "The click's booking identity": (SUPPORT, "supp S.9", ""),
 }
@@ -1069,6 +1085,13 @@ def main() -> None:
         print(f"| {tag} | {ssums[tag]} | {100 * ssums[tag] / stotal:.0f} percent |", file=out)
     print(f"| total | {stotal} | 100 percent |", file=out)
     print(file=out)
+    print(
+        "The new numbers S.8 and S.55 are taken by two sections the main text sheds, so that the numbering runs 1 to 56 "
+        "without a hole: S.8 the procedure of a file (the long version's paragraph at line 125) and S.55 the open items (the "
+        "long version's paragraph at line 747); the hypotheses' derivations tagged OUT take no number.",
+        file=out,
+    )
+    print(file=out)
     print("## 4. The sums against the budgets", file=out)
     print(file=out)
     bib_words = mw[796]
@@ -1105,11 +1128,12 @@ def main() -> None:
     print(file=out)
     print(
         "If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves, the next derivations move whole to "
-        "the report, in this order, each named in the pass's map: old S.43 (the two-mode line under the rotation, its result "
-        "kept as a row of Table 3 with the report cited), old S.42 (c) (the monopole's departure), old S.51's second half (the "
-        "scope of entanglement beyond the pair), old S.26 (d') (the energy line, a declared line), old S.39 (the gapped "
-        "holder's kernel beyond Yukawa's form), old S.55 (the conservation picture). A derivation is never shortened in its "
-        "steps.",
+        "the report, fewest pointers first (the mathematician's order, 5991556261, by the load each carries in the frozen "
+        "paper): old S.55 (the conservation picture), old S.51's second half (the scope of entanglement beyond the pair), old "
+        "S.42 (c) (the monopole's departure), old S.39's part beyond Yukawa's form, old S.26 (d') (the energy line, a declared "
+        "line), and old S.43 (the two-mode line under the rotation) last and only if the five before it do not suffice, its "
+        "two table rows then citing the report. The six hold about 3,270 words, about 5 pages. A derivation is never shortened "
+        "in its steps.",
         file=out,
     )
     print(file=out)
@@ -1193,6 +1217,24 @@ def main() -> None:
         "supplement (the frozen content, the clusters' deceleration, the binding bound, the booking identity). No marked claim "
         "of section A leaves its paragraph: where a paragraph is SUPPORT or OUT and the note names a sentence that stays, that "
         "sentence is restated in the main text with its mark in Table 1 and its claim row keeps the paragraph's tag here.",
+        file=out,
+    )
+    print(file=out)
+    print("## 7. The restatements the main text carries (the advisor's word, 5991473123)", file=out)
+    print(file=out)
+    print(
+        "Six sentences of SUPPORT or OUT paragraphs are restated in the main text with their marks, their rows keeping the "
+        "paragraph's tag here: (1) rows 50, 54, 55 and 56 of section A, one quantum and one click per record between far "
+        "NodeDetectors, the write is the NodeDetector's act, the direction of time belongs to the clicks and not to the lattice, "
+        "only a click moves a quantum between families, each one sentence of 2.5 with its mark and a row of Table 1; (2) row 173, "
+        "charge universality by construction, a row of Table 3 with the measurement a comparison; (3) row 25, neither layer keeps "
+        "a total energy, one sentence of 8.1 or 8.2; (4) row 164, no number comes from the lattice itself, one sentence of 8.2; "
+        "(5) rows 175 to 178, the declarations condensed to one item each with its mark in 8.2; (6) rows 189 to 191, the nuclear "
+        "binding's misses with their numbers in 8.1 (the deuteron by 4 above, iron by 6 below, the size law R proportional to 1 / A "
+        "against A to the one third) with the pointer to report R4 and to the binding bound's derivation. The clusters' "
+        "deceleration (row 52 of section D) stays in the main, in Table 4 or as 4.4's sentence with its number. The citations of "
+        "old S.61 that survive the cut become pointers to report R3 and its row, and the Nomenclature's rows that exist for old S.57 "
+        "and S.59 alone leave with them (the mathematician's conditions (c) and (d), 5991556261).",
         file=out,
     )
 

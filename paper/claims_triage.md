@@ -76,7 +76,7 @@ The supplement: a front (the note on the language model, the Nomenclature, the g
 | 119 | Related work / The formulas derived | 295 | CORE | main 5.1 | the list becomes the rows of Table 3 |
 | 121 | Related work / What stands, and on what | 333 | CORE | main 1.2 | the five things fold into 1.2 and Table 1 |
 | 123 | Related work / What is put in, and the three kinds of claim | 573 | CORE | main 8.2 | the inputs named (the one assumption, the credit, line (1) of the atom, the selective read, the energy line, the file's numbers); the three kinds become Table 1's status words |
-| 125 | Related work / How a Universe24 file is built and tested | 523 | SUPPORT | supp section: the procedure of a file | the procedure and the [999, 1000] example to the supplement; the commands and the install line to report R1 |
+| 125 | Related work / How a Universe24 file is built and tested | 523 | SUPPORT | supp S.8 (the procedure of a file, from this paragraph) | the procedure and the [999, 1000] example to the supplement; the commands and the install line to report R1 |
 | 127 | Table 1 of the long version, the results | 1041 | CORE | main Table 1 | rebuilt as the claims table with its status column over every claim of the short text |
 | 164 | Related work / How to read the paper (the key) | 489 | CORE | main 1.4 | the eight marks, the two fences and the tables' words in half a page; the LLM sentence |
 | 166 | Related work / Nomenclature | 2290 | SUPPORT | supp front | the table whole, at the supplement's front; gate 6 reads it there |
@@ -170,12 +170,12 @@ The supplement: a front (the note on the language model, the Nomenclature, the g
 | 729 | Findings (the head) and Lattice readings, not findings | 254 | SUPPORT | supp S.56 (old S.56) | one sentence in 8.1: nature's mass ratios are not whole, and the [2, 3] values are no finding |
 | 733 | Findings / The declarations, and the four forces as declared | 860 | SUPPORT | supp section: the declarations | the nine declarations are Table 1's status words; the four forces as declared to report R4 with one line each in 9's outlook |
 | 735 | Findings / The model's misses | 442 | CORE | main 8.1 | the list with every number, compressed in words and not in items |
-| 737 | Findings / The lattice's frame, and its mend as a hypothesis | 175 | CORE | main 8.1 | two sentences; the five forms tried to supp S.55 (old S.36) |
+| 737 | Findings / The lattice's frame, and its mend as a hypothesis | 175 | CORE | main 8.1 | two sentences; the finding's sentence in 8.1 points to supp S.54 (old S.35) and to report R4, where the five forms tried stand (old S.36) |
 | 739 | Findings / The strong force, by derivation | 389 | OUT | report R4 | the binding bound's miss one line in 8.1 with supp S.49 (old S.38) behind it |
 | 741 | Findings / The weak force | 243 | CORE | main 8.1 | the four misses in one sentence; the conversion's mechanics to report R4 |
 | 743 | Findings / The gaps in two columns | 112 | CORE | main 8.1 | one sentence |
 | 745 | Findings / The record's parts are its particles | 175 | OUT | report R4 | one line in 9's outlook |
-| 747 | Findings / Open | 581 | SUPPORT | supp S.57 (the open items) | the Fermi-LAT width finding one line in 8.1; the telegraph to report R5 |
+| 747 | Findings / Open | 581 | SUPPORT | supp S.55 (the open items, from this paragraph) | the Fermi-LAT width finding one line in 8.1; the telegraph to report R5 |
 | 749 | Findings / Where a click happens: declared, and open in its cause | 314 | CORE | main 8.1 | two sentences: the cause of a click is open; the recoil is the NodeDetector's |
 | 751 | Findings / Also open, and the atom | 224 | CORE | main 8.1 | helium 1.4 percent, positronium 44 percent, no line for Pauli's exclusion; the rest to supp S.57 |
 | 753 | Findings / What building a world closer to nature needs | 759 | CORE | main 8.3 | the eight calculations as one compact list (the owner's standing decision); the box's and Gamma's axes to supp S.57 |
@@ -257,11 +257,11 @@ The supplement: a front (the note on the language model, the Nomenclature, the g
 | S.54 | 626 | SUPPORT | supp S.50 | the lattice's properties and the calibration series, with Tables 4 and 5 of the long version |
 | S.55 | 647 | SUPPORT | supp S.7 | the conservation picture |
 | S.56 | 1073 | SUPPORT | supp S.56 | the explicit findings with their numbers, behind 7.1 |
-| S.57 | 442 | OUT | report R5 | the anticoincidence, a gate of the repository |
+| S.57 | 442 | OUT | report R5 | the anticoincidence, a gate of the repository; the Nomenclature's rows that exist for it alone leave with it |
 | S.58 | 354 | SUPPORT | supp S.31 | the push on a moving record |
-| S.59 | 693 | OUT | report R5 | the Zeno effect, a gate of the repository |
+| S.59 | 693 | OUT | report R5 | the Zeno effect, a gate of the repository; the Nomenclature's rows that exist for it alone leave with it |
 | S.60 | 1577 | SUPPORT | supp S.48 | the atom under two lines, with hydrogen's, helium's and positronium's numbers; the atoms' table beyond them to report R7 |
-| S.61 | 3424 | OUT | report R3 | the engine's derivation table |
+| S.61 | 3424 | OUT | report R3 | the engine's derivation table; every citation of it that survives the cut becomes a pointer to R3 and its row (no number), the two slits' 674 photons keeping its lattice label with the R3 pointer |
 | S.62 | 114 | OUT | report R3 | the implementation's versions of the click's write |
 | S.63 | 393 | SUPPORT | supp S.22 | Schroedinger's equation as the slow limit |
 | S.64 | 475 | OUT | report R4 | the closure candidate, a side track |
@@ -275,6 +275,8 @@ The supplement: a front (the note on the language model, the Nomenclature, the g
 | OUT | 9993 | 26 percent |
 | total | 38852 | 100 percent |
 
+The new numbers S.8 and S.55 are taken by two sections the main text sheds, so that the numbering runs 1 to 56 without a hole: S.8 the procedure of a file (the long version's paragraph at line 125) and S.55 the open items (the long version's paragraph at line 747); the hypotheses' derivations tagged OUT take no number.
+
 ## 4. The sums against the budgets
 
 The CORE places of the long main text hold 37855 words, of which the bibliography 2566; the rest, 35289 words of text, tables and captions, is 56 Springer pages as it stands. The budget is 30 pages in total: about 22 of running text (13860 words), 4.5 of floats, 0.5 of Statements and 3 of references (about 36 entries). So the rewrite of Step 3 compresses the CORE text to about 45 percent of its present words (the floats' words counted at about 2,000), with no number and no claim dropped: the repetition (the same statement in the introduction, the section and the conclusion), the per-sentence marks (Table 1's column), the pointers' sentences and the long parentheses leave.
@@ -283,7 +285,7 @@ The SUPPORT material holds 28859 words of the long supplement and 12924 words sh
 
 The OUT material holds 1360 words of the main text and 9993 of the supplement, 11353 words for the report; nothing is deleted without being moved.
 
-If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves, the next derivations move whole to the report, in this order, each named in the pass's map: old S.43 (the two-mode line under the rotation, its result kept as a row of Table 3 with the report cited), old S.42 (c) (the monopole's departure), old S.51's second half (the scope of entanglement beyond the pair), old S.26 (d') (the energy line, a declared line), old S.39 (the gapped holder's kernel beyond Yukawa's form), old S.55 (the conservation picture). A derivation is never shortened in its steps.
+If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves, the next derivations move whole to the report, fewest pointers first (the mathematician's order, 5991556261, by the load each carries in the frozen paper): old S.55 (the conservation picture), old S.51's second half (the scope of entanglement beyond the pair), old S.42 (c) (the monopole's departure), old S.39's part beyond Yukawa's form, old S.26 (d') (the energy line, a declared line), and old S.43 (the two-mode line under the rotation) last and only if the five before it do not suffice, its two table rows then citing the report. The six hold about 3,270 words, about 5 pages. A derivation is never shortened in its steps.
 
 ## 5. The rows of claims.md with their tags
 
@@ -485,9 +487,9 @@ If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves
 | 192 | 741 | sec:open / The weak force. | derived | CORE | main 8.1 | Every rotation holder, massive or not, couples at $\alpha$ at the Link; its gap is its range and never its strength ([de |
 | 193 | 741 | sec:open / The weak force. | assumption | CORE | main 8.1 | The table and the rate are nature's numbers, and nothing of the neutron's mass or its excess is claimed ([assumption] fo |
 | 194 | 745 | sec:open / The record's parts are its particles. | hypothesis | OUT | report R4 | \paragraph{The record's parts are its particles.} An explicitly named hypothesis beside the families' reading (S.56 (7)) |
-| 195 | 747 | sec:open / Open. | hypothesis | SUPPORT | supp S.57 (the open items) | \paragraph{Open.} The hypothesis that only a click moves a quantum between families (Section~\ref{sec:nothing}; [hypothe |
-| 196 | 747 | sec:open / Open. | derived | SUPPORT | supp S.57 (the open items) | The lattice's scale: the massless band's quartic term $-(3\sum_a n_a^4 - 1)\,k^4 / 108$ ($-1 / 54$ on an axis, $0$ on th |
-| 197 | 747 | sec:open / Open. | derived,hypothesis | SUPPORT | supp S.57 (the open items) | The shape of the statistics is derived from the known form of the rate equations \cite{cook} ([derived] under a declarat |
+| 195 | 747 | sec:open / Open. | hypothesis | SUPPORT | supp S.55 (the open items, from this paragraph) | \paragraph{Open.} The hypothesis that only a click moves a quantum between families (Section~\ref{sec:nothing}; [hypothe |
+| 196 | 747 | sec:open / Open. | derived | SUPPORT | supp S.55 (the open items, from this paragraph) | The lattice's scale: the massless band's quartic term $-(3\sum_a n_a^4 - 1)\,k^4 / 108$ ($-1 / 54$ on an axis, $0$ on th |
+| 197 | 747 | sec:open / Open. | derived,hypothesis | SUPPORT | supp S.55 (the open items, from this paragraph) | The shape of the statistics is derived from the known form of the rate equations \cite{cook} ([derived] under a declarat |
 | 198 | 749 | sec:open / Where a click happens: declared, and open in its c | assumption | CORE | main 8.1 | The law's one principle for every write from outside Rule3 into a massless record, that it wakes no zero mode of the mas |
 | 199 | 751 | sec:open / Also open, and the atom. | assumption | CORE | main 8.1 | The relations among the file's integers are the programme of future work, each an explicitly named hypothesis tested by  |
 | 200 | 751 | sec:open / Also open, and the atom. | computed | CORE | main 8.1 | The many-body correlation is not reproduced by a product of records (helium $1.4$ percent, positronium $44$ percent of n |
@@ -553,14 +555,14 @@ If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves
 | 49 | tab:adds | derived; clicks | CORE | main Table 4 | The moving clock's fourth order, $\omega_0\,[(\sum_a n_a^4)\tan\omega_0 + \cot\omega_0]$, anisotropic by $\sum |
 | 50 | tab:adds | an evaluation of the declared credit, fitted, no prediction; clicks | CORE | main Table 4 | Bell's and GHZ's values at rational settings, $S = 478 / 169$ and $M = -4$ |
 | 51 | tab:adds | derived under the one assumption; lattice | SUPPORT | supp S.41 | The frozen content, $U_f = \tfrac12\ln(2\Gamma)$, $(\Gamma / 2)\ln 2\Gamma$ levels |
-| 52 | tab:adds | derived at $z \ll 1$; clicks | SUPPORT | supp S.46 | The clusters' deceleration, $q_0 = \Omega_m / 2 > 0$ at $z \ll 1$, bound or free |
+| 52 | tab:adds | derived at $z \ll 1$; clicks | CORE | main 4.4 and Table 4 | The clusters' deceleration, $q_0 = \Omega_m / 2 > 0$ at $z \ll 1$, bound or free |
 | 53 | tab:adds | derived, a bound under the declared $W$; lattice for the well, clicks for the defect it bo... | SUPPORT | supp S.49 | A body's binding per quantum, bounded by $0.76\,CW / (\Gamma E)$ at one Node and about $0.29\,CW / (\Gamma E r |
 | 54 | tab:adds | derived; clicks | SUPPORT | supp S.9 | The click's booking identity, $\Delta(wQ) = w\,(x - v)(x - b)$, with the record's own quantum $W_{\mathrm{rec} |
 
 | Tag | Table rows |
 |---|---|
-| CORE | 48 |
-| SUPPORT | 6 |
+| CORE | 49 |
+| SUPPORT | 5 |
 | OUT | 0 |
 
 ### C. The supplement's derivations (65)
@@ -637,7 +639,7 @@ If the supplement's build at Step 3 exceeds 40 pages after the repetition leaves
 
 | # | Line | Tag | Destination | The sentence |
 |---|---|---|---|---|
-| 1 | 125 | SUPPORT | supp section: the procedure of a file | The engine holds no number, no formula, no family name and no flag, and every primitive is one folder found by its name. |
+| 1 | 125 | SUPPORT | supp S.8 (the procedure of a file, from this paragraph) | The engine holds no number, no formula, no family name and no flag, and every primitive is one folder found by its name. |
 | 2 | 320 | CORE | main 2.6 | Each act is a call of Rule3 on whole-lattice arrays of integers at a declared width, every neighbour read through a Port |
 | 3 | 320 | CORE | main 2.6 | It holds no number of physics, no formula, no family's name and no flag; every physical value comes from the run's files |
 
@@ -654,3 +656,7 @@ These carry no mark and are no claims of the paper; each follows its paragraph's
 ## 6. The exceptions by row
 
 A row whose tag is not its paragraph's: the rows of Table 2 of the long version listed in section D above with a destination of their own (the formulas shared with nature go to Table 3, the two-slit row and the arrival to 6.2, Born's rule, the which-way sum and no signalling to their sentences); the four rows of Table 6 that go to the supplement (the frozen content, the clusters' deceleration, the binding bound, the booking identity). No marked claim of section A leaves its paragraph: where a paragraph is SUPPORT or OUT and the note names a sentence that stays, that sentence is restated in the main text with its mark in Table 1 and its claim row keeps the paragraph's tag here.
+
+## 7. The restatements the main text carries (the advisor's word, 5991473123)
+
+Six sentences of SUPPORT or OUT paragraphs are restated in the main text with their marks, their rows keeping the paragraph's tag here: (1) rows 50, 54, 55 and 56 of section A, one quantum and one click per record between far NodeDetectors, the write is the NodeDetector's act, the direction of time belongs to the clicks and not to the lattice, only a click moves a quantum between families, each one sentence of 2.5 with its mark and a row of Table 1; (2) row 173, charge universality by construction, a row of Table 3 with the measurement a comparison; (3) row 25, neither layer keeps a total energy, one sentence of 8.1 or 8.2; (4) row 164, no number comes from the lattice itself, one sentence of 8.2; (5) rows 175 to 178, the declarations condensed to one item each with its mark in 8.2; (6) rows 189 to 191, the nuclear binding's misses with their numbers in 8.1 (the deuteron by 4 above, iron by 6 below, the size law R proportional to 1 / A against A to the one third) with the pointer to report R4 and to the binding bound's derivation. The clusters' deceleration (row 52 of section D) stays in the main, in Table 4 or as 4.4's sentence with its number. The citations of old S.61 that survive the cut become pointers to report R3 and its row, and the Nomenclature's rows that exist for old S.57 and S.59 alone leave with them (the mathematician's conditions (c) and (d), 5991556261).
