@@ -33,6 +33,40 @@ STRONG = re.compile(
     r"\b(exactly|exact|bound|bounded|conserved|is kept|keeps|fixed point|for every|for any|never|at every Node|independent of)\b"
 )
 NO_BREAK = re.compile(r"(S|Eq|Fig|Sec|Section|Table|\d|vs|al)\.$")
+KEY_WORDS = (
+    "theorem",
+    "derived",
+    "computed",
+    "assumption",
+    "hypothesis",
+    "experiment",
+    "fitted",
+    "inspiration",
+    "calibration",
+    "declaration",
+    "definition",
+    "untested",
+)  # the key's eight words of Section 1 and the tables' four
+PLAIN_MARK = re.compile(
+    r"\\?\((" + "|".join(KEY_WORDS) + r")\b(?:[^()]|\([^()]*\))*\)"
+)  # the short version's mark: a parenthesis opening with a key word, the fence after the first semicolon, then the pointers
+FENCE_WORDS = ("lattice", "clicks")
+
+
+def plain_marks(sentence: str) -> tuple[list[str], str, str]:
+    """The short version's mark of a sentence: the key words of its last marking parenthesis, its fence and the
+    parenthesis itself; the long version's \\claimmark macro is read beside it by the callers."""
+    found = list(PLAIN_MARK.finditer(sentence))
+    if not found:
+        return [], "", ""
+    inside = found[-1].group(0)
+    words = [w for w in re.findall(r"[a-z]+", inside) if w in KEY_WORDS]
+    marks: list[str] = []
+    for word in words:
+        if word not in marks:
+            marks.append(word)
+    fence = ",".join(w for w in FENCE_WORDS if re.search(r"\b" + w + r"\b", inside))
+    return marks, fence, inside
 
 
 def sentences(text: str) -> list[tuple[int, str]]:
@@ -60,18 +94,42 @@ def sentences(text: str) -> list[tuple[int, str]]:
 
 
 def places(text: str) -> dict[int, str]:
-    """The label of the nearest section, subsection or paragraph before each line."""
+    """The labels of the section, the subsection and the subsubsection each line stands in, joined by " > " from the
+    outermost, so that a sentence answers to every level a table's "where" may name; a paragraph's title after
+    " / "."""
     labels: dict[int, str] = {}
-    current = "front matter"
+    stack = ["front matter"]
+    paragraph = ""
     for number, line in enumerate(text.split("\n"), 1):
-        section = re.search(r"\\(section|subsection)\{([^}]*)\}(\\label\{([^}]*)\})?", line)
+        section = re.search(
+            r"\\(section|subsection|subsubsection)\*?\{([^}]*)\}(\\label\{([^}]*)\})?", line
+        )
         if section:
-            current = section.group(4) or section.group(2)[:40]
-        paragraph = re.search(r"\\paragraph\{([^}]*)\}", line)
-        if paragraph:
-            current = current.split(" / ")[0] + " / " + paragraph.group(1)[:50]
-        labels[number] = current
+            depth = {"section": 1, "subsection": 2, "subsubsection": 3}[section.group(1)]
+            label = section.group(4) or section.group(2)[:40]
+            stack = stack[: depth - 1] + [label] if len(stack) >= depth - 1 else [*stack, label]
+            paragraph = ""
+        title = re.search(r"\\paragraph\{([^}]*)\}", line)
+        if title:
+            paragraph = title.group(1)[:50]
+        labels[number] = " > ".join(stack) + (" / " + paragraph if paragraph else "")
     return labels
+
+
+def environments(text: str) -> dict[int, str]:
+    """The key's word each line stands under by its environment: an assumption's text is marked assumption, a
+    theorem's, a lemma's or a proposition's theorem, since the environment's name is the claim's mark."""
+    marks: dict[int, str] = {}
+    current = ""
+    for number, line in enumerate(text.split("\n"), 1):
+        begin = re.search(r"\\begin\{(assumption|theorem|lemma|proposition|corollary)\}", line)
+        if begin:
+            current = "assumption" if begin.group(1) == "assumption" else "theorem"
+        if current:
+            marks[number] = current
+        if re.search(r"\\end\{(assumption|theorem|lemma|proposition|corollary)\}", line):
+            current = ""
+    return marks
 
 
 def sources(sentence: str) -> list[str]:
@@ -122,21 +180,38 @@ def kind_of(marks: list[str]) -> str:
 
 
 TABLES = {
-    "tab:results": (1, 2),
-    "tab:clicks": (1, None),
-    "tab:adds": (2, None),
-}  # the status column, the fence column
+    "tab:claims": (1, 2, 3),
+    "tab:results": (1, 2, None),
+    "tab:clicks": (1, None, None),
+    "tab:shared": (2, None, None),
+    "tab:adds": (2, None, None),
+}  # the status column, the fence column, the "where" column; the short version's labels and the long version's
 
 
-def table_rows(text: str) -> list[dict[str, str]]:
-    """The rows of the tables whose status column is a claim's kind: the results (Table 1), the formulas of clicks
-    (Table 3) and the formulas the paper adds (Table 5); one row per table line between the rules."""
+def table_rows(text: str, supplement: str = "") -> list[dict[str, str]]:
+    """The rows of the tables whose status column is a claim's kind (the claims, the formulas shared with nature and
+    the formulas the paper adds, in the short version; the results, the clicks and the additions in the long);
+    one row per table line between the rules. A table the main no longer holds is read from the supplement, where
+    the short version keeps it whole (the claims list, push 2 of the short version)."""
     found: list[dict[str, str]] = []
-    for label, (status_at, fence_at) in TABLES.items():
+    for label, (status_at, fence_at, where_at) in TABLES.items():
+        text = main_text if (main_text := _text_holding(label, found_in=(text, supplement))) else ""
         start = text.find("\\label{" + label + "}")
         if start < 0:
             continue
-        body = text[text.find("\\midrule", start) : text.find("\\bottomrule", start)]
+        end = min(
+            e
+            for e in (
+                text.find("\\end{longtable}", start),
+                text.find("\\end{tabular}", start),
+            )
+            if e >= 0
+        )
+        foot = text.find("\\endfoot", start)
+        head = foot + len("\\endfoot") if 0 <= foot < end else text.find("\\midrule", start)
+        body = text[
+            head:end
+        ]  # a longtable's rows stand after its foot's definition, a tabular's after its rule
         first_line = text[:start].count("\n") + 1
         for offset, line in enumerate(body.split("\n")):
             if not line.rstrip().endswith("\\\\") or "&" not in line:
@@ -165,10 +240,63 @@ def table_rows(text: str) -> list[dict[str, str]]:
                     else "",
                     "kind": kind,
                     "text": plain(cells[0], 150),
+                    "where": cells[where_at] if where_at is not None and where_at < len(cells) else "",
                     "key": label + ": " + key_of(cells[0]),
                 }
             )
     return found
+
+
+def _text_holding(label: str, found_in: tuple[str, ...]) -> str:
+    """The first of the texts that holds the table's label, the main before the supplement."""
+    for text in found_in:
+        if "\\label{" + label + "}" in text:
+            return text
+    return ""
+
+
+def unmatched_rows(main: str, supplement: str = "") -> list[str]:
+    """The gate of the claims table's move into the supplement (the advisor's word of 2026-10-05, 5996437774 (C)):
+    every row of the claims table has a marked sentence in the main at the row's "where" (a section the sentence
+    stands in, at any level) carrying the row's first status word, and, where the row names a derivation S.n, a
+    marked sentence at that place names one of them; a sentence inside an assumption or theorem environment is
+    marked by the environment. The unmatched rows are the misses, printed with the row's opening words."""
+    labels = places(main)
+    under = environments(main)
+    marked: list[tuple[set[str], set[str], list[str]]] = []
+    for number, sentence in sentences(main):
+        if sentence.startswith(("%", "\\bibitem")):
+            continue
+        marks, _, _ = plain_marks(sentence)
+        marks += re.findall(r"\\claimmark\{([a-z]*)\}", sentence)
+        if number in under:
+            marks.append(under[number])
+        if not marks:
+            continue
+        here = set(labels.get(number, "").split(" / ")[0].split(" > "))
+        marked.append((here, set(re.findall(r"S\.(\d+)", sentence)), marks))
+    misses: list[str] = []
+    for row in table_rows(main, supplement):
+        if row["table"] != "tab:claims":
+            continue
+        sections = set(re.findall(r"\\ref\{(sec:[^}]*)\}", row["where"]))
+        derivations = set(re.findall(r"S\.(\d+)", row["where"]))
+        words = [w for w in re.findall(r"[a-z]+", row["status"].lower()) if w in KEY_WORDS]
+        at_place = [
+            (pointers, marks) for here, pointers, marks in marked if not sections or here & sections
+        ]
+        word_found = any(not words or words[0] in marks for _, marks in at_place)
+        pointer_found = not derivations or any(pointers & derivations for pointers, _ in at_place)
+        if not (word_found and pointer_found):
+            why = (
+                "no sentence marked " + (words[0] if words else "at all")
+                if not word_found
+                else "no S.n of the row"
+            )
+            misses.append(
+                f"Table 1's row without a marked sentence at its place ({why}): {row['text'][:80]}"
+            )
+    return misses
 
 
 DERIVATION = re.compile(r"\\begin\{derivation\}\[([^\]]*)\](.*?)\\end\{derivation\}", re.S)
@@ -244,10 +372,14 @@ def build() -> str:
     labels = places(main)
     rows = []
     for number, sentence in sentences(main):
+        if sentence.startswith(("%", "\\bibitem")):
+            continue
         marks = re.findall(r"\\claimmark\{([a-z]*)\}", sentence)
+        fence = ",".join(re.findall(r"\\fence\{([A-Za-z]*)\}", sentence))
+        if not marks:
+            marks, fence, _ = plain_marks(sentence)
         if not marks:
             continue
-        fence = ",".join(re.findall(r"\\fence\{([A-Za-z]*)\}", sentence))
         key = key_of(sentence)
         breaker = breakers.get(key, {})
         rows.append(
@@ -265,16 +397,27 @@ def build() -> str:
             }
         )
     candidates = [
-        (number, labels.get(number, ""), STRONG.search(sentence).group(0), plain(sentence))  # type: ignore[union-attr]
+        (
+            number,
+            labels.get(number, ""),
+            STRONG.search(sentence).group(0),
+            plain(sentence),
+        )  # type: ignore[union-attr]
         for number, sentence in sentences(main)
         if "\\claimmark" not in sentence
+        and not PLAIN_MARK.search(sentence)
         and STRONG.search(sentence)
         and not sentence.startswith(("%", "\\bibitem"))
         and len(sentence) > 40
     ]
     derivations = []
     for index, match in enumerate(
-        re.finditer(r"\\begin\{derivation\}\[([^\]]*)\](.*?)\\end\{derivation\}", supplement, re.S), 1
+        re.finditer(
+            r"\\begin\{derivation\}\[([^\]]*)\](.*?)\\end\{derivation\}",
+            supplement,
+            re.S,
+        ),
+        1,
     ):
         status = re.search(r"\\emph\{Status:\}\s*(.*?)(\\end|$)", match.group(2), re.S)
         text = (
@@ -289,6 +432,8 @@ def build() -> str:
             )
         )
 
+    tables = table_rows(main, supplement)
+    misses = unmatched_rows(main, supplement)
     filled = sum(1 for row in rows if row["breaker"])
     unsourced = sum(1 for row in rows if row["source"] == "NO SOURCE" and row["kind"] in "abce")
     lines = [
@@ -312,8 +457,8 @@ def build() -> str:
         "",
         f"Rows with a claim mark: {len(rows)}, {filled} with a breaker written; rows of a derived, computed, run or"
         f" engine kind without a source pointer: {unsourced}; candidate sentences with a strong word and no mark:"
-        f" {len(candidates)}; rows of Tables 1, 2 and 6: {len(table_rows(main))}; derivations of the supplement:"
-        f" {len(derivations)}.",
+        f" {len(candidates)}; rows of the tables: {len(tables)}; rows of Table 1 without a marked sentence:"
+        f" {len(misses)}; derivations of the supplement: {len(derivations)}.",
         "",
         "## A. The marked claims of main.tex",
         "",
@@ -340,7 +485,6 @@ def build() -> str:
         for number, sentence in sentences(main)
         if key_of(sentence) in breakers and key_of(sentence) not in marked
     ]
-    tables = table_rows(main)
     lines += [
         "",
         "## E. Unmarked sentences named by hand as claims (the engine's own rule among them)",
@@ -356,7 +500,9 @@ def build() -> str:
         )
     lines += [
         "",
-        "## D. The tables' rows (Tables 1, 2 and 6), the status column their kind",
+        "## D. The tables' rows, the status column their kind; the rows of Table 1 without a marked sentence first",
+        "",
+        *[f"- {miss}" for miss in misses],
         "",
         "| # | table | status | fence | kind | the row | the breaker | state |",
         "|---|---|---|---|---|---|---|---|",
