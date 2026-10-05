@@ -15,8 +15,7 @@ title chosen in the writer's session; "cellular automaton" the literature's name
 for a lattice of integers stepped by one local rule); the meeting of the past with the future stands in the introduction as the
 statement of what a click is. The source carries a submission switch
 (`\submissiontrue` in the preamble of each document): the project's documents
-are then cited as [1], [2], [3] alone, without their line names, and the
-journal's name leaves the supplement's title. The paper is kept to about 40 pages and to what is safe: the rule, its exact
+are then cited as [1], [2], [3] alone, without their line names. The paper is kept to about 40 pages and to what is safe: the rule, its exact
 properties, the measurement with the sign of the charge (Section 5.5), the
 families, the bodies and their clusters, the weak-field forms with both
 potentials and the magnetic force (Section 8, Tables 1 and 2), the two
@@ -64,7 +63,7 @@ their statuses.
   in one sans-serif typeface for the words and the symbols, fonts embedded,
   every line at least 0.3 pt, black and grey, no transparency), with an EPS
   beside each PDF for the journal. The paper uses eight: `lattice.pdf` and `octahedron.pdf` (the two panels
-  of Fig. 2, the lattice and the octahedron of the Nodes one interval away
+  of Fig. 1, the lattice and the octahedron of the Nodes one interval away
   with the cube's group and the inscribed sphere of radius 1 / sqrt 3) by
   `python paper/general_formula/octahedron.py` and `click_body.pdf` (Fig. 4,
   the click at a NodeDetector: space and time with the NodeDetector's region of
@@ -178,8 +177,8 @@ the journal.
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 250 words of prose
-  (278 tokens in the plain-text copy), every formula in it the paper's.
+  and `abstract_journal.txt` beside it are one text of 248 words
+  (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
