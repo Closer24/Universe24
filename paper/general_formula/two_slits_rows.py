@@ -4,7 +4,8 @@
 design.json): the flat lattice of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
 laid over the columns 4 to 16, the wall at the column 20 with its two gaps of three rows 12 Links
 apart, the screen at the column 44, twelve declared NodeDetectors of four rows each. (b) The screen's
-row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
+row per region: the design's blind row written before the run (expectation.json, the law's line in real
+arithmetic at the design's initial data, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
 world by the paper's script two_slits_real_line.py at the lay as the frozen commit 1fe3790a holds it (N = 284.50 in the
 engine's labels), and the seed-24 clicks of the one run as points, the archived row the gate of
@@ -147,7 +148,7 @@ def rows(ax: Axes) -> None:
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the Huygens prediction, before the run ($N = 273$)",
+        label="the blind row, the law's line at the design's initial data ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5
