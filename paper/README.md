@@ -57,7 +57,7 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
-  generative tool, with 6 to 8 pt lettering at the drawn size (Figs. 3 and 5 are
+  generative tool, with 8 pt lettering or above at the drawn size (the panel letters 9 pt; Figs. 3 and 5 are
   included at 0.66 of the text width, the other five at the drawn size), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
@@ -198,11 +198,11 @@ the journal.
   the final size, lines of at least 0.3 pt, the widths 39, 84, 129 or 174 mm
   and the height at most 234 mm (Springer's general artwork guidelines, as the
   writer holds them; the author checks the journal's page before submitting,
-  the venues' pages being unreachable from the writer's session). Not yet met for the lettering: the
-  figures drawn 174 mm wide are included at that size, their lettering 6 to 8 pt at
-  the final size (the axes' labels 7 pt, Fig. 2's box text 6.2 pt), below the 8 pt
-  minimum at the smallest labels, to be raised in the figure scripts before the
-  submission; Figs. 3 and 5, drawn narrower, at 0.66 of the text width.
+  the venues' pages being unreachable from the writer's session). Met for the five
+  figures the short version keeps (the lattice and the octahedron, the bands, the click,
+  the two slits' rows, the moving clock): drawn 174 mm or 129 mm wide with every
+  lettering 8 pt or above at the drawn size (the panel letters 9 pt), redrawn on 2026-10-05;
+  the method figure (6.2 to 8 pt) and the frames leave for the report and the supplement.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection

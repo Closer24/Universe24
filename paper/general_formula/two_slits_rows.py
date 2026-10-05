@@ -83,12 +83,12 @@ def world(ax: Axes) -> None:
     ax.annotate(
         "", xy=(19.0, 24), xytext=(13.5, 24), arrowprops={"arrowstyle": "-|>", "lw": 0.8, "color": INK}
     )
-    ax.text(6.5, -1.2, "the packet,\n$\\lambda = 8$", ha="center", va="top", fontsize=7)
+    ax.text(6.5, -1.2, "the packet,\n$\\lambda = 8$", ha="center", va="top", fontsize=8)
     # the wall at the column 20 with the two gaps
     ax.add_patch(Rectangle((WALL_X, 0), 1, HEIGHT, facecolor=INK, edgecolor="none"))
     for lo, hi in GAPS:
         ax.add_patch(Rectangle((WALL_X, lo), 1, hi - lo + 1, facecolor="white", edgecolor="none"))
-    ax.text(WALL_X + 4.5, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=7)
+    ax.text(WALL_X + 2.0, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=8)
     # the screen: twelve regions of four rows
     for r in range(12):
         y = r * ROWS_PER_REGION
@@ -108,7 +108,7 @@ def world(ax: Axes) -> None:
         "the screen:\n12 NodeDetectors\nof 4 rows",
         ha="center",
         va="top",
-        fontsize=7,
+        fontsize=8,
     )
     ax.annotate(
         "",
@@ -122,7 +122,7 @@ def world(ax: Axes) -> None:
         "$L = 24$ Links",
         ha="center",
         va="bottom",
-        fontsize=7,
+        fontsize=8,
         color=GREY,
     )
     ax.text(-1.2, HEIGHT / 2, "$y$", ha="right", va="center")
@@ -163,8 +163,8 @@ def rows(ax: Axes) -> None:
     ax.set_ylim(0, 66)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    ax.tick_params(length=2, labelsize=7)
-    ax.text(5.55, 50.5, "the central maximum", ha="right", va="bottom", fontsize=7, color=GREY)
+    ax.tick_params(length=2, labelsize=8)
+    ax.text(5.55, 50.5, "the central maximum", ha="right", va="bottom", fontsize=8, color=GREY)
     for r in (4, 8):
         ax.text(
             r,
@@ -172,10 +172,10 @@ def rows(ax: Axes) -> None:
             "a minimum",
             ha="center",
             va="bottom",
-            fontsize=7,
+            fontsize=8,
             color=GREY,
         )
-    ax.legend(loc="upper right", frameon=False, fontsize=7, handlelength=1.2, bbox_to_anchor=(1.0, 1.02))
+    ax.legend(loc="upper right", frameon=False, fontsize=8, handlelength=1.2, bbox_to_anchor=(1.0, 1.02))
     ax.text(-1.5, 65, "b", ha="left", va="top", fontweight="bold", fontsize=9)
 
 

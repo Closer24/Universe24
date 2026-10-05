@@ -115,7 +115,7 @@ def number(ax: Axes, x: float, y: float, n: int, color: str = INK) -> None:
         ha="center",
         va="center",
         color="white",
-        fontsize=7,
+        fontsize=8,
         fontweight="bold",
         zorder=9,
     )
@@ -569,42 +569,44 @@ def the_hole(ax: Axes) -> None:
 
 def the_books(ax: Axes) -> None:
     """(d) The books in whole numbers, the click line to the file and the declaration."""
-    ax.text(-0.3, 6.7, "d", ha="left", va="top", fontweight="bold", fontsize=9)
+    ax.text(-0.3, 6.85, "d", ha="left", va="top", fontweight="bold", fontsize=9)
     rows = (
         ("the arriving record's count", "1", "0"),
         ("its levels and remainder at the drawn Node", "$v$, $b$, $r$", "0, 0, 0"),
         ("the NodeDetector's record, its parts g / e", "1 / 0", "0 / 1"),
     )
-    yt = 6.25
+    yt = 6.4
     ax.text(0.4, yt, "the books", ha="left", va="center", fontweight="bold")
     ax.text(9.6, yt, "before", ha="center", va="center", fontweight="bold")
     ax.text(12.0, yt, "after", ha="center", va="center", fontweight="bold")
     ax.plot([0.0, 13.0], [yt - 0.35, yt - 0.35], color=INK, lw=0.6)
     for i, (name, before, after) in enumerate(rows):
-        yy = yt - 0.9 - i * 0.62
+        yy = yt - 0.85 - i * 0.58
         ax.text(0.0, yy, name, ha="left", va="center")
         ax.text(9.6, yy, before, ha="center", va="center", color=BLUE if i < 2 else INK)
         ax.text(12.0, yy, after, ha="center", va="center", color=ORANGE if i == 2 else INK)
     # the click line: the NodeDetector's report, the only measurement
     for ybox, text in (
         (
-            1.95,
-            "the click line, the NodeDetector's report, the one measurement:\n"
-            "the window's index, the NodeDetector, the family, the part, the\n"
-            "count before and after, the NodeDetector's own clock; no Node",
+            2.1,
+            "the click line, the NodeDetector's report, the one\n"
+            "measurement: the window's index, the NodeDetector, the\n"
+            "family, the part, the count before and after, the\n"
+            "NodeDetector's own clock; no Node",
         ),
         (
-            -0.1,
-            "the declaration in the NodeDetector's file: its Nodes, two or more\n"
-            "connected (one Node with a record of its own: its parts g, e and\n"
-            "the lifetime); the world's draw, a body's NodeDetector's own seed",
+            -0.3,
+            "the declaration in the NodeDetector's file: its Nodes,\n"
+            "two or more connected (one Node with a record of its\n"
+            "own: its parts g, e and the lifetime); the world's draw,\n"
+            "a body's NodeDetector's own seed",
         ),
     ):
         ax.add_patch(
             FancyBboxPatch(
                 (0.0, ybox),
                 13.0,
-                1.75,
+                2.05,
                 boxstyle="round,pad=0,rounding_size=0.12",
                 facecolor=PALE,
                 edgecolor=INK,
@@ -612,7 +614,7 @@ def the_books(ax: Axes) -> None:
                 zorder=3,
             )
         )
-        ax.text(0.25, ybox + 0.875, text, ha="left", va="center", zorder=4, linespacing=1.25)
+        ax.text(0.25, ybox + 1.025, text, ha="left", va="center", zorder=4, linespacing=1.1)
 
 
 def the_node(ax: Axes) -> None:
