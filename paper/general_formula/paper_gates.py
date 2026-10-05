@@ -161,11 +161,11 @@ TWINS = [
         [
             (
                 "main.tex",
-                "the commit 1fe3790a of 2026-10-05, the frozen commit, the commit the two slits ran at",
+                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
             ),
             (
                 "supplement.tex",
-                "the commit 1fe3790a of 2026-10-05, the frozen commit, the pinned commit, the commit the two slits ran at",
+                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
             ),
         ],
     ),
@@ -175,7 +175,7 @@ TWINS = [
             ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
             (
                 "supplement.tex",
-                "the two slits' \\textsc{match} over $40$ intervals at the frozen commit at both seeds",
+                "the two slits' \\textsc{match} over $40$ intervals at the commit 1fe3790a at both seeds",
             ),
         ],
     ),
