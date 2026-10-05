@@ -12,7 +12,7 @@ GATES = ROOT / "paper" / "general_formula" / "paper_gates.py"
 FENCELESS_MARKS_TONIGHT = 0  # every derived or theorem mark carries its fence since ecf653d
 UNMATCHED_ROWS_TONIGHT = 0  # the gate of Table 1's move into the supplement (the advisor's word of 2026-10-05): rows of the claims table without a marked sentence at their place, a count that may only fall, at 0 before Table 1 leaves the main
 MARKS_OUTSIDE_THE_KEY_TONIGHT = (
-    3  # plain marks whose first word is not the key's, a count that may only fall
+    0  # plain marks whose first word is not the key's, a count that may only fall
 )
 SCRIPTLESS_MARKS_TONIGHT = 11  # the ratchet: ten of 2026-10-04 and the atoms' ground levels computed by hand (S.60), named so at the advisor's word of 2026-10-05
 

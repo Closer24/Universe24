@@ -154,6 +154,13 @@ TWINS = [
     ),
     ("the draw's bound", [("main.tex", "$1.1 \\times 10^{-19}$ at the width $63$")]),
     (
+        "Compton's factor at the computed pair",
+        [
+            ("main.tex", "$0.752$ at $[2, 3]$ exactly and $1$ at nature's gap"),
+            ("supplement.tex", "$0.752$ at $[2, 3]$ and $1$ at nature's gap"),
+        ],
+    ),
+    (
         "the wall of a massless family",
         [
             ("main.tex", "a massless field's quantum $\\Wc$ itself"),
