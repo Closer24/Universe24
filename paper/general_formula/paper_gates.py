@@ -113,7 +113,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$284.7$ in the paper's labelling ($284.5$ when the pair after $t$ steps is labelled $t$)",
+                "$284.7$ in the paper's labelling, the pair after $t$ steps labelled $t$ ($284.5$ in the engine's labels",
             ),
             ("main.tex", "$N = 284.50$ in the engine's labels"),
         ],
@@ -140,12 +140,12 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 284$ units of $W_c$ at both seeds ($659$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4456$",
+                "$N = 285$ units of $W_c$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
             ),
-            ("main.tex", "the run $N = 284$ at both of its seeds in the NodeDetector's unit"),
-            ("main.tex", "the two slits' $284$ at both seeds stands against it"),
-            ("main.tex", "The run of the implementation gives $N = 284$ at both seeds"),
-            ("supplement.tex", "The two slits' $284$ units are $659$ photons"),
+            ("main.tex", "the run $N = 285$ at both of its seeds in the NodeDetector's unit"),
+            ("main.tex", "the two slits' $285$ at both seeds stands against it"),
+            ("main.tex", "The run of the implementation gives $N = 285$ at both seeds"),
+            ("supplement.tex", "The two slits' $285$ units are $674$ photons"),
         ],
     ),
     (
@@ -161,11 +161,11 @@ TWINS = [
         [
             (
                 "main.tex",
-                "the commit 7756546d of 2026-10-04, the frozen commit, the commit the two slits ran at",
+                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
             ),
             (
                 "supplement.tex",
-                "the commit 7756546d of 2026-10-04, the frozen commit, the pinned commit, the commit the two slits ran at",
+                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
             ),
         ],
     ),
@@ -175,7 +175,7 @@ TWINS = [
             ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
             (
                 "supplement.tex",
-                "the two slits' \\textsc{match} over $40$ intervals at the frozen commit at both seeds",
+                "the two slits' \\textsc{match} over $40$ intervals at the commit 1fe3790a at both seeds",
             ),
         ],
     ),

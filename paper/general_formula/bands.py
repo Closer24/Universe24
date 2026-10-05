@@ -89,8 +89,8 @@ def band(ax: Axes) -> None:
     # the gap, the tops, the two slits' wave
     ax.plot([0], [w0], "o", ms=3.5, color=INK)
     ax.text(
-        0.08,
-        w0 - 0.05,
+        0.10,
+        w0 - 0.11,
         "the gap $\\omega_0 = \\arccos(2 / 3) = 0.841$:\n$E = m^* c_m^2$ exactly, $c_m^2 = \\omega_0 / (3\\tan\\omega_0)$",
         ha="left",
         va="top",

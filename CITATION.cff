@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 1.0.0
-date-released: 2026-10-02
+version: 1.1.0
+date-released: 2026-10-05
 license: MIT
 doi: 10.5281/zenodo.22738746
 repository-code: "https://github.com/Closer24/Universe24"
@@ -29,22 +29,21 @@ keywords:
   - measurement as a click
 abstract: >-
   The implementation of the paper "Universe24: an integer cellular automaton
-  read through clicks, the world it computes, and the clicks of nature it
-  approaches" (Alon Gonen, 2026): a
-  GameBoard of Nodes holding bounded integers, stepped by one rule, Rule3,
-  from each Node's present, its past and its six neighbours, reversibly, and
-  read only through declared detectors' clicks. The engine holds no number of
+  read through clicks, the formulas it shares with nature and the ones it adds"
+  (Alon Gonen, 2026): a lattice of Nodes holding bounded integers, stepped by
+  one rule, Rule3, from each Node's present, its past and its six neighbours,
+  reversibly, and read only through the clicks of declared NodeDetectors. The engine holds no number of
   physics, no formula and no family's name; every physical value comes from
   the run's files, and every primitive is one folder found by its name. The
   paper's documents, files and scripts are in the repository.
 preferred-citation:
   type: article
-  title: "Universe24: an integer cellular automaton read through clicks, the world it computes, and the clicks of nature it approaches"
+  title: "Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds"
   authors:
     - family-names: Gonen
       given-names: Alon
       email: alon@defounder.ai
       orcid: https://orcid.org/0009-0008-2701-4599
   year: 2026
-  notes: "Submitted to arXiv (quant-ph; cross-lists gr-qc and nlin.CG) and to Foundations of Physics; the arXiv identifier and the journal reference are added here at publication. The paper's source is paper/general_formula/ in this repository."
+  notes: "The project's first paper, a new submission to arXiv (quant-ph; cross-lists gr-qc and nlin.CG) and to Foundations of Physics; the arXiv identifier and the journal reference are added here at publication. The paper's source is paper/general_formula/ in this repository."
   url: "https://github.com/Closer24/Universe24/tree/main/paper/general_formula"

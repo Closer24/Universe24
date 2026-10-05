@@ -262,6 +262,7 @@ REGISTRY_TWO: tuple[tuple[str, Callable[[], Row]], ...] = (
     ("S.45", derived_two.nuclear_holders_threshold),
     ("S.46", derived_two.atom_with_the_nucleus_angle),
     ("S.59", derived_two.zeno_curve),
+    ("S.65", derived_two.lattice_scale_quartic_coefficient),
     ("S.3", rows.guard_bounds_the_pi_mode_at_fixed_coefficients),
     ("S.4", rows.cube_group_commutes_with_rule3),
     ("S.5", forms.shares_change_is_the_six_weighted_currents),

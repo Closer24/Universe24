@@ -6,7 +6,7 @@ laid over the columns 4 to 16, the wall at the column 20 with its two gaps of th
 apart, the screen at the column 44, twelve declared NodeDetectors of four rows each. (b) The screen's
 row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
-world by the paper's script two_slits_real_line.py at the lay as the frozen commit 7756546d holds it (N = 284.50 in the
+world by the paper's script two_slits_real_line.py at the lay as the frozen commit 1fe3790a holds it (N = 284.50 in the
 engine's labels). The
 numbers are typed from those two files; nothing is read from a run of the engine.
 

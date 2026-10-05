@@ -587,3 +587,43 @@ def zeno_curve() -> Row:
         no_write and own[2] < 0.05 and own[0] == 1,
         f"column A {column}; no write: P(e) = 1 at every n; the body's own period {own[1]:.2f} intervals as the window: P(e) = {own[2]:.3f}",
     )
+
+
+def lattice_scale_quartic_coefficient() -> Row:
+    """S.65 (Table 5's scale row): the massless band's quartic coefficient per direction, omega^2 = k^2 / 3 - (k^4 / 108)(3 S_4 - 1) with S_4 = SUM_a n_a^4, -1 / 54 on an axis, -1 / 216 on a face diagonal and 0 on a body diagonal, by the series and by the exact arccosine at k = 0.01 (the mathematician's #1836 comment 5984624212 (1)); outside: an isotropic band, cos omega = cos(|k| / sqrt 3), has the coefficient 0 in every direction, and the band has no cubic term, being even in k."""
+
+    def exact(direction: tuple[int, int, int], k: float = 0.01) -> float:
+        norm = math.sqrt(sum(d * d for d in direction))
+        cos_omega = sum(math.cos(k * d / norm) for d in direction) / 3
+        omega = math.acos(cos_omega)
+        return (omega * omega - k * k / 3) / k**4
+
+    def series(direction: tuple[int, int, int]) -> Fraction:
+        n2 = sum(d * d for d in direction)
+        s4 = sum(Fraction(d * d, n2) ** 2 for d in direction)
+        return -(3 * s4 - 1) / 108
+
+    directions = ((1, 0, 0), (1, 1, 0), (1, 1, 1))
+    expected = [Fraction(-1, 54), Fraction(-1, 216), Fraction(0)]
+    by_series = [series(d) for d in directions]
+    by_arccos = [exact(d) for d in directions]
+    inside = by_series == expected and all(
+        abs(a - float(b)) < 1e-3 for a, b in zip(by_arccos, by_series, strict=True)
+    )
+    k = 0.01
+    isotropic = (math.acos(math.cos(k / math.sqrt(3))) ** 2 - k * k / 3) / k**4
+    even = all(
+        abs(
+            math.acos(sum(math.cos(s * k * d / math.sqrt(sum(x * x for x in d_))) for d in d_) / 3)
+            - math.acos(sum(math.cos(-s * k * d / math.sqrt(sum(x * x for x in d_))) for d in d_) / 3)
+        )
+        < 1e-15
+        for d_ in directions
+        for s in (1.0, 7.0)
+    )
+    return Row(
+        "S.65",
+        inside,
+        abs(isotropic) < 1e-6 and even,
+        f"quartic coefficient by the series {[str(v) for v in by_series]}, by the arccosine {[round(v, 5) for v in by_arccos]}; the isotropic band's {isotropic:.1e}; the band even in k",
+    )
