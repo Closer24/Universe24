@@ -262,9 +262,11 @@ the journal.
 ### Foundations of Physics
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
-  unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 247 to 250 words
-  (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
+  unspecified reference; there are 4 to 6 keywords. The paper's abstract
+  and `abstract_journal.txt` beside it are one text of 236 words, counting the
+  tokens that carry a letter; counting every whitespace token, each formula's symbols one by one, it has
+  254 (258 in the plain copy), above the 250 by the symbols alone;
+  `cut_tools/abstract_count.py` prints both counts; every formula in it is the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
@@ -306,7 +308,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "43 pages, 7 figures, 6 tables; supplementary material of 39 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,492
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,592
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the
