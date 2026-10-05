@@ -223,9 +223,9 @@ def trials(path: Path, seeds: list[int], intervals: int) -> dict[str, Any]:
             if board.ended is not None:
                 break
         lines: list[dict[str, Any]] = board.read_lines  # type: ignore[attr-defined]
-        intervals = [int(line["interval"]) for line in lines if line["event"] == "conversion"]
-        when[seed] = intervals[0] if intervals else None
-        several += len(intervals) > 1
+        converted_at = [int(line["interval"]) for line in lines if line["event"] == "conversion"]
+        when[seed] = converted_at[0] if converted_at else None
+        several += len(converted_at) > 1
     realised = [k for k in when.values() if k is not None]
     return {
         "trials": len(seeds),
