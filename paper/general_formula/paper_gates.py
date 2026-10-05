@@ -20,6 +20,12 @@ script exits non-zero on any.
 7. The units and the abbreviations: a bare number in a parenthesis after a named quantity (the swing, the floor, a
    width) carries its unit word, and every abbreviation of ABBREVIATIONS is expanded in the same document at or
    before its first use (the venue's rule; the organisations' and the missions' names are not abbreviations).
+9. The pointers: every \\ref has its \\label, an equation label is cited by \\eqref and no other;
+   every literal pointer of the supplement, the captions and the README (Section n.m, Eq. (n), Fig. n, Table n,
+   Theorem n, S.n) names a number the paper has, counted from main.tex's source order; every \\cite key has its
+   \\bibitem in the same document, every \\bibitem is cited, none is doubled and the list stands in the order of first citation (the venue's numbered style).
+10. The captions and the names: no caption ends with punctuation (the venue's rule), and no reference stands as an
+    author-year parenthesis outside \\cite (the supplement self-contained with its own list).
 8. The team's idioms: the words of the team's own work (the reference asides, the archive's gate documentation, the
    hands' names, the ledger's row numbers, the comment ids) stand nowhere in the paper (STALE, the fourth sweep).
 
@@ -406,7 +412,7 @@ ABBREVIATIONS = [
     (r"\bCHSH\b", r"Clauser"),
     (r"\bPPN\b", r"parametri[sz]ed post-Newtonian"),
     (r"G_F\b", r"Fermi constant"),
-    (r"E_\{\\mathrm\{QG\}", r"Lorentz-violation scale"),
+    (r"E_\{\\mathrm\{QG\}", r"quantum-gravity \(QG\) scale|Lorentz-violation scale"),
     (r"_\{\\mathrm\{GW\}\}|\bGW\b(?!\d)", r"gravitational wave"),
     (r"_\{\\mathrm\{EM\}\}|\bEM\b", r"electromagnetic"),
     (r"\bGR\b", r"general relativity"),
@@ -438,6 +444,139 @@ def gate_units(texts: dict[str, str]) -> list[str]:
     return misses
 
 
+# 9. the pointers
+def numbering(main: str) -> dict[str, int]:
+    """The counts the paper's numbering reaches, from main.tex's source order: sections with their subsections,
+    numbered equations, figures, tables, theorems, propositions."""
+    body_end = main.find("\\begin{thebibliography}")
+    body = main[:body_end] if body_end > 0 else main
+    body = re.sub(r"(?<!\\)%.*", "", body)
+    counts: dict[str, int] = {
+        "equation": 0,
+        "figure": 0,
+        "table": 0,
+        "theorem": 0,
+        "proposition": 0,
+        "section": 0,
+    }
+    subsections: dict[int, int] = {}
+    for m in re.finditer(
+        r"\\(section|subsection)\{|\\begin\{(equation|figure|table|theorem|proposition)\}", body
+    ):
+        if m.group(1) == "section":
+            counts["section"] += 1
+            subsections[counts["section"]] = 0
+        elif m.group(1) == "subsection":
+            subsections[counts["section"]] = subsections.get(counts["section"], 0) + 1
+        else:
+            counts[m.group(2)] += 1
+    counts["subsections"] = subsections  # type: ignore[assignment]
+    return counts
+
+
+LITERAL_POINTERS = [
+    (r"Section~?(\d+)\.(\d+)", "subsection"),
+    (r"Section~?(\d+)(?![.\d])", "section"),
+    (r"Eq\.~?\((\d+)\)", "equation"),
+    (r"Eqs\.~?\((\d+)\)", "equation"),
+    (r"Fig\.~?(\d+)", "figure"),
+    (r"Figs\.~?(\d+)", "figure"),
+    (r"Table~?(\d+)", "table"),
+    (r"Tables~?(\d+)", "table"),
+    (r"Theorem~?(\d+)", "theorem"),
+    (r"Proposition~?(\d+)", "proposition"),
+]
+
+
+def gate_pointers(texts: dict[str, str]) -> list[str]:
+    misses = []
+    counts = numbering(texts["main.tex"])
+    derivations = len(re.findall(r"\\begin\{derivation\}", texts["supplement.tex"]))
+    for name, text in texts.items():
+        body_end = text.find("\\begin{thebibliography}")
+        body = text[:body_end] if body_end > 0 else text
+        labels = re.findall(r"\\label\{([^}]*)\}", text)
+        for label in sorted({label for label in labels if labels.count(label) > 1}):
+            misses.append(f"{name}: the label {label!r} is defined twice")
+        refs = re.findall(r"\\(eqref|ref)\{([^}]*)\}", text)
+        for kind, label in refs:
+            if label not in labels:
+                misses.append(f"{name}: \\{kind}{{{label}}} has no label")
+            elif (kind == "eqref") != label.startswith("eq:"):
+                misses.append(f"{name}: \\{kind}{{{label}}} cites a label of the other kind")
+        # the literal pointers (the supplement's, the captions' and the README's words; main's own \ref are above)
+        literal_text = body if name != "main.tex" else "\n".join(re.findall(r"\\caption\{.*", body))
+        for pattern, kind in LITERAL_POINTERS:
+            for m in re.finditer(pattern, literal_text):
+                if kind == "subsection":
+                    section, sub = int(m.group(1)), int(m.group(2))
+                    if (
+                        section not in counts["subsections"]
+                        or sub > counts["subsections"][section]
+                        or sub == 0
+                    ):
+                        misses.append(
+                            f"{name}: the pointer {m.group(0)!r} names a subsection the paper has not"
+                        )
+                else:
+                    n = int(m.group(1))
+                    if n == 0 or n > counts[kind]:
+                        misses.append(
+                            f"{name}: the pointer {m.group(0)!r} names a {kind} the paper has not"
+                        )
+        for m in re.finditer(r"\bS\.(\d+)\b", body):
+            if int(m.group(1)) == 0 or int(m.group(1)) > derivations:
+                misses.append(
+                    f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} names a derivation the supplement has not"
+                )
+        # the citations against the document's own bibliography
+        cites = set()
+        for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", text):
+            cites.update(k.strip() for k in m.group(1).split(","))
+        bibitems = re.findall(r"\\bibitem(?:\[[^\]]*\])?\{([^}]*)\}", text)
+        for key in sorted(cites - set(bibitems)):
+            misses.append(f"{name}: \\cite{{{key}}} has no bibitem in this document")
+        for key in sorted(set(bibitems) - cites):
+            misses.append(f"{name}: the bibitem {key!r} is never cited")
+        for key in sorted({b for b in bibitems if bibitems.count(b) > 1}):
+            misses.append(f"{name}: the bibitem {key!r} is doubled")
+        first_cited: list[str] = []
+        for m in re.finditer(r"\\cite(?:\[[^\]]*\])?\{([^}]*)\}", body):
+            for key in (k.strip() for k in m.group(1).split(",")):
+                if key not in first_cited:
+                    first_cited.append(key)
+        if [b for b in bibitems if b in first_cited] != first_cited:
+            misses.append(
+                f"{name}: the bibliography is not in the order of first citation (the venue's numbered style)"
+            )
+    return misses
+
+
+# 10. the captions and the names: a caption ends with no punctuation (the venue's rule); a reference is a \cite,
+# never an author-year parenthesis
+CAPTION = re.compile(r"\\caption\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}")
+AUTHOR_YEAR = re.compile(
+    r"\((?:[A-Z][A-Za-z'\-]+(?:,? (?:and )?[A-Z][A-Za-z'\-]+)*,? (?:19|20)\d\d[^)]{0,60})\)"
+)
+
+
+def gate_captions(texts: dict[str, str]) -> list[str]:
+    misses = []
+    for name, text in texts.items():
+        body_end = text.find("\\begin{thebibliography}")
+        body = text[:body_end] if body_end > 0 else text
+        for m in CAPTION.finditer(body):
+            if m.group(1).rstrip().endswith((".", ",", ";", ":")):
+                misses.append(
+                    f"{name}:{line_of(body, m.start())}: a caption ending with punctuation: {m.group(1)[-60:]!r}"
+                )
+        for m in AUTHOR_YEAR.finditer(body):
+            misses.append(
+                f"{name}:{line_of(body, m.start())}: an author-year reference outside \\cite: {m.group(0)!r}"
+            )
+    return misses
+
+
 def gate_scripts(texts: dict[str, str]) -> list[str]:
     """The derived and computed marks of the main text that name no derivation script (the Boss's rule of 2026-10-04,
     #1793 comment 5975147735): a ratchet, the count may only fall; it reaches 0 with part 4's map of marks to scripts."""
@@ -461,6 +600,8 @@ def main() -> int:
         ("the bare board", gate_board),
         ("the nomenclature", gate_nomenclature),
         ("the units and the abbreviations", gate_units),
+        ("the pointers", gate_pointers),
+        ("the captions and the names", gate_captions),
     ):
         misses = run(texts)
         print(f"{gate}: {len(misses)} miss{'es' if len(misses) != 1 else ''}")

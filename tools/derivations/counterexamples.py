@@ -73,7 +73,10 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         "itemm A free record keeps its wave number Rule3 is invariant",
         rows.plane_wave_keeps_its_wave_number,
     ),
-    ("tab:results: The rules acts form no product of levels", forms.acts_form_no_product_of_levels),
+    (
+        "tab:results: The rules acts form no product of levels on the infinite lat",
+        forms.acts_form_no_product_of_levels,
+    ),
     (
         "tab:results: A conserved form at static paces with the weights 1 pi2 its",
         forms.weighted_form_is_exact_at_static_paces,
@@ -108,7 +111,7 @@ REGISTRY_ONE: tuple[tuple[str, Callable[[], Row]], ...] = (
         derived.shadow_capture_radius_is_2em,
     ),
     (
-        "tab:adds: The shadows capture radius b 2em against Schwarzschilds 3sqr",
+        "tab:adds: The shadows capture radius b 2em the exponential metrics own",
         derived.shadow_capture_radius_is_2em,
     ),
     (
@@ -204,7 +207,7 @@ REGISTRY_TWO: tuple[tuple[str, Callable[[], Row]], ...] = (
         derived_two.bending_exact_in_the_gap,
     ),
     (
-        "tab:results: The bending which fixed the one assumption the perihelion th",
+        "tab:results: The bending and the perihelion which fixed the one assumptio",
         derived_two.bending_exact_in_the_gap,
     ),
     ("tab:clicks: The bendings clicks", derived_two.bending_exact_in_the_gap),

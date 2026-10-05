@@ -58,10 +58,15 @@ the lay against the mode file's integers: the largest difference of a level 0.39
 
 6. The continuum: the same world scaled by s (every extent times s, lambda = 8 s, the wall and the screen one Node thick, the packet's top one column), both x faces receding, the run 130 s intervals, read in the physical labels over the window [45 s, 130 s] and the labels over s
   s = 1 (the lattice itself, the physical labels): N = 284.66, the wings 18.17, 13.54, the peak at 69.0, the centroid 73.49, the span 63.0 to 77.0, v_g 0.5469
+  the lay at s = 1: 1810.4 quanta by Eq. (13) over W_c (the generator's integer count 1809); the transmission per laid quantum N / lay = 0.1572
   s = 2: N = 308.27, the regions 17.7, 18.5, 29.2, 26.7, 11.0, 43.5, 53.8, 13.3, 22.6, 31.3, 20.5, 20.1, the wings 26.75, 22.65, the peak at 65.0, the centroid 69.34, the span 58.5 to 72.0, v_g 0.5699
+    the lay at s = 2: 2085.5 quanta; the transmission per laid quantum N / lay = 0.1478
   s = 4: N = 308.09, the regions 16.7, 17.9, 28.8, 28.1, 12.0, 43.1, 53.9, 13.4, 24.5, 31.1, 19.7, 19.1, the wings 28.13, 24.47, the peak at 62.0, the centroid 68.44, the span 57.8 to 71.0, v_g 0.5755
+    the lay at s = 4: 2170.9 quanta; the transmission per laid quantum N / lay = 0.1419
   s = 8: N = 304.86, the regions 16.2, 17.5, 28.5, 28.2, 12.1, 42.5, 53.3, 13.3, 24.7, 30.7, 19.3, 18.6, the wings 28.20, 24.66, the peak at 62.1, the centroid 68.27, the span 57.5 to 70.6, v_g 0.5769
+    the lay at s = 8: 2196.3 quanta; the transmission per laid quantum N / lay = 0.1388
   the limit by the corrections falling as 1 / s^2, from s = 4 and 8: N 303.78, the wing at the region 3 28.22, the wing at the region 8 24.72, the peak 62.17, the centroid 68.21
+  the transmission per laid quantum, the lattice's own number: 0.1572 at s = 1, 0.1478 at s = 2, 0.1419 at s = 4, 0.1388 at s = 8; its limit by a correction falling as 1 / s: 0.1360 from s = 2 and 4, 0.1357 from s = 4 and 8 (the lattice at s = 1 is 16 percent above it)
   the lattice against the continuum at the largest scale, the physical labels: the peak 69.0 against 62.1, the centroid 73.49 against 68.27, the wings 18.2, 13.5 against 28.2, 24.7
 
 7. The integer budget's walk on the run (the law's clause): the integer step differs from the line applied to the integer levels by below one level per Node per interval, n levels over the run the hard bound; under the model of independent uniform remainders the deviation walks per band mode as sqrt(n / (12 (1 + cos omega_k))), the plane's per-Node figure the zone's mean of 1 / (1 + cos omega) over (k_x, k_y) with k_z folded (the midpoint rule on 192^2 cells)
