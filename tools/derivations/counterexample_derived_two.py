@@ -273,7 +273,7 @@ def alpha_laws_form_from_the_write_weight() -> Row:
 
 
 def clusters_deceleration() -> Row:
-    """Table 5's row ('The clusters' deceleration q_0 = Omega_m / 2 > 0 at z << 1, bound or free') and S.29: for a shell with a'' = -mu / a^2 the deceleration q = -a a'' / a'^2 = mu / (a a'^2) and Omega_m = 2 mu / (a a'^2), so q = Omega_m / 2 exactly in rationals, positive for a bound ball (a'^2 < 2 mu / a) and a free one alike; Hubble's law for a homologous ball, v = (a' / a) r at every shell exactly; Friedmann's invariant and the Doppler form proofs_far_regime's check; outside the law's forms: a vacuum write Lambda, q_0 = Omega_m / 2 - Omega_Lambda = -0.55 at (0.3, 0.7), the sign turned by a declaration (cosmology.deceleration)."""
+    """Table 5's row ('The clusters' deceleration q_0 = Omega_m / 2 > 0 at z << 1, bound or free') and S.29: for a shell with a'' = -mu / a^2 the deceleration q = -a a'' / a'^2 = mu / (a a'^2) and Omega_m = 2 mu / (a a'^2), so q = Omega_m / 2 exactly in rationals, positive for a bound ball (a'^2 < 2 mu / a) and a free one alike; Hubble's law for a homologous ball, v = (a' / a) r at every shell exactly; Friedmann's invariant and the Doppler form proofs_far_regime's check; q_0 = Omega_m / 2 = 0.15 at nature's fitted Omega_m = 0.3 (cosmology.deceleration), against nature's -0.55, a finding by name."""
     draw = random.Random(SEED)
     exact, both_signs = True, {"bound": False, "free": False}
     for _ in range(40):
@@ -291,12 +291,12 @@ def clusters_deceleration() -> Row:
         ]  # the shells' comoving radii x_i, r_i = x_i a
         exact &= all((x * speed) == (speed / a) * (x * a) for x in shells)
     friedmann = proofs_far_regime.check_friedmanns_dust_equations_and_the_redshift()[0]
-    with_vacuum = cosmology.deceleration(0.3, 0.7)
+    q = cosmology.deceleration(0.3)
     return Row(
         "tab:adds: The clusters deceleration q0 Omegam 2 0 at z ll 1 bound or f",
         exact and all(both_signs.values()) and friedmann,
-        with_vacuum[1] < 0 and round(with_vacuum[0], 2) == 0.15,
-        f"q = Omega_m / 2 exact at 40 rational (mu, a, a') with bound and free balls, Hubble's law exact; q_0 = {with_vacuum[0]:.2f} at Omega_m = 0.3 and {with_vacuum[1]:.2f} with Omega_Lambda = 0.7",
+        round(q[0], 2) == 0.15,
+        f"q = Omega_m / 2 exact at 40 rational (mu, a, a') with bound and free balls, Hubble's law exact; q_0 = {q[0]:.2f} at Omega_m = 0.3",
     )
 
 

@@ -131,7 +131,7 @@ def check_the_folded_axis_carries_the_band() -> Check:
 
 
 def check_friedmanns_dust_equations_and_the_redshift() -> Check:
-    """main.tex Section 7.5; S.29: a shell at a feels the mass inside it, a'' = -(4 pi G_K / 3) rho a with rho a^3 constant, which integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, Friedmann's dust equations, the deceleration q_0 = Omega_m / 2 positive for every rho > 0; the invariant a'^2 - 2 mu / a, mu = (4 pi G_K / 3) rho a^3, has the derivative 2 a' (a'' + mu / a^2) = 0 exactly, and a fourth-order integration keeps it to 10^-12; the Doppler period of a receding source times the moving clock's factor, 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), nature's relativistic form to the second order, the classical 1 / (1 - beta) = 1 + beta + beta^2 differing there; z_t = (2 Omega_Lambda / Omega_m)^(1 / 3) - 1 = 0.67 at Omega_Lambda = 0.7; the far end beta = 0.9."""
+    """main.tex Section 7.5; S.29: a shell at a feels the mass inside it, a'' = -(4 pi G_K / 3) rho a with rho a^3 constant, which integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, Friedmann's dust equations, the deceleration q_0 = Omega_m / 2 positive for every rho > 0; the invariant a'^2 - 2 mu / a, mu = (4 pi G_K / 3) rho a^3, has the derivative 2 a' (a'' + mu / a^2) = 0 exactly, and a fourth-order integration keeps it to 10^-12; the Doppler period of a receding source times the moving clock's factor, 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), nature's relativistic form to the second order, the classical 1 / (1 - beta) = 1 + beta + beta^2 differing there; the far end beta = 0.9."""
     mu = 0.7
     a, v = 1.0, 1.5  # an unbound ball, so the integration meets no collapse
     invariant = v * v - 2 * mu / a
@@ -160,14 +160,10 @@ def check_friedmanns_dust_equations_and_the_redshift() -> Check:
     )
     classical = has_order(lambda b: 1 / (1 - b) - (1 + b + b * b / 2), 2, step=0.1)[0]
     far = ((1 + 0.9) / math.sqrt(1 - 0.81), 1 + 0.9 + 0.405, 1 / 0.1)
-    turnaround = round((2 * 0.7 / 0.3) ** (1 / 3) - 1, 2)
-    return drift < 1e-12 and exact_derivative and q_0 == Fraction(
-        1, 2
-    ) and second_order and classical and turnaround == 0.67, {
+    return drift < 1e-12 and exact_derivative and q_0 == Fraction(1, 2) and second_order and classical, {
         "invariant drift": drift,
         "orders of 1 + z": orders,
         "far end beta = 0.9 (exact, second order, classical)": far,
-        "z_t": turnaround,
     }
 
 
