@@ -203,7 +203,7 @@ the journal.
   the two slits' rows, the moving clock): drawn 131 mm (the text width of `sn-jnl`'s
   `sn-mathphys-num`, 372 pt, one column) or 129 mm wide with every lettering 8 pt or
   above at the drawn size (the panel letters 9 pt), redrawn on 2026-10-05, the click
-  figure still at 174 mm until its two panels are laid out again for 131 mm;
+  figure as two panels, (a) and (b), at 131 mm, its (c) and (d) the text of the short version;
   the method figure (6.2 to 8 pt) and the frames leave for the report and the supplement.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
