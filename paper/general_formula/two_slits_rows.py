@@ -7,8 +7,9 @@ apart, the screen at the column 44, twelve declared NodeDetectors of four rows e
 row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
 world by the paper's script two_slits_real_line.py at the lay as the frozen commit 1fe3790a holds it (N = 284.50 in the
-engine's labels). The
-numbers are typed from those two files; nothing is read from a run of the engine.
+engine's labels), and the seed-24 clicks of the one run as points, the archived row the gate of
+tests/test_the_draw.py holds bit for bit (N = 285). The numbers are typed from those files; no run is
+made for the drawing.
 
     python paper/general_formula/two_slits_rows.py --output paper/general_formula/figures
 
@@ -51,6 +52,10 @@ BLIND_N = 273.0
 # two_slits_real_line.txt: the law's real line on the same file, the window 45 to 130, the engine's labels
 REAL = (19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57)
 REAL_N = 284.50
+# tests/test_the_draw.py, GATE_ROW: the seed-24 clicks per region of the one run, the archived row the gate asserts bit
+# for bit at every run of the tests (N = 285); the seed-25 row is not archived in the repository
+SEED24 = (22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25)
+SEED24_N = 285
 # the file's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
 LENGTH, HEIGHT = 45, 48
 PACKET_X, PACKET_Y = (4, 16), (4, 44)
@@ -142,7 +147,7 @@ def rows(ax: Axes) -> None:
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the prediction: Huygens, written before the run ($N = 273$)",
+        label="the Huygens prediction, before the run ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5
@@ -154,13 +159,22 @@ def rows(ax: Axes) -> None:
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label=f"the law's real line on the same file ($N = {REAL_N:.2f}$)",
+        label=f"the law's real line on the file ($N = {REAL_N:.2f}$)",
+    )
+    ax.plot(
+        xs,
+        SEED24,
+        "o",
+        ms=3.0,
+        color=INK,
+        zorder=6,
+        label=f"the seed-$24$ clicks, the archived row ($N = {SEED24_N}$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])
     ax.set_xlabel("the screen's region, from the row 0 across $y$")
     ax.set_ylabel("quanta over the counting window")
-    ax.set_ylim(0, 66)
+    ax.set_ylim(0, 79)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.tick_params(length=2, labelsize=8)
@@ -168,7 +182,7 @@ def rows(ax: Axes) -> None:
     for r in (4, 8):
         ax.text(
             r,
-            max(BLIND[r], REAL[r]) + scatter[r] + 3.2,
+            max(BLIND[r], REAL[r], SEED24[r]) + scatter[r] + 3.2,
             "a minimum",
             ha="center",
             va="bottom",
@@ -176,7 +190,7 @@ def rows(ax: Axes) -> None:
             color=GREY,
         )
     ax.legend(loc="upper right", frameon=False, fontsize=8, handlelength=1.2, bbox_to_anchor=(1.0, 1.02))
-    ax.text(-1.5, 65, "b", ha="left", va="top", fontweight="bold", fontsize=9)
+    ax.text(-2.7, 78.5, "b", ha="left", va="top", fontweight="bold", fontsize=9)
 
 
 def two_slits_rows(output: Path) -> None:
