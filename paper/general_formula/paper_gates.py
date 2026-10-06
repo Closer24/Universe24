@@ -165,7 +165,7 @@ TWINS = [
     (
         "the wall of a massless family",
         [
-            ("main.tex", "a massless field's quantum $\\Wc$ itself"),
+            ("main.tex", "a massless field's quantum is $\\Wc$ itself"),
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
