@@ -147,7 +147,7 @@ Rows with a claim mark: 145, 24 with a breaker written; rows of a derived, compu
 | 137 | 407 | sec:bell > sec:bell-blind | derived,computed,theorem | clicks | a | S.10; Eq eq:bell | Without the declaration the lattice gives the second and third lines of Eq.~\eqref{eq:bell}, two local counting rules on the same declared universe, $S = \sqrt 2$ by the ... |  |  |
 | 138 | 407 | sec:bell > sec:bell-blind | fitted,derived,computed,theorem | clicks | a | S.10; S.38; S.47 | The same counting rule on four lines gives the three-quantum GHZ correlation \cite{ghz}, $E_3 = \cos 2(a + b + c)$, with every pairwise $E$ equal to $0$ and Mermin's $M =... | The credit on four lines at the GHZ settings: E_3 = cos 2 (a + b + c) and M = -4 exactly in the shares (bell.py's GHZ rows); outside: a settings' triple off the Mermin angles gives |M| below 4; the port patterns' orthogonality checked with one pattern wrong (the advisor's configuration). | to write |
 | 139 | 412 | sec:limits > sec:misses | derived | lattice,clicks | a | S.35; S.50; S.52; S.54 | This section lists the findings against nature, each set beside its measurement; the derived click-fenced ones refute the model at that formula (derived, the comparisons ... |  |  |
-| 140 | 414 | sec:limits > sec:misses | derived,assumption | clicks | a | S.56; Sec sec:families | Frame dragging's form, $+4\,\mathbf V\cdot\mathbf p$, is derived for a plane configuration of one rotation sense; the opposite sense is $-4\,\mathbf V\cdot\mathbf p$ and ... |  |  |
+| 140 | 414 | sec:limits > sec:misses | derived,assumption | lattice,clicks | a | S.56; Sec sec:families | Frame dragging's form, $+4\,\mathbf V\cdot\mathbf p$, is derived for a plane configuration of one rotation sense; the opposite sense is $-4\,\mathbf V\cdot\mathbf p$ and ... |  |  |
 | 141 | 420 | sec:limits > sec:inputs | assumption,declaration | lattice,clicks | declaration | NO SOURCE | The model declares and does not derive the following items, each a declaration of the universe (assumption for every declaration; lattice, clicks; the claims list of the ... |  |  |
 | 142 | 421 | sec:limits > sec:inputs | assumption,fitted,declaration,hypothesis | lattice,clicks | declaration | Sec sec:clickalgebra | One line beyond the law stands beside them, the click's twist of Section~\ref{sec:clickalgebra}, chosen with the per-click conservation of momentum in view, an input to n... |  |  |
 | 143 | 428 | sec:conclusion | derived,assumption | clicks | a | S.21; S.56; Sec sec:misses | The one assumption, which clocks a Link twice, applied to a moving source gives the Port's phase with no number put in, and with it frame dragging's form, $g_{0j} = -4V_j... |  |  |
@@ -158,7 +158,7 @@ Rows with a claim mark: 145, 24 with a breaker written; rows of a derived, compu
 
 | # | line | place | word | the sentence |
 |---|---|---|---|---|
-| 1 | 36 | front matter | bounded | The lattice's own terms stand under their conditions, predictions where unread and bounded where read: a black-hole shadow radius $2e\,m$ against the Event Horizon Telesc... |
+| 1 | 36 | front matter | bounded | The lattice's own terms stand under their conditions, predictions where unread, bounded where read: a black-hole shadow radius $2e\,m$ against the Event Horizon Telescope... |
 | 2 | 45 | sec:intro > sec:question | exactly | A cubic lattice of Nodes is stepped by one local rule in whole numbers, Rule3, which is exactly reversible. |
 | 3 | 49 | sec:intro > sec:question | never | The paper starts from one statement and never contradicts it. |
 | 4 | 51 | sec:intro > sec:question | bound | \label{sec:whyclicks}In the model, whoever sees is itself a cluster of bound states on the lattice. |
@@ -236,7 +236,7 @@ Rows with a claim mark: 145, 24 with a breaker written; rows of a derived, compu
 | 76 | 369 | sec:slits > sec:slits-file | never | Gravity's weight $E_g$ is $10^6$ in this universe, chosen so that the packet's own gravity does not focus it, as nature's light never focuses itself (a declaration of the... |
 | 77 | 377 | sec:slits > sec:slits-blind | exact | The blind row's $273$ is light's line in real arithmetic propagated on the design's lattice from the two gaps as its sources and summed at the screen over the window, Huy... |
 | 78 | 388 | sec:bell > sec:bell-file | never | The joint energy is never the square of a local sum, which one NodeDetector could form alone and which gives $S$ at most $2$. |
-| 79 | 412 | sec:limits > sec:misses | keeps | Thirteen stand by name, in the claims list of Online Resource 1 and its Section B.9. Ten are findings against nature, where a line of the law exists and its number or str... |
+| 79 | 412 | sec:limits > sec:misses | keeps | Thirteen stand by name, in the claims list of Online Resource 1. Ten are findings against nature, where a line of the law exists and its number or structure contradicts a... |
 | 80 | 421 | sec:limits > sec:inputs | never | The second is the atom's levels, line (1) of S.52, an assumption, fitted, made with hydrogen's levels in view, its ground the click's line (a configuration reads every ch... |
 
 ## E. Unmarked sentences named by hand as claims (the engine's own rule among them)
