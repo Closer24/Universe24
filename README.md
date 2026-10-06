@@ -14,6 +14,10 @@ TEXINPUTS=sn: pdflatex main.tex && TEXINPUTS=sn: pdflatex main.tex   # the same 
 
 [docs/ALGEBRA.md](docs/ALGEBRA.md) is the law of the lattice, one algebraic line per rule, the document the paper cites by the name of its section.
 
+## The derivations
+
+[tools/derivations/](tools/derivations/) holds the derivations of the law's numbers in Python, each from Rule3's line as the law states it and leaning on no run of the engine: its root is `rule3.py`, the line and its invariants transcribed sentence by sentence, and every other module imports it and derives its numbers from it; beside them stand the machine checks of the law's and the paper's theorems and identities (`proofs_inventory.json`, one row per statement with its check and its verdict). The documents gate of `tests/test_documents.py` holds every number of `tools/numbers.json` that carries a derivation rule to its function's output, to the digits named, and `tests/test_proofs_check_the_law.py` runs every check to its verdict; the folder's own [README](tools/derivations/README.md) states its rules and its inventory.
+
 ## The implementation
 
 The repository also holds an implementation for building worlds, frozen and not updated, which does not reflect the algebra of the paper; the two slits' run of the paper's Section 6 alone is the implementation's, at the state the run's record names, and no other claim of the paper rests on it. Its code is `src/event_universe/`, its tests `tests/` and its document [docs/ENGINE.md](docs/ENGINE.md), the engine as the code holds it at the freeze. From a clone to the two slits' page, six commands from the checkout's root:
