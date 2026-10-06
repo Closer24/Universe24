@@ -129,9 +129,9 @@ TWINS = [
     (
         "positronium's convention",
         [
-            ("main.tex", "positronium $44$ percent of nature's"),
-            ("supplement.tex", "positronium $44$ percent of nature's"),
-            ("supplement.tex", "$44$ percent of nature's, the line at $38$"),
+            ("main.tex", "positronium at $43$ percent of it"),
+            ("supplement.tex", "positronium $43$ percent of nature's"),
+            ("supplement.tex", "$43$ percent of nature's, the line at $37$"),
         ],
     ),
     (
