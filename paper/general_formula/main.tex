@@ -1,6 +1,7 @@
 % The paper. Build: pdflatex main.tex with TEXINPUTS=sn:, three times.
 \documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
 \usepackage{graphicx}
+\renewcommand{\labelitemi}{$\bullet$} % the bullet from the math font, so no bitmap (Type 3) font enters the PDF
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{amsthm}
 \usepackage{booktabs}
@@ -29,7 +30,7 @@
 \raggedbottom
 \begin{document}
 
-\title[Universe24: an integer cellular automaton read through clicks]{Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds}
+\title[Universe24: one simple rule]{Universe24: one simple rule, the formulas it shares with nature and adds}
 \author*{\fnm{Alon} \sur{Gonen}\,\orcidlink{0009-0008-2701-4599}}\email{alon@defounder.ai}
 \affil{\orgname{Independent researcher}, \orgaddress{\city{Haifa}, \country{Israel}}}
 
@@ -42,7 +43,7 @@
 
 \subsection{The question and the claim}\label{sec:question}
 
-This paper is about one method of computing physics. A cubic lattice of Nodes is stepped by one local rule in whole numbers, Rule3, which is exactly reversible. The lattice is read only through clicks, the reports of declared counting regions, which the model calls NodeDetectors. The title names the parts. The integer cellular automaton is the lattice stepped by Rule3. Universe24 is its clicks, written by the NodeDetectors from the fields of its declared universe. The formulas it shares with nature are the known formulas reached from the one line in lattice form: the Klein-Gordon equation with Schr\"odinger's slow limit, Planck's relation in the band's form (the adiabatic invariant \cite{ehrenfest}) and, under one named assumption, the exponential weak-field metric of gravity (Section~\ref{sec:shared}). The formulas it adds are the lattice's own terms, which depart from the continuum or have no counterpart there (Section~\ref{sec:added}). The paper has one claim: that Universe24 helps compute things in nature. Its content is what the model computes of nature, set against measurement, each quantity with its status and its number, the hits and the misses alike. The method is how it computes, and not the claim. The paper does not claim that nature is such a lattice.
+This paper is about one method of computing physics. A cubic lattice of Nodes is stepped by one local rule in whole numbers, Rule3, which is exactly reversible. The lattice is read only through clicks, the reports of declared counting regions, which the model calls NodeDetectors. The title names the parts. The one simple rule is Rule3, one line of integer arithmetic stepping the lattice. Universe24 is its clicks, written by the NodeDetectors from the fields of its declared universe; the 24 of its name is the cube's 24 rotations, the half of the 48 signed permutations of the axes that keeps the orientation (Section~\ref{sec:lattice}). The formulas it shares with nature are the known formulas reached from the one line in lattice form: the Klein-Gordon equation with Schr\"odinger's slow limit, Planck's relation in the band's form (the adiabatic invariant \cite{ehrenfest}) and, under one named assumption, the exponential weak-field metric of gravity (Section~\ref{sec:shared}). The formulas it adds are the lattice's own terms, which depart from the continuum or have no counterpart there (Section~\ref{sec:added}). The paper has one claim: that Universe24 helps compute things in nature. Its content is what the model computes of nature, set against measurement, each quantity with its status and its number, the hits and the misses alike. The method is how it computes, and not the claim. The paper does not claim that nature is such a lattice.
 
 The criterion is the same throughout: a derived, click-fenced formula that disagrees with a measurement beyond its stated order refutes the model at that formula. Section~\ref{sec:limits} lists the refutations found. Universe24 is one world built by the paper's method: two declared universes, the two slits' (the one run, read by its NodeDetectors) and Bell's (no run), and the forms of Sections~\ref{sec:builds} and~\ref{sec:formulas}, derived from the law's lines and computed from no run. Other worlds closer to nature can be built by the same method. Building one needs the calculations named in Section~\ref{sec:closer}, which this work does not do.
 
