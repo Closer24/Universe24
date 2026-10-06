@@ -1,3 +1,0 @@
-{common}
-
-Your assignment: derivations S.{first} to S.{last} of Online Resource 1, each whole (Inputs, Steps, Check, Domain, Status). Word-diff each against its twin in the long version's supplement (the map of numbers is in the supplement's note) and name every difference beyond section numbers and "of the long version" pointers. Recompute every printed number from the Inputs. Check every pointer (S.n, Section, Eq., Theorem) names a thing that holds what is cited. Read every sentence of the main that cites one of these derivations and compare its status, fence, numbers and conditions with the Status line.

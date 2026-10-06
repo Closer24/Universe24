@@ -1,10 +1,9 @@
 # Working on this simulator
 
-Start with [AGENTS.md](AGENTS.md). The canonical repository is
+The canonical repository is
 https://github.com/Closer24/Universe24, branch `main`. The law is
 [docs/ALGEBRA.md](docs/ALGEBRA.md), the engine [docs/ENGINE.md](docs/ENGINE.md),
-the decisions [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md); the procedure in full is
-the short procedure of [the shared workflow](skills/workflow.md).
+the decisions [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md); the procedure is below.
 
 ## The procedure
 
@@ -50,10 +49,7 @@ the short procedure of [the shared workflow](skills/workflow.md).
    tests or paper pull request carries the hands' final paragraphs pasted, which the
    Boss checks against their comment ids (234). Every change, a bundle or a single
    fix, has both hands' lines at its sha before the Boss squashes it at CI green,
-   and every branch is deleted at the merge; the one exception is the reviewer's
-   ledger file, [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md), which merges at CI
-   green by the reviewer's own pull request, the file alone in it, without the
-   hands' re-read (the owner, 2026-10-04). Every result names the `main` commit it
+   and every branch is deleted at the merge. Every result names the `main` commit it
    ran on; there are no tags.
 8. One owner per area (`tools/owners.json`): the Boss owns every area and the
    advisor writes nothing. A pull request from a session that is not the Boss's
@@ -73,17 +69,13 @@ the short procedure of [the shared workflow](skills/workflow.md).
   the model owner is one line in `docs/HIGHLIGHTS.md`, replacing the line it
   changes; a finding or approval of one pull request is a comment on it; a list
   across pull requests is one issue with a checklist.
-- The pull request that prints a finding's state in a document changes the finding's
-  row in [docs/REVIEW_LEDGER.md](docs/REVIEW_LEDGER.md) in the same pull request; the
-  reviewer names the state at the hash.
 - A document cites a path in backticks only where the tree holds it;
   `tests/test_documents.py` refuses a pull request otherwise.
 - A history clause in the law or the engine's document is dated or struck, never
   left; a number that stands in two places is one row of `tools/numbers.json`, and a
   derived number has its script under `tools/derivations/`; `tools/documents_gates.py`
   refuses a pull request otherwise (ENGINE.md, section 8).
-- Write all comments, docstrings and documents in English under the rule in
-  [AGENTS.md](AGENTS.md#repository-language-english); translate prose from older
+- Write all comments, docstrings and documents in English; translate prose from older
   branches before integration.
 - Report the change, the pull request or commit, the validation and the remaining
   work. Never present a model hypothesis as proof of real-world physics.

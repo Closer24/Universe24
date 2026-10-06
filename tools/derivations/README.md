@@ -108,7 +108,7 @@ the first read keeps its id with its verdict against the head.
 `paper_marks.json` lists every `\claimmark{derived}` and `\claimmark{computed}`
 of the paper's `main.tex` (the branch `paper`, its head in the file's header)
 whose enclosing parenthesis names no `\texttt{<name>.py}`, by the rule of
-`paper_gates.gate_scripts`: the line, the mark, the section of `main.tex`, the
+the file's header: the line, the mark, the section of `main.tex`, the
 sentence, its printed numbers, the supplement derivation or section it cites,
 the existing script that already gives its numbers where one exists under
 `paper/general_formula/` or here, the proposed module here, and the status

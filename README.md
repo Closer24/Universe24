@@ -14,8 +14,8 @@ gate and read a world (`tools/`) and the experiments that gate the engine
 written before any run and its reading.
 
 The paper that states the method and its one claim, with its supplement of
-derivations, is in [paper/](paper/README.md) (`paper/general_formula/main.tex` and
-`supplement.tex`, built by the scripts there); the documents it cites are
+derivations, is in `paper/general_formula/` (`main.tex` and `supplement.tex` with
+their PDFs, the figures drawn by the scripts beside them); the documents it cites are
 [docs/ALGEBRA.md](docs/ALGEBRA.md), [docs/ENGINE.md](docs/ENGINE.md) and
 [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md).
 
@@ -69,8 +69,7 @@ repository's tracked files from the run's output and are not committed.
 The three documents: [the law](docs/ALGEBRA.md), one algebraic line per rule;
 [the engine](docs/ENGINE.md), the input files, the interval, the output, how to
 run a world and how to build an experiment; [the decisions](docs/HIGHLIGHTS.md),
-one line each. Contributors start with [AGENTS.md](AGENTS.md) and
-[CONTRIBUTING.md](CONTRIBUTING.md).
+one line each. Contributors start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 To build an experiment of your own (a universe file, a world, its blind written
 first, the run and its reading), follow the engine's section

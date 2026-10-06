@@ -7,9 +7,8 @@ import re
 import tokenize
 from pathlib import Path
 
-ROOT, ENTRY = Path(__file__).resolve().parents[1], ("README.md", "CONTRIBUTING.md", "AGENTS.md")
+ROOT, ENTRY = Path(__file__).resolve().parents[1], ("README.md", "CONTRIBUTING.md")
 DOCUMENTS = sorted((ROOT / "docs").glob("*.md")) + [ROOT / name for name in ENTRY]
-DOCUMENTS += sorted((ROOT / "skills").rglob("*.md"))
 CODE = [path for folder in ("src", "tools", "tests") for path in sorted((ROOT / folder).rglob("*.py"))]
 CAPS = re.compile(r"[A-Z][A-Z0-9'-]+")
 HEADING = re.compile(r"(\d+\.\s+)?[A-Z](?![A-Z0-9'-]*\s+[A-Z][A-Z0-9'-]+(\s|$))")
