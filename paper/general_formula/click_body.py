@@ -6,9 +6,9 @@ meeting of the forward record with the transition read backward from the click; 
 the front, one shell per interval, erases the absorbed record inside the click's causal cone, the empty wave
 beyond it at count 0. (b) The NodeDetector's region before the window's close and after the one write at the
 drawn Node, the draw at the close between them, the front leaving by Rule3 at one Link per interval. The
-absorption's write (the hole, two cases) and the books in whole numbers, the long version's panels (c) and
+absorption's write (the hole, two cases) and the books in whole numbers, the figure's former panels (c) and
 (d), are the text of the short paper's Section 2.5; the functions that drew them, the_hole and the_books,
-stay in this file for the long version's record and are not called.
+stay in this file for the former panels' record (kept outside this tree) and are not called.
 """
 
 from __future__ import annotations
@@ -606,7 +606,7 @@ def the_books(ax: Axes) -> None:
 
 
 def the_node(ax: Axes) -> None:
-    """(b) alone in its frame: the region before the close and after the write (the long version's (c) and (d) are the text of the short paper)."""
+    """(b) alone in its frame: the region before the close and after the write (the former panels (c) and (d) (kept outside this tree) are the text of the short paper)."""
     ax.set_xlim(-0.3, 14.3)
     ax.set_ylim(12.9, 19.7)
     ax.set_aspect("equal")
