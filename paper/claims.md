@@ -293,7 +293,7 @@ Rows with a claim mark: 149, 23 with a breaker written; rows of a derived, compu
 | 34 | tab:claims | theorem for the step's conservations; assumption for the clicks' | lattice, clicks | a | Neither layer keeps a total energy |  |  |
 | 35 | tab:claims | calibration, experiment for $E_g$, $k$, the gap and the Link's length; hypothesis for any ... | clicks | declaration | The universe's physical coefficients $E_g$, $k$ and the gaps are each read from one measurement of nature; the binding pair, $T$ and the integer bound... |  |  |
 | 36 | tab:claims | assumption for every declaration | lattice, clicks | declaration | The declarations: the entries, the NodeDetectors, the rates, the conversion's table, the initial data, the receding face, the one draw, the erasing fr... |  |  |
-| 37 | tab:claims | hypothesis; no number of the paper rests on the last | clicks | declaration | The hypotheses under their own names: the conversion click, the dimension-$3$ field with its confinement in the model's words, the carrier (a real, lo... |  |  |
+| 37 | tab:claims | hypothesis; no number of the paper rests on the last | clicks | declaration | The hypotheses under their own names: the conversion click, the dimension-$3$ field with its confinement in the model's words, the nuclear potentials,... |  |  |
 | 38 | tab:claims | derived for the count, the booking and the chain; assumption, the counting rule, for the d... | lattice; clicks for the bookin... | a | The click's algebra beyond the law: the count's change and the booking identity; the draw of whether and which future continues; the momentum's chain;... |  |  |
 
 ## F. Breakers keyed to the long version at the tag (`long:`), their sentence or row not in the short version
