@@ -426,6 +426,8 @@ def gate_units(texts: dict[str, str]) -> list[str]:
         for m in BARE_NUMBER.finditer(body):
             if NOT_A_QUANTITY.search(m.group(2)):
                 continue
+            if m.group(2).count("$") % 2 == 1:
+                continue  # the parenthesis is inside math mode, a function's argument such as $G_\kappa(1)$
             misses.append(
                 f"{name}:{line_of(body, m.start())}: a bare number with no unit word after '{m.group(1)}': {m.group(0)[-80:]!r}"
             )
