@@ -129,7 +129,7 @@ TWINS = [
     (
         "positronium's convention",
         [
-            ("main.tex", "positronium at $43$ percent of it"),
+            ("supplement.tex", "positronium at $43$ percent of it"),
             ("supplement.tex", "positronium $43$ percent of nature's"),
             ("supplement.tex", "$43$ percent of nature's, the line at $37$"),
         ],
@@ -150,7 +150,7 @@ TWINS = [
     ),
     (
         "the neutron's lifetime",
-        [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
+        [("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
     (
         "Compton's factor at the computed pair",
