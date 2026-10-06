@@ -199,7 +199,7 @@ TWINS = [
     (
         "the walk and not a bound",
         [
-            ("main.tex", "stands within the walk of both the line's $284.7$"),
+            ("main.tex", "stands within the walk of the line's $284.7$"),
             ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
         ],
     ),
