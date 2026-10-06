@@ -4,7 +4,7 @@ Universe24 is the clicks of one line of integer arithmetic: a cubic lattice of N
 
 ## The paper
 
-The paper, "Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with `main.pdf`, `supplement.tex` with `supplement.pdf` (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with `main.pdf`, `supplement.tex` with `supplement.pdf` (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex main.tex && TEXINPUTS=sn: pdflatex main.tex   # the same for supplement.tex
@@ -13,6 +13,10 @@ TEXINPUTS=sn: pdflatex main.tex && TEXINPUTS=sn: pdflatex main.tex   # the same 
 ## The law
 
 [docs/ALGEBRA.md](docs/ALGEBRA.md) is the law of the lattice, one algebraic line per rule, the document the paper cites by the name of its section.
+
+## The decisions
+
+[docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) holds the decisions in force, one line each: every decision of the model owner that a line of the law or the engine rests on.
 
 ## The derivations
 
