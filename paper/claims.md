@@ -9,7 +9,7 @@ Rows with a claim mark: 149, 23 with a breaker written; rows of a derived, compu
 | # | line | place | marks | fence | kind | source the sentence gives | the sentence | the breaker | state |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 49 | sec:intro > sec:question | assumption | clicks | declaration | Sec sec:key | Universe24 is the meeting of the past with the future; a click is that meeting, the only measurement there is in the model, and in it only clicks are seen (assumption, th... |  |  |
-| 2 | 51 | sec:intro > sec:question | assumption,theorem | clicks | a | NO SOURCE | Rule3 is a bijection of the levels (Theorem~\ref{th:direction}), so no step of the lattice is an event; a measurement is an event, one whole quantum credited at a declare... |  |  |
+| 2 | 51 | sec:intro > sec:question | assumption,theorem | clicks | a | NO SOURCE | Rule3 is a bijection of the levels (Theorem~\ref{th:direction}), so no level is an irreversible record and nothing in the lattice is an event; a measurement is an event, ... |  |  |
 | 3 | 51 | sec:intro > sec:question | assumption | clicks | declaration | NO SOURCE | Only a click pattern is compared with a measured pattern of nature (assumption, the paper's first statement; clicks). |  |  |
 | 4 | 51 | sec:intro > sec:question | derived,declaration,assumption,fitted | clicks | a | S.1; S.23; S.46; S.10; S.38; Sec sec:bell; Sec sec:limits | A deterministic, reversible integer lattice read only through clicks gives the statistics of one quantum computed here, one quantum per click, the two slits' pattern and ... |  |  |
 | 5 | 55 | sec:intro > sec:adds | derived,assumption,hypothesis | clicks | a | S.21; S.56; Sec sec:families; Sec sec:misses | From the one assumption applied to a moving source, with no number put in, the coefficient $4$ being the sum of the clock's and the ruler's exponents, follows frame dragg... |  |  |
@@ -240,7 +240,7 @@ Rows with a claim mark: 149, 23 with a breaker written; rows of a derived, compu
 | 76 | 369 | sec:slits > sec:slits-file | never | Gravity's weight $E_g$ is $10^6$ in this universe, chosen so that the packet's own gravity does not focus it, as nature's light never focuses itself (a declaration of the... |
 | 77 | 377 | sec:slits > sec:slits-blind | exact | The blind row's $273$ is light's line in real arithmetic propagated on the design's lattice from the two gaps as its sources and summed at the screen over the window, Huy... |
 | 78 | 388 | sec:bell > sec:bell-file | never | The joint energy is never the square of a local sum, which one NodeDetector could form alone and which gives $S$ at most $2$. |
-| 79 | 412 | sec:limits > sec:misses | keeps | Ten are findings against nature, where a line of the law exists and its number or structure contradicts a measurement, frame dragging for bodies and the $\times$ polarisa... |
+| 79 | 412 | sec:limits > sec:misses | bound | Ten are set beside a measurement of nature where a line of the law exists: the click-fenced refute the model at their formula, the lattice-fenced (helium's correlation en... |
 | 80 | 421 | sec:limits > sec:inputs | never | The second is the atom's levels, line (1) of S.52, an assumption, fitted, made with hydrogen's levels in view, its ground the click's line (a configuration reads every ch... |
 
 ## E. Unmarked sentences named by hand as claims (the engine's own rule among them)
