@@ -499,7 +499,10 @@ def cited_of_the_long_version(text: str, m: re.Match) -> bool:
 def gate_pointers(texts: dict[str, str]) -> list[str]:
     misses = []
     counts = numbering(texts["main.tex"])
-    derivations = len(re.findall(r"\\begin\{derivation\}", texts["supplement.tex"]))
+    # the supplement's own derivations S.1 to S.n stand before Section C; the blocks carried there are C.1 to C.m
+    supplement_s = texts["supplement.tex"].split("\\section*{C. ")[0]
+    derivations = len(re.findall(r"\\begin\{derivation\}", supplement_s))
+    carried = len(re.findall(r"\\subsection\*\{C\.(\d+) ", texts["supplement.tex"]))
     for name, text in texts.items():
         body_end = text.find("\\begin{thebibliography}")
         body = text[:body_end] if body_end > 0 else text
@@ -546,6 +549,12 @@ def gate_pointers(texts: dict[str, str]) -> list[str]:
             if n == 0 or n > derivations:
                 misses.append(
                     f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} names a derivation the supplement has not"
+                )
+        for m in re.finditer(r"\bC\.(\d+)\b", body):
+            n = int(m.group(1))
+            if n == 0 or n > carried:
+                misses.append(
+                    f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} names a block Section C has not"
                 )
         # the citations against the document's own bibliography
         cites = set()
