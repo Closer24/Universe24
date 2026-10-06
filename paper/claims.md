@@ -167,7 +167,7 @@ Rows with a claim mark: 118, 27 with a breaker written; rows of a derived, compu
 | 34 | 189 | sec:theorems > sec:form | conserved | \begin{theorem}[the conserved form]\label{th:form} |
 | 35 | 190 | sec:theorems > sec:form | exact | At constant paces for which a positive Node weight $d_i$ with $d_i R_a(i \to j) = d_j R_a(j \to i)$ on every Link exists, $E$ with the weights $d_i$ is exact under the li... |
 | 36 | 190 | sec:theorems > sec:form | exact | So the weighted form, with $\bM$ the matrix of Rule3's step, $\mathbf a_{\mathrm{next}} + \mathbf a_{\mathrm{before}} = \bM\,\mathbf a_{\mathrm{now}}$, $\bD = \mathrm{dia... |
-| 37 | 193 | sec:theorems > sec:form | exactly | $E$ is a diagnostic; where the paces move it changes exactly in the rationals by $E(t + 1) - E(t) = \mathbf a_{\mathrm{next}}^{\top}\bD\,(\bM(t) - \bM(t + 1))\,\mathbf a_... |
+| 37 | 193 | sec:theorems > sec:form | exactly | $E$ is a diagnostic; where the paces move it changes exactly in the rationals by $E(t + 1) - E(t) = \mathbf a_{\mathrm{next}}^{\top}\bD\,(w\bM(t) - w\bM(t + 1))\,\mathbf ... |
 | 38 | 201 | sec:theorems > sec:share | conserved | the floor of the rational term $\tilde e_i$ of the conserved form at the Node with its weights; the counting rule reads $\sum e_i$ in quanta over $\Wc$, rounded half up t... |
 | 39 | 201 | sec:theorems > sec:share | exactly | At the vacuum's paces it is exactly $3\,\den\,(\mathrm{now}_i^2 + \mathrm{before}_i^2) - \num\,\mathrm{now}_i\,S_6(\mathrm{before})_i$, with $S_6$ the six-neighbour sum. |
 | 40 | 204 | sec:theorems > sec:share | exactly | Over one step of Rule3 the rational quantum share at a Node changes by exactly the six currents into the Node, each weighted by its Link's factor, plus Rule3's own roundi... |

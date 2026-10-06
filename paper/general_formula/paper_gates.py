@@ -157,7 +157,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$0.752$ at $[2, 3]$ from the exact factor, $0.778$ to first order, the beat rule's number (S.55 (f)), and $1$ at nature's gap",
+                "$0.752$ at $[2, 3]$ from the exact factor, $0.778$ to first order in the gap $1 - \\num / \\den$, the beat rule's number (S.55 (f)), and $1$ at nature's gap",
             ),
             ("supplement.tex", "$0.752$ at $[2, 3]$ and $1$ at nature's gap"),
         ],
