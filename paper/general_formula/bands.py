@@ -69,7 +69,7 @@ def band(ax: Axes) -> None:
         "$\\omega = k\\,/\\,3^{1/2}$, light's speed",
         ha="left",
         va="center",
-        fontsize=7,
+        fontsize=8,
         color=GREY,
     )
     # matter's parabola at the band's bottom: omega_0 + k^2 / (2 m*), m* = 3 tan omega_0
@@ -83,7 +83,7 @@ def band(ax: Axes) -> None:
         "the parabola $\\omega_0 + k^2 / (2 m^*)$,\n$m^* = 3\\tan\\omega_0 = 3.354$, the inertia",
         ha="left",
         va="bottom",
-        fontsize=7,
+        fontsize=8,
         color=GREY,
     )
     # the gap, the tops, the two slits' wave
@@ -94,7 +94,7 @@ def band(ax: Axes) -> None:
         "the gap $\\omega_0 = \\arccos(2 / 3) = 0.841$:\n$E = m^* c_m^2$ exactly, $c_m^2 = \\omega_0 / (3\\tan\\omega_0)$",
         ha="left",
         va="top",
-        fontsize=7,
+        fontsize=8,
     )
     ax.plot([math.pi], [math.acos(1 / 3)], "o", ms=3.5, color=INK)
     ax.text(
@@ -103,7 +103,7 @@ def band(ax: Axes) -> None:
         "light's top along the axis,\n$\\arccos(1 / 3) = 1.231$",
         ha="right",
         va="top",
-        fontsize=7,
+        fontsize=8,
     )
     ax.plot([math.pi], [math.acos(2 / 9)], "o", ms=3.5, color=INK, markerfacecolor="white")
     ax.text(
@@ -112,7 +112,7 @@ def band(ax: Axes) -> None:
         "matter's top, $\\arccos(2 / 9) = 1.347$",
         ha="right",
         va="bottom",
-        fontsize=7,
+        fontsize=8,
     )
     k2 = math.pi / 4
     ax.plot([k2], [omega(1, 1, k2)], "s", ms=4, color=INK, markerfacecolor="white")
@@ -122,7 +122,7 @@ def band(ax: Axes) -> None:
         "the two slits' wave,\n$k = \\pi / 4$, $\\lambda = 8$ Links",
         ha="left",
         va="top",
-        fontsize=7,
+        fontsize=8,
     )
     ax.set_xlim(0, math.pi + 0.05)
     ax.set_ylim(0, 1.6)
@@ -132,12 +132,12 @@ def band(ax: Axes) -> None:
     ax.set_ylabel("the rotation $\\omega$ per interval")
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    ax.tick_params(length=2, labelsize=7)
-    ax.legend(loc="lower right", frameon=False, fontsize=7, handlelength=1.8)
+    ax.tick_params(length=2, labelsize=8)
+    ax.legend(loc="lower right", frameon=False, fontsize=8, handlelength=1.8)
 
 
 def bands_figure(output: Path) -> None:
-    fig, ax = plt.subplots(figsize=(4.9, 2.9))
+    fig, ax = plt.subplots(figsize=(5.08, 3.0))
     band(ax)
     fig.subplots_adjust(left=0.11, right=0.995, top=0.98, bottom=0.17)
     output.mkdir(parents=True, exist_ok=True)

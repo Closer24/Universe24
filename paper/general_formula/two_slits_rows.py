@@ -4,11 +4,13 @@
 design.json): the flat lattice of 45 x 48 Nodes, the packet of light at the wavelength 8 Links
 laid over the columns 4 to 16, the wall at the column 20 with its two gaps of three rows 12 Links
 apart, the screen at the column 44, twelve declared NodeDetectors of four rows each. (b) The screen's
-row per region: the Huygens blind written before the run (expectation.json, N = 273, with the
+row per region: the design's blind row written before the run (expectation.json, the law's line in real
+arithmetic at the design's initial data, N = 273, with the
 draw's scatter sqrt(N p (1 - p)) per region) beside the law's real line stepped on the same
 world by the paper's script two_slits_real_line.py at the lay as the frozen commit 1fe3790a holds it (N = 284.50 in the
-engine's labels). The
-numbers are typed from those two files; nothing is read from a run of the engine.
+engine's labels), and the seed-24 clicks of the one run as points, the archived row the gate of
+tests/test_the_draw.py holds bit for bit (N = 285). The numbers are typed from those files; no run is
+made for the drawing.
 
     python paper/general_formula/two_slits_rows.py --output paper/general_formula/figures
 
@@ -48,9 +50,15 @@ INK, GREY, LIGHT, PALE = "#000000", "#7a7a7a", "#c8c8c8", "#efefef"
 # expectation.json: the Huygens blind row per region of four rows, N = 273 through the screen
 BLIND = (21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25)
 BLIND_N = 273.0
-# two_slits_real_line.txt: the law's real line on the same file, the window 45 to 130, the engine's labels
-REAL = (19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57)
-REAL_N = 284.50
+# two_slits_real_line.txt: the law's real line on the declared initial data, the window 45 to 130, the physical labels
+# (the pair after t steps labelled t), the row that sums to 284.66, printed as the paper's 284.7
+REAL = (19.70, 20.22, 28.61, 18.17, 8.52, 40.58, 48.06, 13.44, 13.54, 28.76, 22.48, 22.57)
+REAL_N = 284.66
+# tests/test_the_draw.py, GATE_ROW: the seed-24 clicks per region of the one run, the archived row the gate asserts bit
+# for bit at every run of the tests (N = 285); the seed-25 row stands in examples/events/two_slits/blind_and_reading.md
+# (N = 285, chi-square 12.4) and is not drawn, the figure carrying seed 24 alone at the owner's word
+SEED24 = (22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25)
+SEED24_N = 285
 # the file's numbers (design.json, two_slits.json): the board, the packet, the wall, the gaps, the screen
 LENGTH, HEIGHT = 45, 48
 PACKET_X, PACKET_Y = (4, 16), (4, 44)
@@ -59,13 +67,14 @@ SCREEN_X, ROWS_PER_REGION = 44, 4
 
 
 def save(fig: Figure, path: Path) -> None:
-    """The PDF the paper includes and the EPS a journal asks for, side by side."""
+    """The PDF the paper includes, the EPS a journal asks for and a PNG preview, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))
+    fig.savefig(path.with_suffix(".png"), dpi=150)
 
 
 def world(ax: Axes) -> None:
-    """(a) The declared file: the board, the packet, the wall with its gaps, the screen's regions."""
+    """(a) The declared file: the board, the wave packet, the wall with its gaps, the screen's regions."""
     ax.set_xlim(-1.5, LENGTH + 1.5)
     ax.set_ylim(-12.0, HEIGHT + 7.5)
     ax.set_aspect("equal")
@@ -83,12 +92,12 @@ def world(ax: Axes) -> None:
     ax.annotate(
         "", xy=(19.0, 24), xytext=(13.5, 24), arrowprops={"arrowstyle": "-|>", "lw": 0.8, "color": INK}
     )
-    ax.text(6.5, -1.2, "the packet,\n$\\lambda = 8$", ha="center", va="top", fontsize=7)
+    ax.text(6.5, -1.2, "the wave\npacket,\n$\\lambda = 8$", ha="center", va="top", fontsize=8)
     # the wall at the column 20 with the two gaps
     ax.add_patch(Rectangle((WALL_X, 0), 1, HEIGHT, facecolor=INK, edgecolor="none"))
     for lo, hi in GAPS:
         ax.add_patch(Rectangle((WALL_X, lo), 1, hi - lo + 1, facecolor="white", edgecolor="none"))
-    ax.text(WALL_X + 4.5, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=7)
+    ax.text(WALL_X + 1.2, -1.2, "the wall,\ntwo gaps\n$d = 12$", ha="center", va="top", fontsize=8)
     # the screen: twelve regions of four rows
     for r in range(12):
         y = r * ROWS_PER_REGION
@@ -108,7 +117,7 @@ def world(ax: Axes) -> None:
         "the screen:\n12 NodeDetectors\nof 4 rows",
         ha="center",
         va="top",
-        fontsize=7,
+        fontsize=8,
     )
     ax.annotate(
         "",
@@ -122,7 +131,7 @@ def world(ax: Axes) -> None:
         "$L = 24$ Links",
         ha="center",
         va="bottom",
-        fontsize=7,
+        fontsize=8,
         color=GREY,
     )
     ax.text(-1.2, HEIGHT / 2, "$y$", ha="right", va="center")
@@ -130,60 +139,79 @@ def world(ax: Axes) -> None:
     ax.text(-1.2, HEIGHT + 6.0, "a", ha="right", va="bottom", fontweight="bold", fontsize=9)
 
 
-def rows(ax: Axes) -> None:
-    """(b) The screen's row per region: the blind with its scatter, the real line beside it."""
+def rows(ax: Axes) -> tuple:
+    """(b) The screen's row per region: the prediction with its scatter, the real line beside it."""
     xs = list(range(12))
     w = 0.38
     scatter = [math.sqrt(BLIND_N * (c / BLIND_N) * (1 - c / BLIND_N)) for c in BLIND]
-    ax.bar(
+    blind_bars = ax.bar(
         [x - w / 2 for x in xs],
         BLIND,
         width=w,
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the blind: Huygens, written before the run ($N = 273$)",
+        label="the blind: the Huygens sum on the design's lattice, before the run ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5
     )
-    ax.bar(
+    real_bars = ax.bar(
         [x + w / 2 for x in xs],
         REAL,
         width=w,
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label=f"the law's real line on the same file ($N = {REAL_N:.2f}$)",
+        label=f"the law's real line on the declared initial data ($N = {REAL_N:.1f}$)",
+    )
+    (points,) = ax.plot(
+        xs,
+        SEED24,
+        "o",
+        ms=3.0,
+        color=INK,
+        zorder=6,
+        label=f"the seed-24 clicks of the one run ($N = {SEED24_N}$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])
     ax.set_xlabel("the screen's region, from the row 0 across $y$")
-    ax.set_ylabel("quanta over the window")
-    ax.set_ylim(0, 66)
+    ax.set_ylabel("quanta over the counting window")
+    ax.set_ylim(0, 79)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    ax.tick_params(length=2, labelsize=7)
-    ax.text(5.55, 50.5, "the central maximum", ha="right", va="bottom", fontsize=7, color=GREY)
+    ax.tick_params(length=2, labelsize=8)
+    ax.text(5.55, 50.5, "the central maximum", ha="right", va="bottom", fontsize=8, color=GREY)
     for r in (4, 8):
         ax.text(
             r,
-            max(BLIND[r], REAL[r]) + scatter[r] + 3.2,
+            max(BLIND[r], REAL[r], SEED24[r]) + scatter[r] + 3.2,
             "a minimum",
             ha="center",
             va="bottom",
-            fontsize=7,
+            fontsize=8,
             color=GREY,
         )
-    ax.legend(loc="upper right", frameon=False, fontsize=7, handlelength=1.2, bbox_to_anchor=(1.0, 1.02))
-    ax.text(-1.5, 65, "b", ha="left", va="top", fontweight="bold", fontsize=9)
+    ax.text(-2.7, 78.5, "b", ha="left", va="top", fontweight="bold", fontsize=9)
+    return real_bars, blind_bars, points
 
 
 def two_slits_rows(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(6.85, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
+    fig, axes = plt.subplots(1, 2, figsize=(5.16, 3.35), gridspec_kw={"width_ratios": (1.0, 1.55)})
     world(axes[0])
-    rows(axes[1])
-    fig.subplots_adjust(left=0.01, right=0.995, top=0.95, bottom=0.17, wspace=0.18)
+    handles = rows(axes[1])
+    # the legend below both panels, off the panel labels, the top tick and panel (a)'s dimension
+    fig.legend(
+        handles,
+        [h.get_label() for h in handles],
+        loc="lower center",
+        frameon=False,
+        fontsize=7,
+        handlelength=1.2,
+        bbox_to_anchor=(0.5, 0.0),
+    )
+    fig.subplots_adjust(left=0.01, right=0.995, top=0.955, bottom=0.33, wspace=0.18)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "two_slits_rows.pdf")
     plt.close(fig)

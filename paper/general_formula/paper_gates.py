@@ -120,7 +120,7 @@ STALE_PATTERNS = [
 STALE_ALLOWED = {
     r"\bR\d{3}\b": ["Physical Review A 47, R747"],
     "never one Node": [
-        "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the file, never one Node"
+        "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the universe's declaration, never one Node"
     ],
 }
 
@@ -129,9 +129,9 @@ TWINS = [
     (
         "positronium's convention",
         [
-            ("main.tex", "positronium $44$ percent of nature's"),
-            ("supplement.tex", "positronium $44$ percent of nature's"),
-            ("supplement.tex", "$44$ percent of nature's, the line at $38$"),
+            ("supplement.tex", "positronium at $43$ percent of it"),
+            ("supplement.tex", "positronium $43$ percent of nature's"),
+            ("supplement.tex", "$43$ percent of nature's, the line at $37$"),
         ],
     ),
     (
@@ -139,9 +139,9 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$284.7$ in the paper's labelling, the pair after $t$ steps labelled $t$ ($284.5$ in the engine's labels",
+                "it gives $284.7$ units of $\\Wc$ through the screen, region by region",
             ),
-            ("main.tex", "$N = 284.50$ in the engine's labels"),
+            ("main.tex", "on the declared initial data ($N = 284.7$)"),
         ],
     ),
     (
@@ -150,67 +150,60 @@ TWINS = [
     ),
     (
         "the neutron's lifetime",
-        [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
+        [("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
-    ("the draw's bound", [("main.tex", "$1.1 \\times 10^{-19}$ at the width $63$")]),
+    (
+        "Compton's factor at the computed pair",
+        [
+            (
+                "main.tex",
+                "$0.752$ at $[2, 3]$ from the exact factor, $0.778$ to first order in the gap $1 - \\num / \\den$, the beat rule's number (S.55 (f)), and $1$ at nature's gap",
+            ),
+            ("supplement.tex", "$0.752$ at $[2, 3]$ and $1$ at nature's gap"),
+        ],
+    ),
     (
         "the wall of a massless family",
         [
-            ("main.tex", "$W_c = 3\\,\\den\\,T$ itself for a massless family"),
+            ("main.tex", "a massless field's quantum is $\\Wc$ itself"),
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
-    ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$"), ("supplement.tex", "$\\Delta = 1 / m^*$")]),
+    ("Delta = 1/m*", [("supplement.tex", "$\\Delta = 1 / m^*$")]),
     (
         "the two slits at the fixed lay",
         [
             (
                 "main.tex",
-                "$N = 285$ units of $W_c$ at both seeds ($674$ photons of energy $T\\sin\\omega$ at $\\omega = 0.4366$",
+                "$N = 285$ in the region's unit $\\Wc$ at both seeds, $24$ and $25$",
             ),
-            ("main.tex", "the run $N = 285$ at both of its seeds in the NodeDetector's unit"),
-            ("main.tex", "the two slits' $285$ at both seeds stands against it"),
-            ("main.tex", "The run of the implementation gives $N = 285$ at both seeds"),
-            ("supplement.tex", "The two slits' $285$ units are $674$ photons"),
+            ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
+            ("main.tex", "The run gives $N = 285$ at both seeds"),
         ],
     ),
-    (
-        "the one run",
-        [
-            ("main.tex", "The one run this paper reports is the two slits'"),
-            ("main.tex", "What ran on the implementation for this paper is that one file"),
-            ("supplement.tex", "which reports one run, the two slits'"),
-        ],
-    ),
+    ("the one run", [("main.tex", "The one run this paper reports is the two slits'")]),
     (
         "the pins",
         [
             (
                 "main.tex",
-                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
+                "The repository also holds an implementation for building worlds",
             ),
             (
                 "supplement.tex",
-                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
+                "the run's reading is deposited with the paper (Statements and Declarations)",
             ),
         ],
     ),
     (
         "the gate on the one file",
-        [
-            ("main.tex", "\\textsc{match} on the two slits' file over $40$ intervals"),
-            (
-                "supplement.tex",
-                "the two slits' \\textsc{match} over $40$ intervals at the commit 1fe3790a at both seeds",
-            ),
-        ],
+        [("main.tex", "returns every level exactly, integer for integer, over $40$ intervals")],
     ),
     (
         "the walk and not a bound",
         [
-            ("main.tex", "stands within that walk of the line's $284.7$"),
-            ("main.tex", "stands against it within the integer step's walk"),
-            ("supplement.tex", "within the integer step's walk"),
+            ("main.tex", "stands within the walk of the line's $284.7$"),
+            ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
         ],
     ),
 ]
@@ -370,10 +363,14 @@ def nomenclature_letters(text: str) -> set[str]:
 
 
 def gate_nomenclature(texts: dict[str, str]) -> list[str]:
-    """The misses: a letter in math mode, in either document, with no row in the paper's Nomenclature table."""
-    named = nomenclature_letters(texts["main.tex"])
+    """The misses: a letter in math mode, in either document, with no row in the Nomenclature table of either document."""
+    named = set()
+    for text in texts.values():
+        named |= set(nomenclature_letters(text))
     if not named:
-        return ["main.tex: no Nomenclature row (\\nom{symbols}{senses}) found"]
+        return [
+            "main.tex, supplement.tex: no Nomenclature row (\\nom{symbols}{senses}) found in either document"
+        ]
     misses = []
     for name, text in texts.items():
         seen: dict[str, int] = {}
@@ -488,6 +485,17 @@ LITERAL_POINTERS = [
 ]
 
 
+# the long version of the paper at the tag paper-long-v1.1 numbers its derivations S.1 to S.65; a pointer the text cites
+# "of the long version" (or after "the long version's", or before "at its tag") names that document, not the supplement
+LONG_VERSION_DERIVATIONS = 65
+
+
+def cited_of_the_long_version(text: str, m: re.Match) -> bool:
+    before = text[max(0, m.start() - 70) : m.start()]
+    after = text[m.end() : m.end() + 45]
+    return "long version" in before or "long version" in after or "at its tag" in after
+
+
 def gate_pointers(texts: dict[str, str]) -> list[str]:
     misses = []
     counts = numbering(texts["main.tex"])
@@ -508,6 +516,8 @@ def gate_pointers(texts: dict[str, str]) -> list[str]:
         literal_text = body if name != "main.tex" else "\n".join(re.findall(r"\\caption\{.*", body))
         for pattern, kind in LITERAL_POINTERS:
             for m in re.finditer(pattern, literal_text):
+                if cited_of_the_long_version(literal_text, m):
+                    continue
                 if kind == "subsection":
                     section, sub = int(m.group(1)), int(m.group(2))
                     if (
@@ -525,7 +535,15 @@ def gate_pointers(texts: dict[str, str]) -> list[str]:
                             f"{name}: the pointer {m.group(0)!r} names a {kind} the paper has not"
                         )
         for m in re.finditer(r"\bS\.(\d+)\b", body):
-            if int(m.group(1)) == 0 or int(m.group(1)) > derivations:
+            n = int(m.group(1))
+            if cited_of_the_long_version(body, m):
+                if n == 0 or n > LONG_VERSION_DERIVATIONS:
+                    misses.append(
+                        f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} of the long version names a "
+                        f"derivation the tag has not (S.1 to S.{LONG_VERSION_DERIVATIONS})"
+                    )
+                continue
+            if n == 0 or n > derivations:
                 misses.append(
                     f"{name}:{line_of(body, m.start())}: the pointer {m.group(0)!r} names a derivation the supplement has not"
                 )

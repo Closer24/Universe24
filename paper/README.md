@@ -45,11 +45,13 @@ their statuses.
   breakers written by hand, keyed by the sentence's opening words (the method of 2026-10-04, #1538).
 - `general_formula/supplement.tex` and `supplement.pdf`: the supplementary
   material, the algebraic steps of every derivation the paper states without
-  its proof, Derivations S.1 to S.65, numbered independently of the paper's order, each naming its section,
-  cited in the paper as (S.n), S.61 the engine's derivation table and S.62 the
-  implementation's versions of the click's write and their readings, which stand
-  there and not in the main text (the owner's word of 2026-10-03: a derivation
-  is shown as a derivation, and the main text reports no run but the two slits'); submitted as supplementary material to the
+  its proof, Derivations S.1 to S.55 in their own order, each naming its section,
+  cited in the paper as (S.n); its front carries the glossary of the long version's
+  words, the paper's claims list, the two tables of the formulas and the Nomenclature;
+  the derivations of the hypotheses under their own names and of the implementation
+  stand in the long version at the tag `paper-long-v1.1` in its own numbering, cited
+  as (S.n of the long version); built in Springer Nature's class like the article (the owner's
+  word of 2026-10-05: the readable format only, up to 50 pages); submitted as supplementary material to the
   journal (Online Resource 1, its title page carrying the article's title,
   the journal, the author, the affiliation and the email, as Springer
   asks) and as an ancillary file to arXiv, `anc/supplement.pdf` in the
@@ -57,7 +59,7 @@ their statuses.
 - `general_formula/figures/`: the figures, each drawn by a script from the
   definitions or from the documents' rows, one (`two_slits_frames.pdf`) from the
   engine's own look of the shipped two-slits file, labelled a lattice reading, and none by a
-  generative tool, with 6 to 8 pt lettering at the drawn size (Figs. 3 and 5 are
+  generative tool, with 8 pt lettering or above at the drawn size (the panel letters 9 pt; Figs. 3 and 5 are
   included at 0.66 of the text width, the other five at the drawn size), within the
   journal's and arXiv's rules for artwork (at most 174 mm wide, 8 pt lettering
   in one sans-serif typeface for the words and the symbols, fonts embedded,
@@ -165,6 +167,117 @@ energy, confinement, the polarisations, the Lorentz form, antimatter's opposite 
 witness of S.9; the count may only fall, and the paper claims nothing beyond it (the supplement
 carries the algebraic steps of every derived mark; the scripts' map is the law's fill, part 4).
 
+## The automation for the short version and the supplement
+
+The long version's tools, handed to the editor for the short main text and the rebuilt supplement
+(the owner's word of 2026-10-05); each line says what the tool checks, how it runs and what the
+short version changes in it. Run them in the order of the last paragraph after every push.
+
+**The closing round in one command** (`general_formula/closing_round.py`, the owner's word of
+2026-10-06, "automate this, then the agents' checks"): at a commit it runs the ten gates, the claims
+reader's counts, the checker against the long version with the accepted misses of
+`accepted_misses.txt` (the hands' list, one number per line), the seam gates against
+`seam_baseline.json` when both exist, the Crossref check, the Springer build of both documents, the
+project's checks, CI's check runs at the commit and the open audit issues newer than it, and prints one
+table with the verdict CONVERGED or NOT YET (exit 0 or 1), written to `artifacts/closing_round.md`; `--offline`
+skips Crossref, `--no-ci` the two GitHub reads, `--full` runs every test. The readers' half is
+`general_formula/readers.py`: `prompts --since <commit>` writes the sub-agent readers' prompts from the
+templates in `readers/` (the cold read, the statuses, the terms and the hostile pass at every cut; a
+section reader for every section the diff touched and a derivation reader per group of touched
+derivations), the same text whoever launches them; `collect <directory>` reads their reports' tables and
+writes one summary, every blocking row first, with the counts per reader.
+
+**The seam gates** (`general_formula/seam_gates.py`, the owner's word of 2026-10-05, "fix in one blow", at
+the two hands' specification): four reports on the joins between the main text and Online Resource 1,
+printed as rows, exit 0 until their ratchets are set. The pointer holds: every number and subscripted
+symbol of a marked sentence stands in a derivation the sentence cites, by printed digits (a rounding
+holds, a different number does not); a sentence citing a section alone is listed, not failed. The
+status not stronger: a mark's claim word never above the cited Status line's, in the key's own order
+(theorem, derived, computed), the provenance words equal in kind, the Status line read by the segment
+the mark cites, and each condition phrase of the Status line required in the sentence. The law's
+lines: a sentence of the model's sections naming an act of the law shares a run of five words with the
+law's document. The words: the free nouns on their word boundary, and a Nomenclature symbol named in
+the main at its first use. Their counts become ratchets in `tests/test_seam_gates.py` after the one
+push that fixes the first list.
+
+**The gates on every pull request** (`tools/every_pull_request.txt`: the paper gates, the documents
+gate and the language gate; `python tools/check.py` selects the changed files and their consumers,
+`--full` runs everything, every test under 30 s). `general_formula/paper_gates.py` runs ten gates on
+`main.tex` and `supplement.tex` together and exits non-zero on any miss:
+
+- The marks: every `\claimmark` one of the key's words and every `\fence` one of the two. The short
+  main carries no macro; its mark is the sentence's last parenthesis opening with a key word (the
+  key's eight words and the tables' four: calibration, declaration, definition, untested), the fence
+  after the first semicolon, then the pointers, and `claims_table.py` reads that form (below).
+- The struck phrases: the words earlier prints removed never return; a hand adds a phrase to the list
+  when a cut strikes it for good.
+- The twins: a number or a word printed in two places asserted equal across the two documents. A cut
+  that removes one side of a pair fails the gate; the pair is re-keyed to where the number still
+  stands, or removed, in the same push.
+- The derivations' Inputs graph: no cycle beyond `claims_table.KNOWN_CYCLES`, a set that may only
+  shrink; its numbers take the supplement's renumbering map.
+- The bare board: the lattice by its one noun.
+- The nomenclature: every letter in math mode in either document has its `\nom` row in the
+  supplement's Nomenclature; a row leaves only with the last use of its letter.
+- The units and the abbreviations: a bare number after a named quantity carries its unit, every
+  abbreviation is expanded at its first use in the same document; a cut that deletes a first use
+  moves the expansion to the next.
+- The team's idioms: the hands' names, the ledger's rows and the comment ids stand nowhere in the paper.
+- The pointers: every `\ref` has its `\label`, an equation is cited by `\eqref` alone, every literal
+  pointer of the supplement, the captions and this README names a number the paper has, counted from
+  `main.tex`'s source order; every `\cite` has its `\bibitem` in the same document, every `\bibitem`
+  is cited, none doubled, the list in the order of first citation. Every section, equation, figure or
+  table that leaves or moves renumbers the literal pointers, and the gate lists each by line; after an
+  edit that moves a citation, `cut_tools/reorder_bib.py` restores the order.
+- The captions and the names: no caption ends with punctuation; no author-year parenthesis outside `\cite`.
+
+**The claims reader**, `python paper/general_formula/claims_table.py`, writes `paper/claims.md` at
+every print: the marked sentences (the plain parenthesis or the macro; the itemised lists' items read
+as sentences; a sentence inside an assumption or theorem environment marked by the environment), each
+with its place, marks, fence, kind, the sources it names, its breaker and state; the candidates (a strong
+word in an unmarked sentence, a report and no gate); the tables' rows by the short version's labels,
+read from the main or, once a table has moved, from the supplement; the supplement's derivations with
+their Status lines. Its two gates of the move, held as ratchets in `tests/test_paper_gates.py`: no row
+of the claims list without a marked sentence at the row's place (a sentence in the row's section, at any
+level, carrying the row's first status word, and a sentence there naming one of the row's derivations),
+and no plain mark opening with a word outside the key; both counts may only fall. Beside them the
+breakers' gate, `tests/test_counterexamples.py`, runs every row of `tools/derivations/counterexamples.py`
+(a claim tried inside its condition and outside it in the algebra of Rule3's line) and asserts its key
+is a row of `paper/claims_breakers.json`; the keys are the long version's sentences, table labels and
+derivation numbers, and they take the short version's rows and the renumbering map in one commit.
+
+**The numbers' provenance.** Every computed number of the main is one a script prints from Rule3's
+lines or the one run the paper reports: the derivation modules of `tools/derivations/` (each from the
+line alone, no engine import; `tools/derivations/README.md` the map) and the paper's own checks in
+`general_formula/` (`einstein_check.py`, `schroedinger_check.py`, `invariant_check.py`,
+`stable_body_check.py`, `surplus_check.py`, `dark_matter_check.py`, `dimension_check.py`,
+`two_slits_real_line.py` with its printed row). The scripts' names left the short text at the owner's
+word; the provenance stays theirs, and the supplement's derivations keep the modules' names.
+`short_checker.py` audits every number of the short files against the long version at the tag and
+prints the accepted misses and the weak places; `claims_triage.py` wrote `paper/claims_triage.md`, the
+map of what is core, support and out that the cut follows.
+
+**The cut tools** (`general_formula/cut_tools/README.md`): the bibliography's order, the build in
+Springer's class with the page each section starts on, the abstract's counts, the doubled passages,
+the DOI check against Crossref, a sentence-level grep.
+
+**The figures.** Each figure's script writes its PDF, EPS and PNG into `figures/`, committed; the
+lattice and the octahedron, the two slits' rows, the method, the run's frames; the click, the bands and
+the moving clock stay for the long version. Drawn at 131 mm with 8 pt lettering in the glossary's words.
+
+**The supplement at the rebuild.** Every derivation in its environment with its Inputs, Steps and Status
+lines (the reader and the Inputs gate read that form); the Status line in the key's words; the
+Nomenclature at the front; its own bibliography in the order of first citation; the claims list whole
+under its label, where the reader finds it once the main no longer holds it; the main's citations of
+the long version's numbers kept apart from the new numbering, as the front note states.
+
+**The run at every push:** the claims reader (the two counts at their ratchets, the NO SOURCE marks
+read); the paper gates; the bibliography's order after an edit that moves a citation; the five paper
+tests (`test_paper_gates`, `test_documents`, `test_repository_language`, `test_counterexamples`,
+`test_the_paper_claims_engine`); `python tools/check.py`; the build of both documents in Springer's
+class three times with no error and no undefined reference, the page counts posted; `short_checker.py`;
+the build's by-products deleted before the commit.
+
 ## Submission rules and status
 
 The paper goes first to arXiv and then to Foundations of Physics
@@ -177,8 +290,9 @@ the journal.
 
 - The abstract has 150 to 250 words, with no undefined abbreviation and no
   unspecified reference; there are 4 to 6 keywords. Met: the paper's abstract
-  and `abstract_journal.txt` beside it are one text of 247 to 250 words
-  (whitespace tokens, each formula counted by its tokens), every formula in it the paper's.
+  and `abstract_journal.txt` beside it are one text of 228 words carrying a letter and
+  246 whitespace tokens with each formula's symbols counted one by one (250 in the plain copy),
+  under the 250 by every count; `cut_tools/abstract_count.py` prints both; every formula in it is the paper's.
 - A section "Statements and Declarations" stands before the references,
   or the submission is returned as incomplete: funding, competing
   interests, ethics and consent, data availability, author contributions.
@@ -198,11 +312,13 @@ the journal.
   the final size, lines of at least 0.3 pt, the widths 39, 84, 129 or 174 mm
   and the height at most 234 mm (Springer's general artwork guidelines, as the
   writer holds them; the author checks the journal's page before submitting,
-  the venues' pages being unreachable from the writer's session). Not yet met for the lettering: the
-  figures drawn 174 mm wide are included at that size, their lettering 6 to 8 pt at
-  the final size (the axes' labels 7 pt, Fig. 2's box text 6.2 pt), below the 8 pt
-  minimum at the smallest labels, to be raised in the figure scripts before the
-  submission; Figs. 3 and 5, drawn narrower, at 0.66 of the text width.
+  the venues' pages being unreachable from the writer's session). Met for the five
+  figures the short version keeps (the lattice and the octahedron, the bands, the click,
+  the two slits' rows, the moving clock): drawn 131 mm (the text width of `sn-jnl`'s
+  `sn-mathphys-num`, 372 pt, one column) or 129 mm wide with every lettering 8 pt or
+  above at the drawn size (the panel letters 9 pt), redrawn on 2026-10-05, the click
+  figure as two panels, (a) and (b), at 131 mm, its (c) and (d) the text of the short version;
+  the method figure (6.2 to 8 pt) and the frames leave for the report and the supplement.
 - The template `sn-jnl` is recommended and another class is accepted at
   submission; the switch at acceptance changes the preamble alone.
 - The scope is the conceptual bases of modern physics; a desk rejection
@@ -218,7 +334,7 @@ the journal.
   most 1920 characters with the math written out (`$6\pi$` as `6 pi`,
   `$2\sqrt 2$` as `2 sqrt(2)`), and the comments line, for example
   "43 pages, 7 figures, 6 tables; supplementary material of 39 pages as an
-  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,492
+  ancillary file; code and documents at doi:10.5281/zenodo.22738746". The plain-text abstract has 1,541
   characters, below the cap, and is the paper's own abstract.
 - The source, not the PDF: `main.tex` and `figures/*.pdf`, with the
   supplement's PDF as `anc/supplement.pdf`, without the EPS files and the

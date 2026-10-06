@@ -103,8 +103,8 @@ def figure(ax: Axes) -> None:
     ax.set_ylabel("the moving clock's factor $f = \\Omega / \\omega_0$")
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    ax.tick_params(length=2, labelsize=7)
-    ax.legend(loc="lower left", frameon=False, fontsize=7, handlelength=1.8)
+    ax.tick_params(length=2, labelsize=8)
+    ax.legend(loc="lower left", frameon=False, fontsize=8, handlelength=1.8)
     b23, f23 = moving_clock(2, 3)
     ax.plot([b23[-1]], [f23[-1]], "o", ms=3.5, color=INK)
     ax.text(
@@ -113,7 +113,7 @@ def figure(ax: Axes) -> None:
         "the band's largest group\nspeed along the axis at $[2, 3]$,\n$v$ about $0.2501$ Link per interval",
         ha="left",
         va="center",
-        fontsize=7,
+        fontsize=8,
     )
     ax.text(
         0.60,
@@ -121,13 +121,13 @@ def figure(ax: Axes) -> None:
         "$c_m / c = 0.867$ at $[2, 3]$,\n$1$ as the gap closes",
         ha="left",
         va="top",
-        fontsize=7,
+        fontsize=8,
         color=GREY,
     )
 
 
 def moving_clock_figure(output: Path) -> None:
-    fig, ax = plt.subplots(figsize=(4.9, 2.9))
+    fig, ax = plt.subplots(figsize=(5.08, 3.0))
     figure(ax)
     fig.subplots_adjust(left=0.12, right=0.975, top=0.98, bottom=0.17)
     output.mkdir(parents=True, exist_ok=True)

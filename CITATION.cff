@@ -5,13 +5,16 @@ type: software
 version: 1.1.0
 date-released: 2026-10-05
 license: MIT
-doi: 10.5281/zenodo.22738746
+doi: 10.5281/zenodo.22738745
 repository-code: "https://github.com/Closer24/Universe24"
 url: "https://github.com/Closer24/Universe24"
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.22738746
+    value: 10.5281/zenodo.22738745
     description: "Zenodo concept DOI, resolving to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.22738746
+    description: "Zenodo archive of the first version's record"
   - type: doi
     value: 10.5281/zenodo.22749342
     description: "Zenodo archive of version 0.3.0"
