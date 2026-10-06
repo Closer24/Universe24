@@ -54,7 +54,7 @@ def test_the_templates_fill_and_the_collector_reads_the_rows(tmp_path: Path) -> 
     assert "abc1234" in filled and "{" not in filled.replace("{{", "").replace("}}", "")
     (tmp_path / "x.report.md").write_text(
         "| # | place | the words | what is wrong | the fix | B/N |\n|---|---|---|---|---|---|\n"
-        "| 1 | main.tex:10 | a | b | c | N |\n| 2 | S.3 | d | e | f | B (wrong input) |\n",
+        "| 1 | main.tex:10 | a | b | c | N |\n| 2 {rules; severe} | S.3 | d | e | f | B (wrong input) |\n",
         encoding="utf-8",
     )
     summary = readers.collect(tmp_path, tmp_path / "summary.md")

@@ -21,7 +21,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 TEMPLATES = HERE / "readers"
 GROUP = 5  # derivations per reader
-ROW = re.compile(r"^\|\s*(\d+)\s*\|(.*)\|\s*(B|N)[^|]*\|\s*$", re.M)
+ROW = re.compile(r"^\|\s*(\d+)[^|]*\|(.*)\|\s*(B|N)[^|]*\|\s*$", re.M)
 
 
 def git(*arguments: str) -> str:
