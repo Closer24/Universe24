@@ -191,7 +191,7 @@ TWINS = [
             ),
             (
                 "supplement.tex",
-                "the run's record is deposited with the paper (Statements and Declarations)",
+                "the run's deposited reading is with the paper (Statements and Declarations)",
             ),
         ],
     ),

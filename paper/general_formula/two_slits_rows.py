@@ -50,9 +50,10 @@ INK, GREY, LIGHT, PALE = "#000000", "#7a7a7a", "#c8c8c8", "#efefef"
 # expectation.json: the Huygens blind row per region of four rows, N = 273 through the screen
 BLIND = (21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25)
 BLIND_N = 273.0
-# two_slits_real_line.txt: the law's real line on the same file, the window 45 to 130, the engine's labels
-REAL = (19.70, 20.22, 28.60, 18.16, 8.51, 40.55, 48.02, 13.43, 13.51, 28.75, 22.48, 22.57)
-REAL_N = 284.50
+# two_slits_real_line.txt: the law's real line on the declared initial data, the window 45 to 130, the physical labels
+# (the pair after t steps labelled t), the row that sums to 284.66, printed as the paper's 284.7
+REAL = (19.70, 20.22, 28.61, 18.17, 8.52, 40.58, 48.06, 13.44, 13.54, 28.76, 22.48, 22.57)
+REAL_N = 284.66
 # tests/test_the_draw.py, GATE_ROW: the seed-24 clicks per region of the one run, the archived row the gate asserts bit
 # for bit at every run of the tests (N = 285); the seed-25 row stands in examples/events/two_slits/blind_and_reading.md
 # (N = 285, chi-square 12.4) and is not drawn, the figure carrying seed 24 alone at the owner's word
@@ -137,40 +138,40 @@ def world(ax: Axes) -> None:
     ax.text(-1.2, HEIGHT + 6.0, "a", ha="right", va="bottom", fontweight="bold", fontsize=9)
 
 
-def rows(ax: Axes) -> None:
+def rows(ax: Axes) -> tuple:
     """(b) The screen's row per region: the prediction with its scatter, the real line beside it."""
     xs = list(range(12))
     w = 0.38
     scatter = [math.sqrt(BLIND_N * (c / BLIND_N) * (1 - c / BLIND_N)) for c in BLIND]
-    ax.bar(
+    blind_bars = ax.bar(
         [x - w / 2 for x in xs],
         BLIND,
         width=w,
         facecolor="white",
         edgecolor=INK,
         lw=0.8,
-        label="the blind: the law's line in real arithmetic at the design's initial data, before the run ($N = 273$)",
+        label="the blind: the Huygens sum on the design's lattice, before the run ($N = 273$)",
     )
     ax.errorbar(
         [x - w / 2 for x in xs], BLIND, yerr=scatter, fmt="none", ecolor=INK, elinewidth=0.6, capsize=1.5
     )
-    ax.bar(
+    real_bars = ax.bar(
         [x + w / 2 for x in xs],
         REAL,
         width=w,
         facecolor=LIGHT,
         edgecolor=INK,
         lw=0.5,
-        label=f"the law's real line on the file ($N = {REAL_N:.2f}$)",
+        label=f"the law's real line on the declared initial data ($N = {REAL_N:.1f}$)",
     )
-    ax.plot(
+    (points,) = ax.plot(
         xs,
         SEED24,
         "o",
         ms=3.0,
         color=INK,
         zorder=6,
-        label=f"the seed-$24$ clicks, the archived row ($N = {SEED24_N}$)",
+        label=f"the seed-24 clicks of the one run ($N = {SEED24_N}$)",
     )
     ax.set_xticks(xs)
     ax.set_xticklabels([str(x) for x in xs])
@@ -191,15 +192,25 @@ def rows(ax: Axes) -> None:
             fontsize=8,
             color=GREY,
         )
-    ax.legend(loc="upper right", frameon=False, fontsize=8, handlelength=1.2, bbox_to_anchor=(1.0, 1.02))
     ax.text(-2.7, 78.5, "b", ha="left", va="top", fontweight="bold", fontsize=9)
+    return real_bars, blind_bars, points
 
 
 def two_slits_rows(output: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(5.16, 2.9), gridspec_kw={"width_ratios": (1.0, 1.55)})
+    fig, axes = plt.subplots(1, 2, figsize=(5.16, 3.35), gridspec_kw={"width_ratios": (1.0, 1.55)})
     world(axes[0])
-    rows(axes[1])
-    fig.subplots_adjust(left=0.01, right=0.995, top=0.95, bottom=0.17, wspace=0.18)
+    handles = rows(axes[1])
+    # the legend below both panels, off the panel labels, the top tick and panel (a)'s dimension
+    fig.legend(
+        handles,
+        [h.get_label() for h in handles],
+        loc="lower center",
+        frameon=False,
+        fontsize=7,
+        handlelength=1.2,
+        bbox_to_anchor=(0.5, 0.0),
+    )
+    fig.subplots_adjust(left=0.01, right=0.995, top=0.955, bottom=0.33, wspace=0.18)
     output.mkdir(parents=True, exist_ok=True)
     save(fig, output / "two_slits_rows.pdf")
     plt.close(fig)
