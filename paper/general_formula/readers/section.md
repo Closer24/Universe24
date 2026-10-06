@@ -1,0 +1,3 @@
+{common}
+
+Your assignment: Section {section} of the main text, lines {lines}, every sentence. Check each sentence's status word against the key and against the Status line of every derivation it cites (open the derivation and read what it holds: the pointer must hold the sentence's number or symbol, not only resolve); each condition of the Status line present in the sentence; every number recomputed or found in the cited derivation; the law's sentences against the law's own words; the words against the vocabulary (NodeDetector, Node, Link, Port, lattice; no detector, observer, absorber, grid, board, site alone). Word-diff the section against the long version's twin and name every dropped condition or qualifier.
