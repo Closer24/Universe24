@@ -139,9 +139,9 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$284.7$ units of $\\Wc$ through the screen in the physical labels ($284.5$ in the implementation's labels",
+                "it gives $284.7$ units of $\\Wc$ through the screen, region by region",
             ),
-            ("main.tex", "$N = 284.50$ in the implementation's labels"),
+            ("main.tex", "on the declared initial data ($N = 284.7$)"),
         ],
     ),
     (
@@ -175,7 +175,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "$N = 285$ in the region's unit $\\Wc$ at both seeds, $24$ and $25$ ($674$ photons",
+                "$N = 285$ in the region's unit $\\Wc$ at both seeds, $24$ and $25$",
             ),
             ("supplement.tex", "the run $N = 285$ at both seeds within the integer step's walk"),
             ("main.tex", "The run gives $N = 285$ at both seeds"),
@@ -187,15 +187,15 @@ TWINS = [
         [
             (
                 "main.tex",
-                "the code of the commit 1fe3790a of 2026-10-05 the two slits ran at",
+                "The repository also holds an implementation for building worlds",
             ),
             (
                 "supplement.tex",
-                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
+                "the run's record, the archived universe with its design, its blind row and its reading document",
             ),
         ],
     ),
-    ("the gate on the one file", [("main.tex", "returns every array bit for bit over $40$ intervals")]),
+    ("the gate on the one file", [("main.tex", "returns every level bit for bit over $40$ intervals")]),
     (
         "the walk and not a bound",
         [
