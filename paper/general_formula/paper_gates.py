@@ -120,7 +120,7 @@ STALE_PATTERNS = [
 STALE_ALLOWED = {
     r"\bR\d{3}\b": ["Physical Review A 47, R747"],
     "never one Node": [
-        "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the file, never one Node"
+        "A NodeDetector with Nodes alone is one connected region of two Nodes or more declared in the universe's declaration, never one Node"
     ],
 }
 
@@ -191,11 +191,14 @@ TWINS = [
             ),
             (
                 "supplement.tex",
-                "the run's record, the archived universe with its design, its blind row and its reading document",
+                "the run's record is deposited with the paper (Statements and Declarations)",
             ),
         ],
     ),
-    ("the gate on the one file", [("main.tex", "returns every level bit for bit over $40$ intervals")]),
+    (
+        "the gate on the one file",
+        [("main.tex", "returns every level exactly, integer for integer, over $40$ intervals")],
+    ),
     (
         "the walk and not a bound",
         [
