@@ -1,8 +1,7 @@
-include LICENSE CITATION.cff AGENTS.md README.md CONTRIBUTING.md
+include LICENSE CITATION.cff README.md
 include .python-version
 recursive-include docs *.md
 recursive-include examples *.json
-recursive-include skills *.md
 recursive-include tests *.py
 recursive-include tools *.py
 recursive-include .github *.yml

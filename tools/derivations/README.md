@@ -2,8 +2,8 @@
 
 This folder holds the derivations of the law's numbers in Python, each from
 Rule3's line as `docs/ALGEBRA.md` states it and leaning on no run of the
-engine (the owner's order of 2026-10-04, 04:20 UTC: every derived mark's
-script, everything from Rule3, nothing from the simulator). A module is pure
+engine (every derived mark has its script, everything from Rule3's line,
+nothing from the simulator). A module is pure
 Python, integers and fractions where the law is exact and floats where a
 cosine is asked for; it imports nothing of `event_universe` and reads no file of
 `runs/`; no number of nature enters a derivation, and nature's numbers enter the
@@ -39,7 +39,7 @@ the engine.
   term exactly; (d) the inventory below loads with every field, each entry's
   status one of `scriptless` (no script here yet), `scripted` (its `script`,
   `function`, `expected` and `digits` named) or `differs` (its `computed` and
-  `reason` named, a finding for the hands), and the scriptless count is a
+  `reason` named, a finding), and the scriptless count is a
   ratchet that only falls (`SCRIPTLESS_MARKS`, at most 18); (e) every scripted
   entry's function returns its printed numbers in order, a `num/den` string as
   an exact Fraction, an int as it stands and a float to `digits` decimal places;
@@ -50,9 +50,8 @@ the engine.
 ## The proofs' checks
 
 Beside the numbers' derivations the folder holds a machine check of the law's
-and the paper's theorems and identities (the owner's order of 2026-10-04,
-07:50 UTC, that all the proofs be checked, clearly; the advisor's design
-lines, #1793 comment 5977935062). The rule: a check replaces a hand with a
+and the paper's theorems and identities, every proof checked. The rule: a
+check replaces a hand with a
 machine and changes no claim of the paper or the law; the paper's marks do not
 move by it, and where a check fails as printed the statement, the computed
 object and the discrepancy are reported as a finding, never patched in the
@@ -61,7 +60,7 @@ identity or quantitative claim of `docs/ALGEBRA.md`, `main.tex` and
 `supplement.tex` (at the heads its header names), each with its place, its
 statement in the document's words, the ground it rests on, its kind, its check
 (the module and the `check_` function) and its verdict. The first ten rows are
-the ten items of the external audit, #1876. The kinds: (A) an exact identity,
+the ten items of the external audit. The kinds: (A) an exact identity,
 checked in Python's integers, `fractions.Fraction` and Gaussian rationals at
 random integer witnesses with the symmetric cases forced (a trigonometric
 identity at the Pythagorean rational points of the circle is a polynomial
@@ -95,7 +94,7 @@ The gate, `tests/test_proofs_check_the_law.py`: every row with a check runs
 to its verdict (`holds` and `witness only` True, `finding` False, the
 discrepancy reproduced), every `check_` function of the `proofs_` modules is
 a row's, the rows of the kinds A, B and C without a machine check are a
-ratchet that only falls (`theorems_without_machine_check`, 12 today: two
+ratchet that only falls (`theorems_without_machine_check`, 12: two
 witness-only rows and ten without a check), the header's counts are the
 rows', and no `proofs_` module imports the engine or names a run's file.
 The inventory's header names the heads its statements are quoted at
@@ -106,17 +105,17 @@ the first read keeps its id with its verdict against the head.
 ## The inventory
 
 `paper_marks.json` lists every `\claimmark{derived}` and `\claimmark{computed}`
-of the paper's `main.tex` (the branch `paper`, its head in the file's header)
+of the paper's `main.tex` (its head in the file's header)
 whose enclosing parenthesis names no `\texttt{<name>.py}`, by the rule of
-`paper_gates.gate_scripts`: the line, the mark, the section of `main.tex`, the
+the file's header: the line, the mark, the section of `main.tex`, the
 sentence, its printed numbers, the supplement derivation or section it cites,
 the existing script that already gives its numbers where one exists under
 `paper/general_formula/` or here, the proposed module here, and the status
 `scriptless`. A computed mark, a reading of the implementation's run, names
-its reader (the run's reader or its test, never a derivation) and, since the
-owner's word of 2026-10-04, 04:39 UTC, two more fields: `derived_counterpart`,
+its reader (the run's reader or its test, never a derivation) and two more
+fields: `derived_counterpart`,
 the formula or the script and function that gives the derived value, or "none
-in closed form" for the three the advisor names (the integer step's exact
+in closed form" for three (the integer step's exact
 remainders, the draw's outcomes at a seed, the body's fixed point by
 iteration), and `bound`, the integer budget's bound where it applies. The run
 is the check of the derivation and never the claim: beside the run's number
@@ -128,7 +127,7 @@ beside their blinds' formulas. The header also lists the paper-side scripts
 that lean on the engine, each engine name they import with the law's line that
 replaces it.
 
-## How a later worker closes a mark
+## How a mark is closed
 
 1. Take the mark's entry: its proposed module, its numbers and its source.
 2. Write the function in that module, importing `rule3` and deriving the
@@ -138,7 +137,7 @@ replaces it.
 3. Where the number also stands in the documents, add a `derivation` rule to
    the number's row of `tools/numbers.json` (`module`, `function`, `expected`,
    `digits`); documents gate (3) then holds the number to the script.
-4. The writer names the script beside the mark in `main.tex`,
+4. The script is named beside the mark in `main.tex`,
    `\texttt{<module>.py}` inside the mark's parenthesis, and `gate_scripts`'s
    count falls by one; lower `SCRIPTLESS_MARKS` and the entry's status in
    `paper_marks.json` accordingly, with the paper's new head in the header.
@@ -180,7 +179,7 @@ numbers (`paper/general_formula/einstein_check.py`, `stable_body_check.py`,
 coefficients, count wall and loader and stands under the paper-side ratchet;
 the header lists the law's line that replaces each import (w = 6 den Gamma^2,
 R = 2 num Gamma^2, S = 0 at the vacuum's paces; W_c = 3 den T; the files are
-JSON), so the import can drop when the writer re-pins the paper. A module of
+JSON), so the import can drop when the paper is re-pinned. A module of
 this folder never imports the engine: `units.py` held the engine's
 `count_wall` and `click.squared` as a second method until this gate, and the
 engine's agreement with the formulas is the test's.

@@ -1,3 +1,0 @@
-{common}
-
-Your assignment: the cold read, as a referee of Foundations of Physics who has never seen the project: the abstract, Sections 1, 5, 6.2, 8, 9, the Statements and the supplement's front. Four verdicts in one word each with one sentence of reason: important, interesting, coherent, no overclaim. Then the rows: every sentence that claims beyond its marks, every number without a source, every status word wrong by the key, every contradiction between two places of the paper, every known work a referee would expect and does not find. Three questions a referee would ask, each with where the paper answers it or does not.

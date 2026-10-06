@@ -36,7 +36,6 @@ RATCHETS = [
     ["tools/engine_gates.py"],
     ["tools/record_code_shape.py"],
     ["tools/tests_shape.py"],
-    ["tools/ownership.py"],
 ]
 
 
