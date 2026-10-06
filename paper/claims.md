@@ -113,7 +113,7 @@ Rows with a claim mark: 106, 27 with a breaker written; rows of a derived, compu
 | 103 | 373 | sec:limits > sec:misses | derived | lattice | a | S.52 | Universe24 is a mean-field theory of one quantum: it computes helium at the Hartree-Fock value, $-2.8617$ Ha \cite{roothaan}, and lacks the correlation energy and the rad... |  |  |
 | 104 | 377 | sec:limits > sec:inputs | assumption,declaration | lattice,clicks | declaration | NO SOURCE | The model declares and does not derive: a field's entry and the integers $\Gamma = 6{,}000$, a multiple of $6$ so that light's and matter's pairs are exact over it, the b... |  |  |
 | 105 | 377 | sec:limits > sec:inputs | calibration,experiment,hypothesis | clicks | d | S.11; S.48 | The numbers of the file are nature's or declarations, none the rule's: the vacuum level, a declaration; the binding range following from the pair (S.11); gravity's weight... |  |  |
-| 106 | 386 | sec:conclusion | hypothesis | clicks | declaration | S.36; S.37; S.45; S.53; Sec sec:clickalgebra | The conjectures stand in the long version at the tag paper-long-v1.1, one line each here (hypothesis; no number of the paper rests on the last; clicks; the long version's... |  |  |
+| 106 | 386 | sec:conclusion | hypothesis | clicks | declaration | S.37; S.45; S.53; Sec sec:clickalgebra | The conjectures stand in the long version at the tag paper-long-v1.1, one line each here (hypothesis; no number of the paper rests on the last; clicks; the long version's... |  |  |
 
 ## B. Unmarked sentences with a strong word, candidates for a row of kind (a) or (e)
 
@@ -208,7 +208,7 @@ Rows with a claim mark: 106, 27 with a breaker written; rows of a derived, compu
 | 87 | 373 | sec:limits > sec:misses | bound | The lattice's scale: the massless band's quartic term gives the quadratic Lorentz-violation scale $E_{\mathrm{QG},2} = \hbar c / (\ell_{\mathrm{Link}}\sqrt{\varepsilon_4}... |
 | 88 | 373 | sec:limits > sec:misses | bound | The click's write conserves no momentum, so the recoil is the NodeDetector's, where nature's counter recoils, as in the M\"ossbauer line \cite{mossbauer} and the Compton ... |
 | 89 | 373 | sec:limits > sec:misses | keeps | Neither layer keeps a total energy (a theorem for the step's conservations, an assumption for the clicks'). |
-| 90 | 373 | sec:limits > sec:misses | bound | No standing bound state is claimed from a run; the closed box's filling, the potentials' swing growing linearly over the declared run, is the one open physics finding of ... |
+| 90 | 373 | sec:limits > sec:misses | bound | No standing bound state is claimed from a run (the closed box's swing, the archive's one open physics finding, a lattice reading, in the Statements and Declarations). |
 | 91 | 377 | sec:limits > sec:inputs | bound | What is held to be computable and not computed: the bound states at the closing gap, the moving fixed point of a bound state, and the absorbed fraction with the bound sta... |
 
 ## E. Unmarked sentences named by hand as claims (the engine's own rule among them)

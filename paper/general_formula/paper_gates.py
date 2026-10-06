@@ -187,7 +187,7 @@ TWINS = [
         [
             (
                 "main.tex",
-                "the commit 1fe3790a of 2026-10-05, the commit the two slits ran at",
+                "the code of the commit 1fe3790a of 2026-10-05 the two slits ran at",
             ),
             (
                 "supplement.tex",
