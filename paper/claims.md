@@ -239,7 +239,7 @@ Rows with a claim mark: 156, 26 with a breaker written; rows of a derived, compu
 | 68 | 284 | sec:builds > sec:body | fixed point | For power-law kernels, at a fixed point of the binding potential the virial $2K = \sum_r \sigma_r s_r V_r$ holds, $\sigma_r = +1$ for a hollow and $-1$ for a hill, and th... |
 | 69 | 284 | sec:builds > sec:body | bound | A bound state is stable along the dilation only where this sum is positive; the statement is along the dilation alone, and a full minimum of $F$ would need the Hessian's ... |
 | 70 | 287 | sec:builds > sec:body | bound | No standing bound state is claimed from a run (a lattice reading, named; lattice). |
-| 71 | 287 | sec:builds > sec:body | bounded | The compact branch is coarse in the lattice's pixel by construction, its drift and breathing bounded by $(\mathrm{Link} / R)^2$ and $\sqrt n / A$ (S.53), and whether a la... |
+| 71 | 287 | sec:builds > sec:body | bounded | The compact branch is coarse in the lattice's pixel by construction, its drift and breathing bounded by $(\mathrm{Link} / R)^2$ and $\sqrt n / A$ (the long version's Sect... |
 | 72 | 289 | sec:builds > sec:body | bound | In the model an atom is a bound state of the charge potential. A hydrogen nucleus, one quantum of the proton's field, writes the time angle $\theta_0 = Z\alpha c / r$, wi... |
 | 73 | 289 | sec:builds > sec:body | bound | The criterion is a rule of reading: what nature splits with energy is read as a bound state, and what no energy splits as a quantum of a field, a quantum itself never bre... |
 | 74 | 291 | sec:builds > sec:bodyclicks | bound | \subsection{A bound state's clicks}\label{sec:bodyclicks} |
