@@ -173,6 +173,20 @@ The long version's tools, handed to the editor for the short main text and the r
 (the owner's word of 2026-10-05); each line says what the tool checks, how it runs and what the
 short version changes in it. Run them in the order of the last paragraph after every push.
 
+**The closing round in one command** (`general_formula/closing_round.py`, the owner's word of
+2026-10-06, "automate this, then the agents' checks"): at a commit it runs the ten gates, the claims
+reader's counts, the checker against the long version with the accepted misses of
+`accepted_misses.txt` (the hands' list, one number per line), the seam gates against
+`seam_baseline.json` when both exist, the Crossref check, the Springer build of both documents, the
+project's checks, CI's check runs at the commit and the open audit issues newer than it, and prints one
+table with the verdict CONVERGED or NOT YET (exit 0 or 1), written to `artifacts/closing_round.md`; `--offline`
+skips Crossref, `--no-ci` the two GitHub reads, `--full` runs every test. The readers' half is
+`general_formula/readers.py`: `prompts --since <commit>` writes the sub-agent readers' prompts from the
+templates in `readers/` (the cold read, the statuses, the terms and the hostile pass at every cut; a
+section reader for every section the diff touched and a derivation reader per group of touched
+derivations), the same text whoever launches them; `collect <directory>` reads their reports' tables and
+writes one summary, every blocking row first, with the counts per reader.
+
 **The gates on every pull request** (`tools/every_pull_request.txt`: the paper gates, the documents
 gate and the language gate; `python tools/check.py` selects the changed files and their consumers,
 `--full` runs everything, every test under 30 s). `general_formula/paper_gates.py` runs ten gates on
