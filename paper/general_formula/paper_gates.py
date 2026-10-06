@@ -129,7 +129,7 @@ TWINS = [
     (
         "positronium's convention",
         [
-            ("main.tex", "positronium at $43$ percent of it"),
+            ("supplement.tex", "positronium at $43$ percent of it"),
             ("supplement.tex", "positronium $43$ percent of nature's"),
             ("supplement.tex", "$43$ percent of nature's, the line at $37$"),
         ],
@@ -150,7 +150,7 @@ TWINS = [
     ),
     (
         "the neutron's lifetime",
-        [("main.tex", "$878.4 \\pm 0.5$"), ("supplement.tex", "$878.4 \\pm 0.5$")],
+        [("supplement.tex", "$878.4 \\pm 0.5$")],
     ),
     (
         "Compton's factor at the computed pair",
@@ -169,7 +169,7 @@ TWINS = [
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
-    ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$")]),
+    ("Delta = 1/m*", [("supplement.tex", "$\\Delta = 1 / m^*$")]),
     (
         "the two slits at the fixed lay",
         [
@@ -191,7 +191,7 @@ TWINS = [
             ),
             (
                 "supplement.tex",
-                "the run's record is deposited with the paper (Statements and Declarations)",
+                "the run's reading is deposited with the paper (Statements and Declarations)",
             ),
         ],
     ),
