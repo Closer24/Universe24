@@ -1,4 +1,4 @@
-include LICENSE CITATION.cff README.md CONTRIBUTING.md
+include LICENSE CITATION.cff README.md
 include .python-version
 recursive-include docs *.md
 recursive-include examples *.json

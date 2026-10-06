@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "event-universe"
-version = "1.0.0"
+version = "1.1.0"
 description = "A local integer 3D event-field research simulator"
 readme = "README.md"
 requires-python = ">=3.14"
