@@ -62,6 +62,24 @@ def kicks(k: int, count: int, clicks: int) -> list[int]:
     return [whole[step] - whole[step - 1] for step in range(1, clicks + 1)]
 
 
+def booked_kicks(arrivals: list[int], count: int) -> tuple[list[int], int]:
+    """The proposition's books for a sequence of arriving wave numbers of one axis, mixed in sign and size: the
+    taker's books hold a signed remainder r with |r| < M; at a click with the arrival k the sum s = r + k gives the
+    kick delta k = sgn(s) (|s| div M) and the new remainder r' = s - M delta k, so that r + k = M delta k + r' at
+    every click (the identity asserted here) and M (sum of the kicks) + r = sum of the arrivals over any run."""
+    books = 0
+    kicked: list[int] = []
+    for arrival in arrivals:
+        total = books + arrival
+        kick, rest = symmetric_divmod(total, count)
+        assert books + arrival == count * kick + rest and abs(rest) < count, (books, arrival, kick, rest)
+        assert rest == 0 or (rest > 0) == (total > 0), (total, rest)
+        kicked.append(kick)
+        books = rest
+    assert count * sum(kicked) + books == sum(arrivals), (kicked, books, arrivals)
+    return kicked, books
+
+
 def band_omega(k: float, num: int, den: int) -> float:
     """The band along one axis, cos omega = (num / den)(1 - (1 - cos k) / 3)."""
     return math.acos((num / den) * (1 - (1 - math.cos(k)) / 3))
@@ -130,6 +148,18 @@ def main() -> None:
         )
     assert kicks(count, count, 3) == [1, 1, 1] and kicks(-count, count, 3) == [-1, -1, -1], (
         "the boundary |k_a| = M"
+    )
+    for k_same in (3, -3, 7, 10):
+        assert booked_kicks([k_same] * 7, count)[0] == kicks(k_same, count, 7), k_same
+    mixed = [3, -5, 10, 3, 3, -7, 2]
+    kicked_mixed, books = booked_kicks(mixed, count)
+    assert (
+        kicked_mixed == [0, 0, 1, 0, 1, -1, 0] and books == 2 and count * sum(kicked_mixed) + books == 9
+    )
+    print(
+        f"the books with mixed arrivals {mixed} against M = {count}: the kicks {kicked_mixed}, the books {books}, "
+        f"M (sum of the kicks) + the books = {count * sum(kicked_mixed) + books} = the arrivals' sum {sum(mixed)}; "
+        f"one arrival repeated gives kicks() exactly"
     )
     for k_odd in (3, 7, 10):
         twist, rest = symmetric_divmod(k_odd, count)
