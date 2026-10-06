@@ -187,6 +187,19 @@ section reader for every section the diff touched and a derivation reader per gr
 derivations), the same text whoever launches them; `collect <directory>` reads their reports' tables and
 writes one summary, every blocking row first, with the counts per reader.
 
+**The seam gates** (`general_formula/seam_gates.py`, the owner's word of 2026-10-05, "fix in one blow", at
+the two hands' specification): four reports on the joins between the main text and Online Resource 1,
+printed as rows, exit 0 until their ratchets are set. The pointer holds: every number and subscripted
+symbol of a marked sentence stands in a derivation the sentence cites, by printed digits (a rounding
+holds, a different number does not); a sentence citing a section alone is listed, not failed. The
+status not stronger: a mark's claim word never above the cited Status line's, in the key's own order
+(theorem, derived, computed), the provenance words equal in kind, the Status line read by the segment
+the mark cites, and each condition phrase of the Status line required in the sentence. The law's
+lines: a sentence of the model's sections naming an act of the law shares a run of five words with the
+law's document. The words: the free nouns on their word boundary, and a Nomenclature symbol named in
+the main at its first use. Their counts become ratchets in `tests/test_seam_gates.py` after the one
+push that fixes the first list.
+
 **The gates on every pull request** (`tools/every_pull_request.txt`: the paper gates, the documents
 gate and the language gate; `python tools/check.py` selects the changed files and their consumers,
 `--full` runs everything, every test under 30 s). `general_formula/paper_gates.py` runs ten gates on
