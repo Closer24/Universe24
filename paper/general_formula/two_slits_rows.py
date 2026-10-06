@@ -67,9 +67,10 @@ SCREEN_X, ROWS_PER_REGION = 44, 4
 
 
 def save(fig: Figure, path: Path) -> None:
-    """The PDF the paper includes and the EPS a journal asks for, side by side."""
+    """The PDF the paper includes, the EPS a journal asks for and a PNG preview, side by side."""
     fig.savefig(path)
     fig.savefig(path.with_suffix(".eps"))
+    fig.savefig(path.with_suffix(".png"), dpi=150)
 
 
 def world(ax: Axes) -> None:
