@@ -41,7 +41,7 @@ abstract: >-
   paper's documents, files and scripts are in the repository.
 preferred-citation:
   type: article
-  title: "Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds"
+  title: "Universe24: one simple rule, the formulas it shares with nature and adds"
   authors:
     - family-names: Gonen
       given-names: Alon
