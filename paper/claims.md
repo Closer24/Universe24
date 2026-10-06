@@ -156,7 +156,7 @@ Rows with a claim mark: 149, 23 with a breaker written; rows of a derived, compu
 | 146 | 421 | sec:limits > sec:inputs | assumption,fitted,declaration,hypothesis | lattice,clicks | declaration | Sec sec:clickalgebra | One line beyond the law stands beside them, the click's twist of Section~\ref{sec:clickalgebra}, chosen with the per-click conservation of momentum in view, an input to n... |  |  |
 | 147 | 428 | sec:conclusion | derived,assumption,hypothesis | clicks | a | S.56; S.35; S.21; Sec sec:families; Sec sec:misses | The one assumption, which clocks a Link twice, applied to a moving source gives the Port's phase with no number put in, and with it frame dragging's form, $g_{0j} = -4V_j... |  |  |
 | 148 | 428 | sec:conclusion | derived,assumption,untested | lattice | a | S.56 | Its two lattice terms stand as predictions, light undragged by a rotating mass, which a ring laser's Lense-Thirring term \cite{ginger} and a spinning black hole's shadow ... |  |  |
-| 149 | 432 | sec:conclusion | inspiration,hypothesis,fitted,derived,computed | lattice,clicks | a | Sec sec:clickalgebra; Sec sec:misses | The conjectures stand in Online Resource 1, Section B.12, one line each (inspiration for the directions, hypotheses under their own names; the click's twist a hypothesis,... |  |  |
+| 149 | 432 | sec:conclusion | inspiration,hypothesis,fitted,derived,computed | lattice,clicks | a | Sec sec:clickalgebra | The conjectures stand in Online Resource 1, Section B.12, one line each (inspiration for the directions, hypotheses under their own names; the click's twist a hypothesis,... |  |  |
 
 ## B. Unmarked sentences with a strong word, candidates for a row of kind (a) or (e)
 
