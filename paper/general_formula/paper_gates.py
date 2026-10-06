@@ -169,7 +169,7 @@ TWINS = [
             ("supplement.tex", "$3\\,\\den\\,T$ for a massless family"),
         ],
     ),
-    ("Delta = 1/m*", [("main.tex", "$\\Delta = 1 / m^*$")]),
+    ("Delta = 1/m*", [("supplement.tex", "$\\Delta = 1 / m^*$")]),
     (
         "the two slits at the fixed lay",
         [
