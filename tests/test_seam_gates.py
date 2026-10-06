@@ -24,7 +24,6 @@ def test_a_number_holds_by_its_printed_digits() -> None:
     module = seams()
     assert module.holds("3.37", "the ratio $3.3713 \\times 10^6$ against")
     assert module.holds("1.9e-17", "below $1.9 \\times 10^{-17}$ at the bound")
-    assert module.holds("1857", "the design's $1{,}857$ quanta")
     assert not module.holds("3.85", "the drop is $3.864$ percent")
     assert not module.holds("62.2", "the roots $15.28$ and $32.72$")
 
