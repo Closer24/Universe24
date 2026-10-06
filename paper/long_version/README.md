@@ -1,0 +1,3 @@
+# The long version of the paper
+
+This folder holds the long version of the article "Universe24: an integer cellular automaton read through clicks, the formulas it shares with nature and the ones it adds" (A. Gonen, 2026), frozen at the repository's tag `paper-long-v1.1`, before the law's write of the odd Link part: `main.tex` and `main.pdf` (the article), `supplement.tex` and `supplement.pdf` (its derivations S.1 to S.61) and the figures. The short version in `paper/general_formula/` cites it as "the long version" by its section and derivation numbers; it is kept here so that the deposit holds it and it is never edited.
