@@ -15,7 +15,7 @@ Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md
 
 ## The checks
 
-Format and check the changed Python files with `python -m ruff format` and `python -m ruff check`, then run `python tools/check.py`: it selects the changed files and their consumers and runs Ruff, strict mypy, the gates and the tests they need (`--dry-run` prints the selection, `--tests` adds a dependency the selector cannot see, `--full` is the explicit complete audit). Never drop a related failing test or disable a gate.
+With Python 3.14 or later, which `pyproject.toml` requires, format and check the changed Python files with `python -m ruff format` and `python -m ruff check`, then run `python tools/check.py`: it selects the changed files and their consumers and runs Ruff, strict mypy, the gates and the tests they need (`--dry-run` prints the selection, `--tests` adds a dependency the selector cannot see, `--full` is the explicit complete audit). Never drop a related failing test or disable a gate.
 
 ## Pull requests
 
