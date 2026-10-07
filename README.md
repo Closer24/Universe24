@@ -39,6 +39,10 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 
 [examples/events/two_slits/](examples/events/two_slits/) is the declared universe of the paper's Section 6: its design (`design.json`, every number with its reason), its world `two_slits.json` on the universe file `examples/events/light.json`, its blind row written before any run (`expectation.json`) and its reading beside the blind (`blind_and_reading.md`). The other folders under `examples/events/` are the worlds the implementation's tests load; no claim of the paper rests on them.
 
+## Open problems
+
+What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the findings against nature with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the moving body's lay declared and not built). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+
 ## Contributing
 
 Contributions are welcome, through forks and pull requests. A physics change starts from the law's line in [docs/ALGEBRA.md](docs/ALGEBRA.md) and passes the three tests, generic, vector and local, before it enters, and every change runs `python tools/check.py`. The rules and the checks are in [CONTRIBUTING.md](CONTRIBUTING.md).
