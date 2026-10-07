@@ -2,6 +2,10 @@
 
 Universe24 is the clicks of one line of integer arithmetic: a cubic lattice of Nodes, two integer levels and a remainder per part of a field, stepped by one recurrence, Rule3, from a Node's present, past and six neighbours, reversibly and covariantly under the cube's 48. The lattice is read only through declared counting regions, NodeDetectors, its clicks the only measurements, each the meeting of the forward field with the transition read backward. From it follow, in lattice form, the Klein-Gordon equation with Schroedinger's slow limit, Planck's relation in the band's form and, under one assumption fixed by two measurements, the exponential weak-field metric; the lattice's own terms stand under their conditions, predictions where unread, bounded where read; Bell's and Greenberger-Horne-Zeilinger correlations follow from the declared counting rule; the misses are named, a decelerating cosmology among them. The paper has one claim: that Universe24 helps compute things in nature. It does not claim that nature is such a lattice.
 
+## The aim
+
+This repository is meant to be carried on. Its aim is a complete physics in integers: a world of one rule and its clicks that shows what nature shows, built experiment by experiment by the paper's method, a declared universe, a blind row written before the first run, the clicks against the measurement. What stands today is what the paper computes of nature, the hits and the misses alike; what is open is named below, and anyone may take a piece of it. The paper's one claim is that Universe24 helps compute things in nature, and the repository's aim is to make that claim wider, formula by formula.
+
 ## The paper
 
 The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with `main.pdf`, `supplement.tex` with `supplement.pdf` (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
@@ -38,6 +42,18 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 ## The two slits' universe
 
 [examples/events/two_slits/](examples/events/two_slits/) is the declared universe of the paper's Section 6: its design (`design.json`, every number with its reason), its world `two_slits.json` on the universe file `examples/events/light.json`, its blind row written before any run (`expectation.json`) and its reading beside the blind (`blind_and_reading.md`). The other folders under `examples/events/` are the worlds the implementation's tests load; no claim of the paper rests on them.
+
+## What you can build with it
+
+A world is a universe file and nothing else: the families with their bands and the holders they read, the bodies with their counts, the NodeDetectors as declared counting regions, the box's size and its axes, periodic, open or folded, and its walls with slits. The engine steps the file in bounded integers by the one line, Rule3; the clicks of the NodeDetectors are the measurement, and the look page draws every family's arrays frame by frame. Any experiment that can be declared as such a file and read through clicks can be run this way: a source, a wall with one slit or two or with any declared pattern of gaps, a body at rest (a moving body's lay is named in docs/ENGINE.md's section 10 as not built), light meeting matter. [docs/ENGINE.md](docs/ENGINE.md) states the file's rows (section 4), the output (section 5), how to run a world (section 6), how to add a family (section 7) and how to build an experiment with its blind row written before the first run (section 9); the two slits' folder is the worked example.
+
+The paper's method does not need a run: [tools/derivations/](tools/derivations/) computes the law's numbers from Rule3's line alone, and a new formula of the law is derived the same way, its line in [docs/ALGEBRA.md](docs/ALGEBRA.md) first.
+
+The directions open to anyone: a larger Gamma with the one-way face (the paper's Section 8.3, what a world closer to nature needs), larger boxes and longer runs, the computations the engine leaves undone (docs/ENGINE.md, section 10, a Big Bang world among them, named there as an opening for others), the bound bodies' numbers where the model misses nature (Section 8.1), the integer-step form of the stability theorem (Section 4.2), and the rendering of tools/look/. The lattice is the simple cubic lattice with the cube's group of 48 and the rule is Rule3: another lattice or another rule is a hypothesis under its own name, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+
+## Open problems
+
+What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the moving body's lay declared and not built). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 

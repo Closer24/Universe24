@@ -10,7 +10,7 @@ name, a finding by name, open by name, decided. Every symbol is named in
 English where it first appears. A scalar is written plain, a vector in bold
 lowercase (**n**), a matrix or an operator in bold uppercase (**C**). A line
 that no longer holds is not in this document. An id of the form R42 or W11
-beside a clause names the finding's row in docs/REVIEW_LEDGER.md.
+beside a clause names a finding of the project's review, kept outside this tree.
 A decision named beside a line is in force as docs/HIGHLIGHTS.md records it.
 
 ## The lattice and the families
@@ -1109,7 +1109,7 @@ drifts, names a missing law; the body's own numbers are never patched.
 
 ### The method of derivation
 
-**The method of derivation is the law's own and the team's way of working** (`skills/workflow.md`). Every row of nature is derived from the law by one method, in six steps, and the paper explains it as its own:
+**The method of derivation is the law's own and the team's way of working**. Every row of nature is derived from the law by one method, in six steps, and the paper explains it as its own:
 
 1. **Start from Rule3's line alone.** A reader's band at the paces the row gives it, the clock once (p_0 = Gamma (1 - 1 / Gamma)^L, Gamma - L to first order) and the Link twice, the Node's own level (p_a = p_i q / Gamma with p_i = p_0^2 / Gamma the Node's pace and q = Gamma - t the Link's factor, Gamma - 2 L - t to first order; **The clock is the Node's, the tension is the Link's** and **The paces compose**, [the paces](#the-paces)): cos omega = 1 - g (p_0 / Gamma)^2 - (num / den) (p_a / Gamma)^2 (1 - cos k) / 3 with g = 1 - num / den ([the paces](#the-paces), **The band at a pace**; lattice). Every row of nature is read off this band; no structure is written before its band is computed (the odd line's pace read was, and its band is complex, [what is open](#what-is-open), item 15).
 2. **The source is a row's static rest.** The six Ports' Green's function at the row's pair, with a body's well C as the one number: U = mu / r with mu = 0.24 C / (LW Gamma), LW the level weight, gravity's divisor (**The lattice constants**, [the constants](#the-constants); lattice).
