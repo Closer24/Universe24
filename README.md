@@ -41,7 +41,7 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 
 ## Open problems
 
-What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the findings against nature with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the moving body's lay declared and not built). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the moving body's lay declared and not built). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 
