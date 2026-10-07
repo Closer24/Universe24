@@ -39,6 +39,10 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 
 [examples/events/two_slits/](examples/events/two_slits/) is the declared universe of the paper's Section 6: its design (`design.json`, every number with its reason), its world `two_slits.json` on the universe file `examples/events/light.json`, its blind row written before any run (`expectation.json`) and its reading beside the blind (`blind_and_reading.md`). The other folders under `examples/events/` are the worlds the implementation's tests load; no claim of the paper rests on them.
 
+## Contributing
+
+Contributions are welcome, through forks and pull requests. A physics change starts from the law's line in [docs/ALGEBRA.md](docs/ALGEBRA.md) and passes the three tests, generic, vector and local, before it enters, and every change runs `python tools/check.py`. The rules and the checks are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Licence and citation
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.
