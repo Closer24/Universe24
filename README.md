@@ -8,6 +8,16 @@ Universe24 is the clicks of one line of integer arithmetic: a cubic lattice of N
 
 This repository is meant to be carried on. Its aim is a complete physics in integers: a world of one rule and its clicks that shows what nature shows, built experiment by experiment by the paper's method, a declared universe, a blind row written before the first run, the clicks against the measurement. What stands today is what the paper computes of nature, the hits and the misses alike; what is open is named below, and anyone may take a piece of it. The paper's one claim is that Universe24 helps compute things in nature, and the repository's aim is to make that claim wider, formula by formula.
 
+## In plain words
+
+Suppose nature is discrete: space is made of Nodes, and between one Node and the next nothing moves faster than light. The distance between Nodes is then smaller than anything measured, so a cubic centimetre holds an astronomical number of them. No centre can know the state of all of them and decide for all of them; each Node must act on its own, by a rule of its own, seeing only itself and its six neighbours. That rule is what this repository holds: one line of integer arithmetic, with no free parameter.
+
+The rule, Rule3, is this. A Node holds a few bounded integers: its level now, its level one interval before, and a remainder. At every interval it computes its next level in five steps: it takes the levels of its six neighbours, each with a weight; adds its own level with a weight of its own; subtracts its level of the interval before; adds the remainder it carried; and divides the sum by a fixed integer. The quotient is the new level; the remainder stays at the Node for the next interval. Because the remainder is kept, nothing is lost, and the rule is exactly reversible: a world run backward returns its past exactly.
+
+The weights are not chosen by hand. They come from the family's pair of integers (one pair for light, one for a massive family) and from the Node's paces, the rate of its clock against its neighbours' through the Links; the differences of pace between Nodes are what gravity is here. At the vacuum's paces the rule reduces to a discrete wave equation, and from that line the paper derives its formulas: the ones nature shows and the ones it adds.
+
+A world is read only through clicks: declared counting regions, NodeDetectors, whose counts are the one measurement. The paper's one claim is that this rule helps compute things in nature, and every number it prints is reproduced by a script in this repository.
+
 ## The paper
 
 The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
