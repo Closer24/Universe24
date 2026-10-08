@@ -8,7 +8,7 @@ This repository is meant to be carried on. Its aim is a complete physics in inte
 
 ## The paper
 
-The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with `main.pdf`, `supplement.tex` with `supplement.pdf` (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with [`main.pdf`](paper/general_formula/main.pdf), `supplement.tex` with [`supplement.pdf`](paper/general_formula/supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex main.tex && TEXINPUTS=sn: pdflatex main.tex   # the same for supplement.tex
