@@ -9,8 +9,8 @@ packet's centre at the screen), as grey, the wall with its two gaps and the scre
 file's declarations. Nothing on the figure is a measurement; the measurement of this file is the screen's row of
 two_slits_rows.py (Fig. 6 of the paper).
 
-    python paper/general_formula/two_slits_frames.py                      draws figures/two_slits_frames.pdf and .eps
-    python paper/general_formula/two_slits_frames.py --look <world>.look.json   records the three frames first
+    python paper/two_slits_frames.py                      draws figures/two_slits_frames.pdf and .eps
+    python paper/two_slits_frames.py --look <world>.look.json   records the three frames first
 
 The recording figures/two_slits_frames.json holds the three frames alone (interval, shape, offset, the sparse level
 array) as the look tool wrote them, so that the figure is reproducible without the 14 MB look file.

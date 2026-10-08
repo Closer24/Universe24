@@ -1,4 +1,4 @@
-"""The derivations' gate (the owner's order of 2026-10-04, 04:20 UTC: every derived mark's script from Rule3 and nothing of the simulator; the law's sentence beside the method of derivation, step 6, "No line of the law is derived from the engine", tested here by name): every module of tools/derivations/ imports nothing of event_universe or src/ and names no run's file, a hard rule; the paper-side scripts of paper/general_formula/ that lean on the engine or read a run are a ratchet that only falls;
+"""The derivations' gate (the owner's order of 2026-10-04, 04:20 UTC: every derived mark's script from Rule3 and nothing of the simulator; the law's sentence beside the method of derivation, step 6, "No line of the law is derived from the engine", tested here by name): every module of tools/derivations/ imports nothing of event_universe or src/ and names no run's file, a hard rule; the paper-side scripts of paper/ that lean on the engine or read a run are a ratchet that only falls;
 the modules that do not root in tools/derivations/rule3.py are a ratchet that only falls, so a new module imports rule3; rule3.py's own checks, a plane wave at the derived omega satisfying the line to rounding and the conserved form exact over 50 intervals on a periodic chain of 24 Nodes with integer levels, the remainders' walk the law's term;
 and the inventory tools/derivations/paper_marks.json loads with every field, its scriptless marks a ratchet that only falls, and every mark it names scripted is its script's output to the digits printed."""
 
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DERIVATIONS = ROOT / "tools" / "derivations"
-PAPER_SCRIPTS = ROOT / "paper" / "general_formula"
+PAPER_SCRIPTS = ROOT / "paper"
 INVENTORY = DERIVATIONS / "paper_marks.json"
 # the engine's package, its folder and a tool that imports it; a run's files
 ENGINE = ("event_universe", "src", "click_counts")
@@ -170,7 +170,7 @@ def test_the_inventory_loads_and_its_scriptless_marks_only_fall():
     """(d) paper_marks.json loads, names the paper's head, every entry carries the fields and a computed one its reader, counterpart and bound, and the scriptless count is at most the ratchet's."""
     document = json.loads(INVENTORY.read_text(encoding="utf-8"))
     header, marks = document["header"], document["marks"]
-    assert len(header["paper_head"]) == 40 and header["main_tex"] == "paper/general_formula/main.tex"
+    assert len(header["paper_head"]) == 40 and header["main_tex"] == "paper/main.tex"
     for entry in marks:
         assert all(field in entry for field in FIELDS), entry
         assert entry["mark"] in ("derived", "computed") and entry["status"] in STATUSES
@@ -184,7 +184,7 @@ def test_the_inventory_loads_and_its_scriptless_marks_only_fall():
         if entry["mark"] == "computed":
             assert all(field in entry for field in COMPUTED_FIELDS), entry["line"]
         if entry["existing_script"] is not None:
-            assert entry["existing_script"].startswith(("paper/general_formula/", "tools/derivations/"))
+            assert entry["existing_script"].startswith(("paper/", "tools/derivations/"))
     scriptless = sum(entry["status"] == "scriptless" for entry in marks)
     assert header["counts"]["scriptless"] == scriptless <= SCRIPTLESS_MARKS
 

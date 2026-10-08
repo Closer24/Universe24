@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are welcome: a bug found in the implementation, a derivation checked, a world built by the paper's method, a formula tested against a measurement. The way in is a fork, a branch and a pull request to `main`, which takes a pull request only, with the CI checks green and one review. The paper's text in `paper/general_formula/` is the version of record, and changes to it are the author's.
+Contributions are welcome: a bug found in the implementation, a derivation checked, a world built by the paper's method, a formula tested against a measurement. The way in is a fork, a branch and a pull request to `main`, which takes a pull request only, with the CI checks green and one review. The paper's text in `paper/` is the version of record, and changes to it are the author's.
 
 Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md), described in [docs/ENGINE.md](docs/ENGINE.md). The engine is frozen at the commit 441b2399 and is not updated: the lines of the law entered after the freeze are not in it, and the paper's two slits' run alone is the implementation's. A contribution is read against the law.
 

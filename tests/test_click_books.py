@@ -1,11 +1,11 @@
-"""The proposition's books in paper/general_formula/click_algebra.py: r + k = M delta k + r' at every click, |r'| < M,
+"""The proposition's books in paper/click_algebra.py: r + k = M delta k + r' at every click, |r'| < M,
 and M (sum of the kicks) + r = sum of the arrivals over any run; one arrival repeated reproduces kicks()."""
 
 import importlib.util
 from pathlib import Path
 from types import ModuleType
 
-SCRIPT = Path(__file__).resolve().parents[1] / "paper" / "general_formula" / "click_algebra.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "paper" / "click_algebra.py"
 
 
 def algebra() -> ModuleType:

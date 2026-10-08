@@ -10,7 +10,7 @@ fall for the row, and equals the closed form 2 cos omega_0 / (3 (1 + cos omega_0
 (3) the free quantum is cold: its rest rotation is omega_0 and its group velocity (num / 3 den)
 sin k / sin omega tends to 0 with k, a slow fall and no light. No run of the engine, no file read.
 
-    python paper/general_formula/dark_matter_check.py
+    python paper/dark_matter_check.py
 """
 
 from __future__ import annotations

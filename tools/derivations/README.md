@@ -26,7 +26,7 @@ the engine.
   named, compared positionally, so a number of the documents is its script's.
 - `tests/test_derivations_lean_on_rule3_alone.py`: (a) every module here
   imports nothing of the engine and names no run's file, a hard rule, and the
-  paper-side scripts of `paper/general_formula/` that lean on the engine or
+  paper-side scripts of `paper/` that lean on the engine or
   read a run are a ratchet that only falls (`PAPER_SCRIPTS_LEANING_ON_THE_ENGINE`,
   2 at the paper's head d75c42a9); (b) the modules here that do not import
   `rule3` are a ratchet that only falls (`MODULES_WITHOUT_RULE3_ROOT`, at most
@@ -110,7 +110,7 @@ whose enclosing parenthesis names no `\texttt{<name>.py}`, by the rule of
 the file's header: the line, the mark, the section of `main.tex`, the
 sentence, its printed numbers, the supplement derivation or section it cites,
 the existing script that already gives its numbers where one exists under
-`paper/general_formula/` or here, the proposed module here, and the status
+`paper/` or here, the proposed module here, and the status
 `scriptless`. A computed mark, a reading of the implementation's run, names
 its reader (the run's reader or its test, never a derivation) and two more
 fields: `derived_counterpart`,
@@ -172,7 +172,7 @@ replaces it.
 The existing modules `units.py`, `wells.py`, `two_body.py` and
 `greens_function.py` receive no new mark and stand as existing scripts for
 several. Forty-four marks already have a script whose output gives their
-numbers (`paper/general_formula/einstein_check.py`, `stable_body_check.py`,
+numbers (`paper/einstein_check.py`, `stable_body_check.py`,
 `moving_clock.py`, `bands.py`, `invariant_check.py`, `band_and_channels.py`,
 `click_body.py`, `two_slits_real_line.py` and the modules here); the field
 `existing_script` names it. `two_slits_real_line.py` imports the engine's

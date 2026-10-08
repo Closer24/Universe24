@@ -9,7 +9,7 @@ omega_0 + k^2 / (2 m*), the top at arccos(2 / 9) = 1.347); along the cube's diag
 cos omega = cos k exactly. The two slits' wave, k = pi / 4 on light's band, omega = 0.4456.
 Every number here is the formula's; nothing is read from a run of the engine.
 
-    python paper/general_formula/bands.py --output paper/general_formula/figures
+    python paper/bands.py --output paper/figures
 
 Needs matplotlib.
 """

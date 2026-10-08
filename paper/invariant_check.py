@@ -3,7 +3,7 @@ a_next + a_before = 2 cos(omega_t) a_now stepped over 20,000 intervals with omeg
 to 0.600 keeps D / sin(omega) = A^2 sin(omega), D = a_t^2 - a_{t+1} a_{t-1}, within 4 x 10^-5 of its start while
 D itself falls by a quarter. Floating point, one Node, no run of the engine.
 
-    python paper/general_formula/invariant_check.py
+    python paper/invariant_check.py
 """
 
 from __future__ import annotations

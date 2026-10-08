@@ -8,7 +8,7 @@ m* = 3 tan omega_0 (the group velocity k_0 / m*, the spread a(T)^2 = a^2 + (T / 
 density's width a = sigma_0 / sqrt 2, sigma_0 the amplitude's) and beside the exact band's group
 velocity. Real arithmetic, no run of the engine, no file read.
 
-    python paper/general_formula/schroedinger_check.py
+    python paper/schroedinger_check.py
 """
 
 from __future__ import annotations
