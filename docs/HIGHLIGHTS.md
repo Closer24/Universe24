@@ -92,6 +92,6 @@ points at the law, the law's line governs and no formula is restated here.
 - The paper takes nothing of the open bins: the pair of two bound records and the cross term are hypotheses under their own names in the law and outside the paper until a world has run at two hands; the radiated share's coefficient and the holders' balance stand in the supplement as named open items with their status; what is printed stays as it is.
 - The paper claims nowhere beyond what was shown and names which experiments ran by Rule3.
 - The paper claims only what cannot be killed; what does not endanger us is the guideline for every sentence.
-- The title is "Universe24: one simple rule, the formulas it shares with nature and adds", with six keywords, the field Foundations of Physics, arXiv quant-ph with gr-qc and nlin.CG as cross-lists, in the author's voice.
+- The title is "Universe24: one simple rule, the formulas it shares with nature and adds", with six keywords, the field Foundations of Physics, in the author's voice; arXiv only with the journal's reference (the owner's word of 2026-10-08).
 - The paper's gate (the marks against the key, the struck phrases asserted absent, the twins asserted present) runs as a test on every pull request; every derived or theorem mark carries its fence, the fence following the sentence's object.
 - The quantum computer is not for the paper.
