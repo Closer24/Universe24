@@ -679,7 +679,7 @@ def check_the_atoms_self_term() -> Check:
 
 
 def check_the_equivalence_principle_between_families() -> Check:
-    """S.47; main.tex Section 8 (i): 2 nu / (1 + nu) = 1 - tan^2(omega_s / 2) exactly with nu = cos omega_s, so two families fall apart by tan^2(omega_n / 2) - tan^2(omega_p / 2), (omega_n^2 - omega_p^2) / 4 at small gaps; beryllium (5 / 9) against titanium (26 / 48) differ in their neutron fractions by 0.0139, omega_n^2 - omega_p^2 = (1838.68^2 - 1836.15^2) omega_e^2 = 9,297 omega_e^2, and eta = 0.0139 x 2,324 omega_e^2 = 32.3 omega_e^2, below 4.4 x 10^-18 at omega_e < 3.7 x 10^-10; the identity exact at rational points, the small-gap difference by the residual's order, the numbers recomputed."""
+    """S.47; Universe24_Paper.tex Section 8 (i): 2 nu / (1 + nu) = 1 - tan^2(omega_s / 2) exactly with nu = cos omega_s, so two families fall apart by tan^2(omega_n / 2) - tan^2(omega_p / 2), (omega_n^2 - omega_p^2) / 4 at small gaps; beryllium (5 / 9) against titanium (26 / 48) differ in their neutron fractions by 0.0139, omega_n^2 - omega_p^2 = (1838.68^2 - 1836.15^2) omega_e^2 = 9,297 omega_e^2, and eta = 0.0139 x 2,324 omega_e^2 = 32.3 omega_e^2, below 4.4 x 10^-18 at omega_e < 3.7 x 10^-10; the identity exact at rational points, the small-gap difference by the residual's order, the numbers recomputed."""
     draw = random.Random(SEED)
     for unit in angles(draw, 12):
         c = unit.re

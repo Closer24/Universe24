@@ -140,7 +140,7 @@ def check_the_acts_factors() -> Check:
 
 
 def check_the_exponential_metrics_post_newtonian_orders() -> Check:
-    """S.34 (c); S.19; main.tex Section 3.4: the exponential metric g_00 = -e^(-2 U) and g_ij = e^(2 U) delta_ij expand as -(1 - 2 U + 2 U^2) and (1 + 2 U + 2 U^2), so gamma = 1 exactly and beta = 1 in U; the two expansions' remainders are of the third order (-4 U^3 / 3 and 4 U^3 / 3); the far end, U = 0.5: e^(-1) = 0.368 against the truncation's 0.500 and e^1 = 2.718 against 2.500, the orders holding and the values parting."""
+    """S.34 (c); S.19; Universe24_Paper.tex Section 3.4: the exponential metric g_00 = -e^(-2 U) and g_ij = e^(2 U) delta_ij expand as -(1 - 2 U + 2 U^2) and (1 + 2 U + 2 U^2), so gamma = 1 exactly and beta = 1 in U; the two expansions' remainders are of the third order (-4 U^3 / 3 and 4 U^3 / 3); the far end, U = 0.5: e^(-1) = 0.368 against the truncation's 0.500 and e^1 = 2.718 against 2.500, the orders holding and the values parting."""
     first, orders_1 = has_order(lambda u: math.exp(-2 * u) - (1 - 2 * u + 2 * u * u), 3, step=0.1)
     second, orders_2 = has_order(lambda u: math.exp(2 * u) - (1 + 2 * u + 2 * u * u), 3, step=0.1)
     coefficient_1 = (math.exp(-2 * 0.01) - (1 - 0.02 + 0.0002)) / 0.01**3
@@ -156,7 +156,7 @@ def check_the_exponential_metrics_post_newtonian_orders() -> Check:
 
 
 def check_the_clocks_click_rate() -> Check:
-    """S.15, the clock's click rate; main.tex Section 7.4: Eq. (4) at k = 0 with p_0^2 = Gamma^2 (1 - 2 U + 2 U^2) gives cos omega(U) = cos omega_0 + 2 g U - 2 g U^2 exactly; to first order d omega / omega_0 = -f(omega_0) dU with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0), 1.063 at [2, 3]; f -> 1 as omega_0 -> 0, in series f = 1 + omega_0^2 / 12 + ..., 5.9 percent at the computed pair (6.3 exactly); the far end of the gap, num / den = 0.01: f = 1.269 against the series' 1.203; exact fractions for the quadratic clock, the residual's order for the first order (2 in U) and the series (4 in omega_0)."""
+    """S.15, the clock's click rate; Universe24_Paper.tex Section 7.4: Eq. (4) at k = 0 with p_0^2 = Gamma^2 (1 - 2 U + 2 U^2) gives cos omega(U) = cos omega_0 + 2 g U - 2 g U^2 exactly; to first order d omega / omega_0 = -f(omega_0) dU with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0), 1.063 at [2, 3]; f -> 1 as omega_0 -> 0, in series f = 1 + omega_0^2 / 12 + ..., 5.9 percent at the computed pair (6.3 exactly); the far end of the gap, num / den = 0.01: f = 1.269 against the series' 1.203; exact fractions for the quadratic clock, the residual's order for the first order (2 in U) and the series (4 in omega_0)."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 8):
         g = 1 - Fraction(num, den)
@@ -324,7 +324,7 @@ def check_the_moving_clock_to_the_fourth_order() -> Check:
 
 
 def check_de_broglie_and_the_three_speeds() -> Check:
-    """S.22; main.tex Section 3.3 and S.53: v = k / m* with m* = 3 tan omega_0, so k = m* v = omega_b v / c_m^2 with c_m^2 = omega_0 / m* = omega_0 / (3 tan omega_0), 0.2508 at [2, 3], and m* c_m^2 = omega_0 exactly for every pair; the family's own speed c_s^2 = num / (3 den), c_m^2 and light's 1 / 3 are one as the gap closes (c_m / c = 0.867 at [2, 3], 0.9997 at [999, 1000]); the identity exact, the limit at [999999, 1000000], the far end num / den = 0.01."""
+    """S.22; Universe24_Paper.tex Section 3.3 and S.53: v = k / m* with m* = 3 tan omega_0, so k = m* v = omega_b v / c_m^2 with c_m^2 = omega_0 / m* = omega_0 / (3 tan omega_0), 0.2508 at [2, 3], and m* c_m^2 = omega_0 exactly for every pair; the family's own speed c_s^2 = num / (3 den), c_m^2 and light's 1 / 3 are one as the gap closes (c_m / c = 0.867 at [2, 3], 0.9997 at [999, 1000]); the identity exact, the limit at [999999, 1000000], the far end num / den = 0.01."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 8) + [(1, 100), (999999, 1000000)]:
         if num == den:
@@ -445,7 +445,7 @@ def check_the_shadows_capture_radius() -> Check:
 
 
 def check_the_two_clocks_under_the_principle() -> Check:
-    """S.31; main.tex Table 4 and Section 3.4: every mode scales by N in 2 sin(omega / 2), so omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)] and the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at omega_1 = omega_2: at N = 0.8, omega_1 = 0.4, omega_2 = 0.9 the exact beat 0.3916 against N Delta = 0.4 and the series 0.3920; the correction 2.5 x 10^-38 at omega = 10^-14 and U = 10^-9; in omega the rest line's rate -2 tan(omega_0 / 2) / omega_0 = -f(omega_0) (the half-angle identity tan(omega / 2) = (1 - cos omega) / sin omega, exact at rational points); a cavity of bodies L / h = L N Links apart has the round trip 2 L N sqrt 3 / N^2 = 2 L sqrt 3 / N, the rate N exactly; the series by the residual's order 5, the numbers recomputed, the far end omega_1 = 2, omega_2 = 3 at N = 0.8."""
+    """S.31; Universe24_Paper.tex Table 4 and Section 3.4: every mode scales by N in 2 sin(omega / 2), so omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)] and the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at omega_1 = omega_2: at N = 0.8, omega_1 = 0.4, omega_2 = 0.9 the exact beat 0.3916 against N Delta = 0.4 and the series 0.3920; the correction 2.5 x 10^-38 at omega = 10^-14 and U = 10^-9; in omega the rest line's rate -2 tan(omega_0 / 2) / omega_0 = -f(omega_0) (the half-angle identity tan(omega / 2) = (1 - cos omega) / sin omega, exact at rational points); a cavity of bodies L / h = L N Links apart has the round trip 2 L N sqrt 3 / N^2 = 2 L sqrt 3 / N, the rate N exactly; the series by the residual's order 5, the numbers recomputed, the far end omega_1 = 2, omega_2 = 3 at N = 0.8."""
     draw = random.Random(SEED)
 
     def turned(n: float, omega: float) -> float:
