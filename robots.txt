@@ -1,0 +1,5 @@
+# Universe24: every crawler is welcome to read the whole site.
+User-agent: *
+Allow: /
+
+Sitemap: https://closer24.github.io/Universe24/sitemap.xml
