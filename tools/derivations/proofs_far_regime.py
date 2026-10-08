@@ -1,4 +1,4 @@
-"""The far-regime witnesses (the owner's order of 2026-10-04, 08:20 UTC, through the Boss): every claim of main.tex and supplement.tex that says "for every", "for all", "exactly", "at every step", "in the limit", "as the gap closes" or "to O(...)" and names a quantity, computed at the far end of its stated domain beside the claim's value, with whether they agree to the stated order; the claims of the band, the form, the paces, the credit and the bodies stand in their own modules with their far ends; this module holds the rest: the computed pair's limits, the clock's rate in the half sine, the cut region's uniform mode, the folded axis's band, Friedmann's dust equations and the Doppler-times-clock redshift, the content's first order in the clock, the two readings of beta, gamma_K - 1 as half the gap squared, the lattice's half-sine variable, the ports' orthogonality, the gap below 10^-18, the momentum identity at non-uniform paces and the Fourier weight of a smooth body.
+"""The far-regime witnesses (the owner's order of 2026-10-04, 08:20 UTC, through the Boss): every claim of Universe24_Paper.tex and Universe24_Supplement.tex that says "for every", "for all", "exactly", "at every step", "in the limit", "as the gap closes" or "to O(...)" and names a quantity, computed at the far end of its stated domain beside the claim's value, with whether they agree to the stated order; the claims of the band, the form, the paces, the credit and the bodies stand in their own modules with their far ends; this module holds the rest: the computed pair's limits, the clock's rate in the half sine, the cut region's uniform mode, the folded axis's band, Friedmann's dust equations and the Doppler-times-clock redshift, the content's first order in the clock, the two readings of beta, gamma_K - 1 as half the gap squared, the lattice's half-sine variable, the ports' orthogonality, the gap below 10^-18, the momentum identity at non-uniform paces and the Fourier weight of a smooth body.
 
 Usage: `python tools/derivations/proofs_far_regime.py` prints every verdict.
 """
@@ -31,7 +31,7 @@ from proofs_ground import (
 
 
 def check_the_computed_pairs_limits() -> Check:
-    """main.tex, Introduction: replacing the computed pair [2, 3] by [999, 1000] moves c_m / c from 0.867 to about 0.9997, and the computed pair's gamma_K and beta_K from 1.5 and 1.25 to about 1.001 and 1.0005, approaching 1 as the gap closes; c_m / c = sqrt(omega_0 / tan omega_0), gamma_K = den / num, beta_K = (den + num) / (2 num); the far end of the gap, num / den = 0.01, beside them."""
+    """Universe24_Paper.tex, Introduction: replacing the computed pair [2, 3] by [999, 1000] moves c_m / c from 0.867 to about 0.9997, and the computed pair's gamma_K and beta_K from 1.5 and 1.25 to about 1.001 and 1.0005, approaching 1 as the gap closes; c_m / c = sqrt(omega_0 / tan omega_0), gamma_K = den / num, beta_K = (den + num) / (2 num); the far end of the gap, num / den = 0.01, beside them."""
     rows = {}
     for num, den in ((2, 3), (999, 1000), (1, 100)):
         omega_0 = math.acos(num / den)
@@ -49,7 +49,7 @@ def check_the_computed_pairs_limits() -> Check:
 
 
 def check_the_clocks_rate_is_exact_in_the_half_sine() -> Check:
-    """main.tex Section 3.4; S.31: the clock's rate is N exactly in the lattice's variable 2 sin(omega / 2): from the band at a pace at k = 0, 1 - cos omega(U) = (1 - nu) N^2, so 2 sin^2(omega(U) / 2) = N^2 2 sin^2(omega_0 / 2) and 2 sin(omega(U) / 2) = N 2 sin(omega_0 / 2) exactly for every N; and in omega up to the finite-rotation correction omega_0^2 / 12, 5.9 percent at the computed pair (6.3 exactly); exact rationals in the half-sines squared, the far end of the content U = 4.7 (the frozen content, N^2 = e^(-9.4)) in floats."""
+    """Universe24_Paper.tex Section 3.4; S.31: the clock's rate is N exactly in the lattice's variable 2 sin(omega / 2): from the band at a pace at k = 0, 1 - cos omega(U) = (1 - nu) N^2, so 2 sin^2(omega(U) / 2) = N^2 2 sin^2(omega_0 / 2) and 2 sin(omega(U) / 2) = N 2 sin(omega_0 / 2) exactly for every N; and in omega up to the finite-rotation correction omega_0^2 / 12, 5.9 percent at the computed pair (6.3 exactly); exact rationals in the half-sines squared, the far end of the content U = 4.7 (the frozen content, N^2 = e^(-9.4)) in floats."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 8):
         for _ in range(5):
@@ -71,7 +71,7 @@ def check_the_clocks_rate_is_exact_in_the_half_sine() -> Check:
 
 
 def check_the_cut_regions_uniform_mode() -> Check:
-    """main.tex Section 5.3 (the NodeDetector with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
+    """Universe24_Paper.tex Section 5.3 (the NodeDetector with its own record): a region with its outer Links cut (the Link's factor 0 at both ends, the Node's own coefficient recomputed from its open Links) and its inner Links open has its uniform mode rotating at cos omega_0 = num / den exactly whatever the region's size: S_i = 12 den Gamma^2 - 12 (den - num) Gamma^2 - SUM over the open Ports of R_ij at the vacuum's clock, so (S_i + SUM over the open Ports of R_ij) / w = 12 num Gamma^2 / (6 den Gamma^2) = 2 num / den; exact rationals on chains of one to five Nodes."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 30)
@@ -103,7 +103,7 @@ def check_the_cut_regions_uniform_mode() -> Check:
 
 
 def check_the_folded_axis_carries_the_band() -> Check:
-    """main.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
+    """Universe24_Paper.tex Section 9.1: a record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly: on a chain with y and z folded (rule3.chain_arrivals, four Ports returning the Node itself) a plane wave along x satisfies the line at cos omega = (num / (3 den)) (cos k + 2), the band at k_y = k_z = 0; exact at rational angles by rule3.numerator."""
     draw = random.Random(SEED)
     for num, den in pairs(draw, 6):
         gamma = draw.randint(2, 20)
@@ -131,7 +131,7 @@ def check_the_folded_axis_carries_the_band() -> Check:
 
 
 def check_friedmanns_dust_equations_and_the_redshift() -> Check:
-    """main.tex Section 7.5; S.29: a shell at a feels the mass inside it, a'' = -(4 pi G_K / 3) rho a with rho a^3 constant, which integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, Friedmann's dust equations, the deceleration q_0 = Omega_m / 2 positive for every rho > 0; the invariant a'^2 - 2 mu / a, mu = (4 pi G_K / 3) rho a^3, has the derivative 2 a' (a'' + mu / a^2) = 0 exactly, and a fourth-order integration keeps it to 10^-12; the Doppler period of a receding source times the moving clock's factor, 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), nature's relativistic form to the second order, the classical 1 / (1 - beta) = 1 + beta + beta^2 differing there; the far end beta = 0.9."""
+    """Universe24_Paper.tex Section 7.5; S.29: a shell at a feels the mass inside it, a'' = -(4 pi G_K / 3) rho a with rho a^3 constant, which integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, Friedmann's dust equations, the deceleration q_0 = Omega_m / 2 positive for every rho > 0; the invariant a'^2 - 2 mu / a, mu = (4 pi G_K / 3) rho a^3, has the derivative 2 a' (a'' + mu / a^2) = 0 exactly, and a fourth-order integration keeps it to 10^-12; the Doppler period of a receding source times the moving clock's factor, 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), nature's relativistic form to the second order, the classical 1 / (1 - beta) = 1 + beta + beta^2 differing there; the far end beta = 0.9."""
     mu = 0.7
     a, v = 1.0, 1.5  # an unbound ball, so the integration meets no collapse
     invariant = v * v - 2 * mu / a
@@ -168,7 +168,7 @@ def check_friedmanns_dust_equations_and_the_redshift() -> Check:
 
 
 def check_the_contents_first_order_in_the_clock() -> Check:
-    """main.tex Section 8 (a); The ledger of exactness: p_0 / Gamma = (1 - 1 / Gamma)^l = e^(-U) exactly with U = -l ln(1 - 1 / Gamma), which is l / Gamma to the first order in 1 / Gamma, U - l / Gamma = l / (2 Gamma^2) + ...; the order by the residual in 1 / Gamma, the far end Gamma = 2 (0.693 l against l / 2)."""
+    """Universe24_Paper.tex Section 8 (a); The ledger of exactness: p_0 / Gamma = (1 - 1 / Gamma)^l = e^(-U) exactly with U = -l ln(1 - 1 / Gamma), which is l / Gamma to the first order in 1 / Gamma, U - l / Gamma = l / (2 Gamma^2) + ...; the order by the residual in 1 / Gamma, the far end Gamma = 2 (0.693 l against l / 2)."""
     held, orders = has_order(lambda h: -math.log(1 - h) - h, 2, step=0.1)
     coefficient = (-math.log(1 - 0.01) - 0.01) / 0.01**2
     far = (-math.log(1 - 1 / 2), 1 / 2)
@@ -180,7 +180,7 @@ def check_the_contents_first_order_in_the_clock() -> Check:
 
 
 def check_the_two_readings_of_beta() -> Check:
-    """main.tex Section 8 (b), the push: the two readings of beta in the box, P / E with p = E v as S.58 writes the push, and v / c_local, agree as the gap closes: on the exact band at the vacuum P / E = c k / omega(k) and v / c = (d omega / dk) / c, equal where the band is Lorentz's (omega^2 = omega_0^2 + c^2 k^2) and parting at a finite gap; at [2, 3] and k = 0.3 they read 0.203 and 0.151, at [999999, 1000000] they agree to 10^-6; the readings recomputed."""
+    """Universe24_Paper.tex Section 8 (b), the push: the two readings of beta in the box, P / E with p = E v as S.58 writes the push, and v / c_local, agree as the gap closes: on the exact band at the vacuum P / E = c k / omega(k) and v / c = (d omega / dk) / c, equal where the band is Lorentz's (omega^2 = omega_0^2 + c^2 k^2) and parting at a finite gap; at [2, 3] and k = 0.3 they read 0.203 and 0.151, at [999999, 1000000] they agree to 10^-6; the readings recomputed."""
     c = 1 / math.sqrt(3)
     readings = {}
     for num, den in ((2, 3), (999, 1000), (999999, 1000000)):
@@ -201,7 +201,7 @@ def check_the_two_readings_of_beta() -> Check:
 
 
 def check_gamma_k_minus_one_is_half_the_gap_squared() -> Check:
-    """main.tex Section 10.1; S.27: gamma_K - 1 = den / num - 1 = 1 / cos omega_0 - 1 = omega_0^2 / 2 + O(omega_0^4) (5 omega_0^4 / 24), below 6.7 x 10^-20 at omega_e < 3.7 x 10^-10; the order by the residual, the far end [1, 2] (omega_0 = pi / 3: 1 against 0.548)."""
+    """Universe24_Paper.tex Section 10.1; S.27: gamma_K - 1 = den / num - 1 = 1 / cos omega_0 - 1 = omega_0^2 / 2 + O(omega_0^4) (5 omega_0^4 / 24), below 6.7 x 10^-20 at omega_e < 3.7 x 10^-10; the order by the residual, the far end [1, 2] (omega_0 = pi / 3: 1 against 0.548)."""
     held, orders = has_order(lambda w: 1 / math.cos(w) - 1 - w * w / 2, 4, step=0.4)
     coefficient = (1 / math.cos(0.01) - 1 - 0.01**2 / 2) / 0.01**4
     far = (2 / 1 - 1, (math.pi / 3) ** 2 / 2)
@@ -222,7 +222,7 @@ def check_the_lattices_half_sine_variable() -> Check:
 
 
 def check_the_ports_are_exactly_orthogonal() -> Check:
-    """main.tex Section 9.3; S.51: the port coefficients e(+) = (p, q) and e(-) = (-q, p) are exactly orthogonal with equal norms, so each side's marginal is one half for any setting; and in nature cos omega differs from 1 by under 10^-18 for every family (6.8 x 10^-20 at omega_e = 3.7 x 10^-10); exact integers and the number recomputed."""
+    """Universe24_Paper.tex Section 9.3; S.51: the port coefficients e(+) = (p, q) and e(-) = (-q, p) are exactly orthogonal with equal norms, so each side's marginal is one half for any setting; and in nature cos omega differs from 1 by under 10^-18 for every family (6.8 x 10^-20 at omega_e = 3.7 x 10^-10); exact integers and the number recomputed."""
     draw = random.Random(SEED)
     for _ in range(30):
         p, q = draw.randint(-99, 99), draw.randint(-99, 99)
@@ -314,7 +314,7 @@ def check_the_one_sided_mixed_terms_dispersion() -> Check:
 
 
 def check_the_momentum_identity_at_non_uniform_paces_as_printed() -> Check:
-    """main.tex Section 4.3 as printed: "at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings, while the share's identity (S.5) gains nothing at static paces": computed on a periodic 5-box with per-Node coefficients from differing clocks and the line without its division, w [P_a(t + 1) - P_a(t)] - SUM_b [R_b(i) G_ab(i) - R_b(i - b) G_ab(i - b)] does not vanish; the exact identity at non-uniform static paces is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i with Y the read, whose extra terms against Eq. (7) are the differences of the reading Node's coefficients along the momentum's axis a, [R_b(i + a) - R_b(i)] and [S_(i + a) - S_i], times the levels, not the b-Link-wise differences of R alone; the share's identity does gain nothing (proofs_booking); a finding on the sentence."""
+    """Universe24_Paper.tex Section 4.3 as printed: "at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings, while the share's identity (S.5) gains nothing at static paces": computed on a periodic 5-box with per-Node coefficients from differing clocks and the line without its division, w [P_a(t + 1) - P_a(t)] - SUM_b [R_b(i) G_ab(i) - R_b(i - b) G_ab(i - b)] does not vanish; the exact identity at non-uniform static paces is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i with Y the read, whose extra terms against Eq. (7) are the differences of the reading Node's coefficients along the momentum's axis a, [R_b(i + a) - R_b(i)] and [S_(i + a) - S_i], times the levels, not the b-Link-wise differences of R alone; the share's identity does gain nothing (proofs_booking); a finding on the sentence."""
     draw = random.Random(SEED)
     shape = (5, 5, 5)
     nodes, arrivals = box_nodes(shape), box_arrivals(shape)
@@ -453,7 +453,7 @@ def lights_stress_over_energy(k: float) -> float:
 
 
 def check_lights_written_stress_over_energy_at_finite_k() -> Check:
-    """main.tex 4.3 since 5f5df82b: on light's wave the written stress over the written energy is (num / 3 den) sin^2 k / sin^2 omega, 1 at long wavelength (nature's T_xx = T_00), 0.90 at k = pi / 4, and 3 / 5 where sin k = 1, at k = pi / 2 (printed as "the band's top along an axis", row F08); at light's pair cos omega = (2 + cos k) / 3: the long-wavelength limit 1 by the residual's order 2, 0.897 at pi / 4, 3 / 5 exactly at k = pi / 2 (sin^2 omega = 5 / 9) and 0 at the band's top k = pi, where sin k = 0."""
+    """Universe24_Paper.tex 4.3 since 5f5df82b: on light's wave the written stress over the written energy is (num / 3 den) sin^2 k / sin^2 omega, 1 at long wavelength (nature's T_xx = T_00), 0.90 at k = pi / 4, and 3 / 5 where sin k = 1, at k = pi / 2 (printed as "the band's top along an axis", row F08); at light's pair cos omega = (2 + cos k) / 3: the long-wavelength limit 1 by the residual's order 2, 0.897 at pi / 4, 3 / 5 exactly at k = pi / 2 (sin^2 omega = 5 / 9) and 0 at the band's top k = pi, where sin k = 0."""
     held, orders = has_order(lambda h: lights_stress_over_energy(h) - 1, 2, step=0.2)
     at_quarter = round(lights_stress_over_energy(math.pi / 4), 2)
     at_half = Fraction(1, 3) * 1 / (1 - Fraction(2, 3) ** 2)  # sin^2 k = 1, cos omega = 2 / 3
@@ -467,14 +467,14 @@ def check_lights_written_stress_over_energy_at_finite_k() -> Check:
 
 
 def check_lights_stress_at_the_band_top_as_printed() -> Check:
-    """main.tex 4.3 as printed since 5f5df82b, "3 / 5 at the band's top along an axis": at the band's top along an axis, k = pi with cos omega = 1 / 3 for light, sin k = 0 and the written stress over the written energy is 0; 3 / 5 is its value at k = pi / 2, where sin k = 1 and the group speed along the axis is largest; a finding on the number's place."""
+    """Universe24_Paper.tex 4.3 as printed since 5f5df82b, "3 / 5 at the band's top along an axis": at the band's top along an axis, k = pi with cos omega = 1 / 3 for light, sin k = 0 and the written stress over the written energy is 0; 3 / 5 is its value at k = pi / 2, where sin k = 1 and the group speed along the axis is largest; a finding on the number's place."""
     at_top = Fraction(1, 3) * 0 / (1 - Fraction(1, 3) ** 2)
     at_half = Fraction(1, 3) * 1 / (1 - Fraction(2, 3) ** 2)
     return at_top == Fraction(3, 5), {"at the band's top k = pi": at_top, "at k = pi / 2": at_half}
 
 
 def check_the_division_acts_stop() -> Check:
-    """main.tex since 5f5df82b (the one root, Section 5): the integer square root at a lay is the stop of the division act x <- (x + n div x) div 2, the law's fixed point, where the iterate stops falling (at n = 3 the iterates 2, 1, 2 alternate and the stop is 1); from x_0 = n the stop is isqrt(n) for every n to 5,000, exact integers."""
+    """Universe24_Paper.tex since 5f5df82b (the one root, Section 5): the integer square root at a lay is the stop of the division act x <- (x + n div x) div 2, the law's fixed point, where the iterate stops falling (at n = 3 the iterates 2, 1, 2 alternate and the stop is 1); from x_0 = n the stop is isqrt(n) for every n to 5,000, exact integers."""
 
     def stop(n: int) -> int:
         x = n
@@ -498,7 +498,7 @@ def check_the_division_acts_stop() -> Check:
 
 
 def check_the_shears_exact_angle_at_small_angles() -> Check:
-    """main.tex 5.5 since d7e97674: the exact angle of the three shears is 2 arctan(L p_0 / (2 Gamma^2)), which is (L / Gamma)(p_0 / Gamma) at small angles; with x = L p_0 / Gamma^2 the remainder 2 arctan(x / 2) - x is of the third order, -x^3 / 12, and the exact angle's sine is x / (1 + x^2 / 4) at every rational x (the Pythagorean point of tan(theta / 2) = x / 2, sin^2 + cos^2 = 1 exactly)."""
+    """Universe24_Paper.tex 5.5 since d7e97674: the exact angle of the three shears is 2 arctan(L p_0 / (2 Gamma^2)), which is (L / Gamma)(p_0 / Gamma) at small angles; with x = L p_0 / Gamma^2 the remainder 2 arctan(x / 2) - x is of the third order, -x^3 / 12, and the exact angle's sine is x / (1 + x^2 / 4) at every rational x (the Pythagorean point of tan(theta / 2) = x / 2, sin^2 + cos^2 = 1 exactly)."""
     held, orders = has_order(lambda x: 2 * math.atan(x / 2) - x, 3, step=0.2)
     coefficient = (2 * math.atan(0.05) - 0.1) / 0.1**3
     draw = random.Random(SEED)

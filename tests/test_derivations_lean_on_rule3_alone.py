@@ -24,7 +24,7 @@ RUN_FILE = ("runs/", ".output.json", ".look.json")
 MODULES_WITHOUT_RULE3_ROOT = 4
 # at origin/paper d75c42a9: two_slits_real_line.py imports the engine, two_slits_frames.py reads a run's look
 PAPER_SCRIPTS_LEANING_ON_THE_ENGINE = 2
-# the derived and computed marks of main.tex naming no script at d75c42a9 (123) whose inventory entry still has no
+# the derived and computed marks of Universe24_Paper.tex naming no script at d75c42a9 (123) whose inventory entry still has no
 # script here, the status "scriptless"; a ceiling the count may only fall below (the 11 computed marks, closed by
 # their readers and never by a derivation, and 7 derived marks after the derivations' map)
 SCRIPTLESS_MARKS = 18
@@ -170,7 +170,7 @@ def test_the_inventory_loads_and_its_scriptless_marks_only_fall():
     """(d) paper_marks.json loads, names the paper's head, every entry carries the fields and a computed one its reader, counterpart and bound, and the scriptless count is at most the ratchet's."""
     document = json.loads(INVENTORY.read_text(encoding="utf-8"))
     header, marks = document["header"], document["marks"]
-    assert len(header["paper_head"]) == 40 and header["main_tex"] == "paper/main.tex"
+    assert len(header["paper_head"]) == 40 and header["main_tex"] == "paper/Universe24_Paper.tex"
     for entry in marks:
         assert all(field in entry for field in FIELDS), entry
         assert entry["mark"] in ("derived", "computed") and entry["status"] in STATUSES

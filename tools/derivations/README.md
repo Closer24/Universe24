@@ -56,8 +56,8 @@ machine and changes no claim of the paper or the law; the paper's marks do not
 move by it, and where a check fails as printed the statement, the computed
 object and the discrepancy are reported as a finding, never patched in the
 law. `proofs_inventory.json` is the inventory, one row per theorem, lemma,
-identity or quantitative claim of `docs/ALGEBRA.md`, `main.tex` and
-`supplement.tex` (at the heads its header names), each with its place, its
+identity or quantitative claim of `docs/ALGEBRA.md`, `Universe24_Paper.tex` and
+`Universe24_Supplement.tex` (at the heads its header names), each with its place, its
 statement in the document's words, the ground it rests on, its kind, its check
 (the module and the `check_` function) and its verdict. The first ten rows are
 the ten items of the external audit. The kinds: (A) an exact identity,
@@ -105,9 +105,9 @@ the first read keeps its id with its verdict against the head.
 ## The inventory
 
 `paper_marks.json` lists every `\claimmark{derived}` and `\claimmark{computed}`
-of the paper's `main.tex` (its head in the file's header)
+of the paper's `Universe24_Paper.tex` (its head in the file's header)
 whose enclosing parenthesis names no `\texttt{<name>.py}`, by the rule of
-the file's header: the line, the mark, the section of `main.tex`, the
+the file's header: the line, the mark, the section of `Universe24_Paper.tex`, the
 sentence, its printed numbers, the supplement derivation or section it cites,
 the existing script that already gives its numbers where one exists under
 `paper/` or here, the proposed module here, and the status
@@ -137,7 +137,7 @@ replaces it.
 3. Where the number also stands in the documents, add a `derivation` rule to
    the number's row of `tools/numbers.json` (`module`, `function`, `expected`,
    `digits`); documents gate (3) then holds the number to the script.
-4. The script is named beside the mark in `main.tex`,
+4. The script is named beside the mark in `Universe24_Paper.tex`,
    `\texttt{<module>.py}` inside the mark's parenthesis, and `gate_scripts`'s
    count falls by one; lower `SCRIPTLESS_MARKS` and the entry's status in
    `paper_marks.json` accordingly, with the paper's new head in the header.

@@ -11,8 +11,8 @@
   },
   "paper": {
    "files": [
-    "paper/main.tex",
-    "paper/supplement.tex"
+    "paper/Universe24_Paper.tex",
+    "paper/Universe24_Supplement.tex"
    ],
    "branch": "paper",
    "head": "d7e976743f45c00ad705dbd01d5a911498caf03d",
@@ -71,7 +71,7 @@
   {
    "id": "A01",
    "name": "Theorem 4's Yukawa exponent",
-   "place": "main.tex 7.2, Theorem 4; S.13; the writer's (1), the advisor's (1)",
+   "place": "Universe24_Paper.tex 7.2, Theorem 4; S.13; the writer's (1), the advisor's (1)",
    "statement": "A Yukawa kernel's log-derivative at one separation is 1 + kappa R; a body's integrated well energy has the running exponent s(R) = 1 + kappa R <u^2> / <u> in the body's own weights, 1.0176, 2.130, 2.971, 2.9997 at kappa R = 0.01, 1, 10, 100, from 1 at kappa R << 1 to the contact kernel's 3 at kappa R >> 1 through 2 at 0.821; the virial and the second variation stand with s the integrated exponent, and R^2 F'' carries R s'(R) W.",
    "ground": "the Gaussian body's well moments in closed form through erfc (I = 2 - 2 sqrt pi z erfcx z, J = -4 z + (2 + 4 z^2) sqrt pi erfcx z), the asymptotes by the residual's order",
    "kind": "B",
@@ -86,7 +86,7 @@
   {
    "id": "A02",
    "name": "The time-Link recurrence's Wronskian",
-   "place": "main.tex 5.5, S.9, S.33 and ALGEBRA.md row 9 of The conventions and the units, the two-angle form at every place since d7e97674; the writer's (2), the advisor's (2)",
+   "place": "Universe24_Paper.tex 5.5, S.9, S.33 and ALGEBRA.md row 9 of The conventions and the units, the two-angle form at every place since d7e97674; the writer's (2), the advisor's (2)",
    "statement": "The law's step e^(i theta_t) z_next + e^(-i theta_(t-1)) z_before = M z_now / w conserves W_i = Im(conj(z_now) e^(-i theta_(t-1)) z_before) under the per-Node continuity identity for any paces, Link phases and time angles, and the weighted total SUM W_i / p_i^2 exactly; the one-theta form of 5.5 conserves W at a static angle only, |z_2| = 1.93 against the law's 1.00 at the audit's one-Node witness.",
    "ground": "exact Gaussian rationals on four periodic boards with Link factors; the audit's witness in floats",
    "kind": "A",
@@ -142,7 +142,7 @@
   {
    "id": "A06",
    "name": "S.17's beat",
-   "place": "S.17; main.tex 7.5; the writer's (6), the advisor's (6)",
+   "place": "S.17; Universe24_Paper.tex 7.5; the writer's (6), the advisor's (6)",
    "statement": "The finite window's mean of the cross current of two standing records is the sum-frequency term's, bounded by 2 / ((omega_1 + omega_2) n T_b) for n beats of length T_b: 0.0083 over one beat at A = B = num = 1, omega_1 = 0.4, omega_2 = 0.4 + 2 pi / 20, and 1.1 x 10^-4 over 100 beats (the bounds 0.09 and 0.0009), falling as 1 / n and never 0 at a finite window.",
    "ground": "a hand bound on the oscillating sum; the means and the bounds recomputed, the inequality at random phases",
    "kind": "C",
@@ -156,7 +156,7 @@
   {
    "id": "A07",
    "name": "S.24's orientation",
-   "place": "S.24 and main.tex 10.2; the writer's (7), the advisor's (7)",
+   "place": "S.24 and Universe24_Paper.tex 10.2; the writer's (7), the advisor's (7)",
    "statement": "The directional k^4 coefficient C(n) = (3 SUM_a n_a^4 - 1) / 24 is 1 / 12 on an axis, 1 / 48 on a face diagonal and 0 on the body diagonal, continuous toward it (C / C_axis = 4.4 x 10^-11 at n proportional to (1.00001, 1, 1), the Link bound weakening by 1.5 x 10^5 there); the mean over directions, <SUM n_a^4> = 3 / 5, gives C_mean / C_axis = 2 / 5; the bound weakens tenfold only within about 4 degrees of a body diagonal, one percent of the sky, and a hundredfold within 0.4 degrees.",
    "ground": "C(n) as the band's own fourth order (proofs_band), the caps by bisection over the azimuths",
    "kind": "B",
@@ -184,7 +184,7 @@
   {
    "id": "A09",
    "name": "10.2's 'hence'",
-   "place": "main.tex 10.2; the writer's (9), the advisor's (9)",
+   "place": "Universe24_Paper.tex 10.2; the writer's (9), the advisor's (9)",
    "statement": "Reversibility to the bit with no loops does not by itself give no running of alpha and no Lamb shift; the ground is S.37's 'no pair is created and no coupling runs' from the count's conservation between clicks, the writer's word 'and, with no pair created between clicks (S.37),'.",
    "ground": "a sentence's ground; no quantity to compute",
    "kind": "C",
@@ -235,7 +235,7 @@
   {
    "id": "L03",
    "name": "The vacuum's band and light's dispersion",
-   "place": "row 3 of The conventions and the units; S.1; main.tex 3.3",
+   "place": "row 3 of The conventions and the units; S.1; Universe24_Paper.tex 3.3",
    "statement": "At the vacuum's paces S = 12 num Gamma^2 - 6 R = 0 and cos omega = (num / (3 den)) SUM_a cos k_a, the gap cos omega_0 = num / den; light has cos omega = (2 + cos k) / 3 along an axis; rule3.plane_wave_dispersion is the same number.",
    "ground": "exact rationals; the derivations' rule3 in floats",
    "kind": "A",
@@ -261,7 +261,7 @@
   {
    "id": "L05",
    "name": "The guard's edge",
-   "place": "ALGEBRA.md, The guard; S.3; S.61 row 4; main.tex 3.4",
+   "place": "ALGEBRA.md, The guard; S.3; S.61 row 4; Universe24_Paper.tex 3.4",
    "statement": "The mode at wave number pi on every axis has the factor (S - 2 SUM_a R_a) / w = 2 - 2 (1 - num / den) (p_0 / Gamma)^2 - 4 (num / den) (p_a / Gamma)^2, -2 num / den in the vacuum, at or above -2 exactly when p^2 (den + |num|) <= 2 den Gamma^2 (the k = 0 mode for a negative numerator), the edge P^2 = 2 den Gamma^2 div (den + |num|), Gamma^2 for light.",
    "ground": "exact rationals over every pace to 2 Gamma; rule3.guard_edge_squared",
    "kind": "A",
@@ -287,7 +287,7 @@
   {
    "id": "L07",
    "name": "The three exact bands",
-   "place": "ALGEBRA.md, The exact bands; main.tex 6.1",
+   "place": "ALGEBRA.md, The exact bands; Universe24_Paper.tex 6.1",
    "statement": "The one-Node line at rest is exact in integers only where 2 cos omega_0 is an integer, so the rule carries exactly three exact rotations, 2 cos omega_0 = 1, 0 and -1, the periods 6, 4 and 3, the pairs [1, 2], [0, 1] and [-1, 2].",
    "ground": "the integer matrix [[m, -1], [1, 0]] and its orders",
    "kind": "A",
@@ -326,7 +326,7 @@
   {
    "id": "L10",
    "name": "The content's index for every family",
-   "place": "S.28; main.tex 8 (p); The paces compose",
+   "place": "S.28; Universe24_Paper.tex 8 (p); The paces compose",
    "statement": "A stationary boundary conserving omega gives 1 - cos k_in = [1 - cos k + 3 (den - num) (1 - N^2) / num] / N^4 exactly; for light sin(k_in / 2) = sin(k / 2) / s with s = N^2; the phase index (2 / k) arcsin(sin(k / 2) / s) = 1 / s + k^2 (1 / s^3 - 1 / s) / 24 + O(k^4), to first order in U 1 + [4 tan(k / 2) / k] U, 1.380 at k = pi / 2 and s = 0.8.",
    "ground": "the exact lines in Fractions; the expansions by the residual's orders 4 and 2",
    "kind": "A",
@@ -380,7 +380,7 @@
   {
    "id": "L14",
    "name": "Light's speed and dispersion",
-   "place": "S.1; ALGEBRA.md, The lattice constants; main.tex 10.2",
+   "place": "S.1; ALGEBRA.md, The lattice constants; Universe24_Paper.tex 10.2",
    "statement": "For [1, 1] along an axis cos omega = 1 - k^2 / 6 + k^4 / 72 + O(k^6), omega = (k / sqrt 3) (1 - k^2 / 36 + O(k^4)) and d omega / dk = (1 / sqrt 3) (1 - k^2 / 12 + O(k^4)): the speed 1 / sqrt 3 at long wavelength and the group speed falling as 1 - 0.083 k^2; S.1's check -0.0833, -0.0834, -0.0835 at k = 0.05, 0.1, 0.2.",
    "ground": "the residuals' orders 6, 5 and 4; the numbers recomputed",
    "kind": "B",
@@ -458,7 +458,7 @@
   {
    "id": "L20",
    "name": "The three-level form equals the two-level form",
-   "place": "row 7 of The conventions and the units; main.tex 4.3",
+   "place": "row 7 of The conventions and the units; Universe24_Paper.tex 4.3",
    "statement": "Q = SUM_i (now_i^2 + before_i^2) / p_i^2 - (1 / w) SUM_i (SUM_j R_ij now_j + S_i now_i) before_i / p_i^2 equals E_3 = SUM_i (now_i^2 - next_i before_i) / p_i^2 exactly under the line, and D_i = b^2 sin^2 omega on a plane wave.",
    "ground": "exact fractions on four boards with tensions and at rational angles",
    "kind": "A",
@@ -471,7 +471,7 @@
   {
    "id": "L21",
    "name": "The form's change under moving paces",
-   "place": "main.tex 4.3",
+   "place": "Universe24_Paper.tex 4.3",
    "statement": "Where the paces move, D = |a_now|^2 - <a_next, a_before> changes exactly by D(t + 1) - D(t) = <a_next, (M(t) - M(t + 1)^T) a_now>, and the weighted E with the weights of the paces at t + 1 by a_next^T D (M(t) - M(t + 1)) a_now.",
    "ground": "exact fractions, two reads with different contents on three boards",
    "kind": "A",
@@ -599,7 +599,7 @@
   {
    "id": "L31",
    "name": "The share is conserved at standing paces",
-   "place": "ALGEBRA.md, The count is the record's share (Theorem); main.tex 4.4",
+   "place": "ALGEBRA.md, The count is the record's share (Theorem); Universe24_Paper.tex 4.4",
    "statement": "Over any region whose paces stand, SUM e_i changes in one step by the weighted currents through the region's boundary Links and the remainder terms alone, the interior Links cancelling by F_ji = -F_ij and q_ji = q_ij.",
    "ground": "exact fractions on a chain of five with a region of two and the whole board",
    "kind": "A",
@@ -612,7 +612,7 @@
   {
    "id": "L32",
    "name": "The vacuum's share",
-   "place": "ALGEBRA.md, The count is the record's share; main.tex Eq. (9)",
+   "place": "ALGEBRA.md, The count is the record's share; Universe24_Paper.tex Eq. (9)",
    "statement": "At the vacuum's paces the share is exactly 3 den (now_i^2 + before_i^2) - num now_i S_6(before)_i.",
    "ground": "exact integers on a chain and a box",
    "kind": "A",
@@ -730,7 +730,7 @@
   {
    "id": "L41",
    "name": "The exponential metric's post-Newtonian orders",
-   "place": "S.34 (c); S.19; main.tex 3.4 and 8",
+   "place": "S.34 (c); S.19; Universe24_Paper.tex 3.4 and 8",
    "statement": "g_00 = -e^(-2 U) = -(1 - 2 U + 2 U^2) + O(U^3) and g_ij = e^(2 U) delta_ij = (1 + 2 U + 2 U^2) delta_ij + O(U^3): gamma = 1 exactly and beta = 1 in U; the remainders -4 U^3 / 3 and 4 U^3 / 3.",
    "ground": "the residuals' order 3 and their coefficients",
    "kind": "B",
@@ -744,7 +744,7 @@
   {
    "id": "L42",
    "name": "The clock's click rate",
-   "place": "S.15; main.tex 7.4 and 8 (a); The method of derivation, step 3",
+   "place": "S.15; Universe24_Paper.tex 7.4 and 8 (a); The method of derivation, step 3",
    "statement": "cos omega(U) = cos omega_0 + 2 g U - 2 g U^2 exactly at the quadratic clock; d omega / omega_0 = -f(omega_0) dU with f = 2 (1 - cos omega_0) / (omega_0 sin omega_0), 1.063 at [2, 3]; f = 1 + omega_0^2 / 12 + O(omega_0^4), 5.9 percent at the computed pair (6.3 exactly), 1 as the gap closes.",
    "ground": "exact fractions for the quadratic clock; the residual's orders 2 in U and 4 in omega_0",
    "kind": "B",
@@ -786,7 +786,7 @@
   {
    "id": "L45",
    "name": "The moving clock to the fourth order",
-   "place": "S.21; main.tex 8 (e); ALGEBRA.md, The rows against nature (e)",
+   "place": "S.21; Universe24_Paper.tex 8 (e); ALGEBRA.md, The rows against nature (e)",
    "statement": "omega(k) = omega_0 + alpha k^2 - beta k^4 + O(k^6) with alpha = c_0 / (2 s) and beta = c_0 / (24 s) + c c_0^2 / (8 s^3); Omega / omega_0 = 1 - v^2 / (2 c_m^2) - (2 omega_0 / sin 2 omega_0) v^4 / (8 c_m^4) + O(v^6), c_m^2 = omega_0 / (3 tan omega_0): Lorentz's factor at c_m to the second order exactly, the fourth order's factor 2 omega_0 / sin 2 omega_0 = 1.6926 at [2, 3], along n omega_0 [(SUM n_a^4) tan omega_0 + cot omega_0], 1.2224 on a face diagonal, 1.0657 on the body diagonal, 1 as the gap closes; S.21's check -3.37 and -2.12 against -3.365 and -2.119.",
    "ground": "the band's series by the residual's order 6, the interval's by its order 6; the numbers recomputed",
    "kind": "B",
@@ -800,7 +800,7 @@
   {
    "id": "L46",
    "name": "De Broglie and the three speeds",
-   "place": "S.22; S.53; main.tex 3.3",
+   "place": "S.22; S.53; Universe24_Paper.tex 3.3",
    "statement": "k = m* v with m* = 3 tan omega_0, c_m^2 = omega_0 / (3 tan omega_0) = 0.2508 at [2, 3], and m* c_m^2 = omega_0 exactly for every pair; c_s^2 = num / (3 den), c_m^2 and light's 1 / 3 are one as the gap closes, c_m / c = 0.867 at [2, 3] and 0.9997 at [999, 1000].",
    "ground": "exact identity in floats to 10^-12 relative, the limits recomputed",
    "kind": "A",
@@ -840,7 +840,7 @@
   {
    "id": "L49",
    "name": "The two clocks under the principle",
-   "place": "S.31; main.tex Table 4 and 3.4; ALGEBRA.md, The same clock and the same ruler for every act",
+   "place": "S.31; Universe24_Paper.tex Table 4 and 3.4; ALGEBRA.md, The same clock and the same ruler for every act",
    "statement": "omega' = 2 arcsin(N sin(omega / 2)) = N omega [1 - (1 - N^2) omega^2 / 24 + O(omega^4)]; the beat Delta' = N Delta [1 - (1 - N^2) (omega_1^2 + omega_1 omega_2 + omega_2^2) / 24 + O(omega^4)], (1 - N^2) omega^2 / 8 at equal rotations: 0.3916 against 0.4 and 0.3920 at N = 0.8, omega = 0.4, 0.9; 2.5 x 10^-38 at nature's gap; the rest line's rate in omega -2 tan(omega_0 / 2) / omega_0 = -f(omega_0); a cavity of bodies intervals at N exactly.",
    "ground": "the series by the residual's order 5, the half-angle identity exact, the numbers recomputed",
    "kind": "B",
@@ -854,7 +854,7 @@
   {
    "id": "L50",
    "name": "Light's index to first order",
-   "place": "S.2; S.12; main.tex 8 (p)",
+   "place": "S.2; S.12; Universe24_Paper.tex 8 (p)",
    "statement": "n = e^(2 x) = 1 / (1 - 2 x) + O(x^2) and n - 1 = 2 x + O(x^2); two events over L Links arrive L sqrt 3 [1 / (1 - 2 x) - 1] = 2 x L sqrt 3 + O(x^2) intervals apart.",
    "ground": "the residuals' order 2",
    "kind": "B",
@@ -882,7 +882,7 @@
   {
    "id": "L52",
    "name": "The preferred-frame parameter of a diagonal metric",
-   "place": "S.35; main.tex 10.3",
+   "place": "S.35; Universe24_Paper.tex 10.3",
    "statement": "4 gamma + 4 + alpha_1 = 0, alpha_1 = -4 (1 + gamma) = -8 at gamma = 1; the drag (4 gamma + 4 + alpha_1) / 8 of Lense-Thirring's is 0; a covariant boost would give g_0i = gamma_L^2 v (N^2 - h^2) = -4 U v to first order.",
    "ground": "exact arithmetic; the cross term's residual order 3",
    "kind": "A",
@@ -921,7 +921,7 @@
   {
    "id": "L55",
    "name": "The bounds from the photon and the dispersion",
-   "place": "S.27; S.24; main.tex 10.1 and 10.2",
+   "place": "S.27; S.24; Universe24_Paper.tex 10.1 and 10.2",
    "statement": "One interval is omega_0 x 1.288 x 10^-21 s and one Link omega_0 x 6.69 x 10^-13 m; a photon of 1.4 PeV gives sin omega_0 <= 3.65 x 10^-10 (3.44 x 10^-10 on an axis), den > 1.5 x 10^19 and gamma_K - 1 < 6.7 x 10^-20; MAGIC's 3.8 x 10^-16 gives k < 6.7 x 10^-8 per Link, the Link below 1.3 x 10^-26 m on an axis and 2.1 x 10^-26 m on the mean, omega_e < 2.0 x 10^-14 (3.1 x 10^-14) and gamma_K - 1 < 2.0 x 10^-28.",
    "ground": "every number recomputed from the constants",
    "kind": "A",
@@ -961,7 +961,7 @@
   {
    "id": "L58",
    "name": "Bell's correlation under the declared credit",
-   "place": "S.10; S.51; ALGEBRA.md, The pair family and Bell's gate; main.tex 9.3 and 9.4",
+   "place": "S.10; S.51; ALGEBRA.md, The pair family and Bell's gate; Universe24_Paper.tex 9.3 and 9.4",
    "statement": "The four sums' squares add to M_1^2 + M_2^2 (Lagrange's identity); E(a, b) = cos 2a cos 2b + rho sin 2a sin 2b with rho = 2 M_1 M_2 / (M_1^2 + M_2^2); P(A+) = (M_1^2 c_a^2 + M_2^2 s_a^2) / (M_1^2 + M_2^2) independent of b; equal parts give cos 2(a - b); at (1, 0), (1, 1), (12, 5), (5, 12): 119 / 169, -119 / 169, 120 / 169, 120 / 169, S = 478 / 169 = 2.8284 below 2 sqrt 2, and S = (238 + 240 rho) / 169 at unequal parts.",
    "ground": "exact rationals at random angles and parts, the integer settings exact",
    "kind": "A",
@@ -974,7 +974,7 @@
   {
    "id": "L59",
    "name": "The two local credits and the sawtooth",
-   "place": "S.10; S.51b; main.tex 9.4; ALGEBRA.md (h)",
+   "place": "S.10; S.51b; Universe24_Paper.tex 9.4; ALGEBRA.md (h)",
    "statement": "A credit by the shares gives E = (1 / 2) cos 2(a - b) and S = sqrt 2 at the ideal angles; a credit by the sign of the larger port gives the sawtooth E = 1 - 4 |a - b| / pi, whose sum at four settings ordered a < b < a' < b' within a quarter turn is exactly 2, Bell's bound, at the ideal and at the file's integer settings alike.",
    "ground": "the product-to-sum identity exact, the means by the discrete average over 64 phases (exact for the shares), the sawtooth's measure exact",
    "kind": "A",
@@ -1000,7 +1000,7 @@
   {
    "id": "L61",
    "name": "The GHZ correlation under the declared credit",
-   "place": "S.40; ALGEBRA.md, The GHZ gate; main.tex 9.4",
+   "place": "S.40; ALGEBRA.md, The GHZ gate; Universe24_Paper.tex 9.4",
    "statement": "With the patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p) the + ports' sum is cos(a + b + c), a - port -sin(a + b + c); the eight shares sum to 4, E_3 = cos 2(a + b + c), every pairwise E is 0 and every marginal 1 / 2; Mermin's M = -4 exactly at the integer settings (1, 0) and (1, 1).",
    "ground": "exact Gaussian rationals at random angles",
    "kind": "A",
@@ -1039,7 +1039,7 @@
   {
    "id": "L64",
    "name": "The region's reading factor",
-   "place": "S.8; main.tex 5.3",
+   "place": "S.8; Universe24_Paper.tex 5.3",
    "statement": "|SUM_(y = 0)^(n - 1) e^(2 pi i y / Lambda)| = sin(pi n / Lambda) / sin(pi / Lambda), the factor sin(pi n / Lambda) / (n sin(pi / Lambda)), 0.91 at n = 4, Lambda = 16, and 0 at Lambda = n.",
    "ground": "the geometric sum's modulus exact at rational unit angles; the number recomputed",
    "kind": "A",
@@ -1079,7 +1079,7 @@
   {
    "id": "L67",
    "name": "The hollow's barrier",
-   "place": "ALGEBRA.md 7.2 (b); S.13; main.tex 7.2",
+   "place": "ALGEBRA.md 7.2 (b); S.13; Universe24_Paper.tex 7.2",
    "statement": "F = a / R^2 - b / R^3 - c / R has F' = (c R^2 - 2 a R + 3 b) / R^4, the roots R_+- = (a +- sqrt(a^2 - 3 b c)) / c, none where 3 b c > a^2; F'' = 2 (a R - 3 b) / R^5 at a root, the wide point the minimum and the narrow the saddle.",
    "ground": "exact rationals at (5, 1, 3) and the derivative identity at random points",
    "kind": "A",
@@ -1119,7 +1119,7 @@
   {
    "id": "L70",
    "name": "The body's click share",
-   "place": "S.14, the body's click; main.tex 5.4 and 7.4",
+   "place": "S.14, the body's click; Universe24_Paper.tex 5.4 and 7.4",
    "statement": "sin omega_j - sin omega_i = 2 cos((omega_i + omega_j) / 2) sin((omega_j - omega_i) / 2) = sin(omega_j - omega_i) [1 - omega_i omega_j / 2 + O(omega^4)]: one photon's share T sin omega_L at the line, to a relative omega_0^2 / 2 at nature's gap.",
    "ground": "the identity exact at rational half-angles, the expansion by the residual's order 5",
    "kind": "A",
@@ -1133,7 +1133,7 @@
   {
    "id": "L71",
    "name": "Schroedinger's equation as the slow limit",
-   "place": "S.63; main.tex 3.3",
+   "place": "S.63; Universe24_Paper.tex 3.3",
    "statement": "Re[e^(-i omega_0 (t + 1)) (psi + psi' + psi'' / 2) + e^(-i omega_0 (t - 1)) (psi - psi' + psi'' / 2)] = Re[e^(-i omega_0 t) (2 cos omega_0 psi - 2 i sin omega_0 psi' + cos omega_0 psi'')] exactly; (num / (3 den)) 6 = 2 cos omega_0; i psi' = -Delta psi / (2 m*) with m* = 3 den sin omega_0 / num = 3 tan omega_0; the three conditions, the band's k^4 term of relative size k^2 / 12 and psi'' against 2 sin omega_0 psi' of relative size (omega - omega_0) / (2 tan omega_0).",
    "ground": "the expansion exact in Gaussian rationals; the orders by the residual",
    "kind": "A",
@@ -1172,7 +1172,7 @@
   {
    "id": "L74",
    "name": "The cross current of two standing records",
-   "place": "S.17; main.tex 7.5",
+   "place": "S.17; Universe24_Paper.tex 7.5",
    "statement": "num (a_t b_(t-1) - a_(t-1) b_t) for A cos(omega_1 t + alpha), B cos(omega_2 t + beta) is a sum of cosines of (omega_1 - omega_2) t and (omega_1 + omega_2) t with constant parts only when omega_1 = omega_2.",
    "ground": "exact at rational angles",
    "kind": "A",
@@ -1186,7 +1186,7 @@
   {
    "id": "L75",
    "name": "The integer budget's walk",
-   "place": "ALGEBRA.md, The integer budget of a derived row; main.tex 9.2",
+   "place": "ALGEBRA.md, The integer budget of a derived row; Universe24_Paper.tex 9.2",
    "statement": "The response kernel G_m - G_(m-1) = cos(omega (m + 1 / 2)) / cos(omega / 2) with G_m = sin(omega (m + 1)) / sin omega, of mean square 1 / (1 + cos omega), so the walk is sqrt(n / (12 (1 + cos omega_k))): 0.224 sqrt n at [2, 3]'s rest, 0.209 at light's k = pi / 4, 0.289 at a band's centre; G_(t-1) = t at the uniform mode and (-1)^t t at the checkerboard; the zone means 0.354, 0.259, 0.226 and 0.302 sqrt n.",
    "ground": "the kernel identity exact at rational half-angles, the double roots exact in integers, the numbers recomputed, the zone means by quadrature",
    "kind": "A",
@@ -1213,7 +1213,7 @@
   {
    "id": "L77",
    "name": "What a body writes into the holder of the sign",
-   "place": "S.42; main.tex 7.4",
+   "place": "S.42; Universe24_Paper.tex 7.4",
    "statement": "z_(t+1) + z_(t-1) = 2 cos omega_t z_t with any real omega_t keeps W = Im(conj(z_t) z_(t-1)) exactly; a steady rotation has W_i = phi_i^2 sin omega_b constant and g_ij = 0, writing nothing travelling; the quanta radiated through a far sphere are (3 sqrt 3 / 4 pi) s^2 sin^2 Omega / T, the coefficient 0.4135.",
    "ground": "exact Gaussian rationals, the number recomputed; the retarded multipole expansion a hand derivation",
    "kind": "A",
@@ -1226,7 +1226,7 @@
   {
    "id": "L78",
    "name": "The two-mode line under the rotation",
-   "place": "S.43; main.tex 7.4",
+   "place": "S.43; Universe24_Paper.tex 7.4",
    "statement": "(a) a uniform time turn is a gauge, z_t = e^(-i Phi_t) u_t with u on the plain line for any theta_t; (b) a constant turn shifts both senses by theta; (c) K_jm antisymmetric, K_mm = 0; (d) the transfer generator squares to -(g^2 + Delta^2 / 4), P(t) = [g^2 / (g^2 + Delta^2 / 4)] sin^2(sqrt(g^2 + Delta^2 / 4) t), the full width 4 Omega_R; (e) SUM_i x_i [phi_j (M phi_m) - (M phi_j) phi_m]_i = -K_jm on an open chain, so K_jm = 2 w (cos omega_j - cos omega_m) d_jm = -4 w sin((omega_j + omega_m) / 2) sin((omega_j - omega_m) / 2) d_jm and Omega_R = theta_L omega_L |d_jm| / 2 for a small line.",
    "ground": "exact Gaussian rationals and Fractions, the small line by the residual's order 2",
    "kind": "A",
@@ -1239,7 +1239,7 @@
   {
    "id": "L79",
    "name": "The two forces between quanta",
-   "place": "S.44; main.tex 10.1",
+   "place": "S.44; Universe24_Paper.tex 10.1",
    "statement": "F_e / F_g = k E_g / (2 E_s sin^2 omega_s) at one family and (F_e / F_g)_e / (F_e / F_g)_p = sin^2 omega_p / sin^2 omega_e = (m_p / m_e)^2 between two; nature's 4.17 x 10^42 and 1.24 x 10^36, the ratio 3.37 x 10^6 = 1836.15^2.",
    "ground": "exact rationals, the numbers recomputed",
    "kind": "A",
@@ -1266,7 +1266,7 @@
   {
    "id": "L81",
    "name": "The atom's self-term",
-   "place": "S.46 (c); main.tex 7.3",
+   "place": "S.46 (c); Universe24_Paper.tex 7.3",
    "statement": "epsilon = x^2 - 2 x + (1.25 / Z) x; Hartree's fixed point is the minimum of E_tot = x^2 - 2 x + (0.625 / Z) x at x = 1 - 0.3125 / Z, E_tot = -(1 - 0.3125 / Z)^2 and epsilon = E_tot + 0.625 (1 - 0.3125 / Z) / Z: (-0.473, -0.043, 1.45), (-0.712, -0.448, 1.19), (-0.938, -0.878, 1.03), (-0.979, -0.959, 1.01) at Z = 1, 2, 10, 30; the Rydberg ratios 1 - 1.25 / Z, 95.9 percent at Z = 30.",
    "ground": "exact rationals",
    "kind": "A",
@@ -1279,7 +1279,7 @@
   {
    "id": "L82",
    "name": "The equivalence principle between families",
-   "place": "S.47; main.tex 8 (i)",
+   "place": "S.47; Universe24_Paper.tex 8 (i)",
    "statement": "2 nu / (1 + nu) = 1 - tan^2(omega_s / 2) exactly with nu = cos omega_s; two families fall apart by tan^2(omega_n / 2) - tan^2(omega_p / 2), (omega_n^2 - omega_p^2) / 4 at small gaps; 0.0139 x 9,297 / 4 = 32.3, eta = 32.3 omega_e^2 below 4.4 x 10^-18.",
    "ground": "the identity exact at rational points, the small-gap difference by the residual's order 4, the numbers recomputed",
    "kind": "A",
@@ -1305,7 +1305,7 @@
   {
    "id": "L84",
    "name": "The total share is non-negative",
-   "place": "S.6; ALGEBRA.md, The share's sign and the credit's floor (a), at the vacuum's coefficients since 3a334eeb, the bound in a well the hands' to state; main.tex 4.4",
+   "place": "S.6; ALGEBRA.md, The share's sign and the credit's floor (a), at the vacuum's coefficients since 3a334eeb, the bound in a well the hands' to state; Universe24_Paper.tex 4.4",
    "statement": "At the vacuum's coefficients SUM_i e_i = 3 den (|n|^2 + |b|^2) - num n . S_6 b >= 3 (den - |num|) (|n|^2 + |b|^2) >= 0 on a closed or periodic board for |num| <= den, with equality at the static uniform level of light and the even board's checkerboard with before = -now; a Node's share has the minimum 3 den before_i^2 - num^2 s^2 / (12 den), negative iff |s| > 6 (den / num) |before_i|.",
    "ground": "Gershgorin's theorem on the form's symmetric integer matrix [[3 den I, -(num / 2) S_6], [-(num / 2) S_6^T, 3 den I]], every row's disc in [3 den - 3 |num|, 3 den + 3 |num|] since every row carries six neighbours with multiplicity, exact on four boards; the random boards witnesses; the equality cases and the minimum exact",
    "kind": "A",
@@ -1329,7 +1329,7 @@
   {
    "id": "R01",
    "name": "The computed pair's limits",
-   "place": "main.tex, Introduction",
+   "place": "Universe24_Paper.tex, Introduction",
    "statement": "Replacing [2, 3] by [999, 1000] moves c_m / c from 0.867 to 0.9997 and gamma_K, beta_K from 1.5, 1.25 to 1.001, 1.0005, approaching 1 as the gap closes.",
    "ground": "the numbers recomputed",
    "kind": "A",
@@ -1343,7 +1343,7 @@
   {
    "id": "R02",
    "name": "The clock's rate is exact in 2 sin(omega / 2)",
-   "place": "main.tex 3.4; S.31",
+   "place": "Universe24_Paper.tex 3.4; S.31",
    "statement": "2 sin(omega(U) / 2) = N 2 sin(omega_0 / 2) exactly for every N, from 1 - cos omega(U) = (1 - nu) N^2; in omega up to the finite-rotation correction omega_0^2 / 12, 5.9 percent at the computed pair.",
    "ground": "exact rationals in the half-sines squared",
    "kind": "A",
@@ -1357,7 +1357,7 @@
   {
    "id": "R03",
    "name": "The cut region's uniform mode",
-   "place": "main.tex 5.3",
+   "place": "Universe24_Paper.tex 5.3",
    "statement": "A region with its outer Links cut and its inner Links open has its uniform mode at cos omega_0 = num / den exactly whatever the region's size, (S_i + SUM over the open Ports of R_ij) / w = 2 num / den.",
    "ground": "exact rationals on chains of one to five Nodes",
    "kind": "A",
@@ -1370,7 +1370,7 @@
   {
    "id": "R04",
    "name": "The folded axis carries the band",
-   "place": "main.tex 9.1",
+   "place": "Universe24_Paper.tex 9.1",
    "statement": "A record uniform along the folded axis has the three-dimensional band at k_z = 0, so the flat lattice carries the file's band exactly.",
    "ground": "exact at rational angles on the folded chain by rule3.numerator",
    "kind": "A",
@@ -1383,7 +1383,7 @@
   {
    "id": "R05",
    "name": "Friedmann's dust equations and the redshift",
-   "place": "main.tex 7.5; S.29",
+   "place": "Universe24_Paper.tex 7.5; S.29",
    "statement": "a'' = -(4 pi G_K / 3) rho a with rho a^3 constant integrates exactly to a'^2 / a^2 = (8 pi G_K / 3) rho - kappa / a^2, q_0 = Omega_m / 2 positive for every rho > 0; 1 + z = (1 + beta) / sqrt(1 - beta^2) = 1 + beta + beta^2 / 2 + O(beta^3), the classical 1 / (1 - beta) differing at the second order.",
    "ground": "the invariant's derivative exact and a fourth-order integration to 10^-12; the series by the residual's order 3",
    "kind": "A",
@@ -1397,7 +1397,7 @@
   {
    "id": "R06",
    "name": "The content to first order in the clock",
-   "place": "main.tex 8 (a); ALGEBRA.md, The ledger of exactness",
+   "place": "Universe24_Paper.tex 8 (a); ALGEBRA.md, The ledger of exactness",
    "statement": "p_0 / Gamma = (1 - 1 / Gamma)^l = e^(-U) exactly with U = -l ln(1 - 1 / Gamma), which is l / Gamma to the first order in 1 / Gamma, U - l / Gamma = l / (2 Gamma^2) + ...",
    "ground": "the residual's order 2 in 1 / Gamma",
    "kind": "B",
@@ -1411,7 +1411,7 @@
   {
    "id": "R07",
    "name": "The two readings of beta",
-   "place": "main.tex 8 (b)",
+   "place": "Universe24_Paper.tex 8 (b)",
    "statement": "P / E with p = E v and v / c_local agree as the gap closes: on the exact band P / E = c k / omega(k) and v / c = (d omega / dk) / c read 0.203 and 0.151 at [2, 3] and k = 0.3, and agree to 10^-6 at [999999, 1000000].",
    "ground": "the readings recomputed",
    "kind": "B",
@@ -1425,7 +1425,7 @@
   {
    "id": "R08",
    "name": "gamma_K - 1 is half the gap squared",
-   "place": "main.tex 10.1; S.27",
+   "place": "Universe24_Paper.tex 10.1; S.27",
    "statement": "den / num - 1 = 1 / cos omega_0 - 1 = omega_0^2 / 2 + 5 omega_0^4 / 24 + O(omega_0^6), below 6.7 x 10^-20 at omega_e < 3.7 x 10^-10.",
    "ground": "the residual's order 4 and its coefficient",
    "kind": "B",
@@ -1453,7 +1453,7 @@
   {
    "id": "R10",
    "name": "The ports are exactly orthogonal",
-   "place": "main.tex 9.3; S.51; main.tex 10.1",
+   "place": "Universe24_Paper.tex 9.3; S.51; Universe24_Paper.tex 10.1",
    "statement": "e(+) = (p, q) and e(-) = (-q, p) are exactly orthogonal with equal norms, so each side's marginal is one half for any setting; in nature cos omega differs from 1 by under 10^-18 for every family (6.8 x 10^-20 at omega_e = 3.7 x 10^-10).",
    "ground": "exact integers, the number recomputed",
    "kind": "A",
@@ -1505,7 +1505,7 @@
   {
    "id": "R14",
    "name": "A body stands, in integers",
-   "place": "ALGEBRA.md, The integer budget of a derived row; main.tex 9.2",
+   "place": "ALGEBRA.md, The integer budget of a derived row; Universe24_Paper.tex 9.2",
    "statement": "A = sqrt(T c_i / (2 sin omega_s)) is 852 at T = 2^15 and 3,407 at 2^19 for c_i = 33 at [2, 3]; the deviation 2 sqrt 8 sigma sqrt n / A is 4.7 percent per mode at n = 10^3; at the two slits over 130 intervals the walk is 2.4 levels per mode, 3.0 per Node over the plane's zone and 4.0 over a cube's.",
    "ground": "the numbers recomputed",
    "kind": "A",
@@ -1601,7 +1601,7 @@
   {
    "id": "F06",
    "name": "The momentum identity at non-uniform paces as printed",
-   "place": "main.tex 4.3",
+   "place": "Universe24_Paper.tex 4.3",
    "statement": "As printed: at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings. Computed, the clause's residual on a 5-box is of the size of the identity's terms; the exact identity is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i, whose extra terms against Eq. (7) are the differences of the reading Node's coefficients along the momentum's axis, [R_b(i + a) - R_b(i)] and [S_(i + a) - S_i], times the levels; the share's identity gains nothing (row L30).",
    "ground": "exact fractions on a periodic 5-box with per-Node coefficients",
    "kind": "A",
@@ -1629,7 +1629,7 @@
   {
    "id": "F08",
    "name": "Light's stress at the band's top as printed",
-   "place": "main.tex 4.3 (since 5f5df82b)",
+   "place": "Universe24_Paper.tex 4.3 (since 5f5df82b)",
    "statement": "As printed: on light's wave the written stress over the written energy, (num / 3 den) sin^2 k / sin^2 omega, is '3 / 5 at the band's top along an axis'. At the band's top along an axis, k = pi with cos omega = 1 / 3 for light, sin k = 0 and the ratio is 0; 3 / 5 is the ratio at k = pi / 2, where sin k = 1 and the group speed along the axis is largest.",
    "ground": "exact rationals at k = pi / 2 and k = pi",
    "kind": "A",
@@ -1657,7 +1657,7 @@
   {
    "id": "R17",
    "name": "Light's written stress over its written energy at finite k",
-   "place": "main.tex 4.3 (since 5f5df82b)",
+   "place": "Universe24_Paper.tex 4.3 (since 5f5df82b)",
    "statement": "On light's wave the written stress over the written energy is (num / 3 den) sin^2 k / sin^2 omega, 1 at long wavelength (nature's T_xx = T_00), 0.90 at k = pi / 4 and 3 / 5 where sin k = 1, at k = pi / 2; at the band's top k = pi it is 0.",
    "ground": "the long-wavelength limit by the residual's order 2, 0.897 at pi / 4, the values at k = pi / 2 and pi exact in rationals",
    "kind": "A",
@@ -1671,7 +1671,7 @@
   {
    "id": "R18",
    "name": "The division act's stop is the integer square root",
-   "place": "main.tex, the one root (since 5f5df82b); ALGEBRA.md, The six verbs",
+   "place": "Universe24_Paper.tex, the one root (since 5f5df82b); ALGEBRA.md, The six verbs",
    "statement": "The integer square root at a lay is the stop of the division act x <- (x + n div x) div 2, the law's fixed point, where the iterate stops falling (at n = 3 the iterates 2, 1, 2 alternate and the stop is 1).",
    "ground": "exact integers, the stop from x_0 = n against isqrt(n) for every n to 5,000",
    "kind": "A",
@@ -1684,7 +1684,7 @@
   {
    "id": "R19",
    "name": "The shears' exact angle at small angles",
-   "place": "main.tex 5.5 (since d7e97674); S.61 row 9",
+   "place": "Universe24_Paper.tex 5.5 (since d7e97674); S.61 row 9",
    "statement": "The exact angle of the three shears is 2 arctan(L p_0 / (2 Gamma^2)), which is (L / Gamma)(p_0 / Gamma) at small angles.",
    "ground": "the remainder 2 arctan(x / 2) - x of the order 3 with the coefficient -1 / 12, and the exact angle's sine x / (1 + x^2 / 4) at rational x, the Pythagorean point of tan(theta / 2) = x / 2",
    "kind": "B",
