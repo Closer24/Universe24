@@ -1,0 +1,25 @@
+# Universe24
+
+> One integer rule on a cubic lattice, read through clicks: the formulas it shares with nature and adds. A paper under review at Foundations of Physics, its supplement with every proof, the law of the lattice, the derivations as scripts, a frozen implementation with its tests, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113
+
+## In plain words
+
+Suppose nature is discrete: space is made of Nodes, and between one Node and the next nothing moves faster than light. A cubic centimetre then holds an astronomical number of Nodes, so no centre can know and decide for all of them; each Node acts on its own, by a rule of its own, seeing only itself and its six neighbours. Universe24 is that rule: one line of integer arithmetic with no free parameter. A Node holds its level now, its level one interval before, and a remainder; at every interval it takes its six neighbours' levels with weights, adds its own level with a weight, subtracts its level of the interval before, adds the carried remainder, and divides by a fixed integer, keeping the new remainder. Nothing is lost, so the rule is exactly reversible. The weights come from the family's pair of integers and the Node's paces; at the vacuum's paces the rule is a discrete wave equation, and from it the paper derives formulas that nature shows and adds formulas of its own with blind predictions. A world is read only through clicks of declared counting regions. The paper's one claim: the rule helps compute things in nature. Every number in the paper is reproduced by a script in the repository.
+
+## Read first
+
+- [The paper, 40 pages](https://closer24.github.io/Universe24/paper/Universe24_Paper.pdf): "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026)
+- [The supplement, Online Resource 1, 85 pages](https://closer24.github.io/Universe24/paper/Universe24_Supplement.pdf): the claims list and the algebraic steps of every derivation
+- [README](https://closer24.github.io/Universe24/README.md): the aim, the plain words, what the repository holds, how to run a world, what is open
+
+## The documents
+
+- [The law of the lattice](https://closer24.github.io/Universe24/docs/ALGEBRA.md): one algebraic line per rule, the families, the bodies, the clicks, every experiment's formula and blind expectation
+- [The decisions in force](https://closer24.github.io/Universe24/docs/HIGHLIGHTS.md): one line each
+- [The engine](https://closer24.github.io/Universe24/docs/ENGINE.md): the words, the main loop and Rule3, the files, the output, the gates, how to run a world
+- [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks
+
+## The code
+
+- [Repository on GitHub](https://github.com/Closer24/Universe24): the derivations as scripts (tools/derivations/), the implementation (src/event_universe/), the tests, the two slits' universe (examples/events/two_slits/)
+- [Zenodo record](https://doi.org/10.5281/zenodo.23190113): the archived version 1.1.0 with a DOI, the one to cite
