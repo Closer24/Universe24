@@ -45,5 +45,5 @@ preferred-citation:
       email: alon@defounder.ai
       orcid: https://orcid.org/0009-0008-2701-4599
   year: 2026
-  notes: "The project's first paper, a new submission to arXiv (quant-ph; cross-lists gr-qc and nlin.CG) and to Foundations of Physics; the arXiv identifier and the journal reference are added here at publication. The paper's source is paper/general_formula/ in this repository."
+  notes: "The project's first paper, submitted to Foundations of Physics; the journal reference is added here at publication. The paper's source is paper/general_formula/ in this repository."
   url: "https://github.com/Closer24/Universe24/tree/main/paper/general_formula"
