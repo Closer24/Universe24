@@ -11,8 +11,8 @@
   },
   "paper": {
    "files": [
-    "paper/general_formula/main.tex",
-    "paper/general_formula/supplement.tex"
+    "paper/main.tex",
+    "paper/supplement.tex"
    ],
    "branch": "paper",
    "head": "d7e976743f45c00ad705dbd01d5a911498caf03d",

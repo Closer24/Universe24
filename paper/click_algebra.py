@@ -12,7 +12,7 @@ in the click's unit, their ratio cos omega_0, with the two Compton factors they 
 under the energy, distinct at [2, 3] and one at the closing gap. Every number here is the formula's; nothing is read
 from a run.
 
-    python paper/general_formula/click_algebra.py
+    python paper/click_algebra.py
 """
 
 from __future__ import annotations

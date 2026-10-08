@@ -25,8 +25,8 @@ first minima in the draw's scatter sqrt(N p (1 - p)), the arrival's spread sigma
 group velocity and curvature with the lay's sigma_x and sigma_k, and the integer budget's bound on
 the run's N (the walk sigma sqrt(n) of the integer step against the amplitude).
 
-    PYTHONPATH=src python paper/general_formula/two_slits_real_line.py [--scales 2 4 8] \\
-        > paper/general_formula/two_slits_real_line.txt
+    PYTHONPATH=src python paper/two_slits_real_line.py [--scales 2 4 8] \\
+        > paper/two_slits_real_line.txt
 
 Needs numpy and the engine's loader. No number of the law is typed here: every coefficient is
 Rule3's at the vacuum's paces (event_universe.core.rule3.coefficients), the count wall the
@@ -52,7 +52,7 @@ from event_universe.loader.world import World
 from event_universe.world_files import load_world
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
 from click_counts import apportioned, extrema, nearest  # noqa: E402  # the NodeDetector's own rules

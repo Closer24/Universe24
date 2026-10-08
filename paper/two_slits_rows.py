@@ -12,7 +12,7 @@ engine's labels), and the seed-24 clicks of the one run as points, the archived 
 tests/test_the_draw.py holds bit for bit (N = 285). The numbers are typed from those files; no run is
 made for the drawing.
 
-    python paper/general_formula/two_slits_rows.py --output paper/general_formula/figures
+    python paper/two_slits_rows.py --output paper/figures
 
 Needs matplotlib.
 """

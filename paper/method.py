@@ -8,7 +8,7 @@ NodeDetectors' click lines; the reader prints the run's row beside the blind row
 run; and only there the computed world meets the clicks it approaches. What is fixed and what is
 free is written at each layer as the paper states it. Nothing here is a number of a run.
 
-    python paper/general_formula/method.py --output paper/general_formula/figures
+    python paper/method.py --output paper/figures
 
 Needs matplotlib.
 """

@@ -10,7 +10,7 @@ is light's speed at long wavelength, 1 / sqrt 3 Links per interval
 (docs/ALGEBRA.md, the lattice constants). The unit cube whose group of 48 signed
 axis permutations is also the octahedron's is drawn faint behind it.
 
-    python paper/general_formula/octahedron.py --output paper/general_formula/figures
+    python paper/octahedron.py --output paper/figures
 
 Needs matplotlib (the `render` extra). Nothing is read from a run.
 """

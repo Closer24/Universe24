@@ -1,5 +1,7 @@
 # Universe24
 
+**The paper:** [main.pdf](paper/main.pdf) · [supplement, Online Resource 1](paper/supplement.pdf) · [Zenodo DOI 10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113)
+
 Universe24 is the clicks of one line of integer arithmetic: a cubic lattice of Nodes, two integer levels and a remainder per part of a field, stepped by one recurrence, Rule3, from a Node's present, past and six neighbours, reversibly and covariantly under the cube's 48. The lattice is read only through declared counting regions, NodeDetectors, its clicks the only measurements, each the meeting of the forward field with the transition read backward. From it follow, in lattice form, the Klein-Gordon equation with Schroedinger's slow limit, Planck's relation in the band's form and, under one assumption fixed by two measurements, the exponential weak-field metric; the lattice's own terms stand under their conditions, predictions where unread, bounded where read; Bell's and Greenberger-Horne-Zeilinger correlations follow from the declared counting rule; the misses are named, a decelerating cosmology among them. The paper has one claim: that Universe24 helps compute things in nature. It does not claim that nature is such a lattice.
 
 ## The aim
@@ -8,7 +10,7 @@ This repository is meant to be carried on. Its aim is a complete physics in inte
 
 ## The paper
 
-The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/general_formula/](paper/general_formula/): `main.tex` with [`main.pdf`](paper/general_formula/main.pdf), `supplement.tex` with [`supplement.pdf`](paper/general_formula/supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/](paper/): `main.tex` with [`main.pdf`](paper/main.pdf), `supplement.tex` with [`supplement.pdf`](paper/supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex main.tex && TEXINPUTS=sn: pdflatex main.tex   # the same for supplement.tex

@@ -8,7 +8,7 @@ cos omega = (num / (3 den)) (2 + cos k). Drawn exactly from that band for the pa
 at the band's own kinetic scale c_m, c_m^2 = omega_0 / (3 tan omega_0). Every number here is the
 formula's; nothing is read from a run of the engine.
 
-    python paper/general_formula/moving_clock.py --output paper/general_formula/figures
+    python paper/moving_clock.py --output paper/figures
 
 Needs matplotlib.
 """
