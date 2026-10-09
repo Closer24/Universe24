@@ -21,7 +21,7 @@ from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.meeting import Item, click_act, fan_momentum
 from event_universe.node_detector import NodeBooks, books_of, drawn_weights, piece_momentum
-from event_universe.reports import PORT_NAMES, credit
+from event_universe.reports import NO_BACK_TO_BACK, PORT_NAMES, credit
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -240,11 +240,12 @@ def credited(board: Lattice) -> None:
             keys = sorted(joint)
             combination = keys[draw(board, [joint[key] for key in keys])]
             pieces = [piece_momentum(board, index, momenta[name]) for name, _ports in books.sides]
+            lost = None if back_to_back(pieces) else NO_BACK_TO_BACK
             nodes: list[Node] = []
             for (name, ports), port, piece in zip(books.sides, combination, pieces, strict=True):
                 kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
                 nodes += click_node(
-                    board, index, name, intake[name], PORT_NAMES[port], kept, 1, piece, fan
+                    board, index, name, intake[name], PORT_NAMES[port], kept, 1, piece, fan, lost
                 )
             items.append(Item(index, None, None, -1, tuple(nodes)))
         else:
@@ -259,6 +260,12 @@ def credited(board: Lattice) -> None:
                 at = click_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
                 items.append(Item(index, None, None, -1, tuple(at)))
         click_act(board, books.state, None, [1], [items])
+
+
+def back_to_back(pieces: list[list[int]]) -> bool:
+    """The pair's filter (Part F, Task 6; the two hands' lines of 2026-10-09 (b): a pair from a source at rest has sin k_1 + sin k_2 = 0 exactly, the partner's piece carries -p_1): whether every later side's piece stands back to back with the first taker's, opposite in sign and equal in magnitude to one unit of T per axis, |p_1a + p_ja| at most 1; in the shipped pair worlds each side is one declared region, so there is no draw among regions to filter and the reading is booked in the credit line as `lost`, "no back-to-back region", where it fails (the open corner measured, not hidden); True with one side."""
+    first = pieces[0]
+    return all(abs(a + b) <= 1 for other in pieces[1:] for a, b in zip(first, other, strict=True))
 
 
 def click_node(

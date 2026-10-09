@@ -1,5 +1,6 @@
 """Part F, Task 1: the lattice momentum as a reading (features/currents `momentum`, node.momentum_of; the advisor's and the mathematician's lines of 2026-10-09, momentum from Rule3, 6083929632 and 6084001231). The normalisation chosen and stated: P_a = SUM_i (F_(i,i-a) - F_(i,i+a)) in the current's own unit, F_ij = num (now_i before_j - before_i now_j), so P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)), the mathematician's with the current's weight; a plane wave cos(k x - omega t) has P_a of the sign of +k. (a) On a periodic chain of 24 with a plane wave the rational mirror of the vacuum form conserves P exactly over 200 intervals and the engine's integers drift below the hands' bound per step, 2 num SUM_i |now_(i+a) - now_(i-a)| in this unit (the remainders' walk, |delta_i| < 1 per Node and the two Links each see it); (b) the plane wave's P over the action it holds is the s-integer of the phase pair at the angle k over the amplitude, in T's unit, the cosine read from the record itself and the pair found by bisection on the phase line, no sine on the engine's side; (c) in a static well held by the harness P changes per step by the gradient term exactly as the rational step at the engine's own integers predicts, to the floor, and over the run the packet gains P toward the well, the fall. The measured integers are printed for the Boss."""
 
+import copy
 import json
 import math
 import time
@@ -12,7 +13,7 @@ from event_universe import meeting, node, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.reports import LOST_TO_DECLARATION, LOST_TO_TAKER
+from event_universe.reports import LOST_TO_DECLARATION, LOST_TO_TAKER, NO_BACK_TO_BACK
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import EVENTS
@@ -350,3 +351,51 @@ def test_the_reversal_through_the_click_is_bit_for_bit_with_the_twist(tmp_path, 
     print(
         f"Part F (Task 4): one_photon 100 forward and back through the click of 48: MATCH; {time.perf_counter() - started:.1f} s"
     )
+
+
+def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
+    """A shipped world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the edited world's digest, `edit` applied to the document; the repository root moved there."""
+    world = json.loads(source.read_text(encoding="utf-8"))
+    edit(world)
+    folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
+    for key in ("universe", "engine"):
+        target = tmp_path / world[key]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((EVENTS.parents[1] / world[key]).read_bytes())
+    mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = input_digest(world)
+    (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
+    world_files.REPOSITORY_ROOT = tmp_path
+    return folder / source.name
+
+
+def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monkeypatch):
+    """Task 6: Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over 20 seeds of the draw, the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and sum to 0 within the lay's rounding (under one percent of |p_x|; the two packets are laid at their own roundings) but not to one unit of T, so every click books "no back-to-back region" (each side being one declared region there is no draw among regions to filter; the reading is booked where it fails, the open corner measured); the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, which the filter leaves to the seed)."""
+    world_files.REPOSITORY_ROOT = EVENTS.parents[1]
+    board = Lattice(load_world(EVENTS / "bell" / "bell_a_b.json"), [].append)
+    for _ in range(99):
+        board.step()
+    sums, realised, lost, size = [], [], [], 0
+    for seed in range(20):
+        twin = copy.deepcopy(board)
+        twin.output, twin.credit.state = (lines := []).append, seed + 1
+        twin.step()
+        credits = [line for line in lines if line["event"] == "credit"]
+        assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
+        left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
+        sums.append([a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)])
+        realised.append(f"{left['realised']} {right['realised']}")
+        lost += [c["lost"] for c in credits if c["lost"] is not None]
+        size = abs(left["momentum"][0])
+        assert left["momentum"][0] * right["momentum"][0] < 0  # opposite signs along x
+    largest = max(abs(s[0]) for s in sums)
+    counted = {key: realised.count(key) for key in sorted(set(realised))}
+    print(
+        f"Part F (Task 6): Bell a b over 20 seeds, the pieces' p_x sums {sorted({s[0] for s in sums})} "
+        f"against |p_x| = {size}, the largest |sum| {largest} ({largest / size:.2e}); the realised ports {counted}; "
+        f"{NO_BACK_TO_BACK!r} booked {len(lost)} times of 40 credit lines"
+    )
+    assert all(s[1:] == [0, 0] for s in sums) and largest * 100 < size
+    assert lost == [NO_BACK_TO_BACK] * 40 if largest > 1 else lost == []
