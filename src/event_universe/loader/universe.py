@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import division_fixed_point, division_forward
+from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.loader import derived
 from event_universe.loader.derived import KINDS, PLANE, PLANE_LINE, FamilyRule, Row
 from event_universe.loader.keys import integer, keyed, reads_of
@@ -93,24 +93,20 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
 def composed_pair(
     first: tuple[int, int], second: tuple[int, int], den: int, relative: bool
 ) -> tuple[int, int]:
-    """The pair of the relative part or of the centre's part of two bound records (ALGEBRA.md, the pair of two bound records, a hypothesis under its own name; the two hands): a bound record's inertia is m* = 3 tan omega_0, the band's curvature at rest, so the centre's part has tan omega_M = tan omega_1 + tan omega_2 and the relative part tan omega_mu = tan omega_1 tan omega_2 / (tan omega_1 + tan omega_2), the slow limit's own separation of the two-body problem; in the files' integers at the scale K = (den den_1 den_2)^2: s_i = isqrt(K^2 (den_i^2 - num_i^2)) div den_i is K sin omega_i and c_i = K num_i div den_i is K cos omega_i, Q = s_1 c_2 + s_2 c_1, so the relative part's cosine is Q / sqrt(Q^2 + (s_1 s_2)^2) and the centre's c_1 c_2 / sqrt((c_1 c_2)^2 + Q^2), and the pair's num is the nearest integer to den times that cosine by the division act, (2 den a + r) div (2 r) with r the fixed point of a^2 + b^2; the declared den is the family's own integer (The matter pair's den is the family's own integer). Two [2, 3] records at den 6,000 give the relative part [5237, 6000] and the centre [2449, 6000] (tools/derivations/two_body.py, the floats' 5,237.2 and 2,449.5 the second method)."""
+    """The pair of the relative part or of the centre's part of two bound records (ALGEBRA.md, the pair of two bound records, a hypothesis under its own name; the two hands): a bound record's inertia is m* = 3 tan omega_0, the band's curvature at rest, so the centre's part has tan omega_M = tan omega_1 + tan omega_2 and the relative part tan omega_mu = tan omega_1 tan omega_2 / (tan omega_1 + tan omega_2), the slow limit's own separation of the two-body problem; in the files' integers at the scale K = (den den_1 den_2)^2: s_i = (the largest x with x^2 <= K^2 (den_i^2 - num_i^2)) div den_i is K sin omega_i and c_i = K num_i div den_i is K cos omega_i, Q = s_1 c_2 + s_2 c_1, so the relative part's cosine is Q / (Q^2 + (s_1 s_2)^2)^(1/2) and the centre's c_1 c_2 / ((c_1 c_2)^2 + Q^2)^(1/2), and the pair's num is the nearest integer to den times that cosine by the division act, (2 den a + r) div (2 r) with r the largest integer whose square is at most a^2 + b^2; the declared den is the family's own integer (The matter pair's den is the family's own integer). Two [2, 3] records at den 6,000 give the relative part [5237, 6000] and the centre [2449, 6000] (tools/derivations/two_body.py, the floats' 5,237.2 and 2,449.5 the second method)."""
     (num_1, den_1), (num_2, den_2) = first, second
     scale = (den * den_1 * den_2) ** 2
     sine_1 = int(
-        division_forward(
-            division_fixed_point(scale * scale * (den_1 * den_1 - num_1 * num_1)), den_1, 0
-        )[0]
+        division_forward(largest_below(scale * scale * (den_1 * den_1 - num_1 * num_1)), den_1, 0)[0]
     )
     sine_2 = int(
-        division_forward(
-            division_fixed_point(scale * scale * (den_2 * den_2 - num_2 * num_2)), den_2, 0
-        )[0]
+        division_forward(largest_below(scale * scale * (den_2 * den_2 - num_2 * num_2)), den_2, 0)[0]
     )
     cosine_1 = int(division_forward(scale * num_1, den_1, 0)[0])
     cosine_2 = int(division_forward(scale * num_2, den_2, 0)[0])
     summed = sine_1 * cosine_2 + sine_2 * cosine_1  # the tangents' sum at the scale squared
     along, across = (summed, sine_1 * sine_2) if relative else (cosine_1 * cosine_2, summed)
-    root = division_fixed_point(along * along + across * across)
+    root = largest_below(along * along + across * across)
     return int(division_forward(2 * den * along + root, 2 * root, 0)[0]), den
 
 

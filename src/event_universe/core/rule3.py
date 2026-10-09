@@ -1,4 +1,4 @@
-"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the fixed point of the division act iterated (the root the loader and the generator read, never the run); the form's Node term and the rule's integers from the paces beside it, one read per Port as the product of the Node's pace squared and the Link's factor, the clock the Node's and the tension the Link's, the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-line, #the-direction, #the-interval, #the-paces)."""
+"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the largest integer whose square is at most a count, found by a bisection on the share reading and no root (`largest_below`, the search the loader and the generator read, never the run); the form's Node term and the rule's integers from the paces beside it, one read per Port as the product of the Node's pace squared and the Link's factor, the clock the Node's and the tension the Link's, the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-line, #the-direction, #the-interval, #the-paces)."""
 
 from __future__ import annotations
 
@@ -71,16 +71,21 @@ def division_back(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
     return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, -1)
 
 
-def division_fixed_point(square: int) -> int:
-    """The fixed point of the division act iterated from above, x <- (x + n div x) div 2 while it falls (Newton's integer iteration, the start's own act), the largest x with x^2 <= n; at n = 0 the descent ends at 0 (ALGEBRA.md #the-guard, the root leaves everywhere)."""
-    root = square + 1
-    while True:
-        lower = division_forward(root + division_forward(square, root, 0)[0], 2, 0)[0]
-        if lower >= root:
-            return int(root)
-        root = lower
-        if root == 0:
-            return 0
+def largest_below(square: int) -> int:
+    """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `division_forward(low + high, 2, 0)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
+    if square < 0:
+        raise ValueError(f"no integer has a square at most {square}: the search is refused")
+    high = 1
+    while high * high <= square:
+        high = high + high
+    low = 0
+    while high - low > 1:
+        middle = int(division_forward(low + high, 2, 0)[0])
+        if middle * middle <= square:
+            low = middle
+        else:
+            high = middle
+    return low
 
 
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:

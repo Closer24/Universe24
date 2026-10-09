@@ -24,8 +24,8 @@ from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import (
     NO_READ,
     coefficients,
-    division_fixed_point,
     division_forward,
+    largest_below,
     rule3,
 )
 from event_universe.features import phase
@@ -147,7 +147,7 @@ def count_wall_of(pair: tuple[int, int], action: int) -> int:
     num, den = pair
     gap = den * den - num * num
     wall = 3 * action
-    return division_fixed_point(wall * wall * gap) if gap else 3 * den * action
+    return largest_below(wall * wall * gap) if gap else 3 * den * action
 
 
 def read_quanta(
@@ -591,7 +591,7 @@ def scaled_record(
             )
         return record
 
-    low = max(1, division_fixed_point(max(1, centre_count) * board.action))
+    low = max(1, largest_below(max(1, centre_count) * board.action))
     while low > 1 and ((found := read(low)) is None or measure(found) > target):
         low = max(1, low // 2)
     high = low
@@ -614,9 +614,9 @@ def pixel_record(
 ) -> tuple[Standing, Pairs]:
     """The one-Node record of a body's quanta at its declared Node, a declaration by name and no fixed point (the proton; ALGEBRA.md, The law's alpha is a coefficient of the file, the quantum of a family: one unit of the invariant, 2 A^2 sin omega_s = T per quantum, its Wronskian sense x T / 2): the level now (A, 0) with A the fixed point of the division act on quanta x T den div (2 sin omega_s den) and the level before the band's rest rotation in the body's sense, (A cos omega_s, sense A sin omega_s) with cos omega_s = num / den and sin omega_s = the fixed point of den^2 - num^2 over den; on a pair whose num is not 0 the record is no exact rotating pixel and spreads from the first interval at the band's group velocity (the folder's blind, row 2); its share at the Node reads 1 / sin omega_s of its quanta, which the gate admits within its rounding. Returns the record and its level pairs; `planes` the planes of the record's part, every plane laid alike at A_l^2 = count T den / (2 sin omega_0 x planes), the planes summing to the invariant (the two hands of 2026-10-03, the proton's row of three planes at A_l^2 = T / 6 at [0, den])."""
     num, den = board.pair
-    sine = division_fixed_point(den * den - num * num)
+    sine = largest_below(den * den - num * num)
     quanta = int(counts.sum())
-    amplitude = division_fixed_point(
+    amplitude = largest_below(
         int(division_forward(quanta * board.action * den, 2 * sine * planes, 0)[0])
     )
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
@@ -983,7 +983,7 @@ def rotating(
     own = int(share_of(board, 0, pairs[0], pairs[1]).sum())
     both = own + int(share_of(board, 0, pairs[2], pairs[3]).sum())
     amplitude = max(int(np.abs(level).max()) for level in pairs)
-    scale = division_fixed_point(int(division_forward(amplitude * amplitude * own, both, 0)[0]))
+    scale = largest_below(int(division_forward(amplitude * amplitude * own, both, 0)[0]))
     found = [
         np.asarray(division_forward(level * scale, amplitude, 0)[0], dtype=board.kind) for level in pairs
     ]
@@ -1161,7 +1161,7 @@ def packet_levels(
         (int(turns), int(halves)) if axis == along else sideways.get(axis, (0, 1)) for axis in range(3)
     ]
     amplitude = int(packet["amplitude"])
-    unit = division_fixed_point(int(division_forward(board.width, amplitude, 0)[0]))
+    unit = largest_below(int(division_forward(board.width, amplitude, 0)[0]))
     steps = lcm(*(2 * 2 * q for _p, q in numbers), int(whole_turn))
     quarter = int(division_forward(steps, 2 * 2, 0)[0])
     cosines = half_turn(quarter, unit)  # cos(2 pi j / steps) for j from 0 through the half turn

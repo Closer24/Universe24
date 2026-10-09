@@ -16,7 +16,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import coefficients, division_fixed_point
+from event_universe.core.rule3 import coefficients, largest_below
 from event_universe.lattice import Lattice
 from event_universe.loader.keys import AXES
 from event_universe.records import complement
@@ -33,7 +33,7 @@ def pair(value: Fraction | None) -> list[int] | None:
 
 def rooted(square: Fraction, scale: int) -> list[int]:
     """A fraction's root at a scale as [root x scale, scale] by the fixed point of the division act on the square's numerator times the scale squared over its denominator, the largest integer whose square fits (no root act)."""
-    found = division_fixed_point(square.numerator * scale * scale // square.denominator)
+    found = largest_below(square.numerator * scale * scale // square.denominator)
     return [found, scale]
 
 

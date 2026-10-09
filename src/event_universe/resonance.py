@@ -1,10 +1,10 @@
-"""The resonant read of a record declared a NodeDetector at one Node, the two-quadrature form (ALGEBRA.md #what-is-open, item 50; The click writes on the lattice (b), the share at resonance; the mathematician's and the advisor's hands with their precisions, two hands): the taker keeps per transition two reference records at its declared resonance pair [num_d, den_d], r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced every interval by the one recurrence the emission's phasor uses (`emission.advanced`, Chebyshev's recurrence, one rounding half up), the sine record begun at (0, isqrt(R^2 (den_d^2 - num_d^2)) div den_d), one root at the declaration as the node_detector's wall's is; over the window the arriving level a_t at the Node is summed against both, X = SUM a_t r_t and Y' = SUM a_t r'_t, so that X^2 + Y'^2 = R^2 |SUM a_t e^(i Omega_d t)|^2, and at the window's close the turn of the labels is theta_W = k isqrt(X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k, applied at the window's close as one hop of the labels by the phase line's pair at the window's angle, one carried division per label with the remainders kept in the books (`window_pair`, `hopped`, `meeting.turned_labels`; Part C, the local trial), nothing reading the labels inside the window; the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned by delta, the counter-rotating residue below 2 / W, where the magnitude form the engine ran before accumulated (2 / pi) k A W at every frequency and read no resonance. The scale R is derived from the file's amplitude bound, the record's window and the width and never declared; no s_d anywhere; the root once per window is the NodeDetector's own act as the lay's root is and no act of Rule3, which takes none. The engine holds no number and no family name; the records stand in the books and at no Node."""
+"""The resonant read of a record declared a NodeDetector at one Node, the two-quadrature form (ALGEBRA.md #what-is-open, item 50; The click writes on the lattice (b), the share at resonance; the mathematician's and the advisor's hands with their precisions, two hands): the taker keeps per transition two reference records at its declared resonance pair [num_d, den_d], r_t = R cos(Omega_d t) and r'_t = R sin(Omega_d t), advanced every interval by the one recurrence the emission's phasor uses (`emission.advanced`, Chebyshev's recurrence, one rounding half up), the sine record begun at (0, (the largest x with x^2 <= R^2 (den_d^2 - num_d^2)) div den_d), one root at the declaration as the node_detector's wall's is; over the window the arriving level a_t at the Node is summed against both, X = SUM a_t r_t and Y' = SUM a_t r'_t, so that X^2 + Y'^2 = R^2 |SUM a_t e^(i Omega_d t)|^2, and at the window's close the turn of the labels is theta_W = k (the largest x with x^2 <= X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k, applied at the window's close as one hop of the labels by the phase line's pair at the window's angle, one carried division per label with the remainders kept in the books (`window_pair`, `hopped`, `meeting.turned_labels`; Part C, the local trial), nothing reading the labels inside the window; the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned by delta, the counter-rotating residue below 2 / W, where the magnitude form the engine ran before accumulated (2 / pi) k A W at every frequency and read no resonance. The scale R is derived from the file's amplitude bound, the record's window and the width and never declared; no s_d anywhere; the root once per window is the NodeDetector's own act as the lay's root is and no act of Rule3, which takes none. The engine holds no number and no family name; the records stand in the books and at no Node."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from event_universe.core.rule3 import division_fixed_point, division_forward
+from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.emission import advanced
 from event_universe.features import phase
 from event_universe.loader.node_detector_declaration import Transition
@@ -12,7 +12,7 @@ from event_universe.loader.node_detector_declaration import Transition
 
 @dataclass
 class Reference:
-    """A transition's two reference records at the taker's Node and its window's two sums: the transition's resonance pair (num, den), the scale R (`scale_of`), the cosine record (r_t, r_(t-1)) begun at (R, R num div den), so that r_t = R cos(Omega_d t), the sine record (r'_t, r'_(t-1)) begun at r'_0 = 0 and r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, so that r'_t = R sin(Omega_d t), both advanced by `emission.advanced`, the window's two sums over the arriving level a_t at the Node, X = SUM a_t r_t and Y' = SUM a_t r'_t, and the arrival, the two sums as the close read them, held past their reset for the absorption's lay (ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum); the books' and at no Node."""
+    """A transition's two reference records at the taker's Node and its window's two sums: the transition's resonance pair (num, den), the scale R (`scale_of`), the cosine record (r_t, r_(t-1)) begun at (R, R num div den), so that r_t = R cos(Omega_d t), the sine record (r'_t, r'_(t-1)) begun at r'_0 = 0 and r'_1 = (the largest x with x^2 <= R^2 (den^2 - num^2)) div den, the one root at the declaration, so that r'_t = R sin(Omega_d t), both advanced by `emission.advanced`, the window's two sums over the arriving level a_t at the Node, X = SUM a_t r_t and Y' = SUM a_t r'_t, and the arrival, the two sums as the close read them, held past their reset for the absorption's lay (ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum); the books' and at no Node."""
 
     resonance: tuple[int, int]
     scale: int
@@ -36,13 +36,13 @@ def scale_of(room: int, bound: int, window: int) -> int:
 
 
 def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Reference]:
-    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the emission's own start), the sine record at (0, -r'_1) with r'_1 = isqrt(R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
+    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the emission's own start), the sine record at (0, -r'_1) with r'_1 = (the largest x with x^2 <= R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
     found = []
     for transition in transitions:
         num, den = transition.resonance
         cosine = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
         square = scale * scale * (den * den - num * num)
-        sine = int(division_forward(division_fixed_point(square), den, 0)[0])
+        sine = int(division_forward(largest_below(square), den, 0)[0])
         found.append(Reference(transition.resonance, scale, (scale, cosine), (0, -sine), 0, 0))
     return found
 
@@ -68,8 +68,8 @@ def arrival_of(
 
 
 def turned_direction(re: int, im: int, x: int, y: int) -> tuple[int, int]:
-    """A part's direction (re, im) turned by the angle of (x, y), the arriving record's phase at the Node atan2(Y', X) (ALGEBRA.md, The two-mode line, row 16: the entering part's direction is the leaving part's turned by the arrival's, the product's phase phi_part = phi_left + phi_L): (re x - im y, re y + im x) over isqrt(x^2 + y^2) by the division act, its floor; unturned where no arrival stands, the size 0."""
-    size = division_fixed_point(x * x + y * y)
+    """A part's direction (re, im) turned by the angle of (x, y), the arriving record's phase at the Node atan2(Y', X) (ALGEBRA.md, The two-mode line, row 16: the entering part's direction is the leaving part's turned by the arrival's, the product's phase phi_part = phi_left + phi_L): (re x - im y, re y + im x) over (the largest x with x^2 <= x^2 + y^2) by the division act, its floor; unturned where no arrival stands, the size 0."""
+    size = largest_below(x * x + y * y)
     if size == 0:
         return re, im
     return int(division_forward(re * x - im * y, size, 0)[0]), int(
@@ -78,8 +78,8 @@ def turned_direction(re: int, im: int, x: int, y: int) -> tuple[int, int]:
 
 
 def window_turn(reference: Reference, weight: int) -> int:
-    """The window's turn in the labels' numerator, theta_W = k isqrt(X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k (the advisor's derivation: the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned); the root once per window is the NodeDetector's own act, as the lay's root is (`features/click.amplitude`), and no act of Rule3, which takes none (the advisor's precision (iii))."""
-    size = division_fixed_point(reference.in_phase**2 + reference.quadrature**2)
+    """The window's turn in the labels' numerator, theta_W = k (the largest x with x^2 <= X^2 + Y'^2) div R, the plane's size over the scale at the transition's declared weight k (the advisor's derivation: the first-order change of the labels over a window is k |SUM a_t e^(i Omega_d t)|, A W / 2 at resonance at every arrival phase and A W sinc(delta W / 2) / 2 detuned); the root once per window is the NodeDetector's own act, as the lay's root is (`features/click.amplitude`), and no act of Rule3, which takes none (the advisor's precision (iii))."""
+    size = largest_below(reference.in_phase**2 + reference.quadrature**2)
     return int(division_forward(weight * size, reference.scale, 0)[0])
 
 

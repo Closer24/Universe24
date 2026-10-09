@@ -43,7 +43,7 @@ def link_wall(gamma: int) -> int:
 
 
 def link_guard(numerator: Any, wall: int, name: str, axis: int) -> None:
-    """The Link's guard at load (the one place the loader bounds the sign's Link turn, as it bounds a pace): the tangent half-angle at most 1 at every Node, |n_ij| <= 4 Gamma on the Link of `axis`, a quarter turn per Link, within which the sign's pair stays at its extreme X sqrt 2 (`derived.turned_room`); refused by name beyond it, naming the Node. The time level is guarded by nothing: the phase line's circle wraps (the advisor's second, item (1))."""
+    """The Link's guard at load (the one place the loader bounds the sign's Link turn, as it bounds a pace): the tangent half-angle at most 1 at every Node, |n_ij| <= 4 Gamma on the Link of `axis`, a quarter turn per Link, within which the sign's pair stays at its extreme X 2^(1/2) (`derived.turned_room`); refused by name beyond it, naming the Node. The time level is guarded by nothing: the phase line's circle wraps (the advisor's second, item (1))."""
     size = np.abs(np.asarray(numerator))
     high = int(size.max()) if size.ndim else int(size)
     if high > wall:

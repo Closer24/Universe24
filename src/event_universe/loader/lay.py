@@ -98,7 +98,7 @@ def least_action(
     tolerance: tuple[int, int],
     confidence: tuple[int, int],
 ) -> int:
-    """The least quantum action T the budget admits, a power of two (HIGHLIGHTS.md): the share's deviation over the body, 5.66 sigma sqrt(n) / A with sigma = (num / (3 den)) sqrt(6 / 12) levels per interval and A = sqrt(T c_i / (2 sin omega_s)), within epsilon = e_num / e_den gives T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i); squared, with sin^2 omega_s = (den^2 - num^2) / den^2, the integer line 81 den^6 e_num^4 c_i^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), the confidence multiple squared k^2 = 32 the file's key `confidence` as a pair [num, den] (5.66 sigma: k = 4 sqrt 2, k^4 = 1024, the shipped lays' [32, 1]), both sides scaled by its den and num, and 81 = (3 den)^4 over den^2, Rule3's 3 den squared twice, every other number the file's; T the least power of two whose square meets it, by doubling from 1; 1 where the pair has no gap (a massless family's deviation has no quantum to read)."""
+    """The least quantum action T the budget admits, a power of two (HIGHLIGHTS.md): the share's deviation over the body, 5.66 sigma n^(1/2) / A with sigma = (num / (3 den)) (6 / 12)^(1/2) levels per interval and A = (T c_i / (2 sin omega_s))^(1/2), within epsilon = e_num / e_den gives T >= 32 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i); squared, with sin^2 omega_s = (den^2 - num^2) / den^2, the integer line 81 den^6 e_num^4 c_i^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), the confidence multiple squared k^2 = 32 the file's key `confidence` as a pair [num, den] (5.66 sigma: k = 4 x 2^(1/2), k^4 = 1024, the shipped lays' [32, 1]), both sides scaled by its den and num, and 81 = (3 den)^4 over den^2, Rule3's 3 den squared twice, every other number the file's; T the least power of two whose square meets it, by doubling from 1; 1 where the pair has no gap (a massless family's deviation has no quantum to read)."""
     num, den = pair
     e_num, e_den = tolerance
     k2_num, k2_den = confidence
@@ -132,6 +132,6 @@ def budget_gate(
                 f"the universe's quantum action T = {action} is below the least T = {least} the lay's tolerance "
                 f"{list(lay.tolerance)} needs for a body of the pair {list(pair)} with {quanta} quanta per Node "
                 f"over {intervals} intervals: T >= k^2 num^2 n sin(omega_s) / (9 den^2 epsilon^2 c_i) at the "
-                f"declared confidence k^2 = {list(lay.confidence)}, the share's deviation k sigma sqrt(n) / A within "
+                f"declared confidence k^2 = {list(lay.confidence)}, the share's deviation k sigma n^(1/2) / A within "
                 "epsilon (HIGHLIGHTS.md, the integer budget)"
             )

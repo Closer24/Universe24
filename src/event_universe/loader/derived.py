@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the held write's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the fixed point of the division act, never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the held write's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the search on the share reading (`rule3.largest_below`), never written and never by a root (ALGEBRA.md #the-bound)."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from math import gcd
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, SIDES
-from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
+from event_universe.core.rule3 import coefficients, division_forward, largest_below
 from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 
@@ -237,12 +237,12 @@ def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): isqrt(9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one root of the whole product (the fixed point of the division act), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
+    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): (the largest x with x^2 <= 9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one search on the whole product (`rule3.largest_below`), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
     num, den = family.pair
     gap = den * den - num * num
     if gap:
-        wall = 3 * action  # Rule3's 3 den over the den of sin omega_0 = isqrt(gap) / den
-        return division_fixed_point(wall * wall * gap)  # one root on the whole product
+        wall = 3 * action  # Rule3's 3 den over the den of sin omega_0, the search on gap over den
+        return largest_below(wall * wall * gap)  # one search on the whole product
     return 3 * den * action
 
 
@@ -301,10 +301,10 @@ def factor_bound(families: tuple[FamilyRule, ...], index: int, gamma: int, bound
 
 
 def tension_room(pair: tuple[int, int], gamma: int, q_max: int, wronskian: bool) -> int:
-    """The write's factor's room at a source's hill's edge under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's hand and the advisor's second, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q itself, so under a negative tension q exceeds Gamma, up to q_max, the largest Link factor the axis lines within the bound admit (`factor_bound`), and in a hollow the factor reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, P the edge's pace of the source's pair (`edge_of`), beyond the hill's room (`hill_scale`); the room is the ceiling of P^2 (isqrt(q_max P) + 1) / Gamma^3 on a count and of P^2 q_max / Gamma^3 on a Wronskian, the ceiling by the division act with the carry Gamma^3 - 1 and the root by its fixed point plus one, so that the floor never under-bounds (at the rule's universe, Gamma 6,000 and q_max 15,266: 3 and 4 on matter's pair against the hill's 2, 2 and 3 on the massless pairs against 1)."""
+    """The write's factor's room at a source's hill's edge under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's hand and the advisor's second, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q itself, so under a negative tension q exceeds Gamma, up to q_max, the largest Link factor the axis lines within the bound admit (`factor_bound`), and in a hollow the factor reaches (P / Gamma)^3 (q_max / P)^(1/2) on a count and (P / Gamma)^3 q_max / P on a Wronskian, P the edge's pace of the source's pair (`edge_of`), beyond the hill's room (`hill_scale`); the room is the ceiling of P^2 ((the largest x with x^2 <= q_max P) + 1) / Gamma^3 on a count and of P^2 q_max / Gamma^3 on a Wronskian, the ceiling by the division act with the carry Gamma^3 - 1 and the root's integer the largest whose square is at most the product, plus one, so that the floor never under-bounds (at the rule's universe, Gamma 6,000 and q_max 15,266: 3 and 4 on matter's pair against the hill's 2, 2 and 3 on the massless pairs against 1)."""
     edge = edge_of(pair, gamma)
     cube = gamma * gamma * gamma
-    factor = q_max if wronskian else division_fixed_point(q_max * edge) + 1
+    factor = q_max if wronskian else largest_below(q_max * edge) + 1
     return int(division_forward(edge * edge * factor, cube, cube - 1)[0])
 
 
@@ -348,7 +348,7 @@ def write_rooms(
 
 
 def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
-    """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X sqrt 2 at the angle pi / 4, which the sweep over n passes at the tangent half-angle sqrt 2 - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes sqrt 2); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
+    """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X 2^(1/2) at the angle pi / 4, which the sweep over n passes at the tangent half-angle 2^(1/2) - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes 2^(1/2)); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
     from event_universe.plane import (
         link_wall,
         sign_pairs,
@@ -364,7 +364,7 @@ def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
 def amplitude_bound(
     families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
 ) -> int:
-    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals each under the sign's pair with the Link's phase at its own extreme, X sqrt 2 to the rounding, `turned_room`, and for a folded one within twice the level, `FOLD_REACH`), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, the fixed point of the division act), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`: the booking's room times the factor's room at the source's hill's edge, `hill_scale`, the one rounding's value; its numerator, the count times the three paces, is exact in Python's integers and meets no width, `paces.write_factor`) plus its remainder under the wall, does too, in two passes: the first with every source's room the hill's (`hill_scale`) finds the hill's own bound A_1, the second with every source's room the larger of the hill's and the tension's at q_max = Gamma + SUM W_a A_1, the largest Link factor the axis lines within A_1 admit (`source_room`, `tension_room`, `factor_bound`; `bound_under_rooms`, the one pass), the bound at most A_1 and no fixed point, since q_max(A_1) bounds q_max(A) (the mathematician's hand and the advisor's second, two hands; the four shipped universes' bound 9,266 unmoved, the write's total not their binding term); refused by name where no level fits. The time turn's shears and their rooms (the level before turned, the shears' product, the slack of 2 on every room) are gone with the time turn (features/phase, the temporal gauge): a turned level is a plain level."""
+    """The amplitude bound A, derived and never written: the largest level at which Rule3's total 6 A R + A |S| + w (A + 1) stays inside the file's width for every pair at the vacuum's paces, at a frozen clock (the paces 0, the bound the deepest hollow approaches: |S| grows to 12 den Gamma^2 G^2 as the paces fall) and at the hill's edge P on the clock and the pace alike (`features/read`, `edge_of`; the three the extremes of the guard, ALGEBRA.md #the-bound, #the-paces, The guard; for a turned record the six arrivals each under the sign's pair with the Link's phase at its own extreme, X 2^(1/2) to the rounding, `turned_room`, and for a folded one within twice the level, `FOLD_REACH`), at which the currents' reading at a Node, 6 x 2 x lines x |num| A^2 for every family of quanta (the two products of each of the record's lines through the six Ports; the largest A whose square fits, `rule3.largest_below`), does too (features/currents), at which every held family's one write per part, its numerator at the sources' room with the write's factor at the hill's edge (`write_rooms`: the booking's room times the factor's room at the source's hill's edge, `hill_scale`, the one rounding's value; its numerator, the count times the three paces, is exact in Python's integers and meets no width, `paces.write_factor`) plus its remainder under the wall, does too, in two passes: the first with every source's room the hill's (`hill_scale`) finds the hill's own bound A_1, the second with every source's room the larger of the hill's and the tension's at q_max = Gamma + SUM W_a A_1, the largest Link factor the axis lines within A_1 admit (`source_room`, `tension_room`, `factor_bound`; `bound_under_rooms`, the one pass), the bound at most A_1 and no fixed point, since q_max(A_1) bounds q_max(A) (the mathematician's hand and the advisor's second, two hands; the four shipped universes' bound 9,266 unmoved, the write's total not their binding term); refused by name where no level fits. The time turn's shears and their rooms (the level before turned, the shears' product, the slack of 2 on every room) are gone with the time turn (features/phase, the temporal gauge): a turned level is a plain level."""
     hill = bound_under_rooms(families, gamma, action, width, unit, None)
     return bound_under_rooms(families, gamma, action, width, unit, hill)
 
@@ -385,13 +385,13 @@ def bound_under_rooms(
                 arrivals *= FOLD_REACH
             elif turns(
                 families, index
-            ):  # the sign's pair with the phase: the pair's own extreme, X sqrt 2
+            ):  # the sign's pair with the phase: the pair's own extreme, X 2^(1/2)
                 arrivals = PORTS * pace * pace * turned_room(family.pair, gamma, unit)
             room = arrivals + wall + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]))
         if family.quanta and num:
             room = PORTS * PRODUCTS * family.record * abs(num)
-            found = min(found, division_fixed_point(int(division_forward(largest, room, 0)[0])))
+            found = min(found, largest_below(int(division_forward(largest, room, 0)[0])))
         if family.held:
             write = held_write_of(families, index, action)
             rooms = write_rooms(families, index, write, gamma, hill)
@@ -400,7 +400,7 @@ def bound_under_rooms(
                     found = 0
                 elif room:
                     fits = int(division_forward(largest - wall, room, 0)[0])
-                    found = min(found, division_fixed_point(fits))
+                    found = min(found, largest_below(fits))
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "
