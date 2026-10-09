@@ -191,6 +191,12 @@ def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
+    (
+        "core/ports.py",
+        ast.Mod,
+        "run_offsets",
+        "the periodic wrap of a run's offsets around the ring, the taker across the wrap",
+    ),
     ("loader/faces.py", ast.Mod, "connected", "the periodic wrap of a walked neighbour's coordinate"),
     ("growth.py", ast.Mod, "reached", "a line's number against the family's width, a part's first line"),
     ("growth.py", ast.Mod, "resized", "a line's number against the family's width, a part's first line"),

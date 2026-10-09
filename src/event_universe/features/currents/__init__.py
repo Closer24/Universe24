@@ -35,13 +35,17 @@ def current(weight: int, here: Levels, there: Levels) -> Any:
     return weight * (here.now * there.before - here.before * there.now)
 
 
-def momentum(now: Any, before: Any, axis: int, wrap: Wrap, weight: int = 1) -> int:
-    """The lattice momentum of one level pair along `axis` (Part F; the advisor's and the mathematician's lines of 2026-10-09, momentum from Rule3, 6083929632 and 6084001231): P_a = SUM_i (F_(i,i-a) - F_(i,i+a)), the antisymmetric sum over every Node of the two Link currents along the axis in the current's own unit, F_ij = weight (now_i before_j - before_i now_j) into i from j (`current`), so that P_a = 2 weight SUM_i (now_(i+a) before_i - now_i before_(i+a)) on a periodic board, the mathematician's normalisation with the current's weight kept: a plane wave cos(k x - omega t) has P_a of the sign of +k (the term's mean weight A^2 sin k sin omega per Link), and a piece of action T carries weight T sin k_a, "sin k" the integer current in T's unit. Conserved exactly by the rational step at uniform static paces on a periodic board (M circulant and symmetric commutes with the shift T_a, [M, T_a] = 0) and to the floors on the integers, Delta P_a = (weight / w) SUM_i (r'_i - r_i)(now_(i-a) - now_(i+a)) per step, below weight SUM_i |now_(i+a) - now_(i-a)|, a walk of mean 0; at non-uniform static paces it changes by minus the gradient of the Node's rest rotation times the density, the fall. A reading of the record as it stands, never a write; the neighbours through the Ports (`core/ports.arrival`, 0 beyond a face); no division: the unit is the current's."""
+def momentum_terms(now: Any, before: Any, axis: int, wrap: Wrap, weight: int = 1) -> Any:
+    """The lattice momentum's term at every Node of one level pair along `axis` before the sum (Part F2; the mathematician's line of 2026-10-09, 6085486079: the piece's p is read from "currents.momentum's per-Node terms before their sum" at a region's Nodes): F_(i,i-a) - F_(i,i+a), the Node's two Link currents along the axis, F_ij = weight (now_i before_j - before_i now_j) into i from j (`current`), the neighbours through the Ports (`core/ports.arrival`, 0 beyond a face); an array over the board in the current's own unit, no division; `momentum` is its sum over the board, a region's P_a its sum over the region's Nodes (`node.momentum_of`)."""
     here = Levels(now, before)
     behind = Levels(arrival(now, axis, -1, wrap), arrival(before, axis, -1, wrap))
     ahead = Levels(arrival(now, axis, 1, wrap), arrival(before, axis, 1, wrap))
-    found = current(weight, here, behind) - current(weight, here, ahead)
-    return int(np.asarray(found).sum(dtype=object))
+    return np.asarray(current(weight, here, behind) - current(weight, here, ahead))
+
+
+def momentum(now: Any, before: Any, axis: int, wrap: Wrap, weight: int = 1) -> int:
+    """The lattice momentum of one level pair along `axis` (Part F; the advisor's and the mathematician's lines of 2026-10-09, momentum from Rule3, 6083929632 and 6084001231): P_a = SUM_i (F_(i,i-a) - F_(i,i+a)), the antisymmetric sum over every Node of the two Link currents along the axis in the current's own unit (`momentum_terms`), F_ij = weight (now_i before_j - before_i now_j) into i from j (`current`), so that P_a = 2 weight SUM_i (now_(i+a) before_i - now_i before_(i+a)) on a periodic board, the mathematician's normalisation with the current's weight kept: a plane wave cos(k x - omega t) has P_a of the sign of +k (the term's mean weight A^2 sin k sin omega per Link), and a piece of action T carries weight T sin k_a, "sin k" the integer current in T's unit. Conserved exactly by the rational step at uniform static paces on a periodic board (M circulant and symmetric commutes with the shift T_a, [M, T_a] = 0) and to the floors on the integers, Delta P_a = (weight / w) SUM_i (r'_i - r_i)(now_(i-a) - now_(i+a)) per step, below weight SUM_i |now_(i+a) - now_(i-a)|, a walk of mean 0; at non-uniform static paces it changes by minus the gradient of the Node's rest rotation times the density, the fall. A reading of the record as it stands, never a write; no division: the unit is the current's."""
+    return int(momentum_terms(now, before, axis, wrap, weight).sum(dtype=object))
 
 
 def tension(weight: int, n: Neighbours) -> Any:

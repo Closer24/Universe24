@@ -55,6 +55,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "turn_factor", "rounded"): "D",  # the turn per interval, once
     # core/ports.py
     ("core/ports.py", "shifted", "%"): "D",  # the periodic index wrap, named exception
+    ("core/ports.py", "run_offsets", "%"): "D",  # the run's offsets around the ring
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "record_unit", "division_forward"): "D",  # the mean unit rounded half up
@@ -228,7 +229,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("node_detector.py", "own_clock", "division_forward"): "D",  # the mean clock, rounded once
     ("node_detector.py", "clock_advanced", "division_forward"): "R",  # the reader's clock remainder kept
     ("node_detector.py", "drawn_weights", "division_forward"): "D",  # the inflow over the unit
-    ("node_detector.py", "piece_momentum", "division_forward"): "D",  # the piece's p over num, once
+    ("node_detector.py", "piece_momentum", "division_forward"): "D",  # one count's P over the share
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
     ("plane.py", "step_plane", "rule3"): "R",  # Rule3's step on the plane

@@ -365,12 +365,17 @@ def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.nd
     return tuple(np.asarray(value) for value in found)
 
 
-def momentum_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[int, int, int]:
-    """A record's lattice momentum per axis, a reading of its lines (Part F, features/currents `momentum`; the two hands' lines of 2026-10-09): every line's antisymmetric sum of its two Link currents along the axis over the board, added, in the current's unit at the weight num; what the credit books per axis at a window's close and the write must give the taker."""
-    found = [
-        sum(currents.momentum(r.now, r.before, axis, wrap, weight) for r in lines)
-        for axis in range(AXES)
-    ]
+def momentum_of(
+    weight: int, lines: Sequence[Record], wrap: Wrap, at: np.ndarray | None = None
+) -> tuple[int, int, int]:
+    """A record's lattice momentum per axis, a reading of its lines (Part F, features/currents `momentum`; the two hands' lines of 2026-10-09): every line's antisymmetric sum of its two Link currents along the axis, added, in the current's unit at the weight num, over the board (`at` None) or over the Nodes a mask names (Part F2: the per-Node terms before their sum at a region's Nodes, `currents.momentum_terms`, the piece's P_a at the region the credit books at a window's close, `node_detector.piece_momentum`); what the write must give the taker."""
+    found = []
+    for axis in range(AXES):
+        total = 0
+        for r in lines:
+            terms = currents.momentum_terms(r.now, r.before, axis, wrap, weight)
+            total += int((terms if at is None else terms[at]).sum(dtype=object))
+        found.append(total)
     return int(found[0]), int(found[1]), int(found[2])
 
 

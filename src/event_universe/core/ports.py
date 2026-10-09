@@ -48,3 +48,14 @@ def arrival(a: Any, axis: int, sigma: int, wrap: Wrap, fill: Any = 0) -> Any:
         out = out.copy()
     out[wrap.beyond | shifted(wrap.beyond, axis, sigma, wrap[axis], False)] = fill
     return out
+
+
+def run_offsets(coordinates: Any, held: Any, axis: int, periodic: bool) -> Any:
+    """The offset of every Node along `axis` from the start of the run the mask `held` holds along it (Part F2, Task 4; the mathematician's line of 2026-10-09, 6085486079: a taker straddling a periodic wrap folds by consecutive offsets): `coordinates` the axis coordinate at every Node (`numpy.indices`); on an open or closed axis the start is the lowest held coordinate and the offset the plain difference; on a periodic axis the start is the held coordinate whose predecessor around the ring is not held (the lowest where the run is the whole ring) and the offsets are taken modulo the extent, so the run (N - 1, 0) counts 0, 1 and not N - 1, 0: index arithmetic, the one modulo an index wrap (kind D in the acts table, as `shifted`); no level divided."""
+    along = sorted({int(c) for c in coordinates[held]})
+    start = along[0]
+    if not periodic:
+        return coordinates - start
+    extent = coordinates.shape[axis]
+    start = next((c for c in along if (c - 1) % extent not in along), start)
+    return (coordinates - start) % extent

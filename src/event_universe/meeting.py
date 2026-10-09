@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe import front, node
 from event_universe.core import paces
-from event_universe.core.ports import AXES, arrival
+from event_universe.core.ports import AXES, arrival, run_offsets
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import emitted_quantum
 from event_universe.features import phase
@@ -355,21 +355,20 @@ class Probe:
 def twisted(
     board: Lattice, books: NodeBooks, part: int, momentum: tuple[int, int, int]
 ) -> tuple[list[int], str | None]:
-    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`node.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the one whose quarter turn moves P_a with p_a's sign; where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line and what was lost (None where nothing)."""
+    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`; x the Node's offset from the start of the taker's run along the axis, taken around the ring on a periodic axis so a taker straddling the wrap folds by consecutive offsets, `core/ports.run_offsets`, Part F2), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`node.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the one whose quarter turn moves P_a with p_a's sign; where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line and what was lost (None where nothing)."""
     family, state = board.families[books.index], board.states[books.index]
     first = node.record_slice(family, books.record).start + part * family.width
     if not family.plane:  # a real line holds no phase to twist
         return [0] * AXES, LOST_TO_DECLARATION if any(momentum) else None
     at = board.mask(books.nodes)
     positions = np.indices(board.shape)
-    lowest = [int(positions[axis][at].min()) for axis in range(AXES)]
     found, lost = [0] * AXES, None
     quarter = None
     for axis in range(AXES):
         wanted = momentum[axis]
         if wanted == 0:
             continue
-        offsets = positions[axis] - lowest[axis]
+        offsets = run_offsets(positions[axis], at, axis, board.wrap[axis])
         if int(offsets[at].max()) == 0:  # one Node along the axis: rho = 0, nothing to fold
             lost = LOST_TO_DECLARATION
             continue
@@ -422,12 +421,12 @@ def faces_reported(board: Lattice) -> None:
 def exchange(
     board: Lattice, books: NodeBooks, leaves: int, enters: int, drive: int | None = None
 ) -> list[Item]:
-    """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws (`hole_node`): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_detector_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`written`, `faced`, the undepleted beam; the two hands' line); both items carry the arriving record's phase the close held for the transition, (X, Y') (`resonance.arrival_of`), None for an emission, which names no drive; Part F: the entering item carries the piece's momentum p_a per axis read from the body's booked momentum of the drive at the close (`node_detector.piece_momentum`), and the books take the click's two readings for its credit line, the piece's p_a and the drive's P_a over the board before the erasure starts (`fan_momentum`), the twist's two set by the write (`twisted`)."""
+    """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws (`hole_node`): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_detector_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`written`, `faced`, the undepleted beam; the two hands' line); both items carry the arriving record's phase the close held for the transition, (X, Y') (`resonance.arrival_of`), None for an emission, which names no drive; Part F: the entering item carries the piece's momentum p_a per axis, one count's, read at the close from the drive's momentum terms and share at the body's Nodes (`node_detector.piece_momentum`), and the books take the click's two readings for its credit line, the piece's p_a and the drive's P_a over the board before the erasure starts (`fan_momentum`), the twist's two set by the write (`twisted`)."""
     arrival = arrival_of(books.declared.transitions, books.references, (leaves, enters, drive))
     books.piece = books.fan = books.twist = books.lost = None
     momentum = None
     if drive is not None:
-        books.piece = piece_momentum(board, drive, books.momenta.get(drive, [0, 0, 0]))
+        books.piece = piece_momentum(board, drive, board.mask(books.nodes))
         books.fan = list(fan_momentum(board, drive))
         momentum = (books.piece[0], books.piece[1], books.piece[2])
     entering = Item(
@@ -573,4 +572,4 @@ def jumped(board: Lattice) -> None:
         if books.number not in read | done and len(books.counts) > 1:  # a record of one part reads none
             null_window(board, books)
     for books in closing:
-        books.elapsed, books.lit, books.intake, books.momenta = 0, 0, {}, {}
+        books.elapsed, books.lit, books.intake = 0, 0, {}
