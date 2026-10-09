@@ -28,7 +28,7 @@ from event_universe.core.rule3 import (
     division_forward,
     rule3,
 )
-from event_universe.features import rotation
+from event_universe.features import phase, rotation
 from event_universe.features.start import (
     RestCollapses,
     Sourced,
@@ -155,7 +155,7 @@ def turned_step(
     time = angles[0]
     u = rotation.turned(re.before, im.before, -time, 2 * board.gamma)
     planes = (replace(re, before=np.asarray(u[0])), replace(im, before=np.asarray(u[1])))
-    lines, _booking = node.step_plane(*planes, rule_of(board, content), board.wrap, angles, board.gamma)
+    lines, _booking = node.step_plane(*planes, rule_of(board, content), board.wrap, board.gamma)
     return (
         np.asarray(lines[0].now, dtype=board.kind),
         np.asarray(lines[1].now, dtype=board.kind),
@@ -666,6 +666,7 @@ def start_content(
             board.wrap,
             board.gamma,
             board.unit,
+            phase.amplitude(board.gamma, board.width.bit_length()),
         )
 
     fields = held_rests(
@@ -681,7 +682,7 @@ def start_content(
         content_read(index, families, states, 1, board.wrap, board.gamma, board.unit, slot)[0],
         dtype=board.kind,
     )
-    return content, node.turning(index, families, states, 1, board.gamma, slot)
+    return content, node.turning(index, families, states, 1, slot)
 
 
 def region_of(counts: np.ndarray, well: np.ndarray, centre: Axis, wrap: Wrap) -> np.ndarray:

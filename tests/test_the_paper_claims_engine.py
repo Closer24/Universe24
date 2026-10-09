@@ -304,9 +304,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             "lay.py::written": "the one place a level is written from outside Rule3",
             "node.py::held_write_at": 'ALGEBRA.md #the-primitives, the row "the held write"',
             "node.py::step": "ALGEBRA.md #the-line, #the-direction",
-            "node.py::turned_before": "ALGEBRA.md, The sign holder rotates the two-part record",
+            "node.py::phased": "ALGEBRA.md, The sign holder rotates the two-part record",
             "plane.py::step_plane": "The sign holder rotates the two-part record",
             "records.py::empty_record": "every Node's remainder is born at the half wall",
+            "records.py::phase_lines": "features/phase",
             "records.py::rows_total": "ALGEBRA.md, No record reads its own write of the sign",
         }
         fields, state = {"now", "before", "remainder"}, {"lines", "write_remainders"}

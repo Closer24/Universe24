@@ -106,3 +106,17 @@ def fold(fold_cosine: Any, fold_sine: Any, cosine: Any, sine: Any, amplitude: An
     real = fold_cosine * cosine - fold_sine * sine
     imaginary = fold_sine * cosine + fold_cosine * sine
     return signed_rounded(real, amplitude), signed_rounded(imaginary, amplitude)
+
+
+def amplitude(gamma: Any, width: int) -> int:
+    """The phase line's amplitude X, derived from the width and never written (the two hands' item (i): X of 2^35's size at width 63, 2 K_0 X + D below 2^width): half of the act's room, (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
+    largest = 2**width - 1
+    room = rule3(NO_READ, NO_READ, largest, 2 * D(gamma), 1, 0, 0)[0]
+    half = rule3(NO_READ, NO_READ, room, 2, 1, 0, 0)[0]
+    found = rule3(NO_READ, NO_READ, half, gamma, 1, 0, 0)[0] * gamma
+    if int(found) < int(gamma):
+        raise ValueError(
+            f"the width {width} leaves no multiple of Gamma = {gamma} inside the phase act's room "
+            f"2 K_0 X + D < 2^{width}: the phase line's amplitude is refused"
+        )
+    return int(found)

@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, Wrap, arrival
 from event_universe.core.rule3 import coefficients, rule3
-from event_universe.features import currents, rotation
+from event_universe.features import currents, phase
 from event_universe.features.click import presented
 from event_universe.features.held_write import held_write
 from event_universe.features.read import (
@@ -22,16 +22,20 @@ from event_universe.features.read import (
     paces_guard,
     plain,
 )
-from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
+from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns, weight_of
 from event_universe.plane import (
     NO_FACE,
     Angles,
     Faces,
+    Phases,
     Rule,
     fold_guard,
+    link_guard,
     link_levels,
     link_pairs,
+    link_wall,
     odd_links,
+    phase_links,
     step_plane,
 )
 from event_universe.records import (  # the lines, their readings and their states, the Node's own
@@ -49,11 +53,11 @@ from event_universe.records import form as form
 from event_universe.records import full as full
 from event_universe.records import largest as largest
 from event_universe.records import level_at as level_at
+from event_universe.records import phase_lines as phase_lines
 from event_universe.records import record_slice as record_slice
 from event_universe.records import row_levels as row_levels
 from event_universe.records import rows_total as rows_total
 from event_universe.records import rulers_write_factor as rulers_write_factor
-from event_universe.records import turned_by as turned_by
 from event_universe.records import well as well
 from event_universe.records import write_origins as write_origins
 from event_universe.records import write_sources as write_sources
@@ -129,9 +133,9 @@ def rulers(
 
 
 def turning(
-    index: int, families: Families, states: States, direction: int, gamma: int, record: int = 0
+    index: int, families: Families, states: States, direction: int, record: int = 0
 ) -> Angles | None:
-    """The angles a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; The turn per proper interval): from every holder it reads that declares the rotation, the time angle's numerator SUM of (weight x the holder's time line summed over every row but the record's own, `row_levels`) scaled by the turned family's own clock, p_0 / Gamma from the content it reads (`turned_by`, the angle per proper interval), and each axis's SUM of (weight x the holder's odd line a over the same rows) as it is, at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
+    """The sign's levels a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase): from every holder it reads that declares the rotation, the time level SUM of (weight x the holder's time line summed over every row but the record's own, `row_levels`), the potential whose difference across each Link iterates the Link's phase pair (`phased`, n_ij = L(i) - L(j); no clock scaling: the angle per act is theta_0 = 1 / Gamma and the field the count of acts, the mathematician's item (g)), and each axis's SUM of (weight x the holder's odd line a over the same rows) as it is, at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
     if not turns(families, index):
         return None
     reads = [r for r in families[index].reads if families[r.family].rotation]
@@ -145,12 +149,59 @@ def turning(
         )
         for line in range(1 + AXES)  # the time line and the three axis lines
     ]
-    clock = paces.clock_of(gamma, read_lines(index, families, states, direction, record)[0])
-    return turned_by(levels[0], clock, gamma), (levels[1], levels[2], levels[3])
+    return levels[0], (levels[1], levels[2], levels[3])
+
+
+def sign_holder(index: int, families: Families) -> int:
+    """The one holder of the sign under the rotation a turned family reads, whose phase lines its records read (`phased`, `step_records`); the energy line's holder (`derived.energy_line`); refused by name where a family reads more than one (the Link's phase is one pair per Link, one holder's)."""
+    holders = [r.family for r in families[index].reads if families[r.family].rotation]
+    if len(holders) != 1:
+        raise ValueError(
+            f"{families[index].name!r} reads {len(holders)} holders under the rotation, and the Link's phase "
+            "is one pair per Link, one holder's: a plane reads one holder of the sign under the rotation"
+        )
+    return holders[0]
+
+
+def phased(
+    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+) -> list[list[Record]]:
+    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), and on each axis the Link's count n_ij = L(i) - L(i + a), the potential's difference across the Node's +a Link, 0 beyond a face (`arrival`), by which the Link's cosine and sine lines take |n_ij| rotation acts in n's sense (the pair then at X e^(i SUM_t n_ij theta_0), the temporal gauge's Link phase), forward; at `direction` -1 the same acts back, bit for bit, the inverse's act once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the state untouched."""
+    family, state = families[index], states[index]
+    readers = {
+        row_of(families, reader, record): (reader, record)
+        for reader, other in enumerate(families)
+        if turns(families, reader) and weight_of(index, other)
+        for record in range(other.records)
+    }
+    found: list[list[Record]] = []
+    for row, lines in enumerate(state.phases):
+        if row == 0 or row not in readers:
+            found.append(list(lines))
+            continue
+        reader = families[readers[row][0]]
+        potential = weight_of(index, reader) * row_levels(family, state.lines, 0, 1, row)
+        turned: list[Record] = []
+        for axis in range(AXES):
+            neighbour = arrival(potential, axis, 1, wrap)
+            beyond = (
+                arrival(np.ones_like(np.asarray(potential)), axis, 1, wrap) == 0
+            )  # the Link beyond a face
+            count = np.where(beyond, 0, potential - neighbour)
+            cosine, sine = lines[2 * axis], lines[2 * axis + 1]
+            pair = phase.iterate(
+                ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
+                count,
+                gamma,
+                direction,
+            )
+            turned += [Record(*(np.asarray(a) for a in line)) for line in pair]
+        found.append(turned)
+    return found
 
 
 def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `turn_guard`): the time angle's numerator within 2 Gamma (the shear's room) and each Link's two ends' sum n_ij within 4 Gamma, a tangent half-angle at most 1, the guard on n the fold's Link keeps (`plane.sign_pairs`). A turned record is guarded at both of its levels, the angle now and the angle before (the time Link's phase)."""
+    """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's Links alike (`plane.link_guard`): each Link's two ends' sum n_ij of the sign's odd lines within 4 Gamma, a tangent half-angle at most 1, the guard on n the fold's Link keeps (`plane.sign_pairs`); the time level is guarded by nothing, the phase line's circle wrapping (features/phase); one holder of the sign under the rotation per turned family (`sign_holder`)."""
     for record in range(families[index].records):
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
@@ -158,14 +209,13 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
         links = odd_links(index, families, states, 1, wrap)
         if links is not None:  # a folded record's fold at every Link within the tangent 1
             fold_guard(families[index].pair, gamma, links, families[index].name)
-        angles, before = (turning(index, families, states, d, gamma, record) for d in (1, -1))
-        if angles is not None and before is not None:  # a turned record turns at both of its levels
-            rotation.turn_guard(angles[0], 2 * gamma, families[index].name, None)
-            rotation.turn_guard(before[0], 2 * gamma, families[index].name, None)
+        angles = turning(index, families, states, 1, record)
+        if angles is not None:  # a turned record's Links at both ends
+            sign_holder(index, families)
             for a in range(3):
                 for side in (1, -1):
                     link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
-                    rotation.turn_guard(link, rotation.link_wall(gamma), families[index].name, a)
+                    link_guard(link, link_wall(gamma), families[index].name, a)
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
@@ -208,56 +258,6 @@ def step(
     return Record(record.before, np.asarray(found), np.asarray(remainder))
 
 
-def turned_before(
-    index: int, families: Families, states: States, gamma: int, direction: int = 1, record: int = 0
-) -> list[Record]:
-    """The time Link's phase on a turned record (ALGEBRA.md, The sign holder rotates the two-part record; The turn per proper interval): each plane's level before turned by the previous interval's angle, u = e^(-i theta_(t-1)) z_before with tan(theta_(t-1) / 2) = (L_(t-1) p_0 div Gamma) / (2 Gamma), the numerator `turning` reads at -1, at the levels the previous interval stepped from, the held rows' `before` (the holder's level and the content's clock then); forward before Rule3 steps the plane against u (`step_plane`, `step_family`), backward (direction -1) z_before = e^(i theta_(t-1)) u, bit for bit, the inverse's last act once every held row stands at the previous interval's start again (`Lattice.step_inverse`); the lines returned, the state untouched."""
-    angles = turning(index, families, states, -1, gamma, record)
-    assert angles is not None  # a record under the rotation
-    own = states[index].lines[record_slice(families[index], record)]
-    found = []
-    for re, im in zip(own[0::2], own[1::2], strict=True):
-        x, y = rotation.turned(re.before, im.before, -angles[0], 2 * gamma, direction)
-        found += [replace(re, before=np.asarray(x)), replace(im, before=np.asarray(y))]
-    return found
-
-
-def lines_as_read(
-    index: int,
-    families: Families,
-    states: States,
-    gamma: int,
-    record: int,
-    lines: Sequence[Record],
-) -> list[Record]:
-    """The lines of one record of a family of quanta as the step reads them, the level pair its share and its currents are read from (ALGEBRA.md, The share's change is the currents: under the rotation the share reads the level pair as the step reads it; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker; two hands): `lines`, the record's lines as they stand, where the family's record is not turned (`derived.turns`), and each plane's level before turned by the holder's angle of the previous interval, u = e^(-i theta_(t-1)) z_before, where it is (`turned_before`, the time Link's phase `plane.step_plane` steps against), the share's squares read from the plain levels beside it (`share.share`)."""
-    if not turns(families, index):
-        return list(lines)
-    return turned_before(index, families, states, gamma, 1, record)
-
-
-def record_as_read(
-    index: int, families: Families, states: States, gamma: int, lines: Sequence[Record]
-) -> list[Record]:
-    """A family's record as the step reads it, the lines its currents are read from (`Lattice.record`, `Lattice.currents`): `lines`, the record as it stands, where the family's record is not turned, light's and every plain family's; every record's lines with the level before turned by the previous interval's angle where it is (`lines_as_read` per record, the records in their order)."""
-    if not turns(families, index):
-        return list(lines)
-    return [
-        line
-        for record in range(families[index].records)
-        for line in turned_before(index, families, states, gamma, 1, record)
-    ]
-
-
-def turned_back(index: int, families: Families, states: States, gamma: int) -> list[Record]:
-    """Every record of a turned family with its level before turned back by its own angle, the inverse's last stage (`turned_before` at -1 per record)."""
-    return [
-        line
-        for record in range(families[index].records)
-        for line in turned_before(index, families, states, gamma, -1, record)
-    ]
-
-
 def step_family(
     index: int,
     families: Families,
@@ -270,13 +270,12 @@ def step_family(
     faces: Mapping[int, Faces] | None = None,
     pairs: tuple[Factors, Factors] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own) or folded (`pairs`, each Link's read as the pair (R^c, R^s) from the sign holder's and the flux holder's odd lines, `plane.link_pairs`, the caller's, as `step_records` computes it from the record's read; ALGEBRA.md, The clock family on the Ports), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's time angle first (`turned_before`, the time Link's phase, the one shear that remains)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned or folded (`pairs`, each Link's read as the pair (R^c, R^s) from the sign holder's odd lines with the Link's phase pair and the flux holder's odd lines, `plane.link_pairs`, the caller's, as `step_records` computes it from the record's read; ALGEBRA.md, The clock family on the Ports; features/phase), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
     faced = dict(faces or {})
-    angles = turning(index, families, states, direction, gamma, record)
-    if angles is None and pairs is None:
+    if pairs is None:
         found = [
             step(
                 line,
@@ -289,15 +288,13 @@ def step_family(
             for number, line in enumerate(own, span.start)
         ]
         return found, ((own, found) if direction == 1 else (found, own))
-    turned = direction == 1 and angles is not None  # the time Link's phase on a turned record alone
-    planes = turned_before(index, families, states, gamma, 1, record) if turned else own
     lines: list[Record] = []
     first: list[Record] = []
     second: list[Record] = []
     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
-        pair = planes[start], planes[start + 1]
+        pair = own[start], own[start + 1]
         at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
-        found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at, pairs)
+        found, (begun, left) = step_plane(*pair, rule, wrap, gamma, direction, at, pairs)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -312,17 +309,28 @@ def step_records(
     direction: int = 1,
     cut: Factors | None = None,
     faces: Mapping[int, Faces] | None = None,
+    amplitude: int = 0,
 ) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`), its own angles and its Links' pairs (`turning`, the time angle and the sign's odd levels, every sign row but the record's own; `plane.odd_links`, the flux holder's; `plane.link_pairs`, the pair (R^c, R^s) per Port; `step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
+    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`), its Links' pairs (`turning`, the sign's odd levels, every sign row but the record's own; `plane.odd_links`, the flux holder's; the record's row's phase lines as they stand after the interval's phase act, read through the six Ports, `plane.phase_links`, at the amplitude X, `amplitude`, features/phase.amplitude; `plane.link_pairs`, the pair (R^c, R^s) per Port; `step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(families[index].records):
         content, factors = read(index, families, states, direction, wrap, gamma, unit, record, cut)
         rule = rule_of(families[index], gamma, content, factors, unit)
-        angles = turning(index, families, states, direction, gamma, record)
+        angles = turning(index, families, states, direction, record)
         flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
         sign = None if angles is None else link_levels(angles[1], wrap)  # the sign's Link levels n_ij
-        pairs = link_pairs(families[index].pair, gamma, content, factors, flux, sign)
+        phases: Phases | None = None
+        if angles is not None:  # the record's row's phase pairs, the Link's hop through each Port
+            row = row_of(families, index, record)
+            assert row is not None
+            if amplitude < 1:
+                raise ValueError(
+                    f"{families[index].name!r} reads the sign's phase lines and the step was given no amplitude X "
+                    "for the fold: the caller passes features/phase.amplitude of the width"
+                )
+            phases = phase_links(states[sign_holder(index, families)].phases[row], wrap)
+        pairs = link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
         found, booking = step_family(
             index, families, states, rule, wrap, gamma, direction, record, faces, pairs
         )

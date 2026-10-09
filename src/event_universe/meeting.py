@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import front, node
+from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import emitted_quantum
@@ -50,7 +51,16 @@ def stepped(board: Lattice, index: int, direction: int) -> tuple[list[node.Recor
     gamma, unit, cuts = board.world.node_clock, board.unit, cut(board, index)
     faces = faces_presented(board, index)
     return node.step_records(
-        index, board.families, board.states, board.wrap, gamma, unit, direction, cuts, faces
+        index,
+        board.families,
+        board.states,
+        board.wrap,
+        gamma,
+        unit,
+        direction,
+        cuts,
+        faces,
+        board.amplitude,
     )
 
 
@@ -146,7 +156,7 @@ def turned_labels(board: Lattice, books: NodeBooks) -> None:
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
         leaves, enters = transition.leaves, transition.enters
         if leaves == books.part and leaves != enters:  # the probe's turns nothing
-            turn = int(node.turned_by(window_turn(reference, transition.weight), clock, gamma))
+            turn = int(paces.turn_factor(window_turn(reference, transition.weight), clock, gamma))
             own = sheared(before[leaves], before[enters], turn, books.elapsed, gamma)
             u, v = sheared(books.labels[leaves], books.labels[enters], turn, books.elapsed, gamma)
             books.labels[leaves], books.labels[enters], books.shares[transition] = u, v, own[1] ** 2

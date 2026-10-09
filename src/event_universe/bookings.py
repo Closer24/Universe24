@@ -62,8 +62,9 @@ def booked_sources(
     wrap: Wrap,
     gamma: int,
     unit: int,
+    amplitude: int,
 ) -> tuple[list[Sourced], list[Sourced]]:
-    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`node.step_records`, every sign row but the record's own) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`node.form`, `node.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
+    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`node.step_records`, every sign row but the record's own, the phase lines at their seed with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`node.form`, `node.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
     for (index, row), level in zip(rows, levels, strict=True):
         packet, laid = packets[(index, row)], level + families[index].rest
         line = node.record_slice(families[index], row).start
@@ -73,7 +74,9 @@ def booked_sources(
         if not family.quanta:
             continue
         booked_forms, booked_turns = booked_of(
-            families, index, node.step_records(index, families, states, wrap, gamma, unit)[1]
+            families,
+            index,
+            node.step_records(index, families, states, wrap, gamma, unit, amplitude=amplitude)[1],
         )
         forms.update(booked_forms)
         turns.update(booked_turns)

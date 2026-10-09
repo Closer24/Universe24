@@ -148,7 +148,7 @@ def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_tur
     lines = [node.Record(*draw.integers(-5000, 5001, (3, 64, 1, 1))) for _ in range(2)]
     lines = [node.Record(r.now, r.before, np.abs(r.remainder)) for r in lines]
     rule = coefficients(*PAIR, GAMMA, GAMMA, GAMMA)
-    angles = node.turning(CHARGED, TURNING, states, 1, GAMMA)
+    angles = node.turning(CHARGED, TURNING, states, 1)
     assert angles is not None
     pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], ring))
     assert pairs is not None and any(np.asarray(p).any() for p in pairs[1])

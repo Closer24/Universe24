@@ -176,7 +176,11 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     assert not found, found
 
 
-NODE_STATE = {"lines": "list[Record]", "write_remainders": "list[np.ndarray]"}
+NODE_STATE = {
+    "lines": "list[Record]",
+    "write_remainders": "list[np.ndarray]",
+    "phases": "list[list[Record]]",
+}  # the phase lines, the holder of the sign under the rotation's (features/phase, Part C)
 TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
 
 
