@@ -1028,20 +1028,7 @@ refusal); a body laid with a sense carries its second level pair, the
 sense times the record a quarter period on, the two scaled by one factor
 so their plain form is the record's own (**The sign is the rotation sense**).
 
-(e) **The moving body**. The momentum **n** is a reading of the record's current, **v** =
-**n** / W the packet's velocity. The moving body is the resting envelope with the phase k per
-Link along the axis of motion, the rotation act on its two levels by the
-triple of the pair (m, j), cos k = (m^2 - j^2) / (m^2 + j^2), exact; k is
-the pair at which the packet's own current along the axis, SUM over its
-Links of F_ij / num, F_ij = num (now_i before_j - before_i now_j), at the norm T (M quanta),
-equals T n / (3 Q_unit), the current's velocity of the packet, M
-cancelling: by bisection on j at the declared m (the body's `momentum` n and its `phase_denominator` m are its numbers in the world file, k is derived).
-The read with the arrivals along the axis turned by +k and -k on a fixed
-well is a gauge of the plain read: its fixed point is the rest mode, its
-current 0 and its rotation the rest's at every k; the packet is stationary
-in the body's frame only where the record's current moves the well at **v**; the
-loader's proper pair of a moving body is the packet's rotation at its centre.
-Generic: one primitive, the family's pair and the body's two numbers; vector: the rotation act, a booking, the division act, no root; local: each Node's six Links. Status: not built; the loader admits no such key, `momentum` and `phase_denominator` refused by name; the moving packet is a packet, no body.
+(e) **The moving body**: no lay. A bound body starts at rest and moves only by the step (the fall, the drift under a moving well); a moving record is a packet. The lay of a bound body with a declared velocity, once written here as not built (the keys `momentum` and `phase_denominator`), was removed by the owner's word of 2026-10-09 (#1793); an orbit world or a frame-dragging world needs such a lay and is open, with F2 (the holders' swing under a body laid off the step's fixed point) the difficulty by name. Status: removed; no key, no code.
 
 (f) **The amplitude unit A is derived, never written**: the largest amplitude at
 which Rule3's total stays inside the integer width at every content of the
