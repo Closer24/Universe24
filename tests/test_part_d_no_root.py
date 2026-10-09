@@ -100,7 +100,7 @@ def test_loader_derived_reads_the_same_walls_and_rooms_without_a_root():
 
 
 def test_loader_universe_reads_the_same_composed_pairs_without_a_root():
-    """Task 2 (c), loader/universe: `composed_pair` (the sites at L100, L103, L109) on two [2, 3] records at den 6,000: the relative part [5237, 6000] and the centre [2449, 6000] of the docstring, against the same integers by `math.isqrt`."""
+    """Task 2 (c), loader/universe: `composed_pair` (the sites at lines 100, 103 and 109) on two [2, 3] records at den 6,000: the relative part [5237, 6000] and the centre [2449, 6000] of the docstring, against the same integers by `math.isqrt`."""
     assert universe.composed_pair((2, 3), (2, 3), 6000, True) == (5237, 6000)
     assert universe.composed_pair((2, 3), (2, 3), 6000, False) == (2449, 6000)
     scale = (6000 * 3 * 3) ** 2
