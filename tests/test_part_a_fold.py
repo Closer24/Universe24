@@ -1,12 +1,14 @@
 """Part A, gravity's odd lines in the fold form (ALGEBRA.md, The clock family on the Ports; the two hands' joint line of 2026-10-09): a holder of the content declaring the source `flux` carries three odd lines after its tension lines, written by the count's flux through the axis's two Links summed unhalved over twice the count's wall, and every plane reading it has each Link's read folded into the pair (X^c, X^s) with X^s_ji = -X^s_ij; without the key the engine is bit for bit the frozen one."""
 
 import json
+from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
 
 from event_universe import node, world_files
 from event_universe.core import paces
+from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import folds
 from event_universe.plane import fold_reads, odd_links
@@ -188,3 +190,19 @@ def test_the_static_source_gives_v_proportional_to_u_times_v(tmp_path, monkeypat
     odd = int(gravity.lines[4].now.sum(dtype=object))
     assert odd > 0 and well > 0 and 0 < speed < 1
     assert abs(odd - speed * well) <= 0.03 * speed * well + board.shape[0], (odd, well, speed)
+
+
+def test_the_rotation_unit_by_the_rotation_act():
+    """The family's rest rotation to the unit, K = omega_0 Gamma, found by a bisection on the rotation act and no root (the two hands' (d) of 2026-10-09; features/phase at the fixed angle theta_0 = 1 / Gamma): 5,046 at [4000, 6000] and Gamma 6,000 (arccos(2 / 3) x 6,000 = 5,046.4), 0 at the massless pair [1, 1], and at [2, 3] within one unit of Gamma arccos(2 / 3); the value checked against the phase line itself in Python's fractions at an independent amplitude, the cosine line's level over X above 2 / 3 one act before K and below it one act after, the crossing within one unit of K; and the root is gone from core/paces.py."""
+    gamma = 6000
+    assert paces.rotation_unit(4000, 6000, gamma) == 5046
+    assert paces.rotation_unit(1, 1, gamma) == 0
+    found = paces.rotation_unit(2, 3, gamma)
+    assert abs(found - gamma * np.arccos(2 / 3)) <= 1
+    amplitude = (2**36 // gamma) * gamma  # an amplitude of the test's own, a multiple of Gamma
+    pair = phase.iterate(phase.seed(amplitude, gamma), found - 1, gamma)
+    before = Fraction(int(phase.read(pair)[0]), amplitude)
+    after = Fraction(int(phase.read(phase.iterate(pair, 2, gamma))[0]), amplitude)
+    assert before > Fraction(2, 3) > after, (before, after)
+    source = Path(paces.__file__).read_text(encoding="utf-8")
+    assert "division_fixed_point" not in source
