@@ -285,7 +285,7 @@ class Lattice:
         }
 
     def sense_currents(self) -> Stresses:
-        """Every turned record's sign current on each axis at every Node, the mean of the Node's two a-Links' Wronskian currents, J_a / 2 with J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`node.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the wall den T."""
+        """Every turned record's sign current on each axis at every Node, the Node's two a-Links' Wronskian currents summed unhalved, J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`node.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the doubled wall 2 E_s T (`loader.derived.held_write_of`; the two hands' lines of 2026-10-09)."""
         return {
             s: node.sense_current_of(self.lines_of(*s), self.wrap)
             for s in sources_of(self.families, self.order)

@@ -11,7 +11,7 @@ from event_universe.core import paces
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import folds
-from event_universe.plane import fold_reads, odd_links
+from event_universe.plane import link_pairs, odd_links
 from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import CHARGED, EVENTS, universe_beside
@@ -107,7 +107,9 @@ def test_the_odd_line_is_odd(tmp_path, monkeypatch):
     )
     links = odd_links(index, board.families, board.states, 1, board.wrap)
     content, factors = board.read(index)
-    odd = fold_reads(board.families[index].pair, board.world.node_clock, content, factors, links)
+    pairs = link_pairs(board.families[index].pair, board.world.node_clock, content, factors, links, None)
+    assert pairs is not None
+    odd = pairs[1]
     pace = paces.link_pace_of(board.world.node_clock, content)
     assert links is not None and any(np.asarray(link).any() for link in links)
     for axis in range(3):

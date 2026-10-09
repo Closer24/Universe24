@@ -6,11 +6,13 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
+import numpy as np
+
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
 from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
-from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK, link_wall
+from event_universe.features.rotation import TURNED_REACH, TURNED_SLACK, link_wall, turn_wall
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
 REAL_LINE, PLANE_LINE = (
@@ -18,7 +20,7 @@ REAL_LINE, PLANE_LINE = (
     "plane",
 )  # the kinds of a record's lines, the shape by name (the two hands)
 KINDS = (REAL_LINE, PLANE_LINE)
-FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard), the integer total per part and no modulus
+FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard; the sign's pair, whose magnitude is X to the rounding, read at its own extreme, `turned_room`), the integer total per part and no modulus
 
 
 @dataclass(frozen=True)
@@ -245,7 +247,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; a flux holder's three odd lines at twice the tension line's wall, 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the two hands' joint line of 2026-10-09, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; the odd lines of either holder at twice their measure's wall, the two Links' currents summed unhalved over the doubled wall (the two hands' lines of 2026-10-09, the mathematician's (L2) and the advisor's (c)): the sign holder's three odd lines at 2 E_s T, the Node's two a-Links' Wronskian currents summed (`node.sense_current_of`, the halving (J_a + 1) div 2 retired), and a flux holder's three odd lines at 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the joint line, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'."""
     family = families[index]
     assert family.level_weight is not None
     sources = readers_of(families, index)
@@ -257,6 +259,8 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> 
     row = [family.level_weight * action] + [family.level_weight * measure] * (family.width - 1)
     if family.flux:  # the odd lines: the two Links' flux summed unhalved over twice the count's wall
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
+    if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
+        row[1:] = [SIDES * family.level_weight * measure] * AXES
     walls = (
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike
@@ -346,6 +350,17 @@ def write_rooms(
     return [abs(family.write) * room for room in rooms * family.records]
 
 
+def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
+    """The room of a turned plane's six arrivals under the sign's pair, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root: the pair's magnitude is X to the rounding, so the two parts' sum reaches X sqrt 2 at the tangent half-angle sqrt 2 - 1 and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes sqrt 2); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
+    from event_universe.plane import sign_pairs  # the plane reads this module: imported at the call
+
+    levels = np.arange(
+        link_wall(gamma) + 1
+    )  # n from 0 through 4 Gamma, the sign's part even and odd in n
+    even, odd = sign_pairs(pair, gamma, (unit * unit,), (levels,))
+    return int((np.abs(even[0]) + np.abs(odd[0])).max())
+
+
 def amplitude_bound(
     families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
 ) -> int:
@@ -363,18 +378,22 @@ def bound_under_rooms(
     slack = TURNED_SLACK if any(turns(families, index) for index in range(len(families))) else 0
     for index, family in enumerate(families):
         num, den = family.pair
-        reach = TURNED_REACH if turns(families, index) else 1
-        fold = (
-            FOLD_REACH if folds(families, index) else 1
-        )  # the six arrivals each under a pair's two parts
+        reach = (
+            TURNED_REACH if turns(families, index) else 1
+        )  # the time turn's shear on the level before
         edge = edge_of(family.pair, gamma)
         for clock, pace in ((gamma, gamma), (0, 0), (edge, edge)):
             reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
-            room = (sum(abs(read) for read in reads) * fold + wall) * reach + abs(self_coefficient)
+            arrivals = sum(abs(read) for read in reads)  # the six arrivals' reads, R_ij = p_i^2 X_ij
+            if folds(families, index):  # the six arrivals each under a pair's two parts, within 2 X
+                arrivals *= FOLD_REACH
+            elif reach > 1:  # the sign's pair alone: the pair's own extreme, X sqrt 2 to the rounding
+                arrivals = PORTS * pace * pace * turned_room(family.pair, gamma, unit)
+            room = arrivals + wall * reach + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]) - slack)
         if reach > 1:
-            link = link_wall(gamma)  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
-            product = int(division_forward(largest, 2 * link * link, 0)[0])  # 2 n w x1 at n = w
+            half = turn_wall(gamma)  # the time turn's wall, tan(theta / 2) = n / (2 Gamma), the shear's
+            product = int(division_forward(largest, 2 * half * half, 0)[0])  # 2 n w x1 at n = w
             found = min(found, int(division_forward(product - 1, reach, 0)[0]) - slack)
         if family.quanta and num:
             room = PORTS * PRODUCTS * family.record * abs(num)

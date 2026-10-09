@@ -9,8 +9,8 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import AXES, PORTS, SIDES, Wrap, arrival
-from event_universe.core.rule3 import coefficients, division_forward, rule3
+from event_universe.core.ports import AXES, PORTS, Wrap, arrival
+from event_universe.core.rule3 import coefficients, rule3
 from event_universe.features import currents, rotation
 from event_universe.features.click import presented
 from event_universe.features.held_write import held_write
@@ -29,7 +29,8 @@ from event_universe.plane import (
     Faces,
     Rule,
     fold_guard,
-    fold_reads,
+    link_levels,
+    link_pairs,
     odd_links,
     step_plane,
 )
@@ -149,7 +150,7 @@ def turning(
 
 
 def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
-    """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `guard`): the time angle's numerator within 2 Gamma and each Link's two ends' sum within 4 Gamma, a tangent half-angle at most 1. A turned record is guarded at both of its levels, the angle now and the angle before (the time Link's phase)."""
+    """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's angles alike (features/rotation, `turn_guard`): the time angle's numerator within 2 Gamma (the shear's room) and each Link's two ends' sum n_ij within 4 Gamma, a tangent half-angle at most 1, the guard on n the fold's Link keeps (`plane.sign_pairs`). A turned record is guarded at both of its levels, the angle now and the angle before (the time Link's phase)."""
     for record in range(families[index].records):
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
@@ -267,15 +268,15 @@ def step_family(
     direction: int = 1,
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
-    odd: Factors | None = None,
+    pairs: tuple[Factors, Factors] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own) or folded (`odd`, the odd read of each Link from the flux holder's odd lines, `plane.fold_reads`; ALGEBRA.md, The clock family on the Ports), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own) or folded (`pairs`, each Link's read as the pair (R^c, R^s) from the sign holder's and the flux holder's odd lines, `plane.link_pairs`, the caller's, as `step_records` computes it from the record's read; ALGEBRA.md, The clock family on the Ports), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's time angle first (`turned_before`, the time Link's phase, the one shear that remains)."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
     faced = dict(faces or {})
     angles = turning(index, families, states, direction, gamma, record)
-    if angles is None and odd is None:
+    if angles is None and pairs is None:
         found = [
             step(
                 line,
@@ -296,7 +297,7 @@ def step_family(
     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
         pair = planes[start], planes[start + 1]
         at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
-        found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at, odd)
+        found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at, pairs)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -312,23 +313,25 @@ def step_records(
     cut: Factors | None = None,
     faces: Mapping[int, Faces] | None = None,
 ) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`) and its own angles (`step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
+    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`), its own angles and its Links' pairs (`turning`, the time angle and the sign's odd levels, every sign row but the record's own; `plane.odd_links`, the flux holder's; `plane.link_pairs`, the pair (R^c, R^s) per Port; `step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(families[index].records):
         content, factors = read(index, families, states, direction, wrap, gamma, unit, record, cut)
         rule = rule_of(families[index], gamma, content, factors, unit)
-        links = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
-        odd = None if links is None else fold_reads(families[index].pair, gamma, content, factors, links)
+        angles = turning(index, families, states, direction, gamma, record)
+        flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
+        sign = None if angles is None else link_levels(angles[1], wrap)  # the sign's Link levels n_ij
+        pairs = link_pairs(families[index].pair, gamma, content, factors, flux, sign)
         found, booking = step_family(
-            index, families, states, rule, wrap, gamma, direction, record, faces, odd
+            index, families, states, rule, wrap, gamma, direction, record, faces, pairs
         )
         lines, bookings = lines + found, bookings + [booking]
     return lines, bookings
 
 
 def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The sign's current of a two-part record at every Node on each axis, the mean of the Node's two a-Links' Wronskian currents, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, and the source its mean over the two Links, (J_a + 1) div 2 by the division act rounded as the read rounds the Link's tension (`features/read`, `link_tension`), as the tension on an axis is the mean of its two Links' stresses (ALGEBRA.md #the-primitives, The tension); odd under the sense within that rounding unit (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation over the time line's wall E_s T, the same wall as the time level's W (`loader.derived.held_write_of`; the two hands: over den T the odd levels were 1 / den of the law's), J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma, where J_a unhalved doubled the magnetic term (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
+    """The sign's current of a two-part record at every Node on each axis, the Node's two a-Links' Wronskian currents summed, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, unhalved (the mathematician's (L2) and the advisor's (c) of 2026-10-09: the halving (J_a + 1) div 2 retired, half a unit of current per Node per interval, the mean of the two Links taken instead by the doubled wall of the odd lines' write, `loader.derived.held_write_of`, 2 E_s T, as Part A takes the flux's), odd under the sense exactly (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation, J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
     found: list[Any] = [0, 0, 0]
     for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
         re_at, im_at = ports(re_line.now, wrap), ports(im_line.now, wrap)
@@ -339,8 +342,7 @@ def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
                 + re_line.now * (im_at[plus] - im_at[minus])
                 - im_line.now * (re_at[plus] - re_at[minus])
             )
-    x, y, z = (division_forward(current, SIDES, 1)[0] for current in found)
-    return np.asarray(x), np.asarray(y), np.asarray(z)
+    return np.asarray(found[0]), np.asarray(found[1]), np.asarray(found[2])
 
 
 def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
