@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe import node
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
+from event_universe.core.ports import AXES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features.click import drawn, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
@@ -18,7 +18,7 @@ from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
-from event_universe.reports import BODY, credit, front, weighted
+from event_universe.reports import BODY, credit, front, weighted, weighted_momentum
 from event_universe.resonance import Reference, references_of, scale_of
 
 if TYPE_CHECKING:
@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `meeting.absorbed`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `meeting.absorbed`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): `momenta` per arriving family the window's momentum entering through the region's faces per axis in the unit G^2 (`booked_momentum`, `reports.weighted_momentum`), emptied with the intake at the close; and the last click's four readings for its credit line, `piece` the piece's p_a in T's unit (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis and `lost` what it could not give (`meeting.twisted`)."""
 
     number: int
     index: int
@@ -53,6 +53,11 @@ class NodeBooks:
     intake: dict[int, list[int]] = field(default_factory=dict)
     shares: dict[Transition, int] = field(default_factory=dict)
     carried: list[int] = field(default_factory=list)
+    momenta: dict[int, list[int]] = field(default_factory=dict)
+    piece: list[int] | None = None
+    fan: list[int] | None = None
+    twist: list[int] | None = None
+    lost: str | None = None
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -119,6 +124,24 @@ def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Any) -> No
     book = books.intake.setdefault(drive, [0] * len(books.nodes))
     for index, at in enumerate(books.nodes):
         book[index] += int(came[tuple(np.add(at, board.offset))])
+
+
+def booked_momentum(books: NodeBooks, drive: int, came: list[int]) -> None:
+    """The reader's book of a window's momentum per axis (Part F): the arriving family's conserved form's own momentum entering through the region's faces this interval (`reports.weighted_momentum`, in the unit G^2) added to the window's sum per axis; emptied at the window's close (`jumped`)."""
+    book = books.momenta.setdefault(drive, [0] * AXES)
+    for axis in range(AXES):
+        book[axis] += int(came[axis])
+
+
+def piece_momentum(board: Lattice, index: int, booked: list[int]) -> list[int]:
+    """The piece's momentum p_a per axis in T's unit from a window's booked momentum (Part F; the two hands' lines of 2026-10-09: a piece of action T carries p_a = T sin k_a, "sin k" the integer current in T's unit): the booked antisymmetric sum in the unit num G^2 of the current's weight and the Link factor's unit over num G^2 once by the division act, rounded half up, one division at the close as `credit.quanta_through` divides once (kind D in the acts table); a plane wave of action 2 SUM A^2 sin omega = T then reads T sin k_a to the unit (tests/test_part_f_momentum.py (b))."""
+    unit = board.families[index].pair[0] * board.unit * board.unit
+    half = division_forward(unit, 2, 0)[0]
+    found = []
+    for value in booked:
+        size = int(division_forward(abs(int(value)), unit, half)[0])
+        found.append(size if value >= 0 else -size)
+    return found
 
 
 def dark(board: Lattice, books: NodeBooks) -> bool:
@@ -213,7 +236,7 @@ def reported(
     exchanged: tuple[int | None, int | None],
     count: int = 1,
 ) -> None:
-    """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: never a Node): the reader `body n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the node_detector's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere."""
+    """The click line of a record's click (`reports.credit`, the one click line kind of every reader; ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: never a Node): the reader `body n` by its number, the `parts` realised and left by their declared names (`realised` the part after, `before` the part before), the families `exchanged`, the one taken from and the one given to (None where none), the count moved, 1 for a click and 0 for the null window's write, the count left in the books of the family exchanged (None where none), the window's intervals [first, last], the body's own proper time at the close and the index of the window closed (its books' clock and windows); labelled the node_detector's where a `quantum` passed and a diagnostic for the null window's write; the Node written stands in the `lay` and `face` lines beside it and here nowhere; Part F: the piece's p_a, the arriving record's P_a over the board, the write's twist n_a and what it could not give, the books' four readings of the click (`NodeBooks.piece`, `fan`, `twist`, `lost`), None each where the click read none."""
     if board.output is None:
         return
     names, families = books.declared.names, board.families
@@ -237,6 +260,10 @@ def reported(
         before,
         absorbed,
         light,
+        books.piece,
+        books.fan,
+        books.twist,
+        books.lost,
     )
     board.output(line)
 
@@ -266,3 +293,4 @@ def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray
             facing = front(region, wrap, region, own)
             for drive in drives:
                 booked_inflow(board, books, drive, weighted(facing, weighed[drive]))
+                booked_momentum(books, drive, weighted_momentum(facing, weighed[drive]))

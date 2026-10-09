@@ -404,6 +404,8 @@ class Lattice:
                     self.output(click(self.interval, family.name, detector.name, seen))
                 if detector.declared:
                     credit.booked(self, index, detector.name, reports.weighted(facing, weighed[index]))
+                    momentum = reports.weighted_momentum(facing, weighed[index])
+                    credit.booked_momentum(self, index, detector.name, momentum)
                 if family.several and detector.declared:
                     levels = level_sums(nodes, begun[index])
                     if any(any(level) for level in levels) and self.output is not None:

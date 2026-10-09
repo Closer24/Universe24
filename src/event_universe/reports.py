@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.node import Record
 
 MEASUREMENT, DIAGNOSTIC = (
@@ -31,6 +31,17 @@ EXCHANGED = (
     "absorbed",
     "emitted",
 )  # the families a record's click exchanged a quantum with, None where none
+MOMENTUM, FAN, TWIST, LOST = (
+    "momentum",
+    "fan",
+    "twist",
+    "lost",
+)  # Part F: the piece's p_a per axis in T's unit, the record's P_a over the board at the click, the taker's twist n_a per axis, and what the write could not give (None where nothing was lost)
+LOST_TO_TAKER, LOST_TO_DECLARATION, NO_BACK_TO_BACK = (
+    "P lost to the taker",
+    "P lost to the declaration",
+    "no back-to-back region",
+)  # Part F: the credit line's three bookings of the open corner (the two hands' lines of 2026-10-09)
 CREDIT_KEYS = (
     "window",
     "proper",
@@ -41,6 +52,10 @@ CREDIT_KEYS = (
     "count",
     "left",
     *EXCHANGED,
+    MOMENTUM,
+    FAN,
+    TWIST,
+    LOST,
 )  # the credit line's own keys, the one click line kind's
 ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
 INTO = "into"  # the conversion line's own key, the families of the records out
@@ -139,12 +154,16 @@ def credit(
     before: str | None = None,
     absorbed: str | None = None,
     emitted: str | None = None,
+    momentum: list[int] | None = None,
+    fan: list[int] | None = None,
+    twist: list[int] | None = None,
+    lost: str | None = None,
 ) -> dict[str, object]:
-    """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; features/click), labelled NODEDETECTOR, the experiment's reading and nothing else (the owner's word: we read only the node_detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a NodeDetector), the reader credited or clicking by name (a declared region's, or `body n` for a record declared a NodeDetector, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's intervals, `credit.clocked_regions`, `node_detector.clock_advanced`; the board's `interval` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's absorption, emission or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `absorbed` from or `emitted` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `absorbed` (the arriving family whose quantum was taken, or the probe's at its click) and `emitted` (the light a whole quantum was given to, or the probe's given back), None where none; no Node (the owner's word: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). The null window's re-lay that changed a level writes the same line labelled LATTICE (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
+    """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; features/click), labelled NODEDETECTOR, the experiment's reading and nothing else (the owner's word: we read only the node_detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a NodeDetector), the reader credited or clicking by name (a declared region's, or `body n` for a record declared a NodeDetector, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's intervals, `credit.clocked_regions`, `node_detector.clock_advanced`; the board's `interval` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's absorption, emission or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `absorbed` from or `emitted` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `absorbed` (the arriving family whose quantum was taken, or the probe's at its click) and `emitted` (the light a whole quantum was given to, or the probe's given back), None where none; Part F (the two hands' lines of 2026-10-09, momentum from Rule3): `momentum`, the piece's p_a per axis in T's unit read from the region's booked currents at the close (`node_detector.piece_momentum`), `fan`, the record's lattice momentum P_a per axis over the board at the click's interval before the erasure starts (`node.momentum_of`; their difference the erasure's deficit, measured and not hidden), `twist`, the taker's n_a per axis, the count of phase-line acts the write folded the entering part by (`meeting.twisted`), and `lost`, what the write could not give (`LOST_TO_TAKER`, `LOST_TO_DECLARATION`, `NO_BACK_TO_BACK`), each None where the click has no such reading; no Node (the owner's word: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). The null window's re-lay that changed a level writes the same line labelled LATTICE (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
     label = MEASUREMENT if count else DIAGNOSTIC  # the null window's line (count 0) is the board's
     line = dict(zip(REPORT_KEYS, (CREDIT, label, interval, family, node_detector), strict=True))
     own = (window, proper, windows, before, realised, kept, count, left, absorbed, emitted)
-    line.update(zip(CREDIT_KEYS, own, strict=True))
+    line.update(zip(CREDIT_KEYS, (*own, momentum, fan, twist, lost), strict=True))
     return line
 
 
@@ -277,6 +296,20 @@ def weighted(
             factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
             seen[at] += flow * factor
     return seen
+
+
+def weighted_momentum(
+    facing: Sequence[np.ndarray], pieces: Sequence[tuple[tuple[Any, ...], tuple[Any, ...]]]
+) -> list[int]:
+    """Per axis, the conserved form's own momentum entering a region through its front Ports (Part F; the two hands' lines of 2026-10-09: "the wave vector read at the region's Ports from the Link current"): the antisymmetric sum over the region's two faces along the axis of the weighted Link currents `weighted` books per Node, the -a face's inflows (through the -a Ports, F_(i,i-a) Q_ij) less the +a face's (through the +a Ports, F_(i,i+a) Q_ij), in the unit G^2 of the booking and in Python's integers: a piece entering from the +a side carries P_a below 0, the sign of its travel; what the credit and a reader record book per axis over the window (`credit.booked_momentum`, `node_detector.booked_momentum`)."""
+    found = [0] * AXES
+    for through, factors in pieces:
+        for port, (axis, side) in enumerate(PORT_SIDES):
+            at = facing[port]
+            flow = np.asarray(through[port])[at].astype(object)
+            factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
+            found[axis] -= side * int(np.sum(flow * factor)) if flow.size else 0
+    return found
 
 
 def inflow(

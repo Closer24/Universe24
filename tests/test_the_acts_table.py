@@ -214,6 +214,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # meeting.py
     ("meeting.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("meeting.py", "absorbed", "division_forward"): "D",  # the unit over the norm
+    ("meeting.py", "fan_momentum", "division_forward"): "D",  # the fan's P over num, once
+    ("meeting.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
+    ("meeting.py", "quarter_turn", "phase.iterate"): "S",  # the bisection's probe on the cosine
+    ("meeting.py", "folded_lines", "phase.iterate"): "D",  # the fold's pair, once per offset
+    ("meeting.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     ("node.py", "step", "rule3"): "R",  # Rule3's step at every Node
@@ -223,6 +228,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("node_detector.py", "own_clock", "division_forward"): "D",  # the mean clock, rounded once
     ("node_detector.py", "clock_advanced", "division_forward"): "R",  # the reader's clock remainder kept
     ("node_detector.py", "drawn_weights", "division_forward"): "D",  # the inflow over the unit
+    ("node_detector.py", "piece_momentum", "division_forward"): "D",  # the piece's p over num, once
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
     ("plane.py", "step_plane", "rule3"): "R",  # Rule3's step on the plane

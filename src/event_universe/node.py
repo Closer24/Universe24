@@ -365,6 +365,15 @@ def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.nd
     return tuple(np.asarray(value) for value in found)
 
 
+def momentum_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[int, int, int]:
+    """A record's lattice momentum per axis, a reading of its lines (Part F, features/currents `momentum`; the two hands' lines of 2026-10-09): every line's antisymmetric sum of its two Link currents along the axis over the board, added, in the current's unit at the weight num; what the credit books per axis at a window's close and the write must give the taker."""
+    found = [
+        sum(currents.momentum(r.now, r.before, axis, wrap, weight) for r in lines)
+        for axis in range(AXES)
+    ]
+    return int(found[0]), int(found[1]), int(found[2])
+
+
 def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
     """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
     tensions: currents.Vector = (0, 0, 0)
