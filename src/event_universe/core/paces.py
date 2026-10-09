@@ -10,7 +10,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import division_forward
+from event_universe.core.rule3 import division_fixed_point, division_forward
 
 COUNT_POWER = 2  # the proper-interval powers of a count's write, p_x p_y p_z / (p_0 Gamma^2)
 WRONSKIAN_POWER = 1  # the proper-interval power of a Wronskian's write, p_x p_y p_z / (p_0^2 Gamma)
@@ -159,6 +159,23 @@ def within_width(kind: Any, wall: Any, *factors: Any) -> bool:
     for factor in factors:
         bound *= int(np.abs(np.asarray(factor)).max())
     return bool(bound + int(np.asarray(wall).max()) <= MAX_WORK_INT)
+
+
+# the half-angle's descent: half the hardware's width in halvings (31 at 63 bits: the angle below 2^-29, its
+# sine the angle to 2^-59) at the unit of the width twice (2^126: the cosine's roundings, 2^HALVINGS of them
+# at the end, below 2^-64); the hardware's bound the one integer, no number of the law
+HALVINGS = int(division_forward(MAX_WORK_INT.bit_length(), 2, 0)[0])
+SCALE = (MAX_WORK_INT + 1) * (MAX_WORK_INT + 1)
+
+
+@cache
+def rotation_unit(num: int, den: int, gamma: int) -> int:
+    """The family's rest rotation to the unit Gamma, K = omega_0 Gamma with cos omega_0 = num / den, computed once from the pair with one rounding as the clock's pace is computed from the content (ALGEBRA.md, The clock family on the Ports: omega_0 Gamma_theta the family's rotation to the unit, Gamma_theta = Gamma), the odd Link part's angle 12 V omega_0 then an integer product with the law's one rounding at the read: the angle by the half-angle's descent at the scale of the hardware's width twice (`SCALE`), cos(theta / 2) = sqrt((1 + cos theta) / 2) taken HALVINGS times by the fixed point of the division act (the root the loader reads and never the run), the small angle then its own sine, omega_0 = 2^HALVINGS sin(omega_0 / 2^HALVINGS) to 2^-59, and omega_0 Gamma rounded half up once; 0 for a massless pair (no rest rotation, no odd part), 5,046 at [4000, 6000] and Gamma 6,000 (arccos(2 / 3) = 0.84107)."""
+    cosine = division_forward(SCALE * num, den, 0)[0]
+    for _ in range(HALVINGS):
+        cosine = division_fixed_point(division_forward(SCALE * (SCALE + cosine), 2, 0)[0])
+    sine = division_fixed_point(SCALE * SCALE - cosine * cosine)
+    return int(rounded(sine * gamma * 2**HALVINGS, SCALE))
 
 
 def turn_factor(angle: Any, p_0: Any, gamma: int) -> Any:

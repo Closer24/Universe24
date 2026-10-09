@@ -23,7 +23,16 @@ from event_universe.features.read import (
     plain,
 )
 from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns
-from event_universe.plane import NO_FACE, Angles, Faces, Rule, step_plane
+from event_universe.plane import (
+    NO_FACE,
+    Angles,
+    Faces,
+    Rule,
+    fold_guard,
+    fold_reads,
+    odd_links,
+    step_plane,
+)
 from event_universe.records import (  # the lines, their readings and their states, the Node's own
     Booking as Booking,
 )
@@ -145,6 +154,9 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
             paces_guard(families[index].pair, gamma, unit, content, factors, families[index].name)
+        links = odd_links(index, families, states, 1, wrap)
+        if links is not None:  # a folded record's fold at every Link within the tangent 1
+            fold_guard(families[index].pair, gamma, links, families[index].name)
         angles, before = (turning(index, families, states, d, gamma, record) for d in (1, -1))
         if angles is not None and before is not None:  # a turned record turns at both of its levels
             rotation.turn_guard(angles[0], 2 * gamma, families[index].name, None)
@@ -255,14 +267,15 @@ def step_family(
     direction: int = 1,
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
+    odd: Factors | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
+    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned (`turning`, the angles every sign row's but the record's own) or folded (`odd`, the odd read of each Link from the flux holder's odd lines, `plane.fold_reads`; ALGEBRA.md, The clock family on the Ports), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left for a plain step, the step's levels before the turn for a turned one. Under the rotation the record's levels before are turned by the previous interval's angle first (`turned_before`, the time Link's phase)."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
     faced = dict(faces or {})
     angles = turning(index, families, states, direction, gamma, record)
-    if angles is None:
+    if angles is None and odd is None:
         found = [
             step(
                 line,
@@ -275,14 +288,15 @@ def step_family(
             for number, line in enumerate(own, span.start)
         ]
         return found, ((own, found) if direction == 1 else (found, own))
-    planes = turned_before(index, families, states, gamma, 1, record) if direction == 1 else own
+    turned = direction == 1 and angles is not None  # the time Link's phase on a turned record alone
+    planes = turned_before(index, families, states, gamma, 1, record) if turned else own
     lines: list[Record] = []
     first: list[Record] = []
     second: list[Record] = []
     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
         pair = planes[start], planes[start + 1]
         at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
-        found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at)
+        found, (begun, left) = step_plane(*pair, rule, wrap, angles, gamma, direction, at, odd)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -304,8 +318,10 @@ def step_records(
     for record in range(families[index].records):
         content, factors = read(index, families, states, direction, wrap, gamma, unit, record, cut)
         rule = rule_of(families[index], gamma, content, factors, unit)
+        links = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
+        odd = None if links is None else fold_reads(families[index].pair, gamma, content, factors, links)
         found, booking = step_family(
-            index, families, states, rule, wrap, gamma, direction, record, faces
+            index, families, states, rule, wrap, gamma, direction, record, faces, odd
         )
         lines, bookings = lines + found, bookings + [booking]
     return lines, bookings
@@ -346,6 +362,13 @@ def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Ve
         found = currents.stress(weight, axis_neighbours(record.now, wrap))
         tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
     return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
+
+
+def axis_sources_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[Any, ...]:
+    """The axis sources of a record at every Node, six readings of its lines at the interval's start, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports; a holder without them reads the first three, `write_sources`)."""
+    through = currents_of(weight, lines, wrap)
+    fluxes = [through[2 * axis + 1] - through[2 * axis] for axis in range(AXES)]
+    return (*stresses_of(weight, lines, wrap), *fluxes)
 
 
 def axis_neighbours(

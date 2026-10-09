@@ -13,7 +13,6 @@ from event_universe.bookings import Bookings, booked_of, booked_sources, record_
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward
-from event_universe.features.currents import Vector
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
 from event_universe.lay import laid
@@ -34,7 +33,7 @@ from event_universe.reports import NodeDetector, book, click, entering, level_su
 
 Output = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
-Stresses = dict[node.Sourcing, Vector]  # per record of quanta its tension on each axis
+Stresses = dict[node.Sourcing, tuple[Any, ...]]  # per record of quanta its tension, its flux per axis
 # per record of quanta the paces of its read, the write's rulers
 Rulers = dict[node.Sourcing, node.Rulers]
 
@@ -279,9 +278,9 @@ class Lattice:
         }
 
     def stresses(self) -> Stresses:
-        """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`node.stresses_of`): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension)."""
+        """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`node.stresses_of`), and the count's flux along each axis beside it (`node.axis_sources_of`, the flux holder's odd lines' source): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension)."""
         return {
-            s: node.stresses_of(self.families[s[0]].pair[0], self.lines_of(*s), self.wrap)
+            s: node.axis_sources_of(self.families[s[0]].pair[0], self.lines_of(*s), self.wrap)
             for s in sources_of(self.families, self.order)
         }
 
@@ -426,7 +425,7 @@ class Lattice:
             held.update(gained)
         for record in quanta_records(self.families, index):
             own = record_lines(self.families, index, record, lines)
-            stresses[(index, record)] = node.stresses_of(family.pair[0], own, self.wrap)
+            stresses[(index, record)] = node.axis_sources_of(family.pair[0], own, self.wrap)
             if index in self.turning:
                 senses[(index, record)] = node.sense_current_of(own, self.wrap)
         books[index] = lines

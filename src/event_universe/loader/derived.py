@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
-from event_universe.core.ports import PORTS, SIDES
+from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_fixed_point, division_forward
 from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
@@ -18,6 +18,7 @@ REAL_LINE, PLANE_LINE = (
     "plane",
 )  # the kinds of a record's lines, the shape by name (the two hands)
 KINDS = (REAL_LINE, PLANE_LINE)
+FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard), the integer total per part and no modulus
 
 
 @dataclass(frozen=True)
@@ -36,6 +37,7 @@ class Row:
     rest: int
     declared: tuple[tuple[str, int], ...]
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
+    flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
 
 
 @dataclass(frozen=True)
@@ -103,6 +105,11 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
     """Whether a family's record is turned: a plane that reads a holder declaring the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record); a one-part family reads no holder of the sign and is untouched, as is a plane in a universe whose holders act on the pace."""
     family = families[index]
     return family.plane and any(families[read.family].rotation for read in family.reads)
+
+
+def folds(families: tuple[FamilyRule, ...], index: int) -> bool:
+    """Whether a family's record is folded: a plane that reads a holder carrying the flux's odd lines, each Link's read then a pair (X^c, X^s) in the Link unit (ALGEBRA.md, The clock family on the Ports; plane.py); a record of real lines, light among them, reads the odd lines into no pace and is untouched."""
+    return families[index].plane and any(families[r.family].flux for r in families[index].reads)
 
 
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
@@ -238,7 +245,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
 
 
 def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for an odd line."""
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; a flux holder's three odd lines at twice the tension line's wall, 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the two hands' joint line of 2026-10-09, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'."""
     family = families[index]
     assert family.level_weight is not None
     sources = readers_of(families, index)
@@ -248,6 +255,8 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> 
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
     measure = action if family.rotation else 3 * multiple * action
     row = [family.level_weight * action] + [family.level_weight * measure] * (family.width - 1)
+    if family.flux:  # the odd lines: the two Links' flux summed unhalved over twice the count's wall
+        row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     walls = (
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike
@@ -329,7 +338,12 @@ def write_rooms(
         * (SIDES if family.rotation else abs(families[other].pair[0]))
         for other in sources
     )
-    return [abs(family.write) * room for room in ([time] + [axis] * (family.width - 1)) * family.records]
+    rooms = [time] + [axis] * (family.width - 1)
+    if (
+        family.flux
+    ):  # an odd line: the flux through the axis's two Ports, two products each, |num| on each
+        rooms[1 + AXES :] = [SIDES * axis] * AXES
+    return [abs(family.write) * room for room in rooms * family.records]
 
 
 def amplitude_bound(
@@ -350,10 +364,13 @@ def bound_under_rooms(
     for index, family in enumerate(families):
         num, den = family.pair
         reach = TURNED_REACH if turns(families, index) else 1
+        fold = (
+            FOLD_REACH if folds(families, index) else 1
+        )  # the six arrivals each under a pair's two parts
         edge = edge_of(family.pair, gamma)
         for clock, pace in ((gamma, gamma), (0, 0), (edge, edge)):
             reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
-            room = (sum(abs(read) for read in reads) + wall) * reach + abs(self_coefficient)
+            room = (sum(abs(read) for read in reads) * fold + wall) * reach + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]) - slack)
         if reach > 1:
             link = link_wall(gamma)  # the Link's wall, tan(theta_a / 2) = (L_a(i) + L_a(j)) / (4 Gamma)
