@@ -40,7 +40,7 @@ TEXINPUTS=sn: pdflatex Universe24_Paper.tex && TEXINPUTS=sn: pdflatex Universe24
 
 ## The implementation
 
-The repository also holds an implementation for building worlds, frozen before the odd write of the paper's Section 2.3; the two slits' run of Section 6 is its one run the paper reports, at the state the run's record names, on a universe with gravity off in all but name, so the run is the law's line as Section 2.2 states it, nothing of Section 5.1's vector sector rests on it, and no other claim of the paper does. Its code is `src/event_universe/`, its tests `tests/` and its document [docs/ENGINE.md](docs/ENGINE.md), the engine as the code holds it at the freeze. From a clone to the two slits' page, six commands from the checkout's root:
+The repository also holds an implementation for building worlds, frozen at the tag v1.1.0, before the odd write of the paper's Section 2.3; the two slits' run of Section 6 is its one run the paper reports, at the state the run's record names, on a universe with gravity off in all but name, so the run is the law's line as Section 2.2 states it, nothing of Section 5.1's vector sector rests on it, and no other claim of the paper does. Its code is `src/event_universe/`, its tests `tests/` and its document [docs/ENGINE.md](docs/ENGINE.md), the engine as the code holds it at the freeze. From a clone to the two slits' page, six commands from the checkout's root:
 
 ```bash
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment: Python 3.14 and the package
@@ -50,6 +50,8 @@ PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.j
 PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --blind examples/events/two_slits/expectation.json --out runs/two_slits/two_slits.look.html   # the page: the board frame by frame, the NodeDetectors' bars beside the dashed blind curve
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 ```
+
+To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
 
 ## The two slits' universe
 
