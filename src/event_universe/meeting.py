@@ -32,7 +32,14 @@ from event_universe.node_detector import (
 )
 from event_universe.plane import Faces
 from event_universe.reports import face
-from event_universe.resonance import arrival_of, gathered, sheared, turned_direction, window_turn
+from event_universe.resonance import (
+    arrival_of,
+    gathered,
+    hopped,
+    turned_direction,
+    window_pair,
+    window_turn,
+)
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -150,15 +157,21 @@ def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) 
 
 
 def turned_labels(board: Lattice, books: NodeBooks) -> None:
-    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the lattice (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled by the record's own clock (`node.turned_by`, the tangent half-angle over 2 Gamma) turns the two parts' labels into each other by the engine's own three shears (features/rotation) as W equal sub-turns with the carry (`resonance.sheared`, W the window's intervals, so the angles add as the proper intervals' did), the plane's size over the wall read once and not a turn per interval; the labels' squares are the parts' population after the window; the window's draw reads each transition's own transfer share, kept in the books (`NodeBooks.shares`): the pair as it stood before the window's turns sheared by that transition's turn alone, its entered label squared, sin^2 of the turn, the Rabi form, the record's share at the body (`absorbed`, `probe_click`), the composed label squared itself where one transition alone feeds the part; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
+    """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the lattice (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled to the record's own proper interval by its clock (`paces.turn_factor`, one rounding half up: the window's angle theta_W in units of the phase line's theta_0 = 1 / Gamma) turns the two parts' labels into each other by one hop with the phase line's pair at that angle (`resonance.window_pair`, `resonance.hopped`: (C u - S v + r_u) div X and (S u + C v + r_v) div X, the remainders carried in the books (`NodeBooks.carried`) between windows and cleared with the labels at the re-lay), the plane's size over the wall read once and not a turn per interval, no shear; the labels' squares are the parts' population after the window; the window's draw reads each transition's own transfer share, kept in the books (`NodeBooks.shares`): the pair as it stood before the window's turns hopped by that transition's turn alone (no remainder carried: a read for the share, not the books' write), its entered label squared, sin^2 of the turn, the Rabi form, the record's share at the body (`absorbed`, `probe_click`), the composed label squared itself where one transition alone feeds the part; the complement outcome at the close, none takes, is the null window (`null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
     gamma, clock = board.world.node_clock, own_clock(board, books)
     before, books.shares = list(books.labels), {}
+    if len(books.carried) != len(books.labels):
+        books.carried = [0 for _label in books.labels]
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
         leaves, enters = transition.leaves, transition.enters
         if leaves == books.part and leaves != enters:  # the probe's turns nothing
             turn = int(paces.turn_factor(window_turn(reference, transition.weight), clock, gamma))
-            own = sheared(before[leaves], before[enters], turn, books.elapsed, gamma)
-            u, v = sheared(books.labels[leaves], books.labels[enters], turn, books.elapsed, gamma)
+            pair = window_pair(turn, gamma, board.amplitude)
+            own = hopped(before[leaves], before[enters], *pair)
+            remainders = (books.carried[leaves], books.carried[enters])
+            u, v, books.carried[leaves], books.carried[enters] = hopped(
+                books.labels[leaves], books.labels[enters], *pair, remainders
+            )
             books.labels[leaves], books.labels[enters], books.shares[transition] = u, v, own[1] ** 2
         reference.closed()
 
@@ -220,6 +233,9 @@ def written(board: Lattice, items: list[Item]) -> None:
         books.part = max(range(len(books.counts)), key=lambda k: books.counts[k])
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]
+        books.carried = [
+            0 for _count in books.counts
+        ]  # the labels re-laid: the hop's remainders with them
     for family, absorbed in sorted(holes.items()):
         if board.credit.counts[family] <= 0 and absorbed:  # the count at 0: its front from every Node
             front.started(board, family, absorbed)

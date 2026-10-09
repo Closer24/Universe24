@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `meeting.absorbed`)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, isqrt(A^2 w_i div SUM w), `norm` the record's amplitude over the region, isqrt(SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `meeting.absorbed`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C)."""
 
     number: int
     index: int
@@ -52,6 +52,7 @@ class NodeBooks:
     norm: int = 1
     intake: dict[int, list[int]] = field(default_factory=dict)
     shares: dict[Transition, int] = field(default_factory=dict)
+    carried: list[int] = field(default_factory=list)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:

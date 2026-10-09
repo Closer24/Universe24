@@ -235,8 +235,8 @@ def laid_increment(board: Lattice, source: Source) -> None:
 def advanced(phasor: int, previous: int, resonance: tuple[int, int]) -> tuple[int, int]:
     """One interval of a reference phasor at the resonance (num, den), cos Omega = num / den, Chebyshev's recurrence r_(t+1) = 2 cos Omega r_t - r_(t-1), an identity of the cosine: the turn 2 num r_t div den rounded half up without a carry (one stated choice, the phase error below W / (2 R) over a window of W intervals at the scale R either way; the hands), then the turn minus r_(t-1); returns (r_(t+1), r_t). The emission's phasor and the taker's two reference records (`meeting.gathered`) advance by this one recurrence."""
     num, den = resonance
-    turned = division_forward(2 * num * phasor, den, division_forward(den, 2, 0)[0])[0]
-    return int(turned) - previous, phasor
+    doubled = division_forward(2 * num * phasor, den, division_forward(den, 2, 0)[0])[0]
+    return int(doubled) - previous, phasor
 
 
 def sourced(board: Lattice) -> None:

@@ -8,7 +8,18 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, emission, front, growth, meeting, node, reports, share
+from event_universe import (
+    conversion,
+    credit,
+    emission,
+    front,
+    growth,
+    meeting,
+    node,
+    reports,
+    resonance,
+    share,
+)
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
@@ -44,6 +55,7 @@ class Lattice:
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         paces.clear_memo()  # the paces computed once per content value within this run, kept between none
+        resonance.clear_memo()  # the windows' phase pairs likewise, kept between no two runs
         self.world, self.interval = world, 0
         self.output: Output | None = None
         self.shape, self.offset = world.shape, (0, 0, 0)

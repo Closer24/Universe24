@@ -172,8 +172,8 @@ def laid_pairs(
     num, den = pair
     size, sine = invariant(count, action, pair, laid, share), division_fixed_point(den * den - num * num)
     real = (size, int(division_forward(size * num, den, 0)[0]))
-    turned = (0, sense * int(division_forward(size * sine, den, 0)[0]))
-    return [pair for _ in range(laid) for pair in ((real, turned) if plane else (real,))]
+    imaginary = (0, sense * int(division_forward(size * sine, den, 0)[0]))
+    return [pair for _ in range(laid) for pair in ((real, imaginary) if plane else (real,))]
 
 
 def exact_total(action: int, resonance: tuple[int, int]) -> int:

@@ -10,11 +10,10 @@ import numpy as np
 from event_universe import node, world_files
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
-from event_universe.features.rotation import link_wall
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import held_write_of
 from event_universe.loader.universe import universe_of
-from event_universe.plane import link_levels, link_pairs, sign_pairs
+from event_universe.plane import link_levels, link_pairs, link_wall, sign_pairs
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import EVENTS, chain_body_world

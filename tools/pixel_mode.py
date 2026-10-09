@@ -7,7 +7,7 @@ import hashlib
 import json
 import sys
 from collections.abc import Sequence
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from fractions import Fraction
 from functools import cache
 from math import lcm
@@ -28,7 +28,7 @@ from event_universe.core.rule3 import (
     division_forward,
     rule3,
 )
-from event_universe.features import phase, rotation
+from event_universe.features import phase
 from event_universe.features.start import (
     RestCollapses,
     Sourced,
@@ -134,36 +134,6 @@ def rule_of(board: Board, content: np.ndarray) -> node.Rule:
     )
 
 
-def turned_arrivals(
-    board: Board, re: np.ndarray, im: np.ndarray, links: tuple[Any, Any, Any]
-) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
-    """A plane's six arrivals under the Link angles as the engine reads them (`node.turned_ports`, the pair through the +a Port turned by the Link's odd level over the wall 4 Gamma and through the -a Port by its opposite): the plain arrivals where no odd line stands (the shear by 0 being the identity), the turned ones otherwise."""
-    if not any(bool(np.asarray(level).any()) for level in links):
-        return ports(re, board.wrap), ports(im, board.wrap)
-    turned_re, turned_im = node.turned_ports((re, im), links, 2 * 2 * board.gamma, board.wrap)
-    return tuple(turned_re), tuple(turned_im)
-
-
-def turned_step(
-    board: Board,
-    content: np.ndarray,
-    angles: node.Angles,
-    re: Record,
-    im: Record,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """One interval of Rule3 on a plane under the rotation, the engine's own act (`node.step_plane` after `node.turned_before`'s turn of the level before, u = e^(-i theta) z_before by the time angle; the arrivals turned by the Link angles; the stepped pair turned back by the time angle), the remainders returned beside the two levels next; a reading of a laid plane as the engine steps it, every number the engine's."""
-    time = angles[0]
-    u = rotation.turned(re.before, im.before, -time, 2 * board.gamma)
-    planes = (replace(re, before=np.asarray(u[0])), replace(im, before=np.asarray(u[1])))
-    lines, _booking = node.step_plane(*planes, rule_of(board, content), board.wrap, board.gamma)
-    return (
-        np.asarray(lines[0].now, dtype=board.kind),
-        np.asarray(lines[1].now, dtype=board.kind),
-        np.asarray(lines[0].remainder, dtype=board.kind),
-        np.asarray(lines[1].remainder, dtype=board.kind),
-    )
-
-
 def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: np.ndarray) -> np.ndarray:
     """The record's weighted share at every Node in the current's units, the engine's own `share.share` at the paces of the content (ALGEBRA.md #the-count-is-the-records-share): the conserved form's Node term over the Link's pace squared less the plain Link term."""
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
@@ -266,9 +236,6 @@ ACTS_OF_A_HELD_ROW = 1 + 1  # the acts `held_rests` composes per held row: its r
 ROUNDINGS_OF_A_STEP = (
     1 + 1 + 1 + 1
 )  # the acts composed in next + before - clock x now: now, before, next, the clock's level
-SHEARS_OF_A_TURNED_STEP = (
-    2 * (1 + 1 + 1)
-)  # the two turns of a plane's step, the level before by the previous angle and the stepped pair by this interval's, three shears each, each a floor (features/rotation)
 
 
 def rotation_spread(
@@ -346,151 +313,14 @@ def top_mode(
     return a, np.where(keep, total, 0).astype(board.kind)
 
 
-ROUNDINGS_OF_THE_TURNED_READ = (
-    1 + 1 + 1
-)  # the acts composed in one turned iteration: the read div w, the time factor's division, the scale
-
-
-def time_factor(time: Any, cosine: int, sine: int, fine: int, gamma: int) -> tuple[Any, Any]:
-    """The standing condition of a turned plane at every Node as one fraction, 2 cos(Omega - theta_i) = numerator_i / wall_i (ALGEBRA.md, The sign holder rotates the two-part record, the engine's convention: e^(i theta) z_next + e^(-i theta) z_before = M z, so a record z = phi e^(-i Omega t) stands where (M phi)_i = 2 cos(Omega - theta_i) phi_i): with tan(theta_i / 2) = n_i / h the turn's own rationals, h = 2 Gamma (the time turn's wall, `node.step_plane`), cos theta_i = (h^2 - n_i^2) / (h^2 + n_i^2) and sin theta_i = 2 n_i h / (h^2 + n_i^2) (features/rotation), and the clock pair cos Omega = cosine / fine, sin Omega = sine / fine, 2 cos(Omega - theta_i) = 2 (cosine (h^2 - n_i^2) + sine 2 n_i h) / (fine (h^2 + n_i^2)); the wall above 0 while |Omega - theta| is below a quarter turn."""
-    h = 2 * gamma
-    square = h * h
-    return 2 * (cosine * (square - time * time) + 2 * sine * time * h), fine * (square + time * time)
-
-
-def turned_mode(
-    board: Board, content: np.ndarray, angles: node.Angles, keep: np.ndarray, seed: np.ndarray, fine: int
-) -> tuple[np.ndarray, np.ndarray, tuple[int, int]]:
-    """The turned top mode at the fine unit (ALGEBRA.md, The atom is a bound body of the holder of the sign, step (4); The sign holder rotates the two-part record): the power iteration of Rule3's read with the arrivals turned by the Link angles (`turned_arrivals`, the odd lines' numerators as `node.turned_ports` turns them) and the Node by the time angle, z <- F(z) with F(z)_i = (M z)_i wall_i div numerator_i, M z = (S z + SUM over the Ports of R_ij e^(+-i theta_a) z_j) div w the turned read and numerator_i / wall_i = 2 cos(Omega - theta_i) the standing condition at the clock pair (`time_factor`), shifted by the unit, z <- F(z) + z, so that the band's bottom modes, whose eigenvalue under F has nearly the top's size with the opposite sign, fall near 0 while the top stands near 2 (the real top mode needs no shift, a hollow's S above 0 lifting its whole spectrum), then the division act to the fine unit by one factor on both lines (the mode's own scale; the rotation's phase free): the top mode of the standing condition in the content holders' paces, the holder under the rotation entering no pace, an unlike sign binding it below the free rest rotation; the inner stop the first repeat of the integer pair or a return within the roundings of one iteration at every Node (`ROUNDINGS_OF_THE_TURNED_READ`, the start's own rule of the repeat, one unit per division act composed), the clock then re-read from the mode's own ratio, cosine <- cosine x (the largest of F(z) + z less fine) div fine (F(z) = z exactly at the clock the mode stands at), the outer pass repeated until the clock pair returns itself; the first clock the free rest's, cos omega_0 = num / den. Returns the two lines at the fine unit and the clock pair (cosine, fine), cos Omega = cosine / fine."""
-    reads, self_coefficient, wall = rule_of(board, content)
-    time, links = angles
-    cosine = int(division_forward(board.pair[0] * fine, board.pair[1], 0)[0])
-    re = scaled(board, np.where(keep, seed, 0).astype(board.kind), fine)
-    im: np.ndarray = np.zeros(board.shape, dtype=board.kind)
-
-    def read_of(x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        arrived = turned_arrivals(board, x, y, links)
-        found = [
-            np.where(keep, np.asarray(rule3(reads, at, self_coefficient, wall, a, 0, 0)[0]), 0)
-            for a, at in zip((x, y), arrived, strict=True)
-        ]
-        return np.asarray(found[0]), np.asarray(found[1])
-
-    while True:  # the outer pass: the clock re-read from the mode's own ratio
-        sine = division_fixed_point(fine * fine - cosine * cosine)
-        numerator, denominator = time_factor(time, cosine, sine, fine, board.gamma)
-        seen: set[bytes] = set()
-        largest = fine
-        while True:
-            total = read_of(re, im)
-            found = [
-                np.asarray(rule3(NO_READ, NO_READ, t * denominator, numerator, 1, 0, 0)[0]) + z
-                for t, z in zip(total, (re, im), strict=True)
-            ]  # F(z) + z: the shift by one unit, the band's bottom modes near 0 and the top near 2
-            largest = max(int(np.abs(found[0]).max()), int(np.abs(found[1]).max()))
-            if largest == 0:
-                break
-            turned = [scaled(board, f.astype(board.kind), fine, largest) for f in found]
-            close = max(int(np.abs(turned[0] - re).max()), int(np.abs(turned[1] - im).max()))
-            re, im = turned[0], turned[1]
-            key = digest(re, im)
-            if key in seen or close <= ROUNDINGS_OF_THE_TURNED_READ:
-                break
-            seen.add(key)
-        read = int(division_forward(cosine * (largest - fine), fine, 0)[0])
-        if abs(read - cosine) <= 1:
-            return re, im, (cosine, fine)
-        cosine = read
-
-
-def turned_top_mode(
-    board: Board,
-    content: np.ndarray,
-    angles: node.Angles,
-    keep: np.ndarray,
-    seed: np.ndarray,
-    unit: int,
-    modes: Modes,
-) -> tuple[tuple[np.ndarray, np.ndarray], tuple[int, int]]:
-    """The turned top mode at the amplitude `unit` with its clock pair (cosine, fine), cos Omega = cosine / fine (`turned_mode` once per fine unit in one content, `modes`). The fine unit is derived from the width and never written: the largest at which the turned read of a level stays inside the room (`Board.room` over twice the sum of the coefficients at a Node) and the time factor's product, twice the read times the fine unit times the wall's 2 h^2, h = 2 Gamma, does too (the fixed point of the division act on the room over 4 h^2), at least the amplitude; the mode is then rounded once to the amplitude by one factor on both lines."""
-    h = 2 * board.gamma
-    fine = max(
-        unit,
-        min(
-            int(division_forward(board.room, 2 * reach_of(rule_of(board, content)), 0)[0]),
-            division_fixed_point(int(division_forward(board.room, 2 * 2 * h * h, 0)[0])),
-        ),
+def refused_turned_path() -> None:
+    """The tool's own step of a record a holder of the sign turns is gone with features/rotation (Part C, the local trial): the Link turn is the fold of the sign's pair in `plane.link_pairs` and the time turn the phase line (features/phase, `node.phased`), neither a shear; the tool laid such a record by `node.turned_ports` and the three shears, a path broken since before Part A (Worker B's finding), so it is refused by name here until the generator reads the plane's step itself."""
+    raise NotImplementedError(
+        "pixel_mode lays no record a holder of the sign turns: the engine's Link turn is the fold of the "
+        "sign's pair (plane.link_pairs, features/phase.fold) and its time turn the phase line (node.phased); "
+        "the tool's shear path is gone with features/rotation (Part C); lay the body in the plain universe "
+        "or declare it at one Node"
     )
-    if fine not in modes:
-        modes[fine] = turned_mode(board, content, angles, keep, seed, fine)
-    re, im, clock = modes[fine]
-    largest = max(int(np.abs(re).max()), int(np.abs(im).max()))
-    return (scaled(board, re, unit, largest), scaled(board, im, unit, largest)), clock
-
-
-def turned_spread(
-    board: Board,
-    content: np.ndarray,
-    angles: node.Angles,
-    clock: tuple[int, int],
-    re: np.ndarray,
-    im: np.ndarray,
-    where: np.ndarray,
-) -> int:
-    """The standing condition's largest departure over `where` in levels, on either line: |(M z)_i wall_i - numerator_i z_i| div wall_i, the turned read against 2 cos(Omega - theta_i) z_i at the clock pair (`time_factor`), a record standing in the content and the angles departing at most the roundings of a step at a Node (`ROUNDINGS_OF_A_STEP`)."""
-    reads, self_coefficient, wall = rule_of(board, content)
-    cosine, fine = clock
-    sine = division_fixed_point(fine * fine - cosine * cosine)
-    numerator, denominator = time_factor(angles[0], cosine, sine, fine, board.gamma)
-    arrived = turned_arrivals(board, re, im, angles[1])
-    worst = 0
-    for a, at in zip((re, im), arrived, strict=True):
-        total = np.asarray(rule3(reads, at, self_coefficient, wall, a, 0, 0)[0])
-        off = np.abs(total * denominator - numerator * a)
-        departure = np.asarray(rule3(NO_READ, NO_READ, off, denominator, 1, 0, 0)[0])
-        worst = max(worst, int(np.where(where, departure, 0).max()))
-    return worst
-
-
-def turned_period(
-    board: Board, content: np.ndarray, angles: node.Angles, pairs: Pairs, at: Axis
-) -> int | None:
-    """One whole period of a turned plane at a Node by the engine's own turned step (`turned_step`): the intervals from the real line's return upward through 0 at `at` to the next such return; None where the state repeats before the level returns twice."""
-    (re_now, re_before), (im_now, im_before) = pairs
-    remainders: list[np.ndarray] = [np.zeros(board.shape, dtype=board.kind) for _ in range(2)]
-    sign = 1 if re_now[at] > 0 else -1 if re_now[at] < 0 else 0
-    length, returned_once = 0, False
-    seen: set[bytes] = set()
-    while (key := digest(re_now, re_before, im_now, im_before)) not in seen:
-        seen.add(key)
-        re_next, im_next, remainders[0], remainders[1] = turned_step(
-            board,
-            content,
-            angles,
-            Record(re_now, re_before, remainders[0]),
-            Record(im_now, im_before, remainders[1]),
-        )
-        here = int(re_now[at])
-        if here > 0 and sign <= 0:
-            if returned_once:
-                return length
-            returned_once = True
-        if here:
-            sign = 1 if here > 0 else -1
-        if returned_once:
-            length += 1
-        re_now, re_before, im_now, im_before = re_next, re_now, im_next, im_now
-    return None
-
-
-def quarter_turned(
-    re: np.ndarray, im: np.ndarray, clock: tuple[int, int], sense: int, direction: int
-) -> tuple[np.ndarray, np.ndarray]:
-    """A plane's level pair turned by its own rotation Omega in the record's sense (ALGEBRA.md #the-paces, The sign is the rotation sense: the record of positive Wronskian has z_before = z_now e^(i Omega)): the turn by the tangent half-angle sin Omega / (1 + cos Omega) = sine / (fine + cosine), the three exact shears (features/rotation), `direction` 1 the level before (e^(i sense Omega) z) and -1 the level next (e^(-i sense Omega) z)."""
-    cosine, fine = clock
-    sine = division_fixed_point(fine * fine - cosine * cosine)
-    x, y = rotation.turned(re, im, direction * sense * sine, fine + cosine)
-    return np.asarray(x), np.asarray(y)
 
 
 def standing(
@@ -522,24 +352,7 @@ def standing(
         )
         window = None if reading is None else 2 * reading[0]
     else:
-        (now, im), turned_clock = turned_top_mode(board, content, angles, keep, shape_seed, scale, modes)
-        if not now[node_at] and not im[node_at]:
-            return None
-        if now[node_at] < 0:
-            now, im = -now, -im
-        if turned_spread(board, content, angles, turned_clock, now, im, region) > ROUNDINGS_OF_A_STEP:
-            return None
-        before, im_before = quarter_turned(now, im, turned_clock, sense, 1)
-        nxt, im_next = quarter_turned(now, im, turned_clock, sense, -1)
-        pairs, second, clock = (
-            [(now, before), (im, im_before)],
-            (im, im_before, im_next),
-            (2 * turned_clock[0], turned_clock[1]),
-        )
-        period = turned_period(board, content, angles, pairs, node_at)
-        window = (
-            None if period is None else 2 * period
-        )  # the period is [window, 2], as the real record's
+        refused_turned_path()
     if window is None:
         return None
     total_share = sum(
@@ -1208,10 +1021,8 @@ def standing_check(
     zero: np.ndarray = np.zeros(board.shape, dtype=board.kind)
     stepped = [step(board, content, now, before, zero.copy()) for now, before in pairs]
     allowed = ROUNDINGS_OF_A_STEP
-    if angles is not None:  # a turned record against its own clock, the two turns' floors allowed
-        re, im = (Record(now, before, zero.copy()) for now, before in pairs)
-        stepped = list(turned_step(board, content, angles, re, im)[:2])
-        allowed += SHEARS_OF_A_TURNED_STEP
+    if angles is not None:  # a record a holder of the sign turns: no step of the tool's own
+        refused_turned_path()
     for part, ((now, before), nxt) in enumerate(zip(pairs, stepped, strict=True)):
         median, read, worst = rotation_spread(now, before, nxt, nodes, clock if angles else None)
         at_centre = (

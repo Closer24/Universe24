@@ -2,10 +2,12 @@
 
 import ast
 import dataclasses
+import io
 import json
 import random
 import re
 import sys
+import tokenize
 from fractions import Fraction
 from pathlib import Path
 
@@ -302,3 +304,26 @@ def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_
         assert found.dtype == big.dtype and all(abs(e) <= Fraction(1, 2) for e in off)
     assert [paces.write_factor(9, 0, 0, 0, 0, gamma, k) for k in (2, 1)] == [0, 0]
     assert paces.turn_factor(gamma + 1, p[3], gamma) == ((gamma + 1) * p[3] + gamma // 2) // gamma
+
+
+SHEAR_NAMES = frozenset(
+    {"shear", "sheared", "turned", "turn_wall", "turn_guard", "TURNED_REACH", "TURNED_SLACK", "rotate"}
+)  # features/rotation's names and the shear's: gone with the module (Part C, Task 3)
+
+
+def test_no_shear_and_no_name_of_features_rotation_remains_in_src():
+    """Part C, Task 3: features/rotation is deleted, the time turn being the phase line (features/phase) and the Link turn the fold of the sign's pair (`plane.link_pairs`), the window's turn of the labels the hop with the carried division (`resonance.hopped`); so no module features/rotation stands under src, and no identifier `shear`, `sheared`, `turned`, `turn_wall`, `turn_guard`, `TURNED_REACH`, `TURNED_SLACK` or `rotate` is written in any .py of src outside a docstring or a comment (the tokens of the code, `tokenize`, strings and comments aside); `rotation` remains only as the family's declared key `act: rotation` and its loader field, `families[r].rotation`, which names the holder of the sign (the loader computes and holds it, so the name is allowed under loader/ and as an attribute elsewhere; the Boss renames it later if the owner wants). Every hit is named by file and line."""
+    assert not (SOURCE / "features" / "rotation").exists(), "features/rotation stands under src"
+    hits = []
+    for path in sorted(SOURCE.rglob("*.py")):
+        tokens = list(tokenize.generate_tokens(io.StringIO(path.read_text(encoding="utf-8")).readline))
+        name = path.relative_to(SOURCE).as_posix()
+        for index, token in enumerate(tokens):
+            if token.type != tokenize.NAME:
+                continue
+            attribute = index > 0 and tokens[index - 1].string == "."
+            if token.string in SHEAR_NAMES or (
+                token.string == "rotation" and not attribute and not name.startswith("loader/")
+            ):
+                hits.append(f"src/event_universe/{name}:{token.start[0]} {token.string}")
+    assert not hits, hits

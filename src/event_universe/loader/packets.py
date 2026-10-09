@@ -140,7 +140,7 @@ def packets_of(
         if not isinstance(phase, list) or len(phase) != 2:
             raise ValueError(f"{label}.phase must be [r, s], the phase 2 pi r / s")
         whole_turn = integer(phase[1], f"{label}.phase's s", 1)
-        turned = integer(phase[0], f"{label}.phase's r", 0, whole_turn - 1)
+        fraction = integer(phase[0], f"{label}.phase's r", 0, whole_turn - 1)
         crossing = tuple(name for name in AXES if name != packet["along"])
         sideways = keyed(packet.get("transverse", {}), f"{label}.transverse", crossing, ())
         across = []
@@ -175,7 +175,7 @@ def packets_of(
                 integer(packet["amplitude"], f"{label}.amplitude", 1, bound),
                 (spans[0], spans[1], spans[2]),
                 (widths[0], widths[1], widths[2]),
-                (turned, whole_turn),
+                (fraction, whole_turn),
                 (across[0], across[1], across[2]),
                 *levels,
                 weights_of(

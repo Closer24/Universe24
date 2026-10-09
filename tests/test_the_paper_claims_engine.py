@@ -365,7 +365,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             6: ("node.py", "held_write_at"),
             7: ("features/currents/__init__.py", "tension"),
             8: ("node.py", "sense_current_of"),
-            9: ("features/rotation/__init__.py", "turned"),
+            9: (
+                "node.py",
+                "phased",
+            ),  # the sign holder rotates the plane: the Link phase by its level (Part C)
             10: ("core/ports.py", "arrival"),
             11: ("reports.py", "entering"),
             12: ("credit.py", "quanta_through"),

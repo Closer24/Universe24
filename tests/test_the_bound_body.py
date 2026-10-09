@@ -3,7 +3,6 @@
 import json
 import math
 import shutil
-from itertools import product
 
 import numpy as np
 from scipy.sparse import diags, kronsum
@@ -15,7 +14,7 @@ from event_universe.bookings import booked_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward
-from event_universe.features import rotation
+from event_universe.features import phase
 from event_universe.features.start import scaled_source, unit_of
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import (
@@ -145,16 +144,21 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert now.any() and not np.array_equal(now, before) and (rest.remainder == light.remainder).all()
     assert np.array_equal(light.now - now, light.before - before)  # the packet kept, its rest static
     assert not rest.now.any() and board.record(CHARGE)[0].now[board.body_nodes(0)].min() > 0  # the rows
-    draw, shape = np.random.default_rng(1), (4, 3, 2)
-    x, y, numerator = (draw.integers(-size, size, shape) for size in (10**6, 10**6, 2 * GAMMA))
-    turned, angle = rotation.turned(x, y, numerator, wall := 2 * GAMMA), 2 * np.arctan(numerator / wall)
-    assert np.array_equal(rotation.turned(*turned, numerator, wall, -1), (x, y))
-    real = (x * np.cos(angle) - y * np.sin(angle), x * np.sin(angle) + y * np.cos(angle))
-    assert max(np.abs(turned[0] - real[0]).max(), np.abs(turned[1] - real[1]).max()) < 2
+    seed, unit = (
+        phase.seed(amplitude := phase.amplitude(GAMMA, 63), GAMMA),
+        amplitude,
+    )  # the phase line's pair
+    for count in (-6000, -777, 0, 1, 9408):  # the turn of a plane is the fold of the phase pair (Part C)
+        pair = phase.iterate(seed, count, GAMMA)
+        assert phase.iterate(pair, count, GAMMA, -1) == seed  # the reversal bit for bit
+        cosine, sine = (int(a) for a in phase.read(pair))
+        assert (
+            abs(cosine - unit * math.cos(count / GAMMA))
+            < 2 * GAMMA
+            > abs(sine - unit * math.sin(count / GAMMA))
+        )
     bound, k = amplitude_bound(TURNING, GAMMA, T, 63), math.pi / 6
-    assert rotation.turned(-1, -1, -1, 4) == (-3, -1) and bound > 0  # the witness, beyond twice A = 1
-    for x, y, n, w in product(range(-3, 4), range(-3, 4), range(-6, 7), range(1, 7)):
-        assert abs(n) > w or max(map(abs, rotation.turned(x, y, n, w))) <= 2 * max(abs(x), abs(y)) + 3
+    assert bound > 0
     for content in (
         0,
         GAMMA // 2,

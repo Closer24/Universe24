@@ -181,7 +181,7 @@ def phased(
             continue
         reader = families[readers[row][0]]
         potential = weight_of(index, reader) * row_levels(family, state.lines, 0, 1, row)
-        turned: list[Record] = []
+        phased_lines: list[Record] = []
         for axis in range(AXES):
             neighbour = arrival(potential, axis, 1, wrap)
             beyond = (
@@ -195,8 +195,8 @@ def phased(
                 gamma,
                 direction,
             )
-            turned += [Record(*(np.asarray(a) for a in line)) for line in pair]
-        found.append(turned)
+            phased_lines += [Record(*(np.asarray(a) for a in line)) for line in pair]
+        found.append(phased_lines)
     return found
 
 
