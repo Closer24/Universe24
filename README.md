@@ -59,7 +59,7 @@ To run the engine the paper reports, take the tag v1.1.0 (or the source archive 
 
 ## What you can build with it
 
-A world is a universe file and nothing else: the families with their bands and the holders they read, the bodies with their counts, the NodeDetectors as declared counting regions, the box's size and its axes, periodic, open or folded, and its walls with slits. The engine steps the file in bounded integers by the one line, Rule3; the clicks of the NodeDetectors are the measurement, and the look page draws every family's arrays frame by frame. Any experiment that can be declared as such a file and read through clicks can be run this way: a source, a wall with one slit or two or with any declared pattern of gaps, a body at rest (a moving body's lay is named in docs/ENGINE.md's section 10 as not built), light meeting matter. [docs/ENGINE.md](docs/ENGINE.md) states the file's rows (section 4), the output (section 5), how to run a world (section 6), how to add a family (section 7) and how to build an experiment with its blind row written before the first run (section 9); the two slits' folder is the worked example.
+A world is a universe file and nothing else: the families with their bands and the holders they read, the bodies with their counts, the NodeDetectors as declared counting regions, the box's size and its axes, periodic, open or folded, and its walls with slits. The engine steps the file in bounded integers by the one line, Rule3; the clicks of the NodeDetectors are the measurement, and the look page draws every family's arrays frame by frame. Any experiment that can be declared as such a file and read through clicks can be run this way: a source, a wall with one slit or two or with any declared pattern of gaps, a body at rest, light meeting matter. [docs/ENGINE.md](docs/ENGINE.md) states the file's rows (section 4), the output (section 5), how to run a world (section 6), how to add a family (section 7) and how to build an experiment with its blind row written before the first run (section 9); the two slits' folder is the worked example.
 
 The paper's method does not need a run: [tools/derivations/](tools/derivations/) computes the law's numbers from Rule3's line alone, and a new formula of the law is derived the same way, its line in [docs/ALGEBRA.md](docs/ALGEBRA.md) first.
 
@@ -67,7 +67,7 @@ The directions open to anyone: a larger Gamma with the one-way face (the paper's
 
 ## Open problems
 
-What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the moving body's lay declared and not built). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 
