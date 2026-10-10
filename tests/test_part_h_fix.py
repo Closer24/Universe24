@@ -5,12 +5,16 @@ import time
 import numpy as np
 
 from event_universe import meeting, node, world_files
+from event_universe.core import paces
+from event_universe.core.ports import arrival
+from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.reports import LOST_TO_LAY, LOST_TO_REGION, LOST_TO_TAKER, UNPAID_BY_REGION
 from event_universe.world_files import load_world
 from tests import laws
+from tests import test_part_c_phase_line as coulomb
 from tests.laws import EVENTS
-from tests.test_part_f_momentum import one_photon_board, world_beside
+from tests.test_part_f_momentum import GRAVITY, one_photon_board, world_beside
 from tests.test_part_g_recoil import RUN, emit_and_take_world, levels_floor
 
 ATOM_P = -32040  # one_photon's two-Node atom at count 1: the quarter turn's reach, the hands' 32,040
@@ -132,4 +136,87 @@ def test_a_region_taker_names_the_source_and_folds_nothing(tmp_path, monkeypatch
         f"Part H (MUST 5): the region takes at {t}: p = {click['momentum']}, source {click['source']}, "
         f"recoil {click['recoil']!r}, lost {click['lost']}; the body's P_x at {t - 1}, {t}, {t + 1}: "
         f"{read[t - 1]}, {read[t]}, {read[t + 1]} (unchanged); the emitter's outstanding count 0"
+    )
+
+
+def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_path, monkeypatch):
+    """MUST 3 (the mathematician's 1, the advisor's 4): `node.phased` counts n_ij per end, rounded(L(i) p_0(i), Gamma) - rounded(L(j) p_0(j), Gamma), the reader's clock at each end in one coefficient rounding (`paces.turn_factor`, kind D); at the vacuum's clock the count is L(i) - L(j) bit for bit. The Coulomb world (Part C) with a holder of the content added and the charged plane reading it: the holder's time level the ramp L = x; with the content at 0 the counts along x are -1 per Link (the ramp's difference), and with a uniform level 600 held on the content's row the clock p_0 falls below Gamma and the counts are the two ends' turn factors' difference, not the plain difference, read against the formula at every Link; the two-clock closure itself (the first build's charged body in one dimension) is not rerun here, OPEN."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe = {
+        "integers": coulomb.UNIVERSE["integers"],
+        "families": [
+            GRAVITY,
+            coulomb.UNIVERSE["families"][0],
+            dict(coulomb.UNIVERSE["families"][1], reads={"gravity": 1, "charge": 1}),
+        ],
+    }
+    monkeypatch.setattr(coulomb, "UNIVERSE", universe)
+    board = Lattice(load_world(coulomb.coulomb_world(tmp_path)))
+    gravity, charge, charged = (
+        next(i for i, f in enumerate(board.families) if f.name == name)
+        for name in ("gravity", "charge", "charged")
+    )
+    gamma = board.world.node_clock
+    level = np.arange(coulomb.CHAIN).reshape(board.shape).astype(board.kind)
+    line = board.states[charge].lines[0]
+    board.states[charge].lines[0] = node.Record(level, level.copy(), line.remainder)
+    found = {}
+    for content in (0, 600):
+        row = board.states[gravity].lines[0]
+        uniform = np.full(board.shape, content, dtype=board.kind)
+        board.states[gravity].lines[0] = node.Record(uniform, uniform.copy(), row.remainder)
+        rows = node.phased(charge, board.families, board.states, 1, board.wrap, gamma)
+        angles = node.turning(charged, board.families, board.states, 1, 0)
+        assert angles is not None
+        potential = np.asarray(angles[0], dtype=object)
+        clock = node.rulers(charged, board.families, board.states, 1, board.wrap, gamma, 0)[0]
+        clocked = paces.turn_factor(potential, clock, gamma)
+        plain = np.where(
+            arrival(np.ones_like(potential), 0, 1, board.wrap) == 0,
+            0,
+            potential - arrival(potential, 0, 1, board.wrap),
+        )
+        count = np.where(
+            arrival(np.ones_like(clocked), 0, 1, board.wrap) == 0,
+            0,
+            clocked - arrival(clocked, 0, 1, board.wrap),
+        )
+        row_index = next(
+            r
+            for r in range(len(board.states[charge].phases))
+            if r != 0 and rows[r] is not board.states[charge].phases[r]
+        )
+        cosine, sine = (
+            board.states[charge].phases[row_index][0],
+            board.states[charge].phases[row_index][1],
+        )
+        expected = phase.iterate(
+            ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
+            count,
+            gamma,
+            1,
+        )
+        for got, want in zip(rows[row_index][:2], expected, strict=True):
+            assert all(
+                np.array_equal(np.asarray(getattr(got, k)), np.asarray(w))
+                for k, w in zip(("now", "before", "remainder"), want, strict=True)
+            )
+        p_0 = int(np.asarray(clock).reshape(-1)[0]) if np.ndim(clock) else int(clock)
+        found[content] = (
+            p_0,
+            int(count.reshape(-1)[100]),
+            int(plain.reshape(-1)[100]),
+            int(clocked.reshape(-1)[100]),
+            int(potential.reshape(-1)[100]),
+        )
+    assert (
+        found[0][0] == gamma and found[0][1] == found[0][2] == -1
+    )  # the vacuum: L(i) - L(j), the ramp's -1
+    assert (
+        found[600][0] < gamma and found[600][3] != found[600][4]
+    )  # the level scaled by p_0 / Gamma per end
+    print(
+        f"Part H (MUST 3): the Link's count on the ramp L = x: at the content 0 the clock p_0 = {found[0][0]} = Gamma and n = {found[0][1]} (plain {found[0][2]}); "
+        f"at the uniform level 600 the clock p_0 = {found[600][0]}, the end's turn factor at the Node 100 {found[600][3]} against its level {found[600][4]}, "
+        f"n = {found[600][1]} (plain {found[600][2]}); the phase pairs after the act equal the formula's at every Node; the two-clock closure not rerun, OPEN"
     )

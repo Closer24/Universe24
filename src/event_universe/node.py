@@ -135,7 +135,7 @@ def rulers(
 def turning(
     index: int, families: Families, states: States, direction: int, record: int = 0
 ) -> Angles | None:
-    """The sign's levels a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase): from every holder it reads that declares the rotation, the time level SUM of (weight x the holder's time line summed over every row but the record's own, `row_levels`), the potential whose difference across each Link iterates the Link's phase pair (`phased`, n_ij = L(i) - L(j); no clock scaling: the angle per act is theta_0 = 1 / Gamma and the field the count of acts, the mathematician's item (g)), and each axis's SUM of (weight x the holder's odd line a over the same rows) as it is, at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
+    """The sign's levels a turned record reads (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase): from every holder it reads that declares the rotation, the time level SUM of (weight x the holder's time line summed over every row but the record's own, `row_levels`), the potential whose difference across each Link iterates the Link's phase pair (`phased`, n_ij = rounded(L(i) p_0(i), Gamma) - rounded(L(j) p_0(j), Gamma), each end's level at its own clock, L(i) - L(j) at the vacuum's clock, Part H, MUST 3: the angle per act is theta_0 = 1 / Gamma and the field the count of acts, the mathematician's item (g)), and each axis's SUM of (weight x the holder's odd line a over the same rows) as it is, at every Node, at the level the step in `direction` starts from (the same number read back, so the inverse is explicit); None where the family's record is not turned (`derived.turns`: a one-part family, or every holder acting on the pace)."""
     if not turns(families, index):
         return None
     reads = [r for r in families[index].reads if families[r.family].rotation]
@@ -166,7 +166,7 @@ def sign_holder(index: int, families: Families) -> int:
 def phased(
     index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
 ) -> list[list[Record]]:
-    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), and on each axis the Link's count n_ij = L(i) - L(i + a), the potential's difference across the Node's +a Link, 0 beyond a face (`arrival`), by which the Link's cosine and sine lines take |n_ij| rotation acts in n's sense (the pair then at X e^(i SUM_t n_ij theta_0), the temporal gauge's Link phase), forward; at `direction` -1 the same acts back, bit for bit, the inverse's act once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the state untouched."""
+    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), each end's level scaled by its own clock, the reader's p_0 at that Node over Gamma in one coefficient rounding half up (`paces.turn_factor`, kind D; Part H, MUST 3, both hands' lines of 2026-10-10 on the whole trial: the turn per proper interval, ALGEBRA.md, The turn per proper interval; the first build's time turn carried L p_0 / Gamma at the Node, and in the temporal gauge the Link's phase per interval is the two ends' difference), so that on each axis the Link's count is n_ij = rounded(L(i) p_0(i), Gamma) - rounded(L(i + a) p_0(i + a), Gamma), L(i) - L(i + a) exactly at the vacuum's clock p_0 = Gamma (flat worlds bit for bit), 0 beyond a face (`arrival`), by which the Link's cosine and sine lines take |n_ij| rotation acts in n's sense (the pair then at X e^(i SUM_t n_ij theta_0), the temporal gauge's Link phase; n_ji = -n_ij by construction, the pair Hermitian and the count exact), forward; at `direction` -1 the same acts back, bit for bit, the inverse's act once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the state untouched."""
     family, state = families[index], states[index]
     readers = {
         row_of(families, reader, record): (reader, record)
@@ -179,15 +179,20 @@ def phased(
         if row == 0 or row not in readers:
             found.append(list(lines))
             continue
-        reader = families[readers[row][0]]
+        reader_index, reader_record = readers[row]
+        reader = families[reader_index]
         potential = weight_of(index, reader) * row_levels(family, state.lines, 0, 1, row)
+        clock = rulers(reader_index, families, states, 1, wrap, gamma, reader_record)[0]
+        clocked = paces.turn_factor(
+            potential, clock, gamma
+        )  # per end, L p_0 / Gamma rounded once (kind D)
         phased_lines: list[Record] = []
         for axis in range(AXES):
-            neighbour = arrival(potential, axis, 1, wrap)
+            neighbour = arrival(clocked, axis, 1, wrap)
             beyond = (
                 arrival(np.ones_like(np.asarray(potential)), axis, 1, wrap) == 0
             )  # the Link beyond a face
-            count = np.where(beyond, 0, potential - neighbour)
+            count = np.where(beyond, 0, clocked - neighbour)
             cosine, sine = lines[2 * axis], lines[2 * axis + 1]
             pair = phase.iterate(
                 ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
