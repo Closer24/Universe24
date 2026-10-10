@@ -20,6 +20,10 @@
   "beam_past_mass": {
    "quanta": 10000
   },
-  "beam_alone": {}
+  "beam_alone": {},
+  "pass_g10": {
+   "quanta": 10000
+  },
+  "pass_alone": {}
  }
 }
