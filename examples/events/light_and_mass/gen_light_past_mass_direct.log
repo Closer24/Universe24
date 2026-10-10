@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/home/user/Universe24/tools/pixel_mode.py", line 1716, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/Universe24/tools/pixel_mode.py", line 1701, in main
+    mode = pixel_mode(document, senses, designed, pixels)
+  File "/home/user/Universe24/tools/pixel_mode.py", line 1599, in pixel_mode
+    laid, record, region, _content, pairs_kept, trajectory = unit_fixed_point(
+                                                             ~~~~~~~~~~~~~~~~^
+        *arguments, centre, quanta, counts, sense, lay, weights
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/Universe24/tools/pixel_mode.py", line 1004, in unit_fixed_point
+    record, pairs, found, turned_by = one_pass(
+                                      ~~~~~~~~^
+        board,
+        ^^^^^^
+    ...<11 lines>...
+        weights,
+        ^^^^^^^^
+    )
+    ^
+  File "/home/user/Universe24/tools/pixel_mode.py", line 951, in one_pass
+    record = scaled_record(
+        board, content, angles, centre, own, region, quanta, int(counts[centre]), keep, sense, squares
+    )
+  File "/home/user/Universe24/tools/pixel_mode.py", line 791, in scaled_record
+    if measure(stands(middle)) < target:
+               ~~~~~~^^^^^^^^
+  File "/home/user/Universe24/tools/pixel_mode.py", line 773, in stands
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: the record of the body of 10000 quanta about the Node [30, 20, 0] scaled at 7750 does not stand: the top mode of the read in this content is no one rotation across the region within the roundings of a step, or its centre's level never returns (the generator is Rule3)
+
+real	0m5.577s
+user	0m5.677s
+sys	0m0.024s
+exit 1

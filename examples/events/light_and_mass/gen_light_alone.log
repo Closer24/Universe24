@@ -1,0 +1,6 @@
+{"family": "charge", "pair": [6000, 6000], "amplitude": 931, "count": 289, "nodes": 56}
+
+real	0m0.269s
+user	0m0.296s
+sys	0m0.053s
+exit 0

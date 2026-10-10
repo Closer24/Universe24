@@ -1,0 +1,30 @@
+LATTICE the body about [20, 15, 0], round 1: the content at the centre 198 -> 287, the count 1112 -> 589 of 10415, the clock [6430, 4745] = 1.3551
+LATTICE the body about [20, 15, 0], round 2: the content at the centre 287 -> 188, the count 850 -> 337 of 9631, the clock [5047, 3664] = 1.3775
+LATTICE the body about [20, 15, 0], round 3: the content at the centre 188 -> 172, the count 593 -> 233 of 9949, the clock [4173, 3068] = 1.3602
+LATTICE the body about [20, 15, 0], round 4: the content at the centre 172 -> 152, the count 413 -> 175 of 9937, the clock [3626, 2669] = 1.3586
+LATTICE the body about [20, 15, 0], round 5: the content at the centre 152 -> 140, the count 294 -> 137 of 9939, the clock [3217, 2373] = 1.3557
+LATTICE the body about [20, 15, 0], round 6: the content at the centre 140 -> 130, the count 215 -> 113 of 9971, the clock [2921, 2157] = 1.3542
+LATTICE the body about [20, 15, 0], round 7: the content at the centre 130 -> 123, the count 164 -> 96 of 9964, the clock [2701, 1997] = 1.3525
+LATTICE the body about [20, 15, 0], round 8: the content at the centre 123 -> 117, the count 130 -> 84 of 9980, the clock [2522, 1866] = 1.3516
+LATTICE the body about [20, 15, 0], round 9: the content at the centre 117 -> 113, the count 107 -> 75 of 9989, the clock [2384, 1765] = 1.3507
+LATTICE the body about [20, 15, 0], round 10: the content at the centre 113 -> 109, the count 91 -> 68 of 9968, the clock [2271, 1682] = 1.3502
+LATTICE the body about [20, 15, 0], round 11: the content at the centre 109 -> 107, the count 79 -> 63 of 9993, the clock [2181, 1616] = 1.3496
+LATTICE the body about [20, 15, 0], round 12: the content at the centre 107 -> 104, the count 71 -> 58 of 9984, the clock [2109, 1563] = 1.3493
+LATTICE the body about [20, 15, 0], round 13: the content at the centre 104 -> 103, the count 64 -> 55 of 9997, the clock [2052, 1521] = 1.3491
+LATTICE the body about [20, 15, 0], round 14: the content at the centre 103 -> 101, the count 59 -> 53 of 9987, the clock [2003, 1485] = 1.3488
+LATTICE the body about [20, 15, 0], round 15: the content at the centre 101 -> 100, the count 56 -> 50 of 9992, the clock [1960, 1453] = 1.3489
+LATTICE the body about [20, 15, 0], round 16: the content at the centre 100 -> 99, the count 53 -> 49 of 9989, the clock [1930, 1431] = 1.3487
+LATTICE the body about [20, 15, 0], round 17: the content at the centre 99 -> 99, the count 51 -> 48 of 10004, the clock [1906, 1414] = 1.3479
+LATTICE the body about [20, 15, 0], round 18: the content at the centre 99 -> 98, the count 49 -> 47 of 9993, the clock [1891, 1403] = 1.3478
+LATTICE the body about [20, 15, 0], round 19: the content at the centre 98 -> 98, the count 48 -> 46 of 10006, the clock [1881, 1395] = 1.3484
+LATTICE the body about [20, 15, 0], round 20: the content at the centre 98 -> 98, the count 47 -> 46 of 10010, the clock [1874, 1390] = 1.3482
+LATTICE the body about [20, 15, 0], round 21: the content at the centre 98 -> 98, the count 46 -> 46 of 10002, the clock [1870, 1387] = 1.3482
+LATTICE the body about [20, 15, 0], round 22: the content at the centre 98 -> 98, the count 46 -> 46 of 10006, the clock [1871, 1388] = 1.3480
+LATTICE the body about [20, 15, 0], round 23: the content at the centre 98 -> 98, the count 46 -> 46 of 10002, the clock [1871, 1388] = 1.3480
+LATTICE the lay about [20, 15, 0], level pair 0: stepped once in its start's content the rotation (next + before) / now reads 1.3479 (the median over 839 Nodes), at the centre 1.3480, the largest departure 1.27 of the rounding 1 / |now|; the mode file's clock [1871, 1388] = 1.3480
+{"family": "matter", "pair": [4000, 6000], "count": 10000, "seed": 1388, "carried": 10002, "period": [16, 2], "amplitude": 1388, "clock": [1871, 1388], "nodes": 1271}
+
+real	1m4.470s
+user	1m4.012s
+sys	0m0.020s
+exit 0

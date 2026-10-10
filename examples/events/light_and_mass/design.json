@@ -1,0 +1,25 @@
+{
+ "comment": "scratch: a matter body bound by gravity alone, three level weights",
+ "worlds": {
+  "body_g1000": {
+   "quanta": 10000
+  },
+  "body_g100": {
+   "quanta": 10000
+  },
+  "body_g10": {
+   "quanta": 10000
+  },
+  "light_past_mass": {
+   "quanta": 10000
+  },
+  "light_alone": {},
+  "light_past_mass_direct": {
+   "quanta": 10000
+  },
+  "beam_past_mass": {
+   "quanta": 10000
+  },
+  "beam_alone": {}
+ }
+}
