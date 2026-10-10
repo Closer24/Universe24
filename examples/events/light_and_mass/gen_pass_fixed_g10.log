@@ -1,0 +1,9 @@
+LATTICE the body about [20, 15, 0], round 1: the content at the centre 1234 -> 657, the count 1112 -> 1004 of 8417, the clock [8212, 5475] = 1.4999
+LATTICE the body about [20, 15, 0], round 2: the content at the centre 657 -> 717, the count 1058 -> 596 of 10355, the clock [6128, 4311] = 1.4215
+LATTICE the body about [20, 15, 0], round 3: the content at the centre 717 -> 622, the count 827 -> 443 of 9697, the clock [5466, 3797] = 1.4396
+LATTICE the body about [20, 15, 0], round 4: the content at the centre 622 -> 598, the count 635 -> 375 of 9944, the clock [5018, 3521] = 1.4252
+LATTICE the body about [20, 15, 0], round 5: the content at the centre 598 -> 575, the count 505 -> 335 of 9944, the clock [4762, 3348] = 1.4223
+LATTICE the body about [20, 15, 0], round 6: the content at the centre 575 -> 562, the count 420 -> 310 of 9965, the clock [4590, 3234] = 1.4193
+LATTICE the body about [20, 15, 0], round 7: the content at the centre 562 -> 553, the count 365 -> 296 of 9975, the clock [4485, 3164] = 1.4175
+LATTICE the body about [20, 15, 0], round 8: the content at the centre 553 -> 548, the count 330 -> 286 of 9991, the clock [4415, 3117] = 1.4164
+LATTICE the body about [20, 15, 0], round 9: the content at the centre 548 -> 545, the count 308 -> 281 of 9992, the clock [4377, 3091] = 1.4160
