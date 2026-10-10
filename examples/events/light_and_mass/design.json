@@ -28,6 +28,9 @@
   "pass_fixed_g10": {
    "quanta": 10000
   },
-  "pass_fixed_alone": {}
+  "pass_fixed_alone": {},
+  "assembled_g10": {
+   "quanta": 10000
+  }
  }
 }
