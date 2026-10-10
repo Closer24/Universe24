@@ -2,7 +2,7 @@
 
 Contributions are welcome: a bug found in the implementation, a derivation checked, a world built by the paper's method, a formula tested against a measurement. The way in is a fork, a branch and a pull request to `main`, which takes a pull request only, with the CI checks green and one review. The paper's text in `paper/` is the version of record, and changes to it are the author's.
 
-Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md), described in [docs/ENGINE.md](docs/ENGINE.md). The engine the paper reports is the tag v1.1.0 (the commit 441b2399's engine plus the version line), run from the tag: the lines of the law entered after the freeze are not in it, and the paper's two slits' run alone is the implementation's. main carries the engine in progress; a change of the engine enters only as the implementation of a law line of [docs/ALGEBRA.md](docs/ALGEBRA.md), with the three tests (generic, vector, local), by pull request. A contribution is read against the law.
+Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md), described in [docs/ENGINE.md](docs/ENGINE.md). The engine the paper reports is the tag v1.1.0 (the commit 441b2399's engine plus the version line), run from the tag: the lines of the law entered after the freeze are not in it, and the paper's two slits' run alone is the implementation's. main carries the engine V2 ([docs/ENGINE.md](docs/ENGINE.md); what changed from the tag in [CHANGELOG.md](CHANGELOG.md)); a change of the engine enters only as the implementation of a law line of [docs/ALGEBRA.md](docs/ALGEBRA.md), with the three tests (generic, vector, local), by pull request. A contribution is read against the law.
 
 ## The ground rules
 
