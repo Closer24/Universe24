@@ -1,0 +1,5966 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+6
+]
+],
+"date-time": "2026-10-06T20:02:01Z",
+"timestamp": 1791316921162,
+"version": "4.3.1"
+},
+"reference-count": 49,
+"publisher": "American Physical Society (APS)",
+"issue": "7",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2024,
+8,
+15
+]
+],
+"date-time": "2024-08-15T00:00:00Z",
+"timestamp": 1723680000000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "https://link.aps.org/licenses/aps-default-license"
+}
+],
+"funder": [
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"U1831208"
+],
+"award-info": [
+{
+"award-number": [
+"U1831208"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"12005246"
+],
+"award-info": [
+{
+"award-number": [
+"12005246"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"12173039"
+],
+"award-info": [
+{
+"award-number": [
+"12173039"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"12321003"
+],
+"award-info": [
+{
+"award-number": [
+"12321003"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"12373053"
+],
+"award-info": [
+{
+"award-number": [
+"12373053"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001809",
+"name": "National Natural Science Foundation of China",
+"doi-asserted-by": "publisher",
+"award": [
+"12375108"
+],
+"award-info": [
+{
+"award-number": [
+"12375108"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001809",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004829",
+"name": "Department of Science and Technology of Sichuan Province",
+"doi-asserted-by": "publisher",
+"award": [
+"2021YFSY0030"
+],
+"award-info": [
+{
+"award-number": [
+"2021YFSY0030"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100004829",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100018527",
+"name": "Key Research Program of Frontier Science, Chinese Academy of Sciences",
+"doi-asserted-by": "publisher",
+"award": [
+"ZDBS-LY-7014"
+],
+"award-info": [
+{
+"award-number": [
+"ZDBS-LY-7014"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100018527",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004608",
+"name": "Natural Science Foundation of Jiangsu Province",
+"doi-asserted-by": "publisher",
+"award": [
+"BK20221562"
+],
+"award-info": [
+{
+"award-number": [
+"BK20221562"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100004608",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004192",
+"name": "National Science and Technology Development Agency",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100004192",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004704",
+"name": "National Research Council of Thailand",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100004704",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"name": "Strategic Priority Research Program of the Chinese Academy of Sciences",
+"award": [
+"XDB0550400"
+],
+"award-info": [
+{
+"award-number": [
+"XDB0550400"
+]
+}
+]
+},
+{
+"name": "Project for Young Scientists in Basic Research of Chinese Academy of Sciences",
+"award": [
+"YSBR-061"
+],
+"award-info": [
+{
+"award-number": [
+"YSBR-061"
+]
+}
+]
+},
+{
+"name": "High-Potential Research Team",
+"award": [
+"N42A650868"
+],
+"award-info": [
+{
+"award-number": [
+"N42A650868"
+]
+}
+]
+}
+],
+"content-domain": {
+"domain": [
+"journals.aps.org"
+],
+"crossmark-restriction": true
+},
+"short-container-title": [
+"Phys. Rev. Lett."
+],
+"accepted": {
+"date-parts": [
+[
+2024,
+6,
+27
+]
+]
+},
+"DOI": "10.1103/physrevlett.133.071501",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2024,
+8,
+15
+]
+],
+"date-time": "2024-08-15T10:07:02Z",
+"timestamp": 1723716422000
+},
+"update-policy": "https://doi.org/10.1103/crossmark-policy",
+"source": "Crossref",
+"is-referenced-by-count": 44,
+"title": [
+"Stringent Tests of Lorentz Invariance Violation from LHAASO Observations of GRB 221009A"
+],
+"prefix": "10.1103",
+"volume": "133",
+"author": [
+{
+"given": "Zhen",
+"family": "Cao",
+"sequence": "first",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Aharonian",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Dublin Institute for Advanced Studies"
+},
+{
+"name": "Max-Planck-Institut for Nuclear Physics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"family": "Axikegu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. X.",
+"family": "Bai",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. W.",
+"family": "Bao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Bastieri",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. J.",
+"family": "Bi",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. J.",
+"family": "Bi",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Bian",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A. V.",
+"family": "Bukevich",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q.",
+"family": "Cao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. Y.",
+"family": "Cao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Zhe",
+"family": "Cao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Chang",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. F.",
+"family": "Chang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A. M.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E. S.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. X.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhejiang Laboratory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Liang",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Lin",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Long",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. J.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. L.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q. H.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. H.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. Z.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T. L.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Key Laboratory of Cosmic Rays (Tibet University)"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Chen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Cheng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. D.",
+"family": "Cheng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. Y.",
+"family": "Cui",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. W.",
+"family": "Cui",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. H.",
+"family": "Cui",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. D.",
+"family": "Cui",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. Z.",
+"family": "Dai",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. L.",
+"family": "Dai",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. G.",
+"family": "Dai",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"family": "Danzengluobu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Key Laboratory of Cosmic Rays (Tibet University)"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. Q.",
+"family": "Dong",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K. K.",
+"family": "Duan",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. H.",
+"family": "Fan",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. Z.",
+"family": "Fan",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Fang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. H.",
+"family": "Fang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhejiang Laboratory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Fang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. F.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. H.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. T.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhejiang Laboratory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. L.",
+"family": "Feng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Key Laboratory of Cosmic Rays (Tibet University)"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Gabici",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Université Paris Cité"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Gao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. D.",
+"family": "Gao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q.",
+"family": "Gao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Key Laboratory of Cosmic Rays (Tibet University)"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Gao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. K.",
+"family": "Gao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. M.",
+"family": "Ge",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. S.",
+"family": "Geng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Giacinti",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G. H.",
+"family": "Gong",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Tsinghua University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q. B.",
+"family": "Gou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. H.",
+"family": "Gu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F. L.",
+"family": "Guo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. L.",
+"family": "Guo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. Q.",
+"family": "Guo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. Y.",
+"family": "Guo",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. A.",
+"family": "Han",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhengzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Hasan",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. H.",
+"family": "He",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. N.",
+"family": "He",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. Y.",
+"family": "He",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "He",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. K.",
+"family": "Hor",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. W.",
+"family": "Hou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Hou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X.",
+"family": "Hou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. B.",
+"family": "Hu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q.",
+"family": "Hu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. C.",
+"family": "Hu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "China Center of Advanced Science and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. H.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T. Q.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. J.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. T.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. Y.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Huang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. L.",
+"family": "Ji",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. Y.",
+"family": "Jia",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Jia",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Jiang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. W.",
+"family": "Jiang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. J.",
+"family": "Jiang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Jin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. M.",
+"family": "Kang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sichuan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "I.",
+"family": "Karpikov",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Kuleshov",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Kurinov",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. B.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. M.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Cheng",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Cong",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. B.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. C.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Jian",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Jie",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. D.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. L.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. L.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. R.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Xin",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. Z.",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Zhe",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Zhuo",
+"family": "Li",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Peking University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E. W.",
+"family": "Liang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangxi University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. F.",
+"family": "Liang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangxi University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. J.",
+"family": "Lin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. B.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. D.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhengzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. L.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. Y.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Key Laboratory of Cosmic Rays (Tibet University)"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R. Y.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. M.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. N.",
+"family": "Liu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Tsinghua University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q.",
+"family": "Luo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Luo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. K.",
+"family": "Lv",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. Q.",
+"family": "Ma",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Peking University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. L.",
+"family": "Ma",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. H.",
+"family": "Ma",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. R.",
+"family": "Mao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z.",
+"family": "Min",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Mitthumsiri",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Mahidol University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. J.",
+"family": "Mu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Zhengzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. C.",
+"family": "Nan",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Neronov",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Université Paris Cité"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. J.",
+"family": "Ou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Pattarakijwanich",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Mahidol University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. Y.",
+"family": "Pei",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. C.",
+"family": "Qi",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. Y.",
+"family": "Qi",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. Q.",
+"family": "Qiao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. J.",
+"family": "Qin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Raza",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Ruffolo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Mahidol University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Sáiz",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Mahidol University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Saeed",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Semikoz",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Université Paris Cité"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Shao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "O.",
+"family": "Shchegolev",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+},
+{
+"name": "Moscow Institute of Physics and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. D.",
+"family": "Sheng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F. W.",
+"family": "Shu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanchang University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. C.",
+"family": "Song",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Peking University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Yu. V.",
+"family": "Stenkin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+},
+{
+"name": "Moscow Institute of Physics and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Stepanov",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Institute for Nuclear Research of Russian Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Su",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. X.",
+"family": "Sun",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q. N.",
+"family": "Sun",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. N.",
+"family": "Sun",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangxi University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. B.",
+"family": "Sun",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Takata",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Huazhong University of Science and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P. H. T.",
+"family": "Tam",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q. W.",
+"family": "Tang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanchang University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Tang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. B.",
+"family": "Tang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. W.",
+"family": "Tian",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. B.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G. W.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. G.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. H.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. C.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Kai",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Kai",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Huazhong University of Science and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. P.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. Y.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P. H.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. G.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangxi University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. Y.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. D.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. J.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. H.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sichuan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. X.",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Zhen",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Zheng",
+"family": "Wang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. M.",
+"family": "Wei",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"ORCID": "https://orcid.org/0000-0003-0162-2488",
+"authenticated-orcid": true,
+"given": "J. J.",
+"family": "Wei",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. J.",
+"family": "Wei",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Wen",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. Y.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. R.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q. W.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Huazhong University of Science and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. F.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. S.",
+"family": "Wu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. Q.",
+"family": "Xi",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Xia",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G. M.",
+"family": "Xiang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. X.",
+"family": "Xiao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Xiao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. L.",
+"family": "Xin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Xing",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. R.",
+"family": "Xiong",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z.",
+"family": "Xiong",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. L.",
+"family": "Xu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R. F.",
+"family": "Xu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R. X.",
+"family": "Xu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Peking University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. L.",
+"family": "Xu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sichuan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Xue",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. H.",
+"family": "Yan",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. Z.",
+"family": "Yan",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Yan",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. W.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sichuan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. Y.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F. F.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. L.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sun Yat-sen University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M. J.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R. Z.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. X.",
+"family": "Yang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Guangzhou University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. H.",
+"family": "Yao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. G.",
+"family": "Yao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. Q.",
+"family": "Yin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Yin",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. H.",
+"family": "You",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Z. Y.",
+"family": "You",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. H.",
+"family": "Yu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Q.",
+"family": "Yuan",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Yue",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. D.",
+"family": "Zeng",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T. X.",
+"family": "Zeng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Zeng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Zha",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. B.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. M.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H. Y.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. L.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Li",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P. F.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Yunnan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P. P.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. B.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. R.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. S.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. P.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. F.",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Yi",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Yong",
+"family": "Zhang",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+},
+{
+"name": "University of Science and Technology of China"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L. Z.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Hebei Normal University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S. P.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. H.",
+"family": "Zhao",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Zheng",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W. J.",
+"family": "Zhong",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Jiao Tong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J. N.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shanghai Astronomical Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanchang University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Nanjing University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Sichuan University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. X.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X. X.",
+"family": "Zhou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B. Y.",
+"family": "Zhu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "University of Science and Technology of China"
+},
+{
+"id": [
+{
+"id": "https://ror.org/02eb4t121",
+"id-type": "ROR",
+"asserted-by": "publisher"
+}
+],
+"name": "Purple Mountain Observatory"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C. G.",
+"family": "Zhu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Shandong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F. R.",
+"family": "Zhu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Southwest Jiaotong University"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Zhu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K. J.",
+"family": "Zhu",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "University of Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+},
+{
+"name": "State Key Laboratory of Particle Detection and Electronics"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y. C.",
+"family": "Zou",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Huazhong University of Science and Technology"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "X.",
+"family": "Zuo",
+"sequence": "additional",
+"affiliation": [
+{
+"name": "Chinese Academy of Sciences"
+},
+{
+"name": "Tianfu Cosmic Ray Research Center"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"name": "The LHAASO Collaboration",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+2024,
+8,
+15
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevLett.133.071501Cc1R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/RevModPhys.83.11"
+},
+{
+"key": "PhysRevLett.133.071501Cc2R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.39.683"
+},
+{
+"key": "PhysRevLett.133.071501Cc3R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1142/S0217751X97000566"
+},
+{
+"key": "PhysRevLett.133.071501Cc4R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1023/A:1026720723556"
+},
+{
+"key": "PhysRevLett.133.071501Cc5R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/418034a"
+},
+{
+"key": "PhysRevLett.133.071501Cc6R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.88.190403"
+},
+{
+"key": "PhysRevLett.133.071501Cc7R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.65.103509"
+},
+{
+"key": "PhysRevLett.133.071501Cc8R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.12942/lrr-2005-5"
+},
+{
+"key": "PhysRevLett.133.071501Cc9R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.physletb.2009.07.062"
+},
+{
+"key": "PhysRevLett.133.071501Cc10R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.12942/lrr-2013-5"
+},
+{
+"key": "PhysRevLett.133.071501Cc11R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0034-4885/77/6/062901"
+},
+{
+"key": "PhysRevLett.133.071501Cc12R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1007/s11467-021-1049-x"
+},
+{
+"key": "PhysRevLett.133.071501Cc13R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3390/universe8060323"
+},
+{
+"key": "PhysRevLett.133.071501Cc14R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.ppnp.2022.103948"
+},
+{
+"key": "PhysRevLett.133.071501Cc16R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/31647"
+},
+{
+"key": "PhysRevLett.133.071501Cc17R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1475-7516/2008/01/031"
+},
+{
+"key": "PhysRevLett.133.071501Cc18R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/201833910"
+},
+{
+"key": "PhysRevLett.133.071501Cc19R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.1169101"
+},
+{
+"key": "PhysRevLett.133.071501Cc20R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nature08574"
+},
+{
+"key": "PhysRevLett.133.071501Cc21R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.87.122001"
+},
+{
+"key": "PhysRevLett.133.071501Cc22R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.99.083009"
+},
+{
+"key": "PhysRevLett.133.071501Cc23R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.125.021301"
+},
+{
+"key": "PhysRevLett.133.071501Cc24R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.adg9328"
+},
+{
+"key": "PhysRevLett.133.071501Cc25R1",
+"first-page": "1",
+"volume": "32648",
+"author": "A. de Ugarte Postigo",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc27R1",
+"first-page": "1",
+"volume": "32636",
+"author": "P. Veres",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc28R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/2041-8213/ace5b4"
+},
+{
+"key": "PhysRevLett.133.071501Cc29R1",
+"first-page": "1",
+"volume": "32637",
+"author": "E. Bissaldi",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc30R1",
+"first-page": "1",
+"volume": "32658",
+"author": "R. Pillera",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc31R1",
+"first-page": "1",
+"volume": "32632",
+"author": "S. Dichiara",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc32R1",
+"first-page": "1",
+"volume": "32688",
+"author": "H. A. Krimm",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc33R1",
+"first-page": "1",
+"volume": "32650",
+"author": "A. Ursi",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc34R1",
+"first-page": "1",
+"volume": "32657",
+"author": "G. Piano",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc35R1",
+"first-page": "1",
+"volume": "32660",
+"author": "D. Gotz",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc36R1",
+"first-page": "1",
+"volume": "32661",
+"author": "H. Xiao",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc37R1",
+"first-page": "1",
+"volume": "32663",
+"author": "I. Lapshov",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc38R1",
+"first-page": "1",
+"volume": "32668",
+"author": "D. Frederiks",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc39R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/2041-8213/acd1eb"
+},
+{
+"key": "PhysRevLett.133.071501Cc40R1",
+"first-page": "1",
+"volume": "32685",
+"author": "J. Ripa",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc41R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/202346128"
+},
+{
+"key": "PhysRevLett.133.071501Cc42R1",
+"first-page": "1",
+"volume": "32746",
+"author": "L. J. Mitchell",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc43R1",
+"first-page": "1",
+"volume": "32751",
+"author": "J. C. Liu",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc45R1",
+"first-page": "1",
+"volume": "32973",
+"author": "K.-K. Duan",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc46R1",
+"first-page": "1",
+"volume": "32677",
+"author": "Y. Huang",
+"year": "2022",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevLett.133.071501Cc47R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1674-1137/ac3fa6"
+},
+{
+"key": "PhysRevLett.133.071501Cc48R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1093/mnras/stab2393"
+},
+{
+"key": "PhysRevLett.133.071501Cc50R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/711/2/1073"
+},
+{
+"key": "PhysRevLett.133.071501Cc51R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4357/aada16"
+},
+{
+"key": "PhysRevLett.133.071501Cc52R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/0010-4655(75)90039-9"
+},
+{
+"key": "PhysRevLett.133.071501Cc54R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.109.L081501"
+}
+],
+"container-title": [
+"Physical Review Letters"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://link.aps.org/article/10.1103/PhysRevLett.133.071501",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevLett.133.071501/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+1,
+2
+]
+],
+"date-time": "2025-01-02T20:12:28Z",
+"timestamp": 1735848748000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevLett.133.071501"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2024,
+8,
+15
+]
+]
+},
+"references-count": 49,
+"journal-issue": {
+"issue": "7",
+"published-print": {
+"date-parts": [
+[
+2024,
+8
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physrevlett.133.071501",
+"relation": {},
+"ISSN": [
+"0031-9007",
+"1079-7114"
+],
+"issn-type": [
+{
+"value": "0031-9007",
+"type": "print"
+},
+{
+"value": "1079-7114",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2024,
+8,
+15
+]
+]
+},
+"article-number": "071501"
+}
+}

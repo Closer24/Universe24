@@ -1,0 +1,88 @@
+{
+ "click_tick": 96,
+ "taker": "body 1",
+ "q_0": 6000,
+ "piece_momentum_read_at_the_taker": [
+  33812,
+  34349,
+  13418
+ ],
+ "fan": [
+  4280,
+  -1124,
+  0
+ ],
+ "twist": [
+  9424,
+  0,
+  0
+ ],
+ "quarter_turn_acts": 9424,
+ "gained_along_board": 31560,
+ "short_of_the_piece": 2252,
+ "taker_lines_along_board": [
+  0,
+  0,
+  15780,
+  15780
+ ],
+ "taker_along_board": 31560,
+ "light_along_board": {
+  "0": 3480,
+  "96": 4280,
+  "120": -26406,
+  "172": -46774
+ },
+ "light_along_board_before_click": 3500,
+ "atoms_along_board": {
+  "0": 0,
+  "96": 31560,
+  "120": 31560,
+  "172": 31932
+ },
+ "light_and_atoms_along_board_at_end": -14842,
+ "light_at_end_plus_taker_as_written": -15214,
+ "twin_light_along_board": {
+  "0": 3480,
+  "96": 4280,
+  "120": 2936,
+  "172": 872
+ },
+ "light_and_taker_at_120": 5154,
+ "halves_alone_along_board": {
+  "0": {
+   "0": 37952,
+   "96": 39272
+  },
+  "1": {
+   "0": -36640,
+   "96": -38584
+  }
+ },
+ "linear_form_along_board": {
+  "both": {
+   "0": 3480.0,
+   "48": 3480.0,
+   "96": 3480.0
+  },
+  "half 0": {
+   "0": 37952.0,
+   "48": 37952.0,
+   "96": 37952.0
+  },
+  "half 1": {
+   "0": -36640.0,
+   "48": -36640.0,
+   "96": -36640.0
+  }
+ },
+ "cross_terms_at_start": 2168,
+ "gap_at_click_tick": 3592,
+ "taken_half": "0",
+ "taker_over_taken_half": 0.804,
+ "reference_scale": 4096,
+ "lost": [
+  "P lost to the declaration",
+  "recoil lost to the lay"
+ ]
+}

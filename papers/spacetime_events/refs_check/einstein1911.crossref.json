@@ -1,0 +1,256 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+6
+]
+],
+"date-time": "2026-10-06T17:54:23Z",
+"timestamp": 1791309263805,
+"version": "4.3.1"
+},
+"reference-count": 7,
+"publisher": "Wiley",
+"issue": "10",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2006,
+3,
+14
+]
+],
+"date-time": "2006-03-14T00:00:00Z",
+"timestamp": 1142294400000
+},
+"content-version": "vor",
+"delay-in-days": 34771,
+"URL": "http://onlinelibrary.wiley.com/termsAndConditions#vor"
+}
+],
+"content-domain": {
+"domain": [
+"onlinelibrary.wiley.com"
+],
+"crossmark-restriction": true
+},
+"short-container-title": [
+"Annalen der Physik"
+],
+"published-print": {
+"date-parts": [
+[
+1911,
+1
+]
+]
+},
+"DOI": "10.1002/andp.19113401005",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2007,
+5,
+17
+]
+],
+"date-time": "2007-05-17T03:49:10Z",
+"timestamp": 1179373750000
+},
+"page": "898-908",
+"update-policy": "https://doi.org/10.1002/crossmark_policy",
+"source": "Crossref",
+"is-referenced-by-count": 569,
+"title": [
+"Über den Einfluß der Schwerkraft auf die Ausbreitung des Lichtes"
+],
+"prefix": "10.1002",
+"volume": "340",
+"author": [
+{
+"given": "A.",
+"family": "Einstein",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "311",
+"published-online": {
+"date-parts": [
+[
+2006,
+3,
+14
+]
+]
+},
+"reference": [
+{
+"key": "e_1_2_1_1_2",
+"unstructured": "AEinstein Jahrb. f. Radioakt. u. ElektronikIV. 4."
+},
+{
+"key": "e_1_2_1_2_2",
+"unstructured": "Natürlich kann man einbeliebigesSchwerefeld nicht durch einen Bewegungszustand des Systems ohne Gravitationsfeld ersetzen ebenso‐wenig als man durch eine Relativitätstransformation alle Punkte eines beliebig bewegten Mediums auf Ruhe transformieren kann."
+},
+{
+"key": "e_1_2_1_3_2",
+"unstructured": "In einer späteren Abhandlung wird gezeigt werden daß das hier in Betracht kommende Gravitationsfeld nur in erster Annäherung homogen ist."
+},
+{
+"key": "e_1_2_1_4_2",
+"unstructured": "S1undS2werden als gegenüberhunendlich klein betrachtet."
+},
+{
+"key": "e_1_2_1_5_2",
+"first-page": "913",
+"volume": "17",
+"author": "Einstein A",
+"year": "1905",
+"journal-title": "Ann. d. Phys."
+},
+{
+"key": "e_1_2_1_6_2",
+"first-page": "84",
+"volume": "6",
+"author": "Jewell L. F.",
+"year": "1897",
+"journal-title": "Journ. de phys."
+},
+{
+"key": "e_1_2_1_6_3",
+"first-page": "688",
+"volume": "148",
+"author": "Boisson H.",
+"year": "1909",
+"journal-title": "Compt. rend."
+}
+],
+"container-title": [
+"Annalen der Physik"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://api.wiley.com/onlinelibrary/tdm/v1/articles/10.1002%2Fandp.19113401005",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/andp.19113401005",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2023,
+11,
+3
+]
+],
+"date-time": "2023-11-03T21:15:28Z",
+"timestamp": 1699046128000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://onlinelibrary.wiley.com/doi/10.1002/andp.19113401005"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1911,
+1
+]
+]
+},
+"references-count": 7,
+"journal-issue": {
+"issue": "10",
+"published-print": {
+"date-parts": [
+[
+1911,
+1
+]
+]
+}
+},
+"alternative-id": [
+"10.1002/andp.19113401005"
+],
+"URL": "https://doi.org/10.1002/andp.19113401005",
+"archive": [
+"Portico"
+],
+"relation": {},
+"ISSN": [
+"0003-3804",
+"1521-3889"
+],
+"issn-type": [
+{
+"value": "0003-3804",
+"type": "print"
+},
+{
+"value": "1521-3889",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1911,
+1
+]
+]
+},
+"assertion": [
+{
+"value": "1911-06-21",
+"order": 0,
+"name": "received",
+"label": "Received",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+},
+{
+"value": "2006-03-14",
+"order": 2,
+"name": "published",
+"label": "Published",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+}
+]
+}
+}

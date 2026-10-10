@@ -1,0 +1,532 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+5
+]
+],
+"date-time": "2026-10-05T19:20:27Z",
+"timestamp": 1791228027584,
+"version": "4.1.0"
+},
+"reference-count": 62,
+"publisher": "American Association for the Advancement of Science (AAAS)",
+"issue": "46",
+"content-domain": {
+"domain": [
+"www.science.org"
+],
+"crossmark-restriction": true
+},
+"short-container-title": [
+"Sci. Adv."
+],
+"published-print": {
+"date-parts": [
+[
+2023,
+11,
+17
+]
+]
+},
+"abstract": "<jats:p>\n                    The highest-energy gamma-rays from gamma-ray bursts (GRBs) have important implications for their radiation mechanism. Here we report the detection of gamma-rays up to 13 teraelectronvolts from the brightest GRB 221009A by the Large High Altitude Air-shower Observatory (LHAASO). The LHAASO-KM2A detector registered more than 140 gamma-rays with energies above 3 teraelectronvolts during 230 to 900 seconds after the trigger. The intrinsic energy spectrum of gamma-rays can be described by a power-law after correcting for extragalactic background light absorption. Such a hard spectrum challenges the synchrotron self-Compton scenario of relativistic electrons for the afterglow emission above several teraelectronvolts. Observations of gamma-rays up to 13 teraelectronvolts from a source with a measured redshift of\n                    <jats:italic>z</jats:italic>\n                    = 0.151 hints more transparency in intergalactic space than previously expected. Alternatively, one may invoke new physics such as Lorentz invariance violation or an axion origin of very high-energy signals.\n                  </jats:p>",
+"DOI": "10.1126/sciadv.adj2778",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2023,
+11,
+15
+]
+],
+"date-time": "2023-11-15T13:58:28Z",
+"timestamp": 1700056708000
+},
+"update-policy": "https://doi.org/10.34133/aaas_crossmark",
+"source": "Crossref",
+"is-referenced-by-count": 111,
+"title": [
+"Very high-energy gamma-ray emission beyond 10 TeV from GRB 221009A"
+],
+"prefix": "10.1126",
+"volume": "9",
+"author": [
+{
+"name": "The LHAASO Collaboration",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "221",
+"reference": [
+{
+"key": "e_1_3_2_2_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/s41586-019-1750-x"
+},
+{
+"key": "e_1_3_2_3_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/s41586-019-1754-6"
+},
+{
+"key": "e_1_3_2_4_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/s41586-019-1743-9"
+},
+{
+"key": "e_1_3_2_5_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.abe8560"
+},
+{
+"key": "e_1_3_2_6_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/2041-8213/ab2d8a"
+},
+{
+"key": "e_1_3_2_7_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4357/ab426c"
+},
+{
+"key": "e_1_3_2_8_2",
+"doi-asserted-by": "crossref",
+"unstructured": "S. Lesage P. Veres M. S. Briggs A. Goldstein D. Kocevski E. Burns C. A. Wilson-Hodge P. N. Bhat D. Huppenkothen C. L. Fryer R. Hamburg J. Racusin E. Bissaldi W. H. Cleveland S. Dalessi C. Fletcher M. M. Giles B. A. Hristov C. M. Hui B. Mailyan S. Poolakkil O. J. Roberts A. von Kienlin J. Wood M. Ajello M. Arimoto L. Baldini J. Ballet M. G. Baring D. Bastieri J. Becerra Gonzalez R. Bellazzini E. Bissaldi R. D. Blandford R. Bonino P. Bruel S. Buson R. A. Cameron R. Caputo P. A. Caraveo E. Cavazzuti G. Chiaro N. Cibrario S. Ciprini P. Cristarella Orestano M. Crnogorcevic A. Cuoco S. Cutini F. DAmmando S. De Gaetano N. Di Lalla L. Di Venere A. Dominguez S. J. Fegan E. C. Ferrara H. Fleischhack Y. Fukazawa S. Funk P. Fusco G. Galanti V. Gammaldi F. Gargano C. Gasbarra D. Gasparrini S. Germani F. Giacchino N. Giglietto R. Gill M. Giroletti J. Granot D. Green I. A. Grenier S. Guiriec M. Gustafsson E. Hays J. W. Hewitt D. Horan X. Hou M. Kuss L. Latronico A. Laviron M. Lemoine-Goumard J. Li I. Liodakis F. Longo F. Loparco L. Lorusso M. N. Lovellette P. Lubrano S. Maldera A. Manfreda G. Marti-Devesa M. N. Mazziotta J. E. McEnery I. Mereu M. Meyer P. F. Michelson T. Mizuno M. E. Monzani A. Morselli I. V. Moskalenko M. Negro E. Nuss N. Omodei E. Orlando J. F. Ormes D. Paneque G. Panzarini M. Persic M. Pesce-Rollins R. Pillera F. Piron H. Poon T. A. Porter G. Principe S. Raino R. Rando B. Rani M. Razzano S. Razzaque A. Reimer O. Reimer F. Ryde M. Sanchez-Conde P. M. Saz Parkinson L. Scotton D. Serini C. Sgro V. Sharma E. J. Siskind G. Spandre P. Spinelli H. Tajima D. F. Torres J. Valverde T. Venters Z. Wadiasingh K. Wood G. Zaharijas. Fermi-GBM Discovery of GRB 221009A: An Extraordinarily Bright GRB from Onset to Afterglow. arXiv:2303.14172 (2023).",
+"DOI": "10.3847/2041-8213/ace5b4"
+},
+{
+"key": "e_1_3_2_9_2",
+"first-page": "1",
+"article-title": "GRB 221009A: Swift detected transient may be GRB",
+"volume": "32635",
+"author": "Kennea J. A.",
+"year": "2022",
+"unstructured": "J. A. Kennea, M. Williams, Swift Team, GRB 221009A: Swift detected transient may be GRB. GRB Coord. Netw. 32635, 1 (2022).",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "e_1_3_2_10_2",
+"first-page": "1",
+"article-title": "GRB 221009A: Fermi-LAT refined analysis",
+"volume": "32658",
+"author": "Pillera R.",
+"year": "2022",
+"unstructured": "R. Pillera, E. Bissaldi, N. Omodei, G. La Mura, F. Longo; Fermi-LAT team, GRB 221009A: Fermi-LAT refined analysis. GRB Coord. Netw. 32658, 1 (2022).",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "e_1_3_2_11_2",
+"unstructured": "Z.-H. An S. Antier X.-Z. Bi Q.-C. Bu C. Cai X.-L. Cao A.-E. Camisasca Z. Chang G. Chen L. Chen T.-X. Chen W. Chen Y.-B. Chen Y. Chen Y.-P. Chen M. W. Coughlin W.-W. Cui Z.-G. Dai T. Hussenot-Desenonges Y.-Q. Du Y.-Y. Du Y.-F. Du C.-C. Fan F. Frontera H. Gao M. Gao M.-Y. Ge K. Gong Y.-D. Gu J. Guan D.-Y. Guo Z.-W. Guo C. Guidorzi D.-W. Han J.-J. He J.-W. He D.-J. Hou Y. Huang J. Huo Z. Ji S.-M. Jia W.-C. Jiang D. A. Kann A. Klotz L.-D. Kong L. Lan A. Li B. Li C.-Y. Li C.-K. Li G. Li M.-S. Li T.-P. Li W. Li X.-B. Li X.-Q. Li X.-F. Li Y.-G. Li Z.-W. Li J. Liang X.-H. Liang J.-Y. Liao L. Lin C.-Z. Liu H.-X. Liu H.-W. Liu J.-C. Liu X.-J. Liu Y.-Q. Liu Y.-R. Liu F.-J. Lu H. Lu X.-F. Lu Q. Luo T. Luo B.-Y. Ma F.-L. Ma R.-C. Ma X. Ma R. Maccary J.-R. Mao B. Meng J.-Y. Nie M. Orlandini G. Ou J.-Q. Peng W.-X. Peng R. Qiao J.-L. Qu X.-Q. Ren J.-Y. Shi Q. Shi L.-M. Song X.-Y. Song J. Su G.-X. Sun L. Sun X.-L. Sun W.-J. Tan Y. Tan L. Tao Y.-L. Tuo D. Turpin J.-Z. Wang C. Wang C.-W. Wang H.-J. Wang H. Wang J. Wang L.-J. Wang P.-J. Wang P. Wang W.-S. Wang X.-Y. Wang X.-Lu Wang Y.-S. Wang Y. Wang X.-Y. Wen B.-B. Wu B.-Y. Wu H. Wu S.-H. Xiao S. Xiao Y.-X. Xiao S.-L. Xie S.-L. Xiong S.-L. Xiong D. Xu H. Xu Y.-J. Xu Y.-B. Xu Y.-C. Xu Y.-P. Xu W.-C. Xue S. Yang Y.-J. Yang Z.-X. Yang W.-T. Ye Q.-B. Yi S.-X. Yi Q.-Q. Yin Y. You Y.-W. Yu W. Yu W.-H. Yu M. Zeng B. Zhang B.-B. Zhang D.-L. Zhang F. Zhang H.-M. Zhang J. Zhang L. Zhang P. Zhang P. Zhang S. Zhang S.-N. Zhang W.-C. Zhang X.-F. Zhang X.-L. Zhang Y.-Q. Zhang Y.-T. Zhang Y.-F. Zhang Y.-H. Zhang Z. Zhang G.-Y. Zhao H.-S. Zhao H.-Y. Zhao Q.-X. Zhao S.-J. Zhao X.-Y. Zhao X.-F. Zhao Y. Zhao C. Zheng S.-J. Zheng D.-K. Zhou X. Zhou X.-C. Zhu Insight-HXMT and GECAM-C observations of the brightest-of-all-time GRB 221009A. arXiv:2303.01203 (2023)."
+},
+{
+"key": "e_1_3_2_12_2",
+"doi-asserted-by": "crossref",
+"unstructured": "D. Frederiks D. Svinkin A. L. Lysenko S. Molkov A. Tsvetkova M. Ulanov A. Ridnaia A. A. Lutovinov I. Lapshov A. Tkachenko V. Levin Properties of the extremely energetic GRB~221009A from Konus-WIND and SRG/ART-XC observations. arXiv:2302.13383 (2023).",
+"DOI": "10.3847/2041-8213/acd1eb"
+},
+{
+"key": "e_1_3_2_13_2",
+"first-page": "1",
+"article-title": "GRB 221009A: Redshift from X-shooter/VLT",
+"volume": "32648",
+"author": "de Ugarte Postigo A.",
+"year": "2022",
+"unstructured": "A. de Ugarte Postigo, L. Izzo, G. Pugliese, D. Xu, B. Schneider, J. P. U. Fynbo, N. R. Tanvir, D. B. Malesani, A. Saccardi, D. A. Kann, K. Wiersema, B. P. Gompertz, C. C. Thoene, A. J. Levan, Stargate Collaboration, GRB 221009A: Redshift from X-shooter/VLT. GRB Coord. Netw. 32648, 1 (2022).",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "e_1_3_2_14_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1674-1137/ac3fa6"
+},
+{
+"key": "e_1_3_2_15_2",
+"first-page": "1",
+"article-title": "LHAASO observed GRB 221009A with more than 5000 VHE photons up to around 18 TeV",
+"volume": "32677",
+"author": "Huang Y.",
+"year": "2022",
+"unstructured": "Y. Huang, H. S., S. Chen, M. Zha, C. Liu, Z. Yao, Z. Cao; The Lhaaso Experiment, LHAASO observed GRB 221009A with more than 5000 VHE photons up to around 18 TeV. GRB Coord. Netw. 32677, 1 (2022).",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "e_1_3_2_16_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.adg9328"
+},
+{
+"key": "e_1_3_2_17_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1674-1137/abd01b"
+},
+{
+"key": "e_1_3_2_18_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1093/mnras/stab2393"
+},
+{
+"key": "e_1_3_2_19_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1111/j.1365-2966.2012.20841.x"
+},
+{
+"key": "e_1_3_2_20_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1111/j.1365-2966.2010.17631.x"
+},
+{
+"key": "e_1_3_2_21_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/712/1/238"
+},
+{
+"key": "e_1_3_2_22_2",
+"first-page": "11",
+"article-title": "The time averaged TeV energy spectrum of MKN 501 of the extraordinary 1997 outburst as measured with the stereoscopic Cherenkov telescope system of HEGRA",
+"volume": "349",
+"author": "Aharonian F. A.",
+"year": "1999",
+"unstructured": "F. A. Aharonian, A. G. Akhperjanian, J. A. Barrio, K. Bernlöhr, H. Bojahr, I. Calle, J. L. Contreras, J. Cortina, A. Daum, T. Deckers, S. Denninghoff, V. Fonseca, J. C. Gonzalez, G. Heinzelmann, M. Hemberger, G. Hermann, M. Heß, A. Heusler, W. Hofmann, H. Hohl, D. Horns, A. Ibarra, R. Kankanyan, J. Kettler, C. Köhler, A. Konopelko, H. Kornmeyer, M. Kestel, D. Kranich, H. Krawczynski, H. Lampeitl, A. Lindner, E. Lorenz, N. Magnussen, H. Meyer, R. Mirzoyan, A. Moralejo, L. Padilla, M. Panter, D. Petry, R. Plaga, A. Plyasheshnikov, J. Prahl, G. Pühlhofer, G. Rauterberg, C. Renault, W. Rhode, A. Röhring, V. Sahakian, M. Samorski, D. Schmele, F. Schröder, W. Stamm, H. J. Völk, B. Wiebel-Sooth, C. Wiedner, M. Willmer, W. Wittek, The time averaged TeV energy spectrum of MKN 501 of the extraordinary 1997 outburst as measured with the stereoscopic Cherenkov telescope system of HEGRA. Astron Astrophys 349, 11–28 (1999).",
+"journal-title": "Astron Astrophys"
+},
+{
+"key": "e_1_3_2_23_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361:20020062"
+},
+{
+"key": "e_1_3_2_24_2",
+"unstructured": "F. A. Aharonian TeV blazars and cosmic infrared background radiation. In 27th International Cosmic Ray Conference (ICRC27) volume 27 of International Cosmic Ray Conference page 250 January 2001."
+},
+{
+"key": "e_1_3_2_25_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/201014610"
+},
+{
+"key": "e_1_3_2_26_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nphys4109"
+},
+{
+"key": "e_1_3_2_27_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.88.102003"
+},
+{
+"key": "e_1_3_2_28_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.103.083003"
+},
+{
+"key": "e_1_3_2_29_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.128.051102"
+},
+{
+"key": "e_1_3_2_30_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nature08574"
+},
+{
+"key": "e_1_3_2_31_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/703/1/675"
+},
+{
+"key": "e_1_3_2_32_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/2041-8213/acc79f"
+},
+{
+"key": "e_1_3_2_33_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/202245377"
+},
+{
+"key": "e_1_3_2_34_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4357/acc24e"
+},
+{
+"key": "e_1_3_2_35_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.94.023005"
+},
+{
+"key": "e_1_3_2_36_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/306379"
+},
+{
+"key": "e_1_3_2_37_2",
+"first-page": "247",
+"article-title": "Evidence for dust emission in the warm ionised medium using wham data",
+"volume": "354",
+"author": "Lagache G.",
+"year": "2000",
+"unstructured": "G. Lagache, L. M. Haffner, R. J. Reynolds, S. L. Tufte, Evidence for dust emission in the warm ionised medium using wham data. Astron. Astrophys. 354, 247 (2000).",
+"journal-title": "Astron. Astrophys."
+},
+{
+"key": "e_1_3_2_38_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/301215"
+},
+{
+"key": "e_1_3_2_39_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361:20020106"
+},
+{
+"key": "e_1_3_2_40_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/422585"
+},
+{
+"key": "e_1_3_2_41_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/425252"
+},
+{
+"key": "e_1_3_2_42_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/200913279"
+},
+{
+"key": "e_1_3_2_43_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/737/1/2"
+},
+{
+"key": "e_1_3_2_44_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/736/2/80"
+},
+{
+"key": "e_1_3_2_45_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.1258168"
+},
+{
+"key": "e_1_3_2_46_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/0004-637X/827/2/108"
+},
+{
+"key": "e_1_3_2_47_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/317177"
+},
+{
+"key": "e_1_3_2_48_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1046/j.1365-8711.2000.03268.x"
+},
+{
+"key": "e_1_3_2_49_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361:20030621-1"
+},
+{
+"key": "e_1_3_2_50_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/422880"
+},
+{
+"key": "e_1_3_2_51_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/507149"
+},
+{
+"key": "e_1_3_2_52_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/723/1/40"
+},
+{
+"key": "e_1_3_2_53_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/736/2/119"
+},
+{
+"key": "e_1_3_2_54_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/201015929"
+},
+{
+"key": "e_1_3_2_55_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1093/mnras/stx1296"
+},
+{
+"key": "e_1_3_2_56_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1674-1137/ac041b"
+},
+{
+"key": "e_1_3_2_57_2",
+"unstructured": "R. A. Batista GRB 221009A: A potential source of ultra-high-energy cosmic rays. arXiv:2210.12855 (2022)."
+},
+{
+"key": "e_1_3_2_58_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/2041-8213/acb6d7"
+},
+{
+"key": "e_1_3_2_59_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.37.1237"
+},
+{
+"key": "e_1_3_2_60_2",
+"first-page": "197",
+"article-title": "Magnetic fields in nearby galaxies",
+"volume": "438",
+"author": "Fletcher A.",
+"year": "2011",
+"unstructured": "A. Fletcher, Magnetic fields in nearby galaxies. ASP Conf. Ser. 438, 197–210 (2011).",
+"journal-title": "ASP Conf. Ser."
+},
+{
+"key": "e_1_3_2_61_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/757/1/14"
+},
+{
+"key": "e_1_3_2_62_2",
+"unstructured": "J. M. Cordes T. J. W. Lazio. NE2001. 1. A New model for the galactic distribution of free electrons and its fluctuations. 7 2002."
+},
+{
+"key": "e_1_3_2_63_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/812/1/60"
+}
+],
+"container-title": [
+"Science Advances"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://www.science.org/doi/pdf/10.1126/sciadv.adj2778",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2024,
+1,
+9
+]
+],
+"date-time": "2024-01-09T17:06:22Z",
+"timestamp": 1704819982000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://www.science.org/doi/10.1126/sciadv.adj2778"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2023,
+11,
+17
+]
+]
+},
+"references-count": 62,
+"journal-issue": {
+"issue": "46",
+"published-print": {
+"date-parts": [
+[
+2023,
+11,
+17
+]
+]
+}
+},
+"alternative-id": [
+"10.1126/sciadv.adj2778"
+],
+"URL": "https://doi.org/10.1126/sciadv.adj2778",
+"relation": {},
+"ISSN": [
+"2375-2548"
+],
+"issn-type": [
+{
+"value": "2375-2548",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2023,
+11,
+17
+]
+]
+},
+"assertion": [
+{
+"value": "2023-06-16",
+"order": 0,
+"name": "received",
+"label": "Received",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+},
+{
+"value": "2023-10-16",
+"order": 1,
+"name": "accepted",
+"label": "Accepted",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+},
+{
+"value": "2023-11-15",
+"order": 2,
+"name": "published",
+"label": "Published",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+}
+],
+"article-number": "eadj2778"
+}
+}

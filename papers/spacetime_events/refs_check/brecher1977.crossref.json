@@ -1,0 +1,306 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+9,
+28
+]
+],
+"date-time": "2026-09-28T22:39:47Z",
+"timestamp": 1790635187888,
+"version": "4.1.0"
+},
+"reference-count": 15,
+"publisher": "American Physical Society (APS)",
+"issue": "17",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1977,
+10,
+24
+]
+],
+"date-time": "1977-10-24T00:00:00Z",
+"timestamp": 246499200000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "http://link.aps.org/licenses/aps-default-license"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Phys. Rev. Lett."
+],
+"DOI": "10.1103/physrevlett.39.1051",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2002,
+7,
+27
+]
+],
+"date-time": "2002-07-27T03:58:14Z",
+"timestamp": 1027742294000
+},
+"page": "1051-1054",
+"source": "Crossref",
+"is-referenced-by-count": 57,
+"title": [
+"Is the Speed of Light Independent of the Velocity of the Source?"
+],
+"prefix": "10.1103",
+"volume": "39",
+"author": [
+{
+"given": "Kenneth",
+"family": "Brecher",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+1977,
+10,
+24
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevLett.39.1051Cc1R1",
+"doi-asserted-by": "crossref",
+"first-page": "891",
+"DOI": "10.1002/andp.19053221004",
+"volume": "17",
+"author": "A. Einstein",
+"year": "1905",
+"journal-title": "Ann. Phys. (Leipzig)"
+},
+{
+"key": "PhysRevLett.39.1051Cc2R1",
+"doi-asserted-by": "crossref",
+"first-page": "342",
+"DOI": "10.1103/PhysRevLett.1.342",
+"volume": "1",
+"author": "C. J. Cedarholm",
+"year": "1958",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "PhysRevLett.39.1051Cc2R2",
+"doi-asserted-by": "crossref",
+"first-page": "A1221",
+"DOI": "10.1103/PhysRev.133.A1221",
+"volume": "133",
+"author": "T. S. Jaseja",
+"year": "1964",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "PhysRevLett.39.1051Cc3R1",
+"doi-asserted-by": "crossref",
+"first-page": "271",
+"DOI": "10.1103/PhysRevLett.10.271",
+"volume": "10",
+"author": "D. Sadeh",
+"year": "1963",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "PhysRevLett.39.1051Cc4R1",
+"doi-asserted-by": "crossref",
+"first-page": "260",
+"DOI": "10.1016/0031-9163(64)91095-9",
+"volume": "12",
+"author": "T. Alvager",
+"year": "1964",
+"journal-title": "Phys. Lett."
+},
+{
+"key": "PhysRevLett.39.1051Cc4R2",
+"first-page": "145",
+"volume": "31",
+"author": "T. Alvager",
+"year": "1966",
+"journal-title": "Ark. Fys."
+},
+{
+"key": "PhysRevLett.39.1051Cc5R1",
+"doi-asserted-by": "crossref",
+"first-page": "1071",
+"DOI": "10.1103/PhysRev.135.B1071",
+"volume": "135",
+"author": "T. A. Filippas",
+"year": "1969",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "PhysRevLett.39.1051Cc6R1",
+"doi-asserted-by": "crossref",
+"first-page": "297",
+"DOI": "10.1119/1.1941992",
+"volume": "30",
+"author": "J. G. Fox",
+"year": "1962",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "PhysRevLett.39.1051Cc6R2",
+"doi-asserted-by": "crossref",
+"first-page": "967",
+"DOI": "10.1364/JOSA.57.000967",
+"volume": "57",
+"author": "J. G. Fox",
+"year": "1967",
+"journal-title": "J. Opt. Soc. Am."
+},
+{
+"key": "PhysRevLett.39.1051Cc6R3",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1119/1.1971219",
+"volume": "33",
+"author": "J. G. Fox",
+"year": "1965",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "PhysRevLett.39.1051Cc7R1",
+"first-page": "145",
+"volume": "13",
+"author": "W. Ritz",
+"year": "1908",
+"journal-title": "Ann. Chim. Phys."
+},
+{
+"key": "PhysRevLett.39.1051Cc7R2",
+"volume-title": "Oeuvres",
+"author": "W. Ritz",
+"year": "1911"
+},
+{
+"key": "PhysRevLett.39.1051Cc8R1",
+"first-page": "429",
+"volume": "14",
+"author": "W. de Sitter",
+"year": "1913",
+"journal-title": "Phys. Z."
+},
+{
+"key": "PhysRevLett.39.1051Cc9R1",
+"volume-title": "Principles of Optics",
+"author": "M. Born",
+"year": "1964"
+},
+{
+"key": "PhysRevLett.39.1051Cc10R1",
+"volume-title": "The Binary Stars",
+"author": "R. G. Aitken",
+"year": "1964"
+}
+],
+"container-title": [
+"Physical Review Letters"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.aps.org/article/10.1103/PhysRevLett.39.1051",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevLett.39.1051/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+1,
+3
+]
+],
+"date-time": "2025-01-03T00:37:36Z",
+"timestamp": 1735864656000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevLett.39.1051"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1977,
+10,
+24
+]
+]
+},
+"references-count": 15,
+"journal-issue": {
+"issue": "17",
+"published-print": {
+"date-parts": [
+[
+1977,
+10
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physrevlett.39.1051",
+"relation": {},
+"ISSN": [
+"0031-9007"
+],
+"issn-type": [
+{
+"value": "0031-9007",
+"type": "print"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1977,
+10,
+24
+]
+]
+}
+}
+}

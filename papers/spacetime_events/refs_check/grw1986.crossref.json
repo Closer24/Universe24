@@ -1,0 +1,352 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+9
+]
+],
+"date-time": "2026-10-09T10:08:24Z",
+"timestamp": 1791540504780,
+"version": "4.3.4"
+},
+"reference-count": 17,
+"publisher": "American Physical Society (APS)",
+"issue": "2",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1986,
+7,
+15
+]
+],
+"date-time": "1986-07-15T00:00:00Z",
+"timestamp": 521769600000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "http://link.aps.org/licenses/aps-default-license"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Phys. Rev. D"
+],
+"DOI": "10.1103/physrevd.34.470",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2002,
+7,
+26
+]
+],
+"date-time": "2002-07-26T20:51:26Z",
+"timestamp": 1027716686000
+},
+"page": "470-491",
+"source": "Crossref",
+"is-referenced-by-count": 1820,
+"title": [
+"Unified dynamics for microscopic and macroscopic systems"
+],
+"prefix": "10.1103",
+"volume": "34",
+"author": [
+{
+"given": "G. C.",
+"family": "Ghirardi",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Rimini",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Weber",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+1986,
+7,
+15
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevD.34.470Cc1R1",
+"doi-asserted-by": "crossref",
+"first-page": "331",
+"DOI": "10.1007/BF01653647",
+"volume": "4",
+"author": "G. Ludwig",
+"year": "1967",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc1R2",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1007/BF01654027",
+"volume": "9",
+"author": "G. Ludwig",
+"year": "1968",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc1R4",
+"volume-title": "Essays in Theoretical Physics",
+"author": "A. J. Leggett",
+"year": "1984"
+},
+{
+"key": "PhysRevD.34.470Cc3R1",
+"first-page": "293",
+"volume": "37",
+"author": "J. M. Jauch",
+"year": "1964",
+"journal-title": "Helv. Phys. Acta"
+},
+{
+"key": "PhysRevD.34.470Cc5R1",
+"doi-asserted-by": "crossref",
+"first-page": "80",
+"DOI": "10.1143/PTPS.69.80",
+"volume": "69",
+"author": "A. J. Leggett",
+"year": "1980",
+"journal-title": "Suppl. Progr. Theor. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc6R1",
+"doi-asserted-by": "crossref",
+"first-page": "79",
+"DOI": "10.1007/BF02894935",
+"author": "A. Barchielli",
+"year": "1982",
+"journal-title": "Nuovo Cimento"
+},
+{
+"key": "PhysRevD.34.470Cc6R2",
+"doi-asserted-by": "crossref",
+"first-page": "779",
+"DOI": "10.1007/BF01906270",
+"volume": "13",
+"author": "A. Barchielli",
+"year": "1983",
+"journal-title": "Found. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc8R1",
+"doi-asserted-by": "crossref",
+"first-page": "423",
+"DOI": "10.1103/PhysRevA.32.423",
+"volume": "32",
+"author": "V. Hakim",
+"year": "1985",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "PhysRevD.34.470Cc10R1",
+"doi-asserted-by": "crossref",
+"first-page": "583",
+"DOI": "10.1080/00107518408210731",
+"volume": "25",
+"author": "A. J. Leggett",
+"year": "1984",
+"journal-title": "Contemp. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc11R1",
+"doi-asserted-by": "crossref",
+"first-page": "848",
+"DOI": "10.1063/1.1704187",
+"volume": "5",
+"author": "R. Haag",
+"year": "1964",
+"journal-title": "J. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc11R2",
+"doi-asserted-by": "crossref",
+"first-page": "331",
+"DOI": "10.1007/BF01653647",
+"volume": "4",
+"author": "G. Ludwig",
+"year": "1967",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc15R1",
+"volume-title": "Proceedings of the International Symposium on the Foundations of Quantum Mechanics",
+"author": "W. H. Zurek"
+},
+{
+"key": "PhysRevD.34.470Cc17R1",
+"doi-asserted-by": "crossref",
+"first-page": "395",
+"DOI": "10.1007/BF01206031",
+"volume": "87",
+"author": "S. W. Hawking",
+"year": "1983",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc17R2",
+"doi-asserted-by": "crossref",
+"first-page": "125",
+"DOI": "10.1016/0550-3213(84)90184-6",
+"volume": "244",
+"author": "T. Banks",
+"year": "1984",
+"journal-title": "Nucl. Phys. B vec"
+},
+{
+"key": "PhysRevD.34.470Cc18R1",
+"doi-asserted-by": "crossref",
+"first-page": "119",
+"DOI": "10.1007/BF01608499",
+"volume": "48",
+"author": "G. Lindblad",
+"year": "1976",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "PhysRevD.34.470Cc19R1",
+"volume-title": "States, Effects and Operations",
+"author": "K. Kraus",
+"year": "1983"
+},
+{
+"key": "PhysRevD.34.470Cc21R1",
+"doi-asserted-by": "crossref",
+"first-page": "1070",
+"DOI": "10.1103/PhysRev.150.1079",
+"volume": "150",
+"author": "E. Nelson",
+"year": "1966",
+"journal-title": "Phys. Rev."
+}
+],
+"container-title": [
+"Physical Review D"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.aps.org/article/10.1103/PhysRevD.34.470",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevD.34.470/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2017,
+12,
+9
+]
+],
+"date-time": "2017-12-09T19:08:43Z",
+"timestamp": 1512846523000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevD.34.470"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1986,
+7,
+15
+]
+]
+},
+"references-count": 17,
+"journal-issue": {
+"issue": "2",
+"published-print": {
+"date-parts": [
+[
+1986,
+7
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physrevd.34.470",
+"relation": {},
+"ISSN": [
+"0556-2821"
+],
+"issn-type": [
+{
+"value": "0556-2821",
+"type": "print"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1986,
+7,
+15
+]
+]
+}
+}
+}

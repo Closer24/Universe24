@@ -1,0 +1,150 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+9
+]
+],
+"date-time": "2026-10-09T10:08:27Z",
+"timestamp": 1791540507832,
+"version": "4.3.4"
+},
+"reference-count": 0,
+"publisher": "EDP Sciences",
+"issue": "3",
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Ann. Phys."
+],
+"published-print": {
+"date-parts": [
+[
+1925
+]
+]
+},
+"DOI": "10.1051/anphys/192510030022",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2017,
+4,
+28
+]
+],
+"date-time": "2017-04-28T11:04:14Z",
+"timestamp": 1493377454000
+},
+"page": "22-128",
+"source": "Crossref",
+"is-referenced-by-count": 704,
+"title": [
+"Recherches sur la théorie des Quanta"
+],
+"prefix": "10.1051",
+"volume": "10",
+"author": [
+{
+"given": "Louis",
+"family": "De Broglie",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "250",
+"published-online": {
+"date-parts": [
+[
+2017,
+4,
+28
+]
+]
+},
+"container-title": [
+"Annales de Physique"
+],
+"original-title": [],
+"link": [
+{
+"URL": "http://www.annphys.org/10.1051/anphys/192510030022/pdf",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2017,
+4,
+28
+]
+],
+"date-time": "2017-04-28T11:04:14Z",
+"timestamp": 1493377454000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "http://www.annphys.org/10.1051/anphys/192510030022"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1925
+]
+]
+},
+"references-count": 0,
+"journal-issue": {
+"issue": "3"
+},
+"alternative-id": [
+"anphys19251003p22"
+],
+"URL": "https://doi.org/10.1051/anphys/192510030022",
+"relation": {},
+"ISSN": [
+"0003-4169",
+"1286-4838"
+],
+"issn-type": [
+{
+"value": "0003-4169",
+"type": "print"
+},
+{
+"value": "1286-4838",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1925
+]
+]
+}
+}
+}

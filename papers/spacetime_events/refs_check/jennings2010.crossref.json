@@ -1,0 +1,349 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+9,
+29
+]
+],
+"date-time": "2026-09-29T06:45:38Z",
+"timestamp": 1790664338801,
+"version": "4.1.0"
+},
+"reference-count": 30,
+"publisher": "American Physical Society (APS)",
+"issue": "6",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2010,
+6,
+23
+]
+],
+"date-time": "2010-06-23T00:00:00Z",
+"timestamp": 1277251200000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "http://link.aps.org/licenses/aps-default-license"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Phys. Rev. E"
+],
+"DOI": "10.1103/physreve.81.061130",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2010,
+6,
+28
+]
+],
+"date-time": "2010-06-28T13:32:25Z",
+"timestamp": 1277731945000
+},
+"source": "Crossref",
+"is-referenced-by-count": 105,
+"title": [
+"Entanglement and the thermodynamic arrow of time"
+],
+"prefix": "10.1103",
+"volume": "81",
+"author": [
+{
+"given": "David",
+"family": "Jennings",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Terry",
+"family": "Rudolph",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+2010,
+6,
+23
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevE.81.061130Cc2R1",
+"volume-title": "Theory of Heat",
+"author": "J. C. Maxwell",
+"year": "1871"
+},
+{
+"key": "PhysRevE.81.061130Cc3R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1007/BF01341281"
+},
+{
+"key": "PhysRevE.81.061130Cc4R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/RevModPhys.81.1"
+},
+{
+"key": "PhysRevE.81.061130Cc6R1",
+"volume-title": "Frontiers of Nonequilibrium Statistical Physics",
+"author": "W. H. Zurek",
+"year": "1984"
+},
+{
+"key": "PhysRevE.81.061130Cc7R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1007/BF02084158"
+},
+{
+"key": "PhysRevE.81.061130Cc8R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1147/rd.53.0183"
+},
+{
+"key": "PhysRevE.81.061130Cc10R1",
+"volume-title": "General Relativity: An Einstein Centenary Survey",
+"author": "R. Penrose",
+"year": "1979"
+},
+{
+"key": "PhysRevE.81.061130Cc11R1",
+"volume-title": "Time’s Arrow and Archimedes’ Point",
+"author": "H. Price",
+"year": "1996"
+},
+{
+"key": "PhysRevE.81.061130Cc12R1",
+"doi-asserted-by": "crossref",
+"DOI": "10.1007/978-3-540-38861-6",
+"volume-title": "The Physical Basis of The Direction of Time",
+"author": "H. D. Zeh",
+"year": "2001"
+},
+{
+"key": "PhysRevE.81.061130Cc13R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevE.77.021110"
+},
+{
+"key": "PhysRevE.81.061130Cc14R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1093/bjps/54.2.291"
+},
+{
+"key": "PhysRevE.81.061130Cc15R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1093/bjps/50.1.33"
+},
+{
+"key": "PhysRevE.81.061130Cc16R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevA.39.5378"
+},
+{
+"key": "PhysRevE.81.061130Cc17R1",
+"volume-title": "Quantum Theory, Concepts and Methods",
+"author": "A. Peres",
+"year": "1993"
+},
+{
+"key": "PhysRevE.81.061130Cc18R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevA.61.012108"
+},
+{
+"key": "PhysRevE.81.061130Cc19R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevB.78.064108"
+},
+{
+"key": "PhysRevE.81.061130Cc20R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1367-2630/8/8/140"
+},
+{
+"key": "PhysRevE.81.061130Cc21R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.89.037903"
+},
+{
+"key": "PhysRevE.81.061130Cc22R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.89.240403"
+},
+{
+"key": "PhysRevE.81.061130Cc23R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nphys1100"
+},
+{
+"key": "PhysRevE.81.061130Cc25R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevA.72.032317"
+},
+{
+"key": "PhysRevE.81.061130Cc26R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1063/1.1498001"
+},
+{
+"key": "PhysRevE.81.061130Cc27R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.92.067902"
+},
+{
+"key": "PhysRevE.81.061130Cc28R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/0375-9601(94)91275-0"
+},
+{
+"key": "PhysRevE.81.061130Cc29R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.103.080401"
+},
+{
+"key": "PhysRevE.81.061130Cc30R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.104.148901"
+},
+{
+"key": "PhysRevE.81.061130Cc31R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.101.070502"
+},
+{
+"key": "PhysRevE.81.061130Cc32R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nphys444"
+},
+{
+"key": "PhysRevE.81.061130Cc33R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.90.107902"
+},
+{
+"key": "PhysRevE.81.061130Cc35R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0264-9381/11/12/007"
+}
+],
+"container-title": [
+"Physical Review E"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.aps.org/article/10.1103/PhysRevE.81.061130",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevE.81.061130/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2019,
+5,
+30
+]
+],
+"date-time": "2019-05-30T10:01:56Z",
+"timestamp": 1559210516000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevE.81.061130"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2010,
+6,
+23
+]
+]
+},
+"references-count": 30,
+"journal-issue": {
+"issue": "6",
+"published-print": {
+"date-parts": [
+[
+2010,
+6
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physreve.81.061130",
+"relation": {},
+"ISSN": [
+"1539-3755",
+"1550-2376"
+],
+"issn-type": [
+{
+"value": "1539-3755",
+"type": "print"
+},
+{
+"value": "1550-2376",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2010,
+6,
+23
+]
+]
+},
+"article-number": "061130"
+}
+}

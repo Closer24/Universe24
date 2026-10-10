@@ -1,0 +1,153 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+5
+]
+],
+"date-time": "2026-10-05T08:59:29Z",
+"timestamp": 1791190769304,
+"version": "4.1.0"
+},
+"reference-count": 0,
+"publisher": "American Journal of Science (AJS)",
+"issue": "203",
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"American Journal of Science"
+],
+"published-print": {
+"date-parts": [
+[
+1887,
+11,
+1
+]
+]
+},
+"DOI": "10.2475/ajs.s3-34.203.333",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2013,
+8,
+13
+]
+],
+"date-time": "2013-08-13T23:17:17Z",
+"timestamp": 1376435837000
+},
+"page": "333-345",
+"source": "Crossref",
+"is-referenced-by-count": 876,
+"title": [
+"On the relative motion of the Earth and the luminiferous ether"
+],
+"prefix": "10.2475",
+"volume": "s3-34",
+"author": [
+{
+"given": "A. A.",
+"family": "Michelson",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E. W.",
+"family": "Morley",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "1312",
+"container-title": [
+"American Journal of Science"
+],
+"original-title": [],
+"language": "en",
+"deposited": {
+"date-parts": [
+[
+2023,
+10,
+27
+]
+],
+"date-time": "2023-10-27T17:15:38Z",
+"timestamp": 1698426938000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://ajsonline.org/article/62505"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1887,
+11,
+1
+]
+]
+},
+"references-count": 0,
+"journal-issue": {
+"issue": "203",
+"published-print": {
+"date-parts": [
+[
+1887,
+11,
+1
+]
+]
+}
+},
+"URL": "https://doi.org/10.2475/ajs.s3-34.203.333",
+"relation": {},
+"ISSN": [
+"0002-9599"
+],
+"issn-type": [
+{
+"value": "0002-9599",
+"type": "print"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1887,
+11,
+1
+]
+]
+}
+}
+}
