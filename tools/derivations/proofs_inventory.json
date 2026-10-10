@@ -11,8 +11,8 @@
   },
   "paper": {
    "files": [
-    "paper/Universe24_Paper.tex",
-    "paper/Universe24_Supplement.tex"
+    "papers/one_rule/Universe24_Paper.tex",
+    "papers/one_rule/Universe24_Supplement.tex"
    ],
    "branch": "paper",
    "head": "d7e976743f45c00ad705dbd01d5a911498caf03d",

@@ -45,5 +45,16 @@ preferred-citation:
       email: alon@defounder.ai
       orcid: https://orcid.org/0009-0008-2701-4599
   year: 2026
-  notes: "The project's first paper, archived on Zenodo and at the tag v1.1.0. The paper's source is paper/ in this repository."
-  url: "https://github.com/Closer24/Universe24/tree/main/paper"
+  notes: "The project's first paper, archived on Zenodo and at the tag v1.1.0. The paper's source is papers/one_rule/ in this repository."
+  url: "https://github.com/Closer24/Universe24/tree/main/papers/one_rule"
+references:
+  - type: article
+    title: "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured"
+    authors:
+      - family-names: Gonen
+        given-names: Alon
+        email: alon@defounder.ai
+        orcid: https://orcid.org/0009-0008-2701-4599
+    year: 2026
+    notes: "The project's second paper, the time paper, no DOI yet. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
+    url: "https://github.com/Closer24/Universe24/tree/main/papers/spacetime_events"

@@ -1,4 +1,4 @@
-"""The breaker's gate (the method of 2026-10-04): every row of tools/derivations/counterexamples.py, a claim of the paper tried inside its condition and outside it in the algebra of Rule3's line, is green, its key a row of paper/claims_breakers.json of the kind (a); a red row is listed in RED_ROWS by key and reported for the hands, never silenced by rewording a claim."""
+"""The breaker's gate (the method of 2026-10-04): every row of tools/derivations/counterexamples.py, a claim of the paper tried inside its condition and outside it in the algebra of Rule3's line, is green, its key a row of papers/one_rule/claims_breakers.json of the kind (a); a red row is listed in RED_ROWS by key and reported for the hands, never silenced by rewording a claim."""
 
 import importlib.util
 import json
@@ -19,7 +19,9 @@ def breaker():
 
 def test_every_breaker_row_is_green_and_keyed_to_the_claims_table():
     """Every row's key is a kind (a) row of the claims table; every row is green but those named red; the red set only shrinks."""
-    table = json.loads((ROOT / "paper" / "claims_breakers.json").read_text(encoding="utf-8"))
+    table = json.loads(
+        (ROOT / "papers" / "one_rule" / "claims_breakers.json").read_text(encoding="utf-8")
+    )
     results = breaker().run()
     assert results, "the registry holds rows"
     for key, _, _ in results:
