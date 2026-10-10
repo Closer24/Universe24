@@ -4,7 +4,7 @@
 # check_numbers (every integer against the run's data), check_formulas (every derived number recomputed), check_words
 # (the forbidden words, the mandated sentences, the Abstract's length), check_notation (every symbol defined before its first use, one meaning),
 # check_terms (every term defined before its first use), check_circularity (results against assumptions),
-# check_refs (the citations and the .bib files), check_layout (the body ending by page 14, the figure's labels, overfull boxes).
+# check_refs (the citations and the .bib files), check_layout (the body ending by page 18, the figure's labels, overfull boxes).
 set -e
 cd "$(dirname "$0")"
 export TEXINPUTS="sn:${TEXINPUTS}"

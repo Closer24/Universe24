@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 1.1.0
-date-released: 2026-10-05
+version: 2.0.0
+date-released: 2026-10-11
 license: MIT
 doi: 10.5281/zenodo.23190113
 repository-code: "https://github.com/Closer24/Universe24"
@@ -13,8 +13,11 @@ identifiers:
     value: 10.5281/zenodo.23190113
     description: "Zenodo concept DOI, resolving to the latest version"
   - type: doi
+    value: 10.5281/zenodo.23289515
+    description: "Zenodo archive of version 2.0.0, the engine V2 with the two papers"
+  - type: doi
     value: 10.5281/zenodo.23202100
-    description: "Zenodo archive of version 1.1.0"
+    description: "Zenodo archive of version 1.1.0, the first paper's version of record"
 authors:
   - family-names: Gonen
     given-names: Alon
@@ -28,10 +31,9 @@ keywords:
   - computational physics
   - measurement as a click
 abstract: >-
-  The implementation of the paper "Universe24: an integer cellular automaton
-  read through clicks, the formulas it shares with nature and the ones it adds"
-  (Alon Gonen, 2026): a lattice of Nodes holding bounded integers, stepped by
-  one rule, Rule3, from each Node's present, its past and its six neighbours,
+  The implementation of the paper "Universe24: one simple rule, the formulas
+  it shares with nature and adds" (Alon Gonen, 2026): a lattice of Nodes
+  holding bounded integers, stepped by one rule, Rule3, from each Node's present, its past and its six neighbours,
   reversibly, and read only through the clicks of declared NodeDetectors. The engine holds no number of
   physics, no formula and no family's name; every physical value comes from
   the run's files, and every primitive is one folder found by its name. The
@@ -56,5 +58,6 @@ references:
         email: alon@defounder.ai
         orcid: https://orcid.org/0009-0008-2701-4599
     year: 2026
-    notes: "The project's second paper, the time paper, no DOI yet. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
+    doi: 10.5281/zenodo.23289515
+    notes: "The project's second paper, the time paper, archived with the repository in the Zenodo record of version 2.0.0. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
     url: "https://github.com/Closer24/Universe24/tree/main/papers/spacetime_events"

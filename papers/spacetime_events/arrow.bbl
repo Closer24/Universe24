@@ -535,14 +535,14 @@ Science Advances
 \endbibitem
 
 %%% 36
-\bibitem[\protect\citeauthoryear{Gonen}{2026}]{software}
+\bibitem[\protect\citeauthoryear{Gonen}{2026}]{software2}
 \begin{botherref}
 \oauthor{\bsnm{Gonen}, \binits{A.}}:
 Universe24: the implementation of one integer rule on a cubic lattice, read
   through clicks.
-Zenodo, version 1.1.0
+Zenodo, version 2.0.0
 (2026).
-\doiurl{10.5281/zenodo.23202100}
+\doiurl{10.5281/zenodo.23289515}
 \end{botherref}
 \endbibitem
 
