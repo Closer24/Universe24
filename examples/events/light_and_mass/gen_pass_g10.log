@@ -37,3 +37,17 @@ LATTICE the body about [20, 15, 0], round 36: the content at the centre 532 -> 5
 LATTICE the body about [20, 15, 0], round 37: the content at the centre 532 -> 531, the count 247 -> 246 of 10000, the clock [4111, 2905] = 1.4151
 LATTICE the body about [20, 15, 0], round 38: the content at the centre 531 -> 531, the count 246 -> 245 of 10003, the clock [4103, 2899] = 1.4153
 LATTICE the body about [20, 15, 0], round 39: the content at the centre 531 -> 531, the count 245 -> 244 of 10001, the clock [4096, 2894] = 1.4153
+LATTICE the body about [20, 15, 0], round 40: the content at the centre 531 -> 530, the count 244 -> 243 of 9994, the clock [4088, 2888] = 1.4155
+LATTICE the body about [20, 15, 0], round 41: the content at the centre 530 -> 530, the count 243 -> 242 of 9997, the clock [4083, 2885] = 1.4153
+LATTICE the body about [20, 15, 0], round 42: the content at the centre 530 -> 530, the count 242 -> 241 of 9996, the clock [4076, 2880] = 1.4153
+LATTICE the body about [20, 15, 0], round 43: the content at the centre 530 -> 529, the count 241 -> 240 of 10002, the clock [4071, 2876] = 1.4155
+LATTICE the body about [20, 15, 0], round 44: the content at the centre 529 -> 529, the count 240 -> 240 of 10002, the clock [4064, 2871] = 1.4155
+LATTICE the body about [20, 15, 0], round 45: the content at the centre 529 -> 529, the count 240 -> 239 of 9999, the clock [4057, 2866] = 1.4156
+LATTICE the body about [20, 15, 0], round 46: the content at the centre 529 -> 529, the count 239 -> 238 of 10001, the clock [4054, 2864] = 1.4155
+LATTICE the body about [20, 15, 0], round 47: the content at the centre 529 -> 528, the count 238 -> 237 of 9994, the clock [4046, 2859] = 1.4152
+LATTICE the body about [20, 15, 0], round 48: the content at the centre 528 -> 528, the count 237 -> 237 of 10005, the clock [4040, 2854] = 1.4156
+LATTICE the body about [20, 15, 0], round 49: the content at the centre 528 -> 527, the count 237 -> 236 of 9995, the clock [4033, 2849] = 1.4156
+LATTICE the body about [20, 15, 0], round 50: the content at the centre 527 -> 527, the count 236 -> 235 of 9999, the clock [4028, 2846] = 1.4153
+LATTICE the body about [20, 15, 0], round 51: the content at the centre 527 -> 527, the count 235 -> 235 of 9999, the clock [4024, 2843] = 1.4154
+LATTICE the body about [20, 15, 0], round 52: the content at the centre 527 -> 527, the count 235 -> 234 of 10001, the clock [4021, 2841] = 1.4153
+LATTICE the body about [20, 15, 0], round 53: the content at the centre 527 -> 527, the count 234 -> 234 of 9999, the clock [4016, 2837] = 1.4156
