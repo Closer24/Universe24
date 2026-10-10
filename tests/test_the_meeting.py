@@ -158,7 +158,9 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     proper = [(n * clock // board.world.node_clock, w) for n, w in ((40, 1), (40, 1), (80, 2), (80, 2))]
     assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 39, 79 at 60
     keys = "event label interval family node_detector window proper windows before realised kept"
-    report = set(f"{keys} count left absorbed emitted momentum fan twist lost".split())  # Part F's four
+    report = set(
+        f"{keys} count left absorbed emitted momentum fan twist lost source recoil".split()
+    )  # Part F's four, Part G's two
     assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
     holes = [f for f in lines if f["event"] == "face" and f["interval"] == 41]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}

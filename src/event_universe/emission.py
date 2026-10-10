@@ -7,7 +7,8 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe.core.ports import PORTS, SIDES
+from event_universe import node
+from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features.click import (
     SCALE_OF,
@@ -39,16 +40,42 @@ class Source:
     laid: int
     increments: list[int]
     begun: int
+    emitter: int | None = (
+        None  # Part G: the emitting body by its number among the world's bodies, its NodeBooks `meeting.books_named`; None where the lay is the file's
+    )
 
 
-def emitted_quantum(board: Lattice, item: Item) -> None:
-    """A spread record given `delta` whole quanta at the Nodes named, the one lay of the act's lists (a quantum given into a beam, the record's booked share at the Node above its quantum W_rec, is read in the books alone and never reaches this lay, the undepleted beam, `meeting.written`, `meeting.faced`): by the count at the pair the item names (`laid_by_count`, the conversion's records out at their massless pair) or, where it names none, each a source in time (the mathematician's hand with the advisor's second, two hands; ALGEBRA.md, The click writes on the lattice (j), the emission): the quantum is laid at the one Node over the span tau the item carries (the emission's declared lifetime, the frequency's width 1 / tau), the source's level A_t r_t div R added to the record's level now each interval, the reference phasor r advanced by the declared resonance Omega (the pair at the Node then (A_t r_t, A_(t-1) r_(t-1)) by Rule3's own step), the total of the squared amplitudes S = (2 / 3) T sin k, the form the source radiates on the width-one guide, one quantum (`radiated_total`, the mathematician's hand with the advisor's second, two hands, in place of the invariant's S = T / (2 sin Omega), which laid 1.36 and 2.41 quanta at [4, 5] and [9, 10]), laid with the carry, A_t = (the largest x with x^2 <= (S t) div tau - SUM_(u < t) A_u^2), so that the cumulative sum tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the first interval's level added to the record's first line at once, the following by `sourced` at each interval with their own lay lines; the record's count in the books up by the change at once; a record that held no count at the books' origin gets its unit here, at its first source-in-time lay, the emission's own W_c sin Omega (`born_unit`, the advisor's word), and holds it from there (a lay by the count returns before this and keeps W_c, right for a massless lay, the record staying among the empty; no shipped world lays both on one family)."""
+@dataclass
+class Emitter:
+    """One emitting body's entry in the emitters' book of a light family (Part G, both hands' lines of 2026-10-10, the click with two receivers, 6091663984 and 6091670073, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources; the books hold the quanta each emitter gave that still stand in the record, per family, one record per family summing the sources' interfering waves): the body by its number among the world's bodies (its family index and NodeBooks by `meeting.books_named`), the quanta it gave that still stand in the record (`outstanding`, up by one per quantum laid, down by one per click that draws this body as the piece's source, the entry kept after the Source's span is spent until its count reaches 0), and whether the recoil was paid at the lay (`paid`: the directed packet's, its direction the emission's own draw, folded by -P_a at birth, `laid_packet`, `meeting.written`; the one-Node source in time pays none, the whole recoil the click's). The file's lays (one_photon, two_slits, bell: no body) register nothing. Integers only. OPEN by name (both hands): the finer weight, the source's share at the taker's region, needs one record per source."""
+
+    body: int
+    outstanding: int
+    paid: bool
+
+
+def registered(
+    book: dict[int, list[Emitter]], family: int, body: int | None, paid: bool, count: int
+) -> None:
+    """The emitters' book of a light family gains `count` quanta given by `body` with the recoil `paid` or not: the body's entry up by the count, or a new entry (Part G; `credit.Books.emitters`); nothing where the lay names no body (the file's lay, the conversion's records out)."""
+    if body is None:
+        return
+    for emitter in book.setdefault(family, []):
+        if emitter.body == body and emitter.paid == paid:
+            emitter.outstanding += count
+            return
+    book[family].append(Emitter(body, count, paid))
+
+
+def emitted_quantum(board: Lattice, item: Item) -> tuple[int, int, int] | None:
+    """A spread record given `delta` whole quanta at the Nodes named, the one lay of the act's lists (a quantum given into a beam, the record's booked share at the Node above its quantum W_rec, is read in the books alone and never reaches this lay, the undepleted beam, `meeting.written`, `meeting.faced`): by the count at the pair the item names (`laid_by_count`, the conversion's records out at their massless pair) or, where it names none, each a source in time (the mathematician's hand with the advisor's second, two hands; ALGEBRA.md, The click writes on the lattice (j), the emission): the quantum is laid at the one Node over the span tau the item carries (the emission's declared lifetime, the frequency's width 1 / tau), the source's level A_t r_t div R added to the record's level now each interval, the reference phasor r advanced by the declared resonance Omega (the pair at the Node then (A_t r_t, A_(t-1) r_(t-1)) by Rule3's own step), the total of the squared amplitudes S = (2 / 3) T sin k, the form the source radiates on the width-one guide, one quantum (`radiated_total`, the mathematician's hand with the advisor's second, two hands, in place of the invariant's S = T / (2 sin Omega), which laid 1.36 and 2.41 quanta at [4, 5] and [9, 10]), laid with the carry, A_t = (the largest x with x^2 <= (S t) div tau - SUM_(u < t) A_u^2), so that the cumulative sum tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the first interval's level added to the record's first line at once, the following by `sourced` at each interval with their own lay lines; the record's count in the books up by the change at once; a record that held no count at the books' origin gets its unit here, at its first source-in-time lay, the emission's own W_c sin Omega (`born_unit`, the advisor's word), and holds it from there (a lay by the count returns before this and keeps W_c, right for a massless lay, the record staying among the empty; no shipped world lays both on one family). Part G (both hands' lines of 2026-10-10, the click with two receivers): the emitting body named by the item (`Item.emitter`) enters the emitters' book of the light family with the quanta it gave (`registered`, `Emitter`), the source in time with its recoil unpaid (the one-Node lay is even about its Node, Rule3 spreads it alike both ways, P_lay = 0 to the floor: the whole recoil is the click's, nature's order) and the directed packet with its recoil paid at the lay; returns the packet's lattice momentum per axis at birth in the current's unit (`laid_packet`, the write step folds the emitter by its negative, `meeting.written`), None for the source in time and the lay by the count."""
     if item.pair is not None:
         laid_by_count(board, item)
-        return
+        return None
     if item.direction is not None:
-        laid_packet(board, item)
-        return
+        born = laid_packet(board, item)
+        registered(board.credit.emitters, item.family, item.emitter, True, item.delta * len(item.nodes))
+        return born
     assert item.resonance is not None and item.span > 0  # a lay names its resonance and its span
     action = board.world.quantum_action
     if (
@@ -65,12 +92,22 @@ def emitted_quantum(board: Lattice, item: Item) -> None:
         for _ in range(item.delta):
             where = (int(at[0]), int(at[1]), int(at[2]))
             source = Source(
-                item.family, where, item.resonance, total, item.span, 0, increments, board.interval
+                item.family,
+                where,
+                item.resonance,
+                total,
+                item.span,
+                0,
+                increments,
+                board.interval,
+                item.emitter,
             )
             laid_increment(board, source)
             if source.laid < source.span:
                 board.credit.sources.append(source)
+    registered(board.credit.emitters, item.family, item.emitter, False, item.delta * len(item.nodes))
     board.credit.counts[item.family] += item.delta
+    return None
 
 
 def radiated_total(action: int, resonance: tuple[int, int]) -> int:
@@ -114,8 +151,8 @@ def laid_by_count(board: Lattice, item: Item) -> None:
     board.credit.counts[item.family] += item.delta
 
 
-def laid_packet(board: Lattice, item: Item) -> None:
-    """The open board's emission (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_detector also needs to enter"): the emitted quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the packet lay's form (ALGEBRA.md, The packet lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_detector_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.emitted`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = (the largest x with x^2 <= (R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeDetector's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level (the largest x with x^2 <= R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = (the largest x with x^2 <= R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, (the largest x with x^2 <= R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root (the largest x with x^2 <= den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the one lay act over the packet's Nodes (`lay.laid`, the division act in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest; the loader admits no emission whose span is below its period, `loader/node_detector_declaration.holding_period`), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent) (ALGEBRA.md, The click writes on the lattice (5), the emission lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet by the act's write step, the remainder as it stands, one `lay` line per Node changed for the host's tool to cross; the record's count in the books up by the change."""
+def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
+    """The open board's emission (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_detector also needs to enter"): the emitted quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the packet lay's form (ALGEBRA.md, The packet lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_detector_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`meeting.emitted`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = (the largest x with x^2 <= (R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeDetector's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level (the largest x with x^2 <= R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = (the largest x with x^2 <= R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, (the largest x with x^2 <= R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root (the largest x with x^2 <= den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the one lay act over the packet's Nodes (`lay.laid`, the division act in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest; the loader admits no emission whose span is below its period, `loader/node_detector_declaration.holding_period`), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent) (ALGEBRA.md, The click writes on the lattice (5), the emission lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet by the act's write step, the remainder as it stands, one `lay` line per Node changed for the host's tool to cross; the record's count in the books up by the change. Part G (both hands' lines of 2026-10-10, the click with two receivers, the emission's write): the directed packet carries 2 T sin k_z per quantum at birth because its direction is the emission's own draw, so -P belongs to the emission's write; the packet's lattice momentum per axis is read from the lay's own terms as written, the corrected changes `lay.laid` returns on a record of their own (`node.momentum_of`, the antisymmetric sum of the Link currents, no sine), summed over the item's quanta in the current's unit num, and returned for the write step to fold the emitting body by its negative (`meeting.written`, `meeting.folded_source`); the hands' 1.85 T at birth in packet_emission is read, not declared."""
     assert item.resonance is not None and item.span > 0 and item.width and item.direction is not None
     num, den = item.resonance
     family, action = board.families[item.family], board.world.quantum_action
@@ -127,6 +164,7 @@ def laid_packet(board: Lattice, item: Item) -> None:
     sine = largest_below(scale * scale * (den * den - num * num))  # R sin Omega den, at the scale
     half_scale = division_forward(scale, 2, 0)[0]
     half_wall = division_forward(scale * scale * den, 2, 0)[0]
+    born = [0] * AXES
     for at in item.nodes:
         for _ in range(item.delta):
             section = [
@@ -157,8 +195,17 @@ def laid_packet(board: Lattice, item: Item) -> None:
                     nows[(here := tuple(np.add(there, board.offset)))] = slice_at[0]
                     befores[here], weights[here] = slice_at[1], slice_at[2]
             origin = None  # the remainders as they stand: the packet adds to light's record (the branch's lay)
-            laid(board, item.family, 0, (nows, befores), weights, origin)
+            now, before = laid(board, item.family, 0, (nows, befores), weights, origin)
+            # the packet's own P at birth, the lay's terms on a record of their own (no remainder enters)
+            own = node.Record(
+                np.asarray(now, dtype=object),
+                np.asarray(before, dtype=object),
+                np.zeros(board.shape, dtype=object),
+            )
+            read = node.momentum_of(family.pair[0], [own], board.wrap)
+            born = [a + b for a, b in zip(born, read, strict=True)]
     board.credit.counts[item.family] += item.delta
+    return born[0], born[1], born[2]
 
 
 def _offsets(axis: int, width: int, at: Node, shape: Node) -> list[tuple[int, int, int]]:

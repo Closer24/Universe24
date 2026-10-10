@@ -13,7 +13,7 @@ from event_universe import meeting, node, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.reports import LOST_TO_DECLARATION, LOST_TO_TAKER
+from event_universe.reports import LOST_TO_DECLARATION, LOST_TO_LAY, LOST_TO_TAKER
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import EVENTS
@@ -296,7 +296,7 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
 
 
 def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp_path, monkeypatch):
-    """Task 3: (a) on one_photon at the click of 48 the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` is "P lost to the taker" and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `meeting.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
+    """Task 3: (a) on one_photon at the click of 48 the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `meeting.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
@@ -309,7 +309,8 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     piece, twist, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
     quarter = meeting.quarter_turn(board)
     assert before == (0, 0, 0) and after[0] < 0 and after[0] * piece[0] > 0
-    assert lost == LOST_TO_TAKER and twist == [-quarter, 0, 0] and abs(after[0]) < abs(piece[0])
+    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and twist == [-quarter, 0, 0]  # Part G: the lay's case
+    assert abs(after[0]) < abs(piece[0])
     print(
         f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {twist[0]} "
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
@@ -394,7 +395,7 @@ def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:
 
 
 def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monkeypatch):
-    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over 20 seeds of the draw, the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` is None on every pair line, nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
+    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over 20 seeds of the draw, the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` carries nothing but Part G's "recoil lost to the lay" on every pair line (the pair is the file's lay), nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
     board = Lattice(load_world(EVENTS / "bell" / "bell_a_b.json"), [].append)
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
@@ -410,7 +411,9 @@ def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monke
         left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
         sums.append([a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)])
         realised.append(f"{left['realised']} {right['realised']}")
-        lost += [c["lost"] for c in credits if c["lost"] is not None]
+        lost += [
+            r for c in credits if c["lost"] for r in c["lost"] if r != LOST_TO_LAY
+        ]  # Part G: the lay's
         size = abs(left["momentum"][0])
         floors.append(
             sum(

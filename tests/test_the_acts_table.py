@@ -215,7 +215,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # meeting.py
     ("meeting.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("meeting.py", "absorbed", "division_forward"): "D",  # the unit over the norm
-    ("meeting.py", "fan_momentum", "division_forward"): "D",  # the fan's P over num, once
+    ("meeting.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
     ("meeting.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
     ("meeting.py", "quarter_turn", "phase.iterate"): "S",  # the bisection's probe on the cosine
     ("meeting.py", "folded_lines", "phase.iterate"): "D",  # the fold's pair, once per offset
