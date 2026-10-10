@@ -13,7 +13,12 @@ from event_universe import meeting, node, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.reports import LOST_TO_DECLARATION, LOST_TO_LAY, LOST_TO_TAKER
+from event_universe.reports import (
+    LOST_TO_DECLARATION,
+    LOST_TO_LAY,
+    LOST_TO_REGION,
+    LOST_TO_TAKER,
+)
 from event_universe.world_files import input_digest, load_world
 from tests import laws
 from tests.laws import EVENTS
@@ -412,8 +417,8 @@ def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monke
         sums.append([a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)])
         realised.append(f"{left['realised']} {right['realised']}")
         lost += [
-            r for c in credits if c["lost"] for r in c["lost"] if r != LOST_TO_LAY
-        ]  # Part G: the lay's
+            r for c in credits if c["lost"] for r in c["lost"] if r != LOST_TO_REGION
+        ]  # Part H, MUST 5: a region taker books the piece's P lost to the region (no +p of its own); Part G's "recoil lost to the lay" is a body's reading
         size = abs(left["momentum"][0])
         floors.append(
             sum(

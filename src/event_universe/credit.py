@@ -18,7 +18,7 @@ from event_universe.front import Front
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
-from event_universe.meeting import Item, click_act, fan_momentum, recoiled
+from event_universe.meeting import Item, click_act, fan_momentum, unpaid
 from event_universe.node_detector import NodeBooks, books_of, drawn_weights, piece_momentum
 from event_universe.reports import PORT_NAMES, credit
 
@@ -262,7 +262,7 @@ def click_node(
     piece: list[int] | None = None,
     fan: list[int] | None = None,
 ) -> list[Node]:
-    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write); one credit line, its result the window, the node_detector's own proper time at the close and the index of the window closed (`clocked_regions`, the node_detector's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone), and Part F's two readings, the piece's p_a per axis in T's unit, one count's momentum read at the close from the record's momentum terms and share at the region (`piece`, `node_detector.piece_momentum`) and the record's P_a over the board at the close (`fan`, `fan_momentum`); Part G (both hands' lines of 2026-10-10, the click with two receivers): after the Node, the piece's source drawn among the record's emitters by their outstanding quanta through the same generator (`draw`; one emitter, no draw), its part folded by -p_a at the click's tick by the same twist, and the credit line's `source`, `recoil` and the source's reading in `lost` (`meeting.recoiled`; a region taker has no part to twist, the taker's +p_a OPEN by name for a region of Nodes alone); the write itself the act's (`meeting.click_act`, the face at that Node); returns the Node, none where nothing entered."""
+    """The Node of one click at a region and its credit line: among the region's boundary Nodes the one the credited quantum entered through, drawn by the window's inflows per Node floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write); one credit line, its result the window, the node_detector's own proper time at the close and the index of the window closed (`clocked_regions`, the node_detector's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone), and Part F's two readings, the piece's p_a per axis in T's unit, one count's momentum read at the close from the record's momentum terms and share at the region (`piece`, `node_detector.piece_momentum`) and the record's P_a over the board at the close (`fan`, `fan_momentum`); Part G (both hands' lines of 2026-10-10, the click with two receivers): after the Node, the piece's source drawn among the record's emitters by their outstanding quanta through the same generator (`draw`; one emitter, no draw), its part folded by -p_a at the click's tick by the same twist, and the credit line's `source`, `recoil` and the source's reading in `lost` (`meeting.recoiled` at a body's click); Part H, MUST 5 (both hands' lines of 2026-10-10 on the whole trial): a region taker has no part to twist, so it takes no +p_a of its own, and -p with no +p would break the law, so the region folds no source: the source is drawn and named all the same, its outstanding count down by one, `recoil` reads the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION` (`meeting.unpaid`); OPEN by name: the region's +p, a declared region's record of the momentum it took, which no shipped screen or side carries; the write itself the act's (`meeting.click_act`, the face at that Node); returns the Node, none where nothing entered."""
     nodes = list(book)
     weights = drawn_weights(board, (book[at] for at in nodes))
     if sum(weights) <= 0:
@@ -270,10 +270,13 @@ def click_node(
     at = nodes[draw(board, weights)]
     books = board.credit
     left, window = books.counts[index] - quantum, books.window_of(board.interval)
+    source: str | None
+    recoil: str | None
+    lost: list[str] | None
     source, recoil, lost = None, None, None
-    if piece is not None:
-        source, recoil, reading = recoiled(board, index, piece, lambda shares: draw(board, shares))
-        lost = [reading] if reading is not None else None
+    if piece is not None:  # Part H, MUST 5: the region takes no +p and folds no source
+        source, recoil, reading = unpaid(board, index, lambda shares: draw(board, shares))
+        lost = [reading]
     if board.output is not None:
         family, proper = board.families[index].name, books.clocks.get((index, name), [0, 0])[0]
         proper_window = (window, proper, books.windows)
