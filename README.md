@@ -20,7 +20,7 @@ A world is read only through clicks: declared counting regions, NodeDetectors, w
 
 ## The paper
 
-The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), archived on Zenodo and at the tag v1.1.0, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex Universe24_Paper.tex && TEXINPUTS=sn: pdflatex Universe24_Paper.tex   # the same for Universe24_Supplement.tex
@@ -52,6 +52,12 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 ```
 
 To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
+
+## The engine V2
+
+The engine in progress, on the branch engine-v2-local, is Rule3 and nothing else: every act on a level is Rule3's one carried division with the remainder kept, and what remains is a coefficient's single division or a search by comparing integers. In plain words: the shears that turned a record are gone, the rotation act is gone, no square root is taken anywhere, no sine or cosine is called, no table is read; the phase of a charged record lives on the Links as a pair of Rule3 lines turned one fixed angle at a time, and gravity's odd lines ride the same fold. Three tests keep it so: no root anywhere, no shear and no rotation act, and a table that lists every division in the engine with its kind and fails on any new one. Momentum is conserved at a click: Rule3 conserves a lattice momentum exactly, and at a click the taker is given one whole piece's momentum by a twist of its lines, the loss booked by name where a declared instrument cannot carry it; what a body measures of another in two-way clicks never exceeds c, Lorentz's composition exactly. Main is the engine in progress and the paper's engine is the tag v1.1.0; the branch enters main only on the owner's word, after both hands have read the whole diff.
+
+The next steps, in order: the documents brought to the engine (the law's lines, the engine's document, this page); the click with two receivers, the source's half of the momentum (the taker +p, the source -p); the time paper, the arrow of time as the detector's record, its blind and its run.
 
 ## The two slits' universe
 

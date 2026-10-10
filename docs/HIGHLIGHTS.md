@@ -31,6 +31,16 @@ points at the law, the law's line governs and no formula is restated here.
 - Runs and tests are headless; a look at a run is a page built from the output file outside the repository by the look tools.
 - A world stays in the repository only if it is in the paper or on a test; whatever does not load is deleted.
 
+## The engine V2
+
+- The engine on the branch engine-v2-local is Rule3 only: every act on a level is Rule3's one carried division with the remainder kept, everything else a coefficient's one division or a search by comparison; integers only, no shear, no rotation act, no root, no sine or cosine, no table; the one declared thing in a run is the draw (record 6079837569).
+- Three gates keep it on every run and are the contributor's law: no root anywhere, no shear and no rotation act, and the acts table that lists every division in the engine with its kind, R, D or S, and fails on any new one (record 6079304654).
+- The sign's phase lives on the Links as a Rule3 pair at one fixed angle, turned by the potential's difference across the Link, and gravity's odd lines ride the same fold; the time turn and its shears are gone, Coulomb reproduced (records 6077767144 and 6078942835).
+- Momentum at the click: Rule3 conserves a lattice momentum exactly, a theorem; at a click the taker is given one whole piece's momentum by a twist of its lines found on the phase line, and where a declared instrument cannot carry it the loss is booked by name; the credit line carries momentum, fan, twist and lost; the source's half, the click with two receivers, is the step in progress (records 6084019725, 6085857164 and 6091616510).
+- What a body measures of another in two-way clicks is Lorentz's composition at c exactly, every pair, never above c; the one-way reading departs at second order by a named size; a material ruler is open (record 6083394354).
+- The arrow of time is the detector's record, shown on V2: with its books the lattice runs back exactly through a click, without them the mismatch starts at the erasing front's reach and grows one Link per interval (record 6080173687).
+- Main is the engine in progress and the paper's engine is the tag v1.1.0; the branch enters main only on the owner's word, after both hands' lines on the whole diff.
+
 ## The law and the documents
 
 - The law is docs/ALGEBRA.md, one algebraic line per rule, and the engine is its implementation as of the freeze at 441b2399, and nothing else, no longer updated, the lines entered after the freeze not in it; every rule passes the three tests (generic, vector, local) before it enters, and a hypothesis that needs more is stated under its own name.
@@ -93,6 +103,6 @@ points at the law, the law's line governs and no formula is restated here.
 - The paper takes nothing of the open bins: the pair of two bound records and the cross term are hypotheses under their own names in the law and outside the paper until a world has run at two hands; the radiated share's coefficient and the holders' balance stand in the supplement as named open items with their status; what is printed stays as it is.
 - The paper claims nowhere beyond what was shown and names which experiments ran by Rule3.
 - The paper claims only what cannot be killed; what does not endanger us is the guideline for every sentence.
-- The title is "Universe24: one simple rule, the formulas it shares with nature and adds", with six keywords, the field Foundations of Physics, in the author's voice; arXiv only with the journal's reference (the owner's word of 2026-10-08).
+- The title is "Universe24: one simple rule, the formulas it shares with nature and adds", with six keywords, in the author's voice; the paper is archived on Zenodo and at the tag v1.1.0 (the owner's word of 2026-10-09: Zenodo and GitHub are enough).
 - The paper's gate (the marks against the key, the struck phrases asserted absent, the twins asserted present) runs as a test on every pull request; every derived or theorem mark carries its fence, the fence following the sentence's object.
 - The quantum computer is not for the paper.
