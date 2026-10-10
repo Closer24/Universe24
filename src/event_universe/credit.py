@@ -12,7 +12,7 @@ import numpy as np
 from event_universe import growth, share
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
-from event_universe.emission import Emitter, Source
+from event_universe.emission import Emitter, Source, registered
 from event_universe.features.click import Face, drawn
 from event_universe.front import Front
 from event_universe.loader.derived import count_wall
@@ -84,7 +84,7 @@ class Books:
 
     @classmethod
     def of(cls, board: Lattice) -> Books:
-        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, every other book empty."""
+        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, the emitters' book holding the file's lay for every family laid with a count, `Emitter(None, count, False)` (Part H, the hands' SHOULD: a laid light beside an emitter is drawn between the body and the lay by their counts, `meeting.drawn_emitter`; the lay drawn is the file's, no receiver, `THE_LAY` with `LOST_TO_LAY`), every other book empty."""
         found = board.world.draw
         counts = {index: counted(board, index, board.laid[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.node_detectors if r.pattern]
@@ -92,6 +92,10 @@ class Books:
         units = {
             index: record_unit(board, index, board.laid[index], counts[index]) for index in board.order
         }
+        emitters: dict[int, list[Emitter]] = {}
+        for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
+            if counts[index] > 0:
+                registered(emitters, index, None, False, counts[index])
         return cls(
             found,
             0,
@@ -106,6 +110,7 @@ class Books:
             [],
             units,
             {index for index in board.order if counts[index] <= 0},
+            emitters=emitters,
         )
 
 

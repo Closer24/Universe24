@@ -105,7 +105,9 @@ def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> in
     num, den = pair
     gap = den * den - num * num
     if gap:
-        half = count * action * den  # 2 laid A^2 sqrt(gap) = count T den: the root of the whole product
+        half = (
+            count * action * den
+        )  # 2 laid A^2 s = count T den with s^2 = gap: the search on the whole product
         return largest_below(int(division_forward(half * half, 2 * laid * 2 * laid * gap, 0)[0]))
     return int(division_forward(count * action, 2 * laid, 0)[0])
 

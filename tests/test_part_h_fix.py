@@ -4,12 +4,18 @@ import time
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import emission, meeting, node, world_files
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.reports import LOST_TO_LAY, LOST_TO_REGION, LOST_TO_TAKER, UNPAID_BY_REGION
+from event_universe.reports import (
+    LOST_TO_LAY,
+    LOST_TO_REGION,
+    LOST_TO_TAKER,
+    THE_LAY,
+    UNPAID_BY_REGION,
+)
 from event_universe.world_files import load_world
 from tests import laws
 from tests import test_part_c_phase_line as coulomb
@@ -219,4 +225,38 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
         f"Part H (MUST 3): the Link's count on the ramp L = x: at the content 0 the clock p_0 = {found[0][0]} = Gamma and n = {found[0][1]} (plain {found[0][2]}); "
         f"at the uniform level 600 the clock p_0 = {found[600][0]}, the end's turn factor at the Node 100 {found[600][3]} against its level {found[600][4]}, "
         f"n = {found[600][1]} (plain {found[600][2]}); the phase pairs after the act equal the formula's at every Node; the two-clock closure not rerun, OPEN"
+    )
+
+
+def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
+    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 48 draws the lay (`source` the lay, the count down by one, the board the Part G test's). The emit-and-take world: after body 0's emission the book holds body 0 at 1; the file's lay of one quantum entered beside it, the draw's weights read [1, 1] through `meeting.drawn_emitter`."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board, lines = one_photon_board(tmp_path)
+    photon = next(i for i, f in enumerate(board.families) if f.name == "photon")
+    laid = board.credit.counts[photon]
+    assert board.credit.emitters[photon] == [emission.Emitter(None, laid, False)] and laid >= 1
+    for _ in range(48):
+        board.step()
+    click = next(c for c in lines if c["event"] == "credit")
+    assert click["source"] == THE_LAY and click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
+    assert board.credit.emitters[photon][0].outstanding == laid - 1
+    path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=240)
+    board = Lattice(load_world(path), (lines := []).append)
+    light = next(i for i, f in enumerate(board.families) if f.name == "pulse")
+    assert light not in board.credit.emitters  # nothing laid by the file
+    while not any(c["event"] == "credit" and c["emitted"] == "pulse" for c in lines):
+        board.step()
+    assert board.credit.emitters[light] == [emission.Emitter(0, 1, False)]
+    emission.registered(board.credit.emitters, light, None, False, 1)  # the file's lay of one quantum
+    weights: list[list[int]] = []
+
+    def pick(found: list[int]) -> int:
+        weights.append(list(found))
+        return 1
+
+    drawn = meeting.drawn_emitter(board, light, pick)
+    assert weights == [[1, 1]] and drawn is not None and drawn.body is None and drawn.outstanding == 0
+    print(
+        f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 48 source {click['source']!r} and the lay's count {laid - 1}; "
+        f"the emit-and-take world at the emission ({board.interval}): body 0 at 1 beside the lay's 1, the draw's weights {weights[0]}"
     )

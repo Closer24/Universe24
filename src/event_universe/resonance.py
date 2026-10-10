@@ -109,12 +109,8 @@ def hopped(
     sine: int,
     amplitude: int,
     carried: tuple[int, int] = (0, 0),
-    direction: int = 1,
 ) -> tuple[int, int, int, int]:
     """The labels (u, v) hopped by the pair (C, S) at the magnitude X with one carried division per label (ALGEBRA.md #the-four-acts, the division act, kind R, a carried division on levels): (u', v') = ((C u - S v + r_u) div X, (S u + C v + r_v) div X), the remainders r_u, r_v in [0, X) kept in the books between turns (`NodeBooks.carried`), so that each label's floor is carried to the next window and not lost; counterclockwise for a positive angle, as the three shears turned. Direction -1 hops by the conjugate pair (C, -S), the angle's opposite, with the same carried division: the back-turn to the labels' floor and not bit for bit (the two labels are divided by X, not multiplied, so the remainders before the hop are not recoverable from the remainders after it; tests/test_part_c2_window.py states the reading). Returns (u', v', r_u', r_v')."""
-    if direction not in (1, -1):
-        raise ValueError(f"the hop's direction is 1 or -1, not {direction}")
-    sine = direction * sine
     real, carried_real = division_forward(cosine * u - sine * v, amplitude, carried[0])
     imaginary, carried_imaginary = division_forward(sine * u + cosine * v, amplitude, carried[1])
     return int(real), int(imaginary), int(carried_real), int(carried_imaginary)

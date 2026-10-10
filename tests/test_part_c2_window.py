@@ -32,7 +32,10 @@ def hop(
     u: int, v: int, turn: int, carried: tuple[int, int], direction: int = 1
 ) -> tuple[int, int, int, int]:
     """The labels hopped by the window's pair at `turn` acts of theta_0, the remainders carried."""
-    return resonance.hopped(u, v, *resonance.window_pair(turn, GAMMA, X), carried, direction)
+    cosine, sine, amplitude = resonance.window_pair(turn, GAMMA, X)
+    return resonance.hopped(
+        u, v, cosine, direction * sine, amplitude, carried
+    )  # back: the conjugate pair
 
 
 def test_the_windows_turn_is_one_hop_at_the_phase_lines_angle():

@@ -49,7 +49,7 @@ class Source:
 class Emitter:
     """One emitting body's entry in the emitters' book of a light family (Part G, both hands' lines of 2026-10-10, the click with two receivers, 6091663984 and 6091670073, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources; the books hold the quanta each emitter gave that still stand in the record, per family, one record per family summing the sources' interfering waves): the body by its number among the world's bodies (its family index and NodeBooks by `meeting.books_named`), the quanta it gave that still stand in the record (`outstanding`, up by one per quantum laid, down by one per click that draws this body as the piece's source, the entry kept after the Source's span is spent until its count reaches 0), and whether the recoil was paid at the lay (`paid`: the directed packet's, its direction the emission's own draw, folded by -P_a at birth, `laid_packet`, `meeting.written`; the one-Node source in time pays none, the whole recoil the click's). The file's lays (one_photon, two_slits, bell: no body) register nothing. Integers only. OPEN by name (both hands): the finer weight, the source's share at the taker's region, needs one record per source."""
 
-    body: int
+    body: int | None  # None: the file's lay, entered at the books' start with the laid count (Part H)
     outstanding: int
     paid: bool
 
@@ -57,9 +57,7 @@ class Emitter:
 def registered(
     book: dict[int, list[Emitter]], family: int, body: int | None, paid: bool, count: int
 ) -> None:
-    """The emitters' book of a light family gains `count` quanta given by `body` with the recoil `paid` or not: the body's entry up by the count, or a new entry (Part G; `credit.Books.emitters`); nothing where the lay names no body (the file's lay, the conversion's records out)."""
-    if body is None:
-        return
+    """The emitters' book of a light family gains `count` quanta given by `body` with the recoil `paid` or not: the body's entry up by the count, or a new entry (Part G; `credit.Books.emitters`); a lay naming no body enters the lay's own entry, `body` None (Part H, the hands' SHOULD: the file's lay entered once at the books' start with the laid count, `credit.Books.of`, so a laid light beside an emitter is drawn between the body and the lay by their counts, `meeting.drawn_emitter`; no shipped list reaches here with no body otherwise, the conversion's records out being laid by the count before any registration)."""
     for emitter in book.setdefault(family, []):
         if emitter.body == body and emitter.paid == paid:
             emitter.outstanding += count

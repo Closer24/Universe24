@@ -377,7 +377,7 @@ def recoiled(
     """The piece's source at a click and its fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources): among the light family's emitters with outstanding quanta in the record (`credit.Books.emitters`, `emission.Emitter`) one is drawn by those counts through `pick`, the click's own generator as the Node is drawn (the body's for a record's click, `parted`; the credit's for a region's, `credit.click_node`; one emitter, weight 1, no draw), one taken from its outstanding count, and its part folded by -p_a at the click's tick by the same twist (`folded_source`); where its recoil was paid at the lay (the directed packet) nothing more is folded and `PAID_AT_EMISSION` is read; where no emitter stands for the family the piece is the file's lay's, no receiver, `THE_LAY` with -p_a as integers and `LOST_TO_LAY`. Returns the source's name (`body n` by its number in the world's order, or the lay), the recoil per axis and the reading for `lost` (None where the source carries it). OPEN by name (both hands): the per-source share at the taker's region (one record per source), the fan's remainder on a board uneven about the source, the front's delay."""
     owed = [-int(value) for value in momentum]
     emitter = drawn_emitter(board, family, pick)
-    if emitter is None:
+    if emitter is None or emitter.body is None:  # the file's lay, drawn or alone: no receiver
         return THE_LAY, owed, LOST_TO_LAY
     name = f"{BODY} {emitter.body}"
     if emitter.paid:
@@ -387,7 +387,7 @@ def recoiled(
 
 
 def drawn_emitter(board: Lattice, family: int, pick: Callable[[list[int]], int]) -> Emitter | None:
-    """The piece's source drawn among the light family's emitters with outstanding quanta in the record by those counts through `pick` (one emitter, no draw; `recoiled`), one taken from its outstanding count; None where no body emitted the family's light, the file's lay's."""
+    """The piece's source drawn among the light family's emitters with outstanding quanta in the record by those counts through `pick` (one emitter, no draw; `recoiled`), one taken from its outstanding count; the file's lay stands among them as its own entry with the laid count (`credit.Books.of`, body None, Part H), so a laid light beside an emitter is drawn between the body and the lay by their counts; None where no entry stands."""
     standing = [e for e in board.credit.emitters.get(family, []) if e.outstanding > 0]
     if not standing:
         return None
@@ -399,7 +399,7 @@ def drawn_emitter(board: Lattice, family: int, pick: Callable[[list[int]], int])
 def unpaid(board: Lattice, family: int, pick: Callable[[list[int]], int]) -> tuple[str, str, str]:
     """A region taker's reading of the piece's source (Part H, MUST 5, both hands' lines of 2026-10-10 on the whole trial): a declared region (the two slits' screens, bell's sides) has no part of its own to twist, so it takes no +p and the law's two receivers are not there to pay; folding the source by -p alone would break the law, so the source is drawn and named (`drawn_emitter`, its outstanding count down by one as at a body's click) and nothing is folded: returns the source's name (`body n` or the lay), the recoil's one word `UNPAID_BY_REGION` and the reading `LOST_TO_REGION` for `lost`. OPEN by name: the region's +p (a region's record of the taken piece's momentum, which no declared screen carries)."""
     emitter = drawn_emitter(board, family, pick)
-    name = THE_LAY if emitter is None else f"{BODY} {emitter.body}"
+    name = THE_LAY if emitter is None or emitter.body is None else f"{BODY} {emitter.body}"
     return name, UNPAID_BY_REGION, LOST_TO_REGION
 
 
