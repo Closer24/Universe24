@@ -1,0 +1,286 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+9,
+28
+]
+],
+"date-time": "2026-09-28T22:39:48Z",
+"timestamp": 1790635188757,
+"version": "4.1.0"
+},
+"reference-count": 14,
+"publisher": "MDPI AG",
+"issue": "5",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2019,
+5,
+4
+]
+],
+"date-time": "2019-05-04T00:00:00Z",
+"timestamp": 1556928000000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "https://creativecommons.org/licenses/by/4.0/"
+}
+],
+"funder": [
+{
+"DOI": "10.13039/100009566",
+"name": "Foundational Questions Institute",
+"doi-asserted-by": "publisher",
+"award": [
+"2018-190485"
+],
+"award-info": [
+{
+"award-number": [
+"2018-190485"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/100009566",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Entropy"
+],
+"abstract": "<jats:p>Where was the past low-entropy of the early universe located? Contrary to some popular answers, I argue that that the dominant source of low-entropy is the fact that a single degree of freedom, the scale factor, was not at equilibrium. I also discuss possible interpretations of the \u201cimprobability\u201d of this early low-entropy.</jats:p>",
+"DOI": "10.3390/e21050466",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2019,
+5,
+13
+]
+],
+"date-time": "2019-05-13T11:00:57Z",
+"timestamp": 1557745257000
+},
+"page": "466",
+"update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+"source": "Crossref",
+"is-referenced-by-count": 21,
+"title": [
+"Where Was Past Low-Entropy?"
+],
+"prefix": "10.3390",
+"volume": "21",
+"author": [
+{
+"given": "Carlo",
+"family": "Rovelli",
+"sequence": "first",
+"affiliation": [
+{
+"name": "Centre de Physique Th\u00e9orique (CPT), Aix-Marseille Universit\u00e9, Universit\u00e9 de Toulon, CNRS, F-13288 Marseille, France"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "1968",
+"published-online": {
+"date-parts": [
+[
+2019,
+5,
+4
+]
+]
+},
+"reference": [
+{
+"key": "ref_1",
+"doi-asserted-by": "crossref",
+"unstructured": "Weinberg, S. (2008). Cosmology, Oxford University Press.",
+"DOI": "10.1093/oso/9780198526827.001.0001"
+},
+{
+"key": "ref_2",
+"doi-asserted-by": "crossref",
+"first-page": "32",
+"DOI": "10.1063/1.881363",
+"article-title": "Boltzmann\u2019s entropy and time\u2019s arrow",
+"volume": "46",
+"author": "Lebowitz",
+"year": "1993",
+"journal-title": "Phys. Today"
+},
+{
+"key": "ref_3",
+"unstructured": "Albert, D. (2000). Time and Change, Harvard University Press."
+},
+{
+"key": "ref_4",
+"unstructured": "Price, H. (1996). Time\u2019s Arrow, Oxford University Press."
+},
+{
+"key": "ref_5",
+"doi-asserted-by": "crossref",
+"first-page": "399",
+"DOI": "10.1016/j.shpsb.2006.03.002",
+"article-title": "The Past Hypothesis: Not Even False",
+"volume": "37",
+"author": "Earman",
+"year": "2006",
+"journal-title": "Stud. Hist. Philos. Mod. Phys."
+},
+{
+"key": "ref_6",
+"doi-asserted-by": "crossref",
+"first-page": "513",
+"DOI": "10.1093/bjps/axp048",
+"article-title": "Gravity, entropy, and cosmology: In search of clarity",
+"volume": "61",
+"author": "Wallace",
+"year": "2010",
+"journal-title": "Br. J. Philos. Sci."
+},
+{
+"key": "ref_7",
+"doi-asserted-by": "crossref",
+"unstructured": "Chamcham, K., Silk, J., Barrow, J., and Saunders, S. (2017). Is time\u2019s arrow perspectival?. The Philosophy of Cosmology, Cambridge University Press.",
+"DOI": "10.1017/9781316535783"
+},
+{
+"key": "ref_8",
+"doi-asserted-by": "crossref",
+"unstructured": "Binney, J., and Tremaine, S. (2008). Galactic Dynamics, Princeton University Press. [2nd ed.].",
+"DOI": "10.1515/9781400828722"
+},
+{
+"key": "ref_9",
+"unstructured": "Ernst, G., and Hutteman, A. (2009). The past hypothesis meets gravity. Time, Chance and Reduction: Philosophical Aspects of Statistical Mechanics, Cambridge Univeristity Press."
+},
+{
+"key": "ref_10",
+"unstructured": "Hawking, S.W., and Israel, W. (1979). Singularities and Time-Asymmetry. General Relativiy: an Einstein Centenary, Cambridge University Press."
+},
+{
+"key": "ref_11",
+"unstructured": "Carroll, S.M., and Chen, J. (2004). Spontaneous Inflation and the Origin of the Arrow of Time. arXiv."
+},
+{
+"key": "ref_12",
+"unstructured": "Barbour, J., Koslowski, T., and Mercati, F. (2016). Janus Points and Arrows of Time. arXiv."
+},
+{
+"key": "ref_13",
+"unstructured": "Zeh, H.D. (2016). Comment on the \u2018Janus Point\u2019 Explanation of the Arrow of Time. arXiv."
+},
+{
+"key": "ref_14",
+"doi-asserted-by": "crossref",
+"unstructured": "Rovelli, C., and Vidotto, F. (2018). Pre-Big-Bang Black-Hole Remnants and Past Low Entropy. Universe, 4.",
+"DOI": "10.3390/universe4110129"
+}
+],
+"container-title": [
+"Entropy"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://www.mdpi.com/1099-4300/21/5/466/pdf",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+10,
+11
+]
+],
+"date-time": "2025-10-11T12:49:07Z",
+"timestamp": 1760186947000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://www.mdpi.com/1099-4300/21/5/466"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2019,
+5,
+4
+]
+]
+},
+"references-count": 14,
+"journal-issue": {
+"issue": "5",
+"published-online": {
+"date-parts": [
+[
+2019,
+5
+]
+]
+}
+},
+"alternative-id": [
+"e21050466"
+],
+"URL": "https://doi.org/10.3390/e21050466",
+"relation": {},
+"ISSN": [
+"1099-4300"
+],
+"issn-type": [
+{
+"value": "1099-4300",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2019,
+5,
+4
+]
+]
+}
+}
+}

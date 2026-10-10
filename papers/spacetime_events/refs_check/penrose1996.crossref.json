@@ -1,0 +1,579 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+9
+]
+],
+"date-time": "2026-10-09T16:24:53Z",
+"timestamp": 1791563093646,
+"version": "4.3.4"
+},
+"reference-count": 43,
+"publisher": "Springer Science and Business Media LLC",
+"issue": "5",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1996,
+5,
+1
+]
+],
+"date-time": "1996-05-01T00:00:00Z",
+"timestamp": 830908800000
+},
+"content-version": "tdm",
+"delay-in-days": 0,
+"URL": "http://www.springer.com/tdm"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Gen Relat Gravit"
+],
+"published-print": {
+"date-parts": [
+[
+1996,
+5
+]
+]
+},
+"DOI": "10.1007/bf02105068",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2005,
+9,
+12
+]
+],
+"date-time": "2005-09-12T17:13:52Z",
+"timestamp": 1126545232000
+},
+"page": "581-600",
+"source": "Crossref",
+"is-referenced-by-count": 1425,
+"title": [
+"On Gravity's role in Quantum State Reduction"
+],
+"prefix": "10.1007",
+"volume": "28",
+"author": [
+{
+"given": "Roger",
+"family": "Penrose",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "297",
+"reference": [
+{
+"key": "BF02105068_CR1",
+"doi-asserted-by": "crossref",
+"first-page": "125",
+"DOI": "10.1007/BF02105148",
+"volume": "26",
+"author": "J. Anandan",
+"year": "1994",
+"unstructured": "Anandan, J. (1994).Gen. Rel. Grav. 26, 125.",
+"journal-title": "Gen. Rel. Grav."
+},
+{
+"key": "BF02105068_CR2",
+"unstructured": "Anandan, J. (1995). \u201cGravitational phase operator and cosmic strings\u201d. To appear inPhys. Rev. D."
+},
+{
+"key": "BF02105068_CR3",
+"doi-asserted-by": "crossref",
+"first-page": "33",
+"DOI": "10.1088/2058-7058/3/8/26",
+"volume": "3",
+"author": "J. S. Bell",
+"year": "1990",
+"unstructured": "Bell, J. S. (1990).Physics World 3, 33.",
+"journal-title": "Physics World"
+},
+{
+"key": "BF02105068_CR4",
+"doi-asserted-by": "crossref",
+"first-page": "62",
+"DOI": "10.1016/0003-4916(76)90057-9",
+"volume": "100",
+"author": "I. Bialynicki-Birula",
+"year": "1976",
+"unstructured": "Bialynicki-Birula, I., and Mycielski, J. (1976).Ann. Phys. (NY) 100, 62.",
+"journal-title": "Ann. Phys. (NY)"
+},
+{
+"key": "BF02105068_CR5",
+"doi-asserted-by": "crossref",
+"first-page": "166",
+"DOI": "10.1103/PhysRev.85.166",
+"volume": "85",
+"author": "D. Bohm",
+"year": "1952",
+"unstructured": "Bohm, D. (1952).Phys. Rev. 85, 166.",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "BF02105068_CR6",
+"volume-title": "The Undivided Universe",
+"author": "D. Bohm",
+"year": "1994",
+"unstructured": "Bohm, D., and Hiley, B. (1994).The Undivided Universe (Routledge, London)."
+},
+{
+"key": "BF02105068_CR7",
+"doi-asserted-by": "crossref",
+"first-page": "325",
+"DOI": "10.24033/asens.751",
+"volume": "40",
+"author": "\u00c9. Cartan",
+"year": "1923",
+"unstructured": "Cartan, \u00c9. (1923,1924). \u201cSur les vari\u00e9t\u00e9s \u00e0 connexion affine et la th\u00e9orie de la relativit\u00e9 generalis\u00e9e\u201d,Ann. \u00c9cole Norm. Sup. 40, 325,41, 1.",
+"journal-title": "Ann. \u00c9cole Norm. Sup."
+},
+{
+"key": "BF02105068_CR8",
+"unstructured": "Christian, J. (1995). \u201cDefinite events in Newton-Cartan quantum gravity\u201d Oxford University preprint."
+},
+{
+"key": "BF02105068_CR9",
+"volume-title": "Tentative d'Interpretation Causale et Nonlineaire de la Mechanique Ondulatoire",
+"author": "I. Broglie de",
+"year": "1956",
+"unstructured": "de Broglie, I. (1956).Tentative d'Interpretation Causale et Nonlineaire de la Mechanique Ondulatoire (Gauthier-Villars, Paris)."
+},
+{
+"key": "BF02105068_CR10",
+"volume-title": "The Many Worlds Interpretation of Quantum Mechanics",
+"year": "1973",
+"unstructured": "DeWitt, B. S., and Graham, R. D. (eds.) (1973).The Many Worlds Interpretation of Quantum Mechanics (Princeton University Press, Princeton)."
+},
+{
+"key": "BF02105068_CR11",
+"doi-asserted-by": "crossref",
+"first-page": "1165",
+"DOI": "10.1103/PhysRevA.40.1165",
+"volume": "40",
+"author": "L. Di\u00f3si",
+"year": "1989",
+"unstructured": "Di\u00f3si, L. (1989).Phys. Rev. A 40, 1165.",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "BF02105068_CR12",
+"volume-title": "Monographs and Textbooks in Physical Science, Lecture Notes 20",
+"author": "J. Ehlers",
+"year": "1991",
+"unstructured": "Ehlers, J. (1991). InClassical Mechanics and Relativity: Relationship and Consistency (Int. Conf. in memory of Carlo Cataneo, Elba 1989), G. Ferrarese, ed. (Monographs and Textbooks in Physical Science, Lecture Notes 20, Bibliopolis, Naples)."
+},
+{
+"key": "BF02105068_CR13",
+"doi-asserted-by": "crossref",
+"first-page": "454",
+"DOI": "10.1103/RevModPhys.29.454",
+"volume": "29",
+"author": "H. Everett",
+"year": "1957",
+"unstructured": "Everett, H. (1957).Rev. Mod. Phys. 29, 454.",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "BF02105068_CR14",
+"doi-asserted-by": "crossref",
+"first-page": "566",
+"DOI": "10.1007/BF01451608",
+"volume": "98",
+"author": "K. Friedrichs",
+"year": "1927",
+"unstructured": "Friedrichs, K. (1927).Math. Ann. 98, 566.",
+"journal-title": "Math. Ann."
+},
+{
+"key": "BF02105068_CR15",
+"doi-asserted-by": "crossref",
+"first-page": "3345",
+"DOI": "10.1103/PhysRevD.47.3345",
+"volume": "D47",
+"author": "M. Gell-Mann",
+"year": "1993",
+"unstructured": "Gell-Mann, M., and Hartle, J. B. (1993).Phys. Rev. D 47, 3345.",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "BF02105068_CR16",
+"doi-asserted-by": "crossref",
+"first-page": "470",
+"DOI": "10.1103/PhysRevD.34.470",
+"volume": "D34",
+"author": "G. C. Ghirardi",
+"year": "1986",
+"unstructured": "Ghirardi, G. C., Rimini, A. and Weber, T. (1986).Phys. Rev. D 34, 470.",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "BF02105068_CR17",
+"doi-asserted-by": "crossref",
+"first-page": "1057",
+"DOI": "10.1103/PhysRevA.42.1057",
+"volume": "A42",
+"author": "G. C. Ghirardi",
+"year": "1990",
+"unstructured": "Ghirardi, G. C., Grassi, R., and Rimini, A. (1990).Phys. Rev. A 42, 1057.",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "BF02105068_CR18",
+"doi-asserted-by": "crossref",
+"first-page": "219",
+"DOI": "10.1007/BF01015734",
+"volume": "36",
+"author": "R. Griffiths",
+"year": "1984",
+"unstructured": "Griffiths, R. (1984).J. Stat. Phys. 36, 219.",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "BF02105068_CR19",
+"doi-asserted-by": "crossref",
+"DOI": "10.1007/978-3-642-97306-2",
+"volume-title": "Local Quantum Physics: Fields, Particles, Algebras",
+"author": "R. Haag",
+"year": "1992",
+"unstructured": "Haag, R. (1992).Local Quantum Physics: Fields, Particles, Algebras (Springer-Verlag, Berlin)."
+},
+{
+"key": "BF02105068_CR20",
+"doi-asserted-by": "crossref",
+"first-page": "390",
+"DOI": "10.1007/BF02717926",
+"volume": "A42",
+"author": "F. K\u00e1rolyh\u00e1zy",
+"year": "1966",
+"unstructured": "K\u00e1rolyh\u00e1zy, F. (1966).Nuovo Cimento A 42, 390.",
+"journal-title": "Nuovo Cimento"
+},
+{
+"key": "BF02105068_CR21",
+"first-page": "24",
+"volume": "12",
+"author": "F. K\u00e1rolyh\u00e1zy",
+"year": "1974",
+"unstructured": "K\u00e1rolyh\u00e1zy, F. (1974).Magyar Fizikai Polyoirat 12, 24.",
+"journal-title": "Magyar Fizikai Polyoirat"
+},
+{
+"key": "BF02105068_CR22",
+"first-page": "109",
+"volume-title": "Quantum Concepts in Space and Time",
+"author": "F. K\u00e1rolyh\u00e1zy",
+"year": "1986",
+"unstructured": "K\u00e1rolyh\u00e1zy, F., Frenkel, A., and Luk\u00e1cs, B. (1986). InQuantum Concepts in Space and Time, R. Penrose and C. J. Isham, eds. (Oxford University Press, Oxford), p. 109."
+},
+{
+"key": "BF02105068_CR23",
+"first-page": "63",
+"volume-title": "Quantum Gravity 2: a Second Oxford Symposium",
+"author": "T. W. B. Kibble",
+"year": "1981",
+"unstructured": "Kibble, T. W. B. (1981). InQuantum Gravity 2: a Second Oxford Symposium, C. J. Isham, R. Penrose and D. W. Sciama, eds. (Oxford University Press, Oxford), p.63."
+},
+{
+"key": "BF02105068_CR24",
+"doi-asserted-by": "crossref",
+"first-page": "157",
+"DOI": "10.1007/BF00669563",
+"volume": "2",
+"author": "A. B. Komar",
+"year": "1969",
+"unstructured": "Komar, A. B. (1969).Int. J. Theor. Phys. 2, 157.",
+"journal-title": "Int. J. Theor. Phys."
+},
+{
+"key": "BF02105068_CR25",
+"doi-asserted-by": "crossref",
+"first-page": "339",
+"DOI": "10.1103/RevModPhys.64.339",
+"volume": "64",
+"author": "R. Omn\u00e8s",
+"year": "1992",
+"unstructured": "Omn\u00e8s, R. (1992).Rev. Mod. Phys. 64, 339.",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "BF02105068_CR26",
+"doi-asserted-by": "crossref",
+"first-page": "979",
+"DOI": "10.1103/PhysRevLett.47.979",
+"volume": "47",
+"author": "D. N. Page",
+"year": "1981",
+"unstructured": "Page, D. N., and Geilker, C. D. (1981).Phys. Rev. Lett. 47, 979.",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "BF02105068_CR27",
+"first-page": "84",
+"volume-title": "Quantum Concepts in Space and Time",
+"author": "P. Pearle",
+"year": "1985",
+"unstructured": "Pearle, P. (1985). InQuantum Concepts in Space and Time, R. Penrose and C. J. Isham, eds. (Oxford University Press, Oxford), p.84."
+},
+{
+"key": "BF02105068_CR28",
+"doi-asserted-by": "crossref",
+"first-page": "2277",
+"DOI": "10.1103/PhysRevA.39.2277",
+"volume": "A39",
+"author": "P. Pearle",
+"year": "1989",
+"unstructured": "Pearle, P. (1989).Phys. Rev. A 39, 2277.",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "BF02105068_CR29",
+"unstructured": "Pearle, P., and Squires, E. J. (1995). \u201cGravity, energy conservation and parameter values in collapse models\u201d. Durham University preprint DTP/95/13."
+},
+{
+"key": "BF02105068_CR30",
+"first-page": "244",
+"volume-title": "Quantum Gravity 2: A Second Oxford Symposium",
+"author": "R. Penrose",
+"year": "1981",
+"unstructured": "Penrose, R. (1981). InQuantum Gravity 2: A Second Oxford Symposium, C. J. Isham, R. Penrose and D. W. Sciama, eds. (Oxford University Press, Oxford), p.244."
+},
+{
+"key": "BF02105068_CR31",
+"first-page": "129",
+"volume-title": "Quantum Concepts in Space and Time",
+"author": "R. Penrose",
+"year": "1986",
+"unstructured": "Penrose, R. (1986). InQuantum Concepts in Space and Time, R. Penrose and C. J. Isham, eds. (Oxford University Press, Oxford), p.129."
+},
+{
+"key": "BF02105068_CR32",
+"first-page": "17",
+"volume-title": "300 Years of Gravity",
+"author": "R. Penrose",
+"year": "1987",
+"unstructured": "Penrose, R. (1987). In300 Years of Gravity, S. W. Hawking and W. Israel, eds. (Cambridge University Press, Cambridge), p. 17."
+},
+{
+"key": "BF02105068_CR33",
+"doi-asserted-by": "crossref",
+"DOI": "10.1093/oso/9780198519737.001.0001",
+"volume-title": "The Emperor's New Mind: Concerning Computers, Minds, and the Laws of Physics",
+"author": "R. Penrose",
+"year": "1989",
+"unstructured": "Penrose, R. (1989).The Emperor's New Mind: Concerning Computers, Minds, and the Laws of Physics (Oxford University Press, Oxford)."
+},
+{
+"key": "BF02105068_CR34",
+"first-page": "179",
+"volume-title": "General Relativity and Gravitation 13. Part 1: Plenary Lectures",
+"author": "R. Penrose",
+"year": "1993",
+"unstructured": "Penrose, R. (1993). InGeneral Relativity and Gravitation 13. Part 1: Plenary Lectures, R. J. Gleiser, C. N. Kozameh and O. M. Moreschi, eds. (IOPP, Bristol/Philadelphia), p. 179."
+},
+{
+"key": "BF02105068_CR35",
+"first-page": "238",
+"volume-title": "Fundamental Aspects of Quantum Theory",
+"author": "R. Penrose",
+"year": "1994",
+"unstructured": "Penrose, R. (1994). InFundamental Aspects of Quantum Theory, J. Anandan and J. L. Safko, eds. (World Scientific, Singapore), p.238."
+},
+{
+"key": "BF02105068_CR36",
+"volume-title": "Shadows of the Mind; An Approach to the Missing Science of Consciousness",
+"author": "R. Penrose",
+"year": "1994",
+"unstructured": "Penrose, R. (1994).Shadows of the Mind; An Approach to the Missing Science of Consciousness (Oxford University Press, Oxford)."
+},
+{
+"key": "BF02105068_CR37",
+"doi-asserted-by": "crossref",
+"first-page": "503",
+"DOI": "10.1098/rspa.1995.0139",
+"volume": "A451",
+"author": "I. C. Percival",
+"year": "1995",
+"unstructured": "Percival, I. C. (1995).Proc. R. Soc. Lond. A 451, 503.",
+"journal-title": "Proc. R. Soc. Lond."
+},
+{
+"key": "BF02105068_CR38",
+"doi-asserted-by": "crossref",
+"first-page": "67",
+"DOI": "10.1016/0375-9601(90)90192-Q",
+"volume": "A145",
+"author": "E. Squires",
+"year": "1990",
+"unstructured": "Squires, E. (1990).Phys. Lett. A 145, 67.",
+"journal-title": "Phys. Lett."
+},
+{
+"key": "BF02105068_CR39",
+"doi-asserted-by": "crossref",
+"first-page": "279",
+"DOI": "10.1007/BF00692804",
+"volume": "5",
+"author": "E. Squires",
+"year": "1992",
+"unstructured": "Squires, E. (1992).Found. Phys. Lett. 5, 279.",
+"journal-title": "Found. Phys. Lett."
+},
+{
+"key": "BF02105068_CR40",
+"first-page": "7",
+"volume-title": "Lectures on General Relativity (Brandeis 1964 Summer Inst. on Theoretical Physics), vol. I",
+"author": "A. Trautman",
+"year": "1965",
+"unstructured": "Trautman, A. (1965). InLectures on General Relativity (Brandeis 1964 Summer Inst. on Theoretical Physics), vol. I, by A. Trautman, F. A. E. Pirani and H. Bondi (Prentice-Hall, Englewood Cliffs, NJ), p.7."
+},
+{
+"key": "BF02105068_CR41",
+"doi-asserted-by": "crossref",
+"first-page": "485",
+"DOI": "10.1103/PhysRevLett.62.485",
+"volume": "62",
+"author": "S. Weinberg",
+"year": "1989",
+"unstructured": "Weinberg, S. (1989).Phys. Rev. Lett. 62, 485.",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "BF02105068_CR42",
+"volume-title": "The Scientist Speculates",
+"author": "E. P. Wigner",
+"year": "1961",
+"unstructured": "Wigner, E. P. (1961). InThe Scientist Speculates, I. J. Good, ed. (Heinemann, London); reprinted in E. Wigner (1967).Symmetries and Reflections (Indiana University Press, Bloomington) and in 1983 in QuantumTheory and Measurement, J. A. Wheeler and W. H. Zurek, eds. (Princeton University Press, Princeton)."
+},
+{
+"key": "BF02105068_CR43",
+"doi-asserted-by": "crossref",
+"first-page": "36",
+"DOI": "10.1063/1.881293",
+"volume": "44",
+"author": "W. H. Zurek",
+"year": "1991",
+"unstructured": "Zurek, W. H. (1991).Physics Today 44, 36.",
+"journal-title": "Physics Today"
+}
+],
+"container-title": [
+"General Relativity and Gravitation"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/BF02105068.pdf",
+"content-type": "application/pdf",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://link.springer.com/article/10.1007/BF02105068/fulltext.html",
+"content-type": "text/html",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/BF02105068",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2021,
+7,
+17
+]
+],
+"date-time": "2021-07-17T05:11:07Z",
+"timestamp": 1626498667000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "http://link.springer.com/10.1007/BF02105068"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1996,
+5
+]
+]
+},
+"references-count": 43,
+"journal-issue": {
+"issue": "5",
+"published-print": {
+"date-parts": [
+[
+1996,
+5
+]
+]
+}
+},
+"alternative-id": [
+"BF02105068"
+],
+"URL": "https://doi.org/10.1007/bf02105068",
+"relation": {},
+"ISSN": [
+"0001-7701",
+"1572-9532"
+],
+"issn-type": [
+{
+"value": "0001-7701",
+"type": "print"
+},
+{
+"value": "1572-9532",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1996,
+5
+]
+]
+}
+}
+}

@@ -1,0 +1,145 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+7
+]
+],
+"date-time": "2026-10-07T16:41:35Z",
+"timestamp": 1791391295537,
+"version": "4.3.3"
+},
+"reference-count": 0,
+"publisher": "IBM",
+"issue": "6",
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"IBM J. Res. &amp; Dev."
+],
+"published-print": {
+"date-parts": [
+[
+1973,
+11
+]
+]
+},
+"DOI": "10.1147/rd.176.0525",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2010,
+4,
+5
+]
+],
+"date-time": "2010-04-05T14:34:14Z",
+"timestamp": 1270478054000
+},
+"page": "525-532",
+"source": "Crossref",
+"is-referenced-by-count": 2578,
+"title": [
+"Logical Reversibility of Computation"
+],
+"prefix": "10.1147",
+"volume": "17",
+"author": [
+{
+"given": "C. H.",
+"family": "Bennett",
+"sequence": "first",
+"affiliation": [
+{
+"name": "IBM Thomas J. Watson Research Center, Yorktown Heights, New York 10598, USA"
+}
+],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "3082",
+"container-title": [
+"IBM Journal of Research and Development"
+],
+"original-title": [],
+"link": [
+{
+"URL": "http://xplorestaging.ieee.org/ielx5/5288520/5391321/05391327.pdf?arnumber=5391327",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+10,
+23
+]
+],
+"date-time": "2025-10-23T17:55:30Z",
+"timestamp": 1761242130000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://ieeexplore.ieee.org/document/5391327/"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1973,
+11
+]
+]
+},
+"references-count": 0,
+"journal-issue": {
+"issue": "6"
+},
+"URL": "https://doi.org/10.1147/rd.176.0525",
+"relation": {},
+"ISSN": [
+"0018-8646",
+"0018-8646"
+],
+"issn-type": [
+{
+"value": "0018-8646",
+"type": "print"
+},
+{
+"value": "0018-8646",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1973,
+11
+]
+]
+}
+}
+}

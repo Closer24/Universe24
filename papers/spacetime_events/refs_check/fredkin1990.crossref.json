@@ -1,0 +1,362 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+3
+]
+],
+"date-time": "2026-10-03T00:58:10Z",
+"timestamp": 1790989090085,
+"version": "4.1.0"
+},
+"reference-count": 22,
+"publisher": "Elsevier BV",
+"issue": "1-3",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1990,
+9,
+1
+]
+],
+"date-time": "1990-09-01T00:00:00Z",
+"timestamp": 652147200000
+},
+"content-version": "tdm",
+"delay-in-days": 0,
+"URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Physica D: Nonlinear Phenomena"
+],
+"published-print": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+},
+"DOI": "10.1016/0167-2789(90)90186-s",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2002,
+10,
+17
+]
+],
+"date-time": "2002-10-17T19:58:10Z",
+"timestamp": 1034884690000
+},
+"page": "254-270",
+"source": "Crossref",
+"is-referenced-by-count": 131,
+"title": [
+"An informational process based on reversible universal cellular automata"
+],
+"prefix": "10.1016",
+"volume": "45",
+"author": [
+{
+"given": "Edward",
+"family": "Fredkin",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "78",
+"reference": [
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB1",
+"series-title": "Cellular Automata Machines - A New Environment for Modeling",
+"author": "Toffoli",
+"year": "1987"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB2",
+"doi-asserted-by": "crossref",
+"first-page": "120",
+"DOI": "10.1038/scientificamerican1070-120",
+"article-title": "The fantastic combinations of John Conway's new solitaire game of \u2018Life\u2019",
+"volume": "223",
+"author": "Gardner",
+"year": "1970",
+"journal-title": "Sci. Am."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB3",
+"series-title": "Computation, Finite and Infinite Machines",
+"author": "Minsky",
+"year": "1967"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB4",
+"first-page": "264",
+"article-title": "Random Processes and Transformations",
+"volume": "Vol. 2",
+"author": "Ulam",
+"year": "1950"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB5",
+"article-title": "Theory of Self-Reproducing Automata",
+"author": "von Neumann",
+"year": "1966"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB6_1",
+"series-title": "Rechnender Raum",
+"author": "Zuse",
+"year": "1969"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB6_2",
+"series-title": "Calculating Space",
+"year": "1970"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB7",
+"article-title": "Information processing and transmission in cellular automata",
+"author": "Banks",
+"year": "1971"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB8",
+"article-title": "Cellular automata mechanics",
+"author": "Toffoli",
+"year": "1977"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB9",
+"doi-asserted-by": "crossref",
+"first-page": "81",
+"DOI": "10.1016/0167-2789(84)90252-5",
+"article-title": "Physics-like models of computation",
+"volume": "10",
+"author": "Margolus",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB10",
+"article-title": "Physics and computation",
+"author": "Margolus",
+"year": "1987"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB11",
+"doi-asserted-by": "crossref",
+"first-page": "601",
+"DOI": "10.1103/RevModPhys.55.601",
+"article-title": "Statistical mechanics of cellular automata",
+"volume": "55",
+"author": "Wolfram",
+"year": "1983",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB12",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1016/0167-2789(84)90245-8",
+"article-title": "Universality and complexity in cellular automata",
+"volume": "10",
+"author": "Wolfram",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB13",
+"doi-asserted-by": "crossref",
+"first-page": "15",
+"DOI": "10.1007/BF01217347",
+"article-title": "Computation theory of cellular automata",
+"volume": "96",
+"author": "Wolfram",
+"year": "1984",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB14",
+"doi-asserted-by": "crossref",
+"first-page": "219",
+"DOI": "10.1007/BF01857727",
+"article-title": "Conservative logic",
+"volume": "21",
+"author": "Fredkin",
+"year": "1982",
+"journal-title": "Int. J. Theor. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB15",
+"article-title": "Logical reversibility of computation",
+"volume": "6",
+"author": "Bennett",
+"year": "1973",
+"journal-title": "IBM J. Res. Devel."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB16",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics and Foundations of Hydrodynamics",
+"first-page": "343",
+"article-title": "Four topics in lattice gases: ergodicity; relativity; information flow; and rule compression for parallel lattice-gas machines",
+"author": "Toffoli",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB17",
+"doi-asserted-by": "crossref",
+"first-page": "123",
+"DOI": "10.1016/0196-8858(86)90028-X",
+"article-title": "Random-sequence generation by cellular automata",
+"volume": "7",
+"author": "Wolfram",
+"year": "1986",
+"journal-title": "Adv. Appl. Math."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB18",
+"doi-asserted-by": "crossref",
+"first-page": "1505",
+"DOI": "10.1103/PhysRevLett.56.1505",
+"article-title": "Lattice-gas automata for the Navier-Stokes equation",
+"volume": "56",
+"author": "Frisch",
+"year": "1986",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB19",
+"doi-asserted-by": "crossref",
+"first-page": "62",
+"DOI": "10.1016/S0003-4916(86)80006-9",
+"article-title": "Deterministic Ising dynamics",
+"volume": "167",
+"author": "Creutz",
+"year": "1986",
+"journal-title": "Ann. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB20",
+"series-title": "Lattice Gas Methods for Partial Differential Equations",
+"first-page": "219",
+"article-title": "Cellular automata machines",
+"author": "Margolus",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90186-S_BIB21",
+"doi-asserted-by": "crossref",
+"first-page": "777",
+"DOI": "10.1103/PhysRev.47.777",
+"volume": "47",
+"author": "Einstein",
+"year": "1935",
+"journal-title": "Phys. Rev."
+}
+],
+"container-title": [
+"Physica D: Nonlinear Phenomena"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://api.elsevier.com/content/article/PII:016727899090186S?httpAccept=text/xml",
+"content-type": "text/xml",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "https://api.elsevier.com/content/article/PII:016727899090186S?httpAccept=text/plain",
+"content-type": "text/plain",
+"content-version": "vor",
+"intended-application": "text-mining"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2019,
+4,
+6
+]
+],
+"date-time": "2019-04-06T19:50:53Z",
+"timestamp": 1554580253000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://linkinghub.elsevier.com/retrieve/pii/016727899090186S"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+},
+"references-count": 22,
+"journal-issue": {
+"issue": "1-3",
+"published-print": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+}
+},
+"alternative-id": [
+"016727899090186S"
+],
+"URL": "https://doi.org/10.1016/0167-2789(90)90186-s",
+"relation": {},
+"ISSN": [
+"0167-2789"
+],
+"issn-type": [
+{
+"value": "0167-2789",
+"type": "print"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+}
+}
+}

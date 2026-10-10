@@ -1,6 +1,6 @@
 # Universe24
 
-**The paper:** [Universe24_Paper.pdf](paper/Universe24_Paper.pdf) · [supplement, Online Resource 1](paper/Universe24_Supplement.pdf) · [Zenodo DOI 10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113)
+**The papers:** [Universe24_Paper.pdf](papers/one_rule/Universe24_Paper.pdf) · [supplement, Online Resource 1](papers/one_rule/Universe24_Supplement.pdf) · [Zenodo DOI 10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113) · the time paper, [arrow.pdf](papers/spacetime_events/arrow.pdf)
 
 Universe24 is the clicks of one line of integer arithmetic: a cubic lattice of Nodes, two integer levels and a remainder per part of a field, stepped by one recurrence, Rule3, from a Node's present, past and six neighbours, reversibly and covariantly under the cube's 48. The lattice is read only through declared counting regions, NodeDetectors, its clicks the only measurements, each the meeting of the forward field with the transition read backward. From it follow, in lattice form, the Klein-Gordon equation with Schroedinger's slow limit, Planck's relation in the band's form and, under one assumption fixed by two measurements, the exponential weak-field metric; the lattice's own terms stand under their conditions, predictions where unread, bounded where read; Bell's and Greenberger-Horne-Zeilinger correlations follow from the declared counting rule; the misses are named, a decelerating cosmology among them. The paper has one claim: that Universe24 helps compute things in nature. It does not claim that nature is such a lattice.
 
@@ -18,12 +18,20 @@ The weights are not chosen by hand. They come from the family's pair of integers
 
 A world is read only through clicks: declared counting regions, NodeDetectors, whose counts are the one measurement. The paper's one claim is that this rule helps compute things in nature, and every number it prints is reproduced by a script in this repository.
 
-## The paper
+## The papers
 
-The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), archived on Zenodo and at the tag v1.1.0, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The papers are in [papers/](papers/), one folder each.
+
+**The first paper, [papers/one_rule/](papers/one_rule/):** "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), archived on Zenodo ([DOI 10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113)) and at the tag [v1.1.0](https://github.com/Closer24/Universe24/tree/v1.1.0/paper), where it stands at its old path `paper/`: `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](papers/one_rule/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](papers/one_rule/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex Universe24_Paper.tex && TEXINPUTS=sn: pdflatex Universe24_Paper.tex   # the same for Universe24_Supplement.tex
+```
+
+**The time paper, [papers/spacetime_events/](papers/spacetime_events/):** "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured" (Alon Gonen, 2026): `arrow.tex` with [`arrow.pdf`](papers/spacetime_events/arrow.pdf), its [README](papers/spacetime_events/README.md), the run it reports under `run3d_fixed/` (the world, its report and the ensemble over seeds) and its checks under `tools/`. It can be built and run by anyone from a checkout of the whole repository: [`build.sh`](papers/spacetime_events/build.sh) builds the PDF with the class in `sn/`, then counts the two clocks and the momentum at the click on the board with the program's own functions and runs the eight checks, stopping at the first failure.
+
+```bash
+sh papers/spacetime_events/build.sh
 ```
 
 ## The law

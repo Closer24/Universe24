@@ -1,0 +1,2799 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+9
+]
+],
+"date-time": "2026-10-09T17:30:51Z",
+"timestamp": 1791567051704,
+"version": "4.3.4"
+},
+"reference-count": 264,
+"publisher": "American Physical Society (APS)",
+"issue": "3",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2003,
+5,
+22
+]
+],
+"date-time": "2003-05-22T00:00:00Z",
+"timestamp": 1053561600000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "http://link.aps.org/licenses/aps-default-license"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Rev. Mod. Phys."
+],
+"DOI": "10.1103/revmodphys.75.715",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2003,
+5,
+24
+]
+],
+"date-time": "2003-05-24T00:16:44Z",
+"timestamp": 1053735404000
+},
+"page": "715-775",
+"source": "Crossref",
+"is-referenced-by-count": 3614,
+"title": [
+"Decoherence, einselection, and the quantum origins of the classical"
+],
+"prefix": "10.1103",
+"volume": "75",
+"author": [
+{
+"given": "Wojciech Hubert",
+"family": "Zurek",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+2003,
+5,
+22
+]
+]
+},
+"reference": [
+{
+"key": "RevModPhys.75.715Cc1R1",
+"doi-asserted-by": "crossref",
+"first-page": "135",
+"DOI": "10.1016/S1355-2198(02)00086-2",
+"volume": "34B",
+"author": "Adler, S. L.",
+"year": "2003",
+"journal-title": "Stud. Hist. Philos. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc3R1",
+"doi-asserted-by": "crossref",
+"first-page": "4616",
+"DOI": "10.1103/PhysRevA.47.4616",
+"volume": "47",
+"author": "Aharonov, Y.",
+"year": "1993",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc4R1",
+"doi-asserted-by": "crossref",
+"first-page": "052116",
+"DOI": "10.1103/PhysRevA.65.052116",
+"volume": "65",
+"author": "Aharonov, Y.",
+"year": "2003",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc5R1",
+"doi-asserted-by": "crossref",
+"first-page": "5504",
+"DOI": "10.1103/PhysRevD.46.5504",
+"volume": "46",
+"author": "Albrecht, A.",
+"year": "1992",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc6R1",
+"doi-asserted-by": "crossref",
+"first-page": "3768",
+"DOI": "10.1103/PhysRevD.48.3768",
+"volume": "48",
+"author": "Albrecht, A.",
+"year": "1993",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc8R1",
+"doi-asserted-by": "crossref",
+"first-page": "400",
+"DOI": "10.1002/bbpc.19910950331",
+"volume": "95",
+"author": "Ambegaokar, V.",
+"year": "1991",
+"journal-title": "Ber. Bunsenges. Phys. Chem."
+},
+{
+"key": "RevModPhys.75.715Cc9R1",
+"doi-asserted-by": "crossref",
+"first-page": "4111",
+"DOI": "10.1103/PhysRevLett.80.4111",
+"volume": "80",
+"author": "Ammann, H.",
+"year": "1998",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc10R1",
+"doi-asserted-by": "crossref",
+"first-page": "487",
+"DOI": "10.1016/S1355-2198(01)00011-9",
+"volume": "32",
+"author": "Anderson, P. W.",
+"year": "2001",
+"journal-title": "Stud. Hist. Philos. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc11R1",
+"doi-asserted-by": "crossref",
+"first-page": "6",
+"DOI": "10.1103/PhysRevLett.79.6",
+"volume": "79",
+"author": "Anglin, J. R.",
+"year": "1997",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc12R1",
+"doi-asserted-by": "crossref",
+"first-page": "4041",
+"DOI": "10.1103/PhysRevA.55.4041",
+"volume": "55",
+"author": "Anglin, J. R.",
+"year": "1997",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc13R1",
+"doi-asserted-by": "crossref",
+"first-page": "7327",
+"DOI": "10.1103/PhysRevD.53.7327",
+"volume": "53",
+"author": "Anglin, J. R.",
+"year": "1996",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc16R1",
+"doi-asserted-by": "crossref",
+"first-page": "358",
+"DOI": "10.1103/RevModPhys.42.358",
+"volume": "42",
+"author": "Ballentine, L. E.",
+"year": "1970",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc17R1",
+"doi-asserted-by": "crossref",
+"first-page": "2854",
+"DOI": "10.1103/PhysRevA.50.2854",
+"volume": "50",
+"author": "Ballentine, L. E.",
+"year": "1994",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc18R1",
+"doi-asserted-by": "crossref",
+"first-page": "2404",
+"DOI": "10.1103/PhysRevA.40.2404",
+"volume": "40",
+"author": "Barnett, S. M.",
+"year": "1989",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc19R1",
+"doi-asserted-by": "crossref",
+"first-page": "1175",
+"DOI": "10.1098/rspa.2000.0557",
+"volume": "456",
+"author": "Barnum, H.",
+"year": "2000",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc20R1",
+"doi-asserted-by": "crossref",
+"first-page": "2285",
+"DOI": "10.1088/0264-9381/7/12/010",
+"volume": "7",
+"author": "Barvinsky, A. O.",
+"year": "1990",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "RevModPhys.75.715Cc21R1",
+"doi-asserted-by": "crossref",
+"first-page": "743",
+"DOI": "10.1103/PhysRevD.52.743",
+"volume": "52",
+"author": "Barvinsky, A. O.",
+"year": "1995",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc22R1",
+"doi-asserted-by": "crossref",
+"first-page": "052309",
+"DOI": "10.1103/PhysRevA.64.052309",
+"volume": "64",
+"author": "Beckman, D.",
+"year": "2001",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc23R1",
+"doi-asserted-by": "crossref",
+"first-page": "1762",
+"DOI": "10.1103/PhysRevLett.85.1762",
+"volume": "85",
+"author": "Beige, A.",
+"year": "2000",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc27R1",
+"doi-asserted-by": "crossref",
+"first-page": "893",
+"DOI": "10.1103/PhysRevA.58.893",
+"volume": "58",
+"author": "Benioff, P.",
+"year": "1998",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc28R1",
+"doi-asserted-by": "crossref",
+"first-page": "247",
+"DOI": "10.1038/35005001",
+"volume": "404",
+"author": "Bennett, C. H.",
+"year": "2000",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc29R1",
+"doi-asserted-by": "crossref",
+"first-page": "3824",
+"DOI": "10.1103/PhysRevA.54.3824",
+"volume": "54",
+"author": "Bennett, C. H.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc30R1",
+"doi-asserted-by": "crossref",
+"first-page": "450",
+"DOI": "10.1016/0378-4371(78)90190-5",
+"volume": "91",
+"author": "Berman, G. P.",
+"year": "1978",
+"journal-title": "Physica A"
+},
+{
+"key": "RevModPhys.75.715Cc32R1",
+"doi-asserted-by": "crossref",
+"first-page": "625",
+"DOI": "10.1088/0305-4470/12/5/012",
+"volume": "12",
+"author": "Berry, M. V.",
+"year": "1979",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc33R1",
+"doi-asserted-by": "crossref",
+"first-page": "823",
+"DOI": "10.2307/1968621",
+"volume": "37",
+"author": "Birkhoff, G.",
+"year": "1936",
+"journal-title": "Ann. Math."
+},
+{
+"key": "RevModPhys.75.715Cc35R1",
+"doi-asserted-by": "crossref",
+"first-page": "223",
+"DOI": "10.1016/S0375-9601(00)00507-7",
+"volume": "273",
+"author": "Blanchard, Ph.",
+"year": "2000",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc36R1",
+"doi-asserted-by": "crossref",
+"first-page": "4979",
+"DOI": "10.1103/PhysRevE.55.4979",
+"volume": "55",
+"author": "Boccaletti, S.",
+"year": "1997",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc37R1",
+"doi-asserted-by": "crossref",
+"first-page": "755",
+"DOI": "10.1103/RevModPhys.68.755",
+"volume": "68",
+"author": "Bocko, M. F.",
+"year": "1996",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc39R1",
+"doi-asserted-by": "crossref",
+"first-page": "166",
+"DOI": "10.1103/PhysRev.85.166",
+"volume": "85",
+"author": "Bohm, D.",
+"year": "1952",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc40R1",
+"doi-asserted-by": "crossref",
+"first-page": "580",
+"DOI": "10.1038/121580a0",
+"volume": "121",
+"author": "Bohr, N.",
+"year": "1928",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc41R1",
+"doi-asserted-by": "crossref",
+"first-page": "696",
+"DOI": "10.1103/PhysRev.48.696",
+"volume": "48",
+"author": "Bohr, N.",
+"year": "1935",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc45R1",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1103/RevModPhys.68.1",
+"volume": "68",
+"author": "Braginsky, V. B.",
+"year": "1996",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc46R1",
+"doi-asserted-by": "crossref",
+"first-page": "547",
+"DOI": "10.1126/science.209.4456.547",
+"volume": "209",
+"author": "Braginski, V. B.",
+"year": "1980",
+"journal-title": "Science"
+},
+{
+"key": "RevModPhys.75.715Cc47R1",
+"doi-asserted-by": "crossref",
+"first-page": "2311",
+"DOI": "10.1142/S0217732390002651",
+"volume": "5",
+"author": "Brandenberger, R.",
+"year": "1990",
+"journal-title": "Mod. Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc48R1",
+"doi-asserted-by": "crossref",
+"first-page": "411",
+"DOI": "10.1016/S0030-4018(99)00480-0",
+"volume": "179",
+"author": "Braun, D.",
+"year": "2000",
+"journal-title": "Opt. Commun."
+},
+{
+"key": "RevModPhys.75.715Cc52R1",
+"doi-asserted-by": "crossref",
+"first-page": "13",
+"DOI": "10.1103/PhysRevB.51.13660",
+"volume": "51",
+"author": "Brodie, I.",
+"year": "1995",
+"journal-title": "Phys. Rev. B"
+},
+{
+"key": "RevModPhys.75.715Cc53R1",
+"doi-asserted-by": "crossref",
+"first-page": "1165",
+"DOI": "10.1103/PhysRevD.60.123503",
+"volume": "60",
+"author": "Brun, T.",
+"year": "1999",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc54R1",
+"doi-asserted-by": "crossref",
+"first-page": "2077",
+"DOI": "10.1088/0305-4470/29/9/020",
+"volume": "29",
+"author": "Brun, T.",
+"year": "1996",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc55R1",
+"doi-asserted-by": "crossref",
+"first-page": "4887",
+"DOI": "10.1103/PhysRevLett.77.4887",
+"volume": "77",
+"author": "Brune, M.",
+"year": "1996",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc56R1",
+"doi-asserted-by": "crossref",
+"first-page": "2598",
+"DOI": "10.1103/PhysRevLett.81.2598",
+"volume": "81",
+"author": "Bruss, D.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc58R1",
+"doi-asserted-by": "crossref",
+"first-page": "200",
+"DOI": "10.1093/bjps/47.2.200",
+"volume": "47",
+"author": "Butterfield, J.",
+"year": "1996",
+"journal-title": "Br. J. Philos. Sci."
+},
+{
+"key": "RevModPhys.75.715Cc59R1",
+"doi-asserted-by": "crossref",
+"first-page": "587",
+"DOI": "10.1016/0378-4371(83)90013-4",
+"volume": "121",
+"author": "Caldeira, A. O.",
+"year": "1983",
+"journal-title": "Physica A"
+},
+{
+"key": "RevModPhys.75.715Cc61R1",
+"doi-asserted-by": "crossref",
+"first-page": "4988",
+"DOI": "10.1103/PhysRevLett.86.4988",
+"volume": "86",
+"author": "Carvalho, A. R. R.",
+"year": "2001",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc63R1",
+"doi-asserted-by": "crossref",
+"first-page": "2507",
+"DOI": "10.1103/PhysRevLett.75.350",
+"volume": "75",
+"author": "Casati, G.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc64R1",
+"doi-asserted-by": "crossref",
+"first-page": "2495",
+"DOI": "10.1088/0264-9381/10/12/008",
+"volume": "10",
+"author": "Castagnino, M. A.",
+"year": "1993",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "RevModPhys.75.715Cc66R1",
+"doi-asserted-by": "crossref",
+"first-page": "341",
+"DOI": "10.1103/RevModPhys.52.341",
+"volume": "52",
+"author": "Caves, C. M.",
+"year": "1980",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc67R1",
+"doi-asserted-by": "crossref",
+"first-page": "3371",
+"DOI": "10.1103/PhysRevA.55.3371",
+"volume": "55",
+"author": "Cerf, N.",
+"year": "1997",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc68R1",
+"doi-asserted-by": "crossref",
+"first-page": "3783",
+"DOI": "10.1103/PhysRevLett.75.3783",
+"volume": "75",
+"author": "Chapman, M. S.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc69R1",
+"doi-asserted-by": "crossref",
+"first-page": "11",
+"DOI": "10.1021/ja004186d",
+"volume": "123",
+"author": "Chatzidimitriou-Dreismann, C. A.",
+"year": "2001",
+"journal-title": "J. Am. Chem. Soc."
+},
+{
+"key": "RevModPhys.75.715Cc70R1",
+"doi-asserted-by": "crossref",
+"first-page": "2839",
+"DOI": "10.1103/PhysRevLett.79.2839",
+"volume": "79",
+"author": "Chatzidimitriou-Dreismann, C. A.",
+"year": "1997",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc71R1",
+"doi-asserted-by": "crossref",
+"first-page": "4807",
+"DOI": "10.1103/PhysRevLett.82.4807",
+"volume": "82",
+"author": "Cheng, C. C.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc72R1",
+"doi-asserted-by": "crossref",
+"first-page": "2455",
+"DOI": "10.1080/09500349708231894",
+"volume": "44",
+"author": "Chuang, I. L.",
+"year": "1997",
+"journal-title": "J. Mod. Opt."
+},
+{
+"key": "RevModPhys.75.715Cc73R1",
+"doi-asserted-by": "crossref",
+"first-page": "4091",
+"DOI": "10.1103/PhysRevLett.74.4091",
+"volume": "74",
+"author": "Cirac, J. I.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc74R1",
+"doi-asserted-by": "crossref",
+"first-page": "2152",
+"DOI": "10.1103/PhysRevLett.81.2152",
+"volume": "81",
+"author": "Cory, D. G.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc76R1",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1119/1.1990764",
+"volume": "14",
+"author": "Cox, R. T.",
+"year": "1946",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc77R1",
+"doi-asserted-by": "crossref",
+"first-page": "013607",
+"DOI": "10.1103/PhysRevA.62.013607",
+"volume": "62",
+"author": "Dalvit, D.",
+"year": "2000",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc78R1",
+"doi-asserted-by": "crossref",
+"first-page": "373",
+"DOI": "10.1103/PhysRevLett.86.373",
+"volume": "86",
+"author": "Dalvit, D.",
+"year": "2001",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc79R1",
+"doi-asserted-by": "crossref",
+"first-page": "2126",
+"DOI": "10.1103/PhysRevA.16.2126",
+"volume": "16",
+"author": "Dekker, H.",
+"year": "1977",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc81R1",
+"doi-asserted-by": "crossref",
+"first-page": "747",
+"DOI": "10.1007/BF01016778",
+"volume": "58",
+"author": "d\u2019Espagnat, B.",
+"year": "1989",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc83R1",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1007/BF00670071",
+"volume": "24",
+"author": "Deutsch, D.",
+"year": "1985",
+"journal-title": "Int. J. Theor. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc85R1",
+"doi-asserted-by": "crossref",
+"first-page": "3129",
+"DOI": "10.1098/rspa.1999.0443",
+"volume": "455",
+"author": "Deutsch, D.",
+"year": "1999",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc86R1",
+"doi-asserted-by": "crossref",
+"first-page": "2911",
+"DOI": "10.1098/rspa.2002.1015",
+"volume": "458",
+"author": "Deutsch, D.",
+"year": "2002",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc87R1",
+"doi-asserted-by": "crossref",
+"first-page": "30",
+"DOI": "10.1063/1.3022331",
+"volume": "23",
+"author": "DeWitt, B. S.",
+"year": "1970",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc90R1",
+"doi-asserted-by": "crossref",
+"first-page": "271",
+"DOI": "10.1016/0375-9601(82)90084-6",
+"volume": "92A",
+"author": "Dieks, D.",
+"year": "1982",
+"journal-title": "Phys. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc92R1",
+"doi-asserted-by": "crossref",
+"first-page": "529",
+"DOI": "10.1007/BF02059006",
+"volume": "25",
+"author": "Donald, M. J.",
+"year": "1995",
+"journal-title": "Found. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc93R1",
+"doi-asserted-by": "crossref",
+"first-page": "1580",
+"DOI": "10.1103/PhysRevD.46.1580",
+"volume": "46",
+"author": "Dowker, H. F.",
+"year": "1992",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc94R1",
+"doi-asserted-by": "crossref",
+"first-page": "1575",
+"DOI": "10.1007/BF02183396",
+"volume": "82",
+"author": "Dowker, H. F.",
+"year": "1996",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc95R1",
+"doi-asserted-by": "crossref",
+"first-page": "737",
+"DOI": "10.1103/PhysRevA.57.737",
+"volume": "57",
+"author": "Duan, L.-M.",
+"year": "1998",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc96R1",
+"doi-asserted-by": "crossref",
+"first-page": "045101",
+"DOI": "10.1103/PhysRevB.64.045101",
+"volume": "64",
+"author": "Durakiewicz, T.",
+"year": "2001",
+"journal-title": "Phys. Rev. B"
+},
+{
+"key": "RevModPhys.75.715Cc97R1",
+"first-page": "82",
+"volume": "19",
+"author": "Einstein, A.",
+"year": "1917",
+"journal-title": "Verh. Dtsch. Phys. Ges."
+},
+{
+"key": "RevModPhys.75.715Cc98R1",
+"doi-asserted-by": "crossref",
+"first-page": "777",
+"DOI": "10.1103/PhysRev.47.777",
+"volume": "47",
+"author": "Einstein, A.",
+"year": "1935",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc99R1",
+"doi-asserted-by": "crossref",
+"first-page": "137902",
+"DOI": "10.1103/PhysRevLett.89.137902",
+"volume": "89",
+"author": "Eisert, J.",
+"year": "2002",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc100R1",
+"doi-asserted-by": "crossref",
+"first-page": "2585",
+"DOI": "10.1103/PhysRevLett.77.2585",
+"volume": "77",
+"author": "Ekert, A.",
+"year": "1996",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc103R1",
+"doi-asserted-by": "crossref",
+"first-page": "4213",
+"DOI": "10.1103/PhysRevA.49.4213",
+"volume": "49",
+"author": "Elby, A.",
+"year": "1994",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc104R1",
+"doi-asserted-by": "crossref",
+"first-page": "052103",
+"DOI": "10.1103/PhysRevA.63.052103",
+"volume": "63",
+"author": "Emerson, J.",
+"year": "2001",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc105R1",
+"doi-asserted-by": "crossref",
+"first-page": "026217",
+"DOI": "10.1103/PhysRevE.64.026217",
+"volume": "64",
+"author": "Emerson, J.",
+"year": "2001",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc106R1",
+"doi-asserted-by": "crossref",
+"first-page": "454",
+"DOI": "10.1103/RevModPhys.29.454",
+"volume": "29",
+"author": "Everett, H., III",
+"year": "1957",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc108R1",
+"doi-asserted-by": "crossref",
+"first-page": "368",
+"DOI": "10.1016/0003-4916(89)90141-3",
+"volume": "192",
+"author": "Farhi, E.",
+"year": "1989",
+"journal-title": "Ann. Phys. (N.Y.)"
+},
+{
+"key": "RevModPhys.75.715Cc109R1",
+"doi-asserted-by": "crossref",
+"first-page": "118",
+"DOI": "10.1016/0003-4916(63)90068-X",
+"volume": "24",
+"author": "Feynman, R. P.",
+"year": "1963",
+"journal-title": "Ann. Phys. (N.Y.)"
+},
+{
+"key": "RevModPhys.75.715Cc110R1",
+"doi-asserted-by": "crossref",
+"first-page": "263",
+"DOI": "10.1016/S1049-250X(02)80011-8",
+"volume": "48",
+"author": "Folman, R.",
+"year": "2002",
+"journal-title": "Adv. At., Mol. Opt. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc111R1",
+"doi-asserted-by": "crossref",
+"first-page": "1086",
+"DOI": "10.1119/1.16954",
+"volume": "60",
+"author": "Ford, J.",
+"year": "1992",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc112R1",
+"doi-asserted-by": "crossref",
+"first-page": "3683",
+"DOI": "10.1103/PhysRevE.49.3683",
+"volume": "49",
+"author": "Fox, R. F.",
+"year": "1994",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc113R1",
+"doi-asserted-by": "crossref",
+"first-page": "2553",
+"DOI": "10.1103/PhysRevE.50.2553",
+"volume": "50",
+"author": "Fox, R. F.",
+"year": "1994",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc114R1",
+"doi-asserted-by": "crossref",
+"first-page": "325",
+"DOI": "10.1007/s102080010013",
+"volume": "1",
+"author": "Freedman, M. H.",
+"year": "2001",
+"journal-title": "Found. Comp. Math."
+},
+{
+"key": "RevModPhys.75.715Cc115R1",
+"doi-asserted-by": "crossref",
+"first-page": "5524",
+"DOI": "10.1103/PhysRevLett.80.5524",
+"volume": "80",
+"author": "Furuya, K.",
+"year": "1998",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc116R1",
+"doi-asserted-by": "crossref",
+"first-page": "70",
+"DOI": "10.1063/1.883004",
+"volume": "53",
+"author": "Fuchs, C. A.",
+"year": "2000",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc117R1",
+"doi-asserted-by": "crossref",
+"first-page": "47",
+"DOI": "10.1103/PhysRevA.45.47",
+"volume": "45",
+"author": "Gallis, M. R.",
+"year": "1992",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc118R1",
+"doi-asserted-by": "crossref",
+"first-page": "655",
+"DOI": "10.1103/PhysRevA.53.655",
+"volume": "53",
+"author": "Gallis, M. R.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc119R1",
+"doi-asserted-by": "crossref",
+"first-page": "38",
+"DOI": "10.1103/PhysRevA.42.38",
+"volume": "42",
+"author": "Gallis, M. R.",
+"year": "1990",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc121R1",
+"doi-asserted-by": "crossref",
+"first-page": "3345",
+"DOI": "10.1103/PhysRevD.47.3345",
+"volume": "47",
+"author": "Gell-Mann, M.",
+"year": "1993",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc123R1",
+"doi-asserted-by": "crossref",
+"first-page": "617",
+"DOI": "10.2307/2214880",
+"volume": "XVIII",
+"author": "Geroch, R.",
+"year": "1984",
+"journal-title": "No\u00fbs"
+},
+{
+"key": "RevModPhys.75.715Cc124R1",
+"doi-asserted-by": "crossref",
+"first-page": "470",
+"DOI": "10.1103/PhysRevD.34.470",
+"volume": "34",
+"author": "Ghirardi, G. C.",
+"year": "1986",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc125R1",
+"doi-asserted-by": "crossref",
+"first-page": "3287",
+"DOI": "10.1103/PhysRevD.36.3287",
+"volume": "36",
+"author": "Ghirardi, G. C.",
+"year": "1987",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc126R1",
+"doi-asserted-by": "crossref",
+"first-page": "5677",
+"DOI": "10.1088/0305-4470/25/21/023",
+"volume": "25",
+"author": "Gisin, N.",
+"year": "1992",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc127R1",
+"doi-asserted-by": "crossref",
+"first-page": "2233",
+"DOI": "10.1088/0305-4470/26/9/018",
+"volume": "26",
+"author": "Gisin, N.",
+"year": "1993",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc128R1",
+"doi-asserted-by": "crossref",
+"first-page": "2245",
+"DOI": "10.1088/0305-4470/26/9/019",
+"volume": "26",
+"author": "Gisin, N.",
+"year": "1993",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc129R1",
+"doi-asserted-by": "crossref",
+"first-page": "144",
+"DOI": "10.1016/0375-9601(93)90136-N",
+"volume": "175",
+"author": "Gisin, N.",
+"year": "1993",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc132R1",
+"doi-asserted-by": "crossref",
+"first-page": "291",
+"DOI": "10.1016/0375-9601(95)00128-P",
+"volume": "199",
+"author": "Giulini, D.",
+"year": "1995",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc133R1",
+"first-page": "885",
+"volume": "6",
+"author": "Gleason, A. M.",
+"year": "1957",
+"journal-title": "J. Math. Mech."
+},
+{
+"key": "RevModPhys.75.715Cc136R1",
+"doi-asserted-by": "crossref",
+"first-page": "3715",
+"DOI": "10.1103/PhysRevLett.74.3715",
+"volume": "74",
+"author": "Goldstein, S.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc137R1",
+"doi-asserted-by": "crossref",
+"first-page": "S386",
+"DOI": "10.1088/1464-4266/4/4/325",
+"volume": "4",
+"author": "Gorin, T.",
+"year": "2002",
+"journal-title": "J. Opt. B: Quantum Semiclassical Opt."
+},
+{
+"key": "RevModPhys.75.715Cc138R1",
+"doi-asserted-by": "crossref",
+"first-page": "821",
+"DOI": "10.1063/1.522979",
+"volume": "17",
+"author": "Gorini, V.",
+"year": "1976",
+"journal-title": "J. Math. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc139R1",
+"doi-asserted-by": "crossref",
+"first-page": "1862",
+"DOI": "10.1103/PhysRevA.54.1862",
+"volume": "54",
+"author": "Gottesman, D.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc141R1",
+"doi-asserted-by": "crossref",
+"first-page": "533",
+"DOI": "10.1038/35014500",
+"volume": "405",
+"author": "Gottfried, K.",
+"year": "2000",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc142R1",
+"doi-asserted-by": "crossref",
+"first-page": "115",
+"DOI": "10.1016/0370-1573(88)90023-3",
+"volume": "168",
+"author": "Grabert, H.",
+"year": "1988",
+"journal-title": "Phys. Rep."
+},
+{
+"key": "RevModPhys.75.715Cc144R1",
+"doi-asserted-by": "crossref",
+"first-page": "R19",
+"DOI": "10.1103/PhysRevA.45.R19",
+"volume": "45",
+"author": "Graham, R.",
+"year": "1992",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc145R1",
+"doi-asserted-by": "crossref",
+"first-page": "219",
+"DOI": "10.1007/BF01015734",
+"volume": "36",
+"author": "Griffiths, R. B.",
+"year": "1984",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc146R1",
+"doi-asserted-by": "crossref",
+"first-page": "2759",
+"DOI": "10.1103/PhysRevA.54.2759",
+"volume": "54",
+"author": "Griffiths, R. B.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc147R1",
+"doi-asserted-by": "crossref",
+"first-page": "26",
+"DOI": "10.1063/1.882775",
+"volume": "52",
+"author": "Griffiths, R. B.",
+"year": "1999",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc149R1",
+"doi-asserted-by": "crossref",
+"first-page": "381",
+"DOI": "10.1007/BF01303727",
+"volume": "65",
+"author": "Haake, F.",
+"year": "1987",
+"journal-title": "Z. Phys. B: Condens. Matter"
+},
+{
+"key": "RevModPhys.75.715Cc150R1",
+"doi-asserted-by": "crossref",
+"first-page": "2462",
+"DOI": "10.1103/PhysRevA.32.2462",
+"volume": "32",
+"author": "Haake, F.",
+"year": "1985",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc151R1",
+"doi-asserted-by": "crossref",
+"first-page": "730",
+"DOI": "10.1103/PhysRevA.36.730",
+"volume": "36",
+"author": "Haake, F.",
+"year": "1987",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc152R1",
+"doi-asserted-by": "crossref",
+"first-page": "4361",
+"DOI": "10.1103/PhysRevLett.80.4361",
+"volume": "80",
+"author": "Habib, S.",
+"year": "1998",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc153R1",
+"doi-asserted-by": "crossref",
+"first-page": "2912",
+"DOI": "10.1103/PhysRevD.39.2912",
+"volume": "39",
+"author": "Halliwell, J. J.",
+"year": "1989",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc154R1",
+"doi-asserted-by": "crossref",
+"first-page": "105031",
+"DOI": "10.1103/PhysRevD.60.105031",
+"volume": "60",
+"author": "Halliwell, J. J.",
+"year": "1999",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc156R1",
+"doi-asserted-by": "crossref",
+"first-page": "159",
+"DOI": "10.1238/Physica.Topical.076a00159",
+"volume": "76",
+"author": "Haroche, S.",
+"year": "1998",
+"journal-title": "Phys. Scr., T"
+},
+{
+"key": "RevModPhys.75.715Cc157R1",
+"doi-asserted-by": "crossref",
+"first-page": "704",
+"DOI": "10.1119/1.1975096",
+"volume": "36",
+"author": "Hartle, J. B.",
+"year": "1968",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc160R1",
+"doi-asserted-by": "crossref",
+"first-page": "172",
+"DOI": "10.1007/BF01397280",
+"volume": "43",
+"author": "Heisenberg, W.",
+"year": "1927",
+"journal-title": "Z. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc161R1",
+"doi-asserted-by": "crossref",
+"first-page": "3034",
+"DOI": "10.1103/PhysRevLett.75.3034",
+"volume": "75",
+"author": "Herzog, T. J.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc162R1",
+"doi-asserted-by": "crossref",
+"first-page": "121",
+"DOI": "10.1016/0370-1573(84)90160-1",
+"volume": "106",
+"author": "Hillery, M. A.",
+"year": "1984",
+"journal-title": "Phys. Rep."
+},
+{
+"key": "RevModPhys.75.715Cc165R1",
+"doi-asserted-by": "crossref",
+"first-page": "2843",
+"DOI": "10.1103/PhysRevD.45.2843",
+"volume": "45",
+"author": "Hu, B. L.",
+"year": "1992",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc166R1",
+"first-page": "1576",
+"volume": "47",
+"author": "Hu, B. L.",
+"year": "1993",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc167R1",
+"doi-asserted-by": "crossref",
+"first-page": "3241",
+"DOI": "10.1088/0305-4470/14/12/019",
+"volume": "14",
+"author": "Ivanovic, I. D.",
+"year": "1981",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc168R1",
+"doi-asserted-by": "crossref",
+"first-page": "055203",
+"DOI": "10.1103/PhysRevE.64.055203",
+"volume": "64",
+"author": "Jacquod, P.",
+"year": "2001",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc169R1",
+"doi-asserted-by": "crossref",
+"first-page": "2490",
+"DOI": "10.1103/PhysRevLett.86.2490",
+"volume": "86",
+"author": "Jalabert, R. A.",
+"year": "2001",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc171R1",
+"doi-asserted-by": "crossref",
+"first-page": "620",
+"DOI": "10.1103/PhysRev.106.620",
+"volume": "106",
+"author": "Jaynes, E. T.",
+"year": "1957",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc172R1",
+"doi-asserted-by": "crossref",
+"first-page": "3682",
+"DOI": "10.1103/PhysRevA.50.3682",
+"volume": "50",
+"author": "Jones, K. R. W.",
+"year": "1994",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc173R1",
+"doi-asserted-by": "crossref",
+"first-page": "6",
+"DOI": "10.1111/j.1749-6632.1986.tb12404.x",
+"volume": "480",
+"author": "Joos, E.",
+"year": "1986",
+"journal-title": "Ann. N.Y. Acad. Sci."
+},
+{
+"key": "RevModPhys.75.715Cc174R1",
+"doi-asserted-by": "crossref",
+"first-page": "223",
+"DOI": "10.1007/BF01725541",
+"volume": "59",
+"author": "Joos, E.",
+"year": "1985",
+"journal-title": "Z. Phys. B: Condens. Matter"
+},
+{
+"key": "RevModPhys.75.715Cc176R1",
+"doi-asserted-by": "crossref",
+"first-page": "170405",
+"DOI": "10.1103/PhysRevLett.89.170405",
+"volume": "89",
+"author": "Karkuszewski, Z. P.",
+"year": "2002",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc177R1",
+"doi-asserted-by": "crossref",
+"first-page": "042113",
+"DOI": "10.1103/PhysRevA.65.042113",
+"volume": "65",
+"author": "Karkuszewski, Z. P.",
+"year": "2002",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc178R1",
+"doi-asserted-by": "crossref",
+"first-page": "179",
+"DOI": "10.1238/Physica.Topical.076a00179",
+"volume": "76",
+"author": "Karlsson, E. B.",
+"year": "1998",
+"journal-title": "Phys. Scr., T"
+},
+{
+"key": "RevModPhys.75.715Cc179R1",
+"doi-asserted-by": "crossref",
+"first-page": "1745",
+"DOI": "10.1142/S0217751X90000805",
+"volume": "5",
+"author": "Kent, A.",
+"year": "1990",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc180R1",
+"doi-asserted-by": "crossref",
+"first-page": "1369",
+"DOI": "10.1088/0264-9381/4/5/031",
+"volume": "4",
+"author": "Kiefer, C.",
+"year": "1987",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "RevModPhys.75.715Cc182R1",
+"doi-asserted-by": "crossref",
+"first-page": "4145",
+"DOI": "10.1103/PhysRevD.51.4145",
+"volume": "51",
+"author": "Kiefer, C.",
+"year": "1995",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc184R1",
+"doi-asserted-by": "crossref",
+"first-page": "1191",
+"DOI": "10.1070/RM1997v052n06ABEH002155",
+"volume": "52",
+"author": "Kitaev, A. Y.",
+"year": "1997",
+"journal-title": "Russ. Math. Surveys"
+},
+{
+"key": "RevModPhys.75.715Cc186R1",
+"doi-asserted-by": "crossref",
+"first-page": "1203",
+"DOI": "10.1103/PhysRevLett.81.1203",
+"volume": "81",
+"author": "Klappauf, B. G.",
+"year": "1998",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc186R2",
+"doi-asserted-by": "crossref",
+"first-page": "241",
+"DOI": "10.1103/PhysRevLett.82.241",
+"volume": "82",
+"author": "Klappauf, B. G.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc187R1",
+"doi-asserted-by": "crossref",
+"first-page": "900",
+"DOI": "10.1103/PhysRevA.55.900",
+"volume": "55",
+"author": "Knill, E.",
+"year": "1997",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc188R1",
+"doi-asserted-by": "crossref",
+"first-page": "2525",
+"DOI": "10.1103/PhysRevLett.84.2525",
+"volume": "84",
+"author": "Knill, E.",
+"year": "2000",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc190R1",
+"doi-asserted-by": "crossref",
+"first-page": "324",
+"DOI": "10.1126/science.279.5349.342",
+"volume": "279",
+"author": "Knill, E.",
+"year": "1998",
+"journal-title": "Science"
+},
+{
+"key": "RevModPhys.75.715Cc191R1",
+"doi-asserted-by": "crossref",
+"first-page": "365",
+"DOI": "10.1098/rspa.1998.0166",
+"volume": "454",
+"author": "Knill, E.",
+"year": "1998",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc192R1",
+"doi-asserted-by": "crossref",
+"first-page": "178",
+"DOI": "10.1016/0167-2789(94)00261-N",
+"volume": "83",
+"author": "Koch, P. M.",
+"year": "1995",
+"journal-title": "Physica D"
+},
+{
+"key": "RevModPhys.75.715Cc193R1",
+"doi-asserted-by": "crossref",
+"first-page": "2191",
+"DOI": "10.1103/PhysRevLett.86.2191",
+"volume": "86",
+"author": "Kokorowski, D.",
+"year": "2001",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc194R1",
+"first-page": "2035",
+"volume": "21",
+"author": "Kolmogorov, A. N.",
+"year": "1960",
+"journal-title": "Math. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc195R1",
+"first-page": "649",
+"volume": "21",
+"author": "Kossakowski, A.",
+"year": "1973",
+"journal-title": "Bull. Acad. Pol. Sci., Ser. Sci., Math. Astron. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc197R1",
+"doi-asserted-by": "crossref",
+"first-page": "3394",
+"DOI": "10.1103/PhysRevLett.84.3394",
+"volume": "84",
+"author": "Kravtsov, V. E.",
+"year": "2000",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc198R1",
+"doi-asserted-by": "crossref",
+"first-page": "5190",
+"DOI": "10.1103/PhysRevD.48.5190",
+"volume": "48",
+"author": "Krzywicki, A.",
+"year": "1993",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc199R1",
+"doi-asserted-by": "crossref",
+"first-page": "7729",
+"DOI": "10.1103/PhysRevA.45.7729",
+"volume": "45",
+"author": "Kwiat, P. G.",
+"year": "1992",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc200R1",
+"doi-asserted-by": "crossref",
+"first-page": "198",
+"DOI": "10.1103/PhysRevLett.77.198",
+"volume": "77",
+"author": "Laflamme, R.",
+"year": "1996",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc201R1",
+"doi-asserted-by": "crossref",
+"first-page": "430",
+"DOI": "10.1007/BF01343064",
+"volume": "45",
+"author": "Landau, L.",
+"year": "1927",
+"journal-title": "Z. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc202R1",
+"doi-asserted-by": "crossref",
+"first-page": "23",
+"DOI": "10.1063/1.881299",
+"volume": "44",
+"author": "Landauer, R.",
+"year": "1991",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc203R1",
+"doi-asserted-by": "crossref",
+"first-page": "367",
+"DOI": "10.1098/rsta.1995.0106",
+"volume": "353",
+"author": "Landauer, R.",
+"year": "1995",
+"journal-title": "Philos. Trans. R. Soc. London"
+},
+{
+"key": "RevModPhys.75.715Cc204R1",
+"doi-asserted-by": "crossref",
+"first-page": "237",
+"DOI": "10.1038/338237a0",
+"volume": "338",
+"author": "Laskar, J.",
+"year": "1989",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc205R1",
+"doi-asserted-by": "crossref",
+"first-page": "80",
+"DOI": "10.1143/PTPS.69.80",
+"volume": "69",
+"author": "Leggett, A. J.",
+"year": "1980",
+"journal-title": "Suppl. Prog. Theor. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc207R1",
+"doi-asserted-by": "crossref",
+"first-page": "69",
+"DOI": "10.1238/Physica.Topical.102a00069",
+"volume": "102",
+"author": "Leggett, A. J.",
+"year": "2002",
+"journal-title": "Phys. Scr., T"
+},
+{
+"key": "RevModPhys.75.715Cc208R1",
+"doi-asserted-by": "crossref",
+"first-page": "6285",
+"DOI": "10.1063/1.1308561",
+"volume": "113",
+"author": "Levstein, P. R.",
+"year": "2000",
+"journal-title": "J. Chem. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc209R1",
+"doi-asserted-by": "crossref",
+"first-page": "2718",
+"DOI": "10.1063/1.475664",
+"volume": "108",
+"author": "Levstein, P. R.",
+"year": "1998",
+"journal-title": "J. Chem. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc211R1",
+"doi-asserted-by": "crossref",
+"first-page": "4556",
+"DOI": "10.1103/PhysRevLett.82.4556",
+"volume": "82",
+"author": "Lidar, D. A.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc212R1",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1090/S0002-9904-1975-13621-4",
+"volume": "81",
+"author": "Lieb, E. H.",
+"year": "1975",
+"journal-title": "Bull. Am. Math. Soc."
+},
+{
+"key": "RevModPhys.75.715Cc213R1",
+"doi-asserted-by": "crossref",
+"first-page": "119",
+"DOI": "10.1007/BF01608499",
+"volume": "48",
+"author": "Lindblad, G.",
+"year": "1976",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc214R1",
+"doi-asserted-by": "crossref",
+"first-page": "1613",
+"DOI": "10.1103/PhysRevA.55.1613",
+"volume": "55",
+"author": "Lloyd, S.",
+"year": "1997",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc217R1",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1142/S0218271896000023",
+"volume": "5",
+"author": "Mensky, M. B.",
+"year": "1996",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "RevModPhys.75.715Cc218R1",
+"first-page": "9",
+"volume": "43",
+"author": "Mermin, N. D.",
+"year": "1990",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc219R1",
+"doi-asserted-by": "crossref",
+"first-page": "731",
+"DOI": "10.1119/1.16503",
+"volume": "58",
+"author": "Mermin, N. D.",
+"year": "1990",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc220R1",
+"doi-asserted-by": "crossref",
+"first-page": "9",
+"DOI": "10.1063/1.2808514",
+"volume": "47",
+"author": "Mermin, N. D.",
+"year": "1994",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc221R1",
+"doi-asserted-by": "crossref",
+"first-page": "3971",
+"DOI": "10.1103/PhysRevLett.78.3971",
+"volume": "78",
+"author": "Miquel, C.",
+"year": "1997",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc222R1",
+"doi-asserted-by": "crossref",
+"first-page": "1542",
+"DOI": "10.1103/PhysRevE.60.1542",
+"volume": "60",
+"author": "Miller, P. A.",
+"year": "1999",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc223R1",
+"first-page": "4643",
+"volume": "29",
+"author": "Miller, P. A.",
+"year": "1998",
+"journal-title": "Acta Phys. Pol. B"
+},
+{
+"key": "RevModPhys.75.715Cc224R1",
+"doi-asserted-by": "crossref",
+"first-page": "R13",
+"DOI": "10.1103/PhysRevB.55.R13452",
+"volume": "55",
+"author": "Mohanty, P.",
+"year": "1997",
+"journal-title": "Phys. Rev. B"
+},
+{
+"key": "RevModPhys.75.715Cc225R1",
+"doi-asserted-by": "crossref",
+"first-page": "1131",
+"DOI": "10.1126/science.272.5265.1131",
+"volume": "272",
+"author": "Monroe, C.",
+"year": "1996",
+"journal-title": "Science"
+},
+{
+"key": "RevModPhys.75.715Cc226R1",
+"doi-asserted-by": "crossref",
+"first-page": "3373",
+"DOI": "10.1103/PhysRevLett.85.3373",
+"volume": "85",
+"author": "Monteoliva, D.",
+"year": "2000",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc227R1",
+"doi-asserted-by": "crossref",
+"first-page": "2974",
+"DOI": "10.1103/PhysRevLett.73.2974",
+"volume": "73",
+"author": "Moore, F. L.",
+"year": "1994",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc228R1",
+"doi-asserted-by": "crossref",
+"first-page": "79",
+"DOI": "10.1098/rspa.1929.0205",
+"volume": "126",
+"author": "Mott, N. F.",
+"year": "1929",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc229R1",
+"doi-asserted-by": "crossref",
+"first-page": "99",
+"DOI": "10.1017/S0305004100000487",
+"volume": "45",
+"author": "Moyal, J. E.",
+"year": "1949",
+"journal-title": "Proc. Cambridge Philos. Soc."
+},
+{
+"key": "RevModPhys.75.715Cc230R1",
+"doi-asserted-by": "crossref",
+"first-page": "269",
+"DOI": "10.1038/35002001",
+"volume": "403",
+"author": "Myatt, C. J.",
+"year": "2000",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc231R1",
+"doi-asserted-by": "crossref",
+"first-page": "301",
+"DOI": "10.1016/0370-1573(93)90085-R",
+"volume": "232",
+"author": "Namiki, M.",
+"year": "1993",
+"journal-title": "Phys. Rep."
+},
+{
+"key": "RevModPhys.75.715Cc233R1",
+"doi-asserted-by": "crossref",
+"first-page": "52",
+"DOI": "10.1038/23891",
+"volume": "396",
+"author": "Nielsen, M. A.",
+"year": "1998",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc235R1",
+"doi-asserted-by": "crossref",
+"first-page": "017901",
+"DOI": "10.1103/PhysRevLett.88.017901",
+"volume": "88",
+"author": "Ollivier, H.",
+"year": "2002",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc236R1",
+"doi-asserted-by": "crossref",
+"first-page": "893",
+"DOI": "10.1007/BF01014230",
+"volume": "53",
+"author": "Omn\u00e8s, R.",
+"year": "1988",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc237R1",
+"doi-asserted-by": "crossref",
+"first-page": "339",
+"DOI": "10.1103/RevModPhys.64.339",
+"volume": "64",
+"author": "Omn\u00e8s, R.",
+"year": "1992",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc239R1",
+"doi-asserted-by": "crossref",
+"first-page": "279",
+"DOI": "10.1209/epl/i1999-00386-y",
+"volume": "47",
+"author": "Paraoanu, G. S.",
+"year": "1999",
+"journal-title": "Europhys. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc241R1",
+"doi-asserted-by": "crossref",
+"first-page": "219",
+"DOI": "10.1016/S0375-9601(97)00925-0",
+"volume": "238",
+"author": "Paraoanu, G. S.",
+"year": "1998",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc242R1",
+"doi-asserted-by": "crossref",
+"first-page": "4526",
+"DOI": "10.1103/PhysRevLett.83.4526",
+"volume": "83",
+"author": "Pattanayak, A. K.",
+"year": "2000",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc244R1",
+"doi-asserted-by": "crossref",
+"first-page": "488",
+"DOI": "10.1103/PhysRevD.47.488",
+"volume": "47",
+"author": "Paz, J.-P.",
+"year": "1993",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc245R1",
+"doi-asserted-by": "crossref",
+"first-page": "1038",
+"DOI": "10.1103/PhysRevD.44.1038",
+"volume": "44",
+"author": "Paz, J.-P.",
+"year": "1991",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc246R1",
+"doi-asserted-by": "crossref",
+"first-page": "2823",
+"DOI": "10.1103/PhysRevD.45.2823",
+"volume": "45",
+"author": "Paz, J.-P.",
+"year": "1992",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc247R1",
+"doi-asserted-by": "crossref",
+"first-page": "5181",
+"DOI": "10.1103/PhysRevLett.82.5181",
+"volume": "82",
+"author": "Paz, J.-P.",
+"year": "1999",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc249R1",
+"doi-asserted-by": "crossref",
+"first-page": "857",
+"DOI": "10.1103/PhysRevD.13.857",
+"volume": "13",
+"author": "Pearle, P.",
+"year": "1976",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc250R1",
+"doi-asserted-by": "crossref",
+"first-page": "913",
+"DOI": "10.1103/PhysRevA.48.913",
+"volume": "48",
+"author": "Pearle, P.",
+"year": "1993",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc255R1",
+"doi-asserted-by": "crossref",
+"first-page": "1223",
+"DOI": "10.1103/PhysRevLett.73.1223",
+"volume": "73",
+"author": "Pfau, T.",
+"year": "1994",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc256R1",
+"doi-asserted-by": "crossref",
+"first-page": "4728",
+"DOI": "10.1103/PhysRevLett.77.4728",
+"volume": "77",
+"author": "Poyatos, J. F.",
+"year": "1996",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc257R1",
+"doi-asserted-by": "crossref",
+"first-page": "390",
+"DOI": "10.1103/PhysRevLett.78.390",
+"volume": "78",
+"author": "Poyatos, J. F.",
+"year": "1997",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc258R1",
+"doi-asserted-by": "crossref",
+"first-page": "385",
+"DOI": "10.1098/rspa.1998.0167",
+"volume": "454",
+"author": "Preskill, J.",
+"year": "1998",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc259R1",
+"doi-asserted-by": "crossref",
+"first-page": "24",
+"DOI": "10.1063/1.882692",
+"volume": "52",
+"author": "Preskill, J.",
+"year": "1999",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc260R1",
+"doi-asserted-by": "crossref",
+"first-page": "4707",
+"DOI": "10.1088/0305-4470/35/22/304",
+"volume": "35",
+"author": "Prosen, T.",
+"year": "2002",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "RevModPhys.75.715Cc261R1",
+"doi-asserted-by": "crossref",
+"first-page": "565",
+"DOI": "10.1103/RevModPhys.73.565",
+"volume": "73",
+"author": "Raimond, J. M.",
+"year": "2001",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc262R1",
+"doi-asserted-by": "crossref",
+"first-page": "24",
+"DOI": "10.1238/Physica.Topical.076a00024",
+"volume": "76",
+"author": "Rauch, H.",
+"year": "1998",
+"journal-title": "Phys. Scr., T"
+},
+{
+"key": "RevModPhys.75.715Cc264R1",
+"doi-asserted-by": "crossref",
+"first-page": "4070",
+"DOI": "10.1103/PhysRevA.55.4070",
+"volume": "55",
+"author": "Romero, L. D.",
+"year": "1997",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc265R1",
+"doi-asserted-by": "crossref",
+"first-page": "373",
+"DOI": "10.1023/A:1005079904008",
+"volume": "114",
+"author": "Saunders, S.",
+"year": "1998",
+"journal-title": "Synthesis"
+},
+{
+"key": "RevModPhys.75.715Cc266R1",
+"doi-asserted-by": "crossref",
+"first-page": "1634",
+"DOI": "10.1103/PhysRevA.57.1634",
+"volume": "57",
+"author": "Schack, R.",
+"year": "1998",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc267R1",
+"doi-asserted-by": "crossref",
+"first-page": "3387",
+"DOI": "10.1103/PhysRevE.53.3387",
+"volume": "53",
+"author": "Schack, R.",
+"year": "1996",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc268R1",
+"doi-asserted-by": "crossref",
+"first-page": "664",
+"DOI": "10.1007/BF01507634",
+"volume": "14",
+"author": "Schr\u00f6dinger, E.",
+"year": "1926",
+"journal-title": "Naturwissenschaften"
+},
+{
+"key": "RevModPhys.75.715Cc269R1",
+"doi-asserted-by": "crossref",
+"first-page": "807",
+"DOI": "10.1007/BF01491891",
+"volume": "23",
+"author": "Schr\u00f6dinger, E.",
+"year": "1935",
+"journal-title": "Naturwissenschaften"
+},
+{
+"key": "RevModPhys.75.715Cc270R1",
+"doi-asserted-by": "crossref",
+"first-page": "555",
+"DOI": "10.1017/S0305004100013554",
+"volume": "31",
+"author": "Schr\u00f6dinger, E.",
+"year": "1935",
+"journal-title": "Proc. Cambridge Philos. Soc."
+},
+{
+"key": "RevModPhys.75.715Cc271R1",
+"doi-asserted-by": "crossref",
+"first-page": "446",
+"DOI": "10.1017/S0305004100019137",
+"volume": "32",
+"author": "Schr\u00f6dinger, E.",
+"year": "1936",
+"journal-title": "Proc. Cambridge Philos. Soc."
+},
+{
+"key": "RevModPhys.75.715Cc272R1",
+"doi-asserted-by": "crossref",
+"first-page": "2614",
+"DOI": "10.1103/PhysRevA.54.2614",
+"volume": "54",
+"author": "Schumacher, B. W.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc273R1",
+"doi-asserted-by": "crossref",
+"first-page": "2629",
+"DOI": "10.1103/PhysRevA.54.2629",
+"volume": "54",
+"author": "Schumacher, B. W.",
+"year": "1996",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc275R1",
+"doi-asserted-by": "crossref",
+"first-page": "2497",
+"DOI": "10.1103/PhysRevE.52.2497",
+"volume": "52",
+"author": "Shiokawa, K.",
+"year": "1995",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc276R1",
+"doi-asserted-by": "crossref",
+"first-page": "R2493",
+"DOI": "10.1103/PhysRevA.52.R2493",
+"volume": "52",
+"author": "Shor, P. W.",
+"year": "1995",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc277R1",
+"first-page": "2036",
+"volume": "21",
+"author": "Sinai, Ya.",
+"year": "1960",
+"journal-title": "Math. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc278R1",
+"doi-asserted-by": "crossref",
+"first-page": "67",
+"DOI": "10.1016/0375-9601(90)90192-Q",
+"volume": "145",
+"author": "Squires, E. J.",
+"year": "1990",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc279R1",
+"doi-asserted-by": "crossref",
+"first-page": "1043",
+"DOI": "10.1139/p02-068",
+"volume": "80",
+"author": "Stapp, H. P.",
+"year": "2002",
+"journal-title": "Can. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc280R1",
+"doi-asserted-by": "crossref",
+"first-page": "2551",
+"DOI": "10.1098/rspa.1996.0136",
+"volume": "452",
+"author": "Steane, A. M.",
+"year": "1996",
+"journal-title": "Proc. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc281R1",
+"doi-asserted-by": "crossref",
+"first-page": "635",
+"DOI": "10.2307/2214881",
+"volume": "XVIII",
+"author": "Stein, H.",
+"year": "1984",
+"journal-title": "No\u00fbs"
+},
+{
+"key": "RevModPhys.75.715Cc282R1",
+"doi-asserted-by": "crossref",
+"first-page": "3436",
+"DOI": "10.1103/PhysRevA.41.3436",
+"volume": "41",
+"author": "Stern, A.",
+"year": "1989",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc283R1",
+"doi-asserted-by": "crossref",
+"first-page": "56",
+"DOI": "10.1126/science.257.5066.56",
+"volume": "257",
+"author": "Sussman, G. J.",
+"year": "1992",
+"journal-title": "Science"
+},
+{
+"key": "RevModPhys.75.715Cc284R1",
+"doi-asserted-by": "crossref",
+"first-page": "4194",
+"DOI": "10.1103/PhysRevE.61.4194",
+"volume": "61",
+"author": "Tegmark, M.",
+"year": "2000",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc285R1",
+"doi-asserted-by": "crossref",
+"first-page": "2538",
+"DOI": "10.1103/PhysRevE.50.2538",
+"volume": "50",
+"author": "Tegmark, M.",
+"year": "1994",
+"journal-title": "Phys. Rev. E"
+},
+{
+"key": "RevModPhys.75.715Cc286R1",
+"doi-asserted-by": "crossref",
+"first-page": "68",
+"DOI": "10.1038/scientificamerican0201-68",
+"volume": "284",
+"author": "Tegmark, M.",
+"year": "2001",
+"journal-title": "Sci. Am."
+},
+{
+"key": "RevModPhys.75.715Cc287R1",
+"doi-asserted-by": "crossref",
+"first-page": "053807",
+"DOI": "10.1103/PhysRevA.62.053807",
+"volume": "62",
+"author": "Turchette, Q. A.",
+"year": "2000",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc288R1",
+"doi-asserted-by": "crossref",
+"first-page": "882",
+"DOI": "10.1103/PhysRevA.50.882",
+"volume": "50",
+"author": "Unruh, W. G.",
+"year": "1994",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc289R1",
+"doi-asserted-by": "crossref",
+"first-page": "1071",
+"DOI": "10.1103/PhysRevD.40.1071",
+"volume": "40",
+"author": "Unruh, W. G.",
+"year": "1989",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc290R1",
+"doi-asserted-by": "crossref",
+"first-page": "050401",
+"DOI": "10.1103/PhysRevLett.90.050401",
+"volume": "90",
+"author": "Vedral, V.",
+"year": "2003",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc291R1",
+"doi-asserted-by": "crossref",
+"first-page": "2742",
+"DOI": "10.1103/PhysRevA.50.2742",
+"volume": "50",
+"author": "Venugopalan, A.",
+"year": "1994",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc292R1",
+"first-page": "012102",
+"volume": "6",
+"author": "Venugopalan, A.",
+"year": "2000",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc293R1",
+"doi-asserted-by": "crossref",
+"first-page": "2733",
+"DOI": "10.1103/PhysRevA.58.2733",
+"volume": "58",
+"author": "Viola, L.",
+"year": "1998",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc297R1",
+"doi-asserted-by": "crossref",
+"first-page": "221",
+"DOI": "10.1103/RevModPhys.50.221",
+"volume": "50",
+"author": "Wehrl, A.",
+"year": "1978",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc298R1",
+"doi-asserted-by": "crossref",
+"first-page": "463",
+"DOI": "10.1103/RevModPhys.29.463",
+"volume": "29",
+"author": "Wheeler, J. A.",
+"year": "1957",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc302R1",
+"doi-asserted-by": "crossref",
+"first-page": "101",
+"DOI": "10.1103/PhysRev.88.101",
+"volume": "88",
+"author": "Wick, G. C.",
+"year": "1952",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "RevModPhys.75.715Cc303R1",
+"doi-asserted-by": "crossref",
+"first-page": "3267",
+"DOI": "10.1103/PhysRevD.1.3267",
+"volume": "1",
+"author": "Wick, G. C.",
+"year": "1970",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc304R1",
+"doi-asserted-by": "crossref",
+"first-page": "751",
+"DOI": "10.1007/BF02741478",
+"volume": "110",
+"author": "Wightman, A. S.",
+"year": "1995",
+"journal-title": "Nuovo Cimento B"
+},
+{
+"key": "RevModPhys.75.715Cc305R1",
+"doi-asserted-by": "crossref",
+"first-page": "6",
+"DOI": "10.1119/1.1969254",
+"volume": "31",
+"author": "Wigner, E. P.",
+"year": "1963",
+"journal-title": "Am. J. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc306R1",
+"doi-asserted-by": "crossref",
+"first-page": "272",
+"DOI": "10.1016/0019-1035(85)90011-9",
+"volume": "63",
+"author": "Wisdom, J.",
+"year": "1985",
+"journal-title": "Icarus"
+},
+{
+"key": "RevModPhys.75.715Cc307R1",
+"doi-asserted-by": "crossref",
+"first-page": "548",
+"DOI": "10.1103/PhysRevLett.70.548",
+"volume": "70",
+"author": "Wiseman, H. M.",
+"year": "1993",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc308R1",
+"doi-asserted-by": "crossref",
+"first-page": "241",
+"DOI": "10.1016/S0375-9601(98)00774-9",
+"volume": "250",
+"author": "Wiseman, H. M.",
+"year": "1998",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc309R1",
+"doi-asserted-by": "crossref",
+"first-page": "363",
+"DOI": "10.1016/0003-4916(89)90322-9",
+"volume": "191",
+"author": "Wootters, W. K.",
+"year": "1989",
+"journal-title": "Ann. Phys. (N.Y.)"
+},
+{
+"key": "RevModPhys.75.715Cc310R1",
+"doi-asserted-by": "crossref",
+"first-page": "473",
+"DOI": "10.1103/PhysRevD.19.473",
+"volume": "19",
+"author": "Wootters, W. K.",
+"year": "1979",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc311R1",
+"doi-asserted-by": "crossref",
+"first-page": "802",
+"DOI": "10.1038/299802a0",
+"volume": "299",
+"author": "Wootters, W. K.",
+"year": "1982",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc312R1",
+"doi-asserted-by": "crossref",
+"first-page": "3276",
+"DOI": "10.1103/PhysRevA.57.3276",
+"volume": "57",
+"author": "Zanardi, P.",
+"year": "1998",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc313R1",
+"doi-asserted-by": "crossref",
+"first-page": "012301",
+"DOI": "10.1103/PhysRevA.63.012301",
+"volume": "63",
+"author": "Zanardi, P.",
+"year": "2001",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc314R1",
+"doi-asserted-by": "crossref",
+"first-page": "3306",
+"DOI": "10.1103/PhysRevLett.79.3306",
+"volume": "79",
+"author": "Zanardi, P.",
+"year": "1997",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc315R1",
+"doi-asserted-by": "crossref",
+"first-page": "69",
+"DOI": "10.1007/BF00708656",
+"volume": "1",
+"author": "Zeh, H. D.",
+"year": "1970",
+"journal-title": "Found. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc317R1",
+"doi-asserted-by": "crossref",
+"first-page": "109",
+"DOI": "10.1007/BF00708603",
+"volume": "3",
+"author": "Zeh, H. D.",
+"year": "1973",
+"journal-title": "Found. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc318R1",
+"doi-asserted-by": "crossref",
+"first-page": "9",
+"DOI": "10.1016/0375-9601(86)90346-4",
+"volume": "116",
+"author": "Zeh, H. D.",
+"year": "1986",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc319R1",
+"doi-asserted-by": "crossref",
+"first-page": "311",
+"DOI": "10.1016/0375-9601(88)90842-0",
+"volume": "172",
+"author": "Zeh, H. D.",
+"year": "1988",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc322R1",
+"doi-asserted-by": "crossref",
+"first-page": "189",
+"DOI": "10.1016/0375-9601(93)91005-P",
+"volume": "172",
+"author": "Zeh, H. D.",
+"year": "1993",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "RevModPhys.75.715Cc325R1",
+"doi-asserted-by": "crossref",
+"first-page": "1516",
+"DOI": "10.1103/PhysRevD.24.1516",
+"volume": "24",
+"author": "Zurek, W. H.",
+"year": "1981",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc326R1",
+"doi-asserted-by": "crossref",
+"first-page": "1862",
+"DOI": "10.1103/PhysRevD.26.1862",
+"volume": "26",
+"author": "Zurek, W. H.",
+"year": "1982",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "RevModPhys.75.715Cc329R1",
+"doi-asserted-by": "crossref",
+"first-page": "391",
+"DOI": "10.1103/PhysRevLett.53.391",
+"volume": "53",
+"author": "Zurek, W. H.",
+"year": "1984",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc330R1",
+"doi-asserted-by": "crossref",
+"first-page": "4731",
+"DOI": "10.1103/PhysRevA.40.4731",
+"volume": "40",
+"author": "Zurek, W. H.",
+"year": "1989",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc331R1",
+"doi-asserted-by": "crossref",
+"first-page": "36",
+"DOI": "10.1063/1.881293",
+"volume": "44",
+"author": "Zurek, W. H.",
+"year": "1991",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc332R1",
+"doi-asserted-by": "crossref",
+"first-page": "281",
+"DOI": "10.1143/ptp/89.2.281",
+"volume": "89",
+"author": "Zurek, W. H.",
+"year": "1993",
+"journal-title": "Prog. Theor. Phys."
+},
+{
+"key": "RevModPhys.75.715Cc333R1",
+"first-page": "13",
+"volume": "46",
+"author": "Zurek, W. H.",
+"year": "1993",
+"journal-title": "Phys. Today"
+},
+{
+"key": "RevModPhys.75.715Cc335R1",
+"doi-asserted-by": "crossref",
+"first-page": "1793",
+"DOI": "10.1098/rsta.1998.0250",
+"volume": "356",
+"author": "Zurek, W. H.",
+"year": "1998",
+"journal-title": "Philos. Trans. R. Soc. London, Ser. A"
+},
+{
+"key": "RevModPhys.75.715Cc336R1",
+"doi-asserted-by": "crossref",
+"first-page": "186",
+"DOI": "10.1238/Physica.Topical.076a00186",
+"volume": "76",
+"author": "Zurek, W. H.",
+"year": "1998",
+"journal-title": "Phys. Scr., T"
+},
+{
+"key": "RevModPhys.75.715Cc337R1",
+"doi-asserted-by": "crossref",
+"first-page": "855",
+"DOI": "10.1002/1521-3889(200011)9:11/12<855::AID-ANDP855>3.0.CO;2-K",
+"volume": "9",
+"author": "Zurek, W. H.",
+"year": "2000",
+"journal-title": "Ann. Phys. (Leipzig)"
+},
+{
+"key": "RevModPhys.75.715Cc338R1",
+"doi-asserted-by": "crossref",
+"first-page": "712",
+"DOI": "10.1038/35089017",
+"volume": "412",
+"author": "Zurek, W. H.",
+"year": "2001",
+"journal-title": "Nature (London)"
+},
+{
+"key": "RevModPhys.75.715Cc339R1",
+"doi-asserted-by": "crossref",
+"first-page": "012320",
+"DOI": "10.1103/PhysRevA.67.012320",
+"volume": "67",
+"author": "Zurek, W. H.",
+"year": "2003",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "RevModPhys.75.715Cc340R1",
+"doi-asserted-by": "crossref",
+"first-page": "120404",
+"DOI": "10.1103/PhysRevLett.90.120404",
+"volume": "90",
+"author": "Zurek, W. H.",
+"year": "2003",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc341R1",
+"doi-asserted-by": "crossref",
+"first-page": "1187",
+"DOI": "10.1103/PhysRevLett.70.1187",
+"volume": "70",
+"author": "Zurek, W. H.",
+"year": "1993",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc342R1",
+"doi-asserted-by": "crossref",
+"first-page": "2508",
+"DOI": "10.1103/PhysRevLett.72.2508",
+"volume": "72",
+"author": "Zurek, W. H.",
+"year": "1994",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "RevModPhys.75.715Cc343R1",
+"doi-asserted-by": "crossref",
+"first-page": "300",
+"DOI": "10.1016/0167-2789(94)00271-Q",
+"volume": "83",
+"author": "Zurek, W. H.",
+"year": "1995",
+"journal-title": "Physica D"
+},
+{
+"key": "RevModPhys.75.715Cc344R1",
+"doi-asserted-by": "crossref",
+"first-page": "2508",
+"DOI": "10.1103/PhysRevLett.72.2508",
+"volume": "72",
+"author": "Zurek, W. H.",
+"year": "1995",
+"journal-title": "Phys. Rev. Lett."
+}
+],
+"container-title": [
+"Reviews of Modern Physics"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.aps.org/article/10.1103/RevModPhys.75.715",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/RevModPhys.75.715/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2018,
+2,
+17
+]
+],
+"date-time": "2018-02-17T07:24:23Z",
+"timestamp": 1518852263000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/RevModPhys.75.715"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2003,
+5,
+22
+]
+]
+},
+"references-count": 264,
+"journal-issue": {
+"issue": "3",
+"published-print": {
+"date-parts": [
+[
+2003,
+5
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/revmodphys.75.715",
+"relation": {},
+"ISSN": [
+"0034-6861",
+"1539-0756"
+],
+"issn-type": [
+{
+"value": "0034-6861",
+"type": "print"
+},
+{
+"value": "1539-0756",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2003,
+5,
+22
+]
+]
+}
+}
+}

@@ -8,8 +8,9 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 
 ## Read first
 
-- [The paper, 40 pages](https://closer24.github.io/Universe24/paper/Universe24_Paper.pdf): "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026)
-- [The supplement, Online Resource 1, 85 pages](https://closer24.github.io/Universe24/paper/Universe24_Supplement.pdf): the claims list and the algebraic steps of every derivation
+- [The paper, 40 pages](https://closer24.github.io/Universe24/papers/one_rule/Universe24_Paper.pdf): "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026)
+- [The supplement, Online Resource 1, 85 pages](https://closer24.github.io/Universe24/papers/one_rule/Universe24_Supplement.pdf): the claims list and the algebraic steps of every derivation
+- [The time paper, 21 pages](https://closer24.github.io/Universe24/papers/spacetime_events/arrow.pdf): "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured" (Alon Gonen, 2026), its source, run and checks in papers/spacetime_events/, built and run by its build.sh
 - [README](https://closer24.github.io/Universe24/README.md): the aim, the plain words, what the repository holds, how to run a world, what is open
 
 ## The documents

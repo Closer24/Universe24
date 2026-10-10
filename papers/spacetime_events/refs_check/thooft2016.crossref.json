@@ -1,0 +1,169 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+9
+]
+],
+"date-time": "2026-10-09T16:24:43Z",
+"timestamp": 1791563083300,
+"version": "4.3.4"
+},
+"publisher-location": "Cham",
+"reference-count": 0,
+"publisher": "Springer International Publishing",
+"isbn-type": [
+{
+"value": "9783319412849",
+"type": "print"
+},
+{
+"value": "9783319412856",
+"type": "electronic"
+}
+],
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2016,
+1,
+1
+]
+],
+"date-time": "2016-01-01T00:00:00Z",
+"timestamp": 1451606400000
+},
+"content-version": "unspecified",
+"delay-in-days": 0,
+"URL": "http://creativecommons.org/licenses/by/4.0"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [],
+"published-print": {
+"date-parts": [
+[
+2016
+]
+]
+},
+"DOI": "10.1007/978-3-319-41285-6",
+"type": "book",
+"created": {
+"date-parts": [
+[
+2016,
+9,
+2
+]
+],
+"date-time": "2016-09-02T04:10:41Z",
+"timestamp": 1472789441000
+},
+"source": "Crossref",
+"is-referenced-by-count": 187,
+"title": [
+"The Cellular Automaton Interpretation of Quantum Mechanics"
+],
+"prefix": "10.1007",
+"author": [
+{
+"given": "Gerard",
+"family": "'t Hooft",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "297",
+"container-title": [
+"Fundamental Theories of Physics"
+],
+"original-title": [],
+"link": [
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/978-3-319-41285-6.pdf",
+"content-type": "application/pdf",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/978-3-319-41285-6",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2016,
+9,
+2
+]
+],
+"date-time": "2016-09-02T04:10:40Z",
+"timestamp": 1472789440000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "http://link.springer.com/10.1007/978-3-319-41285-6"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2016
+]
+]
+},
+"ISBN": [
+"9783319412849",
+"9783319412856"
+],
+"references-count": 0,
+"URL": "https://doi.org/10.1007/978-3-319-41285-6",
+"relation": {},
+"ISSN": [
+"0168-1222",
+"2365-6425"
+],
+"issn-type": [
+{
+"value": "0168-1222",
+"type": "print"
+},
+{
+"value": "2365-6425",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2016
+]
+]
+}
+}
+}

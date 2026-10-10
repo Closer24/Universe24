@@ -1,0 +1,138 @@
+{
+"created": "2026-10-07T03:42:26.064958+00:00",
+"modified": "2026-10-08T00:22:32.628833+00:00",
+"id": 23202100,
+"conceptrecid": "23190113",
+"doi": "10.5281/zenodo.23202100",
+"conceptdoi": "10.5281/zenodo.23190113",
+"doi_url": "https://doi.org/10.5281/zenodo.23202100",
+"metadata": {
+"title": "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks",
+"doi": "10.5281/zenodo.23202100",
+"publication_date": "2026-10-07",
+"description": "<p>Universe24 is one integer rule on a cubic lattice. Each Node holds bounded integers and steps, reversibly, from its own present, its past and its six neighbours; nothing else is kept anywhere. A world is read only through the clicks of declared NodeDetectors. The paper's one claim is that this rule helps compute things in nature: from the rule's algebra alone it derives formulas that nature shows, and it adds formulas of its own with blind expectations that an experiment can check.</p>\n<p>&nbsp;</p>\n<p>This record archives version 1.1.0 of the project, the version submitted to Foundations of Physics (Alon Gonen, 2026):</p>\n<p>&nbsp;</p>\n<p>- Universe24_main_v1.1.0.pdf: the paper, \"Universe24: one simple rule, the formulas it shares with nature and adds\" (40 pages).</p>\n<p>- Universe24_Online_Resource_1_v1.1.0.pdf: Online Resource 1, the supplement with the full derivations and proofs (85 pages).</p>\n<p>- Universe24-1.1.0-source.zip: the repository at release v1.1.0: the paper's LaTeX sources and figures; the law of the lattice (docs/ALGEBRA.md), one algebraic line per rule; the decisions in force (docs/HIGHLIGHTS.md); the derivations of the paper's numbers in Python with their machine checks (tools/derivations/, proofs_inventory.json); the frozen implementation of the rule (src/event_universe/) with its document (docs/ENGINE.md) and its tests; and the two slits' universe, the one run the paper reports, with its design, its blind row and its reading.</p>\n<p>&nbsp;</p>\n<p>Every number in the paper is reproducible from the archive: each derivation is a script that starts from the rule's line and uses no run of the engine, and the test suite holds each printed number to its script's output. The repository is developed further at https://github.com/Closer24/Universe24, which states how to build a world, run an experiment and contribute.</p>\n<p>&nbsp;</p>\n<p>Licence: MIT. The journal reference will be added here at publication.</p>",
+"access_right": "open",
+"creators": [
+{
+"name": "Gonen, Alon",
+"affiliation": "Independent researcher, Haifa, Israel",
+"orcid": "0009-0008-2701-4599"
+}
+],
+"version": "1.1.0",
+"custom": {
+"code:codeRepository": "https://github.com/Closer24/Universe24"
+},
+"resource_type": {
+"title": "Software",
+"type": "software"
+},
+"license": {
+"id": "mit-license"
+},
+"relations": {
+"version": [
+{
+"index": 2,
+"is_last": true,
+"parent": {
+"pid_type": "recid",
+"pid_value": "23190113"
+}
+}
+]
+}
+},
+"title": "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks",
+"links": {
+"self": "https://zenodo.org/api/records/23202100",
+"self_html": "https://zenodo.org/records/23202100",
+"preview_html": "https://zenodo.org/records/23202100?preview=1",
+"doi": "https://doi.org/10.5281/zenodo.23202100",
+"self_doi": "https://doi.org/10.5281/zenodo.23202100",
+"self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23202100",
+"reserve_doi": "https://zenodo.org/api/records/23202100/draft/pids/doi",
+"parent": "https://zenodo.org/api/records/23190113",
+"parent_html": "https://zenodo.org/records/23190113",
+"parent_doi": "https://doi.org/10.5281/zenodo.23190113",
+"parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23190113",
+"self_iiif_manifest": "https://zenodo.org/api/iiif/record:23202100/manifest",
+"self_iiif_sequence": "https://zenodo.org/api/iiif/record:23202100/sequence/default",
+"files": "https://zenodo.org/api/records/23202100/files",
+"media_files": "https://zenodo.org/api/records/23202100/media-files",
+"thumbnails": {
+"10": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E10,/0/default.jpg",
+"50": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E50,/0/default.jpg",
+"100": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E100,/0/default.jpg",
+"250": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E250,/0/default.jpg",
+"750": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E750,/0/default.jpg",
+"1200": "https://zenodo.org/api/iiif/record:23202100:Universe24_Online_Resource_1_v1.1.0.pdf/full/%5E1200,/0/default.jpg"
+},
+"latest": "https://zenodo.org/api/records/23202100/versions/latest",
+"latest_html": "https://zenodo.org/records/23202100/latest",
+"versions": "https://zenodo.org/api/records/23202100/versions",
+"draft": "https://zenodo.org/api/records/23202100/draft",
+"access_links": "https://zenodo.org/api/records/23202100/access/links",
+"access_grants": "https://zenodo.org/api/records/23202100/access/grants",
+"access_users": "https://zenodo.org/api/records/23202100/access/users",
+"access_request": "https://zenodo.org/api/records/23202100/access/request",
+"access": "https://zenodo.org/api/records/23202100/access",
+"communities": "https://zenodo.org/api/records/23202100/communities",
+"communities-suggestions": "https://zenodo.org/api/records/23202100/communities-suggestions",
+"request_deletion": "https://zenodo.org/api/records/23202100/request-deletion",
+"file_modification": "https://zenodo.org/api/records/23202100/file-modification",
+"quota_increase": "https://zenodo.org/api/records/23202100/quota-increase",
+"requests": "https://zenodo.org/api/records/23202100/requests"
+},
+"updated": "2026-10-08T00:22:32.628833+00:00",
+"recid": "23202100",
+"revision": 6,
+"files": [
+{
+"id": "832c2c2d-be2b-4194-9de5-12b2c3f14f68",
+"key": "Universe24-1.1.0-source.zip",
+"size": 4357299,
+"checksum": "md5:0411c11a14b87ae35ca940a66c8fb09b",
+"links": {
+"self": "https://zenodo.org/api/records/23202100/files/Universe24-1.1.0-source.zip/content"
+}
+},
+{
+"id": "bc16a643-1370-48b6-860f-bd23c2658e76",
+"key": "Universe24_Online_Resource_1_v1.1.0.pdf",
+"size": 968160,
+"checksum": "md5:0fbe9506f26961669d36739db04bb2b4",
+"links": {
+"self": "https://zenodo.org/api/records/23202100/files/Universe24_Online_Resource_1_v1.1.0.pdf/content"
+}
+},
+{
+"id": "7533ddb3-3db0-4672-a62c-e332e160cea5",
+"key": "Universe24_main_v1.1.0.pdf",
+"size": 615065,
+"checksum": "md5:bcde19cfd1e5b355b85f22d07c09b64b",
+"links": {
+"self": "https://zenodo.org/api/records/23202100/files/Universe24_main_v1.1.0.pdf/content"
+}
+}
+],
+"swh": {},
+"owners": [
+{
+"id": "1878708"
+}
+],
+"status": "published",
+"stats": {
+"downloads": 2,
+"unique_downloads": 2,
+"views": 40,
+"unique_views": 27,
+"version_downloads": 2,
+"version_unique_downloads": 2,
+"version_unique_views": 21,
+"version_views": 30
+},
+"state": "done",
+"submitted": true
+}

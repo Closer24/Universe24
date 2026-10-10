@@ -1,0 +1,283 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+3
+]
+],
+"date-time": "2026-10-03T00:57:50Z",
+"timestamp": 1790989070787,
+"version": "4.1.0"
+},
+"reference-count": 14,
+"publisher": "Wiley",
+"issue": "4",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2006,
+3,
+16
+]
+],
+"date-time": "2006-03-16T00:00:00Z",
+"timestamp": 1142467200000
+},
+"content-version": "vor",
+"delay-in-days": 40251,
+"URL": "http://onlinelibrary.wiley.com/termsAndConditions#vor"
+}
+],
+"content-domain": {
+"domain": [
+"onlinelibrary.wiley.com"
+],
+"crossmark-restriction": true
+},
+"short-container-title": [
+"Annalen der Physik"
+],
+"published-print": {
+"date-parts": [
+[
+1896,
+1
+]
+]
+},
+"DOI": "10.1002/andp.18962930414",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2007,
+5,
+16
+]
+],
+"date-time": "2007-05-16T10:59:32Z",
+"timestamp": 1179313172000
+},
+"page": "773-784",
+"update-policy": "https://doi.org/10.1002/crossmark_policy",
+"source": "Crossref",
+"is-referenced-by-count": 117,
+"title": [
+"Entgegnung auf die w\u00e4rmetheoretischen Betrachtungen des Hrn. E. Zermelo"
+],
+"prefix": "10.1002",
+"volume": "293",
+"author": [
+{
+"given": "Ludwig",
+"family": "Boltzmann",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "311",
+"published-online": {
+"date-parts": [
+[
+2006,
+3,
+16
+]
+]
+},
+"reference": [
+{
+"key": "e_1_2_1_1_2",
+"first-page": "67",
+"volume": "75",
+"author": "Boltzmann L.",
+"year": "1877",
+"journal-title": "Wien. Sitzungsber. II"
+},
+{
+"key": "e_1_2_1_1_3",
+"first-page": "373",
+"volume": "76",
+"year": "1877",
+"journal-title": "Wien. Sitzungsber. II"
+},
+{
+"key": "e_1_2_1_1_4",
+"first-page": "740",
+"volume": "78",
+"year": "1878",
+"journal-title": "Wien. Sitzungsber. II"
+},
+{
+"key": "e_1_2_1_1_5",
+"unstructured": "\u201eDer zweite Hauptsatz der W\u00e4rmetheorie\u201d\ufe01 Rede gehalten am 29. Mai1886"
+},
+{
+"key": "e_1_2_1_1_6",
+"first-page": "413",
+"volume": "51",
+"year": "1895",
+"journal-title": "Almanach d. Wien. Akad. Nature"
+},
+{
+"key": "e_1_2_1_1_7",
+"unstructured": "Vorlesung \u00fcber Gastheorie p.42.1895 Leipzig beiJ. A.Barth."
+},
+{
+"key": "e_1_2_1_2_2",
+"doi-asserted-by": "publisher",
+"DOI": "10.1002/andp.18962930314"
+},
+{
+"key": "e_1_2_1_3_2",
+"unstructured": "L.Boltzmann Nature l. c."
+},
+{
+"key": "e_1_2_1_4_2",
+"unstructured": "Ueber das was hierbei unter gleich m\u00f6glichen Zust\u00e4nden zu verstehen ist vgl. meine eingangs citirten Abhandlungen."
+},
+{
+"key": "e_1_2_1_5_2",
+"first-page": "172",
+"volume": "17",
+"year": "1884",
+"journal-title": "Berl. Ber."
+},
+{
+"key": "e_1_2_1_5_3",
+"unstructured": "Berl. Ber.p.34. Febr.1882."
+},
+{
+"key": "e_1_2_1_6_2",
+"unstructured": "l. c. p.61."
+},
+{
+"key": "e_1_2_1_7_2",
+"first-page": "229",
+"volume": "3",
+"author": "Gibbs",
+"year": "1875",
+"journal-title": "Conn. acad. trans."
+},
+{
+"key": "e_1_2_1_7_3",
+"unstructured": "Ostwald's deutsche Ausgabe p.198."
+}
+],
+"container-title": [
+"Annalen der Physik"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://api.wiley.com/onlinelibrary/tdm/v1/articles/10.1002%2Fandp.18962930414",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/andp.18962930414",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2023,
+11,
+3
+]
+],
+"date-time": "2023-11-03T18:46:36Z",
+"timestamp": 1699037196000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://onlinelibrary.wiley.com/doi/10.1002/andp.18962930414"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1896,
+1
+]
+]
+},
+"references-count": 14,
+"journal-issue": {
+"issue": "4",
+"published-print": {
+"date-parts": [
+[
+1896,
+1
+]
+]
+}
+},
+"alternative-id": [
+"10.1002/andp.18962930414"
+],
+"URL": "https://doi.org/10.1002/andp.18962930414",
+"archive": [
+"Portico"
+],
+"relation": {},
+"ISSN": [
+"0003-3804",
+"1521-3889"
+],
+"issn-type": [
+{
+"value": "0003-3804",
+"type": "print"
+},
+{
+"value": "1521-3889",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1896,
+1
+]
+]
+},
+"assertion": [
+{
+"value": "2006-03-16",
+"order": 2,
+"name": "published",
+"label": "Published",
+"group": {
+"name": "publication_history",
+"label": "Publication History"
+}
+}
+]
+}
+}

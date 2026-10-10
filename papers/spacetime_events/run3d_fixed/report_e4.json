@@ -1,0 +1,4713 @@
+{
+ "engine": "bd0e135577c6014a7667a15842d650618417f11c",
+ "worktree_status": "M paper_time/arrow.bbl\n M paper_time/arrow.pdf\n M paper_time/arrow.tex\n M paper_time/build.sh\n M paper_time/refs.bib\n?? paper_time/tools/",
+ "world": {
+  "shape": [
+   400,
+   8,
+   8
+  ],
+  "boundary": {
+   "x": "open",
+   "y": "open",
+   "z": "open"
+  },
+  "face_depth": 1,
+  "intervals": 172,
+  "universe": "examples/events/anticoincidence/two_atoms.json",
+  "engine": "examples/events/engine_start.json",
+  "bodies": [
+   {
+    "family": "atom",
+    "nodes": [
+     {
+      "node": [
+       175,
+       4,
+       4
+      ],
+      "weight": 1
+     },
+     {
+      "node": [
+       176,
+       4,
+       4
+      ],
+      "weight": 1
+     }
+    ],
+    "parts": [
+     {
+      "part": 0,
+      "name": "g",
+      "role": "ground",
+      "count": 1
+     },
+     {
+      "part": 1,
+      "name": "e",
+      "role": "excited",
+      "count": 0
+     }
+    ],
+    "transitions": [
+     {
+      "from": "g",
+      "to": "e",
+      "drive": "photon",
+      "weight": 40,
+      "resonance": [
+       5414,
+       6000
+      ]
+     }
+    ],
+    "rates": [],
+    "node_detector": {
+     "multiplier": 6364136223846793005,
+     "increment": 1442695040888963407,
+     "window": 48,
+     "seed": 25
+    }
+   },
+   {
+    "family": "atom",
+    "nodes": [
+     {
+      "node": [
+       223,
+       4,
+       4
+      ],
+      "weight": 1
+     },
+     {
+      "node": [
+       224,
+       4,
+       4
+      ],
+      "weight": 1
+     }
+    ],
+    "parts": [
+     {
+      "part": 0,
+      "name": "g",
+      "role": "ground",
+      "count": 1
+     },
+     {
+      "part": 1,
+      "name": "e",
+      "role": "excited",
+      "count": 0
+     }
+    ],
+    "transitions": [
+     {
+      "from": "g",
+      "to": "e",
+      "drive": "photon",
+      "weight": 40,
+      "resonance": [
+       5414,
+       6000
+      ]
+     }
+    ],
+    "rates": [],
+    "node_detector": {
+     "multiplier": 6364136223846793005,
+     "increment": 1442695040888963407,
+     "window": 48,
+     "seed": 25
+    }
+   }
+  ],
+  "packets": [
+   {
+    "family": "photon",
+    "along": "x",
+    "wave": [
+     1,
+     4
+    ],
+    "phase": [
+     0,
+     1
+    ],
+    "amplitude": 21,
+    "top": {
+     "x": [
+      200,
+      200
+     ],
+     "y": [
+      2,
+      5
+     ],
+     "z": [
+      2,
+      5
+     ]
+    },
+    "edge": {
+     "x": 8,
+     "y": 0,
+     "z": 0
+    }
+   },
+   {
+    "family": "photon",
+    "along": "x",
+    "wave": [
+     -1,
+     4
+    ],
+    "phase": [
+     0,
+     1
+    ],
+    "amplitude": 21,
+    "top": {
+     "x": [
+      199,
+      199
+     ],
+     "y": [
+      2,
+      5
+     ],
+     "z": [
+      2,
+      5
+     ]
+    },
+    "edge": {
+     "x": 8,
+     "y": 0,
+     "z": 0
+    }
+   }
+  ],
+  "node_detectors": []
+ },
+ "mode_packets": [
+  {
+   "family": "photon",
+   "pair": [
+    6000,
+    6000
+   ],
+   "amplitude": 21,
+   "count": 1
+  },
+  {
+   "family": "photon",
+   "pair": [
+    6000,
+    6000
+   ],
+   "amplitude": 20,
+   "count": 1
+  }
+ ],
+ "books_at_start": {
+  "counts": {
+   "0": 2,
+   "1": 1
+  },
+  "units": {
+   "0": 124867674,
+   "1": 640824000
+  }
+ },
+ "board": {
+  "shape": [
+   400,
+   8,
+   8
+  ],
+  "offset": [
+   0,
+   0,
+   0
+  ],
+  "receding": [],
+  "nodes": 25600,
+  "open_axes": [
+   true,
+   true,
+   true
+  ]
+ },
+ "f_families": {
+  "pairs": {
+   "atom": [
+    1,
+    1299
+   ],
+   "photon": [
+    6000,
+    6000
+   ]
+  },
+  "universe_integers": {
+   "node_clock": 6000,
+   "quantum_action": 32768,
+   "width": 9223372036854775807,
+   "link_unit": 16
+  },
+  "bodies_rates": [
+   [],
+   []
+  ],
+  "bodies_transitions": [
+   [
+    {
+     "from": "g",
+     "to": "e",
+     "drive": "photon",
+     "weight": 40,
+     "resonance": [
+      5414,
+      6000
+     ]
+    }
+   ],
+   [
+    {
+     "from": "g",
+     "to": "e",
+     "drive": "photon",
+     "weight": 40,
+     "resonance": [
+      5414,
+      6000
+     ]
+    }
+   ]
+  ]
+ },
+ "e_packets_at_load": {
+  "profile_x_at_4_4": {
+   "191": 0,
+   "192": 1,
+   "193": 3,
+   "194": 0,
+   "195": -12,
+   "196": -25,
+   "197": -23,
+   "198": 0,
+   "199": 29,
+   "200": 41,
+   "201": 27,
+   "202": 0,
+   "203": -17,
+   "204": -16,
+   "205": -7,
+   "206": -1,
+   "207": 0
+  },
+  "x_extent": [
+   192,
+   206
+  ],
+  "nodes_nonzero": 192,
+  "cross_section_uniform": true,
+  "mirror_x_to_X-1-x_equal": false,
+  "mirror_sign_flipped": false,
+  "before_equals_now": false,
+  "before_profile_x_at_4_4": {
+   "191": 0,
+   "192": -2,
+   "193": 3,
+   "194": 0,
+   "195": -10,
+   "196": -23,
+   "197": -21,
+   "198": 0,
+   "199": 28,
+   "200": 39,
+   "201": 24,
+   "202": -1,
+   "203": -16,
+   "204": -15,
+   "205": -5,
+   "206": -1,
+   "207": 0
+  }
+ },
+ "h_times": {
+  "forward_both_boards_s": 13.21,
+  "ii_s": 1.85,
+  "iii_s": 5.88,
+  "iii_b_s": 6.22,
+  "total_s": 28.02
+ },
+ "e_motion_0_to_48": {
+  "profiles": {
+   "0": {
+    "x_min": 192,
+    "x_max": 206,
+    "nodes": 192,
+    "peak_minus_x": [
+     199,
+     29
+    ],
+    "peak_plus_x": [
+     200,
+     41
+    ],
+    "largest_abs": 41
+   },
+   "1": {
+    "x_min": 192,
+    "x_max": 208,
+    "nodes": 472,
+    "peak_minus_x": [
+     199,
+     24
+    ],
+    "peak_plus_x": [
+     200,
+     34
+    ],
+    "largest_abs": 34
+   },
+   "2": {
+    "x_min": 191,
+    "x_max": 208,
+    "nodes": 704,
+    "peak_minus_x": [
+     195,
+     -13
+    ],
+    "peak_plus_x": [
+     200,
+     18
+    ],
+    "largest_abs": 18
+   },
+   "3": {
+    "x_min": 190,
+    "x_max": 209,
+    "nodes": 862,
+    "peak_minus_x": [
+     197,
+     13
+    ],
+    "peak_plus_x": [
+     202,
+     15
+    ],
+    "largest_abs": 16
+   },
+   "4": {
+    "x_min": 190,
+    "x_max": 209,
+    "nodes": 1020,
+    "peak_minus_x": [
+     197,
+     26
+    ],
+    "peak_plus_x": [
+     200,
+     -36
+    ],
+    "largest_abs": 37
+   },
+   "5": {
+    "x_min": 189,
+    "x_max": 210,
+    "nodes": 1100,
+    "peak_minus_x": [
+     199,
+     -30
+    ],
+    "peak_plus_x": [
+     200,
+     -41
+    ],
+    "largest_abs": 42
+   },
+   "6": {
+    "x_min": 189,
+    "x_max": 210,
+    "nodes": 1234,
+    "peak_minus_x": [
+     195,
+     21
+    ],
+    "peak_plus_x": [
+     200,
+     -22
+    ],
+    "largest_abs": 22
+   },
+   "7": {
+    "x_min": 188,
+    "x_max": 211,
+    "nodes": 1254,
+    "peak_minus_x": [
+     194,
+     14
+    ],
+    "peak_plus_x": [
+     202,
+     -15
+    ],
+    "largest_abs": 18
+   },
+   "8": {
+    "x_min": 188,
+    "x_max": 211,
+    "nodes": 1352,
+    "peak_minus_x": [
+     197,
+     -15
+    ],
+    "peak_plus_x": [
+     200,
+     17
+    ],
+    "largest_abs": 17
+   },
+   "9": {
+    "x_min": 187,
+    "x_max": 211,
+    "nodes": 1370,
+    "peak_minus_x": [
+     196,
+     -8
+    ],
+    "peak_plus_x": [
+     204,
+     -8
+    ],
+    "largest_abs": 14
+   },
+   "10": {
+    "x_min": 187,
+    "x_max": 211,
+    "nodes": 1418,
+    "peak_minus_x": [
+     192,
+     5
+    ],
+    "peak_plus_x": [
+     207,
+     5
+    ],
+    "largest_abs": 16
+   },
+   "11": {
+    "x_min": 186,
+    "x_max": 212,
+    "nodes": 1454,
+    "peak_minus_x": [
+     193,
+     5
+    ],
+    "peak_plus_x": [
+     208,
+     5
+    ],
+    "largest_abs": 14
+   },
+   "12": {
+    "x_min": 186,
+    "x_max": 212,
+    "nodes": 1452,
+    "peak_minus_x": [
+     192,
+     5
+    ],
+    "peak_plus_x": [
+     208,
+     5
+    ],
+    "largest_abs": 19
+   },
+   "13": {
+    "x_min": 185,
+    "x_max": 213,
+    "nodes": 1526,
+    "peak_minus_x": [
+     192,
+     6
+    ],
+    "peak_plus_x": [
+     205,
+     -5
+    ],
+    "largest_abs": 24
+   },
+   "14": {
+    "x_min": 185,
+    "x_max": 213,
+    "nodes": 1620,
+    "peak_minus_x": [
+     191,
+     6
+    ],
+    "peak_plus_x": [
+     205,
+     -6
+    ],
+    "largest_abs": 24
+   },
+   "15": {
+    "x_min": 185,
+    "x_max": 214,
+    "nodes": 1632,
+    "peak_minus_x": [
+     190,
+     6
+    ],
+    "peak_plus_x": [
+     205,
+     -7
+    ],
+    "largest_abs": 20
+   },
+   "16": {
+    "x_min": 185,
+    "x_max": 214,
+    "nodes": 1706,
+    "peak_minus_x": [
+     194,
+     -10
+    ],
+    "peak_plus_x": [
+     206,
+     -9
+    ],
+    "largest_abs": 16
+   },
+   "17": {
+    "x_min": 185,
+    "x_max": 215,
+    "nodes": 1754,
+    "peak_minus_x": [
+     194,
+     -9
+    ],
+    "peak_plus_x": [
+     206,
+     -12
+    ],
+    "largest_abs": 15
+   },
+   "18": {
+    "x_min": 184,
+    "x_max": 215,
+    "nodes": 1826,
+    "peak_minus_x": [
+     193,
+     -13
+    ],
+    "peak_plus_x": [
+     207,
+     -14
+    ],
+    "largest_abs": 15
+   },
+   "19": {
+    "x_min": 184,
+    "x_max": 216,
+    "nodes": 1922,
+    "peak_minus_x": [
+     192,
+     -15
+    ],
+    "peak_plus_x": [
+     208,
+     -17
+    ],
+    "largest_abs": 17
+   },
+   "20": {
+    "x_min": 183,
+    "x_max": 216,
+    "nodes": 1906,
+    "peak_minus_x": [
+     191,
+     -16
+    ],
+    "peak_plus_x": [
+     209,
+     -17
+    ],
+    "largest_abs": 17
+   },
+   "21": {
+    "x_min": 183,
+    "x_max": 217,
+    "nodes": 1986,
+    "peak_minus_x": [
+     190,
+     -18
+    ],
+    "peak_plus_x": [
+     210,
+     -17
+    ],
+    "largest_abs": 18
+   },
+   "22": {
+    "x_min": 182,
+    "x_max": 217,
+    "nodes": 2000,
+    "peak_minus_x": [
+     190,
+     -17
+    ],
+    "peak_plus_x": [
+     211,
+     -17
+    ],
+    "largest_abs": 17
+   },
+   "23": {
+    "x_min": 182,
+    "x_max": 217,
+    "nodes": 1980,
+    "peak_minus_x": [
+     189,
+     -16
+    ],
+    "peak_plus_x": [
+     207,
+     18
+    ],
+    "largest_abs": 18
+   },
+   "24": {
+    "x_min": 181,
+    "x_max": 218,
+    "nodes": 2012,
+    "peak_minus_x": [
+     188,
+     -18
+    ],
+    "peak_plus_x": [
+     208,
+     18
+    ],
+    "largest_abs": 18
+   },
+   "25": {
+    "x_min": 181,
+    "x_max": 218,
+    "nodes": 2058,
+    "peak_minus_x": [
+     187,
+     -17
+    ],
+    "peak_plus_x": [
+     209,
+     19
+    ],
+    "largest_abs": 21
+   },
+   "26": {
+    "x_min": 180,
+    "x_max": 218,
+    "nodes": 2088,
+    "peak_minus_x": [
+     187,
+     -16
+    ],
+    "peak_plus_x": [
+     210,
+     23
+    ],
+    "largest_abs": 23
+   },
+   "27": {
+    "x_min": 180,
+    "x_max": 218,
+    "nodes": 2118,
+    "peak_minus_x": [
+     190,
+     18
+    ],
+    "peak_plus_x": [
+     210,
+     20
+    ],
+    "largest_abs": 21
+   },
+   "28": {
+    "x_min": 179,
+    "x_max": 219,
+    "nodes": 2198,
+    "peak_minus_x": [
+     189,
+     22
+    ],
+    "peak_plus_x": [
+     211,
+     23
+    ],
+    "largest_abs": 23
+   },
+   "29": {
+    "x_min": 179,
+    "x_max": 219,
+    "nodes": 2234,
+    "peak_minus_x": [
+     188,
+     20
+    ],
+    "peak_plus_x": [
+     212,
+     22
+    ],
+    "largest_abs": 22
+   },
+   "30": {
+    "x_min": 178,
+    "x_max": 220,
+    "nodes": 2312,
+    "peak_minus_x": [
+     187,
+     21
+    ],
+    "peak_plus_x": [
+     213,
+     21
+    ],
+    "largest_abs": 22
+   },
+   "31": {
+    "x_min": 178,
+    "x_max": 220,
+    "nodes": 2304,
+    "peak_minus_x": [
+     186,
+     21
+    ],
+    "peak_plus_x": [
+     214,
+     20
+    ],
+    "largest_abs": 21
+   },
+   "32": {
+    "x_min": 178,
+    "x_max": 221,
+    "nodes": 2436,
+    "peak_minus_x": [
+     185,
+     19
+    ],
+    "peak_plus_x": [
+     214,
+     19
+    ],
+    "largest_abs": 19
+   },
+   "33": {
+    "x_min": 178,
+    "x_max": 221,
+    "nodes": 2462,
+    "peak_minus_x": [
+     185,
+     18
+    ],
+    "peak_plus_x": [
+     215,
+     18
+    ],
+    "largest_abs": 20
+   },
+   "34": {
+    "x_min": 177,
+    "x_max": 222,
+    "nodes": 2512,
+    "peak_minus_x": [
+     184,
+     17
+    ],
+    "peak_plus_x": [
+     216,
+     16
+    ],
+    "largest_abs": 17
+   },
+   "35": {
+    "x_min": 177,
+    "x_max": 222,
+    "nodes": 2528,
+    "peak_minus_x": [
+     189,
+     14
+    ],
+    "peak_plus_x": [
+     208,
+     -15
+    ],
+    "largest_abs": 15
+   },
+   "36": {
+    "x_min": 176,
+    "x_max": 223,
+    "nodes": 2676,
+    "peak_minus_x": [
+     183,
+     12
+    ],
+    "peak_plus_x": [
+     209,
+     -15
+    ],
+    "largest_abs": 15
+   },
+   "37": {
+    "x_min": 176,
+    "x_max": 223,
+    "nodes": 2676,
+    "peak_minus_x": [
+     190,
+     -11
+    ],
+    "peak_plus_x": [
+     210,
+     -10
+    ],
+    "largest_abs": 13
+   },
+   "38": {
+    "x_min": 175,
+    "x_max": 224,
+    "nodes": 2736,
+    "peak_minus_x": [
+     189,
+     -12
+    ],
+    "peak_plus_x": [
+     219,
+     10
+    ],
+    "largest_abs": 13
+   },
+   "39": {
+    "x_min": 175,
+    "x_max": 224,
+    "nodes": 2794,
+    "peak_minus_x": [
+     188,
+     -12
+    ],
+    "peak_plus_x": [
+     218,
+     8
+    ],
+    "largest_abs": 12
+   },
+   "40": {
+    "x_min": 174,
+    "x_max": 225,
+    "nodes": 2794,
+    "peak_minus_x": [
+     187,
+     -9
+    ],
+    "peak_plus_x": [
+     220,
+     9
+    ],
+    "largest_abs": 12
+   },
+   "41": {
+    "x_min": 174,
+    "x_max": 225,
+    "nodes": 2902,
+    "peak_minus_x": [
+     186,
+     -11
+    ],
+    "peak_plus_x": [
+     219,
+     8
+    ],
+    "largest_abs": 11
+   },
+   "42": {
+    "x_min": 173,
+    "x_max": 225,
+    "nodes": 2932,
+    "peak_minus_x": [
+     180,
+     10
+    ],
+    "peak_plus_x": [
+     210,
+     10
+    ],
+    "largest_abs": 11
+   },
+   "43": {
+    "x_min": 173,
+    "x_max": 225,
+    "nodes": 2970,
+    "peak_minus_x": [
+     179,
+     10
+    ],
+    "peak_plus_x": [
+     211,
+     12
+    ],
+    "largest_abs": 12
+   },
+   "44": {
+    "x_min": 172,
+    "x_max": 226,
+    "nodes": 3038,
+    "peak_minus_x": [
+     183,
+     -13
+    ],
+    "peak_plus_x": [
+     217,
+     -12
+    ],
+    "largest_abs": 15
+   },
+   "45": {
+    "x_min": 172,
+    "x_max": 226,
+    "nodes": 3122,
+    "peak_minus_x": [
+     178,
+     11
+    ],
+    "peak_plus_x": [
+     218,
+     -14
+    ],
+    "largest_abs": 16
+   },
+   "46": {
+    "x_min": 171,
+    "x_max": 227,
+    "nodes": 3122,
+    "peak_minus_x": [
+     182,
+     -12
+    ],
+    "peak_plus_x": [
+     215,
+     13
+    ],
+    "largest_abs": 15
+   },
+   "47": {
+    "x_min": 171,
+    "x_max": 227,
+    "nodes": 3134,
+    "peak_minus_x": [
+     180,
+     -11
+    ],
+    "peak_plus_x": [
+     219,
+     -14
+    ],
+    "largest_abs": 15
+   },
+   "48": {
+    "x_min": 171,
+    "x_max": 228,
+    "nodes": 3250,
+    "peak_minus_x": [
+     180,
+     -12
+    ],
+    "peak_plus_x": [
+     220,
+     -15
+    ],
+    "largest_abs": 15
+   },
+   "96": {
+    "x_min": 149,
+    "x_max": 250,
+    "nodes": 5554,
+    "peak_minus_x": [
+     155,
+     -12
+    ],
+    "peak_plus_x": [
+     245,
+     -12
+    ],
+    "largest_abs": 12
+   },
+   "144": {
+    "x_min": 127,
+    "x_max": 272,
+    "nodes": 3225,
+    "peak_minus_x": [
+     134,
+     14
+    ],
+    "peak_plus_x": [
+     271,
+     1
+    ],
+    "largest_abs": 14
+   },
+   "170": {
+    "x_min": 115,
+    "x_max": 157,
+    "nodes": 2077,
+    "peak_minus_x": [
+     120,
+     -14
+    ],
+    "peak_plus_x": [
+     200,
+     0
+    ],
+    "largest_abs": 14
+   },
+   "172": {
+    "x_min": 114,
+    "x_max": 155,
+    "nodes": 2120,
+    "peak_minus_x": [
+     119,
+     -14
+    ],
+    "peak_plus_x": [
+     200,
+     0
+    ],
+    "largest_abs": 14
+   }
+  },
+  "front_plus_x_nodes_per_tick": 0.4583,
+  "front_minus_x_nodes_per_tick": 0.4375,
+  "peak_plus_x_nodes_per_tick": 0.4167,
+  "peak_minus_x_nodes_per_tick": 0.3958,
+  "front_plus_x_by_tick": [
+   [
+    0,
+    206
+   ],
+   [
+    1,
+    208
+   ],
+   [
+    2,
+    208
+   ],
+   [
+    3,
+    209
+   ],
+   [
+    4,
+    209
+   ],
+   [
+    5,
+    210
+   ],
+   [
+    6,
+    210
+   ],
+   [
+    7,
+    211
+   ],
+   [
+    8,
+    211
+   ],
+   [
+    9,
+    211
+   ],
+   [
+    10,
+    211
+   ],
+   [
+    11,
+    212
+   ],
+   [
+    12,
+    212
+   ],
+   [
+    13,
+    213
+   ],
+   [
+    14,
+    213
+   ],
+   [
+    15,
+    214
+   ],
+   [
+    16,
+    214
+   ],
+   [
+    17,
+    215
+   ],
+   [
+    18,
+    215
+   ],
+   [
+    19,
+    216
+   ],
+   [
+    20,
+    216
+   ],
+   [
+    21,
+    217
+   ],
+   [
+    22,
+    217
+   ],
+   [
+    23,
+    217
+   ],
+   [
+    24,
+    218
+   ],
+   [
+    25,
+    218
+   ],
+   [
+    26,
+    218
+   ],
+   [
+    27,
+    218
+   ],
+   [
+    28,
+    219
+   ],
+   [
+    29,
+    219
+   ],
+   [
+    30,
+    220
+   ],
+   [
+    31,
+    220
+   ],
+   [
+    32,
+    221
+   ],
+   [
+    33,
+    221
+   ],
+   [
+    34,
+    222
+   ],
+   [
+    35,
+    222
+   ],
+   [
+    36,
+    223
+   ],
+   [
+    37,
+    223
+   ],
+   [
+    38,
+    224
+   ],
+   [
+    39,
+    224
+   ],
+   [
+    40,
+    225
+   ],
+   [
+    41,
+    225
+   ],
+   [
+    42,
+    225
+   ],
+   [
+    43,
+    225
+   ],
+   [
+    44,
+    226
+   ],
+   [
+    45,
+    226
+   ],
+   [
+    46,
+    227
+   ],
+   [
+    47,
+    227
+   ],
+   [
+    48,
+    228
+   ]
+  ],
+  "peak_plus_x_by_tick": [
+   [
+    0,
+    200,
+    41
+   ],
+   [
+    1,
+    200,
+    34
+   ],
+   [
+    2,
+    200,
+    18
+   ],
+   [
+    3,
+    202,
+    15
+   ],
+   [
+    4,
+    200,
+    -36
+   ],
+   [
+    5,
+    200,
+    -41
+   ],
+   [
+    6,
+    200,
+    -22
+   ],
+   [
+    7,
+    202,
+    -15
+   ],
+   [
+    8,
+    200,
+    17
+   ],
+   [
+    9,
+    204,
+    -8
+   ],
+   [
+    10,
+    207,
+    5
+   ],
+   [
+    11,
+    208,
+    5
+   ],
+   [
+    12,
+    208,
+    5
+   ],
+   [
+    13,
+    205,
+    -5
+   ],
+   [
+    14,
+    205,
+    -6
+   ],
+   [
+    15,
+    205,
+    -7
+   ],
+   [
+    16,
+    206,
+    -9
+   ],
+   [
+    17,
+    206,
+    -12
+   ],
+   [
+    18,
+    207,
+    -14
+   ],
+   [
+    19,
+    208,
+    -17
+   ],
+   [
+    20,
+    209,
+    -17
+   ],
+   [
+    21,
+    210,
+    -17
+   ],
+   [
+    22,
+    211,
+    -17
+   ],
+   [
+    23,
+    207,
+    18
+   ],
+   [
+    24,
+    208,
+    18
+   ],
+   [
+    25,
+    209,
+    19
+   ],
+   [
+    26,
+    210,
+    23
+   ],
+   [
+    27,
+    210,
+    20
+   ],
+   [
+    28,
+    211,
+    23
+   ],
+   [
+    29,
+    212,
+    22
+   ],
+   [
+    30,
+    213,
+    21
+   ],
+   [
+    31,
+    214,
+    20
+   ],
+   [
+    32,
+    214,
+    19
+   ],
+   [
+    33,
+    215,
+    18
+   ],
+   [
+    34,
+    216,
+    16
+   ],
+   [
+    35,
+    208,
+    -15
+   ],
+   [
+    36,
+    209,
+    -15
+   ],
+   [
+    37,
+    210,
+    -10
+   ],
+   [
+    38,
+    219,
+    10
+   ],
+   [
+    39,
+    218,
+    8
+   ],
+   [
+    40,
+    220,
+    9
+   ],
+   [
+    41,
+    219,
+    8
+   ],
+   [
+    42,
+    210,
+    10
+   ],
+   [
+    43,
+    211,
+    12
+   ],
+   [
+    44,
+    217,
+    -12
+   ],
+   [
+    45,
+    218,
+    -14
+   ],
+   [
+    46,
+    215,
+    13
+   ],
+   [
+    47,
+    219,
+    -14
+   ],
+   [
+    48,
+    220,
+    -15
+   ]
+  ]
+ },
+ "iv_two_detectors": {
+  "verdict": "holds",
+  "credit_lines": [
+   {
+    "event": "credit",
+    "label": "NODEDETECTOR",
+    "interval": 96,
+    "family": "atom",
+    "node_detector": "body 1",
+    "window": [
+     49,
+     96
+    ],
+    "proper": 96,
+    "windows": 2,
+    "before": "g",
+    "realised": "e",
+    "kept": null,
+    "count": 1,
+    "left": 0,
+    "absorbed": "photon",
+    "emitted": null,
+    "momentum": [
+     33812,
+     34349,
+     13418
+    ],
+    "fan": [
+     4280,
+     -1124,
+     0
+    ],
+    "twist": [
+     9424,
+     0,
+     0
+    ],
+    "lost": [
+     "P lost to the declaration",
+     "recoil lost to the lay"
+    ],
+    "source": "the lay",
+    "recoil": [
+     -33812,
+     -34349,
+     -13418
+    ]
+   },
+   {
+    "event": "credit",
+    "label": "LATTICE",
+    "interval": 144,
+    "family": "atom",
+    "node_detector": "body 1",
+    "window": [
+     97,
+     144
+    ],
+    "proper": 144,
+    "windows": 3,
+    "before": "e",
+    "realised": "e",
+    "kept": null,
+    "count": 0,
+    "left": null,
+    "absorbed": null,
+    "emitted": null,
+    "momentum": [
+     33812,
+     34349,
+     13418
+    ],
+    "fan": [
+     4280,
+     -1124,
+     0
+    ],
+    "twist": [
+     9424,
+     0,
+     0
+    ],
+    "lost": [
+     "P lost to the declaration",
+     "recoil lost to the lay"
+    ],
+    "source": "the lay",
+    "recoil": [
+     -33812,
+     -34349,
+     -13418
+    ]
+   }
+  ],
+  "clicks_absorbed": [
+   [
+    96,
+    "body 1",
+    96,
+    [
+     49,
+     96
+    ],
+    1,
+    0
+   ]
+  ],
+  "which_clicked": "body 1",
+  "click_tick": 96,
+  "hole_nodes_file_coordinates": [
+   [
+    223,
+    4,
+    4
+   ]
+  ],
+  "takers": [
+   [
+    [
+     175,
+     4,
+     4
+    ],
+    [
+     176,
+     4,
+     4
+    ]
+   ],
+   [
+    [
+     223,
+     4,
+     4
+    ],
+    [
+     224,
+     4,
+     4
+    ]
+   ]
+  ],
+  "second_click": false,
+  "books_count_photon_by_tick": {
+   "47": 1,
+   "48": 1,
+   "49": 1,
+   "95": 1,
+   "96": 0,
+   "97": 0,
+   "144": 0,
+   "145": 0,
+   "170": 0,
+   "172": 0
+  },
+  "fronts": [
+   [
+    1,
+    [
+     223,
+     4,
+     4
+    ],
+    96
+   ]
+  ],
+  "lay_lines": {
+   "count": 12,
+   "nodes": [
+    [
+     223,
+     4,
+     4
+    ],
+    [
+     224,
+     4,
+     4
+    ]
+   ],
+   "by_interval_family_line_node": [
+    [
+     96,
+     "atom",
+     0,
+     [
+      223,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     0,
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     1,
+     [
+      223,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     1,
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     2,
+     [
+      223,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     2,
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     3,
+     [
+      223,
+      4,
+      4
+     ]
+    ],
+    [
+     96,
+     "atom",
+     3,
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    [
+     144,
+     "atom",
+     2,
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    [
+     144,
+     "atom",
+     3,
+     [
+      224,
+      4,
+      4
+     ]
+    ]
+   ]
+  },
+  "face_lines_count": 18176,
+  "event_kinds": [
+   "click",
+   "credit",
+   "erasure",
+   "face",
+   "lay"
+  ],
+  "c_closes": {
+   "48": {
+    "shares": {
+     "body 0": {
+      "labels": [
+       127696858,
+       0
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {
+       "1 0->1": 1309626712225225
+      },
+      "share_over_unit": [
+       0.080313
+      ],
+      "windows": 1,
+      "clock": [
+       48,
+       0
+      ],
+      "part": 0,
+      "counts": [
+       1,
+       0
+      ]
+     },
+     "body 1": {
+      "labels": [
+       127696858,
+       0
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {
+       "1 0->1": 1777772538049600
+      },
+      "share_over_unit": [
+       0.109022
+      ],
+      "windows": 1,
+      "clock": [
+       48,
+       0
+      ],
+      "part": 0,
+      "counts": [
+       1,
+       0
+      ]
+     },
+     "books": {
+      "photon_count": 1,
+      "unabsorbed": {
+       "1": 215556908459703104158526789305344
+      },
+      "unabsorbed_units": {
+       "1": 265901546879405949343175183860969
+      },
+      "unabsorbed_over_unit": {
+       "1": 0.810664
+      }
+     },
+     "sum_of_shares_over_unit": 0.189336,
+     "no_click_weight_over_unit_as_engine": 0.621328
+    },
+    "atom_clicked": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      90,
+      90
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      89,
+      89
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_twin": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      90,
+      90
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      89,
+      89
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_nodes": [
+     [
+      175,
+      4,
+      4
+     ],
+     [
+      176,
+      4,
+      4
+     ],
+     [
+      223,
+      4,
+      4
+     ],
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    "lines_at_tick": [
+     {
+      "event": "click",
+      "label": "NODEDETECTOR",
+      "interval": 48,
+      "family": "photon",
+      "node_detector": "face",
+      "inflow": -32196000
+     }
+    ],
+    "atom_arrays_differing_from_twin": {}
+   },
+   "96": {
+    "shares": {
+     "body 0": {
+      "labels": [
+       127696858,
+       0
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {
+       "1 0->1": 8744137118828281
+      },
+      "share_over_unit": [
+       0.536237
+      ],
+      "windows": 2,
+      "clock": [
+       96,
+       0
+      ],
+      "part": 0,
+      "counts": [
+       1,
+       0
+      ]
+     },
+     "body 1": {
+      "labels": [
+       0,
+       127696858
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {
+       "1 0->1": 11062550940110244
+      },
+      "share_over_unit": [
+       0.678414
+      ],
+      "windows": 2,
+      "clock": [
+       96,
+       0
+      ],
+      "part": 1,
+      "counts": [
+       0,
+       1
+      ]
+     },
+     "books": {
+      "photon_count": 0,
+      "unabsorbed": {},
+      "unabsorbed_units": {},
+      "unabsorbed_over_unit": {}
+     },
+     "sum_of_shares_over_unit": 1.214651,
+     "no_click_weight_over_unit_as_engine": "no draw: the count is 0"
+    },
+    "atom_clicked": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      0,
+      0
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      0,
+      0
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      66,
+      -60
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      -60,
+      -65
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      60,
+      66
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      65,
+      -60
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_twin": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      90,
+      90
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      89,
+      89
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_nodes": [
+     [
+      175,
+      4,
+      4
+     ],
+     [
+      176,
+      4,
+      4
+     ],
+     [
+      223,
+      4,
+      4
+     ],
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    "lines_at_tick": [
+     {
+      "event": "click",
+      "label": "NODEDETECTOR",
+      "interval": 96,
+      "family": "photon",
+      "node_detector": "face",
+      "inflow": 3252000
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 2,
+      "before": [
+       0,
+       0,
+       35914752000000
+      ],
+      "after": [
+       66,
+       -60,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        223,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 2,
+      "before": [
+       0,
+       0,
+       35914752000000
+      ],
+      "after": [
+       66,
+       -60,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 3,
+      "before": [
+       0,
+       0,
+       35914752000000
+      ],
+      "after": [
+       60,
+       65,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        223,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 3,
+      "before": [
+       0,
+       0,
+       35914752000000
+      ],
+      "after": [
+       60,
+       65,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 2,
+      "before": [
+       66,
+       -60,
+       35914752000000
+      ],
+      "after": [
+       -60,
+       -65,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 3,
+      "before": [
+       60,
+       65,
+       35914752000000
+      ],
+      "after": [
+       66,
+       -60,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 0,
+      "before": [
+       90,
+       0,
+       35914752000000
+      ],
+      "after": [
+       0,
+       0,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        223,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 0,
+      "before": [
+       90,
+       0,
+       35914752000000
+      ],
+      "after": [
+       0,
+       0,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 1,
+      "before": [
+       0,
+       89,
+       35914752000000
+      ],
+      "after": [
+       0,
+       0,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        223,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": null,
+      "line": 1,
+      "before": [
+       0,
+       89,
+       35914752000000
+      ],
+      "after": [
+       0,
+       0,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "credit",
+      "label": "NODEDETECTOR",
+      "interval": 96,
+      "family": "atom",
+      "node_detector": "body 1",
+      "window": [
+       49,
+       96
+      ],
+      "proper": 96,
+      "windows": 2,
+      "before": "g",
+      "realised": "e",
+      "kept": null,
+      "count": 1,
+      "left": 0,
+      "absorbed": "photon",
+      "emitted": null,
+      "momentum": [
+       33812,
+       34349,
+       13418
+      ],
+      "fan": [
+       4280,
+       -1124,
+       0
+      ],
+      "twist": [
+       9424,
+       0,
+       0
+      ],
+      "lost": [
+       "P lost to the declaration",
+       "recoil lost to the lay"
+      ],
+      "source": "the lay",
+      "recoil": [
+       -33812,
+       -34349,
+       -13418
+      ]
+     }
+    ],
+    "atom_arrays_differing_from_twin": {
+     "atom.lines[0].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[1].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[2].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[2].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[3].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[3].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ]
+    }
+   },
+   "144": {
+    "shares": {
+     "body 0": {
+      "labels": [
+       127696858,
+       0
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {
+       "1 0->1": 635168929743364
+      },
+      "share_over_unit": [
+       0.038952
+      ],
+      "windows": 3,
+      "clock": [
+       144,
+       0
+      ],
+      "part": 0,
+      "counts": [
+       1,
+       0
+      ]
+     },
+     "body 1": {
+      "labels": [
+       0,
+       127696858
+      ],
+      "labels_unit": 16306487543072164,
+      "shares": {},
+      "share_over_unit": [],
+      "windows": 3,
+      "clock": [
+       144,
+       0
+      ],
+      "part": 1,
+      "counts": [
+       0,
+       1
+      ]
+     },
+     "books": {
+      "photon_count": 0,
+      "unabsorbed": {},
+      "unabsorbed_units": {},
+      "unabsorbed_over_unit": {}
+     },
+     "sum_of_shares_over_unit": 0.038952,
+     "no_click_weight_over_unit_as_engine": "no draw: the count is 0"
+    },
+    "atom_clicked": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      0,
+      0
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      0,
+      0
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      66,
+      -61
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      -60,
+      -66
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      60,
+      66
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      65,
+      -61
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_twin": {
+     "atom.lines[0].now": [
+      90,
+      90,
+      90,
+      90
+     ],
+     "atom.lines[0].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[0].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[1].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[1].before": [
+      89,
+      89,
+      89,
+      89
+     ],
+     "atom.lines[1].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[2].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[2].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ],
+     "atom.lines[3].now": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].before": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "atom.lines[3].remainder": [
+      35914752000000,
+      35914752000000,
+      35914752000000,
+      35914752000000
+     ]
+    },
+    "atom_nodes": [
+     [
+      175,
+      4,
+      4
+     ],
+     [
+      176,
+      4,
+      4
+     ],
+     [
+      223,
+      4,
+      4
+     ],
+     [
+      224,
+      4,
+      4
+     ]
+    ],
+    "lines_at_tick": [
+     {
+      "event": "click",
+      "label": "NODEDETECTOR",
+      "interval": 144,
+      "family": "photon",
+      "node_detector": "face",
+      "inflow": -4212000
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 144,
+      "family": "atom",
+      "node_detector": null,
+      "line": 2,
+      "before": [
+       -60,
+       -65,
+       35914752000000
+      ],
+      "after": [
+       -61,
+       -66,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "lay",
+      "label": "LATTICE",
+      "interval": 144,
+      "family": "atom",
+      "node_detector": null,
+      "line": 3,
+      "before": [
+       66,
+       -60,
+       35914752000000
+      ],
+      "after": [
+       66,
+       -61,
+       35914752000000
+      ],
+      "node": {
+       "label": "LATTICE",
+       "at": [
+        224,
+        4,
+        4
+       ]
+      }
+     },
+     {
+      "event": "credit",
+      "label": "LATTICE",
+      "interval": 144,
+      "family": "atom",
+      "node_detector": "body 1",
+      "window": [
+       97,
+       144
+      ],
+      "proper": 144,
+      "windows": 3,
+      "before": "e",
+      "realised": "e",
+      "kept": null,
+      "count": 0,
+      "left": null,
+      "absorbed": null,
+      "emitted": null,
+      "momentum": [
+       33812,
+       34349,
+       13418
+      ],
+      "fan": [
+       4280,
+       -1124,
+       0
+      ],
+      "twist": [
+       9424,
+       0,
+       0
+      ],
+      "lost": [
+       "P lost to the declaration",
+       "recoil lost to the lay"
+      ],
+      "source": "the lay",
+      "recoil": [
+       -33812,
+       -34349,
+       -13418
+      ]
+     },
+     {
+      "event": "erasure",
+      "label": "LATTICE",
+      "interval": 144,
+      "family": "photon",
+      "node_detector": null,
+      "origin": [
+       223,
+       4,
+       4
+      ],
+      "distance": 48,
+      "nodes": 128,
+      "take": 27894000,
+      "unit": 640824000
+     }
+    ],
+    "atom_arrays_differing_from_twin": {
+     "atom.lines[0].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[1].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[2].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[2].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[3].now": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ],
+     "atom.lines[3].before": [
+      [
+       223,
+       4,
+       4
+      ],
+      [
+       224,
+       4,
+       4
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "a_erased_nodes_per_shell": [
+  [
+   97,
+   1,
+   6
+  ],
+  [
+   98,
+   2,
+   18
+  ],
+  [
+   99,
+   3,
+   38
+  ],
+  [
+   100,
+   4,
+   64
+  ],
+  [
+   101,
+   5,
+   90
+  ],
+  [
+   102,
+   6,
+   110
+  ],
+  [
+   103,
+   7,
+   122
+  ],
+  [
+   104,
+   8,
+   127
+  ],
+  [
+   105,
+   9,
+   128
+  ],
+  [
+   106,
+   10,
+   128
+  ],
+  [
+   107,
+   11,
+   128
+  ],
+  [
+   108,
+   12,
+   128
+  ],
+  [
+   109,
+   13,
+   128
+  ],
+  [
+   110,
+   14,
+   128
+  ],
+  [
+   111,
+   15,
+   128
+  ],
+  [
+   112,
+   16,
+   128
+  ],
+  [
+   113,
+   17,
+   128
+  ],
+  [
+   114,
+   18,
+   128
+  ],
+  [
+   115,
+   19,
+   128
+  ],
+  [
+   116,
+   20,
+   128
+  ],
+  [
+   117,
+   21,
+   128
+  ],
+  [
+   118,
+   22,
+   128
+  ],
+  [
+   119,
+   23,
+   128
+  ],
+  [
+   120,
+   24,
+   128
+  ],
+  [
+   121,
+   25,
+   128
+  ],
+  [
+   122,
+   26,
+   128
+  ],
+  [
+   123,
+   27,
+   128
+  ],
+  [
+   124,
+   28,
+   128
+  ],
+  [
+   125,
+   29,
+   128
+  ],
+  [
+   126,
+   30,
+   128
+  ],
+  [
+   127,
+   31,
+   128
+  ],
+  [
+   128,
+   32,
+   128
+  ],
+  [
+   129,
+   33,
+   128
+  ],
+  [
+   130,
+   34,
+   128
+  ],
+  [
+   131,
+   35,
+   128
+  ],
+  [
+   132,
+   36,
+   128
+  ],
+  [
+   133,
+   37,
+   128
+  ],
+  [
+   134,
+   38,
+   128
+  ],
+  [
+   135,
+   39,
+   128
+  ],
+  [
+   136,
+   40,
+   128
+  ],
+  [
+   137,
+   41,
+   128
+  ],
+  [
+   138,
+   42,
+   128
+  ],
+  [
+   139,
+   43,
+   128
+  ],
+  [
+   140,
+   44,
+   128
+  ],
+  [
+   141,
+   45,
+   128
+  ],
+  [
+   142,
+   46,
+   128
+  ],
+  [
+   143,
+   47,
+   128
+  ],
+  [
+   144,
+   48,
+   128
+  ],
+  [
+   145,
+   49,
+   128
+  ],
+  [
+   146,
+   50,
+   128
+  ],
+  [
+   147,
+   51,
+   128
+  ],
+  [
+   148,
+   52,
+   128
+  ],
+  [
+   149,
+   53,
+   128
+  ],
+  [
+   150,
+   54,
+   128
+  ],
+  [
+   151,
+   55,
+   128
+  ],
+  [
+   152,
+   56,
+   128
+  ],
+  [
+   153,
+   57,
+   128
+  ],
+  [
+   154,
+   58,
+   128
+  ],
+  [
+   155,
+   59,
+   128
+  ],
+  [
+   156,
+   60,
+   128
+  ],
+  [
+   157,
+   61,
+   128
+  ],
+  [
+   158,
+   62,
+   128
+  ],
+  [
+   159,
+   63,
+   128
+  ],
+  [
+   160,
+   64,
+   128
+  ],
+  [
+   161,
+   65,
+   128
+  ],
+  [
+   162,
+   66,
+   128
+  ],
+  [
+   163,
+   67,
+   128
+  ],
+  [
+   164,
+   68,
+   128
+  ],
+  [
+   165,
+   69,
+   128
+  ],
+  [
+   166,
+   70,
+   128
+  ],
+  [
+   167,
+   71,
+   128
+  ],
+  [
+   168,
+   72,
+   128
+  ],
+  [
+   169,
+   73,
+   128
+  ],
+  [
+   170,
+   74,
+   128
+  ],
+  [
+   171,
+   75,
+   128
+  ],
+  [
+   172,
+   76,
+   128
+  ]
+ ],
+ "a_erased_nodes_total_to_end": 9279,
+ "a_erased_nodes_total_to_170": 9023,
+ "b_faces": {
+  "intervals_keyed": [
+   97,
+   174
+  ],
+  "count": 18560,
+  "count_photon_family": 18560,
+  "count_keyed_to_170": 17664,
+  "count_keyed_to_172": 18176,
+  "nonzero_value_count": 16111,
+  "zero_value_count": 2065,
+  "value_none_count": 384,
+  "distinct_nodes": 9280,
+  "nodes_with_at_least_one_nonzero_wiped_value": 9113,
+  "distinct_nodes_keyed_to_170": 8896,
+  "distinct_nodes_keyed_to_172": 9152,
+  "per_keyed_interval": {
+   "97": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "98": [
+    7,
+    7,
+    7,
+    7
+   ],
+   "99": [
+    24,
+    21,
+    24,
+    21
+   ],
+   "100": [
+    56,
+    52,
+    56,
+    52
+   ],
+   "101": [
+    102,
+    97,
+    102,
+    97
+   ],
+   "102": [
+    154,
+    148,
+    154,
+    148
+   ],
+   "103": [
+    200,
+    189,
+    200,
+    189
+   ],
+   "104": [
+    232,
+    215,
+    232,
+    215
+   ],
+   "105": [
+    249,
+    238,
+    249,
+    238
+   ],
+   "106": [
+    255,
+    243,
+    255,
+    243
+   ],
+   "107": [
+    256,
+    244,
+    256,
+    244
+   ],
+   "108": [
+    256,
+    241,
+    256,
+    241
+   ],
+   "109": [
+    256,
+    246,
+    256,
+    246
+   ],
+   "110": [
+    256,
+    245,
+    256,
+    245
+   ],
+   "111": [
+    256,
+    247,
+    256,
+    247
+   ],
+   "112": [
+    256,
+    244,
+    256,
+    244
+   ],
+   "113": [
+    256,
+    244,
+    256,
+    244
+   ],
+   "114": [
+    256,
+    245,
+    256,
+    245
+   ],
+   "115": [
+    256,
+    236,
+    256,
+    236
+   ],
+   "116": [
+    256,
+    239,
+    256,
+    239
+   ],
+   "117": [
+    256,
+    236,
+    256,
+    236
+   ],
+   "118": [
+    256,
+    241,
+    256,
+    241
+   ],
+   "119": [
+    256,
+    244,
+    256,
+    244
+   ],
+   "120": [
+    256,
+    240,
+    256,
+    240
+   ],
+   "121": [
+    256,
+    241,
+    256,
+    241
+   ],
+   "122": [
+    256,
+    246,
+    256,
+    246
+   ],
+   "123": [
+    256,
+    242,
+    256,
+    242
+   ],
+   "124": [
+    256,
+    239,
+    256,
+    239
+   ],
+   "125": [
+    256,
+    242,
+    256,
+    242
+   ],
+   "126": [
+    256,
+    245,
+    256,
+    245
+   ],
+   "127": [
+    256,
+    241,
+    256,
+    241
+   ],
+   "128": [
+    256,
+    247,
+    256,
+    247
+   ],
+   "129": [
+    256,
+    246,
+    256,
+    246
+   ],
+   "130": [
+    256,
+    244,
+    256,
+    244
+   ],
+   "131": [
+    256,
+    229,
+    256,
+    229
+   ],
+   "132": [
+    256,
+    240,
+    256,
+    240
+   ],
+   "133": [
+    256,
+    243,
+    256,
+    243
+   ],
+   "134": [
+    256,
+    234,
+    256,
+    234
+   ],
+   "135": [
+    256,
+    247,
+    256,
+    247
+   ],
+   "136": [
+    256,
+    240,
+    256,
+    240
+   ],
+   "137": [
+    256,
+    245,
+    256,
+    245
+   ],
+   "138": [
+    256,
+    248,
+    256,
+    248
+   ],
+   "139": [
+    256,
+    239,
+    256,
+    239
+   ],
+   "140": [
+    256,
+    247,
+    256,
+    247
+   ],
+   "141": [
+    256,
+    245,
+    256,
+    245
+   ],
+   "142": [
+    256,
+    247,
+    256,
+    247
+   ],
+   "143": [
+    256,
+    243,
+    256,
+    243
+   ],
+   "144": [
+    256,
+    243,
+    256,
+    243
+   ],
+   "145": [
+    256,
+    243,
+    256,
+    243
+   ],
+   "146": [
+    256,
+    243,
+    256,
+    243
+   ],
+   "147": [
+    256,
+    246,
+    256,
+    246
+   ],
+   "148": [
+    256,
+    234,
+    256,
+    234
+   ],
+   "149": [
+    256,
+    240,
+    256,
+    240
+   ],
+   "150": [
+    256,
+    233,
+    256,
+    233
+   ],
+   "151": [
+    256,
+    230,
+    256,
+    230
+   ],
+   "152": [
+    256,
+    224,
+    256,
+    224
+   ],
+   "153": [
+    256,
+    206,
+    256,
+    206
+   ],
+   "154": [
+    256,
+    218,
+    256,
+    218
+   ],
+   "155": [
+    256,
+    196,
+    256,
+    196
+   ],
+   "156": [
+    256,
+    201,
+    256,
+    201
+   ],
+   "157": [
+    256,
+    187,
+    256,
+    187
+   ],
+   "158": [
+    256,
+    185,
+    256,
+    185
+   ],
+   "159": [
+    256,
+    185,
+    256,
+    185
+   ],
+   "160": [
+    256,
+    182,
+    256,
+    182
+   ],
+   "161": [
+    256,
+    190,
+    256,
+    190
+   ],
+   "162": [
+    256,
+    187,
+    256,
+    187
+   ],
+   "163": [
+    256,
+    186,
+    256,
+    186
+   ],
+   "164": [
+    256,
+    187,
+    256,
+    187
+   ],
+   "165": [
+    256,
+    183,
+    256,
+    183
+   ],
+   "166": [
+    256,
+    189,
+    256,
+    189
+   ],
+   "167": [
+    256,
+    186,
+    256,
+    186
+   ],
+   "168": [
+    256,
+    185,
+    256,
+    185
+   ],
+   "169": [
+    256,
+    186,
+    256,
+    186
+   ],
+   "170": [
+    256,
+    185,
+    256,
+    185
+   ],
+   "171": [
+    256,
+    182,
+    256,
+    182
+   ],
+   "172": [
+    256,
+    186,
+    256,
+    186
+   ],
+   "173": [
+    256,
+    0,
+    256,
+    0
+   ],
+   "174": [
+    128,
+    0,
+    128,
+    0
+   ]
+  },
+  "per_keyed_interval_columns": [
+   "faces",
+   "faces with nonzero value",
+   "distinct Nodes",
+   "Nodes with a nonzero value"
+  ],
+  "largest_abs_value": 41,
+  "ports_used": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "fronts_at_end": 1,
+  "board_wiped_read_directly": {
+   "170": {
+    "twin_differing_all_arrays": 8853,
+    "twin_differing_photon_arrays": 8853,
+    "photon_zero_now_and_before_where_twin_nonzero": 8124,
+    "photon_zero_now_and_before_where_twin_nonzero_box": [
+     151,
+     283,
+     0,
+     7,
+     0,
+     7
+    ],
+    "twin_differing_photon_box": [
+     150,
+     296,
+     0,
+     7,
+     0,
+     7
+    ]
+   },
+   "172": {
+    "twin_differing_all_arrays": 9094,
+    "twin_differing_photon_arrays": 9094,
+    "photon_zero_now_and_before_where_twin_nonzero": 8318,
+    "photon_zero_now_and_before_where_twin_nonzero_box": [
+     149,
+     284,
+     0,
+     7,
+     0,
+     7
+    ],
+    "twin_differing_photon_box": [
+     148,
+     298,
+     0,
+     7,
+     0,
+     7
+    ]
+   }
+  }
+ },
+ "i_twin": {
+  "verdict": "holds",
+  "first_difference": [
+   96,
+   {
+    "atom.lines[0].now": 2,
+    "atom.lines[1].before": 2,
+    "atom.lines[2].now": 2,
+    "atom.lines[2].before": 2,
+    "atom.lines[3].now": 2,
+    "atom.lines[3].before": 2
+   },
+   [
+    [
+     223,
+     4,
+     4
+    ],
+    [
+     224,
+     4,
+     4
+    ]
+   ]
+  ],
+  "nodes_differing_at_click_tick": [
+   [
+    223,
+    4,
+    4
+   ],
+   [
+    224,
+    4,
+    4
+   ]
+  ],
+  "ball": "|dx| + |dy| + |dz| <= t - (click_tick + 1) about the hole, from click_tick + 2; at click_tick and click_tick + 1 the taker's Nodes and the hole",
+  "outside_ball": [],
+  "bounding_box_short_of_the_clipped_ball": [
+   [
+    100,
+    [
+     220,
+     226,
+     1,
+     7,
+     1,
+     6
+    ],
+    [
+     220,
+     226,
+     1,
+     7,
+     1,
+     7
+    ]
+   ],
+   [
+    104,
+    [
+     217,
+     230,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     216,
+     230,
+     0,
+     7,
+     0,
+     7
+    ]
+   ],
+   [
+    107,
+    [
+     213,
+     232,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     213,
+     233,
+     0,
+     7,
+     0,
+     7
+    ]
+   ],
+   [
+    123,
+    [
+     198,
+     249,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     197,
+     249,
+     0,
+     7,
+     0,
+     7
+    ]
+   ],
+   [
+    136,
+    [
+     185,
+     262,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     184,
+     262,
+     0,
+     7,
+     0,
+     7
+    ]
+   ],
+   [
+    151,
+    [
+     170,
+     277,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     169,
+     277,
+     0,
+     7,
+     0,
+     7
+    ]
+   ],
+   [
+    171,
+    [
+     150,
+     297,
+     0,
+     7,
+     0,
+     7
+    ],
+    [
+     149,
+     297,
+     0,
+     7,
+     0,
+     7
+    ]
+   ]
+  ],
+  "bounding_box_short_count": 7,
+  "intervals_differing": 77,
+  "shapes_same_whole_run": true,
+  "edges_x": [
+   0,
+   399
+  ],
+  "last_interval": 172
+ },
+ "ii_books": {
+  "verdict": "holds",
+  "lays_crossed": true,
+  "first_mismatch": null,
+  "rows_count": 0,
+  "rows_first3": [],
+  "rows_last3": [],
+  "ends_moving_faster_than_one_node_per_tick": [],
+  "time_s": 1.85,
+  "back_to": 0
+ },
+ "iii_no_books": {
+  "verdict": "holds",
+  "cleared": {
+   "faces_intervals": [
+    97,
+    174
+   ],
+   "faces_count": 18560,
+   "fronts_count": 1,
+   "what": "board.credit.faces = {} and board.credit.fronts = []; nothing else; the lay lines not crossed"
+  },
+  "front_reach_at_end_bounding_box": [
+   148,
+   298,
+   0,
+   7,
+   0,
+   7
+  ],
+  "front_reach_at_end_nodes": 256,
+  "g_wrong_at_tick_0": [
+   0,
+   [
+    88,
+    306,
+    0,
+    7,
+    0,
+    7
+   ],
+   13673
+  ],
+  "g_wrong_at_tick_0_over_board": [
+   13673,
+   25600
+  ],
+  "g_x_end_jumps_above_one_node": [],
+  "g_rows_marks": [
+   [
+    171,
+    [
+     148,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    186
+   ],
+   [
+    170,
+    [
+     147,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    374
+   ],
+   [
+    169,
+    [
+     146,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    563
+   ],
+   [
+    160,
+    [
+     141,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    2178
+   ],
+   [
+    150,
+    [
+     135,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    3856
+   ],
+   [
+    144,
+    [
+     132,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    4835
+   ],
+   [
+    120,
+    [
+     125,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    8377
+   ],
+   [
+    100,
+    [
+     119,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11111
+   ],
+   [
+    97,
+    [
+     118,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11159
+   ],
+   [
+    96,
+    [
+     118,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11173
+   ],
+   [
+    95,
+    [
+     117,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11198
+   ],
+   [
+    72,
+    [
+     111,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11610
+   ],
+   [
+    50,
+    [
+     104,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    11994
+   ],
+   [
+    48,
+    [
+     104,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    12016
+   ],
+   [
+    24,
+    [
+     96,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    12633
+   ],
+   [
+    1,
+    [
+     88,
+     305,
+     0,
+     7,
+     0,
+     7
+    ],
+    13642
+   ],
+   [
+    0,
+    [
+     88,
+     306,
+     0,
+     7,
+     0,
+     7
+    ],
+    13673
+   ]
+  ],
+  "first_mismatch": [
+   171,
+   {
+    "photon.lines[0].before": 110,
+    "photon.lines[0].remainder": 161
+   },
+   [
+    [
+     148,
+     4,
+     4
+    ],
+    [
+     149,
+     3,
+     4
+    ],
+    [
+     149,
+     4,
+     3
+    ],
+    [
+     149,
+     4,
+     4
+    ]
+   ]
+  ],
+  "rows_count": 172,
+  "rows_first3": [
+   [
+    171,
+    [
+     148,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    186
+   ],
+   [
+    170,
+    [
+     147,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    374
+   ],
+   [
+    169,
+    [
+     146,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    563
+   ]
+  ],
+  "rows_last3": [
+   [
+    2,
+    [
+     89,
+     305,
+     0,
+     7,
+     0,
+     7
+    ],
+    13598
+   ],
+   [
+    1,
+    [
+     88,
+     305,
+     0,
+     7,
+     0,
+     7
+    ],
+    13642
+   ],
+   [
+    0,
+    [
+     88,
+     306,
+     0,
+     7,
+     0,
+     7
+    ],
+    13673
+   ]
+  ],
+  "ends_moving_faster_than_one_node_per_tick": [],
+  "time_s": 5.88,
+  "back_to": 0
+ },
+ "iii_b_no_faces_lays_crossed": {
+  "beside_the_blind": "the same clearing as (iii) with the lay lines crossed as in (ii)",
+  "same_rows_as_iii": false,
+  "first_mismatch": [
+   171,
+   {
+    "photon.lines[0].before": 110,
+    "photon.lines[0].remainder": 161
+   },
+   [
+    [
+     148,
+     4,
+     4
+    ],
+    [
+     149,
+     3,
+     4
+    ],
+    [
+     149,
+     4,
+     3
+    ],
+    [
+     149,
+     4,
+     4
+    ]
+   ]
+  ],
+  "rows_count": 172,
+  "rows_first3": [
+   [
+    171,
+    [
+     148,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    186
+   ],
+   [
+    170,
+    [
+     147,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    374
+   ],
+   [
+    169,
+    [
+     146,
+     298,
+     0,
+     7,
+     0,
+     7
+    ],
+    563
+   ]
+  ],
+  "rows_last3": [
+   [
+    2,
+    [
+     89,
+     305,
+     0,
+     7,
+     0,
+     7
+    ],
+    13598
+   ],
+   [
+    1,
+    [
+     88,
+     305,
+     0,
+     7,
+     0,
+     7
+    ],
+    13642
+   ],
+   [
+    0,
+    [
+     88,
+     306,
+     0,
+     7,
+     0,
+     7
+    ],
+    13673
+   ]
+  ],
+  "ends_moving_faster_than_one_node_per_tick": [],
+  "time_s": 6.22,
+  "back_to": 0
+ }
+}

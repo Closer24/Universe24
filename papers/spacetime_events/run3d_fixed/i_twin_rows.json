@@ -1,0 +1,2045 @@
+{
+"columns": [
+"interval",
+"[min x, max x, min y, max y, min z, max z]",
+"count all arrays",
+"labels: array -> Nodes",
+"count photon arrays"
+],
+"rows": [
+[
+96,
+[
+223,
+224,
+4,
+4,
+4,
+4
+],
+2,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2
+},
+0
+],
+[
+97,
+[
+223,
+224,
+4,
+4,
+4,
+4
+],
+2,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1,
+"photon.lines[0].remainder": 1
+},
+1
+],
+[
+98,
+[
+222,
+224,
+3,
+5,
+3,
+5
+],
+7,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 7,
+"photon.lines[0].before": 1,
+"photon.lines[0].remainder": 5
+},
+7
+],
+[
+99,
+[
+221,
+225,
+2,
+6,
+2,
+6
+],
+24,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 23,
+"photon.lines[0].before": 7,
+"photon.lines[0].remainder": 18
+},
+24
+],
+[
+100,
+[
+220,
+226,
+1,
+7,
+1,
+6
+],
+62,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 54,
+"photon.lines[0].before": 23,
+"photon.lines[0].remainder": 47
+},
+62
+],
+[
+101,
+[
+219,
+227,
+0,
+7,
+0,
+7
+],
+123,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 104,
+"photon.lines[0].before": 54,
+"photon.lines[0].remainder": 66
+},
+123
+],
+[
+102,
+[
+218,
+228,
+0,
+7,
+0,
+7
+],
+212,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 199,
+"photon.lines[0].before": 104,
+"photon.lines[0].remainder": 129
+},
+212
+],
+[
+103,
+[
+217,
+229,
+0,
+7,
+0,
+7
+],
+321,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 289,
+"photon.lines[0].before": 199,
+"photon.lines[0].remainder": 227
+},
+321
+],
+[
+104,
+[
+217,
+230,
+0,
+7,
+0,
+7
+],
+441,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 393,
+"photon.lines[0].before": 289,
+"photon.lines[0].remainder": 311
+},
+441
+],
+[
+105,
+[
+215,
+231,
+0,
+7,
+0,
+7
+],
+564,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 495,
+"photon.lines[0].before": 393,
+"photon.lines[0].remainder": 386
+},
+564
+],
+[
+106,
+[
+214,
+232,
+0,
+7,
+0,
+7
+],
+702,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 622,
+"photon.lines[0].before": 495,
+"photon.lines[0].remainder": 443
+},
+702
+],
+[
+107,
+[
+213,
+232,
+0,
+7,
+0,
+7
+],
+820,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 712,
+"photon.lines[0].before": 622,
+"photon.lines[0].remainder": 552
+},
+820
+],
+[
+108,
+[
+212,
+234,
+0,
+7,
+0,
+7
+],
+951,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 837,
+"photon.lines[0].before": 712,
+"photon.lines[0].remainder": 674
+},
+951
+],
+[
+109,
+[
+211,
+235,
+0,
+7,
+0,
+7
+],
+1075,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 932,
+"photon.lines[0].before": 837,
+"photon.lines[0].remainder": 722
+},
+1075
+],
+[
+110,
+[
+210,
+236,
+0,
+7,
+0,
+7
+],
+1205,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1042,
+"photon.lines[0].before": 932,
+"photon.lines[0].remainder": 829
+},
+1205
+],
+[
+111,
+[
+209,
+237,
+0,
+7,
+0,
+7
+],
+1332,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1182,
+"photon.lines[0].before": 1042,
+"photon.lines[0].remainder": 870
+},
+1332
+],
+[
+112,
+[
+208,
+238,
+0,
+7,
+0,
+7
+],
+1462,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 1284,
+"photon.lines[0].before": 1182,
+"photon.lines[0].remainder": 1003
+},
+1462
+],
+[
+113,
+[
+207,
+239,
+0,
+7,
+0,
+7
+],
+1584,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1383,
+"photon.lines[0].before": 1284,
+"photon.lines[0].remainder": 1073
+},
+1584
+],
+[
+114,
+[
+206,
+240,
+0,
+7,
+0,
+7
+],
+1711,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1475,
+"photon.lines[0].before": 1383,
+"photon.lines[0].remainder": 1143
+},
+1711
+],
+[
+115,
+[
+205,
+241,
+0,
+7,
+0,
+7
+],
+1841,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1640,
+"photon.lines[0].before": 1475,
+"photon.lines[0].remainder": 1224
+},
+1841
+],
+[
+116,
+[
+204,
+242,
+0,
+7,
+0,
+7
+],
+1969,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 1756,
+"photon.lines[0].before": 1640,
+"photon.lines[0].remainder": 1379
+},
+1969
+],
+[
+117,
+[
+203,
+243,
+0,
+7,
+0,
+7
+],
+2090,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1817,
+"photon.lines[0].before": 1756,
+"photon.lines[0].remainder": 1376
+},
+2090
+],
+[
+118,
+[
+202,
+244,
+0,
+7,
+0,
+7
+],
+2227,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 1973,
+"photon.lines[0].before": 1817,
+"photon.lines[0].remainder": 1478
+},
+2227
+],
+[
+119,
+[
+201,
+245,
+0,
+7,
+0,
+7
+],
+2349,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2069,
+"photon.lines[0].before": 1973,
+"photon.lines[0].remainder": 1606
+},
+2349
+],
+[
+120,
+[
+200,
+246,
+0,
+7,
+0,
+7
+],
+2477,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 2164,
+"photon.lines[0].before": 2069,
+"photon.lines[0].remainder": 1625
+},
+2477
+],
+[
+121,
+[
+199,
+247,
+0,
+7,
+0,
+7
+],
+2606,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2260,
+"photon.lines[0].before": 2164,
+"photon.lines[0].remainder": 1771
+},
+2606
+],
+[
+122,
+[
+198,
+248,
+0,
+7,
+0,
+7
+],
+2724,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2418,
+"photon.lines[0].before": 2260,
+"photon.lines[0].remainder": 1817
+},
+2724
+],
+[
+123,
+[
+198,
+249,
+0,
+7,
+0,
+7
+],
+2862,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2562,
+"photon.lines[0].before": 2418,
+"photon.lines[0].remainder": 1889
+},
+2862
+],
+[
+124,
+[
+196,
+250,
+0,
+7,
+0,
+7
+],
+2993,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 2656,
+"photon.lines[0].before": 2562,
+"photon.lines[0].remainder": 2005
+},
+2993
+],
+[
+125,
+[
+195,
+251,
+0,
+7,
+0,
+7
+],
+3123,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2726,
+"photon.lines[0].before": 2656,
+"photon.lines[0].remainder": 2111
+},
+3123
+],
+[
+126,
+[
+194,
+252,
+0,
+7,
+0,
+7
+],
+3244,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2869,
+"photon.lines[0].before": 2726,
+"photon.lines[0].remainder": 2182
+},
+3244
+],
+[
+127,
+[
+193,
+253,
+0,
+7,
+0,
+7
+],
+3365,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 2975,
+"photon.lines[0].before": 2869,
+"photon.lines[0].remainder": 2307
+},
+3365
+],
+[
+128,
+[
+192,
+254,
+0,
+7,
+0,
+7
+],
+3498,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 3080,
+"photon.lines[0].before": 2975,
+"photon.lines[0].remainder": 2353
+},
+3498
+],
+[
+129,
+[
+191,
+255,
+0,
+7,
+0,
+7
+],
+3618,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3190,
+"photon.lines[0].before": 3080,
+"photon.lines[0].remainder": 2375
+},
+3618
+],
+[
+130,
+[
+190,
+256,
+0,
+7,
+0,
+7
+],
+3737,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3258,
+"photon.lines[0].before": 3190,
+"photon.lines[0].remainder": 2503
+},
+3737
+],
+[
+131,
+[
+189,
+257,
+0,
+7,
+0,
+7
+],
+3879,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3431,
+"photon.lines[0].before": 3258,
+"photon.lines[0].remainder": 2667
+},
+3879
+],
+[
+132,
+[
+188,
+258,
+0,
+7,
+0,
+7
+],
+4008,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 3548,
+"photon.lines[0].before": 3431,
+"photon.lines[0].remainder": 2741
+},
+4008
+],
+[
+133,
+[
+187,
+259,
+0,
+7,
+0,
+7
+],
+4144,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3596,
+"photon.lines[0].before": 3548,
+"photon.lines[0].remainder": 2771
+},
+4144
+],
+[
+134,
+[
+186,
+260,
+0,
+7,
+0,
+7
+],
+4252,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3808,
+"photon.lines[0].before": 3596,
+"photon.lines[0].remainder": 2843
+},
+4252
+],
+[
+135,
+[
+185,
+261,
+0,
+7,
+0,
+7
+],
+4391,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 3880,
+"photon.lines[0].before": 3808,
+"photon.lines[0].remainder": 2933
+},
+4391
+],
+[
+136,
+[
+185,
+262,
+0,
+7,
+0,
+7
+],
+4519,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 3985,
+"photon.lines[0].before": 3880,
+"photon.lines[0].remainder": 2961
+},
+4519
+],
+[
+137,
+[
+183,
+263,
+0,
+7,
+0,
+7
+],
+4642,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4041,
+"photon.lines[0].before": 3985,
+"photon.lines[0].remainder": 3131
+},
+4642
+],
+[
+138,
+[
+182,
+264,
+0,
+7,
+0,
+7
+],
+4768,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4201,
+"photon.lines[0].before": 4041,
+"photon.lines[0].remainder": 3167
+},
+4768
+],
+[
+139,
+[
+181,
+265,
+0,
+7,
+0,
+7
+],
+4894,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4332,
+"photon.lines[0].before": 4201,
+"photon.lines[0].remainder": 3258
+},
+4894
+],
+[
+140,
+[
+180,
+266,
+0,
+7,
+0,
+7
+],
+5026,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 4396,
+"photon.lines[0].before": 4332,
+"photon.lines[0].remainder": 3392
+},
+5026
+],
+[
+141,
+[
+179,
+267,
+0,
+7,
+0,
+7
+],
+5134,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4554,
+"photon.lines[0].before": 4396,
+"photon.lines[0].remainder": 3391
+},
+5134
+],
+[
+142,
+[
+178,
+268,
+0,
+7,
+0,
+7
+],
+5285,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4622,
+"photon.lines[0].before": 4554,
+"photon.lines[0].remainder": 3545
+},
+5285
+],
+[
+143,
+[
+177,
+269,
+0,
+7,
+0,
+7
+],
+5407,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 4833,
+"photon.lines[0].before": 4622,
+"photon.lines[0].remainder": 3588
+},
+5407
+],
+[
+144,
+[
+176,
+270,
+0,
+7,
+0,
+7
+],
+5543,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 4873,
+"photon.lines[0].before": 4833,
+"photon.lines[0].remainder": 3741
+},
+5543
+],
+[
+145,
+[
+175,
+271,
+0,
+7,
+0,
+7
+],
+5663,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5028,
+"photon.lines[0].before": 4873,
+"photon.lines[0].remainder": 3836
+},
+5663
+],
+[
+146,
+[
+174,
+272,
+0,
+7,
+0,
+7
+],
+5796,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5112,
+"photon.lines[0].before": 5028,
+"photon.lines[0].remainder": 3876
+},
+5796
+],
+[
+147,
+[
+173,
+273,
+0,
+7,
+0,
+7
+],
+5905,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5145,
+"photon.lines[0].before": 5112,
+"photon.lines[0].remainder": 3945
+},
+5905
+],
+[
+148,
+[
+172,
+274,
+0,
+7,
+0,
+7
+],
+6046,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 5337,
+"photon.lines[0].before": 5145,
+"photon.lines[0].remainder": 3982
+},
+6046
+],
+[
+149,
+[
+171,
+275,
+0,
+7,
+0,
+7
+],
+6178,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5413,
+"photon.lines[0].before": 5337,
+"photon.lines[0].remainder": 4127
+},
+6178
+],
+[
+150,
+[
+170,
+276,
+0,
+7,
+0,
+7
+],
+6298,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5584,
+"photon.lines[0].before": 5413,
+"photon.lines[0].remainder": 4290
+},
+6298
+],
+[
+151,
+[
+170,
+277,
+0,
+7,
+0,
+7
+],
+6411,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5716,
+"photon.lines[0].before": 5584,
+"photon.lines[0].remainder": 4320
+},
+6411
+],
+[
+152,
+[
+168,
+278,
+0,
+7,
+0,
+7
+],
+6553,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 5746,
+"photon.lines[0].before": 5716,
+"photon.lines[0].remainder": 4394
+},
+6553
+],
+[
+153,
+[
+167,
+279,
+0,
+7,
+0,
+7
+],
+6671,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5890,
+"photon.lines[0].before": 5746,
+"photon.lines[0].remainder": 4455
+},
+6671
+],
+[
+154,
+[
+166,
+280,
+0,
+7,
+0,
+7
+],
+6801,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 5950,
+"photon.lines[0].before": 5890,
+"photon.lines[0].remainder": 4597
+},
+6801
+],
+[
+155,
+[
+165,
+281,
+0,
+7,
+0,
+7
+],
+6920,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6060,
+"photon.lines[0].before": 5950,
+"photon.lines[0].remainder": 4681
+},
+6920
+],
+[
+156,
+[
+164,
+282,
+0,
+7,
+0,
+7
+],
+7056,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 6167,
+"photon.lines[0].before": 6060,
+"photon.lines[0].remainder": 4757
+},
+7056
+],
+[
+157,
+[
+163,
+283,
+0,
+7,
+0,
+7
+],
+7169,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6213,
+"photon.lines[0].before": 6167,
+"photon.lines[0].remainder": 4815
+},
+7169
+],
+[
+158,
+[
+162,
+284,
+0,
+7,
+0,
+7
+],
+7300,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6379,
+"photon.lines[0].before": 6213,
+"photon.lines[0].remainder": 4910
+},
+7300
+],
+[
+159,
+[
+161,
+285,
+0,
+7,
+0,
+7
+],
+7432,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6412,
+"photon.lines[0].before": 6379,
+"photon.lines[0].remainder": 4945
+},
+7432
+],
+[
+160,
+[
+160,
+286,
+0,
+7,
+0,
+7
+],
+7537,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 6488,
+"photon.lines[0].before": 6412,
+"photon.lines[0].remainder": 5142
+},
+7537
+],
+[
+161,
+[
+159,
+287,
+0,
+7,
+0,
+7
+],
+7686,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6554,
+"photon.lines[0].before": 6488,
+"photon.lines[0].remainder": 5180
+},
+7686
+],
+[
+162,
+[
+158,
+288,
+0,
+7,
+0,
+7
+],
+7794,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6684,
+"photon.lines[0].before": 6554,
+"photon.lines[0].remainder": 5263
+},
+7794
+],
+[
+163,
+[
+157,
+289,
+0,
+7,
+0,
+7
+],
+7938,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6706,
+"photon.lines[0].before": 6684,
+"photon.lines[0].remainder": 5467
+},
+7938
+],
+[
+164,
+[
+156,
+290,
+0,
+7,
+0,
+7
+],
+8026,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 6751,
+"photon.lines[0].before": 6706,
+"photon.lines[0].remainder": 5429
+},
+8026
+],
+[
+165,
+[
+155,
+291,
+0,
+7,
+0,
+7
+],
+8179,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6838,
+"photon.lines[0].before": 6751,
+"photon.lines[0].remainder": 5607
+},
+8179
+],
+[
+166,
+[
+154,
+292,
+0,
+7,
+0,
+7
+],
+8263,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 6979,
+"photon.lines[0].before": 6838,
+"photon.lines[0].remainder": 5580
+},
+8263
+],
+[
+167,
+[
+153,
+293,
+0,
+7,
+0,
+7
+],
+8432,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 7062,
+"photon.lines[0].before": 6979,
+"photon.lines[0].remainder": 5703
+},
+8432
+],
+[
+168,
+[
+152,
+294,
+0,
+7,
+0,
+7
+],
+8564,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 7140,
+"photon.lines[0].before": 7062,
+"photon.lines[0].remainder": 5947
+},
+8564
+],
+[
+169,
+[
+151,
+295,
+0,
+7,
+0,
+7
+],
+8701,
+{
+"atom.lines[0].before": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].now": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 7194,
+"photon.lines[0].before": 7140,
+"photon.lines[0].remainder": 5993
+},
+8701
+],
+[
+170,
+[
+150,
+296,
+0,
+7,
+0,
+7
+],
+8853,
+{
+"atom.lines[0].now": 2,
+"atom.lines[0].remainder": 2,
+"atom.lines[1].before": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 7379,
+"photon.lines[0].before": 7194,
+"photon.lines[0].remainder": 6139
+},
+8853
+],
+[
+171,
+[
+150,
+297,
+0,
+7,
+0,
+7
+],
+8992,
+{
+"atom.lines[0].before": 2,
+"atom.lines[1].now": 2,
+"atom.lines[1].remainder": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[2].remainder": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"atom.lines[3].remainder": 2,
+"photon.lines[0].now": 7464,
+"photon.lines[0].before": 7379,
+"photon.lines[0].remainder": 6238
+},
+8992
+],
+[
+172,
+[
+148,
+298,
+0,
+7,
+0,
+7
+],
+9094,
+{
+"atom.lines[0].now": 2,
+"atom.lines[1].before": 2,
+"atom.lines[2].now": 2,
+"atom.lines[2].before": 2,
+"atom.lines[3].now": 2,
+"atom.lines[3].before": 2,
+"photon.lines[0].now": 7470,
+"photon.lines[0].before": 7464,
+"photon.lines[0].remainder": 6349
+},
+9094
+]
+]
+}

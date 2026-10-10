@@ -1,0 +1,1364 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+6
+]
+],
+"date-time": "2026-10-06T17:58:06Z",
+"timestamp": 1791309486909,
+"version": "4.3.1"
+},
+"reference-count": 142,
+"publisher": "Springer Science and Business Media LLC",
+"issue": "2",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2007,
+11,
+8
+]
+],
+"date-time": "2007-11-08T00:00:00Z",
+"timestamp": 1194480000000
+},
+"content-version": "tdm",
+"delay-in-days": 0,
+"URL": "http://www.springer.com/tdm"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Found Phys"
+],
+"published-print": {
+"date-parts": [
+[
+2008,
+2
+]
+]
+},
+"DOI": "10.1007/s10701-007-9186-9",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2007,
+11,
+7
+]
+],
+"date-time": "2007-11-07T20:39:43Z",
+"timestamp": 1194467983000
+},
+"page": "101-150",
+"source": "Crossref",
+"is-referenced-by-count": 234,
+"title": [
+"The Mathematical Universe"
+],
+"prefix": "10.1007",
+"volume": "38",
+"author": [
+{
+"given": "Max",
+"family": "Tegmark",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "297",
+"published-online": {
+"date-parts": [
+[
+2007,
+11,
+8
+]
+]
+},
+"reference": [
+{
+"key": "9186_CR1",
+"doi-asserted-by": "crossref",
+"first-page": "60",
+"DOI": "10.1098/rspa.1931.0130",
+"volume": "133",
+"author": "P.A.M. Dirac",
+"year": "1931",
+"unstructured": "Dirac, P.A.M.: Proc. R. Soc. A 133, 60 (1931)",
+"journal-title": "Proc. R. Soc. A"
+},
+{
+"key": "9186_CR2",
+"volume-title": "Symmetries and Reflections",
+"author": "E.P. Wigner",
+"year": "1967",
+"unstructured": "Wigner, E.P.: Symmetries and Reflections. MIT Press, Cambridge (1967)"
+},
+{
+"key": "9186_CR3",
+"doi-asserted-by": "crossref",
+"DOI": "10.1007/978-94-017-3173-7",
+"volume-title": "Studies in Methodology and Foundation of Science: Selected Papers from 1951 to 1969",
+"author": "P. Suppes",
+"year": "1969",
+"unstructured": "Suppes, P.: Studies in Methodology and Foundation of Science: Selected Papers from 1951 to 1969. Reidel, Dordrecht (1969)"
+},
+{
+"key": "9186_CR4",
+"unstructured": "Zuse, K.: http://www.zib.de/zuse/English_Version/Inhalt/Texte/Chrono/60er/Pdf/76scan.pdf (1976)"
+},
+{
+"key": "9186_CR5",
+"volume-title": "Infinity and the Mind",
+"author": "R. Rucker",
+"year": "1982",
+"unstructured": "Rucker, R.: Infinity and the Mind. Birkh\u00e4user, Boston (1982)"
+},
+{
+"key": "9186_CR6",
+"volume-title": "Theories of Everything",
+"author": "J.D. Barrow",
+"year": "1991",
+"unstructured": "Barrow, J.D.: Theories of Everything. Ballantine, New York (1991)"
+},
+{
+"key": "9186_CR7",
+"volume-title": "Pi in the Sky",
+"author": "J.D. Barrow",
+"year": "1992",
+"unstructured": "Barrow, J.D.: Pi in the Sky. Clarendon, Oxford (1992)"
+},
+{
+"key": "9186_CR8",
+"volume-title": "The Mind of God",
+"author": "P. Davies",
+"year": "1993",
+"unstructured": "Davies, P.: The Mind of God. Touchstone, New York (1993)"
+},
+{
+"key": "9186_CR9",
+"unstructured": "Jackiw, R.: hep-th/9410151 (1994)"
+},
+{
+"key": "9186_CR10",
+"doi-asserted-by": "crossref",
+"first-page": "32",
+"DOI": "10.1002/(SICI)1099-0526(199709/10)3:1<32::AID-CPLX10>3.0.CO;2-X",
+"volume": "3",
+"author": "S. Lloyd",
+"year": "1997",
+"unstructured": "Lloyd, S.: Complexity 3, 32 (1997). quant-ph/9912088",
+"journal-title": "Complexity"
+},
+{
+"key": "9186_CR11",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1006/aphy.1998.5855",
+"volume": "270",
+"author": "M. Tegmark",
+"year": "1998",
+"unstructured": "Tegmark, M.: Ann. Phys. 270, 1 (1998). gr-qc/9704009",
+"journal-title": "Ann. Phys."
+},
+{
+"key": "9186_CR12",
+"first-page": "201",
+"volume-title": "Lecture Notes in Computer Science",
+"author": "J. Schmidhuber",
+"year": "1997",
+"unstructured": "Schmidhuber, J.: In: Freksa, C. (ed.) Lecture Notes in Computer Science, p. 201. Springer, Berlin (1997). quant-ph/9904050"
+},
+{
+"key": "9186_CR13",
+"doi-asserted-by": "crossref",
+"first-page": "409",
+"DOI": "10.1016/S0039-3681(98)80129-5",
+"volume": "29",
+"author": "J. Ladyman",
+"year": "1998",
+"unstructured": "Ladyman, J.: Stud. Hist. Philos. Sci. 29, 409\u2013424 (1998)",
+"journal-title": "Stud. Hist. Philos. Sci."
+},
+{
+"issue": "5",
+"key": "9186_CR14",
+"doi-asserted-by": "crossref",
+"first-page": "40",
+"DOI": "10.1038/scientificamerican0503-40",
+"volume": "270",
+"author": "M. Tegmark",
+"year": "2003",
+"unstructured": "Tegmark, M.: Sci. Am. 270(5), 40 (2003)",
+"journal-title": "Sci. Am."
+},
+{
+"key": "9186_CR15",
+"unstructured": "Tegmark, M.: astro-ph/0302131 (2003)"
+},
+{
+"key": "9186_CR16",
+"unstructured": "Schmidhuber, J.: quant-ph/0011122 (2000)"
+},
+{
+"key": "9186_CR17",
+"volume-title": "A New Kind of Science",
+"author": "S. Wolfram",
+"year": "2002",
+"unstructured": "Wolfram, S.: A New Kind of Science. Wolfram Media, New York (2002)"
+},
+{
+"key": "9186_CR18",
+"unstructured": "Cohen, M.: Master\u2019s thesis. Dept. of Philosophy, Ben Gurion University of the Negev, Israel (2003)"
+},
+{
+"key": "9186_CR19",
+"doi-asserted-by": "crossref",
+"first-page": "897",
+"DOI": "10.1088/0034-4885/68/4/R04",
+"volume": "68",
+"author": "F.J. Tipler",
+"year": "2005",
+"unstructured": "Tipler, F.J.: Rep. Prog. Phys. 68, 897 (2005)",
+"journal-title": "Rep. Prog. Phys."
+},
+{
+"key": "9186_CR20",
+"unstructured": "McCabe, G.: gr-qc/0610016 (2006)"
+},
+{
+"key": "9186_CR21",
+"unstructured": "McCabe, G.: gr-qc/0601073 (2006)"
+},
+{
+"key": "9186_CR22",
+"volume-title": "Theory of Nothing",
+"author": "R.K. Standish",
+"year": "2006",
+"unstructured": "Standish, R.K.: Theory of Nothing. Booksurge, Charleston (2006)"
+},
+{
+"issue": "11",
+"key": "9186_CR23",
+"doi-asserted-by": "crossref",
+"first-page": "8",
+"DOI": "10.1063/1.2435629",
+"volume": "58",
+"author": "F. Wilczek",
+"year": "2006",
+"unstructured": "Wilczek, F.: Phys. Today 58(11), 8 (2006)",
+"journal-title": "Phys. Today"
+},
+{
+"issue": "6",
+"key": "9186_CR24",
+"doi-asserted-by": "crossref",
+"first-page": "8",
+"DOI": "10.1063/1.2743102",
+"volume": "60",
+"author": "F. Wilczek",
+"year": "2007",
+"unstructured": "Wilczek, F.: Phys. Today 60(6), 8 (2007)",
+"journal-title": "Phys. Today"
+},
+{
+"key": "9186_CR25",
+"volume-title": "Artificial Minds",
+"author": "O.E. R\u00f6ssler",
+"year": "1987",
+"unstructured": "R\u00f6ssler, O.E.: In: Casti, J.L., Karlquist, A. (eds.) Artificial Minds. North-Holland, New York (1987)"
+},
+{
+"key": "9186_CR26",
+"volume-title": "Inside Versus Outside",
+"author": "K. Svozil",
+"year": "1994",
+"unstructured": "Svozil, K.: In: Atmanspacher, H., Dalenoort, G.J. (eds.) Inside Versus Outside. Springer, Berlin (1994)"
+},
+{
+"key": "9186_CR27",
+"volume-title": "Cybernetics and Systems \u201996",
+"author": "K. Svozil",
+"year": "1996",
+"unstructured": "Svozil, K.: In: Trappl, R. (ed.) Cybernetics and Systems \u201996. Austrian Society for Cybernetic Studies, Vienna (1996)"
+},
+{
+"key": "9186_CR28",
+"doi-asserted-by": "crossref",
+"first-page": "454",
+"DOI": "10.1103/RevModPhys.29.454",
+"volume": "29",
+"author": "H. Everett",
+"year": "1957",
+"unstructured": "Everett, H.: Rev. Mod. Phys. 29, 454 (1957)",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "9186_CR29",
+"volume-title": "The Many-Worlds Interpretation of Quantum Mechanics",
+"author": "N. Everett",
+"year": "1973",
+"unstructured": "Everett, N.: In: DeWitt, B.S., Graham, N. (eds.) The Many-Worlds Interpretation of Quantum Mechanics. Princeton University Press, Princeton (1973)"
+},
+{
+"key": "9186_CR30",
+"volume-title": "A Shorter Model Theory",
+"author": "W. Hodges",
+"year": "1997",
+"unstructured": "Hodges, W.: A Shorter Model Theory. Cambridge University Press, Cambridge (1997)"
+},
+{
+"key": "9186_CR31",
+"volume-title": "Space, Time, Matter",
+"author": "H. Weyl",
+"year": "1922",
+"unstructured": "Weyl, H.: Space, Time, Matter. Methuen, London (1922)"
+},
+{
+"key": "9186_CR32",
+"first-page": "59",
+"volume": "79",
+"author": "H.R. Brown",
+"year": "2002",
+"unstructured": "Brown, H.R., Brading, K.A.: Dialogos 79, 59 (2002)",
+"journal-title": "Dialogos"
+},
+{
+"key": "9186_CR33",
+"doi-asserted-by": "crossref",
+"DOI": "10.1017/CBO9780511535369",
+"volume-title": "Symmetries in Physics: Philosophical Reflections",
+"author": "K.A. Brading",
+"year": "2003",
+"unstructured": "Brading, K.A., Castellani, E. (eds.): In: Symmetries in Physics: Philosophical Reflections. Cambridge University Press, Cambridge (2003). quant-ph/0301097"
+},
+{
+"key": "9186_CR34",
+"doi-asserted-by": "crossref",
+"first-page": "335",
+"DOI": "10.1007/BF02959557",
+"volume": "9",
+"author": "E. Majorana",
+"year": "1932",
+"unstructured": "Majorana, E.: Nuovo Cimento 9, 335 (1932)",
+"journal-title": "Nuovo Cimento"
+},
+{
+"key": "9186_CR35",
+"first-page": "447",
+"volume": "155",
+"author": "P.A.M. Dirac",
+"year": "1936",
+"unstructured": "Dirac, P.A.M.: Proc. R. Soc. A 155, 447 (1936)",
+"journal-title": "Proc. R. Soc. A"
+},
+{
+"key": "9186_CR36",
+"doi-asserted-by": "crossref",
+"first-page": "347",
+"DOI": "10.1051/jphysrad:0193600708034700",
+"volume": "7",
+"author": "A. Proca",
+"year": "1936",
+"unstructured": "Proca, A.: J. Phys. Rad. 7, 347 (1936)",
+"journal-title": "J. Phys. Rad."
+},
+{
+"key": "9186_CR37",
+"doi-asserted-by": "crossref",
+"first-page": "149",
+"DOI": "10.2307/1968551",
+"volume": "40",
+"author": "E.P. Wigner",
+"year": "1939",
+"unstructured": "Wigner, E.P.: Ann. Math. 40, 149 (1939)",
+"journal-title": "Ann. Math."
+},
+{
+"key": "9186_CR38",
+"doi-asserted-by": "crossref",
+"first-page": "595",
+"DOI": "10.1103/RevModPhys.37.595",
+"volume": "37",
+"author": "R.M. Houtappel",
+"year": "1965",
+"unstructured": "Houtappel, R.M., van Dam, H., Wigner, E.P.: Rev. Mod. Phys. 37, 595 (1965)",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "9186_CR39",
+"unstructured": "Deutsch, D.: quant-ph/9906015 (1999)"
+},
+{
+"key": "9186_CR40",
+"unstructured": "Weinberg, S.: hep-th/9702027 (1997)"
+},
+{
+"key": "9186_CR41",
+"volume-title": "Our Cosmic Habitat",
+"author": "M.J. Rees",
+"year": "2002",
+"unstructured": "Rees, M.J.: Our Cosmic Habitat. Princeton University Press, Princeton (2002)"
+},
+{
+"key": "9186_CR42",
+"doi-asserted-by": "crossref",
+"first-page": "023505",
+"DOI": "10.1103/PhysRevD.73.023505",
+"volume": "73",
+"author": "M. Tegmark",
+"year": "2006",
+"unstructured": "Tegmark, M., Aguirre, A., Rees, M.J., Wilczek, F.: Phys. Rev. D 73, 023505 (2006)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR43",
+"doi-asserted-by": "crossref",
+"DOI": "10.1017/CBO9780511608858",
+"volume-title": "Algorithmic Information Theory",
+"author": "G.J. Chaitin",
+"year": "1987",
+"unstructured": "Chaitin, G.J.: Algorithmic Information Theory. Cambridge University Press, Cambridge (1987)"
+},
+{
+"key": "9186_CR44",
+"doi-asserted-by": "crossref",
+"DOI": "10.1007/978-1-4757-2606-0",
+"volume-title": "An Introduction to Kolmogorov Complexity and Its Applications",
+"author": "M. Li",
+"year": "1997",
+"unstructured": "Li, M., Vitanyi, P.: An Introduction to Kolmogorov Complexity and Its Applications. Springer, Berlin (1997)"
+},
+{
+"key": "9186_CR45",
+"doi-asserted-by": "crossref",
+"first-page": "247",
+"DOI": "10.1007/BF03019651",
+"volume": "26",
+"author": "E. Borel",
+"year": "1909",
+"unstructured": "Borel, E.: Rend. Circ. Mat. Palermo 26, 247 (1909)",
+"journal-title": "Rend. Circ. Mat. Palermo"
+},
+{
+"key": "9186_CR46",
+"volume-title": "A Course in Probability Theory",
+"author": "K.L. Chung",
+"year": "1974",
+"unstructured": "Chung, K.L.: A Course in Probability Theory. Academic, New York (1974)"
+},
+{
+"key": "9186_CR47",
+"first-page": "61",
+"volume-title": "Complexity, Entropy, and Physical Information",
+"author": "P.C.W. Davies",
+"year": "1990",
+"unstructured": "Davies, P.C.W.: In: Zurek, W.H. (ed.) Complexity, Entropy, and Physical Information, p. 61. Addison-Wesley, Redwood City (1990)"
+},
+{
+"key": "9186_CR48",
+"doi-asserted-by": "crossref",
+"first-page": "25",
+"DOI": "10.1007/BF02186207",
+"volume": "9",
+"author": "M. Tegmark",
+"year": "1996",
+"unstructured": "Tegmark, M.: Found. Phys. Lett. 9, 25 (1996)",
+"journal-title": "Found. Phys. Lett."
+},
+{
+"key": "9186_CR49",
+"volume-title": "The Physical Basis of the Direction of Time",
+"author": "H.D. Zeh",
+"year": "2002",
+"unstructured": "Zeh, H.D.: The Physical Basis of the Direction of Time, 4th edn. Springer, Berlin (2002)",
+"edition": "4"
+},
+{
+"key": "9186_CR50",
+"doi-asserted-by": "crossref",
+"first-page": "063528",
+"DOI": "10.1103/PhysRevD.70.063528",
+"volume": "70",
+"author": "A. Albrecht",
+"year": "2004",
+"unstructured": "Albrecht, A., Sorbo, L.: Phys. Rev. D 70, 063528 (2004)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR51",
+"doi-asserted-by": "crossref",
+"first-page": "1671",
+"DOI": "10.1007/s10714-005-0148-2",
+"volume": "37",
+"author": "S.M. Carroll",
+"year": "2005",
+"unstructured": "Carroll, S.M., Chen, J.: Gen. Relativ. Gravit. 37, 1671 (2005)",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "9186_CR52",
+"unstructured": "Wald, R.M.: gr-qc/0507094 (2005)"
+},
+{
+"key": "9186_CR53",
+"unstructured": "Page, D.N.: hep-th/0612137 (2006)"
+},
+{
+"key": "9186_CR54",
+"doi-asserted-by": "crossref",
+"first-page": "92",
+"DOI": "10.1088/1126-6708/2007/01/092",
+"volume": "701",
+"author": "A. Vilenkin",
+"year": "2007",
+"unstructured": "Vilenkin, A.: J. High Energy Phys. 701, 92 (2007)",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "9186_CR55",
+"doi-asserted-by": "crossref",
+"first-page": "413",
+"DOI": "10.1038/051413b0",
+"volume": "51",
+"author": "L. Boltzmann",
+"year": "1895",
+"unstructured": "Boltzmann, L.: Nature 51, 413 (1895)",
+"journal-title": "Nature"
+},
+{
+"key": "9186_CR56",
+"doi-asserted-by": "crossref",
+"first-page": "347",
+"DOI": "10.1103/PhysRevD.23.347",
+"volume": "23",
+"author": "A. Guth",
+"year": "1981",
+"unstructured": "Guth, A.: Phys. Rev. D 23, 347 (1981)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR57",
+"doi-asserted-by": "crossref",
+"first-page": "2848",
+"DOI": "10.1103/PhysRevD.27.2848",
+"volume": "27",
+"author": "A. Vilenkin",
+"year": "1983",
+"unstructured": "Vilenkin, A.: Phys. Rev. D 27, 2848 (1983)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR58",
+"first-page": "55",
+"volume-title": "Fundamental Interactions",
+"author": "A.A. Starobinsky",
+"year": "1984",
+"unstructured": "Starobinsky, A.A.: Fundamental Interactions, p.\u00a055. MGPI Press, Moscow (1984)"
+},
+{
+"key": "9186_CR59",
+"doi-asserted-by": "crossref",
+"DOI": "10.1201/b16971",
+"volume-title": "Particle Physics and Inflationary Cosmology",
+"author": "A.D. Linde",
+"year": "1990",
+"unstructured": "Linde, A.D.: Particle Physics and Inflationary Cosmology. Harwood, Switzerland (1990)"
+},
+{
+"key": "9186_CR60",
+"unstructured": "Guth, A.H.: hep-th/0702178 (2007)"
+},
+{
+"key": "9186_CR61",
+"doi-asserted-by": "crossref",
+"first-page": "249",
+"DOI": "10.1111/j.1749-6632.1989.tb50513.x",
+"volume": "571",
+"author": "R. Penrose",
+"year": "1989",
+"unstructured": "Penrose, R.: N. Y. Acad. Sci. 571, 249 (1989)",
+"journal-title": "N. Y. Acad. Sci."
+},
+{
+"key": "9186_CR62",
+"doi-asserted-by": "crossref",
+"first-page": "2043",
+"DOI": "10.1023/A:1021175216055",
+"volume": "34",
+"author": "S. Hollands",
+"year": "2002",
+"unstructured": "Hollands, S., Wald, R.M.: Gen. Relativ. Gravit. 34, 2043 (2002)",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "9186_CR63",
+"doi-asserted-by": "crossref",
+"first-page": "57",
+"DOI": "10.1088/1126-6708/2002/10/057",
+"volume": "10",
+"author": "L. Kofman",
+"year": "2002",
+"unstructured": "Kofman, L., Linde, A., Mukhanov, V.: J. High Energy Phys. 10, 57 (2002)",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "9186_CR64",
+"doi-asserted-by": "crossref",
+"DOI": "10.1007/978-3-662-03263-3",
+"volume-title": "Decoherence and the Appearance of a Classical World in Quantum Theory",
+"author": "D. Giulini",
+"year": "1996",
+"unstructured": "Giulini, D., Joos, E., Kiefer, C., Kupsch, J., Stamatescu, I.O., Zeh, H.D.: Decoherence and the Appearance of a Classical World in Quantum Theory. Springer, Berlin (1996)"
+},
+{
+"key": "9186_CR65",
+"doi-asserted-by": "crossref",
+"first-page": "377",
+"DOI": "10.1088/0264-9381/13/3/006",
+"volume": "13",
+"author": "D. Polarski",
+"year": "1996",
+"unstructured": "Polarski, D., Starobinsky, A.A.: Class. Quantum Gravity 13, 377 (1996)",
+"journal-title": "Class. Quantum Gravity"
+},
+{
+"key": "9186_CR66",
+"doi-asserted-by": "crossref",
+"first-page": "137",
+"DOI": "10.1002/andp.2090070302",
+"volume": "7",
+"author": "K. Kiefer",
+"year": "1998",
+"unstructured": "Kiefer, K., Polarski, D.: Ann. Phys. 7, 137 (1998)",
+"journal-title": "Ann. Phys."
+},
+{
+"issue": "4",
+"key": "9186_CR67",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1088/1475-7516/2005/04/001",
+"volume": "2005",
+"author": "M. Tegmark",
+"year": "2005",
+"unstructured": "Tegmark, M.: J. Cosmol. Astropart. Phys. 2005(4), 1 (2005)",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"key": "9186_CR68",
+"doi-asserted-by": "crossref",
+"first-page": "16",
+"DOI": "10.1088/1475-7516/2006/03/016",
+"volume": "0603",
+"author": "R. Easther",
+"year": "2006",
+"unstructured": "Easther, R., Lim, E.A., Martin, M.R.: J. Cosmol. Astropart. Phys. 0603, 16 (2006)",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"key": "9186_CR69",
+"doi-asserted-by": "crossref",
+"first-page": "191302",
+"DOI": "10.1103/PhysRevLett.97.191302",
+"volume": "97",
+"author": "R. Bousso",
+"year": "2006",
+"unstructured": "Bousso, R.: Phys. Rev. Lett. 97, 191302 (2006)",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "9186_CR70",
+"unstructured": "Vilenkin, A.: hep-th/0609193 (2006)"
+},
+{
+"key": "9186_CR71",
+"unstructured": "Aguirre, A., Gratton, S., Johnson, M.C.: hep-th/0611221 (2006)"
+},
+{
+"key": "9186_CR72",
+"doi-asserted-by": "crossref",
+"first-page": "043511",
+"DOI": "10.1103/PhysRevD.64.043511",
+"volume": "64",
+"author": "J. Garriga",
+"year": "2001",
+"unstructured": "Garriga, J., Vilenkin, A.: Phys. Rev. D 64, 043511 (2001)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR73",
+"volume-title": "The fabric of reality",
+"author": "D. Deutsch",
+"year": "1997",
+"unstructured": "Deutsch, D.: The fabric of reality. Allen Lane, New York (1997)"
+},
+{
+"key": "9186_CR74",
+"unstructured": "Linde, A.D.: hep-th/0211048 (2002)"
+},
+{
+"key": "9186_CR75",
+"doi-asserted-by": "crossref",
+"first-page": "921",
+"DOI": "10.1111/j.1365-2966.2004.07261.x",
+"volume": "347",
+"author": "G.F.R. Ellis",
+"year": "2004",
+"unstructured": "Ellis, G.F.R., Kirchner, U., Stoeger, W.R.: Mon. Not. R. Astron. Soc. 347, 921 (2004)",
+"journal-title": "Mon. Not. R. Astron. Soc."
+},
+{
+"key": "9186_CR76",
+"unstructured": "Stoeger, W.R., Ellis, G.F.R., Kirchner, U.: astro-ph/0407329 (2004)"
+},
+{
+"key": "9186_CR77",
+"volume-title": "God, the Multiverse, and Everything: Modern Cosmology and the Argument from Design",
+"author": "R.D. Holder",
+"year": "2004",
+"unstructured": "Holder, R.D.: God, the Multiverse, and Everything: Modern Cosmology and the Argument from Design. Ashgate, Burlington (2004)"
+},
+{
+"key": "9186_CR78",
+"unstructured": "Weinberg, S.: hep-th/0511037 (2005)"
+},
+{
+"key": "9186_CR79",
+"doi-asserted-by": "crossref",
+"first-page": "1132",
+"DOI": "10.1038/nature04804",
+"volume": "440",
+"author": "S.M. Carroll",
+"year": "2006",
+"unstructured": "Carroll, S.M.: Nature 440, 1132 (2006)",
+"journal-title": "Nature"
+},
+{
+"key": "9186_CR80",
+"unstructured": "Page, D.N.: hep-th/0610101 (2006)"
+},
+{
+"key": "9186_CR81",
+"volume-title": "Universe or Multiverse?",
+"author": "P. Davies",
+"year": "2007",
+"unstructured": "Davies, P.: In: Carr, B. (ed.) Universe or Multiverse? Cambridge University Press, Cambridge (2007)"
+},
+{
+"key": "9186_CR82",
+"volume-title": "Parallel Worlds: A Journey Through Creation, Higher Dimensions, and the Future of the Cosmos",
+"author": "M. Kaku",
+"year": "2006",
+"unstructured": "Kaku, M.: Parallel Worlds: A Journey Through Creation, Higher Dimensions, and the Future of the Cosmos. Anchor, New York (2006)"
+},
+{
+"key": "9186_CR83",
+"volume-title": "Many Worlds in One: The Search for Other Universes",
+"author": "A. Vilenkin",
+"year": "2006",
+"unstructured": "Vilenkin, A.: Many Worlds in One: The Search for Other Universes. Hill and Wang, New York (2006)"
+},
+{
+"key": "9186_CR84",
+"doi-asserted-by": "crossref",
+"first-page": "6",
+"DOI": "10.1088/1126-6708/2000/06/006",
+"volume": "6",
+"author": "R. Bousso",
+"year": "2000",
+"unstructured": "Bousso, R., Polchinski, J.: J. High Energy Phys. 6, 6 (2000)",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "9186_CR85",
+"doi-asserted-by": "crossref",
+"first-page": "307",
+"DOI": "10.1016/S0550-3213(01)00097-9",
+"volume": "602",
+"author": "J.L. Feng",
+"year": "2001",
+"unstructured": "Feng, J.L., March-Russell, J., Sethi, S., Wilczek, F.: Nucl. Phys. B 602, 307 (2001)",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "9186_CR86",
+"doi-asserted-by": "crossref",
+"first-page": "046005",
+"DOI": "10.1103/PhysRevD.68.046005",
+"volume": "68",
+"author": "S. Kachru",
+"year": "2003",
+"unstructured": "Kachru, S., Kallosh, R., Linde, A., Trivedi, S.P.: Phys. Rev. D 68, 046005 (2003)",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "9186_CR87",
+"unstructured": "Susskind, L.: hep-th/0302219 (2003)"
+},
+{
+"key": "9186_CR88",
+"doi-asserted-by": "crossref",
+"first-page": "60",
+"DOI": "10.1088/1126-6708/2004/01/060",
+"volume": "401",
+"author": "S. Ashok",
+"year": "2004",
+"unstructured": "Ashok, S., Douglas, M.R.: J. High Energy Phys. 401, 60 (2004)",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "9186_CR89",
+"doi-asserted-by": "crossref",
+"DOI": "10.1093/oso/9780195080308.001.0001",
+"volume-title": "In the Light of Logic",
+"author": "S. Feferman",
+"year": "1998",
+"unstructured": "Feferman, S.: In the Light of Logic. Oxford University Press, Oxford (1998), Chap. 14"
+},
+{
+"key": "9186_CR90",
+"volume-title": "What Is Mathematics, Really?",
+"author": "R. Hersh",
+"year": "1999",
+"unstructured": "Hersh, R.: What Is Mathematics, Really? Oxford University Press, Oxford (1999)"
+},
+{
+"key": "9186_CR91",
+"volume-title": "On the Plurality of Worlds",
+"author": "D. Lewis",
+"year": "1986",
+"unstructured": "Lewis, D.: On the Plurality of Worlds. Blackwell, Oxford (1986)"
+},
+{
+"key": "9186_CR92",
+"volume-title": "A Brief History of Time",
+"author": "S. Hawking",
+"year": "1993",
+"unstructured": "Hawking, S.: A Brief History of Time. Touchstone, New York (1993)"
+},
+{
+"key": "9186_CR93",
+"doi-asserted-by": "crossref",
+"first-page": "37",
+"DOI": "10.1088/0264-9381/16/12A/303",
+"volume": "16",
+"author": "G.F.R. Ellis",
+"year": "1999",
+"unstructured": "Ellis, G.F.R.: Class. Quantum Gravity A 16, 37 (1999)",
+"journal-title": "Class. Quantum Gravity A"
+},
+{
+"key": "9186_CR94",
+"unstructured": "Schmidhuber, C.: hep-th/0011065 (2000)"
+},
+{
+"key": "9186_CR95",
+"doi-asserted-by": "crossref",
+"first-page": "1149",
+"DOI": "10.1103/RevModPhys.72.1149",
+"volume": "72",
+"author": "C.J. Hogan",
+"year": "2000",
+"unstructured": "Hogan, C.J.: Rev. Mod. Phys. 72, 1149 (2000)",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "9186_CR96",
+"doi-asserted-by": "crossref",
+"first-page": "032305",
+"DOI": "10.1103/PhysRevA.63.032305",
+"volume": "63",
+"author": "P. Benioff",
+"year": "2001",
+"unstructured": "Benioff, P.: Phys. Rev. A 63, 032305 (2001)",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "9186_CR97",
+"doi-asserted-by": "crossref",
+"first-page": "2667",
+"DOI": "10.1142/S0217751X02011588",
+"volume": "17",
+"author": "G.F.R. Ellis",
+"year": "2002",
+"unstructured": "Ellis, G.F.R.: Int. J. Mod. Phys. A 17, 2667 (2002)",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "9186_CR98",
+"volume-title": "Anthropic Bias: Observation Selection Effects in Science and Philosophy",
+"author": "N. Bostrom",
+"year": "2002",
+"unstructured": "Bostrom, N.: Anthropic Bias: Observation Selection Effects in Science and Philosophy. Routledge, New York (2002)"
+},
+{
+"key": "9186_CR99",
+"doi-asserted-by": "crossref",
+"first-page": "989",
+"DOI": "10.1023/A:1016561108807",
+"volume": "32",
+"author": "P. Benioff",
+"year": "2002",
+"unstructured": "Benioff, P.: Found. Phys. 32, 989 (2002)",
+"journal-title": "Found. Phys."
+},
+{
+"key": "9186_CR100",
+"unstructured": "Benioff, P.: quant-ph/0303086 (2003)"
+},
+{
+"key": "9186_CR101",
+"doi-asserted-by": "crossref",
+"first-page": "467",
+"DOI": "10.1023/A:1023715732166",
+"volume": "33",
+"author": "M.M. Circovic",
+"year": "2003",
+"unstructured": "Circovic, M.M.: Found. Phys. 33, 467 (2003)",
+"journal-title": "Found. Phys."
+},
+{
+"key": "9186_CR102",
+"unstructured": "Vaas, R.: physics/0408111 (2004)"
+},
+{
+"key": "9186_CR103",
+"unstructured": "Aguirre, A., Tegmark, M.: hep-th/0409072 (2004)"
+},
+{
+"key": "9186_CR104",
+"doi-asserted-by": "crossref",
+"first-page": "1825",
+"DOI": "10.1007/s10701-005-7351-6",
+"volume": "35",
+"author": "P. Benioff",
+"year": "2004",
+"unstructured": "Benioff, P.: Found. Phys. 35, 1825 (2004)",
+"journal-title": "Found. Phys."
+},
+{
+"key": "9186_CR105",
+"unstructured": "McCabe, G.: http://philsci-archive.pitt.edu/archive/00002218 (2005)"
+},
+{
+"key": "9186_CR106",
+"doi-asserted-by": "crossref",
+"first-page": "765",
+"DOI": "10.1007/s10701-006-9048-x",
+"volume": "36",
+"author": "P. Hut",
+"year": "2006",
+"unstructured": "Hut, P., Alford, M., Tegmark, M.: Found. Phys. 36, 765 (2006) physics/0510188",
+"journal-title": "Found. Phys."
+},
+{
+"key": "9186_CR107",
+"first-page": "69",
+"volume": "1",
+"author": "B. Vorhees",
+"year": "2005",
+"unstructured": "Vorhees, B., Luxford, C., Rhyan, A.: Int. J. Unconv. Comput. 1, 69 (2005)",
+"journal-title": "Int. J. Unconv. Comput."
+},
+{
+"key": "9186_CR108",
+"unstructured": "Ellis, G.F.R.: astro-ph/0602280 (2006)"
+},
+{
+"key": "9186_CR109",
+"unstructured": "Stoeger, W.R.: astro-ph/0602356 (2006)"
+},
+{
+"key": "9186_CR110",
+"unstructured": "Hedrich, R.: physics/0604171 (2006)"
+},
+{
+"key": "9186_CR111",
+"volume-title": "Engines of Creation: The Coming Era of Nanotechnology",
+"author": "K.E. Drexler",
+"year": "1985",
+"unstructured": "Drexler, K.E.: Engines of Creation: The Coming Era of Nanotechnology. Forth Estate, London (1985)"
+},
+{
+"key": "9186_CR112",
+"first-page": "1",
+"volume": "2",
+"author": "N. Bostrom",
+"year": "1998",
+"unstructured": "Bostrom, N.: Int. J. Futur. Stud. 2, 1 (1998)",
+"journal-title": "Int. J. Futur. Stud."
+},
+{
+"key": "9186_CR113",
+"volume-title": "The Age of Spiritual Machines: When Computers Exceed Human Intelligence",
+"author": "R. Kurzweil",
+"year": "1999",
+"unstructured": "Kurzweil, R.: The Age of Spiritual Machines: When Computers Exceed Human Intelligence. Viking, New York (1999)"
+},
+{
+"key": "9186_CR114",
+"volume-title": "Robot: Mere Machine to Transcendent Mind",
+"author": "H. Moravec",
+"year": "1999",
+"unstructured": "Moravec, H.: Robot: Mere Machine to Transcendent Mind. Oxford University Press, Oxford (1999)"
+},
+{
+"key": "9186_CR115",
+"volume-title": "The Physics of Immortality",
+"author": "F.J. Tipler",
+"year": "1994",
+"unstructured": "Tipler, F.J.: The Physics of Immortality. Doubleday, New York (1994)"
+},
+{
+"key": "9186_CR116",
+"doi-asserted-by": "crossref",
+"first-page": "243",
+"DOI": "10.1111/1467-9213.00309",
+"volume": "53",
+"author": "N. Bostrom",
+"year": "2003",
+"unstructured": "Bostrom, N.: Philos. Q. 53, 243 (2003)",
+"journal-title": "Philos. Q."
+},
+{
+"key": "9186_CR117",
+"doi-asserted-by": "crossref",
+"first-page": "591",
+"DOI": "10.1016/j.shpsb.2005.04.002",
+"volume": "36",
+"author": "G. McCabe",
+"year": "2005",
+"unstructured": "McCabe, G.: Stud. Hist. Philos. Mod. Phys. 36, 591 (2005). physics/0511116",
+"journal-title": "Stud. Hist. Philos. Mod. Phys."
+},
+{
+"key": "9186_CR118",
+"doi-asserted-by": "crossref",
+"DOI": "10.1093/oso/9780198519737.001.0001",
+"volume-title": "The Emperor\u2019s New Mind",
+"author": "R. Penrose",
+"year": "1989",
+"unstructured": "Penrose, R.: The Emperor\u2019s New Mind. Oxford University Press, Oxford (1989)"
+},
+{
+"key": "9186_CR119",
+"volume-title": "The Large, the Small and the Human Mind",
+"author": "R. Penrose",
+"year": "1997",
+"unstructured": "Penrose, R.: In: Longair, M. (ed.) The Large, the Small and the Human Mind. Cambridge University Press, Cambridge (1997)"
+},
+{
+"key": "9186_CR120",
+"doi-asserted-by": "crossref",
+"first-page": "801",
+"DOI": "10.1038/nature03721",
+"volume": "436",
+"author": "T. Hafting",
+"year": "2005",
+"unstructured": "Hafting, T.: Nature 436, 801 (2005)",
+"journal-title": "Nature"
+},
+{
+"key": "9186_CR121",
+"doi-asserted-by": "crossref",
+"first-page": "45",
+"DOI": "10.1088/1367-2630/6/1/045",
+"volume": "6",
+"author": "R. Gambini",
+"year": "2004",
+"unstructured": "Gambini, R., Porto, R., Pullin, J.: New J. Phys. 6, 45 (2004)",
+"journal-title": "New J. Phys."
+},
+{
+"key": "9186_CR122",
+"volume-title": "Permutation City",
+"author": "G. Egan",
+"year": "1995",
+"unstructured": "Egan, G.: Permutation City. Harper, New York (1995)"
+},
+{
+"key": "9186_CR123",
+"doi-asserted-by": "crossref",
+"unstructured": "Standish, R.K.: Phys. Found. Lett. 17 (2004)",
+"DOI": "10.1023/B:FOPL.0000032475.18334.0e"
+},
+{
+"key": "9186_CR124",
+"volume-title": "Computability and Unsolvability",
+"author": "M. Davis",
+"year": "1982",
+"unstructured": "Davis, M.: Computability and Unsolvability. Dover, New York (1982)"
+},
+{
+"key": "9186_CR125",
+"volume-title": "Grundlagen der Matematik",
+"author": "D. Hilbert",
+"year": "1934",
+"unstructured": "Hilbert, D., Bernays, P.: Grundlagen der Matematik. Springer, Berlin (1934)"
+},
+{
+"key": "9186_CR126",
+"doi-asserted-by": "crossref",
+"first-page": "173",
+"DOI": "10.1007/BF01700692",
+"volume": "38",
+"author": "K. G\u00f6del",
+"year": "1931",
+"unstructured": "G\u00f6del, K.: Monatshefte Math. Phys. 38, 173 (1931)",
+"journal-title": "Monatshefte Math. Phys."
+},
+{
+"key": "9186_CR127",
+"doi-asserted-by": "crossref",
+"first-page": "349",
+"DOI": "10.1017/S0022481200028309",
+"volume": "53",
+"author": "S.G. Simpson",
+"year": "1988",
+"unstructured": "Simpson, S.G.: J. Symb. Log. 53, 349 (1988) http://www.math.psu.edu/simpson/papers/hilbert.pdf",
+"journal-title": "J. Symb. Log."
+},
+{
+"key": "9186_CR128",
+"doi-asserted-by": "crossref",
+"first-page": "339",
+"DOI": "10.1109/LICS.2006.47",
+"volume-title": "21st Annual IEEE Symposium on Logic in Computer Science",
+"author": "J.W. Dawson",
+"year": "2006",
+"unstructured": "Dawson, J.W.: In: 21st Annual IEEE Symposium on Logic in Computer Science, p. 339. IEEE, New York (2006)"
+},
+{
+"key": "9186_CR129",
+"doi-asserted-by": "crossref",
+"first-page": "345",
+"DOI": "10.2307/2371045",
+"volume": "58",
+"author": "A. Church",
+"year": "1936",
+"unstructured": "Church, A.: Am. J. Math. 58, 345 (1936)",
+"journal-title": "Am. J. Math."
+},
+{
+"key": "9186_CR130",
+"first-page": "230",
+"volume": "42",
+"author": "A. Turing",
+"year": "1936",
+"unstructured": "Turing, A.: Proc. Lond. Math. Soc. 42, 230 (1936)",
+"journal-title": "Proc. Lond. Math. Soc."
+},
+{
+"key": "9186_CR131",
+"volume-title": "Constructive Formalism, Essays on the Foundations of Mathematics",
+"author": "R.L. Goodstein",
+"year": "1951",
+"unstructured": "Goodstein, R.L.: Constructive Formalism, Essays on the Foundations of Mathematics. Leister University College, Leicester (1951)"
+},
+{
+"key": "9186_CR132",
+"doi-asserted-by": "crossref",
+"first-page": "351",
+"DOI": "10.1143/PTPS.160.351",
+"volume": "160",
+"author": "X. Wen",
+"year": "2006",
+"unstructured": "Wen, X.: Prog. Theor. Phys. Suppl. 160, 351 (2006). cond-mat/0508020",
+"journal-title": "Prog. Theor. Phys. Suppl."
+},
+{
+"key": "9186_CR133",
+"unstructured": "Levin, M., Wen, X.: hep-th/0507118 (2005)"
+},
+{
+"key": "9186_CR134",
+"volume-title": "The Anthropic Cosmological Principle",
+"author": "J.D. Barrow",
+"year": "1986",
+"unstructured": "Barrow, J.D., Tipler, F.J.: The Anthropic Cosmological Principle. Clarendon, Oxford (1986)"
+},
+{
+"key": "9186_CR135",
+"volume-title": "300 Years of Gravitation",
+"author": "A.D. Linde",
+"year": "1987",
+"unstructured": "Linde, A.D.: In: Hawking, S., Israel, W. (eds.) 300 Years of Gravitation. Cambridge University Press, Cambridge (1987)"
+},
+{
+"key": "9186_CR136",
+"doi-asserted-by": "crossref",
+"first-page": "2607",
+"DOI": "10.1103/PhysRevLett.59.2607",
+"volume": "59",
+"author": "S. Weinberg",
+"year": "1987",
+"unstructured": "Weinberg, S.: Phys. Rev. Lett. 59, 2607 (1987)",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "9186_CR137",
+"doi-asserted-by": "crossref",
+"first-page": "437",
+"DOI": "10.1016/0370-2693(88)90597-7",
+"volume": "201",
+"author": "A.D. Linde",
+"year": "1988",
+"unstructured": "Linde, A.D.: Phys. Lett. B 201, 437 (1988)",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "9186_CR138",
+"unstructured": "Tegmark, M., Vilenkin, A., Pogosian, L.: astro-ph/0304536 (2003)"
+},
+{
+"key": "9186_CR139",
+"doi-asserted-by": "crossref",
+"first-page": "5",
+"DOI": "10.1088/1475-7516/2004/07/005",
+"volume": "407",
+"author": "L. Pogosian",
+"year": "2004",
+"unstructured": "Pogosian, L., Vilenkin, A., Tegmark, M.: J. Cosmol. Astropart. Phys. 407, 5 (2004)",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"key": "9186_CR140",
+"doi-asserted-by": "crossref",
+"first-page": "185",
+"DOI": "10.1086/289611",
+"volume": "58",
+"author": "R. Jones",
+"year": "1991",
+"unstructured": "Jones, R.: Philos. Sci. 58, 185 (1991)",
+"journal-title": "Philos. Sci."
+},
+{
+"key": "9186_CR141",
+"volume-title": "The Structural Foundations of Quantum Gravity",
+"author": "O. Pooley",
+"year": "2007",
+"unstructured": "Pooley, O.: In: Rickles, D.P., French, S.R.D. (eds.) The Structural Foundations of Quantum Gravity. Oxford University Press, Oxford (2007)"
+},
+{
+"key": "9186_CR142",
+"unstructured": "Larsson, T.A.: math-ph/0103013v3 (2001)"
+}
+],
+"container-title": [
+"Foundations of Physics"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/s10701-007-9186-9.pdf",
+"content-type": "application/pdf",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://link.springer.com/article/10.1007/s10701-007-9186-9/fulltext.html",
+"content-type": "text/html",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://link.springer.com/content/pdf/10.1007/s10701-007-9186-9",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2024,
+2,
+18
+]
+],
+"date-time": "2024-02-18T22:39:05Z",
+"timestamp": 1708295945000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "http://link.springer.com/10.1007/s10701-007-9186-9"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2007,
+11,
+8
+]
+]
+},
+"references-count": 142,
+"journal-issue": {
+"issue": "2",
+"published-print": {
+"date-parts": [
+[
+2008,
+2
+]
+]
+}
+},
+"alternative-id": [
+"9186"
+],
+"URL": "https://doi.org/10.1007/s10701-007-9186-9",
+"relation": {},
+"ISSN": [
+"0015-9018",
+"1572-9516"
+],
+"issn-type": [
+{
+"value": "0015-9018",
+"type": "print"
+},
+{
+"value": "1572-9516",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2007,
+11,
+8
+]
+]
+}
+}
+}

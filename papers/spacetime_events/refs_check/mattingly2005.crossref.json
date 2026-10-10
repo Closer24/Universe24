@@ -1,0 +1,2859 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+8
+]
+],
+"date-time": "2026-10-08T23:58:48Z",
+"timestamp": 1791503928406,
+"version": "4.3.4"
+},
+"reference-count": 281,
+"publisher": "Springer Science and Business Media LLC",
+"issue": "1",
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Living Rev. Relativ."
+],
+"published-print": {
+"date-parts": [
+[
+2005,
+12
+]
+]
+},
+"DOI": "10.12942/lrr-2005-5",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2013,
+4,
+3
+]
+],
+"date-time": "2013-04-03T13:48:26Z",
+"timestamp": 1364996906000
+},
+"source": "Crossref",
+"is-referenced-by-count": 892,
+"title": [
+"Modern Tests of Lorentz Invariance"
+],
+"prefix": "10.1007",
+"volume": "8",
+"author": [
+{
+"given": "David",
+"family": "Mattingly",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "297",
+"published-online": {
+"date-parts": [
+[
+2005,
+9,
+7
+]
+]
+},
+"reference": [
+{
+"key": "5_CR1",
+"doi-asserted-by": "publisher",
+"first-page": "401",
+"DOI": "10.1007/s002880050564",
+"volume": "76",
+"author": "K Ackerstaff",
+"year": "1997",
+"unstructured": "Ackerstaff, K. et al. (OPAL Collaboration), \u201cA study of B meson oscillations using hadronic Z0 decays containing leptons\u201d, Z. Phys. C, 76, 401\u2013415, (1997). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ex/9707009. 5.5",
+"journal-title": "Z. Phys. C"
+},
+{
+"key": "5_CR2",
+"unstructured": "Adam, C., and Klinkhamer, F.R., \u201cComment on \u2018Vacuum photon splitting in Lorentzviolating quantum electrodynamics\u201d\u2019, (2003). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0312153. 6.4"
+},
+{
+"key": "5_CR3",
+"doi-asserted-by": "publisher",
+"first-page": "214",
+"DOI": "10.1016/S0550-3213(03)00143-3",
+"volume": "657",
+"author": "C Adam",
+"year": "2003",
+"unstructured": "Adam, C., and Klinkhamer, F.R., \u201cPhoton decay in a CPT-violating extension of quantum electrodynamics\u201d, Nucl. Phys. B, 657, 214\u2013228, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0212028. 6.4",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR4",
+"doi-asserted-by": "publisher",
+"first-page": "897",
+"DOI": "10.1086/423931",
+"volume": "614",
+"author": "F Aharonian",
+"year": "2004",
+"unstructured": "Aharonian, F., Akhperjanian, A., Beilicke, M., Bernl\u00f6hr, K., B\u00f6rst, H.-G., Bojahr, H., Bolz, O., Coarasa, T., Contreras, J.L., Cortina, J., Denninghoff, S., Fonseca, M.V., Girma, M., G\u00f6tting, N., Heinzelmann, G., Hermann, G., Heusler, A., Hofmann, W., Horns, D., Jung, I., Kankanyan, R., Kestel, M., Kohnle, A., Konopelko, A., Kranich, D., Lampeitl, H., Lopez, M., Lorenz, E., Lucarelli, F., Mang, O., Mazin, D., Meyer, H., Mirzoyan, R., Moralejo, A., O\u00f1a-Wilhelmi, E., Panter, M., Plyasheshnikov, A., P\u00fchlhofer, G., de los Reyes, R., Rhode, W., Ripken, J., Rowell, G., Sahakian, V., Samorski, M., Schilling, M., Siems, M., Sobzynska, D., Stamm, W., Tluczykont, M., Vitale, V., V\u00f6lk, H.J., Wiedner, C.A., and Wittek, W., \u201cThe Crab Nebula and Pulsar between 500-GeV and 80-TeV: Observations with the HEGRA Stereoscopic Air Cherenkov Telescopes\u201d, Astrophys. J., 614, 897\u2013913, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0407118. 23",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "5_CR5",
+"doi-asserted-by": "publisher",
+"first-page": "071102",
+"DOI": "10.1103/PhysRevLett.92.071102",
+"volume": "92",
+"author": "J Ahrens",
+"year": "2004",
+"unstructured": "Ahrens, J., Bai, X., Barwick, S.W., Becka, T., Becker, J.K., Bernardini, E., Bertrand, D., Binon, F., Biron, A., Boersma, D.J., B\u00f6ser, S., Botner, O., Bouchta, A., Bouhali, O., Burgess, T., Carius, S., Castermans, T., Chen, A., Chirkin, D., Collin, B., Conrad, J., Cooley, J., Cowen, D.F., Davour, A., de Clercq, C., Deyoung, T., Desiati, P., Dewulf, J.P., Ekstr\u00f6m, P., Feser, T., Gaisser, T.K., Ganugapati, R., Gaug, M., Geenen, H., Gerhardt, L., Goldschmidt, A., Gro\u00df, A., Hallgren, A., Halzen, F., Hanson, K., Hardtke, R., Harenberg, T., Hauschildt, T., Helbing, K., Hellwig, M., Herquet, P., Hill, G.C., Hubert, D., Hughey, B., Hulth, P.O., Hultqvist, K., Hundertmark, S., Jacobsen, J., Karle, A., Kestel, M., K\u00f6pke, L., Kowalski, M., Kuehn, K., Lamoureux, J.I., Leich, H., Leuthold, M., Lindahl, P., Liubarsky, I., Madsen, J., Mandli, K., Marciniewski, P., Matis, H.S., McParland, C.P., Messarius, T., Minaeva, Y., Mio\u010dinovi\u0107, P., Morse, R., M\u00fcnich, K., Nahnhauer, R., Neunh\u00f6ffer, T., Niessen, P., Nygren, D.R., Ogelman, H., Olbrechts, P., P\u00e9rez de Los Heros, C., Pohl, A.C., Porrata, R., Price, P.B., Przybylski, G.T., Rawlins, K., Resconi, E., Rhode, W., Ribordy, M., Richter, S., Martino, J.R., Sander, H.G., Schinarakis, K., Schlenstedt, S., Schmidt, T., Schneider, D., Schwarz, R., Silvestri, A., Solarz, M., Spiczak, G.M., Spiering, C., Stamatikos, M., Steele, D., Steffen, P., Stokstad, R.G., Sulanke, K.H., Taboada, I., Thollander, L., Tilav, S., Wagner, W., Walck, C., Wang, Y.R., Wiebusch, C.H., Wiedemann, C., Wischnewski, R., Wissing, H., Woschnagg, K., and Yodh, G., \u201cSearch for Extraterrestrial Point Sources of Neutrinos with AMANDA-II\u201d, Phys. Rev. Lett., 92, 071102, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0309585. 17",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR6",
+"unstructured": "Alfaro, J., \u201cQuantum gravity and Lorentz invariance deformation in the standard model\u201d, (2004). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0412295. 2"
+},
+{
+"key": "5_CR7",
+"doi-asserted-by": "publisher",
+"first-page": "2318",
+"DOI": "10.1103/PhysRevLett.84.2318",
+"volume": "84",
+"author": "J Alfaro",
+"year": "2000",
+"unstructured": "Alfaro, J., Morales-T\u00e9cotl, H.A., and Urrutia, L.F., \u201cQuantum gravity corrections to neutrino propagation\u201d, Phys. Rev. Lett., 84, 2318\u20132321, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9909079. 8",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR8",
+"doi-asserted-by": "publisher",
+"first-page": "103509",
+"DOI": "10.1103/PhysRevD.65.103509",
+"volume": "65",
+"author": "J Alfaro",
+"year": "2002",
+"unstructured": "Alfaro, J., Morales-T\u00e9cotl, H.A., and Urrutia, L.F., \u201cLoop quantum gravity and light propagation\u201d, Phys. Rev. D, 65, 103509, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0108061. 8",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR9",
+"doi-asserted-by": "publisher",
+"first-page": "083003",
+"DOI": "10.1103/PhysRevD.67.083003",
+"volume": "67",
+"author": "J Alfaro",
+"year": "2003",
+"unstructured": "Alfaro, J., and Palma, G.A., \u201cLoop quantum gravity and ultra high energy cosmic rays\u201d, Phys. Rev. D, 67, 083003, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0208193. 6.5.6",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR10",
+"unstructured": "Alfaro, J., and Palma, G.A., \u201cLoop Quantum Gravity Effects on the High Energy Cosmic Ray Spectrum\u201d, (2005). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0501116. 6.5.6"
+},
+{
+"key": "5_CR11",
+"doi-asserted-by": "publisher",
+"first-page": "127",
+"DOI": "10.1016/S0927-6505(02)00196-2",
+"volume": "19",
+"author": "R Aloisio",
+"year": "2003",
+"unstructured": "Aloisio, R., Blasi, P., Galante, A., Ghia, P.L., and Grillo, A.F., \u201cSpace time fluctuations and ultra high energy cosmic ray interactions\u201d, Astropart. Phys., 19, 127\u2013133, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0205271. 6.6.2",
+"journal-title": "Astropart. Phys."
+},
+{
+"key": "5_CR12",
+"doi-asserted-by": "publisher",
+"first-page": "053010",
+"DOI": "10.1103/PhysRevD.62.053010",
+"volume": "62",
+"author": "R Aloisio",
+"year": "2000",
+"unstructured": "Aloisio, R., Blasi, P., Ghia, P.L., and Grillo, A.F., \u201cProbing the structure of space-time with cosmic rays\u201d, Phys. Rev. D, 62, 053010, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0001258. 2.6, 6.5.6, 6.6.2",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR13",
+"doi-asserted-by": "publisher",
+"first-page": "83",
+"DOI": "10.1016/S0370-2693(97)00801-0",
+"volume": "409",
+"author": "C Alvarez",
+"year": "1997",
+"unstructured": "Alvarez, C., and Mann, R.B., \u201cThe equivalence principle and g-2 experiments\u201d, Phys. Lett. B, 409, 83\u201387, (1997). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/9510070. 2.5",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR14",
+"doi-asserted-by": "publisher",
+"first-page": "1643",
+"DOI": "10.1142/S021827180200302X",
+"volume": "11",
+"author": "G Amelino-Camelia",
+"year": "2002",
+"unstructured": "Amelino-Camelia, G., \u201cDoubly-Special Relativity: First Results and Key Open Problems\u201d, Int. J. Mod. Phys. D, 11, 1643, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0210063. 3",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "5_CR15",
+"doi-asserted-by": "publisher",
+"first-page": "35",
+"DOI": "10.1142/S0218271802001330",
+"volume": "11",
+"author": "G Amelino-Camelia",
+"year": "2002",
+"unstructured": "Amelino-Camelia, G., \u201cRelativity in space-times with short-distance structure governed by an observer-independent (Planckian) length scale\u201d, Int. J. Mod. Phys. D, 11, 35\u201360, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0012051. 2.1.2, 3.4",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "5_CR16",
+"doi-asserted-by": "publisher",
+"first-page": "181",
+"DOI": "10.1016/S0370-2693(02)01223-6",
+"volume": "B528",
+"author": "G Amelino-Camelia",
+"year": "2002",
+"unstructured": "Amelino-Camelia, G., \u201cSpace-time quantum solves three experimental paradoxes\u201d, Phys. Lett., B528, 181\u2013187, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0107086. 6.5.6",
+"journal-title": "Phys. Lett."
+},
+{
+"key": "5_CR17",
+"doi-asserted-by": "publisher",
+"first-page": "188",
+"DOI": "10.1088/1367-2630/6/1/188",
+"volume": "6",
+"author": "G Amelino-Camelia",
+"year": "2004",
+"unstructured": "Amelino-Camelia, G., \u201cPhenomenology of Planck-scale Lorentz-symmetry test theories\u201d, New J. Phys., 6, 188, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0212002. 22",
+"journal-title": "New J. Phys."
+},
+{
+"key": "5_CR18",
+"doi-asserted-by": "publisher",
+"first-page": "009",
+"DOI": "10.1088/1475-7516/2004/02/009",
+"volume": "0402",
+"author": "G Amelino-Camelia",
+"year": "2004",
+"unstructured": "Amelino-Camelia, G., Arzano, M., Ng, Y.J., Piran, T., and van Dam, H., \u201cImplications of spacetime quantization for the Bahcall-Waxman neutrino bound\u201d, J. Cosmol. Astropart. Phys., 0402, 009, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0307027. 6.8.1, 30",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"issue": "09",
+"key": "5_CR19",
+"doi-asserted-by": "publisher",
+"first-page": "006",
+"DOI": "10.1088/1475-7516/2003/09/006",
+"volume": "2003",
+"author": "G Amelino-Camelia",
+"year": "2003",
+"unstructured": "Amelino-Camelia, G., D\u2019Andrea, F., and Mandanici, G., \u201cGroup velocity in noncommutative spacetime\u201d, J. Cosmol. Astropart. Phys., 2003(09), 006, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0211022. 15",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"key": "5_CR20",
+"doi-asserted-by": "publisher",
+"first-page": "763",
+"DOI": "10.1038/31647",
+"volume": "393",
+"author": "G Amelino-Camelia",
+"year": "1998",
+"unstructured": "Amelino-Camelia, G., Ellis, J.R., Mavromatos, N.E., Nanopoulos, D.V., and Sarkar, S., \u201cPotential Sensitivity of Gamma-Ray Burster Observations to Wave Dispersion in Vacuo\u201d, Nature, 393, 763\u2013765, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9712103. 2.2, 6.2",
+"journal-title": "Nature"
+},
+{
+"key": "5_CR21",
+"unstructured": "Amelino-Camelia, G., Kowalski-Glikman, J., Mandanici, G., and Procaccini, A., \u201cPhenomenology of doubly special relativity\u201d, (2003). URL (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0312124. 3, 17, 6.6.1"
+},
+{
+"key": "5_CR22",
+"doi-asserted-by": "publisher",
+"first-page": "899",
+"DOI": "10.1088/0264-9381/21/4/010",
+"volume": "21",
+"author": "G Amelino-Camelia",
+"year": "2004",
+"unstructured": "Amelino-Camelia, G., and L\u00e4mmerzahl, C., \u201cQuantum-gravity motivated Lorentz symmetry tests with laser interferometers\u201d, Class. Quantum Grav., 21, 899\u2013916, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0306019. 32",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR23",
+"unstructured": "Amelino-Camelia, G., L\u00e4mmerzahl, C., Macias, A., and M\u00fcller, H., \u201cThe Search for Quantum Gravity Signals\u201d, (2005). URL (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0501053. 1, 5.3, 1"
+},
+{
+"key": "5_CR24",
+"doi-asserted-by": "publisher",
+"first-page": "729",
+"DOI": "10.1016/S0927-6505(03)00136-1",
+"volume": "19",
+"author": "G Amelino-Camelia",
+"year": "2003",
+"unstructured": "Amelino-Camelia, G., Ng, Y.J., and van Dam, H., \u201cAnomalous particle-production thresholds through systematic and non-systematic quantum-gravity effects\u201d, Astropart. Phys., 19, 729\u2013738, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0204077. 2.6, 6.6.2",
+"journal-title": "Astropart. Phys."
+},
+{
+"key": "5_CR25",
+"doi-asserted-by": "publisher",
+"first-page": "265",
+"DOI": "10.1016/S0370-2693(00)01337-X",
+"volume": "497",
+"author": "G Amelino-Camelia",
+"year": "2001",
+"unstructured": "Amelino-Camelia, G., and Piran, T., \u201cCosmic rays and TeV photons as probes of quantum properties of space-time\u201d, Phys. Lett. B, 497, 265\u2013270, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0006210. 6.5.6",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR26",
+"doi-asserted-by": "publisher",
+"first-page": "036005",
+"DOI": "10.1103/PhysRevD.64.036005",
+"volume": "64",
+"author": "G Amelino-Camelia",
+"year": "2001",
+"unstructured": "Amelino-Camelia, G., and Piran, T., \u201cPlanck-scale deformation of Lorentz symmetry as a solution to the UHECR and the TeV-gamma paradoxes\u201d, Phys. Rev. D, 64, 036005, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0008107. 6.5.6",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR27",
+"doi-asserted-by": "publisher",
+"first-page": "23",
+"DOI": "10.1016/j.physletb.2003.10.062",
+"volume": "578",
+"author": "M Amoretti",
+"year": "2004",
+"unstructured": "Amoretti, M. et al. (ATHENA Collaboration), \u201cHigh rate production of antihydrogen\u201d, Phys. Lett. B, 578, 23\u201332, (2004). 8",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR28",
+"doi-asserted-by": "publisher",
+"first-page": "016001",
+"DOI": "10.1103/PhysRevD.70.016001",
+"volume": "70",
+"author": "DL Anderson",
+"year": "2004",
+"unstructured": "Anderson, D.L., Sher, M., and Turan, I., \u201cLorentz and CPT violation in the Higgs sector\u201d, Phys. Rev. D, 70, 016001, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0403116. 5.8",
+"journal-title": "Phys. Rev. D"
+},
+{
+"issue": "02",
+"key": "5_CR29",
+"doi-asserted-by": "publisher",
+"first-page": "030",
+"DOI": "10.1088/1126-6708/2002/02/030",
+"volume": "2002",
+"author": "AA Andrianov",
+"year": "2002",
+"unstructured": "Andrianov, A.A., Giacconi, P., and Soldati, R., \u201cLorentz and CPT violations from Chern-Simons modifications of QED\u201d, J. High Energy Phys., 2002(02), 030, (2002). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0110279. 10",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR30",
+"first-page": "025002-1",
+"volume": "59",
+"author": "AA Andrianov",
+"year": "1999",
+"unstructured": "Andrianov, A.A., Soldati, R., and Sorbo, L., \u201cDynamical Lorentz symmetry breaking from 3+1 axion-Wess-Zumino model\u201d, Phys. Rev. D, 59, 025002-1\u201313, (1999). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/9806220. 1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR31",
+"doi-asserted-by": "publisher",
+"first-page": "085032",
+"DOI": "10.1103/PhysRevD.65.085032",
+"volume": "65",
+"author": "A Anisimov",
+"year": "2002",
+"unstructured": "Anisimov, A., Banks, T., Dine, M., and Graesser, M.L., \u201cComments on non-commutative phenomenology\u201d, Phys. Rev. D, 65, 085032, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0106356. 9, 9",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR32",
+"unstructured": "Antonini, P., Okhapkin, M., Goklu, E., and Schiller, S., \u201cTest of constancy of speed of light with rotating cryogenic optical resonators\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0504109. 5.3, 1"
+},
+{
+"key": "5_CR33",
+"unstructured": "Arkani-Hamed, N., Cheng, H.-C., Luty, M., and Thaler, J., \u201cUniversal dynamics of spontaneous Lorentz violation and a new spin-dependent inverse-square law force\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0407034. 12"
+},
+{
+"issue": "05",
+"key": "5_CR34",
+"doi-asserted-by": "publisher",
+"first-page": "074",
+"DOI": "10.1088/1126-6708/2004/05/074",
+"volume": "2004",
+"author": "N Arkani-Hamed",
+"year": "2004",
+"unstructured": "Arkani-Hamed, N., Cheng, H.-C., Luty, M.A., and Mukohyama, S., \u201cGhost condensation and a consistent infrared modification of gravity\u201d, J. High Energy Phys., 2004(05), 074, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0312099. 1, 4.4, 4.4",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR35",
+"doi-asserted-by": "publisher",
+"first-page": "101801",
+"DOI": "10.1103/PhysRevLett.93.101801",
+"volume": "93",
+"author": "Y Ashie",
+"year": "2004",
+"unstructured": "Ashie, Y. et al. (Super-Kamiokande Collaboration), \u201cEvidence for an Oscillatory Signature in Atmospheric Neutrino Oscillation\u201d, Phys. Rev. Lett., 93, 101801, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ex/0404034. 6.8.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR36",
+"doi-asserted-by": "publisher",
+"first-page": "1774",
+"DOI": "10.1103/PhysRevLett.81.1774",
+"volume": "81",
+"author": "C Athanassopoulos",
+"year": "1998",
+"unstructured": "Athanassopoulos, C. et al. (LSND Collaboration), \u201cResults on \u03bd\n                    \u03bc\n                   \u2192 \u03bd\n                    e\n                   Neutrino Oscillations from the LSND Experiment\u201d, Phys. Rev. Lett., 81, 1774\u20131777, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/nucl-ex/9709006. 6.8.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR37",
+"doi-asserted-by": "publisher",
+"first-page": "4632",
+"DOI": "10.1103/PhysRevA.47.4632",
+"volume": "47",
+"author": "J Audretsch",
+"year": "1993",
+"unstructured": "Audretsch, J., Bleyer, U., and L\u00e4mmerzahl, C., \u201cTesting Lorentz invariance with atomic beam interferometry\u201d, Phys. Rev. A, 47, 4632\u20134640, (1993). 7",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "5_CR38",
+"doi-asserted-by": "publisher",
+"first-page": "L121",
+"DOI": "10.1088/0264-9381/19/14/101",
+"volume": "19",
+"author": "JC Baez",
+"year": "2002",
+"unstructured": "Baez, J.C., and Olson, S.J., \u201cUncertainty in Measurements of Distance\u201d, Class. Quantum Grav., 19, L121\u2013L126, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0201030. 4",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR39",
+"doi-asserted-by": "publisher",
+"first-page": "1",
+"DOI": "10.1016/0550-3213(79)90292-X",
+"volume": "150",
+"author": "J Bailey",
+"year": "1979",
+"unstructured": "Bailey, J., Borer, K., Combley, F., Drumm, H., Eck, C., Farley, F.J.M., Field, J.H., Flegel, W., Hattersley, P.M., Krienen, F., Lange, F., Leb\u00e9e, G., McMillan, E., Petrucci, G., Picasso, E., R\u00fanolfsson, O., von R\u00fcden, W., Williams, R.W., and Wojcicki, S., \u201cFinal report on the CERN muon storage ring including the anomalous magnetic moment and the electric dipole moment of the muon, and a direct test of relativistic time dilation\u201d, Nucl. Phys. B, 150, 1\u201375, (1979). 5.7",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR40",
+"unstructured": "Barcel\u00f3, C., Liberati, S., and Visser, M., \u201cAnalogue Gravity\u201d, Living Rev. Relativity, 8, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0505065. in press. 1, 2.7.1"
+},
+{
+"key": "5_CR41",
+"doi-asserted-by": "publisher",
+"first-page": "227",
+"DOI": "10.1016/S0370-2693(02)01947-0",
+"volume": "537",
+"author": "G Barenboim",
+"year": "2002",
+"unstructured": "Barenboim, G., Beacom, J.F., Borissov, L., and Kayser, B., \u201cCPT violation and the nature of neutrinos\u201d, Phys. Lett. B, 537, 227\u2013232, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0203261. 30",
+"journal-title": "Phys. Lett. B"
+},
+{
+"issue": "10",
+"key": "5_CR42",
+"doi-asserted-by": "publisher",
+"first-page": "001",
+"DOI": "10.1088/1126-6708/2002/10/001",
+"volume": "2002",
+"author": "G Barenboim",
+"year": "2002",
+"unstructured": "Barenboim, G., Borissov, L., Lykken, J., and Smirnov, A.Y., \u201cNeutrinos as the messengers of CPT violation\u201d, J. High Energy Phys., 2002(10), 001, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0108199. 30",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR43",
+"unstructured": "Basu, S., and Mattingly, D., \u201cConstraints from cosmic rays on non-systematic Lorentz violation\u201d, (2005). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0501425. 6.6.2"
+},
+{
+"key": "5_CR44",
+"doi-asserted-by": "publisher",
+"first-page": "5038",
+"DOI": "10.1103/PhysRevLett.85.5038",
+"volume": "85",
+"author": "D Bear",
+"year": "2000",
+"unstructured": "Bear, D., Stoner, R.E., Walsworth, R.L., Kosteleck\u00fd, V.A., and Lane, C.D., \u201cLimit on Lorentz and CPT violation of the neutron using a two-species noble-gas maser\u201d, Phys. Rev. Lett., 85, 5038\u20135041, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/physics/0007049. 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR45",
+"doi-asserted-by": "publisher",
+"first-page": "209902",
+"DOI": "10.1103/PhysRevLett.89.209902",
+"volume": "89",
+"author": "D Bear",
+"year": "2002",
+"unstructured": "Bear, D., Stoner, R.E., Walsworth, R.L., Kosteleck\u00fd, V.A., and Lane, C.D., \u201cErratum: Limit on Lorentz and CPT Violation of the Neutron Using a Two-Species Noble-Gas Maser\u201d, Phys. Rev. Lett., 89, 209902, (2002). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR46",
+"doi-asserted-by": "publisher",
+"first-page": "1879",
+"DOI": "10.1103/PhysRevLett.75.1879",
+"volume": "75",
+"author": "CJ Berglund",
+"year": "1995",
+"unstructured": "Berglund, C.J. et. al., \u201cNew Limits on Local Lorentz Invariance from Hg and Cs Magnetometers\u201d, Phys. Rev. Lett., 75, 1879, (1995). 9, 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR47",
+"doi-asserted-by": "publisher",
+"first-page": "49",
+"DOI": "10.1016/S0920-5632(00)00753-2",
+"volume": "88",
+"author": "O Bertolami",
+"year": "2000",
+"unstructured": "Bertolami, O., \u201cOn the spontaneous breaking of Lorentz invariance\u201d, Nucl. Phys. B (Proc. Suppl.), 88, 49\u201356, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0001097. 6.5.6",
+"journal-title": "Nucl. Phys. B (Proc. Suppl.)"
+},
+{
+"key": "5_CR48",
+"doi-asserted-by": "publisher",
+"first-page": "707",
+"DOI": "10.1023/A:1015946429950",
+"volume": "34",
+"author": "O Bertolami",
+"year": "2002",
+"unstructured": "Bertolami, O., \u201cUltra-high energy cosmic rays and symmetries of spacetime\u201d, Gen. Relativ. Gravit., 34, 707\u2013713, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0012462. 6.5.6",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "5_CR49",
+"doi-asserted-by": "publisher",
+"first-page": "103002",
+"DOI": "10.1103/PhysRevD.61.103002",
+"volume": "61",
+"author": "O Bertolami",
+"year": "2000",
+"unstructured": "Bertolami, O., and Carvalho, C.S., \u201cProposed astrophysical test of Lorentz invariance\u201d, Phys. Rev. D, 61, 103002, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9912117. 6.5.6",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR50",
+"doi-asserted-by": "publisher",
+"first-page": "083513",
+"DOI": "10.1103/PhysRevD.69.083513",
+"volume": "69",
+"author": "O Bertolami",
+"year": "2004",
+"unstructured": "Bertolami, O., Lehnert, R., Potting, R., and Ribeiro, A., \u201cCosmological acceleration, varying couplings, and Lorentz breaking\u201d, Phys. Rev. D, 69, 083513, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0310344. 1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR51",
+"first-page": "044001-1",
+"volume": "72",
+"author": "O Bertolami",
+"year": "2005",
+"unstructured": "Bertolami, O., and P\u00e1ramos, J., \u201cVacuum solutions of a gravity model with vector-induced spontaneous Lorentz symmetry breaking\u201d, Phys. Rev. D, 72, 044001-1\u201312, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0504215. 4.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR52",
+"doi-asserted-by": "publisher",
+"first-page": "097901",
+"DOI": "10.1103/PhysRevD.71.097901",
+"volume": "71",
+"author": "O Bertolami",
+"year": "2005",
+"unstructured": "Bertolami, O., and Rosa, J.G., \u201cNew bounds on cubic Lorentz-violating terms in the fermionic dispersion relation\u201d, Phys. Rev. D, 71, 097901, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0412289. 13",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR53",
+"doi-asserted-by": "publisher",
+"first-page": "2108",
+"DOI": "10.1103/PhysRevLett.83.2108",
+"volume": "83",
+"author": "SD Biller",
+"year": "1999",
+"unstructured": "Biller, S.D., Breslin, A.C., Buckley, J., Catanese, M., Carson, M., Carter-Lewis, D.A., Cawley, M.F., Fegan, D.J., Finley, J.P., Gaidos, J.A., Hillas, A.M., Krennrich, F., Lamb, R.C., Lessard, R., Masterson, C., McEnery, J.E., McKernan, B., Moriarty, P., Quinn, J., Rose, H.J., Samuelson, F., Sembroski, G., Skelton, P., and Weekes, T.C., \u201cLimits to quantum gravity effects from observations of TeV flares in active galaxies\u201d, Phys. Rev. Lett., 83, 2108\u20132111, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9810044. 16",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR54",
+"unstructured": "Bjorken, J., \u201cEmergent gauge bosons\u201d, (2001). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0111196. 1"
+},
+{
+"key": "5_CR55",
+"unstructured": "Blasone, M., Magueijo, J., and Pires-Pacheco, P., \u201cNeutrino mixing and Lorentz invariance\u201d, (2003). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0307205. 6.8.1"
+},
+{
+"key": "5_CR56",
+"doi-asserted-by": "publisher",
+"first-page": "1381",
+"DOI": "10.1103/PhysRevLett.84.1381",
+"volume": "84",
+"author": "R Bluhm",
+"year": "2000",
+"unstructured": "Bluhm, R., and Kosteleck\u00fd, V.A., \u201cLorentz and CPT tests with spin-polarized solids\u201d, Phys. Rev. Lett., 84, 1381\u20131384, (2000). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/9912542. 5.4",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR57",
+"unstructured": "Bluhm, R., and Kosteleck\u00fd, V.A., \u201cSpontaneous Lorentz violation, Nambu-Goldstone modes, and gravity\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0412320. 31"
+},
+{
+"key": "5_CR58",
+"doi-asserted-by": "publisher",
+"first-page": "1098",
+"DOI": "10.1103/PhysRevLett.84.1098",
+"volume": "84",
+"author": "R Bluhm",
+"year": "2000",
+"unstructured": "Bluhm, R., Kosteleck\u00fd, V.A., and Lane, C.D., \u201cCPT and Lorentz tests with muons\u201d, Phys. Rev. Lett., 84, 1098\u20131101, (2000). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/9912451. 5.7",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR59",
+"doi-asserted-by": "publisher",
+"first-page": "125008",
+"DOI": "10.1103/PhysRevD.68.125008",
+"volume": "68",
+"author": "R Bluhm",
+"year": "2003",
+"unstructured": "Bluhm, R., Kosteleck\u00fd, V.A., Lane, C.D., and Russell, N., \u201cProbing Lorentz and CPT violation with space-based experiments\u201d, Phys. Rev. D, 68, 125008, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0306190. 8",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR60",
+"doi-asserted-by": "publisher",
+"first-page": "3932",
+"DOI": "10.1103/PhysRevD.57.3932",
+"volume": "57",
+"author": "R Bluhm",
+"year": "1998",
+"unstructured": "Bluhm, R., Kosteleck\u00fd, V.A., and Russell, N., \u201cCPT and Lorentz tests in Penning traps\u201d, Phys. Rev. D, 57, 3932\u20133943, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9809543. 5.1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR61",
+"doi-asserted-by": "publisher",
+"first-page": "2254",
+"DOI": "10.1103/PhysRevLett.82.2254",
+"volume": "82",
+"author": "R Bluhm",
+"year": "1999",
+"unstructured": "Bluhm, R., Kosteleck\u00fd, V.A., and Russell, N., \u201cCPT and Lorentz tests in hydrogen and antihydrogen\u201d, Phys. Rev. Lett., 82, 2254\u20132257, (1999). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/9810269. 8",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR62",
+"unstructured": "Boggs, S.E., Wunderer, C.B., Hurley, K., and Coburn, W., \u201cTesting Lorentz Non-Invariance with GRB021206\u201d, (2003). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0310307. 16"
+},
+{
+"key": "5_CR63",
+"unstructured": "Bojowald, M., Morales-T\u00e9cotl, H.A., and Sahlmann, H., \u201cOn loop quantum gravity phenomenology and the issue of Lorentz invariance\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0411101. 8"
+},
+{
+"key": "5_CR64",
+"doi-asserted-by": "publisher",
+"first-page": "1031",
+"DOI": "10.1103/PhysRevLett.63.1031",
+"volume": "63",
+"author": "J Bollinger",
+"year": "1989",
+"unstructured": "Bollinger, J., Heinzen, D.J., Itano, W.M., Gilbert, S.L., and Wineland, D.J., \u201cTest of the linearity of quantum mechanics by rf spectroscopy of the 9Be+ ground state\u201d, Phys. Rev. Lett., 63, 1031\u20131034, (1989). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR65",
+"unstructured": "Bolokhov, P.A., Groot Nibbelink, S., and Pospelov, M., \u201cLorentz violating supersymmetric quantum electrodynamics\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0505029. 2.3.2, 11, 11"
+},
+{
+"key": "5_CR66",
+"doi-asserted-by": "publisher",
+"first-page": "3663",
+"DOI": "10.1142/S0217751X02010765",
+"volume": "17",
+"author": "RH Brandenberger",
+"year": "2002",
+"unstructured": "Brandenberger, R.H., and Martin, J., \u201cOn signatures of short distance physics in the cosmic microwave background\u201d, Int. J. Mod. Phys. A, 17, 3663\u20133680, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0202142. 33",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "5_CR67",
+"doi-asserted-by": "publisher",
+"first-page": "010401",
+"DOI": "10.1103/PhysRevLett.88.010401",
+"volume": "88",
+"author": "C Braxmaier",
+"year": "2002",
+"unstructured": "Braxmaier, C, M\u00fcller, H., Pradl, O., Mlynek, J., Peters, A., and Schiller, S., \u201cTests of Relativity Using a Cryogenic Optical Resonator\u201d, Phys. Rev. Lett., 88, 010401, (2002). 5.3",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR68",
+"doi-asserted-by": "publisher",
+"first-page": "233",
+"DOI": "10.1103/RevModPhys.58.233",
+"volume": "58",
+"author": "LS Brown",
+"year": "1986",
+"unstructured": "Brown, L.S., and Gabrielse, G., \u201cGeonium theory: physics of a single electron or ion in a penning trap\u201d, Rev. Mod. Phys., 58, 233, (1986). 5.1",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "5_CR69",
+"doi-asserted-by": "publisher",
+"first-page": "105006",
+"DOI": "10.1103/PhysRevD.65.105006",
+"volume": "65",
+"author": "R Brustein",
+"year": "2002",
+"unstructured": "Brustein, R., Eichler, D., and Foffa, S., \u201cProbing the Planck scale with neutrino oscillations\u201d, Phys. Rev. D, 65, 105006, (2002). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0106309. 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"issue": "03",
+"key": "5_CR70",
+"doi-asserted-by": "publisher",
+"first-page": "043",
+"DOI": "10.1088/1126-6708/2002/03/043",
+"volume": "2002",
+"author": "CP Burgess",
+"year": "2002",
+"unstructured": "Burgess, C.P., Cline, J., Filotas, E., Matias, J., and Moore, G.D., \u201cLoop-generated bounds on changes to the graviton dispersion relation\u201d, J. High Energy Phys., 2002(03), 043, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0201082. 1, 11",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR71",
+"doi-asserted-by": "publisher",
+"first-page": "230801",
+"DOI": "10.1103/PhysRevLett.93.230801",
+"volume": "93",
+"author": "F Can\u00e8",
+"year": "2004",
+"unstructured": "Can\u00e8, F., Bear, D., Phillips, D.F., Rosen, M.S., Smallwood, C.L., Stoner, R.E., and Walsworth, R.L., \u201cBound on Lorentz- and CPT-Violating Boost Effects for the Neutron\u201d, Phys. Rev. Lett., 93, 230801, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/physics/0309070. 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR72",
+"doi-asserted-by": "publisher",
+"first-page": "1632",
+"DOI": "10.1103/PhysRevLett.82.1632",
+"volume": "82",
+"author": "RM Carey",
+"year": "1999",
+"unstructured": "Carey, R.M. et al., \u201cNew Measurement of the Anomalous Magnetic Moment of the Positive Muon\u201d, Phys. Rev. Lett., 82, 1632\u20131635, (1999). 5.7",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR73",
+"volume-title": "Spacetime and Geometry: An Introduction to General Relativity",
+"author": "SM Carroll",
+"year": "2004",
+"unstructured": "Carroll, S.M., Spacetime and Geometry: An Introduction to General Relativity, (Addison Wesley, San Francisco, U.S.A., 2004). 2.4"
+},
+{
+"key": "5_CR74",
+"doi-asserted-by": "publisher",
+"first-page": "1231",
+"DOI": "10.1103/PhysRevD.41.1231",
+"volume": "41",
+"author": "SM Carroll",
+"year": "1990",
+"unstructured": "Carroll, S.M., Field, G.B., and Jackiw, R., \u201cLimits on a Lorentz and parity violating modification of electrodynamics\u201d, Phys. Rev. D, 41, 1231, (1990). 18",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR75",
+"doi-asserted-by": "publisher",
+"first-page": "141601",
+"DOI": "10.1103/PhysRevLett.87.141601",
+"volume": "87",
+"author": "SM Carroll",
+"year": "2001",
+"unstructured": "Carroll, S.M., Harvey, J.A., Kosteleck\u00fd, V.A., Lane, C.D., and Okamoto, T., \u201cNoncommutative field theory and Lorentz violation\u201d, Phys. Rev. Lett., 87, 141601, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0105082. 9, 9",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR76",
+"doi-asserted-by": "publisher",
+"first-page": "123525",
+"DOI": "10.1103/PhysRevD.70.123525",
+"volume": "70",
+"author": "SM Carroll",
+"year": "2004",
+"unstructured": "Carroll, S.M., and Lim, E.A., \u201cLorentz-violating vector fields slow the universe down\u201d, Phys. Rev. D, 70, 123525, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0407149. 34",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR77",
+"first-page": "065008-1",
+"volume": "69",
+"author": "P Castorina",
+"year": "2004",
+"unstructured": "Castorina, P., Iorio, A., and Zappal\u00e0, D., \u201cNoncommutative synchrotron\u201d, Phys. Rev. D, 69, 065008-1\u20136, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0212238. 9",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR78",
+"doi-asserted-by": "publisher",
+"first-page": "333",
+"DOI": "10.1016/j.nuclphysbps.2004.10.012",
+"volume": "136",
+"author": "P Castorina",
+"year": "2004",
+"unstructured": "Castorina, P., Iorio, A., and Zappal\u00e0, D., \u201cViolation of Lorentz invariance and dynamical effects in high energy gamma rays\u201d, Nucl. Phys. B (Proc. Suppl.), 136, 333\u2013337, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0407363. CRIS 2004 Proceedings of the Cosmic Ray International Seminars: GZK and Surroundings, Catania, May 31\u2013June 04 2004. 6.7",
+"journal-title": "Nucl. Phys. B (Proc. Suppl.)"
+},
+{
+"key": "5_CR79",
+"doi-asserted-by": "publisher",
+"first-page": "125",
+"DOI": "10.1016/0550-3213(83)90081-0",
+"volume": "217",
+"author": "S Chadha",
+"year": "1983",
+"unstructured": "Chadha, S., and Nielsen, H.B., \u201cLorentz invariance as a low-Energy phenomenon\u201d, Nucl. Phys. B, 217, 125, (1983). 1",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR80",
+"unstructured": "Chkareuli, J.L., Froggatt, C.D., Mohapatra, R.N., and Nielsen, H.B., \u201cPhoton as a vector Goldstone boson: Nonlinear sigma model for QED\u201d, (2004). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0412225. 1"
+},
+{
+"key": "5_CR81",
+"doi-asserted-by": "publisher",
+"first-page": "073005",
+"DOI": "10.1103/PhysRevD.67.073005",
+"volume": "67",
+"author": "S Choubey",
+"year": "2003",
+"unstructured": "Choubey, S., and King, S.F., \u201cGamma ray bursts as probes of neutrino mass, quantum gravity and dark energy\u201d, Phys. Rev. D, 67, 073005, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0207260. 17",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR82",
+"doi-asserted-by": "publisher",
+"first-page": "353",
+"DOI": "10.1016/j.physletb.2004.02.047",
+"volume": "586",
+"author": "S Choubey",
+"year": "2004",
+"unstructured": "Choubey, S., and King, S.F., \u201cElectrophobic Lorentz invariance violation for neutrinos and the see-saw mechanism\u201d, Phys. Lett. B, 586, 353\u2013365, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0311326. 6.8.1",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR83",
+"doi-asserted-by": "publisher",
+"first-page": "024012",
+"DOI": "10.1103/PhysRevD.71.024012",
+"volume": "71",
+"author": "J Christian",
+"year": "2005",
+"unstructured": "Christian, J., \u201cTesting quantum gravity via cosmogenic neutrino oscillations\u201d, Phys. Rev. D, 71, 024012, (2005). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0409077. 6.8.1, 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR84",
+"doi-asserted-by": "publisher",
+"first-page": "1541",
+"DOI": "10.1103/PhysRevLett.63.1541",
+"volume": "63",
+"author": "TE Chupp",
+"year": "1989",
+"unstructured": "Chupp, T.E., Hoare, R.J., Loveman, R.A., Oteiza, E.R., Richardson, J.M., Wagshul, M.E., and Thompson, A.K., \u201cResults of a new test of local Lorentz invariance: A search for mass anisotropy in 21Ne\u201d, Phys. Rev. Lett., 63, 1541\u20131545, (1989). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR85",
+"doi-asserted-by": "publisher",
+"first-page": "415",
+"DOI": "10.1038/nature01612",
+"volume": "423",
+"author": "W Coburn",
+"year": "2003",
+"unstructured": "Coburn, W., and Boggs, S.E., \u201cPolarization of the prompt gamma-ray emission from the gamma-ray burst of 6 December 2002\u201d, Nature, 423, 415\u2013417, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0305377. 18, 19",
+"journal-title": "Nature"
+},
+{
+"key": "5_CR86",
+"doi-asserted-by": "publisher",
+"first-page": "249",
+"DOI": "10.1016/S0370-2693(97)00638-2",
+"volume": "405",
+"author": "SR Coleman",
+"year": "1997",
+"unstructured": "Coleman, S.R., and Glashow, S.L., \u201cCosmic ray and neutrino tests of special relativity\u201d, Phys. Lett. B, 405, 249\u2013252, (1997). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9703240. 6.5, 6.5.6, 25, 6.8.1",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR87",
+"unstructured": "Coleman, S.R., and Glashow, S.L., \u201cEvading the GZK cosmic-ray cutoff\u201d, (1998). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9808446. 6.5.6"
+},
+{
+"key": "5_CR88",
+"doi-asserted-by": "publisher",
+"first-page": "116008",
+"DOI": "10.1103/PhysRevD.59.116008",
+"volume": "59",
+"author": "SR Coleman",
+"year": "1999",
+"unstructured": "Coleman, S.R., and Glashow, S.L., \u201cHigh-energy tests of Lorentz invariance\u201d, Phys. Rev. D, 59, 116008, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9812418. 6.5.3, 6.5.6, 6.5.6, 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR89",
+"doi-asserted-by": "publisher",
+"first-page": "6760",
+"DOI": "10.1103/PhysRevD.55.6760",
+"volume": "55",
+"author": "D Colladay",
+"year": "1997",
+"unstructured": "Colladay, D., and Kosteleck\u00fd, V.A., \u201cCPT violation and the standard model\u201d, Phys. Rev. D, 55, 6760\u20136774, (1997). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9703464. 4.1.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR90",
+"doi-asserted-by": "publisher",
+"first-page": "116002",
+"DOI": "10.1103/PhysRevD.58.116002",
+"volume": "58",
+"author": "D Colladay",
+"year": "1998",
+"unstructured": "Colladay, D., and Kosteleck\u00fd, V.A., \u201cLorentz-violating extension of the standard model\u201d, Phys. Rev. D, 58, 116002, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9809521. 1, 2, 4.1.1, 5",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR91",
+"doi-asserted-by": "publisher",
+"first-page": "191301",
+"DOI": "10.1103/PhysRevLett.93.191301",
+"volume": "93",
+"author": "J Collins",
+"year": "2004",
+"unstructured": "Collins, J., Perez, A., Sudarsky, D., Urrutia, L.F., and Vucetich, H., \u201cLorentz invariance: An additional fine-tuning problem\u201d, Phys. Rev. Lett., 93, 191301, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0403053. 10, 11",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR92",
+"doi-asserted-by": "publisher",
+"first-page": "3107",
+"DOI": "10.1088/0264-9381/20/14/313",
+"volume": "20",
+"author": "DH Coule",
+"year": "2003",
+"unstructured": "Coule, D.H., \u201cComment: Planck scale still safe from stellar interferometry\u201d, Class. Quantum Grav., 20, 3107\u20133112, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0302333. 6.9",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR93",
+"doi-asserted-by": "publisher",
+"first-page": "532",
+"DOI": "10.1016/0550-3213(94)90143-0",
+"volume": "423",
+"author": "T Damour",
+"year": "1994",
+"unstructured": "Damour, T., and Polyakov, A.M., \u201cThe string dilaton and a least coupling principle\u201d, Nucl. Phys. B, 423, 532\u2013558, (1994). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9401069. 1",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR94",
+"unstructured": "Danielsson, U.H., \u201cLectures on string theory and cosmology\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0409274. 33"
+},
+{
+"key": "5_CR95",
+"unstructured": "Daszkiewicz, M., Imilkowska, K., Kowalski-Glikman, J., and Nowak, S., \u201cScalar field theory on kappa-Minkowski space-time and doubly special relativity\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0410058. 3"
+},
+{
+"key": "5_CR96",
+"doi-asserted-by": "publisher",
+"first-page": "53",
+"DOI": "10.1016/S0927-6505(03)00148-8",
+"volume": "20",
+"author": "D Marco De",
+"year": "2003",
+"unstructured": "De Marco, D., Blasi, P., and Olinto, A.V., \u201cOn the statistical significance of the GZK feature in the spectrum of ultra high energy cosmic rays\u201d, Astropart. Phys., 20, 53\u201365, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0301497. 6.5.6",
+"journal-title": "Astropart. Phys."
+},
+{
+"key": "5_CR97",
+"doi-asserted-by": "publisher",
+"first-page": "4694",
+"DOI": "10.1103/PhysRevLett.83.4694",
+"volume": "83",
+"author": "HG Dehmelt",
+"year": "1999",
+"unstructured": "Dehmelt, H.G., Mittleman, R.K., van Dyck Jr, R.S., and Schwinberg, P., \u201cPast electron positron g-2 experiments yielded sharpest bound on CPT violation\u201d, Phys. Rev. Lett., 83, 4694\u20134696, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9906262. 5.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR98",
+"doi-asserted-by": "publisher",
+"first-page": "977",
+"DOI": "10.1103/RevModPhys.73.977",
+"volume": "73",
+"author": "MR Douglas",
+"year": "2001",
+"unstructured": "Douglas, M.R., and Nekrasov, N.A., \u201cNoncommutative field theory\u201d, Rev. Mod. Phys., 73, 977\u20131029, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0106048. 1, 4.2",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "5_CR99",
+"doi-asserted-by": "publisher",
+"first-page": "1829",
+"DOI": "10.1142/S0217732304015026",
+"volume": "19",
+"author": "F Dowker",
+"year": "2004",
+"unstructured": "Dowker, F., Henson, J., and Sorkin, R.D., \u201cQuantum gravity phenomenology, Lorentz invariance and discreteness\u201d, Mod. Phys. Lett. A, 19, 1829\u20131840, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0311055. 2.6, 3.5",
+"journal-title": "Mod. Phys. Lett. A"
+},
+{
+"key": "5_CR100",
+"doi-asserted-by": "publisher",
+"first-page": "683",
+"DOI": "10.1080/14786436108244418",
+"volume": "6",
+"author": "RWP Drever",
+"year": "1961",
+"unstructured": "Drever, R.W.P., \u201cA search for anisotropy of inertial mass using a free precession technique\u201d, Philos. Mag., 6, 683\u2013687, (1961). 5.2",
+"journal-title": "Philos. Mag."
+},
+{
+"key": "5_CR101",
+"doi-asserted-by": "publisher",
+"first-page": "103502",
+"DOI": "10.1103/PhysRevD.64.103502",
+"volume": "64",
+"author": "R Easther",
+"year": "2001",
+"unstructured": "Easther, R., Greene, B.R., Kinney, W.H., and Shiu, G., \u201cInflation as a probe of short distance physics\u201d, Phys. Rev. D, 64, 103502, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0104102. 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR102",
+"doi-asserted-by": "publisher",
+"first-page": "1",
+"DOI": "10.1016/j.physletb.2004.06.001",
+"volume": "592",
+"author": "S Eidelman",
+"year": "2004",
+"unstructured": "Eidelman, S. et al. (Particle Data Group), \u201cReview of Particle Physics\u201d, Phys. Lett. B, 592, 1, (2004). 6.8",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR103",
+"doi-asserted-by": "publisher",
+"first-page": "064005",
+"DOI": "10.1103/PhysRevD.69.064005",
+"volume": "69",
+"author": "C Eling",
+"year": "2004",
+"unstructured": "Eling, C., and Jacobson, T.A., \u201cStatic post-Newtonian equivalence of GR and gravity with a dynamical preferred frame\u201d, Phys. Rev. D, 69, 064005, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0310044. 7.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR104",
+"unstructured": "Eling, C., Jacobson, T.A., and Mattingly, D., \u201cEinstein-aether theory\u201d, (2004). URL (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0410001. 2.7.2, 4.4"
+},
+{
+"issue": "08",
+"key": "5_CR105",
+"doi-asserted-by": "publisher",
+"first-page": "066",
+"DOI": "10.1088/1126-6708/2005/08/066",
+"volume": "2005",
+"author": "JW Elliott",
+"year": "2005",
+"unstructured": "Elliott, J.W., Moore, G.D., and Stoica, H., \u201cConstraining the New Aether: Gravitational Cherenkov Radiation\u201d, J. High Energy Phys., 2005(08), 066, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0505211. 12, 6.5.7, 6.5.7, 31",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR106",
+"doi-asserted-by": "publisher",
+"first-page": "139",
+"DOI": "10.1086/308825",
+"volume": "535",
+"author": "JR Ellis",
+"year": "2000",
+"unstructured": "Ellis, J.R., Farakos, K., Mavromatos, N.E., Mitsou, V.A., and Nanopoulos, D.V., \u201cAstrophysical probes of the constancy of the velocity of light\u201d, Astrophys. J., 535, 139\u2013151, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9907340. 6.2, 16",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "5_CR107",
+"unstructured": "Ellis, J.R., Mavromatos, N.E., and Nanopoulos, D.V., \u201cProbing models of quantum spacetime foam\u201d, (1999). URL (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9909085. 1"
+},
+{
+"key": "5_CR108",
+"doi-asserted-by": "publisher",
+"first-page": "127",
+"DOI": "10.1023/A:1001852601248",
+"volume": "32",
+"author": "JR Ellis",
+"year": "2000",
+"unstructured": "Ellis, J.R., Mavromatos, N.E., and Nanopoulos, D.V., \u201cQuantum-gravitational diffusion and stochastic fluctuations in the velocity of light\u201d, Gen. Relativ. Gravit., 32, 127\u2013144, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9904068. 2.6",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "5_CR109",
+"doi-asserted-by": "publisher",
+"first-page": "409",
+"DOI": "10.1051/0004-6361:20030263",
+"volume": "402",
+"author": "JR Ellis",
+"year": "2003",
+"unstructured": "Ellis, J.R., Mavromatos, N.E., Nanopoulos, D.V., and Sakharov, A.S., \u201cQuantum-gravity analysis of gamma-ray bursts using wavelets\u201d, Astron. Astrophys., 402, 409\u2013424, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0210124. 6.2, 16",
+"journal-title": "Astron. Astrophys."
+},
+{
+"key": "5_CR110",
+"doi-asserted-by": "publisher",
+"first-page": "4413",
+"DOI": "10.1142/S0217751X04019780",
+"volume": "19",
+"author": "JR Ellis",
+"year": "2004",
+"unstructured": "Ellis, J.R., Mavromatos, N.E., Nanopoulos, D.V., and Sakharov, A.S., \u201cSpace-time foam may violate the principle of equivalence\u201d, Int. J. Mod. Phys. A, 19, 4413\u20134430, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0312044. 2.5",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "5_CR111",
+"doi-asserted-by": "publisher",
+"first-page": "669",
+"DOI": "10.1016/j.astropartphys.2003.12.001",
+"volume": "20",
+"author": "JR Ellis",
+"year": "2004",
+"unstructured": "Ellis, J.R., Mavromatos, N.E., and Sakharov, A.S., \u201cSynchrotron radiation from the Crab Nebula discriminates between models of space-time foam\u201d, Astropart. Phys., 20, 669\u2013682, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0308403. 6.7",
+"journal-title": "Astropart. Phys."
+},
+{
+"key": "5_CR112",
+"unstructured": "Fermilab, \u201cBooNE: Booster Neutrino Experiment\u201d, project homepage. URL (cited on 22 February 2005): http://www-boone.fnal.gov/. 8"
+},
+{
+"key": "5_CR113",
+"unstructured": "Fermilab, \u201cPierre Auger Observatory\u201d, project homepage. URL (cited on 22 February 2005): http://www.auger.org/. 6.5.6"
+},
+{
+"key": "5_CR114",
+"doi-asserted-by": "publisher",
+"first-page": "053006",
+"DOI": "10.1103/PhysRevD.60.053006",
+"volume": "60",
+"author": "GL Fogli",
+"year": "1999",
+"unstructured": "Fogli, G.L., Lisi, E., Marrone, A., and Scioscia, G., \u201cTesting violations of special and general relativity through the energy dependence of \u03bd\n                    \u03bc\n                   \u2194 \u03bd\n                    \u03c4\n                   oscillations in the Super-Kamiokande atmospheric neutrino experiment\u201d, Phys. Rev. D, 60, 053006, (1999). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/9904248. 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR115",
+"doi-asserted-by": "publisher",
+"first-page": "1692",
+"DOI": "10.1103/PhysRevD.51.1692",
+"volume": "51",
+"author": "LH Ford",
+"year": "1995",
+"unstructured": "Ford, L.H., \u201cGravitons and light cone fluctuations\u201d, Phys. Rev. D, 51, 1692\u20131700, (1995). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9410047. 2.6",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR116",
+"doi-asserted-by": "publisher",
+"first-page": "2465",
+"DOI": "10.1103/PhysRevD.43.2465",
+"volume": "43",
+"author": "MD Gabriel",
+"year": "1991",
+"unstructured": "Gabriel, M.D., Haugan, M.P., Mann, R.B., and Palmer, J.H., \u201cNonsymmetric gravitation theories and local Lorentz invariance\u201d, Phys. Rev. D, 43, 2465\u20132469, (1991). 18",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR117",
+"doi-asserted-by": "publisher",
+"first-page": "233401",
+"DOI": "10.1103/PhysRevLett.89.233401",
+"volume": "89",
+"author": "G Gabrielse",
+"year": "2002",
+"unstructured": "Gabrielse, G., Bowden, N.S., Oxley, P., Speck, A., Storry, C.H., Tan, J.N., Wessels, M., Grzonka, D., Oelert, W., Schepers, G., Sefzick, T., Walz, J., Pittner, H., H\u00e4nsch, T.W., and Hessels, E.A. (ATRAP Collaboration), \u201cDriven production of cold antihydrogen and the first measured distribution of antihydrogen states\u201d, Phys. Rev. Lett., 89, 233401, (2002). 8",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR118",
+"doi-asserted-by": "publisher",
+"first-page": "3198",
+"DOI": "10.1103/PhysRevLett.82.3198",
+"volume": "82",
+"author": "G Gabrielse",
+"year": "1999",
+"unstructured": "Gabrielse, G., Khabbaz, A., Hall, D.S., Heimann, C., Kalinowsky, H., and Jhe, W., \u201cPrecision mass spectroscopy of the antiproton and proton using simultaneously trapped particles\u201d, Phys. Rev. Lett., 82, 3198\u20133201, (1999). 5.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR119",
+"doi-asserted-by": "publisher",
+"first-page": "065002",
+"DOI": "10.1103/PhysRevD.70.065002",
+"volume": "70",
+"author": "O Gagnon",
+"year": "2004",
+"unstructured": "Gagnon, O., and Moore, G.D., \u201cLimits on Lorentz violation from the highest energy cosmic rays\u201d, Phys. Rev. D, 70, 065002, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0404196. 6.5.6, 25, 27, 26",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR120",
+"doi-asserted-by": "publisher",
+"first-page": "124021",
+"DOI": "10.1103/PhysRevD.59.124021",
+"volume": "59",
+"author": "R Gambini",
+"year": "1999",
+"unstructured": "Gambini, R., and Pullin, J., \u201cNonstandard optics from quantum spacetime\u201d, Phys. Rev. D, 59, 124021, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9809038. 1, 8",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR121",
+"doi-asserted-by": "publisher",
+"first-page": "145",
+"DOI": "10.1142/S0217751X95000085",
+"volume": "10",
+"author": "LJ Garay",
+"year": "1995",
+"unstructured": "Garay, L.J., \u201cQuantum gravity and minimum length\u201d, Int. J. Mod. Phys. A, 10, 145\u2013166, (1995). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/9403008. 2.7.1",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "5_CR122",
+"doi-asserted-by": "publisher",
+"first-page": "485",
+"DOI": "10.1088/0264-9381/4/2/026",
+"volume": "4",
+"author": "M Gasperini",
+"year": "1987",
+"unstructured": "Gasperini, M., \u201cSingularity prevention and broken Lorentz symmetry\u201d, Class. Quantum Grav., 4, 485, (1987). 4.4, 4.4",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR123",
+"series-title": "Frontiers Science Series",
+"first-page": "1313",
+"volume-title": "28th International Cosmic Ray Conference (ICRC 2003)",
+"author": "H Geenen",
+"year": "2003",
+"unstructured": "Geenen, H. (AMANDA Collaboration), \u201cAtmospheric Neutrino and Muon Spectra Measured with the AMANDA-II Detector\u201d, in Kajita, T., Asaoka, Y., Kawachi, A., Matsubara, Y., and Sasaki, M, eds., 28th International Cosmic Ray Conference (ICRC 2003), Proceedings of the conference held on July 31 \u2014 August 7, 2003, at Tsukuba, Japan, vol. 41 of Frontiers Science Series, 1313\u20131316, (Universal Academy Press, Tokyo, Japan, 2003). Related online version (cited on 22 February 2005): http://www-rccn.icrr.u-tokyo.ac.jp/icrc2003/PROCEEDINGS/PDF/327.pdf. 6.5.1"
+},
+{
+"issue": "06",
+"key": "5_CR124",
+"doi-asserted-by": "publisher",
+"first-page": "012",
+"DOI": "10.1088/1475-7516/2005/06/012",
+"volume": "2005",
+"author": "G Gelmini",
+"year": "2005",
+"unstructured": "Gelmini, G., Nussinov, S., and Yaguna, C.E., \u201cOn photon splitting in theories with Lorentz invariance violation\u201d, J. Cosmol. Astropart. Phys., 2005(06), 012, (2005). Related online version (cited on 31 August 2005): http://arXiv.org/abs/hep-ph/0503130. 6.4",
+"journal-title": "J. Cosmol. Astropart. Phys."
+},
+{
+"key": "5_CR125",
+"doi-asserted-by": "publisher",
+"first-page": "s826",
+"DOI": "10.1140/epjcd/s2003-03-909-2",
+"volume": "33",
+"author": "G Giacomelli",
+"year": "2004",
+"unstructured": "Giacomelli, G., and Margiotta, A., \u201cMACRO results on atmospheric neutrino oscillations\u201d, Eur. Phys. J. C, 33, s826\u2013s828, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ex/0406037. 6.8.1",
+"journal-title": "Eur. Phys. J. C"
+},
+{
+"key": "5_CR126",
+"unstructured": "Glashow, S.L., \u201cAtmospheric neutrino constraints on Lorentz violation\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0407087. 6.8.1, 30"
+},
+{
+"key": "5_CR127",
+"doi-asserted-by": "publisher",
+"first-page": "083007",
+"DOI": "10.1103/PhysRevD.64.083007",
+"volume": "64",
+"author": "RJ Gleiser",
+"year": "2001",
+"unstructured": "Gleiser, R.J., and Kozameh, C.N., \u201cAstrophysical limits on quantum gravity motivated birefringence\u201d, Phys. Rev. D, 64, 083007, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0102093. 18, 19, 22",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR128",
+"unstructured": "Gonz\u00e1lez, B., Mart\u00ednez, S.A., Montemayor, R., and Urrutia, L.F., \u201cLorentz violating electrodynamics\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0505145. 28"
+},
+{
+"key": "5_CR129",
+"doi-asserted-by": "publisher",
+"first-page": "345",
+"DOI": "10.1103/RevModPhys.75.345",
+"volume": "75",
+"author": "MC Gonzalez-Garcia",
+"year": "2003",
+"unstructured": "Gonzalez-Garcia, M.C., and Nir, Y., \u201cDevelopments in neutrino physics\u201d, Rev. Mod. Phys., 75, 345\u2013402, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0202058. 30",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "5_CR130",
+"unstructured": "Gonzalez-Mestres, L., \u201cProperties of a possible class of particles able to travel faster than light\u201d, (1995). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9505117. 6.5, 6.5.6"
+},
+{
+"key": "5_CR131",
+"unstructured": "Gonzalez-Mestres, L., \u201cPhysical and cosmological implications of a possible class of particles able to travel faster than light\u201d, (1996). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9610474. 6.5.6"
+},
+{
+"key": "5_CR132",
+"unstructured": "Gonzalez-Mestres, L., \u201cDeformed Lorentz Symmetry and High-Energy Astrophysics (I)\u201d, (2000). URL (cited on 22 February 2005): http://arXiv.org/abs/physics/0003080. 6.5.6"
+},
+{
+"key": "5_CR133",
+"unstructured": "Graesser, M.L., Jenkins, A., and Wise, M.B., \u201cSpontaneous Lorentz Violation and the Long-Range Gravitational Preferred-Frame Effect\u201d, (2005). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0501223. 12, 7.3"
+},
+{
+"key": "5_CR134",
+"doi-asserted-by": "publisher",
+"first-page": "231602",
+"DOI": "10.1103/PhysRevLett.89.231602",
+"volume": "89",
+"author": "OW Greenberg",
+"year": "2002",
+"unstructured": "Greenberg, O.W., \u201cCPT violation implies violation of Lorentz invariance\u201d, Phys. Rev. Lett., 89, 231602, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0201258. 2.3.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR135",
+"doi-asserted-by": "publisher",
+"first-page": "748",
+"DOI": "10.1103/PhysRevLett.16.748",
+"volume": "16",
+"author": "K Greisen",
+"year": "1966",
+"unstructured": "Greisen, K., \u201cEnd to the cosmic ray spectrum?\u201d, Phys. Rev. Lett., 16, 748\u2013750, (1966). 6.5.6",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"issue": "10",
+"key": "5_CR136",
+"doi-asserted-by": "publisher",
+"first-page": "069",
+"DOI": "10.1088/1126-6708/2004/10/069",
+"volume": "2004",
+"author": "BM Gripaios",
+"year": "2004",
+"unstructured": "Gripaios, B.M., \u201cModified gravity via spontaneous symmetry breaking\u201d, J. High Energy Phys., 2004(10), 069, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0408127. 31, 32",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR137",
+"unstructured": "Groot Nibbelink, S., and Pospelov, M., \u201cLorentz violation in supersymmetric field theories\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0404271. 2.3.2, 11"
+},
+{
+"key": "5_CR138",
+"doi-asserted-by": "publisher",
+"first-page": "78",
+"DOI": "10.1016/S0370-2693(99)01258-7",
+"volume": "469",
+"author": "A Halprin",
+"year": "1999",
+"unstructured": "Halprin, A., and Kim, H.B., \u201cMapping Lorentz invariance violations into equivalence principle violations\u201d, Phys. Lett. B, 469, 78\u201380, (1999). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/9905301. 2.5",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR139",
+"doi-asserted-by": "publisher",
+"first-page": "599",
+"DOI": "10.1088/0034-4885/65/5/201",
+"volume": "65",
+"author": "RT Hammond",
+"year": "2002",
+"unstructured": "Hammond, R.T., \u201cTorsion gravity\u201d, Rep. Prog. Phys., 65, 599\u2013649, (2002). 4.4",
+"journal-title": "Rep. Prog. Phys."
+},
+{
+"key": "5_CR140",
+"doi-asserted-by": "publisher",
+"first-page": "156",
+"DOI": "10.1016/0003-4916(79)90238-0",
+"volume": "118",
+"author": "MP Haugan",
+"year": "1979",
+"unstructured": "Haugan, M.P., \u201cEnergy conservation and the principle of equivalence\u201d, Ann. Phys. (N.Y.), 118, 156\u2013186, (1979). 2.5",
+"journal-title": "Ann. Phys. (N.Y.)"
+},
+{
+"key": "5_CR141",
+"unstructured": "Heckel, B.R. (for the E\u00f6t-Wash Group), \u201cTorsion Balance Tests of Spin Coupled Forces\u201d, project homepage, University of Washington. URL (cited on 22 February 2005): http://www.npl.washington.edu/eotwash/publications/cpt01.pdf. 5.4"
+},
+{
+"key": "5_CR142",
+"unstructured": "Hehl, F.W., and Obukhov, Y.N., \u201cTo consider the electromagnetic field as fundamental, and the metric only as a subsidiary field\u201d, (2004). URL (cited on 08 June 2005): http://arXiv.org/abs/physics/0404101. 19"
+},
+{
+"key": "5_CR143",
+"doi-asserted-by": "publisher",
+"first-page": "393",
+"DOI": "10.1103/RevModPhys.48.393",
+"volume": "48",
+"author": "FW Hehl",
+"year": "1976",
+"unstructured": "Hehl, F.W., von der Heyde, P., Kerlick, G.D., and Nester, J.M., \u201cGeneral relativity with spin and torsion: Foundations and prospects\u201d, Rev. Mod. Phys., 48, 393\u2013416, (1976). 4.4",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "5_CR144",
+"unstructured": "Heinicke, C., Baekler, P., and Hehl, F.W., \u201cEinstein-aether theory, violation of Lorentz invariance, and metric-affine gravity\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0504005. 12"
+},
+{
+"key": "5_CR145",
+"doi-asserted-by": "publisher",
+"first-page": "3593",
+"DOI": "10.1103/PhysRevD.7.3593",
+"volume": "7",
+"author": "RW Hellings",
+"year": "1973",
+"unstructured": "Hellings, R.W., and Nordvedt Jr, K.L., \u201cVector-Metric Theory of Gravity\u201d, Phys. Rev. D, 7, 3593, (1973). 31, 7.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR146",
+"doi-asserted-by": "publisher",
+"first-page": "105016",
+"DOI": "10.1103/PhysRevD.69.105016",
+"volume": "69",
+"author": "D Heyman",
+"year": "2004",
+"unstructured": "Heyman, D., Hinteleitner, F., and Major, S., \u201cOn reaction thresholds in doubly special relativity\u201d, Phys. Rev. D, 69, 105016, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0312089. 2.3.3, 6.6.1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR147",
+"doi-asserted-by": "publisher",
+"first-page": "179",
+"DOI": "10.1142/S0217751X04017094",
+"volume": "19",
+"author": "I Hinchliffe",
+"year": "2004",
+"unstructured": "Hinchliffe, I., Kersting, N., and Ma, Y.L., \u201cReview of the phenomenology of noncommutative geometry\u201d, Int. J. Mod. Phys. A, 19, 179\u2013204, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0205040. 4.2",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "5_CR148",
+"doi-asserted-by": "publisher",
+"first-page": "201101",
+"DOI": "10.1103/PhysRevLett.90.201101",
+"volume": "90",
+"author": "L-S Hou",
+"year": "2003",
+"unstructured": "Hou, L.-S., Ni, W.-T., and Li, Y.-C.M., \u201cTest of Cosmic Spatial Isotropy for Polarized Electrons Using a Rotatable Torsion Balance\u201d, Phys. Rev. Lett., 90, 201101, (2003). 5.4, 5.4",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR149",
+"first-page": "111804-1",
+"volume": "87",
+"author": "VW Hughes",
+"year": "2001",
+"unstructured": "Hughes, V.W., Grosse Perdekamp, M., Kawall, D., Liu, W., Jungmann, K., and zu Pulitz, G., \u201cTest of CPT and Lorentz Invariance from Muonium Spectroscopy\u201d, Phys. Rev. Lett., 87, 111804-1\u20134, (2001). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ex/0106103. 5.7",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR150",
+"doi-asserted-by": "publisher",
+"first-page": "342",
+"DOI": "10.1103/PhysRevLett.4.342",
+"volume": "4",
+"author": "VW Hughes",
+"year": "1960",
+"unstructured": "Hughes, V.W., Robinson, H.G., and Beltran-Lopez, V., \u201cUpper Limit for the Anisotropy of Inertial Mass from Nuclear Resonance Experiments\u201d, Phys. Rev. Lett., 4, 342, (1960). 5.2",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR151",
+"doi-asserted-by": "publisher",
+"first-page": "104012",
+"DOI": "10.1103/PhysRevD.68.104012",
+"volume": "68",
+"author": "R Jackiw",
+"year": "2003",
+"unstructured": "Jackiw, R., and Pi, S.Y., \u201cChern-Simons modification of general relativity\u201d, Phys. Rev. D, 68, 104012, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0308071. 31",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR152",
+"doi-asserted-by": "publisher",
+"first-page": "081302",
+"DOI": "10.1103/PhysRevD.66.081302",
+"volume": "66",
+"author": "TA Jacobson",
+"year": "2002",
+"unstructured": "Jacobson, T.A., Liberati, S., and Mattingly, D., \u201cTeV astrophysics constraints on Planck scale Lorentz violation\u201d, Phys. Rev. D, 66, 081302, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0112207. 6.4, 22",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR153",
+"doi-asserted-by": "publisher",
+"first-page": "1019",
+"DOI": "10.1038/nature01882",
+"volume": "424",
+"author": "TA Jacobson",
+"year": "2003",
+"unstructured": "Jacobson, T.A., Liberati, S., and Mattingly, D., \u201cLorentz violation and Crab synchrotron emission: A new constraint far beyond the Planck scale\u201d, Nature, 424, 1019\u20131021, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0212190. 6.7, 6.7, 28",
+"journal-title": "Nature"
+},
+{
+"key": "5_CR154",
+"doi-asserted-by": "publisher",
+"first-page": "124011",
+"DOI": "10.1103/PhysRevD.67.124011",
+"volume": "67",
+"author": "TA Jacobson",
+"year": "2003",
+"unstructured": "Jacobson, T.A., Liberati, S., and Mattingly, D., \u201cThreshold effects and Planck scale Lorentz violation: Combined constraints from high energy astrophysics\u201d, Phys. Rev. D, 67, 124011, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0209264. 6.4, 6.5, 6.5.1, 6.5.1, 20, 21, 6.5.5, 22, 23, 22, 6.5.6, 6.5.6, 25, 6.6.2, 6.8.2",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR155",
+"unstructured": "Jacobson, T.A., Liberati, S., and Mattingly, D., \u201cLorentz violation at high energy: Concepts, phenomena and astrophysical constraints\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0505267. 1, 6.5.4, 6.5.5, 29"
+},
+{
+"key": "5_CR156",
+"doi-asserted-by": "publisher",
+"first-page": "021101",
+"DOI": "10.1103/PhysRevLett.93.021101",
+"volume": "93",
+"author": "TA Jacobson",
+"year": "2004",
+"unstructured": "Jacobson, T.A., Liberati, S., Mattingly, D., and Stecker, F.W., \u201cNew limits on Planck scale Lorentz violation in QED\u201d, Phys. Rev. Lett., 93, 021101, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0309681. 19, 6.5.5",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR157",
+"doi-asserted-by": "publisher",
+"first-page": "024028",
+"DOI": "10.1103/PhysRevD.64.024028",
+"volume": "64",
+"author": "TA Jacobson",
+"year": "2001",
+"unstructured": "Jacobson, T.A., and Mattingly, D., \u201cGravity with a dynamical preferred frame\u201d, Phys. Rev. D, 64, 024028, (2001). 2.4, 4.4, 4.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR158",
+"doi-asserted-by": "publisher",
+"first-page": "024003",
+"DOI": "10.1103/PhysRevD.70.024003",
+"volume": "70",
+"author": "TA Jacobson",
+"year": "2004",
+"unstructured": "Jacobson, T.A., and Mattingly, D., \u201cEinstein-Aether Waves\u201d, Phys. Rev. D, 70, 024003, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0402005. 2.7.2, 31",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR159",
+"doi-asserted-by": "publisher",
+"first-page": "213",
+"DOI": "10.1016/j.physletb.2005.06.055",
+"volume": "621",
+"author": "P Jain",
+"year": "2005",
+"unstructured": "Jain, P., and Ralston, J.P., \u201cSupersymmetry and the Lorentz fine tuning problem\u201d, Phys. Lett. B, 621, 213\u2013218, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0502106. 11",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR160",
+"doi-asserted-by": "publisher",
+"first-page": "651",
+"DOI": "10.1016/j.astropartphys.2004.04.008",
+"volume": "21",
+"author": "M Jankiewicz",
+"year": "2004",
+"unstructured": "Jankiewicz, M., Buniy, R.V., Kephart, T.W., and Weiler, T.J., \u201cSpace-time foam and cosmicray interactions\u201d, Astropart. Phys., 21, 651\u2013666, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0312221. 6.6.2",
+"journal-title": "Astropart. Phys."
+},
+{
+"key": "5_CR161",
+"doi-asserted-by": "publisher",
+"first-page": "105007",
+"DOI": "10.1103/PhysRevD.69.105007",
+"volume": "69",
+"author": "A Jenkins",
+"year": "2004",
+"unstructured": "Jenkins, A., \u201cSpontaneous breaking of Lorentz invariance\u201d, Phys. Rev. D, 69, 105007, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0311127. 1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR162",
+"first-page": "409",
+"volume": "30",
+"author": "R Jost",
+"year": "1957",
+"unstructured": "Jost, R., \u201cEine Bemerkung zum CPT\u201d, Helv. Phys. Acta, 30, 409, (1957). 2.3.1",
+"journal-title": "Helv. Phys. Acta"
+},
+{
+"key": "5_CR163",
+"doi-asserted-by": "publisher",
+"first-page": "045001",
+"DOI": "10.1103/PhysRevD.68.045001",
+"volume": "68",
+"author": "S Judes",
+"year": "2003",
+"unstructured": "Judes, S., and Visser, M., \u201cConservation Laws in Doubly Special Relativity\u201d, Phys. Rev. D, 68, 045001, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0205067. 3.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR164",
+"doi-asserted-by": "publisher",
+"first-page": "123510-1",
+"DOI": "10.1103/PhysRevD.66.123510",
+"volume": "66",
+"author": "N Kaloper",
+"year": "2002",
+"unstructured": "Kaloper, N., Kleban, M., Lawrence, A.E., and Shenker, S.H., \u201cSignatures of short distance physics in the cosmic microwave background\u201d, Phys. Rev. D, 66, 123510-1\u201321, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0201158. 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR165",
+"unstructured": "Kayser, B., \u201cNeutrino mass, mixing, and oscillation\u201d, (2001). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0104147. 6.8"
+},
+{
+"key": "5_CR166",
+"doi-asserted-by": "publisher",
+"first-page": "L21",
+"DOI": "10.1086/312057",
+"volume": "518",
+"author": "T Kifune",
+"year": "1999",
+"unstructured": "Kifune, T., \u201cInvariance violation extends the cosmic ray horizon?\u201d, Astrophys. J. Lett., 518, L21\u2013L24, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9904164. 6.5.6",
+"journal-title": "Astrophys. J. Lett."
+},
+{
+"key": "5_CR167",
+"doi-asserted-by": "publisher",
+"first-page": "57",
+"DOI": "10.1088/1367-2630/4/1/357",
+"volume": "4",
+"author": "TJ Konopka",
+"year": "2002",
+"unstructured": "Konopka, T.J., and Major, S.A., \u201cObservational limits on quantum geometry effects\u201d, New J. Phys., 4, 57, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0201184. 20, 22, 6.5.6",
+"journal-title": "New J. Phys."
+},
+{
+"key": "5_CR168",
+"doi-asserted-by": "publisher",
+"first-page": "1818",
+"DOI": "10.1103/PhysRevLett.80.1818",
+"volume": "80",
+"author": "VA Kosteleck\u00fd",
+"year": "1998",
+"unstructured": "Kosteleck\u00fd, V.A., \u201cSensitivity of CPT tests with neutral mesons\u201d, Phys. Rev. Lett., 80, 1818, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9809572. 14",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR169",
+"unstructured": "Kosteleck\u00fd, V.A., \u201cTesting CPT with B mesons\u201d, (1998). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9809560. 5.5"
+},
+{
+"key": "5_CR170",
+"volume-title": "CPT and Lorentz Symmetry",
+"year": "1999",
+"unstructured": "Kosteleck\u00fd, V.A., ed., CPT and Lorentz Symmetry, Proceedings of the Meeting held at Indiana University, Bloomington, USA, November 6\u20138, 1998, (World Scientific, Singapore, 1999). 5.4"
+},
+{
+"key": "5_CR171",
+"doi-asserted-by": "publisher",
+"first-page": "016002",
+"DOI": "10.1103/PhysRevD.61.016002",
+"volume": "61",
+"author": "VA Kosteleck\u00fd",
+"year": "2000",
+"unstructured": "Kosteleck\u00fd, V.A., \u201cSignals for CPT and Lorentz violation in neutral-meson oscillations\u201d, Phys. Rev. D, 61, 016002, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9909554. 14",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR172",
+"unstructured": "Kosteleck\u00fd, V.A., \u201cTopics in Lorentz and CPT violation\u201d, (2001). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0104227. 1, 1"
+},
+{
+"key": "5_CR173",
+"doi-asserted-by": "publisher",
+"first-page": "105009",
+"DOI": "10.1103/PhysRevD.69.105009",
+"volume": "69",
+"author": "VA Kosteleck\u00fd",
+"year": "2004",
+"unstructured": "Kosteleck\u00fd, V.A., \u201cGravity, Lorentz violation, and the standard model\u201d, Phys. Rev. D, 69, 105009, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0312310. 2.4, 4.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR174",
+"volume-title": "Third Meeting on CPT and Lorentz Symmetry",
+"year": "2005",
+"unstructured": "Kosteleck\u00fd, V.A., ed., Third Meeting on CPT and Lorentz Symmetry, Proceedings of the meeting held at Bloomington, USA, 4\u20137 August 2004, (World Scientific, Singapore, 2005). 1"
+},
+{
+"key": "5_CR175",
+"doi-asserted-by": "publisher",
+"first-page": "116010",
+"DOI": "10.1103/PhysRevD.60.116010",
+"volume": "60",
+"author": "VA Kosteleck\u00fd",
+"year": "1999",
+"unstructured": "Kosteleck\u00fd, V.A., and Lane, C.D., \u201cConstraints on Lorentz violation from clock-comparison experiments\u201d, Phys. Rev. D, 60, 116010, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9908504. 13, 13, 13",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR176",
+"doi-asserted-by": "publisher",
+"first-page": "065008",
+"DOI": "10.1103/PhysRevD.63.065008",
+"volume": "63",
+"author": "VA Kosteleck\u00fd",
+"year": "2001",
+"unstructured": "Kosteleck\u00fd, V.A., and Lehnert, R., \u201cStability, causality, and Lorentz and CPT violation\u201d, Phys. Rev. D, 63, 065008, (2001). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0012060. 1, 2.7.1, 2.7.2",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR177",
+"doi-asserted-by": "publisher",
+"first-page": "123511",
+"DOI": "10.1103/PhysRevD.68.123511",
+"volume": "68",
+"author": "VA Kosteleck\u00fd",
+"year": "2003",
+"unstructured": "Kosteleck\u00fd, V.A., Lehnert, R., and Perry, M.J., \u201cSpacetime-varying couplings and Lorentz violation\u201d, Phys. Rev. D, 68, 123511, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0212003. 1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR178",
+"doi-asserted-by": "publisher",
+"first-page": "251304",
+"DOI": "10.1103/PhysRevLett.87.251304",
+"volume": "87",
+"author": "VA Kosteleck\u00fd",
+"year": "2001",
+"unstructured": "Kosteleck\u00fd, V.A., and Mewes, M., \u201cCosmological constraints on Lorentz violation in electrodynamics\u201d, Phys. Rev. Lett., 87, 251304, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0111026. 18, 18",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR179",
+"doi-asserted-by": "publisher",
+"first-page": "056005",
+"DOI": "10.1103/PhysRevD.66.056005",
+"volume": "66",
+"author": "VA Kosteleck\u00fd",
+"year": "2002",
+"unstructured": "Kosteleck\u00fd, V.A., and Mewes, M., \u201cSignals for Lorentz violation in electrodynamics\u201d, Phys. Rev. D, 66, 056005, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0205211. 3.2, 3.3, 4.1.4, 4.1.4, 5.3, 5.3, 18",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR180",
+"doi-asserted-by": "publisher",
+"first-page": "016005",
+"DOI": "10.1103/PhysRevD.69.016005",
+"volume": "69",
+"author": "VA Kosteleck\u00fd",
+"year": "2004",
+"unstructured": "Kosteleck\u00fd, V.A., and Mewes, M., \u201cLorentz and CPT violation in neutrinos\u201d, Phys. Rev. D, 69, 016005, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0309025. 6.8.1, 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR181",
+"doi-asserted-by": "publisher",
+"first-page": "031902",
+"DOI": "10.1103/PhysRevD.70.031902",
+"volume": "70",
+"author": "VA Kosteleck\u00fd",
+"year": "2004",
+"unstructured": "Kosteleck\u00fd, V.A., and Mewes, M., \u201cLorentz and CPT violation in the neutrino sector\u201d, Phys. Rev. D, 70, 031902, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0308300. 6.8.1, 6.8.1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR182",
+"doi-asserted-by": "publisher",
+"first-page": "076002",
+"DOI": "10.1103/PhysRevD.70.076002",
+"volume": "70",
+"author": "VA Kosteleck\u00fd",
+"year": "2004",
+"unstructured": "Kosteleck\u00fd, V.A., and Mewes, M., \u201cLorentz violation and short-baseline neutrino experiments\u201d, Phys. Rev. D, 70, 076002, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0406255. 6.8.1, 6.8.1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR183",
+"doi-asserted-by": "publisher",
+"first-page": "031801",
+"DOI": "10.1103/PhysRevLett.91.031801",
+"volume": "91",
+"author": "VA Kosteleck\u00fd",
+"year": "2003",
+"unstructured": "Kosteleck\u00fd, V.A., and Pickering, A.G.M., \u201cVacuum photon splitting in Lorentz-violating quantum electrodynamics\u201d, Phys. Rev. Lett., 91, 031801, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0212382. 6.4",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR184",
+"doi-asserted-by": "publisher",
+"first-page": "3923",
+"DOI": "10.1103/PhysRevD.51.3923",
+"volume": "51",
+"author": "VA Kosteleck\u00fd",
+"year": "1995",
+"unstructured": "Kosteleck\u00fd, V.A., and Potting, R., \u201cCPT, strings, and meson factories\u201d, Phys. Rev. D, 51, 3923\u20133935, (1995). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9501341. 5.5, 5.5",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR185",
+"doi-asserted-by": "publisher",
+"first-page": "683",
+"DOI": "10.1103/PhysRevD.39.683",
+"volume": "39",
+"author": "VA Kosteleck\u00fd",
+"year": "1989",
+"unstructured": "Kosteleck\u00fd, V.A., and Samuel, S., \u201cSpontaneous Breaking Of Lorentz Symmetry In String Theory\u201d, Phys. Rev. D, 39, 683, (1989). 1, 4.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR186",
+"unstructured": "Kowalski-Glikman, J., \u201cIntroduction to Doubly Special Relativity\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0405273. 1, 2.1.2, 2.2, 3.4, 3, 3, 15, 17"
+},
+{
+"key": "5_CR187",
+"doi-asserted-by": "publisher",
+"first-page": "299",
+"DOI": "10.1142/S0218271803003050",
+"volume": "12",
+"author": "J Kowalski-Glikman",
+"year": "2003",
+"unstructured": "Kowalski-Glikman, J., and Nowak, S., \u201cNon-commutative space-time of doubly special relativity theories\u201d, Int. J. Mod. Phys. D, 12, 299\u2013316, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0204245. 4.2",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "5_CR188",
+"doi-asserted-by": "publisher",
+"first-page": "255",
+"DOI": "10.1038/378255a0",
+"volume": "378",
+"author": "K Koyama",
+"year": "1995",
+"unstructured": "Koyama, K., Petre, R., Gotthelf, E.V., Hwang, U., Matsuura, M., Ozaki, M., and Holt, S.S., \u201cEvidence for shock acceleration of high-energy electrons in the supernova remnant SN1006\u201d, Nature, 378, 255\u2013258, (1995). 6.5.1",
+"journal-title": "Nature"
+},
+{
+"key": "5_CR189",
+"first-page": "045015-1",
+"volume": "66",
+"author": "P Kraus",
+"year": "2002",
+"unstructured": "Kraus, P., and Tomboulis, E.T., \u201cPhotons and gravitons as Goldstone bosons, and the cosmological constant\u201d, Phys. Rev. D, 66, 045015-1\u201310, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0203221. 1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR190",
+"doi-asserted-by": "publisher",
+"first-page": "23",
+"DOI": "10.1142/S0217732303009538",
+"volume": "18",
+"author": "G Lambiase",
+"year": "2003",
+"unstructured": "Lambiase, G., \u201cCerenkov\u2019s effect and neutrino oscillations in loop quantum gravity\u201d, Mod. Phys. Lett. A, 18, 23\u201330, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0301058. 25",
+"journal-title": "Mod. Phys. Lett. A"
+},
+{
+"key": "5_CR191",
+"doi-asserted-by": "publisher",
+"first-page": "1",
+"DOI": "10.1016/S0370-2693(03)00379-4",
+"volume": "560",
+"author": "G Lambiase",
+"year": "2003",
+"unstructured": "Lambiase, G., \u201cNeutrino oscillations and Lorentz invariance breakdown\u201d, Phys. Lett. B, 560, 1\u20136, (2003). 6.8.1",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR192",
+"first-page": "065005-1",
+"volume": "71",
+"author": "G Lambiase",
+"year": "2005",
+"unstructured": "Lambiase, G., \u201cEffects of CPT and Lorentz invariance violation on pulsar kicks\u201d, Phys. Rev. D, 71, 065005-1\u20137, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0503002. 29",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR193",
+"doi-asserted-by": "publisher",
+"first-page": "13",
+"DOI": "10.1088/0264-9381/15/1/003",
+"volume": "15",
+"author": "C L\u00e4mmerzahl",
+"year": "1998",
+"unstructured": "L\u00e4mmerzahl, C., \u201cQuantum tests of the foundations of general relativity\u201d, Class. Quantum Grav., 15, 13\u201327, (1998). 7",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR194",
+"doi-asserted-by": "publisher",
+"first-page": "615",
+"DOI": "10.1023/B:GERG.0000010734.62571.b4",
+"volume": "36",
+"author": "C L\u00e4mmerzahl",
+"year": "2004",
+"unstructured": "L\u00e4mmerzahl, C., Ahlers, G., Ashby, N., Barmatz, M., Biermann, P.L., Dittus, H., Dohm, V., Duncan, R., Gibble, K., Lipa, J., Lockerbie, N., Mulders, N., and Salomon, C., \u201cReview: Experiments in Fundamental Physics Scheduled and in Development for the ISS\u201d, Gen. Relativ. Gravit., 36, 615\u2013649, (2004). 8",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "5_CR195",
+"doi-asserted-by": "publisher",
+"first-page": "105022",
+"DOI": "10.1103/PhysRevD.70.105022",
+"volume": "70",
+"author": "C L\u00e4mmerzahl",
+"year": "2004",
+"unstructured": "L\u00e4mmerzahl, C., and Hehl, F.W., \u201cRiemannian light cone from vanishing birefringence in premetric vacuum electrodynamics\u201d, Phys. Rev. D, 70, 105022, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0409072. 19",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR196",
+"doi-asserted-by": "publisher",
+"first-page": "3125",
+"DOI": "10.1103/PhysRevLett.57.3125",
+"volume": "57",
+"author": "SK Lamoreaux",
+"year": "1986",
+"unstructured": "Lamoreaux, S.K., Jacobs, J.P., Heckel, B.R., Raab, F.J., and Fortson, E.N., \u201cNew limits on spatial anisotrophy from optically pumped He-201 and Hg-199\u201d, Phys. Rev. Lett., 57, 3125\u20133128, (1986). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR197",
+"unstructured": "Lane, C.D., \u201cProbing Lorentz violation with Doppler-shift experiments\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0505130. 5.6"
+},
+{
+"key": "5_CR198",
+"doi-asserted-by": "publisher",
+"first-page": "511",
+"DOI": "10.1146/annurev.ns.16.120166.002455",
+"volume": "16",
+"author": "TD Lee",
+"year": "1966",
+"unstructured": "Lee, T.D., and Wu, C.S., \u201cWeak Interactions (Second section) Chapter 9: Decays of Neutral K Mesons\u201d, Annu. Rev. Nucl. Sci., 16, 511\u2013590, (1966). 5.5",
+"journal-title": "Annu. Rev. Nucl. Sci."
+},
+{
+"key": "5_CR199",
+"doi-asserted-by": "publisher",
+"first-page": "1",
+"DOI": "10.1080/01422419808240871",
+"volume": "13",
+"author": "J Lee-Franzini",
+"year": "1998",
+"unstructured": "Lee-Franzini, J., and Franzini, P., \u201cCP violation in the K-system\u201d, Surv. High Energy Phys., 13, 1\u201344, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ex/9709007. 14",
+"journal-title": "Surv. High Energy Phys."
+},
+{
+"key": "5_CR200",
+"doi-asserted-by": "publisher",
+"first-page": "085003",
+"DOI": "10.1103/PhysRevD.68.085003",
+"volume": "68",
+"author": "R Lehnert",
+"year": "2003",
+"unstructured": "Lehnert, R., \u201cThreshold analyses and Lorentz violation\u201d, Phys. Rev. D, 68, 085003, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0304013. 6.5",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR201",
+"doi-asserted-by": "publisher",
+"first-page": "125010",
+"DOI": "10.1103/PhysRevD.70.125010",
+"volume": "70",
+"author": "R Lehnert",
+"year": "2004",
+"unstructured": "Lehnert, R., and Potting, R., \u201cThe Cerenkov effect in Lorentz-violating vacua\u201d, Phys. Rev. D, 70, 125010, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0408285. 6.4, 6.5",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR202",
+"doi-asserted-by": "publisher",
+"first-page": "110402",
+"DOI": "10.1103/PhysRevLett.93.110402",
+"volume": "93",
+"author": "R Lehnert",
+"year": "2004",
+"unstructured": "Lehnert, R., and Potting, R., \u201cVacuum Cerenkov radiation\u201d, Phys. Rev. Lett., 93, 110402, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0406128. 6.4",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR203",
+"unstructured": "Liberati, S., Sonego, S., and Visser, M., \u201cInterpreting doubly special relativity as a modified theory of measurement\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0410113. 3"
+},
+{
+"key": "5_CR204",
+"doi-asserted-by": "publisher",
+"first-page": "L77",
+"DOI": "10.1086/374350",
+"volume": "585",
+"author": "R Lieu",
+"year": "2003",
+"unstructured": "Lieu, R., and Hillman, L.W., \u201cThe phase coherence of light from extragalactic sources: Direct evidence against first order quantum gravity fluctuations in time and space\u201d, Astrophys. J. Lett., 585, L77\u2013L80, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0301184. 6.9, 6.9",
+"journal-title": "Astrophys. J. Lett."
+},
+{
+"key": "5_CR205",
+"doi-asserted-by": "publisher",
+"first-page": "364",
+"DOI": "10.1103/PhysRevD.8.364",
+"volume": "8",
+"author": "AP Lightman",
+"year": "1973",
+"unstructured": "Lightman, A.P., and Lee, D.L., \u201cRestricted proof that the Weak Equivalence Principle implies the Einstein Equivalence Principle\u201d, Phys. Rev. D, 8, 364\u2013376, (1973). 2.2, 3.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR206",
+"doi-asserted-by": "publisher",
+"first-page": "063504-1",
+"DOI": "10.1103/PhysRevD.71.063504",
+"volume": "71",
+"author": "EA Lim",
+"year": "2005",
+"unstructured": "Lim, E.A., \u201cCan we see Lorentz-violating vector fields in the CMB?\u201d, Phys. Rev. D, 71, 063504-1\u201316, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/astro-ph/0407437. 2.7.1, 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR207",
+"doi-asserted-by": "publisher",
+"first-page": "060403",
+"DOI": "10.1103/PhysRevLett.90.060403",
+"volume": "90",
+"author": "JA Lipa",
+"year": "2003",
+"unstructured": "Lipa, J.A., Nissen, J.A., Wang, S., Stricker, D.A., and Avaloff, D., \u201cA New Limit on Signals of Lorentz Violation in Electrodynamics\u201d, Phys. Rev. Lett., 90, 060403, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/physics/0302093. 5.3",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"issue": "06",
+"key": "5_CR208",
+"doi-asserted-by": "publisher",
+"first-page": "050",
+"DOI": "10.1088/1126-6708/2004/06/050",
+"volume": "2004",
+"author": "ER Livine",
+"year": "2004",
+"unstructured": "Livine, E.R., and Oriti, D., \u201cAbout Lorentz invariance in a discrete quantum setting\u201d, J. High Energy Phys., 2004(06), 050, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0405085. 8",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR209",
+"doi-asserted-by": "publisher",
+"first-page": "2025",
+"DOI": "10.1088/0034-4885/66/11/R04",
+"volume": "66",
+"author": "J Magueijo",
+"year": "2003",
+"unstructured": "Magueijo, J., \u201cNew varying speed of light theories\u201d, Rep. Prog. Phys., 66, 2025, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0305457. 1, 34",
+"journal-title": "Rep. Prog. Phys."
+},
+{
+"key": "5_CR210",
+"doi-asserted-by": "publisher",
+"first-page": "044017",
+"DOI": "10.1103/PhysRevD.67.044017",
+"volume": "67",
+"author": "J Magueijo",
+"year": "2003",
+"unstructured": "Magueijo, J., and Smolin, L., \u201cGeneralized Lorentz invariance with an invariant energy scale\u201d, Phys. Rev. D, 67, 044017, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/0207085. 3.4",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR211",
+"doi-asserted-by": "publisher",
+"first-page": "497",
+"DOI": "10.1007/BF00762634",
+"volume": "8",
+"author": "R Mansouri",
+"year": "1977",
+"unstructured": "Mansouri, R., and Sexl, R.U., \u201cA test theory of special relativity. I \u2014 Simultaneity and clock synchronization\u201d, Gen. Relativ. Gravit., 8, 497\u2013513, (1977). 2.2, 3.2",
+"journal-title": "Gen. Relativ. Gravit."
+},
+{
+"key": "5_CR212",
+"first-page": "123501-1",
+"volume": "63",
+"author": "J Martin",
+"year": "2001",
+"unstructured": "Martin, J., and Brandenberger, R.H., \u201cTrans-Planckian problem of inflationary cosmology\u201d, Phys. Rev. D, 63, 123501-1\u201316, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0005209. 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR213",
+"doi-asserted-by": "publisher",
+"first-page": "103514",
+"DOI": "10.1103/PhysRevD.65.103514",
+"volume": "65",
+"author": "J Martin",
+"year": "2002",
+"unstructured": "Martin, J., and Brandenberger, R.H., \u201cThe Corley-Jacobson dispersion relation and trans-Planckian inflation\u201d, Phys. Rev. D, 65, 103514, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0201189. 7.2",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR214",
+"doi-asserted-by": "publisher",
+"first-page": "063513",
+"DOI": "10.1103/PhysRevD.68.063513",
+"volume": "68",
+"author": "J Martin",
+"year": "2003",
+"unstructured": "Martin, J., and Brandenberger, R.H., \u201cOn the dependence of the spectra of fluctuations in inflationary cosmology on trans-Planckian physics\u201d, Phys. Rev. D, 68, 063513, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0305161. 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR215",
+"doi-asserted-by": "publisher",
+"first-page": "124012",
+"DOI": "10.1103/PhysRevD.67.124012",
+"volume": "67",
+"author": "D Mattingly",
+"year": "2003",
+"unstructured": "Mattingly, D., Jacobson, T.A., and Liberati, S., \u201cThreshold configurations in the presence of Lorentz violating dispersion relations\u201d, Phys. Rev. D, 67, 124012, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0211466. 6.5.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"issue": "12",
+"key": "5_CR216",
+"doi-asserted-by": "publisher",
+"first-page": "002",
+"DOI": "10.1088/1126-6708/2000/12/002",
+"volume": "2000",
+"author": "A Matusis",
+"year": "2000",
+"unstructured": "Matusis, A., Susskind, L., and Toumbas, N., \u201cThe IR/UV connection in the non-commutative gauge theories\u201d, J. High Energy Phys., 2000(12), 002, (2000). Related online version (cited on 22 February 2005): http://arxiv.org/abs/hep-th/0002075. 4.2, 11",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR217",
+"doi-asserted-by": "publisher",
+"first-page": "2116",
+"DOI": "10.1103/PhysRevLett.83.2116",
+"volume": "83",
+"author": "RK Mittleman",
+"year": "1999",
+"unstructured": "Mittleman, R.K., Ioannou, I.I., Dehmelt, H.G., and Russell, N., \u201cBound on CPT and Lorentz symmetry with a trapped electron\u201d, Phys. Rev. Lett., 83, 2116\u20132119, (1999). 5.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR218",
+"doi-asserted-by": "publisher",
+"first-page": "390",
+"DOI": "10.1016/S0370-2693(00)00928-X",
+"volume": "489",
+"author": "I Mocioiu",
+"year": "2000",
+"unstructured": "Mocioiu, I., Pospelov, M., and Roiban, R., \u201cLow-energy limits on the antisymmetric tensor field background on the brane and on the non-commutative scale\u201d, Phys. Lett. B, 489, 390\u2013396, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0005191. 9",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR219",
+"doi-asserted-by": "publisher",
+"first-page": "351",
+"DOI": "10.1142/S0218271893000246",
+"volume": "2",
+"author": "JW Moffat",
+"year": "1993",
+"unstructured": "Moffat, J.W., \u201cSuperluminary universe: A Possible solution to the initial value problem in cosmology\u201d, Int. J. Mod. Phys. D, 2, 351\u2013366, (1993). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/9211020. 1",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "5_CR220",
+"doi-asserted-by": "publisher",
+"first-page": "1279",
+"DOI": "10.1142/S0218271803003633",
+"volume": "12",
+"author": "JW Moffat",
+"year": "2003",
+"unstructured": "Moffat, J.W., \u201cSpontaneous violation of Lorentz invariance and ultra-high energy cosmic rays\u201d, Int. J. Mod. Phys. D, 12, 1279\u20131288, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0211167. 4.4",
+"journal-title": "Int. J. Mod. Phys. D"
+},
+{
+"key": "5_CR221",
+"unstructured": "Montemayor, R., and Urrutia, L.F., \u201cSynchrotron radiation in Lorentz-violating electrodynamics: The Myers-Pospelov model\u201d, (2005). URL (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0505135. 6.7"
+},
+{
+"key": "5_CR222",
+"doi-asserted-by": "publisher",
+"first-page": "86",
+"DOI": "10.1016/j.physletb.2004.11.080",
+"volume": "606",
+"author": "R Montemayor",
+"year": "2005",
+"unstructured": "Montemayor, R., and Urrutia, L.F., \u201cSynchrotron radiation in Myers-Pospelov effective electrodynamics\u201d, Phys. Lett. B, 606, 86\u201394, (2005). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0410143. 6.7",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR223",
+"unstructured": "Moore, G.D., \u201cInformal Lectures on Lattice Gauge Theory\u201d, lecture notes, McGill University. URL (cited on 22 February 2005): http://www.physics.mcgill.ca/\u223cguymoore/latt_lectures.pdf. 11"
+},
+{
+"issue": "09",
+"key": "5_CR224",
+"doi-asserted-by": "publisher",
+"first-page": "023",
+"DOI": "10.1088/1126-6708/2001/09/023",
+"volume": "2001",
+"author": "GD Moore",
+"year": "2001",
+"unstructured": "Moore, G.D., and Nelson, A.E., \u201cLower bound on the propagation speed of gravity from gravitational Cherenkov radiation\u201d, J. High Energy Phys., 2001(09), 023, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0106220. 6.5.5, 6.5.7",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR225",
+"doi-asserted-by": "publisher",
+"first-page": "1099",
+"DOI": "10.1143/PTP.108.1099",
+"volume": "108",
+"author": "K Morita",
+"year": "2003",
+"unstructured": "Morita, K., \u201cLorentz-invariant non-commutative QED\u201d, Prog. Theor. Phys., 108, 1099\u20131122, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0209234. 4.2",
+"journal-title": "Prog. Theor. Phys."
+},
+{
+"key": "5_CR226",
+"unstructured": "M\u00fcller, H., \u201cTesting Lorentz invariance by use of vacuum and matter filled cavity resonators\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0412385. 5.3, 1"
+},
+{
+"key": "5_CR227",
+"doi-asserted-by": "publisher",
+"first-page": "116006-1",
+"DOI": "10.1103/PhysRevD.68.116006",
+"volume": "68",
+"author": "H M\u00fcller",
+"year": "2003",
+"unstructured": "M\u00fcller, H., Herrmann, S., Saenz, A., Peters, A., and L\u00e4mmerzahl, C., \u201cOptical cavity tests of Lorentz invariance for the electron\u201d, Phys. Rev. D, 68, 116006-1\u201317, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0401016. 5.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR228",
+"doi-asserted-by": "publisher",
+"first-page": "076004",
+"DOI": "10.1103/PhysRevD.70.076004",
+"volume": "70",
+"author": "H M\u00fcller",
+"year": "2004",
+"unstructured": "M\u00fcller, H., Herrmann, S., Saenz, A., Peters, A., and L\u00e4mmerzahl, C., \u201cTests of Lorentz invariance using hydrogen molecules\u201d, Phys. Rev. D, 70, 076004, (2004). 8",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR229",
+"doi-asserted-by": "publisher",
+"first-page": "263",
+"DOI": "10.1016/S0370-2693(01)01136-4",
+"volume": "B520",
+"author": "H Murayama",
+"year": "2001",
+"unstructured": "Murayama, H., and Yanagida, T., \u201cLSND, SN1987A, and CPT violation\u201d, Phys. Lett., B520, 263\u2013268, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0010178. 30",
+"journal-title": "Phys. Lett."
+},
+{
+"key": "5_CR230",
+"doi-asserted-by": "publisher",
+"first-page": "211601",
+"DOI": "10.1103/PhysRevLett.90.211601",
+"volume": "90",
+"author": "RC Myers",
+"year": "2003",
+"unstructured": "Myers, R.C., and Pospelov, M., \u201cExperimental challenges for quantum gravity\u201d, Phys. Rev. Lett., 90, 211601, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0301124. 2, 4.1.4, 5.4, 8",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR231",
+"doi-asserted-by": "publisher",
+"first-page": "335",
+"DOI": "10.1142/S0217732394000356",
+"volume": "9",
+"author": "YJ Ng",
+"year": "1994",
+"unstructured": "Ng, Y.J., and van Dam, H., \u201cLimit to space-time measurement\u201d, Mod. Phys. Lett. A, 9, 335\u2013340, (1994). 2.6, 3.5",
+"journal-title": "Mod. Phys. Lett. A"
+},
+{
+"key": "5_CR232",
+"doi-asserted-by": "publisher",
+"first-page": "795",
+"DOI": "10.1023/A:1003745212871",
+"volume": "30",
+"author": "YJ Ng",
+"year": "2000",
+"unstructured": "Ng, Y.J., and van Dam, H., \u201cMeasuring the foaminess of space-time with gravity-wave interferometers\u201d, Found. Phys., 30, 795\u2013805, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/gr-qc/9906003. 2.6, 3.5",
+"journal-title": "Found. Phys."
+},
+{
+"key": "5_CR233",
+"doi-asserted-by": "publisher",
+"first-page": "L87",
+"DOI": "10.1086/377121",
+"volume": "591",
+"author": "YJ Ng",
+"year": "2003",
+"unstructured": "Ng, Y.J., van Dam, H., and Christiansen, W.A., \u201cProbing Planck-scale physics with extra-galactic sources\u201d, Astrophys. J. Lett., 591, L87\u2013L90, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0302372. 6.9",
+"journal-title": "Astrophys. J. Lett."
+},
+{
+"key": "5_CR234",
+"unstructured": "Nguyen, H.H., \u201cCPT results from KTeV\u201d, (2001). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-ex/0112046. 14"
+},
+{
+"key": "5_CR235",
+"doi-asserted-by": "publisher",
+"first-page": "301",
+"DOI": "10.1103/PhysRevLett.38.301",
+"volume": "38",
+"author": "W-T Ni",
+"year": "1977",
+"unstructured": "Ni, W.-T., \u201cEquivalence Principles and Electromagnetism\u201d, Phys. Rev. Lett., 38, 301, (1977). 7",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR236",
+"doi-asserted-by": "publisher",
+"first-page": "083510",
+"DOI": "10.1103/PhysRevD.66.083510",
+"volume": "66",
+"author": "JC Niemeyer",
+"year": "2002",
+"unstructured": "Niemeyer, J.C., Parentani, R., and Campo, D., \u201cMinimal modifications of the primordial power spectrum from an adiabatic short distance cutoff\u201d, Phys. Rev. D, 66, 083510, (2002). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0206149. 33",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR237",
+"doi-asserted-by": "publisher",
+"first-page": "775",
+"DOI": "10.1086/151755",
+"volume": "177",
+"author": "KL Nordvedt Jr",
+"year": "1972",
+"unstructured": "Nordvedt Jr, K.L., and Will, C.M., \u201cConservation Laws and Preferred Frames in Relativistic Gravity. II. Experimental Evidence to Rule Out Preferred-Frame Theories of Gravity\u201d, Astrophys. J., 177, 775\u2013792, (1972). Related online version (cited on 31 August 2005): http://adsabs.harvard.edu/cgi-bin/bib_query?1972ApJ...177..775W. 31",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "5_CR238",
+"doi-asserted-by": "publisher",
+"DOI": "10.1142/4861",
+"volume-title": "Artificial Black Holes",
+"author": "M Novello",
+"year": "2002",
+"unstructured": "Novello, M., Visser, M., and Volovik, G., Artificial Black Holes, (World Scientific, Singapore; River Edge, U.S.A., 2002). 1"
+},
+{
+"key": "5_CR239",
+"doi-asserted-by": "publisher",
+"first-page": "L107",
+"DOI": "10.1088/0264-9381/4/4/007",
+"volume": "4",
+"author": "T Padmanabhan",
+"year": "1987",
+"unstructured": "Padmanabhan, T., \u201cLimitations on the operational definition of space-time events and quantum gravity\u201d, Class. Quantum Grav., 4, L107\u2013L113, (1987). 2.7.1",
+"journal-title": "Class. Quantum Grav."
+},
+{
+"key": "5_CR240",
+"volume-title": "An Introduction to Quantum Field Theory",
+"author": "ME Peskin",
+"year": "1995",
+"unstructured": "Peskin, Michael E., and Schroeder, D.V., An Introduction to Quantum Field Theory, (Westview Press, Boulder, U.S.A., 1995). 1"
+},
+{
+"key": "5_CR241",
+"doi-asserted-by": "publisher",
+"first-page": "111101",
+"DOI": "10.1103/PhysRevD.63.111101",
+"volume": "63",
+"author": "DF Phillips",
+"year": "2001",
+"unstructured": "Phillips, D.F., Humphrey, M.A., Mattison, E.M., Stoner, R.E., Vessot, R.F.C., and Walsworth, R.L., \u201cLimit on Lorentz and CPT violation of the proton using a hydrogen maser\u201d, Phys. Rev. D, 63, 111101, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/physics/0008230. 13",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR242",
+"unstructured": "Piran, T., \u201cGamma Ray Bursts as Probes of Quantum Gravity\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0407462. 16"
+},
+{
+"key": "5_CR243",
+"doi-asserted-by": "publisher",
+"first-page": "2387",
+"DOI": "10.1103/PhysRevLett.54.2387",
+"volume": "54",
+"author": "JD Prestage",
+"year": "1985",
+"unstructured": "Prestage, J.D., Bollinger, J.J., Itano, W.M., and Wineland, D.J., \u201cLimits for spatial anisotrophy by use of nuclear spin polarized Be-9+ ions\u201d, Phys. Rev. Lett., 54, 2387\u20132390, (1985). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR244",
+"doi-asserted-by": "publisher",
+"first-page": "067101",
+"DOI": "10.1103/PhysRevD.70.067101",
+"volume": "70",
+"author": "O Preuss",
+"year": "2004",
+"unstructured": "Preuss, O., Haugan, M.P., Solanki, S.K., and Jordan, S., \u201cAn astronomical search for evidence of new physics: Limits on gravity-induced birefringence from the magnetic white dwarf RE J0317-853\u201d, Phys. Rev. D, 70, 067101, (2004). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0405068. 18",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR245",
+"doi-asserted-by": "publisher",
+"first-page": "L1",
+"DOI": "10.1086/375046",
+"volume": "587",
+"author": "R Ragazzoni",
+"year": "2003",
+"unstructured": "Ragazzoni, R., Turatto, M., and Gaessler, W., \u201cLack of observational evidence for quantum structure of space-time at Plank scales\u201d, Astrophys. J. Lett., 587, L1\u2013L4, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0303043. 6.9",
+"journal-title": "Astrophys. J. Lett."
+},
+{
+"key": "5_CR246",
+"doi-asserted-by": "publisher",
+"first-page": "378",
+"DOI": "10.1103/RevModPhys.21.378",
+"volume": "21",
+"author": "H Robertson",
+"year": "1949",
+"unstructured": "Robertson, H., \u201cPostulate versus observation in the special theory of relativity\u201d, Rev. Mod. Phys., 21, 378, (1949). 2.2, 3.2",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "5_CR247",
+"series-title": "Cambridge Monographs on Mathematical Physics",
+"doi-asserted-by": "publisher",
+"DOI": "10.1017/CBO9780511755804",
+"volume-title": "Quantum Gravity",
+"author": "C Rovelli",
+"year": "2004",
+"unstructured": "Rovelli, C., Quantum Gravity, Cambridge Monographs on Mathematical Physics, (Cambridge University Press, Cambridge, U.K.; New York, U.S.A., 2004). 2.4"
+},
+{
+"key": "5_CR248",
+"doi-asserted-by": "publisher",
+"first-page": "1272",
+"DOI": "10.1111/j.1365-2966.2004.07665.x",
+"volume": "350",
+"author": "RE Rutledge",
+"year": "2004",
+"unstructured": "Rutledge, R.E., and Fox, D.B., \u201cRe-Analysis of Polarization in the Gamma-ray flux of GRB 021206\u201d, Mon. Not. R. Astron. Soc., 350, 1272, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0310385. 18, 19",
+"journal-title": "Mon. Not. R. Astron. Soc."
+},
+{
+"key": "5_CR249",
+"doi-asserted-by": "publisher",
+"first-page": "190403",
+"DOI": "10.1103/PhysRevLett.91.190403",
+"volume": "91",
+"author": "G Saathoff",
+"year": "2003",
+"unstructured": "Saathoff, G., Karpuk, S., Eisenbarth, U., Huber, G., Krohn, S., Horta, R.M., Reinhardt, S., Schwalm, D., Wolf, A., and Gwinner, G., \u201cImproved Test of Time Dilation in Special Relativity\u201d, Phys. Rev. Lett., 91, 190403, (2003). 5.6",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR250",
+"unstructured": "Schaefer, B.E., \u201cSevere Limits on Variations of the Speed of Light with Frequency\u201d, (1998). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9810479. 16"
+},
+{
+"key": "5_CR251",
+"doi-asserted-by": "publisher",
+"first-page": "358",
+"DOI": "10.1007/BF01338744",
+"volume": "106",
+"author": "T Schmidt",
+"year": "1937",
+"unstructured": "Schmidt, T., Z. Phys., 106, 358, (1937). 13",
+"journal-title": "Z. Phys."
+},
+{
+"key": "5_CR252",
+"doi-asserted-by": "publisher",
+"first-page": "45",
+"DOI": "10.1007/BF01940959",
+"volume": "65",
+"author": "R Schoen",
+"year": "1979",
+"unstructured": "Schoen, R., and Yau, S.-T., \u201cOn the Proof of the Positive Mass Conjecture in General Relativity\u201d, Commun. Math. Phys., 65, 45\u201376, (1979). Related online version (cited on 31 August 2005): http://projecteuclid.org/getRecord?id=euclid.cmp/1103904790. 2.7.2",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "5_CR253",
+"doi-asserted-by": "publisher",
+"first-page": "4376",
+"DOI": "10.1103/PhysRevLett.74.4376",
+"volume": "74",
+"author": "B Schwingenheuer",
+"year": "1995",
+"unstructured": "Schwingenheuer, B. et al., \u201cCPT tests in the neutral kaon system\u201d, Phys. Rev. Lett., 74, 4376\u20134379, (1995). 14",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"issue": "09",
+"key": "5_CR254",
+"doi-asserted-by": "publisher",
+"first-page": "032",
+"DOI": "10.1088/1126-6708/1999/09/032",
+"volume": "1999",
+"author": "N Seiberg",
+"year": "1999",
+"unstructured": "Seiberg, N., and Witten, E., \u201cString theory and noncommutative geometry\u201d, J. High Energy Phys., 1999(09), 032, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/9908142. 9",
+"journal-title": "J. High Energy Phys."
+},
+{
+"key": "5_CR255",
+"doi-asserted-by": "publisher",
+"first-page": "024002-1",
+"DOI": "10.1103/PhysRevD.62.024002",
+"volume": "62",
+"author": "K Shiokawa",
+"year": "2000",
+"unstructured": "Shiokawa, K., \u201cMesoscopic fluctuations in stochastic spacetime\u201d, Phys. Rev. D, 62, 024002-1\u201314, (2000). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0001088. 2.6, 3.5",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR256",
+"doi-asserted-by": "publisher",
+"first-page": "86",
+"DOI": "10.1016/j.nuclphysb.2005.03.040",
+"volume": "717",
+"author": "GM Shore",
+"year": "2005",
+"unstructured": "Shore, G.M., \u201cStrong equivalence, Lorentz and CPT violation, anti-hydrogen spectroscopy and gamma-ray burst polarimetry\u201d, Nucl. Phys. B, 717, 86\u2013118, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-th/0409125. 2.5, 8",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR257",
+"unstructured": "Smolin, L., \u201cAn invitation to loop quantum gravity\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0408048. 8"
+},
+{
+"key": "5_CR258",
+"unstructured": "Smolin, L., \u201cFalsifiable predictions from semiclassical quantum gravity\u201d, (2005). URL (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0501091. 17, 6.6.1"
+},
+{
+"key": "5_CR259",
+"doi-asserted-by": "publisher",
+"first-page": "047101",
+"DOI": "10.1103/PhysRevD.59.047101",
+"volume": "59",
+"author": "SK Solanki",
+"year": "1999",
+"unstructured": "Solanki, S.K., Haugan, M.P., and Mann, R.B., \u201cLimits on gravity induced depolarization of light from the white dwarf Grw +70 degr 8247\u201d, Phys. Rev. D, 59, 047101, (1999). 18",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR260",
+"unstructured": "Stanford University, \u201cGLAST: The Gamma Ray Large Area Space Telescope\u201d, project homepage. URL (cited on 22 February 2005): http://www-glast.stanford.edu/. 17, 8"
+},
+{
+"key": "5_CR261",
+"doi-asserted-by": "publisher",
+"first-page": "040404",
+"DOI": "10.1103/PhysRevLett.95.040404",
+"volume": "95",
+"author": "PL Stanwix",
+"year": "2005",
+"unstructured": "Stanwix, P.L., Tobar, M.E., Wolf, P., Susli, M., Locke, C.R., Ivanov, E.N., Winterflood, J., and van Kann, F., \u201cTest of Lorentz Invariance in Electrodynamics Using Rotating Cryogenic Sapphire Microwave Oscillators\u201d, Phys. Rev. Lett., 95, 040404, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0506074. 5.3, 1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR262",
+"first-page": "415",
+"volume": "73",
+"author": "AA Starobinsky",
+"year": "2001",
+"unstructured": "Starobinsky, A.A., \u201cRobustness of the inflationary perturbation spectrum to trans-Planckian physics\u201d, Pis. Zh. Eksp. Teor. Fiz., 73, 415\u2013418, (2001). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0104043. 33",
+"journal-title": "Pis. Zh. Eksp. Teor. Fiz."
+},
+{
+"key": "5_CR263",
+"doi-asserted-by": "publisher",
+"first-page": "R47",
+"DOI": "10.1088/0954-3899/29/10/201",
+"volume": "G29",
+"author": "FW Stecker",
+"year": "2003",
+"unstructured": "Stecker, F.W., \u201cCosmic physics: The high energy frontier\u201d, J. Phys. G, G29, R47\u2013R88, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0309027. 22, 6.5.6",
+"journal-title": "J. Phys. G"
+},
+{
+"key": "5_CR264",
+"unstructured": "Stecker, F.W., and Scully, S.T., \u201cLorentz invariance violation and the spectrum and source power of ultrahigh energy cosmic rays\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0412495. 6.5.6"
+},
+{
+"key": "5_CR265",
+"doi-asserted-by": "publisher",
+"first-page": "353",
+"DOI": "10.1016/0370-2693(88)91154-9",
+"volume": "201",
+"author": "L Stodolsky",
+"year": "1988",
+"unstructured": "Stodolsky, L., \u201cThe Speed of Light and the Speed of Neutrinos\u201d, Phys. Lett. B, 201, 353, (1988). 30",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "5_CR266",
+"doi-asserted-by": "publisher",
+"first-page": "231301",
+"DOI": "10.1103/PhysRevLett.89.231301",
+"volume": "89",
+"author": "D Sudarsky",
+"year": "2002",
+"unstructured": "Sudarsky, D., Urrutia, L.F., and Vucetich, H., \u201cNew observational bounds to quantum gravity signals\u201d, Phys. Rev. Lett., 89, 231301, (2002). 13",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR267",
+"doi-asserted-by": "publisher",
+"first-page": "1163",
+"DOI": "10.1103/PhysRevLett.81.1163",
+"volume": "81",
+"author": "M Takeda",
+"year": "1998",
+"unstructured": "Takeda, M., Hayashida, N., Honda, K., Inoue, N., Kadota, K., Kakimoto, F., Kamata, K., Kawaguchi, S., Kawasaki, Y., Kawasumi, N., Kitamura, H., Kusano, E., Matsubara, Y., Murakami, K., Nagano, M., Nishikawa, D., Ohoka, H., Sakaki, N., Sasaki, M., Shinozaki, K., Souma, N., Teshima, M., Torii, R., Tsushima, I., Uchihori, Y., Yamamoto, T., Yoshida, S., and Yoshii, H., \u201cExtension of the Cosmic-Ray Energy Spectrum Beyond the Predicted Greisen-Zatsepin-Kuz\u2019min Cutoff\u201d, Phys. Rev. Lett., 81, 1163\u20131166, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9807193. 6.5.1",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "5_CR268",
+"doi-asserted-by": "publisher",
+"first-page": "L33",
+"DOI": "10.1086/311077",
+"volume": "492",
+"author": "T Tanimori",
+"year": "1998",
+"unstructured": "Tanimori, T., Sakurazawa, K., Dazeley, S.A., Edwards, P.G., Hara, T., Hayami, Y., Kamei, S., Kifune, T., Konishi, T., Matsubara, Y., Matsuoka, T., Mizumoto, Y., Masaike, A., Mori, M., Muraishi, H., Muraki, Y., Naito, T., Oda, S., Ogio, S., Osaki, T., Patterson, J.R., Roberts, M.D., Rowell, G.P., Suzuki, A., Suzuki, R., Sako, T., Tamura, T., Thornton, G.J., Susukita, R., Yanagita, S., Yoshida, T., and Yoshikoshi, T., \u201cDetection of Gamma Rays of up to 50 TeV from the Crab Nebula\u201d, Astrophys. J. Lett., 492, L33\u2013L36, (1998). Related online version (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/9710272. 6.4, 6.5.1",
+"journal-title": "Astrophys. J. Lett."
+},
+{
+"key": "5_CR269",
+"doi-asserted-by": "publisher",
+"first-page": "025004",
+"DOI": "10.1103/PhysRevD.71.025004",
+"volume": "71",
+"author": "ME Tobar",
+"year": "2005",
+"unstructured": "Tobar, M.E., Wolf, P., Fowler, A., and Hartnett, J.G., \u201cNew methods of testing Lorentz violation in electrodynamics\u201d, Phys. Rev. D, 71, 025004, (2005). Related online version (cited on 08 June 2005): http://arXiv.org/abs/hep-ph/0408006. 5.6",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR270",
+"doi-asserted-by": "publisher",
+"first-page": "024008",
+"DOI": "10.1103/PhysRevD.68.024008",
+"volume": "68",
+"author": "WG Unruh",
+"year": "2003",
+"unstructured": "Unruh, W.G., and Sch\u00fctzhold, R., \u201cOn slow light as a black hole analogue\u201d, Phys. Rev. D, 68, 024008, (2003). Related online version (cited on 08 June 2005): http://arXiv.org/abs/gr-qc/0303028. 2.7.1",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR271",
+"doi-asserted-by": "publisher",
+"first-page": "401",
+"DOI": "10.1016/j.nuclphysb.2003.08.023",
+"volume": "671",
+"author": "S Vaidya",
+"year": "2003",
+"unstructured": "Vaidya, S., and Ydri, B., \u201cOn the origin of the UV-IR mixing in noncommutative matrix geometry\u201d, Nucl. Phys. B, 671, 401\u2013431, (2003). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/0305201. 9",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "5_CR272",
+"doi-asserted-by": "publisher",
+"DOI": "10.7208/chicago/9780226870373.001.0001",
+"volume-title": "General Relativity",
+"author": "RM Wald",
+"year": "1984",
+"unstructured": "Wald, R.M., General Relativity, (University of Chicago Press, Chicago, U.S.A., 1984). 2.7.1, 4.4"
+},
+{
+"key": "5_CR273",
+"doi-asserted-by": "publisher",
+"first-page": "023002",
+"DOI": "10.1103/PhysRevD.59.023002",
+"volume": "59",
+"author": "E Waxman",
+"year": "1999",
+"unstructured": "Waxman, E., and Bahcall, J.N., \u201cHigh energy neutrinos from astrophysical sources: An upper bound\u201d, Phys. Rev. D, 59, 023002, (1999). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-th/9807282. 30",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR274",
+"unstructured": "Wigger, C., Hajdas, W., Arzner, K., Gudel, M., and Zehnder, A., \u201cGamma-Ray Burst Polarization: Limits from RHESSI Measurements\u201d, (2004). URL (cited on 22 February 2005): http://arXiv.org/abs/astro-ph/0405525. 18, 19"
+},
+{
+"key": "5_CR275",
+"doi-asserted-by": "publisher",
+"first-page": "403",
+"DOI": "10.1103/PhysRevD.45.403",
+"volume": "45",
+"author": "CM Will",
+"year": "1992",
+"unstructured": "Will, C.M., \u201cClock synchronization and isotropy of the one-way speed of light\u201d, Phys. Rev. D, 45, 403\u2013411, (1992). 3.2",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR276",
+"doi-asserted-by": "publisher",
+"DOI": "10.1017/CBO9780511564246",
+"volume-title": "Theory and experiment in gravitational physics",
+"author": "CM Will",
+"year": "1993",
+"unstructured": "Will, C.M., Theory and experiment in gravitational physics, (Cambridge University Press, Cambridge, U.K.; New York, U.S.A., 1993), 2nd edition. 1, 7.3",
+"edition": "2"
+},
+{
+"key": "5_CR277",
+"unstructured": "Will, C.M., \u201cThe Confrontation between General Relativity and Experiment\u201d, Living Rev. Relativity, 4(4), lrr-2001-4, (2001). URL (cited on 22 February 2005): http://www.livingreviews.org/lrr-2001-4. 3.2, 3.3, 4.4, 31, 7.3, 7.3"
+},
+{
+"key": "5_CR278",
+"doi-asserted-by": "publisher",
+"first-page": "757",
+"DOI": "10.1086/151754",
+"volume": "177",
+"author": "CM Will",
+"year": "1972",
+"unstructured": "Will, C.M., and Nordvedt Jr, K.L., \u201cConservation Laws and Preferred Frames in Relativistic Gravity. I. Preferred-Frame Theories and an Extended PPN Formalism\u201d, Astrophys. J., 177, 757\u2013774, (1972). Related online version (cited on 31 August 2005): http://adsabs.harvard.edu/cgi-bin/bib_query?1972ApJ...177..757W. 31",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "5_CR279",
+"doi-asserted-by": "publisher",
+"first-page": "381",
+"DOI": "10.1007/BF01208277",
+"volume": "80",
+"author": "E Witten",
+"year": "1981",
+"unstructured": "Witten, E., \u201cA new proof of the positive energy theorem\u201d, Commun. Math. Phys., 80, 381\u2013402, (1981). Related online version (cited on 31 August 2005): http://projecteuclid.org/getRecord?id=euclid.cmp/1103919981. 2.7.2",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "5_CR280",
+"doi-asserted-by": "publisher",
+"first-page": "051902-1",
+"DOI": "10.1103/PhysRevD.70.051902",
+"volume": "70",
+"author": "P Wolf",
+"year": "2004",
+"unstructured": "Wolf, P., Bize, S., Clairon, A., Santarelli, G., Tobar, M.E., and Luiten, A.N., \u201cImproved test of Lorentz invariance in electrodynamics\u201d, Phys. Rev. D, 70, 051902-1\u20134, (2004). Related online version (cited on 22 February 2005): http://arXiv.org/abs/hep-ph/0407232. 5.3",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "5_CR281",
+"first-page": "78",
+"volume": "4",
+"author": "GT Zatsepin",
+"year": "1966",
+"unstructured": "Zatsepin, G.T., and Kuzmin, V.A., \u201cUpper limit of the spectrum of cosmic rays\u201d, J. Exp. Theor. Phys. Lett., 4, 78\u201380, (1966). 6.5.6",
+"journal-title": "J. Exp. Theor. Phys. Lett."
+}
+],
+"container-title": [
+"Living Reviews in Relativity"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.springer.com/content/pdf/10.12942/lrr-2005-5",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2017,
+1,
+30
+]
+],
+"date-time": "2017-01-30T10:17:58Z",
+"timestamp": 1485771478000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "http://link.springer.com/10.12942/lrr-2005-5"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2005,
+9,
+7
+]
+]
+},
+"references-count": 281,
+"journal-issue": {
+"issue": "1",
+"published-print": {
+"date-parts": [
+[
+2005,
+12
+]
+]
+}
+},
+"alternative-id": [
+"5"
+],
+"URL": "https://doi.org/10.12942/lrr-2005-5",
+"relation": {},
+"ISSN": [
+"2367-3613",
+"1433-8351"
+],
+"issn-type": [
+{
+"value": "2367-3613",
+"type": "print"
+},
+{
+"value": "1433-8351",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2005,
+9,
+7
+]
+]
+},
+"article-number": "5"
+}
+}

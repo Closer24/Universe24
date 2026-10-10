@@ -1,0 +1,254 @@
+{
+ "world": "papers/spacetime_events/run3d_fixed/one_piece_3d_fixed.json",
+ "intervals": 172,
+ "closes": [
+  48,
+  96,
+  144
+ ],
+ "seeds": [
+  1,
+  400
+ ],
+ "variants": [
+  "both",
+  "A",
+  "B"
+ ],
+ "wall_time_s": 871.4,
+ "workers": 4,
+ "summary": {
+  "both": {
+   "seeds": 400,
+   "A_clicks": 174,
+   "B_clicks": 226,
+   "no_click": 0,
+   "A_frequency": [
+    0.435,
+    0.0248
+   ],
+   "B_frequency": [
+    0.565,
+    0.0248
+   ],
+   "no_click_fraction": [
+    0.0,
+    0.0
+   ],
+   "clicks_by_detector_and_tick": {
+    "A at 48": 32,
+    "A at 96": 142,
+    "B at 48": 44,
+    "B at 96": 182
+   },
+   "two_clicks_in_one_run": 0,
+   "prediction_from_the_weights": {
+    "weights_read": {
+     "48": {
+      "A": 0.080313,
+      "B": 0.109022
+     },
+     "96": {
+      "A": 0.536237,
+      "B": 0.678414
+     }
+    },
+    "chain": {
+     "48": {
+      "weights": {
+       "A": 0.080313,
+       "B": 0.109022
+      },
+      "no_click_weight": 0.8107,
+      "chance_here": {
+       "A": 0.0803,
+       "B": 0.109
+      },
+      "reached_with_no_click": 1.0
+     },
+     "96": {
+      "weights": {
+       "A": 0.536237,
+       "B": 0.678414
+      },
+      "no_click_weight": 0.0,
+      "chance_here": {
+       "A": 0.4415,
+       "B": 0.5585
+      },
+      "reached_with_no_click": 0.8107
+     }
+    },
+    "predicted": {
+     "A": 0.4382,
+     "B": 0.5618,
+     "none": 0.0
+    }
+   },
+   "B_given_A_clicked": [
+    0.0,
+    0.0
+   ],
+   "B_given_A_did_not_click": [
+    1.0,
+    0.0
+   ],
+   "A_given_B_clicked": [
+    0.0,
+    0.0
+   ],
+   "A_given_B_did_not_click": [
+    1.0,
+    0.0
+   ]
+  },
+  "A": {
+   "seeds": 400,
+   "A_clicks": 263,
+   "B_clicks": 0,
+   "no_click": 137,
+   "A_frequency": [
+    0.6575,
+    0.0237
+   ],
+   "B_frequency": [
+    0.0,
+    0.0
+   ],
+   "no_click_fraction": [
+    0.3425,
+    0.0237
+   ],
+   "clicks_by_detector_and_tick": {
+    "A at 144": 16,
+    "A at 48": 32,
+    "A at 96": 215
+   },
+   "two_clicks_in_one_run": 0,
+   "prediction_from_the_weights": {
+    "weights_read": {
+     "48": {
+      "A": 0.080313
+     },
+     "96": {
+      "A": 0.536237
+     },
+     "144": {
+      "A": 0.041307
+     }
+    },
+    "chain": {
+     "48": {
+      "weights": {
+       "A": 0.080313
+      },
+      "no_click_weight": 0.9197,
+      "chance_here": {
+       "A": 0.0803
+      },
+      "reached_with_no_click": 1.0
+     },
+     "96": {
+      "weights": {
+       "A": 0.536237
+      },
+      "no_click_weight": 0.3835,
+      "chance_here": {
+       "A": 0.5831
+      },
+      "reached_with_no_click": 0.9197
+     },
+     "144": {
+      "weights": {
+       "A": 0.041307
+      },
+      "no_click_weight": 0.3421,
+      "chance_here": {
+       "A": 0.1077
+      },
+      "reached_with_no_click": 0.3835
+     }
+    },
+    "predicted": {
+     "A": 0.6579,
+     "B": 0.0,
+     "none": 0.3421
+    }
+   }
+  },
+  "B": {
+   "seeds": 400,
+   "A_clicks": 0,
+   "B_clicks": 326,
+   "no_click": 74,
+   "A_frequency": [
+    0.0,
+    0.0
+   ],
+   "B_frequency": [
+    0.815,
+    0.0194
+   ],
+   "no_click_fraction": [
+    0.185,
+    0.0194
+   ],
+   "clicks_by_detector_and_tick": {
+    "B at 144": 11,
+    "B at 48": 44,
+    "B at 96": 271
+   },
+   "two_clicks_in_one_run": 0,
+   "prediction_from_the_weights": {
+    "weights_read": {
+     "48": {
+      "B": 0.109022
+     },
+     "96": {
+      "B": 0.678414
+     },
+     "144": {
+      "B": 0.024809
+     }
+    },
+    "chain": {
+     "48": {
+      "weights": {
+       "B": 0.109022
+      },
+      "no_click_weight": 0.891,
+      "chance_here": {
+       "B": 0.109
+      },
+      "reached_with_no_click": 1.0
+     },
+     "96": {
+      "weights": {
+       "B": 0.678414
+      },
+      "no_click_weight": 0.2126,
+      "chance_here": {
+       "B": 0.7614
+      },
+      "reached_with_no_click": 0.891
+     },
+     "144": {
+      "weights": {
+       "B": 0.024809
+      },
+      "no_click_weight": 0.1878,
+      "chance_here": {
+       "B": 0.1167
+      },
+      "reached_with_no_click": 0.2126
+     }
+    },
+    "predicted": {
+     "A": 0.0,
+     "B": 0.8122,
+     "none": 0.1878
+    }
+   }
+  }
+ }
+}

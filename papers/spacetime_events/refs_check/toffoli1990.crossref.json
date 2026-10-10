@@ -1,0 +1,1042 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+9,
+24
+]
+],
+"date-time": "2026-09-24T14:59:17Z",
+"timestamp": 1790261957290,
+"version": "4.1.0"
+},
+"reference-count": 97,
+"publisher": "Elsevier BV",
+"issue": "1-3",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1990,
+9,
+1
+]
+],
+"date-time": "1990-09-01T00:00:00Z",
+"timestamp": 652147200000
+},
+"content-version": "tdm",
+"delay-in-days": 0,
+"URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Physica D: Nonlinear Phenomena"
+],
+"published-print": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+},
+"DOI": "10.1016/0167-2789(90)90185-r",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2002,
+10,
+17
+]
+],
+"date-time": "2002-10-17T19:58:10Z",
+"timestamp": 1034884690000
+},
+"page": "229-253",
+"source": "Crossref",
+"is-referenced-by-count": 267,
+"title": [
+"Invertible cellular automata: A review"
+],
+"prefix": "10.1016",
+"volume": "45",
+"author": [
+{
+"given": "Tommaso",
+"family": "Toffoli",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Norman H.",
+"family": "Margolus",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "78",
+"reference": [
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB1",
+"first-page": "80",
+"article-title": "Computability in homogeneous structures",
+"volume": "21",
+"author": "Aladyev",
+"year": "1972",
+"journal-title": "Izv. Akad. Nauk. Estonian SSR, Fiz.-Mat."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB2",
+"doi-asserted-by": "crossref",
+"first-page": "448",
+"DOI": "10.1016/S0022-0000(72)80013-8",
+"article-title": "Decision procedures for surjectivity and injectivity of parallel maps for tessellation structures",
+"volume": "6",
+"author": "Amoroso",
+"year": "1972",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB3",
+"doi-asserted-by": "crossref",
+"first-page": "77",
+"DOI": "10.1016/S0022-0000(75)80015-8",
+"article-title": "Some clarifications of the concept of a Garden-of-Eden configuration",
+"volume": "10",
+"author": "Amoroso",
+"year": "1975",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB4",
+"article-title": "Information processing and transmission in cellular automata",
+"author": "Banks",
+"year": "1971"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB5",
+"doi-asserted-by": "crossref",
+"first-page": "177",
+"DOI": "10.1007/BF01857725",
+"article-title": "Quantum mechanical Hamiltonian models of discrete processes that erase their own histories: applications to Turing machines",
+"volume": "21",
+"author": "Benioff",
+"year": "1982",
+"journal-title": "Int. J. Theor. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB6",
+"doi-asserted-by": "crossref",
+"first-page": "525",
+"DOI": "10.1147/rd.176.0525",
+"article-title": "Logical reversibility of computation",
+"volume": "6",
+"author": "Bennett",
+"year": "1973",
+"journal-title": "IBM J. Res. Develop."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB7",
+"doi-asserted-by": "crossref",
+"first-page": "657",
+"DOI": "10.1103/PhysRevLett.55.657",
+"article-title": "Role of irreversibility in stabilizing complex and nonenergodic behavior in locally interacting discrete systems",
+"volume": "55",
+"author": "Bennett",
+"year": "1985",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB8",
+"doi-asserted-by": "crossref",
+"first-page": "585",
+"DOI": "10.1007/BF01886523",
+"article-title": "On the nature and origin of complexity in discrete, homogeneous, locally-interacting systems",
+"volume": "16",
+"author": "Bennett",
+"year": "1986",
+"journal-title": "Found. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB9",
+"doi-asserted-by": "crossref",
+"first-page": "2254",
+"DOI": "10.1103/PhysRevB.37.2254",
+"article-title": "Bond-energy variables for Ising spin-glass dynamics",
+"volume": "37",
+"author": "Bennett",
+"year": "1988",
+"journal-title": "Phys. Rev. B"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB10",
+"series-title": "Cellular Automata '86",
+"year": "1986"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB11",
+"series-title": "Essays on Cellular Automata",
+"year": "1970"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB12_1",
+"doi-asserted-by": "crossref",
+"first-page": "32",
+"DOI": "10.1007/BF01448839",
+"article-title": "On the partial difference equations of mathematical physics",
+"volume": "100",
+"author": "Courant",
+"year": "1928",
+"journal-title": "Math. Ann."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB12_2",
+"first-page": "215",
+"year": "1967",
+"journal-title": "IBM J."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB13",
+"doi-asserted-by": "crossref",
+"first-page": "62",
+"DOI": "10.1016/S0003-4916(86)80006-9",
+"article-title": "Deterministic Ising dynamics",
+"volume": "167",
+"author": "Creutz",
+"year": "1986",
+"journal-title": "Ann. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB14",
+"first-page": "1035",
+"article-title": "On invertible cellular automata",
+"volume": "1",
+"author": "Culik",
+"year": "1987",
+"journal-title": "Complex Systems"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB15",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
+"first-page": "102",
+"article-title": "Invariants in lattice gas models",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB16",
+"series-title": "Lattice-Gas Methods for Partial Differential Equations",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB17",
+"series-title": "The Many-World Interpretation of Quantum Mechanics",
+"article-title": "The theory of the universal wave function",
+"author": "Everett",
+"year": "1973"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB18",
+"doi-asserted-by": "crossref",
+"first-page": "11",
+"DOI": "10.1364/ON.11.2.000011",
+"article-title": "Quantum-mechanical computers",
+"volume": "11",
+"author": "Feynman",
+"year": "1985",
+"journal-title": "Opt. News"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB19",
+"doi-asserted-by": "crossref",
+"first-page": "219",
+"DOI": "10.1007/BF01857727",
+"article-title": "Conservative logic",
+"volume": "21",
+"author": "Fredkin",
+"year": "1982",
+"journal-title": "Int. J. Theor. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB20_1",
+"series-title": "Proceedings of a Conference on Physics and Computation",
+"volume": "21",
+"year": "1982"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB20_2",
+"series-title": "Proceedings of a Conference on Physics and Computation",
+"volume": "21",
+"year": "1982"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB20_3",
+"series-title": "Proceedings of a Conference on Physics and Computation",
+"volume": "21",
+"year": "1982"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB21",
+"doi-asserted-by": "crossref",
+"first-page": "1505",
+"DOI": "10.1103/PhysRevLett.56.1505",
+"article-title": "Lattice-gas automata for the Navier-Stokes equation",
+"volume": "56",
+"author": "Frisch",
+"year": "1986",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB22",
+"series-title": "Lattice-Gas Methods for Partial Differential Equations",
+"first-page": "77",
+"article-title": "Lattice gas hydrodynamics in two and three dimensions",
+"author": "Frisch",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB23",
+"doi-asserted-by": "crossref",
+"first-page": "120",
+"DOI": "10.1038/scientificamerican1070-120",
+"article-title": "The fantastic combinations of John Conway's new solitaire game \u2018Life\u2019",
+"volume": "223",
+"author": "Gardner",
+"year": "1970",
+"journal-title": "Sci. Am."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB24",
+"doi-asserted-by": "crossref",
+"first-page": "18",
+"DOI": "10.1016/0167-2789(87)90120-5",
+"article-title": "Local structure theory for cellular automata",
+"volume": "28",
+"author": "Gutowitz",
+"year": "1987",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB25",
+"doi-asserted-by": "crossref",
+"first-page": "136",
+"DOI": "10.1016/0167-2789(90)90179-S",
+"article-title": "A hierarchical classification of cellular automata",
+"volume": "45",
+"author": "Gutowitz",
+"year": "1990",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB26",
+"doi-asserted-by": "crossref",
+"first-page": "1949",
+"DOI": "10.1103/PhysRevA.13.1949",
+"article-title": "Molecular dynamics of a classical lattice gas: transport properties and time correlation functions",
+"volume": "13",
+"author": "Hardy",
+"year": "1976",
+"journal-title": "Phys. Rev. A"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB27_1",
+"first-page": "175",
+"article-title": "Discrete fluids",
+"author": "Hasslacher",
+"year": "1987",
+"journal-title": "Los Alamos Science"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB27_2",
+"first-page": "211",
+"article-title": "Discrete fluids",
+"author": "Hasslacher",
+"year": "1987",
+"journal-title": "Los Alamos Science"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB28",
+"first-page": "753",
+"article-title": "The effect of Galilean non-invariance in lattice gas automaton one-dimensional flow",
+"volume": "1",
+"author": "Hayot",
+"year": "1987",
+"journal-title": "Complex Systems"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB29",
+"article-title": "One-dimensional cellular automata: injectivity from unambiguity",
+"volume": "3",
+"author": "Head",
+"year": "1989",
+"journal-title": "Complex Systems"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB30",
+"series-title": "Communications Research Division, working paper",
+"article-title": "All onto functions of span less than or equal to five",
+"author": "Hedlund",
+"year": "1963"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB31",
+"doi-asserted-by": "crossref",
+"first-page": "51",
+"DOI": "10.1007/BF01691062",
+"article-title": "Endomorphism and automorphism of the shift dynamical system",
+"volume": "3",
+"author": "Hedlund",
+"year": "1969",
+"journal-title": "Math. Syst. Theory"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB32",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
+"first-page": "146",
+"article-title": "Optimization of collision rules in the FCHC lattice gases and addition of rest particles",
+"author": "H\u00e9non",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB33",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
+"first-page": "160",
+"article-title": "On the relation between lattice gases and cellular automata",
+"author": "H\u00e9non",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB34",
+"unstructured": "H. Hrgov\u010di\u0107, personal communication."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB35",
+"article-title": "Reversible parallel computation: an evolving space model",
+"volume": "75",
+"author": "Jacopini",
+"year": "1990",
+"journal-title": "Theor. Comp. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB36_1",
+"doi-asserted-by": "crossref",
+"first-page": "620",
+"DOI": "10.1103/PhysRev.106.620",
+"article-title": "Information theory and statistical mechanics",
+"volume": "106",
+"author": "Jaynes",
+"year": "1957",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB36_2",
+"doi-asserted-by": "crossref",
+"first-page": "171",
+"DOI": "10.1103/PhysRev.108.171",
+"article-title": "Information theory and statistical mechanics",
+"volume": "108",
+"author": "Jaynes",
+"year": "1957",
+"journal-title": "Phys. Rev."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB37",
+"doi-asserted-by": "crossref",
+"first-page": "9",
+"DOI": "10.1016/0375-9601(88)90464-1",
+"article-title": "Symplectic cellular automata",
+"volume": "129",
+"author": "Kaneko",
+"year": "1988",
+"journal-title": "Phys. Lett. A"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB38",
+"article-title": "Reversibility and surjectivity of cellular automata",
+"author": "Kari",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB39",
+"doi-asserted-by": "crossref",
+"first-page": "379",
+"DOI": "10.1016/0167-2789(90)90195-U",
+"article-title": "Reversibility of 2D cellular automata is undecidable",
+"volume": "45",
+"author": "Kari",
+"year": "1990",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB40",
+"year": "1976"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB41",
+"doi-asserted-by": "crossref",
+"first-page": "81",
+"DOI": "10.1016/0167-2789(84)90252-5",
+"article-title": "Physics-like models of computation",
+"volume": "10",
+"author": "Margolus",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB42",
+"doi-asserted-by": "crossref",
+"first-page": "487",
+"DOI": "10.1111/j.1749-6632.1986.tb12451.x",
+"article-title": "Quantum computation",
+"volume": "480",
+"author": "Margolus",
+"year": "1986",
+"journal-title": "Ann. NY Acad. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB43",
+"series-title": "Tech. Rep. MIT/LCS/TR-415",
+"article-title": "Physics and Computation",
+"author": "Margolus",
+"year": "1988"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB44",
+"series-title": "Lattice-Gas Methods for Partial Differential Equations",
+"first-page": "219",
+"article-title": "Cellular Automata Machines",
+"author": "Margolus",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB45",
+"doi-asserted-by": "crossref",
+"first-page": "1694",
+"DOI": "10.1103/PhysRevLett.56.1694",
+"article-title": "Cellular automata supercomputers for fluid dynamics modeling",
+"volume": "56",
+"author": "Margolus",
+"year": "1986",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB46",
+"doi-asserted-by": "crossref",
+"first-page": "158",
+"DOI": "10.1016/S0019-9958(76)90195-9",
+"article-title": "Conditions for injectivity of global maps for tessellation automata",
+"volume": "32",
+"author": "Maruoka",
+"year": "1976",
+"journal-title": "Info. Control"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB47",
+"doi-asserted-by": "crossref",
+"first-page": "47",
+"DOI": "10.1016/0022-0000(79)90051-5",
+"article-title": "Injectivity and surjectivity of parallel maps for cellular automata",
+"volume": "18",
+"author": "Maruoka",
+"year": "1979",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB48",
+"doi-asserted-by": "crossref",
+"first-page": "269",
+"DOI": "10.1016/0304-3975(82)90069-X",
+"article-title": "Strong surjectivity is equivalent to C-injectivity",
+"volume": "18",
+"author": "Maruoka",
+"year": "1982",
+"journal-title": "Theor. Comp. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB49",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB50",
+"first-page": "758",
+"article-title": "Computation universality of one-dimensional reversible (injective) cellular automata",
+"volume": "72",
+"author": "Morita",
+"year": "1989",
+"journal-title": "Trans. IEICE E"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB51",
+"first-page": "17",
+"article-title": "Machine models of self-reproduction",
+"volume": "14",
+"author": "Moore",
+"year": "1962"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB52",
+"series-title": "Sequential Machines",
+"first-page": "213",
+"article-title": "The firing squad synchronization problem",
+"author": "Moore",
+"year": "1964"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB53",
+"first-page": "658",
+"article-title": "The converse of Moore's garden-of-Eden theorem",
+"volume": "14",
+"author": "Myhill",
+"year": "1963"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB54",
+"doi-asserted-by": "crossref",
+"first-page": "327",
+"DOI": "10.1007/BF01768485",
+"article-title": "Local maps inducing surjective global maps of one-dimensional tessellation automata",
+"volume": "11",
+"author": "Nasu",
+"year": "1978",
+"journal-title": "Math. Syst. Theor."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB55",
+"doi-asserted-by": "crossref",
+"first-page": "901",
+"DOI": "10.1007/BF01010423",
+"article-title": "Two-dimensional cellular automata",
+"volume": "38",
+"author": "Packard",
+"year": "1985",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB56",
+"series-title": "Injections of neighborhood size three and four on the set of configurations from the infinite one-dimensional tessellation automata of two-state cells",
+"author": "Patt",
+"year": "1971"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB57",
+"series-title": "Proceedings of a Conference on Physics and Computation",
+"first-page": "979",
+"article-title": "State-transition structures in physics and in computation",
+"volume": "21",
+"author": "Petri",
+"year": "1982"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB58",
+"doi-asserted-by": "crossref",
+"first-page": "L415",
+"DOI": "10.1088/0305-4470/17/8/004",
+"article-title": "Invariant in cellular automata",
+"volume": "17",
+"author": "Pomeau",
+"year": "1984",
+"journal-title": "J. Phys. A"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB59",
+"series-title": "Modern Cellular Automata",
+"author": "Preston",
+"year": "1984"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB60",
+"doi-asserted-by": "crossref",
+"first-page": "373",
+"DOI": "10.1016/S0022-0000(72)80009-6",
+"article-title": "Tessellation with local transformations",
+"volume": "6",
+"author": "Richardson",
+"year": "1972",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB61",
+"doi-asserted-by": "crossref",
+"first-page": "121",
+"DOI": "10.1016/S0022-0000(77)80002-0",
+"article-title": "Certain relations between properties of maps of tessellation automata",
+"volume": "15",
+"author": "Sato",
+"year": "1977",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB62",
+"doi-asserted-by": "crossref",
+"first-page": "228",
+"DOI": "10.1007/BF01694179",
+"article-title": "The automorphisms of the shift dynamical systems are relatively sparse",
+"volume": "5",
+"author": "Sears",
+"year": "1971",
+"journal-title": "Math. Syst. Theory"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB63",
+"article-title": "Cellular automata theory",
+"volume": "2",
+"author": "Smith",
+"year": "1969"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB64",
+"doi-asserted-by": "crossref",
+"first-page": "2499",
+"DOI": "10.1103/PhysRevLett.59.2499",
+"article-title": "Reversible cellular automata and statistical mechanics",
+"volume": "59",
+"author": "Takesue",
+"year": "1987",
+"journal-title": "Phys. Rev. Lett."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB65",
+"doi-asserted-by": "crossref",
+"first-page": "271",
+"DOI": "10.1016/0167-2789(90)90187-T",
+"article-title": "Representations of geometrical and topological quantities in cellular automata",
+"volume": "45",
+"author": "Smith",
+"year": "1990",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB66",
+"doi-asserted-by": "crossref",
+"first-page": "278",
+"DOI": "10.1016/0167-2789(90)90188-U",
+"article-title": "Relaxation properties of elementary reversible cellular automata",
+"volume": "45",
+"author": "Takesue",
+"year": "1990",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB67",
+"doi-asserted-by": "crossref",
+"first-page": "213",
+"DOI": "10.1016/S0022-0000(77)80007-X",
+"article-title": "Computation and construction universality of reversible cellular automata",
+"volume": "15",
+"author": "Toffoli",
+"year": "1977",
+"journal-title": "J. Comp. Syst. Sci."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB68",
+"article-title": "Cellular automata mechanics",
+"author": "Toffoli",
+"year": "1977"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB69",
+"doi-asserted-by": "crossref",
+"first-page": "13",
+"DOI": "10.1007/BF01752388",
+"article-title": "Bicontinuous extension of reversible combinatorial functions",
+"volume": "14",
+"author": "Toffoli",
+"year": "1981",
+"journal-title": "Math. Syst. Theory"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB70",
+"series-title": "Reversible Computing, Automata, Languages and Programming",
+"first-page": "632",
+"author": "Toffoli",
+"year": "1980"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB71",
+"doi-asserted-by": "crossref",
+"first-page": "195",
+"DOI": "10.1016/0167-2789(84)90261-6",
+"article-title": "CAM: A high-performance cellular-automaton machine",
+"volume": "10",
+"author": "Toffoli",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB72",
+"doi-asserted-by": "crossref",
+"first-page": "117",
+"DOI": "10.1016/0167-2789(84)90254-9",
+"article-title": "Cellular automata as an alternative to (rather than an approximation of) differential equations in modeling physics",
+"volume": "10",
+"author": "Toffoli",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"issue": "1",
+"key": "10.1016/0167-2789(90)90185-R_BIB73",
+"doi-asserted-by": "crossref",
+"first-page": "29",
+"DOI": "10.1147/rd.321.0029",
+"article-title": "Information transport obeying the continuity equation",
+"volume": "32",
+"author": "Toffoli",
+"year": "1988",
+"journal-title": "IBM J. Res. Develop."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB74",
+"series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
+"first-page": "343",
+"article-title": "Four topics in lattice gases: ergodicity; relativity; information flow; and rule compression for parallel lattice-gas machines",
+"author": "Toffoli",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB75",
+"series-title": "Complexity, Entropy, and the Physics of Information",
+"article-title": "How cheap can mechanics' first principles be?",
+"author": "Toffoli",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB76",
+"series-title": "Information Processing 89",
+"first-page": "1",
+"article-title": "Frontiers in computing",
+"author": "Toffoli",
+"year": "1989"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB77",
+"series-title": "Cellular Automata Machines - A New Environment for Modeling",
+"author": "Toffoli",
+"year": "1987"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB78",
+"series-title": "Lattice Gas Methods for PDEs",
+"article-title": "Programmable matter",
+"volume": "46",
+"author": "Toffoli",
+"year": "1990"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB79",
+"unstructured": "T. Toffoli and N. Margolus, Invertible cellular automata, occasionaly updated technical memo (MIT Lab. for Comp. Sci.), eventually to appear in book form."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB80",
+"unstructured": "G. 't Hooft, A two-dimensional model with discrete general coordinate-invariance, preprint."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB81",
+"first-page": "230",
+"article-title": "On computable numbers, with an application to the Entscheidungsproblem",
+"volume": "42",
+"author": "Turing",
+"year": "1936"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB82",
+"first-page": "264",
+"article-title": "Random processes and transformations",
+"volume": "2",
+"author": "Ulam",
+"year": "1952"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB83",
+"doi-asserted-by": "crossref",
+"first-page": "96",
+"DOI": "10.1016/0167-2789(84)90253-7",
+"article-title": "Simulating physics with cellular automata",
+"volume": "10",
+"author": "Vichniac",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB84",
+"series-title": "Theory of Self-Reproducing Automata",
+"author": "von Neumann",
+"year": "1966"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB85",
+"doi-asserted-by": "crossref",
+"first-page": "601",
+"DOI": "10.1103/RevModPhys.55.601",
+"article-title": "Statistical mechanics of cellular automata",
+"volume": "55",
+"author": "Wolfram",
+"year": "1983",
+"journal-title": "Rev. Mod. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB86",
+"doi-asserted-by": "crossref",
+"first-page": "1",
+"DOI": "10.1016/0167-2789(84)90245-8",
+"article-title": "Universality and complexity in cellular automata",
+"volume": "10",
+"author": "Wolfram",
+"year": "1984",
+"journal-title": "Physica D"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB87",
+"doi-asserted-by": "crossref",
+"first-page": "15",
+"DOI": "10.1007/BF01217347",
+"article-title": "Computation theory of cellular automata",
+"volume": "96",
+"author": "Wolfram",
+"year": "1984",
+"journal-title": "Commun. Math. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB88",
+"doi-asserted-by": "crossref",
+"first-page": "471",
+"DOI": "10.1007/BF01021083",
+"article-title": "Cellular automaton fluids 1: basic theory",
+"volume": "45",
+"author": "Wolfram",
+"year": "1986",
+"journal-title": "J. Stat. Phys."
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB89",
+"series-title": "Theory and Applications of Cellular Automaton",
+"author": "Wolfram",
+"year": "1986"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB90",
+"first-page": "216",
+"article-title": "Inverse and injectivity of parallel relations induced by cellular automata",
+"volume": "58",
+"author": "Yaku",
+"year": "1976"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB91_1",
+"series-title": "Rechnender Raum",
+"author": "Zuse",
+"year": "1969"
+},
+{
+"key": "10.1016/0167-2789(90)90185-R_BIB91_2",
+"series-title": "Calculating Space",
+"year": "1970"
+}
+],
+"container-title": [
+"Physica D: Nonlinear Phenomena"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://api.elsevier.com/content/article/PII:016727899090185R?httpAccept=text/xml",
+"content-type": "text/xml",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "https://api.elsevier.com/content/article/PII:016727899090185R?httpAccept=text/plain",
+"content-type": "text/plain",
+"content-version": "vor",
+"intended-application": "text-mining"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2019,
+4,
+6
+]
+],
+"date-time": "2019-04-06T19:50:54Z",
+"timestamp": 1554580254000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://linkinghub.elsevier.com/retrieve/pii/016727899090185R"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+},
+"references-count": 97,
+"journal-issue": {
+"issue": "1-3",
+"published-print": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+}
+},
+"alternative-id": [
+"016727899090185R"
+],
+"URL": "https://doi.org/10.1016/0167-2789(90)90185-r",
+"relation": {},
+"ISSN": [
+"0167-2789"
+],
+"issn-type": [
+{
+"value": "0167-2789",
+"type": "print"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1990,
+9
+]
+]
+}
+}
+}

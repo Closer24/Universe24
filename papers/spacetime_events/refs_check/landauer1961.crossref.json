@@ -1,0 +1,141 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+10
+]
+],
+"date-time": "2026-10-10T02:25:17Z",
+"timestamp": 1791599117709,
+"version": "4.3.4"
+},
+"reference-count": 0,
+"publisher": "IBM",
+"issue": "3",
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"IBM J. Res. &amp; Dev."
+],
+"published-print": {
+"date-parts": [
+[
+1961,
+7
+]
+]
+},
+"DOI": "10.1147/rd.53.0183",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2010,
+4,
+5
+]
+],
+"date-time": "2010-04-05T14:34:14Z",
+"timestamp": 1270478054000
+},
+"page": "183-191",
+"source": "Crossref",
+"is-referenced-by-count": 4442,
+"title": [
+"Irreversibility and Heat Generation in the Computing Process"
+],
+"prefix": "10.1147",
+"volume": "5",
+"author": [
+{
+"given": "R.",
+"family": "Landauer",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "3082",
+"container-title": [
+"IBM Journal of Research and Development"
+],
+"original-title": [],
+"link": [
+{
+"URL": "http://xplorestaging.ieee.org/ielx5/5288520/5392444/05392446.pdf?arnumber=5392446",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+10,
+23
+]
+],
+"date-time": "2025-10-23T17:56:44Z",
+"timestamp": 1761242204000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://ieeexplore.ieee.org/document/5392446/"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1961,
+7
+]
+]
+},
+"references-count": 0,
+"journal-issue": {
+"issue": "3"
+},
+"URL": "https://doi.org/10.1147/rd.53.0183",
+"relation": {},
+"ISSN": [
+"0018-8646",
+"0018-8646"
+],
+"issn-type": [
+{
+"value": "0018-8646",
+"type": "print"
+},
+{
+"value": "0018-8646",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1961,
+7
+]
+]
+}
+}
+}

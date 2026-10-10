@@ -1,0 +1,653 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+6
+]
+],
+"date-time": "2026-10-06T20:02:01Z",
+"timestamp": 1791316921338,
+"version": "4.3.1"
+},
+"reference-count": 66,
+"publisher": "American Physical Society (APS)",
+"issue": "12",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2013,
+6,
+4
+]
+],
+"date-time": "2013-06-04T00:00:00Z",
+"timestamp": 1370304000000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "http://link.aps.org/licenses/aps-default-license"
+},
+{
+"start": {
+"date-parts": [
+[
+2014,
+6,
+4
+]
+],
+"date-time": "2014-06-04T00:00:00Z",
+"timestamp": 1401840000000
+},
+"content-version": "am",
+"delay-in-days": 365,
+"URL": "http://link.aps.org/licenses/aps-default-accepted-manuscript-license"
+}
+],
+"funder": [
+{
+"DOI": "10.13039/100000015",
+"name": "U.S. Department of Energy",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/100000015",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Phys. Rev. D"
+],
+"DOI": "10.1103/physrevd.87.122001",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2013,
+6,
+5
+]
+],
+"date-time": "2013-06-05T02:51:53Z",
+"timestamp": 1370400713000
+},
+"source": "Crossref",
+"is-referenced-by-count": 187,
+"title": [
+"Constraints on Lorentz invariance violation from\n                    <i>Fermi</i>\n                    -Large Area Telescope observations of gamma-ray bursts"
+],
+"prefix": "10.1103",
+"volume": "87",
+"author": [
+{
+"given": "V.",
+"family": "Vasileiou",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Jacholkowska",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Piron",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Bolmont",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Couturier",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Granot",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F. W.",
+"family": "Stecker",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Cohen-Tanugi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Longo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+2013,
+6,
+4
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevD.87.122001Cc1R1",
+"volume": "5",
+"author": "M. Planck",
+"year": "1899",
+"journal-title": "Mitt. Thermodyn. Folg."
+},
+{
+"key": "PhysRevD.87.122001Cc2R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.39.683"
+},
+{
+"key": "PhysRevD.87.122001Cc3R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.12942/lrr-2011-8"
+},
+{
+"key": "PhysRevD.87.122001Cc4R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.12942/lrr-2008-5"
+},
+{
+"key": "PhysRevD.87.122001Cc5R1",
+"volume-title": "Three Roads to Quantum Gravity",
+"author": "L. Smolin",
+"year": "2001"
+},
+{
+"key": "PhysRevD.87.122001Cc6R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.12942/lrr-2005-5"
+},
+{
+"key": "PhysRevD.87.122001Cc7R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.aop.2005.06.004"
+},
+{
+"key": "PhysRevD.87.122001Cc8R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.59.116008"
+},
+{
+"key": "PhysRevD.87.122001Cc9R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.93.021101"
+},
+{
+"key": "PhysRevD.87.122001Cc10R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1367-2630/11/8/085003"
+},
+{
+"key": "PhysRevD.87.122001Cc11R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2011.06.007"
+},
+{
+"key": "PhysRevD.87.122001Cc12R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.83.056012"
+},
+{
+"key": "PhysRevD.87.122001Cc13R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/31647"
+},
+{
+"key": "PhysRevD.87.122001Cc14R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.55.6760"
+},
+{
+"key": "PhysRevD.87.122001Cc15R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.80.015020"
+},
+{
+"key": "PhysRevD.87.122001Cc16R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.51.3923"
+},
+{
+"key": "PhysRevD.87.122001Cc17R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/S0927-6505(01)00137-2"
+},
+{
+"key": "PhysRevD.87.122001Cc18R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1007/s10714-007-0580-6"
+},
+{
+"key": "PhysRevD.87.122001Cc19R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/527524"
+},
+{
+"key": "PhysRevD.87.122001Cc20R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2006.04.001"
+},
+{
+"key": "PhysRevD.87.122001Cc21R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1475-7516/2006/05/017"
+},
+{
+"key": "PhysRevD.87.122001Cc22R1",
+"volume-title": "Proc. Sci.",
+"author": "F. Piron",
+"issn-type": "print",
+"ISSN": "https://id.crossref.org/issn/1824-8039"
+},
+{
+"key": "PhysRevD.87.122001Cc23R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/697/2/1071"
+},
+{
+"key": "PhysRevD.87.122001Cc24R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1126/science.1169101"
+},
+{
+"key": "PhysRevD.87.122001Cc25R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/nature08574"
+},
+{
+"key": "PhysRevD.87.122001Cc26R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2010.03.003"
+},
+{
+"key": "PhysRevD.87.122001Cc27R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.108.231103"
+},
+{
+"key": "PhysRevD.87.122001Cc28R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.physletb.2008.08.007"
+},
+{
+"key": "PhysRevD.87.122001Cc29R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2009.01.005"
+},
+{
+"key": "PhysRevD.87.122001Cc30R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.101.170402"
+},
+{
+"key": "PhysRevD.87.122001Cc31R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2011.01.007"
+},
+{
+"key": "PhysRevD.87.122001Cc32R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.97.140401"
+},
+{
+"key": "PhysRevD.87.122001Cc33R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.109.241104"
+},
+{
+"key": "PhysRevD.87.122001Cc34R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.83.121301"
+},
+{
+"key": "PhysRevD.87.122001Cc35R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.110.201601"
+},
+{
+"key": "PhysRevD.87.122001Cc36R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.physletb.2008.06.029"
+},
+{
+"key": "PhysRevD.87.122001Cc37R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/524396"
+},
+{
+"key": "PhysRevD.87.122001Cc38R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.80.084017"
+},
+{
+"key": "PhysRevD.87.122001Cc39R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.90.211601"
+},
+{
+"key": "PhysRevD.87.122001Cc40R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.58.116002"
+},
+{
+"key": "PhysRevD.87.122001Cc41R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1475-7516/2008/01/031"
+},
+{
+"key": "PhysRevD.87.122001Cc42R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0067-0049/192/2/18"
+},
+{
+"key": "PhysRevD.87.122001Cc43R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/730/2/119"
+},
+{
+"key": "PhysRevD.87.122001Cc44R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0067-0049/203/1/4"
+},
+{
+"key": "PhysRevD.87.122001Cc47R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/200811571"
+},
+{
+"key": "PhysRevD.87.122001Cc48R1",
+"first-page": "1",
+"volume": "9352",
+"author": "F. Olivares",
+"year": "2009",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevD.87.122001Cc49R1",
+"first-page": "1",
+"volume": "9873",
+"author": "A. Cucchiara",
+"year": "2009",
+"journal-title": "GRB Coordinates Network"
+},
+{
+"key": "PhysRevD.87.122001Cc50R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1051/0004-6361/201015216"
+},
+{
+"key": "PhysRevD.87.122001Cc51R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/176902"
+},
+{
+"key": "PhysRevD.87.122001Cc52R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/729/2/114"
+},
+{
+"key": "PhysRevD.87.122001Cc54R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.78.033013"
+},
+{
+"key": "PhysRevD.87.122001Cc55R1",
+"volume-title": "Probability and Statistics in Particle Physics",
+"author": "A.\u2009G. Frodesen",
+"year": "1979"
+},
+{
+"key": "PhysRevD.87.122001Cc56R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/172995"
+},
+{
+"key": "PhysRevD.87.122001Cc57R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0264-9381/21/12/L01"
+},
+{
+"key": "PhysRevD.87.122001Cc58R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/716/2/1178"
+},
+{
+"key": "PhysRevD.87.122001Cc59R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/0004-637X/706/1/L138"
+},
+{
+"key": "PhysRevD.87.122001Cc60R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/526414"
+},
+{
+"key": "PhysRevD.87.122001Cc61R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1111/j.1365-2966.2011.20332.x"
+},
+{
+"key": "PhysRevD.87.122001Cc62R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/337962"
+},
+{
+"key": "PhysRevD.87.122001Cc63R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2012.04.006"
+},
+{
+"key": "PhysRevD.87.122001Cc64R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/RevModPhys.83.11"
+},
+{
+"key": "PhysRevD.87.122001Cc65R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.77.3288"
+},
+{
+"key": "PhysRevD.87.122001Cc66R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.44.1740"
+},
+{
+"key": "PhysRevD.87.122001Cc67R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.105.021101"
+},
+{
+"key": "PhysRevD.87.122001Cc68R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.physletb.2010.09.035"
+},
+{
+"key": "PhysRevD.87.122001Cc69R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2012.02.001"
+}
+],
+"container-title": [
+"Physical Review D"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://link.aps.org/accepted/10.1103/PhysRevD.87.122001",
+"content-type": "application/pdf",
+"content-version": "am",
+"intended-application": "unspecified"
+},
+{
+"URL": "http://link.aps.org/article/10.1103/PhysRevD.87.122001",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevD.87.122001/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2017,
+4,
+6
+]
+],
+"date-time": "2017-04-06T12:54:39Z",
+"timestamp": 1491483279000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevD.87.122001"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2013,
+6,
+4
+]
+]
+},
+"references-count": 66,
+"journal-issue": {
+"issue": "12",
+"published-print": {
+"date-parts": [
+[
+2013,
+6
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physrevd.87.122001",
+"relation": {},
+"ISSN": [
+"1550-7998",
+"1550-2368"
+],
+"issn-type": [
+{
+"value": "1550-7998",
+"type": "print"
+},
+{
+"value": "1550-2368",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2013,
+6,
+4
+]
+]
+},
+"article-number": "122001"
+}
+}

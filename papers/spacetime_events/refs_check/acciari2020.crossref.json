@@ -1,0 +1,3087 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+9,
+20
+]
+],
+"date-time": "2026-09-20T14:13:55Z",
+"timestamp": 1789913635222,
+"version": "4.0.1"
+},
+"reference-count": 21,
+"publisher": "American Physical Society (APS)",
+"issue": "2",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+2020,
+7,
+9
+]
+],
+"date-time": "2020-07-09T00:00:00Z",
+"timestamp": 1594252800000
+},
+"content-version": "vor",
+"delay-in-days": 0,
+"URL": "https://link.aps.org/licenses/aps-default-license"
+}
+],
+"funder": [
+{
+"DOI": "10.13039/501100002347",
+"name": "Bundesministerium f\u00fcr Bildung und Forschung",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100002347",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004189",
+"name": "Max-Planck-Gesellschaft",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100004189",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004007",
+"name": "Instituto Nazionale di Fisica Nucleare",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100004007",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100005184",
+"name": "Istituto Nazionale di Astrofisica",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100005184",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001711",
+"name": "Schweizerischer Nationalfonds zur F\u00f6rderung der Wissenschaftlichen Forschung",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100001711",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA2017-87859-P"
+],
+"award-info": [
+{
+"award-number": [
+"FPA2017-87859-P"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA2017-85668-P"
+],
+"award-info": [
+{
+"award-number": [
+"FPA2017-85668-P"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA2017-82729-C6-2-R"
+],
+"award-info": [
+{
+"award-number": [
+"FPA2017-82729-C6-2-R"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA2017-82729-C6-6-R"
+],
+"award-info": [
+{
+"award-number": [
+"FPA2017-82729-C6-6-R"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA2017-82729-C6-5-R"
+],
+"award-info": [
+{
+"award-number": [
+"FPA2017-82729-C6-5-R"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"AYA2015-71042-P"
+],
+"award-info": [
+{
+"award-number": [
+"AYA2015-71042-P"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"AYA2016-76012-C3-1-P"
+],
+"award-info": [
+{
+"award-number": [
+"AYA2016-76012-C3-1-P"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"ESP2017-87055-C2-2-P"
+],
+"award-info": [
+{
+"award-number": [
+"ESP2017-87055-C2-2-P"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003329",
+"name": "Ministerio de Econom\u00eda y Competitividad",
+"doi-asserted-by": "publisher",
+"award": [
+"FPA201790566REDC"
+],
+"award-info": [
+{
+"award-number": [
+"FPA201790566REDC"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100003329",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001502",
+"name": "Department of Atomic Energy, Government of India",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100001502",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001691",
+"name": "Japan Society for the Promotion of Science",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100001691",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001700",
+"name": "Ministry of Education, Culture, Sports, Science and Technology",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100001700",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100005992",
+"name": "Ministry of Education and Science",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100005992",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100002341",
+"name": "Academy of Finland",
+"doi-asserted-by": "publisher",
+"award": [
+"320045"
+],
+"award-info": [
+{
+"award-number": [
+"320045"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100002341",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004488",
+"name": "Hrvatska Zaklada za Znanost",
+"doi-asserted-by": "publisher",
+"award": [
+"IP-2016-06-9782"
+],
+"award-info": [
+{
+"award-number": [
+"IP-2016-06-9782"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100004488",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001659",
+"name": "Deutsche Forschungsgemeinschaft",
+"doi-asserted-by": "publisher",
+"award": [
+"SFB823/C4"
+],
+"award-info": [
+{
+"award-number": [
+"SFB823/C4"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001659",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100001659",
+"name": "Deutsche Forschungsgemeinschaft",
+"doi-asserted-by": "publisher",
+"award": [
+"SFB876/C3"
+],
+"award-info": [
+{
+"award-number": [
+"SFB876/C3"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100001659",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100003593",
+"name": "Conselho Nacional de Desenvolvimento Cient\u00edfico e Tecnol\u00f3gico",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100003593",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100004586",
+"name": "Funda\u00e7\u00e3o Carlos Chagas Filho de Amparo \u00e0 Pesquisa do Estado do Rio de Janeiro",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100004586",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100006358",
+"name": "Stiftelsen Blanceflor Boncompagni Ludovisi, f\u00f6dd Bildt",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/501100006358",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/100010661",
+"name": "Horizon 2020 Framework Programme",
+"doi-asserted-by": "publisher",
+"id": [
+{
+"id": "10.13039/100010661",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/100010665",
+"name": "H2020 Marie Sk\u0142odowska-Curie Actions",
+"doi-asserted-by": "publisher",
+"award": [
+"754510"
+],
+"award-info": [
+{
+"award-number": [
+"754510"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/100010665",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/100010665",
+"name": "H2020 Marie Sk\u0142odowska-Curie Actions",
+"doi-asserted-by": "publisher",
+"award": [
+"664931"
+],
+"award-info": [
+{
+"award-number": [
+"664931"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/100010665",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"DOI": "10.13039/501100000921",
+"name": "European Cooperation in Science and Technology",
+"doi-asserted-by": "publisher",
+"award": [
+"CA18108"
+],
+"award-info": [
+{
+"award-number": [
+"CA18108"
+]
+}
+],
+"id": [
+{
+"id": "10.13039/501100000921",
+"id-type": "DOI",
+"asserted-by": "publisher"
+}
+]
+},
+{
+"name": "Instituto de Astrof\u00edsica de Canarias"
+},
+{
+"name": "Observatorio del Roque de los Muchachos"
+},
+{
+"name": "National RI Roadmap",
+"award": [
+"DO1-153/28.08.2018"
+],
+"award-info": [
+{
+"award-number": [
+"DO1-153/28.08.2018"
+]
+}
+]
+},
+{
+"name": "Spanish Centro de Excelencia",
+"award": [
+"SEV-2016-0588"
+],
+"award-info": [
+{
+"award-number": [
+"SEV-2016-0588"
+]
+}
+]
+},
+{
+"name": "Spanish Centro de Excelencia",
+"award": [
+"SEV-2015-0548"
+],
+"award-info": [
+{
+"award-number": [
+"SEV-2015-0548"
+]
+}
+]
+},
+{
+"name": "Unidad de Excelencia",
+"award": [
+"MDM-2014-0369"
+],
+"award-info": [
+{
+"award-number": [
+"MDM-2014-0369"
+]
+}
+]
+},
+{
+"name": "University of Rijeka",
+"award": [
+"13.12.1.3.02"
+],
+"award-info": [
+{
+"award-number": [
+"13.12.1.3.02"
+]
+}
+]
+},
+{
+"name": "Polish National Research Centre",
+"award": [
+"UMO-2016/22/M/ST9/00382"
+],
+"award-info": [
+{
+"award-number": [
+"UMO-2016/22/M/ST9/00382"
+]
+}
+]
+},
+{
+"name": "Brazilian MCTIC"
+}
+],
+"content-domain": {
+"domain": [
+"journals.aps.org"
+],
+"crossmark-restriction": true
+},
+"short-container-title": [
+"Phys. Rev. Lett."
+],
+"DOI": "10.1103/physrevlett.125.021301",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2020,
+7,
+9
+]
+],
+"date-time": "2020-07-09T14:14:26Z",
+"timestamp": 1594304066000
+},
+"update-policy": "https://doi.org/10.1103/crossmark-policy",
+"source": "Crossref",
+"is-referenced-by-count": 80,
+"title": [
+"Bounds on Lorentz Invariance Violation from MAGIC Observation of GRB 190114C"
+],
+"prefix": "10.1103",
+"volume": "125",
+"author": [
+{
+"given": "V.\u2009A.",
+"family": "Acciari",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Ansoldi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.\u2009A.",
+"family": "Antonelli",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Arbet Engels",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Baack",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Babi\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Banerjee",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "U.",
+"family": "Barres de Almeida",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.\u2009A.",
+"family": "Barrio",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Becerra Gonz\u00e1lez",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Bednarek",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Bellizzi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Bernardini",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Berti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Besenrieder",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Bhattacharyya",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Bigongiari",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Biland",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "O.",
+"family": "Blanch",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Bonnoli",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "\u017d.",
+"family": "Bo\u0161njak",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Busetto",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Carosi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Ceribella",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Cerruti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Chai",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Chilingarian",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Cikota",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.\u2009M.",
+"family": "Colak",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "U.",
+"family": "Colin",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Colombo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.\u2009L.",
+"family": "Contreras",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Cortina",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Covino",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "D\u2019Amico",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "D\u2019Elia",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Da Vela",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Dazzi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "De Angelis",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "De Lotto",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Delfino",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Delgado",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Depaoli",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Di Pierro",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Di Venere",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Do Souto Espi\u00f1eira",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Dominis Prester",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Donini",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Dorner",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Doro",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Elsaesser",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Fallah Ramazani",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Fattorini",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Ferrara",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Foffano",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.\u2009V.",
+"family": "Fonseca",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Font",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Fruck",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Fukami",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.\u2009J.",
+"family": "Garc\u00eda L\u00f3pez",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Garczarczyk",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Gasparyan",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Gaug",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Giglietto",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Giordano",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Gliwny",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Godinovi\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Green",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Hadasch",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Hahn",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Herrera",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Hoang",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Hrupec",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "H\u00fctten",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Inada",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Inoue",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Ishio",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Iwamura",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Jouvin",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Kajiwara",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Karjalainen",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Kerszberg",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Kobayashi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "H.",
+"family": "Kubo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Kushida",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Lamastra",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Lelas",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Leone",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Lindfors",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Lombardi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Longo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "L\u00f3pez",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "L\u00f3pez-Coto",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "L\u00f3pez-Oramas",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Loporchio",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Machado de Oliveira Fraga",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Maggio",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Majumdar",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Makariev",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Mallamaci",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Maneva",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Manganaro",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Mannheim",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Maraschi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Mariotti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Mart\u00ednez",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Mazin",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Mender",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Mi\u0107anovi\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Miceli",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Miener",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Minev",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.\u2009M.",
+"family": "Miranda",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Mirzoyan",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Molina",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Moralejo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Morcuende",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Moreno",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Moretti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Munar-Adrover",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Neustroev",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Nigro",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Nilsson",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Ninci",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Nishijima",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Noda",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Nogu\u00e9s",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Nozaki",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Ohtani",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Oka",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Otero-Santos",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Palatiello",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Paneque",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "R.",
+"family": "Paoletti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.\u2009M.",
+"family": "Paredes",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Pavleti\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Pe\u00f1il",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Perennes",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Peresano",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Persic",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.\u2009G.",
+"family": "Prada Moroni",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "E.",
+"family": "Prandini",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "I.",
+"family": "Puljak",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "W.",
+"family": "Rhode",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Rib\u00f3",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Rico",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.",
+"family": "Righi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Rugliancich",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Saha",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Sahakyan",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Saito",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Sakurai",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Satalecka",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "B.",
+"family": "Schleicher",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "K.",
+"family": "Schmidt",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Schweizer",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "Sitarek",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "I.",
+"family": "\u0160nidari\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Sobczynska",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Spolon",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "A.",
+"family": "Stamerra",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Strom",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Strzys",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Y.",
+"family": "Suda",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "T.",
+"family": "Suri\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Takahashi",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "F.",
+"family": "Tavecchio",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "P.",
+"family": "Temnikov",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"ORCID": "https://orcid.org/0000-0002-4209-3407",
+"authenticated-orcid": true,
+"given": "T.",
+"family": "Terzi\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Teshima",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N.",
+"family": "Torres-Alb\u00e0",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Tosti",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "J.",
+"family": "van Scherpenberg",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "G.",
+"family": "Vanzo",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Vazquez Acosta",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "S.",
+"family": "Ventura",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Verguilov",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "C.\u2009F.",
+"family": "Vigorito",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "V.",
+"family": "Vitale",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "I.",
+"family": "Vovk",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "M.",
+"family": "Will",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D.",
+"family": "Zari\u0107",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "L.",
+"family": "Nava",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"name": "MAGIC Collaboration",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "16",
+"published-online": {
+"date-parts": [
+[
+2020,
+7,
+9
+]
+]
+},
+"reference": [
+{
+"key": "PhysRevLett.125.021301Cc1R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.39.683"
+},
+{
+"key": "PhysRevLett.125.021301Cc2R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/31647"
+},
+{
+"key": "PhysRevLett.125.021301Cc3R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.59.124021"
+},
+{
+"key": "PhysRevLett.125.021301Cc4R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevLett.87.141601"
+},
+{
+"key": "PhysRevLett.125.021301Cc5R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1006/aphy.1995.1092"
+},
+{
+"key": "PhysRevLett.125.021301Cc6R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1142/S0217751X00002779"
+},
+{
+"key": "PhysRevLett.125.021301Cc7R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1126-6708/2002/03/043"
+},
+{
+"key": "PhysRevLett.125.021301Cc8R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1086/312057"
+},
+{
+"key": "PhysRevLett.125.021301Cc9R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1088/1475-7516/2008/01/031"
+},
+{
+"key": "PhysRevLett.125.021301Cc10R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.87.122001"
+},
+{
+"key": "PhysRevLett.125.021301Cc11R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1103/PhysRevD.99.083009"
+},
+{
+"key": "PhysRevLett.125.021301Cc12R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4357/aaf1c4"
+},
+{
+"key": "PhysRevLett.125.021301Cc13R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4365/aa8404"
+},
+{
+"key": "PhysRevLett.125.021301Cc14R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.3847/1538-4357/ab1d4e"
+},
+{
+"key": "PhysRevLett.125.021301Cc15R1",
+"first-page": "1",
+"volume": "23695",
+"author": "J. Selsing",
+"year": "2019",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "PhysRevLett.125.021301Cc16R1",
+"first-page": "1",
+"volume": "23708",
+"author": "A.\u2009J. Castro-Tirado",
+"year": "2019",
+"journal-title": "GRB Coord. Netw."
+},
+{
+"key": "PhysRevLett.125.021301Cc17R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/s41586-019-1750-x"
+},
+{
+"key": "PhysRevLett.125.021301Cc18R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2015.04.004"
+},
+{
+"key": "PhysRevLett.125.021301Cc19R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1038/s41586-019-1754-6"
+},
+{
+"key": "PhysRevLett.125.021301Cc20R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1016/j.astropartphys.2009.01.005"
+},
+{
+"key": "PhysRevLett.125.021301Cc21R1",
+"doi-asserted-by": "publisher",
+"DOI": "10.1111/j.1365-2966.2010.17631.x"
+}
+],
+"container-title": [
+"Physical Review Letters"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "https://link.aps.org/article/10.1103/PhysRevLett.125.021301",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "syndication"
+},
+{
+"URL": "http://harvest.aps.org/v2/journals/articles/10.1103/PhysRevLett.125.021301/fulltext",
+"content-type": "unspecified",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2025,
+1,
+2
+]
+],
+"date-time": "2025-01-02T18:01:58Z",
+"timestamp": 1735840918000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://link.aps.org/doi/10.1103/PhysRevLett.125.021301"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+2020,
+7,
+9
+]
+]
+},
+"references-count": 21,
+"journal-issue": {
+"issue": "2",
+"published-print": {
+"date-parts": [
+[
+2020,
+7
+]
+]
+}
+},
+"URL": "https://doi.org/10.1103/physrevlett.125.021301",
+"relation": {},
+"ISSN": [
+"0031-9007",
+"1079-7114"
+],
+"issn-type": [
+{
+"value": "0031-9007",
+"type": "print"
+},
+{
+"value": "1079-7114",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+2020,
+7,
+9
+]
+]
+},
+"article-number": "021301"
+}
+}

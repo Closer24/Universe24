@@ -1,0 +1,549 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{36}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\url{https://doi.org/#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\bibcommenthead
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem[\protect\citeauthoryear{Loschmidt}{1876}]{loschmidt1876}
+\begin{barticle}
+\bauthor{\bsnm{Loschmidt}, \binits{J.}}:
+\batitle{{{\"U}ber den Zustand des W{\"a}rmegleichgewichtes eines Systems von
+  K{\"o}rpern mit R{\"u}cksicht auf die Schwerkraft. I}}.
+\bjtitle{Sitzungsberichte der Kaiserlichen Akademie der Wissenschaften,
+  Mathematisch-Naturwissenschaftliche Classe}
+\bvolume{73},
+\bfpage{128}--\blpage{142}
+(\byear{1876})
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem[\protect\citeauthoryear{Boltzmann}{1877}]{boltzmann1877}
+\begin{barticle}
+\bauthor{\bsnm{Boltzmann}, \binits{L.}}:
+\batitle{{{\"U}ber die Beziehung zwischen dem zweiten Hauptsatze der
+  mechanischen W{\"a}rmetheorie und der Wahrscheinlichkeitsrechnung respektive
+  den S{\"a}tzen {\"u}ber das W{\"a}rmegleichgewicht}}.
+\bjtitle{Sitzungsberichte der Kaiserlichen Akademie der Wissenschaften,
+  Mathematisch-Naturwissenschaftliche Classe}
+\bvolume{76},
+\bfpage{373}--\blpage{435}
+(\byear{1877})
+\end{barticle}
+\endbibitem
+
+%%% 3
+\bibitem[\protect\citeauthoryear{Boltzmann}{1896}]{boltzmann1896}
+\begin{barticle}
+\bauthor{\bsnm{Boltzmann}, \binits{L.}}:
+\batitle{{Entgegnung auf die w{\"a}rmetheoretischen Betrachtungen des Hrn. E.
+  Zermelo}}.
+\bjtitle{Annalen der Physik}
+\bvolume{293}(\bissue{4}),
+\bfpage{773}--\blpage{784}
+(\byear{1896})
+\doiurl{10.1002/andp.18962930414}
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem[\protect\citeauthoryear{Rovelli}{2019}]{rovelli2019}
+\begin{barticle}
+\bauthor{\bsnm{Rovelli}, \binits{C.}}:
+\batitle{Where was past low-entropy?}
+\bjtitle{Entropy}
+\bvolume{21}(\bissue{5}),
+\bfpage{466}
+(\byear{2019})
+\doiurl{10.3390/e21050466}
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem[\protect\citeauthoryear{Ghirardi et~al.}{1986}]{grw1986}
+\begin{barticle}
+\bauthor{\bsnm{Ghirardi}, \binits{G.}},
+\bauthor{\bsnm{Rimini}, \binits{A.}},
+\bauthor{\bsnm{Weber}, \binits{T.}}:
+\batitle{Unified dynamics for microscopic and macroscopic systems}.
+\bjtitle{Physical Review D}
+\bvolume{34}(\bissue{2}),
+\bfpage{470}--\blpage{491}
+(\byear{1986})
+\doiurl{10.1103/PhysRevD.34.470}
+\end{barticle}
+\endbibitem
+
+%%% 6
+\bibitem[\protect\citeauthoryear{Penrose}{1996}]{penrose1996}
+\begin{barticle}
+\bauthor{\bsnm{Penrose}, \binits{R.}}:
+\batitle{On gravity's role in quantum state reduction}.
+\bjtitle{General Relativity and Gravitation}
+\bvolume{28}(\bissue{5}),
+\bfpage{581}--\blpage{600}
+(\byear{1996})
+\doiurl{10.1007/BF02105068}
+\end{barticle}
+\endbibitem
+
+%%% 7
+\bibitem[\protect\citeauthoryear{Zurek}{2003}]{zurek2003}
+\begin{barticle}
+\bauthor{\bsnm{Zurek}, \binits{W.H.}}:
+\batitle{Decoherence, einselection, and the quantum origins of the classical}.
+\bjtitle{Reviews of Modern Physics}
+\bvolume{75}(\bissue{3}),
+\bfpage{715}--\blpage{775}
+(\byear{2003})
+\doiurl{10.1103/RevModPhys.75.715}
+\end{barticle}
+\endbibitem
+
+%%% 8
+\bibitem[\protect\citeauthoryear{Joos and Zeh}{1985}]{joos1985}
+\begin{barticle}
+\bauthor{\bsnm{Joos}, \binits{E.}},
+\bauthor{\bsnm{Zeh}, \binits{H.D.}}:
+\batitle{The emergence of classical properties through interaction with the
+  environment}.
+\bjtitle{Zeitschrift f{\"u}r Physik B Condensed Matter}
+\bvolume{59}(\bissue{2}),
+\bfpage{223}--\blpage{243}
+(\byear{1985})
+\doiurl{10.1007/BF01725541}
+\end{barticle}
+\endbibitem
+
+%%% 9
+\bibitem[\protect\citeauthoryear{Maccone}{2009}]{maccone2009}
+\begin{barticle}
+\bauthor{\bsnm{Maccone}, \binits{L.}}:
+\batitle{Quantum solution to the arrow-of-time dilemma}.
+\bjtitle{Physical Review Letters}
+\bvolume{103}(\bissue{8}),
+\bfpage{080401}
+(\byear{2009})
+\doiurl{10.1103/PhysRevLett.103.080401}
+\end{barticle}
+\endbibitem
+
+%%% 10
+\bibitem[\protect\citeauthoryear{Jennings and Rudolph}{2010}]{jennings2010}
+\begin{barticle}
+\bauthor{\bsnm{Jennings}, \binits{D.}},
+\bauthor{\bsnm{Rudolph}, \binits{T.}}:
+\batitle{Entanglement and the thermodynamic arrow of time}.
+\bjtitle{Physical Review E}
+\bvolume{81}(\bissue{6}),
+\bfpage{061130}
+(\byear{2010})
+\doiurl{10.1103/PhysRevE.81.061130}
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem[\protect\citeauthoryear{Landauer}{1961}]{landauer1961}
+\begin{barticle}
+\bauthor{\bsnm{Landauer}, \binits{R.}}:
+\batitle{Irreversibility and heat generation in the computing process}.
+\bjtitle{IBM Journal of Research and Development}
+\bvolume{5}(\bissue{3}),
+\bfpage{183}--\blpage{191}
+(\byear{1961})
+\doiurl{10.1147/rd.53.0183}
+\end{barticle}
+\endbibitem
+
+%%% 12
+\bibitem[\protect\citeauthoryear{Bennett}{1973}]{bennett1973}
+\begin{barticle}
+\bauthor{\bsnm{Bennett}, \binits{C.H.}}:
+\batitle{Logical reversibility of computation}.
+\bjtitle{IBM Journal of Research and Development}
+\bvolume{17}(\bissue{6}),
+\bfpage{525}--\blpage{532}
+(\byear{1973})
+\doiurl{10.1147/rd.176.0525}
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem[\protect\citeauthoryear{Bennett}{1982}]{bennett1982}
+\begin{barticle}
+\bauthor{\bsnm{Bennett}, \binits{C.H.}}:
+\batitle{The thermodynamics of computation---a review}.
+\bjtitle{International Journal of Theoretical Physics}
+\bvolume{21}(\bissue{12}),
+\bfpage{905}--\blpage{940}
+(\byear{1982})
+\doiurl{10.1007/BF02084158}
+\end{barticle}
+\endbibitem
+
+%%% 14
+\bibitem[\protect\citeauthoryear{Zurek}{1989}]{zurek1989}
+\begin{barticle}
+\bauthor{\bsnm{Zurek}, \binits{W.H.}}:
+\batitle{Algorithmic randomness and physical entropy}.
+\bjtitle{Physical Review A}
+\bvolume{40}(\bissue{8}),
+\bfpage{4731}--\blpage{4751}
+(\byear{1989})
+\doiurl{10.1103/PhysRevA.40.4731}
+\end{barticle}
+\endbibitem
+
+%%% 15
+\bibitem[\protect\citeauthoryear{Gonen}{2026}]{first}
+\begin{botherref}
+\oauthor{\bsnm{Gonen}, \binits{A.}}:
+Universe24: the implementation of one integer rule on a cubic lattice, read
+  through clicks.
+Zenodo, concept record
+(2026).
+\doiurl{10.5281/zenodo.23190113}
+\end{botherref}
+\endbibitem
+
+%%% 16
+\bibitem[\protect\citeauthoryear{Toffoli and Margolus}{1990}]{toffoli1990}
+\begin{barticle}
+\bauthor{\bsnm{Toffoli}, \binits{T.}},
+\bauthor{\bsnm{Margolus}, \binits{N.}}:
+\batitle{Invertible cellular automata: a review}.
+\bjtitle{Physica D}
+\bvolume{45}(\bissue{1--3}),
+\bfpage{229}--\blpage{253}
+(\byear{1990})
+\doiurl{10.1016/0167-2789(90)90185-R}
+\end{barticle}
+\endbibitem
+
+%%% 17
+\bibitem[\protect\citeauthoryear{Fredkin}{1990}]{fredkin1990}
+\begin{barticle}
+\bauthor{\bsnm{Fredkin}, \binits{E.}}:
+\batitle{Digital mechanics: an informational process based on reversible
+  universal cellular automata}.
+\bjtitle{Physica D}
+\bvolume{45}(\bissue{1--3}),
+\bfpage{254}--\blpage{270}
+(\byear{1990})
+\doiurl{10.1016/0167-2789(90)90186-S}
+\end{barticle}
+\endbibitem
+
+%%% 18
+\bibitem[\protect\citeauthoryear{Zuse}{1969}]{zuse1969}
+\begin{bbook}
+\bauthor{\bsnm{Zuse}, \binits{K.}}:
+\bbtitle{Rechnender Raum}.
+\bpublisher{Vieweg},
+\blocation{Braunschweig}
+(\byear{1969}).
+\bcomment{English translation: Calculating Space, MIT Technical Translation
+  AZT-70-164-GEMIT, MIT Project MAC, Cambridge, 1970}
+\end{bbook}
+\endbibitem
+
+%%% 19
+\bibitem[\protect\citeauthoryear{Wolfram}{2002}]{wolfram2002}
+\begin{bbook}
+\bauthor{\bsnm{Wolfram}, \binits{S.}}:
+\bbtitle{A New Kind of Science}.
+\bpublisher{Wolfram Media},
+\blocation{Champaign}
+(\byear{2002})
+\end{bbook}
+\endbibitem
+
+%%% 20
+\bibitem[\protect\citeauthoryear{{'t Hooft}}{2016}]{thooft2016}
+\begin{bbook}
+\bauthor{\bsnm{{'t Hooft}}, \binits{G.}}:
+\bbtitle{The Cellular Automaton Interpretation of Quantum Mechanics}.
+\bsertitle{Fundamental Theories of Physics},
+vol. \bseriesno{185}.
+\bpublisher{Springer},
+\blocation{Cham}
+(\byear{2016}).
+\doiurl{10.1007/978-3-319-41285-6}
+\end{bbook}
+\endbibitem
+
+%%% 21
+\bibitem[\protect\citeauthoryear{Tegmark}{2008}]{tegmark2008}
+\begin{barticle}
+\bauthor{\bsnm{Tegmark}, \binits{M.}}:
+\batitle{The mathematical universe}.
+\bjtitle{Foundations of Physics}
+\bvolume{38}(\bissue{2}),
+\bfpage{101}--\blpage{150}
+(\byear{2008})
+\doiurl{10.1007/s10701-007-9186-9}
+\end{barticle}
+\endbibitem
+
+%%% 22
+\bibitem[\protect\citeauthoryear{Brecher}{1977}]{brecher1977}
+\begin{barticle}
+\bauthor{\bsnm{Brecher}, \binits{K.}}:
+\batitle{Is the speed of light independent of the velocity of the source?}
+\bjtitle{Physical Review Letters}
+\bvolume{39}(\bissue{17}),
+\bfpage{1051}--\blpage{1054}
+(\byear{1977})
+\doiurl{10.1103/PhysRevLett.39.1051}
+\end{barticle}
+\endbibitem
+
+%%% 23
+\bibitem[\protect\citeauthoryear{Michelson and Morley}{1887}]{michelson1887}
+\begin{barticle}
+\bauthor{\bsnm{Michelson}, \binits{A.A.}},
+\bauthor{\bsnm{Morley}, \binits{E.W.}}:
+\batitle{On the relative motion of the {Earth} and the luminiferous ether}.
+\bjtitle{American Journal of Science}
+\bvolume{34}(\bissue{203}),
+\bfpage{333}--\blpage{345}
+(\byear{1887})
+\doiurl{10.2475/ajs.s3-34.203.333}
+\end{barticle}
+\endbibitem
+
+%%% 24
+\bibitem[\protect\citeauthoryear{Pound and Rebka}{1960}]{pound1960}
+\begin{barticle}
+\bauthor{\bsnm{Pound}, \binits{R.V.}},
+\bauthor{\bsnm{Rebka}, \binits{G.A.}}:
+\batitle{Apparent weight of photons}.
+\bjtitle{Physical Review Letters}
+\bvolume{4}(\bissue{7}),
+\bfpage{337}--\blpage{341}
+(\byear{1960})
+\doiurl{10.1103/PhysRevLett.4.337}
+\end{barticle}
+\endbibitem
+
+%%% 25
+\bibitem[\protect\citeauthoryear{Einstein}{1911}]{einstein1911}
+\begin{barticle}
+\bauthor{\bsnm{Einstein}, \binits{A.}}:
+\batitle{{\"U}ber den {Einflu\ss} der {Schwerkraft} auf die {Ausbreitung} des
+  {Lichtes}}.
+\bjtitle{Annalen der Physik}
+\bvolume{340}(\bissue{10}),
+\bfpage{898}--\blpage{908}
+(\byear{1911})
+\doiurl{10.1002/andp.19113401005}
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem[\protect\citeauthoryear{Dyson et~al.}{1920}]{dyson1920}
+\begin{barticle}
+\bauthor{\bsnm{Dyson}, \binits{F.W.}},
+\bauthor{\bsnm{Eddington}, \binits{A.S.}},
+\bauthor{\bsnm{Davidson}, \binits{C.}}:
+\batitle{A determination of the deflection of light by the {Sun}'s
+  gravitational field, from observations made at the total eclipse of {May} 29,
+  1919}.
+\bjtitle{Philosophical Transactions of the Royal Society of London. Series A}
+\bvolume{220}(\bissue{571--581}),
+\bfpage{291}--\blpage{333}
+(\byear{1920})
+\doiurl{10.1098/rsta.1920.0009}
+\end{barticle}
+\endbibitem
+
+%%% 27
+\bibitem[\protect\citeauthoryear{Shapiro}{1964}]{shapiro1964}
+\begin{barticle}
+\bauthor{\bsnm{Shapiro}, \binits{I.I.}}:
+\batitle{Fourth test of general relativity}.
+\bjtitle{Physical Review Letters}
+\bvolume{13}(\bissue{26}),
+\bfpage{789}--\blpage{791}
+(\byear{1964})
+\doiurl{10.1103/PhysRevLett.13.789}
+\end{barticle}
+\endbibitem
+
+%%% 28
+\bibitem[\protect\citeauthoryear{Ives and Stilwell}{1938}]{ives1938}
+\begin{barticle}
+\bauthor{\bsnm{Ives}, \binits{H.E.}},
+\bauthor{\bsnm{Stilwell}, \binits{G.R.}}:
+\batitle{An experimental study of the rate of a moving atomic clock}.
+\bjtitle{Journal of the Optical Society of America}
+\bvolume{28}(\bissue{7}),
+\bfpage{215}--\blpage{226}
+(\byear{1938})
+\doiurl{10.1364/JOSA.28.000215}
+\end{barticle}
+\endbibitem
+
+%%% 29
+\bibitem[\protect\citeauthoryear{Einstein}{1905}]{einstein1905}
+\begin{barticle}
+\bauthor{\bsnm{Einstein}, \binits{A.}}:
+\batitle{Zur {Elektrodynamik} bewegter {K\"orper}}.
+\bjtitle{Annalen der Physik}
+\bvolume{322}(\bissue{10}),
+\bfpage{891}--\blpage{921}
+(\byear{1905})
+\doiurl{10.1002/andp.19053221004}
+\end{barticle}
+\endbibitem
+
+%%% 30
+\bibitem[\protect\citeauthoryear{Acciari et~al.}{2020}]{acciari2020}
+\begin{barticle}
+\bauthor{\bsnm{Acciari}, \binits{V.A.}},
+\bauthor{\bsnm{Ansoldi}, \binits{S.}},
+\bauthor{\bsnm{Antonelli}, \binits{L.A.}},
+\bauthor{\bsnm{Arbet~Engels}, \binits{A.}},
+\bauthor{\bsnm{Baack}, \binits{D.}},
+\bauthor{\bsnm{Babi{\'c}}, \binits{A.}},
+\bauthor{\bsnm{Banerjee}, \binits{B.}},
+\bauthor{\bsnm{{Barres de Almeida}}, \binits{U.}},
+\bauthor{\bsnm{Barrio}, \binits{J.A.}},
+\bauthor{\bsnm{Becerra~Gonz{\'a}lez}, \binits{J.}}, \betal:
+\batitle{Bounds on {Lorentz} invariance violation from {MAGIC} observation of
+  {GRB 190114C}}.
+\bjtitle{Physical Review Letters}
+\bvolume{125}(\bissue{2}),
+\bfpage{021301}
+(\byear{2020})
+\doiurl{10.1103/PhysRevLett.125.021301}
+\end{barticle}
+\endbibitem
+
+%%% 31
+\bibitem[\protect\citeauthoryear{Vasileiou et~al.}{2013}]{vasileiou2013}
+\begin{barticle}
+\bauthor{\bsnm{Vasileiou}, \binits{V.}},
+\bauthor{\bsnm{Jacholkowska}, \binits{A.}},
+\bauthor{\bsnm{Piron}, \binits{F.}},
+\bauthor{\bsnm{Bolmont}, \binits{J.}},
+\bauthor{\bsnm{Couturier}, \binits{C.}},
+\bauthor{\bsnm{Granot}, \binits{J.}},
+\bauthor{\bsnm{Stecker}, \binits{F.W.}},
+\bauthor{\bsnm{Cohen-Tanugi}, \binits{J.}},
+\bauthor{\bsnm{Longo}, \binits{F.}}:
+\batitle{Constraints on {Lorentz} invariance violation from {Fermi}-{Large Area
+  Telescope} observations of gamma-ray bursts}.
+\bjtitle{Physical Review D}
+\bvolume{87}(\bissue{12}),
+\bfpage{122001}
+(\byear{2013})
+\doiurl{10.1103/PhysRevD.87.122001}
+\end{barticle}
+\endbibitem
+
+%%% 32
+\bibitem[\protect\citeauthoryear{{LHAASO Collaboration}}{2023}]{lhaaso2023b}
+\begin{botherref}
+\oauthor{\bsnm{{LHAASO Collaboration}}}:
+Very high-energy gamma-ray emission beyond 10 {TeV} from {GRB 221009A}.
+Science Advances
+\textbf{9}(46)
+(2023)
+\doiurl{10.1126/sciadv.adj2778}
+\end{botherref}
+\endbibitem
+
+%%% 33
+\bibitem[\protect\citeauthoryear{Cao et~al.}{2024}]{lhaaso2024}
+\begin{barticle}
+\bauthor{\bsnm{Cao}, \binits{Z.}}, \betal:
+\batitle{Stringent tests of {Lorentz} invariance violation from {LHAASO}
+  observations of {GRB 221009A}}.
+\bjtitle{Physical Review Letters}
+\bvolume{133}(\bissue{7}),
+\bfpage{071501}
+(\byear{2024})
+\doiurl{10.1103/PhysRevLett.133.071501}
+\end{barticle}
+\endbibitem
+
+%%% 34
+\bibitem[\protect\citeauthoryear{Mattingly}{2005}]{mattingly2005}
+\begin{barticle}
+\bauthor{\bsnm{Mattingly}, \binits{D.}}:
+\batitle{Modern tests of {Lorentz} invariance}.
+\bjtitle{Living Reviews in Relativity}
+\bvolume{8},
+\bfpage{5}
+(\byear{2005})
+\doiurl{10.12942/lrr-2005-5}
+\end{barticle}
+\endbibitem
+
+%%% 35
+\bibitem[\protect\citeauthoryear{{de Broglie}}{1925}]{debroglie1925}
+\begin{barticle}
+\bauthor{\bsnm{{de Broglie}}, \binits{L.}}:
+\batitle{Recherches sur la th{\'e}orie des quanta}.
+\bjtitle{Annales de Physique}
+\bvolume{10}(\bissue{3}),
+\bfpage{22}--\blpage{128}
+(\byear{1925})
+\doiurl{10.1051/anphys/192510030022}
+\end{barticle}
+\endbibitem
+
+%%% 36
+\bibitem[\protect\citeauthoryear{Gonen}{2026}]{software}
+\begin{botherref}
+\oauthor{\bsnm{Gonen}, \binits{A.}}:
+Universe24: the implementation of one integer rule on a cubic lattice, read
+  through clicks.
+Zenodo, version 1.1.0
+(2026).
+\doiurl{10.5281/zenodo.23202100}
+\end{botherref}
+\endbibitem
+
+\end{thebibliography}
