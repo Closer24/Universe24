@@ -106,9 +106,9 @@
 "first-page": "664",
 "DOI": "10.1007/BF01507634",
 "volume": "28",
-"author": "E. Schrödinger",
+"author": "E. Schr\u00f6dinger",
 "year": "1926",
-"unstructured": "Schrödinger, E.: Naturwissenschaften28, 664 (1926)",
+"unstructured": "Schr\u00f6dinger, E.: Naturwissenschaften28, 664 (1926)",
 "journal-title": "Naturwissenschaften"
 },
 {
@@ -288,7 +288,7 @@
 },
 {
 "key": "BF01725541_CR19",
-"unstructured": "Pfeifer, P.: Thesis (Zürich 1980)"
+"unstructured": "Pfeifer, P.: Thesis (Z\u00fcrich 1980)"
 },
 {
 "key": "BF01725541_CR20",
@@ -319,9 +319,9 @@
 "first-page": "405",
 "DOI": "10.1016/0003-4916(73)90040-7",
 "volume": "76",
-"author": "O. Kübler",
+"author": "O. K\u00fcbler",
 "year": "1973",
-"unstructured": "Kübler, O., Zeh, H.D.: Ann. Phys. (NY)76, 405 (1973)",
+"unstructured": "K\u00fcbler, O., Zeh, H.D.: Ann. Phys. (NY)76, 405 (1973)",
 "journal-title": "Ann. Phys. (NY)"
 },
 {
@@ -423,7 +423,7 @@
 }
 ],
 "container-title": [
-"Zeitschrift für Physik B Condensed Matter"
+"Zeitschrift f\u00fcr Physik B Condensed Matter"
 ],
 "original-title": [],
 "language": "en",

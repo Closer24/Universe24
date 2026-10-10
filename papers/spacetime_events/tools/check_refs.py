@@ -25,7 +25,7 @@ def fold(text: str) -> str:
     text = re.sub(r"\\[\"'^`~=.]", "", text)  # accent commands: \"o, \'e, ...
     text = re.sub(r"\\[a-zA-Z]+|[{}\\]", "", text)
     text = re.sub(r"<[^>]+>", " ", text)  # a record's markup, <i>...</i>
-    text = unicodedata.normalize("NFKD", text.replace("ß", "ss"))
+    text = unicodedata.normalize("NFKD", text.replace("\u00df", "ss"))
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 

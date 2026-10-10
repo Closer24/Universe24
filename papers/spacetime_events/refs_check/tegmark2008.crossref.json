@@ -133,7 +133,7 @@
 "volume-title": "Infinity and the Mind",
 "author": "R. Rucker",
 "year": "1982",
-"unstructured": "Rucker, R.: Infinity and the Mind. Birkhäuser, Boston (1982)"
+"unstructured": "Rucker, R.: Infinity and the Mind. Birkh\u00e4user, Boston (1982)"
 },
 {
 "key": "9186_CR6",
@@ -198,7 +198,7 @@
 "volume": "29",
 "author": "J. Ladyman",
 "year": "1998",
-"unstructured": "Ladyman, J.: Stud. Hist. Philos. Sci. 29, 409–424 (1998)",
+"unstructured": "Ladyman, J.: Stud. Hist. Philos. Sci. 29, 409\u2013424 (1998)",
 "journal-title": "Stud. Hist. Philos. Sci."
 },
 {
@@ -230,7 +230,7 @@
 },
 {
 "key": "9186_CR18",
-"unstructured": "Cohen, M.: Master’s thesis. Dept. of Philosophy, Ben Gurion University of the Negev, Israel (2003)"
+"unstructured": "Cohen, M.: Master\u2019s thesis. Dept. of Philosophy, Ben Gurion University of the Negev, Israel (2003)"
 },
 {
 "key": "9186_CR19",
@@ -285,9 +285,9 @@
 {
 "key": "9186_CR25",
 "volume-title": "Artificial Minds",
-"author": "O.E. Rössler",
+"author": "O.E. R\u00f6ssler",
 "year": "1987",
-"unstructured": "Rössler, O.E.: In: Casti, J.L., Karlquist, A. (eds.) Artificial Minds. North-Holland, New York (1987)"
+"unstructured": "R\u00f6ssler, O.E.: In: Casti, J.L., Karlquist, A. (eds.) Artificial Minds. North-Holland, New York (1987)"
 },
 {
 "key": "9186_CR26",
@@ -298,10 +298,10 @@
 },
 {
 "key": "9186_CR27",
-"volume-title": "Cybernetics and Systems ’96",
+"volume-title": "Cybernetics and Systems \u201996",
 "author": "K. Svozil",
 "year": "1996",
-"unstructured": "Svozil, K.: In: Trappl, R. (ed.) Cybernetics and Systems ’96. Austrian Society for Cybernetic Studies, Vienna (1996)"
+"unstructured": "Svozil, K.: In: Trappl, R. (ed.) Cybernetics and Systems \u201996. Austrian Society for Cybernetic Studies, Vienna (1996)"
 },
 {
 "key": "9186_CR28",
@@ -575,7 +575,7 @@
 "volume-title": "Fundamental Interactions",
 "author": "A.A. Starobinsky",
 "year": "1984",
-"unstructured": "Starobinsky, A.A.: Fundamental Interactions, p. 55. MGPI Press, Moscow (1984)"
+"unstructured": "Starobinsky, A.A.: Fundamental Interactions, p.\u00a055. MGPI Press, Moscow (1984)"
 },
 {
 "key": "9186_CR59",
@@ -1057,10 +1057,10 @@
 "key": "9186_CR118",
 "doi-asserted-by": "crossref",
 "DOI": "10.1093/oso/9780198519737.001.0001",
-"volume-title": "The Emperor’s New Mind",
+"volume-title": "The Emperor\u2019s New Mind",
 "author": "R. Penrose",
 "year": "1989",
-"unstructured": "Penrose, R.: The Emperor’s New Mind. Oxford University Press, Oxford (1989)"
+"unstructured": "Penrose, R.: The Emperor\u2019s New Mind. Oxford University Press, Oxford (1989)"
 },
 {
 "key": "9186_CR119",
@@ -1124,9 +1124,9 @@
 "first-page": "173",
 "DOI": "10.1007/BF01700692",
 "volume": "38",
-"author": "K. Gödel",
+"author": "K. G\u00f6del",
 "year": "1931",
-"unstructured": "Gödel, K.: Monatshefte Math. Phys. 38, 173 (1931)",
+"unstructured": "G\u00f6del, K.: Monatshefte Math. Phys. 38, 173 (1931)",
 "journal-title": "Monatshefte Math. Phys."
 },
 {

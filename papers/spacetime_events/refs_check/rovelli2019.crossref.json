@@ -67,7 +67,7 @@
 "short-container-title": [
 "Entropy"
 ],
-"abstract": "<jats:p>Where was the past low-entropy of the early universe located? Contrary to some popular answers, I argue that that the dominant source of low-entropy is the fact that a single degree of freedom, the scale factor, was not at equilibrium. I also discuss possible interpretations of the “improbability” of this early low-entropy.</jats:p>",
+"abstract": "<jats:p>Where was the past low-entropy of the early universe located? Contrary to some popular answers, I argue that that the dominant source of low-entropy is the fact that a single degree of freedom, the scale factor, was not at equilibrium. I also discuss possible interpretations of the \u201cimprobability\u201d of this early low-entropy.</jats:p>",
 "DOI": "10.3390/e21050466",
 "type": "journal-article",
 "created": {
@@ -97,7 +97,7 @@
 "sequence": "first",
 "affiliation": [
 {
-"name": "Centre de Physique Théorique (CPT), Aix-Marseille Université, Université de Toulon, CNRS, F-13288 Marseille, France"
+"name": "Centre de Physique Th\u00e9orique (CPT), Aix-Marseille Universit\u00e9, Universit\u00e9 de Toulon, CNRS, F-13288 Marseille, France"
 }
 ],
 "role": [
@@ -130,7 +130,7 @@
 "doi-asserted-by": "crossref",
 "first-page": "32",
 "DOI": "10.1063/1.881363",
-"article-title": "Boltzmann’s entropy and time’s arrow",
+"article-title": "Boltzmann\u2019s entropy and time\u2019s arrow",
 "volume": "46",
 "author": "Lebowitz",
 "year": "1993",
@@ -142,7 +142,7 @@
 },
 {
 "key": "ref_4",
-"unstructured": "Price, H. (1996). Time’s Arrow, Oxford University Press."
+"unstructured": "Price, H. (1996). Time\u2019s Arrow, Oxford University Press."
 },
 {
 "key": "ref_5",
@@ -169,7 +169,7 @@
 {
 "key": "ref_7",
 "doi-asserted-by": "crossref",
-"unstructured": "Chamcham, K., Silk, J., Barrow, J., and Saunders, S. (2017). Is time’s arrow perspectival?. The Philosophy of Cosmology, Cambridge University Press.",
+"unstructured": "Chamcham, K., Silk, J., Barrow, J., and Saunders, S. (2017). Is time\u2019s arrow perspectival?. The Philosophy of Cosmology, Cambridge University Press.",
 "DOI": "10.1017/9781316535783"
 },
 {
@@ -196,7 +196,7 @@
 },
 {
 "key": "ref_13",
-"unstructured": "Zeh, H.D. (2016). Comment on the ‘Janus Point’ Explanation of the Arrow of Time. arXiv."
+"unstructured": "Zeh, H.D. (2016). Comment on the \u2018Janus Point\u2019 Explanation of the Arrow of Time. arXiv."
 },
 {
 "key": "ref_14",

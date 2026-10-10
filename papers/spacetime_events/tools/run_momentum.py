@@ -1,4 +1,4 @@
-"""The momentum at the click, read on the board with the program's own functions: the run's world (run3d_fixed/one_piece_3d_fixed.json, with its mode file) is stepped through the run, and equation (5), the board's momentum along each axis, is summed over the whole board for the light's lines and for the atoms' lines at every tick (node.momentum_of, the one reading the click itself uses), as is the write's twist probe (meeting.Probe.gained) as the click runs: the piece's momentum per axis as the credit line reads it at the taker's two Nodes scaled to one count, the quarter turn, the largest count of the angle 1/q_0 two Nodes along the board can hold, the momentum that quarter turn gives the taker along the board, and what is left of the piece's; and the same world run again with no detector declared (the twin of the run's third check), for the light's drift without a click. Written to run_momentum.json beside the paper, the board sums at the ticks the paper prints. Deterministic; the run's own toss. Usage: python3 -I run_momentum.py [src directory, ../../src unless given]; the world names the repository's examples/ files; the twin's mode file is the run's with the twin's digest (the bodies' records and the packets are the same, only the detectors' declarations are dropped)."""
+"""The momentum at the click, read on the board with the program's own functions: the run's world (run3d_fixed/one_piece_3d_fixed.json, with its mode file) is stepped through the run, and equation (5), the board's momentum along each axis, is summed over the whole board for the light's lines and for the atoms' lines at every tick (node.momentum_of, the one reading the click itself uses), as is the write's twist probe (Probe.gained) as the click runs: the piece's momentum per axis as the credit line reads it at the taker's two Nodes scaled to one count, the quarter turn, the largest count of the angle 1/q_0 two Nodes along the board can hold, the momentum that quarter turn gives the taker along the board, and what is left of the piece's; and the same world run again with no detector declared (the twin of the run's third check), for the light's drift without a click. Written to run_momentum.json beside the paper, the board sums at the ticks the paper prints. Deterministic; the run's own toss. Usage: python3 -I run_momentum.py [src directory, ../../src unless given]; the world names the repository's examples/ files; the twin's mode file is the run's with the twin's digest (the bodies' records and the packets are the same, only the detectors' declarations are dropped)."""
 from __future__ import annotations
 import json
 import shutil
@@ -11,7 +11,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE.parents[2] / "src"
 sys.path.insert(0, str(SRC))
-from event_universe import meeting, node, resonance  # noqa: E402
+from event_universe import node, resonance  # noqa: E402
+try:
+    from event_universe.twist import Probe  # noqa: E402  # the engine after the split
+except ImportError:
+    from event_universe.meeting import Probe  # noqa: E402  # the engine before it
 from event_universe.lattice import Lattice  # noqa: E402
 from event_universe.world_files import input_digest, load_world  # noqa: E402
 
@@ -81,14 +85,14 @@ def linear_run(board: Lattice, name: str, ticks: tuple[int, ...]) -> dict[str, f
 
 def main() -> int:
     readings: list[tuple[int, int, int]] = []  # (axis, count of acts, the momentum gained)
-    original = meeting.Probe.gained
+    original = Probe.gained
 
-    def logged(self: meeting.Probe, count: int) -> int:
+    def logged(self: Probe, count: int) -> int:
         value = original(self, count)
         readings.append((self.axis, count, value))
         return value
 
-    meeting.Probe.gained = logged  # the probe read as the click runs
+    Probe.gained = logged  # the probe read as the click runs
     lines: list[dict] = []
     board = Lattice(load_world(WORLD), lines.append)
     by_tick = {0: sums(board)}
@@ -105,7 +109,7 @@ def main() -> int:
                 before_click = by_tick[board.interval - 1]
                 taker_lines = lines_along(board, credit["family"])
         by_tick[board.interval] = sums(board)
-    meeting.Probe.gained = original
+    Probe.gained = original
     if credit is None:
         print("run_momentum: no click with a momentum in this world")
         return 1

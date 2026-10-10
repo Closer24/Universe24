@@ -322,7 +322,7 @@
 "doi-asserted-by": "crossref",
 "first-page": "120",
 "DOI": "10.1038/scientificamerican1070-120",
-"article-title": "The fantastic combinations of John Conway's new solitaire game ‘Life’",
+"article-title": "The fantastic combinations of John Conway's new solitaire game \u2018Life\u2019",
 "volume": "223",
 "author": "Gardner",
 "year": "1970",
@@ -417,7 +417,7 @@
 "series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
 "first-page": "146",
 "article-title": "Optimization of collision rules in the FCHC lattice gases and addition of rest particles",
-"author": "Hénon",
+"author": "H\u00e9non",
 "year": "1989"
 },
 {
@@ -425,12 +425,12 @@
 "series-title": "Discrete Kinetic Theory, Lattice Gas Dynamics, and Foundations of Hydrodynamics",
 "first-page": "160",
 "article-title": "On the relation between lattice gases and cellular automata",
-"author": "Hénon",
+"author": "H\u00e9non",
 "year": "1989"
 },
 {
 "key": "10.1016/0167-2789(90)90185-R_BIB34",
-"unstructured": "H. Hrgovčić, personal communication."
+"unstructured": "H. Hrgov\u010di\u0107, personal communication."
 },
 {
 "key": "10.1016/0167-2789(90)90185-R_BIB35",

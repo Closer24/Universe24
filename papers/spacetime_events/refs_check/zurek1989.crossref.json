@@ -269,7 +269,7 @@
 "first-page": "602",
 "DOI": "10.1016/S0019-9958(66)80018-9",
 "volume": "9",
-"author": "P. Martin-Löf",
+"author": "P. Martin-L\u00f6f",
 "year": "1966",
 "journal-title": "Inf. Control"
 },
@@ -297,7 +297,7 @@
 "volume": "15",
 "author": "P. Gacs",
 "year": "1974",
-"journal-title": "Sov. Phys.—Dokl."
+"journal-title": "Sov. Phys.\u2014Dokl."
 },
 {
 "key": "PhysRevA.40.4731Cc29R1",
@@ -305,7 +305,7 @@
 "volume": "17",
 "author": "L. A. Levin",
 "year": "1976",
-"journal-title": "Sov. Phys.—Dokl."
+"journal-title": "Sov. Phys.\u2014Dokl."
 },
 {
 "key": "PhysRevA.40.4731Cc30R1",
@@ -343,7 +343,7 @@
 },
 {
 "key": "PhysRevA.40.4731Cc33R1",
-"volume-title": "Gödel, Escher, Bach",
+"volume-title": "G\u00f6del, Escher, Bach",
 "author": "D. Hofstader",
 "year": "1980"
 },

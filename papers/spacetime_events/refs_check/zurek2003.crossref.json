@@ -675,7 +675,7 @@
 "first-page": "747",
 "DOI": "10.1007/BF01016778",
 "volume": "58",
-"author": "d’Espagnat, B.",
+"author": "d\u2019Espagnat, B.",
 "year": "1989",
 "journal-title": "J. Stat. Phys."
 },
@@ -995,7 +995,7 @@
 "volume": "XVIII",
 "author": "Geroch, R.",
 "year": "1984",
-"journal-title": "Noûs"
+"journal-title": "No\u00fbs"
 },
 {
 "key": "RevModPhys.75.715Cc124R1",
@@ -1871,7 +1871,7 @@
 "first-page": "893",
 "DOI": "10.1007/BF01014230",
 "volume": "53",
-"author": "Omnès, R.",
+"author": "Omn\u00e8s, R.",
 "year": "1988",
 "journal-title": "J. Stat. Phys."
 },
@@ -1881,7 +1881,7 @@
 "first-page": "339",
 "DOI": "10.1103/RevModPhys.64.339",
 "volume": "64",
-"author": "Omnès, R.",
+"author": "Omn\u00e8s, R.",
 "year": "1992",
 "journal-title": "Rev. Mod. Phys."
 },
@@ -2101,7 +2101,7 @@
 "first-page": "664",
 "DOI": "10.1007/BF01507634",
 "volume": "14",
-"author": "Schrödinger, E.",
+"author": "Schr\u00f6dinger, E.",
 "year": "1926",
 "journal-title": "Naturwissenschaften"
 },
@@ -2111,7 +2111,7 @@
 "first-page": "807",
 "DOI": "10.1007/BF01491891",
 "volume": "23",
-"author": "Schrödinger, E.",
+"author": "Schr\u00f6dinger, E.",
 "year": "1935",
 "journal-title": "Naturwissenschaften"
 },
@@ -2121,7 +2121,7 @@
 "first-page": "555",
 "DOI": "10.1017/S0305004100013554",
 "volume": "31",
-"author": "Schrödinger, E.",
+"author": "Schr\u00f6dinger, E.",
 "year": "1935",
 "journal-title": "Proc. Cambridge Philos. Soc."
 },
@@ -2131,7 +2131,7 @@
 "first-page": "446",
 "DOI": "10.1017/S0305004100019137",
 "volume": "32",
-"author": "Schrödinger, E.",
+"author": "Schr\u00f6dinger, E.",
 "year": "1936",
 "journal-title": "Proc. Cambridge Philos. Soc."
 },
@@ -2221,7 +2221,7 @@
 "volume": "XVIII",
 "author": "Stein, H.",
 "year": "1984",
-"journal-title": "Noûs"
+"journal-title": "No\u00fbs"
 },
 {
 "key": "RevModPhys.75.715Cc282R1",

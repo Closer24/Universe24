@@ -68,7 +68,7 @@
 "source": "Crossref",
 "is-referenced-by-count": 1553,
 "title": [
-"The thermodynamics of computation—a review"
+"The thermodynamics of computation\u2014a review"
 ],
 "prefix": "10.1007",
 "volume": "21",
@@ -100,7 +100,7 @@
 "volume": "17",
 "author": "C. H. Bennett",
 "year": "1973",
-"unstructured": "Bennett, C. H. (1973). “Logical Reversibility of Computation”,IBM Journal of Research and Development,17, 525–532.",
+"unstructured": "Bennett, C. H. (1973). \u201cLogical Reversibility of Computation\u201d,IBM Journal of Research and Development,17, 525\u2013532.",
 "journal-title": "IBM Journal of Research and Development"
 },
 {
@@ -111,7 +111,7 @@
 "volume": "22",
 "author": "C. H. Bennett",
 "year": "1975",
-"unstructured": "Bennett, C. H. (1975). “Efficient Estimation of Free Energy Differences from Monte Carlo Data,”Journal of Computational Physics,22, 245–268.",
+"unstructured": "Bennett, C. H. (1975). \u201cEfficient Estimation of Free Energy Differences from Monte Carlo Data,\u201dJournal of Computational Physics,22, 245\u2013268.",
 "journal-title": "Journal of Computational Physics"
 },
 {
@@ -122,7 +122,7 @@
 "volume": "11",
 "author": "C. H. Bennett",
 "year": "1979",
-"unstructured": "Bennett, C. H. (1979). “Dissipation-Error Tradeoff in Proofreading,”BioSystems,11, 85–90.",
+"unstructured": "Bennett, C. H. (1979). \u201cDissipation-Error Tradeoff in Proofreading,\u201dBioSystems,11, 85\u201390.",
 "journal-title": "BioSystems"
 },
 {
@@ -134,7 +134,7 @@
 "volume": "232",
 "author": "G. Chaitin",
 "year": "1975",
-"unstructured": "Chaitin, G. (1975a). “Randomness and Mathematical Proof,”Scientific American,232, No. 5, 46–52.",
+"unstructured": "Chaitin, G. (1975a). \u201cRandomness and Mathematical Proof,\u201dScientific American,232, No. 5, 46\u201352.",
 "journal-title": "Scientific American"
 },
 {
@@ -145,7 +145,7 @@
 "volume": "22",
 "author": "G. Chaitin",
 "year": "1975",
-"unstructured": "Chaitin, G. (1975b). “A Theory of Program Size Formally Identical to Information Theory,”Journal of the Association for Computing Machinery,22, 329–340.",
+"unstructured": "Chaitin, G. (1975b). \u201cA Theory of Program Size Formally Identical to Information Theory,\u201dJournal of the Association for Computing Machinery,22, 329\u2013340.",
 "journal-title": "Journal of the Association for Computing Machinery"
 },
 {
@@ -156,7 +156,7 @@
 "volume": "21",
 "author": "G. Chaitin",
 "year": "1977",
-"unstructured": "Chaitin, G. (1977). “Algorithmic Information Theory,”IBM Journal of Research and Development,21, 350–359, 496.",
+"unstructured": "Chaitin, G. (1977). \u201cAlgorithmic Information Theory,\u201dIBM Journal of Research and Development,21, 350\u2013359, 496.",
 "journal-title": "IBM Journal of Research and Development"
 },
 {
@@ -165,13 +165,13 @@
 "volume-title": "Science and Information Theory",
 "author": "L. Brillouin",
 "year": "1956",
-"unstructured": "Brillouin, L. (1956).Science and Information Theory (2nd edition, 1962), pp. 261–264, 194–196. Academic Press, London.",
+"unstructured": "Brillouin, L. (1956).Science and Information Theory (2nd edition, 1962), pp. 261\u2013264, 194\u2013196. Academic Press, London.",
 "edition": "2nd edition"
 },
 {
 "key": "BF02084158_CR9",
 "doi-asserted-by": "crossref",
-"unstructured": "Fredkin, Edward, and Toffoli, Tommaso, (1982). “Conservative Logic,” MIT Report MIT/LCS/TM-197;International Journal of Theoretical Physics,21, 219.",
+"unstructured": "Fredkin, Edward, and Toffoli, Tommaso, (1982). \u201cConservative Logic,\u201d MIT Report MIT/LCS/TM-197;International Journal of Theoretical Physics,21, 219.",
 "DOI": "10.1007/BF01857727"
 },
 {
@@ -180,7 +180,7 @@
 "volume": "15",
 "author": "P. Gacs",
 "year": "1974",
-"unstructured": "Gacs, P. (1974). “On the Symmetry of Algorithmic Information,”Soviet Mathematics Doklady,15, 1477.",
+"unstructured": "Gacs, P. (1974). \u201cOn the Symmetry of Algorithmic Information,\u201dSoviet Mathematics Doklady,15, 1477.",
 "journal-title": "Soviet Mathematics Doklady"
 },
 {
@@ -191,7 +191,7 @@
 "volume": "71",
 "author": "J. J. Hopfield",
 "year": "1974",
-"unstructured": "Hopfield, J. J. (1974).Proceedings of the National Academy of Science USA,71, 4135–4139.",
+"unstructured": "Hopfield, J. J. (1974).Proceedings of the National Academy of Science USA,71, 4135\u20134139.",
 "journal-title": "Proceedings of the National Academy of Science USA"
 },
 {
@@ -213,7 +213,7 @@
 "volume": "3",
 "author": "R. Landauer",
 "year": "1961",
-"unstructured": "Landauer, R. (1961). “Irreversibility and Heat Generation in the Computing Process,”IBM Journal of Research and Development,3, 183–191.",
+"unstructured": "Landauer, R. (1961). \u201cIrreversibility and Heat Generation in the Computing Process,\u201dIBM Journal of Research and Development,3, 183\u2013191.",
 "journal-title": "IBM Journal of Research and Development"
 },
 {
@@ -222,7 +222,7 @@
 "volume": "17",
 "author": "L. A. Levin",
 "year": "1976",
-"unstructured": "Levin, L. A. (1976). “Various Measures of Complexity for Finite Objects (Axiomatic Description),”Soviet Mathematics Doklady,17, 522–526.",
+"unstructured": "Levin, L. A. (1976). \u201cVarious Measures of Complexity for Finite Objects (Axiomatic Description),\u201dSoviet Mathematics Doklady,17, 522\u2013526.",
 "journal-title": "Soviet Mathematics Doklady"
 },
 {
@@ -233,7 +233,7 @@
 "volume": "21",
 "author": "K. Likharev",
 "year": "1982",
-"unstructured": "Likharev, K. (1982). “Classical and Quantum Limitations on Energy Consumption in Computation,”International Journal of Theoretical Physics,21, 311.",
+"unstructured": "Likharev, K. (1982). \u201cClassical and Quantum Limitations on Energy Consumption in Computation,\u201dInternational Journal of Theoretical Physics,21, 311.",
 "journal-title": "International Journal of Theoretical Physics"
 },
 {
@@ -241,7 +241,7 @@
 "volume-title": "Automata Studies",
 "author": "John McCarthy",
 "year": "1956",
-"unstructured": "McCarthy, John (1956). “The Inversion of Functions Defined by Turing Machines,” inAutomata Studies, C. E. Shannon and J. McCarthy, eds. Princeton Univ. Press, New Jersey."
+"unstructured": "McCarthy, John (1956). \u201cThe Inversion of Functions Defined by Turing Machines,\u201d inAutomata Studies, C. E. Shannon and J. McCarthy, eds. Princeton Univ. Press, New Jersey."
 },
 {
 "key": "BF02084158_CR17",
@@ -251,13 +251,13 @@
 "volume": "57",
 "author": "J. Ninio",
 "year": "1975",
-"unstructured": "Ninio, J. (1975).Biochimie,57, 587–595.",
+"unstructured": "Ninio, J. (1975).Biochimie,57, 587\u2013595.",
 "journal-title": "Biochimie"
 },
 {
 "key": "BF02084158_CR18",
 "doi-asserted-by": "crossref",
-"unstructured": "Reif, John H. (1979). “Complexity of the Mover's Problem and Generalizations,” Proc. 20'th IEEE Symp. Found. Comp. Sci., San Juan, Puerto Rico, pp. 421–427.",
+"unstructured": "Reif, John H. (1979). \u201cComplexity of the Mover's Problem and Generalizations,\u201d Proc. 20'th IEEE Symp. Found. Comp. Sci., San Juan, Puerto Rico, pp. 421\u2013427.",
 "DOI": "10.1109/SFCS.1979.10"
 },
 {
@@ -268,13 +268,13 @@
 "volume": "53",
 "author": "L. Szilard",
 "year": "1929",
-"unstructured": "Szilard, L. (1929).Zeitschrift für Physik,53, 840–856.",
-"journal-title": "Zeitschrift für Physik"
+"unstructured": "Szilard, L. (1929).Zeitschrift f\u00fcr Physik,53, 840\u2013856.",
+"journal-title": "Zeitschrift f\u00fcr Physik"
 },
 {
 "key": "BF02084158_CR20",
 "doi-asserted-by": "crossref",
-"unstructured": "Toffoli, Tommaso (1980). “Reversible Computing,” MIT Report MIT/LCS/TM-151.",
+"unstructured": "Toffoli, Tommaso (1980). \u201cReversible Computing,\u201d MIT Report MIT/LCS/TM-151.",
 "DOI": "10.21236/ADA082021"
 },
 {
@@ -285,7 +285,7 @@
 "volume": "14",
 "author": "Tommaso Toffoli",
 "year": "1981",
-"unstructured": "Toffoli, Tommaso (1981). “Bicontinuous Extensions of Invertible Combinatorial Functions,”Mathematical and Systems Theory,14, 13–23.",
+"unstructured": "Toffoli, Tommaso (1981). \u201cBicontinuous Extensions of Invertible Combinatorial Functions,\u201dMathematical and Systems Theory,14, 13\u201323.",
 "journal-title": "Mathematical and Systems Theory"
 },
 {
@@ -312,7 +312,7 @@
 "volume": "25",
 "author": "A. K. Zvonkin",
 "year": "1970",
-"unstructured": "Zvonkin, A. K., and Levin, L. A. (1970). “The Complexity of Finite Objects and the Development of the Concepts of Information and Randomness by Means of the Theory of Algorithms,”Russian Mathematical Surveys,25, 83–124.",
+"unstructured": "Zvonkin, A. K., and Levin, L. A. (1970). \u201cThe Complexity of Finite Objects and the Development of the Concepts of Information and Randomness by Means of the Theory of Algorithms,\u201dRussian Mathematical Surveys,25, 83\u2013124.",
 "journal-title": "Russian Mathematical Surveys"
 }
 ],

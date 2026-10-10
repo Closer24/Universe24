@@ -18,7 +18,7 @@ NATURE = "If the world is built as such a board, this is where the direction of 
 POSTULATES = ["Nature is discrete: a board of events", "once per tick and writes only itself; nothing passes faster than one step per tick", "What we see is clicks, not the board", "Every number at a Node is a whole number", "one simple act, the step of equation", "Light is the kind with the top equal to the bottom", "One kind, gravity, has a content at the Node", "The click, put in by hand"]
 REPO_SENTENCE = "Everything here is in the public repository and can be run by anyone."
 LAST_CLAUSE = "is what we call entanglement on the board."
-PAGE_LIMIT = 18  # the owner's yes to the table of symbols ("טבלת סימונים לדעתי כן") allowed page 16; the table took four fifths of a page, not half, and the external review's items a further half page; the editor asked for page 17 after its cuts of round 12, and 18 if the round's additions (the momentum paragraph in full, the three bursts, the clocks' largest numbers) did not let it hold: the body ends a third of a page into 18, so 18 stands here pending the owner's word; before the table the owner's rule was page 14, then 15 with the ensemble over seeds and the gathered open paragraph (round 8)  # the owner's rule: the body may run to page 14; shorten only where a sentence is uninteresting ("לצמצם עמודים רק אם אפשר ויש דברים שלא מעניינים")
+PAGE_LIMIT = 18  # the owner's yes to the table of symbols (the owner: "a table of symbols, in my view yes") allowed page 16; the table took four fifths of a page, not half, and the external review's items a further half page; the editor asked for page 17 after its cuts of round 12, and 18 if the round's additions (the momentum paragraph in full, the three bursts, the clocks' largest numbers) did not let it hold: the body ends a third of a page into 18, so 18 stands here pending the owner's word; before the table the owner's rule was page 14, then 15 with the ensemble over seeds and the gathered open paragraph (round 8)  # the owner's rule: the body may run to page 14; shorten only where a sentence is uninteresting (the owner: "cut pages only where it can be done and where there are things of no interest")
 OPEN = ["The detector is placed by us, its reset after a click and the keeping of its record ours too, outside the board; in nature the detector is a body on the board and keeps the rule, so nothing it does outruns light, and what it does in detail is not built here.", "What a moving body reads with a ruler of its own, the two-way sameness that was measured \\cite{michelson1887}, and what it reads of light from one side, and what a body standing in the content reads of light with its own clock and its own ruler, are not shown here; the one-side reading depends on the matter pair, and we do not settle it here.", "Whether a body keeps its own record we do not know."]
 LEDGER = "the ledger of what was measured"
 AI_DECLARATION = "\\bmhead{Use of AI tools} The author used AI tools in preparing this manuscript, under the author's direction and review; the author takes full responsibility for its content."
@@ -96,7 +96,7 @@ def main(argv: list[str]) -> int:
     n_wave = count_word(time_sec, "wave")
     if n_wave != 1 or WAVE_CLAUSE not in time_sec:
         musts.append(f"'wave' in the clocks' section {n_wave} time(s); once, in '{WAVE_CLAUSE}'")
-    if "√" in whole or re.search(r"square root", whole, re.I):
+    if "\u221a" in whole or re.search(r"square root", whole, re.I):
         musts.append("a root sign or 'square root'")
     n_nature = len(re.findall(r"in nature", whole))
     if n_nature != 3:
@@ -120,16 +120,16 @@ def main(argv: list[str]) -> int:
     for i, o in enumerate(OPEN, 1):
         once(re.sub(r" +", " ", plain(o)), body, f"open sentence {i}")  # the sentence read as plain() reads the body, its mathematics stripped the same way
     once(LEDGER, body, "the ledger sentence in the body", at_most=True)
-    # the owner's word: every limitation sentence in the one paragraph "What is open", the rest of the text without them
-    open_par = re.search(r"\\textit\{What is open\.\}.*?\n", tex, flags=re.S)
+    # the owner's word: every limitation sentence in the one section "What is open" (Section 6, before the Conclusion), the rest of the text without them
+    open_par = re.search(r"\\section\{What is open\}\\label\{sec:open\}.*?(?=\\section\{)", tex, flags=re.S)
     rest = plain(tex.replace(open_par.group(0), " ")) if open_par else body
     rest = rest.replace("the direction of the burst on the board we do not know", " ")  # the owner: it stays in Section 5, the reason for the two numbers, not a limitation
     for phrase in LIMITS:
         n = len(re.findall(re.escape(phrase), rest))
         if n:
-            musts.append(f"a limitation outside the paragraph 'What is open': '{phrase}' x {n}")
+            musts.append(f"a limitation outside the section 'What is open': '{phrase}' x {n}")
     if open_par is None:
-        musts.append("no paragraph 'What is open'")
+        musts.append("no section 'What is open'")
     if TITLE not in tex:
         musts.append("the title is not the owner's")
     if RUNNING_HEAD not in tex:

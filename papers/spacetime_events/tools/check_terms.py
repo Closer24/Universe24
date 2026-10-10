@@ -19,7 +19,7 @@ TERMS = [
     ("next", r"next (number|plus)|\\mathrm\{next\}", r"keeping the quotient as its next number"),
     ("remainder", r"\bremainders?\b", r"the remainder \(what is left over from the division\)"),
     ("piece", r"\bpieces?\b(?! of particle decay)", r"one whole piece, the smallest amount a detector can take"),  # "one small piece of particle decay aside" in the opening is the everyday word, not the term
-    ("detector", r"\bdetectors?\b", r"a detector we place, one Node or a few with a record"),
+    ("detector", r"(?<!a write into the )\bdetectors?\b", r"a detector we place, one Node or a few with a record"),  # "a write into the detector that took" in the opening names the thing two lines before the sentence that defines it
     ("record", r"(?<!runs back with its )\brecords?\b", r"one Node or a few with a record, clicks \(takes something from the numbers and records it\)"),  # "the toss runs back with its record" in the opening is the toss's own record of its draws, the everyday word, not the detector's
     ("books", r"\bbooks\b", r"the detector's books, the count it keeps of pieces"),
     ("click", r"\bclick(s|ed)?\b", r"clicks \(takes something from the numbers and records it\)"),

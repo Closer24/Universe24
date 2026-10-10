@@ -39,7 +39,7 @@
 "funder": [
 {
 "DOI": "10.13039/501100002347",
-"name": "Bundesministerium für Bildung und Forschung",
+"name": "Bundesministerium f\u00fcr Bildung und Forschung",
 "doi-asserted-by": "publisher",
 "id": [
 {
@@ -87,7 +87,7 @@
 },
 {
 "DOI": "10.13039/501100001711",
-"name": "Schweizerischer Nationalfonds zur Förderung der Wissenschaftlichen Forschung",
+"name": "Schweizerischer Nationalfonds zur F\u00f6rderung der Wissenschaftlichen Forschung",
 "doi-asserted-by": "publisher",
 "id": [
 {
@@ -99,7 +99,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA2017-87859-P"
@@ -121,7 +121,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA2017-85668-P"
@@ -143,7 +143,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA2017-82729-C6-2-R"
@@ -165,7 +165,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA2017-82729-C6-6-R"
@@ -187,7 +187,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA2017-82729-C6-5-R"
@@ -209,7 +209,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "AYA2015-71042-P"
@@ -231,7 +231,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "AYA2016-76012-C3-1-P"
@@ -253,7 +253,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "ESP2017-87055-C2-2-P"
@@ -275,7 +275,7 @@
 },
 {
 "DOI": "10.13039/501100003329",
-"name": "Ministerio de Economía y Competitividad",
+"name": "Ministerio de Econom\u00eda y Competitividad",
 "doi-asserted-by": "publisher",
 "award": [
 "FPA201790566REDC"
@@ -433,7 +433,7 @@
 },
 {
 "DOI": "10.13039/501100003593",
-"name": "Conselho Nacional de Desenvolvimento Científico e Tecnológico",
+"name": "Conselho Nacional de Desenvolvimento Cient\u00edfico e Tecnol\u00f3gico",
 "doi-asserted-by": "publisher",
 "id": [
 {
@@ -445,7 +445,7 @@
 },
 {
 "DOI": "10.13039/501100004586",
-"name": "Fundação Carlos Chagas Filho de Amparo à Pesquisa do Estado do Rio de Janeiro",
+"name": "Funda\u00e7\u00e3o Carlos Chagas Filho de Amparo \u00e0 Pesquisa do Estado do Rio de Janeiro",
 "doi-asserted-by": "publisher",
 "id": [
 {
@@ -457,7 +457,7 @@
 },
 {
 "DOI": "10.13039/501100006358",
-"name": "Stiftelsen Blanceflor Boncompagni Ludovisi, född Bildt",
+"name": "Stiftelsen Blanceflor Boncompagni Ludovisi, f\u00f6dd Bildt",
 "doi-asserted-by": "publisher",
 "id": [
 {
@@ -481,7 +481,7 @@
 },
 {
 "DOI": "10.13039/100010665",
-"name": "H2020 Marie Skłodowska-Curie Actions",
+"name": "H2020 Marie Sk\u0142odowska-Curie Actions",
 "doi-asserted-by": "publisher",
 "award": [
 "754510"
@@ -503,7 +503,7 @@
 },
 {
 "DOI": "10.13039/100010665",
-"name": "H2020 Marie Skłodowska-Curie Actions",
+"name": "H2020 Marie Sk\u0142odowska-Curie Actions",
 "doi-asserted-by": "publisher",
 "award": [
 "664931"
@@ -546,7 +546,7 @@
 ]
 },
 {
-"name": "Instituto de Astrofísica de Canarias"
+"name": "Instituto de Astrof\u00edsica de Canarias"
 },
 {
 "name": "Observatorio del Roque de los Muchachos"
@@ -665,7 +665,7 @@
 "volume": "125",
 "author": [
 {
-"given": "V. A.",
+"given": "V.\u2009A.",
 "family": "Acciari",
 "sequence": "first",
 "affiliation": [],
@@ -689,7 +689,7 @@
 ]
 },
 {
-"given": "L. A.",
+"given": "L.\u2009A.",
 "family": "Antonelli",
 "sequence": "additional",
 "affiliation": [],
@@ -726,7 +726,7 @@
 },
 {
 "given": "A.",
-"family": "Babić",
+"family": "Babi\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -761,7 +761,7 @@
 ]
 },
 {
-"given": "J. A.",
+"given": "J.\u2009A.",
 "family": "Barrio",
 "sequence": "additional",
 "affiliation": [],
@@ -774,7 +774,7 @@
 },
 {
 "given": "J.",
-"family": "Becerra González",
+"family": "Becerra Gonz\u00e1lez",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -905,8 +905,8 @@
 ]
 },
 {
-"given": "Ž.",
-"family": "Bošnjak",
+"given": "\u017d.",
+"family": "Bo\u0161njak",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1001,7 +1001,7 @@
 ]
 },
 {
-"given": "S. M.",
+"given": "S.\u2009M.",
 "family": "Colak",
 "sequence": "additional",
 "affiliation": [],
@@ -1037,7 +1037,7 @@
 ]
 },
 {
-"given": "J. L.",
+"given": "J.\u2009L.",
 "family": "Contreras",
 "sequence": "additional",
 "affiliation": [],
@@ -1074,7 +1074,7 @@
 },
 {
 "given": "G.",
-"family": "D’Amico",
+"family": "D\u2019Amico",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1086,7 +1086,7 @@
 },
 {
 "given": "V.",
-"family": "D’Elia",
+"family": "D\u2019Elia",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1206,7 +1206,7 @@
 },
 {
 "given": "E.",
-"family": "Do Souto Espiñeira",
+"family": "Do Souto Espi\u00f1eira",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1325,7 +1325,7 @@
 ]
 },
 {
-"given": "M. V.",
+"given": "M.\u2009V.",
 "family": "Fonseca",
 "sequence": "additional",
 "affiliation": [],
@@ -1373,8 +1373,8 @@
 ]
 },
 {
-"given": "R. J.",
-"family": "García López",
+"given": "R.\u2009J.",
+"family": "Garc\u00eda L\u00f3pez",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1458,7 +1458,7 @@
 },
 {
 "given": "N.",
-"family": "Godinović",
+"family": "Godinovi\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1542,7 +1542,7 @@
 },
 {
 "given": "M.",
-"family": "Hütten",
+"family": "H\u00fctten",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1758,7 +1758,7 @@
 },
 {
 "given": "M.",
-"family": "López",
+"family": "L\u00f3pez",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1770,7 +1770,7 @@
 },
 {
 "given": "R.",
-"family": "López-Coto",
+"family": "L\u00f3pez-Coto",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1782,7 +1782,7 @@
 },
 {
 "given": "A.",
-"family": "López-Oramas",
+"family": "L\u00f3pez-Oramas",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1926,7 +1926,7 @@
 },
 {
 "given": "M.",
-"family": "Martínez",
+"family": "Mart\u00ednez",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -1962,7 +1962,7 @@
 },
 {
 "given": "S.",
-"family": "Mićanović",
+"family": "Mi\u0107anovi\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2009,7 +2009,7 @@
 ]
 },
 {
-"given": "J. M.",
+"given": "J.\u2009M.",
 "family": "Miranda",
 "sequence": "additional",
 "affiliation": [],
@@ -2178,7 +2178,7 @@
 },
 {
 "given": "L.",
-"family": "Nogués",
+"family": "Nogu\u00e9s",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2273,7 +2273,7 @@
 ]
 },
 {
-"given": "J. M.",
+"given": "J.\u2009M.",
 "family": "Paredes",
 "sequence": "additional",
 "affiliation": [],
@@ -2286,7 +2286,7 @@
 },
 {
 "given": "L.",
-"family": "Pavletić",
+"family": "Pavleti\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2298,7 +2298,7 @@
 },
 {
 "given": "P.",
-"family": "Peñil",
+"family": "Pe\u00f1il",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2345,7 +2345,7 @@
 ]
 },
 {
-"given": "P. G.",
+"given": "P.\u2009G.",
 "family": "Prada Moroni",
 "sequence": "additional",
 "affiliation": [],
@@ -2394,7 +2394,7 @@
 },
 {
 "given": "M.",
-"family": "Ribó",
+"family": "Rib\u00f3",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2550,7 +2550,7 @@
 },
 {
 "given": "I.",
-"family": "Šnidarić",
+"family": "\u0160nidari\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2634,7 +2634,7 @@
 },
 {
 "given": "T.",
-"family": "Surić",
+"family": "Suri\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2684,7 +2684,7 @@
 "ORCID": "https://orcid.org/0000-0002-4209-3407",
 "authenticated-orcid": true,
 "given": "T.",
-"family": "Terzić",
+"family": "Terzi\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2708,7 +2708,7 @@
 },
 {
 "given": "N.",
-"family": "Torres-Albà",
+"family": "Torres-Alb\u00e0",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2791,7 +2791,7 @@
 ]
 },
 {
-"given": "C. F.",
+"given": "C.\u2009F.",
 "family": "Vigorito",
 "sequence": "additional",
 "affiliation": [],
@@ -2840,7 +2840,7 @@
 },
 {
 "given": "D.",
-"family": "Zarić",
+"family": "Zari\u0107",
 "sequence": "additional",
 "affiliation": [],
 "role": [
@@ -2967,7 +2967,7 @@
 "key": "PhysRevLett.125.021301Cc16R1",
 "first-page": "1",
 "volume": "23708",
-"author": "A. J. Castro-Tirado",
+"author": "A.\u2009J. Castro-Tirado",
 "year": "2019",
 "journal-title": "GRB Coord. Netw."
 },

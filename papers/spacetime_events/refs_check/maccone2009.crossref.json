@@ -116,7 +116,7 @@
 {
 "key": "PhysRevLett.103.080401Cc6R2",
 "volume-title": "The Physics of Time Asymmetry",
-"author": "P. C. W. Davies",
+"author": "P.\u2009C.\u2009W. Davies",
 "year": "1974"
 },
 {
@@ -134,13 +134,13 @@
 "doi-asserted-by": "crossref",
 "DOI": "10.2307/j.ctv1bzfptv",
 "volume-title": "Quantum Mechanics and Experience",
-"author": "D. Z. Albert",
+"author": "D.\u2009Z. Albert",
 "year": "1994"
 },
 {
 "key": "PhysRevLett.103.080401Cc7R3",
 "volume-title": "Thermodynamics: Foundations and Applications",
-"author": "E. P. Gyftopoulos",
+"author": "E.\u2009P. Gyftopoulos",
 "year": "2005"
 },
 {
@@ -148,15 +148,15 @@
 "doi-asserted-by": "crossref",
 "DOI": "10.1007/978-3-662-03805-5",
 "volume-title": "The Physical Basis of the Direction of Time",
-"author": "H. D. Zeh",
+"author": "H.\u2009D. Zeh",
 "year": "1999"
 },
 {
 "key": "PhysRevLett.103.080401Cc9R1",
 "doi-asserted-by": "crossref",
 "DOI": "10.1017/CBO9780511622878",
-"volume-title": "Time’s Arrow and Quantum Measurement",
-"author": "L. S. Schulman",
+"volume-title": "Time\u2019s Arrow and Quantum Measurement",
+"author": "L.\u2009S. Schulman",
 "year": "1997"
 },
 {
@@ -166,13 +166,13 @@
 },
 {
 "key": "PhysRevLett.103.080401Cc10R2",
-"volume-title": "Time’s Arrow and Archimedes’ Point",
+"volume-title": "Time\u2019s Arrow and Archimedes\u2019 Point",
 "author": "H. Price",
 "year": "1996"
 },
 {
 "key": "PhysRevLett.103.080401Cc10R3",
-"volume-title": "Time’s Arrows Today",
+"volume-title": "Time\u2019s Arrows Today",
 "year": "1997"
 },
 {
@@ -208,7 +208,7 @@
 },
 {
 "key": "PhysRevLett.103.080401Cc16R1",
-"volume-title": "Maxwell’s Demon: Entropy, Information, Computing",
+"volume-title": "Maxwell\u2019s Demon: Entropy, Information, Computing",
 "year": "1991"
 },
 {
@@ -246,7 +246,7 @@
 },
 {
 "key": "PhysRevLett.103.080401Cc21R1",
-"volume-title": "Proceedings of the Workshop on Physics and Computation Phys Comp’92",
+"volume-title": "Proceedings of the Workshop on Physics and Computation Phys Comp\u201992",
 "author": "R. Landauer",
 "year": "1992"
 },
@@ -278,7 +278,7 @@
 {
 "key": "PhysRevLett.103.080401Cc28R1",
 "volume-title": "Frontiers of Nonequilibrium Statistical Physics",
-"author": "W. H. Zurek",
+"author": "W.\u2009H. Zurek",
 "year": "1984"
 },
 {
@@ -289,7 +289,7 @@
 {
 "key": "PhysRevLett.103.080401Cc30R1",
 "volume-title": "PSA: Proceedings of the Biennial Meeting of the Philosophy of Science Association",
-"author": "D. Z. Albert",
+"author": "D.\u2009Z. Albert",
 "year": "1988"
 }
 ],
