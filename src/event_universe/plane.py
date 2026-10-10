@@ -10,7 +10,7 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES, Wrap, arrival
 from event_universe.core.rule3 import rule3
 from event_universe.features.click import Face, presented
-from event_universe.features.phase import fold, read, signed_rounded
+from event_universe.features.phase import fold, read, rotation_unit, signed_rounded
 from event_universe.features.read import content_of
 from event_universe.loader.derived import FamilyRule
 from event_universe.records import Booking, NodeState, Record, level_at
@@ -86,7 +86,7 @@ def fold_pairs(
 ) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
     """Gravity's pair on each Link in Port order, in the Link unit (ALGEBRA.md, The clock family on the Ports; the two hands' joint line of 2026-10-09): the Link quantity X_ij = 2 num Q_ij keeps its even part X^c = X_ij and takes the odd part X^s_ij = sgn(V_ij) rounded(6 X_ij K |V_ij| / Gamma^2), the angle 12 omega_0 V_ij of the two ends' sum V_ij over 2 Gamma with K = omega_0 Gamma the family's rotation to the unit (`paces.rotation_unit`), one rounding per Link per interval on the size with the sign attached after (features/phase.signed_rounded), so that X^s_ji = -X^s_ij exactly; 0 on a Link the world cuts and on every Link of a massless family (K = 0)."""
     num, square = pair[0], gamma * gamma
-    turn = paces.rotation_unit(*pair, gamma)
+    turn = rotation_unit(*pair, gamma)
     even = tuple(2 * num * factor for factor in factors)  # X_ij, the Link quantity in the Link unit
     odd = tuple(signed_rounded(6 * x * turn * link, square) for x, link in zip(even, links, strict=True))
     return even, odd
@@ -143,7 +143,7 @@ def link_pairs(
 
 def fold_guard(pair: tuple[int, int], gamma: int, links: tuple[Any, ...], name: str) -> None:
     """The fold's guard at load, as the Link's (`link_guard`): the fold's tangent at most 1 on every Link, 6 K |V_ij| <= Gamma^2, within which a folded arrival's part stays within twice the level (`derived.FOLD_REACH`); refused by name beyond it, naming the Port."""
-    turn = paces.rotation_unit(*pair, gamma)
+    turn = rotation_unit(*pair, gamma)
     for port, link in enumerate(links):
         high = int(np.abs(np.asarray(6 * turn * link)).max())
         if high > gamma * gamma:
@@ -213,3 +213,12 @@ def step_plane(
     first = [Record(now[part], np.asarray(u[part]), remainders[part]) for part in range(2)]
     second = [Record(np.asarray(v[part]), now[part], remainders[part]) for part in range(2)]
     return lines, (first, second)
+
+
+def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
+    """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X 2^(1/2) at the angle pi / 4, which the sweep over n passes at the tangent half-angle 2^(1/2) - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes 2^(1/2)); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
+    levels = np.arange(
+        link_wall(gamma) + 1
+    )  # n from 0 through 4 Gamma, the sign's part even and odd in n
+    even, odd = sign_pairs(pair, gamma, (unit * unit,), (levels,))
+    return int((np.abs(even[0]) + np.abs(odd[0])).max()) + 1

@@ -1,6 +1,7 @@
 """Part A, gravity's odd lines in the fold form (ALGEBRA.md, The clock family on the Ports; the two hands' joint line of 2026-10-09): a holder of the content declaring the source `flux` carries three odd lines after its tension lines, written by the count's flux through the axis's two Links summed unhalved over twice the count's wall, and every plane reading it has each Link's read folded into the pair (X^c, X^s) with X^s_ji = -X^s_ij; without the key the engine is bit for bit the frozen one."""
 
 import json
+import lzma
 from fractions import Fraction
 from pathlib import Path
 
@@ -16,7 +17,7 @@ from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import CHARGED, EVENTS, universe_beside
 
-ORACLE = Path(__file__).resolve().parents[2] / "v2_oracle" / "two_slits.look.json"
+ORACLE = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
 KEYS = ("now", "before", "remainder")
 
 
@@ -68,7 +69,7 @@ def arrays(board: Lattice) -> list[np.ndarray]:
 def test_without_flux_the_step_is_bit_identical(monkeypatch):
     """(a) The two slits world of light.json, no `flux` declared, stepped for 20 intervals: every family's level now equals the frozen engine's look file frame by frame (the oracle recorded before Part A), so the code path without a flux holder is the engine of 441b2399 bit for bit; and no family of the shipped universes is folded."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    look = json.loads(ORACLE.read_text(encoding="utf-8"))
+    look = json.loads(lzma.open(ORACLE).read())
     board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
     assert not any(folds(board.families, i) for i in range(len(board.families)))
     for interval in range(21):
@@ -197,9 +198,9 @@ def test_the_static_source_gives_v_proportional_to_u_times_v(tmp_path, monkeypat
 def test_the_rotation_unit_by_the_rotation_act():
     """The family's rest rotation to the unit, K = omega_0 Gamma, found by a bisection on the rotation act and no root (the two hands' (d) of 2026-10-09; features/phase at the fixed angle theta_0 = 1 / Gamma): 5,046 at [4000, 6000] and Gamma 6,000 (arccos(2 / 3) x 6,000 = 5,046.4), 0 at the massless pair [1, 1], and at [2, 3] within one unit of Gamma arccos(2 / 3); the value checked against the phase line itself in Python's fractions at an independent amplitude, the cosine line's level over X above 2 / 3 one act before K and below it one act after, the crossing within one unit of K; and the root is gone from core/paces.py."""
     gamma = 6000
-    assert paces.rotation_unit(4000, 6000, gamma) == 5046
-    assert paces.rotation_unit(1, 1, gamma) == 0
-    found = paces.rotation_unit(2, 3, gamma)
+    assert phase.rotation_unit(4000, 6000, gamma) == 5046
+    assert phase.rotation_unit(1, 1, gamma) == 0
+    found = phase.rotation_unit(2, 3, gamma)
     assert abs(found - gamma * np.arccos(2 / 3)) <= 1
     amplitude = (2**36 // gamma) * gamma  # an amplitude of the test's own, a multiple of Gamma
     pair = phase.iterate(phase.seed(amplitude, gamma), found - 1, gamma)

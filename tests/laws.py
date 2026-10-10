@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import math
 import sys
 from fractions import Fraction
 from pathlib import Path
@@ -14,7 +15,9 @@ from event_universe.core import paces
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, Row, quanta_records
+from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
+from event_universe.world_files import input_digest, load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -277,3 +280,152 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
         assert not delta[~near].any() and fixed + int(delta[near].sum()) == int(delta.sum()) + fixed
         found.append((board.total_share(index)[0] - fixed - int(delta.sum()), abs(terms) + floors))  # type: ignore[operator]
     return found
+
+
+# the builders the parts' tests share (tests/test_part_*.py; the shape of tests/: a helper imported by two files
+# lives here): the turning universe's charged record by hand, the Coulomb chain, the one photon's board, a shipped
+# world edited beside tmp_path, the emit-and-take world and the fold's floor
+TURNING_FILE = EVENTS / "turning.json"
+TURNING_INTEGERS, TURNING = universe_of(json.loads(TURNING_FILE.read_text(encoding="utf-8")))
+TURNING_T, TURNING_PAIR = TURNING_INTEGERS["quantum_action"], (4000, 6000)
+CHARGE = [family.name for family in TURNING].index("charge")
+RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
+SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
+COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
+GRAVITY = {
+    "name": "gravity",
+    "pair": [6000, 6000],
+    "reads": {"gravity": 1},
+    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60, "act": "pace"},
+}
+COULOMB_UNIVERSE = {
+    "integers": {"node_clock": 6000, "quantum_action": 36000, "width": 63, "link_unit": 16},
+    "families": [
+        {
+            "name": "charge",
+            "pair": [6000, 6000],
+            "reads": {},
+            "held": {
+                "sources": ["wronskian"],
+                "level_weight": 100,
+                "write_weight": 400,
+                "act": "rotation",
+            },
+        },
+        {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
+    ],
+}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
+
+
+def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
+    """A world on turning.json's universe with one charged record by hand at the count 1 (the count-1 gate: the profile scaled to one quantum, 2 SUM L^2 sin omega_0 = T, as test_the_node lays it): the level now (L, 0) over `profile` and the level before the band's rest rotation in the sense +1, (L cos omega_0, L sin omega_0)."""
+    (tmp_path / "u.json").write_bytes(TURNING_FILE.read_bytes())
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    values = [int(v) for v in np.asarray(profile).ravel()]
+    scale = math.isqrt(
+        TURNING_T * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values))
+    )  # one quantum
+    levels = [v * scale // 1000 for v in values]  # 2 SUM L^2 sin omega_0 = T, the law's one quantum
+    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
+    moving.update(im_now=[0] * len(levels), im_before=[v * SINE // TURNING_PAIR[1] for v in levels])
+    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
+    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
+    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
+    (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
+    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
+    beside = {"world_digest": input_digest(world), "bodies": [mode]}
+    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
+    return path
+
+
+def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.ndarray:
+    return np.transpose(a, axes)[tuple(slice(None, None, s) for s in signs)]
+
+
+def coulomb_world(
+    tmp_path, shape=(COULOMB_CHAIN, 1, 1), boundary=None, intervals=3000, centre=(COULOMB_AT, 0, 0)
+):  # type: ignore[no-untyped-def]
+    """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
+    (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
+    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    profile = np.zeros(shape, dtype=np.int64)
+    profile[centre] = 1
+    values = [int(v) for v in profile.ravel()]
+    scale = math.isqrt(36000 * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
+    levels = [v * scale // 1000 for v in values]
+    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
+    moving.update(
+        im_now=[0] * len(levels), im_before=[0] * len(levels)
+    )  # W = 0: nothing sources the holder at the start (the massless fixed point on 400 Nodes is slow), the record laid by hand after
+    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
+    boundary = boundary or dict(x="open", y="periodic", z="periodic")
+    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
+    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
+    (path := tmp_path / "coulomb.json").write_text(json.dumps(world), encoding="utf-8")
+    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
+    beside = {"world_digest": input_digest(world), "bodies": [mode]}
+    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
+    return path
+
+
+def one_photon_board(tmp_path, draw: bool = True):  # type: ignore[no-untyped-def]
+    """The anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json) with its committed mode file, its output kept, the repository root the host's; without `draw` the bodies' node_detector keys are dropped (the twin that books nothing), the world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the twin's digest."""
+    source = EVENTS / "anticoincidence" / "one_photon.json"
+    if draw:
+        world_files.REPOSITORY_ROOT = EVENTS.parents[1]
+        return Lattice(load_world(source), (lines := []).append), lines
+    world = json.loads(source.read_text(encoding="utf-8"))
+    for body in world["bodies"]:  # the parts alone: no draw, no transition, no rate
+        body.pop("node_detector"), body.pop("transitions"), body.pop("rates")
+    folder = tmp_path / "examples" / "events" / "anticoincidence"
+    folder.mkdir(parents=True)
+    (folder / "one_photon.json").write_text(json.dumps(world), encoding="utf-8")
+    (folder / "two_atoms.json").write_bytes((EVENTS / "anticoincidence" / "two_atoms.json").read_bytes())
+    (folder.parent / "engine_start.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    mode = json.loads((EVENTS / "anticoincidence" / "one_photon.mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = input_digest(world)
+    (folder / "one_photon.mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    world_files.REPOSITORY_ROOT = tmp_path
+    return Lattice(load_world(folder / "one_photon.json"), (lines := []).append), lines
+
+
+def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
+    """A shipped world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the edited world's digest, `edit` applied to the document; the repository root moved there."""
+    world = json.loads(source.read_text(encoding="utf-8"))
+    edit(world)
+    folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
+    for key in ("universe", "engine"):
+        target = tmp_path / world[key]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((EVENTS.parents[1] / world[key]).read_bytes())
+    mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = input_digest(world)
+    (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
+    world_files.REPOSITORY_ROOT = tmp_path
+    return folder / source.name
+
+
+def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, seed=1, window=240):  # type: ignore[no-untyped-def]
+    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, longer than the run by default), body 1 the taker on `taker_nodes` (ground, window 48, its generator at `seed`), 200 intervals on the periodic chain of 48."""
+
+    def edit(world):  # type: ignore[no-untyped-def]
+        world["intervals"] = EMIT_RUN
+        world["bodies"][0]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in emitter_nodes]
+        world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in taker_nodes]
+        world["bodies"][0]["node_detector"]["window"] = window
+        world["bodies"][1]["node_detector"]["window"] = 48
+        world["bodies"][1]["node_detector"]["seed"] = seed
+
+    return world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
+
+
+def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
+    """The floor of a fold's roundings in T's unit (Part F, test 5's floor; the two hands' lines of 2026-10-09): one level unit per rounding at each Node of `at`, meeting the neighbour's level on two Links, 2 SUM over the family's lines and the Nodes of (|now| + |before|), plus one for the reading's own rounding half up."""
+    lines = own_lines(board, index)
+    levels = sum(
+        int(np.abs(r.now.astype(object))[at].sum()) + int(np.abs(r.before.astype(object))[at].sum())
+        for r in lines
+    )
+    return 2 * levels + 1

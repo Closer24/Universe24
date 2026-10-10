@@ -5,9 +5,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from event_universe.loader.draw import Draw
-from event_universe.meeting import Item, written
+from event_universe.meeting import written
 from event_universe.node_detector import NodeBooks, drawn_node, picked, share_weights
 from event_universe.reports import conversion
+from event_universe.twist import Item
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice

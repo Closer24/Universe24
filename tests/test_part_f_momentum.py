@@ -9,7 +9,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import meeting, node, world_files
+from event_universe import node, twist, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
@@ -19,18 +19,12 @@ from event_universe.reports import (
     LOST_TO_REGION,
     LOST_TO_TAKER,
 )
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EVENTS
+from tests.laws import EVENTS, GRAVITY, one_photon_board, world_beside
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "reads": {}, "dimension": 1}
-GRAVITY = {
-    "name": "gravity",
-    "pair": [GAMMA, GAMMA],
-    "reads": {"gravity": 1},
-    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60, "act": "pace"},
-}
 INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": UNIT}
 
 
@@ -244,27 +238,6 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
     )
 
 
-def one_photon_board(tmp_path, draw: bool = True):  # type: ignore[no-untyped-def]
-    """The anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json) with its committed mode file, its output kept, the repository root the host's; without `draw` the bodies' node_detector keys are dropped (the twin that books nothing), the world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the twin's digest."""
-    source = EVENTS / "anticoincidence" / "one_photon.json"
-    if draw:
-        world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-        return Lattice(load_world(source), (lines := []).append), lines
-    world = json.loads(source.read_text(encoding="utf-8"))
-    for body in world["bodies"]:  # the parts alone: no draw, no transition, no rate
-        body.pop("node_detector"), body.pop("transitions"), body.pop("rates")
-    folder = tmp_path / "examples" / "events" / "anticoincidence"
-    folder.mkdir(parents=True)
-    (folder / "one_photon.json").write_text(json.dumps(world), encoding="utf-8")
-    (folder / "two_atoms.json").write_bytes((EVENTS / "anticoincidence" / "two_atoms.json").read_bytes())
-    (folder.parent / "engine_start.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    mode = json.loads((EVENTS / "anticoincidence" / "one_photon.mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (folder / "one_photon.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    world_files.REPOSITORY_ROOT = tmp_path
-    return Lattice(load_world(folder / "one_photon.json"), (lines := []).append), lines
-
-
 def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_path, monkeypatch):
     """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click of 48 at body 0, the piece arriving from the right: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 47 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
@@ -301,23 +274,23 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
 
 
 def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp_path, monkeypatch):
-    """Task 3: (a) on one_photon at the click of 48 the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `meeting.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
+    """Task 3: (a) on one_photon at the click of 48 the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `twist.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
     for _ in range(47):
         board.step()
-    before = meeting.fan_momentum(board, atom)
+    before = twist.fan_momentum(board, atom)
     board.step()
-    after = meeting.fan_momentum(board, atom)
+    after = twist.fan_momentum(board, atom)
     credits = [line for line in lines if line["event"] == "credit"]
-    piece, twist, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
-    quarter = meeting.quarter_turn(board)
+    piece, turned, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
+    quarter = twist.quarter_turn(board)
     assert before == (0, 0, 0) and after[0] < 0 and after[0] * piece[0] > 0
-    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and twist == [-quarter, 0, 0]  # Part G: the lay's case
+    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [-quarter, 0, 0]  # Part G: the lay's case
     assert abs(after[0]) < abs(piece[0])
     print(
-        f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {twist[0]} "
+        f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {turned[0]} "
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
         f"(the two-Node atom's reach 4 SUM A^2 = {4 * 2 * 90 * 90} at most; no taker of this lay carries one count of one_photon's photon)"
     )
@@ -326,9 +299,9 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     wanted = 10000
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
-    standing = meeting.fan_momentum(board, atom)[0]
-    found, nothing = meeting.twisted(board, books, books.part, (wanted, 0, 0))
-    gained = meeting.fan_momentum(board, atom)[0] - standing
+    standing = twist.fan_momentum(board, atom)[0]
+    found, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0))
+    gained = twist.fan_momentum(board, atom)[0] - standing
     assert nothing is None and found[1:] == [0, 0] and 0 < found[0] < quarter
     at = board.mask(books.nodes)
     floor = 2 * sum(int(np.abs(r.now.astype(object))[at].sum()) for r in board.states[atom].lines)
@@ -349,7 +322,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     # (b) the one-Node taker: the second atom's books on its first Node alone
     single = replace(books, nodes=books.nodes[:1], weights=books.weights[:1])
     kept = [(r.now.copy(), r.before.copy(), r.remainder.copy()) for r in board.states[atom].lines]
-    found, lost = meeting.twisted(board, single, single.part, (wanted, 0, 0))
+    found, lost = twist.twisted(board, single, single.part, (wanted, 0, 0))
     assert found == [0, 0, 0] and lost == LOST_TO_DECLARATION and len(single.nodes) == 1
     assert all(
         np.array_equal(a, b)
@@ -368,24 +341,6 @@ def test_the_reversal_through_the_click_is_bit_for_bit_with_the_twist(tmp_path, 
     print(
         f"Part F (Task 4): one_photon 100 forward and back through the click of 48: MATCH; {time.perf_counter() - started:.1f} s"
     )
-
-
-def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
-    """A shipped world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the edited world's digest, `edit` applied to the document; the repository root moved there."""
-    world = json.loads(source.read_text(encoding="utf-8"))
-    edit(world)
-    folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
-    for key in ("universe", "engine"):
-        target = tmp_path / world[key]
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes((EVENTS.parents[1] / world[key]).read_bytes())
-    mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
-    world_files.REPOSITORY_ROOT = tmp_path
-    return folder / source.name
 
 
 def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:
@@ -439,7 +394,7 @@ def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monke
 
 
 def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path, monkeypatch):
-    """Part F2, Task 4 (the mathematician's line of 2026-10-09: meeting.twisted's offsets failed across a periodic wrap): one_photon's world made a periodic chain of 96 with no packet and no receding face, the first atom at the Nodes (95, 0) across the wrap and the second at (40, 41) in the middle; `meeting.twisted` asked the same p_x of each ground part gives the same n_x and the same deposit, the taker across the wrap folded by the offsets 0, 1 (`core/ports.run_offsets`) and not 95, 0; the integers printed."""
+    """Part F2, Task 4 (the mathematician's line of 2026-10-09: twist.twisted's offsets failed across a periodic wrap): one_photon's world made a periodic chain of 96 with no packet and no receding face, the first atom at the Nodes (95, 0) across the wrap and the second at (40, 41) in the middle; `twist.twisted` asked the same p_x of each ground part gives the same n_x and the same deposit, the taker across the wrap folded by the offsets 0, 1 (`core/ports.run_offsets`) and not 95, 0; the integers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
 
     def edit(world):  # type: ignore[no-untyped-def]
@@ -464,9 +419,9 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
     ]
     wanted, deposits, twists = 10000, [], []
     for books in board.credit.bodies:
-        standing = meeting.fan_momentum(board, atom)[0]
-        found, lost = meeting.twisted(board, books, books.part, (wanted, 0, 0))
-        deposits.append(meeting.fan_momentum(board, atom)[0] - standing)
+        standing = twist.fan_momentum(board, atom)[0]
+        found, lost = twist.twisted(board, books, books.part, (wanted, 0, 0))
+        deposits.append(twist.fan_momentum(board, atom)[0] - standing)
         twists.append(found[0])
         assert lost is None and found[1:] == [0, 0]
     print(

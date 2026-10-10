@@ -6,8 +6,6 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
-import numpy as np
-
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_forward, largest_below
 from event_universe.features.currents import PRODUCTS
@@ -347,20 +345,6 @@ def write_rooms(
     return [abs(family.write) * room for room in rooms * family.records]
 
 
-def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
-    """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X 2^(1/2) at the angle pi / 4, which the sweep over n passes at the tangent half-angle 2^(1/2) - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes 2^(1/2)); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
-    from event_universe.plane import (
-        link_wall,
-        sign_pairs,
-    )  # the plane reads this module: imported at the call
-
-    levels = np.arange(
-        link_wall(gamma) + 1
-    )  # n from 0 through 4 Gamma, the sign's part even and odd in n
-    even, odd = sign_pairs(pair, gamma, (unit * unit,), (levels,))
-    return int((np.abs(even[0]) + np.abs(odd[0])).max()) + 1
-
-
 def amplitude_bound(
     families: tuple[FamilyRule, ...], gamma: int, action: int, width: int, unit: int = 1
 ) -> int:
@@ -386,6 +370,8 @@ def bound_under_rooms(
             elif turns(
                 families, index
             ):  # the sign's pair with the phase: the pair's own extreme, X 2^(1/2)
+                from event_universe.plane import turned_room  # plane reads this module: imported here
+
                 arrivals = PORTS * pace * pace * turned_room(family.pair, gamma, unit)
             room = arrivals + wall + abs(self_coefficient)
             found = min(found, int(division_forward(largest - wall, room, 0)[0]))

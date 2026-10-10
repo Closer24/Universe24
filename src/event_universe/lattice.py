@@ -8,23 +8,10 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import (
-    conversion,
-    credit,
-    emission,
-    front,
-    growth,
-    meeting,
-    node,
-    reports,
-    resonance,
-    share,
-)
+from event_universe import conversion, credit, emission, front, growth, meeting, node, reports, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
-from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward
-from event_universe.features import phase
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
 from event_universe.lay import laid
@@ -42,6 +29,7 @@ from event_universe.loader.packets import PacketRow
 from event_universe.loader.world import BodyRow, World
 from event_universe.node_detector import Weighed, booked_inflows, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
+from event_universe.resonance import clear_memo
 
 Output = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
@@ -54,8 +42,7 @@ class Lattice:
     """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics)."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
-        paces.clear_memo()  # the paces computed once per content value within this run, kept between none
-        resonance.clear_memo()  # the windows' phase pairs likewise, kept between no two runs
+        clear_memo()
         self.world, self.interval = world, 0
         self.output: Output | None = None
         self.shape, self.offset = world.shape, (0, 0, 0)
@@ -77,15 +64,7 @@ class Lattice:
         ]
         # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
-        self.amplitude = phase.amplitude(
-            world.node_clock, world.width.bit_length()
-        )  # the phase lines' X
-        for index, family in enumerate(
-            self.families
-        ):  # the sign holder's phase lines, seeded at the angle 0
-            self.states[index].phases = node.phase_lines(
-                family, self.shape, self.kind, world.node_clock, world.width.bit_length()
-            )
+        self.amplitude = node.seed_phases(self.families, self.states, self.shape, self.kind, world)
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.detector is not None:
                 meeting.laid_record(self, number, record)
@@ -322,7 +301,7 @@ class Lattice:
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
         currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
         rulers, begun, weighed = self.rulers(1), [s.lines for s in self.states], weighed_currents(self)
-        self.phased(1)  # the phase act by the potentials at the interval's start, before the lines' step
+        node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]
@@ -341,15 +320,6 @@ class Lattice:
         conversion.drawn_conversions(self)
         emission.sourced(self)
         front.advanced_fronts(self)
-
-    def phased(self, direction: int) -> None:
-        """The phase act of one interval on every holder of the sign under the rotation (`node.phased`; features/phase; the mathematician's repaired form of item (g)): each row's phase lines take |n_ij| rotation acts per Link in n's sense, n_ij = L(i) - L(j) the reader's potential's difference across the Link read from the holder's time lines as they stand at the interval's start (the level now, the state the interval begins from in either direction: forward before every line's step, backward once every line stands at the interval's start again), the inverse acts at `direction` -1, bit for bit."""
-        gamma = self.world.node_clock
-        for index in self.held:
-            if self.families[index].rotation:
-                self.states[index].phases = node.phased(
-                    index, self.families, self.states, direction, self.wrap, gamma
-                )
 
     def held_write(
         self,
@@ -483,7 +453,7 @@ class Lattice:
             books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():
             self.states[index].lines = lines
-        self.phased(-1)  # the phase act back, by the potentials at the interval's start, standing again
+        node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
         self.interval, self.ended = self.interval - 1, None
         while self.growths and self.growths[-1][0] == self.interval + 1:
             growth.resize(self, *self.growths.pop()[1:], -1)

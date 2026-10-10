@@ -2,9 +2,11 @@
 
 import hashlib
 import json
+import lzma
 import math
 import random
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -103,10 +105,10 @@ def test_the_back_turn_returns_the_labels_to_the_hops_floor_and_not_bit_for_bit(
 
 def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(monkeypatch):
     """The two slits world declares no transition, so no label is hopped (no books with labels), and its 20 intervals equal the frozen look file frame by frame (the oracle of Part A), the levels' digest printed: the sha256 of `tools/run_inputs.py` on it, c50eaa36, stands (run beside the suite and reported)."""
-    from tests.test_part_a_fold import ORACLE
+    oracle = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    started, look = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
+    started, look = time.perf_counter(), json.loads(lzma.open(oracle).read())
     board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
     assert board.credit.bodies == []
     digest = hashlib.sha256()

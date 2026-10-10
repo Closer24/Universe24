@@ -22,13 +22,12 @@ from event_universe.loader.derived import (
     count_wall,
     held_write_of,
     row_sources,
-    turned_room,
     turns,
     weight_of,
 )
 from event_universe.loader.lay import least_action
 from event_universe.loader.universe import universe_of
-from event_universe.plane import link_levels, link_pairs
+from event_universe.plane import link_levels, link_pairs, turned_room
 from event_universe.world_files import input_digest, load_world
 from tests.laws import (
     BACK,

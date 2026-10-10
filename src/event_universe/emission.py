@@ -25,7 +25,7 @@ from event_universe.loader.keys import Node
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
-    from event_universe.meeting import Item
+    from event_universe.twist import Item
 
 
 @dataclass

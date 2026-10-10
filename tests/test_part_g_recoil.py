@@ -1,4 +1,4 @@
-"""Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged record 6091735946): at a click the write conserves the lattice momentum with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, at the click's tick by one twist (`meeting.recoiled`, `meeting.folded_source`); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window longer than the run, so no null window re-lays it: a null window's re-lay discards a body's twist, Part F's taker's too, a finding reported and not hidden), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
+"""Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged line 6091735946): at a click the write conserves the lattice momentum with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, at the click's tick by one twist (`twist.recoiled`, `twist.folded_source`); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window longer than the run, so no null window re-lays it: a null window's re-lay discards a body's twist, Part F's taker's too, a finding reported and not hidden), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
 
 import json
 import time
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import emission, meeting, node, world_files
+from event_universe import emission, meeting, node, twist, world_files
 from event_universe.lattice import Lattice
 from event_universe.reports import (
     LOST_TO_LAY,
@@ -18,37 +18,12 @@ from event_universe.reports import (
 )
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EVENTS
-from tests.test_part_f_momentum import one_photon_board, world_beside
+from tests.laws import EMIT_RUN as RUN
+from tests.laws import EVENTS, emit_and_take_world, levels_floor, one_photon_board
 
 T = 32768
-ORACLE = Path(__file__).resolve().parents[2] / "v2_oracle" / "before_g" / "one_photon.output.json"
+ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_before_g.output.json"
 STRIPPED = {"momentum", "fan", "twist", "lost", "source", "recoil"}  # the Boss's check strips these
-RUN = 200
-
-
-def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, seed=1, window=240):  # type: ignore[no-untyped-def]
-    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, longer than the run by default), body 1 the taker on `taker_nodes` (ground, window 48, its generator at `seed`), 200 intervals on the periodic chain of 48."""
-
-    def edit(world):  # type: ignore[no-untyped-def]
-        world["intervals"] = RUN
-        world["bodies"][0]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in emitter_nodes]
-        world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in taker_nodes]
-        world["bodies"][0]["node_detector"]["window"] = window
-        world["bodies"][1]["node_detector"]["window"] = 48
-        world["bodies"][1]["node_detector"]["seed"] = seed
-
-    return world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
-
-
-def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
-    """The floor of a fold's roundings in T's unit (Part F, test 5's floor; the two hands' lines of 2026-10-09): one level unit per rounding at each Node of `at`, meeting the neighbour's level on two Links, 2 SUM over the family's lines and the Nodes of (|now| + |before|), plus one for the reading's own rounding half up."""
-    lines = laws.own_lines(board, index)
-    levels = sum(
-        int(np.abs(r.now.astype(object))[at].sum()) + int(np.abs(r.before.astype(object))[at].sum())
-        for r in lines
-    )
-    return 2 * levels + 1
 
 
 def drift_bound(board: Lattice, index: int) -> int:
@@ -74,20 +49,18 @@ def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(t
     after, floor = None, None
     for _ in range(RUN):
         if not any(c["event"] == "credit" for c in lines):  # before the emission's click
-            before_emission = (
-                meeting.fan_momentum(board, light)[0] + meeting.fan_momentum(board, atom)[0]
-            )
+            before_emission = twist.fan_momentum(board, light)[0] + twist.fan_momentum(board, atom)[0]
         if board.credit.sources:
             bound += drift_bound(board, light)
         board.step()
         if board.credit.sources:  # the emission's intervals: the light's P over the board
-            light_during.append(meeting.fan_momentum(board, light)[0])
+            light_during.append(twist.fan_momentum(board, light)[0])
         taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
         if taken and after is None and not board.credit.fronts and board.credit.counts[light] == 0:
             after = (
                 board.interval,
-                meeting.fan_momentum(board, light)[0],
-                meeting.fan_momentum(board, atom)[0],
+                twist.fan_momentum(board, light)[0],
+                twist.fan_momentum(board, atom)[0],
             )
             at = np.zeros(board.shape, dtype=bool)
             for books in board.credit.bodies:
@@ -189,7 +162,7 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
 
 
 def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
-    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `node.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`meeting.written`, `meeting.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`meeting.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
+    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `node.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`meeting.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
     board = Lattice(load_world(EVENTS / "packet_emission" / "packet_emission.json"), [].append)
     light = next(i for i, f in enumerate(board.families) if f.name == "pulse")
@@ -197,7 +170,7 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
     giver = board.credit.bodies[0]
     rate = giver.declared.rates[0]
     assert rate.width == 4 and rate.resonance == (2, 3) and (0, 1) in rate.directions
-    item = meeting.Item(
+    item = twist.Item(
         light, None, None, 1, (giver.nodes[0],), None, rate.resonance, rate.lifetime, emitter=0
     )
     item = replace(item, width=rate.width, direction=(0, 1))
@@ -206,7 +179,7 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
     )
     meeting.written(board, [item])
     num = board.families[light].pair[0]
-    born = meeting.fan_momentum(board, light)
+    born = twist.fan_momentum(board, light)
     recoil, lost = giver.recoil, giver.lost
     assert recoil is not None and lost is not None and lost[0] == PAID_AT_EMISSION
     assert born[0] > 0 and born[1:] == (0, 0) and recoil[0] < 0 and recoil[1:] == [0, 0]
@@ -221,7 +194,7 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
         and emitters[0].paid
         and emitters[0].outstanding == 1
     )
-    source, owed, reading = meeting.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
+    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
     assert source == "body 0" and owed == [-born[0], 0, 0] and reading == PAID_AT_EMISSION
     assert emitters[0].outstanding == 0
     import math  # the test prints against the hands' sine; the engine reads no sine

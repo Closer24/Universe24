@@ -282,6 +282,41 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (#1827 comment 5984864554): the packet "
         "reader's `clicks` column the region's click lines within the draw's window, the giver's credit lines in their own column",
     ),
+    "tests/test_part_h_fix.py::test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum": (
+        92,
+        "the engine V2 (Part H, MUST 3; #2122): the Link's count carries each end's clock as one coefficient rounding, "
+        "plain at the vacuum, the fold's turn per proper interval read on the Coulomb chain",
+    ),
+    "tests/test_part_g_recoil.py::test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil": (
+        61,
+        "the engine V2 (Part G; #2122): the click with two receivers, the taker folded by +p_a and the source by -p_a, "
+        "the board's momentum kept through the click and booked on the credit line",
+    ),
+    "tests/test_part_f_momentum.py::test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss": (
+        56,
+        "the engine V2 (Part F, Task 3; #2122): the write's twist by bisection on the phase line to the quarter turn's "
+        "cap, the loss booked by name where the taker cannot carry it",
+    ),
+    "tests/test_part_f_momentum.py::test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_toward_the_well": (
+        52,
+        "the engine V2 (Part F, Task 2; #2122): the lattice momentum under a held well, the gradient term the one change",
+    ),
+    "tests/test_part_b_sign_fold.py::test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn": (
+        50,
+        "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
+    ),
+    "tests/test_part_g_recoil.py::test_the_directed_packets_recoil_is_paid_at_the_lay": (
+        47,
+        "the engine V2 (Part G; #2122): the directed packet's recoil paid at the lay, the file's lay an entry in the emitters' draw",
+    ),
+    "tests/test_part_h_fix.py::test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close": (
+        45,
+        "the engine V2 (Part H, MUST 1; #2122): the null window's re-lay keeps each Node's own direction, the fold surviving the close",
+    ),
+    "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
+        42,
+        "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

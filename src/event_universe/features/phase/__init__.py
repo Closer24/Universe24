@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from functools import cache
 from typing import Any
 
 import numpy as np
 
+from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import NO_READ, rule3
+from event_universe.core.rule3 import NO_READ, division_forward, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
 Line = tuple[Any, Any, Any]
@@ -120,3 +122,28 @@ def amplitude(gamma: Any, width: int) -> int:
             f"2 K_0 X + D < 2^{width}: the phase line's amplitude is refused"
         )
     return int(found)
+
+
+# the rotation unit's seed: the phase line's amplitude of the hardware's width's size, 2^63 (the largest
+# multiple of Gamma below it, features/phase.seed asking a multiple of Gamma), in Python's integers at load;
+# the cosine line then resolves an angle to 2^-63 and the walk's standing Gamma / 2 levels lie far below one
+# act's step X theta_0 sin omega_0 at every rest rotation; the hardware's bound the one integer, no number of the law
+SEED_SIZE = MAX_WORK_INT + 1
+
+
+@cache
+def rotation_unit(num: int, den: int, gamma: int) -> int:
+    """The family's rest rotation to the unit Gamma, K = omega_0 Gamma with cos omega_0 = num / den, computed once from the pair with one rounding as the clock's pace is computed from the content (ALGEBRA.md, The clock family on the Ports: omega_0 Gamma_theta the family's rotation to the unit, Gamma_theta = Gamma), the odd Link part's angle 12 V omega_0 then an integer product with the law's one rounding at the read: found by a bisection on the rotation act and no root (the two hands' word of 2026-10-09, the advisor's (d) and the mathematician's (d): the loader checks an angle by the rotation act's bisection as features/click reads a cosine, no formula in the run and no table): the phase line's pair (features/phase) at the fixed angle theta_0 = 1 / Gamma (D = 2 Gamma^2, K_0 = D - 1, theta_0 within 2.6 x 10^-9 of 1 / Gamma relative) seeded at the amplitude X of the width's size (`SEED_SIZE`, 2^63), a multiple of Gamma, and acted on K times, the cosine line standing at X cos(K theta_0) to the walk's bound; K the largest count in [0, 2 Gamma] at which the cosine line's level is still at or above the pair's cosine, c_K den >= X num (the cosine falling over the half turn, the bisection carrying the pair and acting (middle - low) times per probe, at most 2 Gamma acts in all), then rounded half up to the nearer of K and K + 1 by the two levels' distances to X num, c_K den - X num against X num - c_(K + 1) den; 0 for a massless pair (no rest rotation, no odd part), 5,046 at [4000, 6000] and Gamma 6,000 (arccos(2 / 3) = 0.84107, 5,046.4 to the unit)."""
+    amplitude = int(division_forward(SEED_SIZE, gamma, 0)[0]) * gamma
+    target = amplitude * num  # c_K den compared against X num, the pair's cosine at the amplitude
+    low, high = 0, 2 * gamma  # cos(2) < 0 <= num / den: the crossing lies inside
+    pair = seed(amplitude, gamma)
+    while high - low > 1:
+        middle = int(division_forward(low + high, 2, 0)[0])
+        probe = iterate(pair, middle - low, gamma)
+        if int(read(probe)[0]) * den >= target:
+            low, pair = middle, probe
+        else:
+            high = middle
+    at, following = int(read(pair)[0]), int(read(iterate(pair, 1, gamma))[0])
+    return low + int(at * den - target >= target - following * den)

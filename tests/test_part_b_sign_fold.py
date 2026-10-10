@@ -1,7 +1,5 @@
 """Part B, the sign's Link phase in the fold form (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the two hands' lines of 2026-10-09, the advisor's (a), (c) and (1), the mathematician's (a) and (L2)): the Link's turn by the sign holder's odd lines is the exact tangent half-angle triple rebooked in the Link's unit with one rounding per part, X^c even and X^s odd in the Link's level n, so that the pair read from the two ends is exact by direction and the count is conserved by Hermiticity; the odd lines' source is the two Links' Wronskian currents summed unhalved over the doubled wall; the time turn stays the one shear. Every test under 30 seconds."""
 
-import json
-import math
 from fractions import Fraction
 from itertools import permutations, product
 
@@ -12,53 +10,22 @@ from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import held_write_of
-from event_universe.loader.universe import universe_of
 from event_universe.plane import link_levels, link_pairs, link_wall, sign_pairs
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EVENTS, chain_body_world
+from tests.laws import CHARGE, RULE_WALL, TURNING, chain_body_world, imaged, sign_world
+from tests.laws import TURNING_T as T
 
 GAMMA, PAIR, UNIT = 6000, (4000, 6000), 16
-TURNING_FILE = EVENTS / "turning.json"
-INTEGERS, TURNING = universe_of(json.loads(TURNING_FILE.read_text(encoding="utf-8")))
-T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]
-CHARGE, CHARGED = NAMES.index("charge"), NAMES.index("charged")
+NAMES = [family.name for family in TURNING]
+CHARGED = NAMES.index("charged")
 KEYS = ("now", "before", "remainder")
-RULE_WALL = coefficients(*TURNING[CHARGE].pair, GAMMA, GAMMA, GAMMA, None, UNIT)[
-    2
-]  # w = 6 den Gamma^2 G^2
-SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
-
-
-def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
-    """A world on turning.json's universe with one charged record by hand at the count 1 (the count-1 gate: the profile scaled to one quantum, 2 SUM L^2 sin omega_0 = T, as test_the_node lays it): the level now (L, 0) over `profile` and the level before the band's rest rotation in the sense +1, (L cos omega_0, L sin omega_0)."""
-    (tmp_path / "u.json").write_bytes(TURNING_FILE.read_bytes())
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    values = [int(v) for v in np.asarray(profile).ravel()]
-    scale = math.isqrt(
-        T * PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values))
-    )  # one quantum
-    levels = [v * scale // 1000 for v in values]  # 2 SUM L^2 sin omega_0 = T, the law's one quantum
-    moving = dict(now=levels, before=[v * PAIR[0] // PAIR[1] for v in levels])
-    moving.update(im_now=[0] * len(levels), im_before=[v * SINE // PAIR[1] for v in levels])
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
 
 
 def arrays(board: Lattice) -> list[np.ndarray]:
     return [getattr(r, k).copy() for s in board.states for r in s.lines for k in KEYS] + [
         r.copy() for s in board.states for r in s.write_remainders
     ]
-
-
-def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.ndarray:
-    return np.transpose(a, axes)[tuple(slice(None, None, s) for s in signs)]
 
 
 def test_the_sign_pair_is_even_and_odd_in_the_links_level():

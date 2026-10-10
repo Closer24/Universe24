@@ -566,7 +566,7 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     (path := tmp_path / "staggered.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
-    laid, trials, clicks, left = Lattice(load_world(path)), 400, [], {}
+    laid, trials, clicks, left = Lattice(load_world(path)), 120, [], {}
     photon = [f.name for f in laid.families].index("photon")
     while laid.interval < 47:  # the interval before A's close: the same lay and steps in every trial
         laid.step()

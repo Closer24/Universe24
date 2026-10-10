@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from event_universe.core import paces
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.emission import advanced
 from event_universe.features import phase
@@ -89,7 +90,8 @@ PAIRS: dict[
 
 
 def clear_memo() -> None:
-    """The memo cleared at a run's start (`Lattice.__init__`, with `paces.clear_memo`): the phase pairs at the windows' angles are computed again within the run from the seed and nothing is kept between runs."""
+    """The memos cleared at a run's start (`Lattice.__init__`): the paces computed once per content value within the run (`paces.clear_memo`) and the phase pairs at the windows' angles, both computed again within the run and kept between no two runs."""
+    paces.clear_memo()
     PAIRS.clear()
 
 

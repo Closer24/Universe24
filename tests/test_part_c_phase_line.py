@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import lzma
 import math
 import time
 from itertools import permutations, product
@@ -12,56 +13,17 @@ import numpy as np
 from event_universe import node, world_files
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EVENTS
+from tests.laws import COULOMB_AT as AT
+from tests.laws import COULOMB_CHAIN as CHAIN
+from tests.laws import COULOMB_UNIVERSE as UNIVERSE
+from tests.laws import EVENTS, coulomb_world
 
 GAMMA, PAIR, UNIT, T = 6000, (4000, 6000), 16, 36000
-CHAIN, AT, SIGMA, AMPLITUDE = 400, 280, 30, 3000
+SIGMA, AMPLITUDE = 30, 3000
 KEYS = ("now", "before", "remainder")
-ORACLE = Path(__file__).resolve().parents[2] / "v2_oracle" / "coulomb_before.json"
-SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
-UNIVERSE = {
-    "integers": {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": UNIT},
-    "families": [
-        {
-            "name": "charge",
-            "pair": [GAMMA, GAMMA],
-            "reads": {},
-            "held": {
-                "sources": ["wronskian"],
-                "level_weight": 100,
-                "write_weight": 400,
-                "act": "rotation",
-            },
-        },
-        {"name": "charged", "pair": list(PAIR), "reads": {"charge": 1}, "dimension": 2},
-    ],
-}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
-
-
-def coulomb_world(tmp_path, shape=(CHAIN, 1, 1), boundary=None, intervals=3000, centre=(AT, 0, 0)):  # type: ignore[no-untyped-def]
-    """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
-    (tmp_path / "u.json").write_text(json.dumps(UNIVERSE), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    profile = np.zeros(shape, dtype=np.int64)
-    profile[centre] = 1
-    values = [int(v) for v in profile.ravel()]
-    scale = math.isqrt(T * PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
-    levels = [v * scale // 1000 for v in values]
-    moving = dict(now=levels, before=[v * PAIR[0] // PAIR[1] for v in levels])
-    moving.update(
-        im_now=[0] * len(levels), im_before=[0] * len(levels)
-    )  # W = 0: nothing sources the holder at the start (the massless fixed point on 400 Nodes is slow), the record laid by hand after
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    boundary = boundary or dict(x="open", y="periodic", z="periodic")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / "coulomb.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
+ORACLE = Path(__file__).resolve().parent / "oracle" / "coulomb_before.json"
 
 
 def gaussian_record(board: Lattice, conjugate: bool, amplitude: int = AMPLITUDE) -> None:
@@ -205,7 +167,7 @@ def test_the_static_field_is_bounded_by_the_walks_bound():
 
 def test_the_48_returns_on_a_closed_cube_with_the_phase_lines(tmp_path, monkeypatch):
     """(4) Part B's cube (tests/test_part_b_sign_fold.py): a charged record by hand on a closed cube of 7^3 in turning.json's universe, the free row's odd lines a radial vector field; over four intervals every scalar line keeps the 48 and the odd lines keep them as a vector, and the phase lines beside them: the cosine lines scalars under the 48 and the sine lines too, the pair (c, s) going to (c, -s) under a reflection of its axis exactly, since the potential the record reads (the free row's time level, 0 everywhere; its own row read by no phase of its own) gives n = 0 on every Link and every pair stands at its seed, s = 0; the back-in-time gate over twelve intervals MATCH with the phase pairs."""
-    from tests.test_part_b_sign_fold import CHARGE, RULE_WALL, imaged, sign_world
+    from tests.laws import CHARGE, RULE_WALL, imaged, sign_world
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started = time.perf_counter()
@@ -275,10 +237,10 @@ def test_the_phase_act_reaches_one_link():
 
 def test_without_a_sign_holder_the_two_slits_are_the_frozen_oracle(monkeypatch):
     """(6) The two slits world of light.json, no holder of the sign, stepped for 20 intervals: every family's level now equals the frozen engine's look file frame by frame (the oracle recorded before Part A, tests/test_part_a_fold.py's), the code path without a sign holder the engine of 441b2399 bit for bit, no phase line anywhere (every family's `phases` empty); the output file's sha256 c50eaa36... is the run's own (tools/run_inputs.py)."""
-    from tests.test_part_a_fold import ORACLE as LOOK
+    LOOK = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    started, look = time.perf_counter(), json.loads(LOOK.read_text(encoding="utf-8"))
+    started, look = time.perf_counter(), json.loads(lzma.open(LOOK).read())
     board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
     assert all(state.phases == [] for state in board.states)
     digest = hashlib.sha256()

@@ -1,10 +1,10 @@
-"""Part H, the fix pass before the owner reads (both hands' lines of 2026-10-10 on the whole local trial, the advisor's 6092354791 and the mathematician's 6092368671, the Boss's merged list 6092388848). MUST 1: the null window's re-lay keeps the fold: `meeting.relaid` with no direction named lays each Node of the region in the direction standing there, so the taker's twist and the source's fold (the lattice momentum given at a click) survive a body's null close instead of being discarded unbooked (one_photon's atom kept -32,040 only to its next close at 96 before). MUST 5: a region taker (the two slits' screens, bell's sides) takes no +p of its own, so it folds no source: the source is drawn and named, its outstanding count down by one, `recoil` reads "unpaid by the region" and `lost` "P lost to the region" (`meeting.unpaid`, `credit.click_node`), the body's P unchanged."""
+"""Part H, the fix pass before the owner reads (both hands' lines of 2026-10-10 on the whole local trial, the advisor's 6092354791 and the mathematician's 6092368671, the Boss's merged list 6092388848). MUST 1: the null window's re-lay keeps the fold: `meeting.relaid` with no direction named lays each Node of the region in the direction standing there, so the taker's twist and the source's fold (the lattice momentum given at a click) survive a body's null close instead of being discarded unbooked (one_photon's atom kept -32,040 only to its next close at 96 before). MUST 5: a region taker (the two slits' screens, bell's sides) takes no +p of its own, so it folds no source: the source is drawn and named, its outstanding count down by one, `recoil` reads "unpaid by the region" and `lost` "P lost to the region" (`twist.unpaid`, `credit.click_node`), the body's P unchanged."""
 
 import time
 
 import numpy as np
 
-from event_universe import emission, meeting, node, world_files
+from event_universe import emission, node, twist, world_files
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.features import phase
@@ -18,10 +18,18 @@ from event_universe.reports import (
 )
 from event_universe.world_files import load_world
 from tests import laws
-from tests import test_part_c_phase_line as coulomb
-from tests.laws import EVENTS
-from tests.test_part_f_momentum import GRAVITY, one_photon_board, world_beside
-from tests.test_part_g_recoil import RUN, emit_and_take_world, levels_floor
+from tests.laws import (
+    COULOMB_CHAIN,
+    COULOMB_UNIVERSE,
+    EVENTS,
+    GRAVITY,
+    coulomb_world,
+    emit_and_take_world,
+    levels_floor,
+    one_photon_board,
+    world_beside,
+)
+from tests.laws import EMIT_RUN as RUN
 
 ATOM_P = -32040  # one_photon's two-Node atom at count 1: the quarter turn's reach, the hands' 32,040
 
@@ -35,7 +43,7 @@ def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monke
     for _ in range(board.world.intervals):
         board.step()
         if board.interval in (48, 95, 96, 97, 144, board.world.intervals):
-            read[board.interval] = meeting.fan_momentum(board, atom)[0]
+            read[board.interval] = twist.fan_momentum(board, atom)[0]
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     assert len(credits) == 1 and credits[0]["interval"] == 48
     assert credits[0]["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -60,14 +68,14 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     before, after, floor = None, None, None
     for _ in range(RUN):
         if not any(c["event"] == "credit" for c in lines):
-            before = meeting.fan_momentum(board, light)[0] + meeting.fan_momentum(board, atom)[0]
+            before = twist.fan_momentum(board, light)[0] + twist.fan_momentum(board, atom)[0]
         board.step()
         taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
         if taken and after is None and not board.credit.fronts and board.credit.counts[light] == 0:
             after = (
                 board.interval,
-                meeting.fan_momentum(board, light)[0],
-                meeting.fan_momentum(board, atom)[0],
+                twist.fan_momentum(board, light)[0],
+                twist.fan_momentum(board, atom)[0],
             )
             at = np.zeros(board.shape, dtype=bool)
             for books in board.credit.bodies:
@@ -79,7 +87,7 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     closes = [b.windows for b in board.credit.bodies]
     assert all(windows * 48 > click for windows in closes)  # a null close of each body after the click
     assert before == 0 and after is not None and floor is not None
-    end = (meeting.fan_momentum(board, light)[0], meeting.fan_momentum(board, atom)[0])
+    end = (twist.fan_momentum(board, light)[0], twist.fan_momentum(board, atom)[0])
     assert abs(after[1] + after[2] - before) <= floor, (before, after, floor)
     assert abs(end[0] + end[1] - before) <= floor, (before, end, floor)
     print(
@@ -149,21 +157,21 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
     """MUST 3 (the mathematician's 1, the advisor's 4): `node.phased` counts n_ij per end, rounded(L(i) p_0(i), Gamma) - rounded(L(j) p_0(j), Gamma), the reader's clock at each end in one coefficient rounding (`paces.turn_factor`, kind D); at the vacuum's clock the count is L(i) - L(j) bit for bit. The Coulomb world (Part C) with a holder of the content added and the charged plane reading it: the holder's time level the ramp L = x; with the content at 0 the counts along x are -1 per Link (the ramp's difference), and with a uniform level 600 held on the content's row the clock p_0 falls below Gamma and the counts are the two ends' turn factors' difference, not the plain difference, read against the formula at every Link, and one named Link whose count with the factor differs from the plain count (the RE-CHECK's SHOULD: 38 of 399 Links on the ramp count 0 against the plain -1; the first of them asserted and printed with both counts); the two-clock closure itself is an identity from the form (theorem, both hands' RE-CHECK), its integer number on V2 OPEN: not rerun here."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe = {
-        "integers": coulomb.UNIVERSE["integers"],
+        "integers": COULOMB_UNIVERSE["integers"],
         "families": [
             GRAVITY,
-            coulomb.UNIVERSE["families"][0],
-            dict(coulomb.UNIVERSE["families"][1], reads={"gravity": 1, "charge": 1}),
+            COULOMB_UNIVERSE["families"][0],
+            dict(COULOMB_UNIVERSE["families"][1], reads={"gravity": 1, "charge": 1}),
         ],
     }
-    monkeypatch.setattr(coulomb, "UNIVERSE", universe)
-    board = Lattice(load_world(coulomb.coulomb_world(tmp_path)))
+    monkeypatch.setattr(laws, "COULOMB_UNIVERSE", universe)
+    board = Lattice(load_world(coulomb_world(tmp_path)))
     gravity, charge, charged = (
         next(i for i, f in enumerate(board.families) if f.name == name)
         for name in ("gravity", "charge", "charged")
     )
     gamma = board.world.node_clock
-    level = np.arange(coulomb.CHAIN).reshape(board.shape).astype(board.kind)
+    level = np.arange(COULOMB_CHAIN).reshape(board.shape).astype(board.kind)
     line = board.states[charge].lines[0]
     board.states[charge].lines[0] = node.Record(level, level.copy(), line.remainder)
     found = {}
@@ -240,7 +248,7 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
 
 
 def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
-    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 48 draws the lay (`source` the lay, the count down by one, the board the Part G test's). The emit-and-take world: after body 0's emission the book holds body 0 at 1; the file's lay of one quantum entered beside it, the draw's weights read [1, 1] through `meeting.drawn_emitter`."""
+    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 48 draws the lay (`source` the lay, the count down by one, the board the Part G test's). The emit-and-take world: after body 0's emission the book holds body 0 at 1; the file's lay of one quantum entered beside it, the draw's weights read [1, 1] through `twist.drawn_emitter`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     photon = next(i for i, f in enumerate(board.families) if f.name == "photon")
@@ -265,7 +273,7 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
         weights.append(list(found))
         return 1
 
-    drawn = meeting.drawn_emitter(board, light, pick)
+    drawn = twist.drawn_emitter(board, light, pick)
     assert weights == [[1, 1]] and drawn is not None and drawn.body is None and drawn.outstanding == 0
     print(
         f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 48 source {click['source']!r} and the lay's count {laid - 1}; "

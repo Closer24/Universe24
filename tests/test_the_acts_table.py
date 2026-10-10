@@ -51,11 +51,15 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # halving the bisection's span, discarded
     ("core/paces.py", "axis_pace", "rounded"): "D",  # the axis pace, one rounding
     ("core/paces.py", "write_factor", "rounded"): "D",  # the write's factor, one rounding
-    ("core/paces.py", "rotation_unit", "division_forward"): "D",  # the seed's multiple and the halving
     (
-        "core/paces.py",
+        "features/phase/__init__.py",
         "rotation_unit",
-        "phase.iterate",
+        "division_forward",
+    ): "D",  # the seed's multiple and the halving
+    (
+        "features/phase/__init__.py",
+        "rotation_unit",
+        "iterate",
     ): "R",  # the one carried act on a pair (the bisection around it S)
     ("core/paces.py", "turn_factor", "rounded"): "D",  # the turn per interval, once
     # core/ports.py
@@ -222,19 +226,19 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # meeting.py
     ("meeting.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("meeting.py", "absorbed", "division_forward"): "D",  # the unit over the norm
-    ("meeting.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
-    ("meeting.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
+    ("twist.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
+    ("twist.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
     (
-        "meeting.py",
+        "twist.py",
         "quarter_turn",
         "phase.iterate",
     ): "R",  # the one carried act on a pair (the bisection around it S)
     (
-        "meeting.py",
+        "twist.py",
         "folded_lines",
         "phase.iterate",
     ): "R",  # the one carried act on a pair (the fold's coefficient D)
-    ("meeting.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
+    ("twist.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     ("node.py", "step", "rule3"): "R",  # Rule3's step at every Node
@@ -279,8 +283,8 @@ R_OUTSIDE_THE_STEP = frozenset(
         ("node_detector.py", "clock_advanced", "division_forward"),  # the reader's clock remainder
         ("resonance.py", "window_pair", "phase.iterate"),  # the window's pair in the memo
         ("resonance.py", "hopped", "division_forward"),  # the labels' hop with its carries
-        ("meeting.py", "quarter_turn", "phase.iterate"),  # the pair carried along the bisection's probe
-        ("meeting.py", "folded_lines", "phase.iterate"),  # the pair carried to the fold's offset
+        ("twist.py", "quarter_turn", "phase.iterate"),  # the pair carried along the bisection's probe
+        ("twist.py", "folded_lines", "phase.iterate"),  # the pair carried to the fold's offset
     }
 )
 
