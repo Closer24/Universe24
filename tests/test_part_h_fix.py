@@ -146,7 +146,7 @@ def test_a_region_taker_names_the_source_and_folds_nothing(tmp_path, monkeypatch
 
 
 def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_path, monkeypatch):
-    """MUST 3 (the mathematician's 1, the advisor's 4): `node.phased` counts n_ij per end, rounded(L(i) p_0(i), Gamma) - rounded(L(j) p_0(j), Gamma), the reader's clock at each end in one coefficient rounding (`paces.turn_factor`, kind D); at the vacuum's clock the count is L(i) - L(j) bit for bit. The Coulomb world (Part C) with a holder of the content added and the charged plane reading it: the holder's time level the ramp L = x; with the content at 0 the counts along x are -1 per Link (the ramp's difference), and with a uniform level 600 held on the content's row the clock p_0 falls below Gamma and the counts are the two ends' turn factors' difference, not the plain difference, read against the formula at every Link; the two-clock closure itself (the first build's charged body in one dimension) is not rerun here, OPEN."""
+    """MUST 3 (the mathematician's 1, the advisor's 4): `node.phased` counts n_ij per end, rounded(L(i) p_0(i), Gamma) - rounded(L(j) p_0(j), Gamma), the reader's clock at each end in one coefficient rounding (`paces.turn_factor`, kind D); at the vacuum's clock the count is L(i) - L(j) bit for bit. The Coulomb world (Part C) with a holder of the content added and the charged plane reading it: the holder's time level the ramp L = x; with the content at 0 the counts along x are -1 per Link (the ramp's difference), and with a uniform level 600 held on the content's row the clock p_0 falls below Gamma and the counts are the two ends' turn factors' difference, not the plain difference, read against the formula at every Link, and one named Link whose count with the factor differs from the plain count (the RE-CHECK's SHOULD: 38 of 399 Links on the ramp count 0 against the plain -1; the first of them asserted and printed with both counts); the two-clock closure itself is an identity from the form (theorem, both hands' RE-CHECK), its integer number on V2 OPEN: not rerun here."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe = {
         "integers": coulomb.UNIVERSE["integers"],
@@ -208,12 +208,15 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
                 for k, w in zip(("now", "before", "remainder"), want, strict=True)
             )
         p_0 = int(np.asarray(clock).reshape(-1)[0]) if np.ndim(clock) else int(clock)
+        counts, plains = count.reshape(-1), plain.reshape(-1)
+        differing = [k for k in range(len(counts)) if counts[k] != plains[k]]
         found[content] = (
             p_0,
-            int(count.reshape(-1)[100]),
-            int(plain.reshape(-1)[100]),
+            int(counts[100]),
+            int(plains[100]),
             int(clocked.reshape(-1)[100]),
             int(potential.reshape(-1)[100]),
+            differing,
         )
     assert (
         found[0][0] == gamma and found[0][1] == found[0][2] == -1
@@ -221,10 +224,18 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
     assert (
         found[600][0] < gamma and found[600][3] != found[600][4]
     )  # the level scaled by p_0 / Gamma per end
+    assert found[0][5] == []  # at the vacuum's clock no Link's count differs from the plain
+    differing = found[600][5]
+    first = differing[0]
+    link = (first, int(count.reshape(-1)[first]), int(plain.reshape(-1)[first]))
+    assert (
+        len(differing) == 38 and link[1] != link[2]
+    )  # one named Link: the factor's count against the plain
     print(
         f"Part H (MUST 3): the Link's count on the ramp L = x: at the content 0 the clock p_0 = {found[0][0]} = Gamma and n = {found[0][1]} (plain {found[0][2]}); "
         f"at the uniform level 600 the clock p_0 = {found[600][0]}, the end's turn factor at the Node 100 {found[600][3]} against its level {found[600][4]}, "
-        f"n = {found[600][1]} (plain {found[600][2]}); the phase pairs after the act equal the formula's at every Node; the two-clock closure not rerun, OPEN"
+        f"n = {found[600][1]} (plain {found[600][2]}); {len(differing)} of {sum(1 for p in plain.reshape(-1) if p != 0)} Links differ from the plain count, the first the Link at the index {link[0]}: "
+        f"n = {link[1]} against the plain {link[2]}; the phase pairs after the act equal the formula's at every Node; the closure an identity from the form, its integer on V2 not rerun, OPEN"
     )
 
 
