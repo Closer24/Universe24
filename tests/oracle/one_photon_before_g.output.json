@@ -1,0 +1,8142 @@
+{
+ "input": "one_photon.json",
+ "verdict": "LAWFUL",
+ "intervals": 170,
+ "ended": null,
+ "books": {
+  "atom": {
+   "share": 249735348,
+   "quanta": 2,
+   "count": 2,
+   "deficit": 0,
+   "drift": 0,
+   "pace": 6000,
+   "frozen": 0
+  },
+  "photon": {
+   "share": 41304000,
+   "quanta": 0,
+   "count": 0,
+   "deficit": 0,
+   "drift": -522288000,
+   "pace": 6000,
+   "frozen": 0
+  }
+ },
+ "lines": [
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 2,
+   "before": [
+    0,
+    0,
+    35914752000000
+   ],
+   "after": [
+    90,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 2,
+   "before": [
+    0,
+    0,
+    35914752000000
+   ],
+   "after": [
+    90,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 3,
+   "before": [
+    0,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    89,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 3,
+   "before": [
+    0,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    89,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 2,
+   "before": [
+    90,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    89,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 3,
+   "before": [
+    0,
+    89,
+    35914752000000
+   ],
+   "after": [
+    -90,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 0,
+   "before": [
+    90,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 0,
+   "before": [
+    90,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 1,
+   "before": [
+    0,
+    89,
+    35914752000000
+   ],
+   "after": [
+    0,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": null,
+   "line": 1,
+   "before": [
+    0,
+    89,
+    35914752000000
+   ],
+   "after": [
+    0,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 48,
+   "family": "atom",
+   "node_detector": "body 0",
+   "window": [
+    1,
+    48
+   ],
+   "proper": 48,
+   "windows": 1,
+   "before": "g",
+   "realised": "e",
+   "kept": null,
+   "count": 1,
+   "left": 0,
+   "absorbed": "photon",
+   "emitted": null,
+   "momentum": [
+    -93089,
+    0,
+    0
+   ],
+   "fan": [
+    688,
+    0,
+    0
+   ],
+   "twist": [
+    -9424,
+    0,
+    0
+   ],
+   "lost": "P lost to the taker"
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 49,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 136,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 49,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 1,
+   "nodes": 2,
+   "take": 46662000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 50,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -136,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 50,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 124,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 50,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -29,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     25,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 50,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 2,
+   "nodes": 2,
+   "take": 43368000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 51,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -114,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     23,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 51,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -127,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     25,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 51,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 90,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     22,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 51,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -64,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     26,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 51,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 3,
+   "nodes": 2,
+   "take": 44604000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 52,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -71,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     22,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 52,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 46,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     26,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 52,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 28,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     21,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 52,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 31,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     27,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 52,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 4,
+   "nodes": 2,
+   "take": 48726000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 53,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     21,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 53,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     27,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 53,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -47,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     20,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 53,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     28,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 53,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 5,
+   "nodes": 2,
+   "take": 51606000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 54,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 75,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     20,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 54,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -21,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     28,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 54,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -126,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     19,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 54,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     29,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 54,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 6,
+   "nodes": 2,
+   "take": 48102000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 55,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 152,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     19,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 55,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 10,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     29,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 55,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -197,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     18,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 55,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 8,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     30,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 55,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 7,
+   "nodes": 2,
+   "take": 41514000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 56,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 214,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     18,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 56,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     30,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 56,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -231,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     17,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 56,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     31,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 56,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 8,
+   "nodes": 2,
+   "take": 36168000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 57,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 236,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     17,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 57,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     31,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 57,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -234,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     16,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 57,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     32,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 57,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 9,
+   "nodes": 2,
+   "take": 30318000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 58,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 228,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     16,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 58,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     32,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 58,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -211,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     15,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 58,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     33,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 58,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 10,
+   "nodes": 2,
+   "take": 25368000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 59,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 191,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     15,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 59,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     33,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 59,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -159,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     14,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 59,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     34,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 59,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 11,
+   "nodes": 2,
+   "take": 20556000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 60,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 137,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     14,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 60,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     34,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 60,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -94,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     13,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 60,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     35,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 60,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 12,
+   "nodes": 2,
+   "take": 16584000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 61,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 67,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     13,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 61,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     35,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 61,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -25,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     12,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 61,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     36,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 61,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 13,
+   "nodes": 2,
+   "take": 12906000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 62,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     12,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 62,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     36,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 62,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 29,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     11,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 62,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     37,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 62,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 14,
+   "nodes": 2,
+   "take": 9510000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 63,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -47,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     11,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 63,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     37,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 63,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 75,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     10,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 63,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     38,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 63,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 15,
+   "nodes": 2,
+   "take": 7494000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 64,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -86,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     10,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 64,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     38,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 64,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 97,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     9,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 64,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     39,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 64,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 16,
+   "nodes": 2,
+   "take": 5370000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 65,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -103,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     9,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 65,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     39,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 65,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 109,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     8,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 65,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     40,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 65,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 17,
+   "nodes": 2,
+   "take": 1794000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 66,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -113,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     8,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 66,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     40,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 66,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 105,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     7,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 66,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     41,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 66,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 18,
+   "nodes": 2,
+   "take": 1584000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 67,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -99,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     7,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 67,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     41,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 67,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 89,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     6,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 67,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     42,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 67,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 19,
+   "nodes": 2,
+   "take": 696000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 68,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -86,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     6,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 68,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     42,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 68,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 75,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     5,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 68,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     43,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 68,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 20,
+   "nodes": 2,
+   "take": 468000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 69,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -69,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     5,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 69,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     43,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 69,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 59,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 69,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     44,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 69,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 21,
+   "nodes": 2,
+   "take": 66000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 70,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -55,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 70,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     44,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 70,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 43,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     3,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 70,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     45,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 70,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 22,
+   "nodes": 2,
+   "take": 252000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 71,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -39,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     3,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 71,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     45,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 71,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 31,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     2,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 71,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     46,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 71,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 23,
+   "nodes": 2,
+   "take": 168000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 72,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -27,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     2,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 72,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     46,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 72,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 22,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 72,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     47,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 72,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 24,
+   "nodes": 2,
+   "take": 54000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 73,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -21,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 73,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     47,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 73,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 14,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 73,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     48,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 73,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 25,
+   "nodes": 2,
+   "take": 84000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 74,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -14,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 74,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     48,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 74,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 11,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 74,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     49,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 74,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 26,
+   "nodes": 2,
+   "take": 96000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 75,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -10,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -1,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 75,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     49,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 75,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -2,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 75,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -8,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     50,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 75,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 27,
+   "nodes": 2,
+   "take": 6000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 76,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -2,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 76,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     50,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 76,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -3,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 76,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     51,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 76,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 28,
+   "nodes": 2,
+   "take": 54000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 77,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -3,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 77,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     51,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 77,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 77,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -8,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     52,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 77,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 29,
+   "nodes": 2,
+   "take": 30000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 78,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -4,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 78,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     52,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 78,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -5,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 78,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     53,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 78,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 30,
+   "nodes": 2,
+   "take": 90000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 79,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -5,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 79,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     53,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 79,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -6,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 79,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     54,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 79,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 31,
+   "nodes": 2,
+   "take": 162000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 80,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -6,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 80,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -11,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     54,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 80,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -7,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 80,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     55,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 80,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 32,
+   "nodes": 2,
+   "take": 114000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 81,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -7,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 81,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     55,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 81,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -8,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 81,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     56,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 81,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 33,
+   "nodes": 2,
+   "take": 144000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 82,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -8,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 82,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     56,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 82,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -9,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 82,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     57,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 82,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 34,
+   "nodes": 2,
+   "take": 30000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 83,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -9,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 83,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -10,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     57,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 83,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -10,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 83,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     58,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 83,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 35,
+   "nodes": 2,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 84,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -10,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 84,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     58,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 84,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -11,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 84,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     59,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 84,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 36,
+   "nodes": 2,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 85,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -11,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 85,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     59,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 85,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -12,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 85,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     60,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 85,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 37,
+   "nodes": 2,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 86,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -12,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 86,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     60,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 86,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -13,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 86,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     61,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 86,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 38,
+   "nodes": 2,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 87,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -13,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 87,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     61,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 87,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -14,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 87,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     62,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 87,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 39,
+   "nodes": 2,
+   "take": -12000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 88,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -14,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 88,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     62,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 88,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -15,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 88,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     63,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 88,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 40,
+   "nodes": 2,
+   "take": 72000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 89,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -15,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 89,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     63,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 89,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -16,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 89,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     64,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 89,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 41,
+   "nodes": 1,
+   "take": 108000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 90,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 0,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     -16,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 90,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     64,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 90,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     65,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 90,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 42,
+   "nodes": 1,
+   "take": 36000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 91,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     65,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 91,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     66,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 91,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 43,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 92,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     66,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 92,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     67,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 92,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 44,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 93,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     67,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 93,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     68,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 93,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 45,
+   "nodes": 1,
+   "take": 90000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 94,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     68,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 94,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     69,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 94,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 46,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 95,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     69,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 95,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     70,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 95,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 47,
+   "nodes": 1,
+   "take": 126000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 96,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     70,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 96,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     71,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 96,
+   "family": "atom",
+   "node_detector": null,
+   "line": 2,
+   "before": [
+    0,
+    89,
+    35914752000000
+   ],
+   "after": [
+    90,
+    0,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "lay",
+   "label": "LATTICE",
+   "interval": 96,
+   "family": "atom",
+   "node_detector": null,
+   "line": 3,
+   "before": [
+    -90,
+    0,
+    35914752000000
+   ],
+   "after": [
+    0,
+    89,
+    35914752000000
+   ],
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     24,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 96,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 48,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 97,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     71,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 97,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     72,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 97,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 49,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 98,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     72,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 98,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     73,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 98,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 50,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 99,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     73,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 99,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     74,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 99,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 51,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 100,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     74,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 100,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     75,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 100,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 52,
+   "nodes": 1,
+   "take": 12000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 101,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     75,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 101,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     76,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 101,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 53,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 102,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     76,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 102,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     77,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 102,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 54,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 103,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     77,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 103,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     78,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 103,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 55,
+   "nodes": 1,
+   "take": 66000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 104,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     78,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 104,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     79,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 104,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 56,
+   "nodes": 1,
+   "take": 0,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 105,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     79,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 105,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     80,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 105,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 57,
+   "nodes": 1,
+   "take": 108000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 106,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     80,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 106,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     81,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 106,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 58,
+   "nodes": 1,
+   "take": 90000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 107,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     81,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 107,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -13,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     82,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 107,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 59,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 108,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     82,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 108,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     83,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 108,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 60,
+   "nodes": 1,
+   "take": 72000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 109,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 0,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     83,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 109,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     84,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 109,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 61,
+   "nodes": 1,
+   "take": 126000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 110,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     84,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 110,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     85,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 110,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 62,
+   "nodes": 1,
+   "take": 48000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 111,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     85,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 111,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -8,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     86,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 111,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 63,
+   "nodes": 1,
+   "take": 18000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 112,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     86,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 112,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     87,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 112,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 64,
+   "nodes": 1,
+   "take": 12000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 113,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     87,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 113,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     88,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 113,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 65,
+   "nodes": 1,
+   "take": 24000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 114,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     88,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 114,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     89,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 114,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 66,
+   "nodes": 1,
+   "take": 54000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 115,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     89,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 115,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     90,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 115,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 67,
+   "nodes": 1,
+   "take": 72000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 116,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     90,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 116,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     91,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 116,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 68,
+   "nodes": 1,
+   "take": 60000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 117,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     91,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 117,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     92,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 117,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 69,
+   "nodes": 1,
+   "take": 72000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 118,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     92,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 118,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     93,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 118,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 70,
+   "nodes": 1,
+   "take": 54000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 119,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     93,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 119,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     94,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 119,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 71,
+   "nodes": 1,
+   "take": 126000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 120,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     94,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 120,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     95,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 120,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 72,
+   "nodes": 1,
+   "take": 60000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 121,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 8,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     95,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 121,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     96,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 121,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 73,
+   "nodes": 1,
+   "take": 42000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 122,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -5,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     96,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 122,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     97,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 122,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 74,
+   "nodes": 1,
+   "take": 66000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 123,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     97,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 123,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     98,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 123,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 75,
+   "nodes": 1,
+   "take": 72000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 124,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -6,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     98,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 124,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     99,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 124,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 76,
+   "nodes": 1,
+   "take": 114000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 125,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     99,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 125,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     100,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 125,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 77,
+   "nodes": 1,
+   "take": 96000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 126,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     100,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 126,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     101,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 126,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 78,
+   "nodes": 1,
+   "take": 252000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 127,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 3,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     101,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 127,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     102,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 127,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 79,
+   "nodes": 1,
+   "take": 288000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 128,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 9,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     102,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 128,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     103,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 128,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 80,
+   "nodes": 1,
+   "take": 306000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 129,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     103,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 129,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 2,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     104,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 129,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 81,
+   "nodes": 1,
+   "take": 432000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 130,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     104,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 130,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 4,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     105,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 130,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 82,
+   "nodes": 1,
+   "take": 624000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 131,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -7,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     105,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 131,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 12,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     106,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 131,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 83,
+   "nodes": 1,
+   "take": 672000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 132,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -16,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     106,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 132,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 19,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     107,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 132,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 84,
+   "nodes": 1,
+   "take": 810000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 133,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -18,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     107,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 133,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 13,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     108,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 133,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 85,
+   "nodes": 1,
+   "take": 1728000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 134,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -16,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     108,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 134,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 17,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     109,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 134,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 86,
+   "nodes": 1,
+   "take": 1632000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 135,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -11,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     109,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 135,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     110,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 135,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 87,
+   "nodes": 1,
+   "take": 2262000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 136,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     110,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 136,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -18,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     111,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 136,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 88,
+   "nodes": 1,
+   "take": 1872000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 137,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 27,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     111,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 137,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -30,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     112,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 137,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 89,
+   "nodes": 1,
+   "take": 3186000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 138,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 29,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     112,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 138,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -39,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     113,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 138,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 90,
+   "nodes": 1,
+   "take": 3708000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 139,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 38,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     113,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 139,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -36,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     114,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 139,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 91,
+   "nodes": 1,
+   "take": 4134000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 140,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 31,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     114,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 140,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -21,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     115,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 140,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 92,
+   "nodes": 1,
+   "take": 4362000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 141,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 11,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     115,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 141,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 10,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     116,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 141,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 93,
+   "nodes": 1,
+   "take": 6948000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 142,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -17,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     116,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 142,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 31,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     117,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 142,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 94,
+   "nodes": 1,
+   "take": 7062000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 143,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -46,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     117,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 143,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 54,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     118,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 143,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 95,
+   "nodes": 1,
+   "take": 9468000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 144,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -60,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     118,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 144,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 66,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     119,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 144,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 96,
+   "nodes": 1,
+   "take": 12114000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 145,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -65,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     119,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 145,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 59,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     120,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 145,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 97,
+   "nodes": 1,
+   "take": 15480000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 146,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -51,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     120,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 146,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 31,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     121,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 146,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 98,
+   "nodes": 1,
+   "take": 18270000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 147,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -17,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     121,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 147,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -14,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     122,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 147,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 99,
+   "nodes": 1,
+   "take": 22152000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 148,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 29,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     122,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 148,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -67,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     123,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 148,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 100,
+   "nodes": 1,
+   "take": 22980000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 149,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 86,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     123,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 149,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -112,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     124,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 149,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 101,
+   "nodes": 1,
+   "take": 24498000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 150,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 123,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     124,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 150,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -135,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     125,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 150,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 102,
+   "nodes": 1,
+   "take": 26082000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 151,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 135,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     125,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 151,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -125,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     126,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 151,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 103,
+   "nodes": 1,
+   "take": 30006000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 152,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 114,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     126,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 152,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -93,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     127,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 152,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 104,
+   "nodes": 1,
+   "take": 31878000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 153,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 73,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     127,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 153,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -36,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     128,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 153,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 105,
+   "nodes": 1,
+   "take": 37518000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 154,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 13,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     128,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 154,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 27,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     129,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 154,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 106,
+   "nodes": 1,
+   "take": 33498000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 155,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -58,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     129,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 155,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 103,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     130,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 155,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 107,
+   "nodes": 1,
+   "take": 34128000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 156,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -123,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     130,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 156,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 156,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     131,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 156,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 108,
+   "nodes": 1,
+   "take": 29160000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 157,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -175,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     131,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 157,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 192,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     132,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 157,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 109,
+   "nodes": 1,
+   "take": 30072000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 158,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -196,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     132,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 158,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 194,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     133,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 158,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 110,
+   "nodes": 1,
+   "take": 30132000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 159,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -193,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     133,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 159,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 184,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     134,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 159,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 111,
+   "nodes": 1,
+   "take": 27072000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 160,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -174,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     134,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 160,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 146,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     135,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 160,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 112,
+   "nodes": 1,
+   "take": 23646000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 161,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -127,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     135,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 161,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 85,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     136,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 161,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 113,
+   "nodes": 1,
+   "take": 22332000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 162,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -64,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     136,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 162,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 21,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     137,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 162,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 114,
+   "nodes": 1,
+   "take": 20370000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 163,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 1,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     137,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 163,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -36,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     138,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 163,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 115,
+   "nodes": 1,
+   "take": 15840000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 164,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 57,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     138,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 164,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -90,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     139,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 164,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 116,
+   "nodes": 1,
+   "take": 12690000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 165,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 103,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     139,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 165,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -124,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     140,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 165,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 117,
+   "nodes": 1,
+   "take": 10872000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 166,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 132,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     140,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 166,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -142,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     141,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 166,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 118,
+   "nodes": 1,
+   "take": 8274000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 167,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 145,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     141,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 167,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -152,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     142,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 167,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 119,
+   "nodes": 1,
+   "take": 6942000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 168,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 148,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     142,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 168,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -144,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     143,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 168,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 120,
+   "nodes": 1,
+   "take": 5616000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 169,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 139,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     143,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 169,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -131,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     144,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 169,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 121,
+   "nodes": 1,
+   "take": 3834000,
+   "unit": 563592000
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 170,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": 125,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     144,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "face",
+   "label": "LATTICE",
+   "interval": 170,
+   "family": "photon",
+   "node_detector": null,
+   "line": 0,
+   "port": 1,
+   "value": -108,
+   "node": {
+    "label": "LATTICE",
+    "at": [
+     145,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "event": "erasure",
+   "label": "LATTICE",
+   "interval": 170,
+   "family": "photon",
+   "node_detector": null,
+   "origin": [
+    24,
+    0,
+    0
+   ],
+   "distance": 122,
+   "nodes": 1,
+   "take": 3840000,
+   "unit": 563592000
+  }
+ ]
+}

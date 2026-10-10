@@ -206,7 +206,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         board = [node.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
         board[0].lines[0] = node.Record(level, level, two)
         paced_read = node.read(1, rows, board, 1, wrap, GAMMA, 1)[0]
-        turn = node.turning(1, rows, board, 1, GAMMA)
+        turn = node.turning(1, rows, board, 1)
         assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
         assert rows is paced or paced_read == 0  # the rotation: no level in the content
     rows = (rule := json.loads(UNIVERSE.read_text(encoding="utf-8")))["families"]

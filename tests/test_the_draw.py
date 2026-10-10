@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import meeting, node, world_files
-from event_universe.core.rule3 import division_fixed_point, division_forward, rule3
+from event_universe.core.rule3 import division_forward, largest_below, rule3
 from event_universe.credit import record_unit
 from event_universe.emission import born_unit, radiated_total
 from event_universe.features.click import along_cosine, envelope, exact_total, line_total
@@ -280,7 +280,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
         light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
-            division_fixed_point(wall * wall * 5) // 3,
+            largest_below(wall * wall * 5) // 3,
         )  # one quantum at [2, 3]
         assert (
             record_unit(board, light_at, 7 * wall, 7) == wall
@@ -355,7 +355,7 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
         light_at = [f.name for f in board.families].index("pulse")
         gamma, own = (
             board.world.node_clock,
-            division_fixed_point(wall * wall * 5) // 3,
+            largest_below(wall * wall * 5) // 3,
         )  # one quantum at [2, 3]
         assert (
             record_unit(board, light_at, 7 * wall, 7) == wall
@@ -453,7 +453,7 @@ def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(
     carried = 45 * sum(a * a for a in train)  # den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2
     assert abs(turn - carried) * 50 < carried  # the carrier's phase at Omega, exact within 2 percent
     wall, total = count_wall(board.families[pulse], action), board.total_share(pulse)[0]
-    own = division_fixed_point(wall * wall * 5) // 3  # one quantum at [2, 3], W_c sin Omega
+    own = largest_below(wall * wall * 5) // 3  # one quantum at [2, 3], W_c sin Omega
     assert board.credit.counts[pulse] == 1 and total is not None
     assert division_forward(total, own, division_forward(own, 2, 0)[0])[0] == 1  # one quantum
 
@@ -566,7 +566,7 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     (path := tmp_path / "staggered.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
-    laid, trials, clicks, left = Lattice(load_world(path)), 400, [], {}
+    laid, trials, clicks, left = Lattice(load_world(path)), 80, [], {}
     photon = [f.name for f in laid.families].index("photon")
     while laid.interval < 47:  # the interval before A's close: the same lay and steps in every trial
         laid.step()

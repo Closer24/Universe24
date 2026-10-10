@@ -139,10 +139,10 @@ def laid(
     origin: int | None,
     nodes: Any | None = None,
     faced: Any | None = None,
-) -> None:
-    """The one lay act on one line of a family's record: the changes corrected for a massless family (`corrected`, the uniform part of each level out in proportion to `weights`), guarded, and written (`written`) at the lay's Nodes with the remainder at `origin`, the Nodes `faced` left to the faces."""
+) -> Changes:
+    """The one lay act on one line of a family's record: the changes corrected for a massless family (`corrected`, the uniform part of each level out in proportion to `weights`), guarded, and written (`written`) at the lay's Nodes with the remainder at `origin`, the Nodes `faced` left to the faces; returns the corrected changes as written, the lay's own terms (Part G: the directed packet's lattice momentum at birth is read from them, `emission.laid_packet`)."""
     family = board.families[index]
     num, den = family.pair
-    written(
-        board, index, line, corrected(family.name, num == den, changes, weights), origin, nodes, faced
-    )
+    found = corrected(family.name, num == den, changes, weights)
+    written(board, index, line, found, origin, nodes, faced)
+    return found

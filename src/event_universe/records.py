@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
 
 from event_universe.core import paces
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import NO_READ, rule3
-from event_universe.features import currents
+from event_universe.features import currents, phase
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, row_sources, weight_of
 
@@ -20,10 +21,11 @@ Families = tuple[FamilyRule, ...]  # the families as the loader derived them, in
 
 @dataclass
 class NodeState:
-    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): its lines, each a record of dimension one (two levels and Rule3's remainder), one shape for every family, and per held line the one remainder of its write. A family of quanta's lines are its record, one line (dimension 1) or two (a plane, re and im); a held row's lines are its sources' count, the time line and, where the tensions source it, the three axis lines; the holder of the sign's one line is its record, light. Its count, currents, tension, form and Wronskian are readings of the lines (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
+    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): its lines, each a record of dimension one (two levels and Rule3's remainder), one shape for every family, and per held line the one remainder of its write. A family of quanta's lines are its record, one line (dimension 1) or two (a plane, re and im); a held row's lines are its sources' count, the time line and, where the tensions source it, the three axis lines; the holder of the sign's one line is its record, light. The holder of the sign under the rotation carries beside its rows the phase lines (`phases`, the line kind "phase" after the odd lines; features/phase, the mathematician's repaired form of item (g)): per row of the sign beyond the free row six lines of the same shape, the cosine and the sine line of each axis's Link at the Node that owns it (the +a Link of i), the Link's phase as the record owning the row reads it, every row but its own (ALGEBRA.md, No record reads its own write of the sign), 18 integers per Node per record; empty on every other family and on the free row. Its count, currents, tension, form and Wronskian are readings of the lines (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
 
     lines: list[Record]
     write_remainders: list[np.ndarray]
+    phases: list[list[Record]] = field(default_factory=list)
 
 
 States = list[NodeState]  # every family's NodeState, in the families' order
@@ -102,11 +104,6 @@ def rulers_write_factor(count: Any, rulers: Rulers, gamma: int, intervals: int) 
     return paces.write_factor(count, p_x, p_y, p_z, clock, gamma, intervals)
 
 
-def turned_by(angle: Any, clock: Any, gamma: int) -> Any:
-    """The turn's factor, one place (ALGEBRA.md, The turn per proper interval): the holder's level read into a plane's phase is the angle per proper interval, the numerator times the turned family's clock over Gamma, rounded once (`paces.turn_factor`); the angle itself at the vacuum's clock."""
-    return paces.turn_factor(angle, clock, gamma)
-
-
 Sourcing = tuple[int, int]  # a source of a write: a family of quanta's index and the record of it
 
 
@@ -161,6 +158,25 @@ def full(shape: tuple[int, int, int], value: Any, kind: type) -> np.ndarray:
 def empty_record(shape: tuple[int, int, int], kind: type, origin: Any = 0) -> Record:
     """A line at 0 with its remainder at `origin` at every Node, the half wall of the rule the line steps by where the caller gives it: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root); 0 where no wall is given (a line read for its levels alone)."""
     return Record(zeros(shape, kind), zeros(shape, kind), full(shape, origin, kind))
+
+
+def phase_lines(
+    family: FamilyRule, shape: tuple[int, int, int], kind: type, gamma: int, width: int
+) -> list[list[Record]]:
+    """The phase lines of a holder of the sign under the rotation at the start (features/phase, `seed`; the two hands' item (i)): per row of the sign beyond the free row, for each axis the cosine line and the sine line of the Node's +a Link at the angle 0, (X, X cos theta_0 rounded, D div 2) and (0, -(X div Gamma), D div 2) at every Node, X the amplitude the width derives (`phase.amplitude`), the Link's phase at the fixed angle theta_0 = 1 / Gamma; the free row's list empty (read by no record); empty for every other family."""
+    if not family.rotation:
+        return []
+    cosine, sine = phase.seed(phase.amplitude(gamma, width), gamma)
+    return [
+        []
+        if row == 0
+        else [
+            Record(full(shape, c, kind), full(shape, b, kind), full(shape, r, kind))
+            for _axis in range(AXES)
+            for c, b, r in (cosine, sine)
+        ]
+        for row in range(family.records)
+    ]
 
 
 def complement(remainder: Any, wall: Any) -> Any:

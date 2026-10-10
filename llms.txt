@@ -1,6 +1,6 @@
 # Universe24
 
-> One integer rule on a cubic lattice, read through clicks: the formulas it shares with nature and adds. A paper under review at Foundations of Physics, its supplement with every proof, the law of the lattice, the derivations as scripts, a frozen implementation with its tests, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113
+> One integer rule on a cubic lattice, read through clicks: the formulas it shares with nature and adds. A paper archived on Zenodo and at the tag v1.1.0, its supplement with every proof, the law of the lattice, the derivations as scripts, the engine V2 with its tests and the paper's engine at the tag v1.1.0, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113
 
 ## In plain words
 
@@ -16,8 +16,9 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 
 - [The law of the lattice](https://closer24.github.io/Universe24/docs/ALGEBRA.md): one algebraic line per rule, the families, the bodies, the clicks, every experiment's formula and blind expectation
 - [The decisions in force](https://closer24.github.io/Universe24/docs/HIGHLIGHTS.md): one line each
-- [The engine](https://closer24.github.io/Universe24/docs/ENGINE.md): the words, the main loop and Rule3, the files, the output, the gates, how to run a world
+- [The engine](https://closer24.github.io/Universe24/docs/ENGINE.md): the words, the main loop and Rule3, the files, the output, the gates, how to run a world, the known issues and the open items
 - [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks
+- [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 2.0.0 the engine V2 against 1.1.0, the paper's engine
 
 ## The code
 

@@ -17,6 +17,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import coefficients
+    from event_universe.features import phase
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import quanta_records
@@ -119,7 +120,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 undrawn = BACK.snapshot(twin) if twin.interval == 72 else undrawn
                 drive.append([int(twin.states[pulse].lines[0].now[n]) for n in at])  # d_i, a_t's read
         clicks, lays = ([x for x in lines if x["event"] == event] for event in ("credit", "lay"))
-        assert [c["interval"] for c in clicks] == [72] and len(lays) == 8
+        assert [c["interval"] for c in clicks] == [72] and len(lays) == 8 + 2  # Part F: the twist's two
         assert {x["interval"] for x in lays} == {72}
         for _ in range(60):  # between clicks: nothing crossed, bit for bit
             between.step_inverse()
@@ -167,8 +168,24 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         def read(a, here, *ks):  # [re now, re before, im now, im before] of a part's two lines
             return [int(a[f"atom.lines[{k}].{w}"][here]) for k in ks for w in ("now", "before")]
 
+        twist, gamma, amplitude = clicks[0]["twist"], board.world.node_clock, board.amplitude
+        axis = next(
+            (a for a in range(3) if twist[a]), 0
+        )  # Part F: the write's twist along the piece's axis
         for here in at:
-            assert read(written, here, 2, 3) == [entered[0], before[0], entered[1], before[1]]  # entered
+            expected = [entered[0], before[0], entered[1], before[1]]
+            if offset := here[axis] - min(
+                n[axis] for n in at
+            ):  # the fold at x n_a acts beyond the lowest Node
+                c, s = phase.read(
+                    phase.iterate(phase.seed(amplitude, gamma), offset * twist[axis], gamma)
+                )
+                re_t, im_t = phase.fold(entered[0], entered[1], c, s, amplitude)
+                re_tb, im_tb = phase.fold(before[0], before[1], c, s, amplitude)
+                expected = [int(re_t), int(re_tb), int(im_t), int(im_tb)]
+            assert (
+                read(written, here, 2, 3) == expected
+            )  # entered, twisted by the piece's momentum (Part F)
             assert read(written, here, 0, 1) == [0, 0, 0, 0] == read(stood, here, 2, 3)  # left; e
             assert read(stood, here, 0, 1) == [re, re_before, im, im_before]  # the twin's g stands
             assert all(int(written[f"atom.lines[{k}].remainder"][here]) == half for k in range(4))
@@ -302,11 +319,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             "lattice.py::Lattice.step_inverse": "ALGEBRA.md #the-direction",
             "growth.py::resized": "the NodeState of a Node with no level",
             "lay.py::written": "the one place a level is written from outside Rule3",
+            "twist.py::folded_lines": "the phase pair at the angle x n theta_0",
             "node.py::held_write_at": 'ALGEBRA.md #the-primitives, the row "the held write"',
             "node.py::step": "ALGEBRA.md #the-line, #the-direction",
-            "node.py::turned_before": "ALGEBRA.md, The sign holder rotates the two-part record",
+            "node.py::phased": "ALGEBRA.md, The sign holder rotates the two-part record",
             "plane.py::step_plane": "The sign holder rotates the two-part record",
             "records.py::empty_record": "every Node's remainder is born at the half wall",
+            "records.py::phase_lines": "features/phase",
             "records.py::rows_total": "ALGEBRA.md, No record reads its own write of the sign",
         }
         fields, state = {"now", "before", "remainder"}, {"lines", "write_remainders"}
@@ -364,7 +383,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             6: ("node.py", "held_write_at"),
             7: ("features/currents/__init__.py", "tension"),
             8: ("node.py", "sense_current_of"),
-            9: ("features/rotation/__init__.py", "turned"),
+            9: (
+                "node.py",
+                "phased",
+            ),  # the sign holder rotates the plane: the Link phase by its level (Part C)
             10: ("core/ports.py", "arrival"),
             11: ("reports.py", "entering"),
             12: ("credit.py", "quanta_through"),

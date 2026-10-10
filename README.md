@@ -20,7 +20,7 @@ A world is read only through clicks: declared counting regions, NodeDetectors, w
 
 ## The paper
 
-The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), submitted to Foundations of Physics, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
+The paper, "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), archived on Zenodo and at the tag v1.1.0, is in [paper/](paper/): `Universe24_Paper.tex` with [`Universe24_Paper.pdf`](paper/Universe24_Paper.pdf), `Universe24_Supplement.tex` with [`Universe24_Supplement.pdf`](paper/Universe24_Supplement.pdf) (the supplementary material, Online Resource 1: the claims list and the algebraic steps of every derivation), the journal's abstract in `abstract_journal.txt`, the figures with the scripts that draw them and the check scripts beside them. The bibliography stands in each file, so either builds from the folder with the class in `sn/` on the input path, twice:
 
 ```bash
 TEXINPUTS=sn: pdflatex Universe24_Paper.tex && TEXINPUTS=sn: pdflatex Universe24_Paper.tex   # the same for Universe24_Supplement.tex
@@ -40,7 +40,7 @@ TEXINPUTS=sn: pdflatex Universe24_Paper.tex && TEXINPUTS=sn: pdflatex Universe24
 
 ## The implementation
 
-The repository also holds an implementation for building worlds, frozen at the tag v1.1.0, before the odd write of the paper's Section 2.3; the two slits' run of Section 6 is its one run the paper reports, at the state the run's record names, on a universe with gravity off in all but name, so the run is the law's line as Section 2.2 states it, nothing of Section 5.1's vector sector rests on it, and no other claim of the paper does. Its code is `src/event_universe/`, its tests `tests/` and its document [docs/ENGINE.md](docs/ENGINE.md), the engine as the code holds it at the freeze. From a clone to the two slits' page, six commands from the checkout's root:
+The repository also holds an implementation for building worlds, the engine: on main the engine V2 (the next section), and at the tag v1.1.0 the paper's engine, frozen before the odd write of the paper's Section 2.3; the two slits' run of Section 6 is the tag's one run the paper reports, at the state the run's record names, on a universe with gravity off in all but name, so the run is the law's line as Section 2.2 states it, nothing of Section 5.1's vector sector rests on it, and no other claim of the paper does. Its code is `src/event_universe/`, its tests `tests/` and its document [docs/ENGINE.md](docs/ENGINE.md), the engine as the code holds it on main, with the tag's known issues in its section 10. From a clone to the two slits' page, six commands from the checkout's root:
 
 ```bash
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment: Python 3.14 and the package
@@ -52,6 +52,12 @@ PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_s
 ```
 
 To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
+
+## The engine V2
+
+The engine on main, V2, is Rule3 and nothing else: every act on a level is Rule3's one carried division with the remainder kept, and what remains is a coefficient's single division or a search by comparing integers. In plain words: the shears that turned a record are gone, the rotation act is gone, no square root is taken anywhere, no sine or cosine is called, no table is read; the phase of a charged record lives on the Links as a pair of Rule3 lines turned one fixed angle at a time, and gravity's odd lines ride the same fold. Three tests keep it so: no root anywhere, no shear and no rotation act, and a table that lists every division in the engine with its kind and fails on any new one. Momentum is conserved at a click: Rule3 conserves a lattice momentum exactly in the rationals at uniform paces, to a bound each interval on the integers, and at a click the taker is given the piece's momentum as far as it can hold it by a twist of its lines, the rest booked by name; the click has two receivers, the piece's source folded back by the same twist and booked with its recoil; what a body measures of another in two-way clicks never exceeds c, Lorentz's composition exactly. The paper's engine is the tag v1.1.0, unchanged; what changed from it, version by version, is in [CHANGELOG.md](CHANGELOG.md), and the open items stand by name in [docs/ENGINE.md](docs/ENGINE.md), section 10.
+
+The next step is the time paper, the arrow of time as the detector's record, its blind and its run.
 
 ## The two slits' universe
 
@@ -67,7 +73,7 @@ The directions open to anyone: a larger Gamma with the one-way face (the paper's
 
 ## Open problems
 
-What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+What the model misses and what a world closer to nature needs are named in the paper, Section 8: 8.1 the misses, with their numbers, 8.2 what is put in, 8.3 what a world closer to nature needs. The computations the implementation leaves undone are named in [docs/ENGINE.md](docs/ENGINE.md), section 10 (the Zeno worlds not re-run at the frozen hash, the holders' swing under a body laid off the step's fixed point, the engine V2's open items). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 

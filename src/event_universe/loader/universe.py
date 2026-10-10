@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.rule3 import division_fixed_point, division_forward
+from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.loader import derived
 from event_universe.loader.derived import KINDS, PLANE, PLANE_LINE, FamilyRule, Row
 from event_universe.loader.keys import integer, keyed, reads_of
@@ -19,12 +19,18 @@ FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("sources", "level_weight", "write_weight", "rest", "act"),
     ("sources", "level_weight", "write_weight", "act"),
 )
-FORM, TENSIONS, WRONSKIAN = (
+FORM, TENSIONS, WRONSKIAN, FLUX = (
     "form",
     "tensions",
     "wronskian",
-)  # what sources a held row: one real line each
-SOURCES = ((FORM,), (FORM, TENSIONS), (WRONSKIAN,))  # the lists a held row may declare, in this order
+    "flux",
+)  # what sources a held row: one real line each, the flux three odd lines
+SOURCES = (
+    (FORM,),
+    (FORM, TENSIONS),
+    (WRONSKIAN,),
+    (FORM, TENSIONS, FLUX),
+)  # the lists a held row may declare, in this order
 PACE, ROTATION = (
     "pace",
     "rotation",
@@ -33,7 +39,7 @@ ACTS = (PACE, ROTATION)
 
 
 def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
-    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, any integer from 1, the lines of its record, each stepped by Rule3 as every line is, the form and the share the sum over them (1 one real line; 2 a plane, re and im, the one dimension with a Wronskian and a turn, `PLANE`; 3 three real lines, each stepped as a line of dimension one, no turn and no row of the sign; a dimension below 1 refused by name and no other refused by number), or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), or the shape by name, a list of its lines' kinds, `real` or `plane` (`KINDS`; the two hands: 1 and 2 kept as spellings, ["plane", "plane", "plane"] a record of three planes, one Wronskian per plane summed into its row, the proton's row; a record of real lines and planes together refused by name, not built), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content asking the rotation, and an act by another word, are refused by name."""
+    """A family's shape from its row, (lines, parts, plane, wronskian, rotation): a family of quanta declares its `dimension`, any integer from 1, the lines of its record, each stepped by Rule3 as every line is, the form and the share the sum over them (1 one real line; 2 a plane, re and im, the one dimension with a Wronskian and a turn, `PLANE`; 3 three real lines, each stepped as a line of dimension one, no turn and no row of the sign; a dimension below 1 refused by name and no other refused by number), or its shape [parts, dimension], parts records of that dimension laid as one event and never summed at a Node (the pair family [2, 1], two real lines; ALGEBRA.md #a-familys-declaration, the dimension's table), or the shape by name, a list of its lines' kinds, `real` or `plane` (`KINDS`; the two hands: 1 and 2 kept as spellings, ["plane", "plane", "plane"] a record of three planes, one Wronskian per plane summed into its row, the proton's row; a record of real lines and planes together refused by name, not built), and nothing of what sources it; a held row declares its `sources`, the form alone, the form and the tensions, or the Wronskian (one real line per source: 1, 1 + 3 or 1 lines), no dimension, a held row never being a plane, and optionally its `act` on its readers (`ACTS`): the plain read into their paces, every holder's without the key, or the rotation of the two-part record, the holder of the sign's alone (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record), under which the holder carries three odd axis lines beside its time line (1 + 3 lines); a holder of the content sourced by the form, the tensions and the flux carries three odd lines after its tension lines (1 + 3 + 3 lines), the count's flux through the axis's two Links written into them and read by every plane reading it as the odd part of the Link's read (ALGEBRA.md, The clock family on the Ports; plane.py); a holder of the content asking the rotation, and an act by another word, are refused by name."""
     if "held" in row:
         if "dimension" in row:
             raise ValueError(
@@ -54,7 +60,8 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
                 "paces; the rotation of the two-part record is the act of the holder of the sign, sourced by "
                 "the Wronskian (ALGEBRA.md #the-hypotheses-under-their-own-names)"
             )
-        return 1 + 3 * (TENSIONS in sources or rotation), 1, False, WRONSKIAN in sources, rotation
+        odd = 3 * (FLUX in sources)  # the three odd lines of the count's flux after the tensions
+        return 1 + 3 * (TENSIONS in sources or rotation) + odd, 1, False, WRONSKIAN in sources, rotation
     if "dimension" not in row:
         raise ValueError(
             f"{label} lacks the key 'dimension': a family of quanta declares an integer from 1 or [parts, dimension]"
@@ -86,24 +93,20 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
 def composed_pair(
     first: tuple[int, int], second: tuple[int, int], den: int, relative: bool
 ) -> tuple[int, int]:
-    """The pair of the relative part or of the centre's part of two bound records (ALGEBRA.md, the pair of two bound records, a hypothesis under its own name; the two hands): a bound record's inertia is m* = 3 tan omega_0, the band's curvature at rest, so the centre's part has tan omega_M = tan omega_1 + tan omega_2 and the relative part tan omega_mu = tan omega_1 tan omega_2 / (tan omega_1 + tan omega_2), the slow limit's own separation of the two-body problem; in the files' integers at the scale K = (den den_1 den_2)^2: s_i = isqrt(K^2 (den_i^2 - num_i^2)) div den_i is K sin omega_i and c_i = K num_i div den_i is K cos omega_i, Q = s_1 c_2 + s_2 c_1, so the relative part's cosine is Q / sqrt(Q^2 + (s_1 s_2)^2) and the centre's c_1 c_2 / sqrt((c_1 c_2)^2 + Q^2), and the pair's num is the nearest integer to den times that cosine by the division act, (2 den a + r) div (2 r) with r the fixed point of a^2 + b^2; the declared den is the family's own integer (The matter pair's den is the family's own integer). Two [2, 3] records at den 6,000 give the relative part [5237, 6000] and the centre [2449, 6000] (tools/derivations/two_body.py, the floats' 5,237.2 and 2,449.5 the second method)."""
+    """The pair of the relative part or of the centre's part of two bound records (ALGEBRA.md, the pair of two bound records, a hypothesis under its own name; the two hands): a bound record's inertia is m* = 3 tan omega_0, the band's curvature at rest, so the centre's part has tan omega_M = tan omega_1 + tan omega_2 and the relative part tan omega_mu = tan omega_1 tan omega_2 / (tan omega_1 + tan omega_2), the slow limit's own separation of the two-body problem; in the files' integers at the scale K = (den den_1 den_2)^2: s_i = (the largest x with x^2 <= K^2 (den_i^2 - num_i^2)) div den_i is K sin omega_i and c_i = K num_i div den_i is K cos omega_i, Q = s_1 c_2 + s_2 c_1, so the relative part's cosine is Q / (Q^2 + (s_1 s_2)^2)^(1/2) and the centre's c_1 c_2 / ((c_1 c_2)^2 + Q^2)^(1/2), and the pair's num is the nearest integer to den times that cosine by the division act, (2 den a + r) div (2 r) with r the largest integer whose square is at most a^2 + b^2; the declared den is the family's own integer (The matter pair's den is the family's own integer). Two [2, 3] records at den 6,000 give the relative part [5237, 6000] and the centre [2449, 6000] (tools/derivations/two_body.py, the floats' 5,237.2 and 2,449.5 the second method)."""
     (num_1, den_1), (num_2, den_2) = first, second
     scale = (den * den_1 * den_2) ** 2
     sine_1 = int(
-        division_forward(
-            division_fixed_point(scale * scale * (den_1 * den_1 - num_1 * num_1)), den_1, 0
-        )[0]
+        division_forward(largest_below(scale * scale * (den_1 * den_1 - num_1 * num_1)), den_1, 0)[0]
     )
     sine_2 = int(
-        division_forward(
-            division_fixed_point(scale * scale * (den_2 * den_2 - num_2 * num_2)), den_2, 0
-        )[0]
+        division_forward(largest_below(scale * scale * (den_2 * den_2 - num_2 * num_2)), den_2, 0)[0]
     )
     cosine_1 = int(division_forward(scale * num_1, den_1, 0)[0])
     cosine_2 = int(division_forward(scale * num_2, den_2, 0)[0])
     summed = sine_1 * cosine_2 + sine_2 * cosine_1  # the tangents' sum at the scale squared
     along, across = (summed, sine_1 * sine_2) if relative else (cosine_1 * cosine_2, summed)
-    root = division_fixed_point(along * along + across * across)
+    root = largest_below(along * along + across * across)
     return int(division_forward(2 * den * along + root, 2 * root, 0)[0]), den
 
 
@@ -184,8 +187,23 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 rest = integer(
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
+        flux = "held" in row and FLUX in row["held"]["sources"]  # the row carries the odd lines
         rows.append(
-            Row(name, (num, den), lines, parts, plane, wronskian, rotation, weight, writes, rest, reads)
+            Row(
+                name,
+                (num, den),
+                lines,
+                parts,
+                plane,
+                wronskian,
+                rotation,
+                weight,
+                writes,
+                rest,
+                reads,
+                1,
+                flux,
+            )
         )
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])

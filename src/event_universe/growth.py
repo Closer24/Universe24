@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import node
+from event_universe.features import phase
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES, Node
@@ -72,8 +73,9 @@ def resized(
     direction: int,
     kind: type,
     half: int = 0,
+    seed: phase.Pair = ((0, 0, 0), (0, 0, 0)),
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), the sign holder's phase lines at their seed, the Link at the angle 0 (`seed`, features/phase.seed, the cosine line then the sine line per axis), everything else 0; or the same layers taken off (direction -1)."""
 
     def grown(a: Any, value: int = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
@@ -91,6 +93,18 @@ def resized(
     origins = [origin_of(at) for at in node.write_origins(walls, ONE, kind)]
     state.write_remainders = [
         grown(a, at) for a, at in zip(state.write_remainders, origins, strict=True)
+    ]
+    seeds = [a for line in seed for a in line]  # the phase pair's seed, the Link at the angle 0
+    state.phases = [
+        [
+            node.Record(
+                grown(r.now, seeds[k % 2 * 3]),
+                grown(r.before, seeds[k % 2 * 3 + 1]),
+                grown(r.remainder, seeds[k % 2 * 3 + 2]),
+            )
+            for k, r in enumerate(lines)
+        ]
+        for lines in state.phases
     ]
 
 
@@ -137,6 +151,7 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
             direction,
             kind,
             board.half_wall(index),
+            phase.seed(board.amplitude, board.world.node_clock),
         )
     board.node_detectors = [
         resized_node_detector(d, axis, side, layers, direction) for d in board.node_detectors

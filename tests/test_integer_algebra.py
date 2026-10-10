@@ -18,7 +18,7 @@ SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "lattice.py", "share.py", "reports.py", "credit.py", "world_files.py")
 PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "conversion.py", "front.py", "plane.py")
-PHYSICAL_MODULES += ("emission.py", "lay.py")
+PHYSICAL_MODULES += ("emission.py", "lay.py", "twist.py", "readings.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
@@ -191,6 +191,12 @@ def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
+    (
+        "core/ports.py",
+        ast.Mod,
+        "run_offsets",
+        "the periodic wrap of a run's offsets around the ring, the taker across the wrap",
+    ),
     ("loader/faces.py", ast.Mod, "connected", "the periodic wrap of a walked neighbour's coordinate"),
     ("growth.py", ast.Mod, "reached", "a line's number against the family's width, a part's first line"),
     ("growth.py", ast.Mod, "resized", "a line's number against the family's width, a part's first line"),

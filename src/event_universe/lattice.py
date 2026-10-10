@@ -10,10 +10,8 @@ import numpy as np
 
 from event_universe import conversion, credit, emission, front, growth, meeting, node, reports, share
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
-from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward
-from event_universe.features.currents import Vector
 from event_universe.features.start import Sourced, held_rests
 from event_universe.features.write import carried
 from event_universe.lay import laid
@@ -31,10 +29,11 @@ from event_universe.loader.packets import PacketRow
 from event_universe.loader.world import BodyRow, World
 from event_universe.node_detector import Weighed, booked_inflows, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
+from event_universe.resonance import clear_memo
 
 Output = Callable[[dict[str, object]], None]
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
-Stresses = dict[node.Sourcing, Vector]  # per record of quanta its tension on each axis
+Stresses = dict[node.Sourcing, tuple[Any, ...]]  # per record of quanta its tension, its flux per axis
 # per record of quanta the paces of its read, the write's rulers
 Rulers = dict[node.Sourcing, node.Rulers]
 
@@ -43,7 +42,7 @@ class Lattice:
     """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics)."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
-        paces.clear_memo()  # the paces computed once per content value within this run, kept between none
+        clear_memo()
         self.world, self.interval = world, 0
         self.output: Output | None = None
         self.shape, self.offset = world.shape, (0, 0, 0)
@@ -65,6 +64,7 @@ class Lattice:
         ]
         # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
+        self.amplitude = node.seed_phases(self.families, self.states, self.shape, self.kind, world)
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.detector is not None:
                 meeting.laid_record(self, number, record)
@@ -155,6 +155,7 @@ class Lattice:
                 self.wrap,
                 gamma,
                 self.unit,
+                self.amplitude,
             )
 
         seed = [node.zeros(self.shape, self.kind) for _ in rows]
@@ -215,16 +216,15 @@ class Lattice:
         }
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's read on the pair as the step reads it, its level before turned by the previous interval's angle (`node.lines_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
         family, gamma = self.families[index], self.world.node_clock
         found: Any = 0
         frozen = np.zeros(self.shape, dtype=bool)
         for record in quanta_records(self.families, index):
             content, factors = self.read(index, direction, record)
             lines = self.lines_of(index, record)
-            turned = node.lines_as_read(index, self.families, self.states, gamma, record, lines)
             found = found + share.family_share(
-                family, lines, self.wrap, gamma, content, factors, self.unit, at, turned
+                family, lines, self.wrap, gamma, content, factors, self.unit, at
             )
             frozen |= np.broadcast_to(share.frozen(gamma, content), self.shape)
         return np.asarray(found), frozen
@@ -265,28 +265,27 @@ class Lattice:
         """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension, every sign row but the record's own, the Links the world cuts at 0), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`meeting.stepped`, `node.step_records`), with one booking per record its form and its Wronskian are read from."""
         return meeting.stepped(self, index, direction)
 
-    def record(self, index: int, turned: bool = False) -> list[node.Record]:
-        """A family's record, the lines its share, its currents, its tension, its form and its Wronskian are read from: every line of a family of quanta (every record's), the time line of a held row of the content, and for a holder of the sign its light, the sum of its rows (`node.rows_total`); where `turned`, as the step reads it, a turned record's level before turned by the previous interval's angle (`node.record_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation)."""
-        family, lines, gamma = self.families[index], self.states[index].lines, self.world.node_clock
-        found = [node.rows_total(family, lines)] if family.wronskian else lines[: family.record]
-        return node.record_as_read(index, self.families, self.states, gamma, found) if turned else found
+    def record(self, index: int) -> list[node.Record]:
+        """A family's record, the lines its share, its currents, its tension, its form and its Wronskian are read from: every line of a family of quanta (every record's), the time line of a held row of the content, and for a holder of the sign its light, the sum of its rows (`node.rows_total`); a turned record's plain lines (under the temporal gauge the time Link carries no phase, plane.step_plane)."""
+        family, lines = self.families[index], self.states[index].lines
+        return [node.rows_total(family, lines)] if family.wronskian else lines[: family.record]
 
     def currents(self) -> Currents:
-        """Every family of quanta's plain current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; a turned record's from the same turned pair its share reads, its level before turned by the previous interval's angle (`record`, `node.record_as_read`; ALGEBRA.md, The share's change is the currents, under the rotation); the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`)."""
+        """Every family of quanta's plain current through each Port at every Node, read from its record as it stands (`node.currents_of`): before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; a turned record's from its plain pair as its share reads it (`record`); the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`)."""
         return {
-            index: node.currents_of(self.families[index].pair[0], self.record(index, True), self.wrap)
+            index: node.currents_of(self.families[index].pair[0], self.record(index), self.wrap)
             for index in self.order
         }
 
     def stresses(self) -> Stresses:
-        """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`node.stresses_of`): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension)."""
+        """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`node.stresses_of`), and the count's flux along each axis beside it (`node.axis_sources_of`, the flux holder's odd lines' source): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension)."""
         return {
-            s: node.stresses_of(self.families[s[0]].pair[0], self.lines_of(*s), self.wrap)
+            s: node.axis_sources_of(self.families[s[0]].pair[0], self.lines_of(*s), self.wrap)
             for s in sources_of(self.families, self.order)
         }
 
     def sense_currents(self) -> Stresses:
-        """Every turned record's sign current on each axis at every Node, the mean of the Node's two a-Links' Wronskian currents, J_a / 2 with J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`node.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the wall den T."""
+        """Every turned record's sign current on each axis at every Node, the Node's two a-Links' Wronskian currents summed unhalved, J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`node.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the doubled wall 2 E_s T (`loader.derived.held_write_of`; the two hands' lines of 2026-10-09)."""
         return {
             s: node.sense_current_of(self.lines_of(*s), self.wrap)
             for s in sources_of(self.families, self.order)
@@ -294,7 +293,7 @@ class Lattice:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the node_detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeDetectors' acts from outside the Node (`credit.counted_windows`, `meeting.jumped`, `conversion.drawn_conversions`, `emission.sourced`, `front.advanced_fronts`)."""
+        """One interval forward, each act one loop over the families or the node_detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the sign holder's phase act, each Link's pair iterated by the potential's difference across it read at the start (`phased`, features/phase); the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeDetectors' acts from outside the Node (`credit.counted_windows`, `meeting.jumped`, `conversion.drawn_conversions`, `emission.sourced`, `front.advanced_fronts`)."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.interval}: {self.ended}")
         if not growth.grow(self):
@@ -302,6 +301,7 @@ class Lattice:
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
         currents, senses, stresses = self.currents(), self.sense_currents(), self.stresses()
         rulers, begun, weighed = self.rulers(1), [s.lines for s in self.states], weighed_currents(self)
+        node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]
@@ -418,7 +418,7 @@ class Lattice:
         stresses: Stresses,
         senses: Stresses,
     ) -> None:
-        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers; a turned plane's from z_now and the un-turned levels u and v alone, with no z_before in them), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done; a turned plane's level before comes back as u, the inverse's first stage (`node.step_plane`)."""
+        """A family of quanta's lines one interval back, its record free of any write: every line back, its form and its Wronskian read about the step from the same levels the forward write read (its booking, the same numbers), its tension's parts and a turned record's sign current from the pair the interval started with, the lines the inverse returns (as the forward bookings read them), the lines kept aside until every read of the interval's start is done."""
         family = self.families[index]
         lines, bookings = self.stepped(index, -1)
         booked = booked_of(self.families, index, bookings)
@@ -426,17 +426,17 @@ class Lattice:
             held.update(gained)
         for record in quanta_records(self.families, index):
             own = record_lines(self.families, index, record, lines)
-            stresses[(index, record)] = node.stresses_of(family.pair[0], own, self.wrap)
+            stresses[(index, record)] = node.axis_sources_of(family.pair[0], own, self.wrap)
             if index in self.turning:
                 senses[(index, record)] = node.sense_current_of(own, self.wrap)
         books[index] = lines
 
     def step_inverse(self) -> None:
-        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every held row standing at the previous interval's start again, each turned plane's level before turned back by that interval's angle (`node.turned_before` at -1, the inverse's second stage around the holders' write back: the mathematician's hand); the lay is not taken back."""
+        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): the write's rulers read first from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back."""
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`
         books: dict[int, list[node.Record]] = {}
-        pending, gamma = list(self.held), self.world.node_clock
+        pending = list(self.held)
         while True:
             for index in self.order:
                 if index not in books and (index not in self.held or index not in pending):
@@ -453,8 +453,7 @@ class Lattice:
             books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():
             self.states[index].lines = lines
-        for index in self.turning:
-            self.states[index].lines = node.turned_back(index, self.families, self.states, gamma)
+        node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
         self.interval, self.ended = self.interval - 1, None
         while self.growths and self.growths[-1][0] == self.interval + 1:
             growth.resize(self, *self.growths.pop()[1:], -1)

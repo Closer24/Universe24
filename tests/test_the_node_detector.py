@@ -7,7 +7,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import credit, meeting, node, node_detector, reports, world_files
+from event_universe import credit, meeting, node, node_detector, reports, twist, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import amplitude, spread, squared
@@ -198,7 +198,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted".split()
+        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan twist lost source recoil".split()
     )
     hole_at = tuple(
         node_draws[0][2]
@@ -287,8 +287,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert logged == {f for f in faced if f[4] <= board.interval} == set()  # no face: the drive a beam
     assert BACK.verdict(Lattice(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
     fresh = Lattice(load_world(path), (conv := []).append)  # the conversion's list through the one act
-    counts, items = dict(fresh.credit.counts), [meeting.Item(drv, None, None, -1, (here,))]
-    items += [meeting.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
+    counts, items = dict(fresh.credit.counts), [twist.Item(drv, None, None, -1, (here,))]
+    items += [twist.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
     assert meeting.click_act(fresh, 7, None, [1], [items]) == (
         0,
         7,

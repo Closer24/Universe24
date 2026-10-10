@@ -9,7 +9,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import division_fixed_point, division_forward, link_factor
+from event_universe.core.rule3 import division_forward, largest_below, link_factor
 
 
 def plain(level: Any, sign: bool) -> Any:
@@ -71,8 +71,8 @@ def edge_squared(pair: tuple[int, int], gamma: int) -> int:
 
 
 def edge_of(pair: tuple[int, int], gamma: int) -> int:
-    """The edge's pace P, the largest integer whose square is at or below the edge's square, by the fixed point of the division act (the loader's own act, never a root in the run): the largest clock and the largest pace the guard admits, a hill's, Gamma where num = den; the loader reads the amplitude bound at it (ALGEBRA.md #the-bound)."""
-    return division_fixed_point(edge_squared(pair, gamma))
+    """The edge's pace P, the largest integer whose square is at or below the edge's square, by the search on the share reading, `rule3.largest_below` (the loader's own act, never a root in the run): the largest clock and the largest pace the guard admits, a hill's, Gamma where num = den; the loader reads the amplitude bound at it (ALGEBRA.md #the-bound)."""
+    return largest_below(edge_squared(pair, gamma))
 
 
 def at_the_node(value: Any, node: tuple[Any, ...]) -> int:

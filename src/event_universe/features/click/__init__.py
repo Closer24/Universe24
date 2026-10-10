@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, SIDES
-from event_universe.core.rule3 import NO_READ, division_fixed_point, division_forward, rule3
+from event_universe.core.rule3 import NO_READ, division_forward, largest_below, rule3
 
 SCALE_OF = (
     2  # the emission's reference scale, the count's wall times itself: its rounding below one level
@@ -101,29 +101,31 @@ def presented(
 
 
 def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
-    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): isqrt(count^2 T^2 den^2 div (4 laid^2 (den^2 - num^2))), one root on the whole product by the fixed point of the division act, the invariant 2 A^2 sin omega = T per quantum per line (ALGEBRA.md, the absorption's A^2 = (N + 1) T / (2 sin omega_part); the two hands' word on R8, #1793), count T div (2 laid) for the massless pair, the number `amplitude` takes the root of."""
+    """A^2 of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): (the largest x with x^2 <= count^2 T^2 den^2 div (4 laid^2 (den^2 - num^2))), one search on the whole product by the search on the share reading (`rule3.largest_below`), the invariant 2 A^2 sin omega = T per quantum per line (ALGEBRA.md, the absorption's A^2 = (N + 1) T / (2 sin omega_part); the two hands' word on R8, #1793), count T div (2 laid) for the massless pair, the number `amplitude` takes the largest integer whose square is at most it of."""
     num, den = pair
     gap = den * den - num * num
     if gap:
-        half = count * action * den  # 2 laid A^2 sqrt(gap) = count T den: the root of the whole product
-        return division_fixed_point(int(division_forward(half * half, 2 * laid * 2 * laid * gap, 0)[0]))
+        half = (
+            count * action * den
+        )  # 2 laid A^2 s = count T den with s^2 = gap: the search on the whole product
+        return largest_below(int(division_forward(half * half, 2 * laid * 2 * laid * gap, 0)[0]))
     return int(division_forward(count * action, 2 * laid, 0)[0])
 
 
 def spread(square: int, share: tuple[int, int]) -> int:
-    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, isqrt(A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand)."""
+    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, (the largest x with x^2 <= A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand)."""
     weight, total = share
-    return division_fixed_point(int(division_forward(square * weight, total, 0)[0]))
+    return largest_below(int(division_forward(square * weight, total, 0)[0]))
 
 
 def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
-    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the fixed point of the division act; for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `emission.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's hand)."""
-    return division_fixed_point(squared(count, action, pair, laid))
+    """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the search on the share reading (`rule3.largest_below`); for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `emission.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's hand)."""
+    return largest_below(squared(count, action, pair, laid))
 
 
 def direction(re: int, im: int, size: int) -> tuple[int, int]:
     """A level pair of the size `size` in the direction of (re, im) by the division act, (size, 0) where the pair is 0: the phase of the part the quantum leaves passed to the part it enters."""
-    norm = division_fixed_point(re * re + im * im)
+    norm = largest_below(re * re + im * im)
     if norm == 0:
         return size, 0
     return int(division_forward(re * size, norm, 0)[0]), int(division_forward(im * size, norm, 0)[0])
@@ -137,12 +139,12 @@ def standing(
     sense: int,
     share: tuple[int, int] = (1, 1),
 ) -> tuple[tuple[int, int], tuple[int, int]]:
-    """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the fixed point of den^2 - num^2 (sin omega den), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
+    """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the largest integer whose square is at most den^2 - num^2 (sin omega den), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
     if count <= 0:
         return (0, 0), (0, 0)
     num, den = pair
     re, im = direction(phase[0], phase[1], spread(squared(count, action, pair), share))
-    sine = sense * division_fixed_point(den * den - num * num)
+    sine = sense * largest_below(den * den - num * num)
     re_before = int(division_forward(re * num - im * sine, den, 0)[0])
     im_before = int(division_forward(im * num + re * sine, den, 0)[0])
     return (re, im), (re_before, im_before)
@@ -151,9 +153,9 @@ def standing(
 def invariant(
     count: int, action: int, pair: tuple[int, int], laid: int, share: tuple[int, int] = (1, 1)
 ) -> int:
-    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands, the advisor's (b) and (c) and the mathematician's hand: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the fixed point of den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`meeting.relaid`); the share form of `amplitude` beside it, the reader's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
+    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands, the advisor's (b) and (c) and the mathematician's hand: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the largest integer whose square is at most den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`meeting.relaid`); the share form of `amplitude` beside it, the reader's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
     num, den = pair
-    sine = division_fixed_point(den * den - num * num)
+    sine = largest_below(den * den - num * num)
     if count <= 0 or sine == 0:
         return 0
     return spread(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]), share)
@@ -168,29 +170,27 @@ def laid_pairs(
     laid: int,
     share: tuple[int, int] = (1, 1),
 ) -> list[tuple[int, int]]:
-    """The level pairs (now, before) of `count` whole quanta on every line of a record at one Node, the lay of a record converted whole at the start (the two hands; the generator's one-Node declaration, equal phases): per real line or plane the amplitude `invariant` on the level now and the level before turned by the pair's rest rotation, (A, A num div den), and for a plane its second line's pair, the sense, (0, sense A s div den) with s the fixed point of den^2 - num^2, so that its Wronskian is sense x A^2 sin omega; `laid` pairs for real lines, 2 `laid` for planes, every one alike; every level 0 at the count 0."""
+    """The level pairs (now, before) of `count` whole quanta on every line of a record at one Node, the lay of a record converted whole at the start (the two hands; the generator's one-Node declaration, equal phases): per real line or plane the amplitude `invariant` on the level now and the level before turned by the pair's rest rotation, (A, A num div den), and for a plane its second line's pair, the sense, (0, sense A s div den) with s the largest integer whose square is at most den^2 - num^2, so that its Wronskian is sense x A^2 sin omega; `laid` pairs for real lines, 2 `laid` for planes, every one alike; every level 0 at the count 0."""
     num, den = pair
-    size, sine = invariant(count, action, pair, laid, share), division_fixed_point(den * den - num * num)
+    size, sine = invariant(count, action, pair, laid, share), largest_below(den * den - num * num)
     real = (size, int(division_forward(size * num, den, 0)[0]))
-    turned = (0, sense * int(division_forward(size * sine, den, 0)[0]))
-    return [pair for _ in range(laid) for pair in ((real, turned) if plane else (real,))]
+    imaginary = (0, sense * int(division_forward(size * sine, den, 0)[0]))
+    return [pair for _ in range(laid) for pair in ((real, imaginary) if plane else (real,))]
 
 
 def exact_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes of one quantum of light at the resonance, S = SUM A^2 with 2 S sin Omega = T, the exact root isqrt((T den div 2)^2 div (den^2 - num^2)) by the fixed point of the division act (the advisor's form and the mathematician's hand, two hands), one root of the whole product; one line's share of a plane's quantum, the two lines together (the taker's lay), the source in time's total (`emission.laid_increment`, `emission.emitted_quantum`); the one-line packet's root is `line_total`; the NodeDetector's own act at the lay and no act of the interval."""
+    """The total of the squared amplitudes of one quantum of light at the resonance, S = SUM A^2 with 2 S sin Omega = T, (the largest x with x^2 <= (T den div 2)^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`) (the advisor's form and the mathematician's hand, two hands), one root of the whole product; one line's share of a plane's quantum, the two lines together (the taker's lay), the source in time's total (`emission.laid_increment`, `emission.emitted_quantum`); the one-line packet's root is `line_total`; the NodeDetector's own act at the lay and no act of the interval."""
     num, den = resonance
     half = int(
         division_forward(action * den, 2, 0)[0]
     )  # T den div 2, exact for the file's T, a power of two
-    return division_fixed_point(int(division_forward(half * half, den * den - num * num, 0)[0]))
+    return largest_below(int(division_forward(half * half, den * den - num * num, 0)[0]))
 
 
 def line_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, the exact root isqrt(T^2 den^2 div (den^2 - num^2)) by the fixed point of the division act, twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) (`exact_total`) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
+    """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, (the largest x with x^2 <= T^2 den^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`), twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) (`exact_total`) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
     num, den = resonance
-    return division_fixed_point(
-        int(division_forward(action * action * den * den, den * den - num * num, 0)[0])
-    )
+    return largest_below(int(division_forward(action * action * den * den, den * den - num * num, 0)[0]))
 
 
 def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> list[int]:
@@ -231,12 +231,12 @@ def along_cosine(
 
 
 def envelope(total: int, span: int, across: int) -> list[int]:
-    """A packet's amplitude per Node slice by slice along its axis in the energy form (the mathematician's hand, on the advisor's derivation, step 5, two hands): the energy left R_0 the packet's root (`line_total`, T / sin Omega for the one-line packet), each slice's energy R_t div span over the `across` Nodes of its cross-section, the amplitude per Node a_t = isqrt((R_t div span) div across), the carry R_(t+1) = R_t - across a_t^2, so that the energy decays at 1 / span per slice and the amplitude at 1 / (2 span), the body's survival under the constant hazard and nature's natural linewidth, the Lorentzian of full width 1 / span; the lay ends where a_t falls below 1, the deficit left below span level squared per Node (47 of 43,962, the one-line root at T = 32,768 and [2, 3], span 48, one Node across, the mathematician's number); the length L = 2 span ln a_0 in the continuous line (326 at a_0 = 30) and longer in the integers, whose tail at a_t = 1 falls linearly (456 slices there, SUM a_t^2 = 43,915)."""
+    """A packet's amplitude per Node slice by slice along its axis in the energy form (the mathematician's hand, on the advisor's derivation, step 5, two hands): the energy left R_0 the packet's root (`line_total`, T / sin Omega for the one-line packet), each slice's energy R_t div span over the `across` Nodes of its cross-section, the amplitude per Node a_t = (the largest x with x^2 <= (R_t div span) div across), the carry R_(t+1) = R_t - across a_t^2, so that the energy decays at 1 / span per slice and the amplitude at 1 / (2 span), the body's survival under the constant hazard and nature's natural linewidth, the Lorentzian of full width 1 / span; the lay ends where a_t falls below 1, the deficit left below span level squared per Node (47 of 43,962, the one-line root at T = 32,768 and [2, 3], span 48, one Node across, the mathematician's number); the length L = 2 span ln a_0 in the continuous line (326 at a_0 = 30) and longer in the integers, whose tail at a_t = 1 falls linearly (456 slices there, SUM a_t^2 = 43,915)."""
     found: list[int] = []
     left = total
     while True:
         energy = int(division_forward(left, span, 0)[0])
-        amplitude = division_fixed_point(int(division_forward(energy, across, 0)[0]))
+        amplitude = largest_below(int(division_forward(energy, across, 0)[0]))
         if amplitude == 0:
             return found
         found.append(amplitude)
