@@ -317,6 +317,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         42,
         "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
     ),
+    "tests/test_part_g_recoil.py::test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_the_two_folds": (
+        13,
+        "the engine V2 (Part G, Task 5 (d); #2122): the reversal with the books as its own test, so that each half of "
+        "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
+    ),
+    "tests/test_part_h_fix.py::test_the_emit_and_take_world_with_the_shorter_window_runs_back": (
+        13,
+        "the engine V2 (Part H, MUST 1; #2122): the reversal with the shorter window as its own test, under the suite's bound",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

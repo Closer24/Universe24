@@ -60,7 +60,6 @@ def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monke
 def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
     """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 144 with the two receivers; both bodies' windows close with no click at 192, after the click and before the run's end, and P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started = time.perf_counter()
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=48)
     board = Lattice(load_world(path), (lines := []).append)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
@@ -97,6 +96,13 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
         f"click at {max(closes) * 48}; at the run's end ({RUN}) the light's {end[0]} and the bodies' {end[1]}, the total "
         f"{end[0] + end[1]}; the floor {floor}"
     )
+
+
+def test_the_emit_and_take_world_with_the_shorter_window_runs_back(tmp_path, monkeypatch):
+    """MUST 1, the reversal: the same world with the emitter's window 48, RUN intervals forward and back with the books, MATCH; its own test so that each half runs under the suite's bound."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    started = time.perf_counter()
+    path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=48)
     verdict = laws.BACK.verdict(Lattice(load_world(path)), RUN)
     assert verdict["verdict"] == "MATCH", verdict
     print(

@@ -39,7 +39,6 @@ def drift_bound(board: Lattice, index: int) -> int:
 def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(tmp_path, monkeypatch):
     """Task 5 (a) to (d). (a) At the emission's intervals (the source in time's 48 lays from 61) the light's P_x over the board stays within the accumulated drift bound (it reads 0: the one-Node lay is even about its Node). (b) At body 1's click (144) the credit line names `source` body 0, `recoil` = -`momentum` per axis and `lost` None: the six-Node taker carries +p and the six-Node source carries -p. (c) P over the board and the two bodies before the emission equals P after the front has passed, to the floor of the two folds' roundings, read after the front and before the taker's next window closes (192, whose null window re-lays the body); the three integers and the floor printed. (d) The reversal with the books through the emission, the click, the two folds and the front is bit for bit (tools/back_in_time: MATCH)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started = time.perf_counter()
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))
     board = Lattice(load_world(path), (lines := []).append)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
@@ -89,7 +88,15 @@ def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(t
         f"emission {before_emission}, after the front passed (interval {after[0]}) the light's {after[1]} and the two bodies' "
         f"{after[2]}, the total {total_after}, the floor {floor}"
     )
-    # (d) the reversal with the books
+
+
+def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_the_two_folds(
+    tmp_path, monkeypatch
+):
+    """Task 5 (d): the reversal with the books on the same world (the emitter's window 240), RUN intervals forward and back through the emission, the click and the two folds, MATCH; its own test so that each half of Task 5 runs under the suite's bound."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    started = time.perf_counter()
+    path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))
     verdict = laws.BACK.verdict(Lattice(load_world(path)), RUN)
     assert verdict["verdict"] == "MATCH", verdict
     print(
