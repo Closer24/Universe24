@@ -1,0 +1,83 @@
+{
+ "shape": [
+  41,
+  31,
+  1
+ ],
+ "boundary": {
+  "x": "closed",
+  "y": "closed",
+  "z": "periodic"
+ },
+ "intervals": 4000,
+ "universe": "examples/events/light_and_mass/universe_nowrite.json",
+ "engine": "examples/events/engine_start.json",
+ "bodies": [],
+ "packets": [
+  {
+   "family": "charge",
+   "along": "x",
+   "wave": [
+    1,
+    4
+   ],
+   "phase": [
+    0,
+    1
+   ],
+   "amplitude": 1241,
+   "top": {
+    "x": [
+     4,
+     8
+    ],
+    "y": [
+     21,
+     25
+    ],
+    "z": [
+     0,
+     0
+    ]
+   },
+   "edge": {
+    "x": 4,
+    "y": 2,
+    "z": 0
+   }
+  }
+ ],
+ "node_detectors": [
+  {
+   "name": "screen",
+   "positions": [
+    [
+     36,
+     14,
+     0
+    ],
+    [
+     36,
+     15,
+     0
+    ],
+    [
+     36,
+     16,
+     0
+    ],
+    [
+     36,
+     17,
+     0
+    ]
+   ]
+  }
+ ],
+ "draw": {
+  "window": 4000,
+  "seed": 24,
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407
+ }
+}
