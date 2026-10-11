@@ -47,9 +47,21 @@ preferred-citation:
       email: alon@defounder.ai
       orcid: https://orcid.org/0009-0008-2701-4599
   year: 2026
+  doi: 10.5281/zenodo.23297864
   notes: "The project's first paper, archived on Zenodo and at the tag v1.1.0. The paper's source is papers/one_rule/ in this repository."
   url: "https://github.com/Closer24/Universe24/tree/main/papers/one_rule"
 references:
+  - type: article
+    title: "Universe24: one simple rule, the formulas it shares with nature and adds"
+    authors:
+      - family-names: Gonen
+        given-names: Alon
+        email: alon@defounder.ai
+        orcid: https://orcid.org/0009-0008-2701-4599
+    year: 2026
+    doi: 10.5281/zenodo.23297864
+    notes: "The project's first paper, the paper's own preprint record (version 1.1.0, with Online Resource 1; concept DOI 10.5281/zenodo.23297863); the software it reports is 10.5281/zenodo.23202100, the tag v1.1.0. Its source is papers/one_rule/ in this repository."
+    url: "https://github.com/Closer24/Universe24/tree/main/papers/one_rule"
   - type: article
     title: "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured"
     authors:
@@ -58,6 +70,6 @@ references:
         email: alon@defounder.ai
         orcid: https://orcid.org/0009-0008-2701-4599
     year: 2026
-    doi: 10.5281/zenodo.23289515
-    notes: "The project's second paper, the time paper, archived with the repository in the Zenodo record of version 2.0.0. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
+    doi: 10.5281/zenodo.23297705
+    notes: "The project's second paper, the time paper, archived as a preprint in its own Zenodo record (concept DOI 10.5281/zenodo.23297704), submitted to Foundations of Physics on 2026-10-11. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
     url: "https://github.com/Closer24/Universe24/tree/main/papers/spacetime_events"
