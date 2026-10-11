@@ -18,6 +18,8 @@ The weights are not chosen by hand. They come from the family's pair of integers
 
 A world is read only through clicks: declared counting regions, NodeDetectors, whose counts are the one measurement. The paper's one claim is that this rule helps compute things in nature, and every number it prints is reproduced by a script in this repository.
 
+The second paper, the time paper ([papers/spacetime_events/](papers/spacetime_events/)), runs on the same board. Because the remainder is kept, every step runs back exactly, so no step has a direction of time; a direction appears only where a detector clicks: it takes one whole piece, records it and wipes the rest, one step per tick. With the record the board runs back through the click; without it the backward run fails where the wiping reached, and the failure spreads no faster than one step per tick. The paper proposes that nature's arrow appears this way, and shows that the same rule gives one bound on everything on the board, clocks slowed near matter and in motion in the known forms at first order, and, from the light of three gamma-ray bursts, a bound on the tick of time.
+
 ## The papers
 
 The papers are in [papers/](papers/), one folder each.
