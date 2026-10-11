@@ -47,6 +47,7 @@ preferred-citation:
       email: alon@defounder.ai
       orcid: https://orcid.org/0009-0008-2701-4599
   year: 2026
+  doi: 10.5281/zenodo.23297864
   notes: "The project's first paper, archived on Zenodo and at the tag v1.1.0. The paper's source is papers/one_rule/ in this repository."
   url: "https://github.com/Closer24/Universe24/tree/main/papers/one_rule"
 references:
