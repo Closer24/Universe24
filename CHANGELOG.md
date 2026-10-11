@@ -2,7 +2,7 @@
 
 One entry per version, the newest first; what the engine does differently, with the files, and what the documents say. The law is [docs/ALGEBRA.md](docs/ALGEBRA.md), the engine's document [docs/ENGINE.md](docs/ENGINE.md), the decisions in force [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md).
 
-## Version 2.0.0, unreleased, this branch
+## Version 2.0.0 (2026-10-11), the tag v2.0.0, Zenodo 10.5281/zenodo.23289515
 
 The engine V2, on main: Rule3 only. Against 1.1.0, by theme.
 

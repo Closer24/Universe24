@@ -1,0 +1,129 @@
+{
+"created": "2026-10-10T23:45:39.801206+00:00",
+"modified": "2026-10-10T23:45:40.898710+00:00",
+"id": 23289515,
+"conceptrecid": "23190113",
+"doi": "10.5281/zenodo.23289515",
+"conceptdoi": "10.5281/zenodo.23190113",
+"doi_url": "https://doi.org/10.5281/zenodo.23289515",
+"metadata": {
+"title": "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks",
+"doi": "10.5281/zenodo.23289515",
+"publication_date": "2026-10-11",
+"description": "<p>Universe24 is one integer rule on a cubic lattice. Each Node holds bounded integers and steps, reversibly, from its own present, its past and its six neighbours; nothing else is kept anywhere. A world is read only through the clicks of declared NodeDetectors.</p>\n<p>This record archives version 2.0.0 of the project, the engine V2 on main and the two papers in one place (Alon Gonen, 2026):</p>\n<p>- Universe24_spacetime_events_v2.0.0.pdf: the second paper, \"A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured\" (22 pages). Its run, its records and the eight checks of its build script are in the archive under papers/spacetime_events/ and can be run by anyone.<br>- Universe24-2.0.0-source.zip: the repository at release v2.0.0: the engine V2 (src/event_universe/), every act on a level one carried division with the remainder kept, no shear, no rotation act, no sine, cosine or root anywhere in the code; its 212 tests and three gates; the law of the lattice (docs/ALGEBRA.md) with the lines from the second paper's work; the decisions in force (docs/HIGHLIGHTS.md); what changed from 1.1.0 (CHANGELOG.md); the first paper, unchanged, under papers/one_rule/ (its version of record is 10.5281/zenodo.23202100); and the second paper's sources, run and checks under papers/spacetime_events/.</p>\n<p>Every number in the second paper is reproducible from the archive: papers/spacetime_events/build.sh rebuilds the PDF, reruns the clocks' and the momentum's readings on the committed world, checks the ensemble over 400 seeds against its summary, and runs the eight checks of the paper's numbers, formulas, words, notation, terms, circularity, references and layout. The engine the first paper reports stays frozen at the tag v1.1.0.</p>\n<p>Repository: https://github.com/Closer24/Universe24 (MIT licence). Cite with CITATION.cff.</p>",
+"access_right": "open",
+"creators": [
+{
+"name": "Gonen, Alon",
+"affiliation": "Independent researcher, Haifa, Israel",
+"orcid": "0009-0008-2701-4599"
+}
+],
+"version": "2.0.0",
+"custom": {
+"code:codeRepository": "https://github.com/Closer24/Universe24"
+},
+"resource_type": {
+"title": "Software",
+"type": "software"
+},
+"license": {
+"id": "mit-license"
+},
+"relations": {
+"version": [
+{
+"index": 3,
+"is_last": true,
+"parent": {
+"pid_type": "recid",
+"pid_value": "23190113"
+}
+}
+]
+}
+},
+"title": "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks",
+"links": {
+"self": "https://zenodo.org/api/records/23289515",
+"self_html": "https://zenodo.org/records/23289515",
+"preview_html": "https://zenodo.org/records/23289515?preview=1",
+"doi": "https://doi.org/10.5281/zenodo.23289515",
+"self_doi": "https://doi.org/10.5281/zenodo.23289515",
+"self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23289515",
+"reserve_doi": "https://zenodo.org/api/records/23289515/draft/pids/doi",
+"parent": "https://zenodo.org/api/records/23190113",
+"parent_html": "https://zenodo.org/records/23190113",
+"parent_doi": "https://doi.org/10.5281/zenodo.23190113",
+"parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23190113",
+"self_iiif_manifest": "https://zenodo.org/api/iiif/record:23289515/manifest",
+"self_iiif_sequence": "https://zenodo.org/api/iiif/record:23289515/sequence/default",
+"files": "https://zenodo.org/api/records/23289515/files",
+"media_files": "https://zenodo.org/api/records/23289515/media-files",
+"thumbnails": {
+"10": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E10,/0/default.jpg",
+"50": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E50,/0/default.jpg",
+"100": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E100,/0/default.jpg",
+"250": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E250,/0/default.jpg",
+"750": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E750,/0/default.jpg",
+"1200": "https://zenodo.org/api/iiif/record:23289515:Universe24_spacetime_events_v2.0.0.pdf/full/%5E1200,/0/default.jpg"
+},
+"latest": "https://zenodo.org/api/records/23289515/versions/latest",
+"latest_html": "https://zenodo.org/records/23289515/latest",
+"versions": "https://zenodo.org/api/records/23289515/versions",
+"draft": "https://zenodo.org/api/records/23289515/draft",
+"access_links": "https://zenodo.org/api/records/23289515/access/links",
+"access_grants": "https://zenodo.org/api/records/23289515/access/grants",
+"access_users": "https://zenodo.org/api/records/23289515/access/users",
+"access_request": "https://zenodo.org/api/records/23289515/access/request",
+"access": "https://zenodo.org/api/records/23289515/access",
+"communities": "https://zenodo.org/api/records/23289515/communities",
+"communities-suggestions": "https://zenodo.org/api/records/23289515/communities-suggestions",
+"request_deletion": "https://zenodo.org/api/records/23289515/request-deletion",
+"file_modification": "https://zenodo.org/api/records/23289515/file-modification",
+"quota_increase": "https://zenodo.org/api/records/23289515/quota-increase",
+"requests": "https://zenodo.org/api/records/23289515/requests"
+},
+"updated": "2026-10-10T23:45:40.898710+00:00",
+"recid": "23289515",
+"revision": 3,
+"files": [
+{
+"id": "72170ac3-c7ff-4b30-a591-a078f1d9c78d",
+"key": "Universe24-2.0.0-source.zip",
+"size": 6895568,
+"checksum": "md5:256a3d9c1a37566f1eae43326aa79bb0",
+"links": {
+"self": "https://zenodo.org/api/records/23289515/files/Universe24-2.0.0-source.zip/content"
+}
+},
+{
+"id": "a9811610-671f-426c-a9a5-e1915d8b1bac",
+"key": "Universe24_spacetime_events_v2.0.0.pdf",
+"size": 460543,
+"checksum": "md5:a4c1863f39ff05e255a35cde6457c65f",
+"links": {
+"self": "https://zenodo.org/api/records/23289515/files/Universe24_spacetime_events_v2.0.0.pdf/content"
+}
+}
+],
+"swh": {},
+"owners": [
+{
+"id": "1878708"
+}
+],
+"status": "published",
+"stats": {
+"downloads": 2,
+"unique_downloads": 2,
+"views": 42,
+"unique_views": 29,
+"version_downloads": 0,
+"version_unique_downloads": 0,
+"version_unique_views": 0,
+"version_views": 0
+},
+"state": "done",
+"submitted": true
+}

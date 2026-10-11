@@ -59,13 +59,13 @@ PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --bl
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 ```
 
-To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
+To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); the engine V2 is the release v2.0.0 (the Zenodo record 10.5281/zenodo.23289515); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
 
 ## The engine V2
 
 The engine on main, V2, is Rule3 and nothing else: every act on a level is Rule3's one carried division with the remainder kept, and what remains is a coefficient's single division or a search by comparing integers. In plain words: the shears that turned a record are gone, the rotation act is gone, no square root is taken anywhere, no sine or cosine is called, no table is read; the phase of a charged record lives on the Links as a pair of Rule3 lines turned one fixed angle at a time, and gravity's odd lines ride the same fold. Three tests keep it so: no root anywhere, no shear and no rotation act, and a table that lists every division in the engine with its kind and fails on any new one. Momentum is conserved at a click: Rule3 conserves a lattice momentum exactly in the rationals at uniform paces, to a bound each interval on the integers, and at a click the taker is given the piece's momentum as far as it can hold it by a twist of its lines, the rest booked by name; the click has two receivers, the piece's source folded back by the same twist and booked with its recoil; what a body measures of another in two-way clicks never exceeds c, Lorentz's composition exactly. The paper's engine is the tag v1.1.0, unchanged; what changed from it, version by version, is in [CHANGELOG.md](CHANGELOG.md), and the open items stand by name in [docs/ENGINE.md](docs/ENGINE.md), section 10.
 
-The next step is the time paper, the arrow of time as the detector's record, its blind and its run.
+The time paper is written and stands at [papers/spacetime_events/](papers/spacetime_events/) with its run and the checks its `build.sh` runs; the engine's open items are named in [docs/ENGINE.md](docs/ENGINE.md), section 10.
 
 ## The two slits' universe
 
@@ -89,4 +89,4 @@ Contributions are welcome, through forks and pull requests. A physics change sta
 
 ## Licence and citation
 
-Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.
+Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113), version 2.0.0 under the version DOI [10.5281/zenodo.23289515](https://doi.org/10.5281/zenodo.23289515); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.

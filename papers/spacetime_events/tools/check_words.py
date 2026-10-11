@@ -1,4 +1,4 @@
-"""The paper's words: the forbidden lists (the program's internal words, proof words, names outside the citations, words about the tool that wrote nothing here, root signs, 'in nature' beyond the three sentences that carry it, 'coin' beyond the slot image, 'window'), the claim sentence present once and whole, the nature sentence once, the three open sentences once each, the ledger sentence at most once in the body, the phrases the owner struck ('readings of the first paper', 'unchecked', 'in short' and the like) absent, the status words present and in square brackets only in the Conclusion's list, a source sentence before every displayed equation, no wave word in the clocks' section and 'wave' there only in its one closing clause, the body ending by page 14, the Abstract under 200 words and 1,920 characters with no macro. Usage: python3 check_words.py [arrow.pdf] [abstract word limit, 200 unless given]."""
+"""The paper's words: the forbidden lists (the program's internal words, proof words, names outside the citations, words about the tool that wrote nothing here, root signs, 'in nature' beyond the three sentences that carry it, 'coin' beyond the slot image, 'window'), the claim sentence present once and whole, the nature sentence once, the three open sentences once each, the ledger sentence at most once in the body, the phrases the owner struck ('readings of the first paper', 'unchecked', 'in short' and the like) absent, the status words present and in square brackets only in the Conclusion's list, a source sentence before every displayed equation, no wave word in the clocks' section and 'wave' there only in its one closing clause, the body ending by page 18 (PAGE_LIMIT), the Abstract under 200 words and 1,920 characters with no macro. Usage: python3 check_words.py [arrow.pdf] [abstract word limit, 200 unless given]."""
 from __future__ import annotations
 import re
 import subprocess
@@ -151,7 +151,7 @@ def main(argv: list[str]) -> int:
         musts.append("the Abstract must say the failure spreads 'no faster than' the wiping's pace (the ends moved 60 and 8 Nodes in 171 ticks)")
     if "\\" in abstract or "$" in abstract:
         musts.append("the Abstract holds a macro or a formula")
-    # the body ends by page 14 (the owner's rule): the Conclusion's last sentence on a page no later than 14
+    # the body ends by PAGE_LIMIT, page 18 (the owner's rule): the Conclusion's last sentence on a page no later than 18
     pdf = Path(argv[1]) if len(argv) > 1 else PAPER / "arrow.pdf"
     if pdf.exists():
         last_page = None
