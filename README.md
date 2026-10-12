@@ -92,3 +92,10 @@ Contributions are welcome, through forks and pull requests. A physics change sta
 ## Licence and citation
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113), version 2.0.0 under the version DOI [10.5281/zenodo.23289515](https://doi.org/10.5281/zenodo.23289515); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.
+
+## About the Author
+
+Universe24 is an independent research project by **Alon Gonen**, founder of **Plus500** and **deFounder**.
+
+- [deFounder website](https://defounder.ai)
+- [Alon's Linktree](https://linktree.defounder.ai)
