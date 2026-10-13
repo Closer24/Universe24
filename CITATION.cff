@@ -71,5 +71,5 @@ references:
         orcid: https://orcid.org/0009-0008-2701-4599
     year: 2026
     doi: 10.5281/zenodo.23297705
-    notes: "The project's second paper, the time paper, archived as a preprint in its own Zenodo record (concept DOI 10.5281/zenodo.23297704), submitted to Foundations of Physics on 2026-10-11. Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
+    notes: "The project's second paper, the time paper, archived as a preprint in its own Zenodo record (concept DOI 10.5281/zenodo.23297704). Its source is papers/spacetime_events/ in this repository, with the run it reports and the checks its build.sh runs."
     url: "https://github.com/Closer24/Universe24/tree/main/papers/spacetime_events"
