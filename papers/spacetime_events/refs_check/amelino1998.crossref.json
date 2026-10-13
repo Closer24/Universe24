@@ -1,0 +1,510 @@
+{
+"status": "ok",
+"message-type": "work",
+"message-version": "1.0.0",
+"message": {
+"indexed": {
+"date-parts": [
+[
+2026,
+10,
+6
+]
+],
+"date-time": "2026-10-06T17:32:20Z",
+"timestamp": 1791307940986,
+"version": "4.3.1"
+},
+"reference-count": 30,
+"publisher": "Springer Science and Business Media LLC",
+"issue": "6687",
+"license": [
+{
+"start": {
+"date-parts": [
+[
+1998,
+6,
+1
+]
+],
+"date-time": "1998-06-01T00:00:00Z",
+"timestamp": 896659200000
+},
+"content-version": "tdm",
+"delay-in-days": 0,
+"URL": "http://www.springer.com/tdm"
+}
+],
+"content-domain": {
+"domain": [],
+"crossmark-restriction": false
+},
+"short-container-title": [
+"Nature"
+],
+"published-print": {
+"date-parts": [
+[
+1998,
+6
+]
+]
+},
+"DOI": "10.1038/31647",
+"type": "journal-article",
+"created": {
+"date-parts": [
+[
+2002,
+7,
+26
+]
+],
+"date-time": "2002-07-26T08:39:15Z",
+"timestamp": 1027672755000
+},
+"page": "763-765",
+"source": "Crossref",
+"is-referenced-by-count": 1250,
+"title": [
+"Tests of quantum gravity from observations of \u03b3-ray bursts"
+],
+"prefix": "10.1038",
+"volume": "393",
+"author": [
+{
+"given": "G.",
+"family": "Amelino-Camelia",
+"sequence": "first",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "John",
+"family": "Ellis",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "N. E.",
+"family": "Mavromatos",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "D. V.",
+"family": "Nanopoulos",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+},
+{
+"given": "Subir",
+"family": "Sarkar",
+"sequence": "additional",
+"affiliation": [],
+"role": [
+{
+"vocabulary": "crossref",
+"role": "author"
+}
+]
+}
+],
+"member": "297",
+"reference": [
+{
+"key": "BF31647_CR1",
+"doi-asserted-by": "publisher",
+"first-page": "686",
+"DOI": "10.1038/386686a0",
+"volume": "386",
+"author": "J van Paradis",
+"year": "1997",
+"unstructured": "van Paradis, J. et al. Transient optical emission from the error box of the \u03b3-ray burst of 28 February 1997. Nature 386, 686\u2013689 (1997).",
+"journal-title": "Nature"
+},
+{
+"key": "BF31647_CR2",
+"volume-title": "IAU Circ.No. 6676",
+"author": "PJ Groot",
+"year": "1997",
+"unstructured": "Groot, P. J. et al. IAU Circ.No. 6676 (1997)."
+},
+{
+"key": "BF31647_CR3",
+"doi-asserted-by": "publisher",
+"first-page": "878",
+"DOI": "10.1038/43132",
+"volume": "387",
+"author": "ML Metzger",
+"year": "1997",
+"unstructured": "Metzger, M. L. et al. Spectral constraints on the redshift of the optical counterpart to the \u03b3-ray burst of 8 May 1997. Nature 387, 878\u2013880 (1997).",
+"journal-title": "Nature"
+},
+{
+"key": "BF31647_CR4",
+"volume-title": "IAU Circ.No. 6676",
+"author": "ML Metzger",
+"year": "1997",
+"unstructured": "Metzger, M. L. et al. IAU Circ.No. 6676 (1997)."
+},
+{
+"key": "BF31647_CR5",
+"doi-asserted-by": "publisher",
+"first-page": "415",
+"DOI": "10.1146/annurev.aa.33.090195.002215",
+"volume": "33",
+"author": "GJ Fishman",
+"year": "1995",
+"unstructured": "Fishman, G. J. & Meegan, C. A. Gamma-ray bursts. Annu. Rev. Astron. Astrophys. 33, 415\u2013458 (1995).",
+"journal-title": "Annu. Rev. Astron. Astrophys."
+},
+{
+"key": "BF31647_CR6",
+"doi-asserted-by": "publisher",
+"first-page": "60",
+"DOI": "10.1016/0550-3213(94)00490-6",
+"volume": "437",
+"author": "JI Latorre",
+"year": "1995",
+"unstructured": "Latorre, J. I., Pascual, P. & Tarrach, R. Speed of light in nontrivial vacua. Nucl. Phys. B 437, 60\u201382 (1995).",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "BF31647_CR7",
+"doi-asserted-by": "publisher",
+"first-page": "37",
+"DOI": "10.1016/0370-2693(92)91478-R",
+"volume": "293",
+"author": "J Ellis",
+"year": "1992",
+"unstructured": "Ellis, J., Mavromatos, N. & Nanopoulos, D. V. String theory modifies quantum mechanics. Phys. Lett. B 293, 37\u201348 (1992).",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "BF31647_CR8",
+"unstructured": "Garay, L. J. Space-time foam as a quantum thermal bath. Phys. Rev. Lett.(submitted); also as preprint gr-qc/9801024."
+},
+{
+"key": "BF31647_CR9",
+"doi-asserted-by": "publisher",
+"first-page": "381",
+"DOI": "10.1016/0550-3213(84)90053-1",
+"volume": "241",
+"author": "J Ellis",
+"year": "1984",
+"unstructured": "Ellis, J., Hagelin, J. S., Nanopoulos, D. V. & Srednicki, M. Search for violations of quantum mechanics. Nucl. Phys. B 241, 381\u2013405 (1984).",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "BF31647_CR10",
+"doi-asserted-by": "publisher",
+"first-page": "3846",
+"DOI": "10.1103/PhysRevD.53.3846",
+"volume": "53",
+"author": "J Ellis",
+"year": "1996",
+"unstructured": "Ellis, J., Lopez, J., Mavromatos, N. & Nanopoulos, D. V. Precision tests of CPT symmetry and quantum mechanics in the neutral kaon system. Phys. Rev. D 53, 3846\u20133870 (1996).",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "BF31647_CR11",
+"doi-asserted-by": "publisher",
+"first-page": "3",
+"DOI": "10.1016/0550-3213(94)00390-Z",
+"volume": "434",
+"author": "P Huet",
+"year": "1995",
+"unstructured": "Huet, P. & Peskin, M. E. Violation of CPT and quantum mechanics in the K0\u2212 \u00af0system. Nucl. Phys. B 434, 3\u201338 (1995).",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "BF31647_CR12",
+"doi-asserted-by": "publisher",
+"first-page": "239",
+"DOI": "10.1016/0370-2693(95)01416-0",
+"volume": "364",
+"author": "R Adler",
+"year": "1995",
+"unstructured": "Adler, R. et al. Tests of CPT symmetry and quantum mechanics with experinental data from CPLEAR. Phys. Lett. B 364, 239\u2013245 (1995).",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "BF31647_CR13",
+"doi-asserted-by": "publisher",
+"first-page": "278",
+"DOI": "10.1016/0370-2693(91)91893-Z",
+"volume": "257",
+"author": "I Antoniadis",
+"year": "1991",
+"unstructured": "Antoniadis, I., Bachas, C., Ellis, J. & Nanopoulos, D. V. Comments on cosmological string solutions. Phys. Lett. B 257, 278\u2013284 (1991).",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "BF31647_CR14",
+"doi-asserted-by": "publisher",
+"first-page": "90",
+"DOI": "10.1006/aphy.1995.1092",
+"volume": "243",
+"author": "J Lukierski",
+"year": "1995",
+"unstructured": "Lukierski, J., Nowicki, A. & Ruegg, H. Classical and quantum-mechanics of free \u03ba-relativistic systems. Ann. Phys. 243, 90\u2013116 (1995).",
+"journal-title": "Ann. Phys."
+},
+{
+"key": "BF31647_CR15",
+"doi-asserted-by": "publisher",
+"first-page": "283",
+"DOI": "10.1016/S0370-2693(96)01565-1",
+"volume": "392",
+"author": "G Amelino-Camelia",
+"year": "1997",
+"unstructured": "Amelino-Camelia, G. Enlarged bound on the measurability of distances and quantum \u03ba-Poincar\u00e9 group. Phys. Lett. B 392, 283\u2013286 (1997).",
+"journal-title": "Phys. Lett. B"
+},
+{
+"key": "BF31647_CR16",
+"doi-asserted-by": "publisher",
+"first-page": "1023",
+"DOI": "10.1088/0264-9381/13/5/018",
+"volume": "13",
+"author": "G 't Hooft",
+"year": "1996",
+"unstructured": "'t Hooft, G. Quantization of point particles in (2 + 1)-dimensional gravity and space-time discreteness. Class. Quant. Grav. 13, 1023\u20131039 (1996).",
+"journal-title": "Class. Quant. Grav."
+},
+{
+"key": "BF31647_CR17",
+"doi-asserted-by": "publisher",
+"first-page": "607",
+"DOI": "10.1142/S0217751X97000566",
+"volume": "12",
+"author": "G Amelino-Camelia",
+"year": "1997",
+"unstructured": "Amelino-Camelia, G., Ellis, J., Mavromatos, N. E. & Nanopoulos, D. V. Distance measurement and wave dispersion in a Liouville string approach to quantum gravity. Int. J. Mod. Phys. A 12, 607\u2013623 (1997).",
+"journal-title": "Int. J. Mod. Phys. A"
+},
+{
+"key": "BF31647_CR18",
+"doi-asserted-by": "publisher",
+"first-page": "3415",
+"DOI": "10.1142/S0217732394003245",
+"volume": "9",
+"author": "G Amelino-Camelia",
+"year": "1994",
+"unstructured": "Amelino-Camelia, G. Limits on the measurability of space-time distances in the semi-classical approximation of quantum gravity. Mod. Phys. Lett. A 9, 3415\u20133422 (1994).",
+"journal-title": "Mod. Phys. Lett. A"
+},
+{
+"key": "BF31647_CR19",
+"unstructured": "Baring, M. G. Gamma-ray bursts above 1\u2009GeV.in Towards a Major Atmospheric Cerenkov Detector(ed. de Jager, O. C.) (Proc. Kruger National Park TeV Workshop, Westprint, Potchefstroom, in the press); also as preprint astro-ph/9711256."
+},
+{
+"key": "BF31647_CR20",
+"unstructured": "Rees, M. J. Gamma-ray bursts: challenges to relativistic astrophysics.in Proc. 18th Texas Symp. on Relativistic Astrohysics 1996(eds Olinto, A., Friemann, J. & Schramm, D. N.) (World Scientific, in the press); also as preprint astro-ph/9701162."
+},
+{
+"key": "BF31647_CR21",
+"unstructured": "M\u00e9sz\u00e1ros, P. Theoretical models of gamma-ray bursts.in Gamma-Ray Bursts(eds Meegan, C., Preece, R. & Koshut, T.) (Proc. 4th Huntsville Symp., Am. Inst. Phys., in the press); also as preprint astro-ph/9711354."
+},
+{
+"key": "BF31647_CR22",
+"doi-asserted-by": "publisher",
+"first-page": "217",
+"DOI": "10.1038/359217a0",
+"volume": "359",
+"author": "CL Bhat",
+"year": "1992",
+"unstructured": "Bhat, C. L. et al. Evidence for sub-millisecond structure in a \u03b3-ray burster. Nature 359, 217\u2013216 (1992).",
+"journal-title": "Nature"
+},
+{
+"key": "BF31647_CR23",
+"unstructured": "Scargle, J. D., Norris, J. & Bonnell, J. Attributes of GRB pulses: Bayesian blocks analysis of TTE data; a microburst in GR920229.in Gamma-Ray Bursts(eds Meegan, C., Preece, R. & Koshut, T.) (Proc. 4th Huntsville Symp., Am. Inst. Phys., in the press); also as preprint astro-ph/9712016."
+},
+{
+"key": "BF31647_CR24",
+"doi-asserted-by": "publisher",
+"first-page": "207",
+"DOI": "10.1103/PhysRevD.54.1",
+"volume": "54",
+"author": "RM Barnett",
+"year": "1996",
+"unstructured": "Barnett, R. M. et al. Review of particle properties. Phys. Rev. D 54, 207\u2013720 (1996).",
+"journal-title": "Phys. Rev. D"
+},
+{
+"key": "BF31647_CR25",
+"doi-asserted-by": "publisher",
+"first-page": "135",
+"DOI": "10.1016/0550-3213(96)00190-3",
+"volume": "471",
+"author": "E Witten",
+"year": "1996",
+"unstructured": "Witten, E. Strong coupling expansion of Calabi-Yau compactification. Nucl. Phys. B 471, 135\u2013158 (1996).",
+"journal-title": "Nucl. Phys. B"
+},
+{
+"key": "BF31647_CR26",
+"doi-asserted-by": "publisher",
+"first-page": "L43",
+"DOI": "10.1086/184740",
+"volume": "308",
+"author": "B Paczynski",
+"year": "1986",
+"unstructured": "Paczynski, B. Gamma-ray bursts at cosmological distances. Astrophys. J. 308, L43\u2013L46 (1986).",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "BF31647_CR27",
+"doi-asserted-by": "publisher",
+"first-page": "36",
+"DOI": "10.1086/173054",
+"volume": "414",
+"author": "RJ Nemiroff",
+"year": "1994",
+"unstructured": "Nemiroff, R. J. et al. Searching gamma-ray bursts for gravitational lensing echoes\u2014Implications for compact dark matter. Astrophys. J. 414, 36\u201340 (1994).",
+"journal-title": "Astrophys. J."
+},
+{
+"key": "BF31647_CR28",
+"unstructured": "Krawczynski, H. et al. Search for TeV counterparts of gamma-ray bursts with the HEGRA experiment.in Proc. Int. School of Cosmic-Ray Astrophysics(World Scientific, in the press); also as preprint astro-ph/9611044."
+},
+{
+"key": "BF31647_CR29",
+"first-page": "61",
+"volume-title": "Proc. 25th Int. Cosmic ray Conf.",
+"author": "PJ Boyle",
+"year": "1998",
+"unstructured": "Boyle, P. J. et al. in Proc. 25th Int. Cosmic ray Conf. Vol. 3 (eds Potgieter M. S. et al.) 61 (Westprint, Potchefstroom, 1998); also as preprint astro-ph/9706132."
+},
+{
+"key": "BF31647_CR30",
+"doi-asserted-by": "publisher",
+"first-page": "652",
+"DOI": "10.1038/372652a0",
+"volume": "372",
+"author": "K Hurley",
+"year": "1994",
+"unstructured": "Hurley, K. et al. Detection of a \u03b3-ray burst of very long duration and very high energy. Nature 372, 652\u2013654 (1994).",
+"journal-title": "Nature"
+}
+],
+"container-title": [
+"Nature"
+],
+"original-title": [],
+"language": "en",
+"link": [
+{
+"URL": "http://www.nature.com/articles/31647.pdf",
+"content-type": "application/pdf",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://www.nature.com/articles/31647",
+"content-type": "text/html",
+"content-version": "vor",
+"intended-application": "text-mining"
+},
+{
+"URL": "http://www.nature.com/articles/31647.pdf",
+"content-type": "application/pdf",
+"content-version": "vor",
+"intended-application": "similarity-checking"
+}
+],
+"deposited": {
+"date-parts": [
+[
+2023,
+5,
+17
+]
+],
+"date-time": "2023-05-17T01:27:47Z",
+"timestamp": 1684286867000
+},
+"score": 1,
+"resource": {
+"primary": {
+"URL": "https://www.nature.com/articles/31647"
+}
+},
+"subtitle": [],
+"short-title": [],
+"issued": {
+"date-parts": [
+[
+1998,
+6
+]
+]
+},
+"references-count": 30,
+"journal-issue": {
+"issue": "6687",
+"published-print": {
+"date-parts": [
+[
+1998,
+6
+]
+]
+}
+},
+"alternative-id": [
+"BF31647"
+],
+"URL": "https://doi.org/10.1038/31647",
+"relation": {},
+"ISSN": [
+"0028-0836",
+"1476-4687"
+],
+"issn-type": [
+{
+"value": "0028-0836",
+"type": "print"
+},
+{
+"value": "1476-4687",
+"type": "electronic"
+}
+],
+"subject": [],
+"published": {
+"date-parts": [
+[
+1998,
+6
+]
+]
+}
+}
+}

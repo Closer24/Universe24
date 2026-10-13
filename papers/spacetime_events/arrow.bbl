@@ -1,6 +1,6 @@
 %% BioMed_Central_Bib_Style_v1.01
 
-\begin{thebibliography}{36}
+\begin{thebibliography}{38}
 % BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
 \ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
 \ifx \binits  \undefined \def \binits#1{#1}\fi
@@ -53,7 +53,8 @@
   Mathematisch-Naturwissenschaftliche Classe}
 \bvolume{73},
 \bfpage{128}--\blpage{142}
-(\byear{1876})
+(\byear{1876}).
+\bcomment{\url{https://www.zobodat.at/publikation_series.php?id=7341}}
 \end{barticle}
 \endbibitem
 
@@ -68,7 +69,10 @@
   Mathematisch-Naturwissenschaftliche Classe}
 \bvolume{76},
 \bfpage{373}--\blpage{435}
-(\byear{1877})
+(\byear{1877}).
+\bcomment{Reprinted in Wissenschaftliche Abhandlungen, vol. II, pp. 164--223,
+  Cambridge University Press, Cambridge (2012),
+  \url{https://doi.org/10.1017/CBO9781139381437.011}}
 \end{barticle}
 \endbibitem
 
@@ -282,6 +286,7 @@ Zenodo, concept record
 \bpublisher{Vieweg},
 \blocation{Braunschweig}
 (\byear{1969}).
+\doiurl{10.1007/978-3-663-02723-2} .
 \bcomment{English translation: Calculating Space, MIT Technical Translation
   AZT-70-164-GEMIT, MIT Project MAC, Cambridge, 1970}
 \end{bbook}
@@ -294,7 +299,8 @@ Zenodo, concept record
 \bbtitle{A New Kind of Science}.
 \bpublisher{Wolfram Media},
 \blocation{Champaign}
-(\byear{2002})
+(\byear{2002}).
+\burl{https://www.wolframscience.com/nks/}
 \end{bbook}
 \endbibitem
 
@@ -313,6 +319,22 @@ vol. \bseriesno{185}.
 \endbibitem
 
 %%% 21
+\bibitem[\protect\citeauthoryear{Bombelli et~al.}{1987}]{bombelli1987}
+\begin{barticle}
+\bauthor{\bsnm{Bombelli}, \binits{L.}},
+\bauthor{\bsnm{Lee}, \binits{J.}},
+\bauthor{\bsnm{Meyer}, \binits{D.}},
+\bauthor{\bsnm{Sorkin}, \binits{R.D.}}:
+\batitle{Space-time as a causal set}.
+\bjtitle{Physical Review Letters}
+\bvolume{59}(\bissue{5}),
+\bfpage{521}--\blpage{524}
+(\byear{1987})
+\doiurl{10.1103/PhysRevLett.59.521}
+\end{barticle}
+\endbibitem
+
+%%% 22
 \bibitem[\protect\citeauthoryear{Tegmark}{2008}]{tegmark2008}
 \begin{barticle}
 \bauthor{\bsnm{Tegmark}, \binits{M.}}:
@@ -325,7 +347,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 22
+%%% 23
 \bibitem[\protect\citeauthoryear{Brecher}{1977}]{brecher1977}
 \begin{barticle}
 \bauthor{\bsnm{Brecher}, \binits{K.}}:
@@ -338,7 +360,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 23
+%%% 24
 \bibitem[\protect\citeauthoryear{Michelson and Morley}{1887}]{michelson1887}
 \begin{barticle}
 \bauthor{\bsnm{Michelson}, \binits{A.A.}},
@@ -352,7 +374,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 24
+%%% 25
 \bibitem[\protect\citeauthoryear{Pound and Rebka}{1960}]{pound1960}
 \begin{barticle}
 \bauthor{\bsnm{Pound}, \binits{R.V.}},
@@ -366,7 +388,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 25
+%%% 26
 \bibitem[\protect\citeauthoryear{Einstein}{1911}]{einstein1911}
 \begin{barticle}
 \bauthor{\bsnm{Einstein}, \binits{A.}}:
@@ -380,7 +402,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 26
+%%% 27
 \bibitem[\protect\citeauthoryear{Dyson et~al.}{1920}]{dyson1920}
 \begin{barticle}
 \bauthor{\bsnm{Dyson}, \binits{F.W.}},
@@ -397,7 +419,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 27
+%%% 28
 \bibitem[\protect\citeauthoryear{Shapiro}{1964}]{shapiro1964}
 \begin{barticle}
 \bauthor{\bsnm{Shapiro}, \binits{I.I.}}:
@@ -410,7 +432,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 28
+%%% 29
 \bibitem[\protect\citeauthoryear{Ives and Stilwell}{1938}]{ives1938}
 \begin{barticle}
 \bauthor{\bsnm{Ives}, \binits{H.E.}},
@@ -424,7 +446,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 29
+%%% 30
 \bibitem[\protect\citeauthoryear{Einstein}{1905}]{einstein1905}
 \begin{barticle}
 \bauthor{\bsnm{Einstein}, \binits{A.}}:
@@ -437,7 +459,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 30
+%%% 31
 \bibitem[\protect\citeauthoryear{Acciari et~al.}{2020}]{acciari2020}
 \begin{barticle}
 \bauthor{\bsnm{Acciari}, \binits{V.A.}},
@@ -460,7 +482,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 31
+%%% 32
 \bibitem[\protect\citeauthoryear{Vasileiou et~al.}{2013}]{vasileiou2013}
 \begin{barticle}
 \bauthor{\bsnm{Vasileiou}, \binits{V.}},
@@ -482,7 +504,7 @@ vol. \bseriesno{185}.
 \end{barticle}
 \endbibitem
 
-%%% 32
+%%% 33
 \bibitem[\protect\citeauthoryear{{LHAASO Collaboration}}{2023}]{lhaaso2023b}
 \begin{botherref}
 \oauthor{\bsnm{{LHAASO Collaboration}}}:
@@ -494,7 +516,7 @@ Science Advances
 \end{botherref}
 \endbibitem
 
-%%% 33
+%%% 34
 \bibitem[\protect\citeauthoryear{Cao et~al.}{2024}]{lhaaso2024}
 \begin{barticle}
 \bauthor{\bsnm{Cao}, \binits{Z.}}, \betal:
@@ -508,7 +530,24 @@ Science Advances
 \end{barticle}
 \endbibitem
 
-%%% 34
+%%% 35
+\bibitem[\protect\citeauthoryear{Amelino-Camelia et~al.}{1998}]{amelino1998}
+\begin{barticle}
+\bauthor{\bsnm{Amelino-Camelia}, \binits{G.}},
+\bauthor{\bsnm{Ellis}, \binits{J.}},
+\bauthor{\bsnm{Mavromatos}, \binits{N.E.}},
+\bauthor{\bsnm{Nanopoulos}, \binits{D.V.}},
+\bauthor{\bsnm{Sarkar}, \binits{S.}}:
+\batitle{Tests of quantum gravity from observations of $\gamma$-ray bursts}.
+\bjtitle{Nature}
+\bvolume{393}(\bissue{6687}),
+\bfpage{763}--\blpage{765}
+(\byear{1998})
+\doiurl{10.1038/31647}
+\end{barticle}
+\endbibitem
+
+%%% 36
 \bibitem[\protect\citeauthoryear{Mattingly}{2005}]{mattingly2005}
 \begin{barticle}
 \bauthor{\bsnm{Mattingly}, \binits{D.}}:
@@ -521,7 +560,7 @@ Science Advances
 \end{barticle}
 \endbibitem
 
-%%% 35
+%%% 37
 \bibitem[\protect\citeauthoryear{{de Broglie}}{1925}]{debroglie1925}
 \begin{barticle}
 \bauthor{\bsnm{{de Broglie}}, \binits{L.}}:
@@ -534,7 +573,7 @@ Science Advances
 \end{barticle}
 \endbibitem
 
-%%% 36
+%%% 38
 \bibitem[\protect\citeauthoryear{Gonen}{2026}]{software2}
 \begin{botherref}
 \oauthor{\bsnm{Gonen}, \binits{A.}}:
