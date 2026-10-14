@@ -1,4 +1,4 @@
-"""The paper's words: the forbidden lists (the program's internal words, proof words, names outside the citations, words about the tool that wrote nothing here, root signs, 'in nature' beyond the three sentences that carry it, 'coin' beyond the slot image, 'window'), the claim sentence present once and whole, the nature sentence once, the three open sentences once each, the ledger sentence at most once in the body, the phrases the owner struck ('readings of the first paper', 'unchecked', 'in short' and the like) absent, the status words present and in square brackets only in the Conclusion's list, a source sentence before every displayed equation, no wave word in the clocks' section and 'wave' there only in its one closing clause, the body ending by page 18 (PAGE_LIMIT), the Abstract under 200 words and 1,920 characters with no macro. Usage: python3 check_words.py [arrow.pdf] [abstract word limit, 200 unless given]."""
+"""The paper's words: the forbidden lists (the program's internal words, proof words, names outside the citations, words about the tool that wrote nothing here, root signs, 'in nature' beyond the three sentences that carry it, 'coin' beyond the slot image, 'window'), the claim sentence present once and whole, the nature sentence once, the three open sentences once each, the ledger sentence at most once in the body, the phrases the owner struck ('readings of the first paper', 'unchecked', 'in short' and the like) absent, the status words present and in square brackets only in the Conclusion's list, a source sentence before every displayed equation, no wave word in the clocks' section and 'wave' there only in its one closing clause, the body ending by page 18 (PAGE_LIMIT), the Abstract under 200 words and 1,920 characters with no macro. Usage: python3 check_words.py [Universe24_Discrete_Spacetime_of_Events_Paper.pdf] [abstract word limit, 200 unless given]."""
 from __future__ import annotations
 import re
 import subprocess
@@ -59,9 +59,9 @@ def main(argv: list[str]) -> int:
         if count_word(plain(cited_removed), w):
             musts.append(f"name outside a citation: '{w}' x {count_word(plain(cited_removed), w)}")
     for w in AI:
-        for fname in ("arrow.tex", "figures.tex", "refs.bib", "refs_more.bib"):
+        for fname in ("Universe24_Discrete_Spacetime_of_Events_Paper.tex", "figures.tex", "refs.bib", "refs_more.bib"):
             text = (PAPER / fname).read_text(encoding="utf-8")
-            if fname == "arrow.tex":
+            if fname == "Universe24_Discrete_Spacetime_of_Events_Paper.tex":
                 text = text.replace(AI_DECLARATION, " ")  # the one sentence the journal requires, in the Declarations alone
                 if text.count("\\bmhead{Use of AI tools}") or tex.count(AI_DECLARATION) != 1 or AI_DECLARATION not in tex[tex.index("\\section*{Statements and Declarations}"):]:
                     musts.append("the declaration of AI use is not the one sentence in the Declarations")
@@ -152,7 +152,7 @@ def main(argv: list[str]) -> int:
     if "\\" in abstract or "$" in abstract:
         musts.append("the Abstract holds a macro or a formula")
     # the body ends by PAGE_LIMIT, page 18 (the owner's rule): the Conclusion's last sentence on a page no later than 18
-    pdf = Path(argv[1]) if len(argv) > 1 else PAPER / "arrow.pdf"
+    pdf = Path(argv[1]) if len(argv) > 1 else PAPER / "Universe24_Discrete_Spacetime_of_Events_Paper.pdf"
     if pdf.exists():
         last_page = None
         for pg in range(1, 24):

@@ -1,4 +1,4 @@
-"""The references: every \\cite key of arrow.tex exists in refs.bib or refs_more.bib, every entry of the two .bib files is cited, the first paper's entry prints its DOI once (read from arrow.bbl), and every entry is verified against its record: for a DOI, the Crossref record (https://api.crossref.org/works/<doi>), its title (case and punctuation folded), first author's family name, year, volume and first page against the .bib; for the two Zenodo DOIs, the Zenodo record (https://zenodo.org/api/records/<id>), its title, creator and version; an entry without a DOI is marked as checked by hand against the journal's record. The fetched records are cached under papers/spacetime_events/refs_check/ (committed), so the check runs offline once they are there; a record that cannot be fetched passes with a warning, a MISMATCH fails. Usage: python3 -I check_refs.py."""
+"""The references: every \\cite key of Universe24_Discrete_Spacetime_of_Events_Paper.tex exists in refs.bib or refs_more.bib, every entry of the two .bib files is cited, the first paper's entry prints its DOI once (read from Universe24_Discrete_Spacetime_of_Events_Paper.bbl), and every entry is verified against its record: for a DOI, the Crossref record (https://api.crossref.org/works/<doi>), its title (case and punctuation folded), first author's family name, year, volume and first page against the .bib; for the two Zenodo DOIs, the Zenodo record (https://zenodo.org/api/records/<id>), its title, creator and version; an entry without a DOI is marked as checked by hand against the journal's record. The fetched records are cached under papers/spacetime_events/refs_check/ (committed), so the check runs offline once they are there; a record that cannot be fetched passes with a warning, a MISMATCH fails. Usage: python3 -I check_refs.py."""
 from __future__ import annotations
 from pathlib import Path
 import json
@@ -50,7 +50,7 @@ def fetch(url: str, cache_file: Path) -> dict | None:
     for attempt in range(3):
         try:
             ctx = ssl.create_default_context(cafile=os.environ.get("SSL_CERT_FILE") or os.environ.get("CURL_CA_BUNDLE") or None)
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "arrow.tex check_refs (mailto:alon@defounder.ai)"}), timeout=40, context=ctx) as resp:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Universe24_Discrete_Spacetime_of_Events_Paper.tex check_refs (mailto:alon@defounder.ai)"}), timeout=40, context=ctx) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 break
         except Exception:
@@ -139,7 +139,7 @@ def main() -> int:
         problems.append(f"cited but not in a .bib: {k}")
     for k in sorted(set(entries) - cited):
         problems.append(f"in {entries[k]} but never cited: {k}")
-    bbl = PAPER / "arrow.bbl"
+    bbl = PAPER / "Universe24_Discrete_Spacetime_of_Events_Paper.bbl"
     if bbl.exists():
         text = bbl.read_text(encoding="utf-8")
         items = text.split("\\bibitem")
@@ -153,7 +153,7 @@ def main() -> int:
         if "v1.1.0" in text:
             problems.append("the tag v1.1.0 is printed")
     else:
-        problems.append("no arrow.bbl to check the printed entry")
+        problems.append("no Universe24_Discrete_Spacetime_of_Events_Paper.bbl to check the printed entry")
     print(f"check_refs: {len(cited)} keys cited, {len(entries)} entries in the .bib files")
     # every entry against its record
     for key, e in bib_entries().items():

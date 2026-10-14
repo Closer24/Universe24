@@ -1,4 +1,4 @@
-"""The layout: the body ends by page 18 (the Conclusion's last sentence sits on a page no later than 18 and the Declarations or the References begin by page 19; PAGE_LIMIT); the smallest printed label of Figure 1 is at least 7 points and its panel titles at least 8 points, measured from the PDF's word boxes on the figure's page (pdftotext -bbox); no overfull box wider than 5 points in the LaTeX log; the figure's inset frame holds all its rows and no box crosses the rule's line beneath (the layout comment of figures_board.tex against pdftotext -bbox). Usage: python3 -I check_layout.py [arrow.pdf] [arrow.log]."""
+"""The layout: the body ends by page 18 (the Conclusion's last sentence sits on a page no later than 18 and the Declarations or the References begin by page 19; PAGE_LIMIT); the smallest printed label of Figure 1 is at least 7 points and its panel titles at least 8 points, measured from the PDF's word boxes on the figure's page (pdftotext -bbox); no overfull box wider than 5 points in the LaTeX log; the figure's inset frame holds all its rows and no box crosses the rule's line beneath (the layout comment of figures_board.tex against pdftotext -bbox). Usage: python3 -I check_layout.py [Universe24_Discrete_Spacetime_of_Events_Paper.pdf] [Universe24_Discrete_Spacetime_of_Events_Paper.log]."""
 from __future__ import annotations
 import re
 import subprocess
@@ -89,8 +89,8 @@ def figure_overlaps(pdf: Path, page: int, board: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
-    pdf = Path(argv[1]) if len(argv) > 1 else PAPER / "arrow.pdf"
-    log = Path(argv[2]) if len(argv) > 2 else PAPER / "arrow.log"
+    pdf = Path(argv[1]) if len(argv) > 1 else PAPER / "Universe24_Discrete_Spacetime_of_Events_Paper.pdf"
+    log = Path(argv[2]) if len(argv) > 2 else PAPER / "Universe24_Discrete_Spacetime_of_Events_Paper.log"
     problems = []
     info = subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True).stdout
     pages = int(re.search(r"Pages:\s+(\d+)", info).group(1))
