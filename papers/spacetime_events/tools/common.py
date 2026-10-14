@@ -1,11 +1,11 @@
-"""Shared helpers for the paper's checks: reading arrow.tex, stripping LaTeX to plain text, splitting it into sentences and into its parts (abstract, sections, conclusion)."""
+"""Shared helpers for the paper's checks: reading Universe24_Discrete_Spacetime_of_Events_Paper.tex, stripping LaTeX to plain text, splitting it into sentences and into its parts (abstract, sections, conclusion)."""
 from __future__ import annotations
 import re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PAPER = HERE.parent
-TEX = PAPER / "arrow.tex"
+TEX = PAPER / "Universe24_Discrete_Spacetime_of_Events_Paper.tex"
 
 
 def read_tex(path: Path = TEX) -> str:
