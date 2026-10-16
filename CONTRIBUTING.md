@@ -6,7 +6,7 @@ Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md
 
 ## The ground rules
 
-- A physics change starts from the law's line in `docs/ALGEBRA.md` and passes the three tests, generic, vector and local, before it enters; a hypothesis that needs more is stated under its own name.
+- A physics change starts from the law's line in `docs/ALGEBRA.md`, the open things listed by name in [docs/OPEN.md](docs/OPEN.md), and passes the three tests, generic, vector and local, before it enters; a hypothesis that needs more is stated under its own name.
 - The engine matches the law in its implementation, not only in its results: the step is Rule3 in the law's flux form, written once in `core/rule3.py` with the law's names (the reach R_ij per Link, the mass D_i per Node, the wall w, the remainder r), the Links' sum gathered in `flux.py`; the law's first form lives outside `src/` as the step's oracle (`tools/step_oracle.py`, run by `tests/test_step_oracle.py`), and a change to the step is shown bit for bit against it.
 - Physical calculations use bounded integers, a fixed local NodeState and the six neighbouring Nodes; nothing is kept at a Node beyond the law's own numbers, and the engine holds no number of physics: every value comes from the run's files.
 - Only a NodeDetector's click is a measurement; a lattice reading is a diagnostic and is labelled so. Runs and tests are headless: inspect a run's output and its events, never a frame.
