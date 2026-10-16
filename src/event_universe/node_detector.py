@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import node
+from event_universe import node, readings, records
 from event_universe.core import paces
 from event_universe.core.ports import AXES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
@@ -106,11 +106,11 @@ def books_of(board: Lattice) -> list[NodeBooks]:
 
 
 def arriving(board: Lattice, books: NodeBooks, drive: int, direction: int = 1) -> int:
-    """The arriving record's level read into the reader's resonant turn: its level at each of the NodeDetector's Nodes, the level now (`direction` 1) or the level before (-1), projected on the reader's own normalised mode, SUM_i d_i A_i div A with A_i the lay's amplitude of one quantum at the Node and A = (the largest x with x^2 <= SUM A_i^2) (`NodeBooks.amplitudes`, `norm`), rounded half up by the division act: the meeting is bilinear in the two records at each Node and the region's turn is the sum of the Nodes' meetings over the record's norm, the drive's level itself at one Node and (SUM_i d_i) / n^(1/2) over n Nodes in the equal lay (the mathematician's hand with the advisor's second, two hands: the level sum over-weights by n^(1/2), the boundary inflow is quadratic in the drive and turns no phase); a drive whose phase runs along the region carries the form factor of a body of that size. A holder of the sign's time level is summed over every row but the record's own (`node.row_levels`, light), a family of quanta's first line's level otherwise."""
+    """The arriving record's level read into the reader's resonant turn: its level at each of the NodeDetector's Nodes, the level now (`direction` 1) or the level before (-1), projected on the reader's own normalised mode, SUM_i d_i A_i div A with A_i the lay's amplitude of one quantum at the Node and A = (the largest x with x^2 <= SUM A_i^2) (`NodeBooks.amplitudes`, `norm`), rounded half up by the division act: the meeting is bilinear in the two records at each Node and the region's turn is the sum of the Nodes' meetings over the record's norm, the drive's level itself at one Node and (SUM_i d_i) / n^(1/2) over n Nodes in the equal lay (the mathematician's hand with the advisor's second, two hands: the level sum over-weights by n^(1/2), the boundary inflow is quadratic in the drive and turns no phase); a drive whose phase runs along the region carries the form factor of a body of that size. A holder of the sign's time level is summed over every row but the record's own (`records.row_levels`, light), a family of quanta's first line's level otherwise."""
     family, lines = board.families[drive], board.states[drive].lines
     if family.wronskian:
         own = row_of(board.families, books.index, books.record)
-        levels = np.asarray(node.row_levels(family, lines, 0, direction, own))
+        levels = np.asarray(records.row_levels(family, lines, 0, direction, own))
     else:
         levels = lines[0].now if direction == 1 else lines[0].before
     total = sum(
@@ -130,11 +130,11 @@ def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Any) -> No
 
 
 def piece_momentum(board: Lattice, index: int, at: np.ndarray) -> list[int]:
-    """The piece's momentum p_a per axis in T's unit, the momentum one credited count of the arriving record deposits (Part F2; both hands' correction of Part F, 2026-10-09, the advisor's 6085442608 and the mathematician's 6085486079: the faces' throughput summed over a window is no momentum, the sin k cancels in it; the piece is the region's lattice momentum over its share, scaled to one count): p_a = P_a(region) x W_rec div (num x W(region)), P_a(region) the record's momentum terms at the region's Nodes `at` read at the close (`node.momentum_of` over the mask, `currents.momentum_terms`, in the unit num of the current's weight), W(region) its share at those Nodes at the close (`Lattice.share_of`, the conserved form's density in the current's units) and W_rec the unit of one credited count (`credit.Books.units`, `record_unit`), one division at the close, rounded half up on the magnitude with the sign after (kind D in the acts table, as `credit.quanta_through` divides once), so that the piece deposited is one count whatever fraction of the packet stands in the region and whichever unit the record holds: one quantum of action (SUM A^2 sin omega = T) at the wave number k carries 2 T sin k in this normalisation (46,341 at k = pi / 4), a count of W_c carries 2 T sin k / sin omega, and a record whose count holds several packets carries their action's worth at the region's own wave number; the sign that of +k, a piece entering from the +a side carries p_a below 0; 0 where the region holds no share."""
+    """The piece's momentum p_a per axis in T's unit, the momentum one credited count of the arriving record deposits (Part F2; both hands' correction of Part F, 2026-10-09, the advisor's 6085442608 and the mathematician's 6085486079: the faces' throughput summed over a window is no momentum, the sin k cancels in it; the piece is the region's lattice momentum over its share, scaled to one count): p_a = P_a(region) x W_rec div (num x W(region)), P_a(region) the record's momentum terms at the region's Nodes `at` read at the close (`readings.momentum_of` over the mask, `currents.momentum_terms`, in the unit num of the current's weight), W(region) its share at those Nodes at the close (`Lattice.share_of`, the conserved form's density in the current's units) and W_rec the unit of one credited count (`credit.Books.units`, `record_unit`), one division at the close, rounded half up on the magnitude with the sign after (kind D in the acts table, as `credit.quanta_through` divides once), so that the piece deposited is one count whatever fraction of the packet stands in the region and whichever unit the record holds: one quantum of action (SUM A^2 sin omega = T) at the wave number k carries 2 T sin k in this normalisation (46,341 at k = pi / 4), a count of W_c carries 2 T sin k / sin omega, and a record whose count holds several packets carries their action's worth at the region's own wave number; the sign that of +k, a piece entering from the +a side carries p_a below 0; 0 where the region holds no share."""
     weight = board.families[index].pair[0]
     terms = [0, 0, 0]
     for record in quanta_records(board.families, index):
-        read = node.momentum_of(weight, board.lines_of(index, record), board.wrap, at)
+        read = readings.momentum_of(weight, board.lines_of(index, record), board.wrap, at)
         terms = [a + b for a, b in zip(terms, read, strict=True)]
     share = int(board.share_of(index, 1, at)[0][at].sum(dtype=object))
     unit = board.credit.units[index]
@@ -157,7 +157,7 @@ def dark(board: Lattice, books: NodeBooks) -> bool:
         own = row_of(board.families, books.index, books.record)
         for side in (1, -1):
             if family.wronskian:
-                levels = np.asarray(node.row_levels(family, lines, 0, side, own))
+                levels = np.asarray(records.row_levels(family, lines, 0, side, own))
             else:
                 levels = lines[0].now if side == 1 else lines[0].before
             if any(int(levels[tuple(np.add(at, board.offset))]) for at in books.nodes):
@@ -276,11 +276,11 @@ def reported(
 
 
 def weighed_currents(board: Lattice) -> Weighed:
-    """Every record of quanta's current through each Port at every Node (`node.currents_of`, as `Lattice.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`Lattice.read`, the record's own), both at the pair the step starts from: the pieces of the conserved form's own current, SUM over the family's records of Q_ij F_ij per Port, the one weight a NodeDetector books through its front Ports (`reports.weighted`, `Lattice.report`, `booked_inflows`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, equal to the plain current where no tension stands); the records of a charged family each with its own read, as `Lattice.share_of` loops them, a turned record's currents from its plain pair as its share reads it (under the temporal gauge the time Link carries no phase, plane.step_plane)."""
+    """Every record of quanta's current through each Port at every Node (`readings.currents_of`, as `Lattice.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`Lattice.read`, the record's own), both at the pair the step starts from: the pieces of the conserved form's own current, SUM over the family's records of Q_ij F_ij per Port, the one weight a NodeDetector books through its front Ports (`reports.weighted`, `Lattice.report`, `booked_inflows`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, equal to the plain current where no tension stands); the records of a charged family each with its own read, as `Lattice.share_of` loops them, a turned record's currents from its plain pair as its share reads it (under the temporal gauge the time Link carries no phase, plane.step_plane)."""
     return {
         index: [
             (
-                node.currents_of(
+                readings.currents_of(
                     board.families[index].pair[0], board.lines_of(index, record), board.wrap
                 ),
                 board.read(index, 1, record)[1],

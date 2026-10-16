@@ -1,4 +1,4 @@
-"""The momentum at the click, read on the board with the program's own functions: the run's world (run3d_fixed/one_piece_3d_fixed.json, with its mode file) is stepped through the run, and equation (5), the board's momentum along each axis, is summed over the whole board for the light's lines and for the atoms' lines at every tick (node.momentum_of, the one reading the click itself uses), as is the write's twist probe (Probe.gained) as the click runs: the piece's momentum per axis as the credit line reads it at the taker's two Nodes scaled to one count, the quarter turn, the largest count of the angle 1/q_0 two Nodes along the board can hold, the momentum that quarter turn gives the taker along the board, and what is left of the piece's; and the same world run again with no detector declared (the twin of the run's third check), for the light's drift without a click. Written to run_momentum.json beside the paper, the board sums at the ticks the paper prints. Deterministic; the run's own toss. Usage: python3 -I run_momentum.py [src directory, ../../src unless given]; the world names the repository's examples/ files; the twin's mode file is the run's with the twin's digest (the bodies' records and the packets are the same, only the detectors' declarations are dropped)."""
+"""The momentum at the click, read on the board with the program's own functions: the run's world (run3d_fixed/one_piece_3d_fixed.json, with its mode file) is stepped through the run, and equation (5), the board's momentum along each axis, is summed over the whole board for the light's lines and for the atoms' lines at every tick (readings.momentum_of, the one reading the click itself uses), as is the write's twist probe (Probe.gained) as the click runs: the piece's momentum per axis as the credit line reads it at the taker's two Nodes scaled to one count, the quarter turn, the largest count of the angle 1/q_0 two Nodes along the board can hold, the momentum that quarter turn gives the taker along the board, and what is left of the piece's; and the same world run again with no detector declared (the twin of the run's third check), for the light's drift without a click. Written to run_momentum.json beside the paper, the board sums at the ticks the paper prints. Deterministic; the run's own toss. Usage: python3 -I run_momentum.py [src directory, ../../src unless given]; the world names the repository's examples/ files; the twin's mode file is the run's with the twin's digest (the bodies' records and the packets are the same, only the detectors' declarations are dropped)."""
 from __future__ import annotations
 import json
 import shutil
@@ -11,7 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else HERE.parents[2] / "src"
 sys.path.insert(0, str(SRC))
-from event_universe import node, resonance  # noqa: E402
+from event_universe import readings, resonance  # noqa: E402
 try:
     from event_universe.twist import Probe  # noqa: E402  # the engine after the split
 except ImportError:
@@ -46,7 +46,7 @@ def sums(board: Lattice) -> dict[str, list[int]]:
     """Equation (5) over the whole board, per axis, for each family's lines, in the unit of equation (5) itself (the weight 1; the credit line's fan is in this unit)."""
     out = {}
     for family, state in zip(board.families, board.states, strict=True):
-        out[family.name] = list(node.momentum_of(1, list(state.lines), board.wrap))
+        out[family.name] = list(readings.momentum_of(1, list(state.lines), board.wrap))
     return out
 
 
@@ -54,7 +54,7 @@ def lines_along(board: Lattice, name: str) -> list[int]:
     """Equation (5) along the board, line by line, for one family."""
     k = [f.name for f in board.families].index(name)
     family, state = board.families[k], board.states[k]
-    return [node.momentum_of(1, [line], board.wrap)[0] for line in state.lines]
+    return [readings.momentum_of(1, [line], board.wrap)[0] for line in state.lines]
 
 
 def p_along(now: np.ndarray, before: np.ndarray) -> float:
@@ -125,10 +125,10 @@ def main() -> int:
             half = Lattice(load_world(twin_world(Path(tmp), k)))
             kind = [f.name for f in half.families].index(credit["absorbed"])
             linear[f"half {k}"] = linear_run(half, credit["absorbed"], (0, 48, 96))
-            along = {0: node.momentum_of(1, list(half.states[kind].lines), half.wrap)[0]}
+            along = {0: readings.momentum_of(1, list(half.states[kind].lines), half.wrap)[0]}
             while half.interval < tick:
                 half.step()
-            along[tick] = node.momentum_of(1, list(half.states[kind].lines), half.wrap)[0]
+            along[tick] = readings.momentum_of(1, list(half.states[kind].lines), half.wrap)[0]
             halves[str(k)] = {str(t_): v for t_, v in along.items()}
     taker_nodes = board.credit.bodies[int(credit["node_detector"].split()[-1])].nodes
     taken = max(halves, key=lambda k: halves[k][str(tick)] * (1 if taker_nodes[0][0] >= board.world.packets[int(k)].top[0][0] else -1))

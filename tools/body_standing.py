@@ -16,7 +16,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import coefficients, largest_below
+from event_universe.core.rule3 import largest_below, wall_of
 from event_universe.lattice import Lattice
 from event_universe.loader.keys import AXES
 from event_universe.records import complement
@@ -209,7 +209,7 @@ def images_kept(board: Lattice) -> list[str]:
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         width, lines = family.width, state.lines
         vectors = width - 1 if family.axes else 0
-        rule_wall = coefficients(family.pair[0], family.pair[1], gamma, gamma, gamma, None, unit)[2]
+        rule_wall = wall_of(family.pair[1], gamma, unit)
         for axes, signs in product(permutations(range(len(AXES))), product((1, -1), repeat=len(AXES))):
             for first in range(0, len(lines), width):
                 kept = True

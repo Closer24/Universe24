@@ -1,4 +1,4 @@
-"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the lattice grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time line at the remainder the start gave the row, every write remainder at half its wall (`node.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
+"""The receding face (ALGEBRA.md #the-objects, the unbounded board): the lattice grows by layers of zeros beyond a receding face whenever a level other than 0 stands on the layer before it, so no wave meets the face (a level leaves 0 only where a neighbour was not 0 the interval before), every grown Node at the NodeState of a Node with no level: every level 0 (the massless row holding the content at its rest, the vacuum content, ALGEBRA.md #what-is-open, item 22), a held row's time line at the remainder the start gave the row, every write remainder at half its wall (`records.write_origins`) and every other remainder 0; on the way back in time the layers a step grew are taken off after its inverse, the grown Nodes having returned to that state exactly; a face grown to the axis's largest size ends the run rather than reflecting, named; growth before the origin (the low face) keeps every declared coordinate the file's by the offset of the layers before it."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import node
+from event_universe import records
 from event_universe.features import phase
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
@@ -42,7 +42,7 @@ def sized(a: Any, axis: int, side: int, layers: int, direction: int, value: int 
 
 
 def reached(
-    states: list[node.NodeState], families: tuple[FamilyRule, ...], axis: int, side: int
+    states: list[records.NodeState], families: tuple[FamilyRule, ...], axis: int, side: int
 ) -> bool:
     """Whether a level other than 0 of any family (the massless row's time part read against its rest) stands on the layer before the face on `side` of `axis` (the last layer for +1, the first for -1): the layer from which the next interval would carry the front beyond the face."""
     layer = -1 if side > 0 else 0
@@ -63,7 +63,7 @@ def origin_of(values: Any) -> int:
 
 
 def resized(
-    state: node.NodeState,
+    state: records.NodeState,
     family: FamilyRule,
     axis: int,
     side: int,
@@ -81,7 +81,7 @@ def resized(
         return sized(a, axis, side, layers, direction, value)
 
     state.lines = [
-        node.Record(
+        records.Record(
             grown(record.now, family.rest if number % family.width == 0 else 0),
             grown(record.before, family.rest if number % family.width == 0 else 0),
             grown(
@@ -90,14 +90,14 @@ def resized(
         )
         for number, record in enumerate(state.lines)
     ]
-    origins = [origin_of(at) for at in node.write_origins(walls, ONE, kind)]
+    origins = [origin_of(at) for at in records.write_origins(walls, ONE, kind)]
     state.write_remainders = [
         grown(a, at) for a, at in zip(state.write_remainders, origins, strict=True)
     ]
     seeds = [a for line in seed for a in line]  # the phase pair's seed, the Link at the angle 0
     state.phases = [
         [
-            node.Record(
+            records.Record(
                 grown(r.now, seeds[k % 2 * 3]),
                 grown(r.before, seeds[k % 2 * 3 + 1]),
                 grown(r.remainder, seeds[k % 2 * 3 + 2]),

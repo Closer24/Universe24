@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import node
+from event_universe import readings, records
 from event_universe.core.ports import AXES, run_offsets
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter
@@ -50,7 +50,7 @@ def relaid(
 ) -> None:
     """The lay of one part of the record over the NodeDetector's Nodes through the one act (features/click, `standing`, `laid_pairs`; `lay.laid`): at every Node of the region the part's lines move to the levels of its share of `count` quanta, A_i^2 = A^2 weight_i / total in the counts' proportion, standing in the direction `phase` and the sense `sense`, the change from what stands handed to the act with no weights (a record at its Node is laid as built, named) and the remainder at the division's origin at every Node of the region, the lay lines the write step's; the count's own lines alone, the other parts untouched. Part H (both hands' lines of 2026-10-10 on the whole trial, MUST 1: the null window's re-lay keeps the fold): where `phase` is None the re-lay keeps each Node's own direction, the pair (re, im) standing at that Node on the part's two lines setting the direction of its new levels (`own_direction`), so that a phase gradient across the region, the write's twist of the taker (`twisted`) and the source's fold (`folded_source`), survives the re-lay to the lay's rounding and the lattice momentum it carries is not discarded unbooked; the acts the same lay act's, the count's share laid as before; one direction at every Node where `phase` names one (the click's write, the part entered in the leaving part's direction turned by the arrival)."""
     family, action = board.families[books.index], board.world.quantum_action
-    first = node.record_slice(family, books.record).start + part * family.width
+    first = records.record_slice(family, books.record).start + part * family.width
     total, at = sum(books.weights), board.mask(books.nodes)
     levels: list[tuple[np.ndarray, np.ndarray]] = []
     for here, weight in zip(books.nodes, books.weights, strict=True):
@@ -66,7 +66,7 @@ def relaid(
             )
             pairs = [(re, re_before), (im, im_before)]
         levels = levels or [
-            (node.zeros(board.shape, object), node.zeros(board.shape, object)) for _ in pairs
+            (records.zeros(board.shape, object), records.zeros(board.shape, object)) for _ in pairs
         ]
         where = tuple(np.add(here, board.offset))
         for (now, before), (nows, befores) in zip(pairs, levels, strict=True):
@@ -85,7 +85,7 @@ def levels_at(
 ) -> tuple[int, int, int, int]:
     """A part's levels at one Node of the reader, (re_now, im_now, re_before, im_before), read from its two lines; the reader's first Node where none is named: the click's write lays the part in one direction at every Node of the region and the first Node carries that phase, a twisted part (`twisted`, `folded_source`) standing at each Node in its own (Part H, MUST 1, `own_direction`)."""
     family, state = board.families[books.index], board.states[books.index]
-    first = node.record_slice(family, books.record).start + part * family.width
+    first = records.record_slice(family, books.record).start + part * family.width
     at = tuple(np.add(books.nodes[0] if here is None else here, board.offset))
     re, im = state.lines[first], state.lines[first + 1 if family.plane else first]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
@@ -148,11 +148,11 @@ def faced(board: Lattice, item: Item) -> list[Node]:
 
 
 def fan_momentum(board: Lattice, index: int) -> tuple[int, int, int]:
-    """A family's lattice momentum P_a over the board in T's unit (Part F, Task 5; the two hands' lines of 2026-10-09 (c)): every record of the family read at the weight num (`node.momentum_of`) and the sum over num once by the division act, rounded half up on the magnitude with the sign after (kind D), the same unit as the piece's p_a (`node_detector.piece_momentum`) so that the credit line's two integers differ by the erasure's deficit; the fan's P before the erasure starts, read at the click's interval."""
+    """A family's lattice momentum P_a over the board in T's unit (Part F, Task 5; the two hands' lines of 2026-10-09 (c)): every record of the family read at the weight num (`readings.momentum_of`) and the sum over num once by the division act, rounded half up on the magnitude with the sign after (kind D), the same unit as the piece's p_a (`node_detector.piece_momentum`) so that the credit line's two integers differ by the erasure's deficit; the fan's P before the erasure starts, read at the click's interval."""
     weight = board.families[index].pair[0]
     found = [0, 0, 0]
     for record in quanta_records(board.families, index):
-        read = node.momentum_of(weight, board.lines_of(index, record), board.wrap)
+        read = readings.momentum_of(weight, board.lines_of(index, record), board.wrap)
         found = [a + b for a, b in zip(found, read, strict=True)]
     signed = scaled(found, weight)
     return signed[0], signed[1], signed[2]
@@ -168,13 +168,13 @@ def scaled(found: Sequence[int], weight: int) -> list[int]:
 def folded_source(
     board: Lattice, giver: NodeBooks, wanted: tuple[int, int, int]
 ) -> tuple[list[int], str | None]:
-    """The source's fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, theorem from the pair rule with the source as partner: at a click the write conserves P with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, both at the click's tick by the same twist, n_a from the same bisection, kind S): the giver's part, the one carrying its count, folded by `wanted` through `twisted` on its own books, the same function the taker's write runs, written through the one lay act (`lay.written`, one `lay` line per Node changed) so that the host's tool crosses it on the way back; the fold is the body's and runs through no erasing front (the source's Nodes are the body's, not the light's). Returns the recoil given and its reading: `wanted` itself and None where the quarter turn carries it (the deposit equal to it to the fold's roundings, the hands' bound 2 c T (M - 1) / M for a count c on M Nodes along the axis); where the quarter turn falls short, the reach as read on the giver's own record lines before and after (`node.momentum_of`, `scaled`) with `LOST_TO_SOURCE`, the remainder `wanted` less it; a region of one Node along the axis folds none, `LOST_TO_DECLARATION`. OPEN by name (both hands): the shipped two-Node atoms at count 1 carry 0.71 of a pi / 4 piece; the one-Node write; the dipole."""
+    """The source's fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, theorem from the pair rule with the source as partner: at a click the write conserves P with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, both at the click's tick by the same twist, n_a from the same bisection, kind S): the giver's part, the one carrying its count, folded by `wanted` through `twisted` on its own books, the same function the taker's write runs, written through the one lay act (`lay.written`, one `lay` line per Node changed) so that the host's tool crosses it on the way back; the fold is the body's and runs through no erasing front (the source's Nodes are the body's, not the light's). Returns the recoil given and its reading: `wanted` itself and None where the quarter turn carries it (the deposit equal to it to the fold's roundings, the hands' bound 2 c T (M - 1) / M for a count c on M Nodes along the axis); where the quarter turn falls short, the reach as read on the giver's own record lines before and after (`readings.momentum_of`, `scaled`) with `LOST_TO_SOURCE`, the remainder `wanted` less it; a region of one Node along the axis folds none, `LOST_TO_DECLARATION`. OPEN by name (both hands): the shipped two-Node atoms at count 1 carry 0.71 of a pi / 4 piece; the one-Node write; the dipole."""
     weight, lines = board.families[giver.index].pair[0], board.lines_of(giver.index, giver.record)
-    before = node.momentum_of(weight, lines, board.wrap)
+    before = readings.momentum_of(weight, lines, board.wrap)
     _twist, short = twisted(board, giver, giver.part, wanted)
     if short is None:
         return list(wanted), None
-    after = node.momentum_of(weight, board.lines_of(giver.index, giver.record), board.wrap)
+    after = readings.momentum_of(weight, board.lines_of(giver.index, giver.record), board.wrap)
     reach = scaled([a - b for a, b in zip(after, before, strict=True)], weight)
     return reach, LOST_TO_SOURCE if short == LOST_TO_TAKER else short
 
@@ -227,12 +227,12 @@ def quarter_turn(board: Lattice) -> int:
 
 def folded_lines(
     board: Lattice,
-    lines: tuple[node.Record, node.Record],
+    lines: tuple[records.Record, records.Record],
     at: np.ndarray,
     offsets: np.ndarray,
     count: int,
-) -> tuple[node.Record, node.Record]:
-    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the region's lowest Node and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (`phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`), one per offset."""
+) -> tuple[records.Record, records.Record]:
+    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the region's lowest Node and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (features/phase: `phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`), one per offset."""
     re_line, im_line = lines
     gamma, amplitude = board.world.node_clock, board.amplitude
     re_now, im_now = re_line.now.copy(), im_line.now.copy()
@@ -245,34 +245,34 @@ def folded_lines(
                 now[here].astype(object), before[here].astype(object), c, s, amplitude
             )
             now[here], before[here] = re_folded, im_folded
-    return node.Record(re_now, re_before, re_line.remainder), node.Record(
+    return records.Record(re_now, re_before, re_line.remainder), records.Record(
         im_now, im_before, im_line.remainder
     )
 
 
 @dataclass(frozen=True)
 class Probe:
-    """The twist's probe (Part F): a part's two lines standing at the region `at` with the Nodes' offsets along one axis, read once; `gained` the lattice momentum along the axis the fold at a signed count of acts would add, the folded copy's reading less the standing lines' (`folded_lines`, `node.momentum_of`), the exact reading in place of M rho sin delta."""
+    """The twist's probe (Part F): a part's two lines standing at the region `at` with the Nodes' offsets along one axis, read once; `gained` the lattice momentum along the axis the fold at a signed count of acts would add, the folded copy's reading less the standing lines' (`folded_lines`, `readings.momentum_of`), the exact reading in place of M rho sin delta."""
 
     board: Lattice
     weight: int
-    lines: tuple[node.Record, node.Record]
+    lines: tuple[records.Record, records.Record]
     at: np.ndarray
     offsets: np.ndarray
     axis: int
 
     def gained(self, count: int) -> int:
-        standing = node.momentum_of(self.weight, list(self.lines), self.board.wrap)[self.axis]
+        standing = readings.momentum_of(self.weight, list(self.lines), self.board.wrap)[self.axis]
         folded = folded_lines(self.board, self.lines, self.at, self.offsets, count)
-        return node.momentum_of(self.weight, list(folded), self.board.wrap)[self.axis] - standing
+        return readings.momentum_of(self.weight, list(folded), self.board.wrap)[self.axis] - standing
 
 
 def twisted(
     board: Lattice, books: NodeBooks, part: int, momentum: tuple[int, int, int]
 ) -> tuple[list[int], str | None]:
-    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`; x the Node's offset from the start of the taker's run along the axis, taken around the ring on a periodic axis so a taker straddling the wrap folds by consecutive offsets, `core/ports.run_offsets`, Part F2), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`node.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the one whose quarter turn moves P_a with p_a's sign; where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line and what was lost (None where nothing)."""
+    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`; x the Node's offset from the start of the taker's run along the axis, taken around the ring on a periodic axis so a taker straddling the wrap folds by consecutive offsets, `core/ports.run_offsets`, Part F2), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`readings.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the one whose quarter turn moves P_a with p_a's sign; where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line and what was lost (None where nothing)."""
     family, state = board.families[books.index], board.states[books.index]
-    first = node.record_slice(family, books.record).start + part * family.width
+    first = records.record_slice(family, books.record).start + part * family.width
     if not family.plane:  # a real line holds no phase to twist
         return [0] * AXES, LOST_TO_DECLARATION if any(momentum) else None
     at = board.mask(books.nodes)
@@ -315,7 +315,7 @@ def twisted(
 
 
 def faces_presented(board: Lattice, index: int) -> dict[int, Faces]:
-    """The faces presented to a family's lines at this interval's step, per line, with the board's offset (the layers grown before the origin), forward and back alike (`node.step_records`)."""
+    """The faces presented to a family's lines at this interval's step, per line, with the board's offset (the layers grown before the origin), forward and back alike (`flux.step_records`)."""
     found: dict[int, Faces] = {}
     for presented in board.credit.faces.get(board.interval, []):
         if presented.family == index:

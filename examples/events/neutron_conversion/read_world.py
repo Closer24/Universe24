@@ -14,7 +14,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node
+from event_universe import records
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.world_files import load_world
@@ -83,7 +83,7 @@ def at_node(board: Lattice, index: int, here: tuple[int, int, int]) -> dict[str,
         "lines": levels,
         "rotation": rotation,
         "sine": None if rotation is None else math.sin(rotation),
-        "wronskian": int(np.asarray(node.wronskian(state.lines, family.plane))[here])
+        "wronskian": int(np.asarray(records.wronskian(state.lines, family.plane))[here])
         if family.plane
         else 0,
         "share_at_the_node": int(share[here]),
