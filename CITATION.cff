@@ -13,6 +13,9 @@ identifiers:
     value: 10.5281/zenodo.23190113
     description: "Zenodo concept DOI, resolving to the latest version"
   - type: doi
+    value: 10.5281/zenodo.23421502
+    description: "Zenodo archive of version 2.1.0, the step in the law's flux form"
+  - type: doi
     value: 10.5281/zenodo.23289515
     description: "Zenodo archive of version 2.0.0, the engine V2 with the two papers"
   - type: doi
