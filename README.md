@@ -63,7 +63,7 @@ PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --bl
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 ```
 
-To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); the engine V2 is the release v2.0.0 (the Zenodo record 10.5281/zenodo.23289515); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
+To run the engine the paper reports, take the tag v1.1.0 (or the source archive of the Zenodo record 10.5281/zenodo.23202100); the engine V2 is the release v2.0.0 (the Zenodo record 10.5281/zenodo.23289515); the engine 2.1.0, the step in the law's flux form, is the release v2.1.0 (the Zenodo record 10.5281/zenodo.23421502); main carries the engine in progress, changed only by pull requests that enter a line of the law with its three tests.
 
 ## The engine V2
 
@@ -93,7 +93,7 @@ Contributions are welcome, through forks and pull requests. A physics change sta
 
 ## Licence and citation
 
-Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113), version 2.0.0 under the version DOI [10.5281/zenodo.23289515](https://doi.org/10.5281/zenodo.23289515); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.
+Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen, and archived on Zenodo under the concept DOI [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113), version 2.1.0 under the version DOI [10.5281/zenodo.23421502](https://doi.org/10.5281/zenodo.23421502), version 2.0.0 under [10.5281/zenodo.23289515](https://doi.org/10.5281/zenodo.23289515); cite it with [CITATION.cff](CITATION.cff). The author used a large language model (Claude, Anthropic, through Claude Code, 2026) as a tool under the author's direction for the computations, the derivations and their checks and the drafting of the text; the model is not an author, and the author reviewed every statement and takes full responsibility for the content.
 
 ## About the Author
 

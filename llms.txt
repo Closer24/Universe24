@@ -1,6 +1,6 @@
 # Universe24
 
-> One line of whole-number arithmetic on a cubic lattice of Nodes, Rule3 in the law's flux form, read through clicks: the formulas it shares with nature and adds. A paper archived on Zenodo and at the tag v1.1.0, its supplement with every proof, the law of the lattice, the derivations as scripts, the engine V2 with its tests and the paper's engine at the tag v1.1.0, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113
+> One line of whole-number arithmetic on a cubic lattice of Nodes, Rule3 in the law's flux form, read through clicks: the formulas it shares with nature and adds. A paper archived on Zenodo and at the tag v1.1.0, its supplement with every proof, the law of the lattice, the derivations as scripts, the engine V2 with its tests and the paper's engine at the tag v1.1.0, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113 (the concept DOI, resolving to the latest version); the current software version, 2.1.0: https://doi.org/10.5281/zenodo.23421502
 
 ## In plain words
 
@@ -24,4 +24,4 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 ## The code
 
 - [Repository on GitHub](https://github.com/Closer24/Universe24): the derivations as scripts (tools/derivations/), the implementation (src/event_universe/), the tests, the two slits' universe (examples/events/two_slits/)
-- [Zenodo record](https://doi.org/10.5281/zenodo.23190113): the archived version 1.1.0 with a DOI, the one to cite
+- [Zenodo record](https://doi.org/10.5281/zenodo.23190113): the concept DOI, the permanent record and the one to cite, resolving to the latest version; the current software version, 2.1.0, the step in the law's flux form, is the version record [10.5281/zenodo.23421502](https://doi.org/10.5281/zenodo.23421502); the paper's engine, version 1.1.0, is 10.5281/zenodo.23202100
