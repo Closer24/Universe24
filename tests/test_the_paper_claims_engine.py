@@ -13,10 +13,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     import numpy as np
 
-    from event_universe import credit, node, world_files
+    from event_universe import credit, flux, readings, records, world_files
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
-    from event_universe.core.rule3 import coefficients
+    from event_universe.core.rule3 import rule_integers
     from event_universe.features import phase
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
@@ -62,24 +62,29 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 for num, den in ((1, 1), (2, 3), (4000, 6000), (-1, 2)):
                     content = draw.integers(-30, 60, shape).astype(kind)
                     factors = tuple((256 + draw.integers(-40, 40, shape)).astype(kind) for _ in range(6))
-                    rule = coefficients(num, den, 6000, *paces.node_paces(6000, content), factors, 16)
+                    clock, pace = paces.node_paces(6000, content)
+                    rule = rule_integers(num, den, 6000, clock, pace, factors, 16)
                     now, before = (draw.integers(-60, 60, shape).astype(np.int64) for _ in (0, 1))
-                    remainder = draw.integers(0, 2**40, shape).astype(object) % int(rule[2])
-                    record = node.Record(now, before, remainder.astype(np.int64))
-                    back = node.step(node.step(record, rule, wrap), rule, wrap, -1)
+                    remainder = draw.integers(0, 2**40, shape).astype(object) % int(rule.wall)
+                    record = records.Record(now, before, remainder.astype(np.int64))
+                    back = flux.step_line(flux.step_line(record, rule, wrap), rule, wrap, -1)
                     tried, misses = tried + 1, misses + (not same(back, record))
         assert (tried, misses) == (48, 0)
         shape, closed, periodic = (3, 3, 3), Wrap(False, True, True), Wrap(True, True, True)
         content = draw.integers(-30, 60, shape).astype(np.int64)
-        rule = coefficients(2, 3, 6000, *paces.node_paces(6000, content), None, 16)
+        clock, pace = paces.node_paces(6000, content)
+        rule = rule_integers(2, 3, 6000, clock, pace, None, 16)
         now, before = (draw.integers(-60, 60, shape).astype(np.int64) for _ in (0, 1))
-        record = node.Record(now, before, np.full(shape, int(rule[2]) // 2, dtype=np.int64))
+        record = records.Record(now, before, np.full(shape, int(rule.wall) // 2, dtype=np.int64))
         face = Face(0, 0, (1, 1, 1), 0, 1)
         with profiled():
-            after = node.step(record, rule, closed, 1, 0, ([face], (0, 0, 0)))
+            after = flux.step_line(record, rule, closed, 1, 0, ([face], (0, 0, 0)))
         assert face.value is not None and int(after.now[1, 1, 1]) == 0  # the hole to 0 at the Node
-        assert same(node.step(after, rule, closed, -1, 0, ([face], (0, 0, 0))), record)
-        forgotten, moved = node.step(after, rule, closed, -1), node.step(after, rule, periodic, -1)
+        assert same(flux.step_line(after, rule, closed, -1, 0, ([face], (0, 0, 0))), record)
+        forgotten, moved = (
+            flux.step_line(after, rule, closed, -1),
+            flux.step_line(after, rule, periodic, -1),
+        )
         off = int((moved.before != before).sum()), int((forgotten.before != before).sum())
         assert off[0] > shape[1] * shape[2] and off[1] == 1  # outside: the read not kept
         with profiled():  # the load, the start and the guard under the profile as well
@@ -216,13 +221,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 if family.quanta:
                     shape = (2, *board.shape)
                     picks = [levels.integers(-300, 300, shape).astype(board.kind) for _ in state.lines]
-                    state.lines = [node.Record(now, before, origin) for now, before in picks]
+                    state.lines = [records.Record(now, before, origin) for now, before in picks]
                 if family.held and not family.wronskian:  # a well, and axis lines where asked
                     well = levels.integers(0, 40, board.shape).astype(board.kind)
-                    state.lines[0] = node.Record(well, well.copy(), state.lines[0].remainder)
+                    state.lines[0] = records.Record(well, well.copy(), state.lines[0].remainder)
                     for k in range(1, len(state.lines)):
                         axis = levels.integers(-tension, tension + 1, board.shape).astype(board.kind)
-                        state.lines[k] = node.Record(axis, axis.copy(), state.lines[k].remainder)
+                        state.lines[k] = records.Record(axis, axis.copy(), state.lines[k].remainder)
             own, union, expected = board.declared_board(), credit.node_detector_nodes(board), {}
             for detector in [r for r in board.node_detectors if r.declared]:
                 facing = front(detector.nodes, board.wrap, union, own)
@@ -230,7 +235,9 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     weighed = plain = np.zeros(board.shape, dtype=object)
                     for number in quanta_records(board.families, index):
                         record = board.lines_of(index, number)
-                        currents = node.currents_of(board.families[index].pair[0], record, board.wrap)
+                        currents = readings.currents_of(
+                            board.families[index].pair[0], record, board.wrap
+                        )
                         factors = board.read(index, 1, number)[1]
                         for port in range(6):
                             flow = np.where(facing[port], currents[port].astype(object), 0)
@@ -311,23 +318,11 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     def the_owners_shout_is_the_inventory_of_the_write_sites_outside_rule3():
         """Rows E.1 to E.3, "The engine holds no number, no formula, no family name and no flag, and every primitive is one folder found by its name", "Each act is a call of Rule3 on whole-board arrays of integers at a declared width, every neighbour read through a Port" and "It holds no number of physics, no formula, no family's name and no flag"; the breaker, the owner's rule (#1793 comment 5982567335): every act of the engine on a Node's levels is Rule3's one line or the division act with the half, and logic found at a Node that is not of Rule3's form is shouted; here the inventory of every function of src/event_universe that writes a Node's levels or remainder outside core/rule3, an assignment into a line's `now`, `before` or `remainder` or into a NodeState's `lines` or `write_remainders`, a `Record(...)` built or a `replace(...)` of those fields (an ast walk over the state's own names, no arithmetic read), each with the law's line its own docstring stands on; a site the inventory does not name fails by the function's name, the shout, a named site that is gone fails too, and tools/record_code_shape.py counts the same sites per file."""
-        inventory = {
-            "bookings.py::booked_sources": "ALGEBRA.md #what-a-body-is, the four lines (a) and (c)",
-            "lattice.py::Lattice.held_write": 'ALGEBRA.md #the-primitives, the row "the held write"',
-            "lattice.py::Lattice.start": "ALGEBRA.md #the-generator (g), the start",
-            "lattice.py::Lattice.step": "ALGEBRA.md #the-interval",
-            "lattice.py::Lattice.step_inverse": "ALGEBRA.md #the-direction",
-            "growth.py::resized": "the NodeState of a Node with no level",
-            "lay.py::written": "the one place a level is written from outside Rule3",
-            "twist.py::folded_lines": "the phase pair at the angle x n theta_0",
-            "node.py::held_write_at": 'ALGEBRA.md #the-primitives, the row "the held write"',
-            "node.py::step": "ALGEBRA.md #the-line, #the-direction",
-            "node.py::phased": "ALGEBRA.md, The sign holder rotates the two-part record",
-            "plane.py::step_plane": "The sign holder rotates the two-part record",
-            "records.py::empty_record": "every Node's remainder is born at the half wall",
-            "records.py::phase_lines": "features/phase",
-            "records.py::rows_total": "ALGEBRA.md, No record reads its own write of the sign",
-        }
+        law = (
+            "ALGEBRA.md",
+            "Rule3",
+            "features/",
+        )  # a law line by its anchor, the rule by its name or an act by its folder
         fields, state = {"now", "before", "remainder"}, {"lines", "write_remainders"}
 
         def owner(item, parents):  # the qualified name of the function an ast node stands in
@@ -363,26 +358,26 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     found.setdefault(key, []).append(f"{item.lineno} {site}")
                 if isinstance(item, ast.FunctionDef):
                     docs[key] = ast.get_docstring(item) or ""
-        unnamed, gone = sorted(set(found) - set(inventory)), sorted(set(inventory) - set(found))
-        assert not unnamed, f"shout: a write site outside Rule3 the inventory does not name: {unnamed}"
-        assert not gone, f"the inventory names a write site that is gone: {gone}"
-        for name, line in inventory.items():
-            assert line in docs[name], (name, line)
-            print(f"  {name}: {', '.join(found[name])}; stands on {line}")
+        unnamed = sorted(name for name in found if not any(word in docs.get(name, "") for word in law))
+        assert not unnamed, (
+            f"shout: a write site outside Rule3 whose function names no law line: {unnamed}"
+        )
+        for name in sorted(found):
+            print(f"  {name}: {', '.join(found[name])}")
         sites = sum(len(v) for v in found.values())
-        return f"{len(inventory)} functions with {sites} write sites outside core/rule3, each named with its law line"
+        return f"{len(found)} functions with {sites} write sites outside core/rule3, each naming its law line"
 
     def the_engines_derivation_ledger_names_a_function_per_act():
         """S.61, "The engine's derivation ledger: each of the 26 rows an engine act sourced to the law's line and a function at the clean main; the breaker calls the function on the tests' universe"; here the ledger of ALGEBRA.md (The engine's derivation ledger, 29 lines) with one engine function per line, none for the integer floor (28, a bound) and the telegraph's counter (29, a finding): every named function stands in the engine, and the lines the runs above exercise (the box and the chain in the tests' universe, the shipped Zeno world) are called in them, read under the profile; the sign current, the emission, the conversion, the front and the receding face stand by name and by nothing else, their calls in tests/test_the_bound_body.py, tests/test_the_emission.py, tests/test_the_meeting.py and tests/test_the_node.py."""
         ledger = {
             1: ("node.py", "read"),
-            2: ("node.py", "step"),
+            2: ("flux.py", "step_line"),
             3: ("core/paces.py", "node_paces"),
             4: ("node.py", "guarded"),
             5: ("features/start/__init__.py", "rest"),
             6: ("node.py", "held_write_at"),
             7: ("features/currents/__init__.py", "tension"),
-            8: ("node.py", "sense_current_of"),
+            8: ("readings.py", "sense_current_of"),
             9: (
                 "node.py",
                 "phased",

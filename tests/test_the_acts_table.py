@@ -10,6 +10,7 @@ CALLEES = frozenset(
         "division_forward",
         "division_back",
         "rule3",
+        "carried_division",
         "rounded",
         "link_factor",
         "act",
@@ -22,6 +23,7 @@ KINDS = frozenset({"R", "D", "S"})
 STEP = (
     "core/rule3.py",
     "core/paces.py",
+    "flux.py",
     "node.py",
     "plane.py",
     "lattice.py",
@@ -30,9 +32,10 @@ STEP = (
 
 INVENTORY: dict[tuple[str, str, str], str] = {
     # core/rule3.py
-    ("core/rule3.py", "rule3", "//"): "R",  # the one carried division, remainder kept
-    ("core/rule3.py", "division_forward", "rule3"): "R",  # the division act forward, carry given
-    ("core/rule3.py", "division_back", "rule3"): "R",  # the division act back, carry given
+    ("core/rule3.py", "carried_division", "//"): "R",  # the one carried division, remainder kept
+    ("core/rule3.py", "rule3", "carried_division"): "R",  # the flux line's division, the law's step
+    ("core/rule3.py", "division_forward", "carried_division"): "R",  # the division act forward
+    ("core/rule3.py", "division_back", "carried_division"): "R",  # the division act back
     ("core/rule3.py", "link_factor", "division_forward"): "D",  # the Link's factor, once, discarded
     (
         "core/rule3.py",
@@ -155,28 +158,35 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # features/held_write
     ("features/held_write/__init__.py", "held_write", "act"): "R",  # the held write's remainder returned
     # features/phase
-    ("features/phase/__init__.py", "half_wall", "rule3"): "D",  # the half wall, once
-    ("features/phase/__init__.py", "seed", "rule3"): "D",  # the seed X div Gamma, once
+    ("features/phase/__init__.py", "half_wall", "division_forward"): "D",  # the half wall, once
+    ("features/phase/__init__.py", "seed", "division_forward"): "D",  # the seed X div Gamma, once
     ("features/phase/__init__.py", "seed", "rounded"): "D",  # the seed's rounding, once
     ("features/phase/__init__.py", "act", "rule3"): "R",  # the phase line's carried step
     ("features/phase/__init__.py", "iterate", "act"): "R",  # the step repeated, remainders carried
     ("features/phase/__init__.py", "signed_rounded", "rounded"): "D",  # a signed rounding, once
-    ("features/phase/__init__.py", "amplitude", "rule3"): "D",  # the width's amplitude, a bound
+    (
+        "features/phase/__init__.py",
+        "amplitude",
+        "division_forward",
+    ): "D",  # the width's amplitude, a bound
     # features/read
     ("features/read/__init__.py", "link_tension", "division_forward"): "D",  # the Link's tension, once
     ("features/read/__init__.py", "link_factors", "link_factor"): "D",  # the six Link factors, once
     ("features/read/__init__.py", "edge_squared", "division_forward"): "D",  # the edge's square, once
     ("features/read/__init__.py", "edge_of", "largest_below"): "S",  # the edge's pace by search
     # features/start
-    ("features/start/__init__.py", "division", "rule3"): "D",  # the start's division, discarded
+    (
+        "features/start/__init__.py",
+        "division",
+        "division_forward",
+    ): "D",  # the start's division, discarded
     (
         "features/start/__init__.py",
         "settled.act",
-        "rule3",
+        "division_forward",
     ): "D",  # the lay's iteration, remainder discarded
     ("features/start/__init__.py", "settled", "act"): "D",  # the iteration to the fixed point
-    ("features/start/__init__.py", "refined", "rule3"): "D",  # the numerator at wall 1
-    ("features/start/__init__.py", "rest", "rule3"): "D",  # the rest's rounding, once
+    ("features/start/__init__.py", "rest", "division_forward"): "D",  # the rest's rounding, once
     # features/write
     (
         "features/write/__init__.py",
@@ -241,7 +251,13 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("twist.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
-    ("node.py", "step", "rule3"): "R",  # Rule3's step at every Node
+    # flux.py, the step
+    (
+        "flux.py",
+        "step_line",
+        "rule3",
+    ): "R",  # Rule3's flux line at every Node of a plain line, the law's step
+    ("flux.py", "step_plane", "rule3"): "R",  # the same on each part of a turned or folded plane
     # node_detector.py
     ("node_detector.py", "books_of", "largest_below"): "S",  # the record's norm by search
     ("node_detector.py", "arriving", "division_forward"): "D",  # the projected level, rounded once
@@ -251,8 +267,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("node_detector.py", "piece_momentum", "division_forward"): "D",  # one count's P over the share
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
-    ("plane.py", "step_plane", "rule3"): "R",  # Rule3's step on the plane
-    ("records.py", "write_origins", "rule3"): "D",  # the write's origin, once
+    ("records.py", "write_origins", "division_forward"): "D",  # the write's origin, once
     # resonance.py
     ("resonance.py", "references_of", "division_forward"): "D",  # the references' levels, rounded once
     ("resonance.py", "references_of", "largest_below"): "S",  # the sine's level by search
@@ -263,9 +278,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
     # share.py
-    ("share.py", "over_pace", "rule3"): "D",  # the share over the pace
-    ("share.py", "share", "rule3"): "D",  # the Link's reading, wall 1
-    ("share.py", "quanta_of", "rule3"): "D",  # the quanta's rounding, once
+    ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
+    ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):

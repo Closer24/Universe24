@@ -1,4 +1,4 @@
-"""The plane's step under the rotation, Rule3 on a two-part record's two lines as one with the Peierls phase on every Link and none on the time Link, the temporal gauge (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase, the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): every Link's phase in the fold form, each Link's read a pair (X^c, X^s) in the Link unit, the sign's from the sign holder's odd lines, the Link's angle theta with tan(theta / 2) = n / (4 Gamma) rebooked as the exact tangent half-angle triple with one rounding per part (`sign_pairs`; the two hands' lines of 2026-10-09), folded with the Link's phase pair (c, s) = X e^(i (Phi_i - Phi_j)), the pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma the holder's time level difference across the Link iterates (`phase_links`, the pair at the Node owning the +a Link, read conjugated through the -a Port; features/phase.fold, one rounding into the Link unit), gravity's from the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports; `odd_links`, `fold_pairs`), the pairs composed where a plane reads several, the product pair rounded once (`link_pairs`), and the faces the click act presents among a line's arrivals (features/click): the two lines stepped against the plain level before, every Link's pair on the two arrivals in Rule3's one division per part at the wall unchanged, the time turn gone by the exact gauge identity b_i = z_i e^(i Phi_i) (the mathematician's item 5), the bookings the form and the Wronskian are read from the plain pair, every number the same in either direction; the Node's own act, called by node.py line by line."""
+"""The Link's pairs of a plane under the rotation, which the step reads on a two-part record's two lines as one (flux.step_plane) with the Peierls phase on every Link and none on the time Link, the temporal gauge (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase, the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): every Link's phase in the fold form, each Link's read a pair (X^c, X^s) in the Link unit, the sign's from the sign holder's odd lines, the Link's angle theta with tan(theta / 2) = n / (4 Gamma) rebooked as the exact tangent half-angle triple with one rounding per part (`sign_pairs`; the two hands' lines of 2026-10-09), folded with the Link's phase pair (c, s) = X e^(i (Phi_i - Phi_j)), the pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma the holder's time level difference across the Link iterates (`phase_links`, the pair at the Node owning the +a Link, read conjugated through the -a Port; features/phase.fold, one rounding into the Link unit), gravity's from the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports; `odd_links`, `fold_pairs`), the pairs composed where a plane reads several, the product pair rounded once (`link_pairs`), and the faces the click act presents among a line's arrivals (features/click): the two lines stepped against the plain level before, every Link's pair on the two arrivals in Rule3's one division per part at the wall unchanged, the time turn gone by the exact gauge identity b_i = z_i e^(i Phi_i) (the mathematician's item 5), the bookings the form and the Wronskian are read from the plain pair, every number the same in either direction; the pairs are read plane by plane by the step (flux.step_family)."""
 
 from __future__ import annotations
 
@@ -8,14 +8,12 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES, Wrap, arrival
-from event_universe.core.rule3 import rule3
-from event_universe.features.click import Face, presented
+from event_universe.features.click import Face
 from event_universe.features.phase import fold, read, rotation_unit, signed_rounded
 from event_universe.features.read import content_of
 from event_universe.loader.derived import FamilyRule
-from event_universe.records import Booking, NodeState, Record, level_at
+from event_universe.records import NodeState, Record, level_at
 
-Rule = tuple[tuple[Any, ...], Any, Any]  # Rule3's integers at every Node: the six Ports' R_ij, S, w
 Offset = tuple[
     int, int, int
 ]  # the layers grown before the origin on each axis, the file's coordinates to the board's
@@ -152,67 +150,6 @@ def fold_guard(pair: tuple[int, int], gamma: int, links: tuple[Any, ...], name: 
                 "above 1 (the odd line's level along the Link beyond the room the amplitude bound derives for a "
                 "folded arrival); the run is refused: raise the holder's level weight"
             )
-
-
-def step_plane(
-    re: Record,
-    im: Record,
-    rule: Rule,
-    wrap: Wrap,
-    gamma: int,
-    direction: int = 1,
-    faces: tuple[Faces, Faces] = (NO_FACE, NO_FACE),
-    pairs: tuple[tuple[Any, ...], tuple[Any, ...]] | None = None,
-) -> tuple[list[Record], Booking]:
-    """Rule3 on a plane's two lines under the rotation in the temporal gauge (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase, the mathematician's repaired form of item (g)): with z = re + i im, z_next + z_before = (S z_now + SUM over the Ports of (X^c_ij + i X^s_ij) p_i^2 z_j) / w, every Link's phase in its pair (`pairs`, `link_pairs`: the sign's tangent half-angle triple folded with the phase pair X e^(i (Phi_i - Phi_j)), Phi_i = SUM_t L_t(i) theta_0 the holder's time level summed over the intervals, and gravity's) and the time Link carrying no phase: the time turn e^(-i theta_t) of the level next and e^(-i theta_(t-1)) of the level before, the shears of 5c65fb1b, leave by the exact gauge identity b_i = z_i e^(i Phi_i) (the mathematician's item 5: the same physics to the bit of the rationals, the force dk / dt = -Delta L theta_0 per Link), so `before` is the plain level before in both directions and the bookings (first, second) the form D = form(first, second) = |z_now|^2 - z_next . z_before and the Wronskian W = wronskian(second) = Im(conj(z_next) z_now) are read from the plain pair, the same numbers in either direction (the Wronskian exact under any Hermitian pair, Theorem 3). Under the fold each arrival z_j enters as (X^c + i X^s) z_j: the re part's numerator SUM (R^c_ij re_j - R^s_ij im_j) and the im part's SUM (R^c_ij im_j + R^s_ij re_j), twelve reads on twelve arrivals in Rule3's one division per part at the wall w unchanged, the same reads read back (ALGEBRA.md, The clock family on the Ports; the two hands' (a) of 2026-10-09); `pairs` None the plain reads R_ij on six arrivals; forward from (now, before, r) to (next, now, r'), backward the kept levels back, bit for bit (ALGEBRA.md #the-direction), with the faces the click act presents to each part's line (features/click)."""
-    reads, self_coefficient, wall = rule
-    now = (level_at(re, direction), level_at(im, direction))
-    other = (re.before, im.before) if direction == 1 else (re.now, im.now)
-    arrived = tuple(
-        tuple(arrival(level, axis, side, wrap) for axis in range(AXES) for side in (1, -1))
-        for level in now
-    )
-    if faces[0][0] or faces[1][0]:  # the faces presented to each part's line
-        faced = [
-            presented(
-                at,
-                reads,
-                self_coefficient,
-                wall,
-                now[k],
-                other[k],
-                (re, im)[k].remainder,
-                *faces[k],
-                direction,
-            )
-            if faces[k][0]
-            else at
-            for k, at in enumerate(arrived)
-        ]
-        arrived = (faced[0], faced[1])
-    folded = (  # each Link's pair on the two arrivals: X^c re_j - X^s im_j on re, X^c im_j + X^s re_j on im
-        ((reads, arrived[0]), (reads, arrived[1]))
-        if pairs is None
-        else (
-            (pairs[0] + tuple(-x for x in pairs[1]), arrived[0] + arrived[1]),
-            (pairs[0] + pairs[1], arrived[1] + arrived[0]),
-        )
-    )
-    stepped = [
-        rule3(read, at, self_coefficient, wall, now[part], other[part], record.remainder, direction)
-        for part, (record, (read, at)) in enumerate(zip((re, im), folded, strict=True))
-    ]
-    levels, remainders = ([np.asarray(found[i]) for found in stepped] for i in (0, 1))
-    u, v = (other, levels) if direction == 1 else (levels, other)
-    lines = [
-        Record(levels[part], record.now, remainders[part])
-        if direction == 1
-        else Record(record.before, levels[part], remainders[part])
-        for part, record in enumerate((re, im))
-    ]
-    first = [Record(now[part], np.asarray(u[part]), remainders[part]) for part in range(2)]
-    second = [Record(np.asarray(v[part]), now[part], remainders[part]) for part in range(2)]
-    return lines, (first, second)
 
 
 def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:

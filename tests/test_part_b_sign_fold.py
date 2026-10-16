@@ -5,9 +5,9 @@ from itertools import permutations, product
 
 import numpy as np
 
-from event_universe import node, world_files
+from event_universe import flux, node, records, world_files
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients
+from event_universe.core.rule3 import rule_integers
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import held_write_of
 from event_universe.plane import link_levels, link_pairs, link_wall, sign_pairs
@@ -52,7 +52,7 @@ def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatc
     holder, kind = board.states[CHARGE], board.kind
     for axis in range(3):  # the free row's odd lines, a radial vector field, static in both levels
         level = (40 * (np.indices(shape)[axis] - 3)).astype(kind)
-        holder.lines[1 + axis] = node.Record(level, level.copy(), holder.lines[1 + axis].remainder)
+        holder.lines[1 + axis] = records.Record(level, level.copy(), holder.lines[1 + axis].remainder)
     for _ in range(4):
         board.step()
         for state, family in zip(board.states, board.families, strict=True):
@@ -94,7 +94,7 @@ def test_back_in_time_on_the_turning_world_for_forty_intervals(tmp_path, monkeyp
     board = Lattice(load_world(sign_world(tmp_path, "chain", shape, open_x, 80, (12, 0, 0), profile)))
     holder = board.states[CHARGE]
     bump = (300 * np.exp(-((np.arange(25) - 12) ** 2) / 18)).round().astype(board.kind).reshape(shape)
-    holder.lines[1] = node.Record(bump, bump.copy(), holder.lines[1].remainder)
+    holder.lines[1] = records.Record(bump, bump.copy(), holder.lines[1].remainder)
     begun = arrays(board)
     for _ in range(40):
         board.step()
@@ -105,26 +105,26 @@ def test_back_in_time_on_the_turning_world_for_forty_intervals(tmp_path, monkeyp
 
 
 def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn():
-    """(the count, Theorem 3) On a ring of 64 in the vacuum's rule of the matter pair with the sign holder's x odd line at random levels within 3,000 per Node (|n| <= 6,000, inside the guard's 4 Gamma) and the time level 0, a random plane record within 5,000 stepped 200 intervals by `node.step_family` with the Links' pairs: the summed Wronskian W = SUM Im(conj(z_now) z_before) over the ring drifts by no more than Rule3's own floor, SUM over the intervals and the Nodes of |re| + |im| (one level per part per Node per interval); and in exact rationals on a ring of 9, the same pairs (the engine's integers) with the division exact, W is conserved exactly, the drift 0 over 200 intervals (K = D M Hermitian: X^c even and X^s odd in n)."""
+    """(the count, Theorem 3) On a ring of 64 in the vacuum's rule of the matter pair with the sign holder's x odd line at random levels within 3,000 per Node (|n| <= 6,000, inside the guard's 4 Gamma) and the time level 0, a random plane record within 5,000 stepped 200 intervals by `flux.step_family` with the Links' pairs: the summed Wronskian W = SUM Im(conj(z_now) z_before) over the ring drifts by no more than Rule3's own floor, SUM over the intervals and the Nodes of |re| + |im| (one level per part per Node per interval); and in exact rationals on a ring of 9, the same pairs (the engine's integers) with the division exact, W is conserved exactly, the drift 0 over 200 intervals (K = D M Hermitian: X^c even and X^s odd in n)."""
     ring, draw = Wrap(True, True, True), np.random.default_rng(7)
-    states = [node.empty_state(f, (64, 1, 1), (), np.int64) for f in TURNING]
+    states = [records.empty_state(f, (64, 1, 1), (), np.int64) for f in TURNING]
     zero = np.zeros((64, 1, 1), dtype=np.int64)
     odd = [draw.integers(-3000, 3001, (64, 1, 1)), zero, zero]
-    states[CHARGE].lines = [node.Record(zero, zero, zero)] + [node.Record(v, v, zero) for v in odd]
-    lines = [node.Record(*draw.integers(-5000, 5001, (3, 64, 1, 1))) for _ in range(2)]
-    lines = [node.Record(r.now, r.before, np.abs(r.remainder)) for r in lines]
-    rule = coefficients(*PAIR, GAMMA, GAMMA, GAMMA)
+    states[CHARGE].lines = [records.Record(zero, zero, zero)] + [records.Record(v, v, zero) for v in odd]
+    lines = [records.Record(*draw.integers(-5000, 5001, (3, 64, 1, 1))) for _ in range(2)]
+    lines = [records.Record(r.now, r.before, np.abs(r.remainder)) for r in lines]
+    rule = rule_integers(*PAIR, GAMMA, GAMMA, GAMMA)
     angles = node.turning(CHARGED, TURNING, states, 1)
     assert angles is not None
     pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], ring))
     assert pairs is not None and any(np.asarray(p).any() for p in pairs[1])
-    started = int(node.wronskian(lines, True).sum(dtype=object))
+    started = int(records.wronskian(lines, True).sum(dtype=object))
     floor = 0
     for _ in range(200):
         states[CHARGED].lines = lines
         floor += int((np.abs(lines[0].now) + np.abs(lines[1].now)).sum(dtype=object))
-        lines = node.step_family(CHARGED, TURNING, states, rule, ring, GAMMA, pairs=pairs)[0]
-    drift = int(node.wronskian(lines, True).sum(dtype=object)) - started
+        lines = flux.step_family(CHARGED, TURNING, states, rule, ring, GAMMA, pairs=pairs)[0]
+    drift = int(records.wronskian(lines, True).sum(dtype=object)) - started
     assert started != 0 and abs(drift) <= floor, (drift, floor)
     print(f"the ring of 64: W {started}, the drift over 200 intervals {drift} within the floor {floor}")
     n = 9  # the rational mirror: the same step in Fractions, the pairs the engine's integers
@@ -133,7 +133,7 @@ def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_tur
     even, odd_part = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, links)  # type: ignore[misc]
     even = [np.asarray(p, dtype=object).ravel() for p in even]
     odd_part = [np.asarray(p, dtype=object).ravel() for p in odd_part]
-    reads, self_coefficient, wall = rule
+    reads, self_coefficient, wall, _mass = rule
     z = [complex(*draw.integers(-5000, 5001, 2)) for _ in range(n)]
     z = [(Fraction(int(v.real)), Fraction(int(v.imag))) for v in z]
     z_before = [(Fraction(int(a)), Fraction(int(b))) for a, b in draw.integers(-5000, 5001, (n, 2))]
@@ -164,10 +164,10 @@ def test_two_charges_of_opposite_sense_run_a_hundred_intervals(tmp_path, monkeyp
     bound = board.world.amplitude_bound
     for _ in range(100):
         board.step()
-        assert all(node.largest(line) <= bound for state in board.states for line in state.lines)
+        assert all(records.largest(line) <= bound for state in board.states for line in state.lines)
     index = [f.name for f in board.families].index("charged")
     for record, sense in enumerate((1, -1)):
-        found = node.wronskian(board.lines_of(index, record), True)
+        found = records.wronskian(board.lines_of(index, record), True)
         assert np.sign(found[board.body_nodes(record)]).tolist() == [sense] * int(
             board.body_nodes(record).sum()
         )

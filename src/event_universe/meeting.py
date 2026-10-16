@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import front, node
+from event_universe import flux, front, node
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.core.rule3 import division_forward
@@ -28,9 +28,8 @@ from event_universe.node_detector import (
     reported,
     share_weights,
 )
-from event_universe.reports import (
-    PAID_AT_EMISSION,
-)
+from event_universe.records import Booking, Record
+from event_universe.reports import PAID_AT_EMISSION
 from event_universe.resonance import (
     arrival_of,
     gathered,
@@ -68,11 +67,11 @@ def read_with_cuts(board: Lattice, index: int, direction: int, record: int) -> t
     )
 
 
-def stepped(board: Lattice, index: int, direction: int) -> tuple[list[node.Record], list[node.Booking]]:
-    """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (`node.step_records`), the Links the world cuts at 0 among its factors (`cut`) and the faces the click act presents at this interval among its arrivals (`faces_presented`)."""
+def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], list[Booking]]:
+    """Every record of a family stepped by Rule3 in flux form in `direction` with the rule of its own read (`flux.step_records`), the Links the world cuts at 0 among its factors (`cut`) and the faces the click act presents at this interval among its arrivals (`faces_presented`)."""
     gamma, unit, cuts = board.world.node_clock, board.unit, cut(board, index)
     faces = faces_presented(board, index)
-    return node.step_records(
+    return flux.step_records(
         index,
         board.families,
         board.states,

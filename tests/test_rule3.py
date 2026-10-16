@@ -14,13 +14,20 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import node, share
+from event_universe import readings, share
 from event_universe.core import paces
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import NO_READ, coefficients, form_term, link_factor, rule3
+from event_universe.core.rule3 import (
+    coefficients,
+    form_term,
+    link_factor,
+    mass,
+    rule3,
+)
 from event_universe.lattice import Lattice
+from event_universe.records import NodeState, Record, form, wronskian
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, TOOL, chain_body_world
+from tests.laws import BACK, TOOL, arrivals_rule3, chain_body_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
@@ -78,9 +85,16 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         remainder = rng.randint(0, wall - 1)
         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
         total += self_coefficient * now - wall * before + remainder
-        nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
+        fluxes = sum(read * (arrival - now) for read, arrival in zip(reads, arrivals, strict=True))
+        own = mass(num, den, clock, 16)
+        assert own == 2 * wall - self_coefficient - sum(reads)  # the mass, the identity of the two forms
+        nxt, carried = rule3(fluxes, own, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
-        back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
+        assert arrivals_rule3(reads, arrivals, self_coefficient, wall, now, before, remainder) == (
+            nxt,
+            carried,
+        )
+        back = rule3(fluxes, own, wall, now, nxt, carried, -1)
         assert back == (before, remainder)
     generator, shape = np.random.default_rng(9), (4, 3, 2)
     num, den = np.full(shape, 800, dtype=np.int64), np.full(shape, 809, dtype=np.int64)
@@ -89,22 +103,45 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
     reads, self_coefficient, wall = coefficients(num, den, GAMMA, *paces.node_paces(GAMMA, content))
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
-    nxt, carried = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
+    fluxes = reads[0] * sum(arrival - now for arrival in arrivals)
+    own = 2 * wall - self_coefficient - sum(reads)
+    nxt, carried = rule3(fluxes, own, wall, now, before, remainder)
     total = reads[0] * sum(arrivals) + self_coefficient * now - wall * before + remainder
     assert nxt.dtype == np.int64 and np.array_equal(nxt, np.floor_divide(total, wall))
     assert np.array_equal(carried, total - wall * nxt)
-    back = rule3(reads, arrivals, self_coefficient, wall, now, nxt, carried, -1)
+    back = rule3(fluxes, own, wall, now, nxt, carried, -1)
     assert np.array_equal(back, (before, remainder))
     reads, self_coefficient, wall = coefficients(800, 809, GAMMA, *(own := paces.node_paces(GAMMA, 250)))
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
-    bound = 6 * (1 << 20) * abs(reads[0]) + (1 << 20) * abs(self_coefficient) + wall * ((1 << 20) + 1)
-    assert core.rule_total_bound(800, 809, GAMMA, *own, 1 << 20) == bound
+    level, own_mass = 1 << 20, mass(800, 809, own[0])
+    partials = (
+        3 * wall * level,
+        own_mass * level,
+        (abs(2 * wall - own_mass) + wall) * level,
+        2 * 6 * abs(reads[0]) * level,
+    )
+    bound = max(*partials, (6 * abs(reads[0]) + wall + abs(self_coefficient)) * level + wall - 1)
+    assert (
+        core.rule_total_bound(800, 809, GAMMA, *own, level) == bound
+    )  # the largest partial sum, the step's order
 
 
-RULE_LINES = (r"self_coefficient \* now\b", r"wall \* other\b", r"direction \* total \+ carry")
-RULE_LINES += (r"direction \* quotient", r"now \* now \+ before \* before")
-RULE_ARITHMETIC = RULE_LINES + (r"self_coefficient \* before\b", r"wall \* before\b")
-RULE_ARITHMETIC += (r"wall \* now \+ remainder", r"direction \* carry\b")
+RULE_LINES = (r"mass \* now\b", r"wall \* \(now \+ now - other\)", r"direction \* total \+ remainder")
+RULE_LINES += (
+    r"direction \* quotient",
+    r"now \* now \+ before \* before",
+)  # the flux line, the carried division, the form
+RULE_ARITHMETIC = RULE_LINES + (
+    r"self_coefficient \* now\b",
+    r"wall \* other\b",
+    r"direction \* total \+ carry",
+)
+RULE_ARITHMETIC += (
+    r"self_coefficient \* before\b",
+    r"wall \* before\b",
+    r"wall \* now \+ remainder",
+    r"direction \* carry\b",
+)
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
@@ -130,7 +167,7 @@ def test_no_other_file_of_src_writes_the_rules_arithmetic():
             inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
             found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
     assert {home: found.pop(home) for home in SHIFT_HOME} == SHIFT_HOME and found == {}, found
-    stepping = [SOURCE / "node.py", SOURCE / "lattice.py", *SOURCE.glob("core/*.py")]
+    stepping = [SOURCE / "node.py", SOURCE / "flux.py", SOURCE / "lattice.py", *SOURCE.glob("core/*.py")]
     for path in stepping + list(SOURCE.glob("features/*/*.py")):
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             assert not (isinstance(item, ast.FunctionDef) and "split" in item.name.lower()), path.name
@@ -178,6 +215,7 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     assert not found, found
 
 
+STEP_CALLS = ("rule3", "carried_division")  # the step's line and the one division under it
 NODE_STATE = {
     "lines": "list[Record]",
     "write_remainders": "list[np.ndarray]",
@@ -188,28 +226,39 @@ TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState tab
 
 def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     """The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family. (a) The NodeState holds lines (now, before, Rule3's remainder), as many as the loader derives for the family (a family of quanta's dimension, a held row's sources' count), and one write remainder per held line and nothing else, one shape for every family; (b) on the chain with a rotating body (every kind of family: a plane of two lines, a family of one line, the holder of the sign, two rows with a gap, the massless row with its axis lines) one interval forward and one back make exactly one Rule3 division per line, the level each line started from that call's own, and exactly one write per held line, and every reading the engine exposes leaves every line bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a). The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
-    assert {f.name: f.type for f in dataclasses.fields(node.NodeState)} == NODE_STATE
-    assert [f.name for f in dataclasses.fields(node.Record)] == ["now", "before", "remainder"]
+    assert {f.name: f.type for f in dataclasses.fields(NodeState)} == NODE_STATE
+    assert [f.name for f in dataclasses.fields(Record)] == ["now", "before", "remainder"]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
     assert sorted(len(s.lines) for s in board.states) == [1, 1, 2, 2, 4]  # the sign: 2 rows
-    calls, original = [], core.rule3
+    calls, originals = [], {name: getattr(core, name) for name in STEP_CALLS}
+    inside: list[bool] = []  # a step's own carried division, not a write
 
-    def counting(*args):  # type: ignore[no-untyped-def]
-        reads, _arrivals, _numerator, wall, now, other, remainder = args[:7]  # the call's kind, no state
-        plain = reads is NO_READ and type(now) is int and (now == 1) and (other == 0)
-        write = plain and type(wall) is int and isinstance(remainder, np.ndarray)
-        arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)  # a step: reads on arrays
-        kind = "write" if write else "step" if reads is not NO_READ and arrays else None
-        calls.append((kind, id(args[4])))  # the call's kind and its level now, nothing kept
-        return original(*args)
+    def counting_step(name):  # type: ignore[no-untyped-def]
+        def counted(*args):  # type: ignore[no-untyped-def]
+            now, other = args[3:5]  # the call's kind, no state
+            arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)  # a step on arrays
+            calls.append(("step" if arrays else None, id(now)))  # the level the step began from
+            inside.append(True)
+            try:
+                return originals[name](*args)
+            finally:
+                inside.pop()
+
+        return counted
+
+    def counting_division(total, wall, remainder, direction=1):  # type: ignore[no-untyped-def]
+        write = not inside and type(wall) is int and isinstance(remainder, np.ndarray)
+        calls.append(("write" if write else None, id(total)))  # the held write's carried division
+        return originals["carried_division"](total, wall, remainder, direction)
 
     engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]
-    for module in [m for m in engine if m.__dict__.get("rule3") is original]:
-        monkeypatch.setattr(module, "rule3", counting)
+    for module in [m for m in engine if m.__dict__.get("rule3") is originals["rule3"]]:
+        monkeypatch.setattr(module, "rule3", counting_step("rule3"))
+    monkeypatch.setattr(core, "carried_division", counting_division)
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
         calls.clear(), act()
         records = [record for state in board.states for record in state.lines]
@@ -222,14 +271,19 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         if family.quanta:
             share.family_share(family, state.lines, board.wrap, board.world.node_clock)
-            node.currents_of(family.pair[0], state.lines, board.wrap)
-            node.stresses_of(family.pair[0], state.lines, board.wrap)
-            node.wronskian(state.lines, family.plane), node.form(state.lines, state.lines)
+            readings.currents_of(family.pair[0], state.lines, board.wrap)
+            readings.stresses_of(family.pair[0], state.lines, board.wrap)
+            wronskian(state.lines, family.plane), form(state.lines, state.lines)
             board.quanta(index)
     assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
-    for module in [m for m in engine if m.__dict__.get("rule3") is counting]:
-        monkeypatch.setattr(module, "rule3", original)  # the count is taken; the runs below plain
+    monkeypatch.setattr(core, "carried_division", originals["carried_division"])
+    for module in [
+        m for m in engine if m.__dict__.get("rule3") is not originals["rule3"] and "rule3" in m.__dict__
+    ]:
+        monkeypatch.setattr(
+            module, "rule3", originals["rule3"]
+        )  # the count is taken; the runs below plain
     for _ in range(60):
         board.step()
     regions = {row.name for row in board.world.node_detectors} | {"face"}

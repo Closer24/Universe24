@@ -8,66 +8,67 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node
+from event_universe import records
 from event_universe.core.ports import Wrap
 from event_universe.features.start import Sourced
+from event_universe.flux import step_records as stepped_records
 from event_universe.loader.derived import quanta_records, row_sources, weight_of
 
-Bookings = dict[node.Sourcing, Any]  # per record of quanta its form or its Wronskian
+Bookings = dict[records.Sourcing, Any]  # per record of quanta its form or its Wronskian
 Row = tuple[int, int]  # a held family's index and one row of it, the rows the start rests
 
 
-def sources_of(families: node.Families, order: Sequence[int]) -> list[node.Sourcing]:
+def sources_of(families: records.Families, order: Sequence[int]) -> list[records.Sourcing]:
     """Every record of quanta of the families of quanta `order`, (family, record): the sources of the writes and the readers of the rows (`derived.quanta_records`)."""
     return [(index, record) for index in order for record in quanta_records(families, index)]
 
 
 def record_lines(
-    families: node.Families, index: int, record: int, lines: Sequence[node.Record]
-) -> list[node.Record]:
-    """The lines of one record of a family of quanta among the family's `lines`: the record's own lines (`node.record_slice`), and for a holder of the sign its one record, light, the sum of its rows (`node.rows_total`)."""
+    families: records.Families, index: int, record: int, lines: Sequence[records.Record]
+) -> list[records.Record]:
+    """The lines of one record of a family of quanta among the family's `lines`: the record's own lines (`records.record_slice`), and for a holder of the sign its one record, light, the sum of its rows (`records.rows_total`)."""
     family = families[index]
     return (
-        [node.rows_total(family, lines)]
+        [records.rows_total(family, lines)]
         if family.wronskian
-        else list(lines[node.record_slice(family, record)])
+        else list(lines[records.record_slice(family, record)])
     )
 
 
 def booked_of(
-    families: node.Families, index: int, bookings: list[node.Booking]
+    families: records.Families, index: int, bookings: list[records.Booking]
 ) -> tuple[Bookings, Bookings]:
-    """A family of quanta's form D and Wronskian W per record from its bookings about the step (`node.form`, `node.wronskian`): one per record, keyed by the record, for the writes of the rows it sources; a holder of the sign's one form, light's, read from the sum of its rows (the advisor's cost: the holders' form is booked from the rows' sum, so the Wronskian write's balance stays exact, ALGEBRA.md, No record reads its own write of the sign), and no Wronskian."""
+    """A family of quanta's form D and Wronskian W per record from its bookings about the step (`records.form`, `records.wronskian`): one per record, keyed by the record, for the writes of the rows it sources; a holder of the sign's one form, light's, read from the sum of its rows (the advisor's cost: the holders' form is booked from the rows' sum, so the Wronskian write's balance stays exact, ALGEBRA.md, No record reads its own write of the sign), and no Wronskian."""
     family = families[index]
     forms, turns = Bookings(), Bookings()
     if family.wronskian:
-        first = [node.rows_total(family, [b for first, _second in bookings for b in first])]
-        second = [node.rows_total(family, [b for _first, second in bookings for b in second])]
-        forms[(index, 0)], turns[(index, 0)] = node.form(first, second), 0
+        first = [records.rows_total(family, [b for first, _second in bookings for b in first])]
+        second = [records.rows_total(family, [b for _first, second in bookings for b in second])]
+        forms[(index, 0)], turns[(index, 0)] = records.form(first, second), 0
         return forms, turns
     for record, (first, second) in enumerate(bookings):
-        forms[(index, record)] = node.form(first, second)
-        turns[(index, record)] = node.wronskian(second, family.plane)
+        forms[(index, record)] = records.form(first, second)
+        turns[(index, record)] = records.wronskian(second, family.plane)
     return forms, turns
 
 
 def booked_sources(
-    families: node.Families,
-    states: node.States,
+    families: records.Families,
+    states: records.States,
     rows: Sequence[Row],
     holders: Sequence[Row],
     walls: dict[Row, int],
-    packets: dict[Row, node.Record],
+    packets: dict[Row, records.Record],
     levels: Sequence[np.ndarray],
     wrap: Wrap,
     gamma: int,
     unit: int,
     amplitude: int,
 ) -> tuple[list[Sourced], list[Sourced]]:
-    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`node.step_records`, every sign row but the record's own, the phase lines at their seed with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`node.form`, `node.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
+    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`flux.step_records`, every sign row but the record's own, the phase lines at their seed with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`records.form`, `records.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
     for (index, row), level in zip(rows, levels, strict=True):
         packet, laid = packets[(index, row)], level + families[index].rest
-        line = node.record_slice(families[index], row).start
+        line = records.record_slice(families[index], row).start
         states[index].lines[line] = replace(packet, now=packet.now + laid, before=packet.before + laid)
     forms, turns = Bookings(), Bookings()
     for index, family in enumerate(families):
@@ -76,7 +77,7 @@ def booked_sources(
         booked_forms, booked_turns = booked_of(
             families,
             index,
-            node.step_records(index, families, states, wrap, gamma, unit, amplitude=amplitude)[1],
+            stepped_records(index, families, states, wrap, gamma, unit, amplitude=amplitude)[1],
         )
         forms.update(booked_forms)
         turns.update(booked_turns)

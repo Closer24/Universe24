@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import NO_READ, rule3
+from event_universe.core.rule3 import division_forward
 from event_universe.features import currents, phase
 from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, row_sources, weight_of
@@ -190,7 +190,7 @@ def write_origins(
     """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start); a signed line carries the origin's complement at the Nodes its image mask names (`images`, per line the mask of the Nodes on the image side of the line's mirror, None or absent for a scalar line), so that a symmetric lay is symmetric to the bit (`complement`)."""
     found = []
     for line, wall in enumerate(walls):
-        origin = rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0]
+        origin = division_forward(wall, 2, 0)[0]
         image = images[line] if line < len(images) else None
         plain = full(shape, origin, kind)
         found.append(plain if image is None else np.where(image, complement(plain, wall), plain))

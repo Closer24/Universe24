@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import meeting, node, world_files
-from event_universe.core.rule3 import division_forward, largest_below, rule3
+from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.credit import record_unit
 from event_universe.emission import born_unit, radiated_total
 from event_universe.features.click import along_cosine, envelope, exact_total, line_total
@@ -99,10 +99,7 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
     assert list(quanta_of(shares, wall, object)) == [
         division_forward(int(s) + half, wall, 0)[0] for s in shares
     ]
-    assert rule3((0,) * 6, (0,) * 6, 1, wall, 7, 0, 0) == (
-        0,
-        7,
-    )  # the division act is Rule3 with no read
+    assert division_forward(7, wall, 0) == (0, 7)  # the division act is the one carried division
 
 
 def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines():
