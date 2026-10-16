@@ -7,7 +7,7 @@ import pytest
 from scipy.sparse import diags, kronsum
 from scipy.sparse.linalg import spsolve
 
-from event_universe import node
+from event_universe import flux, node, records
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
@@ -156,10 +156,10 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     draw, wrap, action = np.random.default_rng(7), Wrap(True, True, True), integers["quantum_action"]
     writes = {i: held_write_of(families, i, action) for i in (hollow, core)}
     walls = [writes[i].walls if f.held else () for i, f in enumerate(families)]
-    states = [node.empty_state(f, SHAPE, w, np.int64) for f, w in zip(families, walls, strict=True)]
+    states = [records.empty_state(f, SHAPE, w, np.int64) for f, w in zip(families, walls, strict=True)]
     for state in states:
         levels = [draw.integers(1, 40, (2, *SHAPE)) for _ in state.lines]
-        state.lines = [node.Record(*pair, 0 * SHAPE[0]) for pair in levels]
+        state.lines = [records.Record(*pair, 0 * SHAPE[0]) for pair in levels]
     levels = [states[i].lines[0].now for i in (hollow, core)]
     read = {i: node.read(i, families, states, 1, wrap, GAMMA, 1) for i in range(4)}
     assert np.array_equal(read[stuff][0], 2 * levels[0]) and np.array_equal(read[other][0], levels[1])
@@ -170,12 +170,12 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     forms, rulers = {}, {}
     for i in (stuff, other):
         own = node.rule_of(families[i], GAMMA, *read[i])
-        _lines, (first, second) = node.step_family(i, families, states, own, wrap, GAMMA)
-        forms[i, 0] = node.form(first, second)  # the bookings per record, (family, record)
+        _lines, (first, second) = flux.step_family(i, families, states, own, wrap, GAMMA)
+        forms[i, 0] = records.form(first, second)  # the bookings per record, (family, record)
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
-        numerators = node.write_sources(held, families, forms, {}, writes[held], rulers, GAMMA)
-        by_hand = weights * node.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
+        numerators = records.write_sources(held, families, forms, {}, writes[held], rulers, GAMMA)
+        by_hand = weights * records.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         before, wall = states[held].lines[0], writes[held].walls[0]
         remainder = [draw.integers(0, wall, SHAPE)]
@@ -203,8 +203,8 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     paced = universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane))[1]
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
     for rows, found in ((paced, [5, 5]), (turning, [-5, 5])):  # |L| into the pace; the turn by L
-        board = [node.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
-        board[0].lines[0] = node.Record(level, level, two)
+        board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
+        board[0].lines[0] = records.Record(level, level, two)
         paced_read = node.read(1, rows, board, 1, wrap, GAMMA, 1)[0]
         turn = node.turning(1, rows, board, 1)
         assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
@@ -279,7 +279,10 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
 
     from event_universe.loader import derived
 
-    gamma, hill_bound = 6000, 9266
+    gamma, hill_bound = (
+        6000,
+        6949,
+    )  # the engine's bound for the flux line's partial sums (ENGINE.md, The amplitude bound)
     q_max = gamma + 1 * hill_bound  # W = 1: every shipped family reads gravity's axis lines at 1
     for row in json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]:
         pair, matter = tuple(row["pair"]), row["name"] == "matter"
@@ -291,10 +294,12 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         count = ceil(Fraction(edge**2 * (isqrt(q_max * edge) + 1), gamma**3))
         wronskian = ceil(Fraction(edge**2 * q_max, gamma**3))
         values = ((edge / gamma) ** 3 * (q_max / edge) ** 0.5, (edge / gamma) ** 3 * q_max / edge)
-        assert [round(v, 3) for v in values] == ([2.003, 3.053] if matter else [1.595, 2.544])
-        assert (hill, count, wronskian) == ((2, 3, 4) if matter else (1, 2, 3))
-        assert all(value > hill for value in values) and derived.hill_scale(pair, gamma) == hill
-        assert derived.tension_room(pair, gamma, q_max, False) == count > hill
+        assert [round(v, 3) for v in values] == ([1.845, 2.589] if matter else [1.469, 2.158])
+        assert (hill, count, wronskian) == ((2, 2, 3) if matter else (1, 2, 3))
+        assert all(value > hill - 1 for value in values) and derived.hill_scale(pair, gamma) == hill
+        assert (
+            derived.tension_room(pair, gamma, q_max, False) == count >= hill
+        )  # equal at matter's pair at A = 6,949
         assert derived.tension_room(pair, gamma, q_max, True) == wronskian > hill
     for name in ("rule", "light", "ghz", "pair"):
         integers, families = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))

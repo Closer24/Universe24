@@ -1,4 +1,4 @@
-"""Part F, Task 1: the lattice momentum as a reading (features/currents `momentum`, node.momentum_of; the advisor's and the mathematician's lines of 2026-10-09, momentum from Rule3, 6083929632 and 6084001231). The normalisation chosen and stated: P_a = SUM_i (F_(i,i-a) - F_(i,i+a)) in the current's own unit, F_ij = num (now_i before_j - before_i now_j), so P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)), the mathematician's with the current's weight; a plane wave cos(k x - omega t) has P_a of the sign of +k. (a) On a periodic chain of 24 with a plane wave the rational mirror of the vacuum form conserves P exactly over 200 intervals and the engine's integers drift below the hands' bound per step, 2 num SUM_i |now_(i+a) - now_(i-a)| in this unit (the remainders' walk, |delta_i| < 1 per Node and the two Links each see it); (b) the plane wave's P over the action it holds is the s-integer of the phase pair at the angle k over the amplitude, in T's unit, the cosine read from the record itself and the pair found by bisection on the phase line, no sine on the engine's side; (c) in a static well held by the harness P changes per step by the gradient term exactly as the rational step at the engine's own integers predicts, to the floor, and over the run the packet gains P toward the well, the fall. The measured integers are printed for the Boss."""
+"""Part F, Task 1: the lattice momentum as a reading (features/currents `momentum`, readings.momentum_of; the advisor's and the mathematician's lines of 2026-10-09, momentum from Rule3, 6083929632 and 6084001231). The normalisation chosen and stated: P_a = SUM_i (F_(i,i-a) - F_(i,i+a)) in the current's own unit, F_ij = num (now_i before_j - before_i now_j), so P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)), the mathematician's with the current's weight; a plane wave cos(k x - omega t) has P_a of the sign of +k. (a) On a periodic chain of 24 with a plane wave the rational mirror of the vacuum form conserves P exactly over 200 intervals and the engine's integers drift below the hands' bound per step, 2 num SUM_i |now_(i+a) - now_(i-a)| in this unit (the remainders' walk, |delta_i| < 1 per Node and the two Links each see it); (b) the plane wave's P over the action it holds is the s-integer of the phase pair at the angle k over the amplitude, in T's unit, the cosine read from the record itself and the pair found by bisection on the phase line, no sine on the engine's side; (c) in a static well held by the harness P changes per step by the gradient term exactly as the rational step at the engine's own integers predicts, to the floor, and over the run the packet gains P toward the well, the fall. The measured integers are printed for the Boss."""
 
 import copy
 import json
@@ -9,7 +9,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import node, twist, world_files
+from event_universe import node, readings, records, twist, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
@@ -45,7 +45,7 @@ def chain_world(tmp_path, families, chain=CHAIN, boundary="periodic"):  # type: 
 def plane_wave(board: Lattice, index: int, amplitude: int, wave: tuple[int, int], envelope=None):  # type: ignore[no-untyped-def]
     """A real plane wave cos(k x) at the wave number pi p / q per Link laid by hand on the family's one line, the level before advanced by the band's own omega(k) at the vacuum's paces (the test's floats lay; the engine reads no sine), under `envelope` where one is given."""
     family, chain = board.families[index], board.shape[0]
-    reads, self_coefficient, wall = node.rule_of(family, GAMMA, 0, None, board.unit)
+    reads, self_coefficient, wall, _mass = node.rule_of(family, GAMMA, 0, None, board.unit)
     k = math.pi * wave[0] / wave[1]
     cosine = (
         int(self_coefficient) + 2 * int(reads[0]) * math.cos(k) + sum(int(r) for r in reads[2:])
@@ -55,7 +55,7 @@ def plane_wave(board: Lattice, index: int, amplitude: int, wave: tuple[int, int]
     now = np.rint(shape * np.cos(k * x)).astype(board.kind).reshape(board.shape)
     before = np.rint(shape * np.cos(k * x + omega)).astype(board.kind).reshape(board.shape)
     line = board.states[index].lines[0]
-    board.states[index].lines = [node.Record(now, before, line.remainder)]
+    board.states[index].lines = [records.Record(now, before, line.remainder)]
     return reads, self_coefficient, wall
 
 
@@ -115,16 +115,16 @@ def pair_at_cosine(board: Lattice, numerator: int, denominator: int) -> tuple[in
 def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the_integers(
     tmp_path, monkeypatch
 ):
-    """(a) A plane wave at k = pi / 4 on the periodic chain of 24 at the amplitude 8,000 (the world's bound 9,266): the rational mirror of the vacuum form keeps P_x bit for bit over 200 intervals; the engine's integer P_x moves per step below the hands' bound 2 num SUM |now_(i+1) - now_(i-1)| and the drift over the run is printed; P_y = P_z = 0 on the folded axes."""
+    """(a) A plane wave at k = pi / 4 on the periodic chain of 24 at the amplitude 5,000 (the world's bound 6,949): the rational mirror of the vacuum form keeps P_x bit for bit over 200 intervals; the engine's integer P_x moves per step below the hands' bound 2 num SUM |now_(i+1) - now_(i-1)| and the drift over the run is printed; P_y = P_z = 0 on the folded axes."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started = time.perf_counter()
     board = Lattice(load_world(chain_world(tmp_path, [LIGHT])))
-    reads, self_coefficient, wall = plane_wave(board, 0, 8000, (1, 4))
+    reads, self_coefficient, wall = plane_wave(board, 0, 5000, (1, 4))
     num = board.families[0].pair[0]
     lines = board.states[0].lines
     now = [Fraction(int(v)) for v in lines[0].now.reshape(-1)]
     before = [Fraction(int(v)) for v in lines[0].before.reshape(-1)]
-    mirror, first = momentum_fraction(now, before, num), node.momentum_of(num, lines, board.wrap)
+    mirror, first = momentum_fraction(now, before, num), readings.momentum_of(num, lines, board.wrap)
     assert first[0] > 0 and first[1:] == (0, 0) and Fraction(first[0]) == mirror  # +k: P of k's sign
     steps, bounds, last = [], [], first[0]
     for _ in range(200):
@@ -132,7 +132,7 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         now, before = rational_step(now, before, reads, self_coefficient, wall), now
         assert momentum_fraction(now, before, num) == mirror  # the theorem: exact at uniform paces
         board.step()
-        found = node.momentum_of(num, board.states[0].lines, board.wrap)
+        found = readings.momentum_of(num, board.states[0].lines, board.wrap)
         steps.append(found[0] - last)
         bounds.append(bound)
         assert abs(found[0] - last) < bound and found[1:] == (0, 0)
@@ -149,7 +149,7 @@ def test_the_plane_waves_momentum_over_its_action_is_the_pairs_s_integer(tmp_pat
     """(b) The same plane wave: cos k read from the record itself, 2 cos k = SUM now_i (now_(i+1) + now_(i-1)) / SUM now_i^2, the pair at k by bisection on the phase line (n_k acts, c_k, s_k) and the pair at the band's omega(k) from the rule's own line 2 w cos omega = S + 2 R cos k + 4 R (n_omega, s_omega); Part F2, both hands' unit (6085442608, 6085486079): one quantum of action is SUM over lines and Nodes of A^2 sin omega = T, and the record's quanta of action are its share over (3 den T sin omega) (the engine's share 3 den A^2 sin^2 omega per Node), so P_x over num and over the quanta, P_x 3 den s_omega T over (num share X), stands against the whole quantum's 2 T s_k / X (T sin k per Link once, each Link twice in the antisymmetric sum) to the lay's rounding; both integers printed, with the engine's count of the record in W_c for the Boss (a W_c count is 1 / sin omega quanta of action and carries 2 T sin k / sin omega)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(chain_world(tmp_path, [LIGHT])))
-    reads, self_coefficient, wall = plane_wave(board, 0, 8000, (1, 4))
+    reads, self_coefficient, wall = plane_wave(board, 0, 5000, (1, 4))
     family, lines = board.families[0], board.states[0].lines
     num, den = family.pair
     now = lines[0].now.reshape(-1).astype(object)
@@ -164,7 +164,7 @@ def test_the_plane_waves_momentum_over_its_action_is_the_pairs_s_integer(tmp_pat
         + sum(int(r) for r in reads[2:]) * amplitude
     )
     n_omega, c_omega, s_omega = pair_at_cosine(board, band_numerator, 2 * int(wall) * amplitude)
-    momentum = node.momentum_of(num, lines, board.wrap)[0]
+    momentum = readings.momentum_of(num, lines, board.wrap)[0]
     share = board.total_share(0)[0]
     assert share is not None and momentum > 0
     hands = int(division_forward(2 * T * s_k, amplitude, division_forward(amplitude, 2, 0)[0])[0])
@@ -194,19 +194,19 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
     gravity, index = 0, 1
     x = np.arange(48)
     envelope = np.where((x >= 4) & (x < 16), np.sin(np.pi * (x - 3) / 13) ** 2, 0.0)
-    plane_wave(board, index, 6000, (1, 4), envelope)
+    plane_wave(board, index, 5000, (1, 4), envelope)  # within the bound 6,949
     well = np.where(abs(x - 36) <= 4, np.rint(400 * np.cos(np.pi * (x - 36) / 10) ** 2), 0).astype(
         board.kind
     )
     row = board.states[gravity].lines[0]
     level = (row.now + well.reshape(board.shape)).astype(board.kind)
-    board.states[gravity].lines[0] = node.Record(level, level.copy(), row.remainder)
+    board.states[gravity].lines[0] = records.Record(level, level.copy(), row.remainder)
     kept = (
         list(board.states[gravity].lines),
         [r.copy() for r in board.states[gravity].write_remainders],
     )
     num = board.families[index].pair[0]
-    first = node.momentum_of(num, board.states[index].lines, board.wrap)[0]
+    first = readings.momentum_of(num, board.states[index].lines, board.wrap)[0]
     last, misses = first, []
     for _ in range(30):
         content = board.read(index, 1, 0)[0]
@@ -227,7 +227,7 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
         board.step()
         board.states[gravity].lines = list(kept[0])
         board.states[gravity].write_remainders = [r.copy() for r in kept[1]]
-        found = node.momentum_of(num, board.states[index].lines, board.wrap)[0]
+        found = readings.momentum_of(num, board.states[index].lines, board.wrap)[0]
         misses.append(abs(Fraction(found - last) - predicted))
         assert abs(Fraction(found - last) - predicted) < bound
         last = found
@@ -247,7 +247,7 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
     for _ in range(47):
         board.step()
     left = (np.arange(board.shape[0]) < 48).reshape(board.shape)
-    packet_momentum = node.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
+    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
     packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     board.step()
