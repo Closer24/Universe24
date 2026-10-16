@@ -357,6 +357,8 @@ w = 6 den Gamma^2,
 R_ij = 2 num p_i^2 q_ij^2 / Gamma^2, p_i = p_0^2 / Gamma the Node's pace and q_ij = Gamma - t_a(i, j) the Link's factor,
 S_i = 12 den Gamma^2 - 12 (den - num) p_0^2 - SUM over the six Ports of R_ij.
 
+**The flux form of Rule3** below writes this mass term as D_i = 12 (den - num) p_0^2 G^2, the same quantity in the engine's integer levels, where w, R_ij and S_i carry the square of the Link unit G alike, so the two forms agree.
+
 At the vacuum's paces, p_0 = p_i = Gamma and q_ij = Gamma, the line is the plain second-order
 rule of the pair: a_next + a_before = 2 cos omega a_now with the
 six-neighbour coupling, the rotation omega_0 with cos omega_0 = num /
