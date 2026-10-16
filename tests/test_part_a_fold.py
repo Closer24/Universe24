@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import node, world_files
+from event_universe import records, world_files
 from event_universe.core import paces
 from event_universe.features import phase
 from event_universe.lattice import Lattice
@@ -15,49 +15,10 @@ from event_universe.loader.derived import folds
 from event_universe.plane import link_pairs, odd_links
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import CHARGED, EVENTS, universe_beside
+from tests.laws import CHARGED, EVENTS, flux_world, packet
 
 ORACLE = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
 KEYS = ("now", "before", "remainder")
-
-
-def flux_world(tmp_path, shape, boundary, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
-    """The rule's universe with the charged plane and gravity carrying the flux's odd lines, on a board."""
-    universe_beside(tmp_path, charged=True)
-    rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    gravity = next(row for row in rows["families"] if row["name"] == "gravity")["held"]
-    gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
-    (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", bodies=[], node_detectors=[])
-    (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
-    return path
-
-
-def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int) -> None:
-    """A plane-wave packet of the charged family laid by hand, moving along `axis` with the wave number 2 pi wave[0] / wave[1] per Link under a raised-cosine envelope over `size` Nodes from `at`, its level before the wave advanced by the band's own rotation at the vacuum's content, z_before = z_now e^(i omega), the record of positive Wronskian moving toward +a."""
-    index = [f.name for f in board.families].index(CHARGED["name"])
-    family, gamma = board.families[index], board.world.node_clock
-    k = 2 * np.pi * wave[0] / wave[1]
-    content = laws.vacuum_content(board.world, family)
-    omega = np.arccos(laws.band_of(family.pair, gamma, content, board.unit, np.cos(k), 1.0, 1.0))
-    x = np.indices(board.shape)[axis]
-    inside = (x >= at) & (x < at + size)  # a raised-cosine window: a locally plane wave
-    envelope = 600 * inside * np.sin(np.pi * (x - at + 1) / (size + 1)) ** 2
-    phase = k * x
-    lines = [
-        node.Record(
-            np.rint(envelope * np.cos(phase)).astype(board.kind),
-            np.rint(envelope * np.cos(phase + omega)).astype(board.kind),
-            board.states[index].lines[0].remainder,
-        ),
-        node.Record(
-            np.rint(envelope * np.sin(phase)).astype(board.kind),
-            np.rint(envelope * np.sin(phase + omega)).astype(board.kind),
-            board.states[index].lines[1].remainder,
-        ),
-    ]
-    board.states[index].lines = lines
 
 
 def arrays(board: Lattice) -> list[np.ndarray]:
@@ -154,9 +115,9 @@ def test_the_one_link_reach_with_the_fold(tmp_path, monkeypatch):
         for index, (family, kept) in enumerate(zip(board.families, board.states, strict=True)):
             low = 0 if family.held and not family.wronskian else -60
             picks = [draw.integers(low, 60, (3, *board.shape)) for _ in kept.lines]
-            kept.lines = [node.Record(now, before, np.abs(r)) for now, before, r in picks]
+            kept.lines = [records.Record(now, before, np.abs(r)) for now, before, r in picks]
             if family.axes:  # the tension lines at 0, the odd lines at their random levels
-                kept.lines[1:4] = [node.empty_record(board.shape, board.kind) for _ in range(3)]
+                kept.lines[1:4] = [records.empty_record(board.shape, board.kind) for _ in range(3)]
             kept.write_remainders = [draw.integers(0, wall, board.shape) for wall in board.walls(index)]
             for array in [*(getattr(r, k) for r in kept.lines for k in KEYS), *kept.write_remainders]:
                 array[4 + far, 0, 0] += 7 * bool(far)

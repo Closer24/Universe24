@@ -9,9 +9,10 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import NO_READ, coefficients, form_term, rule3
+from event_universe.core.rule3 import coefficients, division_forward, form_term
 from event_universe.loader.derived import FamilyRule
-from event_universe.node import Record, ports
+from event_universe.readings import ports
+from event_universe.records import Record
 
 
 def frozen(gamma: int, content: Any) -> Any:
@@ -24,7 +25,7 @@ def over_pace(numerator: Any, gamma: int, content: Any, unit: int) -> np.ndarray
     pace = paces.link_pace_of(gamma, content)
     squares = pace * pace
     wall = 2 * squares * unit * unit + (squares == 0)
-    return np.asarray(rule3(NO_READ, NO_READ, 1, wall, numerator, 0, 0)[0])
+    return np.asarray(division_forward(numerator, wall, 0)[0])
 
 
 def share(
@@ -47,7 +48,7 @@ def share(
     links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
     reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
     arrived = tuple(value[at].astype(object) for value in ports(read.before, wrap))
-    link = rule3(reads, arrived, 0, 1, 0, 0, 0)[0]
+    link = sum(read * arrival for read, arrival in zip(reads, arrived, strict=True))  # the Links' sum
     turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn
     found = form_term(self_coefficient, wall, now, before) - now * (link + turn)
     everywhere = np.zeros(record.now.shape, dtype=object)
@@ -77,6 +78,6 @@ def family_share(
 
 def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
     """A share in quanta at every Node, (share + W_c div 2) div W_c by Rule3's division act, W_c div 2 the rounding's origin: the reading of a share as whole quanta, in the run's kind of integers (the share itself is summed in Python's integers, exact beyond the width)."""
-    origin = rule3(NO_READ, NO_READ, 1, 2, wall, 0, 0)[0]
-    quanta, _remainder = rule3(NO_READ, NO_READ, 1, wall, 0, 0, np.asarray(share_now) + origin)
+    origin = division_forward(wall, 2, 0)[0]
+    quanta, _remainder = division_forward(np.asarray(share_now) + origin, wall, 0)
     return np.asarray(quanta, dtype=kind)

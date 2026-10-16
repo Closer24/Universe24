@@ -1,16 +1,53 @@
-"""Rule3 in one place: one function steps every record at every Node in either direction, w a_next + r' = SUM over the six Ports of R_ij arr_j + S a_now - w a_before + r with the remainder kept in [0, w); the carried division, its division act with the remainder kept between intervals; the largest integer whose square is at most a count, found by a bisection on the share reading and no root (`largest_below`, the search the loader and the generator read, never the run); the form's Node term and the rule's integers from the paces beside it, one read per Port as the product of the Node's pace squared and the Link's factor, the clock the Node's and the tension the Link's, the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-line, #the-direction, #the-interval, #the-paces)."""
+"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it (`carried_division`) is the division act with the remainder kept, which the division act's two functions call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, NamedTuple
 
 from event_universe.core.ports import PORTS
 
-# the rule's reads, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij on
-# the Link to that neighbour; the arrivals through the same Ports; integers or the loop's integer arrays
+# the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
+# the Link to that neighbour; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 
 NO_READ: tuple[int, ...] = (0,) * PORTS
+
+
+class Rule(NamedTuple):
+    """Rule3's integers at a Node, the law's four names: the six reaches R_ij in Port order, the own weight S_i of the first form (2 w - D_i - SUM_j R_ij, named by the form's Node term and the click's face), the wall w and the mass D_i (`rule_integers`, `node.rule_of`)."""
+
+    reaches: Reads
+    self_coefficient: Any
+    wall: Any
+    mass: Any
+
+
+def wall_of(den: Any, gamma: Any, unit: Any = 1) -> Any:
+    """The wall w = 6 den Gamma^2 G^2, the family's one divisor at every Node and every content (ALGEBRA.md #the-line)."""
+    return 6 * den * gamma * gamma * unit * unit
+
+
+def mass(num: Any, den: Any, clock: Any, unit: Any = 1) -> Any:
+    """The Node's mass D_i = 12 (den - num) p_0^2 G^2 (ALGEBRA.md #the-line, the flux form): the shortfall of the six reaches and the own weight under twice the wall, 2 w - S_i - SUM_j R_ij, the clock's alone, 0 for every family with num = den (light), the one term of Rule3's line that is the Node's own and not a Link's."""
+    return 12 * (den - num) * clock * clock * unit * unit
+
+
+def rule_integers(
+    num: Any,
+    den: Any,
+    gamma: Any,
+    clock: Any,
+    pace: Any,
+    factors: tuple[Any, ...] | None = None,
+    unit: Any = 1,
+) -> Rule:
+    """The rule's integers at a Node from its paces, the Rule (the six reaches, S, w, D), the clock the Node's and the tension the Link's (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): the clock p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the Node's content c, the reading row's own level among it, the primary number whose square enters the mass (`paces.clock_of`); the Node's pace p_i = p_0^2 / Gamma, the clock twice, on every one of its six Links (`paces.link_pace_of`); each Link's factor Q_ij, one integer per Link in the unit G^2 of the run's Link unit G (`link_factor`, read the same from both ends; None: no tension, G^2 on every Link); the reach R_ij = 2 num p_i^2 Q_ij per Port, the product and not the sum; the wall w (`wall_of`); the mass D (`mass`); the own weight S = 2 w - D - SUM over the six Ports of R_ij, 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM R_ij as the law's first form writes it, the same integer; at the vacuum's paces p_0 = p_i = Gamma the plain rule of the pair."""
+    square = unit * unit
+    node_squared = pace * pace
+    links = (square,) * PORTS if factors is None else factors
+    reaches = tuple(2 * node_squared * factor * num for factor in links)
+    wall, own = wall_of(den, gamma, unit), mass(num, den, clock, unit)
+    return Rule(reaches, wall + wall - own - sum(reaches), wall, own)
 
 
 def coefficients(
@@ -22,15 +59,9 @@ def coefficients(
     factors: tuple[Any, ...] | None = None,
     unit: Any = 1,
 ) -> tuple[Reads, Any, Any]:
-    """The rule's integers at a Node from its paces, (the six reads, S, w), the clock the Node's and the tension the Link's (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): the clock p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the Node's content c, the reading row's own level among it, the primary number whose square enters S (`paces.clock_of`); the Node's pace p_i = p_0^2 / Gamma, the clock twice, on every one of its six Links (`paces.link_pace_of`); each Link's factor Q_ij, one integer per Link in the unit G^2 of the run's Link unit G (`link_factor`, read the same from both ends; None: no tension, G^2 on every Link); R_ij = 2 num p_i^2 Q_ij per Port, the product and not the sum; S = 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM over the six Ports of R_ij (12 num p_i^2 G^2 with no tension, so the rotation at wave number zero is the clock's alone), w = 6 den Gamma^2 G^2 (#the-line); at the vacuum's paces p_0 = p_i = Gamma the plain rule of the pair."""
-    square = unit * unit
-    clock_squared = clock * clock
-    node_squared = pace * pace
-    links = (square,) * PORTS if factors is None else factors
-    reads = tuple(2 * node_squared * factor * num for factor in links)
-    gamma_squared = gamma * gamma
-    self_coefficient = 12 * (den * gamma_squared - (den - num) * clock_squared) * square - sum(reads)
-    return reads, self_coefficient, 6 * den * gamma_squared * square
+    """The rule's first three integers, (the six reaches, S, w), as the readings of the first form name them (`rule_integers` for the four)."""
+    reaches, self_coefficient, wall, _mass = rule_integers(num, den, gamma, clock, pace, factors, unit)
+    return reaches, self_coefficient, wall
 
 
 def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
@@ -41,34 +72,33 @@ def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     return division_forward(unit * unit * pace * pace, wall, half)[0]
 
 
-def rule3(
-    reads: Reads,
-    arrivals: tuple[Any, ...],
-    self_coefficient: Any,
-    wall: Any,
-    now: Any,
-    other: Any,
-    carry: Any,
-    direction: int = 1,
-) -> tuple[Any, Any]:
-    """One interval of Rule3 in `direction` sigma: u = sigma (SUM over the Ports of R_ij arr_j + S a_now - w other) + carry, z = sigma (u div w), carry' = u mod w; +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r) (ALGEBRA.md #the-line, #the-direction); the reads and the arrivals in Port order, one per Port, none for the division act (NO_READ)."""
-    total = self_coefficient * now
-    total -= wall * other
-    for read, arrived in zip(reads, arrivals, strict=True):
-        total += read * arrived
-    total = direction * total + carry
+def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
+    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = sigma total + r, the quotient sigma (u div w) and the remainder u mod w kept in [0, w) for a total of either sign; +1 forward, -1 the same act back, exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
+    total = direction * total + remainder
     quotient = total // wall
     return direction * quotient, total - wall * quotient
 
 
+def flux_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
+    """The flux line's total before the remainder and the division, in the order the amplitude bound is derived for (ENGINE.md, The amplitude bound): w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now); `rule3` divides it, the click's face reads it (features/click `presented`)."""
+    return wall * (now + now - other) - mass * now + flux
+
+
+def rule3(
+    flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int = 1
+) -> tuple[Any, Any]:
+    """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (`carried_division`); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
+    return carried_division(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
+
+
 def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
-    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the line with no read and the numerator as the self coefficient on the level 1 (ALGEBRA.md #the-four-acts)."""
-    return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, 1)
+    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the one carried division on a numerator (ALGEBRA.md #the-four-acts)."""
+    return carried_division(numerator, wall, carry, 1)
 
 
 def division_back(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
-    """The division act one interval back by Rule3's direction -1: from the remainder after, the quotient the forward act wrote and the remainder before it, exact (ALGEBRA.md #the-direction)."""
-    return rule3(NO_READ, NO_READ, numerator, wall, 1, 0, carry, -1)
+    """The division act one interval back by the carried division's direction -1: from the remainder after, the quotient the forward act wrote and the remainder before it, exact (ALGEBRA.md #the-direction)."""
+    return carried_division(numerator, wall, carry, -1)
 
 
 def largest_below(square: int) -> int:
@@ -93,13 +123,26 @@ def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
     return wall * (now * now + before * before) - self_coefficient * now * before
 
 
+def partial_rooms(
+    reaches: Reads, self_coefficient: Any, wall: Any, mass: Any, links: Any, arrivals: Any
+) -> tuple[Any, ...]:
+    """The rooms of the flux line's five partial sums at a level A, each the factor of A (ENGINE.md, The amplitude bound): the free term 3 w, the mass D, the Node's own terms |2 w - D| + w, the Links' sum `links` (2 SUM_j |R_ij| on a plain line, a Node at +A among six neighbours at -A; more on a turned or folded plane, whose Links reach further), and the whole total `arrivals` + w + |S| with the remainder, w - 1 more than A times it, `arrivals` the six arrivals' reads (SUM_j |R_ij| on a plain line; under the pair's two parts on a turned or folded plane, the loader's `bound_under_rooms`)."""
+    return (
+        3 * wall,
+        mass,
+        abs(wall + wall - mass) + wall,
+        links,
+        arrivals + wall + abs(self_coefficient),
+    )
+
+
 def rule_total_bound(
     num: int, den: int, gamma: int, clock: int, pace: int, amplitude: int, unit: int = 1
 ) -> int:
-    """The largest total the rule reaches at a Node of the paces (p_0, p_i) whose reads and levels stand at the amplitude bound A, A SUM over the six Ports of |R_ij| + A |S| + w (A + 1), 6 A R in a uniform level, the Link's unit G^2 among the integers; below 2^width - 1 or the world is refused (ALGEBRA.md #the-line, #the-bound, #the-rows-against-nature)."""
-    reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
-    return int(
-        amplitude * sum(abs(read) for read in reads)
-        + amplitude * abs(self_coefficient)
-        + wall * (amplitude + 1)
+    """The largest partial sum of Rule3's flux line at a Node of the paces (p_0, p_i) whose levels and arrivals stand within A, in the order the step adds them (`rule3`): w (2 a_now - a_before) at most 3 w A, the mass term D A, their difference A (|2 w - D| + w), the six Links' flux 2 A SUM |R_ij| (a Node at +A among neighbours at -A, the checkerboard at the bound) and the total A (|S| + w + SUM |R_ij|) + w - 1; inside 2^width - 1 or the world is refused (ENGINE.md, The amplitude bound: the engine's promise; the law itself carries no bound, ALGEBRA.md #the-direction). The last of the five is the total of the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integer."""
+    reaches, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
+    links = sum(abs(reach) for reach in reaches)
+    *partials, total = partial_rooms(
+        reaches, self_coefficient, wall, mass(num, den, clock, unit), links + links, links
     )
+    return int(max(*(room * amplitude for room in partials), total * amplitude + wall - 1))

@@ -16,18 +16,12 @@ from typing import Any, cast
 
 import numpy as np
 
-from event_universe import node
+from event_universe import flux, node
 from event_universe.bookings import booked_sources
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap, arrival
-from event_universe.core.rule3 import (
-    NO_READ,
-    coefficients,
-    division_forward,
-    largest_below,
-    rule3,
-)
+from event_universe.core.rule3 import Rule, division_forward, largest_below, rule3, rule_integers
 from event_universe.features import phase
 from event_universe.features.start import (
     RestCollapses,
@@ -43,8 +37,9 @@ from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
-from event_universe.node import Record, empty_state, ports, record_slice, wronskian
 from event_universe.node import read as content_read
+from event_universe.readings import ports
+from event_universe.records import Record, empty_state, record_slice, wronskian
 from event_universe.share import quanta_of, share
 from event_universe.world_files import input_digest, world_files
 
@@ -108,30 +103,19 @@ class Standing:
 def step(
     board: Board, content: np.ndarray, now: np.ndarray, before: np.ndarray, remainder: np.ndarray
 ) -> np.ndarray:
-    """One interval of Rule3 on the whole board, the engine's own form: the six arrivals through the Ports (0 beyond a face, the wrap on a periodic one, `node.ports`), the coefficients from the composed paces of the content at every Node with no tension (core.rule3, core.paces, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
-    reads, self_coefficient, wall = coefficients(
-        board.pair[0],
-        board.pair[1],
-        board.gamma,
-        *paces.node_paces(board.gamma, content),
-        None,
-        board.unit,
-    )
-    arrivals = ports(now, board.wrap)
-    nxt, remainder[...] = rule3(reads, arrivals, self_coefficient, wall, now, before, remainder)
+    """One interval of Rule3 on the whole board, the engine's own form: the six arrivals through the Ports (0 beyond a face, the wrap on a periodic one, `ports`), the coefficients from the composed paces of the content at every Node with no tension (core.rule3, core.paces, ALGEBRA.md #the-paces), the division by the wall with the remainder kept at the Node."""
+    rule = rule_of(board, content)
+    fluxes = flux.link_fluxes(
+        now, rule.reaches, board.wrap, 0
+    )  # the Links' sum, the engine's own (flux.py)
+    nxt, remainder[...] = rule3(fluxes, rule.mass, rule.wall, now, before, remainder)
     return np.asarray(nxt, dtype=board.kind)
 
 
-def rule_of(board: Board, content: np.ndarray) -> node.Rule:
-    """Rule3's integers at every Node of the board from the composed paces of the content, no tension (`core.rule3.coefficients`)."""
-    return coefficients(
-        board.pair[0],
-        board.pair[1],
-        board.gamma,
-        *paces.node_paces(board.gamma, content),
-        None,
-        board.unit,
-    )
+def rule_of(board: Board, content: np.ndarray) -> Rule:
+    """Rule3's integers at every Node of the board from the composed paces of the content, no tension (`core.rule3.rule_integers`): the reaches, S, w and the mass D."""
+    clock, pace = paces.node_paces(board.gamma, content)
+    return rule_integers(board.pair[0], board.pair[1], board.gamma, clock, pace, None, board.unit)
 
 
 def share_of(board: Board, content: np.ndarray | int, now: np.ndarray, before: np.ndarray) -> np.ndarray:
@@ -270,20 +254,26 @@ def scaled(board: Board, total: np.ndarray, to: int, largest: int | None = None)
     return np.asarray(division_forward(total * to, largest, 0)[0], dtype=board.kind)
 
 
-def reach_of(rule: node.Rule) -> int:
+def reach_of(rule: Rule) -> int:
     """The largest sum of the rule's coefficients at a Node, |S| + SUM over the six Ports of R_ij, the room one level of the read takes."""
-    reads, self_coefficient, _wall = rule
-    return int((np.abs(np.asarray(self_coefficient)) + sum(np.asarray(read) for read in reads)).max())
+    return int(
+        (
+            np.abs(np.asarray(rule.self_coefficient)) + sum(np.asarray(read) for read in rule.reaches)
+        ).max()
+    )
 
 
 def fine_mode(
     board: Board, content: np.ndarray, keep: np.ndarray, seed: np.ndarray, fine: int
 ) -> np.ndarray:
     """The iteration of the generator at the fine unit (ALGEBRA.md #the-generator (b)): Rule3's read act with the before-coefficient 0, a <- (SUM over the Ports of R_ij arr_j + S a) div w within `keep` (the board as declared, `on_the_board`) and 0 outside it, then the division act to the fine unit (the level times the unit over its largest size): the power iteration of the symmetric form's top mode, the body's bound mode; the stop is the first repeat of the integer vector, exact, no tolerance."""
-    reads, self_coefficient, wall = rule_of(board, content)
+    rule = rule_of(board, content)
 
     def read_of(a: np.ndarray) -> np.ndarray:
-        total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
+        summed = sum(
+            read * arrived for read, arrived in zip(rule.reaches, ports(a, board.wrap), strict=True)
+        )
+        total = np.asarray(division_forward(summed + rule.self_coefficient * a, rule.wall, 0)[0])
         return np.where(keep, total, 0).astype(board.kind)
 
     a = scaled(board, np.where(keep, seed, 0).astype(board.kind), fine)
@@ -304,12 +294,15 @@ def top_mode(
     board: Board, content: np.ndarray, keep: np.ndarray, seed: np.ndarray, unit: int, modes: Modes
 ) -> tuple[np.ndarray, np.ndarray]:
     """The top mode at the amplitude `unit` and its read (`fine_mode` once per fine unit in one content, `modes`, the iteration not depending on the amplitude it is read at). The fine unit is derived from the width and never written, the largest at which the read of a level stays inside the room (`Board.room`, the host's width or the file's, over twice the sum of the coefficients at a Node, as the start derives its own, `features.start.unit_of`), so that the rounding trap of the iteration is far below the amplitude's rounding; the mode is then rounded once to the amplitude `unit` by the division act and read once more: returns the mode at the amplitude and its read, (SUM over the Ports of R_ij arr_j + S a) div w, the mode times its rotation 2 cos omega within the step's one act."""
-    reads, self_coefficient, wall = rule = rule_of(board, content)
+    rule = rule_of(board, content)
     fine = max(unit, int(division_forward(board.room, 2 * reach_of(rule), 0)[0]))
     if fine not in modes:
         modes[fine] = fine_mode(board, content, keep, seed, fine)
     a = scaled(board, modes[fine], unit)
-    total = np.asarray(rule3(reads, ports(a, board.wrap), self_coefficient, wall, a, 0, 0)[0])
+    summed = sum(
+        read * arrived for read, arrived in zip(rule.reaches, ports(a, board.wrap), strict=True)
+    )
+    total = np.asarray(division_forward(summed + rule.self_coefficient * a, rule.wall, 0)[0])
     return a, np.where(keep, total, 0).astype(board.kind)
 
 
@@ -433,7 +426,7 @@ Others = tuple[np.ndarray, Laid]  # the other bodies' counts (the seed's) and th
 def start_content(
     board: Board, families: tuple[FamilyRule, ...], index: int, slot: int, pairs: Pairs, others: Laid
 ) -> tuple[np.ndarray, Angles]:
-    """The content a body's record reads at the engine's own start, by the engine's own act and no copy of it (`Lattice.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its record's lines and the other bodies' and the packets' on theirs (`others`, each its family and its record, `node.record_slice`; the symmetric lay over a record's parts, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and every row of the holders of the sign a laid plane sources (the form of every record and its Wronskian as the held write books them, the Wronskian into the record's own row, over the write's wall E_s T, the fine form and no whole quanta), and the record's read of those rests (every holder of the content, and for a plane every row of the holders of the sign but its own, plainly), the content the engine steps its record in (ALGEBRA.md, No record reads its own write of the sign); beside it the angles the record is turned by where a holder declares the rotation (`node.turning`: the time angle's numerators from every sign row but the record's own at the record's own clock, and the odd lines), None where no holder turns it."""
+    """The content a body's record reads at the engine's own start, by the engine's own act and no copy of it (`Lattice.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its record's lines and the other bodies' and the packets' on theirs (`others`, each its family and its record, `record_slice`; the symmetric lay over a record's parts, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and every row of the holders of the sign a laid plane sources (the form of every record and its Wronskian as the held write books them, the Wronskian into the record's own row, over the write's wall E_s T, the fine form and no whole quanta), and the record's read of those rests (every holder of the content, and for a plane every row of the holders of the sign but its own, plainly), the content the engine steps its record in (ALGEBRA.md, No record reads its own write of the sign); beside it the angles the record is turned by where a holder declares the rotation (`node.turning`: the time angle's numerators from every sign row but the record's own at the record's own clock, and the odd lines), None where no holder turns it."""
     walls = {
         number: held_write_of(families, number, board.action).walls
         for number, f in enumerate(families)
@@ -1051,8 +1044,9 @@ def standing_check(
 def turned(doubled: int, unit: int, steps: int) -> list[int]:
     """Rule3's rotation act (ALGEBRA.md #the-four-acts (b)) from the level `unit` and the level `doubled` div 2 after it: a_next = (doubled x a_now + r) div unit - a_before with the remainder kept, `steps` turns; the levels unit x cos(n theta) at 2 unit cos theta = doubled."""
     levels, carry = [unit, int(division_forward(doubled, 2, 0)[0])], 0
+    own = unit + unit - doubled  # the line's own term: Rule3's flux line with no Links
     for _ in range(steps - 1):
-        nxt, carry = rule3(NO_READ, NO_READ, doubled, unit, levels[-1], levels[-2], carry)
+        nxt, carry = rule3(0, own, unit, levels[-1], levels[-2], carry)
         levels.append(int(nxt))
     return levels
 
@@ -1091,20 +1085,19 @@ def envelope(extent: int, top: tuple[int, int], edge: int, unit: int) -> list[in
     return found
 
 
-def advanced_real_part(real_now: np.ndarray, real_quadrature: np.ndarray, rule: node.Rule) -> np.ndarray:
+def advanced_real_part(real_now: np.ndarray, real_quadrature: np.ndarray, rule: Rule) -> np.ndarray:
     """The exact lay's before level in the tool's floats (ALGEBRA.md, The packet lay, the law's (h): **L** the line's own read of the packet's family at the paces of the vacuum the packet is laid in; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3); the family's pair, R370, the reviewer's 5984295586 section C and the advisor's 5984314233 (3); the declared rest's paces, the mathematician's 5985967677 (4) with the advisor's second 5986066894 (6)): the packet z = a + i s over the board, a the now level and s its quadrature on the same envelope, transformed over the board's shape, every component advanced by its own omega(q) and the real part returned; cos omega(q) the line's dispersion from `rule` (Rule3's integers at the content the packet's family reads where nothing is laid, the declared rests of its content holders, `rule_of`; the six reads R, the self coefficient S and the wall w, one number each at a uniform content): 2 w cos omega(q) = S + SUM over the six Ports of R_ij cos q_a, each Port's read times the cosine of its axis's wave number, which is (num / den) (cos q_x + cos q_y + cos q_z) / 3 at the content 0 and the same band at the effective Gamma of the declared rest (ALGEBRA.md, The vacuum content, item 22: every reader's paces are Gamma - 2 c_vac), clipped to [-1, 1] (a component above the band's top is advanced as the top, none in a packet of the shipped designs)."""
     imaginary = complex(0, 1)
     wave_numbers = [
         (2 * np.pi * np.fft.fftfreq(extent)).reshape([-1 if a == axis else 1 for a in range(3)])
         for axis, extent in enumerate(real_now.shape)
     ]
-    reads, self_coefficient, wall = rule
     ports = (
-        int(np.asarray(read).ravel()[0]) for read in reads
+        int(np.asarray(read).ravel()[0]) for read in rule.reaches
     )  # the six Ports, [+X, -X, +Y, -Y, +Z, -Z]
     arrived = sum(read * np.cos(wave_numbers[port // 2]) for port, read in enumerate(ports))
-    doubled = int(np.asarray(self_coefficient).ravel()[0]) + arrived  # 2 w cos omega(q)
-    omega = np.arccos(np.clip(doubled / (2 * int(np.asarray(wall).ravel()[0])), -1, 1))
+    doubled = int(np.asarray(rule.self_coefficient).ravel()[0]) + arrived  # 2 w cos omega(q)
+    omega = np.arccos(np.clip(doubled / (2 * int(np.asarray(rule.wall).ravel()[0])), -1, 1))
     packet = np.fft.fftn(real_now + imaginary * real_quadrature)
     advanced = packet * (np.cos(omega) + imaginary * np.sin(omega))
     return np.asarray(np.real(np.fft.ifftn(advanced)))
@@ -1199,7 +1192,7 @@ def packet_levels(
     for whole, level in zip(extended, (now, envelope_here * quadrature * unit), strict=True):
         whole[within] = np.vectorize(lambda numerator: numerator / scale, otypes=[float])(level)
     levels = [
-        np.where(beyond, 0, np.asarray(rule3(NO_READ, NO_READ, 1, scale, 0, 0, now + half)[0])),
+        np.where(beyond, 0, np.asarray(division_forward(now + half, scale, 0)[0])),
         np.where(
             beyond,
             0,

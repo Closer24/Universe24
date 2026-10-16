@@ -10,7 +10,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import node, world_files
+from event_universe import node, records, world_files
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
@@ -39,20 +39,20 @@ def gaussian_record(board: Lattice, conjugate: bool, amplitude: int = AMPLITUDE)
     im_before = np.rint(sense * shape * math.sin(omega)).astype(board.kind)
     re, im = board.states[1].lines[:2]
     board.states[1].lines[:2] = [
-        node.Record(re_now, re_before, re.remainder),
-        node.Record(im_now, im_before, im.remainder),
+        records.Record(re_now, re_before, re.remainder),
+        records.Record(im_now, im_before, im.remainder),
     ]
 
 
-def ramp(board: Lattice) -> tuple[list[node.Record], list[np.ndarray]]:
+def ramp(board: Lattice) -> tuple[list[records.Record], list[np.ndarray]]:
     """The holder's free row's time level rising one unit per Link along +x, L = x, both levels; returns the holder's whole state (its rows' lines and its write remainders) for the harness to hold it static (`held_static`): the chain's open ends would otherwise radiate the ramp's kink into the packet, and the record's own row, written by its Wronskian and read by nothing, would pass the bound (the hands' chain had no self-write)."""
     level = np.arange(CHAIN).reshape(board.shape).astype(board.kind)
     line = board.states[0].lines[0]
-    board.states[0].lines[0] = node.Record(level, level.copy(), line.remainder)
+    board.states[0].lines[0] = records.Record(level, level.copy(), line.remainder)
     return list(board.states[0].lines), [r.copy() for r in board.states[0].write_remainders]
 
 
-def held_static(board: Lattice, kept: tuple[list[node.Record], list[np.ndarray]]) -> None:
+def held_static(board: Lattice, kept: tuple[list[records.Record], list[np.ndarray]]) -> None:
     """The holder's state restored after an interval, the harness's static potential."""
     board.states[0].lines = list(kept[0])
     board.states[0].write_remainders = [r.copy() for r in kept[1]]
@@ -134,10 +134,10 @@ def test_the_static_field_is_bounded_by_the_walks_bound():
 
     families = universe_of(UNIVERSE)[1]
     shape, wrap = (2, 1, 1), Wrap(False, True, True, None)
-    states = [node.empty_state(f, shape, (), np.int64) for f in families]
-    states[0].phases = node.phase_lines(families[0], shape, np.int64, GAMMA, 63)
+    states = [records.empty_state(f, shape, (), np.int64) for f in families]
+    states[0].phases = records.phase_lines(families[0], shape, np.int64, GAMMA, 63)
     level = np.array([[[0]], [[-5]]], dtype=np.int64)
-    states[0].lines[0] = node.Record(level, level.copy(), states[0].lines[0].remainder)
+    states[0].lines[0] = records.Record(level, level.copy(), states[0].lines[0].remainder)
     amplitude = phase.amplitude(GAMMA, 63)
     seed = [a.copy() for r in states[0].phases[1] for a in (r.now, r.before, r.remainder)]
     worst, acts = 0.0, 0
@@ -179,7 +179,7 @@ def test_the_48_returns_on_a_closed_cube_with_the_phase_lines(tmp_path, monkeypa
     holder, kind = board.states[CHARGE], board.kind
     for axis in range(3):
         level = (40 * (np.indices(shape)[axis] - 3)).astype(kind)
-        holder.lines[1 + axis] = node.Record(level, level.copy(), holder.lines[1 + axis].remainder)
+        holder.lines[1 + axis] = records.Record(level, level.copy(), holder.lines[1 + axis].remainder)
     assert len(holder.phases) == board.families[CHARGE].records and holder.phases[0] == []
     seeds = [[a.copy() for r in rows for a in (r.now, r.before, r.remainder)] for rows in holder.phases]
     for _ in range(4):
@@ -216,11 +216,11 @@ def test_the_phase_act_reaches_one_link():
     shape, wrap, at = (24, 1, 1), Wrap(False, True, True, None), 10
     boards = []
     for kick in (0, 200):
-        states = [node.empty_state(f, shape, (), np.int64) for f in families]
-        states[0].phases = node.phase_lines(families[0], shape, np.int64, GAMMA, 63)
+        states = [records.empty_state(f, shape, (), np.int64) for f in families]
+        states[0].phases = records.phase_lines(families[0], shape, np.int64, GAMMA, 63)
         level = np.zeros(shape, dtype=np.int64)
         level[at] = kick
-        states[0].lines[0] = node.Record(level, level.copy(), states[0].lines[0].remainder)
+        states[0].lines[0] = records.Record(level, level.copy(), states[0].lines[0].remainder)
         boards.append(node.phased(0, families, states, 1, wrap, GAMMA))
     apart = sorted(
         {

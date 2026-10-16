@@ -1,4 +1,4 @@
-"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part and the axis sources (`stresses_of`, `axis_sources_of`), the sign's current (`sense_current_of`) and the lattice momentum per axis (`momentum_of`); readings alone, no level written, node.py re-exports them under its own name."""
+"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part and the axis sources (`stresses_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`), the linear sum of a line with its exchange through the board's faces and its rate-weighted form (`linear_sum`, `linear_exchange`, `weighted_linear_sum`; the flux form of Rule3); readings alone, no level written."""
 
 from __future__ import annotations
 
@@ -81,3 +81,29 @@ def axis_neighbours(
     arrived = ports(now, wrap)
     found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
+
+
+def linear_sum(wall: int, line: Record) -> int:
+    """The linear sum of one line over the board, L = SUM over the Nodes of [w (now - before) + r], w the family's wall 6 den Gamma^2 G^2 (the flux form of Rule3: w (next - 2 now + before) + r' - r = SUM over the Ports of R_ij (arrival - now) - D now, so the Link terms pair off on a closed board read at one rate and L moves by the mass term alone, zero for light); a lattice reading, no level written."""
+    now, before = line.now.astype(object), line.before.astype(object)
+    return int((wall * (now - before) + line.remainder.astype(object)).sum())
+
+
+def linear_exchange(reads: Sequence[Any], line: Record, wrap: Wrap) -> int:
+    """The change of a line's linear sum over one interval by its exchange with the board's faces, a family of light (num = den, so D = 0, at any content): -SUM over the Ports of R_ij times the Node's number over every Node whose Port arrives from beyond a face (the fill 0 there), 0 on a periodic axis; with the step's own six reads R_ij, the expected change of L where no other act writes the line, so that a jump beyond it names a level written outside Rule3's line."""
+    beyond = ports(np.zeros_like(line.now), wrap, 1)
+    now = line.now.astype(object)
+    found = 0
+    for read, mask in zip(reads, beyond, strict=True):
+        where = np.asarray(mask, dtype=bool)
+        found += int(
+            (np.broadcast_to(np.asarray(read, dtype=object), now.shape)[where] * now[where]).sum()
+        )
+    return -found
+
+
+def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
+    """The linear sum weighted by the Node's rate, L'' = SUM over the Nodes of weight_i x [w (now - before) + r] with weight_i = scale div p_i^2, scale the least common multiple of the distinct p_i^2 on the board, so that every weight is a whole number (the caller's, no division here): R_ij / p_i^2 = 2 num Q_ij G^2 is the same at a Link's two ends whatever their rates, so the weighted Link terms of the flux form pair off on a closed board at any fixed content profile and L'' of light is kept exactly where L moves by the pairing term; a lattice reading."""
+    now, before = line.now.astype(object), line.before.astype(object)
+    scaled = np.broadcast_to(np.asarray(weights, dtype=object), now.shape)
+    return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())

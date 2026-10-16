@@ -15,7 +15,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node, share
+from event_universe import node, records, share
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall, quanta_records
 from event_universe.loader.keys import AXES
@@ -30,9 +30,9 @@ def pair(value: Fraction | None) -> list[int] | None:
     return None if value is None else [value.numerator, value.denominator]
 
 
-def copied(record: node.Record) -> node.Record:
+def copied(record: records.Record) -> records.Record:
     """A record's two levels copied, its remainder shared: the interval's start kept while the board steps."""
-    return node.Record(record.now.copy(), record.before.copy(), record.remainder)
+    return records.Record(record.now.copy(), record.before.copy(), record.remainder)
 
 
 def centre_of(board: Lattice, number: int) -> Node:
@@ -100,7 +100,7 @@ def body_reading(
     board: Lattice,
     number: int,
     region: np.ndarray,
-    begun: list[node.Record],
+    begun: list[records.Record],
     share: np.ndarray,
     quanta: np.ndarray,
     reach: int,
@@ -115,9 +115,9 @@ def body_reading(
     num, den, gamma = *family.pair, board.world.node_clock
     read_content = int(content[at]) if np.ndim(content) else int(content)
     one_node = 2 - 2 * Fraction(den - num, den) * Fraction(gamma - 1, gamma) ** (2 * read_content)
-    form = node.form(begun, state.lines[: family.record])
+    form = records.form(begun, state.lines[: family.record])
     well_sum = int(np.where(region, form, 0).sum(dtype=object))
-    wronskian = node.wronskian(begun, family.plane)
+    wronskian = records.wronskian(begun, family.plane)
     held = {
         board.families[index].name: {
             AXES[axis]: along(board.record(index)[0].now, centre, axis, reach, board.offset)
@@ -188,7 +188,7 @@ def remainder_term(
     board: Lattice,
     index: int,
     reads: list[tuple[Any, node.Factors]],
-    kept: list[list[node.Record]],
+    kept: list[list[records.Record]],
     shape: tuple[int, ...],
     offset: Node,
 ) -> int:
@@ -219,7 +219,7 @@ def stepped(board: Lattice, terms: dict[int, dict[str, int]]) -> None:
     kept = {
         index: [
             [
-                node.Record(line.now.copy(), line.before.copy(), np.array(line.remainder, copy=True))
+                records.Record(line.now.copy(), line.before.copy(), np.array(line.remainder, copy=True))
                 for line in board.lines_of(index, record)
             ]
             for record in quanta_records(board.families, index)
@@ -278,7 +278,7 @@ def read_about_one_interval(
     for number in range(len(board.world.bodies)):
         begun, share, quanta, content = kept[number]
         begun = [
-            node.Record(
+            records.Record(
                 grown(line.now, shape, offset, board),
                 grown(line.before, shape, offset, board),
                 line.remainder,

@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
-from event_universe.core.rule3 import NO_READ, Reads, coefficients, rule3
+from event_universe.core.rule3 import Reads, coefficients, division_forward, wall_of
 
 Pair = tuple[int, int]
 SignReads = tuple[
@@ -39,9 +39,9 @@ class FieldAtRest:
     content: np.ndarray  # the row's own level its paces were read at: the levels where the rest settled, one off at a rounding tie
 
 
-def division(numerator: object, wall: object, value: object) -> np.ndarray:
+def division(numerator: Any, wall: Any, value: Any) -> np.ndarray:
     """Rule3's division act on a value: (numerator x value) div wall, the remainder not kept (ALGEBRA.md #the-four-acts)."""
-    return np.asarray(rule3(NO_READ, NO_READ, numerator, wall, value, 0, 0)[0])
+    return np.asarray(division_forward(numerator * value, wall, 0)[0])
 
 
 def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
@@ -90,7 +90,8 @@ def settled(
     """The line at fixed paces, b <- (SUM over the three axes of read x the two arrivals + source) div divisor, iterated by the division act to its fixed point, the first state the act returns unchanged (the line's residual then in [0, divisor) at every Node, the state below the line by up to the bound `bound_of` in the lowest mode, which `refined` takes off); where the act cycles (the floors of a line at the massless pair can swing between two states), the cycle's elementwise highest state is a floor of the line, from which the act, monotone in the levels, only rises to a fixed point, so the iteration goes on from it; refused by name where it cycles again."""
 
     def act(state: np.ndarray) -> np.ndarray:
-        return np.asarray(rule3(reads, arrivals(state, wrap), 0, divisor, state, 0, source)[0])
+        summed = sum(read * arrived for read, arrived in zip(reads, arrivals(state, wrap), strict=True))
+        return np.asarray(division_forward(summed, divisor, source)[0])
 
     seen: set[int] = set()
     resolved = 0
@@ -99,7 +100,9 @@ def settled(
         after = act(fine)
         if np.array_equal(after, fine):
             return fine, iterations
-        key = hash(after.tobytes())
+        key = hash(
+            tuple(after.ravel().tolist()) if after.dtype == object else after.tobytes()
+        )  # by value: an object array's bytes are its elements' addresses
         if key in seen:  # a cycle, or a hash's collision: collect it within the states seen
             highest, state, length = after, act(after), 1
             while not np.array_equal(state, after) and length < len(seen):
@@ -155,7 +158,10 @@ def refined(
     bound = miss = 0
     six = 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
     while True:
-        total = rule3(reads, arrivals(fine, wrap), 0, 1, fine, 0, source)[0]  # the numerator, the wall 1
+        total = (
+            sum(read * arrived for read, arrived in zip(reads, arrivals(fine, wrap), strict=True))
+            + source
+        )  # the numerator
         residual = np.asarray(total, dtype=object) - np.asarray(divisor, dtype=object) * fine
         residual = residual.astype(fine.dtype)  # within the divisor, the fine levels' kind
         if not residual.any():  # the stop is the line itself: nothing to refine, no bound needed
@@ -266,7 +272,7 @@ def rest(
         fine, iterations, correction = refined(
             fine, reads, line_wall, scaled, wrap, largest, unit, iterations, correction
         )
-        rounded = np.asarray(rule3(NO_READ, NO_READ, 1, unit, fine, 0, half)[0])
+        rounded = np.asarray(division_forward(fine, unit, half)[0])
         if returned([rounded], [own], seen, f"the rest of the pair {list(pair)}"):
             break
         own = rounded
@@ -305,7 +311,7 @@ def settled_rows(
         began, fields, before = list(levels), [], fields
         for number, (counts, pair, divisor, _own_rest, reads) in enumerate(rows):
             others, own_weight = read_content(reads, levels, rests, number)
-            wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
+            wall = wall_of(pair[1], gamma, unit)
             seed = before[number] if number < len(before) else None
             field = rest(
                 counts,
@@ -343,7 +349,7 @@ def held_rests(
         rests = [own_rest for _counts, _pair, _divisor, own_rest, _reads in holders]
         for number, (counts, pair, divisor, _own_rest, reads) in enumerate(signs, len(holders)):
             content, own_weight = read_content(reads, [field.levels for field in fields], rests, None)
-            wall = coefficients(pair[0], pair[1], gamma, gamma, gamma, None, unit)[2]
+            wall = wall_of(pair[1], gamma, unit)
             seeded = before[number] if number < len(before) else None
             fields.append(
                 rest(

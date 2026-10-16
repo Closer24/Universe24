@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 2.0.0
-date-released: 2026-10-11
+version: 2.1.0
+date-released: 2026-10-16
 license: MIT
 doi: 10.5281/zenodo.23190113
 repository-code: "https://github.com/Closer24/Universe24"
@@ -32,12 +32,16 @@ keywords:
   - measurement as a click
 abstract: >-
   The implementation of the paper "Universe24: one simple rule, the formulas
-  it shares with nature and adds" (Alon Gonen, 2026): a lattice of Nodes
-  holding bounded integers, stepped by one rule, Rule3, from each Node's present, its past and its six neighbours,
-  reversibly, and read only through the clicks of declared NodeDetectors. The engine holds no number of
-  physics, no formula and no family's name; every physical value comes from
-  the run's files, and every primitive is one folder found by its name. The
-  paper's documents, files and scripts are in the repository.
+  it shares with nature and adds" (Alon Gonen, 2026): a cubic lattice of Nodes,
+  each holding two levels and a remainder per line of a field, stepped by one
+  rule, Rule3, in the law's flux form, a Node's level changing by what crosses
+  its six Links at each Link's reach, less the Node's own mass term, the
+  remainder carried; whole numbers of any size, the bound the engine's; the tick
+  the count of rounds that no Node reads; every run returning its past to the
+  bit; and read only through the clicks of declared NodeDetectors. The engine
+  holds no number of physics, no formula and no family's name; every physical
+  value comes from the run's files, and every primitive is one folder found by
+  its name. The paper's documents, files and scripts are in the repository.
 preferred-citation:
   type: article
   title: "Universe24: one simple rule, the formulas it shares with nature and adds"

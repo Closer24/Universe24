@@ -22,7 +22,7 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
             board.step()
         for index, family in enumerate(board.families):
             content, factors = board.read(index)
-            reads, self_coefficient, wall = node.rule_of(family, gamma, content, factors, unit)
+            reads, self_coefficient, wall, _mass = node.rule_of(family, gamma, content, factors, unit)
             lowest = min(lowest, (int(np.min(content)), interval, family.name, int(np.argmin(content))))
             pi_mode = Fraction(int(np.min(self_coefficient - sum(reads))), int(wall))  # 2 cos omega(pi)
             edge = min(edge, (pi_mode, f"interval {interval}, {family.name}"))

@@ -15,7 +15,7 @@ import numpy as np
 
 from event_universe.features.click import Face
 from event_universe.lattice import Lattice
-from event_universe.node import NodeState, Record
+from event_universe.records import NodeState, Record
 from event_universe.world_files import load_world
 
 Snapshot = list[tuple[str, np.ndarray]]

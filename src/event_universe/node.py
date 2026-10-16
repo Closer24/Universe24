@@ -1,8 +1,8 @@
-"""The Node: every family's NodeState over the lattice, a flat list of lines of dimension one and the law's numbers and nothing else, and the interval's acts on it as pure functions of whole-board arrays, each a call of Rule3 (core/rule3.py) with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), Rule3 on every line (#the-line, #the-direction), the readings of the lines at the interval's start (the currents and the tension's part at the Node, features/currents; the form and the Wronskian about the step; the count is the record's share, #the-count-is-the-records-share) and the one write per held line (#the-primitives, the row "the held write"). The step knows no family, no dimension and no name: it receives lines with their coefficients, their sources and their readers (the loader's grouping, loader/derived.py)."""
+"""The Node's acts on every family's NodeState over the lattice (records.py: a flat list of lines of dimension one and the law's numbers and nothing else), each a pure function of whole-board arrays with every neighbour read through a Port (core/ports.py), one Link's reach for every act (ALGEBRA.md #the-interval, the dependency radius): the read, the content at the Node into the composed clock and the Node's pace, the clock twice, with each Link's own factor from its tension (#the-paces; the guard once at load), the rule's integers of that read for the step (`rule_of`, core/rule3.rule_integers; the step itself is flux.py, Rule3 in flux form on every line, #the-line, #the-direction), the sign's levels a turned record reads, the phase act on the holder's phase lines (features/phase) and the one write per held line (#the-primitives, the row "the held write"). The step knows no family, no dimension and no name: it receives lines with their rule, their sources and their readers (the loader's grouping, loader/derived.py)."""
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Sequence
 from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
@@ -10,9 +10,8 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, Wrap, arrival
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import Rule, rule_integers
 from event_universe.features import phase
-from event_universe.features.click import presented
 from event_universe.features.held_write import held_write
 from event_universe.features.read import (
     axis_paces,
@@ -22,54 +21,15 @@ from event_universe.features.read import (
     paces_guard,
     plain,
 )
-from event_universe.loader.derived import PLANE, FamilyRule, row_of, turns, weight_of
+from event_universe.loader.derived import FamilyRule, row_of, turns, weight_of
 from event_universe.plane import (
-    NO_FACE,
     Angles,
-    Faces,
-    Phases,
-    Rule,
     fold_guard,
     link_guard,
-    link_levels,
-    link_pairs,
     link_wall,
     odd_links,
-    phase_links,
-    step_plane,
 )
-from event_universe.readings import axis_neighbours as axis_neighbours
-from event_universe.readings import axis_sources_of as axis_sources_of
-from event_universe.readings import currents_of as currents_of
-from event_universe.readings import momentum_of as momentum_of
-from event_universe.readings import ports as ports
-from event_universe.readings import sense_current_of as sense_current_of
-from event_universe.readings import stresses_of as stresses_of
-from event_universe.records import (  # the lines, their readings and their states, the Node's own
-    Booking as Booking,
-)
-from event_universe.records import Families as Families
-from event_universe.records import NodeState as NodeState
-from event_universe.records import Record as Record
-from event_universe.records import Rulers as Rulers
-from event_universe.records import Sourcing as Sourcing
-from event_universe.records import States as States
-from event_universe.records import empty_record as empty_record
-from event_universe.records import empty_state as empty_state
-from event_universe.records import form as form
-from event_universe.records import full as full
-from event_universe.records import largest as largest
-from event_universe.records import level_at as level_at
-from event_universe.records import phase_lines as phase_lines
-from event_universe.records import record_slice as record_slice
-from event_universe.records import row_levels as row_levels
-from event_universe.records import rows_total as rows_total
-from event_universe.records import rulers_write_factor as rulers_write_factor
-from event_universe.records import well as well
-from event_universe.records import write_origins as write_origins
-from event_universe.records import write_sources as write_sources
-from event_universe.records import wronskian as wronskian
-from event_universe.records import zeros as zeros
+from event_universe.records import Families, Record, Rulers, States, level_at, phase_lines, row_levels
 
 if TYPE_CHECKING:
     from event_universe.loader.world import World
@@ -243,109 +203,10 @@ def least_pace(index: int, families: Families, states: States, gamma: int, wrap:
 def rule_of(
     family: FamilyRule, gamma: int, content: Any, factors: Factors | None = None, unit: int = 1
 ) -> Rule:
-    """The rule every line of a family steps by, Rule3's integers at every Node from its pair and the paces of its read, the clock and the Node's pace from the Node's content (`paces.node_paces`, The paces compose) and each Link's factor (ALGEBRA.md #the-line; #the-interval): a family of quanta's (the holder of the sign included, its line its record) and a held row's alike, the row's own level among the content it reads (Every row reads the content); None no tension, G^2 on every Link."""
+    """The rule every line of a family steps by, Rule3's integers at every Node from its pair and the paces of its read, (the six reaches R_ij, the own weight S_i, the wall w, the mass D_i), the clock and the Node's pace from the Node's content (`paces.node_paces`, The paces compose) and each Link's factor (ALGEBRA.md #the-line, the flux form; #the-interval): a family of quanta's (the holder of the sign included, its line its record) and a held row's alike, the row's own level among the content it reads (Every row reads the content); None no tension, G^2 on every Link; the step's module takes it (flux.py)."""
     num, den = family.pair
     clock, pace = paces.node_paces(gamma, content)
-    return coefficients(num, den, gamma, clock, pace, factors, unit)
-
-
-def step(
-    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0, faces: Faces = NO_FACE
-) -> Record:
-    """Rule3 on one line (ALGEBRA.md #the-line, #the-direction): forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r), the six arrivals through the Ports of the level the step starts from, each under its Port's read, `fill` read beyond a face (the row's rest), and where the click act presents a face at a Node its value in the place of that Port's arrival (features/click, `presented`), forward computed and kept, backward the kept one."""
-    reads, self_coefficient, wall = rule
-    level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
-    arrived = ports(level, wrap, fill)
-    if faces[0]:
-        arrived = presented(
-            arrived, reads, self_coefficient, wall, level, other, record.remainder, *faces, direction
-        )
-    found, remainder = rule3(
-        reads, arrived, self_coefficient, wall, level, other, record.remainder, direction
-    )
-    if direction == 1:
-        return Record(np.asarray(found), record.now, np.asarray(remainder))
-    return Record(record.before, np.asarray(found), np.asarray(remainder))
-
-
-def step_family(
-    index: int,
-    families: Families,
-    states: States,
-    rule: Rule,
-    wrap: Wrap,
-    gamma: int,
-    direction: int = 1,
-    record: int = 0,
-    faces: Mapping[int, Faces] | None = None,
-    pairs: tuple[Factors, Factors] | None = None,
-) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped by Rule3 in `direction` with its rule (ALGEBRA.md #the-interval): line by line (`step`), the time line of a holder of the content reading its rest beyond every face, or, where the family's record is turned or folded (`pairs`, each Link's read as the pair (R^c, R^s) from the sign holder's odd lines with the Link's phase pair and the flux holder's odd lines, `plane.link_pairs`, the caller's, as `step_records` computes it from the record's read; ALGEBRA.md, The clock family on the Ports; features/phase), each part's plane as one (`step_plane`), every line with the faces the click act presents to it at this step (`faces`, per line number); with the lines, the booking (first, second) the form D = form(first, second) and the Wronskian W = wronskian(second) are read from, the lines the step started from and the lines it left."""
-    family, state = families[index], states[index]
-    span = record_slice(family, record)
-    own = state.lines[span]
-    faced = dict(faces or {})
-    if pairs is None:
-        found = [
-            step(
-                line,
-                rule,
-                wrap,
-                direction,
-                family.rest if number == 0 else 0,
-                faced.get(number, NO_FACE),
-            )
-            for number, line in enumerate(own, span.start)
-        ]
-        return found, ((own, found) if direction == 1 else (found, own))
-    lines: list[Record] = []
-    first: list[Record] = []
-    second: list[Record] = []
-    for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
-        pair = own[start], own[start + 1]
-        at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
-        found, (begun, left) = step_plane(*pair, rule, wrap, gamma, direction, at, pairs)
-        lines, first, second = lines + found, first + begun, second + left
-    return lines, (first, second)
-
-
-def step_records(
-    index: int,
-    families: Families,
-    states: States,
-    wrap: Wrap,
-    gamma: int,
-    unit: int,
-    direction: int = 1,
-    cut: Factors | None = None,
-    faces: Mapping[int, Faces] | None = None,
-    amplitude: int = 0,
-) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped by Rule3 in `direction`, each with the rule of its own read (`read`, `rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`), its Links' pairs (`turning`, the sign's odd levels, every sign row but the record's own; `plane.odd_links`, the flux holder's; the record's row's phase lines as they stand after the interval's phase act, read through the six Ports, `plane.phase_links`, at the amplitude X, `amplitude`, features/phase.amplitude; `plane.link_pairs`, the pair (R^c, R^s) per Port; `step_family`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
-    lines: list[Record] = []
-    bookings: list[Booking] = []
-    for record in range(families[index].records):
-        content, factors = read(index, families, states, direction, wrap, gamma, unit, record, cut)
-        rule = rule_of(families[index], gamma, content, factors, unit)
-        angles = turning(index, families, states, direction, record)
-        flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
-        sign = None if angles is None else link_levels(angles[1], wrap)  # the sign's Link levels n_ij
-        phases: Phases | None = None
-        if angles is not None:  # the record's row's phase pairs, the Link's hop through each Port
-            row = row_of(families, index, record)
-            assert row is not None
-            if amplitude < 1:
-                raise ValueError(
-                    f"{families[index].name!r} reads the sign's phase lines and the step was given no amplitude X "
-                    "for the fold: the caller passes features/phase.amplitude of the width"
-                )
-            phases = phase_links(states[sign_holder(index, families)].phases[row], wrap)
-        pairs = link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
-        found, booking = step_family(
-            index, families, states, rule, wrap, gamma, direction, record, faces, pairs
-        )
-        lines, bookings = lines + found, bookings + [booking]
-    return lines, bookings
+    return rule_integers(num, den, gamma, clock, pace, factors, unit)
 
 
 def held_write_at(

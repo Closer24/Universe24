@@ -9,16 +9,17 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.core.rule3 import coefficients, rule3
+from event_universe.core.rule3 import coefficients
 from event_universe.features.currents import Levels, Neighbours, current, tension
 from event_universe.features.read import link_tension
+from tests.laws import arrivals_rule3
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
 PHYSICAL_MODULES = ("node.py", "lattice.py", "share.py", "reports.py", "credit.py", "world_files.py")
 PHYSICAL_MODULES += ("records.py", "bookings.py", "meeting.py", "conversion.py", "front.py", "plane.py")
-PHYSICAL_MODULES += ("emission.py", "lay.py", "twist.py", "readings.py")
+PHYSICAL_MODULES += ("emission.py", "lay.py", "twist.py", "readings.py", "flux.py")
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
@@ -247,7 +248,9 @@ def ring_step(now, before, carry, reads, self_coefficient, wall):  # type: ignor
     nexts, carries = [], []
     for i in range(n):
         arrivals = (now[(i + 1) % n], now[(i - 1) % n], now[i], now[i], now[i], now[i])
-        value, rest = rule3(reads, arrivals, self_coefficient, wall, now[i], before[i], carry[i])
+        value, rest = arrivals_rule3(
+            reads, arrivals, self_coefficient, wall, now[i], before[i], carry[i]
+        )
         nexts.append(int(value))
         carries.append(int(rest))
     return nexts, carries

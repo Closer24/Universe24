@@ -1,4 +1,4 @@
-"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading". Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta, the engine's own `Lattice.quanta`), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `node.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeDetector's read, the parts' signed level sums per region, which the joint-share reader credits); the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
+"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading". Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta, the engine's own `Lattice.quanta`), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `records.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeDetector's read, the parts' signed level sums per region, which the joint-share reader credits); the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -15,7 +15,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import growth, node
+from event_universe import growth, node, records
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
@@ -109,7 +109,7 @@ def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
     }
 
 
-def frame(board: Lattice, kept: dict[int, list[node.Record]] | None) -> dict[str, object]:
+def frame(board: Lattice, kept: dict[int, list[records.Record]] | None) -> dict[str, object]:
     """One interval's reading of every family's arrays (`kept` the lines the interval started from, None at frame 0): the level now of the record's line, its second where it is a plane, the count as the record's share in quanta (a reading of the record, kept nowhere), the share over the lattice in the current's units (the books' share at this interval, None over a frozen Node), the form and the pace; the bodies' standing Nodes as a report derives them (`Lattice.body_nodes`), the lattice's shape and offset at the interval and the output lines to come."""
     world, families = board.world, {}
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
@@ -124,8 +124,8 @@ def frame(board: Lattice, kept: dict[int, list[node.Record]] | None) -> dict[str
             if family.plane:
                 row["second"] = lines[1].now
             if kept is not None:
-                began = [node.rows_total(family, kept[index])] if family.wronskian else kept[index]
-                row["form"] = node.form(began, lines)
+                began = [records.rows_total(family, kept[index])] if family.wronskian else kept[index]
+                row["form"] = records.form(began, lines)
             row["pace"] = node.least_pace(
                 index, board.families, board.states, world.node_clock, board.wrap, world.link_unit
             )
@@ -137,17 +137,17 @@ def frame(board: Lattice, kept: dict[int, list[node.Record]] | None) -> dict[str
     return {**found, "shape": list(board.shape), "offset": list(board.offset), "lines": []}
 
 
-def copied(record: node.Record) -> node.Record:
+def copied(record: records.Record) -> records.Record:
     """A line's two levels copied, so the form is read from the interval's start after the step."""
-    return node.Record(record.now.copy(), record.before.copy(), record.remainder)
+    return records.Record(record.now.copy(), record.before.copy(), record.remainder)
 
 
-def grown(record: node.Record, board: Lattice) -> node.Record:
+def grown(record: records.Record, board: Lattice) -> records.Record:
     """A kept line over the lattice as the interval grew it (the layers a receding face added before this interval's acts, 0 at the interval's start), so the form is read at every Node of the frame."""
     for served, axis, side, layers in board.growths:
         if served == board.interval:
             now, before = (growth.padded(a, axis, side, layers) for a in (record.now, record.before))
-            record = node.Record(now, before, record.remainder)
+            record = records.Record(now, before, record.remainder)
     return record
 
 

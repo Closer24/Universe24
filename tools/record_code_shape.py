@@ -42,8 +42,10 @@ LOOP_PUBLIC = frozenset({"Lattice"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
-# Rule3's own lines (tests/test_rule3.py of the operation's cut names the same four)
+# Rule3's own lines, the flux line's and the arrivals form's (tests/test_rule3.py names the same)
 RULE_ARITHMETIC = (
+    r"mass \* now\b",
+    r"wall \* \(now \+ now - other\)",
     r"self_coefficient \* (now|before)\b",
     r"wall \* before\b",
     r"wall \* now \+ remainder",

@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, SIDES
-from event_universe.core.rule3 import NO_READ, division_forward, largest_below, rule3
+from event_universe.core.rule3 import Rule, division_forward, flux_total, largest_below, rule3
 
 SCALE_OF = (
     2  # the emission's reference scale, the count's wall times itself: its rounding below one level
@@ -53,9 +53,7 @@ def face_value(total: int, read: int) -> int:
 
 def presented(
     arrived: tuple[Any, ...],
-    reads: tuple[Any, ...],
-    self_coefficient: Any,
-    wall: Any,
+    rule: Rule,
     now: Any,
     other: Any,
     carry: Any,
@@ -63,11 +61,11 @@ def presented(
     offset: tuple[int, int, int],
     direction: int,
 ) -> tuple[Any, ...]:
-    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed from the arrivals, the Node's two levels and its remainder as the step reads them (`face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, the first Port from the preferred one whose read is not 0 at the Node, kept in the face; a Node with every read 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
+    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed at the Node from Rule3's flux line (`rule3.flux_total` with the face's arrival 0 among the six, the Node's two levels, its mass and its remainder as the step reads them; `face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, the first Port from the preferred one whose reach is not 0 at the Node, kept in the face; a Node with every reach 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
         at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
-        here = [int(np.asarray(read)[at]) if np.ndim(read) else int(read) for read in reads]
+        here = [int(np.asarray(read)[at]) if np.ndim(read) else int(read) for read in rule.reaches]
         if face.value is None:
             assert direction == 1, "a face is computed forward and presented again backward"
             ports = [p for p in [*range(face.port, len(here)), *range(face.port)] if here[p] != 0]
@@ -76,23 +74,26 @@ def presented(
                     f"the face at the Node {list(face.at)} finds every read 0: no open Link"
                 )
             face.port = ports[0]
-            coefficient = int(
-                np.asarray(self_coefficient)[at] if np.ndim(self_coefficient) else self_coefficient
+            level, wall = int(now[at]), int(rule.wall)
+            own = int(np.asarray(rule.mass)[at] if np.ndim(rule.mass) else rule.mass)
+            links = sum(
+                here[p] * (int(found[p][at]) - level) for p in range(len(here)) if p != face.port
             )
-            self_term = coefficient * int(now[at])
-            rest = -int(wall) * int(other[at]) + int(carry[at])
-            rest += sum(here[p] * int(found[p][at]) for p in range(len(here)) if p != face.port)
+            links -= here[face.port] * level  # the face's Link with its arrival 0
+            total = flux_total(links, own, wall, level, int(other[at])) + int(carry[at])
             target = 0  # the hole to 0, every face's target but the taper's
             if (
                 face.fraction is not None
             ):  # the front's taper: the fraction of Rule3's own level, toward 0
-                own = here[face.port] * int(found[face.port][at])  # the face Port's arrival untouched
-                own_level = int(division_forward(self_term + rest + own, int(wall), 0)[0])
+                untouched = here[face.port] * int(
+                    found[face.port][at]
+                )  # the face Port's arrival untouched
+                own_level = int(division_forward(total + untouched, wall, 0)[0])
                 scaled = int(division_forward(face.fraction[0] * abs(own_level), face.fraction[1], 0)[0])
                 target = (
                     scaled if own_level >= 0 else -scaled
                 )  # a level of size 1 goes to 0 at any fraction
-            face.value = face_value(self_term + rest - int(wall) * target, here[face.port])
+            face.value = face_value(total - wall * target, here[face.port])
         if face.port not in copied:
             found[face.port] = np.array(found[face.port], copy=True)
             copied.add(face.port)
@@ -196,8 +197,9 @@ def line_total(action: int, resonance: tuple[int, int]) -> int:
 def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> list[int]:
     """Rule3's rotation act (ALGEBRA.md #the-four-acts (b)) from the levels `first` and `second`: a_next = (doubled a_now + r) div unit - a_before with the remainder kept, `count` levels in all; unit cos(n theta) from (unit, doubled div 2) and unit sin(n theta) from (0, unit sin theta) at 2 unit cos theta = doubled."""
     levels, carry = [first, second], 0
+    mass = unit + unit - doubled  # the line's own term: Rule3's flux line with no Links
     while len(levels) < count:
-        following, carry = rule3(NO_READ, NO_READ, doubled, unit, levels[-1], levels[-2], carry)
+        following, carry = rule3(0, mass, unit, levels[-1], levels[-2], carry)
         levels.append(int(following))
     return levels[:count]
 

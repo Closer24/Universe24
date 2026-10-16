@@ -7,9 +7,9 @@ import numpy as np
 import pytest
 
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import coefficients, division_forward, rule3
+from event_universe.core.rule3 import coefficients, division_forward
 from event_universe.features.phase import K0, D, act, fold, half_wall, iterate, read, seed
-from tests.laws import refused
+from tests.laws import arrivals_rule3, refused
 
 GAMMA = 6_000
 WALL, COEFFICIENT = D(GAMMA), K0(GAMMA)
@@ -250,10 +250,10 @@ def chain_centroid_shift(conjugate: bool, intervals: int) -> tuple[float, float]
         self_re, self_im = LINK_UNIT * re_now, LINK_UNIT * im_now
         arrivals_re = (plus_re, minus_re, self_re, self_re, self_re, self_re)
         arrivals_im = (plus_im, minus_im, self_im, self_im, self_im, self_im)
-        re_next, carry_re = rule3(
+        re_next, carry_re = arrivals_rule3(
             reads, arrivals_re, self_coefficient, wall, re_now, re_before, carry_re
-        )
-        im_next, carry_im = rule3(
+        )  # the twelve reads of a turned plane, the law's first form on the two parts
+        im_next, carry_im = arrivals_rule3(
             reads, arrivals_im, self_coefficient, wall, im_now, im_before, carry_im
         )
         re_now, re_before, im_now, im_before = re_next, re_now, im_next, im_now

@@ -9,13 +9,15 @@ from scipy.sparse import diags, kronsum
 from scipy.sparse.linalg import spsolve
 
 import event_universe.world_files as world_files
-from event_universe import node
+from event_universe import node, readings, records
 from event_universe.bookings import booked_of
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients, division_forward
+from event_universe.core.rule3 import coefficients, division_forward, rule_integers
 from event_universe.features import phase
 from event_universe.features.start import scaled_source, unit_of
+from event_universe.flux import step_family as flux_step_family
+from event_universe.flux import step_line as flux_step_line
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import (
     amplitude_bound,
@@ -61,7 +63,8 @@ T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # th
 CHARGE, CHARGED, MATTER, BINDING = map(NAMES.index, ("charge", "charged", "matter", "binding"))
 LEVEL, SHAPE, VACUUM, KEYS = 100_000, (24, 1, 1), (GAMMA, (GAMMA,) * 3), ("now", "before", "remainder")
 OMEGA = math.acos(PAIR[0] / PAIR[1])  # the matter pair's rest rotation in the vacuum
-RULE, ZERO, SIZE = coefficients(*PAIR, GAMMA, GAMMA, GAMMA), np.zeros(SHAPE, dtype=np.int64), 5_000
+RULE = rule_integers(*PAIR, GAMMA, GAMMA, GAMMA)  # the reaches, S, w, the mass D
+ZERO, SIZE = np.zeros(SHAPE, dtype=np.int64), 5_000
 
 
 def band(k: float) -> float:
@@ -69,21 +72,23 @@ def band(k: float) -> float:
     return math.acos(PAIR[0] / (3 * PAIR[1]) * (math.cos(k) + 2))
 
 
-def wave(k: float, omega: float, sense: int = 1, size: int = LEVEL) -> list[node.Record]:
+def wave(k: float, omega: float, sense: int = 1, size: int = LEVEL) -> list[records.Record]:
     at = k * np.arange(SHAPE[0]).reshape(SHAPE)
     re, im = (np.rint(size * f(at)).astype(np.int64) for f in (np.cos, np.sin))
     re_before, im_before = (np.rint(size * f(at + omega)).astype(np.int64) for f in (np.cos, np.sin))
-    return [node.Record(re, re_before, ZERO), node.Record(sense * im, sense * im_before, ZERO)]
+    return [records.Record(re, re_before, ZERO), records.Record(sense * im, sense * im_before, ZERO)]
 
 
-START = int(node.wronskian(wave(0, OMEGA), True).sum(dtype=object))  # the uniform record's W on the ring
+START = int(
+    records.wronskian(wave(0, OMEGA), True).sum(dtype=object)
+)  # the uniform record's W on the ring
 
 
 def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
-    """A plane of the charged family on the ring stepped `steps` intervals in the turning universe at the vacuum's rule, the holder of the sign at the time level ramp[t + 1] with ramp[t] the previous interval's at the interval t (its two levels as the held write leaves them; under the temporal gauge the time level turns nothing at the Node, features/phase, the Link's phase pair standing at its seed here, no phase lines given) and its odd lines `links`, each Link's pair in the fold form from them (plane.link_pairs, the caller's as node.step_records computes it); then the same intervals back, the holder's levels stepped back by hand, every level and remainder returning bit for bit, asserted; returns the rotation rate at the Node 0 (the phase unwrapped) and the swings of the Wronskian read from the booking and of the plain one (the same numbers now, the bookings from the plain pair)."""
-    states = [node.empty_state(f, SHAPE, (), np.int64) for f in TURNING]
-    odd = [node.Record(level, level, ZERO) for level in links]  # the holder's odd lines, static
-    time = [node.Record(ramp[t + 1] + ZERO, ramp[t] + ZERO, ZERO) for t in range(steps + 1)]
+    """A plane of the charged family on the ring stepped `steps` intervals in the turning universe at the vacuum's rule, the holder of the sign at the time level ramp[t + 1] with ramp[t] the previous interval's at the interval t (its two levels as the held write leaves them; under the temporal gauge the time level turns nothing at the Node, features/phase, the Link's phase pair standing at its seed here, no phase lines given) and its odd lines `links`, each Link's pair in the fold form from them (plane.link_pairs, the caller's as flux.step_records computes it); then the same intervals back, the holder's levels stepped back by hand, every level and remainder returning bit for bit, asserted; returns the rotation rate at the Node 0 (the phase unwrapped) and the swings of the Wronskian read from the booking and of the plain one (the same numbers now, the bookings from the plain pair)."""
+    states = [records.empty_state(f, SHAPE, (), np.int64) for f in TURNING]
+    odd = [records.Record(level, level, ZERO) for level in links]  # the holder's odd lines, static
+    time = [records.Record(ramp[t + 1] + ZERO, ramp[t] + ZERO, ZERO) for t in range(steps + 1)]
     phases, swings, kept = [], [], []
     states[CHARGE].lines = [time[0], *odd]
     angles = node.turning(CHARGED, TURNING, states, 1)  # the sign's odd levels, static
@@ -92,21 +97,21 @@ def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
     for t in range(steps):
         states[CHARGE].lines, states[CHARGED].lines = [time[t], *odd], lines
         kept.append(np.array([getattr(r, k) for r in lines for k in KEYS]))
-        lines, (_first, second) = node.step_family(
+        lines, (_first, second) = flux_step_family(
             CHARGED, TURNING, states, RULE, RING, GAMMA, pairs=pairs
         )
         phases.append(math.atan2(int(lines[1].now[0, 0, 0]), int(lines[0].now[0, 0, 0])))
-        swings.append([int(node.wronskian(w, True).sum(dtype=object)) for w in (second, lines)])
+        swings.append([int(records.wronskian(w, True).sum(dtype=object)) for w in (second, lines)])
     for t in reversed(range(steps)):  # the inverse, the holder's own step back by hand beside it
         states[CHARGE].lines, states[CHARGED].lines = [time[t + 1], *odd], lines
-        lines = node.step_family(CHARGED, TURNING, states, RULE, RING, GAMMA, -1, pairs=pairs)[0]
+        lines = flux_step_family(CHARGED, TURNING, states, RULE, RING, GAMMA, -1, pairs=pairs)[0]
         states[CHARGE].lines = [time[t], *odd]
         assert np.array_equal(kept[t], [getattr(r, k) for r in lines for k in KEYS]), t
     return np.diff(np.unwrap(phases)).mean(), *(max(s) - min(s) for s in zip(*swings, strict=True))
 
 
 def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_path, monkeypatch):
-    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; the start sources the binding holder by the form the held write writes, so the held write's first write returns the start's rest within Rule3's rounding, two units at most at any Node; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at the six arrivals under the sign's pair with the phase at its own extreme, X sqrt 2 to the rounding (`derived.turned_room`; the time turn's shears and their slack gone with the time turn, features/phase: 7,591 on turning.json, the mathematician's number of 2026-10-09, against 5,961 under the time shear and 4,963 under the Link shears); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under a uniform time level L rotates at omega for L = 600, -600 and 0 alike (the temporal gauge: a uniform level does nothing, as a uniform potential does, the mathematician's item 6; the phase lives on the Link, test_part_c_phase_line), and the Wronskian read from the booking, the plain pair's, stands over 400 intervals within the rounding; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current its two x-Links' Wronskian currents summed unhalved, J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of 2 A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite exactly (the halving (J_x + 1) div 2 retired with the two hands' lines of 2026-10-09, the mean taken by the doubled wall; where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes its write weight k_w times w x that sum of each plane reader into its odd line a by the one write with one remainder over the doubled wall 2 E_s T, its time line's k_w x w x W over E_s T (node.write_sources with the sign currents as the axis booked, node.held_write_at; k_w 400 in turning.json; ALGEBRA.md row (b2)'s arithmetic, the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands): the plane wave at k = pi / 4 and the amplitude 5,000, the files' scale, writes its odd level over its time level at the law's 3 den v / num within the integers' rounding, v the band's group velocity at k (J_a = (6 den / num) W v exactly on a plane record), where over den T the odd level rounded to 0 at every Node and the engine's magnetic sector was absent; a real reader sources none of it, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its four walls E_s T on the time line and 2 E_s T on the odd lines against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act (light and the pair family, real lines, name no holder of the sign in their reads, and a real line naming one under the rotation is refused by name, tests/test_the_features.py). The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, names no holder of the sign and reads nothing of it. A laid packet on a sourced holder is kept (ENGINE.md section 3, the start): on the chain with a rotating body of the charged family, whose Wronskian sources the holder of the sign, and a packet of light laid on the holder's row, the holder's record at interval 0 is the laid packet plus a rest static under it, the same in the level now and the level before (the packet kept bit for bit), the rest the start lays with the packet's own form among the sources (light's form sources the rows of the content, so the rest the start lays on an empty line differs from it, the binding row's by a hump under the packet), that empty line's rest static and positive at the body's Nodes and the remainder the start's."""
+    """The count is the record's share in quanta over the wall 3 den T, read at the start within the law's tolerance of the declared count, every Node of the body carrying a quantum; the start sources the binding holder by the form the held write writes, so the held write's first write returns the start's rest within Rule3's rounding, two units at most at any Node; over a hundred intervals the share's total moves only by Rule3's own rounding (the books' drift, under a quantum per Node of the chain) and no quantum changes family, the quanta at the declared Nodes stay above 0 and the body's Nodes derived for a report are where its share stands; a declared count off the share beyond the rounding refuses the world by name. (a) Random pairs within a million turned at random tangent half-angles within 1 and turned back return bit for bit, the turned pair within two units of the real rotation by 2 arctan(n / w); a turned level is not within twice A (the audit's witness, #1583 B10: (-1, -1) at the tangent half-angle -1 / 4 turns to (-3, -1) at A = 1) but within 2 A + 3, exhaustively over small pairs and walls, and the turning universe's amplitude bound reads a turned record's rooms at the six arrivals under the sign's pair with the phase at its own extreme, X sqrt 2 to the rounding (`derived.turned_room`; the time turn's shears and their slack gone with the time turn, features/phase: 7,591 on turning.json, the mathematician's number of 2026-10-09, against 5,961 under the time shear and 4,963 under the Link shears); (b) at one Node of the matter pair in the vacuum, every Port folded, a record of positive Wronskian (z_before = z_now e^(i omega), clockwise) under a uniform time level L rotates at omega for L = 600, -600 and 0 alike (the temporal gauge: a uniform level does nothing, as a uniform potential does, the mathematician's item 6; the phase lives on the Link, test_part_c_phase_line), and the Wronskian read from the booking, the plain pair's, stands over 400 intervals within the rounding; (c) on a ring of 24 a plane wave at k = pi / 6 under the uniform odd level L_x rotates at the band's omega(k + theta_x) with tan(theta_x / 2) = L_x / (2 Gamma), the read through +x turned by the Link's angle and through -x by its opposite, and under -L_x at omega(k - theta_x); (d) the Wronskian's sign is the record's: the wave of either sense has W of that sign at every Node and keeps it over 100 plain intervals of Rule3 on both lines with one rule, and a real line has none; (e) a plane moving toward +x (z = A e^(i (k x - omega t)), positive Wronskian) has as its sign current its two x-Links' Wronskian currents summed unhalved, J_x = Im(conj(z_i) (z_(+x) - z_(-x))) = 2 A^2 sin k, above 0 at every Node and within the lay's rounding of 2 A^2 sin k, and J_y = J_z = 0, its conjugate, the opposite sense moving alike, the opposite exactly (the halving (J_x + 1) div 2 retired with the two hands' lines of 2026-10-09, the mean taken by the doubled wall; where the momentum density gave the two the same current; the owner's word of 2026-10-01, 17:17, on the two hands), and a real record, two equal real lines, 0; the holder of the sign under the rotation takes its write weight k_w times w x that sum of each plane reader into its odd line a by the one write with one remainder over the doubled wall 2 E_s T, its time line's k_w x w x W over E_s T (records.write_sources with the sign currents as the axis booked, node.held_write_at; k_w 400 in turning.json; ALGEBRA.md row (b2)'s arithmetic, the mathematician's 122 D, #1572 comment 5946560198, and the advisor's #1563 comment 5946186214, two hands): the plane wave at k = pi / 4 and the amplitude 5,000, the files' scale, writes its odd level over its time level at the law's 3 den v / num within the integers' rounding, v the band's group velocity at k (J_a = (6 den / num) W v exactly on a plane record), where over den T the odd level rounded to 0 at every Node and the engine's magnetic sector was absent; a real reader sources none of it, and the write back undoes it bit for bit. The act key of a held row: `rotation` on the holder of the sign gives it 1 + 3 lines, its record the time line, its four walls E_s T on the time line and 2 E_s T on the odd lines against the tensions' E_s x 3 den T, the plane turned by it (derived.turns) and matter, one part, reading it not at all; `pace` or no key keeps one line and the plain read; an act by another word, and the rotation asked of a holder of the content, are refused by name; the two gates' universe files declare no act (light and the pair family, real lines, name no holder of the sign in their reads, and a real line naming one under the rotation is refused by name, tests/test_the_features.py). The plain control of unlike senses (the dimension's table, ALGEBRA.md #a-familys-declaration): after one interval the two bodies carry the Wronskian of their senses at their Nodes, the holder's record (its one line, light's) stands at or above 0 at the first's Nodes and at or below 0 at the second's, not 0 in all; the plane reads the holder plainly, a level of 100 entering its content as 100 at every Node of both bodies, while matter, real parts of the same pair, names no holder of the sign and reads nothing of it. A laid packet on a sourced holder is kept (ENGINE.md section 3, the start): on the chain with a rotating body of the charged family, whose Wronskian sources the holder of the sign, and a packet of light laid on the holder's row, the holder's record at interval 0 is the laid packet plus a rest static under it, the same in the level now and the level before (the packet kept bit for bit), the rest the start lays with the packet's own form among the sources (light's form sources the rows of the content, so the rest the start lays on an empty line differs from it, the binding row's by a hump under the packet), that empty line's rest static and positive at the body's Nodes and the remainder the start's."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(world := chain_body_world(tmp_path, TOOL)))
     declared, quanta = board.mask(board.world.bodies[0].nodes), board.quanta(MATTER)[0]
@@ -137,7 +142,7 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     packet, light = board.world.packets[0], board.states[CHARGE].lines[0]
     now, before = board.board_array(packet.now), board.board_array(packet.before)
     for index in board.held:  # the start again on empty time lines: every held row's rest alone
-        board.states[index].lines[0] = node.empty_record(board.shape, board.kind)
+        board.states[index].lines[0] = records.empty_record(board.shape, board.kind)
     board.start()
     rest = board.states[CHARGE].lines[0]
     assert now.any() and not np.array_equal(now, before) and (rest.remainder == light.remainder).all()
@@ -179,24 +184,24 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     for sense in (1, -1):
         lines = wave(k, band(k), sense)
         for _ in range(100):
-            lines = [node.step(line, RULE, RING) for line in lines]
-            assert (np.sign(node.wronskian(lines, True)) == sense).all()
-    assert node.wronskian(lines[:1], False) == 0
-    flux = node.sense_current_of(plane := wave(k := math.pi / 4, band(k), size=SIZE), RING)
+            lines = [flux_step_line(line, RULE, RING) for line in lines]
+            assert (np.sign(records.wronskian(lines, True)) == sense).all()
+    assert records.wronskian(lines[:1], False) == 0
+    flux = readings.sense_current_of(plane := wave(k := math.pi / 4, band(k), size=SIZE), RING)
     assert np.abs(flux[0] - 2 * SIZE * SIZE * math.sin(k)).max() < 4 * SIZE  # J_x unhalved, 2 A^2 sin k
     assert (flux[0] > 0).all() and not flux[1].any() and not flux[2].any()
     assert not (
-        node.sense_current_of(wave(k, band(k), -1, SIZE), RING)[0] + flux[0]
+        readings.sense_current_of(wave(k, band(k), -1, SIZE), RING)[0] + flux[0]
     ).any()  # odd exactly
-    assert not any(part.any() for part in node.sense_current_of([plane[0], plane[0]], RING))
+    assert not any(part.any() for part in readings.sense_current_of([plane[0], plane[0]], RING))
     own, write = (CHARGED, 0), held_write_of(TURNING, CHARGE, T)  # the plane's one record owns the row 1
-    sign = {own: node.wronskian(plane, True)}
-    sources = node.write_sources(CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA)
+    sign = {own: records.wronskian(plane, True)}
+    sources = records.write_sources(CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA)
     assert np.array_equal(sources[4], TURNING[CHARGE].write * sign[own]) and not sources[6].any()
     assert np.array_equal(
         sources[5], TURNING[CHARGE].write * flux[0]
     )  # k_w x w x J_x at w = 1, unhalved
-    held = node.empty_state(TURNING[CHARGE], SHAPE, write.walls, np.int64)
+    held = records.empty_state(TURNING[CHARGE], SHAPE, write.walls, np.int64)
     lines, remainders = node.held_write_at(held.lines, sources, write.walls, held.write_remainders)
     assert (
         write.walls == (100 * T, *(200 * T,) * 3) * 2
@@ -272,13 +277,15 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     assert abs(quantum - T // 2) <= 2 * amplitude
     time_lines = [board.states[charge].lines[4 * row].now for row in range(3)]  # the rows at the start
     for record, (x, sense) in enumerate(((3, 1), (6, -1))):
-        wronskian = node.wronskian(board.lines_of(charged, record), True)
+        wronskian = records.wronskian(board.lines_of(charged, record), True)
         assert int(wronskian[x, 0, 0]) == sense * quantum and int(np.count_nonzero(wronskian)) == 1
         own = sense * time_lines[record + 1]  # the row's rest at the start, of its own record's sense
         assert (own >= 0).all() and own[x, 0, 0] > 0
     assert not time_lines[0].any()  # the free row: nothing sources it and no light is laid
-    rule = coefficients(6000, 6000, GAMMA, GAMMA, GAMMA, None, board.unit)  # the vacuum's rule
-    empty = node.empty_record(board.shape, board.kind)
+    rule = rule_integers(
+        6000, 6000, GAMMA, GAMMA, GAMMA, None, board.unit
+    )  # the vacuum's rule, the mass 0
+    empty = records.empty_record(board.shape, board.kind)
     for _ in range(3):
         states, lines = board.states, list(board.states[charge].lines)
         remainders = [r.copy() for r in states[charge].write_remainders]
@@ -288,15 +295,17 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
             turn = node.turning(charged, families, states, 1, record)
             assert np.array_equal(turn[0], lines[other].now) and lines[4 * (record + 1)].now.any()
             assert all(np.array_equal(a, lines[other + 1 + axis].now) for axis, a in enumerate(turn[1]))
-            blank = [*states[:charge], node.NodeState(list(lines), remainders), *states[charge + 1 :]]
+            blank = [*states[:charge], records.NodeState(list(lines), remainders), *states[charge + 1 :]]
             blank[charge].lines[4 * (record + 1) : 4 * (record + 2)] = [empty] * 4  # the own row zeroed
             zeroed = node.turning(charged, families, blank, 1, record)
             assert np.array_equal(zeroed[0], turn[0])  # the self-read 0 to the bit
             assert all(np.array_equal(a, b) for a, b in zip(zeroed[1], turn[1], strict=True))
         board.step()
         for record in (0, 1):
-            line, own = 4 * (record + 1), node.wronskian(bookings[record][1], True)
-            expected = node.step(lines[line], rule, board.wrap).now + (k_w * own + remainders[line]) // T
+            line, own = 4 * (record + 1), records.wronskian(bookings[record][1], True)
+            expected = (
+                flux_step_line(lines[line], rule, board.wrap).now + (k_w * own + remainders[line]) // T
+            )
             assert np.array_equal(board.states[charge].lines[line].now, expected), (
                 board.interval,
                 record,

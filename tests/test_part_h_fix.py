@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from event_universe import emission, node, twist, world_files
+from event_universe import emission, node, readings, records, twist, world_files
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.features import phase
@@ -140,9 +140,9 @@ def test_a_region_taker_names_the_source_and_folds_nothing(tmp_path, monkeypatch
     read = {}
     for _ in range(RUN):
         board.step()
-        read[board.interval] = node.momentum_of(weight, board.lines_of(atom, giver.record), board.wrap)[
-            0
-        ]
+        read[board.interval] = readings.momentum_of(
+            weight, board.lines_of(atom, giver.record), board.wrap
+        )[0]
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     region = [c for c in credits if c["node_detector"] == "counter"]
     assert len(region) == 1 and region[0]["family"] == "pulse"
@@ -179,12 +179,12 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
     gamma = board.world.node_clock
     level = np.arange(COULOMB_CHAIN).reshape(board.shape).astype(board.kind)
     line = board.states[charge].lines[0]
-    board.states[charge].lines[0] = node.Record(level, level.copy(), line.remainder)
+    board.states[charge].lines[0] = records.Record(level, level.copy(), line.remainder)
     found = {}
     for content in (0, 600):
         row = board.states[gravity].lines[0]
         uniform = np.full(board.shape, content, dtype=board.kind)
-        board.states[gravity].lines[0] = node.Record(uniform, uniform.copy(), row.remainder)
+        board.states[gravity].lines[0] = records.Record(uniform, uniform.copy(), row.remainder)
         rows = node.phased(charge, board.families, board.states, 1, board.wrap, gamma)
         angles = node.turning(charged, board.families, board.states, 1, 0)
         assert angles is not None
