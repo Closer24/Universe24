@@ -20,7 +20,9 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 - [Further research](https://closer24.github.io/Universe24/docs/FURTHER_RESEARCH.md): every open thing by name, what nature shows, what the law has, what is missing, where to start and, where a local study exists, what was checked locally on 2026-10-17
 - [Follow-up papers](https://closer24.github.io/Universe24/docs/FOLLOW_UP_PAPERS.md): the papers the project proposes next, from the careful to the bold, each with its one question, what the project has in the law's status words, and the run or derivation it needs
 - [The engine](https://closer24.github.io/Universe24/docs/ENGINE.md): the words, the main loop and Rule3 in the law's flux form (2.1.0), the files, the output, the gates, how to run a world, the known issues and the open items
-- [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks
+- [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks, how to report an error or a failed reproduction
+- [The claims map](https://closer24.github.io/Universe24/docs/CLAIMS.md): every theorem, identity and quantitative claim of the proofs' inventory as one row, its place, statement, ground, kind, verdict and the function that checks it, generated from the proofs inventory
+- [Errata](https://closer24.github.io/Universe24/docs/ERRATA.md): the findings in the text and what was done about them, with the commits and the versions of record
 - [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 2.1.0 the step in the law's flux form, 2.0.0 the engine V2 against 1.1.0, the paper's engine
 
 ## The code
