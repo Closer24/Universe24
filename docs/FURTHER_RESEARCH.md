@@ -1,6 +1,6 @@
-# What is still to be researched
+# Further research
 
-This file names every open thing the project has named, in plain words, for a researcher to take; each entry gives what nature shows, what the law has in its own status words, what is missing and where to start. The law's words are defined in the README's section [The words, from the law](../README.md#the-words-from-the-law); a pointer is a bold line name of [the law](ALGEBRA.md) with its section on first use, "item N" an item of [what is open](ALGEBRA.md#what-is-open), and B.9 the claims list of Online Resource 1.
+This file is the project's further research: every open thing the project has named, in plain words, for a researcher to take; each entry gives what nature shows, what the law has in its own status words, what is missing, where to start, and, where a local study exists, what was checked locally on 2026-10-17 with its numbers. The law's words are defined in the README's section [The words, from the law](../README.md#the-words-from-the-law); a pointer is a bold line name of [the law](ALGEBRA.md) with its section on first use, "item N" an item of [what is open](ALGEBRA.md#what-is-open), and B.9 the claims list of Online Resource 1.
 
 ## Matter and the atom
 
