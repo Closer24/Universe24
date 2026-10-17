@@ -89,6 +89,7 @@ order test, the general read with Link factors, the integer witnesses).
 | `proofs_bodies.py` | the bodies | the stable body theorem, the functional's gradient, the adiabatic invariant, the slow limit, the resonances, the budget, the two-mode line, the atom and the nucleus |
 | `proofs_audit.py` | the audit | Theorem 4's exponent, the monopole, the band's reality, the Link phase gauge, the beat's mean, the orientation coefficient, (d')'s remainder |
 | `proofs_far_regime.py` | the far ends | every claim that says for all, exactly, at every step, in the limit or to O(...), computed at the far end of its stated domain; the heads' new claims (the massless row's double roots, light's stress at finite k, the division act's stop, the shears' angle) |
+| `proofs_lines_2026_10_17.py` | the law's lines of 2026-10-17 | the bilinears of one pair and the planes' Gram determinant, the charge of a plane bounded by its share mode by mode, the Ports' three readings, the staggering to the bit, the quarter turn of a two-plane record and the 48 lifts of the 24 rotations, 8 in integers, the exact bands' integer rotations, the closed shell's Hartree-Fock identity |
 
 The gate, `tests/test_proofs_check_the_law.py`: every row with a check runs
 to its verdict (`holds` and `witness only` True, `finding` False, the

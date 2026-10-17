@@ -18,7 +18,7 @@
    "head": "d7e976743f45c00ad705dbd01d5a911498caf03d",
    "first_read": "2836519e"
   },
-  "heads": "every statement is quoted at the head named; where the text moved between the first read and the head (the audit's corrections 5f5df82b and 9775922e, the convention rows d7e97674, fill 17's pushes seven and eight on main), the row's note names both",
+  "heads": "every statement is quoted at the head named; where the text moved between the first read and the head (the audit's corrections 5f5df82b and 9775922e, the convention rows d7e97674, fill 17's pushes seven and eight on main), the row's note names both; the rows L86 to L93, the law's lines of 2026-10-17, are quoted at b254f4d2, named in their place",
   "ids": "A the audit's ten items, L the law's and the supplement's lines, R the far-regime rows and the heads' new claims, F the rows raised as findings at the first read (the verdict is against the head), N the rows with no check",
   "kinds": {
    "A": "an exact identity, polynomial or trigonometric in the law's integers, checked exactly in Python's integers, Fractions and Gaussian rationals at random rational witnesses with the symmetric cases forced (a trigonometric identity at the Pythagorean rational points of the circle is a polynomial identity), or a derivative identity by the centred difference's order 2",
@@ -36,15 +36,15 @@
   "far_regime_witnesses": "a row with the field far_regime_witness carries the claim's quantity at the far end of its stated domain beside the claim's value (the owner's order of 08:20 UTC)",
   "checks": "tools/derivations/proofs_<module>.py, each check a function check_<name>() returning (held, computed); proofs_ground.py the shared ground, rule3.py the one Rule3; `python tools/derivations/proofs_<module>.py` prints the module's verdicts; tests/test_proofs_check_the_law.py runs every row's check to its verdict",
   "counts": {
-   "rows": 136,
+   "rows": 144,
    "by_kind": {
-    "A": 95,
+    "A": 103,
     "B": 22,
     "C": 12,
     "D": 7
    },
    "by_verdict": {
-    "holds": 111,
+    "holds": 119,
     "witness only": 2,
     "none": 17,
     "finding": 6
@@ -1325,6 +1325,118 @@
    "check": null,
    "verdict": "none",
    "note": "No numerical witness is printed; a machine check would be a proof assistant's."
+  },
+  {
+   "id": "L86",
+   "name": "The bilinears of one pair",
+   "place": "ALGEBRA.md at b254f4d2, The conserved form (The bilinears of one pair)",
+   "statement": "Two solutions u, v of one line conserve Omega(u, v) = SUM_i (u_now v_before - v_now u_before) / p_i^2 and E polarised over them, exactly in the rationals at fixed paces, in integers to the carried remainders, as W = Omega(re, im); n lines carry n^2 such numbers, the dimension declaring the record's; a line of another pair conserves none with them; three planes of one pair carry u(3), the trace the record's W, eight traceless numbers no holder reads.",
+   "ground": "D M symmetric at the law's weights 1 / p_i^2: Omega and the polarised form exact in Fractions on four boards at random clocks and Link factors read the same from both ends, six lines (the zero line among them), the 36 bilinears, five pairs with the symmetric ones forced; the integer step's walk of Omega the remainders' term SUM_i (epsilon_u v_now - epsilon_v u_now) / p_i^2 exactly; a line stepped by [3, 4] beside the record's pair moving every cross number; the Hermitian 3 x 3 of three planes conserved, its trace the weighted W; the contrast, the clock's weight 1 / p_0^2 moving the cross Omega",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_bilinears_of_one_pair"
+   },
+   "verdict": "holds",
+   "note": "The law's own witness run of 2026-10-17 (a periodic chain of 40 at [2, 3], 200 rational and 2,000 integer intervals) is not repeated; the identity is checked exactly at random witnesses, the integer clause as the exact walk."
+  },
+  {
+   "id": "L87",
+   "name": "The Gram determinant of the planes",
+   "place": "ALGEBRA.md at b254f4d2, The count is the record's share (The Gram determinant of the planes)",
+   "statement": "For n planes of one pair K_ab, E polarised over the planes a and b, is their Gram matrix, positive definite for a gapped family: its trace the record's share, its rank the independent planes' number, det K 0 exactly when they are dependent. Identical planes step bit-identically, det K = 0 exactly in integers; a plane laid as two others' sum departs by its remainders, its eigenvalue 10^-3 to 10^-5 of the trace. Neither the step nor the credit reads it.",
+   "ground": "the real polarisation of E over the planes' two lines at the vacuum's coefficients, anchored to rule3.conserved_form; Sylvester's minors and the rank by elimination in Fractions on four boards and five pairs, the dependent lays (identical planes, a sum, a rational combination) before and after the step, and the massless contrast (light's static uniform plane, E = 0, det K = 0 with independent planes); rule3.step on the chain of 221 at [4000, 6000], two bit-identical planes and the plane laid as two overlapping packets' sum, the smallest eigenvalue over the trace after five intervals at the lay amplitudes 30 and 100 (6.5 x 10^-4 and 7.4 x 10^-5)",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_gram_determinant_of_the_planes"
+   },
+   "verdict": "holds",
+   "note": "The credit's count of a coincident pair as two quanta and the inflow matrix at the close are the engine's readings of 2026-10-17 (the chain of 221), not checked here; the eigenvalue's range 10^-3 to 10^-5 is recomputed on the law's step at the amplitudes named and falls inside it."
+  },
+  {
+   "id": "L88",
+   "name": "The charge of a plane is bounded by its share",
+   "place": "ALGEBRA.md at b254f4d2, The paces (The charge of a plane is bounded by its share); The third and the colours, closed as absent",
+   "statement": "A plane at fixed paces has |W| <= I / 2, I the invariant: D M is self-adjoint in the D metric, form and Wronskian split over its eigenmodes, each mode a 2 x 2 Cauchy-Schwarz of determinant sin^2 omega_k; exact at fixed paces (the vacuum by Parseval, a static well by its modes), a reading under moving paces, in integers to the remainders' walk. A record has |W| <= count x T / 2, with the count read at the record's own rotation (in a well the vacuum's unit reads the factor sin omega_0 / sin omega_b, the two units of a quantum, The click writes on the lattice), equality iff every plane is circular and of one sense: |q_p| = |q_e| is the one-sense case (16,384 = T / 2 per quantum on the engine), the fractions (2, 2, -1) / 3 give 3 / 5 of the unit at count 1 or count 5 / 3 at the unit.",
+   "ground": "Lagrange's identity W_k^2 sin^2 omega_k = q_k(re) q_k(im) - <re, im>_k^2 per mode with the arithmetic mean's bound, exact in Fractions: the one-Node line at the Pythagorean pairs [3, 5] to [24, 25], its rotation from rule3.coefficients, circular planes of either sense built at rational angles (equality), elliptical, real and zero planes (strict), records of several planes (equality iff all circular and of one sense); the Fourier modes of the vacuum's boxes of extents 1, 2 and 4 (Parseval) and the two-Node well at Gamma = 3, [5, 9], the clocks 1 and 2, with rational D-orthogonal modes, the split and the per-mode identity exact and the summed bound in floats; the fractions' arithmetic and T / 2 at T = 32,768",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_charge_of_a_plane_is_bounded_by_its_share"
+   },
+   "verdict": "holds",
+   "note": "The integer clause, the Wronskian's walk by the remainders, is row L25 and not restated; the reading under moving paces is a reading, not a check; 16,384 = T / 2 per quantum is the engine's reading of 2026-10-17 on the one-Node ring (the one-sense lay, W per piece 16,384 at every read; the charged lay 9,713 = 0.5928 T / 2), not this check's arithmetic; the record clause |W| <= count x T / 2 is covered as several planes at one Node (the records of two planes, equality iff both circular and of one sense) plus the arithmetic 16,384 = 32,768 / 2."
+  },
+  {
+   "id": "L89",
+   "name": "The Ports' three readings",
+   "place": "ALGEBRA.md at b254f4d2, The click is the meeting (The Ports' three readings)",
+   "statement": "Under the 48 a Node's six arrivals split into their sum, the quadrupole pair and the three signed differences along the axes; Rule3's numerator SUM_a R_a (arr(+a) + arr(-a)) is even in every axis, so the step reads the sum alone at uniform paces, the sum and the pair where the Link paces differ by axis, the differences never (2,000 trials per pair on the law's step); the click's inflow is the sum over the region's front Ports and the lattice momentum the differences; the quadrupole pair no line reads. A traceless symmetric tensor splits into its diagonal pair and its three off-diagonal parts, and the law's tensions and paces are diagonal: the static read's + and no x.",
+   "ground": "the 48 signed permutations on the six Ports in integers, the three pieces orthogonal, invariant under the 48 and rebuilding the arrivals, 1 + 2 + 3 = 6; rule3.numerator and rule3.step at random arrivals, 2,000 trials per pair at eight pairs, at uniform and at by-axis Link paces, the pair's read (R_x - R_y) delta; the inflow and the momentum density from rule3.link_current at random neighbours; the tensor's count 5 = 2 + 3 and the read's one coefficient per axis",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_ports_three_readings"
+   },
+   "verdict": "holds",
+   "note": "The engine's 300 trials and the two slits' 159 click lines and 1,120 readings are runs of the engine, not repeated here."
+  },
+  {
+   "id": "L90",
+   "name": "The staggering is exact",
+   "place": "ALGEBRA.md at b254f4d2, A family's declaration (The staggering is exact)",
+   "statement": "b = (-1)^(x + y + z) a signs every arrival against its Node, so b obeys the line with R_a -> -R_a and S unchanged, [-num, den]'s line at the vacuum's S = 0; with the odd Nodes' levels negated and remainders complemented, w - 1 - r, the floor commutes exactly, so in the vacuum a record of [1, 2] and one of [-1, 2] are one record read on the two sublattices with opposite signs, bit for bit (4 x 4 x 4, 60 intervals; 18 of 64 Nodes break without the complement, 63 of 64 in a content with S / w = 0.02). The space-time (-1)^(t + x + y + z) maps a pair's line to itself with S -> -S, exact in the rationals, not in integers (no remainder alternates its sign with the interval).",
+   "ground": "the signed line exact in Fractions at random clocks and Link factors on boxes of even extents, four pairs; rule3.coefficients at [num, den] and [-num, den], equal but for the sign of R at the vacuum and apart by 24 num (p_a^2 - p_0^2) in S in a content; rule3.step on the 4 x 4 x 4 box over 60 intervals at random levels and remainders, with the complement (0 Nodes broken), without it (27 of 64 at the first interval) and in the content c = 20 of Gamma = 6,000 with S / w = 0.0199 (64 of 64); the space-time sign in Fractions, and in integers the Nodes departing by the second interval with and without the complement",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_staggering_is_exact"
+   },
+   "verdict": "holds",
+   "note": "The counts 18 of 64 and 63 of 64 are the law's lay's; this lay's counts stand in the computed object, 27 and 64."
+  },
+  {
+   "id": "L91",
+   "name": "The quarter turn of a two-plane record",
+   "place": "ALGEBRA.md at b254f4d2, The direction (The quarter turn of a two-plane record)",
+   "statement": "A two-plane record whose axis vector turns as a vector needs its planes mixed: the quarter turn about z is diag(1, i) up to the common phase e^(-i pi / 4), plane 2's (re, im) -> (-im, re), exact to the bit with the negated line's remainder complemented (40 intervals); the turn about x needs a halving, exact in the rationals alone (210 of 500 Node-lines off). Up to a common phase 8 lifts are exact in integers (one axis's dihedral group), 16 need a halving, none 1 / sqrt 2.",
+   "ground": "the 48 unit quaternions of the cube's rotations as Pauli matrices in Gaussian integers over the scales 1, sqrt 2 and 2, each turning the three Pauli axes as a signed permutation of determinant 1 exactly, classified by its entries' moduli and ratios (8, 16, 0); rule3.step on the 4 x 4 x 2 box over 40 intervals at [2, 3] and [4000, 6000] with the z turn's Node map and the complement, bit for bit; the x turn on the 5 x 5 x 5 box in Fractions, exact, its half-integer Node-lines counted (228 of 500)",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_quarter_turn_of_a_two_plane_record"
+   },
+   "verdict": "holds",
+   "note": "Whether the common phase is a ray's freedom or a line of the lay is the law's open decision, not a check; the 210 of 500 is the law's lay's count, this lay's 228 in the computed object."
+  },
+  {
+   "id": "L92",
+   "name": "The exact bands: the integer rotations",
+   "place": "ALGEBRA.md at b254f4d2, A family's declaration (The exact bands)",
+   "statement": "Three lines of [-1, 2] laid as the third's phases (1000, -500, -500) turn by the 3-cycle (L_0, L_1, L_2) -> (L_2, L_0, L_1) with remainder 0, three lines of [1, 2] by the signed 3-cycle (-L_2, L_0, L_1), a plane of [0, 1] by (re, im) -> (-im, re), to the bit (30 intervals); the lines' 3-cycle is the uniform lay's identity and no act of the step (a random lay differs from it at 374 of 375 Node-lines), the cube's C3 commuting with the step on every lay: one group of order 3, two actions, the lines' cycle a Cartan element of SU(3) and not its centre.",
+   "ground": "rule3.step at the vacuum on the 2 x 2 x 2 box over 30 intervals for the three exact pairs, the lines laid as s(t - m) on the period's phases, the remainders 0 throughout; a random lay of three lines on the 5 x 5 x 5 box against the cycle (375 of 375 Node-lines off); the body diagonal's C3 on the 5 x 5 x 5 box against rule3.step with random levels and remainders at [-1, 2] and [2, 3], its order 3; the cycle's matrix in integers, P^3 = I, det P = 1, the characteristic polynomial x^3 - 1, no scalar",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_exact_bands_integer_rotations"
+   },
+   "verdict": "holds",
+   "note": "The three exact rotations themselves are row L07; the 374 of 375 is the law's lay's count, this lay's 375 in the computed object."
+  },
+  {
+   "id": "L93",
+   "name": "The nucleon is a compact body of its family: the Hartree-Fock identity",
+   "place": "ALGEBRA.md at b254f4d2, The hypotheses under their own names (The nucleon is a compact body of its family)",
+   "statement": "Helium in the mean field without exchange -2.8617 against -2.9037 hartree (1.4 percent), the Hartree-Fock number itself: in the 1s^2 singlet the opposite-spin exchange vanishes and the self-exchange cancels the self-Hartree that No record reads its own write of the sign removes, so the 1.4 percent is the correlation alone, the two-position amplitude no board of one-position records holds.",
+   "ground": "the two-electron determinant's expectation of a symmetric interaction summed over positions and spins exactly in Fractions at random orbitals and kernels, twelve cases: J / N^2 for the singlet of one orbital, equal to (2 J - K) / N^2 with K = J and to the mean field in which each electron reads the other's cloud alone, apart from the self-read mean field 2 J / N^2 by J / N^2; two orbitals of parallel spin carrying -K_ab and of opposite spin none, the same-orbital parallel pair the zero state; the percent from the two printed energies",
+   "kind": "A",
+   "check": {
+    "module": "tools/derivations/proofs_lines_2026_10_17.py",
+    "function": "check_the_hartree_fock_identity_of_the_closed_shell"
+   },
+   "verdict": "holds",
+   "note": "The two energies are the quantum-chemical calculations' numbers, taken as input; the percent is recomputed, 1.45."
   },
   {
    "id": "R01",
