@@ -26,7 +26,7 @@ Careful: it extends a published run with the law's own derivations.
 ## 4. The bilinears of one pair and the dimension as a declaration
 
 Question: what does Rule3 conserve for n lines of one pair, and what is a family's dimension?
-Has: all n^2 bilinears conserved exactly in the rationals, Omega antisymmetric and E symmetric, and a line of another pair conserving none with them, so one record's planes share one pair (**The bilinears of one pair**, derived). The U(n) mixes, one plane the charge, two an axis vector, three eight traceless numbers read by no holder (the same line); the dimension declaring which numbers are the record's.
+Has: all n^2 bilinears conserved exactly in the rationals, Omega antisymmetric and E symmetric, and a line of another pair conserving none with them, so one record's planes share one pair (**The bilinears of one pair**, a theorem of the law). The U(n) mixes, one plane the charge, two an axis vector, three eight traceless numbers read by no holder (the same line); the dimension declaring which numbers are the record's.
 Would show: the proofs, the engine check, the blind telling one family of three planes (one click) from three families.
 Careful with one bold edge: U(1), SU(2), SU(3) by name from the dimensions 2, 4, 6, and the content not nature's (chirality, flavour, no reader of the eight).
 
@@ -54,8 +54,8 @@ Bold: if the blind held, spin one half and the fine structure would come from tw
 ## 8. Pauli read through clicks
 
 Question: can exclusion be a rule of the detector's books with the board untouched?
-Has: "Pauli's exclusion has no line"; the parked exclusivity algebra anticoincidence, not Pauli. The determinant det K is zero iff the planes are dependent, the Slater determinant's norm from one-position planes (derived, **The Gram determinant of the planes**; exact in integers for identical planes). On the engine two planes in one orbital credited 2 by the law, 0 by the antisymmetric reading, two orbitals 2 by both; the rank cap crediting (a, b, a) 2 against the law's 3, the cap per part filling [1, 2, 2] (checked locally).
-Would run: the declaration, cap or rank; the [2, 4] record's 1s^2 count and a third piece's refusal written first.
+Has: "Pauli's exclusion has no line"; the parked exclusivity algebra anticoincidence, not Pauli. The determinant det K is zero iff the planes are dependent, the Slater determinant's norm from one-position planes (theorem, **The Gram determinant of the planes**; exact in integers for identical planes). On the engine two planes in one orbital credited 2 by the law, 0 by the antisymmetric reading, two orbitals 2 by both; the rank cap crediting (a, b, a) 2 against the law's 3, the cap per part filling [1, 2, 2] (checked locally).
+Would run: the declaration, the rank at the credit with the cap per part as its booked form; the [2, 4] record's 1s^2 count and a third piece's refusal written first.
 Bold: if it held, two per spin-orbital and the capacities 2, 8, 18, 32 would be the click's on Hartree's levels; honest, a declared rule, not a derivation: no energies, no Hund, no correlation.
 
 ## 9. The quarks as the parts of one record
