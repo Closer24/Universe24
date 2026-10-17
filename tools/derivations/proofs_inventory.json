@@ -1714,7 +1714,7 @@
    "id": "F06",
    "name": "The momentum identity at non-uniform paces as printed",
    "place": "Universe24_Paper.tex 4.3",
-   "statement": "As printed: at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings. Computed, the clause's residual on a 5-box is of the size of the identity's terms; the exact identity is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i, whose extra terms against Eq. (7) are the differences of the reading Node's coefficients along the momentum's axis, [R_b(i + a) - R_b(i)] and [S_(i + a) - S_i], times the levels; the share's identity gains nothing (row L30).",
+   "statement": "As printed: at non-uniform static paces Eq. (7) gains the Link-wise differences of the coefficients, [R_b(i) - R_b(i - b)] times the stress readings. Computed, the clause's residual on a 5-box is of the size of the identity's terms; the exact identity is w [P_a(t + 1) - P_a(t)] = -Y_i Delta_a now_i + now_i Delta_a Y_i, whose extra terms against Eq. (7) are, times the levels' products, the differences [S_(i + a) - S_i] along the momentum's axis and, for every Link direction b, [R_b(i + a) - R_b(i +- e_b)], along the axis for b = a and between the axis neighbour and the transverse neighbours for b != a, the transverse part of the size of the axial one; the share's identity gains nothing (row L30).",
    "ground": "exact fractions on a periodic 5-box with per-Node coefficients",
    "kind": "A",
    "check": {
