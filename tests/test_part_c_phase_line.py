@@ -1,4 +1,4 @@
-"""Part C, the time turn replaced by the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
+"""Part C, the time turn replaced by the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the record's run and its mirror's each its own test, the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
 
 import hashlib
 import json
@@ -88,18 +88,32 @@ def arrays(board: Lattice) -> list[np.ndarray]:
 
 
 def test_the_coulomb_run_on_the_engine_moves_the_centroid_by_the_hands_count(tmp_path, monkeypatch):
-    """(1) The Coulomb run through `Lattice.step`: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280 and its conjugate about the mirror Node 119; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83 and +150.90) within 2 percent, and the conjugate's mirrors it (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity)."""
+    """(1a) The Coulomb run through `Lattice.step`: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83) within 2 percent (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity); the conjugate's run is (1b), its own test, so that each run of 2,500 intervals stays under the suite's bound of 30 seconds on CI's clock."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
     assert oracle["intervals"] == 2_500
     record = coulomb_shift(tmp_path, False, oracle["intervals"])
-    mirror = coulomb_shift(tmp_path, True, oracle["intervals"])
     tolerance = 0.02 * abs(oracle["record"])
     assert abs(record - oracle["record"]) <= tolerance, (record, oracle["record"], tolerance)
-    assert abs(mirror - oracle["conjugate"]) <= tolerance, (mirror, oracle["conjugate"], tolerance)
-    assert abs(record + mirror) <= tolerance and abs(record + 151.20) <= tolerance
+    assert abs(record + 151.20) <= tolerance, record
     print(
-        f"2,500 intervals: the record's centroid shift {record:+.2f} Nodes (the time turn's oracle {oracle['record']:+.2f}, the hands -151.20), the conjugate's {mirror:+.2f} ({oracle['conjugate']:+.2f}, +151.20); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
+        f"2,500 intervals: the record's centroid shift {record:+.2f} Nodes (the time turn's oracle {oracle['record']:+.2f}, the hands -151.20); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
+    )
+
+
+def test_the_coulomb_runs_mirror_moves_the_centroid_the_other_way_by_the_hands_count(
+    tmp_path, monkeypatch
+):
+    """(1b) The Coulomb run's mirror through `Lattice.step`: the world of (1a) with the conjugate packet (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals its centroid moves the other way by the hands' count (+151.20; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: +150.90, the record's -150.83 reversed to within 0.07 Nodes) within the same 2 percent of the oracle's record, the mirror the record's negative stated against the hands' count with the sign reversed (one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions); its own test, so that each run of 2,500 intervals stays under the suite's bound of 30 seconds on CI's clock."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
+    assert oracle["intervals"] == 2_500
+    mirror = coulomb_shift(tmp_path, True, oracle["intervals"])
+    tolerance = 0.02 * abs(oracle["record"])
+    assert abs(mirror - oracle["conjugate"]) <= tolerance, (mirror, oracle["conjugate"], tolerance)
+    assert abs(mirror - 151.20) <= tolerance, mirror
+    print(
+        f"2,500 intervals: the mirror's centroid shift {mirror:+.2f} Nodes (the time turn's oracle {oracle['conjugate']:+.2f}, the hands +151.20); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
     )
 
 
