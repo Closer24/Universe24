@@ -8,8 +8,9 @@ and the git history, and the findings with their states in the reviewer's ledger
 in the repository. What the decisions govern is one line of whole-number arithmetic,
 Rule3, on a cubic lattice of Nodes, written in the law's flux form, carrying no
 bound of its own, its tick the count of rounds that no Node reads, and read only
-through the clicks of NodeDetectors. The project's three documents are [docs/ALGEBRA.md](ALGEBRA.md), the law,
-[docs/ENGINE.md](ENGINE.md), the engine, and this one, the decisions. Where a line
+through the clicks of NodeDetectors. The project's four documents are [docs/ALGEBRA.md](ALGEBRA.md), the law,
+[docs/ENGINE.md](ENGINE.md), the engine, [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md), the
+further research, and this one, the decisions. Where a line
 points at the law, the law's line governs and no formula is restated here.
 
 ## The engine
@@ -70,6 +71,8 @@ points at the law, the law's line governs and no formula is restated here.
 - HIGHLIGHTS is the decisions in force, one line each, no diary; the narrative lives in the issues and the git history and the findings' states in the reviewer's ledger in the repository; nothing is a decision until it is a line here.
 - A change to a document replaces what it touches and deletes what no longer holds in the same pull request; the documents are English and ASCII, simple and precise, every symbol named at its first use.
 - Every proof of the law and the supplement is checked by a machine where a machine can check it: an inventory first of every line called a theorem, an identity, exact or derived, with its statement, its ground and the check it admits (an exact symbolic identity, a series expansion with its order, or a hand proof with a numerical witness only), then the checks as pure Python under the tools with a gate test and a ratchet that only falls, read by both hands at their sha; a check replaces a hand with a machine and changes no claim.
+- A finding changes no engine: what a local study finds of the engine enters ENGINE.md section 10 as a note, the engine untouched until a law line and its pull request; a sentence closed by a theorem enters the law as its bold line; an open thing goes by name, with where to start, to docs/FURTHER_RESEARCH.md, which holds nothing closed, a part closed named there by its law line with the open remainder kept.
+- The project proposes follow-up papers, from the careful to the bold, listed in docs/FOLLOW_UP_PAPERS.md, each a proposal with its one question, what the project has in the law's status words and the run or derivation it needs; nothing in it is claimed.
 
 ## The experiments and the worlds
 

@@ -5,7 +5,7 @@ The papers the project's own findings point to next, from the careful to the bol
 ## 1. Rule3 in flux form: the step, the Gauss law and the walk
 
 Question: what does one integer line keep, and what moves it?
-Has: the step as the flux form, a Node changing by what crosses its six Ports less its mass term, zero for light, the remainder carried (theorem; residual 0 on the full engine, the engine's step this form from 2.1.0); the lattice Gauss law, the static flux minus the enclosed write exactly, the moving flux above it by a sign-definite quadratic with no bound (no line); the walk 0.354 sqrt n levels per Node, the lattice's one noise.
+Has: the step as the flux form, a Node changing by what crosses its six Ports less its mass term, zero for light, the remainder carried (theorem; residual 0 on the full engine, the engine's step this form from 2.1.0). The lattice Gauss law, the static flux minus the enclosed write exactly, the moving flux above it by a sign-definite quadratic with no bound (no line). The walk 0.354 sqrt n levels per Node, the lattice's one noise.
 Would show: the identities with the engine as oracle, long runs of the walk, the excess's bound.
 Careful: every number a checked identity; the one open thing a bound.
 
@@ -26,14 +26,14 @@ Careful: it extends a published run with the law's own derivations.
 ## 4. The bilinears of one pair and the dimension as a declaration
 
 Question: what does Rule3 conserve for n lines of one pair, and what is a family's dimension?
-Has: all n^2 bilinears conserved exactly in the rationals, Omega antisymmetric and E symmetric (theorem; checked locally); another pair beats every cross number, so one record's planes share one pair (checked); the U(n) mixes, one plane the charge, two an axis vector, three eight traceless numbers read by no holder (theorem); the dimension declaring which numbers are the record's.
+Has: all n^2 bilinears conserved exactly in the rationals, Omega antisymmetric and E symmetric, and a line of another pair conserving none with them, so one record's planes share one pair (**The bilinears of one pair**, a theorem of the law). The U(n) mixes, one plane the charge, two an axis vector, three eight traceless numbers read by no holder (the same line); the dimension declaring which numbers are the record's.
 Would show: the proofs, the engine check, the blind telling one family of three planes (one click) from three families.
 Careful with one bold edge: U(1), SU(2), SU(3) by name from the dimensions 2, 4, 6, and the content not nature's (chirality, flavour, no reader of the eight).
 
 ## 5. The cube's 48 and what they organise
 
 Question: what does the lattice's group fix, and what does it leave to the declaration?
-Has: the step commutes with the cube's 48, O_h (theorem); the Ports A1 + E + T1, the click reading A1, the momentum T1, E nothing (checked locally); Eg and never T2g from diagonal reads, so gravitational waves "+ only", a finding against nature; the exact bands the integer rotations of orders 6, 4, 3 (theorem); the staggering carrying [1, 2] to [-1, 2] bit for bit (checked).
+Has: the step commutes with the cube's 48, O_h (theorem, **The cube's symmetry**). The Ports A1 + E + T1, the click reading A1, the momentum T1, E nothing, and Eg and never T2g from diagonal reads, so gravitational waves "+ only", a finding against nature (**The Ports' three readings**). The exact bands the integer rotations of orders 6, 4, 3 (**The exact bands**); the staggering carrying [1, 2] to [-1, 2] bit for bit in the vacuum (**The staggering is exact**).
 Would show: the representation theory of the step and the click; the x row's blind on a rotating source.
 Careful in method; one finding against nature by name and one prediction by name.
 
@@ -47,22 +47,22 @@ Middle, toward bold: the first bound body of nature on the board; -0.043 R the n
 ## 7. Spin one half from two planes
 
 Question: is the electron's spin two planes of one record, and the fine structure their electric read?
-Has: **Spin, closed for the paper as a route** (a hypothesis under its own name; g = 2 derived); the splitting Phi / m* at the ratio 1.00000 in integers (checked locally, a recurrence, no world); g - 2 = Phi / 2, 10^-29 against nature's 1.16 x 10^-3, the anomaly not the lattice's; the electric read anti-Hermitian, Theorem 3's form kept only under a plane-mixing weight G (a reading, floats); the fine structure's 29 GHz against Dirac's 10.95.
+Has: **Spin, closed for the paper as a route** (a hypothesis under its own name; g = 2 derived). The splitting Phi / m* at the ratio 1.00000 in integers (checked in an integer recurrence, no world, in that line); g - 2 = Phi / 2, 10^-29 against nature's 1.16 x 10^-3, the anomaly not the lattice's. The electric read anti-Hermitian, Theorem 3's form kept only under a plane-mixing weight G (a reading in real arithmetic, in that line); the fine structure's 29 GHz against Dirac's 10.95.
 Would run: the spin blind's click rows, (1 +/- cos theta) / 2 and the singlet's -cos(a - b); T-S4, the 2p doublet against (Z alpha)^4 / 32.
 Bold: if the blind held, spin one half and the fine structure would come from two planes of one integer recurrence; honest, a hypothesis by name whose electric half costs the conserved form's weight.
 
 ## 8. Pauli read through clicks
 
 Question: can exclusion be a rule of the detector's books with the board untouched?
-Has: "Pauli's exclusion has no line"; the parked exclusivity algebra anticoincidence, not Pauli; det K zero iff the planes are dependent, the Slater determinant's norm from one-position planes (theorem; exact in integers for identical planes); on the engine two planes in one orbital credited 2 by the law, 0 by the antisymmetric reading, two orbitals 2 by both; the rank cap crediting (a, b, a) 2 against the law's 3, the cap per part filling [1, 2, 2] (checked locally).
+Has: "Pauli's exclusion has no line"; the parked exclusivity algebra anticoincidence, not Pauli. The determinant det K is zero iff the planes are dependent, the Slater determinant's norm from one-position planes (theorem, **The Gram determinant of the planes**; exact in integers for identical planes). On the engine two planes in one orbital credited 2 by the law, 0 by the antisymmetric reading, two orbitals 2 by both; the rank cap crediting (a, b, a) 2 against the law's 3, the cap per part filling [1, 2, 2] (checked locally).
 Would run: the declaration, cap or rank; the [2, 4] record's 1s^2 count and a third piece's refusal written first.
 Bold: if it held, two per spin-orbital and the capacities 2, 8, 18, 32 would be the click's on Hartree's levels; honest, a declared rule, not a derivation: no energies, no Hund, no correlation.
 
 ## 9. The quarks as the parts of one record
 
 Question: are the quarks the lines of one record, confined by the click alone?
-Has: **The record's parts are its particles** (a hypothesis under its own name) and **Confinement is the click's** (a theorem under it); confinement seen, 204 of 204 and 87 of 87 credits taking the whole record (checked locally); the charge fractions 0.671, 0.671, -0.342 on a local variant (a declaration); the one-piece theorem |W| <= count x T / 2, so one piece with (2, 2, -1) / 3 carries 3 / 5 of the unit (0.59 on the engine), the trilemma; the Delta++ at 2 e a question, since T / 2 is every family's unit and no one-piece record carries more than it: the model allows it as two pieces, a proton piece with a charged meson piece, so the pi+ p resonance is a look at two pieces, a finding by name only if the Delta++ must be one piece.
-Would run: the fifth feasibility world at count 1, E3 at one piece, T-Q1, T-Q2, the trilemma's decision.
+Has: **The record's parts are its particles** (a hypothesis under its own name) and **Confinement is the click's** (a theorem under it). Confinement seen, 204 of 204 and 87 of 87 credits taking the whole record (204 on the engine's own detector, 87 on the local variant). The charge fractions 0.671, 0.671, -0.342 on a local variant (a declaration). The bound **The charge of a plane is bounded by its share**, |W| <= count x T / 2 at fixed paces, so one piece with (2, 2, -1) / 3 carries 3 / 5 of the unit (0.59 on the local variant E3): the trilemma (FURTHER_RESEARCH.md, the quarks: the quark charges, the proton's count or the unit per piece must give), decided by the law's lines. The Delta++ at 2 e a question (FURTHER_RESEARCH.md, the doubly charged baryons): T / 2 is every family's unit and no one-piece record carries more than it, so the model allows the Delta++ as two pieces, a proton piece with a charged meson piece, and the pi+ p resonance is a look at two pieces, a finding by name only if the Delta++ must be one piece.
+Would run: the fifth feasibility world at count 1 (three real lines, neutral); E3 at one piece; T-Q1 and T-Q2 as the quarks' Start in FURTHER_RESEARCH.md defines them; the Delta++ as a two-piece cluster.
 Bold: if it held, confinement would be indivisibility under the click, no force and no number; honest, a hypothesis by name contradicting nature by name at the string, the running and the gluons' half.
 
 ## 10. A world closer to nature
