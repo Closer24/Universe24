@@ -1319,7 +1319,7 @@ The differences between the two ledgers, by name, resolved to the lines: (1) lin
 
 ### The postulates
 
-1. The world is Nodes and Events. Space is the lattice; an Event is a change of a
+The premise of the seven, the owner's postulate (an assumption, declared 2026-10-17): nature is always described by equations, by mathematics and by physics, so the world is taken to be only numbers; a world that is only numbers and full of Nodes has every Node doing one operation on whole numbers; the postulates start from there. 1. The world is Nodes and Events. Space is the lattice; an Event is a change of a
 NodeState: a level stepped by Rule3 with its remainder; a click is a detector's report of the currents and, where its draw realises it, the detector's write at one Node; nothing else happens. 2. A Node holds bounded local information: its
 NodeState, fixed in size, read from itself and its six neighbours; no read
 beyond them, no list that grows with the world, nothing of the past kept.

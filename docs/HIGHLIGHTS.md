@@ -73,6 +73,7 @@ points at the law, the law's line governs and no formula is restated here.
 - Every proof of the law and the supplement is checked by a machine where a machine can check it: an inventory first of every line called a theorem, an identity, exact or derived, with its statement, its ground and the check it admits (an exact symbolic identity, a series expansion with its order, or a hand proof with a numerical witness only), then the checks as pure Python under the tools with a gate test and a ratchet that only falls, read by both hands at their sha; a check replaces a hand with a machine and changes no claim.
 - A finding changes no engine: what a local study finds of the engine enters ENGINE.md section 10 as a note, the engine untouched until a law line and its pull request; a sentence closed by a theorem enters the law as its bold line; an open thing goes by name, with where to start, to docs/FURTHER_RESEARCH.md, which holds nothing closed, a part closed named there by its law line with the open remainder kept.
 - The project proposes follow-up papers, from the careful to the bold, listed in docs/FOLLOW_UP_PAPERS.md, each a proposal with its one question, what the project has in the law's status words and the run or derivation it needs; nothing in it is claimed.
+- The law's postulates open with the owner's premise, an assumption: nature is always described by equations, so the world is taken to be only numbers, and a world of numbers and Nodes has every Node doing one operation on whole numbers.
 
 ## The experiments and the worlds
 
