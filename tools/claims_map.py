@@ -18,12 +18,15 @@ COLUMNS = ("id", "name", "place", "kind", "verdict")
 TITLE = "# The claims map"
 OPENING = (
     "Every theorem, lemma, identity and quantitative claim of the law (docs/ALGEBRA.md), the paper and "
-    "its supplement stands here as one row, generated from tools/derivations/proofs_inventory.json by "
+    "its supplement, as the proofs' inventory quotes them at the heads its header names (the law at "
+    "3a334eeb, the paper and the supplement at d7e97674, the long version), stands here as one row, "
+    "generated from tools/derivations/proofs_inventory.json by "
     "tools/claims_map.py, so the two cannot drift apart (tests/test_claims_map.py). Each row names where "
     "the claim stands, its exact statement, the ground its check stands on, its kind and its verdict, and "
     "the function that checks it; tests/test_proofs_check_the_law.py runs every check and asserts every "
-    "verdict, so a green run of `python -m pytest tests/test_proofs_check_the_law.py -q` is the whole map "
-    "re-verified."
+    "verdict, so a green run of `python -m pytest tests/test_proofs_check_the_law.py -q` runs every check "
+    "of the map to its verdict; the rows with no check stand as statements only, and a witness is not a "
+    "proof."
 )
 LEGEND = (
     "**The kinds and the verdicts.** The kinds, in the words of tools/derivations/README.md: (A) an exact "
@@ -34,8 +37,8 @@ LEGEND = (
     "counted as unchecked; (D) a statement of the engine's structure that only a test of the engine shows, "
     'the engine\'s tests named and no check here. The verdicts: "holds" (the check returns true), '
     '"witness only" (a hand proof with a numerical witness, the check a witness and not a proof), '
-    '"finding" (the statement as printed at the place and commit named is false, the check reproduces the '
-    "mismatch; what was found and what was done about it stands in docs/ERRATA.md), "
+    '"finding" (the statement as printed at the place named is false and the check reproduces the '
+    "mismatch; the commits, what was found and what was done about it stand in docs/ERRATA.md), "
     '"none" (no check, the row stands as a statement only).'
 )
 
