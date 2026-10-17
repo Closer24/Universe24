@@ -23,6 +23,16 @@
       "identifier": "https://github.com/Closer24/Universe24",
       "relation": "isSupplementTo",
       "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.23297864",
+      "relation": "isSupplementTo",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.23297705",
+      "relation": "isSupplementTo",
+      "scheme": "doi"
     }
   ]
 }
