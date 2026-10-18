@@ -205,17 +205,17 @@ def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> lis
     return levels[:count]
 
 
-def transverse_cosine(width: int, unit: int) -> int:
-    """unit cos(pi / (width + 1)), the lowest mode of a top-hat of `width` Nodes with zero ends, by the rotation act: the doubled cosine of the step pi / (2 (width + 1)) is the largest integer at which the rotation from the unit reaches 0 within width + 1 steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and two steps of it are the mode's cosine."""
+def wave_cosine(turns: int, halves: int, unit: int) -> int:
+    """unit cos(pi turns / halves) by the rotation act (the click's plan, C1: the cosine of a wave number pi p / q, as a packet's `wave` [p, q] declares it, by the integer search and no table): the doubled cosine of the step pi / (2 halves) is the largest integer at which the rotation from the unit reaches 0 within `halves` steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and 2 |turns| steps of it are the wave's cosine; at turns 1 and halves width + 1 the lowest mode of a top-hat of `width` Nodes with zero ends, cos(pi / (width + 1)) (`along_cosine`, `emission.holds_period`)."""
     lower, upper = 0, 2 * unit
     while upper - lower > 1:
         middle = int(division_forward(lower + upper, 2, 0)[0])
-        if min(rotated(unit, int(division_forward(middle, 2, 0)[0]), middle, unit, width + 2)) <= 0:
+        if min(rotated(unit, int(division_forward(middle, 2, 0)[0]), middle, unit, halves + 1)) <= 0:
             lower = middle
         else:
             upper = middle
-    seeds = 2  # the recurrence's two seeds; the level after them is the cosine's
-    return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, seeds + 1)[seeds]
+    steps = 2 * abs(turns)  # the recurrence's two seeds and the steps after them to the wave's angle
+    return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, steps + 1)[steps]
 
 
 def below_the_band(num: int, den: int) -> bool:
@@ -228,7 +228,7 @@ def along_cosine(
 ) -> int | None:
     """The doubled cosine 2 unit cos k_z of a packet's wave number along its axis, from the light family's band with the transverse mode of its width (the mathematician's hand, the advisor's second, two hands): cos Omega = (num_l / (3 den_l)) (cos k_z + 2 cos k_perp) with k_perp = pi / (width + 1) the lowest mode of the top-hat across, so 2 unit cos k_z = (6 unit den_l num) div (num_l den) - 2 x (2 unit cos k_perp), the two transverse axes each at the doubled cosine, every cosine at the unit by the rotation act; None where the width cannot carry Omega, cos k_z not strictly inside (-1, 1) (the band's edge k_z = 0, a wave of no wave number, refused with the outside; the top-hat's spectrum spreads the frequency by about (num_l / (3 den_l)) k_perp^2 / sin Omega, the open board's tolerance)."""
     (num_l, den_l), (num, den) = light, resonance
-    across = 2 * transverse_cosine(width, unit)  # 2 unit cos k_perp, one transverse axis
+    across = 2 * wave_cosine(1, width + 1, unit)  # 2 unit cos k_perp, one transverse axis
     doubled = int(division_forward(PORTS * unit * den_l * num, num_l * den, 0)[0]) - (AXES - 1) * across
     return doubled if -2 * unit < doubled < 2 * unit else None
 

@@ -17,7 +17,7 @@ from event_universe.features.click import (
     envelope,
     line_total,
     rotated,
-    transverse_cosine,
+    wave_cosine,
 )
 from event_universe.lay import laid, laid_in_time, written
 from event_universe.loader.derived import FamilyRule, count_wall
@@ -79,7 +79,8 @@ def emitted_quantum(board: Lattice, item: Item) -> tuple[int, int, int] | None:
     if (
         item.family in board.credit.empty
     ):  # a record empty at the books' origin: its unit the first lay's own
-        board.credit.units[item.family] = born_unit(board, item.family, item.resonance)
+        wall = count_wall(board.families[item.family], action)
+        board.credit.units[item.family] = born_unit(wall, item.resonance)
         board.credit.empty.discard(item.family)
     total = radiated_total(action, item.resonance)
     scale = count_wall(board.families[item.family], action) ** SCALE_OF
@@ -118,11 +119,18 @@ def radiated_total(action: int, resonance: tuple[int, int]) -> int:
     )
 
 
-def born_unit(board: Lattice, index: int, resonance: tuple[int, int]) -> int:
-    """The unit of one quantum of a record empty at the books' origin, set at its first lay and held from there (the advisor's word, on the generic node_detector's entry "read once from the books' origin"): the emission's own share, W_c sin Omega, (the largest x with x^2 <= (W_c^2 (den^2 - num^2)) div den^2) as the source's total is taken (the root on the large number, within one of the share's unit, where the fixed point of den^2 - num^2 alone would read 4 div 10 for the 0.436 of [9, 10]), the count's line Q(z) = count x W_c sin Omega at the count 1 (the mathematician's hand), so that a born quantum below the half-top energy (sin Omega below 1 / 2) is credited 1 and not 0 by `record_unit`'s default W_c."""
+def born_unit(wall: int, resonance: tuple[int, int]) -> int:
+    """The unit of one quantum, W_c sin Omega, of a record whose quantum stands at the rotation `resonance`, `wall` its W_c (`loader/derived.count_wall`; a record empty at the books' origin takes it at its first lay and holds it from there, the advisor's word on the generic node_detector's entry "read once from the books' origin"; a massless packet's at its wave, `packet_unit`, the click's plan, C1): the emission's own share, W_c sin Omega, (the largest x with x^2 <= (W_c^2 (den^2 - num^2)) div den^2) as the source's total is taken (the root on the large number, within one of the share's unit, where the fixed point of den^2 - num^2 alone would read 4 div 10 for the 0.436 of [9, 10]), the count's line Q(z) = count x W_c sin Omega at the count 1 (the mathematician's hand), so that a born quantum below the half-top energy (sin Omega below 1 / 2) is credited 1 and not 0 by `record_unit`'s default W_c."""
     num, den = resonance
-    wall = count_wall(board.families[index], board.world.quantum_action)
     return largest_below(int(division_forward(wall * wall * (den * den - num * num), den * den, 0)[0]))
+
+
+def packet_unit(wall: int, pair: tuple[int, int], wave: tuple[int, int]) -> int:
+    """The unit of one quantum of a massless packet at the wave [p, q] (the click's plan, C1; `credit.record_unit`; the generator's count of a packet, tools/pixel_mode.py, so that the mode file's count is the books'): the rotation of that wave on the band's line with the transverse wave numbers 0, den cos omega = (num (den cos k + 2 den)) div (3 den) by the division act, den cos k by the rotation act's integer search (`features/click.wave_cosine`; 4242 of 6000 at k = pi / 4, den cos omega then 5414), and the unit W_c sin omega through the one form of a born quantum's (`born_unit`, `wall` the family's W_c): nature's E = h nu, one count of light carrying the form of its own frequency; a gapped family keeps its wall (`record_unit`)."""
+    num, den = pair
+    cosine = wave_cosine(wave[0], wave[1], den)  # den cos k
+    omega = int(division_forward(num * (cosine + 2 * den), 3 * den, 0)[0])  # den cos omega
+    return born_unit(wall, (omega, den))
 
 
 def emitted_lines(family: FamilyRule) -> list[int]:
@@ -260,7 +268,7 @@ def holds_period(span: int, resonance: tuple[int, int], unit: int) -> bool:
     if span < 2:
         return False
     num, den = resonance
-    cosine = transverse_cosine(span - 1, unit)  # unit cos(pi / tau)
+    cosine = wave_cosine(1, span, unit)  # unit cos(pi / tau)
     doubled = int(division_forward(2 * cosine * cosine, unit, 0)[0]) - unit  # unit cos(2 pi / tau)
     return num * unit <= den * doubled
 

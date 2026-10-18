@@ -187,7 +187,7 @@ def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_pa
         names, books = [family.name for family in board.families], board.credit.counts
         assert [e["count"] for e in entries] == [books[names.index(e["family"])] for e in entries]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    dilute = slit_world(tmp_path, TOOL, "dilute", packets=[{**PACKET, "amplitude": 80}])
+    dilute = slit_world(tmp_path, TOOL, "dilute", packets=[{**PACKET, "amplitude": 48}])  # W_rec
     entry = json.loads(dilute.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"][0]
     board = Lattice(load_world(dilute))
     charge = [family.name for family in board.families].index("charge")

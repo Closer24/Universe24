@@ -9,7 +9,7 @@ import numpy as np
 from event_universe import meeting, records, resonance, twist, world_files
 from event_universe.emission import laid_by_count
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import count_wall, row_of
+from event_universe.loader.derived import row_of
 from event_universe.loader.draw import (
     Draw,
     Generator,
@@ -463,7 +463,7 @@ def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothin
         f"the Zeno drive's booked share at the Node {booked_share} over W_rec {unit}, the books {books}"
     )
     assert (books["count"], books["deficit"], books["quanta"]) == (count - 1, 1, its_books["quanta"])
-    within = abs(books["drift"]) // count_wall(board.families[pulse], board.world.quantum_action) + 1
+    within = abs(books["drift"]) // board.credit.units[pulse] + 1  # the drift in W_rec (C1)
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
     assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
@@ -546,14 +546,14 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark()
     board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(260):  # dark from the interval 250 (the click at 75, the front from 76 to 260)
+    for _ in range(262):  # dark from the interval 251 (the click at 76, the front from 77 to 261)
         board.step()
         shares.append(board.books()["photon"]["share"])
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     credits = [c for c in credits if c["absorbed"]]
-    assert len(credits) == 1 and credits[0]["interval"] == 75 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 76 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {x["event"] for x in lines if x["interval"] > 75} <= {"erasure", "face", "credit", "lay"}
+    assert {x["event"] for x in lines if x["interval"] > 76} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
@@ -585,14 +585,14 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
         (path := tmp_path / f"{len(drives)}.json").write_text(json.dumps(world), encoding="utf-8")
         TOOL.main(["--input", str(path)])
         board = Lattice(load_world(path), (lines := []).append)
-        while board.interval < 71:
+        while board.interval < 70:
             board.step()
         hits = [c for c in lines if c.get("absorbed")]
         clicks[drives] = [(c["interval"], c["node_detector"], c["absorbed"]) for c in hits]
-    assert clicks["photon", "photon_b"] == [(55, "body 0", "photon_b"), (70, "body 1", "photon")]
-    assert clicks[("photon",)] == [(70, "body 1", "photon")]
+    assert clicks["photon", "photon_b"] == [(56, "body 0", "photon_b"), (69, "body 1", "photon")]
+    assert clicks[("photon",)] == [(69, "body 1", "photon")]
     two, one = seen[:2], seen[2:]  # the closes per world; the drives photon 1, photon_b 2
     print(f"by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
     assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
-    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, alike in both
+    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, 69 in both worlds
     assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

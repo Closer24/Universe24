@@ -71,7 +71,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
-    ("credit.py", "record_unit", "division_forward"): "D",  # the mean unit rounded half up
     (
         "credit.py",
         "quanta_through",
@@ -87,6 +86,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "radiated_total", "largest_below"): "S",  # the search on the total's square
     ("emission.py", "born_unit", "largest_below"): "S",  # the search on the unit's square
     ("emission.py", "born_unit", "division_forward"): "D",  # the unit over den squared, once
+    ("emission.py", "packet_unit", "division_forward"): "D",  # den cos omega of the packet's wave, once
     ("emission.py", "laid_by_count", "division_forward"): "D",  # the count's lay, one division
     ("emission.py", "laid_packet", "largest_below"): "S",  # the sine and the transverse size
     ("emission.py", "laid_packet", "division_forward"): "D",  # the packet's levels, rounded once
@@ -153,7 +153,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "R",  # the lay's recurrence carrying its remainder
     (
         "features/click/__init__.py",
-        "transverse_cosine",
+        "wave_cosine",
         "division_forward",
     ): "D",  # the cosine's bisection, discarded
     ("features/click/__init__.py", "along_cosine", "division_forward"): "D",  # the along cosine, once

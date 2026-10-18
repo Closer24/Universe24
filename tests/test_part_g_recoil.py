@@ -104,13 +104,13 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, monkeypatch):
-    """Task 5 (e): one_photon's first click (75, the second atom's window open from the photon's first lit interval, 28, and closed 48 after it, C2; 48 before it): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (before them the Part F2 run recorded at 04caccce2; the oracle's lines to 75, the six keys stripped as the Boss's check strips them)."""
+    """Task 5 (e): one_photon's first click (76, the second atom's window open from the photon's first lit interval, 29, and closed 48 after it, C2, the packets at the amplitude 78 of one quantum in the record's own unit, C1; 48 before C2 and 75 before C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (before them the Part F2 run recorded at 04caccce2; the oracle's lines to 76, the six keys stripped as the Boss's check strips them)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
-    for _ in range(75):
+    for _ in range(76):
         board.step()
     credits = [c for c in lines if c["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 75
+    assert len(credits) == 1 and credits[0]["interval"] == 76
     click = credits[0]
     assert click["source"] == THE_LAY and click["recoil"] == [-p for p in click["momentum"]]
     assert click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -121,12 +121,12 @@ def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, 
         return [
             {k: v for k, v in line.items() if k not in STRIPPED}
             for line in found
-            if line["event"] in kinds and int(str(line["interval"])) <= 75
+            if line["event"] in kinds and int(str(line["interval"])) <= 76
         ]
 
     assert cleaned(lines) == cleaned(oracle["lines"])
     print(
-        f"Part G (5e): one_photon at 75: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's"
+        f"Part G (5e): one_photon at 76: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's"
     )
 
 

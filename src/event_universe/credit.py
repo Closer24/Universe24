@@ -14,7 +14,7 @@ from event_universe import growth, share
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
-from event_universe.emission import Emitter, Source, registered
+from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
 from event_universe.front import Front
 from event_universe.loader.derived import count_wall
@@ -89,14 +89,12 @@ class Books:
 
     @classmethod
     def of(cls, board: Lattice) -> Books:
-        """The books at the start: every family of quanta's count its laid share in whole quanta (the books' origin read as a count), its unit of one quantum from the same two numbers (`record_unit`, held through the run; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, the emitters' book holding the file's lay for every family laid with a count, `Emitter(None, count, False)` (Part H, the hands' SHOULD: a laid light beside an emitter is drawn between the body and the lay by their counts, `twist.drawn_emitter`; the lay drawn is the file's, no receiver, `THE_LAY` with `LOST_TO_LAY`), every other book empty."""
+        """The books at the start: every family of quanta's unit of one quantum from its own rotation (`record_unit`, held through the run; the click's plan, C1) and its count its laid share in that unit (`counted`, the books' origin read as a count; a record with no count at the origin named among `empty`, its unit set at its first lay), the generator at the declared seed, the emitters' book holding the file's lay for every family laid with a count, `Emitter(None, count, False)` (Part H, the hands' SHOULD: a laid light beside an emitter is drawn between the body and the lay by their counts, `twist.drawn_emitter`; the lay drawn is the file's, no receiver, `THE_LAY` with `LOST_TO_LAY`), every other book empty."""
         found = board.world.draw
-        counts = {index: counted(board, index, board.laid[index]) for index in board.order}
+        units = {index: record_unit(board, index) for index in board.order}
+        counts = {index: counted(board, index, board.laid[index], units[index]) for index in board.order}
         sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.node_detectors if r.pattern]
         bodies = books_of(board)
-        units = {
-            index: record_unit(board, index, board.laid[index], counts[index]) for index in board.order
-        }
         emitters: dict[int, list[Emitter]] = {}
         for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
             if counts[index] > 0:
@@ -119,18 +117,19 @@ class Books:
         )
 
 
-def counted(board: Lattice, index: int, total: int | None) -> int:
-    """A share in the current's units as whole quanta, (total + W_c div 2) div W_c by the division act (`share.quanta_of`), 0 where it is not read: the reading of the record's count."""
-    wall = count_wall(board.families[index], board.world.quantum_action)
-    return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), wall, object)[0])
+def counted(board: Lattice, index: int, total: int | None, unit: int) -> int:
+    """A share in the current's units as whole quanta of the record's own unit, (total + W_rec div 2) div W_rec by the division act (`share.quanta_of`; `record_unit`, C1), 0 where it is not read: the reading of the record's count."""
+    return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), unit, object)[0])
 
 
-def record_unit(board: Lattice, index: int, total: int | None, count: int) -> int:
-    """The unit of one quantum of a record, W_rec, read and not declared (the advisor's line with the mathematician's second, two hands; the count's line, Q(z) = count x W_c sin omega for a monochromatic record): the record's share over the board at the books' origin over its count there, (total + count div 2) div count by the division act, read once and held through the run (a face removes one quantum's share with one count, the ratio unchanged; the roundings' drift moves it not); W_c where the books hold no count or no reading (nothing to credit), until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`, `born_unit`), so a born quantum below the half-top energy is credited 1 and not 0. For a record laid by share with its count the share over W_c it is W_c within the lay's own rounding; for a born quantum of count 1 at Omega it is W_c sin Omega, the node_detector counting in the record's own quantum with no transition declared on any region."""
-    wall = count_wall(board.families[index], board.world.quantum_action)
-    if total is None or count <= 0:
+def record_unit(board: Lattice, index: int) -> int:
+    """The unit of one quantum of a record, W_rec, from the record's own rotation and not from a reading (the click's plan, C1; the count's line, Q = count x W_c sin omega for a monochromatic record; nature: E = h nu, one count of light carries the form of its own frequency): W_rec = (the largest x with x^2 <= W_c^2 (den^2 - num_r^2) div den^2) with (num_r, den) the record's rotation, W_c = 3 den T; a family with a gap at its rest rotation, W_c sin omega_0, the count's wall as it stands (`loader/derived.count_wall`); a massless family laid as a packet at the wave [p, q] (the family's first packet; a family laid at several waves takes the first's) at the rotation of that wave, den cos omega = (num_l (den cos k + 2 den)) div (3 den_l) by the division act, the band's line with the transverse wave numbers 0, den cos k by the rotation act's integer search, the unit then W_c sin omega through the one form of a born quantum's (`emission.packet_unit`, `features/click.wave_cosine`, `emission.born_unit`; 4242 and 5414 of 6000 at k = pi / 4; the generator reads a packet's count in the same unit, tools/pixel_mode.py); W_c, the massless wall, for a massless family laid by no packet, until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`); held through the run (a face removes one quantum's share with one count). What moves against the reading of the share over the count: a massless packet's count is its share over W_c sin omega and no longer over W_c, one count at pi / 4 the amplitude 110 and not 165 on two_photons' packet, and the beams' counts by 1 / sin omega."""
+    family, action = board.families[index], board.world.quantum_action
+    wall = count_wall(family, action)
+    packet = next((p for p in board.world.packets if p.family == index), None)
+    if family.pair[0] != family.pair[1] or packet is None:
         return wall
-    return int(division_forward(total, count, division_forward(count, 2, 0)[0])[0])
+    return packet_unit(wall, family.pair, packet.wave)
 
 
 def quanta_through(books: Books, index: int, inflow: int, link_unit: int) -> int:

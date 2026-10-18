@@ -22,6 +22,7 @@ from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import Rule, division_forward, largest_below, rule3, rule_integers
+from event_universe.emission import packet_unit
 from event_universe.features import phase
 from event_universe.features.start import (
     RestCollapses,
@@ -1233,11 +1234,19 @@ def packet_entry(
     whole = (
         int(np.asarray(total, dtype=object).sum()) * family.parts
     )  # the board's total, the parts laid alike
+    wall = count_wall_of(
+        board.pair, board.action
+    )  # the count in the record's own unit (C1): W_c sin omega
+    unit = (
+        packet_unit(wall, board.pair, (packet["wave"][0], packet["wave"][1]))
+        if board.pair[0] == board.pair[1]
+        else wall
+    )
     return {
         "family": packet["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(read_quanta(whole, board.pair, board.action, object)),
+        "count": int(quanta_of(whole, unit, object)),
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 

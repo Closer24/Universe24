@@ -7,7 +7,6 @@ import pytest
 
 from event_universe import lay, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
@@ -191,7 +190,7 @@ def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_d
     )
     assert all(f.family != drive for f in board.credit.fronts)
     assert (books["count"], books["deficit"]) == (count - len(absorptions), len(absorptions))
-    wall = count_wall(board.families[drive], board.world.quantum_action)
+    wall = board.credit.units[drive]  # the record's own unit of one quantum (C1)
     within = abs(books["drift"]) // wall + 1  # the share's drift in quanta and the reading's rounding
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert books["quanta"] == its_books["quanta"] and books["drift"] == its_books["drift"]

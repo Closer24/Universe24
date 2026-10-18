@@ -19,7 +19,6 @@ from event_universe.features.write import carried
 from event_universe.lay import laid
 from event_universe.loader.derived import (
     PLANE,
-    count_wall,
     held_write_of,
     quanta_records,
     readers_of,
@@ -83,8 +82,8 @@ class Lattice:
         rows = ((r, self.mask(r.positions) if r.body is None else None) for r in world.node_detectors)
         self.node_detectors = [NodeDetector(r.name, at, r.body, r.declared) for r, at in rows]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
-        self.gate()
         self.credit = credit.Books.of(self)
+        self.gate()
 
     def half_wall(self, index: int) -> int:
         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`wall_of`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
@@ -231,10 +230,9 @@ class Lattice:
         return np.asarray(found), frozen
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
         found, frozen = self.share_of(index, 1, at)
-        wall = count_wall(self.families[index], self.world.quantum_action)
-        return share.quanta_of(found, wall, self.kind), frozen
+        return share.quanta_of(found, self.credit.units[index], self.kind), frozen
 
     def total_share(self, index: int) -> tuple[int | None, int]:
         """A family's share summed over the lattice in the current's units, a reading, None over a lattice holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
@@ -248,11 +246,11 @@ class Lattice:
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:
-        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its wall W_c, its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `twist.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its own unit W_rec (`credit.record_unit`, C1), its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `twist.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
             family, gamma, credit = self.families[index], self.world.node_clock, self.credit
-            wall = count_wall(family, self.world.quantum_action)
+            wall = credit.units[index]
             (total, cold), laid = self.total_share(index), self.laid[index]
             quanta, drift, deficit = None, None, credit.deficits.get(index, 0)
             if total is not None:

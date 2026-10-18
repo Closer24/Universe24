@@ -24,8 +24,8 @@
   "edge": 8
  },
  "worlds": {
-  "one_photon": 116,
-  "two_photons": 165
+  "one_photon": 78,
+  "two_photons": 110
  },
  "control": {
   "world": "two_photons",

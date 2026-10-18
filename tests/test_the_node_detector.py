@@ -328,7 +328,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         [],
     )  # the second record's window open after the click
     for body in world["bodies"]:
-        body["node_detector"]["seed"] = 2  # a seed whose draw at 48 takes at the first record alone
+        body["node_detector"]["seed"] = 3  # a seed whose draw at 77 takes at the first record alone (C1)
     (split := tmp_path / "split.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(split)])
     for front in (True, False):  # the count-0 record's inflow erased by the front, or standing
@@ -337,7 +337,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         ph, b_at = (
             [f.name for f in b.families].index("photon"),
             [90, 0, 0],
-        )  # the taken packet's remnant at 170, inside the front's reach from the click at 76 (C2)
+        )  # the taken packet's remnant at 170, inside the front's reach from the click at 77 (C1)
         absorbed = [
             (x["interval"], x["node_detector"]) for x in sl if x["event"] == "credit" and x["absorbed"]
         ]
