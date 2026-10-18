@@ -147,27 +147,36 @@ def written(board: Lattice, items: list[Item]) -> None:
             front.started(board, family, absorbed)
 
 
-def leaving_phase(board: Lattice, item: Item) -> Phase:
-    """The direction (re, im) and the sense (the sign of the Wronskian) of the part a quantum leaves, read at the Node before any lay of the list."""
+def leaving_phase(board: Lattice, item: Item) -> list[Phase]:
+    """The direction (re, im) and the sense (the sign of the Wronskian) of the part a quantum leaves at each Node of the body, in the books' order, read before any lay of the list (the click's plan, C3: per Node and not at the first Node, so the re-lay keeps each Node's own direction); a Node standing at (0, 0) takes the first Node's direction."""
     assert item.part is not None
-    re, im, re_before, im_before = levels_at(board, books_named(board, item.body or 0), item.part)
-    return (re, im), 1 if re * im_before - im * re_before >= 0 else -1
+    books = books_named(board, item.body or 0)
+    found = [levels_at(board, books, item.part, here) for here in books.nodes]
+    first = next((levels for levels in found if levels[:2] != (0, 0)), found[0])
+    return [
+        (
+            (re, im) if (re, im) != (0, 0) else first[:2],
+            1 if re * im_before - im * re_before >= 0 else -1,
+        )
+        for re, im, re_before, im_before in found
+    ]
 
 
-def parted(board: Lattice, books: NodeBooks, item: Item, phase: Phase | None) -> None:
-    """One part of a record declared a NodeDetector at one Node laid at its new count (`relaid`): in the sense of the part the quantum leaves where the list names one, the entered part's direction the leaving part's turned by the arriving record's phase at the Node, atan2(Y', X) of the two sums the close held (`Item.arrival`, `resonance.turned_direction`; ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum, the product's phase phi_part = phi_left + phi_L), unturned where no arrival stands (the emission's items); in its own direction and sense otherwise (a part laid again at its count, the null window: Part H, MUST 1, each Node of the region in the direction standing there, so the twist and the source's fold survive the re-lay, `relaid` with no direction named); Part F: where the item carries the piece's momentum and the count enters, the part's lines twisted after the lay about the click's Node, the item's origin (`twisted`, C6 (ii)), the books taking n_a per axis and what was lost for the credit line; Part G (both hands' lines of 2026-10-10, the click with two receivers): after the taker's twist the piece's source is drawn among the light's emitters by the quanta each still holds, through the taker's own generator as its Node is drawn (one emitter, no draw), and the source's part is folded by -p_a at the click's tick by the same twist (`recoiled`), the books taking the source's name, its recoil and its reading in `lost` after the taker's."""
+def parted(board: Lattice, books: NodeBooks, item: Item, phase: list[Phase] | None) -> None:
+    """One part of a record declared a NodeDetector at one Node laid at its new count (`relaid`): in the sense of the part the quantum leaves where the list names one, the entered part's direction at each Node the leaving part's own at that Node turned by the arriving record's phase, atan2(Y', X) of the two sums the close held (the click's plan, C3: per Node, so the body's P after an absorption and an emission is gain_in - gain_out, the two kicks of laser cooling) (`Item.arrival`, `resonance.turned_direction`; ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum, the product's phase phi_part = phi_left + phi_L), unturned where no arrival stands (the emission's items) and for the part the quantum leaves; in its own direction and sense otherwise (a part laid again at its count, the null window: Part H, MUST 1, each Node of the region in the direction standing there, so the twist and the source's fold survive every re-lay, `relaid`); Part F: where the item carries the piece's momentum and the count enters, the part's lines twisted after the lay about the click's Node, the item's origin (`twisted`, C6 (ii)), the books taking n_a per axis and what was lost for the credit line; Part G (both hands' lines of 2026-10-10, the click with two receivers): after the taker's twist the piece's source is drawn among the light's emitters by the quanta each still holds, through the taker's own generator as its Node is drawn (one emitter, no draw), and the source's part is folded by -p_a at the click's tick by the same twist (`recoiled`), the books taking the source's name, its recoil and its reading in `lost` after the taker's."""
     assert item.part is not None and item.nodes == books.nodes
     books.counts[item.part] += item.delta
-    (re, im), sense = phase if phase is not None else leaving_phase(board, item)
-    direction: tuple[int, int] | None
-    if item.delta == 0:  # the null window and the probe's own: each Node keeps its own direction
-        direction = None
-    else:
-        direction = (re, im) if item.arrival is None else turned_direction(re, im, *item.arrival)
-    relaid(board, books, item.part, books.counts[item.part], direction, sense)
+    own = phase if phase is not None else leaving_phase(board, item)
+    arrival = (
+        item.arrival if item.delta > 0 else None
+    )  # the entering part turned; the leaving, the null's own
+    phases = [(d if arrival is None else turned_direction(*d, *arrival), s) for d, s in own]
+    relaid(board, books, item.part, books.counts[item.part], phases)
     if item.momentum is not None and item.delta > 0:
         assert item.origin is not None  # the click's Node, the fold's origin
-        books.twist, short = twisted(board, books, item.part, item.momentum, item.origin)
+        books.twist, books.shortfall, short = twisted(
+            board, books, item.part, item.momentum, item.origin
+        )
         readings = [short] if short is not None else []
         if item.drive is not None:
 

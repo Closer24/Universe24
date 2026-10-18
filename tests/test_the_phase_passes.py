@@ -49,9 +49,9 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
         arrivals[board.interval] = [(t.leaves, t.enters, r.in_phase, r.quadrature) for t, r in pairs]
         turned_labels(board, books)
 
-    def spied(board, books, part, count, phase, sense):
-        laid.append((board.interval, part, count, phase, sense))
-        relaid(board, books, part, count, phase, sense)
+    def spied(board, books, part, count, phases):  # C3: one phase per Node of the body
+        laid.append((board.interval, part, count, list(phases)))
+        relaid(board, books, part, count, phases)
 
     def read(board, item):
         found = leaving_phase(board, item)
@@ -70,21 +70,19 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
         ]
     interval = board.interval
     assert taken and taken[0]["interval"] == interval
-    leaves, ((re, im), sense) = next((part, found) for t, part, found in left if t == interval)
-    enters = 1 - leaves
+    leaves, own = next((part, found) for t, part, found in left if t == interval)
+    ((re, im), sense), enters = own[0], 1 - leaves
     x, y = next((x, y) for low, up, x, y in arrivals[interval] if (low, up) == (leaves, enters))
-    entered = next((c, phase, s) for t, p, c, phase, s in laid if t == interval and p == enters)
+    count, phases = next((c, p) for t, part, c, p in laid if t == interval and part == enters)
+    entered = (count, phases[0][0], phases[0][1])
+    assert phases == [(turned_direction(r, i, x, y), s) for (r, i), s in own]  # C3: each Node its own
     print(
         f"the Zeno world's first absorption at {interval}: the leaving part {leaves} stands at {(re, im)}, the arrival "
         f"(X, Y') = {(x, y)}, atan2 = {math.degrees(math.atan2(y, x)):.3f} degrees, the entered part laid at {entered[1]}"
     )
     assert y != 0 and entered == (1, turned_direction(re, im, x, y), sense) and entered[1] != (re, im)
     assert all(abs(f - e) <= 1 for f, e in zip(entered[1], float_turn(re, im, x, y), strict=True))
-    assert next((c, phase, s) for t, p, c, phase, s in laid if t == interval and p == leaves) == (
-        0,
-        (re, im),
-        sense,
-    )
+    assert next((c, p) for t, part, c, p in laid if t == interval and part == leaves) == (0, own)
 
 
 def test_the_born_lights_source_begins_at_the_phase_from_the_ground_parts_direction_to_the_excited_parts():

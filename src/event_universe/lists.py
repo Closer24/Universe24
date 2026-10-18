@@ -46,7 +46,9 @@ def exchange(
 ) -> list[Item]:
     """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws, with the Ports the quantum entered it by, the hole's face set, and that Node the fold's origin on the part entered (`hole_node`, `Item.ports`, `Item.origin`; the click's plan, C6): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_detector_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`act.written`, `twist.faced`, the undepleted beam; the two hands' line); both items carry the arriving record's phase the close held for the transition, (X, Y') (`resonance.arrival_of`), None for an emission, which names no drive; Part F: the entering item carries the piece's momentum p_a per axis, one count's, read at the close from the drive's passage through the body's Nodes over the window, its momentum terms over its share (`node_detector.piece_momentum`, `NodeBooks.passages`, C4), and the books take the click's two readings for its credit line, the piece's p_a and the drive's P_a over the board before the erasure starts (`fan_momentum`), the twist's two set by the write (`twist.twisted`)."""
     arrival = arrival_of(books.declared.transitions, books.references, (leaves, enters, drive))
-    books.piece = books.fan = books.twist = books.lost = books.source = books.recoil = None
+    books.piece = books.fan = books.twist = books.shortfall = books.lost = books.source = (
+        books.recoil
+    ) = None
     momentum, taken = None, None
     if drive is not None:
         books.piece = piece_momentum(board, drive, books.passages.get(drive, Passage()))
@@ -110,6 +112,7 @@ def credited_node(
                 None,
                 piece,
                 fan,
+                None,
                 None,
                 [reading],
                 source,

@@ -300,7 +300,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
     standing = twist.fan_momentum(board, atom)[0]
-    found, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
+    found, short, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
     gained = twist.fan_momentum(board, atom)[0] - standing
     assert nothing is None and found[1:] == [0, 0] and 0 < found[0] < quarter
     at = board.mask(books.nodes)
@@ -310,20 +310,22 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
         wanted,
         floor,
     )  # one level unit per rounding, the neighbour's level each
+    assert short[1:] == [0, 0] and 0 <= short[0] <= floor  # C3: s_x = p_x - gain_x, under the floor
     shares_after = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_after = board.quanta(atom, board.mask(books.nodes))[0]
     assert np.array_equal(count_before, count_after)
     moved = int((shares_after - shares_before)[board.mask(books.nodes)].sum(dtype=object))
     held = int(shares_before[board.mask(books.nodes)].sum(dtype=object))
     print(
-        f"Part F (Task 3b', 3c): p_x = {wanted} asked, {gained} given by n_x = {found[0]} acts (the floor {floor}); the share "
+        f"Part F (Task 3b', 3c): p_x = {wanted} asked, {gained} given by n_x = {found[0]} acts, s_x = {short[0]} (the floor {floor}); the share "
         f"over the taker's Nodes {held} moved by {moved} ({moved / held:.2e}), the count unchanged"
     )
     # (b) the one-Node taker: the second atom's books on its first Node alone
     single = replace(books, nodes=books.nodes[:1], weights=books.weights[:1])
     kept = [(r.now.copy(), r.before.copy(), r.remainder.copy()) for r in board.states[atom].lines]
-    found, lost = twist.twisted(board, single, single.part, (wanted, 0, 0), single.nodes[0])
+    found, short, lost = twist.twisted(board, single, single.part, (wanted, 0, 0), single.nodes[0])
     assert found == [0, 0, 0] and lost == LOST_TO_DECLARATION and len(single.nodes) == 1
+    assert short == [wanted, 0, 0]  # C3: the whole of p_x the shortfall where nothing is folded
     assert all(
         np.array_equal(a, b)
         for r, k in zip(board.states[atom].lines, kept, strict=True)
@@ -420,12 +422,12 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
     wanted, deposits, twists = 10000, [], []
     for books in board.credit.bodies:
         standing = twist.fan_momentum(board, atom)[0]
-        found, lost = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
+        found, short, lost = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
         deposits.append(twist.fan_momentum(board, atom)[0] - standing)
-        twists.append(found[0])
+        twists.append((found[0], short[0]))
         assert lost is None and found[1:] == [0, 0]
     print(
         f"Part F2 (Task 4): p_x = {wanted} asked of the taker across the wrap (95, 0) and of the taker (40, 41): "
-        f"the deposits {deposits}, n_x {twists}"
+        f"the deposits {deposits}, (n_x, s_x) {twists}"
     )
     assert deposits[0] == deposits[1] and twists[0] == twists[1] and 0 < deposits[0] <= wanted

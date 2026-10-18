@@ -31,12 +31,13 @@ EXCHANGED = (
     "absorbed",
     "emitted",
 )  # the families a record's click exchanged a quantum with, None where none
-MOMENTUM, FAN, TWIST, LOST = (
+MOMENTUM, FAN, TWIST, SHORTFALL, LOST = (
     "momentum",
     "fan",
     "twist",
+    "shortfall",
     "lost",
-)  # Part F: the piece's p_a per axis in T's unit, the record's P_a over the board at the click, the taker's twist n_a per axis, and what the write could not give (None where nothing was lost)
+)  # Part F: the piece's p_a per axis in T's unit, the record's P_a over the board at the click, the taker's twist n_a per axis, the fold's shortfall per axis, s_a = |p_a| - gain_a at or above 0 (the click's plan, C3; None where no fold), and what the write could not give (None where nothing was lost)
 SOURCE, RECOIL = (
     "source",
     "recoil",
@@ -69,6 +70,7 @@ CREDIT_KEYS = (
     MOMENTUM,
     FAN,
     TWIST,
+    SHORTFALL,
     LOST,
     SOURCE,
     RECOIL,
@@ -179,6 +181,7 @@ def credit(
     momentum: list[int] | None = None,
     fan: list[int] | None = None,
     twist: list[int] | None = None,
+    shortfall: list[int] | None = None,
     lost: list[str] | None = None,
     source: str | None = None,
     recoil: list[int] | str | None = None,
@@ -187,7 +190,9 @@ def credit(
     label = MEASUREMENT if count else DIAGNOSTIC  # the null window's line (count 0) is the board's
     line = dict(zip(REPORT_KEYS, (CREDIT, label, interval, family, node_detector), strict=True))
     own = (window, proper, windows, before, realised, kept, count, left, absorbed, emitted)
-    line.update(zip(CREDIT_KEYS, (*own, momentum, fan, twist, lost, source, recoil), strict=True))
+    line.update(
+        zip(CREDIT_KEYS, (*own, momentum, fan, twist, shortfall, lost, source, recoil), strict=True)
+    )
     return line
 
 

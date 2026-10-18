@@ -15,7 +15,7 @@
   },
   "photon": {
    "share": 127530000,
-   "quanta": 0,
+   "quanta": 1,
    "count": 0,
    "deficit": 0,
    "drift": -128856000,
@@ -318,6 +318,11 @@
     0,
     0
    ],
+   "shortfall": [
+    13268,
+    0,
+    0
+   ],
    "lost": [
     "P lost to the taker",
     "recoil lost to the lay"
@@ -475,6 +480,7 @@
    "momentum": null,
    "fan": null,
    "twist": null,
+   "shortfall": null,
    "lost": null,
    "source": null,
    "recoil": null

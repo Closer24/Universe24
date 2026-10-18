@@ -74,7 +74,7 @@ def laid_record(board: Lattice, number: int, record: int) -> None:
     assert kind is not None
     books = NodeBooks(number, row.family, record, row.nodes, row.counts, kind, 0, [], [], 0, 0, [])
     for part, count in enumerate(kind.counts):
-        relaid(board, books, part, count, (1, 0), 1)
+        relaid(board, books, part, count, [((1, 0), 1)] * len(books.nodes))
 
 
 def laid_whole(board: Lattice) -> None:
