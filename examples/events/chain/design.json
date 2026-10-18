@@ -1,0 +1,74 @@
+{
+ "comment": "The chain world of the click's plan (the spec of 2026-10-18, sections C and D, and the conservation plan's blinds, written before any run; the owner's word of 2026-10-18: the files on the branch, the readings the owner's alone): one law-quantum of light on two bodies of three Nodes. A chain of 96 Nodes open on its axis with both faces receding (largest 400 by 16 layers), the two other axes folded to one Node; two records of the family `atom` ([1, 1299], the shape [2, 2], g at the count 1 and e at 0) declared NodeDetectors over three Nodes each, at the Nodes 60 to 62 and 20 to 22 along the chain, each taking the light `photon` into e at the transition's weight 6 and the resonance [5414, 6000] over a window of 48 intervals from the first lit interval (C2) and giving it back as a source in time at the lifetime 48 (the rate e to g, `gives_to` photon; C5: dark to its own source), the generators seeded 25 and 26; the light `photon` (the pair [6000, 6000], one real line) laid as one packet at k = pi / 4 from the Node 84 toward the lower side, the raised cosine of 8 beyond the top (one wavelength, no uniform mode), at the amplitude 110, one whole quantum in the record's own unit W_rec (C1: W_c sin omega at k = pi / 4; the books' count 1 read from the loaded world, lay_bounds.json); the run 400 intervals. The six worlds are this chain under the six signed permutations of the axes that carry a chain to a chain, B5 (the 48): along x, y and z, the light toward the axis's lower side (minus, the original along x) or its upper side (plus, the mirror image, every coordinate c to 95 - c), the bodies' Node lists the images in the original's order (the draw's order, `drawn`, is the declaration's: B5's one named exception). The trials the same lay with the records' generators at the hash of the declared seeds 25, 26, 27 (tools/meeting_trials.py). Every number stands here and the engine reads none.",
+ "universe": "examples/events/anticoincidence/two_atoms.json",
+ "engine": "examples/events/engine_start.json",
+ "length": 96,
+ "largest": 400,
+ "layers": 16,
+ "face_depth": 1,
+ "bodies": {
+  "family": "atom",
+  "first": [
+   60,
+   20
+  ],
+  "nodes": 3,
+  "weight": 6,
+  "window": 48,
+  "lifetime": 48,
+  "seeds": [
+   25,
+   26
+  ]
+ },
+ "light": {
+  "family": "photon",
+  "top": 84,
+  "quarters": 4,
+  "edge": 8,
+  "amplitude": 110
+ },
+ "resonance": [
+  5414,
+  6000
+ ],
+ "generator": {
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407
+ },
+ "intervals": 400,
+ "trial_intervals": 400,
+ "seeds": [
+  25,
+  26,
+  27
+ ],
+ "inverse_intervals": 40,
+ "worlds": {
+  "chain_x_minus": [
+   "x",
+   "minus"
+  ],
+  "chain_x_plus": [
+   "x",
+   "plus"
+  ],
+  "chain_y_minus": [
+   "y",
+   "minus"
+  ],
+  "chain_y_plus": [
+   "y",
+   "plus"
+  ],
+  "chain_z_minus": [
+   "z",
+   "minus"
+  ],
+  "chain_z_plus": [
+   "z",
+   "plus"
+  ]
+ },
+ "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3); no run on the branch, the readings the owner's to take into blind_and_reading.md"
+}
