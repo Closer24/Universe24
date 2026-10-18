@@ -22,8 +22,10 @@ CDN_THREE = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
 
 
 def shown(value: object) -> str:
-    """A number as the page prints it: an integer with its thousands separated, any other value as written."""
-    return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
+    """A number as the page prints it: an integer with its thousands separated, a blind's nested object or list as JSON, any other value as written."""
+    if isinstance(value, int) and not isinstance(value, bool):
+        return f"{value:,}"
+    return json.dumps(value) if isinstance(value, dict | list) else str(value)
 
 
 Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its node_detector
