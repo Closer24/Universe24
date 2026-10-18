@@ -1,0 +1,825 @@
+<meta charset="utf-8">
+<title>Resonant look</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* The page's own layout: every colour and size of the page stands in this one block and nowhere else. */
+:root {
+  --bg: #0f1114; --panel: #171a20; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #07080a;
+  --cube: #1a1d24; --matter: #6ea1f0; --light: #4ade80; --field: #a3a7ae; --wall: #d7dae0; --ring: #c9c7c0;
+  --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); --hole: #ffffff; --front: #c084fc;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
+  --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
+  --side-min: 300px; --board-height: min(76vh, 900px); --graph-width: 360; --graph-height: 84; --graph-pad: 6;
+  --bar-slot: 12; --measure-width: 960px; --blind-words: 100; --blind-list: 48; --blind-rows: 24; --arrival-width: 2.6; --arrival-height: 1.6;
+  --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
+  --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
+  --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12; --hole-size: 1.08; --front-size: 0.5;
+  --view-margin: 1; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
+  --label-size: 1.4;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding-inline: var(--gutter); padding-block: var(--pad); background: var(--bg); color: var(--fg); font: var(--text)/1.45 var(--font-body); }
+h1 { font-size: var(--title); margin: 0; font-weight: 600; text-wrap: balance; }
+h2 { font-size: var(--text); margin: 0; font-weight: 600; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--gap); margin-bottom: var(--gap); }
+header .verdict { font-family: var(--font-mono); color: var(--muted); }
+.page { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--side-min), 1fr)); gap: var(--gap); align-items: start; }
+.wide { grid-column: 1 / -1; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); min-width: 0; }
+.stage { position: relative; height: var(--board-height); border-radius: var(--radius); overflow: hidden; background: var(--board); border: 1px solid var(--line); }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.corner { position: absolute; top: var(--gap); left: var(--gap); font: 500 var(--small)/1.2 var(--font-mono); color: var(--muted); pointer-events: none; }
+.zoom { position: absolute; top: var(--gap); right: var(--gap); display: flex; gap: 4px; }
+.hover { position: absolute; display: none; max-width: min(320px, 90%); padding: 8px 10px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); font: var(--small)/1.4 var(--font-mono); pointer-events: none; white-space: pre-line; }
+.layers { display: flex; flex-wrap: wrap; gap: 6px var(--gap); margin-top: var(--gap); font-size: var(--small); }
+.layers label { display: inline-flex; align-items: center; gap: 4px; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); }
+.swatch.dashed { border-style: dashed; }
+.time { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }
+.track { position: relative; min-width: 0; }
+.track input { width: 100%; margin: 0; position: relative; z-index: 1; }
+.track .window { position: absolute; top: 25%; height: 50%; background: var(--window); border-radius: var(--radius); }
+.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
+.lines { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 6px; min-height: 1.4em; }
+button, select, input[type=number] { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 10px; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.stack { display: grid; gap: var(--gap); }
+.graph { display: grid; gap: 2px; }
+.graph .caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px var(--gap); font-size: var(--small); color: var(--muted); }
+.graph .caption b { color: var(--fg); font-weight: 600; }
+.graph svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px var(--gap); font-size: var(--small); }
+.legend i { display: inline-block; width: 14px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 4px; }
+.legend i.dashed { border-top-style: dashed; }
+.picker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--small); }
+.picker input { width: 5ch; padding: 3px 6px; }
+dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px var(--gap); margin: 0; font-size: var(--small); }
+dt { color: var(--muted); } dd { margin: 0; font-family: var(--font-mono); overflow-wrap: anywhere; }
+table { border-collapse: collapse; width: 100%; font-size: var(--small); }
+th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; font-variant-numeric: tabular-nums; }
+th { color: var(--muted); font-weight: 600; }
+td.num { font-family: var(--font-mono); }
+.scroll { overflow-x: auto; }
+.measure { border-color: var(--fg); }
+.measure svg, #arrival svg { max-width: var(--measure-width); }
+.totals, .watch { font-family: var(--font-mono); font-size: var(--small); margin-top: 6px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script id="look" type="application/gzip+base64">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</script>
+<script id="roles" type="application/json">{"atom":{"role":"matter","dashed":false},"pulse":{"role":"light","dashed":false}}</script>
+<script id="blind" type="application/json">{"verdict":"NODEDETECTOR","comment":"The resonance world, test (vi), T4 (the owner's word of 2026-10-03, 05:00 UTC, 'not in the morning, now'; the mathematician's 213 (B), #1572 comment 5965054791, his 220, 5965303134, and the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands): the born light's frequency read in the engine. On the Zeno atom's universe (examples/events/zeno/zeno_atom.json: the atom [1, 1299] of two parts, the light `pulse` the holder of the sign under the rotation), a chain of 48 Nodes periodic on x, y and z folded. The giver, an atom at the Node 0 standing in its upper part e, its transition g to e by `pulse` at the resonance [2, 3] (cos Omega = 2 / 3, Omega = 0.8411, the drive's own rotation at k = pi / 2) and its emission e to g to `pulse` at the lifetime 48, its window 48, so that the emission is drawn with certainty at the interval 48 (the weights the window against the lifetime's rest, 48 against 0) and the quantum is laid as a source in time at the Node 0 over the intervals 48 to 95: the total of the squared amplitudes S = isqrt(T^2 den^2 div (4 (den^2 - num^2))) = 21,981 at T = 32,768 (2 S sin Omega / T = 0.99998, one quantum's action), laid with the carry, A_t = isqrt((S t) div 48 - SUM A_u^2), 21 on 30 intervals and 22 on 18, one lay line per interval. Two worlds from the design: `resonant.json`, a second atom at the Node 12 standing in g with the transition g to e by `pulse` at the same resonance [2, 3] and the weight 6, its window 96, one draw at the run's end over its share; `detuned.json`, the same atom at the Node 12 at the resonance [1, 3] (Omega = 1.2310, the detuning delta = 0.3899 per interval, 2 pi / delta = 16.1 intervals). The far Node's reading: the light's level n_t at the Node 8 over the window of intervals 62 to 70 (the wave arriving at about 56 and the plateau standing until the source stops at 95 and the wrap returns at about 88), cos Omega read as SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2), a lattice reading. The blind, written before any lay and never touched after, in expectation.json; the reading in blind_and_reading.md, a miss a finding by name. The mathematician's 221 (#1572 comment 5965498522): the source in time stands inside a guide, this chain, where its far Node reads the frequency; in the open board a single quantum falls below one level within about 0.28 A_source Links and travels only as a beam, the form of a round of its own.","family":"pulse","emission":{"clock":"the lifetime's hazard 1 / tau per interval: in the dark one draw per interval at the now, the window's draw while a window stands (the giver is in the dark until it gives)","span":48,"lay_lines":"48 from the interval t, cut by the run's end 96 for t above 49 (0.644 of the seeds hold the whole span)","total_formula":"S = isqrt(T^2 den^2 div (4 (den^2 - num^2)))","total":21981,"invariant_check":0.99998,"amplitudes":{"21":30,"22":18},"width":"1 / tau = 1 / 48","line":"the emission's clock the lifetime's hazard 1 / tau per interval, drawn per window while a window stands and per interval in the dark, at the now and not a booked waiting time (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562; the advisor's 5965918924 (a) and his second 5966129376; two hands): the giver stands in the dark until it gives, no light on the board before the emission, so its window of 48 draws nothing and the emission is drawn once per interval at 1 / 48 from the interval 1; the degenerate corner of the first blind, the window 48 equal to the lifetime 48 giving with certainty at 48, is gone; written 2026-10-03, 06:50 UTC, before any run under the form","chance_within_the_lifetime":0.636,"chance_within_the_lifetime_formula":"1 - (47 / 48)^48","seeds_within_the_lifetime":[63.6,4.8],"band_two_deviations":[54,73],"chance_within_the_run":0.8675,"seeds_within_the_run":[86.7,3.4],"waiting_time":{"law":"geometric at the grain 1, the exponential exactly","mean":48,"standard_deviation":47.5},"plateau":"[t + 28, t + 42] for an emission at the interval t, inside the run for t <= 53 (0.675 of the seeds): the cosine within 2 / A_far of 2 / 3 there as on the plateau 76 to 90 of an emission at 48, the board holding no light before the emission","takers":"the resonant and the detuned record take alike as before (the two-mode act reads no resonance, a finding by name); their fractions fall below the first reading's 39 of 100 where the light's train reaches the Node 12 late in the taker's window of 96; no number blind beyond that","telegraph":"unchanged by name: the shelved ion's window is 1, its window's draw already one draw per interval at the hazard, and its two drives stand at its Node at every interval, so it is never in the dark; 43 of 43, the bins 5, 9, 0 and the refusal at 434 expected bit for bit"},"cos_omega":{"value":0.6666666666666666,"pair":[2,3],"node":[8,0,0],"node_from_the_lay":"the design's reading Node is eight Nodes along x from the giver's first Node; the reader stands over the Nodes 0 and 1 and its emission is laid at the Node drawn by the record's share, so the reading Node is the one eight Nodes along x from the laid Node, 8 or 9","window":[62,70],"estimator":"SUM_t n_t (n_(t+1) + n_(t-1)) / (2 SUM_t n_t^2)","gate":"|cos Omega_read - num / den| <= 2 / A_far with A_far = max |n_t| over the window at the reading Node (the mathematician's 220, the advisor's second)"},"count_at_the_spans_end":{"value":1,"reading":"the light's record's share in whole quanta over the board at the interval 96, (SUM share + W_c div 2) div W_c","status":"the count's line, refused by name otherwise (the advisor's second)"},"resonant":{"share":1.0,"reading":"the fraction of the seeds with an absorption at the taker (the record's click lines, NODEDETECTOR), gate sqrt(N p (1 - p)) over the seeds","status":"the mathematician's 220: the resonant record's share 1 at delta = 0"},"detuned":{"ratio_to_resonant":0.0001,"reading":"the detuned taker's fraction over the resonant's","status":"S.43 (the paper's supplement, line 328): P(tau) = [g^2 / (g^2 + delta^2 / 4)] sin^2(sqrt(g^2 + delta^2 / 4) tau), the ratio sinc^2(delta tau / 2) in the weak-turn limit, 1e-4 at tau = 48: fewer than one absorption in a thousand of the resonant record's","delta_per_interval":0.3899,"period_intervals":16.1,"sinc_squared_at_tau":{"3":0.8911,"6":0.6195,"12":0.0944,"24":0.0456,"48":0.0001}},"seeds":100,"status":"the two hands' numbers (the mathematician's 220, #1572 comment 5965303134; the advisor's second, #1563 comment 5965316267); fence: clicks for the absorptions, a lattice reading for the cosine and the count"}</script>
+<script id="measurement" type="application/json">null</script>
+<script id="output" type="application/json">{"input":"resonant.json","verdict":"LAWFUL","intervals":96,"ended":null,"books":{"atom":{"share":251740793,"quanta":2,"count":2,"deficit":0,"drift":2005445,"pace":6000,"frozen":0},"pulse":{"share":444180000,"quanta":1,"count":0,"deficit":0,"drift":444180000,"pace":6000,"frozen":0}},"lines":[{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":0,"before":[0,0,35914752000000],"after":[0,-90,35914752000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":0,"before":[0,0,35914752000000],"after":[0,-90,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":1,"before":[0,0,35914752000000],"after":[90,0,35914752000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":1,"before":[0,0,35914752000000],"after":[90,0,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":2,"before":[0,-90,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":2,"before":[0,-90,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":3,"before":[89,0,26072064000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"atom","node_detector":null,"line":3,"before":[89,0,26072064000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":27,"family":"pulse","node_detector":null,"line":0,"before":[0,0,165888000000000],"after":[21,0,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"credit","label":"NODEDETECTOR","interval":27,"family":"atom","node_detector":"body 0","window":[1,27],"proper":27,"windows":0,"before":"e","realised":"g","kept":null,"count":1,"left":1,"absorbed":null,"emitted":"pulse","momentum":null,"fan":null,"twist":null,"lost":null,"source":null,"recoil":null},{"event":"lay","label":"LATTICE","interval":28,"family":"pulse","node_detector":null,"line":0,"before":[28,21,165888000000000],"after":[42,21,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":29,"family":"pulse","node_detector":null,"line":0,"before":[40,42,55296000000000],"after":[38,42,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":30,"family":"pulse","node_detector":null,"line":0,"before":[24,38,55296000000000],"after":[6,38,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":31,"family":"pulse","node_detector":null,"line":0,"before":[-6,6,276480000000000],"after":[-27,6,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":32,"family":"pulse","node_detector":null,"line":0,"before":[-20,-27,55296000000000],"after":[-30,-27,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":33,"family":"pulse","node_detector":null,"line":0,"before":[-10,-30,165888000000000],"after":[-3,-30,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":34,"family":"pulse","node_detector":null,"line":0,"before":[11,-3,55296000000000],"after":[29,-3,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":35,"family":"pulse","node_detector":null,"line":0,"before":[23,29,55296000000000],"after":[42,29,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":36,"family":"pulse","node_detector":null,"line":0,"before":[25,42,55296000000000],"after":[31,42,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":37,"family":"pulse","node_detector":null,"line":0,"before":[19,31,165888000000000],"after":[7,31,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":38,"family":"pulse","node_detector":null,"line":0,"before":[8,7,55296000000000],"after":[-13,7,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":39,"family":"pulse","node_detector":null,"line":0,"before":[-5,-13,276480000000000],"after":[-21,-13,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":40,"family":"pulse","node_detector":null,"line":0,"before":[-13,-21,55296000000000],"after":[-15,-21,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":41,"family":"pulse","node_detector":null,"line":0,"before":[-12,-15,165888000000000],"after":[2,-15,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":42,"family":"pulse","node_detector":null,"line":0,"before":[3,2,165888000000000],"after":[25,2,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":43,"family":"pulse","node_detector":null,"line":0,"before":[25,25,276480000000000],"after":[37,25,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":44,"family":"pulse","node_detector":null,"line":0,"before":[31,37,276480000000000],"after":[28,37,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":45,"family":"pulse","node_detector":null,"line":0,"before":[19,28,55296000000000],"after":[0,28,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":46,"family":"pulse","node_detector":null,"line":0,"before":[-6,0,55296000000000],"after":[-27,0,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":47,"family":"pulse","node_detector":null,"line":0,"before":[-22,-27,276480000000000],"after":[-32,-27,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":48,"family":"atom","node_detector":null,"line":1,"before":[0,90,45868032000000],"after":[0,89,35914752000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":48,"family":"atom","node_detector":null,"line":1,"before":[0,90,45868032000000],"after":[0,89,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"credit","label":"LATTICE","interval":48,"family":"atom","node_detector":"body 0","window":[1,48],"proper":48,"windows":1,"before":"g","realised":"g","kept":null,"count":0,"left":null,"absorbed":null,"emitted":null,"momentum":null,"fan":null,"twist":null,"lost":null,"source":null,"recoil":null},{"event":"lay","label":"LATTICE","interval":48,"family":"pulse","node_detector":null,"line":0,"before":[-17,-32,55296000000000],"after":[-9,-32,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":49,"family":"pulse","node_detector":null,"line":0,"before":[2,-9,55296000000000],"after":[21,-9,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":50,"family":"pulse","node_detector":null,"line":0,"before":[17,21,55296000000000],"after":[34,21,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":51,"family":"pulse","node_detector":null,"line":0,"before":[19,34,55296000000000],"after":[24,34,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":52,"family":"pulse","node_detector":null,"line":0,"before":[12,24,276480000000000],"after":[-1,24,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":53,"family":"pulse","node_detector":null,"line":0,"before":[-1,-1,165888000000000],"after":[-23,-1,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":54,"family":"pulse","node_detector":null,"line":0,"before":[-14,-23,276480000000000],"after":[-31,-23,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":55,"family":"pulse","node_detector":null,"line":0,"before":[-21,-31,276480000000000],"after":[-22,-31,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":56,"family":"pulse","node_detector":null,"line":0,"before":[-16,-22,165888000000000],"after":[-2,-22,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":57,"family":"pulse","node_detector":null,"line":0,"before":[-2,-2,165888000000000],"after":[19,-2,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":58,"family":"pulse","node_detector":null,"line":0,"before":[15,19,55296000000000],"after":[26,19,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":59,"family":"pulse","node_detector":null,"line":0,"before":[17,26,276480000000000],"after":[12,26,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":60,"family":"pulse","node_detector":null,"line":0,"before":[4,12,276480000000000],"after":[-15,12,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":61,"family":"pulse","node_detector":null,"line":0,"before":[-16,-15,276480000000000],"after":[-38,-15,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":62,"family":"pulse","node_detector":null,"line":0,"before":[-29,-38,55296000000000],"after":[-38,-38,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":63,"family":"pulse","node_detector":null,"line":0,"before":[-24,-38,55296000000000],"after":[-16,-38,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":64,"family":"pulse","node_detector":null,"line":0,"before":[-9,-16,165888000000000],"after":[10,-16,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":65,"family":"pulse","node_detector":null,"line":0,"before":[4,10,165888000000000],"after":[21,10,165888000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":66,"family":"pulse","node_detector":null,"line":0,"before":[7,21,276480000000000],"after":[10,21,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":67,"family":"pulse","node_detector":null,"line":0,"before":[1,10,55296000000000],"after":[-13,10,55296000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":68,"family":"pulse","node_detector":null,"line":0,"before":[-12,-13,276480000000000],"after":[-34,-13,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":69,"family":"pulse","node_detector":null,"line":0,"before":[-25,-34,276480000000000],"after":[-42,-34,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":71,"family":"pulse","node_detector":null,"line":0,"before":[-29,-33,276480000000000],"after":[-14,-33,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":72,"family":"pulse","node_detector":null,"line":0,"before":[-15,-14,276480000000000],"after":[6,-14,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":73,"family":"pulse","node_detector":null,"line":0,"before":[2,6,276480000000000],"after":[13,6,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":74,"family":"pulse","node_detector":null,"line":0,"before":[6,13,276480000000000],"after":[0,13,276480000000000],"node":{"label":"LATTICE","at":[0,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":2,"before":[0,0,35914752000000],"after":[-17,88,35914752000000],"node":{"label":"LATTICE","at":[12,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":2,"before":[0,0,35914752000000],"after":[-17,88,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":3,"before":[0,0,35914752000000],"after":[-89,-18,35914752000000],"node":{"label":"LATTICE","at":[12,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":3,"before":[0,0,35914752000000],"after":[-89,-18,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":2,"before":[-17,88,35914752000000],"after":[89,18,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":3,"before":[-89,-18,35914752000000],"after":[-17,88,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":0,"before":[90,0,35914752000000],"after":[0,89,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":1,"before":[0,89,35914752000000],"after":[-90,0,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":0,"before":[90,0,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[12,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":0,"before":[90,0,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":1,"before":[0,89,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[12,0,0]}},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":1,"before":[0,89,35914752000000],"after":[0,0,35914752000000],"node":{"label":"LATTICE","at":[13,0,0]}},{"event":"credit","label":"NODEDETECTOR","interval":96,"family":"atom","node_detector":"body 1","window":[1,96],"proper":96,"windows":1,"before":"g","realised":"e","kept":null,"count":1,"left":0,"absorbed":"pulse","emitted":null,"momentum":[64197,0,0],"fan":[0,0,0],"twist":[9424,0,0],"lost":["P lost to the taker","recoil lost to the source"],"source":"body 0","recoil":[-32040,0,0]},{"event":"lay","label":"LATTICE","interval":96,"family":"atom","node_detector":null,"line":1,"before":[-90,0,35914752000000],"after":[-90,-1,35914752000000],"node":{"label":"LATTICE","at":[1,0,0]}},{"event":"credit","label":"LATTICE","interval":96,"family":"atom","node_detector":"body 0","window":[49,96],"proper":96,"windows":2,"before":"g","realised":"g","kept":null,"count":0,"left":null,"absorbed":null,"emitted":null,"momentum":null,"fan":null,"twist":null,"lost":null,"source":null,"recoil":null}]}</script>
+<script id="reading" type="application/json">null</script>
+<header>
+  <h1 id="title"></h1>
+  <span class="verdict" id="verdict"></span>
+  <span class="verdict" id="source"></span>
+</header>
+<div class="page">
+  <section class="panel wide">
+    <div class="stage" id="stage">
+      <canvas id="board"></canvas>
+      <div class="corner">lattice reading</div>
+      <div class="zoom"><button type="button" id="zoom-in" aria-label="closer">+</button><button type="button" id="zoom-out" aria-label="farther">&minus;</button></div>
+      <div class="hover" id="hover"></div>
+    </div>
+    <div class="layers" id="layers"></div>
+    <div class="picker" id="view-picker"></div>
+    <div class="time">
+      <button type="button" id="play">Play</button>
+      <div class="track"><div class="window" id="window" hidden></div><input type="range" id="slider" min="0" value="0" step="1" aria-label="the interval"></div>
+      <div class="frame" id="frame"></div>
+    </div>
+    <div class="lines" id="lines"></div>
+  </section>
+  <section class="panel measure" id="measure-box">
+    <h2>Measurement: the node_detectors' report</h2>
+    <div class="picker" id="measure-picker"></div>
+    <div class="graph" id="measure"></div>
+    <div class="totals" id="totals"></div>
+    <div class="watch" id="watch"></div>
+  </section>
+  <section class="panel wide" id="arrival-box" hidden>
+    <h2>The arrival at the NodeDetectors over the intervals</h2>
+    <div class="stack" id="arrival"></div>
+  </section>
+  <section class="panel wide" id="records-box" hidden>
+    <h2>The records' clicks: the meeting written on the lattice</h2>
+    <div class="stack" id="records"></div>
+    <div class="scroll" id="credits"></div>
+  </section>
+  <section class="panel">
+    <h2>The blind, written before the run</h2>
+    <div id="blind-box"></div>
+  </section>
+  <section class="panel">
+    <h2>The world's numbers</h2>
+    <div id="numbers"></div>
+  </section>
+  <section class="panel">
+    <h2>Over the intervals, at a Node</h2>
+    <div class="picker" id="node-picker"></div>
+    <div class="stack" id="graphs"></div>
+  </section>
+  <section class="panel wide">
+    <h2>The books at the run's end</h2>
+    <div class="scroll" id="books"></div>
+  </section>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+/* The look is embedded gzip-compressed and base64-encoded, so that a look of many frames fits one page; the browser's own DecompressionStream inflates it at load and the numbers are the look's, untouched. */
+async function inflated(id) {
+  const text = document.getElementById(id).textContent.trim();
+  const bytes = Uint8Array.from(atob(text), c => c.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return JSON.parse(await new Response(stream).text());
+}
+(async () => {
+const LOOK = await inflated('look');
+const ROLES = JSON.parse(document.getElementById('roles').textContent);
+const BLIND = JSON.parse(document.getElementById('blind').textContent) || {};
+const MEASURE = JSON.parse(document.getElementById('measurement').textContent);
+const OUTPUT = JSON.parse(document.getElementById('output').textContent);
+const READ = JSON.parse(document.getElementById('reading').textContent);
+const root = document.documentElement;
+const token = name => getComputedStyle(root).getPropertyValue(name).trim();
+const size = name => parseFloat(token(name));
+const byId = id => document.getElementById(id);
+/* The frames' shapes: a board with a receding face grows, so the page's box is the union of the frames' shapes at the file's coordinates (a frame's origin is minus its offset, the layers grown before the origin); an older look without them has the world's shape. */
+const shapeOf = fr => fr.shape || LOOK.shape, originOf = fr => (fr.offset || [0, 0, 0]).map(o => -o);
+const LOW = [0, 1, 2].map(a => Math.min(...LOOK.frames.map(fr => originOf(fr)[a])));
+const HIGH = [0, 1, 2].map(a => Math.max(...LOOK.frames.map(fr => originOf(fr)[a] + shapeOf(fr)[a])));
+const [X, Y, Z] = HIGH.map((h, a) => h - LOW[a]), N = X * Y * Z, T = LOOK.frames.length - 1;
+/* The view is fixed: the board is seen along one axis, VIEW, and never turned; a folded axis is the one seen along (the board the plane it is), a board of three axes is seen along z one layer at a time, LAYER. The eye stands on the side of the axis from which its two other axes read right and up (ACROSS), and the declared board (the file's own Nodes, from the origin) alone is in the frame. */
+const VIEW = LOOK.folded.indexOf(true) >= 0 ? LOOK.folded.indexOf(true) : 2, SIDE = VIEW === 2 ? 1 : -1;
+const ACROSS = [0, 1, 2].filter(a => a !== VIEW);
+const CENTRE = LOOK.shape.map((e, a) => (e - 1) / 2 - LOW[a] - ([X, Y, Z][a] - 1) / 2);
+let LAYER = LOOK.folded[VIEW] ? 0 : LOOK.bodies.length && LOOK.bodies[0].nodes.length ? LOOK.bodies[0].nodes[0][VIEW] : Math.floor(LOOK.shape[VIEW] / 2);
+const FAMILIES = LOOK.families, QUANTA = FAMILIES.filter(f => f.quanta), HELD = FAMILIES.filter(f => !f.quanta);
+const AXES = ['x', 'y', 'z'], PARTS = ['x', 'y', 'z', 'xx', 'yy', 'zz', 'xy', 'xz', 'yz'];
+const colourOf = name => token('--' + ROLES[name].role);
+const esc = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const format = value => typeof value === 'number' ? value.toLocaleString('en-US') : String(value);
+
+/* The arrays of a frame, dense nested lists or the nonzero Nodes alone over the frame's own shape, as flat x-major arrays over the page's box, the frame's Nodes at their file coordinates. */
+function arrayOf(value, fr) {
+  const out = new Float64Array(N);
+  if (!value) return out;
+  const [fy, fz] = shapeOf(fr).slice(1), [ox, oy, oz] = originOf(fr).map((o, a) => o - LOW[a]);
+  const put = (x, y, z, v) => { out[((x + ox) * Y + (y + oy)) * Z + (z + oz)] = v; };
+  if (Array.isArray(value)) value.forEach((plane, x) => plane.forEach((row, y) => row.forEach((v, z) => put(x, y, z, v))));
+  else value.at.forEach((k, j) => put(Math.floor(k / (fy * fz)), Math.floor(k / fz) % fy, k % fz, value.values[j]));
+  return out;
+}
+const inside = i => { const n = nodeOf(i); return n.every((c, a) => c >= 0 && c < LOOK.shape[a]) && (LOOK.folded[VIEW] || n[VIEW] === LAYER); };  // the declared board, the layer seen
+const cache = new Map();
+function frameOf(t) {
+  if (cache.has(t)) return cache.get(t);
+  const frame = LOOK.frames[t], out = {};
+  for (const f of FAMILIES) {
+    const row = frame.families[f.name] || {}, a = {};
+    if (f.quanta) { for (const key of ['now', 'second', 'count', 'form']) if (row[key] !== undefined) a[key] = arrayOf(row[key], frame); a.pace = row.pace; a.share = row.share; a.peakForm = a.form ? peak(a.form) : 0; a.peakNow = Math.max(peak(a.now), a.second ? peak(a.second) : 0); }
+    else { a.level = arrayOf(row.level, frame); a.parts = (row.parts || []).map(part => arrayOf(part, frame)); }
+    out[f.name] = a;
+  }
+  cache.set(t, out);
+  return out;
+}
+const peak = a => { let m = 0; for (let i = 0; i < a.length; i++) { const v = Math.abs(a[i]); if (v > m) m = v; } return m; };
+const sum = a => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i]; return s; };
+const MOST = {}, TOTALS = {};
+for (const f of FAMILIES) { MOST[f.name] = { now: 0, count: 0, level: 0, part: 0, form: 0 }; if (f.quanta) TOTALS[f.name] = new Float64Array(T + 1); }
+for (let t = 0; t <= T; t++) {
+  const fr = frameOf(t);
+  for (const f of FAMILIES) {
+    const a = fr[f.name], m = MOST[f.name];
+    if (f.quanta) { m.now = Math.max(m.now, peak(a.now), a.second ? peak(a.second) : 0); m.count = Math.max(m.count, peak(a.count)); m.form = Math.max(m.form, a.form ? peak(a.form) : 0); TOTALS[f.name][t] = a.share == null ? sum(a.count) : a.share / f.wall; }
+    else { m.level = Math.max(m.level, peak(a.level)); for (const p of a.parts) m.part = Math.max(m.part, peak(p)); }
+  }
+}
+const indexOf = (x, y, z) => ((x - LOW[0]) * Y + (y - LOW[1])) * Z + (z - LOW[2]);
+const nodeOf = i => [Math.floor(i / (Y * Z)) + LOW[0], Math.floor(i / Z) % Y + LOW[1], i % Z + LOW[2]];
+/* The click lines the measurement is drawn from: the output file's where it is given (the run's own output), the look's otherwise; the two are the same engine lines, and the header says so or names the difference. The output file's credit lines (the clicks the draw credited) and density lines (a lattice reading per declared region) beside them. */
+const LOOK_CLICKS = [], reportsAt = {}, CREDITS_AT = {}, DENSITY_AT = {};
+for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'click') LOOK_CLICKS.push(line);
+const CLICKS = OUTPUT ? OUTPUT.lines.filter(line => line.event === 'click') : LOOK_CLICKS;
+for (const line of CLICKS) {
+  const byFamily = reportsAt[line.node_detector] || (reportsAt[line.node_detector] = {});
+  (byFamily[line.family] || (byFamily[line.family] = [])).push([line.interval, line.inflow]);
+}
+if (OUTPUT) for (const line of OUTPUT.lines) {
+  if (line.event === 'credit') (CREDITS_AT[line.node_detector] || (CREDITS_AT[line.node_detector] = [])).push([line.interval, line.count || 0]);
+  if (line.event === 'density') ((DENSITY_AT[line.family] || (DENSITY_AT[line.family] = {}))[line.node_detector] || (DENSITY_AT[line.family][line.node_detector] = [])).push([line.interval, line.reading]);
+}
+/* The click act's lines from the output file: the hole (the lay lines' Nodes per interval), the faces presented (the face lines' Nodes per interval: the hole's faces, then the front's shells), the front's erasure lines (the origin, the distance and the sizes taken per interval) and the records' credits (a record declared a NodeDetector, `body n`), the meeting of the future with the past drawn where the engine wrote it. */
+const HOLES_AT = {}, FACES_AT = {}, FRONTS_AT = {}, RECORD_CREDITS = {};
+if (OUTPUT) for (const line of OUTPUT.lines) {
+  if (line.event === 'lay' && line.node && Array.isArray(line.node.at)) (HOLES_AT[line.interval] || (HOLES_AT[line.interval] = new Set())).add(line.node.at.join(','));
+  if (line.event === 'face' && line.node && Array.isArray(line.node.at)) (FACES_AT[line.interval] || (FACES_AT[line.interval] = new Set())).add(line.node.at.join(','));
+  if (line.event === 'erasure') (FRONTS_AT[line.interval] || (FRONTS_AT[line.interval] = [])).push(line);
+  if (line.event === 'credit' && /^body \d+$/.test(String(line.node_detector))) (RECORD_CREDITS[line.node_detector] || (RECORD_CREDITS[line.node_detector] = [])).push(line);
+}
+const DETECTOR_BODIES = LOOK.bodies.filter(b => b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
+const key = line => [line.interval, line.node_detector, line.family, line.inflow].join('|');
+const SAME_LINES = OUTPUT ? CLICKS.length === LOOK_CLICKS.length && CLICKS.map(key).sort().join(';') === LOOK_CLICKS.map(key).sort().join(';') : null;
+const WALL = {};
+for (const f of FAMILIES) if (f.quanta) WALL[f.name] = f.wall;
+const WINDOW = Array.isArray(BLIND.window) && BLIND.window.length === 2 ? BLIND.window : null;
+
+/* The board: cubes, dots, glow, mist, bars, rings, the box's edges and a folded axis's plane. */
+const stage = byId('stage'), canvas = byId('board');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio || 1);
+const scene = new THREE.Scene();
+const EXTENT = Math.max(X, Y, Z);
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, EXTENT * size('--camera-far'));
+/* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS. */
+function fit() {
+  const w = stage.clientWidth || 1, margin = size('--view-margin');
+  let halfW = (LOOK.shape[ACROSS[0]] + 2 * margin) / 2, halfH = (LOOK.shape[ACROSS[1]] + 2 * margin) / 2;
+  stage.style.height = Math.round(Math.max(size('--board-least'), Math.min(size('--board-most'), w * halfH / halfW))) + 'px';  // the stage the board's own shape, within bounds
+  const h = stage.clientHeight || 1;
+  if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
+  camera.left = -halfW; camera.right = halfW; camera.top = halfH; camera.bottom = -halfH; camera.updateProjectionMatrix();
+  const centre = new THREE.Vector3(...CENTRE), eye = centre.clone(), up = new THREE.Vector3();
+  eye.setComponent(VIEW, CENTRE[VIEW] + SIDE * EXTENT * size('--camera-far') / 2); up.setComponent(ACROSS[1], 1);
+  camera.position.copy(eye); camera.up.copy(up); camera.lookAt(centre);
+}
+const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000, 1), sun = new THREE.DirectionalLight(0xffffff, size('--sun'));
+sun.position.set(1, 2, 3);
+scene.add(hemisphere, sun);
+const position = i => { const [x, y, z] = nodeOf(i); return new THREE.Vector3(x - LOW[0] - (X - 1) / 2, y - LOW[1] - (Y - 1) / 2, z - LOW[2] - (Z - 1) / 2); };  // the Node at its file coordinates within the box, the layers grown before the origin counted
+const matrix = new THREE.Matrix4(), quaternion = new THREE.Quaternion(), scale = new THREE.Vector3(), colour = new THREE.Color(), tint = new THREE.Color();
+const hidden = new THREE.Matrix4().makeScale(0, 0, 0);
+const layers = {};
+/* A cube is thin along a folded axis (the board a plane of slabs) and the dots rest on the slab's face, so a dot of any count is seen; along an axis of many Nodes a cube keeps its size. */
+const cubeSide = size('--cube-size'), cubeDepth = size('--cube-depth');
+const extentAlong = (side, depth) => [0, 1, 2].map(a => LOOK.folded[a] ? depth : side);
+const lift = [0, 1, 2].map(a => LOOK.folded[a] ? SIDE * cubeDepth / 2 : 0);  // toward the eye
+const cubes = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(cubeSide, cubeDepth)), new THREE.MeshBasicMaterial({ color: 0xffffff }), N);  // unlit, so that a Node's glow is drawn in the tone the frame gives it and no light dims it (the owner's word of 2026-10-04: the tones stand out)
+for (let i = 0; i < N; i++) cubes.setMatrixAt(i, matrix.makeTranslation(...position(i).toArray()));
+for (let i = 0; i < N; i++) cubes.setColorAt(i, colour.set(0xffffff));
+scene.add(cubes);
+function striped(hex) {
+  const c = document.createElement('canvas'), bands = 8; c.width = c.height = 64;
+  const g = c.getContext('2d'); g.fillStyle = hex;
+  for (let b = 0; b < bands; b += 2) g.fillRect(0, b * c.height / bands, c.width, c.height / bands);
+  const texture = new THREE.CanvasTexture(c); texture.needsUpdate = true; return texture;
+}
+const dots = {};
+QUANTA.forEach((f, k) => {
+  const hex = colourOf(f.name), dashed = ROLES[f.name].dashed;
+  const full = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 16, 12), dashed ? new THREE.MeshLambertMaterial({ map: striped(hex), transparent: true, alphaTest: 0.5 }) : new THREE.MeshLambertMaterial({ color: hex }), N);
+  const hollow = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), new THREE.MeshBasicMaterial({ color: hex, wireframe: true }), N);
+  dots[f.name] = { full, hollow, offset: (k - (QUANTA.length - 1) / 2) * size('--dot-offset') };
+  scene.add(full, hollow);
+  layers[f.name + ' dots'] = { on: true, objects: [full, hollow] };
+  layers[f.name + ' glow'] = { on: true, objects: [] };
+});
+const mists = {}, bars = {};
+for (const f of HELD) {
+  const mist = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: colourOf(f.name), transparent: true, opacity: size('--mist-opacity'), depthWrite: false }), N);
+  mists[f.name] = mist; scene.add(mist);
+  layers[f.name + ' mist'] = { on: true, objects: [mist] };
+  if (f.parts.length >= 3) {
+    bars[f.name] = AXES.map(() => new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshLambertMaterial({ color: colourOf(f.name) }), N));
+    scene.add(...bars[f.name]);
+    layers[f.name + ' tension bars'] = { on: false, objects: bars[f.name] };
+  }
+}
+const bodyExtent = n => Math.max(1, ...LOOK.frames.map(fr => fr.bodies[n].length));
+const ringCapacity = LOOK.node_detectors.reduce((n, d) => n + (d.body === null ? d.nodes.length : bodyExtent(d.body)), 0) + DETECTOR_BODIES.reduce((n, b) => n + bodyExtent(b), 0);
+const ringGeometry = new THREE.TorusGeometry(size('--ring-radius'), size('--ring-tube'), 8, 32);  // the ring faces the eye: it lies across the axis seen along
+if (VIEW === 1) ringGeometry.rotateX(Math.PI / 2); else if (VIEW === 0) ringGeometry.rotateY(Math.PI / 2);
+const rings = new THREE.InstancedMesh(ringGeometry, new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(ringCapacity, 1));
+scene.add(rings);
+layers['node_detector rings (the declared regions and the records declared readers)'] = { on: true, objects: [rings] };
+/* The hole and the front, from the output file: a wire cube at each Node the lay and face lines write at the interval shown, and a small cube at each Node of the erasure lines' shells at that interval. */
+const holeCapacity = Math.max(1, ...Object.values(HOLES_AT).map(set => set.size)), frontCapacity = Math.max(1, ...Object.values(FACES_AT).map(set => set.size));
+const holes = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(size('--hole-size'), size('--hole-size'))), new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true }), holeCapacity);
+const fronts = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(size('--front-size'), size('--front-size'))), new THREE.MeshBasicMaterial({ color: 0xffffff }), frontCapacity);
+holes.setMatrixAt(0, hidden); fronts.setMatrixAt(0, hidden);
+scene.add(holes, fronts);
+if (Object.keys(HOLES_AT).length) layers['the hole (the lay lines)'] = { on: true, objects: [holes] };
+if (Object.keys(FACES_AT).length) layers['the faces presented (the face lines: the hole, then the front)'] = { on: true, objects: [fronts] };
+/* The inner faces the world declares: the plane's Nodes across the axis at the coordinate, its gaps left open, drawn as cubes within the declared board alone (the layers a receding face grew are not in the frame); the Nodes are the file's declaration and nothing is read there. */
+const beyond = new Set();
+for (const face of LOOK.faces || []) {
+  const a = AXES.indexOf(face.axis), others = [0, 1, 2].filter(k => k !== a), extents = LOOK.shape;
+  for (let u = 0; u < extents[others[0]]; u++) for (let v = 0; v < extents[others[1]]; v++) {
+    const open = face.gaps.some(gap => { const [p, q] = gap[AXES[others[0]]], [r, s] = gap[AXES[others[1]]]; return p <= u && u <= q && r <= v && v <= s; });
+    if (open) continue;
+    const at = [0, 0, 0]; at[a] = face.at; at[others[0]] = u; at[others[1]] = v;
+    beyond.add(indexOf(...at));
+  }
+}
+const wall = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(size('--wall-size'), size('--wall-depth'))), new THREE.MeshLambertMaterial({ color: 0xffffff }), Math.max(beyond.size, 1));
+wall.setMatrixAt(0, hidden);
+[...beyond].forEach((i, k) => wall.setMatrixAt(k, matrix.makeTranslation(...position(i).toArray())));
+wall.visible = beyond.size > 0;
+scene.add(wall);
+if (beyond.size) layers['the faces (declared)'] = { on: true, objects: [wall] };
+const box = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(...LOOK.shape)), new THREE.LineBasicMaterial({ color: 0xffffff }));
+/* The box is the declared board's, drawn once at its place; the cubes outside the declared board, and outside the layer seen, are hidden. */
+let boxKey = null;
+function boxAt() {
+  if (boxKey === LAYER) return;
+  boxKey = LAYER;
+  for (let i = 0; i < N; i++) cubes.setMatrixAt(i, inside(i) ? matrix.makeTranslation(...position(i).toArray()) : hidden);
+  cubes.instanceMatrix.needsUpdate = true;
+}
+const faces = new THREE.Group();
+AXES.forEach((axis, a) => {
+  if (LOOK.boundary[axis] !== 'open') return;
+  for (const side of [-1, 1]) {
+    const half = LOOK.shape.map(e => e / 2), corners = [];
+    for (const [u, v] of [[-1, -1], [1, -1], [1, 1], [-1, 1], [-1, -1]]) {
+      const p = [0, 0, 0]; p[a] = side * half[a]; p[(a + 1) % 3] = u * half[(a + 1) % 3]; p[(a + 2) % 3] = v * half[(a + 2) % 3];
+      corners.push(new THREE.Vector3(...p));
+    }
+    faces.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(corners), new THREE.LineBasicMaterial({ color: 0xffffff })));
+  }
+});
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: size('--plane-opacity'), side: THREE.DoubleSide, depthWrite: false }));
+plane.visible = LOOK.folded.some(Boolean);
+if (plane.visible) {
+  const span = LOOK.shape.map((e, a) => LOOK.folded[a] ? cubeSide : e), folded = LOOK.folded.indexOf(true);
+  if (folded === 2) plane.scale.set(span[0], span[1], 1);
+  else if (folded === 1) { plane.rotation.x = Math.PI / 2; plane.scale.set(span[0], span[2], 1); }
+  else { plane.rotation.y = Math.PI / 2; plane.scale.set(span[2], span[1], 1); }
+}
+const labels = new THREE.Group(), labelSize = size('--label-size');
+AXES.forEach((axis, a) => {
+  const c = document.createElement('canvas'), px = 64; c.width = c.height = px;
+  const g = c.getContext('2d'); g.font = `${px / 2}px ${token('--font-mono')}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#ffffff'; g.fillText(axis, px / 2, px / 2);
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthTest: false }));
+  const p = [0, 0, 0]; p[a] = LOOK.shape[a] / 2 + labelSize;
+  sprite.position.set(...p); sprite.scale.setScalar(labelSize); labels.add(sprite);
+});
+const frameGroup = new THREE.Group();
+frameGroup.position.set(...CENTRE); frameGroup.add(box, faces, plane, labels); scene.add(frameGroup);
+layers['the box and its axes'] = { on: true, objects: [box, faces, plane, labels] };
+
+function themed() {
+  scene.background = new THREE.Color(token('--board'));
+  box.material.color.set(token('--line')); plane.material.color.set(token('--muted')); wall.material.color.set(token('--wall'));
+  holes.material.color.set(token('--hole')); fronts.material.color.set(token('--front'));
+  faces.children.forEach(line => line.material.color.set(token('--fg')));
+  labels.children.forEach(sprite => sprite.material.color.set(token('--muted')));
+  hemisphere.color.set(token('--sky')); hemisphere.groundColor.set(token('--ground'));
+  for (const f of QUANTA) { const hex = colourOf(f.name); if (!ROLES[f.name].dashed) dots[f.name].full.material.color.set(hex); else dots[f.name].full.material.map = striped(hex); dots[f.name].hollow.material.color.set(hex); }
+  for (const f of HELD) { mists[f.name].material.color.set(colourOf(f.name)); (bars[f.name] || []).forEach(b => b.material.color.set(colourOf(f.name))); }
+}
+
+/* One frame drawn: no state between frames, every mark from the frame's arrays alone. */
+let t = 0, playing = null, named = null;
+function draw() {
+  const frame = LOOK.frames[t], fr = frameOf(t), glow = size('--glow'), glowPower = size('--glow-power'), glowTint = size('--glow-tint');
+  const base = new THREE.Color(token('--cube'));
+  boxAt(frame);
+  for (let i = 0; i < N; i++) {
+    colour.copy(base);
+    for (const f of QUANTA) {
+      if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
+      const a = fr[f.name];  // the glow by the form D at the Node (the wave's intensity, phase-free) against the frame's own largest, where the look holds it, else by the level against the frame's own largest; the dots carry the absolute count
+      if (!(a.peakForm || a.peakNow)) continue;
+      const strength = glow * Math.pow(a.peakForm && a.form ? Math.abs(a.form[i]) / a.peakForm : Math.max(Math.abs(a.now[i]), a.second ? Math.abs(a.second[i]) : 0) / a.peakNow, glowPower);
+      colour.lerp(tint.set(colourOf(f.name)).lerp(base, glowTint), Math.min(1, strength));  // the glow a tint of the family's colour, the dots the colour itself
+    }
+    cubes.setColorAt(i, colour);
+  }
+  cubes.instanceColor.needsUpdate = true;
+  const radius = size('--dot-radius'), floor = size('--dot-floor');
+  for (const f of QUANTA) {
+    const { full, hollow, offset } = dots[f.name], count = fr[f.name].count, most = Math.sqrt(MOST[f.name].count) || 1;
+    for (let i = 0; i < N; i++) {
+      const c = inside(i) ? count[i] : 0, r = c ? Math.max(floor, radius * Math.sqrt(Math.abs(c)) / most) : 0;
+      const p = position(i); p.y += offset; p.x += lift[0]; p.y += lift[1]; p.z += lift[2];
+      matrix.compose(p, quaternion, scale.setScalar(r));
+      full.setMatrixAt(i, c > 0 ? matrix : hidden); hollow.setMatrixAt(i, c < 0 ? matrix : hidden);
+    }
+    full.instanceMatrix.needsUpdate = true; hollow.instanceMatrix.needsUpdate = true;
+  }
+  const mistSize = size('--mist-size'), power = size('--mist-power'), barLength = size('--bar-length'), thickness = size('--bar-thickness');
+  for (const f of HELD) {
+    const a = fr[f.name], mist = mists[f.name], most = MOST[f.name].level;
+    for (let i = 0; i < N; i++) {
+      const s = most && inside(i) ? mistSize * Math.pow(Math.abs(a.level[i]) / most, power) : 0;
+      mist.setMatrixAt(i, s ? matrix.compose(position(i), quaternion, scale.setScalar(s)) : hidden);
+    }
+    mist.instanceMatrix.needsUpdate = true;
+    if (bars[f.name]) bars[f.name].forEach((bar, axis) => {
+      const part = a.parts[f.parts[1] + axis], most = MOST[f.name].part;
+      for (let i = 0; i < N; i++) {
+        const length = most && part && inside(i) ? barLength * Math.abs(part[i]) / most : 0;
+        scale.set(thickness, thickness, thickness); if (length) scale.setComponent(axis, length);
+        bar.setMatrixAt(i, length ? matrix.compose(position(i), quaternion, scale) : hidden);
+      }
+      bar.instanceMatrix.needsUpdate = true;
+    });
+  }
+  let slot = 0;
+  const ringColour = new THREE.Color(token('--ring')), flashColour = new THREE.Color(token('--flash')), flashScale = size('--flash-scale');
+  for (const d of LOOK.node_detectors) {
+    if (d.name === 'face') continue;  // the open faces' layer reports, but is no declared region: not drawn
+    const nodes = d.body === null ? d.nodes : frame.bodies[d.body];
+    const flashing = frame.lines.some(line => line.event === 'click' && line.node_detector === d.name);
+    for (const [x, y, z] of nodes) {
+      rings.setMatrixAt(slot, inside(indexOf(x, y, z)) ? matrix.compose(position(indexOf(x, y, z)), quaternion, scale.setScalar(flashing ? flashScale : 1)) : hidden);
+      rings.setColorAt(slot, flashing ? flashColour : ringColour); slot++;
+    }
+  }
+  for (const n of DETECTOR_BODIES) {
+    const flashing = (RECORD_CREDITS['body ' + n] || []).some(line => line.interval === t && line.count);
+    for (const [x, y, z] of frame.bodies[n]) {
+      rings.setMatrixAt(slot, inside(indexOf(x, y, z)) ? matrix.compose(position(indexOf(x, y, z)), quaternion, scale.setScalar(flashing ? flashScale : 1)) : hidden);
+      rings.setColorAt(slot, flashing ? flashColour : ringColour); slot++;
+    }
+  }
+  for (; slot < rings.count; slot++) rings.setMatrixAt(slot, hidden);
+  rings.instanceMatrix.needsUpdate = true; if (rings.instanceColor) rings.instanceColor.needsUpdate = true;
+  let hole = 0;
+  for (const at of HOLES_AT[t] || []) { const [x, y, z] = at.split(',').map(Number), i = indexOf(x, y, z); if (i >= 0 && i < N && inside(i)) holes.setMatrixAt(hole++, matrix.makeTranslation(...position(i).toArray())); }
+  for (; hole < holes.count; hole++) holes.setMatrixAt(hole, hidden);
+  holes.instanceMatrix.needsUpdate = true;
+  let front = 0;
+  for (const at of FACES_AT[t] || []) { const [x, y, z] = at.split(',').map(Number), i = indexOf(x, y, z); if (i >= 0 && i < N && inside(i)) fronts.setMatrixAt(front++, matrix.makeTranslation(...position(i).toArray())); }
+  for (; front < fronts.count; front++) fronts.setMatrixAt(front, hidden);
+  fronts.instanceMatrix.needsUpdate = true;
+  for (const layer of Object.values(layers)) layer.objects.forEach(o => { o.visible = layer.on; });
+  renderer.render(scene, camera);
+  byId('slider').value = t;
+  byId('frame').textContent = t === 0 ? 'laid, 0 / ' + T : 'interval ' + t + ' / ' + T;
+  const counts = {};
+  for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
+  const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.node_detector + ': ' + line.family);
+  byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\' declared counts, the levels of the mode file, every held row at its start.'
+    : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
+  if (!MEASURE) drawMeasure();
+  moveCursors();
+}
+
+/* The view is fixed: no turning; the wheel and the two buttons bring the board closer or farther, within a bound; a board of three axes has its layer picked. */
+canvas.addEventListener('pointermove', hover);
+canvas.addEventListener('pointerleave', () => hover(null));
+canvas.addEventListener('wheel', e => { e.preventDefault(); zoom(Math.exp(e.deltaY * size('--zoom-rate'))); }, { passive: false });
+function zoom(factor) { camera.zoom = Math.min(size('--zoom-most'), Math.max(1 / size('--zoom-most'), camera.zoom / factor)); camera.updateProjectionMatrix(); renderer.render(scene, camera); }
+byId('zoom-in').addEventListener('click', () => zoom(size('--zoom-step')));
+byId('zoom-out').addEventListener('click', () => zoom(1 / size('--zoom-step')));
+const viewPicker = byId('view-picker');
+if (LOOK.folded[VIEW]) viewPicker.textContent = `Seen along ${AXES[VIEW]}, the board the plane it is: ${AXES[ACROSS[0]]} to the right, ${AXES[ACROSS[1]]} up; the declared board alone, ${LOOK.shape[ACROSS[0]]} x ${LOOK.shape[ACROSS[1]]} Nodes; no turning.`;
+else {
+  viewPicker.innerHTML = `Seen along ${AXES[VIEW]}, one layer at a time: ${AXES[VIEW]} = <label><input type="number" id="layer" min="0" max="${LOOK.shape[VIEW] - 1}" value="${LAYER}" aria-label="the layer seen"></label> of 0 to ${LOOK.shape[VIEW] - 1}; ${AXES[ACROSS[0]]} to the right, ${AXES[ACROSS[1]]} up; the declared board alone; no turning.`;
+  byId('layer').addEventListener('change', () => { LAYER = Math.max(0, Math.min(LOOK.shape[VIEW] - 1, Number(byId('layer').value) || 0)); draw(); });
+}
+canvas.addEventListener('click', e => { const i = pick(e); if (i !== null) { named = nodeOf(i); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); drawGraphs(); } });
+new ResizeObserver(() => {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false); fit(); renderer.render(scene, camera);
+}).observe(stage);
+
+/* The hover: a Node's numbers as they are, the count the record's share in quanta. */
+const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
+function pick(e) {
+  const r = canvas.getBoundingClientRect();
+  pointer.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  raycaster.setFromCamera(pointer, camera);
+  const hit = raycaster.intersectObject(cubes)[0];
+  return hit ? hit.instanceId : null;
+}
+function hover(e) {
+  const panel = byId('hover'), i = e ? pick(e) : null;
+  if (i === null) { panel.style.display = 'none'; return; }
+  const fr = frameOf(t), lines = ['Node [' + nodeOf(i).join(', ') + ']  (lattice reading)' + (beyond.has(i) ? ', beyond the board: a declared face' : '')];
+  for (const f of FAMILIES) {
+    const a = fr[f.name];
+    if (f.quanta) {
+      const parts = ['level ' + format(a.now[i])];
+      if (MOST[f.name].now && a.second && a.second[i]) parts.push('second ' + format(a.second[i]));
+      parts.push('count ' + format(a.count[i]));
+      lines.push(f.name + ': ' + parts.join(', '));
+    } else {
+      const parts = a.parts.map((p, k) => PARTS[k] + ' ' + format(p[i]));
+      lines.push(f.name + ': level ' + format(a.level[i]) + (parts.length ? '; ' + parts.join(', ') : ''));
+    }
+  }
+  panel.textContent = lines.join('\n');
+  panel.style.display = 'block';
+  const r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  panel.style.left = Math.min(x + 12, r.width - panel.offsetWidth - 4) + 'px';
+  panel.style.top = Math.min(y + 12, r.height - panel.offsetHeight - 4) + 'px';
+}
+
+/* The layers, one switch each. */
+const layerBox = byId('layers');
+for (const [name, layer] of Object.entries(layers)) {
+  const family = FAMILIES.find(f => name.startsWith(f.name + ' '));
+  const label = document.createElement('label'), input = document.createElement('input');
+  input.type = 'checkbox'; input.checked = layer.on; input.id = 'layer-' + name.replace(/\W+/g, '-');
+  input.addEventListener('change', () => { layer.on = input.checked; draw(); });
+  label.append(input);
+  if (family) { const swatch = document.createElement('i'); swatch.className = 'swatch' + (ROLES[family.name].dashed ? ' dashed' : ''); swatch.style.borderColor = colourOf(family.name); swatch.style.background = name.endsWith(' dots') ? colourOf(family.name) : 'transparent'; label.append(swatch); }
+  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : ''));
+  layerBox.append(label);
+}
+
+/* The time: one frame per interval, a slider, play; the reading's window marked on the slider. */
+const slider = byId('slider'); slider.max = T;
+slider.addEventListener('input', () => { t = Number(slider.value); draw(); });
+byId('play').addEventListener('click', () => {
+  if (playing) { clearInterval(playing); playing = null; byId('play').textContent = 'Play'; return; }
+  if (t >= T) t = 0;
+  byId('play').textContent = 'Pause';
+  playing = setInterval(() => { if (t >= T) { clearInterval(playing); playing = null; byId('play').textContent = 'Play'; return; } t++; draw(); }, 1000 / size('--frames-per-second'));
+});
+document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return; if (e.key === 'ArrowRight' && t < T) { t++; draw(); } if (e.key === 'ArrowLeft' && t > 0) { t--; draw(); } });
+if (WINDOW && T) { const w = byId('window'); w.hidden = false; w.style.left = (WINDOW[0] / T * 100) + '%'; w.style.width = (Math.max(0, WINDOW[1] - WINDOW[0]) / T * 100) + '%'; w.title = 'the reading\'s window: intervals ' + WINDOW[0] + ' to ' + WINDOW[1]; }
+
+/* The graphs, inline SVG: polylines through the frames' values, nothing between frames. */
+const svgText = (text, x, y, anchor) => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size('--small') * 0.75}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${esc(text)}</text>`;
+function graph(container, title, series, kind, marks, shape) {
+  const W = size('--graph-width') * (shape ? shape[0] : 1), H = size('--graph-height') * (shape ? shape[1] : 1), pad = size('--graph-pad'), left = pad * 8, frames = series[0] ? series[0].values.length : 0;
+  let low = Infinity, high = -Infinity;
+  for (const s of series) for (const v of s.values) { if (v < low) low = v; if (v > high) high = v; }
+  if (!series.length || !isFinite(low)) { container.innerHTML = `<div class="caption"><b>${esc(title)}</b><span>nothing to draw</span></div>`; return; }
+  if (low === high) { low -= 1; high += 1; }
+  const px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (W - left - pad), py = v => pad + (high - v) / (high - low) * (H - 2 * pad);
+  let body = `<rect x="${left}" y="${pad}" width="${W - left - pad}" height="${H - 2 * pad}" fill="none" stroke="${token('--line')}"/>`;
+  if (low < 0 && high > 0) body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}" stroke-dasharray="2 3"/>`;
+  body += svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText(format(low), left - 3, H - pad, 'end');
+  for (const s of series) body += `<polyline fill="none" stroke="${s.colour}" stroke-width="${size('--line-width')}" ${s.dashed ? 'stroke-dasharray="5 4"' : ''} stroke-linejoin="round" points="${Array.from(s.values, (v, i) => px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ')}"/>`;
+  if (marks) body += marks(px, py, low, high);
+  body += `<line class="cursor" x1="${px(t)}" x2="${px(t)}" y1="${pad}" y2="${H - pad}" stroke="${token('--fg')}" stroke-width="1"/>`;
+  const legend = series.map(s => `<span><i class="${s.dashed ? 'dashed' : ''}" style="border-color:${s.colour}"></i>${esc(s.name)}</span>`).join('');
+  container.innerHTML = `<div class="caption"><b>${esc(title)}</b><span>${kind}</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">${body}</svg><div class="caption now"></div>`;
+  container.dataset.px = JSON.stringify([left, W - pad, frames]);
+  container.series = series;
+}
+function moveCursors() {
+  document.querySelectorAll('.graph').forEach(g => {
+    if (!g.series) return;
+    const [left, right, frames] = JSON.parse(g.dataset.px), x = left + (frames > 1 ? t / (frames - 1) : 0) * (right - left);
+    g.querySelectorAll('.cursor').forEach(c => { c.setAttribute('x1', x); c.setAttribute('x2', x); });
+    const now = g.querySelector('.now'); if (now) now.innerHTML = g.series.map(s => `<span>${esc(s.name)} <b>${format(s.values[t])}</b></span>`).join('');
+  });
+}
+const seriesOf = (family, name, values, dashed) => ({ name, values, colour: colourOf(family), dashed: !!dashed });
+function drawGraphs() {
+  const box = byId('graphs'); box.innerHTML = '';
+  const at = named ? indexOf(...named) : null, reading = 'lattice reading';
+  const add = (title, series) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, series, reading); };
+  add('The share per family over the lattice, in quanta (the books per interval, LATTICE; the counts per Node summed where the look holds no share)', QUANTA.map(f => seriesOf(f.name, f.name, TOTALS[f.name], ROLES[f.name].dashed)));
+  if (at === null) return;
+  const over = key => f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => (frameOf(k)[f.name][key] || [])[at] || 0), ROLES[f.name].dashed);  // frame 0 holds no form
+  add('The count at the Node', QUANTA.map(over('count')));
+  add('The form at the Node', QUANTA.map(over('form')));
+  add('The field at the Node', HELD.map(f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => frameOf(k)[f.name].level[at]))));
+  add('The pace\'s minimum', QUANTA.map(f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => frameOf(k)[f.name].pace), ROLES[f.name].dashed)));
+  const tension = [];
+  for (const f of HELD) {
+    const first = f.parts.length >= 3 ? f.parts[1] : 0, names = f.parts.length >= 3 ? PARTS.slice(3, 6) : PARTS.slice(0, 3);
+    if (f.parts.length >= 2) names.forEach((part, k) => tension.push(seriesOf(f.name, f.name + ' ' + part, Float64Array.from({ length: T + 1 }, (_, i) => (frameOf(i)[f.name].parts[first + k] || [])[at] || 0), k > 0)));
+  }
+  if (tension.length) add('The tension at the Node', tension);
+  moveCursors();
+}
+const picker = byId('node-picker');
+picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="number" id="node-${axis}" min="${LOW[a]}" max="${HIGH[a] - 1}" value="0"></label>`).join(' ') + ' <span>(click a cube to pick it)</span>';
+AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map((a, k) => Math.max(LOW[k], Math.min(HIGH[k] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
+if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
+
+/* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the node_detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
+const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
+function drawNodeMeasure() {
+  const m = MEASURE, n = m.rounded_shares.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
+  byId('measure-box').classList.add('wide');
+  measurePicker.textContent = `${m.node_detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
+    + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
+  const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
+  const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
+  const coordinate = k => m.at[k];
+  let body = '';
+  if (Array.isArray(m.pattern) && m.pattern.length === 2 && n) {
+    const [first, last] = m.pattern.map(v => Math.max(0, Math.min(n - 1, v)));
+    body += `<rect x="${(px(first) - slot / 2).toFixed(1)}" y="${pad}" width="${(slot * (last - first + 1)).toFixed(1)}" height="${(H - pad - bottom).toFixed(1)}" fill="${token('--window')}"><title>the pattern's range: ${m.across} ${coordinate(first)} to ${coordinate(last)}</title></rect>`;
+  }
+  body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
+  const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
+  m.rounded_shares.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
+  });
+  if (blind.some(v => v !== null)) {
+    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+    body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  }
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
+  byId('totals').textContent = m.totals;
+  byId('watch').innerHTML = m.watch.map(esc).join('<br>');
+}
+if (!MEASURE) {
+  for (const f of QUANTA) { const o = document.createElement('option'); o.value = f.name; o.textContent = f.name; select.append(o); }
+  const reporting = QUANTA.find(f => f.name === BLIND.family) || QUANTA.find(f => ROLES[f.name].role === 'light') || QUANTA[0];
+  if (reporting) select.value = reporting.name;
+  select.addEventListener('change', drawMeasure);
+  measurePicker.append('Family ', select, document.createTextNode(WINDOW ? ' within the window ' + WINDOW[0] + ' to ' + WINDOW[1] : ' over every interval'));
+}
+function reported(node_detector, family) {
+  const lines = (reportsAt[node_detector] || {})[family] || [];
+  const saw = lines.filter(([k]) => k <= t && (!WINDOW || (k >= WINDOW[0] && k <= WINDOW[1]))).reduce((s, [, inflow]) => s + inflow, 0);
+  return WALL[family] ? saw / WALL[family] : saw;
+}
+function drawMeasure() {
+  const family = select.value, node_detectors = LOOK.node_detectors, box = byId('measure');
+  const expected = node_detectors.map((d, k) => Array.isArray(BLIND.expected) ? BLIND.expected[k] : BLIND.expected && typeof BLIND.expected === 'object' ? BLIND.expected[d.name] : undefined);
+  const counts = node_detectors.map(d => reported(d.name, family));
+  const W = size('--graph-width'), H = size('--graph-height') * 1.5, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3;
+  const high = Math.max(1, ...counts, ...expected.filter(v => typeof v === 'number'));
+  const slot = (W - left - pad) / Math.max(node_detectors.length, 1), py = v => pad + (high - v) / high * (H - pad - bottom);
+  let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
+  if (expected.some(v => typeof v === 'number')) {
+    const points = expected.map((v, k) => typeof v === 'number' ? (left + slot * (k + 0.5)).toFixed(1) + ',' + py(v).toFixed(1) : null).filter(Boolean).join(' ');
+    body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  }
+  const every = Math.max(1, Math.ceil(node_detectors.length / 12));
+  node_detectors.forEach((d, k) => {
+    const x = left + slot * (k + 0.5), w = Math.max(1, slot * 0.6);
+    body += `<rect x="${(x - w / 2).toFixed(1)}" y="${py(counts[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(counts[k])).toFixed(1)}" fill="${colourOf(family)}"><title>${esc(d.name)}: ${counts[k].toFixed(2)} quanta seen</title></rect>`;
+    if (k % every === 0) body += svgText(d.name, x, H - pad, 'middle');
+  });
+  box.innerHTML = `<div class="caption"><b>The reports of ${esc(family)} (what each node_detector saw over W_c)</b><span>measurement</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' report">${body}</svg>`;
+  const watch = BLIND.watch && typeof BLIND.watch === 'object' ? BLIND.watch : null;
+  byId('watch').textContent = watch ? `${watch.node_detector}: ${reported(watch.node_detector, family).toFixed(2)} quanta seen, the blind ${format(watch.count)}` : '';
+}
+
+/* The world's numbers as the files hold them, and the books at the end. */
+function numbers() {
+  const row = (k, v) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`;
+  const inner = (LOOK.faces || []).map(f => `${f.axis} at ${f.at}, gaps ${f.gaps.map(g => Object.entries(g).map(([k, v]) => k + ' [' + v.join(', ') + ']').join(' ')).join('; ') || 'none'}`).join(' | ') || 'none';
+  const receding = Object.entries(LOOK.receding || {}).map(([a, f]) => `${a} ${f.sides.join(' and ')}, the largest ${format(f.largest)}, ${format(f.layers)} layers per growth`).join('; ') || 'none';
+  const ended = LOOK.ended ? `at interval ${format(LOOK.ended.interval)}: the front at the ${LOOK.ended.side} face of ${LOOK.ended.axis} at the largest size ${format(LOOK.ended.largest)}` : 'no';
+  let html = '<dl>' + row('world', LOOK.world) + row('shape', LOOK.shape.join(' x ') + (X * Y * Z > LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2] ? ', grown to ' + [X, Y, Z].join(' x ') : '')) + row('boundary', AXES.map(a => a + ' ' + LOOK.boundary[a]).join(', ')) + row('inner faces', inner) + row('receding faces', receding) + row('ended', ended) + row('folded', AXES.filter((a, k) => LOOK.folded[k]).join(', ') || 'none') + row('face depth', LOOK.face_depth)
+    + row('Gamma (the Node clock)', format(LOOK.node_clock)) + row('T (the quantum action)', format(LOOK.quantum_action)) + row('the largest integer', LOOK.largest_integer) + row('A (the amplitude bound)', format(LOOK.amplitude_bound))
+    + row('intervals', format(LOOK.intervals) + ' recorded; the world declares ' + format(LOOK.declared_intervals)) + '</dl>';
+  html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>level weight</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
+    + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
+    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>node_detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
+    + LOOK.node_detectors.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
+  byId('numbers').innerHTML = html;
+  const books = LOOK.books || {}, keys = Object.keys(Object.values(books)[0] || {});
+  byId('books').innerHTML = keys.length ? '<div class="scroll"><table><thead><tr><th>family</th>' + keys.map(k => `<th>${esc(k.replace('_', ' '))}</th>`).join('') + '</tr></thead><tbody>'
+    + Object.entries(books).map(([name, book]) => `<tr><td>${esc(name)}</td>` + keys.map(k => `<td class="num">${format(book[k])}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>' : '<p>No interval was run.</p>';
+}
+
+/* The blind as a table: every number and short list of the expectation file a row, a nested object's rows named key.subkey, a list of lists or of objects as it is written, and its words (comments, statuses) under a fold; nothing of the page's own. */
+function blindTable() {
+  const box = byId('blind-box');
+  if (!Object.keys(BLIND).length) { box.innerHTML = '<p>No blind file was given.</p>'; return; }
+  const rows = [], words = [], most = size('--blind-words'), many = size('--blind-list');
+  const plain = v => Array.isArray(v) ? (v.some(x => x && typeof x === 'object') ? JSON.stringify(v) : v.map(plain).join(', ')) : v === null ? 'none' : format(v);
+  const walk = (name, v) => {
+    if (typeof v === 'string' && v.length > most) words.push([name, v]);
+    else if (Array.isArray(v)) rows.push([name, v.length > many ? plain(v.slice(0, many)) + ', ... (' + format(v.length) + ' in all)' : plain(v)]);
+    else if (v && typeof v === 'object') Object.entries(v).forEach(([k, w]) => walk(name + '.' + k, w));
+    else rows.push([name, plain(v)]);
+  };
+  Object.entries(BLIND).forEach(([k, v]) => walk(k, v));
+  const row = ([k, v]) => `<tr><td>${esc(k)}</td><td class="num">${esc(v)}</td></tr>`, head = '<table><thead><tr><th>the blind file, key</th><th>value</th></tr></thead><tbody>', first = size('--blind-rows');
+  box.innerHTML = '<div class="scroll">' + head + rows.slice(0, first).map(row).join('') + '</tbody></table></div>'
+    + (rows.length > first ? '<details><summary>the blind file, ' + format(rows.length - first) + ' more rows</summary><div class="scroll">' + head + rows.slice(first).map(row).join('') + '</tbody></table></div></details>' : '')
+    + (words.length ? '<details><summary>the blind file, its words: ' + esc(words.map(([k]) => k).join(', ')) + '</summary>' + words.map(([k, v]) => `<p><b>${esc(k)}</b> ${esc(v)}</p>`).join('') + '</details>' : '');
+}
+
+/* The reading of the output file against the blind (tools/click_counts.py's file): one bar per reporter for the rounded shares (N by the shares, the expectation), one beside it for the clicks the draw credited (the measurement), the dashed blind curve, the totals, and one table of every row the reader compares, read against blind with the difference. */
+function drawReading() {
+  const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
+  byId('measure-box').classList.add('wide');
+  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
+  const slot = size('--bar-slot') * 1.8, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
+  const W = Math.max(size('--graph-width'), left + slot * n + pad), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
+  let body = '';
+  if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
+    const [first, last] = BLIND.pattern.map(v => Math.max(0, Math.min(n - 1, v)));
+    body += `<rect x="${(px(first) - slot / 2).toFixed(1)}" y="${pad}" width="${(slot * (last - first + 1)).toFixed(1)}" height="${(H - pad - bottom).toFixed(1)}" fill="${token('--window')}"><title>the pattern's range: ${r.across} ${r.at[first]} to ${r.at[last]}</title></rect>`;
+  }
+  body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
+  const every = Math.max(1, Math.ceil(n / 16));
+  rs.row.forEach((v, k) => {
+    body += `<rect x="${(px(k) - w).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(r.node_detector[k])}: ${format(v)} by the shares, saw ${format(r.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (clicks) body += `<rect x="${px(k).toFixed(1)}" y="${py(clicks[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(clicks[k])).toFixed(1)}" fill="${flash}"><title>${esc(r.node_detector[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
+    if (k % every === 0 || k === n - 1) body += svgText(r.at[k], px(k), H - pad, 'middle');
+  });
+  if (blind.some(v => v !== null)) {
+    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+    body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  }
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)}, the rounded shares per reporter (N by the shares of the output file's click lines, the expectation)</span>` + (clicks ? `<span><i style="border-color:${flash};border-top-width:6px"></i>the clicks the draw credited (the credit lines, the measurement)</span>` : '') + `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(BLIND.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The output file's credit of ${esc(family)} at ${format(n)} reporters across ${esc(r.across)}, beside the blind</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the reading's bars beside the blind">${body}</svg>`;
+  const credited = clicks ? clicks.reduce((a, b) => a + b, 0) : null;
+  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw with the seed ${format(r.seed)}` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
+  byId('watch').innerHTML = readingTable();
+}
+function readingTable() {
+  const r = READ, rs = r.rounded_shares, b = r.blind || {}, a = r.arrival || {}, ba = r.blind_arrival || {}, rows = [];
+  const text = v => v === null || v === undefined ? 'none' : Array.isArray(v) ? (v.some(x => x && typeof x === 'object') ? JSON.stringify(v) : v.map(text).join(', ')) : typeof v === 'object' ? JSON.stringify(v) : format(v);
+  const signed = v => (v > 0 ? '+' : '') + format(Math.round(v * 100) / 100);
+  const numbers = v => Array.isArray(v) && v.length && v.every(x => typeof x === 'number');
+  const diff = (x, y) => typeof x === 'number' && typeof y === 'number' ? (x - y === 0 ? 'the same' : signed(x - y)) : numbers(x) && numbers(y) && x.length === y.length ? (x.every((v, k) => v === y[k]) ? 'the same' : x.map((v, k) => signed(v - y[k])).join(', ')) : x === null || x === undefined || y === null || y === undefined ? '' : JSON.stringify(x) === JSON.stringify(y) ? 'the same' : 'differs';
+  const put = (what, x, y) => rows.push([what, text(x), text(y), diff(x, y)]);
+  put('N, the screen’s inflow over W_c, to the nearest whole', r.quanta, r.blind_quanta);
+  put('laid by the generator; elsewhere, laid less N', [r.laid, r.elsewhere], [r.laid, 0]);
+  put('maxima within the pattern, by the shares', rs.maxima, b.maxima);
+  put('minima, by the shares (the blind its first minima)', rs.minima, b.minima);
+  put('visibility at the central maximum, by the shares [most - least, most + least]', rs.visibility, b.visibility);
+  put('wings, by the shares (the blind the lattice’s; the continuum’s beside)', rs.wings, b.wings && b.wings.lattice ? b.wings.lattice : b.wings);
+  if (b.wings && b.wings.continuum) put('wings, the continuum’s number', rs.wings, b.wings.continuum);
+  put('deviation from the blind row’s shares, [numerator, denominator]', rs.deviation, [0, rs.deviation ? rs.deviation[1] : 1]);
+  if (r.clicks) { put('maxima, the clicks the draw credited', r.clicks.maxima, b.maxima); put('minima, the clicks', r.clicks.minima, b.minima); put('visibility, the clicks', r.clicks.visibility, b.visibility); put('deviation, the clicks', r.clicks.deviation, [0, r.clicks.deviation ? r.clicks.deviation[1] : 1]); }
+  if (a.peak !== undefined) put('arrival: the peak interval', a.peak, ba.peak);
+  if (Array.isArray(a.centroid)) put('arrival: the centroid interval', Math.round(a.centroid[0] / a.centroid[1] * 100) / 100, ba.centroid);
+  if (a.span) put('arrival: the half-maximum span', a.span, ba.span);
+  for (const [name, seen] of Object.entries(r.aside || {})) put(`the bare region ${name}: seen, quanta`, [seen.seen, seen.quanta], 'nothing');
+  return '<div class="scroll"><table><thead><tr><th>what tools/click_counts.py compares</th><th>read from the output file</th><th>the blind, written first</th><th>the difference</th></tr></thead><tbody>' + rows.map(cells => '<tr>' + cells.map((c, k) => `<td${k ? ' class="num"' : ''}>${esc(c)}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>';
+}
+
+/* The records' clicks: for each record declared a NodeDetector (a body with credit lines in the output file) the part it stands in over the intervals, from its credit lines (the part before and the part realised at each absorption, the first line's `before` the part it started in), one step series per record, and the credit lines themselves in one table; the measurement, the engine's own lines. */
+function drawRecords() {
+  if (!DETECTOR_BODIES.length) return;
+  const box = byId('records'); box.innerHTML = ''; byId('records-box').hidden = false;
+  const names = [], rows = [];
+  for (const n of DETECTOR_BODIES) {
+    const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort((a, b) => a.interval - b.interval), body = LOOK.bodies[n];
+    const parts = []; for (const line of lines) for (const part of [line.before, line.realised]) if (part !== null && part !== undefined && !parts.includes(part)) parts.push(part);
+    let part = lines.length ? lines[0].before : null, next = 0;
+    const values = new Float64Array(T + 1), labels = [];
+    for (let k = 0; k <= T; k++) { while (next < lines.length && lines[next].interval <= k) { if (lines[next].count && lines[next].realised !== null) part = lines[next].realised; next++; } values[k] = part === null ? 0 : parts.indexOf(part); }
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `body ${n} (${esc(body.family)} at the Nodes ${body.nodes.map(node => '[' + node.join(', ') + ']').join(' ')}): ${lines.length ? 'the part it stands in, ' + parts.map((p, k) => k + ' = ' + p).join(', ') : 'no click: it stands in the part it was laid in'}`, [{ name: 'the part, from the credit lines', values, colour: colourOf(body.family), dashed: false }], 'measurement, the credit lines', (px, py, low, high) => lines.filter(line => line.count).map(line => `<line x1="${px(line.interval).toFixed(1)}" x2="${px(line.interval).toFixed(1)}" y1="${py(high).toFixed(1)}" y2="${py(low).toFixed(1)}" stroke="${token('--flash')}" stroke-dasharray="3 2"><title>interval ${line.interval}: ${line.before} to ${line.realised}</title></line>`).join(''), [size('--arrival-width'), 1]);
+    for (const line of lines) rows.push([line.interval, 'body ' + n, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, line.label]);
+  }
+  const intervals = Object.keys(FRONTS_AT).map(Number);
+  if (intervals.length) {
+    const taken = new Float64Array(T + 1), distance = new Float64Array(T + 1);
+    for (const [interval, shells] of Object.entries(FRONTS_AT)) if (Number(interval) <= T) { taken[interval] = shells.reduce((s, line) => s + (line.taken || 0), 0); distance[interval] = Math.max(...shells.map(line => line.distance || 0)); }
+    const origins = [...new Set(Object.values(FRONTS_AT).flat().map(line => '[' + (line.origin || []).join(', ') + ']'))].join(' ');
+    for (const [title, name, values] of [[`The front from ${origins}: the sizes erased at its shell per interval (the erasure lines, taken)`, "taken, the sum of the levels' sizes over the shell", taken], ["The front's distance from its origin per interval (the erasure lines)", "distance in Links, the intervals since the click", distance]]) {
+      const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+      graph(g, title, [{ name, values, colour: token('--front'), dashed: false }], "lattice reading, the front's shell", null, [size('--arrival-width'), 1]);
+    }
+  }
+  byId('credits').innerHTML = '<table><thead><tr>' + ['interval', 'record', 'family', 'window', 'proper time', 'before', 'realised', 'count moved', 'count left', 'taken from', 'given to', 'label'].map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.sort((a, b) => a[0] - b[0]).map(cells => '<tr>' + cells.map(c => `<td class="num">${esc(c === null || c === undefined ? '' : c)}</td>`).join('') + '</tr>').join('') + '</tbody></table>';
+}
+
+/* The arrival: with an expectation across an axis, the reporters' inflow per interval (their click lines summed, the negative ones included, in quanta over the family's wall) and the quanta gathered within the window up to each interval; the blind's peak, centroid and span marked where the blind names an arrival, the blind's total where it names one; the measurement over the intervals. */
+function drawArrival() {
+  const m = READ ? { labels: READ.node_detector, family: READ.family, window: READ.window } : MEASURE, box = byId('arrival'); box.innerHTML = ''; byId('arrival-box').hidden = false;
+  const wall = WALL[m.family] || 1, per = new Float64Array(T + 1), gathered = new Float64Array(T + 1), hex = ROLES[m.family] ? colourOf(m.family) : token('--fg');
+  for (const name of m.labels) for (const [interval, inflow] of (reportsAt[name] || {})[m.family] || []) if (interval <= T) per[interval] += inflow / wall;
+  let sum = 0;
+  for (let k = 0; k <= T; k++) { if (k >= m.window[0] && k <= m.window[1]) sum += per[k]; gathered[k] = sum; }
+  const arrival = BLIND.arrival && typeof BLIND.arrival === 'object' ? BLIND.arrival : null, total = Number(BLIND.quanta !== undefined ? BLIND.quanta : BLIND.through);
+  const marks = (px, py, low, high) => {
+    let body = '';
+    if (!arrival) return body;
+    if (Array.isArray(arrival.span) && arrival.span.length === 2) body += `<rect x="${px(arrival.span[0]).toFixed(1)}" y="${py(high).toFixed(1)}" width="${(px(arrival.span[1]) - px(arrival.span[0])).toFixed(1)}" height="${(py(low) - py(high)).toFixed(1)}" fill="${token('--window')}"><title>the blind span, intervals ${arrival.span[0]} to ${arrival.span[1]}</title></rect>`;
+    [['peak', '5 4'], ['centroid', '2 3']].forEach(([key, dash], k) => { if (typeof arrival[key] !== 'number') return; body += `<line x1="${px(arrival[key]).toFixed(1)}" x2="${px(arrival[key]).toFixed(1)}" y1="${py(high).toFixed(1)}" y2="${py(low).toFixed(1)}" stroke="${token('--blind')}" stroke-dasharray="${dash}"><title>the blind ${key}, interval ${arrival[key]}</title></line>` + svgText('blind ' + key + ' ' + format(arrival[key]), px(arrival[key]) + 2, py(high) + size('--small') * (0.75 + 0.85 * k), 'start'); });
+    return body;
+  };
+  const line = (px, py, low, high) => isFinite(total) && total >= low && total <= high ? `<line x1="${px(0).toFixed(1)}" x2="${px(T).toFixed(1)}" y1="${py(total).toFixed(1)}" y2="${py(total).toFixed(1)}" stroke="${token('--blind')}" stroke-dasharray="5 4"><title>the blind total ${format(total)}</title></line>` + svgText('blind ' + format(total), px(T), py(total) - 2, 'end') : '';
+  const add = (title, name, values, extra) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, [{ name, values, colour: hex, dashed: false }], 'measurement', extra, [size('--arrival-width'), size('--arrival-height')]); };
+  add(`The inflow of ${m.family} at the ${m.labels.length} reporters per interval, in quanta over W_c ${format(wall)}`, "the reporters' click lines summed", per, marks);
+  add(`The quanta gathered within the window ${m.window[0]} to ${m.window[1]}, up to each interval`, 'N so far, the inflow over W_c', gathered, line);
+  if (OUTPUT) {
+    const credited = new Float64Array(T + 1);
+    for (const name of m.labels) for (const [interval, count] of CREDITS_AT[name] || []) if (interval <= T) credited[interval] += count;
+    for (let k = 1; k <= T; k++) credited[k] += credited[k - 1];
+    if (credited[T]) add(`The clicks the draw credited at the ${m.labels.length} reporters, up to each interval (the credit lines)`, 'clicks credited so far', credited, line);
+    const density = new Float64Array(T + 1), at = DENSITY_AT[m.family] || {};
+    for (const name of m.labels) { let last = 0, next = 0; const changes = at[name] || []; for (let k = 0; k <= T; k++) { while (next < changes.length && changes[next][0] <= k) { last = changes[next][1] === null ? last : changes[next][1]; next++; } density[k] += last; } }
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `The density of ${m.family} over the ${m.labels.length} reporters’ Nodes per interval, in quanta (the density lines)`, [{ name: 'LATTICE, the share at the regions, a diagnostic and no click', values: density, colour: token('--field'), dashed: true }], 'lattice reading', null, [size('--arrival-width'), size('--arrival-height')]);
+  }
+  moveCursors();
+}
+
+/* The start: the title, the verdict, frame 0. */
+byId('title').textContent = document.title;
+byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
+byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (SAME_LINES ? ', the look’s click lines the same' : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
+if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
+function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
+start();
+})();
+</script>

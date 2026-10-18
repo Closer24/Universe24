@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://closer24.github.io/Universe24/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/papers/one_rule/Universe24_Paper.pdf</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/papers/one_rule/Universe24_Supplement.pdf</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/papers/spacetime_events/Universe24_Discrete_Spacetime_of_Events_Paper.pdf</loc><lastmod>2026-10-10</lastmod></url>
@@ -15,5 +15,14 @@
   <url><loc>https://closer24.github.io/Universe24/examples/events/two_bodies/two_bodies.html</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/examples/events/body_motion/body_motion.html</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/examples/events/two_slits/two_slits.html</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/which_way/two_gaps.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/which_way/one_gap.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/which_way/which_way.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/anticoincidence/anticoincidence.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/anticoincidence/two_photons.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/packet_emission/packet_emission.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/resonance/resonance.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/events/resonance/detuned.html</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://closer24.github.io/Universe24/examples/results.html</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://closer24.github.io/Universe24/CONTRIBUTING.md</loc><lastmod>2026-10-17</lastmod></url>
 </urlset>

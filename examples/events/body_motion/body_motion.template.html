@@ -7,17 +7,19 @@
 <meta name="description" content="The matter pixel pushed along x on an open board, stepped by Rule3 alone for 200 intervals: the record's level, the well it writes and the share along x, interval by interval.">
 <style>
 /* layout: one column; the board strips span the width, the traces sit below in a wrapping grid */
+/* the page is dark by default; the light tokens apply only where the visitor's system asks for light and the page is not set dark, or where the page is set light */
 :root {
-  --bg: #f6f5f1; --fg: #1d1f24; --muted: #6b6f78; --line: #d9d7cf; --panel: #ffffff;
-  --accent: #b5471f; --pos: #b5471f; --neg: #2a5d9f; --well: #3b2f2a;
+  --bg: #15171c; --fg: #e8e6df; --muted: #9a9ea8; --line: #2d3038; --panel: #1d2026;
+  --accent: #e07a4c; --pos: #e07a4c; --neg: #6ea1e0; --well: #d8cbb8;
   --display: Georgia, "Times New Roman", serif; --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --mono: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #15171c; --fg: #e8e6df; --muted: #9a9ea8; --line: #2d3038; --panel: #1d2026;
-  --accent: #e07a4c; --pos: #e07a4c; --neg: #6ea1e0; --well: #d8cbb8; color-scheme: dark } }
-:root[data-theme="dark"] {
-  --bg: #15171c; --fg: #e8e6df; --muted: #9a9ea8; --line: #2d3038; --panel: #1d2026;
-  --accent: #e07a4c; --pos: #e07a4c; --neg: #6ea1e0; --well: #d8cbb8; color-scheme: dark }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #f6f5f1; --fg: #1d1f24; --muted: #6b6f78; --line: #d9d7cf; --panel: #ffffff;
+  --accent: #b5471f; --pos: #b5471f; --neg: #2a5d9f; --well: #3b2f2a; color-scheme: light } }
+:root[data-theme="light"] {
+  --bg: #f6f5f1; --fg: #1d1f24; --muted: #6b6f78; --line: #d9d7cf; --panel: #ffffff;
+  --accent: #b5471f; --pos: #b5471f; --neg: #2a5d9f; --well: #3b2f2a; color-scheme: light }
 body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.5;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px; }
 main { max-width: 1080px; margin: 0 auto; display: grid; gap: 18px; }

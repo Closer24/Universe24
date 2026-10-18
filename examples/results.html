@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Universe24 results</title>
+<meta name="description" content="The results of the four gates of the Universe24 engine, Bell, GHZ, the quantum Zeno and the pulsed Zeno: the blind written before each run beside the engine's reading, every number from whole numbers stepped by Rule 3 and the declared counting rule.">
+<link rel="canonical" href="https://closer24.github.io/Universe24/examples/results.html">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #111214;
+    --panel: #191a1d;
+    --ink: #e8e6e1;
+    --muted: #a9a69f;
+    --grid: #2c2e33;
+    --axis: #6b6d73;
+    --blind: #2a6ac4;
+    --result: #c98500;
+    --fence: #5c5e64;
+    --band: rgba(42, 106, 196, 0.22);
+    --bound: #d0cdc6;
+    --link: #e8e6e1;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --bg: #f2f0ea;
+      --panel: #ffffff;
+      --ink: #1c1c1e;
+      --muted: #5d5b56;
+      --grid: #d3d0c8;
+      --axis: #6b6d73;
+      --blind: #1f5fbf;
+      --result: #9c5f00;
+      --fence: #7d7f86;
+      --band: rgba(31, 95, 191, 0.18);
+      --bound: #3a3c40;
+      --link: #1f5fbf;
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f2f0ea;
+    --panel: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #5d5b56;
+    --grid: #d3d0c8;
+    --axis: #6b6d73;
+    --blind: #1f5fbf;
+    --result: #9c5f00;
+    --fence: #7d7f86;
+    --band: rgba(31, 95, 191, 0.18);
+    --bound: #3a3c40;
+    --link: #1f5fbf;
+  }
+  html { background: var(--bg); }
+  body { margin: 0; padding: 2rem 16px 3rem; background: var(--bg); color: var(--ink); font: 1.05rem/1.55 Georgia, "Times New Roman", serif; max-width: 44em; margin-left: auto; margin-right: auto; overflow-x: hidden; }
+  h1 { font-size: 2.1rem; margin: 0 0 0.25rem; }
+  h2 { font-size: 1.35rem; margin: 2.2rem 0 0.5rem; }
+  p.one { font-weight: bold; }
+  p.muted, .muted { color: var(--muted); }
+  a { color: var(--link); }
+  section { background: var(--panel); border-radius: 8px; padding: 1rem 16px 1.2rem; margin: 1.5rem 0; }
+  figure { margin: 1rem 0; }
+  svg { display: block; max-width: 640px; margin: 0 auto; background: var(--panel); }
+  svg text { fill: var(--ink); font-family:Georgia,'Times New Roman',serif; }
+  .ct { font-size: 15px; font-weight: bold; }
+  .tick, .lg, .bl { font-size: 12px; fill: var(--muted); }
+  .al { font-size: 12px; fill: var(--muted); }
+  .rl { font-size: 12px; }
+  .val { font-size: 12px; font-weight: bold; }
+  .blind-val { fill: var(--muted); font-weight: normal; }
+  .grid { stroke: var(--grid); stroke-width: 1; }
+  .axis { stroke: var(--axis); stroke-width: 1; }
+  rect.blind { fill: var(--blind); rx: 2; }
+  rect.result { fill: var(--result); rx: 2; }
+  rect.fence { fill: var(--fence); rx: 2; }
+  .bound { stroke: var(--bound); stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .blind-line { stroke: var(--blind); stroke-width: 2.5; fill: none; }
+  .blind-dot { fill: var(--blind); }
+  .result-dot { fill: var(--result); stroke: var(--panel); stroke-width: 2; }
+  .band { fill: var(--band); stroke: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; font-size: 0.95rem; margin: 0.6rem 0 0; }
+  .sw { display: inline-block; width: 1em; height: 0.75em; border-radius: 2px; vertical-align: -0.08em; margin-right: 0.4em; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: 0.9rem; margin: 0.6rem 0 0; min-width: 100%; }
+  th, td { padding: 0.3rem 0.6rem; border-bottom: 1px solid var(--grid); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--muted); font-weight: normal; white-space: normal; vertical-align: bottom; }
+  footer { margin-top: 2.5rem; font-size: 0.92rem; border-top: 1px solid var(--grid); padding-top: 1rem; color: var(--muted); }
+  footer code, p code { font-size: 0.85em; }
+  @media (max-width: 480px) { table { font-size: 0.8rem; } th, td { padding: 0.25rem 0.4rem; } }
+  pre { white-space: pre-wrap; word-break: break-all; font-size: 0.82em; background: var(--panel); padding: 0.6rem 16px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<header>
+<h1>Universe24 results</h1>
+<p class="one">Every number on this page comes from whole numbers stepped by Rule 3 and the declared counting rule, nothing else.</p>
+<p>The four gates of the engine, whose result is a number and not a motion: Bell, GHZ, the quantum Zeno and the pulsed Zeno. For each gate the blind, written from the design before the first run and never edited after, stands beside the engine's reading. The counting rule (the click is the meeting) is <strong>declared</strong>; the correlations <strong>follow</strong> from it; no derivation of the probability rule is claimed. The experiments that move stand on <a href="../index.html">the front page</a>.</p>
+<div class="legend"><span><span class="sw" style="background:var(--blind)"></span>the blind, written before the run</span><span><span class="sw" style="background:var(--result)"></span>the engine's reading</span><span><span class="sw" style="background:var(--fence)"></span>the local credits, the fence</span></div>
+</header>
+
+<main>
+<section id="bell">
+<h2>Bell's gate</h2>
+<p>Two parts of one record are laid equal and sent to two sides, where each side reads them at its own setting, a pair of whole numbers. Nature's pairs show the correlation E = cos 2a cos 2b + rho sin 2a sin 2b with rho = 1, and at the settings a = (1, 0), a' = (1, 1), b = (12, 5), b' = (5, 12) the CHSH sum S reaches 478/169 = 2.8284, below Tsirelson's bound 2 sqrt 2 by 2.5 x 10^-5 and above the bound 2 of every local product form. Under the <strong>declared</strong> counting rule the correlation <strong>follows</strong> by Lagrange's identity at equal parts, and the board's four worlds read E = 119/169, -119/169, 120/169, 120/169 and S = 478/169 = 2.8284, the blind's fractions exactly, while the three local credits read beside them stay at or under 2. Bell is a gate of the engine and not an experiment: no reading of nature is claimed by it.</p>
+<figure>
+<svg viewBox="0 0 520 330" width="100%" role="img" aria-labelledby="bell_e bell_e_d" xmlns="http://www.w3.org/2000/svg">
+<title id="bell_e">Bell's gate: the correlation E at the four settings</title>
+<desc id="bell_e_d">Four pairs of bars, the blind beside the engine's reading, at the settings (a, b), (a, b'), (a', b) and (a', b'); every pair equal.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">Bell's gate: the correlation E at the four settings</text>
+<line class="grid" x1="56" y1="266.0" x2="504" y2="266.0"/>
+<text class="tick" x="50" y="270.0" text-anchor="end">-1</text>
+<line class="grid" x1="56" y1="217.5" x2="504" y2="217.5"/>
+<text class="tick" x="50" y="221.5" text-anchor="end">-0.5</text>
+<line class="grid" x1="56" y1="169.0" x2="504" y2="169.0"/>
+<text class="tick" x="50" y="173.0" text-anchor="end">0</text>
+<line class="grid" x1="56" y1="120.5" x2="504" y2="120.5"/>
+<text class="tick" x="50" y="124.5" text-anchor="end">0.5</text>
+<line class="grid" x1="56" y1="72.0" x2="504" y2="72.0"/>
+<text class="tick" x="50" y="76.0" text-anchor="end">1</text>
+<line class="axis" x1="56" y1="169.0" x2="504" y2="169.0"/>
+<text class="al" transform="translate(14 169) rotate(-90)" text-anchor="middle">E, the correlation</text>
+<text class="al" x="280" y="322" text-anchor="middle">the settings: a = (1, 0), a' = (1, 1), b = (12, 5), b' = (5, 12)</text>
+<rect class="blind" x="61.0" y="100.7" width="47.0" height="68.3"/>
+<text class="val" x="84.5" y="94.7" text-anchor="middle">119/169</text>
+<rect class="result" x="116.0" y="100.7" width="47.0" height="68.3"/>
+<text class="val" x="139.5" y="94.7" text-anchor="middle">119/169</text>
+<text class="tick" x="112.0" y="296" text-anchor="middle">a, b</text>
+<rect class="blind" x="173.0" y="169.0" width="47.0" height="68.3"/>
+<text class="val" x="196.5" y="251.3" text-anchor="middle">-119/169</text>
+<rect class="result" x="228.0" y="169.0" width="47.0" height="68.3"/>
+<text class="val" x="251.5" y="251.3" text-anchor="middle">-119/169</text>
+<text class="tick" x="224.0" y="296" text-anchor="middle">a, b'</text>
+<rect class="blind" x="285.0" y="100.1" width="47.0" height="68.9"/>
+<text class="val" x="308.5" y="94.1" text-anchor="middle">120/169</text>
+<rect class="result" x="340.0" y="100.1" width="47.0" height="68.9"/>
+<text class="val" x="363.5" y="94.1" text-anchor="middle">120/169</text>
+<text class="tick" x="336.0" y="296" text-anchor="middle">a', b</text>
+<rect class="blind" x="397.0" y="100.1" width="47.0" height="68.9"/>
+<text class="val" x="420.5" y="94.1" text-anchor="middle">120/169</text>
+<rect class="result" x="452.0" y="100.1" width="47.0" height="68.9"/>
+<text class="val" x="475.5" y="94.1" text-anchor="middle">120/169</text>
+<text class="tick" x="448.0" y="296" text-anchor="middle">a', b'</text>
+<rect class="blind" x="56.0" y="36" width="14" height="10" rx="2"/>
+<text class="lg" x="75.0" y="45">the blind, written before the run</text>
+<rect class="result" x="297.6" y="36" width="14" height="10" rx="2"/>
+<text class="lg" x="316.6" y="45">the engine's reading</text>
+</svg>
+</figure>
+<figure>
+<svg viewBox="0 0 520 218" width="100%" role="img" aria-labelledby="bell_s bell_s_d" xmlns="http://www.w3.org/2000/svg">
+<title id="bell_s">Bell's gate: the CHSH sum S against the bounds</title>
+<desc id="bell_s_d">Horizontal bars: S by the engine and by the blind, both 478/169, and the three local credits as the fence, 238/169, 240/169 and 2; the classical bound 2 and the quantum bound 2 sqrt 2 drawn as lines.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">Bell's gate: the CHSH sum S against the bounds</text>
+<line class="axis" x1="170.0" y1="40" x2="170.0" y2="174"/>
+<rect class="result" x="170.0" y="48" width="295.2" height="18"/>
+<text class="rl" x="162" y="61.0" text-anchor="end">S, the engine's reading</text>
+<text class="val" x="470.2" y="61.0">478/169</text>
+<rect class="blind" x="170.0" y="74" width="295.2" height="18"/>
+<text class="rl" x="162" y="87.0" text-anchor="end">S, the blind</text>
+<text class="val" x="470.2" y="87.0">478/169</text>
+<rect class="fence" x="170.0" y="100" width="147.0" height="18"/>
+<text class="rl" x="162" y="113.0" text-anchor="end">the fence: by the parts' shares</text>
+<text class="val" x="322.0" y="113.0">238/169</text>
+<rect class="fence" x="170.0" y="126" width="148.2" height="18"/>
+<text class="rl" x="162" y="139.0" text-anchor="end">the fence: by the local sums</text>
+<text class="val" x="323.2" y="139.0">240/169</text>
+<rect class="fence" x="170.0" y="152" width="208.8" height="18"/>
+<text class="rl" x="162" y="165.0" text-anchor="end">the fence: by the sign</text>
+<text class="val" x="383.8" y="165.0">2</text>
+<line class="bound" x1="378.8" y1="40" x2="378.8" y2="176"/>
+<text class="bl" x="378.8" y="188" text-anchor="middle">2, the classical bound</text>
+<line class="bound" x1="465.2" y1="40" x2="465.2" y2="176"/>
+<text class="bl" x="469.2" y="34" text-anchor="end">2 sqrt 2 = 2.82843</text>
+<text class="al" x="337" y="212" text-anchor="middle">S = E(a, b) - E(a, b') + E(a', b) + E(a', b')</text>
+</svg>
+</figure>
+<div class="tw"><table>
+<thead><tr><th>the settings (a, b)</th><th>the blind</th><th>the engine</th></tr></thead>
+<tbody>
+<tr><td>a, b</td><td>119/169 = 0.7041</td><td>119/169 = 0.7041</td></tr>
+<tr><td>a, b'</td><td>-119/169 = -0.7041</td><td>-119/169 = -0.7041</td></tr>
+<tr><td>a', b</td><td>120/169 = 0.7101</td><td>120/169 = 0.7101</td></tr>
+<tr><td>a', b'</td><td>120/169 = 0.7101</td><td>120/169 = 0.7101</td></tr>
+<tr><td>S</td><td>478/169 = 2.82840</td><td>478/169 = 2.82840</td></tr>
+</tbody></table></div>
+
+<p class="muted">Every marginal 1/2 on both sides in every world; 100 intervals per world, the window the whole passage. The fence: by the parts' shares S = 238/169, by the local sums 240/169, by the sign 2.</p>
+</section>
+
+<section id="ghz">
+<h2>The GHZ gate</h2>
+<p>One record of four parts is read at three sides, each side's pattern saying how its parts read its setting, x = (1, 0) or y = (1, 1). Nature's three-particle state shows E_3 = cos 2(a + b + c), that is -1 at the settings x y y, y x y and y y x and +1 at x x x, Mermin's M = -4, where every local product form holds |M| at most 2, and the three local credits land at M = -1 at these settings. Under the <strong>declared</strong> counting rule the three-sided credit <strong>follows</strong>, and the board's four worlds read E_3 = -1, -1, -1, 1 and M = -4, the blind's exactly, the three local credits at M = -1, -1 and -1. GHZ is a gate of the engine and not an experiment.</p>
+<figure>
+<svg viewBox="0 0 520 330" width="100%" role="img" aria-labelledby="ghz_e ghz_e_d" xmlns="http://www.w3.org/2000/svg">
+<title id="ghz_e">The GHZ gate: the three-sided credit E_3 at the four settings</title>
+<desc id="ghz_e_d">Four pairs of bars, the blind beside the engine's reading, at the settings x y y, y x y, y y x and x x x: -1, -1, -1 and +1 in every pair.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">The GHZ gate: the three-sided credit E_3 at the four settings</text>
+<line class="grid" x1="56" y1="266.0" x2="504" y2="266.0"/>
+<text class="tick" x="50" y="270.0" text-anchor="end">-1</text>
+<line class="grid" x1="56" y1="217.5" x2="504" y2="217.5"/>
+<text class="tick" x="50" y="221.5" text-anchor="end">-0.5</text>
+<line class="grid" x1="56" y1="169.0" x2="504" y2="169.0"/>
+<text class="tick" x="50" y="173.0" text-anchor="end">0</text>
+<line class="grid" x1="56" y1="120.5" x2="504" y2="120.5"/>
+<text class="tick" x="50" y="124.5" text-anchor="end">0.5</text>
+<line class="grid" x1="56" y1="72.0" x2="504" y2="72.0"/>
+<text class="tick" x="50" y="76.0" text-anchor="end">1</text>
+<line class="axis" x1="56" y1="169.0" x2="504" y2="169.0"/>
+<text class="al" transform="translate(14 169) rotate(-90)" text-anchor="middle">E_3, the three-sided credit</text>
+<text class="al" x="280" y="322" text-anchor="middle">the settings: x = (1, 0), the angle 0; y = (1, 1), the angle pi / 4</text>
+<rect class="blind" x="61.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="84.5" y="280.0" text-anchor="middle">-1</text>
+<rect class="result" x="116.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="139.5" y="280.0" text-anchor="middle">-1</text>
+<text class="tick" x="112.0" y="296" text-anchor="middle">x, y, y</text>
+<rect class="blind" x="173.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="196.5" y="280.0" text-anchor="middle">-1</text>
+<rect class="result" x="228.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="251.5" y="280.0" text-anchor="middle">-1</text>
+<text class="tick" x="224.0" y="296" text-anchor="middle">y, x, y</text>
+<rect class="blind" x="285.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="308.5" y="280.0" text-anchor="middle">-1</text>
+<rect class="result" x="340.0" y="169.0" width="47.0" height="97.0"/>
+<text class="val" x="363.5" y="280.0" text-anchor="middle">-1</text>
+<text class="tick" x="336.0" y="296" text-anchor="middle">y, y, x</text>
+<rect class="blind" x="397.0" y="72.0" width="47.0" height="97.0"/>
+<text class="val" x="420.5" y="66.0" text-anchor="middle">1</text>
+<rect class="result" x="452.0" y="72.0" width="47.0" height="97.0"/>
+<text class="val" x="475.5" y="66.0" text-anchor="middle">1</text>
+<text class="tick" x="448.0" y="296" text-anchor="middle">x, x, x</text>
+<rect class="blind" x="56.0" y="36" width="14" height="10" rx="2"/>
+<text class="lg" x="75.0" y="45">the blind, written before the run</text>
+<rect class="result" x="297.6" y="36" width="14" height="10" rx="2"/>
+<text class="lg" x="316.6" y="45">the engine's reading</text>
+</svg>
+</figure>
+<figure>
+<svg viewBox="0 0 520 218" width="100%" role="img" aria-labelledby="ghz_m ghz_m_d" xmlns="http://www.w3.org/2000/svg">
+<title id="ghz_m">The GHZ gate: Mermin's M against the bounds</title>
+<desc id="ghz_m_d">Horizontal bars: M by the engine and by the blind, both -4, and the three local credits as the fence, -1 each; the local bounds -2 and +2 drawn as lines.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">The GHZ gate: Mermin's M against the bounds</text>
+<line class="axis" x1="383.4" y1="40" x2="383.4" y2="174"/>
+<rect class="result" x="197.8" y="48" width="185.6" height="18"/>
+<text class="rl" x="162" y="61.0" text-anchor="end">M, the engine's reading</text>
+<text class="val" x="192.8" y="61.0" text-anchor="end">-4</text>
+<rect class="blind" x="197.8" y="74" width="185.6" height="18"/>
+<text class="rl" x="162" y="87.0" text-anchor="end">M, the blind</text>
+<text class="val" x="192.8" y="87.0" text-anchor="end">-4</text>
+<rect class="fence" x="337.0" y="100" width="46.4" height="18"/>
+<text class="rl" x="162" y="113.0" text-anchor="end">the fence: by the parts' shares</text>
+<text class="val" x="332.0" y="113.0" text-anchor="end">-1</text>
+<rect class="fence" x="337.0" y="126" width="46.4" height="18"/>
+<text class="rl" x="162" y="139.0" text-anchor="end">the fence: by the local sums</text>
+<text class="val" x="332.0" y="139.0" text-anchor="end">-1</text>
+<rect class="fence" x="337.0" y="152" width="46.4" height="18"/>
+<text class="rl" x="162" y="165.0" text-anchor="end">the fence: by the sign</text>
+<text class="val" x="332.0" y="165.0" text-anchor="end">-1</text>
+<line class="bound" x1="290.6" y1="40" x2="290.6" y2="176"/>
+<text class="bl" x="290.6" y="188" text-anchor="middle">-2, the local bound</text>
+<line class="bound" x1="476.2" y1="40" x2="476.2" y2="176"/>
+<text class="bl" x="480.2" y="34" text-anchor="end">+2, the local bound</text>
+<text class="al" x="337" y="212" text-anchor="middle">M = E(x, y, y) + E(y, x, y) + E(y, y, x) - E(x, x, x)</text>
+</svg>
+</figure>
+<div class="tw"><table>
+<thead><tr><th>the settings (a, b, c)</th><th>the blind</th><th>the engine</th></tr></thead>
+<tbody>
+<tr><td>x, y, y</td><td>-1</td><td>-1</td></tr>
+<tr><td>y, x, y</td><td>-1</td><td>-1</td></tr>
+<tr><td>y, y, x</td><td>-1</td><td>-1</td></tr>
+<tr><td>x, x, x</td><td>1</td><td>1</td></tr>
+<tr><td>M</td><td>-4</td><td>-4</td></tr>
+</tbody></table></div>
+
+<p class="muted">Every marginal 1/2 and every pairwise correlation 0 in every world; 60 intervals per world, the window the whole passage.</p>
+</section>
+
+<section id="zeno">
+<h2>The quantum Zeno gate</h2>
+<p>One record of two parts, g and e, stands at one Node under a drive whose turn over 48 intervals is a pi pulse, so left alone it ends in e; the record reads its own parts n times over the run, and each reading closes a window with a write. Nature (Itano, Heinzen, Bollinger and Wineland, 1990) shows the transition held back by the readings: P(e at T_pi) = (1 - cos^n(pi / n)) / 2, 1 at n = 1 and 0.1334 at n = 16. The board's 480 trials per world read 1.0000, 0.5062, 0.3917, 0.2292, 0.1417 at n = 1, 2, 4, 8, 16, every row within one standard error of the formula (the folder's criterion), the largest deviation +0.75 standard errors at n = 4; without the window's write the law would give 1 at every n.</p>
+<figure>
+<svg viewBox="0 0 520 350" width="100%" role="img" aria-labelledby="svg_zeno svg_zeno_d" xmlns="http://www.w3.org/2000/svg">
+<title id="svg_zeno">The quantum Zeno gate: P(e at T_pi) against the readings n</title>
+<desc id="svg_zeno_d">The blind's curve through n = 1, 2, 4, 8, 16 with its band of one standard error, and the engine's fraction of 480 trials at each n.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">The quantum Zeno gate: P(e at T_pi) against the readings n</text>
+<line class="grid" x1="70" y1="282.0" x2="500" y2="282.0"/>
+<text class="tick" x="64" y="286.0" text-anchor="end">0</text>
+<line class="grid" x1="70" y1="222.5" x2="500" y2="222.5"/>
+<text class="tick" x="64" y="226.5" text-anchor="end">0.25</text>
+<line class="grid" x1="70" y1="163.0" x2="500" y2="163.0"/>
+<text class="tick" x="64" y="167.0" text-anchor="end">0.5</text>
+<line class="grid" x1="70" y1="103.5" x2="500" y2="103.5"/>
+<text class="tick" x="64" y="107.5" text-anchor="end">0.75</text>
+<line class="grid" x1="70" y1="44.0" x2="500" y2="44.0"/>
+<text class="tick" x="64" y="48.0" text-anchor="end">1</text>
+<line class="axis" x1="70" y1="282.0" x2="500" y2="282.0"/>
+<text class="al" transform="translate(14 163) rotate(-90)" text-anchor="middle">P(e at T_pi)</text>
+<text class="al" x="285" y="342" text-anchor="middle">n, the record's readings of its own parts over the pi pulse of 48 intervals</text>
+<polygon class="band" points="113.0,44.0 199.0,157.6 285.0,187.5 371.0,221.6 457.0,246.6 457.0,253.9 371.0,230.8 285.0,198.0 199.0,168.4 113.0,44.0"/>
+<polyline class="blind-line" points="113.0,44.0 199.0,163.0 285.0,192.8 371.0,226.2 457.0,250.3"/>
+<circle class="blind-dot" cx="113.0" cy="44.0" r="4"/>
+<circle class="result-dot" cx="113.0" cy="44.0" r="5"/>
+<text class="val blind-val" x="107.0" y="63.0" text-anchor="end">1.0000</text>
+<text class="val" x="122.0" y="48.0">1.0000</text>
+<text class="tick" x="113.0" y="312" text-anchor="middle">1</text>
+<circle class="blind-dot" cx="199.0" cy="163.0" r="4"/>
+<circle class="result-dot" cx="199.0" cy="161.5" r="5"/>
+<text class="val blind-val" x="199.0" y="152.5" text-anchor="middle">0.5000</text>
+<text class="val" x="199.0" y="180.0" text-anchor="middle">0.5062</text>
+<text class="tick" x="199.0" y="312" text-anchor="middle">2</text>
+<circle class="blind-dot" cx="285.0" cy="192.8" r="4"/>
+<circle class="result-dot" cx="285.0" cy="188.8" r="5"/>
+<text class="val blind-val" x="285.0" y="179.8" text-anchor="middle">0.3750</text>
+<text class="val" x="285.0" y="209.8" text-anchor="middle">0.3917</text>
+<text class="tick" x="285.0" y="312" text-anchor="middle">4</text>
+<circle class="blind-dot" cx="371.0" cy="226.2" r="4"/>
+<circle class="result-dot" cx="371.0" cy="227.5" r="5"/>
+<text class="val blind-val" x="371.0" y="217.2" text-anchor="middle">0.2346</text>
+<text class="val" x="371.0" y="244.5" text-anchor="middle">0.2292</text>
+<text class="tick" x="371.0" y="312" text-anchor="middle">8</text>
+<circle class="blind-dot" cx="457.0" cy="250.3" r="4"/>
+<circle class="result-dot" cx="457.0" cy="248.3" r="5"/>
+<text class="val blind-val" x="457.0" y="239.3" text-anchor="middle">0.1334</text>
+<text class="val" x="457.0" y="267.3" text-anchor="middle">0.1417</text>
+<text class="tick" x="457.0" y="312" text-anchor="middle">16</text>
+<line class="blind-line" x1="294" y1="51" x2="308" y2="51"/>
+<text class="lg" x="313" y="55">the blind, (1 - cos^n(pi / n)) / 2</text>
+<rect class="band" x="294" y="62" width="14" height="10"/>
+<text class="lg" x="313" y="71">the blind within one standard error</text>
+<circle class="result-dot" cx="301" cy="83" r="4"/>
+<text class="lg" x="313" y="87">the engine, 480 trials per world</text>
+</svg>
+</figure>
+<div class="tw"><table>
+<thead><tr><th>n</th><th>window, intervals</th><th>ends in e, of 480</th><th>the engine</th><th>the blind</th><th>one standard error</th><th>deviation, in standard errors</th><th>jumps g to e / e to g</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>48</td><td>480</td><td>1.0000</td><td>1.0000</td><td>0</td><td>the column exactly</td><td>480 / 0</td></tr>
+<tr><td>2</td><td>24</td><td>243</td><td>0.5062</td><td>0.5000</td><td>0.0228</td><td>+0.27</td><td>367 / 124</td></tr>
+<tr><td>4</td><td>12</td><td>188</td><td>0.3917</td><td>0.3750</td><td>0.0221</td><td>+0.75</td><td>239 / 51</td></tr>
+<tr><td>8</td><td>6</td><td>110</td><td>0.2292</td><td>0.2346</td><td>0.0193</td><td>-0.28</td><td>129 / 19</td></tr>
+<tr><td>16</td><td>3</td><td>68</td><td>0.1417</td><td>0.1334</td><td>0.0155</td><td>+0.53</td><td>70 / 2</td></tr>
+</tbody></table></div>
+
+</section>
+
+<section id="pulsed">
+<h2>The pulsed Zeno gate</h2>
+<p>The same body at the Node clock 96,000, the pi pulse lengthened to 768 intervals, probed by one quantum laid at its Node n times over the pi time, Itano's protocol: the body's window is bounded by the probe's lays, no window declared, and at each probe the body's one draw by its labels' squares. Nature shows the same formula down to 0.0371 at n = 64. The board's 480 trials per world read 1.0000, 0.5021, 0.3625, 0.2104, 0.1292, 0.0646, 0.0292 at n = 1, 2, 4, 8, 16, 32, 64, every row within two standard errors of the formula (the folder's criterion), the largest deviation -1.27 standard errors at n = 8; the windows closed n times exactly in every trial.</p>
+<figure>
+<svg viewBox="0 0 520 350" width="100%" role="img" aria-labelledby="svg_pulsed svg_pulsed_d" xmlns="http://www.w3.org/2000/svg">
+<title id="svg_pulsed">The pulsed Zeno gate: P(e at T_pi) against the probes n</title>
+<desc id="svg_pulsed_d">The blind's curve through n = 1 to 64 with its band of two standard errors, and the engine's fraction of 480 trials at each n.</desc>
+<text class="ct" x="260.0" y="20" text-anchor="middle">The pulsed Zeno gate: P(e at T_pi) against the probes n</text>
+<line class="grid" x1="70" y1="282.0" x2="500" y2="282.0"/>
+<text class="tick" x="64" y="286.0" text-anchor="end">0</text>
+<line class="grid" x1="70" y1="222.5" x2="500" y2="222.5"/>
+<text class="tick" x="64" y="226.5" text-anchor="end">0.25</text>
+<line class="grid" x1="70" y1="163.0" x2="500" y2="163.0"/>
+<text class="tick" x="64" y="167.0" text-anchor="end">0.5</text>
+<line class="grid" x1="70" y1="103.5" x2="500" y2="103.5"/>
+<text class="tick" x="64" y="107.5" text-anchor="end">0.75</text>
+<line class="grid" x1="70" y1="44.0" x2="500" y2="44.0"/>
+<text class="tick" x="64" y="48.0" text-anchor="end">1</text>
+<line class="axis" x1="70" y1="282.0" x2="500" y2="282.0"/>
+<text class="al" transform="translate(14 163) rotate(-90)" text-anchor="middle">P(e at T_pi)</text>
+<text class="al" x="285" y="342" text-anchor="middle">n, the probes laid at the body's Node over the pi pulse of 768 intervals</text>
+<polygon class="band" points="100.7,44.0 162.1,152.1 223.6,182.3 285.0,217.1 346.4,242.6 407.9,259.2 469.3,268.9 469.3,277.5 407.9,270.7 346.4,257.9 285.0,235.2 223.6,203.2 162.1,173.9 100.7,44.0"/>
+<polyline class="blind-line" points="100.7,44.0 162.1,163.0 223.6,192.8 285.0,226.2 346.4,250.3 407.9,265.0 469.3,273.2"/>
+<circle class="blind-dot" cx="100.7" cy="44.0" r="4"/>
+<circle class="result-dot" cx="100.7" cy="44.0" r="5"/>
+<text class="val blind-val" x="94.7" y="63.0" text-anchor="end">1.0000</text>
+<text class="val" x="109.7" y="48.0">1.0000</text>
+<text class="tick" x="100.7" y="312" text-anchor="middle">1</text>
+<circle class="blind-dot" cx="162.1" cy="163.0" r="4"/>
+<circle class="result-dot" cx="162.1" cy="162.5" r="5"/>
+<text class="val blind-val" x="162.1" y="153.5" text-anchor="middle">0.5000</text>
+<text class="val" x="162.1" y="180.0" text-anchor="middle">0.5021</text>
+<text class="tick" x="162.1" y="312" text-anchor="middle">2</text>
+<circle class="blind-dot" cx="223.6" cy="192.8" r="4"/>
+<circle class="result-dot" cx="223.6" cy="195.7" r="5"/>
+<text class="val blind-val" x="223.6" y="183.8" text-anchor="middle">0.3750</text>
+<text class="val" x="223.6" y="212.7" text-anchor="middle">0.3625</text>
+<text class="tick" x="223.6" y="312" text-anchor="middle">4</text>
+<circle class="blind-dot" cx="285.0" cy="226.2" r="4"/>
+<circle class="result-dot" cx="285.0" cy="231.9" r="5"/>
+<text class="val blind-val" x="285.0" y="217.2" text-anchor="middle">0.2346</text>
+<text class="val" x="285.0" y="248.9" text-anchor="middle">0.2104</text>
+<text class="tick" x="285.0" y="312" text-anchor="middle">8</text>
+<circle class="blind-dot" cx="346.4" cy="250.3" r="4"/>
+<circle class="result-dot" cx="346.4" cy="251.3" r="5"/>
+<text class="val blind-val" x="346.4" y="241.3" text-anchor="middle">0.1334</text>
+<text class="val" x="346.4" y="268.3" text-anchor="middle">0.1292</text>
+<text class="tick" x="346.4" y="312" text-anchor="middle">16</text>
+<circle class="blind-dot" cx="407.9" cy="265.0" r="4"/>
+<circle class="result-dot" cx="407.9" cy="266.6" r="5"/>
+<text class="val blind-val" x="407.9" y="256.0" text-anchor="middle">0.0716</text>
+<text class="val" x="407.9" y="283.6" text-anchor="middle">0.0646</text>
+<text class="tick" x="407.9" y="312" text-anchor="middle">32</text>
+<circle class="blind-dot" cx="469.3" cy="273.2" r="4"/>
+<circle class="result-dot" cx="469.3" cy="275.1" r="5"/>
+<text class="val blind-val" x="469.3" y="264.2" text-anchor="middle">0.0371</text>
+<text class="val" x="469.3" y="292.1" text-anchor="middle">0.0292</text>
+<text class="tick" x="469.3" y="312" text-anchor="middle">64</text>
+<line class="blind-line" x1="294" y1="51" x2="308" y2="51"/>
+<text class="lg" x="313" y="55">the blind, (1 - cos^n(pi / n)) / 2</text>
+<rect class="band" x="294" y="62" width="14" height="10"/>
+<text class="lg" x="313" y="71">the blind within 2 standard errors</text>
+<circle class="result-dot" cx="301" cy="83" r="4"/>
+<text class="lg" x="313" y="87">the engine, 480 trials per world</text>
+</svg>
+</figure>
+<div class="tw"><table>
+<thead><tr><th>n</th><th>window, intervals</th><th>ends in e, of 480</th><th>the engine</th><th>the blind</th><th>one standard error</th><th>deviation, in standard errors</th><th>jumps g to e / e to g</th><th>fluorescence clicks per run, the engine / the blind</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>768</td><td>480</td><td>1.0000</td><td>1.0000</td><td>0</td><td>the column exactly</td><td>480 / 0</td><td>0.00 / 0.00</td></tr>
+<tr><td>2</td><td>384</td><td>241</td><td>0.5021</td><td>0.5000</td><td>0.023</td><td>+0.09</td><td>364 / 123</td><td>1.00 / 1.00</td></tr>
+<tr><td>4</td><td>192</td><td>174</td><td>0.3625</td><td>0.3750</td><td>0.022</td><td>-0.57</td><td>232 / 58</td><td>2.93 / 2.91</td></tr>
+<tr><td>8</td><td>96</td><td>101</td><td>0.2104</td><td>0.2346</td><td>0.019</td><td>-1.27</td><td>122 / 21</td><td>6.91 / 6.85</td></tr>
+<tr><td>16</td><td>48</td><td>62</td><td>0.1292</td><td>0.1334</td><td>0.016</td><td>-0.26</td><td>65 / 3</td><td>14.70 / 14.81</td></tr>
+<tr><td>32</td><td>24</td><td>31</td><td>0.0646</td><td>0.0716</td><td>0.012</td><td>-0.58</td><td>32 / 1</td><td>30.78 / 30.79</td></tr>
+<tr><td>64</td><td>12</td><td>14</td><td>0.0292</td><td>0.0371</td><td>0.009</td><td>-0.88</td><td>15 / 1</td><td>63.15 / 62.78</td></tr>
+</tbody></table></div>
+
+</section>
+</main>
+
+<footer>
+<p>The numbers were reproduced on 2026-10-18 from main at d5b44f0cc with the folders' own readers, Python 3.14 with <code>PYTHONPATH=src</code>, and compared with the readings recorded at the clean engine in each folder's <code>blind_and_reading.md</code> (Bell and GHZ at main 1fe3790a, the Zeno and the pulsed Zeno at main 39cc3851, 2026-10-05). Every number of the reproduction is the recorded reading's bit for bit: Bell's four fractions and S, the GHZ's four credits and M, the Zeno counts 480, 243, 188, 110 and 68 of 480 and the pulsed counts 480, 241, 174, 101, 62, 31 and 14 of 480, the jumps per kind included.</p>
+<pre>python tools/run_inputs.py --out runs/bell --jobs 4 examples/events/bell/bell_a_b.json examples/events/bell/bell_a_b_prime.json examples/events/bell/bell_a_prime_b.json examples/events/bell/bell_a_prime_b_prime.json
+python tools/bell_gate.py --expectation examples/events/bell/expectation.json --outputs runs/bell/*.output.json
+python tools/run_inputs.py --out runs/ghz --jobs 4 examples/events/ghz/ghz_x_y_y.json examples/events/ghz/ghz_y_x_y.json examples/events/ghz/ghz_y_y_x.json examples/events/ghz/ghz_x_x_x.json
+python tools/bell_gate.py --expectation examples/events/ghz/expectation.json --outputs runs/ghz/*.output.json
+python tools/meeting_trials.py --world examples/events/zeno/zeno_&lt;n&gt;.json --design examples/events/zeno/design.json --expectation examples/events/zeno/expectation.json   (n = 1, 2, 4, 8, 16)
+python tools/meeting_trials.py --world examples/events/zeno_pulsed/zeno_pulsed_&lt;n&gt;.json --design examples/events/zeno_pulsed/design.json --expectation examples/events/zeno_pulsed/expectation.json   (n = 1, 2, 4, 8, 16, 32, 64)</pre>
+<p>The blinds: <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/bell/expectation.json">bell/expectation.json</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/ghz/expectation.json">ghz/expectation.json</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/zeno/expectation.json">zeno/expectation.json</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/zeno_pulsed/expectation.json">zeno_pulsed/expectation.json</a>. The readings and their history: <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/bell/blind_and_reading.md">bell</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/ghz/blind_and_reading.md">ghz</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/zeno/blind_and_reading.md">zeno</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/events/zeno_pulsed/blind_and_reading.md">zeno_pulsed</a>. The readers: <a href="https://github.com/Closer24/Universe24/blob/main/tools/bell_gate.py">tools/bell_gate.py</a> over the output files of <a href="https://github.com/Closer24/Universe24/blob/main/tools/run_inputs.py">tools/run_inputs.py</a> (Bell and GHZ), <a href="https://github.com/Closer24/Universe24/blob/main/tools/meeting_trials.py">tools/meeting_trials.py</a> (the Zeno and the pulsed Zeno). The one standard error is the folder's recorded column, sqrt(p (1 - p) / 480) at the blind's p, to four places for the Zeno and to three for the pulsed Zeno as its blind file records it, the deviation the read fraction less the blind over that column; the fractions are printed to four places as the readings record them, the Bell and GHZ numbers as the exact fractions the reader prints, S to five places beside the bound.</p>
+<p>The Bell and GHZ readings are labelled NODEDETECTOR by the reader (the credit lines' clicks); the Zeno readings are the part each record stands in at the trial's end, a click. The status words are the law's: the counting rule declared, the correlations following from it, Bell and GHZ gates of the engine and not experiments (<a href="https://github.com/Closer24/Universe24/blob/main/docs/HIGHLIGHTS.md">docs/HIGHLIGHTS.md</a>, <a href="https://github.com/Closer24/Universe24/blob/main/examples/README.md">examples/README.md</a>).</p>
+<p>Alon Gonen, 2026. <a href="../index.html">Universe24</a>.</p>
+</footer>
+</body>
+</html>
