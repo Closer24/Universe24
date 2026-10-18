@@ -171,13 +171,11 @@ def sourcing(board: Lattice, books: NodeBooks) -> set[int]:
     return {source.family for source in board.credit.sources if source.emitter == books.number}
 
 
-def dark(board: Lattice, books: NodeBooks) -> bool:
-    """A reader with no arriving record at its Nodes this interval: both levels, now and before, of every family its transitions name, its own sources' families aside (`sourcing`, C5), sum to 0 over the region at every Node, so no window stands and the emission\'s grain is the interval; a reader naming no drive is never dark, its window its own clock's (the conversion's), and a declared window opens at the first lit interval and closes its length after it, a window bounded by a probe's lays counting from its last close as before (the click's plan, C2, the hybrid window: the detector integrates over the pulse, `meeting.jumped`)."""
-    turning = {t.drive for t in books.declared.transitions if t.leaves != t.enters} - sourcing(
-        board, books
-    )
+def dark(board: Lattice, books: NodeBooks, sourced: set[int]) -> bool:
+    """A reader with no arriving record at its Nodes this interval: both levels, now and before, of every family its transitions name, its own sources' families `sourced` aside (`sourcing`, read once per body per interval by the caller, C5), sum to 0 over the region at every Node, so no window stands and the emission\'s grain is the interval; a reader naming no drive is never dark, its window its own clock's (the conversion's), and a declared window opens at the first lit interval and closes its length after it, a window bounded by a probe's lays counting from its last close as before (the click's plan, C2, the hybrid window: the detector integrates over the pulse, `meeting.jumped`)."""
     if not books.declared.transitions:
         return False
+    turning = {t.drive for t in books.declared.transitions if t.leaves != t.enters} - sourced
     for drive in sorted(turning):
         family, lines = board.families[drive], board.states[drive].lines
         own = row_of(board.families, books.index, books.record)
@@ -219,7 +217,7 @@ def clock_advanced(board: Lattice, books: NodeBooks) -> None:
 def picked(
     board: Lattice, state: int, generator: Generator | None, weights: list[int], outcomes: int
 ) -> tuple[int, int]:
-    """The draw of the one click act, the outcome alone: with more than one outcome, one draw by the weights with the generator (its state carried in the books), the lower index on a tie; one outcome, no draw and the state kept. The Node of the realised write is drawn after it, for that write alone (the advisor's hand, the mathematician's hand, two hands: one draw per click, none for a candidate not realised)."""
+    """The draw of the one click act, the outcome alone: with more than one outcome, one draw by the weights with the generator (its state carried in the books), the lower index on a tie; one outcome, no draw and the state kept (where `credit_draw`, the regions' draw of a place, advances its state on one weight too: main's two rules, each kept for the byte equality of section 0). The Node of the realised write is drawn after it, for that write alone (the advisor's hand, the mathematician's hand, two hands: one draw per click, none for a candidate not realised)."""
     pick, modulus = 0, board.world.width + 1
     if outcomes > 1:
         assert generator is not None  # a draw among outcomes is the declared generator's
@@ -228,7 +226,7 @@ def picked(
 
 
 def credit_draw(board: Lattice, weights: list[int]) -> int:
-    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`)."""
+    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`)."""
     books = board.credit
     assert books.declaration is not None
     found = books.declaration
@@ -293,7 +291,10 @@ def reported(
     if board.output is None:
         return
     names, families = books.declared.names, board.families
-    window = [board.interval - books.elapsed + 1, board.interval]
+    window = [
+        board.interval - max(books.elapsed, 1) + 1,
+        board.interval,
+    ]  # a dark draw: its own interval
     absorbed, light = (families[k].name if k is not None else None for k in exchanged)
     moved = next((k for k in exchanged if k is not None), None)
     left = board.credit.counts[moved] if moved is not None else None

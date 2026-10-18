@@ -16,7 +16,7 @@ def test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_on
     schedule = {(1, 2), (1, 3), (1, 6), (3, 8)}  # the (window, interval) pairs that are dark
     at, spans = {"window": 0}, []
 
-    def dark(board, books):
+    def dark(board, books, sourced):  # C5: the body's own sources, read once by the caller
         return books is giver and (at["window"], books.elapsed) in schedule
 
     def emitted(board, books, grain):

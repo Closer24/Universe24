@@ -469,3 +469,11 @@ advisor's cross-check at 1fe3790a (5987243109, the folder's reader at the design
 the emissions 64 and 82 of 100, the resonant taker 35 of 100, the plateau's cosine 0.6808 in 69 of
 69, the count 1 in 30 of 30 and in the detuned world 64 of 64, the detuned taker 0, the same counts as
 the table above.
+
+## The dark giver under the click's plan (2026-10-18, branch claude/click-one-act)
+
+A body in the dark has no window (C2): the giver's null windows every 48 intervals before its emission,
+re-laid on main, are gone, its emission drawn per interval at the hazard 1 / 48 as the dark grain reads
+it, and its first window opens when its own light stands at its Node after the span (C5: while the
+source has intervals left the giver reads none of it, no self-click). The readings above were taken
+before C2 and C5; the emission's interval and the far Node's cosine stand as read.

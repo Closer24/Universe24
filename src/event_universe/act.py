@@ -12,7 +12,7 @@ from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
 from event_universe.node_detector import NodeBooks, picked, reported
-from event_universe.reports import PAID_AT_EMISSION, conversion
+from event_universe.reports import NO_SIDE, PAID_AT_EMISSION, conversion
 from event_universe.resonance import turned_direction
 from event_universe.twist import (
     Item,
@@ -109,6 +109,7 @@ def written(board: Lattice, items: list[Item]) -> None:
     touched: list[NodeBooks] = []
     holes: dict[int, list[tuple[Node, tuple[int, ...]]]] = {}
     recoils: list[tuple[int, int, tuple[int, int, int], Node]] = []
+    unsided = False  # C6: a hole's Node with an empty face set, the quantum booked and not faced
     for item in items:
         if item.body is not None:
             parted(board, books := books_named(board, item.body), item, phases.get(item.body))
@@ -125,9 +126,11 @@ def written(board: Lattice, items: list[Item]) -> None:
         board.credit.account_ended(item.family)
         if item.delta < 0:
             holes.setdefault(item.family, []).extend(whole)
-        if unwritten:  # the undepleted beam: the quantum in the books alone
+        if unwritten:  # the undepleted beam, or a two-sided arrival: the quantum in the books alone
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
+            unsided |= item.delta < 0 and bool(item.ports) and not any(item.ports)
     for books in touched:
+        books.lost = [*(books.lost or []), NO_SIDE] if unsided else books.lost
         books.part = max(range(len(books.counts)), key=lambda k: books.counts[k])
         wall = count_wall(board.families[books.index], board.world.quantum_action)
         books.labels = [count * wall for count in books.counts]

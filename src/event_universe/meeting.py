@@ -174,17 +174,19 @@ def jumped(board: Lattice) -> None:
     """The records at Nodes that are NodeDetectors at the end of an interval: first the packets the world lays whole at this interval (`laid_whole`, the probe's lay at the body's Node by the schedule); then each record gathers the records arriving at its Node into its window's sums (`resonance.gathered`, the arriving level per drive family read once, `arriving`), one more interval elapsed and its own clock advanced (`node_detector.clock_advanced`); the window closes at its declared length, or, for a body with a probe among its transitions, at the interval of the probe's lay at its Node (`probe_arrived`: the window bounded by clicks, opened at the body's last write and closed at the probe's absorption, no level read; ALGEBRA.md, The pulsed gate, the two hands); at the close the window's turn of the labels (`turned_labels`, once per window, as W sub-turns with the carry) and the body's windows counted, then the draws and the writes, every one the one act's over the table's rows (`act.click`, `lists.py`): the emissions first record by record (`emission_drawn`: at the window's close while a window stands, the grain the count of the window's lit intervals, `NodeBooks.lit`, at every interval in the dark, `dark`, the grain 1, the lifetime's hazard 1 / tau per interval either way; a dark interval at the window's close draws twice, the interval at its own grain and then, where none was given, the window's lit intervals at theirs, so every interval of the window enters exactly one draw's span and the summed hazard over a window is W / tau whatever its dark intervals, ALGEBRA.md, The dark; a window with no dark interval the length itself, bit for bit), then at a probe's close the body's own one draw over its outcomes (`lists.probe`), at a declared window's the absorptions in one draw per arriving family over the records that gave none (`absorptions_drawn`), then the null window of every record of several parts that neither gave nor took (`lists.null_window`; a record of one part reads no part of itself and has none); the windows begun again; last, after the records' clicks, the conversion of every record converted whole whose window closed at this interval (`conversion_drawn`, its window read as the clicks left it)."""
     laid_whole(board)
     laid = {(whole.family, whole.at) for whole in board.world.wholes if whole.interval == board.interval}
+    own = {b.number: sourcing(board, b) for b in board.credit.bodies}  # C5: read once per body
     for books in board.credit.bodies:
-        own = sourcing(board, books)  # C5: a record the body is itself sourcing turns nothing
         levels = {
-            t.drive: 0 if t.drive in own else arriving(board, books, t.drive)
+            t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions
         }
         gathered(books.references, books.declared.transitions, levels)
         timed = isinstance(
             books.declared.draw, Draw
         )  # C2: a declared window opens at the first lit interval
-        books.elapsed += 1 if books.elapsed or not timed or not dark(board, books) else 0
+        books.elapsed += (
+            1 if books.elapsed or not timed or not dark(board, books, own[books.number]) else 0
+        )
         clock_advanced(board, books)
     closing = [
         b
@@ -202,7 +204,7 @@ def jumped(board: Lattice) -> None:
     for books in board.credit.bodies:
         if books.declared.draw is None:
             continue
-        lit = not dark(board, books)
+        lit = not dark(board, books, own[books.number])
         books.lit += lit
         spans = ([] if lit else [1]) + ([books.lit] if books.number in ended and books.lit else [])
         if any(emission_drawn(board, books, span) for span in spans):

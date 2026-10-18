@@ -4,14 +4,15 @@ import json
 
 import numpy as np
 
-from event_universe import world_files
+from event_universe import node_detector, world_files
 from event_universe.emission import holds_period, increments_of, radiated_total
 from event_universe.features.click import SCALE_OF
 from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
+from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, packet_world, refused
+from tests.laws import BACK, EVENTS, ROOT, TOOL, one_photon_board, packet_world, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
@@ -106,3 +107,17 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"
+
+
+def test_a_two_sided_arrival_is_booked_and_not_faced(tmp_path, monkeypatch):
+    """C6's empty Port set (the cold reader's fix of 2026-10-18; the owner's word: generic and right): an arrival two-sided on every axis at the hole's Node (the booked inflow tied through its two Ports on each axis, `node_detector.arrival_ports` naming no Port, given here by hand on the shipped one_photon world, whose packets are not exact mirror images) is a lawful click: the quantum is taken in the books by the write step's own deficit path (`twist.faced` faces no Node without a side, `act.written` books the deficit), the levels stand (no face, no front), the credit line carries the reading `NO_SIDE` after the taker's own, and the run goes on (before the fix `Face.presented` refused the whole run on the empty set)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(node_detector, "arrival_ports", lambda booked: ())  # every axis tied
+    board, lines = one_photon_board(tmp_path)
+    photon = [f.name for f in board.families].index("photon")
+    for _ in range(76):
+        board.step()
+    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+    assert len(taken) == 1 and taken[0]["lost"][-1] == NO_SIDE and board.credit.counts[photon] == 0
+    assert board.credit.deficits[photon] == 1 and not board.credit.fronts and not board.credit.faces
+    assert board.books()["photon"]["share"] > 0  # the levels stand: booked, not faced
