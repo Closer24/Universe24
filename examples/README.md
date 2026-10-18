@@ -66,3 +66,5 @@ The files at `examples/events/*.json` and the universe files the folders carry. 
 | `shelved_ion/mercury_ion.json` | Ion [1, 1299]; strong_drive, weak_drive and fluorescence [6000, 6000], each at the level weight 1. | The two shelved ion worlds, `tests/laws.py`, `tests/test_the_node_detector.py`. |
 | `zeno/zeno_atom.json` | Atom [1, 1299] and pulse [6000, 6000] at the level weight 1. | The five Zeno worlds, the two resonance worlds, `packet_emission.json`. |
 | `zeno_pulsed/pulsed_atom.json` | Gamma = 96,000, G = 1; atom [1, 1299], pulse [6000, 6000] at the level weight 1, probe [4000, 6000]. | The seven pulsed Zeno worlds, `tests/laws.py`. |
+
+The gates' results page, `examples/results.html`, is one static page built from the readers' numbers (`tools/bell_gate.py` over the Bell and GHZ output files, `tools/meeting_trials.py` over the Zeno and pulsed Zeno worlds), each folder's blind beside the engine's reading, the commands and the date of the reproduction in its footer.
