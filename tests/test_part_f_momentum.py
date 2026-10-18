@@ -300,7 +300,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
     standing = twist.fan_momentum(board, atom)[0]
-    found, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0))
+    found, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
     gained = twist.fan_momentum(board, atom)[0] - standing
     assert nothing is None and found[1:] == [0, 0] and 0 < found[0] < quarter
     at = board.mask(books.nodes)
@@ -322,7 +322,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     # (b) the one-Node taker: the second atom's books on its first Node alone
     single = replace(books, nodes=books.nodes[:1], weights=books.weights[:1])
     kept = [(r.now.copy(), r.before.copy(), r.remainder.copy()) for r in board.states[atom].lines]
-    found, lost = twist.twisted(board, single, single.part, (wanted, 0, 0))
+    found, lost = twist.twisted(board, single, single.part, (wanted, 0, 0), single.nodes[0])
     assert found == [0, 0, 0] and lost == LOST_TO_DECLARATION and len(single.nodes) == 1
     assert all(
         np.array_equal(a, b)
@@ -420,7 +420,7 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
     wanted, deposits, twists = 10000, [], []
     for books in board.credit.bodies:
         standing = twist.fan_momentum(board, atom)[0]
-        found, lost = twist.twisted(board, books, books.part, (wanted, 0, 0))
+        found, lost = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
         deposits.append(twist.fan_momentum(board, atom)[0] - standing)
         twists.append(found[0])
         assert lost is None and found[1:] == [0, 0]

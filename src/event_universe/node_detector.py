@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe import node, readings, records
 from event_universe.core import paces
-from event_universe.core.ports import AXES, Wrap
+from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features.click import drawn, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis and `lost` the readings of what it could not give (`twist.twisted`); Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, per Node and per Port, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights by their sums and the hole's Port set by the Ports (`arrival_ports`), and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis and `lost` the readings of what it could not give (`twist.twisted`); Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
 
     number: int
     index: int
@@ -50,7 +50,7 @@ class NodeBooks:
     clock: list[int] = field(default_factory=lambda: [0, 0])
     amplitudes: tuple[int, ...] = ()
     norm: int = 1
-    intake: dict[int, list[int]] = field(default_factory=dict)
+    intake: dict[int, list[list[int]]] = field(default_factory=dict)
     shares: dict[Transition, int] = field(default_factory=dict)
     carried: list[int] = field(default_factory=list)
     piece: list[int] | None = None
@@ -122,11 +122,13 @@ def arriving(board: Lattice, books: NodeBooks, drive: int, direction: int = 1) -
     return size if total >= 0 else -size
 
 
-def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Any) -> None:
-    """The reader's book of a window's inflows per Node (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands, one rule for the one kind): the arriving family's conserved form's own current through each of the NodeDetector's Nodes' front Ports this interval, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`, the same read as the credit's `booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking) added to the window's sum at that Node, the weights the absorption's Node is drawn by at the close, over G^2 once (`drawn_weights`), the Node the quantum entered through; emptied at the window's close (`jumped`)."""
-    book = books.intake.setdefault(drive, [0] * len(books.nodes))
+def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Sequence[Any]) -> None:
+    """The reader's book of a window's inflows per Node and per Port (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand with the advisor's second, two hands, one rule for the one kind): the arriving family's conserved form's own current through each of the NodeDetector's Nodes' front Ports this interval, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`, per Port, the same read as the credit's `booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking) added to the window's sum at that Node and Port, the sums the weights the absorption's Node is drawn by at the close, over G^2 once (`drawn_weights`), the Node the quantum entered through, and the Ports its face set (`arrival_ports`); emptied at the window's close (`jumped`)."""
+    book = books.intake.setdefault(drive, [[0] * PORTS for _at in books.nodes])
     for index, at in enumerate(books.nodes):
-        book[index] += int(came[tuple(np.add(at, board.offset))])
+        here = tuple(np.add(at, board.offset))
+        for port, through in enumerate(came):
+            book[index][port] += int(through[here])
 
 
 def piece_momentum(board: Lattice, index: int, at: np.ndarray) -> list[int]:
@@ -239,10 +241,21 @@ def share_weights(board: Lattice, books: NodeBooks) -> list[int]:
     return shares if sum(shares) > 0 else list(books.weights)
 
 
-def hole_node(board: Lattice, books: NodeBooks, drive: int) -> Node:
-    """The absorption's Node: drawn by the arriving record's inflow booked through each of the NodeDetector's Nodes' front Ports over the window (`booked_inflow`, floored at 0 and over G^2 once, `drawn_weights`), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's hand, the advisor's hand, two hands); the lay's weights where nothing entered; the hole's two faces written there; drawn after the outcome, for the realised write alone."""
-    booked = books.intake.get(drive, [0] * len(books.nodes))
-    return drawn_node(board, books, drawn_weights(board, booked))
+def arrival_ports(booked: Sequence[int]) -> tuple[int, ...]:
+    """The Ports a quantum entered a Node by, read from the window's inflow booked per Port at that Node (the click's plan, C6 (i): nature names no axis; `booked_inflow`, `credit.booked`): per axis the Port of the larger booked inflow, the arrival's side, and none where the two Ports tie (the arrival has no side on that axis), so the set holds at most one Port per axis and the hole's remainder stays below one read coefficient (features/click, `presented`); the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a set empty on every axis, a standing wave with no side, refuses the hole by name at the step."""
+    found = []
+    for axis in range(AXES):
+        plus, minus = booked[SIDES * axis], booked[SIDES * axis + 1]
+        if plus != minus:
+            found.append(SIDES * axis if plus > minus else SIDES * axis + 1)
+    return tuple(found)
+
+
+def hole_node(board: Lattice, books: NodeBooks, drive: int) -> tuple[Node, tuple[int, ...]]:
+    """The absorption's Node and its face set: the Node drawn by the arriving record's inflow booked through each of the NodeDetector's Nodes' front Ports over the window, the Ports' sums (`booked_inflow`, floored at 0 and over G^2 once, `drawn_weights`), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's hand, the advisor's hand, two hands); the lay's weights where nothing entered; the Ports the quantum entered that Node by from the same book (`arrival_ports`), the hole's two faces written there at them; drawn after the outcome, for the realised write alone."""
+    booked = books.intake.get(drive, [[0] * PORTS for _at in books.nodes])
+    at = drawn_node(board, books, drawn_weights(board, [sum(through) for through in booked]))
+    return at, arrival_ports(booked[books.nodes.index(at)])
 
 
 def reported(

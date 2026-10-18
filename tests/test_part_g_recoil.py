@@ -105,7 +105,7 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, monkeypatch):
-    """Task 5 (e): one_photon's first click (48): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board unchanged against the Part F2 run recorded at 04caccce2 (the oracle's lines to 48, the six keys stripped as the Boss's check strips them)."""
+    """Task 5 (e): one_photon's first click (48): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6; before it the Part F2 run recorded at 04caccce2) (the oracle's lines to 48, the six keys stripped as the Boss's check strips them)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     for _ in range(48):
@@ -201,7 +201,8 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
         and emitters[0].paid
         and emitters[0].outstanding == 1
     )
-    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
+    at = board.credit.bodies[0].nodes[0]
+    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0, at)
     assert source == "body 0" and owed == [-born[0], 0, 0] and reading == PAID_AT_EMISSION
     assert emitters[0].outstanding == 0
     import math  # the test prints against the hands' sine; the engine reads no sine

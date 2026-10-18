@@ -5,11 +5,11 @@
  "ended": null,
  "books": {
   "atom": {
-   "share": 249735348,
+   "share": 250433001,
    "quanta": 2,
    "count": 2,
    "deficit": 0,
-   "drift": 0,
+   "drift": 697653,
    "pace": 6000,
    "frozen": 0
   },
@@ -142,13 +142,13 @@
    ],
    "after": [
     0,
-    89,
+    -89,
     35914752000000
    ],
    "node": {
     "label": "LATTICE",
     "at": [
-     24,
+     23,
      0,
      0
     ]
@@ -167,14 +167,14 @@
     35914752000000
    ],
    "after": [
-    -90,
+    90,
     0,
     35914752000000
    ],
    "node": {
     "label": "LATTICE",
     "at": [
-     24,
+     23,
      0,
      0
     ]
@@ -318,7 +318,16 @@
     0,
     0
    ],
-   "lost": "P lost to the taker"
+   "lost": [
+    "P lost to the taker",
+    "recoil lost to the lay"
+   ],
+   "source": "the lay",
+   "recoil": [
+    93089,
+    0,
+    0
+   ]
   },
   {
    "event": "face",
@@ -327,7 +336,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 136,
    "node": {
     "label": "LATTICE",
@@ -361,7 +372,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -136,
    "node": {
     "label": "LATTICE",
@@ -379,7 +392,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 124,
    "node": {
     "label": "LATTICE",
@@ -397,7 +412,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -29,
    "node": {
     "label": "LATTICE",
@@ -431,7 +448,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -114,
    "node": {
     "label": "LATTICE",
@@ -449,7 +468,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -127,
    "node": {
     "label": "LATTICE",
@@ -467,7 +488,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 90,
    "node": {
     "label": "LATTICE",
@@ -485,7 +508,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -64,
    "node": {
     "label": "LATTICE",
@@ -519,7 +544,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -71,
    "node": {
     "label": "LATTICE",
@@ -537,7 +564,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 46,
    "node": {
     "label": "LATTICE",
@@ -555,7 +584,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 28,
    "node": {
     "label": "LATTICE",
@@ -573,7 +604,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 31,
    "node": {
     "label": "LATTICE",
@@ -607,7 +640,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -625,7 +660,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 12,
    "node": {
     "label": "LATTICE",
@@ -643,7 +680,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -47,
    "node": {
     "label": "LATTICE",
@@ -661,7 +700,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -695,7 +736,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 75,
    "node": {
     "label": "LATTICE",
@@ -713,7 +756,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -21,
    "node": {
     "label": "LATTICE",
@@ -731,7 +776,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -126,
    "node": {
     "label": "LATTICE",
@@ -749,7 +796,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -12,
    "node": {
     "label": "LATTICE",
@@ -783,7 +832,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 152,
    "node": {
     "label": "LATTICE",
@@ -801,7 +852,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 10,
    "node": {
     "label": "LATTICE",
@@ -819,7 +872,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -197,
    "node": {
     "label": "LATTICE",
@@ -837,7 +892,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 8,
    "node": {
     "label": "LATTICE",
@@ -871,7 +928,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 214,
    "node": {
     "label": "LATTICE",
@@ -889,7 +948,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -907,7 +968,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -231,
    "node": {
     "label": "LATTICE",
@@ -925,7 +988,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -959,7 +1024,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 236,
    "node": {
     "label": "LATTICE",
@@ -977,7 +1044,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -995,7 +1064,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -234,
    "node": {
     "label": "LATTICE",
@@ -1013,7 +1084,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -1047,7 +1120,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 228,
    "node": {
     "label": "LATTICE",
@@ -1065,7 +1140,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -1083,7 +1160,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -211,
    "node": {
     "label": "LATTICE",
@@ -1101,7 +1180,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -1135,7 +1216,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 191,
    "node": {
     "label": "LATTICE",
@@ -1153,7 +1236,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1171,7 +1256,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -159,
    "node": {
     "label": "LATTICE",
@@ -1189,7 +1276,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -12,
    "node": {
     "label": "LATTICE",
@@ -1223,7 +1312,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 137,
    "node": {
     "label": "LATTICE",
@@ -1241,7 +1332,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -1259,7 +1352,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -94,
    "node": {
     "label": "LATTICE",
@@ -1277,7 +1372,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -1311,7 +1408,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 67,
    "node": {
     "label": "LATTICE",
@@ -1329,7 +1428,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1347,7 +1448,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -25,
    "node": {
     "label": "LATTICE",
@@ -1365,7 +1468,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1399,7 +1504,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1417,7 +1524,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -1435,7 +1544,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 29,
    "node": {
     "label": "LATTICE",
@@ -1453,7 +1564,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -6,
    "node": {
     "label": "LATTICE",
@@ -1487,7 +1600,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -47,
    "node": {
     "label": "LATTICE",
@@ -1505,7 +1620,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -1523,7 +1640,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 75,
    "node": {
     "label": "LATTICE",
@@ -1541,7 +1660,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -1575,7 +1696,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -86,
    "node": {
     "label": "LATTICE",
@@ -1593,7 +1716,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -1611,7 +1736,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 97,
    "node": {
     "label": "LATTICE",
@@ -1629,7 +1756,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -1663,7 +1792,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -103,
    "node": {
     "label": "LATTICE",
@@ -1681,7 +1812,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1699,7 +1832,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 109,
    "node": {
     "label": "LATTICE",
@@ -1717,7 +1852,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -1751,7 +1888,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -113,
    "node": {
     "label": "LATTICE",
@@ -1769,7 +1908,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 5,
    "node": {
     "label": "LATTICE",
@@ -1787,7 +1928,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 105,
    "node": {
     "label": "LATTICE",
@@ -1805,7 +1948,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -7,
    "node": {
     "label": "LATTICE",
@@ -1839,7 +1984,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -99,
    "node": {
     "label": "LATTICE",
@@ -1857,7 +2004,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -1875,7 +2024,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 89,
    "node": {
     "label": "LATTICE",
@@ -1893,7 +2044,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -1927,7 +2080,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -86,
    "node": {
     "label": "LATTICE",
@@ -1945,7 +2100,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -1963,7 +2120,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 75,
    "node": {
     "label": "LATTICE",
@@ -1981,7 +2140,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -2015,7 +2176,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -69,
    "node": {
     "label": "LATTICE",
@@ -2033,7 +2196,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -2051,7 +2216,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 59,
    "node": {
     "label": "LATTICE",
@@ -2069,7 +2236,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -2103,7 +2272,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -55,
    "node": {
     "label": "LATTICE",
@@ -2121,7 +2292,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2139,7 +2312,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 43,
    "node": {
     "label": "LATTICE",
@@ -2157,7 +2332,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -2191,7 +2368,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -39,
    "node": {
     "label": "LATTICE",
@@ -2209,7 +2388,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2227,7 +2408,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 31,
    "node": {
     "label": "LATTICE",
@@ -2245,7 +2428,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -2279,7 +2464,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -27,
    "node": {
     "label": "LATTICE",
@@ -2297,7 +2484,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -2315,7 +2504,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 22,
    "node": {
     "label": "LATTICE",
@@ -2333,7 +2524,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -6,
    "node": {
     "label": "LATTICE",
@@ -2367,7 +2560,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -21,
    "node": {
     "label": "LATTICE",
@@ -2385,7 +2580,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 5,
    "node": {
     "label": "LATTICE",
@@ -2403,7 +2600,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 14,
    "node": {
     "label": "LATTICE",
@@ -2421,7 +2620,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -2455,7 +2656,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -14,
    "node": {
     "label": "LATTICE",
@@ -2473,7 +2676,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -2491,7 +2696,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 11,
    "node": {
     "label": "LATTICE",
@@ -2509,7 +2716,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -2543,7 +2752,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -10,
    "node": {
     "label": "LATTICE",
@@ -2561,7 +2772,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -2579,7 +2792,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -2597,7 +2812,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -8,
    "node": {
     "label": "LATTICE",
@@ -2631,7 +2848,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -2649,7 +2868,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -2667,7 +2888,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -2685,7 +2908,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -2719,7 +2944,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -2737,7 +2964,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -2755,7 +2984,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2773,7 +3004,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -8,
    "node": {
     "label": "LATTICE",
@@ -2807,7 +3040,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2825,7 +3060,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -2843,7 +3080,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -2861,7 +3100,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -2895,7 +3136,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2913,7 +3156,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -2931,7 +3176,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -2949,7 +3196,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -2983,7 +3232,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3001,7 +3252,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -11,
    "node": {
     "label": "LATTICE",
@@ -3019,7 +3272,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3037,7 +3292,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -3071,7 +3328,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3089,7 +3348,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -3107,7 +3368,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3125,7 +3388,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -9,
    "node": {
     "label": "LATTICE",
@@ -3159,7 +3424,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3177,7 +3444,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 9,
    "node": {
     "label": "LATTICE",
@@ -3195,7 +3464,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3213,7 +3484,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -3247,7 +3520,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3265,7 +3540,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -10,
    "node": {
     "label": "LATTICE",
@@ -3283,7 +3560,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3301,7 +3580,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3335,7 +3616,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3353,7 +3636,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -3371,7 +3656,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3389,7 +3676,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -6,
    "node": {
     "label": "LATTICE",
@@ -3423,7 +3712,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3441,7 +3732,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -3459,7 +3752,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3477,7 +3772,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -3511,7 +3808,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3529,7 +3828,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3547,7 +3848,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3565,7 +3868,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3599,7 +3904,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3617,7 +3924,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3635,7 +3944,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3653,7 +3964,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -3687,7 +4000,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3705,7 +4020,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -3723,7 +4040,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3741,7 +4060,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -3775,7 +4096,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3793,7 +4116,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -3811,7 +4136,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -3829,7 +4156,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -3863,7 +4192,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 0,
+   "ports": [
+    0
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -3881,7 +4212,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -3899,7 +4232,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -3933,7 +4268,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -3951,7 +4288,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -12,
    "node": {
     "label": "LATTICE",
@@ -3985,7 +4324,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -4003,7 +4344,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -7,
    "node": {
     "label": "LATTICE",
@@ -4037,7 +4380,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 9,
    "node": {
     "label": "LATTICE",
@@ -4055,7 +4400,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -4089,7 +4436,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -4107,7 +4456,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -4141,7 +4492,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -4159,7 +4512,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -4193,7 +4548,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -4211,7 +4568,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -12,
    "node": {
     "label": "LATTICE",
@@ -4231,48 +4590,67 @@
    "line": 2,
    "before": [
     0,
-    89,
+    -89,
     35914752000000
    ],
    "after": [
-    90,
     0,
+    -90,
     35914752000000
    ],
    "node": {
     "label": "LATTICE",
     "at": [
-     24,
+     23,
      0,
      0
     ]
    }
   },
   {
-   "event": "lay",
+   "event": "credit",
    "label": "LATTICE",
    "interval": 96,
    "family": "atom",
-   "node_detector": null,
-   "line": 3,
-   "before": [
-    -90,
-    0,
-    35914752000000
+   "node_detector": "body 0",
+   "window": [
+    49,
+    96
    ],
-   "after": [
+   "proper": 96,
+   "windows": 2,
+   "before": "e",
+   "realised": "e",
+   "kept": null,
+   "count": 0,
+   "left": null,
+   "absorbed": null,
+   "emitted": null,
+   "momentum": [
+    -93089,
     0,
-    89,
-    35914752000000
+    0
    ],
-   "node": {
-    "label": "LATTICE",
-    "at": [
-     24,
-     0,
-     0
-    ]
-   }
+   "fan": [
+    688,
+    0,
+    0
+   ],
+   "twist": [
+    -9424,
+    0,
+    0
+   ],
+   "lost": [
+    "P lost to the taker",
+    "recoil lost to the lay"
+   ],
+   "source": "the lay",
+   "recoil": [
+    93089,
+    0,
+    0
+   ]
   },
   {
    "event": "erasure",
@@ -4297,7 +4675,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 5,
    "node": {
     "label": "LATTICE",
@@ -4315,7 +4695,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -4349,7 +4731,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -4367,7 +4751,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -4401,7 +4787,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -4419,7 +4807,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -4453,7 +4843,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -4471,7 +4863,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -4505,7 +4899,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -4523,7 +4919,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -4557,7 +4955,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -4575,7 +4975,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -4609,7 +5011,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -4627,7 +5031,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -4661,7 +5067,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -4679,7 +5087,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -4713,7 +5123,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -4731,7 +5143,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -4765,7 +5179,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -4783,7 +5199,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -4817,7 +5235,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -4835,7 +5255,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -13,
    "node": {
     "label": "LATTICE",
@@ -4869,7 +5291,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 9,
    "node": {
     "label": "LATTICE",
@@ -4887,7 +5311,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -4921,7 +5347,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 0,
    "node": {
     "label": "LATTICE",
@@ -4939,7 +5367,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -4973,7 +5403,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -3,
    "node": {
     "label": "LATTICE",
@@ -4991,7 +5423,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -5025,7 +5459,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 7,
    "node": {
     "label": "LATTICE",
@@ -5043,7 +5479,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -8,
    "node": {
     "label": "LATTICE",
@@ -5077,7 +5515,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 6,
    "node": {
     "label": "LATTICE",
@@ -5095,7 +5535,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -5129,7 +5571,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -5147,7 +5591,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -2,
    "node": {
     "label": "LATTICE",
@@ -5181,7 +5627,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -5199,7 +5647,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -5233,7 +5683,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -5251,7 +5703,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -5285,7 +5739,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -6,
    "node": {
     "label": "LATTICE",
@@ -5303,7 +5759,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -5337,7 +5795,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -5355,7 +5815,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -5389,7 +5851,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -5407,7 +5871,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -5441,7 +5907,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -5459,7 +5927,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -5493,7 +5963,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -5511,7 +5983,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -9,
    "node": {
     "label": "LATTICE",
@@ -5545,7 +6019,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 8,
    "node": {
     "label": "LATTICE",
@@ -5563,7 +6039,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -5597,7 +6075,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -5,
    "node": {
     "label": "LATTICE",
@@ -5615,7 +6095,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -5649,7 +6131,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -5667,7 +6151,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -5701,7 +6187,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -6,
    "node": {
     "label": "LATTICE",
@@ -5719,7 +6207,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -5753,7 +6243,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -1,
    "node": {
     "label": "LATTICE",
@@ -5771,7 +6263,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -5805,7 +6299,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -5823,7 +6319,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -4,
    "node": {
     "label": "LATTICE",
@@ -5857,7 +6355,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 3,
    "node": {
     "label": "LATTICE",
@@ -5875,7 +6375,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -9,
    "node": {
     "label": "LATTICE",
@@ -5909,7 +6411,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 9,
    "node": {
     "label": "LATTICE",
@@ -5927,7 +6431,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -7,
    "node": {
     "label": "LATTICE",
@@ -5961,7 +6467,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -5979,7 +6487,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 2,
    "node": {
     "label": "LATTICE",
@@ -6013,7 +6523,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -7,
    "node": {
     "label": "LATTICE",
@@ -6031,7 +6543,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 4,
    "node": {
     "label": "LATTICE",
@@ -6065,7 +6579,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -7,
    "node": {
     "label": "LATTICE",
@@ -6083,7 +6599,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 12,
    "node": {
     "label": "LATTICE",
@@ -6117,7 +6635,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -16,
    "node": {
     "label": "LATTICE",
@@ -6135,7 +6655,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 19,
    "node": {
     "label": "LATTICE",
@@ -6169,7 +6691,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -18,
    "node": {
     "label": "LATTICE",
@@ -6187,7 +6711,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 13,
    "node": {
     "label": "LATTICE",
@@ -6221,7 +6747,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -16,
    "node": {
     "label": "LATTICE",
@@ -6239,7 +6767,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 17,
    "node": {
     "label": "LATTICE",
@@ -6273,7 +6803,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -11,
    "node": {
     "label": "LATTICE",
@@ -6291,7 +6823,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -6325,7 +6859,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -6343,7 +6879,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -18,
    "node": {
     "label": "LATTICE",
@@ -6377,7 +6915,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 27,
    "node": {
     "label": "LATTICE",
@@ -6395,7 +6935,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -30,
    "node": {
     "label": "LATTICE",
@@ -6429,7 +6971,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 29,
    "node": {
     "label": "LATTICE",
@@ -6447,7 +6991,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -39,
    "node": {
     "label": "LATTICE",
@@ -6481,7 +7027,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 38,
    "node": {
     "label": "LATTICE",
@@ -6499,7 +7047,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -36,
    "node": {
     "label": "LATTICE",
@@ -6533,7 +7083,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 31,
    "node": {
     "label": "LATTICE",
@@ -6551,7 +7103,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -21,
    "node": {
     "label": "LATTICE",
@@ -6585,7 +7139,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 11,
    "node": {
     "label": "LATTICE",
@@ -6603,7 +7159,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 10,
    "node": {
     "label": "LATTICE",
@@ -6637,7 +7195,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -17,
    "node": {
     "label": "LATTICE",
@@ -6655,7 +7215,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 31,
    "node": {
     "label": "LATTICE",
@@ -6689,7 +7251,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -46,
    "node": {
     "label": "LATTICE",
@@ -6707,7 +7271,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 54,
    "node": {
     "label": "LATTICE",
@@ -6741,7 +7307,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -60,
    "node": {
     "label": "LATTICE",
@@ -6759,7 +7327,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 66,
    "node": {
     "label": "LATTICE",
@@ -6793,7 +7363,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -65,
    "node": {
     "label": "LATTICE",
@@ -6811,7 +7383,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 59,
    "node": {
     "label": "LATTICE",
@@ -6845,7 +7419,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -51,
    "node": {
     "label": "LATTICE",
@@ -6863,7 +7439,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 31,
    "node": {
     "label": "LATTICE",
@@ -6897,7 +7475,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -17,
    "node": {
     "label": "LATTICE",
@@ -6915,7 +7495,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -14,
    "node": {
     "label": "LATTICE",
@@ -6949,7 +7531,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 29,
    "node": {
     "label": "LATTICE",
@@ -6967,7 +7551,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -67,
    "node": {
     "label": "LATTICE",
@@ -7001,7 +7587,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 86,
    "node": {
     "label": "LATTICE",
@@ -7019,7 +7607,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -112,
    "node": {
     "label": "LATTICE",
@@ -7053,7 +7643,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 123,
    "node": {
     "label": "LATTICE",
@@ -7071,7 +7663,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -135,
    "node": {
     "label": "LATTICE",
@@ -7105,7 +7699,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 135,
    "node": {
     "label": "LATTICE",
@@ -7123,7 +7719,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -125,
    "node": {
     "label": "LATTICE",
@@ -7157,7 +7755,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 114,
    "node": {
     "label": "LATTICE",
@@ -7175,7 +7775,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -93,
    "node": {
     "label": "LATTICE",
@@ -7209,7 +7811,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 73,
    "node": {
     "label": "LATTICE",
@@ -7227,7 +7831,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -36,
    "node": {
     "label": "LATTICE",
@@ -7261,7 +7867,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 13,
    "node": {
     "label": "LATTICE",
@@ -7279,7 +7887,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 27,
    "node": {
     "label": "LATTICE",
@@ -7313,7 +7923,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -58,
    "node": {
     "label": "LATTICE",
@@ -7331,7 +7943,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 103,
    "node": {
     "label": "LATTICE",
@@ -7365,7 +7979,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -123,
    "node": {
     "label": "LATTICE",
@@ -7383,7 +7999,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 156,
    "node": {
     "label": "LATTICE",
@@ -7417,7 +8035,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -175,
    "node": {
     "label": "LATTICE",
@@ -7435,7 +8055,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 192,
    "node": {
     "label": "LATTICE",
@@ -7469,7 +8091,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -196,
    "node": {
     "label": "LATTICE",
@@ -7487,7 +8111,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 194,
    "node": {
     "label": "LATTICE",
@@ -7521,7 +8147,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -193,
    "node": {
     "label": "LATTICE",
@@ -7539,7 +8167,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 184,
    "node": {
     "label": "LATTICE",
@@ -7573,7 +8203,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -174,
    "node": {
     "label": "LATTICE",
@@ -7591,7 +8223,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 146,
    "node": {
     "label": "LATTICE",
@@ -7625,7 +8259,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -127,
    "node": {
     "label": "LATTICE",
@@ -7643,7 +8279,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 85,
    "node": {
     "label": "LATTICE",
@@ -7677,7 +8315,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -64,
    "node": {
     "label": "LATTICE",
@@ -7695,7 +8335,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 21,
    "node": {
     "label": "LATTICE",
@@ -7729,7 +8371,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 1,
    "node": {
     "label": "LATTICE",
@@ -7747,7 +8391,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -36,
    "node": {
     "label": "LATTICE",
@@ -7781,7 +8427,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 57,
    "node": {
     "label": "LATTICE",
@@ -7799,7 +8447,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -90,
    "node": {
     "label": "LATTICE",
@@ -7833,7 +8483,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 103,
    "node": {
     "label": "LATTICE",
@@ -7851,7 +8503,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -124,
    "node": {
     "label": "LATTICE",
@@ -7885,7 +8539,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 132,
    "node": {
     "label": "LATTICE",
@@ -7903,7 +8559,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -142,
    "node": {
     "label": "LATTICE",
@@ -7937,7 +8595,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 145,
    "node": {
     "label": "LATTICE",
@@ -7955,7 +8615,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -152,
    "node": {
     "label": "LATTICE",
@@ -7989,7 +8651,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 148,
    "node": {
     "label": "LATTICE",
@@ -8007,7 +8671,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -144,
    "node": {
     "label": "LATTICE",
@@ -8041,7 +8707,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 139,
    "node": {
     "label": "LATTICE",
@@ -8059,7 +8727,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -131,
    "node": {
     "label": "LATTICE",
@@ -8093,7 +8763,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": 125,
    "node": {
     "label": "LATTICE",
@@ -8111,7 +8783,9 @@
    "family": "photon",
    "node_detector": null,
    "line": 0,
-   "port": 1,
+   "ports": [
+    1
+   ],
    "value": -108,
    "node": {
     "label": "LATTICE",

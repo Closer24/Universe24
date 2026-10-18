@@ -75,7 +75,13 @@ CREDIT_KEYS = (
 ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
 INTO = "into"  # the conversion line's own key, the families of the records out
 CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
-LINE, BEFORE, AFTER, PORT, VALUE = ("line", "before", "after", "port", "value")  # the two acts' words
+LINE, BEFORE, AFTER, PORT_SET, VALUE = (
+    "line",
+    "before",
+    "after",
+    "ports",
+    "value",
+)  # the two acts' words
 LAY_KEYS = (
     LINE,
     BEFORE,
@@ -84,10 +90,10 @@ LAY_KEYS = (
 )  # the lay line's own keys: the line laid, its levels before and after
 FACE_KEYS = (
     LINE,
-    PORT,
+    PORT_SET,
     VALUE,
     "node",
-)  # the face line's own keys: the line, the Port and the value presented
+)  # the face line's own keys: the line, the Ports and the value presented
 BODY = "body"  # a NodeDetector with a record of its own in the output, by its number among the world's bodies
 AT = "at"  # the one Node written, a lattice diagnostic beside the credit's result
 OUTPUT = (
@@ -99,7 +105,7 @@ OUTPUT = (
     *CREDIT_KEYS,
     *ERASURE_KEYS,
     *LAY_KEYS[:3],
-    PORT,
+    PORT_SET,
     VALUE,
     INTO,
 )  # the lines' keys
@@ -209,13 +215,13 @@ def lay(
 
 
 def face(
-    interval: int, family: str, line: int, node: list[int], port: int, value: int
+    interval: int, family: str, line: int, node: list[int], ports: list[int], value: int
 ) -> dict[str, object]:
-    """The face line, one value presented at one Port of one Node for one interval's step (features/click, `Face`; the mathematician's hand with the advisor's second, the face value logged per line per interval), labelled LATTICE, a diagnostic for the host's tool and no result: the interval at whose step it is presented, the record's family, no node_detector, the line, the Port in Port order and the value Rule3 read there in the place of the neighbour's level (the click's hole and the front's shells alike), the one Node under `node`; the inverse presents the same value, so the tool crosses the click from the lines and not from the books' log."""
+    """The face line, one value presented at the Ports of one Node's set for one interval's step (features/click, `Face`; the mathematician's hand with the advisor's second, the face value logged per line per interval; the click's plan, C6: the set in place of one Port), labelled LATTICE, a diagnostic for the host's tool and no result: the interval at whose step it is presented, the record's family, no node_detector, the line, the Ports, the set in Port order, and the value Rule3 read through each of them in the place of the neighbour's level (the click's hole and the front's shells alike), the one Node under `node`; the inverse presents the same value at the same Ports, so the tool crosses the click from the lines and not from the books' log."""
     found: dict[str, object] = dict(
         zip(REPORT_KEYS, (FACE, DIAGNOSTIC, interval, family, None), strict=True)
     )
-    found.update(zip(FACE_KEYS, (line, port, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
+    found.update(zip(FACE_KEYS, (line, ports, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
     return found
 
 
@@ -303,15 +309,15 @@ def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarr
 
 def weighted(
     facing: Sequence[np.ndarray], pieces: Sequence[tuple[tuple[Any, ...], tuple[Any, ...]]]
-) -> np.ndarray:
-    """Per Node of a region, the conserved form's own current through its front boundary Ports (`facing`, the region's front per Port as `entering` reads it), inward positive, 0 at every other Node: per record its current through each front Port times that Link's factor Q_ij, summed over the family's records, `pieces` per record its six currents and its six Links' factors in Port order at the pair the step starts from (`node_detector.weighed_currents`), in the unit G^2 of the Link's factor and in Python's integers at the front Nodes alone; what a NodeDetector books (`credit.booked`, `node_detector.booked_inflow`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j) through each front Port, the Link's factor squared the one weight, no rounding per Link), equal to the plain current times G^2 where no tension stands on the Link; the click line keeps the plain current, `entering`."""
-    seen = np.zeros(facing[0].shape, dtype=object)
+) -> list[np.ndarray]:
+    """Per Port and per Node of a region, the conserved form's own current through that front boundary Port (`facing`, the region's front per Port as `entering` reads it), inward positive, 0 at every other Node and Port, six arrays in Port order (their sum at a Node its inflow, the draw's weight; the Port's own the hole's set, `node_detector.arrival_ports`; the click's plan, C6 (i)): per record its current through each front Port times that Link's factor Q_ij, summed over the family's records, `pieces` per record its six currents and its six Links' factors in Port order at the pair the step starts from (`node_detector.weighed_currents`), in the unit G^2 of the Link's factor and in Python's integers at the front Nodes alone; what a NodeDetector books (`credit.booked`, `node_detector.booked_inflow`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j) through each front Port, the Link's factor squared the one weight, no rounding per Link), equal to the plain current times G^2 where no tension stands on the Link; the click line keeps the plain current, `entering`."""
+    seen = [np.zeros(facing[0].shape, dtype=object) for _port in range(PORTS)]
     for through, factors in pieces:
         for port in range(PORTS):
             at = facing[port]
             flow = np.asarray(through[port])[at].astype(object)
             factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
-            seen[at] += flow * factor
+            seen[port][at] += flow * factor
     return seen
 
 

@@ -35,19 +35,19 @@ def drawn(
 
 @dataclass
 class Face:
-    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Port preferred (the first in Port order whose read is not 0 at the step is taken and kept), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, and the front's taper (`fraction`, (p, q): the target the fraction p / q of Rule3's own level by the division act on its size, toward 0, so that a level of size 1 falls to 0 at any fraction below 1 and no leading edge of ones rides the band; None the target 0, the hole to 0; src/event_universe/front.py)."""
+    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Ports presented at, a set of one to three with at most one per axis (the hole's the Ports the quantum entered by, from the window's inflow booked per Port, `node_detector.arrival_ports`; a front shell Node's the Ports toward the inner shell, `front.faced`; the click's plan, C6: nature names no axis, so no Port order is read, the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a cut Port, its read 0, is dropped at the step and a set left without an open Port is refused by name), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, and the front's taper (`fraction`, (p, q): the target the fraction p / q of Rule3's own level by the division act on its size, toward 0, so that a level of size 1 falls to 0 at any fraction below 1 and no leading edge of ones rides the band; None the target 0, the hole to 0; src/event_universe/front.py)."""
 
     family: int
     line: int
     at: tuple[int, int, int]
-    port: int
+    ports: tuple[int, ...]
     interval: int
     value: int | None = None
     fraction: tuple[int, int] | None = None
 
 
 def face_value(total: int, read: int) -> int:
-    """The least arrival that lifts Rule3's numerator into the target's window [0, R_face), ceiling(-total / R_face), the division act's floor negated, with `total` the numerator without the face Port's term less w a* (a* the target, 0 for the hole to 0): R_face x value + total in [0, R_face), within [0, w) since R_face <= w, so the level next is a* and the remainder Rule3's own."""
+    """The least arrival that lifts Rule3's numerator into the target's window [0, R_face), ceiling(-total / R_face), the division act's floor negated, with `total` the numerator with the face Ports' arrivals 0 less w a* (a* the target, 0 for the hole to 0) and `read` R_face the sum of the set's reaches: R_face x value + total in [0, R_face), within [0, w) since each reach is at most w / 3 at paces at most the vacuum's (L810's guard) and the set holds at most one Port per axis, so the level next is a* and the remainder Rule3's own, below one read coefficient."""
     return -int(division_forward(total, read, 0)[0])
 
 
@@ -61,43 +61,44 @@ def presented(
     offset: tuple[int, int, int],
     direction: int,
 ) -> tuple[Any, ...]:
-    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed at the Node from Rule3's flux line (`rule3.flux_total` with the face's arrival 0 among the six, the Node's two levels, its mass and its remainder as the step reads them; `face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, the first Port from the preferred one whose reach is not 0 at the Node, kept in the face; a Node with every reach 0 refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
+    """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed at the Node from Rule3's flux line (`rule3.flux_total` with the face's arrival 0 among the six, the Node's two levels, its mass and its remainder as the step reads them; `face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, on the sum of the reaches of the face's Ports, every cut Port, its reach 0 at the Node, dropped from the set and the set kept in the face; a set left with no open Port refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
         at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
         here = [int(np.asarray(read)[at]) if np.ndim(read) else int(read) for read in rule.reaches]
         if face.value is None:
             assert direction == 1, "a face is computed forward and presented again backward"
-            ports = [p for p in [*range(face.port, len(here)), *range(face.port)] if here[p] != 0]
-            if not ports:
+            named, face.ports = face.ports, tuple(p for p in face.ports if here[p] != 0)
+            if not face.ports:  # every Port of the set cut, or no Port named: the hole has no side
                 raise ValueError(
-                    f"the face at the Node {list(face.at)} finds every read 0: no open Link"
+                    f"the face at the Node {list(face.at)} has no open Port in its set {list(named)}"
                 )
-            face.port = ports[0]
+            reach = sum(here[p] for p in face.ports)
             level, wall = int(now[at]), int(rule.wall)
             own = int(np.asarray(rule.mass)[at] if np.ndim(rule.mass) else rule.mass)
             links = sum(
-                here[p] * (int(found[p][at]) - level) for p in range(len(here)) if p != face.port
+                here[p] * (int(found[p][at]) - level) for p in range(len(here)) if p not in face.ports
             )
-            links -= here[face.port] * level  # the face's Link with its arrival 0
+            links -= reach * level  # the set's Links with their arrivals 0
             total = flux_total(links, own, wall, level, int(other[at])) + int(carry[at])
             target = 0  # the hole to 0, every face's target but the taper's
             if (
                 face.fraction is not None
             ):  # the front's taper: the fraction of Rule3's own level, toward 0
-                untouched = here[face.port] * int(
-                    found[face.port][at]
-                )  # the face Port's arrival untouched
+                untouched = sum(
+                    here[p] * int(found[p][at]) for p in face.ports
+                )  # the set's arrivals untouched
                 own_level = int(division_forward(total + untouched, wall, 0)[0])
                 scaled = int(division_forward(face.fraction[0] * abs(own_level), face.fraction[1], 0)[0])
                 target = (
                     scaled if own_level >= 0 else -scaled
                 )  # a level of size 1 goes to 0 at any fraction
-            face.value = face_value(total - wall * target, here[face.port])
-        if face.port not in copied:
-            found[face.port] = np.array(found[face.port], copy=True)
-            copied.add(face.port)
-        found[face.port][at] = face.value
+            face.value = face_value(total - wall * target, reach)
+        for port in face.ports:
+            if port not in copied:
+                found[port] = np.array(found[port], copy=True)
+                copied.add(port)
+            found[port][at] = face.value
     return tuple(found)
 
 

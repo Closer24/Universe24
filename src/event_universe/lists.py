@@ -14,6 +14,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Conversion, Rate, Transition
 from event_universe.node_detector import (
     NodeBooks,
+    arrival_ports,
     credit_draw,
     drawn_node,
     drawn_weights,
@@ -42,14 +43,18 @@ def part_at(books: NodeBooks, part: int, delta: int) -> list[Item]:
 def exchange(
     board: Lattice, books: NodeBooks, leaves: int, enters: int, drive: int | None = None
 ) -> list[Item]:
-    """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws (`hole_node`): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_detector_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`act.written`, `twist.faced`, the undepleted beam; the two hands' line); both items carry the arriving record's phase the close held for the transition, (X, Y') (`resonance.arrival_of`), None for an emission, which names no drive; Part F: the entering item carries the piece's momentum p_a per axis, one count's, read at the close from the drive's momentum terms and share at the body's Nodes (`node_detector.piece_momentum`), and the books take the click's two readings for its credit line, the piece's p_a and the drive's P_a over the board before the erasure starts (`fan_momentum`), the twist's two set by the write (`twist.twisted`)."""
+    """The record's own half of a click's list, one quantum of its count from the part `leaves` to the part `enters` at its Node, and before it, for a transition by a `drive`, the drive's item at the Node the drive's inflow draws, with the Ports the quantum entered it by, the hole's face set, and that Node the fold's origin on the part entered (`hole_node`, `Item.ports`, `Item.origin`; the click's plan, C6): the drive's quantum taken, -1, where the transition climbs, the part entered above the part left in the body's declared order of parts (the first part the lowest, `loader/node_detector_declaration.parts_of`), and given back, +1, where it descends, stimulated emission, by the count at the drive's own pair where the drive is local and whole at the Node and nothing where it is a beam (`act.written`, `twist.faced`, the undepleted beam; the two hands' line); both items carry the arriving record's phase the close held for the transition, (X, Y') (`resonance.arrival_of`), None for an emission, which names no drive; Part F: the entering item carries the piece's momentum p_a per axis, one count's, read at the close from the drive's momentum terms and share at the body's Nodes (`node_detector.piece_momentum`), and the books take the click's two readings for its credit line, the piece's p_a and the drive's P_a over the board before the erasure starts (`fan_momentum`), the twist's two set by the write (`twist.twisted`)."""
     arrival = arrival_of(books.declared.transitions, books.references, (leaves, enters, drive))
     books.piece = books.fan = books.twist = books.lost = books.source = books.recoil = None
-    momentum = None
+    momentum, taken = None, None
     if drive is not None:
         books.piece = piece_momentum(board, drive, board.mask(books.nodes))
         books.fan = list(fan_momentum(board, drive))
         momentum = (books.piece[0], books.piece[1], books.piece[2])
+        at, ports = hole_node(board, books, drive)
+        sign = -1 if enters > leaves else 1
+        pair = board.families[drive].pair if sign > 0 else None
+        taken = Item(drive, None, None, sign, (at,), pair, ports=(ports,))
     entering = Item(
         books.index,
         books.number,
@@ -59,13 +64,10 @@ def exchange(
         arrival=arrival,
         momentum=momentum,
         drive=drive,
+        origin=taken.nodes[0] if taken is not None else None,
     )
-    parts = [entering, replace(entering, part=leaves, delta=-1, arrival=None, momentum=None, drive=None)]
-    if drive is None:
-        return parts
-    sign = -1 if enters > leaves else 1
-    pair = board.families[drive].pair if sign > 0 else None
-    return [Item(drive, None, None, sign, (hole_node(board, books, drive),), pair), *parts]
+    left = replace(entering, part=leaves, delta=-1, arrival=None, momentum=None, drive=None, origin=None)
+    return [entering, left] if taken is None else [taken, entering, left]
 
 
 def credited_node(
@@ -78,10 +80,10 @@ def credited_node(
     quantum: int,
     piece: list[int],
     fan: list[int],
-) -> list[Node]:
-    """The Node of one credited quantum at a region and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's generator (Part G; one emitter, no draw), named and not folded, a region taker having no part of its own to twist (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `twist.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit (`node_detector.piece_momentum`) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node, none where nothing entered."""
+) -> list[tuple[Node, tuple[int, ...]]]:
+    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's generator (Part G; one emitter, no draw), named and not folded, a region taker having no part of its own to twist (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `twist.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit (`node_detector.piece_momentum`) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered."""
     nodes = list(book)
-    weights = drawn_weights(board, (book[at] for at in nodes))
+    weights = drawn_weights(board, (sum(book[at]) for at in nodes))
     if sum(weights) <= 0:
         return []
     at = nodes[credit_draw(board, weights)]
@@ -113,7 +115,7 @@ def credited_node(
                 recoil,
             )
         )
-    return [at]
+    return [(at, arrival_ports(book[at]))]
 
 
 def region(board: Lattice, index: int) -> Alternative | None:
@@ -130,15 +132,19 @@ def region(board: Lattice, index: int) -> Alternative | None:
             fan, keys = list(fan_momentum(board, index)), sorted(joint)
             combination = keys[credit_draw(board, [joint[key] for key in keys])]
             pieces = [piece_momentum(board, index, regions[name]) for name, _ports in books.sides]
-            nodes: list[Node] = []
+            found: list[tuple[Node, tuple[int, ...]]] = []
             for (name, ports), port, piece in zip(books.sides, combination, pieces, strict=True):
                 kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
                 port_name = reports.PORT_NAMES[port]
-                nodes += credited_node(board, index, name, intake[name], port_name, kept, 1, piece, fan)
-            return [Item(index, None, None, -1, tuple(nodes))]
+                found += credited_node(board, index, name, intake[name], port_name, kept, 1, piece, fan)
+            return [
+                Item(
+                    index, None, None, -1, tuple(n for n, _p in found), ports=tuple(p for _n, p in found)
+                )
+            ]
 
         return Alternative(1, sides)
-    inflows = [max(sum(intake[name].values()), 0) for name in names]
+    inflows = [max(sum(sum(through) for through in intake[name].values()), 0) for name in names]
     shares = drawn_weights(board, inflows)
     if sum(shares) <= 0:
         return None
@@ -149,8 +155,12 @@ def region(board: Lattice, index: int) -> Alternative | None:
         for quantum in range(min(through, books.counts[index])):
             name = names[credit_draw(board, shares)]
             piece = piece_momentum(board, index, regions[name])
-            at = credited_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
-            items.append(Item(index, None, None, -1, tuple(at)))
+            found = credited_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
+            items.append(
+                Item(
+                    index, None, None, -1, tuple(n for n, _p in found), ports=tuple(p for _n, p in found)
+                )
+            )
         return items
 
     return Alternative(1, quanta)

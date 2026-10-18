@@ -188,11 +188,11 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     jumps = credit_lines(lines, "absorbed")
     assert len(jumps) == 1 and jumps[0]["interval"] == 48 and board.credit.counts[light] == 0
     holes = {
-        f.at for f in board.credit.faces[49] if f.family == light
-    }  # the hole's one Node, the face books'
-    since, origin = 48, list(next(iter(holes)))
+        (f.at, f.ports) for f in board.credit.faces[49] if f.family == light
+    }  # the hole's one Node with its Port set, the face books'
+    since, (origin, ports) = 48, next(iter(holes))
     assert len(holes) == 1 and "node" not in jumps[0]
-    assert board.credit.fronts == [Front(light, (origin[0], origin[1], origin[2]), since)]
+    assert board.credit.fronts == [Front(light, (origin[0], origin[1], origin[2]), since, ports)]
     checked = 0
 
     def ball(

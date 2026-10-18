@@ -190,7 +190,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         board.interval
     ]  # one draw per click
     assert node_draws[0][1] == [
-        max(w, 0) // unit**2 for w in book[drv]
+        max(sum(w), 0) // unit**2 for w in book[drv]
     ]  # the Node by the inflow per Node
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "absorbed", "emitted", "count", "node_detector")
@@ -207,7 +207,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         f.family == drv for f in board.credit.faces.get(board.interval + 1, [])
     )
     assert (
-        book[drv][region.index(hole_at)] > 0
+        sum(book[drv][region.index(hole_at)]) > 0
     )  # the Node the quantum entered through, its inflow booked
     written = {
         tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["interval"] == board.interval
@@ -281,9 +281,16 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         ("fluorescence", 0) in kinds[g["interval"]] for g in given
     )  # every emission laid its quantum
     assert {x["label"] for x in lays} == {"LATTICE"} and board.credit.counts[light] >= 1  # none refused
-    key, kept = ("line", "port", "interval", "value"), sum(board.credit.faces.values(), [])
+    key, kept = ("line", "ports", "interval", "value"), sum(board.credit.faces.values(), [])
     faced = {(f.family, f.at, *(getattr(f, k) for k in key)) for f in kept}
-    logged = {(names.index(x["family"]), tuple(x["node"]["at"]), *(x[k] for k in key)) for x in faces}
+    logged = {
+        (
+            names.index(x["family"]),
+            tuple(x["node"]["at"]),
+            *(tuple(x[k]) if k == "ports" else x[k] for k in key),
+        )
+        for x in faces
+    }
     assert logged == {f for f in faced if f[4] <= board.interval} == set()  # no face: the drive a beam
     assert BACK.verdict(Lattice(load_world(path)), 23)["verdict"] == "MATCH"  # every act crossed
     fresh = Lattice(load_world(path), (conv := []).append)  # the conversion's list through the one act
@@ -478,12 +485,15 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
                 for n in np.argwhere(f)
             ]
             assert (min(fronts) < 0) == (k == 0) and len(fronts) == 2  # tension on the front Links
-            was, lines = sum(b.credit.intake.get((light, "near"), {}).values()), own_lines(b, light)
+            was, lines = (
+                sum(map(sum, b.credit.intake.get((light, "near"), {}).values())),
+                own_lines(b, light),
+            )
             start = int(shares_of(b, light, read, lines)[at].sum())
             squares = np.broadcast_to(np.asarray(paces.link_pace_of(gamma, read[0])) ** 2, b.shape)[at]
             b.step()
             moved, remainder = own_lines(b, light), Fraction(0)
-            booked_now = sum(b.credit.intake.get((light, "near"), {}).values()) - was
+            booked_now = sum(map(sum, b.credit.intake.get((light, "near"), {}).values())) - was
             for a, z in zip(lines, moved, strict=True):  # Rule3's remainder term per Node of the region
                 step = (z.now.astype(object) - a.before.astype(object))[at]  # next - before
                 carried = (z.remainder.astype(object) - a.remainder.astype(object))[at]  # r' - r

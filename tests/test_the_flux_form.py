@@ -210,11 +210,11 @@ def test_the_linear_sum_of_light_moves_by_the_faces_exchange_and_the_lays_alone(
                         here = tuple(
                             int(c) + o for c, o in zip(x["node"]["at"], board.offset, strict=True)
                         )  # type: ignore[index]
-                        port = int(str(x["port"]))
-                        read = reads[port]
-                        wiped += (int(read[here]) if read.ndim else int(read)) * (
-                            int(str(x["value"])) - int(arrivals[port][here])
-                        )
+                        for port in [int(str(p)) for p in list(x["ports"])]:  # type: ignore[call-overload]
+                            read = reads[port]
+                            wiped += (int(read[here]) if read.ndim else int(read)) * (
+                                int(str(x["value"])) - int(arrivals[port][here])
+                            )
                     laid = sum(
                         wall
                         * (

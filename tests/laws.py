@@ -263,13 +263,21 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
             pairs = zip(step * carried, squares.ravel(), strict=True)
             terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
         for face in [f for f in board.credit.faces.get(board.interval, []) if f.family == index]:
-            here, read_at = tuple(np.add(face.at, board.offset)), reads[face.port]  # the face term
-            read_at = int(np.asarray(read_at)[here]) if np.ndim(read_at) else int(read_at)
-            fill = board.families[index].rest if face.line == 0 else 0
-            arrived = int(readings.ports(records[face.line].now, board.wrap, fill)[face.port][here])
+            here, fill = (
+                tuple(np.add(face.at, board.offset)),
+                board.families[index].rest * (face.line == 0),
+            )
+            arrivals = readings.ports(records[face.line].now, board.wrap, fill)  # the face term per Port
+            reach = [
+                int(np.asarray(reads[p])[here]) if np.ndim(reads[p]) else int(reads[p])
+                for p in face.ports
+            ]
             step = int(stepped[index][face.line].now[here]) - int(records[face.line].before[here])
             wall = 2 * int(squares[here]) * unit * unit
-            terms += Fraction(step * read_at * (face.value - arrived), wall)
+            wiped = sum(
+                r * (face.value - int(arrivals[p][here])) for r, p in zip(reach, face.ports, strict=True)
+            )
+            terms += Fraction(step * wiped, wall)
         floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
         start = int(shares_of(board, index, read, records).sum())
         assert abs(Fraction(fixed - start - net) - terms) < floors, (index, fixed - start - net, terms)

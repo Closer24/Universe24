@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import itertools
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from math import gcd
 from typing import TYPE_CHECKING
@@ -11,6 +12,7 @@ import numpy as np
 
 from event_universe import growth, share
 from event_universe.core import paces
+from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter, Source, registered
 from event_universe.features.click import Face
@@ -24,7 +26,9 @@ from event_universe.reports import PORT_NAMES
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
-Intake = dict[Node, int]  # per boundary Node of a region, at the file's coordinates, the window's inflow
+Intake = dict[
+    Node, list[int]
+]  # per boundary Node of a region, at the file's coordinates, the window's inflow per Port
 Joints = dict[
     tuple[int, ...], int
 ]  # per combination of the sides' ports (0 the +, 1 the -) the window's J
@@ -162,14 +166,15 @@ def node_detector_nodes(board: Lattice) -> np.ndarray:
     return found
 
 
-def booked(board: Lattice, index: int, name: str, came: np.ndarray) -> None:
-    """The book of a window's inflows: per family and declared region the conserved form's own current through each boundary Node's front Ports, each record's plain current times its Link's factor Q_ij in the unit G^2 (`reports.weighted`, `came` per Node; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, no rounding per Link) summed over the window's intervals, the Node at the file's coordinates; the shares of the draw of the one Node the click is written at and, over the regions, of the window's count (`quanta_through`); nothing where the world declares no draw."""
+def booked(board: Lattice, index: int, name: str, came: Sequence[np.ndarray]) -> None:
+    """The book of a window's inflows: per family and declared region the conserved form's own current through each boundary Node's front Ports, per Port, each record's plain current times its Link's factor Q_ij in the unit G^2 (`reports.weighted`, `came` per Port and Node; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, no rounding per Link) summed over the window's intervals, the Node at the file's coordinates; the Ports' sums the shares of the draw of the one Node the click is written at and, over the regions, of the window's count (`quanta_through`), the Ports the hole's face set (`node_detector.arrival_ports`); nothing where the world declares no draw."""
     if board.credit.declaration is None:
         return
     book = board.credit.intake.setdefault((index, name), {})
-    for at in np.argwhere(came != 0):
-        key = growth.declared(at, board.offset)
-        book[key[0], key[1], key[2]] = book.get((key[0], key[1], key[2]), 0) + int(came[tuple(at)])
+    for port, through in enumerate(came):
+        for at in np.argwhere(through != 0):
+            key = growth.declared(at, board.offset)
+            book.setdefault((key[0], key[1], key[2]), [0] * PORTS)[port] += int(through[tuple(at)])
 
 
 def joined(board: Lattice, index: int, sums: Sums) -> None:

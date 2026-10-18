@@ -76,7 +76,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         rule = rule_integers(2, 3, 6000, clock, pace, None, 16)
         now, before = (draw.integers(-60, 60, shape).astype(np.int64) for _ in (0, 1))
         record = records.Record(now, before, np.full(shape, int(rule.wall) // 2, dtype=np.int64))
-        face = Face(0, 0, (1, 1, 1), 0, 1)
+        face = Face(0, 0, (1, 1, 1), (0,), 1)
         with profiled():
             after = flux.step_line(record, rule, closed, 1, 0, ([face], (0, 0, 0)))
         assert face.value is not None and int(after.now[1, 1, 1]) == 0  # the hole to 0 at the Node
@@ -248,7 +248,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             square = board.unit * board.unit
             for (index, name), (weighed, plain) in expected.items():
                 book = board.credit.intake.get((index, name), {})
-                booked = {tuple(int(v) for v in k): v for k, v in book.items()}
+                booked = {tuple(int(v) for v in k): sum(v) for k, v in book.items()}
                 assert booked == {n: int(weighed[n]) for n in np.ndindex(board.shape) if weighed[n] != 0}
                 scaled = {n: square * int(plain[n]) for n in np.ndindex(board.shape) if plain[n] != 0}
                 agreed, plain_too[tension, index, name] = agreed + 1, booked == scaled
