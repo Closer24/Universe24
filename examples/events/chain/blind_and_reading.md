@@ -91,6 +91,12 @@ files declare 1 and 6; checked on the Zeno calibration (the drive 392 at the wei
 quanta per window and its pi pulse is the derived weight's quarter turn scaled by their root), so
 the replacement of the files' weights, with the Zeno drive re-declared at one quantum per window,
 is the owner's call and not made here. This folder's bodies keep the declared weight 6.
+ Checked on 2026-10-19 before any replacement (the order's own clause): the unit's weight is the quarter
+turn over S_1 = A_1 W / 2, so the window's turn it gives is (pi / 2) sqrt(N_W), N_W the quanta passing
+the Node in the window, the root of the window where the declared weight gives k A W / 2, linear in
+it; the two meet at the Zeno calibration alone and under the unit's weight the Zeno column reads
+about 1.0, 0.32, 0.50, 0.50 and 0.50 at n = 1, 2, 4, 8 and 16 against Itano's, so the replacement is
+not made and the declared weight stands as the number of the file by the owner's word.
 
 ## The lay's numbers (lay_bounds.json, 2026-10-18; the loaded worlds, no interval stepped)
 

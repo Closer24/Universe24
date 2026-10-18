@@ -188,6 +188,14 @@ against the blind's 136.5 within three scatters (24.8);
 (12.6 s). The gate's table below holds this run's rows as `tools/reading_gate.py` re-reads them on the
 committed files.
 
+## Under the click's plan, 2026-10-18 (branch claude/click-one-act)
+
+The blind's 273 and 136.5 above are the Huygens sum in W_c, written before the run and standing as
+written; since C1 of the click's plan the laid light's unit is its own rotation's, W_c sin omega at
+k = pi / 4, so the engine's N counts the light's own quanta and the design's `blind_through` is
+re-declared in the record's unit (633, the two slits' alike), the generator's count the books'. The
+tables above stand as history at their commits; the screen's rows are not re-run on the branch.
+
 ## The gate's table
 
 Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the lays and the

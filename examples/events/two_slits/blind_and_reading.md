@@ -90,6 +90,12 @@ both hands read it on #1949 (5986385624 (2), 5986484965: the count pace-invarian
 1,809 / 1,804 = 1.003). The gate's table below holds this run's rows as `tools/reading_gate.py`
 re-reads them on the committed files.
 
+The photons' column above, N over sin omega (661.3), is history since 2026-10-18: under C1 of the click's
+plan the laid light's unit is its own rotation's, W_c sin omega at k = pi / 4, so the engine's N counts
+the light's own quanta and the column's division is the old form of the same reading; the blind's
+`photons` and `quanta` stand as written before the run, and the design's `blind_through` is re-declared
+in the record's unit (633) so that the generator's count is the books'.
+
 ## The gate's table
 
 Every row is a reading of the control run at the clean engine (the engine of main 39cc3851; the lays and the

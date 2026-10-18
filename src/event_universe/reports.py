@@ -149,7 +149,7 @@ def click(interval: int, family: str, node_detector: str, inflow: int) -> dict[s
 def density(
     interval: int, family: str, node_detector: str, reading: int | None, well: int | None = None
 ) -> dict[str, object]:
-    """The field line, a lattice reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
+    """The density line, a lattice reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
     line = dict(zip(REPORT_KEYS, (DENSITY, DIAGNOSTIC, interval, family, node_detector), strict=True))
     line[READING] = reading
     if well is not None:
