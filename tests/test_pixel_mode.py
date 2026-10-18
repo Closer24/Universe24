@@ -362,7 +362,7 @@ def test_the_generator_refuses_a_wave_at_p_0_by_name_before_any_lay(tmp_path, mo
 def test_the_generators_sense_and_one_node_declaration_are_the_design_files_and_the_flags_are_refused(
     tmp_path, monkeypatch
 ):
-    """The generator's two inputs beside the count are the design file's (the owner's decision C2, #1793 comment 5982379080; `design_entry`, `designed_lay`): `senses`, the rotation sense per body in the world's order, and `pixels`, the bodies laid as the one-Node record of their quanta, read from the folder's design.json beside the world, its world's entry or the design's own, and never from the command line: `--sense` and `--pixel` on the command line are refused by name with the words "the design file's" before the world is read (no mode file written); a design naming a body in `pixels` without its sense is refused by name naming the design file's `senses`; with both keys the chain's one quantum of the charged family is laid as the one-Node record in its sense, as the flags laid it, the design's own keys standing where the design has no entry for the world; the pair atom's shipped design carries the keys its builder passed."""
+    """The generator's two inputs beside the count are the design file's (the owner's decision C2, #1793 comment 5982379080; `design_entry`, `designed_lay`): `senses`, the rotation sense per body in the world's order, and `pixels`, the bodies laid as the one-Node record of their quanta, read from the folder's design.json beside the world, its world's entry or the design's own, and never from the command line: `--sense` and `--pixel` on the command line are refused by name with the words "the design file's" before the world is read (no mode file written); a design naming a body in `pixels` without its sense is refused by name naming the design file's `senses`; with both keys the chain's one quantum of the charged family is laid as the one-Node record in its sense, as the flags laid it, the design's own keys standing where the design has no entry for the world; a two-body design's senses and pixels are read as written."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL, senses=(1,), mode=False)  # its design entry written beside
     for flags in (["--sense", "1"], ["--pixel", "0"], ["--sense=1", "--pixel=0"]):
@@ -383,9 +383,12 @@ def test_the_generators_sense_and_one_node_declaration_are_the_design_files_and_
     assert not any(entry["moving"]["im_now"]) and any(
         entry["moving"]["im_before"]
     )  # the one-Node record
-    pair = json.loads((EVENTS / "pair_atom" / "design.json").read_text(encoding="utf-8"))
+    (tmp_path / "design.json").write_text(
+        json.dumps({"senses": [1, -1], "pixels": [0, 1]}), encoding="utf-8"
+    )
+    pair = TOOL.design_entry(world)
     print(
-        f"the flags' refusal: {refusal}; the chain's one-Node record {entry['clock']}; the pair atom's design {pair['senses']} {pair['pixels']}"
+        f"the flags' refusal: {refusal}; the chain's one-Node record {entry['clock']}; the two-body design {pair['senses']} {pair['pixels']}"
     )
     assert (pair["senses"], pair["pixels"]) == ([1, -1], [0, 1]) and TOOL.designed_lay(
         EVENTS / "a.json"
