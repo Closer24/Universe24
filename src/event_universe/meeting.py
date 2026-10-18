@@ -12,7 +12,7 @@ from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
 from event_universe.loader.draw import Draw
 from event_universe.loader.keys import Node
-from event_universe.node_detector import NodeBooks, arriving, clock_advanced, dark, own_clock
+from event_universe.node_detector import NodeBooks, arriving, clock_advanced, dark, own_clock, sourcing
 from event_universe.records import Booking, Record
 from event_universe.resonance import gathered, hopped, window_pair, window_turn
 from event_universe.twist import Item, faces_presented, relaid
@@ -159,7 +159,7 @@ def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
 
 
 def closed(board: Lattice) -> None:
-    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator), then the window's books emptied, the inflows and the joint shares, the count beginning again."""
+    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator), then the window's books emptied, the inflows, the joint shares and the passages, the count beginning again."""
     books = board.credit
     for index in board.order:
         found = lists.region(board, index)
@@ -167,6 +167,7 @@ def closed(board: Lattice) -> None:
             click(board, books, None, [found])
     books.intake.clear()
     books.joints.clear()
+    books.passages.clear()
 
 
 def jumped(board: Lattice) -> None:
@@ -174,9 +175,16 @@ def jumped(board: Lattice) -> None:
     laid_whole(board)
     laid = {(whole.family, whole.at) for whole in board.world.wholes if whole.interval == board.interval}
     for books in board.credit.bodies:
-        levels = {t.drive: arriving(board, books, t.drive) for t in books.declared.transitions}
+        own = sourcing(board, books)  # C5: a record the body is itself sourcing turns nothing
+        levels = {
+            t.drive: 0 if t.drive in own else arriving(board, books, t.drive)
+            for t in books.declared.transitions
+        }
         gathered(books.references, books.declared.transitions, levels)
-        books.elapsed += 1
+        timed = isinstance(
+            books.declared.draw, Draw
+        )  # C2: a declared window opens at the first lit interval
+        books.elapsed += 1 if books.elapsed or not timed or not dark(board, books) else 0
         clock_advanced(board, books)
     closing = [
         b
@@ -209,7 +217,7 @@ def jumped(board: Lattice) -> None:
         if books.number not in read | done and len(books.counts) > 1:  # a record of one part reads none
             click(board, books, books.declared.draw, lists.null_window(board, books))
     for books in closing:
-        books.elapsed, books.lit, books.intake = 0, 0, {}
+        books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
     for (
         books
     ) in board.credit.bodies:  # the conversions after the records' clicks, the window as they left it

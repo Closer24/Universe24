@@ -336,8 +336,8 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         [(b.step(), front or b.credit.fronts.clear()) for _ in range(170)]
         ph, b_at = (
             [f.name for f in b.families].index("photon"),
-            [141, 0, 0],
-        )  # the far packet's top at 170
+            [90, 0, 0],
+        )  # the taken packet's remnant at 170, inside the front's reach from the click at 76 (C2)
         absorbed = [
             (x["interval"], x["node_detector"]) for x in sl if x["event"] == "credit" and x["absorbed"]
         ]

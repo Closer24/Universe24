@@ -66,7 +66,7 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
+    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 75 as the shipped one does (the hybrid window, C2); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
     folder = EVENTS / "anticoincidence"
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
@@ -81,22 +81,22 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(48):
+    for _ in range(75):
         board.step()
     credits = [
         c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
     ]
-    assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
-    origin = next(f.at for f in board.credit.faces[49] if f.family == photon)
+    assert len(credits) == 1 and credits[0]["interval"] == 75 and board.credit.counts[photon] == 0
+    origin = next(f.at for f in board.credit.faces[76] if f.family == photon)
     tapered = 0
-    for interval in range(49, 231):  # the band of eight shells leaves the grown board by about 210
+    for interval in range(76, 258):  # the band of eight shells leaves the grown board by about 237
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
         inside, taper = (
-            distance <= interval - 48 - 9,
-            (distance > interval - 48 - 9) & (distance <= interval - 48),
+            distance <= interval - 75 - 9,
+            (distance > interval - 75 - 9) & (distance <= interval - 75),
         )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()

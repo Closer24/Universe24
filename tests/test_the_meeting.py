@@ -546,14 +546,14 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark()
     board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(200):
+    for _ in range(260):  # dark from the interval 250 (the click at 75, the front from 76 to 260)
         board.step()
         shares.append(board.books()["photon"]["share"])
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     credits = [c for c in credits if c["absorbed"]]
-    assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 75 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {x["event"] for x in lines if x["interval"] > 48} <= {"erasure", "face", "credit", "lay"}
+    assert {x["event"] for x in lines if x["interval"] > 75} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
@@ -585,14 +585,14 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
         (path := tmp_path / f"{len(drives)}.json").write_text(json.dumps(world), encoding="utf-8")
         TOOL.main(["--input", str(path)])
         board = Lattice(load_world(path), (lines := []).append)
-        while board.interval < 56:
+        while board.interval < 71:
             board.step()
         hits = [c for c in lines if c.get("absorbed")]
         clicks[drives] = [(c["interval"], c["node_detector"], c["absorbed"]) for c in hits]
-    assert clicks["photon", "photon_b"] == [(44, "body 0", "photon_b"), (56, "body 1", "photon")]
-    assert clicks[("photon",)] == [(56, "body 1", "photon")]
-    two, one = seen[:2], seen[2:]  # the closes at 44 and 56 per world; the drives photon 1, photon_b 2
+    assert clicks["photon", "photon_b"] == [(55, "body 0", "photon_b"), (70, "body 1", "photon")]
+    assert clicks[("photon",)] == [(70, "body 1", "photon")]
+    two, one = seen[:2], seen[2:]  # the closes per world; the drives photon 1, photon_b 2
     print(f"by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
     assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
-    assert [shares[1] for _, shares in two] == [shares[1] for _, shares in one]  # photon's own share
+    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, alike in both
     assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

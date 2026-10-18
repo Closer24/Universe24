@@ -29,7 +29,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.mode import Levels
 from event_universe.loader.packets import PacketRow
 from event_universe.loader.world import BodyRow, World
-from event_universe.node_detector import Weighed, booked_inflows, weighed_currents
+from event_universe.node_detector import Weighed, booked_inflows, node_detector_nodes, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
 from event_universe.resonance import clear_memo
 
@@ -362,7 +362,7 @@ class Lattice:
     ) -> None:
         """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`twist.faces_reported`)."""
         twist.faces_reported(self)
-        own, union, wrap = self.declared_board(), credit.node_detector_nodes(self), self.wrap
+        own, union, wrap = self.declared_board(), node_detector_nodes(self), self.wrap
         where = [(d, reports.region_of(d, self.body_nodes)) for d in self.node_detectors]
         fronts = [(d, at, reports.front(at, wrap, union if d.declared else at, own)) for d, at in where]
         sums: dict[int, dict[str, list[list[int]]]] = {}
@@ -374,7 +374,7 @@ class Lattice:
                 if seen != 0 and self.output is not None:
                     self.output(click(self.interval, family.name, detector.name, seen))
                 if detector.declared:
-                    credit.booked(self, index, detector.name, reports.weighted(facing, weighed[index]))
+                    credit.booked(self, index, detector.name, nodes, facing, weighed)
                 if family.several and detector.declared:
                     levels = level_sums(nodes, begun[index])
                     if any(any(level) for level in levels) and self.output is not None:

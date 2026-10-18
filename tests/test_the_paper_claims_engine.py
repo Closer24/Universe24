@@ -13,7 +13,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     import numpy as np
 
-    from event_universe import credit, flux, readings, records, world_files
+    from event_universe import flux, node_detector, readings, records, world_files
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import rule_integers
@@ -228,7 +228,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     for k in range(1, len(state.lines)):
                         axis = levels.integers(-tension, tension + 1, board.shape).astype(board.kind)
                         state.lines[k] = records.Record(axis, axis.copy(), state.lines[k].remainder)
-            own, union, expected = board.declared_board(), credit.node_detector_nodes(board), {}
+            own, union, expected = board.declared_board(), node_detector.node_detector_nodes(board), {}
             for detector in [r for r in board.node_detectors if r.declared]:
                 facing = front(detector.nodes, board.wrap, union, own)
                 for index in board.order:

@@ -31,29 +31,29 @@ from tests.laws import (
 )
 from tests.laws import EMIT_RUN as RUN
 
-ATOM_P = -32040  # one_photon's two-Node atom at count 1: the quarter turn's reach, the hands' 32,040
+ATOM_P = 32572  # one_photon's second atom at count 1: the quarter turn's reach about the hole's Node (C6), the +x piece (C2)
 
 
 def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monkeypatch):
-    """MUST 1 (the advisor's run): one_photon's atom takes at 48 with the quarter turn applied ("P lost to the taker"), its P_x -32,040; its window of 48 closes with no click at 96 and 144, and the re-lay there keeps the fold: P_x at 95, 96, 97 and the run's end (170) all -32,040 (before the fix 0 from 96); printed."""
+    """MUST 1 (the advisor's run): one_photon's second atom takes at 75 with the quarter turn applied ("P lost to the taker"), its P_x 32,572 (the +x piece about the hole's Node, C6); its window of 48, open again from the first lit interval after the click, closes with no click at 123, and the re-lay there keeps the fold: P_x at 122, 123, 124 and the run's end (170) all 32,572 (before the fix 0 from the null close); printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
     read = {}
     for _ in range(board.world.intervals):
         board.step()
-        if board.interval in (48, 95, 96, 97, 144, board.world.intervals):
+        if board.interval in (75, 122, 123, 124, board.world.intervals):
             read[board.interval] = twist.fan_momentum(board, atom)[0]
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    assert len(credits) == 1 and credits[0]["interval"] == 48
+    assert len(credits) == 1 and credits[0]["interval"] == 75
     assert credits[0]["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
     end = board.world.intervals
-    floor = levels_floor(board, atom, board.mask(board.credit.bodies[0].nodes))
-    assert read[48] == ATOM_P
-    assert all(abs(read[t] - ATOM_P) <= floor for t in (95, 96, 97, 144, end)), (read, floor)
+    floor = levels_floor(board, atom, board.mask(board.credit.bodies[1].nodes))
+    assert read[75] == ATOM_P
+    assert all(abs(read[t] - ATOM_P) <= floor for t in (122, 123, 124, end)), (read, floor)
     print(
-        f"Part H (MUST 1): one_photon's atom P_x at 48 {read[48]}, at 95 {read[95]}, at 96 {read[96]}, "
-        f"at 97 {read[97]}, at 144 {read[144]}, at the end ({end}) {read[end]}; the floor {floor}"
+        f"Part H (MUST 1): one_photon's atom P_x at 75 {read[75]}, at 122 {read[122]}, at 123 {read[123]}, "
+        f"at 124 {read[124]}, at the end ({end}) {read[end]}; the floor {floor}"
     )
 
 
@@ -84,7 +84,10 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     assert len(taken) == 1 and taken[0]["source"] == "body 0" and taken[0]["lost"] is None
     click = taken[0]["interval"]
     closes = [b.windows for b in board.credit.bodies]
-    assert all(windows * 48 > click for windows in closes)  # a null close of each body after the click
+    assert closes == [
+        1,
+        2,
+    ]  # C2: the emitter's one window, lit after its source ended, the taker's null and its click
     assert before == 0 and after is not None and floor is not None
     end = (twist.fan_momentum(board, light)[0], twist.fan_momentum(board, atom)[0])
     assert abs(after[1] + after[2] - before) <= floor, (before, after, floor)
@@ -92,8 +95,8 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     print(
         f"Part H (MUST 1, the shorter window): the click at {click}, p = {taken[0]['momentum']}, recoil {taken[0]['recoil']}; "
         f"P before the emission {before}, after the front passed (interval {after[0]}) the light's {after[1]} and the "
-        f"two bodies' {after[2]}, the total {after[1] + after[2]}; the bodies' windows closed {closes} times, the last with no "
-        f"click at {max(closes) * 48}; at the run's end ({RUN}) the light's {end[0]} and the bodies' {end[1]}, the total "
+        f"two bodies' {after[2]}, the total {after[1] + after[2]}; the bodies' windows closed {closes} times; "
+        f"at the run's end ({RUN}) the light's {end[0]} and the bodies' {end[1]}, the total "
         f"{end[0] + end[1]}; the floor {floor}"
     )
 
@@ -260,7 +263,7 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
     photon = next(i for i, f in enumerate(board.families) if f.name == "photon")
     laid = board.credit.counts[photon]
     assert board.credit.emitters[photon] == [emission.Emitter(None, laid, False)] and laid >= 1
-    for _ in range(48):
+    for _ in range(75):
         board.step()
     click = next(c for c in lines if c["event"] == "credit")
     assert click["source"] == THE_LAY and click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -282,6 +285,6 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
     drawn = twist.drawn_emitter(board, light, pick)
     assert weights == [[1, 1]] and drawn is not None and drawn.body is None and drawn.outstanding == 0
     print(
-        f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 48 source {click['source']!r} and the lay's count {laid - 1}; "
+        f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 75 source {click['source']!r} and the lay's count {laid - 1}; "
         f"the emit-and-take world at the emission ({board.interval}): body 0 at 1 beside the lay's 1, the draw's weights {weights[0]}"
     )

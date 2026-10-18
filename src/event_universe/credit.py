@@ -20,8 +20,8 @@ from event_universe.front import Front
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
-from event_universe.node_detector import NodeBooks, books_of
-from event_universe.reports import PORT_NAMES
+from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of
+from event_universe.reports import PORT_NAMES, weighted
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -40,7 +40,7 @@ Clock = list[
 
 @dataclass
 class Books:
-    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeDetectors with their own books (`node_detector.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `emission.emitted_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_detectors' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `twist.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left unabsorbed (`unabsorbed`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `lists.absorption`, `act.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each unabsorbed share is kept in (`unabsorbed_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `unabsorbed_in`; ALGEBRA.md, The absorption, the draw (b)); Part F, the piece's p_a per axis read at the close from the arriving record's momentum terms and share at the region's Nodes, scaled to one count (`node_detector.piece_momentum`), into the credit line; Part G (both hands' lines of 2026-10-10, the click with two receivers), the emitters' book per light family (`emitters`, `emission.Emitter`: per emitting body the quanta it gave that still stand in the record and whether the recoil was paid at the lay, kept after the Source's span is spent until its count reaches 0; the file's lays register nothing), the weights of the one draw of the piece's source at a click (`twist.recoiled`); the click's plan, C7: per record the remainder of the credit's division carried into the next window (`remainders`, `quanta_through`), L759's row 12, kept in the books for the next window, nature's counter having no window edge."""
+    """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the generator's state, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the window's joint shares per family of several parts, the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeDetectors with their own books (`node_detector.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `emission.emitted_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_detectors' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `twist.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left unabsorbed (`unabsorbed`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `lists.absorption`, `act.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each unabsorbed share is kept in (`unabsorbed_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `unabsorbed_in`; ALGEBRA.md, The absorption, the draw (b)); Part F, the piece's p_a per axis read at the close from the arriving record's momentum terms and share at the region's Nodes, scaled to one count (`node_detector.piece_momentum`), into the credit line; Part G (both hands' lines of 2026-10-10, the click with two receivers), the emitters' book per light family (`emitters`, `emission.Emitter`: per emitting body the quanta it gave that still stand in the record and whether the recoil was paid at the lay, kept after the Source's span is spent until its count reaches 0; the file's lays register nothing), the weights of the one draw of the piece's source at a click (`twist.recoiled`); the click's plan, C7: per record the remainder of the credit's division carried into the next window (`remainders`, `quanta_through`), L759's row 12, kept in the books for the next window, nature's counter having no window edge; C4: per family and region the record's passage over the window, its momentum terms and its share at the region summed, the piece's two sums (`passages`, `node_detector.Passage`, booked beside the inflow in `booked`)."""
 
     declaration: Draw | None
     elapsed: int
@@ -62,6 +62,7 @@ class Books:
     unabsorbed_units: dict[int, int] = field(default_factory=dict)
     emitters: dict[int, list[Emitter]] = field(default_factory=dict)
     remainders: dict[int, int] = field(default_factory=dict)
+    passages: dict[tuple[int, str], Passage] = field(default_factory=dict)
 
     def unabsorbed_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
         """The one denominator of the bodies closing a drive's interval and the record's unabsorbed share read in it (ALGEBRA.md, The absorption, the draw (b); `lists.absorption`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the unabsorbed share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`unabsorbed_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
@@ -161,21 +162,20 @@ def clocked_regions(board: Lattice) -> None:
             own[0], own[1] = own[0] + int(whole), int(rest)
 
 
-def node_detector_nodes(board: Lattice) -> np.ndarray:
-    """The declared NodeDetectors' Nodes: the union of the declared regions (every node_detector with its own positions, the faces' layer and the bodies' node_detectors aside, `NodeDetector.declared`), whose boundary is where the reports are read, so that what moves between two regions of one screen is not seen twice."""
-    found = np.zeros(board.shape, dtype=bool)
-    for node_detector in board.node_detectors:
-        if node_detector.declared and node_detector.nodes is not None:
-            found |= node_detector.nodes
-    return found
-
-
-def booked(board: Lattice, index: int, name: str, came: Sequence[np.ndarray]) -> None:
-    """The book of a window's inflows: per family and declared region the conserved form's own current through each boundary Node's front Ports, per Port, each record's plain current times its Link's factor Q_ij in the unit G^2 (`reports.weighted`, `came` per Port and Node; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, no rounding per Link) summed over the window's intervals, the Node at the file's coordinates; the Ports' sums the shares of the draw of the one Node the click is written at and, over the regions, of the window's count (`quanta_through`), the Ports the hole's face set (`node_detector.arrival_ports`); nothing where the world declares no draw."""
+def booked(
+    board: Lattice,
+    index: int,
+    name: str,
+    nodes: np.ndarray,
+    facing: Sequence[np.ndarray],
+    weighed: Weighed,
+) -> None:
+    """The book of a window's inflows: per family and declared region the conserved form's own current through each boundary Node's front Ports, per Port, each record's plain current times its Link's factor Q_ij in the unit G^2 (`reports.weighted` on the family's read `weighed` through the region's front `facing`, per Port and Node; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, no rounding per Link) summed over the window's intervals, the Node at the file's coordinates; the Ports' sums the shares of the draw of the one Node the click is written at and, over the regions, of the window's count (`quanta_through`), the Ports the hole's face set (`node_detector.arrival_ports`); beside it the family's passage through the region's Nodes, its momentum terms and its share there from the same read, summed over the window, the piece's two sums (`node_detector.Passage`, C4); nothing where the world declares no draw."""
     if board.credit.declaration is None:
         return
+    board.credit.passages.setdefault((index, name), Passage()).booked(nodes, weighed[index])
     book = board.credit.intake.setdefault((index, name), {})
-    for port, through in enumerate(came):
+    for port, through in enumerate(weighted(facing, weighed[index])):
         for at in np.argwhere(through != 0):
             key = growth.declared(at, board.offset)
             book.setdefault((key[0], key[1], key[2]), [0] * PORTS)[port] += int(through[tuple(at)])

@@ -5,7 +5,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import credit, flux, readings, records, share, world_files
+from event_universe import flux, node_detector, readings, records, share, world_files
 from event_universe.core import paces, ports
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule_integers
@@ -124,7 +124,10 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
         board = Lattice(load_world(EVENTS / folder / f"{name}.json"))
         for _ in range(24):
             board.step()  # the board may grow beyond a receding face: the masks at its shape now
-            union, everywhere = credit.node_detector_nodes(board), np.ones(board.shape, dtype=bool)
+            union, everywhere = (
+                node_detector.node_detector_nodes(board),
+                np.ones(board.shape, dtype=bool),
+            )
             for index in range(len(board.families)):
                 full, frozen = board.share_of(index, 1, everywhere)
                 short, frozen_short = board.share_of(index)

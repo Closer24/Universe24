@@ -244,24 +244,24 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
     board, lines = one_photon_board(tmp_path)
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     num = board.families[light].pair[0]
-    for _ in range(47):
+    for _ in range(74):
         board.step()
-    left = (np.arange(board.shape[0]) < 48).reshape(board.shape)
-    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
-    packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
+    right = (np.arange(board.shape[0]) >= 48).reshape(board.shape)
+    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, right)[0]
+    packet_share = int(board.share_of(light, 1, right)[0][right].sum(dtype=object))
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     board.step()
     credits = [line for line in lines if line["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 48 and credits[0]["absorbed"] == "photon"
+    assert len(credits) == 1 and credits[0]["interval"] == 75 and credits[0]["absorbed"] == "photon"
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
-    assert piece[0] < 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
+    assert piece[0] > 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
     assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio
     deficit = [a - b for a, b in zip(fan, piece, strict=True)]
-    assert deficit[0] > 0 and abs(deficit[0] + piece[0]) < abs(piece[0])  # the fan near symmetric
+    assert deficit[0] < 0 and abs(deficit[0] + piece[0]) < abs(piece[0])  # the fan near symmetric
     quantum = 2 * T * math.sin(math.pi / 4)
     print(
         f"Part F2 (Tasks 1, 5): the piece's p = {piece}, the fan's P = {fan}, the deficit {deficit}; "
-        f"the whole left packet's P W_rec / (W num) at 47 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
+        f"the whole right packet's P W_rec / (W num) at 74 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
         f"W = {packet_share / 589824000:.3f} W_c), W_rec = {board.credit.units[light] / 589824000:.3f} W_c; "
         f"|p_x| against 2 T sin(pi / 4) = {quantum:.0f}: {abs(piece[0]) / quantum:.3f} of it"
     )
@@ -278,7 +278,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
-    for _ in range(47):
+    for _ in range(74):
         board.step()
     before = twist.fan_momentum(board, atom)
     board.step()
@@ -286,16 +286,16 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     credits = [line for line in lines if line["event"] == "credit"]
     piece, turned, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
     quarter = twist.quarter_turn(board)
-    assert before == (0, 0, 0) and after[0] < 0 and after[0] * piece[0] > 0
-    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [-quarter, 0, 0]  # Part G: the lay's case
+    assert before == (0, 0, 0) and after[0] > 0 and after[0] * piece[0] > 0
+    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [quarter, 0, 0]  # Part G: the lay's case
     assert abs(after[0]) < abs(piece[0])
     print(
         f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {turned[0]} "
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
         f"(the two-Node atom's reach 4 SUM A^2 = {4 * 2 * 90 * 90} at most; no taker of this lay carries one count of one_photon's photon)"
     )
-    # (b') the reachable case on the second atom, standing in its ground part at 48
-    books = board.credit.bodies[1]
+    # (b') the reachable case on the first atom, standing in its ground part at 75
+    books = board.credit.bodies[0]
     wanted = 10000
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
