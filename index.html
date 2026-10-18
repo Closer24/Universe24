@@ -4,18 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Universe24</title>
-<meta name="description" content="What if the universe is just numbers? Every point of space holds whole numbers and follows one simple rule with its six neighbours. From this come the speed of light, clocks that run slow, a direction of time only where something is measured, and a black hole's shadow the size telescopes measured, within their error. Every step runs back exactly.">
+<meta name="description" content="What if the universe is just numbers? Every point of space holds whole numbers and follows one simple rule with its six neighbours. The experiments on this page, the two slits, which way, one photon on two atoms, an emission, a resonance, two falling bodies and a moving body, are runs of that rule, each with its own page; the gates' results stand beside their blinds.">
 <link rel="canonical" href="https://closer24.github.io/Universe24/">
 <style>
-  :root { color-scheme: light dark; }
-  body { margin: 0; padding: 2rem 1rem 3rem; font: 1.05rem/1.55 Georgia, "Times New Roman", serif; max-width: 44em; margin-left: auto; margin-right: auto; }
+  :root {
+    color-scheme: dark;
+    --bg: #111214;
+    --panel: #191a1d;
+    --ink: #e8e6e1;
+    --muted: #a9a69f;
+    --line: #2c2e33;
+    --accent: #8fb8ff;
+    --status: #c98500;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #faf9f6;
+    --panel: #ffffff;
+    --ink: #1c1c1e;
+    --muted: #5d5b56;
+    --line: #d9d6cf;
+    --accent: #1f5fbf;
+    --status: #8a5a00;
+  }
+  html { background: var(--bg); }
+  body { margin: 0; padding: 2rem 16px 3rem; background: var(--bg); color: var(--ink); font: 1.05rem/1.55 Georgia, "Times New Roman", serif; max-width: 44rem; margin-left: auto; margin-right: auto; overflow-x: hidden; }
   h1 { font-size: 2.2rem; margin: 0 0 0.25rem; }
-  h2 { font-size: 1.3rem; margin: 2rem 0 0.5rem; }
+  h2 { font-size: 1.35rem; margin: 2.2rem 0 0.5rem; }
+  h3 { font-size: 1.15rem; margin: 0 0 0.5rem; }
+  p { margin: 0.6rem 0; }
   p.aim { font-weight: bold; }
+  .muted { color: var(--muted); }
   ul { padding-left: 1.2em; }
   li { margin: 0.4rem 0; }
-  footer { margin-top: 2.5rem; font-size: 0.9rem; border-top: 1px solid #8884; padding-top: 1rem; }
-  a { color: inherit; }
+  a { color: var(--accent); }
+  article.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 16px 1.1rem; margin: 1.2rem 0; }
+  article.card p { margin: 0.5rem 0 0; }
+  p.open { margin-top: 0.7rem; }
+  span.status { color: var(--status); font-variant: small-caps; letter-spacing: 0.03em; }
+  footer { margin-top: 2.5rem; font-size: 0.92rem; border-top: 1px solid var(--line); padding-top: 1rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -25,17 +52,70 @@
 </header>
 
 <main>
-<h2>What this is</h2>
+<h2 id="what">What this is</h2>
 <p>What if the universe is just numbers? Every point of space holds whole numbers and follows one simple rule with its six neighbours. From this come the speed of light, clocks that run slow near matter and in motion, a direction of time only where something is measured, and a black hole's shadow the size telescopes measured, within their error. Every step runs back exactly.</p>
 <p>The paper's one claim is that Universe24 helps compute things in nature. Every number in the first paper is reproduced by a script in the repository, and the time paper's build checks every integer of its text against its run, so anyone with a computer can run the same counting and read the same numbers.</p>
 
-<h2>Read the papers</h2>
+<h2 id="experiments">The experiments</h2>
+<p>Everything on these pages comes from whole numbers at each point of space stepped by one rule, Rule 3, and the declared counting rule; nothing is drawn by hand. Rule 3 is one integer line: from a point's two numbers, the six arrivals from its neighbours and its kept remainder it forms one sum, divides once, and keeps the new remainder. The runs were recorded and embedded in their pages; the levels on them are the integers the engine wrote, and a page computes nothing beyond the sums its bars and graphs draw. Each link opens the experiment's own page in a new tab. Press Play, drag the slider. The numbers are the lattice's own, not nature's.</p>
+
+<article class="card" id="two-slits">
+<h3>The two slits</h3>
+<p>The paper's experiment: light through two gaps in a wall, with detectors waiting along a screen read in twelve regions, 130 intervals of Rule 3. The bars are the detectors' clicks per region of the screen, 285 in the counting window; the dashed curve is the blind row, 273 written down before the first run from light's line in real arithmetic, the pattern the two openings should give. The three high regions of the bars stand where the blind has them, the lows at the regions 4 and 7 against the blind's 4 and 8: interference, read as clicks, out of whole numbers alone. The clicks are the measurement; the bars are what the page draws from them. Watch the board frame by frame and see the light from the two gaps meet. The law's own line for this row, 284.7, was computed after the run and stands in the paper. <span class="status">Approved experiment.</span></p>
+<p class="open"><a href="examples/events/two_slits/two_slits.html" target="_blank" rel="noopener">Open the two slits</a></p>
+</article>
+
+<article class="card" id="which-way">
+<h3>Which way</h3>
+<p>Which gap did the light pass? The same wall is read three ways. With both gaps open the screen's twelve regions read [22, 21, 27, 16, 9, 36, 56, 11, 12, 26, 24, 25], 285 clicks, the two slits as shipped; with the lower gap closed they read [0, 0, 0, 0, 0, 19, 32, 15, 26, 17, 16, 17], 142 clicks, one gap's pattern. With both gaps open and a channel detector behind the lower gap taking everything that passes it, the channel reads 149 clicks and the screen 137, in the row [0, 0, 0, 0, 0, 18, 35, 12, 22, 23, 14, 13]: the one-gap row within the draw's scatter, and the two-slit fringes are gone, the central maximum at the region 6 down from 56 to 35, the minimum beside it at the region 8 filled from 12 to 22. In nature this is the which-way experiment, where knowing the path erases the interference; on the board nothing is added to do it, the channel's detector credits the quanta that pass it, so they never reach the screen. These are the readings at the clean engine, one seed, from the folder's blind_and_reading.md. <span class="status">World.</span></p>
+<p class="open"><a href="examples/events/which_way/two_gaps.html" target="_blank" rel="noopener">Both gaps</a> &middot; <a href="examples/events/which_way/one_gap.html" target="_blank" rel="noopener">One gap</a> &middot; <a href="examples/events/which_way/which_way.html" target="_blank" rel="noopener">Both gaps with the which-way detector</a></p>
+</article>
+
+<article class="card" id="anticoincidence">
+<h3>One photon on two atoms</h3>
+<p>Can one quantum of light be caught twice? One light record holding one whole quantum is laid between two atoms on a chain of 96 Nodes, and spreads toward both as a wave. At the interval 48 one atom, body 0, absorbs it and goes from its ground state to its excited state; the other stays in the ground state. In the folder's reading over 200 trials of this world the two atoms never both absorb; in the control world, two light records laid on the same two atoms, both absorb at the interval 48. The board's light is a wave that reaches both atoms, and the click is one: one quantum is one click, never shared. <span class="status">World.</span></p>
+<p class="open"><a href="examples/events/anticoincidence/anticoincidence.html" target="_blank" rel="noopener">One photon</a> &middot; <a href="examples/events/anticoincidence/two_photons.html" target="_blank" rel="noopener">Two photons, the control</a></p>
+</article>
+
+<article class="card" id="packet-emission">
+<h3>The packet emission</h3>
+<p>How does an atom give its light? On a board of 627 Nodes along one axis, one atom in its excited state emits its one quantum at the interval 61 as a packet travelling along the axis; the page draws the packet's Nodes as it goes. At the board's far end a region named reach waits for it. The region records no click in this run and in every seed of the folder's reading: at this board's size the packet is at the floor there, a finding by name in the folder, written as such and not adjusted. The page shows an emission as a travelling packet, and a far detector that does not click. <span class="status">World.</span></p>
+<p class="open"><a href="examples/events/packet_emission/packet_emission.html" target="_blank" rel="noopener">Open the packet emission</a></p>
+</article>
+
+<article class="card" id="resonance">
+<h3>The resonance</h3>
+<p>Who can take the light an atom gives? On a ring of 48 Nodes a giver atom and a taker atom stand apart, and the giver emits its pulse at the interval 27. In the resonant world the taker is tuned to the giver's frequency and absorbs the pulse, its credit at the interval 96; in the detuned world the taker is tuned away and does not. Both pages run at the design's seed 1, one of the 35 seeds of 100 at which the tuned taker absorbs; the detuned taker absorbs at 0 of 100 seeds, and the full reading stands in the folder's blind_and_reading.md. The born light's frequency is read by who can take it: this is the beat of two levels, the law's line "the wavelength is the giver's beat". <span class="status">World.</span></p>
+<p class="open"><a href="examples/events/resonance/resonance.html" target="_blank" rel="noopener">Resonant</a> &middot; <a href="examples/events/resonance/detuned.html" target="_blank" rel="noopener">Detuned</a></p>
+</article>
+
+<article class="card" id="two-bodies">
+<h3>Two bodies fall toward each other</h3>
+<p>Two bodies of matter are laid at rest on a board of 49 x 17 x 17 Links, 24 Links apart, with no velocity given, and Rule 3 runs for 900 intervals. The board carries a second row of numbers, the content, declared in the universe file: each body writes a well into it, and where the content is deep the clock runs slow. For about 300 intervals little moves. Then the two drift toward each other, faster and faster, their distance falling under a third of its start, and they fall into one well, where they breathe as one body. Nothing pulls: the fall is the same integer line, stepped on a board where the clocks differ. Watch the two wells on the content strip draw together. <span class="status">Lattice reading, no blind.</span></p>
+<p class="open"><a href="examples/events/two_bodies/two_bodies.html" target="_blank" rel="noopener">Open the two bodies</a></p>
+</article>
+
+<article class="card" id="body-motion">
+<h3>A bound body in motion</h3>
+<p>One body is pushed once, at the start, along an axis, and then left to the rule for 200 intervals. It moves at 0.0948 Links per interval, 2 percent under the speed its band predicts, and it stays whole: at every interval at most one quantum stands beyond a sphere of radius 9 around its centre. The level at its centre changes sign every 3.85 intervals, the half period of its rest rotation: the body's own clock, ticking as it travels, the thing the law calls time. The push was put in by hand once; everything after it is the rule's. <span class="status">Lattice reading, no blind.</span></p>
+<p class="open"><a href="examples/events/body_motion/body_motion.html" target="_blank" rel="noopener">Open the body in motion</a></p>
+</article>
+
+<article class="card" id="gates">
+<h3>The gates, a results page</h3>
+<p>Four checks whose result is a number and not a motion, each with its blind, written before the run, beside the engine's reading. Bell's gate: at four settings the two sides' correlation reads E = 119/169, -119/169, 120/169, 120/169 and S = 478/169 = 2.8284, above the classical bound 2 at the quantum 2 sqrt 2, blind and result identical. The GHZ gate: the three-sided credit -1, -1, -1, +1 at the four patterns, M = -4, where the local bounds are -2 to +2. The quantum Zeno gate: the body ends excited in 480, 243, 188, 110 and 68 of 480 trials at 1, 2, 4, 8 and 16 readings, against the blind's 1.0000, 0.5000, 0.3750, 0.2346 and 0.1334, every point within one standard error; the pulsed Zeno gate reads 480, 241, 174, 101, 62, 31 and 14 of 480 at 1 to 64 probes, every point within two standard errors of the blind. In the law's words the counting rule is declared and the correlations follow from it on the board: the gates are the engine's checks of its own counting rule against the blind written before the run, not experiments of nature. The page shows blind beside result for every number. <span class="status">Gate.</span></p>
+<p class="open"><a href="examples/results.html" target="_blank" rel="noopener">Open the results page</a></p>
+</article>
+
+<p class="muted">Every world's design, blind and reading, folder by folder: <a href="https://github.com/Closer24/Universe24/blob/main/examples/README.md">examples/README.md</a>.</p>
+
+<h2 id="papers">Read the papers</h2>
 <ul>
   <li><a href="papers/one_rule/Universe24_Paper.pdf">The paper</a>: "Universe24: one simple rule, the formulas it shares with nature and adds" (Alon Gonen, 2026), with its <a href="papers/one_rule/Universe24_Supplement.pdf">supplement, Online Resource 1</a>, the claims list and the algebraic steps of every derivation. Archived as a preprint on Zenodo: <a href="https://doi.org/10.5281/zenodo.23297864">DOI 10.5281/zenodo.23297864</a>.</li>
   <li><a href="papers/spacetime_events/Universe24_Discrete_Spacetime_of_Events_Paper.pdf">The time paper</a>: "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured" (Alon Gonen, 2026). Archived on Zenodo: <a href="https://doi.org/10.5281/zenodo.23297705">DOI 10.5281/zenodo.23297705</a>.</li>
 </ul>
 
-<h2>The law, what is open, what comes next</h2>
+<h2 id="law">The law, what is open, what comes next</h2>
 <ul>
   <li><a href="https://github.com/Closer24/Universe24/blob/main/docs/ALGEBRA.md">The law of the lattice</a>: what the law states and has closed stands as its bold lines.</li>
   <li><a href="https://github.com/Closer24/Universe24/blob/main/docs/FURTHER_RESEARCH.md">Further research</a>: what still needs further research, by name and with where to start.</li>
@@ -43,15 +123,7 @@
   <li><a href="https://github.com/Closer24/Universe24/blob/main/README.md">The README</a>: where the project starts from, how the rule was found and named, the achievements with their status, and every word defined.</li>
 </ul>
 
-<h2>See it move</h2>
-<p>The board on these three pages runs on whole numbers and one rule. The engine steps every point of the board with Rule3, one integer line: from a point's two numbers, the six arrivals from its neighbours and its kept remainder it forms one sum, divides once, and keeps the new remainder. A holder of content is declared in the universe file, no force, no velocity law and no wave equation; the runs were recorded and embedded in their pages, the levels on them are the integers the engine wrote, and a page computes nothing beyond the sums its bars and graphs draw. Each link opens in a new tab. Press Play, drag the slider. The numbers are the lattice's own, not nature's.</p>
-<ul>
-  <li><a href="examples/events/two_bodies/two_bodies.html" target="_blank" rel="noopener">Two bodies fall toward each other</a>. Two bodies of matter are laid at rest on a board of 49 x 17 x 17 Links, 24 Links apart, with no velocity given, and Rule3 runs for 900 intervals. The board carries a second row of numbers, the content, declared in the universe file: each body writes a well into it, and where the content is deep the clock runs slow. For about 300 intervals little moves. Then the two drift toward each other, faster and faster, their distance falling under a third of its start, and they fall into one well, where they breathe as one body. Nothing pulls: the fall is the same integer line, stepped on a board where the clocks differ. Watch the two wells on the content strip draw together.</li>
-  <li><a href="examples/events/body_motion/body_motion.html" target="_blank" rel="noopener">A bound body in motion</a>. One body is pushed once, at the start, along an axis, and then left to the rule for 200 intervals. It moves at 0.0948 Links per interval, 2 percent under the speed its band predicts, and it stays whole: at every interval at most one quantum stands beyond a sphere of radius 9 around its centre. The level at its centre changes sign every 3.85 intervals, the half period of its rest rotation: the body's own clock, ticking as it travels, the thing the law calls time. The push was put in by hand once; everything after it is the rule's.</li>
-  <li><a href="examples/events/two_slits/two_slits.html" target="_blank" rel="noopener">The two slits</a>. The paper's experiment: light through two slits, with detectors waiting along a screen, 130 intervals of Rule3. The bars are the detectors' clicks per region of the screen, 285 in the counting window; the dashed curve is the blind row, 273 written down before the first run from light's line in real arithmetic, the pattern the two openings should give. The three high regions of the bars stand where the blind has them, the lows at the regions 4 and 7 against the blind's 4 and 8: interference, read as clicks, out of whole numbers alone. Watch the board frame by frame and see the light from the two gaps meet. The law's own line for this row, 284.7, was computed after the run and stands in the paper.</li>
-</ul>
-
-<h2>Run it yourself</h2>
+<h2 id="run">Run it yourself</h2>
 <p>The whole project is open: the engine, the law, the papers and the runs the papers report stand in <a href="https://github.com/Closer24/Universe24">the repository on GitHub</a>. With Python 3.14 or later, six commands from a downloaded copy run the two-slit experiment's world, read its detectors' counts beside the prediction written down before the first run, and draw the board frame by frame: see <a href="https://github.com/Closer24/Universe24/blob/main/README.md#run-it">Run it</a> in the README.</p>
 </main>
 
