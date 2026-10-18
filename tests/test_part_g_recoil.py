@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import emission, meeting, readings, twist, world_files
+from event_universe import act, emission, readings, twist, world_files
 from event_universe.lattice import Lattice
 from event_universe.reports import (
     LOST_TO_LAY,
@@ -169,7 +169,7 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
 
 
 def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
-    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `readings.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`meeting.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
+    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `readings.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`act.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
     board = Lattice(load_world(EVENTS / "packet_emission" / "packet_emission.json"), [].append)
     light = next(i for i, f in enumerate(board.families) if f.name == "pulse")
@@ -184,7 +184,7 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
     standing = readings.momentum_of(
         board.families[atom].pair[0], board.lines_of(atom, giver.record), board.wrap
     )
-    meeting.written(board, [item])
+    act.written(board, [item])
     num = board.families[light].pair[0]
     born = twist.fan_momentum(board, light)
     recoil, lost = giver.recoil, giver.lost

@@ -247,8 +247,9 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
     stepped, counted = {}, credit.counted_windows
 
-    def kept(b: Lattice) -> None:  # the lines after the held write, before the NodeDetectors' acts
-        stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
+    def kept(b: Lattice) -> bool:  # the lines after the held write, before the NodeDetectors' acts
+        stepped.update({i: own_lines(b, i) for i in indexes})
+        return counted(b)
 
     with monkeypatch.context() as swap:
         swap.setattr(credit, "counted_windows", kept), board.step()

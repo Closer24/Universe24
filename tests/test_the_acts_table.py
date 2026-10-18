@@ -233,9 +233,9 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the composed pair's quotients, once
     ("loader/universe.py", "composed_pair", "largest_below"): "S",  # the sines and the norm
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
-    # meeting.py
-    ("meeting.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
-    ("meeting.py", "absorbed", "division_forward"): "D",  # the unit over the norm
+    # lists.py
+    ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
+    ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
     ("twist.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
     ("twist.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
     (

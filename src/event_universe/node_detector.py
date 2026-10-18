@@ -31,7 +31,7 @@ Weighed = dict[
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `meeting.absorbed`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis and `lost` the readings of what it could not give (`meeting.twisted`); Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`meeting.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`meeting.written`)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights, and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis and `lost` the readings of what it could not give (`twist.twisted`); Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
 
     number: int
     index: int
@@ -57,9 +57,9 @@ class NodeBooks:
     fan: list[int] | None = None
     twist: list[int] | None = None
     lost: list[str] | None = None
-    source: str | None = None  # Part G: the piece's source, `body n` or the lay (`meeting.recoiled`)
+    source: str | None = None  # Part G: the piece's source, `body n` or the lay (`twist.recoiled`)
     recoil: list[int] | None = (
-        None  # Part G: the source's p per axis, the fold given (`meeting.folded_source`)
+        None  # Part G: the source's p per axis, the fold given (`twist.folded_source`)
     )
 
 
@@ -199,6 +199,17 @@ def picked(
         assert generator is not None  # a draw among outcomes is the declared generator's
         pick, state = drawn(state, generator.multiplier, generator.increment, modulus, weights)
     return pick, state
+
+
+def credit_draw(board: Lattice, weights: list[int]) -> int:
+    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`)."""
+    books = board.credit
+    assert books.declaration is not None
+    found = books.declaration
+    pick, books.state = drawn(
+        books.state, found.multiplier, found.increment, board.world.width + 1, weights
+    )
+    return pick
 
 
 def drawn_node(board: Lattice, books: NodeBooks, weights: list[int]) -> Node:

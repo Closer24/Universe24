@@ -3,7 +3,7 @@
 import json
 import math
 
-from event_universe import conversion, meeting, node_detector, world_files
+from event_universe import act, lists, meeting, node_detector, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file, packet_world
@@ -11,24 +11,24 @@ from tests.laws import EVENTS, ROOT, TOOL, load_file, packet_world
 TRIALS = 1200
 
 
-def forced_write(monkeypatch, module):  # type: ignore[no-untyped-def]
-    """The module's click act forced to its first list and its Node draw spied: `picked` answers the index 0 with the state kept, `drawn_node` notes the weights it is handed and draws as built; returns the notes."""
+def forced_write(monkeypatch):  # type: ignore[no-untyped-def]
+    """The click act forced to its first alternative and the rows' Node draw spied: `act.picked` answers the index 0 with the state kept, `lists.drawn_node` notes the weights it is handed and draws as built; returns the notes."""
     noted: list[list[int]] = []
-    real = module.drawn_node
+    real = lists.drawn_node
 
     def spy(board, books, weights):  # type: ignore[no-untyped-def]
         noted.append(list(weights))
         return real(board, books, weights)
 
-    monkeypatch.setattr(module, "picked", lambda board, state, generator, weights, outcomes: (0, state))
-    monkeypatch.setattr(module, "drawn_node", spy)
+    monkeypatch.setattr(act, "picked", lambda board, state, generator, weights, outcomes: (0, state))
+    monkeypatch.setattr(lists, "drawn_node", spy)
     return noted
 
 
 def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_and_not_by_the_weights(
     tmp_path, monkeypatch
 ):
-    """The Zeno reader on two Nodes with the lay weights 1 and 2 and its atom at the pair [2, 3], real hopping across its inner Link (the shipped pair [1, 1299] hops by 1 in 1,299, the two Nodes' shares then standing at the lay's proportion for the whole window): at the lay the record's share at its Nodes stands near the weights' proportion, A_i^2 = A^2 w_i / SUM w with the inner Link's term and the amplitudes' rounding (0.306 against 1 / 3), and over ten intervals of Rule3's own step inside the window the record beats between its Nodes, so that the board's share departs from the weights' proportion by more than a fifth; `share_weights` reads the board's shares floored at 0 and not the weights, and 1,200 draws of the Node through `drawn_node` with the generator at the trials tool's hashed states fall within three standard errors of the share's proportion and farther than three from the weights' 1 / 3; `meeting.emitted` on the packet world's giver and `conversion.converted` on the neutron's record, each forced to its write, hand `drawn_node` the shares the board holds and never the file's weights."""
+    """The Zeno reader on two Nodes with the lay weights 1 and 2 and its atom at the pair [2, 3], real hopping across its inner Link (the shipped pair [1, 1299] hops by 1 in 1,299, the two Nodes' shares then standing at the lay's proportion for the whole window): at the lay the record's share at its Nodes stands near the weights' proportion, A_i^2 = A^2 w_i / SUM w with the inner Link's term and the amplitudes' rounding (0.306 against 1 / 3), and over ten intervals of Rule3's own step inside the window the record beats between its Nodes, so that the board's share departs from the weights' proportion by more than a fifth; `share_weights` reads the board's shares floored at 0 and not the weights, and 1,200 draws of the Node through `drawn_node` with the generator at the trials tool's hashed states fall within three standard errors of the share's proportion and farther than three from the weights' 1 / 3; `lists.emission` on the packet world's giver and `lists.conversion` on the neutron's record, each forced to its write, hand `drawn_node` the shares the board holds and never the file's weights."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     universe["families"][0]["pair"] = [2, 3]  # the atom hops across its inner Link: the record beats
@@ -63,17 +63,14 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     assert abs(frequency - share) < 3 * error < abs(frequency - weight)
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)  # the shipped worlds' universes
     giver = Lattice(load_world(packet_world(tmp_path, TOOL)))  # a body in its upper part with a rate
-    emitter, given = giver.credit.bodies[0], forced_write(monkeypatch, meeting)
-    standing = node_detector.share_weights(
-        giver, emitter
-    )  # read before the write, as `emitted` reads it
-    assert (
-        meeting.emitted(giver, emitter, 2) and given == [standing] and given[0] != list(emitter.weights)
-    )
+    emitter, given = giver.credit.bodies[0], forced_write(monkeypatch)
+    standing = node_detector.share_weights(giver, emitter)  # read before the write, as the row reads it
+    assert meeting.emission_drawn(giver, emitter, 2) and given == [standing]
+    assert given[0] != list(emitter.weights)
     neutron = Lattice(load_world(EVENTS / "neutron_conversion" / "neutron_conversion.json"))
-    whole, converted = neutron.credit.bodies[0], forced_write(monkeypatch, conversion)
+    whole, converted = neutron.credit.bodies[0], forced_write(monkeypatch)
     standing = node_detector.share_weights(neutron, whole)
-    assert conversion.converted(neutron, whole) and converted == [standing]
+    assert meeting.conversion_drawn(neutron, whole) and converted == [standing]
     assert converted[0] != list(whole.weights)
 
 

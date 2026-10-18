@@ -1,9 +1,9 @@
-"""The absorption's weights at one denominator (ALGEBRA.md, The absorption, the draw (a) and (b): where the shares of the bodies closing one drive's interval sum above the unit the rest is 0 and the drive's one quantum goes to one of them in the proportion of their shares; each body's weight is its own transfer share, its entered label squared over its own norm, the weights of bodies of different counts brought to one denominator, the norms' least common multiple, bodies of one count read as before; the mathematician's line, #1793 comment 5981866600 K4, the advisor's second 5981976271 (3), two hands; `meeting.absorbed`, `credit.Books.unabsorbed_in`)."""
+"""The absorption's weights at one denominator (ALGEBRA.md, The absorption, the draw (a) and (b): where the shares of the bodies closing one drive's interval sum above the unit the rest is 0 and the drive's one quantum goes to one of them in the proportion of their shares; each body's weight is its own transfer share, its entered label squared over its own norm, the weights of bodies of different counts brought to one denominator, the norms' least common multiple, bodies of one count read as before; the mathematician's line, #1793 comment 5981866600 K4, the advisor's second 5981976271 (3), two hands; `lists.absorption`, `credit.Books.unabsorbed_in`)."""
 
 import json
 import math
 
-from event_universe import meeting
+from event_universe import act, meeting
 from event_universe.features.click import drawn
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
@@ -24,10 +24,11 @@ def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, 
     assert a.counts == [1, 0] and b.counts == [2, 0] and 0 < n_a < n_b  # the engine's own norms
 
     def booked(board, items):  # the write step reduced to the books: the drive's count moved, no lay
-        board.credit.counts[items[0].family] += items[0].delta
+        if items:  # the outcome that none takes writes nothing
+            board.credit.counts[items[0].family] += items[0].delta
 
-    monkeypatch.setattr(meeting, "written", booked)
-    monkeypatch.setattr(meeting, "reported", lambda *args: None)
+    monkeypatch.setattr(act, "written", booked)
+    monkeypatch.setattr(act, "reported", lambda *args: None)
 
     def frequencies(closing, shares):
         taken, picks = {books.number: 0 for books in closing}, []
@@ -36,7 +37,7 @@ def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, 
             board.credit.account_ended(drive)
             for books, share in zip(closing, shares, strict=True):
                 books.shares = {books.declared.transitions[0]: share}
-            done = meeting.absorbed(board, closing)
+            done = meeting.absorptions_drawn(board, closing)
             picks.append(min(done) if done else len(closing))
             for number in done:
                 taken[number] += 1

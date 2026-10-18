@@ -7,7 +7,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import credit, meeting, node, node_detector, reports, twist, world_files
+from event_universe import act, credit, meeting, node, node_detector, reports, twist, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import amplitude, spread, squared
@@ -289,10 +289,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     fresh = Lattice(load_world(path), (conv := []).append)  # the conversion's list through the one act
     counts, items = dict(fresh.credit.counts), [twist.Item(drv, None, None, -1, (here,))]
     items += [twist.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
-    assert meeting.click_act(fresh, 7, None, [1], [items]) == (
-        0,
-        7,
-    )  # one outcome: no draw, the state kept
+    one, fresh.credit.state = [act.Alternative(1, lambda: items)], 7
+    assert act.click(fresh, fresh.credit, None, one) == 0  # one alternative: no draw
+    assert fresh.credit.state == 7  # the state kept
     moved = {k: fresh.credit.counts[k] - counts[k] for k in (drv, weak, light)}  # the counts by the row
     assert moved == {drv: -1, weak: 1, light: 1} and int(fresh.quanta(light)[0].sum()) == 1
     laid = [(x["family"], x["line"], [x["after"][k] - x["before"][k] for k in (0, 1)]) for x in conv]

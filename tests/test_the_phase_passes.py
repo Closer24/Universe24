@@ -3,7 +3,7 @@
 import math
 import random
 
-from event_universe import meeting
+from event_universe import act, meeting
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import increments_of, radiated_total, start_of
 from event_universe.features.click import SCALE_OF
@@ -42,7 +42,7 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     arrivals: dict[int, list[tuple[int, int, int, int]]] = {}
     laid: list[tuple[int, int, int, tuple[int, int], int]] = []
     left: list[tuple[int, int, tuple[tuple[int, int], int]]] = []
-    turned_labels, relaid, leaving_phase = meeting.turned_labels, meeting.relaid, meeting.leaving_phase
+    turned_labels, relaid, leaving_phase = meeting.turned_labels, act.relaid, act.leaving_phase
 
     def held(board, books):
         pairs = zip(books.declared.transitions, books.references, strict=True)
@@ -59,8 +59,8 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
         return found
 
     monkeypatch.setattr(meeting, "turned_labels", held)
-    monkeypatch.setattr(meeting, "relaid", spied)
-    monkeypatch.setattr(meeting, "leaving_phase", read)
+    monkeypatch.setattr(act, "relaid", spied)
+    monkeypatch.setattr(act, "leaving_phase", read)
     board = Lattice(load_world(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
     taken: list[dict] = []
     while not taken and board.interval < 96:
