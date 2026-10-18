@@ -83,5 +83,5 @@
    "fence": "clicks"
   }
  },
- "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3, C9); no run on the branch, the readings the owner's to take into blind_and_reading.md"
+ "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3, C9); the blinds asserted by tests/test_the_chain_world.py on every run of tools/check.py (the owner's word of 2026-10-19, write it as a test), the readings and the findings in blind_and_reading.md"
 }

@@ -18,21 +18,11 @@ from event_universe.reports import (
 from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import EMIT_RUN as RUN
-from tests.laws import EVENTS, emit_and_take_world, levels_floor, one_photon_board
+from tests.laws import EVENTS, drift_bound, emit_and_take_world, levels_floor, one_photon_board
 
 T = 32768
 ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_before_g.output.json"
 STRIPPED = {"momentum", "fan", "twist", "lost", "source", "recoil"}  # the Boss's check strips these
-
-
-def drift_bound(board: Lattice, index: int) -> int:
-    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| (Part F, test (a))."""
-    chain = board.shape[0]
-    found = 0
-    for r in laws.own_lines(board, index):
-        now = r.now.reshape(-1).astype(object)
-        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
-    return 2 * found
 
 
 def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(tmp_path, monkeypatch):

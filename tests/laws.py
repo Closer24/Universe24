@@ -514,3 +514,13 @@ def d4_bound(board: Lattice, index: int, nodes: Sequence[Node]) -> list[int]:
             total += 2 * len(lines)
         found.append(total)
     return found
+
+
+def drift_bound(board: Lattice, index: int) -> int:
+    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| over the chain's axis (Part F, test (a); D1, the floors in integers)."""
+    chain = board.shape[0]
+    found = 0
+    for r in own_lines(board, index):
+        now = r.now.reshape(-1).astype(object)
+        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
+    return 2 * found
