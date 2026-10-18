@@ -341,7 +341,7 @@ finding of that reading (0.408, 1.5 standard errors high) does not reappear at t
 ## The counts under the click's plan (2026-10-18, branch claude/click-one-act)
 
 The pulse is a massless family laid as a packet at the wave [1, 2], so under C1 its unit is its own
-rotation's, W_c sin omega at k = pi / 2, 439,716,758 against the bolometer's W_c, and its books' count
+rotation's, W_c sin omega at k = pi / 2, 439,628,852 (439,716,758 before the quarter turn's cosine read 0 exactly, 2026-10-19) against the bolometer's W_c, and its books' count
 over the box reads 1118 (833 before C1, read from the loaded worlds, `Lattice.books`); the amplitude 392
 stands as declared, the clicks hold (the window's turn reads the levels and not the count, and the
 unabsorbed share is capped at the unit, so the count stays above 0 through the run), and Itano's column

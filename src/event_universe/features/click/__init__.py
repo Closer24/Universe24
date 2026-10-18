@@ -206,7 +206,12 @@ def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> lis
 
 
 def wave_cosine(turns: int, halves: int, unit: int) -> int:
-    """unit cos(pi turns / halves) by the rotation act (the click's plan, C1: the cosine of a wave number pi p / q, as a packet's `wave` [p, q] declares it, by the integer search and no table): the doubled cosine of the step pi / (2 halves) is the largest integer at which the rotation from the unit reaches 0 within `halves` steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and 2 |turns| steps of it are the wave's cosine; at turns 1 and halves width + 1 the lowest mode of a top-hat of `width` Nodes with zero ends, cos(pi / (width + 1)) (`along_cosine`, `emission.holds_period`)."""
+    """unit cos(pi turns / halves) by the rotation act (the click's plan, C1: the cosine of a wave number pi p / q, as a packet's `wave` [p, q] declares it, by the integer search and no table; the quarter turn reads 0 exactly and an angle past it reads the negative of its mirror's, cos(pi - k) = -cos k, so one record has one unit at [1, 2] with den cos omega 4000 and not the search's 3999, the cold reader's line of 2026-10-19): the doubled cosine of the step pi / (2 halves) is the largest integer at which the rotation from the unit reaches 0 within `halves` steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and 2 |turns| steps of it are the wave's cosine; at turns 1 and halves width + 1 the lowest mode of a top-hat of `width` Nodes with zero ends, cos(pi / (width + 1)) (`along_cosine`, `emission.holds_period`)."""
+    turns = abs(turns)  # the cosine is even
+    if 2 * turns == halves:
+        return 0  # the quarter turn exactly: cos(pi / 2) = 0, the circle's two halves mirror about it
+    if 2 * turns > halves:
+        return -wave_cosine(halves - turns, halves, unit)  # cos(pi - k) = -cos k, the mirror's half
     lower, upper = 0, 2 * unit
     while upper - lower > 1:
         middle = int(division_forward(lower + upper, 2, 0)[0])
@@ -214,7 +219,7 @@ def wave_cosine(turns: int, halves: int, unit: int) -> int:
             lower = middle
         else:
             upper = middle
-    steps = 2 * abs(turns)  # the recurrence's two seeds and the steps after them to the wave's angle
+    steps = 2 * turns  # the recurrence's two seeds and the steps after them to the wave's angle
     return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, steps + 1)[steps]
 
 

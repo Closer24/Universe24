@@ -46,6 +46,16 @@
      0,
      0
     ],
+    "D4_amplitude_form_T_unit": [
+     2352,
+     0,
+     0
+    ],
+    "links_along_axis": [
+     4,
+     0,
+     0
+    ],
     "weight_declared": [
      6
     ],
@@ -87,6 +97,16 @@
     ],
     "D4_bound_current_unit": [
      902,
+     0,
+     0
+    ],
+    "D4_amplitude_form_T_unit": [
+     2352,
+     0,
+     0
+    ],
+    "links_along_axis": [
+     4,
      0,
      0
     ],
@@ -149,6 +169,16 @@
      0,
      0
     ],
+    "D4_amplitude_form_T_unit": [
+     2352,
+     0,
+     0
+    ],
+    "links_along_axis": [
+     4,
+     0,
+     0
+    ],
     "weight_declared": [
      6
     ],
@@ -190,6 +220,16 @@
     ],
     "D4_bound_current_unit": [
      902,
+     0,
+     0
+    ],
+    "D4_amplitude_form_T_unit": [
+     2352,
+     0,
+     0
+    ],
+    "links_along_axis": [
+     4,
      0,
      0
     ],
@@ -252,6 +292,16 @@
      902,
      0
     ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     2352,
+     0
+    ],
+    "links_along_axis": [
+     0,
+     4,
+     0
+    ],
     "weight_declared": [
      6
     ],
@@ -294,6 +344,16 @@
     "D4_bound_current_unit": [
      0,
      902,
+     0
+    ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     2352,
+     0
+    ],
+    "links_along_axis": [
+     0,
+     4,
      0
     ],
     "weight_declared": [
@@ -355,6 +415,16 @@
      902,
      0
     ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     2352,
+     0
+    ],
+    "links_along_axis": [
+     0,
+     4,
+     0
+    ],
     "weight_declared": [
      6
     ],
@@ -397,6 +467,16 @@
     "D4_bound_current_unit": [
      0,
      902,
+     0
+    ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     2352,
+     0
+    ],
+    "links_along_axis": [
+     0,
+     4,
      0
     ],
     "weight_declared": [
@@ -458,6 +538,16 @@
      0,
      902
     ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     0,
+     2352
+    ],
+    "links_along_axis": [
+     0,
+     0,
+     4
+    ],
     "weight_declared": [
      6
     ],
@@ -501,6 +591,16 @@
      0,
      0,
      902
+    ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     0,
+     2352
+    ],
+    "links_along_axis": [
+     0,
+     0,
+     4
     ],
     "weight_declared": [
      6
@@ -561,6 +661,16 @@
      0,
      902
     ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     0,
+     2352
+    ],
+    "links_along_axis": [
+     0,
+     0,
+     4
+    ],
     "weight_declared": [
      6
     ],
@@ -604,6 +714,16 @@
      0,
      0,
      902
+    ],
+    "D4_amplitude_form_T_unit": [
+     0,
+     0,
+     2352
+    ],
+    "links_along_axis": [
+     0,
+     0,
+     4
     ],
     "weight_declared": [
      6
@@ -661,6 +781,16 @@
     ],
     "D4_bound_current_unit": [
      902,
+     0,
+     0
+    ],
+    "D4_amplitude_form_T_unit": [
+     2352,
+     0,
+     0
+    ],
+    "links_along_axis": [
+     4,
      0,
      0
     ],

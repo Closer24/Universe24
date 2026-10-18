@@ -19,11 +19,11 @@ from event_universe.world_files import load_world
 HERE = Path(__file__).resolve().parent
 
 
-def body_bound(board: Lattice, books) -> list[int]:  # type: ignore[no-untyped-def]
-    """D4's bound per axis for one body at the lay, in T's unit: over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2."""
+def body_bound(board: Lattice, books) -> tuple[list[int], list[int]]:  # type: ignore[no-untyped-def]
+    """D4's bound per axis for one body at the lay, in T's unit: over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2; and the Links' count per axis, for the amplitude form (`amplitude_form`)."""
     lines = board.lines_of(books.index, books.record)
     nodes = [tuple(int(v) for v in np.add(node, board.offset)) for node in books.nodes]
-    found = []
+    found, counts = [], []
     for axis in range(3):
         links = set()
         for here in nodes:
@@ -42,7 +42,13 @@ def body_bound(board: Lattice, books) -> list[int]:  # type: ignore[no-untyped-d
                 total += sum(abs(int(r.now[at])) + abs(int(r.before[at])) for r in lines)
             total += 2 * len(lines)
         found.append(total)
-    return found
+        counts.append(len(links))
+    return found, counts
+
+
+def amplitude_form(amplitude: int, links: list[int], lines: int) -> list[int]:
+    """D4's bound in the amplitude form, per axis in T's unit (the cold reader's line of 2026-10-19): 4 A + 2 per line of the part per Link along the axis, A the body's lay amplitude at a Node, the bound of a re-lay at any phase (|re| + |im| up to sqrt 2 larger than the lay's phase-0 value, which `body_bound` reads)."""
+    return [count * lines * (4 * amplitude + 2) for count in links]
 
 
 def lay_of(path: Path) -> dict:
@@ -52,7 +58,9 @@ def lay_of(path: Path) -> dict:
     quarter, action = quarter_turn(board), board.world.quantum_action
     bodies = []
     for books in board.credit.bodies:
-        num, bound = board.families[books.index].pair[0], body_bound(board, books)
+        family = board.families[books.index]
+        num, (bound, links) = family.pair[0], body_bound(board, books)
+        form = amplitude_form(max(books.amplitudes), links, family.width)
         window, transitions = books.declared.draw.window, books.declared.transitions
         bodies.append(
             {
@@ -61,6 +69,8 @@ def lay_of(path: Path) -> dict:
                 "amplitudes": list(books.amplitudes),
                 "D4_bound_T_unit": bound,
                 "D4_bound_current_unit": [num * b for b in bound],
+                "D4_amplitude_form_T_unit": form,
+                "links_along_axis": links,
                 "weight_declared": [t.weight for t in transitions],
                 "weight_from_the_unit": [
                     unit_weight(quarter, window, action, board.families[t.drive].pair, t.resonance)

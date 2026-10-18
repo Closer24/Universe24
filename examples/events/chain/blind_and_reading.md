@@ -18,16 +18,17 @@ upper side), and the same along y and z; the bodies' Node lists are the images i
 order (the draw's order, `drawn`, is the declaration's: B5's one named exception). The original's
 light is laid by the generator (tools/pixel_mode.py); the five images' mode files carry the
 original's levels under the permutation (`build_world.py`, `image_mode`), so the six lays are exact
-images of one another, the premise of B5 (the generator's cosine is referenced to the Node
-coordinate, so its own lay of a mirror packet differs from the image by the rounding; the mirror
-packet's declared phase, 1 / 8 of the turn, describes the levels it carries). The trials are the same
+images of one another, the premise of B5 (the carried levels equal the generator's own lay of the
+mirror packet index by index, the cold reader's check on main of 2026-10-19; the mirror packet's
+declared phase, 1 / 8 of the turn, describes the levels it carries). The trials are the same
 lay with the records' generators at the hash of the declared seeds 25, 26, 27 (tools/meeting_trials.py,
 the design's `seeds`). The blind is `expectation.json`, written by `build_world.py` before any run and
 never edited after; the lay's numbers are `lay_bounds.json`, read from the loaded worlds by
 `lay_bounds.py` with no interval stepped; the readings are the test's, printed on every run and written
 below, every number a click or a named lattice reading; a reading that misses a blind is a finding,
 asserted as found, named below and never adjusted (expectation.json's `status` line is the design's and
-moved with it on 2026-10-19; the seven blinds' texts stand as written on 2026-10-18).
+moved with it on 2026-10-19; six of the seven blinds' texts stand as written on 2026-10-18 and B7's bound
+is corrected by derivation on 2026-10-19, below).
 
 ## The blind (expectation.json), written before any run (2026-10-18)
 
@@ -74,7 +75,13 @@ would reach the transition with its spectrum and be absorbed at the weight's sin
 needs the packet's length W Nodes or more, the declaration C9 (b) names. Its trials are the eight
 seeds of `detuned_trials.json` (tools/meeting_trials.py with that file as the design).
 
-7. B7 the line shape: absorbed in at most 1 of the 8 trials.
+7. B7 the line shape: absorbed in at most 4 of the 8 trials. Corrected by derivation on 2026-10-19 from
+   "at most 1 of the 8", written before the run and corrected before any run claim, no fit to a reading
+   (the cold reader): the window's sinc weighs the turn and not the chance; the turn per flat window at
+   the declared weight 6 is 1.27 rad at one Node, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one
+   Node and 0.111 with the body's projection over its three Nodes (the factor 1.65 at pi / 8), two windows
+   per passage, 0.19 per trial, 1.5 of 8 expected and P(at most 4 of 8) = 0.99; under the first bound,
+   which presumed the sinc on the chance, a lawful engine fails about half the time.
 
 The weight from the unit, C9 (a), is a derivation in the engine beside the declared weight
 (`resonance.unit_weight`, tests/test_the_absorption_weights.py): the ratio of the phase line's quarter
@@ -106,51 +113,58 @@ are the images of the original's; the detuned world's body is the second body at
 ## The reading (2026-10-19): the blinds as tests/test_the_chain_world.py asserts them
 
 The owner's word of 2026-10-19, "write it as a test": the test runs chain_x_minus over its 400 intervals,
-the inverse over 100, the six worlds over 200 each and the detuned world's eight trials over 250 each on
-every run of tools/check.py (its four tests 7, 3, 12 and 10 seconds on the build's machine, 2026-10-19)
-and asserts the blinds as written; a reading that misses a blind is asserted as found and named here,
-the blind unchanged. The clicks of chain_x_minus: the absorptions at 74, 142, 272 and 298, the
-emissions at 91, 155 and 281, the null windows at 122, 186, 250 and 320.
+the inverse over 100, the six worlds over 400 each (three tests, the pure permutations, the mirror and
+the three mirrors among themselves) and the detuned world's eight trials over 250 each on every run of
+tools/check.py, and asserts the blinds as written; a reading that misses a blind is asserted as found
+and named here, the blind unchanged unless corrected by derivation before any run claim (B7). The
+clicks of chain_x_minus: the absorptions at 74, 142, 272 and 298, the emissions at 91, 155 and 281,
+the null windows at 122, 186, 250 and 320; the fourth absorption, 298, is the second body's window
+closing on the remnant of its own emission after its source's span (C5 binds while the source has
+intervals left).
 
 | blind | the test's assertion | the reading |
 | --- | --- | --- |
-| B1 | the counts exactly at every click; the quanta the count before the first front | holds |
+| B1 | the counts exactly at every click; outside the sources' spans the live light's share, behind the latest front (the shells it has erased), in whole quanta equals the count at every interval, and the whole share equals the count where nothing stands ahead of a front (before the first click); the share ahead of the front is the span, the levels it has still to erase, decreasing | holds |
 | C1 | the count 1 and the quanta 1 at the lay and after the first emission's span (139) | holds |
 | C5 | no absorption line names its own body as the source | holds |
-| B2 | the form over the pair (74, 91) within D7's 3 den SUM_t (abs(a_t) + 1 / 4); I = 1 within it at the lay and after the span | moved -7,212,834 within 9,972,000; holds |
-| B3 | p_a = gain_a + s_a at 74; the body's P moved by the gain within D4's 902 (the lay's, lay_bounds.json); kept through the emission within 902 | the piece -45,290, the shortfall 2,954, moved -42,336 against the gain -42,336; holds |
-| B3 | the light's P after the span against D7's residue plus D1's floors | the residue 0, the reading 30 in T's unit: FINDING (1) |
+| B2 | the form over the pair (74, 91) within D7's 3 den SUM_t (abs(a_t) + 1 / 4); I = 1 within the lay's own rounding at the lay (3 den (2 A + 1) per lit Node) and within D7's bound after the span | moved -7,212,834 within 9,972,000; holds |
+| B3 | p_a = gain_a + s_a at 74; the body's P moved by the gain within D4's amplitude form, 4 A + 2 per line per Link along the axis, 2352 in T's unit (lay_bounds.json; the lay's phase-0 value 902 the consistency pin); kept through the emission within it | the piece -45,290, the shortfall 2,954, moved -42,336 against the gain -42,336; holds |
+| B3 | the light's P after the span equal to D7's identity term, 2 SUM_t a_t (before_(i-x) - before_(i+x)) at the source's Node, plus Rule3's floors over the span within the hands' bound | the identity's term 0, the reading 30 in T's unit within the floors' bound 138,108: FINDING (1) |
 | B4 | the inverse over 100 intervals through 74 and 91 | MATCH |
-| B5 | the two pure permutations (y and z toward the lower side) exact over 200 intervals in every click line, level and remainder; the three mirrors one world among themselves | holds |
-| B5 | the three mirrors against the original | apart at one place, the giver's record at 142: FINDING (2) |
-| B7 | absorbed in at most 1 of the 8 trials | 3 of 8: FINDING (3) |
+| B5 | the two pure permutations (y and z toward the lower side) equal to the original over 400 intervals in every click line, level and remainder; the mirror (x toward the upper side) equal to the original; the three mirrors equal to one another: the six worlds one world, the draw's order the one named exception | holds, exactly, since the fix of 2026-10-19: FINDING (2), the defect found and fixed |
+| B7 | absorbed in at most 4 of the 8 trials, the bound corrected by derivation | 3 of 8, pinned as the engine's reading at the declared weight 6: FINDING (3) |
 
-The findings by name (2026-10-19), the blinds unchanged:
+The findings by name (2026-10-19):
 
-1. B3, the light's P after the span. D7's residue, SUM_t abs(a_t) abs(before_(i-x) - before_(i+x)) at the
-   source's Node, is 0 on this chain: the source's lay is even about its Node at every interval of the span
-   (the absorbed quantum's fan erased near the hole by the front before the emission). The light's P after
-   the span reads 30 in T's unit against a quantum's 45,290: the walk of the integers over the span's 48
-   intervals and the wave's spread (D1, the carried floors, one per line per Node, no sign and no binding),
-   within the hands' bound of their sum, 2 SUM_i abs(now_(i+1) - now_(i-1)) on the light's line per
-   interval, 138,108 over the span, which the test asserts. The absorbed quantum's fan carries its P
-   (-45,930 at the emission's interval) until the front from the hole erases it over the span (D6, "P lost
-   to the taker", the taker's since the click), so the comparison is against 0, the emitted light's alone.
-2. B5, the mirrors. At 142 the second body takes the light the first emitted and the first is folded by the
-   recoil about the click's Node (`twist.recoiled`, `twist.folded_source`, C6 (ii)). The first body stands
-   at a quarter turn per Node since its own absorption (the twist of 74, 9424 acts per Node toward the
-   lower side, kept through its emission's re-lay, Part H), so both senses of the recoil's fold move its P
-   by the piece, to k = 0 or to k = pi, the momentum 0 either way to the rounding; `twist.twisted` takes
-   the sense whose positive quarter turn moves P with the piece's sign, and that is the same sense in the
-   mirror image, where the covariant one is its opposite. The record ends at k = 0 in the original and at
-   k = pi in the image: the same counts and every click line after equal, the giver's middle Node's two
-   real lines at the opposite sign, its three Nodes' remainders apart, and the recoil read on its lines
-   41,404 against 42,320 in T's unit (the rounding at k = pi against k = 0), the `recoil` of that one click
-   line the only key that differs. A second exception to the 48 beside the draw's order, found by the
-   mirror worlds and asserted as found; the rule at the tie is the owner's word.
+1. B3, the light's P after the span. An increment d laid at a Node moves P_x by 2 d (before_(i-x) -
+   before_(i+x)) exactly in T's unit (`readings.momentum_of` counts each Link from both ends), so the
+   emitted light's P is that identity's term summed over the source's increments plus Rule3's floors over
+   the span. The term is 0 on this chain: the source stands on a region the front erased before the
+   emission (the hole at 62 at 74, the front 17 Nodes out by 91), the spreading wave even about its Node.
+   The light's P after the span reads 30 in T's unit against a quantum's 45,290: Rule3's floors over the
+   span on a row asymmetric as a whole, the absorbed fan toward -x erased by the front during the span
+   (the cold reader's third cause; not the front unfinished at the emission as such, though the fan
+   still carried -45,930 at the emission's interval, D6, "P lost to the taker"; and not the increments,
+   laid at one Node), within the hands' bound of the floors' sum, 2 SUM_i abs(now_(i+1) - now_(i-1)) per
+   interval, 138,108 over the span, a bound by name and loose by three orders; D7's bound form stands
+   beside it. The blind's "the source's residue within D7's bound" holds with the identity's term 0.
+2. B5, the mirrors: a defect found and fixed the same day. On the test's first run (1be7429) the two
+   pure permutations were exact and the three mirrors were one world among themselves but differed from
+   the original at one place, the first body's record at 142, where the second body takes the light the
+   first emitted and the first is folded by the recoil about the click's Node: the first body stood at
+   a quarter turn per Node since its own absorption, so both senses of the fold moved its P by the piece,
+   to k = 0 or to k = pi, and `twist.twisted` took the sense whose positive quarter turn moved P with the
+   piece's sign, the same sense in the mirror image where the covariant one is its opposite (the recoil
+   read 42,320 against 41,404 in T's unit, the middle Node's two lines at the opposite sign). The fix:
+   the sense from the geometry, n taking the piece's sign and the fold's gradient e^(i n theta_0 x)
+   carrying a lattice momentum of n's sign, x n invariant under the mirror, the bisection finding |n|
+   as before; where a record stands beyond the quarter turn no fold carries the piece, named; and the
+   fold's pair at a negative angle the conjugate of the forward pair, one rounding per level, odd exactly
+   (D5). The original's run is unchanged by the fix, its sense being the geometric one (the recoil
+   41,404 stands); the images move to it, and the six worlds read one world over 400 intervals, the
+   second instance of the tie at 272 included. The 48 keep the draw's order as their one exception.
 3. B7, the line shape. The detuned packet is absorbed in 3 of the 8 trials (the seeds 25 to 32) at the
-   declared weight 6 against the blind's at most 1: the window's sums of this long packet turn the labels
-   1.8 rad at resonance, the sinc's 0.16 leaves 0.28 rad, sin^2 near 8 percent per window with two or
-   three windows per passage, near 20 percent per trial; the blind presumed one window and one quarter
-   turn where the packet gives more. The reading is pinned in the test as the engine's, to move with the
-   weight (C9 (a)).
+   declared weight 6, within the bound as corrected by derivation (at most 4 of 8, above) and outside
+   the bound first written (at most 1 of 8), which presumed the sinc on the chance where it weighs the
+   turn. The reading is pinned in the test as the engine's beside the blind, to move with any change of
+   the weight (C9 (a), checked and not made on 2026-10-19).

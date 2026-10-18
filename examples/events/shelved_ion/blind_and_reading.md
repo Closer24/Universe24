@@ -237,8 +237,8 @@ read nothing of the blind until the strong drive's row is fixed, as the advisor'
 ## The ion under the click's plan (2026-10-18, branch claude/click-one-act)
 
 The two drives are massless families laid as packets at the wave [1, 2], so under C1 their unit is
-their own rotation's, W_c sin omega at k = pi / 2 (439,716,758 against the bolometer's W_c): the books'
-counts read from the loaded worlds (`Lattice.books`) are the strong drive's 206,308 (153,804 before C1)
+their own rotation's, W_c sin omega at k = pi / 2 (439,628,852 (439,716,758 before the quarter turn's cosine read 0 exactly, 2026-10-19) against the bolometer's W_c): the books'
+counts read from the loaded worlds (`Lattice.books`) are the strong drive's 206,350 (153,804 before C1; 206,308 at the search's cosine, before 2026-10-19)
 and the weak drive's 65 (49 before); the amplitudes 3000 and 53 stand as declared and the clicks hold
 (the ion's window of one interval reads the levels). Under C3 the ion is the one shipped body a twist
 meets at an exchange: the strong drive, a travelling packet along x, deposits its piece at the ion's

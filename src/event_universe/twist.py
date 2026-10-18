@@ -229,15 +229,17 @@ def folded_lines(
     offsets: np.ndarray,
     count: int,
 ) -> tuple[records.Record, records.Record]:
-    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the fold's origin, the click's Node (`core/ports.run_offsets`, C6 (ii)), and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (features/phase: `phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`), one per offset."""
+    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the fold's origin, the click's Node (`core/ports.run_offsets`, C6 (ii)), and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (features/phase: `phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`) at the magnitude of the angle, one per offset, and the pair at a negative angle the conjugate (c, -s) of the pair at its magnitude (features/phase, `phase.read`: the -a end reads the conjugate), so that the fold is odd under the axis's sign exactly, one rounding per level (D5, L408 (4); the backward sequence from the seed, read before 2026-10-19, differed from the conjugate at the roundings' ties); the memo holds non-negative angles alone."""
     re_line, im_line = lines
     gamma, amplitude = board.world.node_clock, board.amplitude
     re_now, im_now = re_line.now.copy(), im_line.now.copy()
     re_before, im_before = re_line.before.copy(), im_line.before.copy()
     for offset in sorted({int(x) for x in offsets[at]}):
-        c, s, _ = window_pair(
-            offset * count, gamma, amplitude
-        )  # the memo's pair: the acts compose exactly
+        c, s, _ = window_pair(abs(offset * count), gamma, amplitude)  # the memo's pair at the magnitude
+        if offset * count < 0:
+            s = (
+                -s
+            )  # the pair at a negative angle the conjugate (c, -s): one rounding per level, odd exactly
         here = at & (offsets == offset)
         for now, before in ((re_now, im_now), (re_before, im_before)):
             re_folded, im_folded = phase.fold(
@@ -269,7 +271,7 @@ class Probe:
 def twisted(
     board: Lattice, books: NodeBooks, part: int, momentum: tuple[int, int, int], origin: Node
 ) -> tuple[list[int], list[int], str | None]:
-    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`; x the Node's offset along the axis from the click's Node `origin`, the hole's Node at an absorption and the lay's at a packet's emission, taken along the taker's run around the ring on a periodic axis so a taker straddling the wrap folds by consecutive offsets, `core/ports.run_offsets`, Part F2; the click's plan, C6 (ii): the origin a Node of the geometry and no lowest Node of the run, so the fold's angles are equal at image Nodes under the cube's symmetries, the entered part's phase at the click's Node the arrival's), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`readings.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the one whose quarter turn moves P_a with p_a's sign; where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line, the shortfall per axis, s_a = |p_a| - gain_a at or above 0 and the whole of |p_a| where nothing is folded (the click's plan, C3; `NodeBooks.shortfall`), and what was lost (None where nothing)."""
+    """The write's twist (Part F, Task 3; the two hands' lines of 2026-10-09: at a click the write must give the taker the piece's p_a exactly, by a phase gradient delta_a across the taker's Nodes, the whole-record twist e^(i delta x); NO SINE: delta is a count n of phase-line acts found by bisection, the mathematician's 6084261824): after the count entered the part, for each axis with p_a other than 0, the part's two lines folded at every Node of the region by the phase pair at the angle x n_a theta_0 (`folded_lines`; x the Node's offset along the axis from the click's Node `origin`, the hole's Node at an absorption and the lay's at a packet's emission, taken along the taker's run around the ring on a periodic axis so a taker straddling the wrap folds by consecutive offsets, `core/ports.run_offsets`, Part F2; the click's plan, C6 (ii): the origin a Node of the geometry and no lowest Node of the run, so the fold's angles are equal at image Nodes under the cube's symmetries, the entered part's phase at the click's Node the arrival's), n_a the count at which the part's lattice momentum along the axis grew by p_a, found by bisection over [0, the quarter turn] on the probe "the folded lines' P_a less the standing lines' against |p_a|" (`readings.momentum_of` on the folded copy, the exact reading in place of M rho sin delta: no overlap division; kind S), the sense of n_a the piece's own sign, the fold's gradient e^(i n theta_0 x) carrying a lattice momentum of n's sign, so that x n is invariant under the axis's mirror and the fold is equivariant under the 48 (the geometry's rule since 2026-10-19; the probe's sign, the sense whose quarter turn moved P_a with p_a's sign, was a heuristic that agreed with it away from a tie and failed at the tie of a record standing at a quarter turn per Node, where both senses move P_a by the piece, to k = 0 or to k = pi: the chain's mirror worlds, tests/test_the_chain_world.py); where the quarter turn itself falls short of |p_a| the taker cannot carry the piece's momentum, "P lost to the taker" is booked and the quarter turn applied; where the record stands beyond the quarter turn (cos k_0 below 0) a gradient in the piece's direction lowers |P_a| and no fold carries the piece: nothing is folded, the whole of |p_a| is the shortfall and "P lost to the taker" is booked, the regime named and no shipped body in it; a region of one Node along the axis carries none, nothing folded and "P lost to the declaration" booked; the fold is written through the one lay act (`lay.written`), one `lay` line per Node changed so that the host's tool crosses the twist on the way back (tools/back_in_time, `crossed`) and the inverse through the click is bit for bit; returns n_a per axis for the credit line, the shortfall per axis, s_a = |p_a| - gain_a at or above 0 and the whole of |p_a| where nothing is folded (the click's plan, C3; `NodeBooks.shortfall`), and what was lost (None where nothing)."""
     family, state = board.families[books.index], board.states[books.index]
     first = records.record_slice(family, books.record).start + part * family.width
     if not family.plane:  # a real line holds no phase to twist
@@ -293,10 +295,15 @@ def twisted(
         lines = (state.lines[first], state.lines[first + 1])
         quarter = quarter_turn(board) if quarter is None else quarter
         probe = Probe(board, family.pair[0], lines, at, offsets, axis)
-        sense = 1 if probe.gained(quarter) * wanted > 0 else -1
-        size = abs(wanted)
+        sense = (
+            1 if wanted > 0 else -1
+        )  # the fold's own gradient carries the piece's sign: the geometry's
+        size, reach = abs(wanted), probe.gained(sense * quarter)
+        if reach * wanted < 0:  # beyond the quarter turn a gradient in the piece's direction lowers |P|
+            lost, shortfall[axis] = LOST_TO_TAKER, size
+            continue
         low, high = 0, quarter
-        if abs(probe.gained(sense * quarter)) < size:
+        if abs(reach) < size:
             lost, low = LOST_TO_TAKER, quarter
         while high - low > 1:
             middle = int(division_forward(low + high, 2, 0)[0])

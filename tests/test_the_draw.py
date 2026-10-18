@@ -353,8 +353,10 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
             board.world.node_clock,
             largest_below(wall * wall * 5) // 3,
         )  # one quantum at [2, 3]
-        unit = record_unit(board, light_at)  # W_rec at [1, 2]: cos omega 3999 of 6000 by the search
-        assert abs(unit / wall - 5**0.5 / 3) < 2 / 6000 and board.credit.units[light_at] == unit != own
+        unit = record_unit(
+            board, light_at
+        )  # W_rec at [1, 2]: cos omega 4000 of 6000, the [2, 3] transition's own unit exactly (the quarter turn's cosine 0, 2026-10-19; 3999 by the search before it)
+        assert abs(unit / wall - 5**0.5 / 3) < 2 / 6000 and board.credit.units[light_at] == unit == own
         assert abs(own / wall - 5**0.5 / 3) < 2 / wall
         assert hazard_weights(1, 48, gamma, gamma, 9) == [
             9,
