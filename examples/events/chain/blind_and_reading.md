@@ -95,9 +95,12 @@ reader's arbitration of 2026-10-19: the declared weight stands, and what the uni
 k_sat(W) = quarter / S_1(W), the weight at which one window-filling quantum turns exactly the quarter
 turn, the declared weight at or below it for the click's exclusivity (one quantum never read as more
 than one click); with the body's projection over its three Nodes at pi / 4 (the factor 1.39) the bound
-is 5.2, and this folder's declared 6 is the one shipped place above the bound for a flat window-filling
-quantum, its packet of 17 Nodes turning about 0.62 of the quarter (the reader's reading), so no reading
-of this folder is touched; named here as the reader asked.
+is 5.2, and this folder's declared 6 and the anticoincidence folder's stand above the bound for a flat
+window-filling quantum (5.2 over three Nodes here, 5.6 over the anticoincidence's two, both at pi / 4
+and W 48), both with a packet of edge 8 (17 Nodes) shorter than the window, carrying 0.62 of a
+window-filling quantum's two sums and so turning about 0.71 of the quarter at the declared 6 over this
+folder's three Nodes (the chance 0.81; the anticoincidence's 0.67 and 0.75), so no reading of this
+folder is touched; named here as the reader asked.
  Checked on 2026-10-19 before any replacement (the order's own clause): the unit's weight is the quarter
 turn over S_1 = A_1 W / 2, so the window's turn it gives is (pi / 2) sqrt(N_W), N_W the quanta passing
 the Node in the window, the root of the window where the declared weight gives k A W / 2, linear in
