@@ -1,4 +1,4 @@
-"""The chain world's builder (the click's plan of 2026-10-18, the chain world at M = 3 with the six blinds; the owner's word: the files on the branch, the readings the owner's alone): from `design.json` it writes the six worlds, one chain under each of the six signed permutations of the axes that carry a chain to a chain (`chain_x_minus.json` the original, the light along x toward the axis's lower side; `chain_x_plus.json` its mirror image, every coordinate c to 95 - c; the same along y and z), each a chain of 96 Nodes open on its axis with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeDetectors over three Nodes each, the transition g to e by the light at the declared weight and resonance over a window of 48 from the first lit interval (C2) and the rate e to g as a source in time at the lifetime 48 (C5: dark to its own source), and one packet of the light at k = pi / 4, one whole quantum in the record's own unit (C1), from the Node 84 toward the bodies at 60 to 62 and 20 to 22; and the blind `expectation.json`, the six blinds B1 to B6 as text with no measured number inside them, written before any run and never edited after. With `--modes` it lays the original's light by the generator (tools/pixel_mode.py) and writes the five images' mode files as the original's levels carried by the permutation (`image_mode`), so the six lays are exact images of one another, B5's premise (the generator's cosine is referenced to the Node coordinate, so its own lay of a mirror packet differs from the image by the rounding; the mirror packet's wave is declared with the phase that describes the carried levels, `mirror_phase`). Every number is the design's; the engine reads none of it.
+"""The chain world's builder (the click's plan of 2026-10-18, the chain world at M = 3 with the six blinds; the owner's word: the files on the branch, the readings the owner's alone): from `design.json` it writes the six worlds, one chain under each of the six signed permutations of the axes that carry a chain to a chain (`chain_x_minus.json` the original, the light along x toward the axis's lower side; `chain_x_plus.json` its mirror image, every coordinate c to 95 - c; the same along y and z), each a chain of 96 Nodes open on its axis with both faces receding, two records of two parts (g at the count 1, e at 0) declared NodeDetectors over three Nodes each, the transition g to e by the light at the declared weight and resonance over a window of 48 from the first lit interval (C2) and the rate e to g as a source in time at the lifetime 48 (C5: dark to its own source), and one packet of the light at k = pi / 4, one whole quantum in the record's own unit (C1), from the Node 84 toward the bodies at 60 to 62 and 20 to 22; the seventh world `chain_detuned.json` (C9 (b), the packet's length: the chain along x with the second body alone and one packet at k = pi / 8 of one quantum, a flat top of 48 Nodes with the raised cosine of 8 beyond it, monochromatic within the window and detuned from the transition, with its eight trial seeds in `detuned_trials.json`), and the blind `expectation.json`, the blinds B1 to B7 as text with no measured number inside them, written before any run and never edited after. With `--modes` it lays the original's light by the generator (tools/pixel_mode.py) and writes the five images' mode files as the original's levels carried by the permutation (`image_mode`), so the six lays are exact images of one another, B5's premise (the generator's cosine is referenced to the Node coordinate, so its own lay of a mirror packet differs from the image by the rounding; the mirror packet's wave is declared with the phase that describes the carried levels, `mirror_phase`). Every number is the design's; the engine reads none of it.
 
 PYTHONPATH=src python examples/events/chain/build_world.py --modes [--folder <folder>]
 """
@@ -99,15 +99,42 @@ def world_of(design: dict, name: str) -> dict:
     }
 
 
+def detuned_world(design: dict) -> dict:
+    """The detuned packet's world (C9 (b)): the chain along x toward the lower side with the design's one body (`detuned.body`, three Nodes as the others) and one packet of the light at k = pi / `quarters`, a flat top of `top` Nodes with the raised cosine of `edge` beyond, at the amplitude of one quantum in the record's unit at that wave: monochromatic within the window, its passage over the body longer than the window, detuned from the transition's resonance by the dispersion."""
+    row, light = design["detuned"], design["light"]
+    world = world_of(design, next(iter(design["worlds"])))
+    world["bodies"] = [body(design, row["body"], AXES[0], MINUS)]
+    world["packets"] = [
+        {
+            "family": light["family"],
+            "along": AXES[0],
+            "wave": [-1, row["quarters"]],
+            "phase": [0, 1],
+            "amplitude": row["amplitude"],
+            "top": {"x": list(row["top"]), "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": row["edge"], "y": 0, "z": 0},
+        }
+    ]
+    return world
+
+
 def expectation(design: dict) -> dict:
-    """The blind: the six blinds of the click's plan as text, no measured number inside them (the bounds named by their formulas, D4's number read at the lay into lay_bounds.json before any run)."""
-    sides = {MINUS: "the axis's lower side", PLUS: "the axis's upper side"}
+    """The blind: the seven blinds of the click's plan as text, no measured number inside them (the bounds named by their formulas, D4's number read at the lay into lay_bounds.json before any run)."""
+    sides, row = {MINUS: "the axis's lower side", PLUS: "the axis's upper side"}, design["detuned"]
     return {
         "verdict": "NODEDETECTOR",
         "comment": "The chain world of the click's plan: one law-quantum of light at k = pi / 4 on two bodies of three Nodes along a chain of 96 with receding faces, each body taking the light into e over a window of 48 from the first lit interval and giving it back as a source in time at the lifetime 48; the six worlds the chain under the six signed permutations that carry a chain to a chain. The six blinds below are the conservation section's, each a conservation to the remainder's bound and bit for bit under the inverse, written before any run and never edited after; the readings are the owner's, appended to blind_and_reading.md after the runs (tools/run_inputs.py on each world, tools/meeting_trials.py on the design's seeds, tools/back_in_time.py over the inverse's intervals).",
         "worlds": {
             name: {"axis": axis, "light_toward": sides[toward]}
             for name, (axis, toward) in design["worlds"].items()
+        },
+        "detuned_world": {
+            "name": row["name"],
+            "axis": AXES[0],
+            "light_toward": sides[MINUS],
+            "wave": f"pi / {row['quarters']}",
+            "trials": len(row["seeds"]),
+            "seeds": "detuned_trials.json, for tools/meeting_trials.py",
         },
         "trials": len(design["seeds"]),
         "intervals": design["trial_intervals"],
@@ -149,6 +176,12 @@ def expectation(design: dict) -> dict:
                 "blind": "P(both) = 0 exactly, alpha = 0, |P(A only) - P(B only)| <= 2 sqrt(s (1 - s) / N) with s the anticoincidence folder's blind and N its trials; the identities D3 (the hole) and D6 (the front) per click",
                 "status": "S.57 (b), the credit's one draw per record; D3 and D6",
                 "fence": "clicks (the anticoincidence folder's own)",
+            },
+            "B7 the line shape": {
+                "reading": "chain_detuned over its intervals for each seed of detuned_trials.json (tools/meeting_trials.py with that file as the design): the trials with an absorption at the body, the credit lines naming `absorbed`",
+                "blind": "absorbed in at most 1 of the 8 trials: the packet at k = pi / 8 stands detuned from the transition at [5414, 6000] (k = pi / 4) by Delta = omega(pi / 4) - omega(pi / 8) per interval, and the window's sinc at Delta W / 2 = 5.3 weighs each window's turn by sinc^2 below 1 / 30 (C9: the line shape is the window's own, the width 1 / W); the packet's flat top of 48 Nodes with the raised cosine of 8 beyond is monochromatic within the window, its passage over the body at the group velocity longer than the window, so two or three windows open on it, each weighed so; a packet of one wavelength at pi / 8, the 17-Node kind of the other worlds, would reach the transition with its spectrum and be absorbed at the weight's sin^2, so a detuning claim needs the packet's length W Nodes or more (C9 (b), the declaration)",
+                "status": "C9, the window's sinc; the declaration (b) on the packet's length; written before any run",
+                "fence": "clicks",
             },
         },
         "status": design["status"],
@@ -202,6 +235,14 @@ def main(argv: list[str] | None = None) -> None:
             assert original is not None
             mode = json.dumps(image_mode(design, name, world, original), separators=(",", ":"))
             path.with_suffix(".mode.json").write_text(mode + "\n", encoding="utf-8")
+    row, path = design["detuned"], args.folder / f"{design['detuned']['name']}.json"
+    path.write_text(json.dumps(detuned_world(design)) + "\n", encoding="utf-8")
+    if args.modes:
+        import pixel_mode
+
+        pixel_mode.main(["--input", str(path)])
+    trials = {"seeds": row["seeds"], "trial_intervals": design["trial_intervals"]}
+    (args.folder / "detuned_trials.json").write_text(json.dumps(trials) + "\n", encoding="utf-8")
     (args.folder / "expectation.json").write_text(
         json.dumps(expectation(design), indent=1) + "\n", encoding="utf-8"
     )

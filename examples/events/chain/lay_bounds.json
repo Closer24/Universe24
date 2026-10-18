@@ -45,6 +45,15 @@
      902,
      0,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -80,6 +89,15 @@
      902,
      0,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]
@@ -130,6 +148,15 @@
      902,
      0,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -165,6 +192,15 @@
      902,
      0,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]
@@ -215,6 +251,15 @@
      0,
      902,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -250,6 +295,15 @@
      0,
      902,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]
@@ -300,6 +354,15 @@
      0,
      902,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -335,6 +398,15 @@
      0,
      902,
      0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]
@@ -385,6 +457,15 @@
      0,
      0,
      902
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -420,6 +501,15 @@
      0,
      0,
      902
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]
@@ -470,6 +560,15 @@
      0,
      0,
      902
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    },
    {
@@ -505,6 +604,74 @@
      0,
      0,
      902
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
+    ]
+   }
+  ]
+ },
+ {
+  "world": "chain_detuned",
+  "light": {
+   "unit_W_rec": 132349132,
+   "share": 137886000,
+   "quanta": 1,
+   "count": 1,
+   "deficit": 0,
+   "drift": 0,
+   "pace": 6000,
+   "frozen": 0
+  },
+  "bodies": [
+   {
+    "body": 0,
+    "nodes": [
+     [
+      20,
+      0,
+      0
+     ],
+     [
+      21,
+      0,
+      0
+     ],
+     [
+      22,
+      0,
+      0
+     ]
+    ],
+    "amplitudes": [
+     73,
+     73,
+     73
+    ],
+    "D4_bound_T_unit": [
+     902,
+     0,
+     0
+    ],
+    "D4_bound_current_unit": [
+     902,
+     0,
+     0
+    ],
+    "weight_declared": [
+     6
+    ],
+    "weight_from_the_unit": [
+     [
+      9424,
+      1291
+     ]
     ]
    }
   ]

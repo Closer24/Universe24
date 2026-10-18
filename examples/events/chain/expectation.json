@@ -27,6 +27,14 @@
    "light_toward": "the axis's upper side"
   }
  },
+ "detuned_world": {
+  "name": "chain_detuned",
+  "axis": "x",
+  "light_toward": "the axis's lower side",
+  "wave": "pi / 8",
+  "trials": 8,
+  "seeds": "detuned_trials.json, for tools/meeting_trials.py"
+ },
  "trials": 3,
  "intervals": 400,
  "inverse_intervals": 40,
@@ -67,7 +75,13 @@
    "blind": "P(both) = 0 exactly, alpha = 0, |P(A only) - P(B only)| <= 2 sqrt(s (1 - s) / N) with s the anticoincidence folder's blind and N its trials; the identities D3 (the hole) and D6 (the front) per click",
    "status": "S.57 (b), the credit's one draw per record; D3 and D6",
    "fence": "clicks (the anticoincidence folder's own)"
+  },
+  "B7 the line shape": {
+   "reading": "chain_detuned over its intervals for each seed of detuned_trials.json (tools/meeting_trials.py with that file as the design): the trials with an absorption at the body, the credit lines naming `absorbed`",
+   "blind": "absorbed in at most 1 of the 8 trials: the packet at k = pi / 8 stands detuned from the transition at [5414, 6000] (k = pi / 4) by Delta = omega(pi / 4) - omega(pi / 8) per interval, and the window's sinc at Delta W / 2 = 5.3 weighs each window's turn by sinc^2 below 1 / 30 (C9: the line shape is the window's own, the width 1 / W); the packet's flat top of 48 Nodes with the raised cosine of 8 beyond is monochromatic within the window, its passage over the body at the group velocity longer than the window, so two or three windows open on it, each weighed so; a packet of one wavelength at pi / 8, the 17-Node kind of the other worlds, would reach the transition with its spectrum and be absorbed at the weight's sin^2, so a detuning claim needs the packet's length W Nodes or more (C9 (b), the declaration)",
+   "status": "C9, the window's sinc; the declaration (b) on the packet's length; written before any run",
+   "fence": "clicks"
   }
  },
- "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3); no run on the branch, the readings the owner's to take into blind_and_reading.md"
+ "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3, C9); no run on the branch, the readings the owner's to take into blind_and_reading.md"
 }

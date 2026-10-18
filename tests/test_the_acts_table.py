@@ -279,6 +279,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "turned_direction", "division_forward"): "D",  # the turned direction, floors
     ("resonance.py", "window_turn", "largest_below"): "S",  # the plane's size by search
     ("resonance.py", "window_turn", "division_forward"): "D",  # the turn over the scale
+    ("resonance.py", "unit_weight", "largest_below"): "S",  # the sine and S_1 by search
+    ("resonance.py", "unit_weight", "division_forward"): "D",  # (A_1 W)^2 over sin k, and the half
     ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
     # share.py

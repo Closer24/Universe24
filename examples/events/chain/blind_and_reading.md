@@ -58,6 +58,32 @@ number inside them, the bounds named by their formulas and D4's number read at t
    |P(A only) - P(B only)| <= 2 sqrt(s (1 - s) / N) with s that folder's blind and N its trials; the
    identities D3 (the hole) and D6 (the front) per click.
 
+## The detuned packet, C9 (b): the packet's length (2026-10-18)
+
+The seventh world, `chain_detuned.json`: the chain along x with the second body alone (the Nodes 20 to
+22, the generator seeded 26) and one packet of the light at k = pi / 8 toward the lower side, a flat
+top of 48 Nodes (the Nodes 40 to 87) with the raised cosine of 8 beyond it, 64 Nodes in all, at the
+amplitude 53, one quantum in the record's unit at pi / 8 (C1); the transition stands at [5414, 6000],
+k = pi / 4, so the packet is detuned by Delta = omega(pi / 4) - omega(pi / 8) per interval and the
+window's sinc at Delta W / 2 = 5.3 weighs each window's turn by sinc^2, below 1 / 30 (C9: the line
+shape is the window's own, the width 1 / W). The packet is monochromatic within the window: its
+passage over the body at the group velocity is longer than the window, so two or three windows open
+on it, each weighed so. A packet of one wavelength at pi / 8, the 17-Node kind of the six worlds,
+would reach the transition with its spectrum and be absorbed at the weight's sin^2: a detuning claim
+needs the packet's length W Nodes or more, the declaration C9 (b) names. Its trials are the eight
+seeds of `detuned_trials.json` (tools/meeting_trials.py with that file as the design).
+
+7. B7 the line shape: absorbed in at most 1 of the 8 trials.
+
+The weight from the unit, C9 (a), is a derivation in the engine beside the declared weight
+(`resonance.unit_weight`, tests/test_the_absorption_weights.py): the ratio of the phase line's quarter
+turn over S_1 = sqrt(3 W T / (4 sin k)), the plane's size one quantum makes over the window at a Node,
+8.68 at the Zeno transition [2, 3] and 7.30 at the atoms' [5414, 6000] over the window 48, where the
+files declare 1 and 6; checked on the Zeno calibration (the drive 392 at the weight 1 carries 75
+quanta per window and its pi pulse is the derived weight's quarter turn scaled by their root), so
+the replacement of the files' weights, with the Zeno drive re-declared at one quantum per window,
+is the owner's call and not made here. This folder's bodies keep the declared weight 6.
+
 ## The lay's numbers (lay_bounds.json, 2026-10-18; the loaded worlds, no interval stepped)
 
 | reading | value | by |
@@ -68,9 +94,13 @@ number inside them, the bounds named by their formulas and D4's number read at t
 | each body's lay amplitude at each of its three Nodes | 73 | `NodeBooks.amplitudes` |
 | D4's bound on the body's dP along the chain's axis, in T's unit (num = 1, the same in the current's unit) | 902 | `lay_bounds.body_bound` |
 | D4's bound across the two folded axes | 0 | no Link across a folded axis |
+| the weight from the unit at [5414, 6000] over the window 48 (C9 (a)), beside the declared 6 | 9424 / 1291 = 7.30 | `resonance.unit_weight` |
+| chain_detuned: the light's unit W_rec at k = pi / 8 | 132,349,132 | `credit.record_unit` |
+| chain_detuned: the light's share at the lay, its count and quanta | 137,886,000; 1 and 1 | the books |
+| chain_detuned: the body's amplitudes and D4's bound along the chain | 73 per Node; 902 | as above |
 
 The six worlds read the same numbers: the images carry the original's levels, and each body's Nodes
-are the images of the original's.
+are the images of the original's; the detuned world's body is the second body at its own Nodes.
 
 ## The reading
 
@@ -78,5 +108,6 @@ No run on the branch claude/click-one-act (the owner's word of 2026-10-18): the 
 owner's to take and to append here with the gate's table (`## The gate's table`, the reading gate's
 five columns): tools/run_inputs.py over each of the six worlds (400 intervals), tools/meeting_trials.py
 with `--design design.json` on chain_x_minus (the seeds 25, 26, 27), tools/back_in_time.py over 40
-intervals through the first absorption and the emission after it, and B5 by the six outputs brought
-back by the inverse permutations.
+intervals through the first absorption and the emission after it, B5 by the six outputs brought
+back by the inverse permutations, and B7 by tools/meeting_trials.py on chain_detuned with
+`--design detuned_trials.json`.
