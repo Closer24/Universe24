@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
@@ -125,11 +126,11 @@ def born_unit(wall: int, resonance: tuple[int, int]) -> int:
     return largest_below(int(division_forward(wall * wall * (den * den - num * num), den * den, 0)[0]))
 
 
-def packet_unit(wall: int, pair: tuple[int, int], wave: tuple[int, int]) -> int:
-    """The unit of one quantum of a massless packet at the wave [p, q] (the click's plan, C1; `credit.record_unit`; the generator's count of a packet, tools/pixel_mode.py, so that the mode file's count is the books'): the rotation of that wave on the band's line with the transverse wave numbers 0, den cos omega = (num (den cos k + 2 den)) div (3 den) by the division act, den cos k by the rotation act's integer search (`features/click.wave_cosine`; 4242 of 6000 at k = pi / 4, den cos omega then 5414), and the unit W_c sin omega through the one form of a born quantum's (`born_unit`, `wall` the family's W_c): nature's E = h nu, one count of light carrying the form of its own frequency; a gapped family keeps its wall (`record_unit`)."""
+def packet_unit(wall: int, pair: tuple[int, int], waves: Sequence[tuple[int, int]]) -> int:
+    """The unit of one quantum of a massless packet at the wave [p, q] (the click's plan, C1; `credit.record_unit`; the generator's count of a packet, tools/pixel_mode.py, so that the mode file's count is the books'): the rotation of that wave on the band's line with the three axes' wave numbers, `waves` the pair [p, q] per axis (the packet's `wave` along its axis and its `transverse` pairs across, [0, 1] where none), den cos omega = (num SUM over the axes of den cos k_a) div (3 den) by the division act, den cos k_a by the rotation act's integer search (`features/click.wave_cosine`; 4242 of 6000 at k = pi / 4 with the two axes across at 0, den cos omega then 5414; the cold reader's fix of 2026-10-19: a packet declared with `transverse` takes its own unit), and the unit W_c sin omega through the one form of a born quantum's (`born_unit`, `wall` the family's W_c): nature's E = h nu, one count of light carrying the form of its own frequency; a gapped family keeps its wall (`record_unit`)."""
     num, den = pair
-    cosine = wave_cosine(wave[0], wave[1], den)  # den cos k
-    omega = int(division_forward(num * (cosine + 2 * den), 3 * den, 0)[0])  # den cos omega
+    cosines = sum(wave_cosine(turns, halves, den) for turns, halves in waves)  # SUM den cos k_a
+    omega = int(division_forward(num * cosines, 3 * den, 0)[0])  # den cos omega, the band's line
     return born_unit(wall, (omega, den))
 
 

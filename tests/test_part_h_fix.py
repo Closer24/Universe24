@@ -24,6 +24,7 @@ from tests.laws import (
     EVENTS,
     GRAVITY,
     coulomb_world,
+    d4_bound,
     emit_and_take_world,
     levels_floor,
     one_photon_board,
@@ -291,7 +292,7 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
 
 
 def test_the_twisted_taker_keeps_its_momentum_through_its_emissions_re_lay(tmp_path, monkeypatch):
-    """C3, the recoil per Node (the spec's blind: the taker's P kept through the emission within the re-lay's rounding bound, D4): the emit-and-take chain with the taker declaring the giver's rate too; the taker takes the pulse at 361 (its own rate's draws advance its generator, so it takes later than the rateless taker's 169) and the write twists it by the piece, 42,839 less the shortfall 7 booked per axis on the credit line (`shortfall`, C3); an emission is then given to it through the one act (`lists.emission`, one alternative, no draw): its parts are re-laid each Node in its own direction, the part the quantum enters in the leaving part's own at that Node, so the phase gradient the twist wrote survives the exchange and the taker's own P (its record's terms over its Nodes, `readings.momentum_of`) is kept within `levels_floor`'s bound, the count moved e to g and the pulse laid as a source in time; with one direction laid at every Node, the engine before C3, the gradient was erased and the P fell to the rounding."""
+    """C3, the recoil per Node (the spec's blind: the taker's P kept through the emission within the re-lay's rounding bound, D4): the emit-and-take chain with the taker declaring the giver's rate too; the taker takes the pulse at 361 (its own rate's draws advance its generator, so it takes later than the rateless taker's 169; the interval pinned to the generator's sequence, as the other pins are) and the write twists it by the piece, 42,839 less the shortfall 7 booked per axis on the credit line (`shortfall`, C3); an emission is then given to it through the one act (`lists.emission`, one alternative, no draw): its parts are re-laid each Node in its own direction, the part the quantum enters in the leaving part's own at that Node, so the phase gradient the twist wrote survives the exchange and the taker's own P (its record's terms over its Nodes, `readings.momentum_of`) is kept within D4's bound (`d4_bound`: one level's change per line and Node, SUM over the body's axis-Links of |now_i| + |before_i| + |now_j| + |before_j| + 2, in T's unit; `levels_floor`, Part F's floor over the body's Nodes, read beside it), the count moved e to g and the pulse laid as a source in time; with one direction laid at every Node, the engine before C3, the gradient was erased and the P fell to the rounding."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
 
     def edit(world):  # type: ignore[no-untyped-def]
@@ -316,7 +317,7 @@ def test_the_twisted_taker_keeps_its_momentum_through_its_emissions_re_lay(tmp_p
         return twist.scaled(read, weight)[0]
 
     click = next(c for c in lines if c["event"] == "credit" and c["absorbed"])
-    before, floor = own(), levels_floor(board, atom, at)
+    before, floor, bound = own(), levels_floor(board, atom, at), d4_bound(board, atom, taker.nodes)[0]
     assert (click["interval"], click["node_detector"], click["momentum"]) == (
         361,
         "body 1",
@@ -326,11 +327,14 @@ def test_the_twisted_taker_keeps_its_momentum_through_its_emissions_re_lay(tmp_p
     rate = next(r for r in taker.declared.rates if r.leaves == taker.part)
     act.click(board, taker, None, [lists.emission(board, taker, rate, 1)[0]])  # the emission given
     after = own()
-    assert taker.counts == [1, 0] and board.credit.sources and abs(after - before) <= floor, (
+    assert (
+        taker.counts == [1, 0] and board.credit.sources and abs(after - before) <= min(floor, bound)
+    ), (
         before,
         after,
         floor,
+        bound,
     )
     print(
-        f"C3: the taker's P_x {before} at its click, {after} after its emission's re-lay; the bound {floor}"
+        f"C3: the taker's P_x {before} at its click, {after} after its emission's re-lay; D4's bound {bound}, the floor {floor}"
     )

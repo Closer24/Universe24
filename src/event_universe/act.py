@@ -116,6 +116,7 @@ def written(board: Lattice, items: list[Item]) -> None:
             touched += [books] if books not in touched else []
             continue
         whole = faced(board, item)
+        drawn = list(zip(item.nodes, item.ports or ((),) * len(item.nodes), strict=True))
         unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
         if item.delta > 0 and not unwritten:
             born = emitted_quantum(board, item)
@@ -124,11 +125,11 @@ def written(board: Lattice, items: list[Item]) -> None:
         else:
             board.credit.counts[item.family] += item.delta
         board.credit.account_ended(item.family)
-        if item.delta < 0:
-            holes.setdefault(item.family, []).extend(whole)
-        if unwritten:  # the undepleted beam, or a two-sided arrival: the quantum in the books alone
+        if item.delta < 0:  # the front from every drawn Node, faced or not (C6, the re-fix)
+            holes.setdefault(item.family, []).extend(drawn)
+        if unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
-            unsided |= item.delta < 0 and bool(item.ports) and not any(item.ports)
+        unsided |= item.delta < 0 and bool(item.ports) and not all(item.ports)  # any Node without a side
     for books in touched:
         books.lost = [*(books.lost or []), NO_SIDE] if unsided else books.lost
         books.part = max(range(len(books.counts)), key=lambda k: books.counts[k])
@@ -140,7 +141,9 @@ def written(board: Lattice, items: list[Item]) -> None:
     for light, number, born, origin in recoils:  # the packet's recoil at the lay: the giver folded by -P
         giver = books_named(board, number)
         owed = scaled([-value for value in born], board.families[light].pair[0])
-        giver.recoil, short = folded_source(board, giver, (owed[0], owed[1], owed[2]), origin)
+        giver.recoil, giver.shortfall, short = folded_source(
+            board, giver, (owed[0], owed[1], owed[2]), origin
+        )  # D8: s_out beside the recoil on the emission's line
         giver.lost = [PAID_AT_EMISSION, *([short] if short is not None else [])]
     for family, absorbed in sorted(holes.items()):
         if board.credit.counts[family] <= 0 and absorbed:  # the count at 0: its front from every Node
@@ -148,7 +151,7 @@ def written(board: Lattice, items: list[Item]) -> None:
 
 
 def leaving_phase(board: Lattice, item: Item) -> list[Phase]:
-    """The direction (re, im) and the sense (the sign of the Wronskian) of the part a quantum leaves at each Node of the body, in the books' order, read before any lay of the list (the click's plan, C3: per Node and not at the first Node, so the re-lay keeps each Node's own direction); a Node standing at (0, 0) takes the first Node's direction."""
+    """The direction (re, im) and the sense (the sign of the Wronskian) of the part a quantum leaves at each Node of the body, in the books' order, read before any lay of the list (the click's plan, C3: per Node and not at the first Node, so the re-lay keeps each Node's own direction); a Node with no direction of its own, standing at (0, 0), takes the direction of the first Node that has one, a tie-break of the hole's Port order's kind (the cold reader's line of 2026-10-19)."""
     assert item.part is not None
     books = books_named(board, item.body or 0)
     found = [levels_at(board, books, item.part, here) for here in books.nodes]

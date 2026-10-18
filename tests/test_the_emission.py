@@ -109,15 +109,39 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"
 
 
-def test_a_two_sided_arrival_is_booked_and_not_faced(tmp_path, monkeypatch):
-    """C6's empty Port set (the cold reader's fix of 2026-10-18; the owner's word: generic and right): an arrival two-sided on every axis at the hole's Node (the booked inflow tied through its two Ports on each axis, `node_detector.arrival_ports` naming no Port, given here by hand on the shipped one_photon world, whose packets are not exact mirror images) is a lawful click: the quantum is taken in the books by the write step's own deficit path (`twist.faced` faces no Node without a side, `act.written` books the deficit), the levels stand (no face, no front), the credit line carries the reading `NO_SIDE` after the taker's own, and the run goes on (before the fix `Face.presented` refused the whole run on the empty set)."""
+def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(tmp_path, monkeypatch):
+    """C6's face set at a tie (the cold reader's re-fix of 2026-10-19, the Boss's decision under the owner's word, generic and right: a tied axis contributes both its Ports where the set's read coefficients sum to the wall at most, `node_detector.face_ports`; above the wall the booked path): given by hand on the shipped one_photon world through `arrival_ports` (its packets are not exact mirror images, so no built tie stands). (i) One tied axis, the two x Ports (2 w / 3 for light): the hole is faced on both, two faces per line at 77 and 78 with the set (0, 1), the count 0 with no deficit and no `NO_SIDE`, the front begun from the hole's Node. (ii) Two tied axes, four Ports (4 w / 3, above the wall): the set is emptied, the quantum taken in the books alone (the deficit 1, the reading `NO_SIDE` after the taker's own), no face, and the front begun from the drawn Node all the same (the law's line: from every Node written in that draw), so the quantum's share, standing on the board at 79, is erased by the front as in the faced case, the two runs ending with the same share at 170, the packet's other half beyond the front's reach, 127,530,000 as the Part G oracle's header reads (the hole's Node itself carries no form at this click, the packet having passed it; an origin with form stands while its shells are erased, named in the law)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    monkeypatch.setattr(node_detector, "arrival_ports", lambda booked: ())  # every axis tied
-    board, lines = one_photon_board(tmp_path)
-    photon = [f.name for f in board.families].index("photon")
-    for _ in range(76):
-        board.step()
-    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-    assert len(taken) == 1 and taken[0]["lost"][-1] == NO_SIDE and board.credit.counts[photon] == 0
-    assert board.credit.deficits[photon] == 1 and not board.credit.fronts and not board.credit.faces
-    assert board.books()["photon"]["share"] > 0  # the levels stand: booked, not faced
+    found = {}
+    for name, ports in (("tied", (0, 1)), ("above", (0, 1, 2, 3))):
+        monkeypatch.setattr(node_detector, "arrival_ports", lambda booked, ports=ports: ports)
+        board, lines = one_photon_board(tmp_path)
+        photon = [f.name for f in board.families].index("photon")
+        for _ in range(79):
+            board.step()
+        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+        faces = [f for f in lines if f["event"] == "face"]
+        origin = board.credit.fronts[0].origin
+        share = board.books()["photon"]["share"]  # the quantum's share on the board at 79
+        for _ in range(79, 170):
+            board.step()
+        dark = board.books()["photon"]["share"]  # the board at the run's end
+        faces = [
+            f for f in faces if f["node"]["at"] == list(origin)
+        ]  # the hole's own faces, not the front's
+        found[name] = (
+            len(taken),
+            taken[0]["lost"],
+            board.credit.counts[photon],
+            board.credit.deficits.get(photon, 0),
+            sorted({tuple(f["ports"]) for f in faces}),
+            len(board.credit.fronts),
+            share > 0,
+            dark,
+        )
+    lost = ["P lost to the taker", "recoil lost to the lay"]
+    assert found["tied"][:7] == (1, lost, 0, 0, [(0, 1)], 1, True)
+    assert found["above"][:7] == (1, [*lost, NO_SIDE], 0, 1, [], 1, True)  # booked, the front begun
+    assert (
+        found["above"][7] == found["tied"][7] == 127530000
+    )  # the other half beyond the front's reach, the oracle's

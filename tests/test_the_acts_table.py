@@ -247,11 +247,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "quarter_turn",
         "phase.iterate",
     ): "R",  # the one carried act on a pair (the bisection around it S)
-    (
-        "twist.py",
-        "folded_lines",
-        "phase.iterate",
-    ): "R",  # the one carried act on a pair (the fold's coefficient D)
     ("twist.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
@@ -305,7 +300,6 @@ R_OUTSIDE_THE_STEP = frozenset(
         ("resonance.py", "window_pair", "phase.iterate"),  # the window's pair in the memo
         ("resonance.py", "hopped", "division_forward"),  # the labels' hop with its carries
         ("twist.py", "quarter_turn", "phase.iterate"),  # the pair carried along the bisection's probe
-        ("twist.py", "folded_lines", "phase.iterate"),  # the pair carried to the fold's offset
     }
 )
 

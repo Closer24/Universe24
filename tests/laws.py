@@ -4,6 +4,7 @@ import importlib.util
 import json
 import math
 import sys
+from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, Row, quanta_records
+from event_universe.loader.keys import Node
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
@@ -486,3 +488,29 @@ def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int)
         ),
     ]
     board.states[index].lines = lines
+
+
+def d4_bound(board: Lattice, index: int, nodes: Sequence[Node]) -> list[int]:
+    """D4's bound on a body's lattice momentum change at a re-lay, per axis, in T's unit (the click's plan, section D4; the chain folder's lay_bounds.py reads the same): one level's change per line and Node at most, so over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2; times num in the current's unit."""
+    lines = own_lines(board, index)
+    placed = [tuple(int(v) for v in np.add(node, board.offset)) for node in nodes]
+    found = []
+    for axis in range(3):
+        links = set()
+        for here in placed:
+            for step in (-1, 1):
+                there = list(here)
+                there[axis] += step
+                if board.wrap[axis]:
+                    there[axis] %= board.shape[axis]
+                elif not 0 <= there[axis] < board.shape[axis]:
+                    continue
+                if tuple(there) != here:
+                    links.add(frozenset((here, tuple(there))))
+        total = 0
+        for link in links:
+            for at in link:
+                total += sum(abs(int(r.now[at])) + abs(int(r.before[at])) for r in lines)
+            total += 2 * len(lines)
+        found.append(total)
+    return found

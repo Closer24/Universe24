@@ -265,20 +265,32 @@ def share_weights(board: Lattice, books: NodeBooks) -> list[int]:
 
 
 def arrival_ports(booked: Sequence[int]) -> tuple[int, ...]:
-    """The Ports a quantum entered a Node by, read from the window's inflow booked per Port at that Node (the click's plan, C6 (i): nature names no axis; `booked_inflow`, `credit.booked`): per axis the Port of the larger booked inflow, the arrival's side, and none where the two Ports tie (the arrival has no side on that axis), so the set holds at most one Port per axis and the hole's remainder stays below one read coefficient (features/click, `presented`); the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a set empty on every axis, a standing wave with no side, refuses the hole by name at the step."""
+    """The Ports a quantum entered a Node by, read from the window's inflow booked per Port at that Node (the click's plan, C6 (i): nature names no axis; `booked_inflow`, `credit.booked`): per axis the Port of the larger booked inflow, the arrival's side, and both Ports where the two tie with inflow (the quantum came through both, a tied axis; none where the axis carries no inflow), the set within the wall's bound or empty decided by `face_ports`, so the hole's remainder stays below one read coefficient (features/click, `presented`); the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a set empty on every axis, a standing wave with no side, refuses the hole by name at the step."""
     found = []
     for axis in range(AXES):
         plus, minus = booked[SIDES * axis], booked[SIDES * axis + 1]
         if plus != minus:
             found.append(SIDES * axis if plus > minus else SIDES * axis + 1)
+        elif plus > 0:  # a tied axis with inflow: the quantum came through both its Ports
+            found.extend((SIDES * axis, SIDES * axis + 1))
     return tuple(found)
+
+
+def face_ports(board: Lattice, index: int, at: Node, booked: Sequence[int]) -> tuple[int, ...]:
+    """The hole's face set at a Node (the click's plan, C6 (i); the cold reader's re-fix of 2026-10-19, the Boss's decision under the owner's word, generic and right): the Ports the quantum entered by (`arrival_ports`, a sided axis's one Port and a tied axis's two) where the set's read coefficients at the Node sum to the wall at most, SUM over the set of R_p <= w, the window in which the face value reaches the target exactly (ALGEBRA.md, The one act as a face at the Node's Ports: one or two sided axes, one tied axis alone or beside a sided one for light's R = w / 3); above the wall (two or three tied axes, four to six Ports) the empty set, the booked path: the quantum taken in the books, the Node not faced and its levels standing, the credit line reading `NO_SIDE` (`act.written`, `lists.credited_node`); the rule's integers the record's own read at the Node (`node.rule_of`), the detector's side and nothing at the Node."""
+    ports = arrival_ports(booked)
+    content, factors = board.read(index)
+    rule = node.rule_of(board.families[index], board.world.node_clock, content, factors, board.unit)
+    here = tuple(int(v) for v in np.add(at, board.offset))
+    reaches = [int(np.asarray(read)[here]) if np.ndim(read) else int(read) for read in rule.reaches]
+    return ports if sum(reaches[p] for p in ports) <= int(rule.wall) else ()
 
 
 def hole_node(board: Lattice, books: NodeBooks, drive: int) -> tuple[Node, tuple[int, ...]]:
     """The absorption's Node and its face set: the Node drawn by the arriving record's inflow booked through each of the NodeDetector's Nodes' front Ports over the window, the Ports' sums (`booked_inflow`, floored at 0 and over G^2 once, `drawn_weights`), the Node the quantum entered through, as the credit draws it for a reader of the field's record, one rule for the one kind (the mathematician's hand, the advisor's hand, two hands); the lay's weights where nothing entered; the Ports the quantum entered that Node by from the same book (`arrival_ports`), the hole's two faces written there at them; drawn after the outcome, for the realised write alone."""
     booked = books.intake.get(drive, [[0] * PORTS for _at in books.nodes])
     at = drawn_node(board, books, drawn_weights(board, [sum(through) for through in booked]))
-    return at, arrival_ports(booked[books.nodes.index(at)])
+    return at, face_ports(board, drive, at, booked[books.nodes.index(at)])
 
 
 def reported(

@@ -15,10 +15,10 @@ from event_universe.loader.node_detector_declaration import Conversion, Rate, Tr
 from event_universe.node_detector import (
     NodeBooks,
     Passage,
-    arrival_ports,
     credit_draw,
     drawn_node,
     drawn_weights,
+    face_ports,
     hole_node,
     own_clock,
     piece_momentum,
@@ -90,6 +90,7 @@ def credited_node(
     if sum(weights) <= 0:
         return []
     at = nodes[credit_draw(board, weights)]
+    ports = face_ports(board, index, at, book[at])  # the face set, empty on the booked path
     books = board.credit
     left, window = books.counts[index] - quantum, books.window_of(board.interval)
     source, recoil, reading = unpaid(board, index, partial(credit_draw, board))
@@ -114,12 +115,12 @@ def credited_node(
                 fan,
                 None,
                 None,
-                [reading],
+                [reading, *([reports.NO_SIDE] if not ports else [])],
                 source,
                 recoil,
             )
         )
-    return [(at, arrival_ports(book[at]))]
+    return [(at, ports)]
 
 
 def region(board: Lattice, index: int) -> Alternative | None:

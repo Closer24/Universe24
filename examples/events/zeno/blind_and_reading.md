@@ -337,3 +337,12 @@ line: the reading on main of 2026-10-03 (the partial hole's 0.523, 0.408, 0.227,
 8, 16) differs from these draws by -0.8, -0.7, +0.1 and +1.5 of its standard errors, and the n = 4
 finding of that reading (0.408, 1.5 standard errors high) does not reappear at these draws (0.392,
 +0.75 standard errors).
+
+## The counts under the click's plan (2026-10-18, branch claude/click-one-act)
+
+The pulse is a massless family laid as a packet at the wave [1, 2], so under C1 its unit is its own
+rotation's, W_c sin omega at k = pi / 2, 439,716,758 against the bolometer's W_c, and its books' count
+over the box reads 1118 (833 before C1, read from the loaded worlds, `Lattice.books`); the amplitude 392
+stands as declared, the clicks hold (the window's turn reads the levels and not the count, and the
+unabsorbed share is capped at the unit, so the count stays above 0 through the run), and Itano's column
+is not re-read on this branch (no run but the tests' own).

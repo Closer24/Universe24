@@ -46,7 +46,7 @@ class Front:
 
 
 def started(board: Lattice, index: int, holes: list[tuple[Node, tuple[int, ...]]]) -> None:
-    """A record's count at 0 in the books: a front begun at this interval from every Node written in the draw with the Ports faced there, kept in the books (`credit.Books.fronts`)."""
+    """A record's count at 0 in the books: a front begun at this interval from every Node drawn in the click, faced or not (the law's line, from every Node written in that draw; C6, the cold reader's re-fix of 2026-10-19), with the Ports faced there, an empty set on the booked path, whose origin the front leaves standing, kept in the books (`credit.Books.fronts`)."""
     board.credit.fronts.extend(Front(index, at, board.interval, ports) for at, ports in holes)
 
 
@@ -94,7 +94,9 @@ def erased(board: Lattice, front: Front, distance: int) -> bool:
             reached = distance - s + 1  # the intervals since the reach passed the shell s
             fraction = (taper - reached, taper) if reached < taper else None
             holds |= faced(board, index, family.record, where, s, [board.interval + 1], fraction)
-        if 2 <= distance <= taper:  # the hole's Node kept at 0 while its first shell tapers
+        if (
+            2 <= distance <= taper and front.ports
+        ):  # the hole's Node kept at 0 while its first shell tapers
             for line in range(family.record):
                 board.credit.faces.setdefault(board.interval + 1, []).append(
                     Face(index, line, (origin[0], origin[1], origin[2]), front.ports, board.interval + 1)

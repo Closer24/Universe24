@@ -35,6 +35,7 @@ from event_universe.reports import (
     UNPAID_BY_REGION,
     face,
 )
+from event_universe.resonance import window_pair
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -161,16 +162,16 @@ def scaled(found: Sequence[int], weight: int) -> list[int]:
 
 def folded_source(
     board: Lattice, giver: NodeBooks, wanted: tuple[int, int, int], origin: Node
-) -> tuple[list[int], str | None]:
-    """The source's fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, theorem from the pair rule with the source as partner: at a click the write conserves P with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, both at the click's tick by the same twist, n_a from the same bisection, kind S): the giver's part, the one carrying its count, folded by `wanted` through `twisted` on its own books about the click's Node `origin` (C6 (ii)), the same function the taker's write runs, written through the one lay act (`lay.written`, one `lay` line per Node changed) so that the host's tool crosses it on the way back; the fold is the body's and runs through no erasing front (the source's Nodes are the body's, not the light's). Returns the recoil given and its reading: `wanted` itself and None where the quarter turn carries it (the deposit equal to it to the fold's roundings, the hands' bound 2 c T (M - 1) / M for a count c on M Nodes along the axis); where the quarter turn falls short, the reach as read on the giver's own record lines before and after (`readings.momentum_of`, `scaled`) with `LOST_TO_SOURCE`, the remainder `wanted` less it; a region of one Node along the axis folds none, `LOST_TO_DECLARATION`. OPEN by name (both hands): the shipped two-Node atoms at count 1 carry 0.71 of a pi / 4 piece; the one-Node write; the dipole."""
+) -> tuple[list[int], list[int], str | None]:
+    """The source's fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, theorem from the pair rule with the source as partner: at a click the write conserves P with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, both at the click's tick by the same twist, n_a from the same bisection, kind S): the giver's part, the one carrying its count, folded by `wanted` through `twisted` on its own books about the click's Node `origin` (C6 (ii)), the same function the taker's write runs, written through the one lay act (`lay.written`, one `lay` line per Node changed) so that the host's tool crosses it on the way back; the fold is the body's and runs through no erasing front (the source's Nodes are the body's, not the light's). Returns the recoil given, the fold's shortfall per axis (C3; D8: gain_out + s_out = |born_a| at a packet's lay, the giver's `shortfall` on the emission's line, `act.written`) and its reading: `wanted` itself and None where the quarter turn carries it (the deposit equal to it to the fold's roundings, the hands' bound 2 c T (M - 1) / M for a count c on M Nodes along the axis); where the quarter turn falls short, the reach as read on the giver's own record lines before and after (`readings.momentum_of`, `scaled`) with `LOST_TO_SOURCE`, the remainder `wanted` less it; a region of one Node along the axis folds none, `LOST_TO_DECLARATION`. OPEN by name (both hands): the shipped two-Node atoms at count 1 carry 0.71 of a pi / 4 piece; the one-Node write; the dipole."""
     weight, lines = board.families[giver.index].pair[0], board.lines_of(giver.index, giver.record)
     before = readings.momentum_of(weight, lines, board.wrap)
-    _twist, _shortfall, short = twisted(board, giver, giver.part, wanted, origin)
+    _twist, shortfall, short = twisted(board, giver, giver.part, wanted, origin)
     if short is None:
-        return list(wanted), None
+        return list(wanted), shortfall, None
     after = readings.momentum_of(weight, board.lines_of(giver.index, giver.record), board.wrap)
     reach = scaled([a - b for a, b in zip(after, before, strict=True)], weight)
-    return reach, LOST_TO_SOURCE if short == LOST_TO_TAKER else short
+    return reach, shortfall, LOST_TO_SOURCE if short == LOST_TO_TAKER else short
 
 
 def recoiled(
@@ -184,9 +185,9 @@ def recoiled(
     name = f"{BODY} {emitter.body}"
     if emitter.paid:
         return name, owed, PAID_AT_EMISSION
-    given, short = folded_source(
+    given, _shortfall, short = folded_source(
         board, books_named(board, emitter.body), (owed[0], owed[1], owed[2]), origin
-    )
+    )  # the source's shortfall at an absorption's recoil stands on no line (named)
     return name, given, short
 
 
@@ -234,7 +235,9 @@ def folded_lines(
     re_now, im_now = re_line.now.copy(), im_line.now.copy()
     re_before, im_before = re_line.before.copy(), im_line.before.copy()
     for offset in sorted({int(x) for x in offsets[at]}):
-        c, s = phase.read(phase.iterate(phase.seed(amplitude, gamma), offset * count, gamma))
+        c, s, _ = window_pair(
+            offset * count, gamma, amplitude
+        )  # the memo's pair: the acts compose exactly
         here = at & (offsets == offset)
         for now, before in ((re_now, im_now), (re_before, im_before)):
             re_folded, im_folded = phase.fold(
