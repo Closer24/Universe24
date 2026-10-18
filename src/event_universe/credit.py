@@ -33,7 +33,9 @@ Intake = dict[
 Joints = dict[
     tuple[int, ...], int
 ]  # per combination of the sides' ports (0 the +, 1 the -) the window's J
-Sums = dict[str, list[list[int]]]  # per region the parts' level sums [now, before] of one interval
+Sums = dict[
+    str, list[list[int]]
+]  # per region the record's lines' level sums [now, before] of one interval
 Clock = list[
     int
 ]  # a node_detector's own clock: its proper time in whole intervals and the remainder carried
@@ -94,7 +96,11 @@ class Books:
         found = board.world.draw
         units = {index: record_unit(board, index) for index in board.order}
         counts = {index: counted(board, index, board.laid[index], units[index]) for index in board.order}
-        sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.node_detectors if r.pattern]
+        sides = [
+            (r.name, ports_of(r.axis or r.basis, r.pattern))
+            for r in board.world.node_detectors
+            if r.pattern
+        ]  # a side's setting its `axis` for planes or its `basis` for real lines
         bodies = books_of(board)
         emitters: dict[int, list[Emitter]] = {}
         for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
@@ -195,23 +201,30 @@ def booked(
 
 
 def joined(board: Lattice, index: int, sums: Sums) -> None:
-    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side."""
+    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side. For a record of plane parts (the spin branch, 2026-10-19) a part's sum is its pair (re, im) on its two lines, the product over the sides a plane's product and the square the pair's norm, J += |SUM_k c_k PROD_sides psi^s_k|^2 per member: the spinor amplitude's share under the detectors' declared axes (`loader/draw.settings_of_the_law`), the real-line form the same with im at 0."""
     books = board.credit
     if books.declaration is None or not books.sides:
         return
-    parts = board.families[index].parts
-    levels = [sums.get(name, [[0, 0]] * parts) for name, _ports in books.sides]
+    family = board.families[index]
+    parts, width = family.parts, family.width  # the lines per part: one for a real line, two for a plane
+    levels = [sums.get(name, [[0, 0]] * (parts * width)) for name, _ports in books.sides]
     joint = books.joints.setdefault(index, {})
     for key in itertools.product(range(len(PORT_NAMES)), repeat=len(books.sides)):
         total = 0
         for member in range(2):
-            term = 0
+            real, imaginary = 0, 0
             for k in range(parts):
-                product = 1
+                product = (
+                    1,
+                    0,
+                )  # the product over the sides as a plane's pair (re, im); a real line (re, 0)
                 for (_name, ports), port, found in zip(books.sides, key, levels, strict=True):
-                    product *= ports[port][k] * found[k][member]
-                term += product
-            total += term * term
+                    factor = ports[port][k]
+                    re = factor * found[k * width][member]
+                    im = factor * found[k * width + 1][member] if family.plane else 0
+                    product = (product[0] * re - product[1] * im, product[0] * im + product[1] * re)
+                real, imaginary = real + product[0], imaginary + product[1]
+            total += real * real + imaginary * imaginary
         joint[key] = joint.get(key, 0) + total
 
 

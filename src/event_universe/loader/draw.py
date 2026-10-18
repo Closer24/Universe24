@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from event_universe.core.integer import MAX_WORK_INT
@@ -128,4 +129,43 @@ def patterns_of_the_law(
                     if parts
                     else "no record of several parts"
                 )
+            )
+
+
+def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand."""
+    basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
+    axis = basis_of(row["axis"], f"{label}.axis") if "axis" in row else ()
+    if axis and basis:
+        raise ValueError(
+            f"{label} declares both `axis` and `basis`: a side's setting is one of the two, `basis` the setting's "
+            "coefficients (p, q) for a record of real-line parts and `axis` the half-angle pair (c, s) for planes"
+        )
+    return basis, axis
+
+
+def settings_of_the_law(
+    sides: list[tuple[str, tuple[int, ...], tuple[int, ...], Pattern]],
+    laid: list[int],
+    families: tuple[FamilyRule, ...],
+) -> None:
+    """A side's setting is `basis` for a record of real-line parts, the setting's coefficients (p, q) at the full angle (the pair's and the GHZ's polarizations), and `axis` for a record of plane parts, the half-angle pair (c, s) of the detector's axis, the spinor read of a two-plane record (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route: the half angle is the detector's declared basis and no property of the record under the 48): per side with a pattern, the laid families of as many parts as the pattern name the kind; refused by name where the side declares the other kind or where the laid records are of both kinds. The two ports' arithmetic is one (`ports_of`): e_k(+) = alpha_k c + beta_k s, e_k(-) = beta_k c - alpha_k s."""
+    for name, axis, basis, pattern in sides:
+        if not pattern:
+            continue
+        planes = {families[index].plane for index in laid if families[index].parts == len(pattern)}
+        if len(planes) == 2:
+            raise ValueError(
+                f"node_detector {name!r} reads records of planes and of real lines with one pattern: a side's "
+                "setting is one kind's, `axis` for planes and `basis` for real lines"
+            )
+        if planes == {True} and basis:
+            raise ValueError(
+                f"node_detector {name!r} declares `basis` for a record of planes, whose sides declare `axis`, the "
+                "half-angle pair (c, s) of the detector's axis"
+            )
+        if planes == {False} and axis:
+            raise ValueError(
+                f"node_detector {name!r} declares `axis` for a record of real lines, whose sides declare `basis`, "
+                "the setting's coefficients (p, q)"
             )

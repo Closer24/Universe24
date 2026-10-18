@@ -14,11 +14,12 @@ from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import (
     Draw,
     Pattern,
-    basis_of,
     draw_of,
     pattern_of,
     patterns_of_the_law,
     ports_of,
+    setting_of,
+    settings_of_the_law,
 )
 from event_universe.loader.faces import (
     RecedingFace,
@@ -55,7 +56,7 @@ READER_NODE_KEYS = (
     "node",
     "weight",
 )  # a reader's Node: its lay's weight, the record's count declared once
-NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "pattern")  # a node_detector's keys
+NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern")  # a node_detector's keys
 TRANSITION = (
     "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
 )
@@ -79,7 +80,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class NodeDetectorRow:
-    """A node_detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared NodeDetector, and not for a body's node_detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the reader's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name)."""
+    """A node_detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared NodeDetector, and not for a body's node_detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the reader's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name). A side of a record of several parts declares its setting as `basis` (real-line parts, the setting's coefficients at the full angle) or as `axis` (plane parts, the half-angle pair of the detector's axis; the spin branch, 2026-10-19), one of the two, with its `pattern`; the ports' arithmetic is one (`loader/draw.ports_of`)."""
 
     name: str
     positions: tuple[Node, ...]
@@ -87,6 +88,7 @@ class NodeDetectorRow:
     declared: bool
     basis: tuple[int, ...]
     pattern: Pattern
+    axis: tuple[int, ...] = ()  # a plane record's setting, the half-angle pair (the spin branch)
 
 
 @dataclass(frozen=True)
@@ -229,18 +231,21 @@ def node_detectors_of(
             raise ValueError(f"{label}.name must be a name of its own, not {FACE_NAME!r}")
         if ("positions" in row) == ("block" in row):
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
-        basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
-        if "pattern" in row and not basis:
-            raise ValueError(f"{label}.pattern reads the setting `basis` declares, and none is declared")
-        pattern = pattern_of(row["pattern"], f"{label}.pattern", basis) if "pattern" in row else ()
+        basis, axis = setting_of(row, label)  # one of the two, refused by name together (`loader/draw`)
+        setting = axis or basis
+        if "pattern" in row and not setting:
+            raise ValueError(
+                f"{label}.pattern reads the setting `basis` or `axis` declares, and none is declared"
+            )
+        pattern = pattern_of(row["pattern"], f"{label}.pattern", setting) if "pattern" in row else ()
         if pattern:
             ports_of(
-                basis, pattern
+                setting, pattern
             )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
-            if basis:
+            if setting:
                 raise ValueError(
-                    f"{label}: a basis is declared on a region, not on a body's node_detector"
+                    f"{label}: a basis or an axis is declared on a region, not on a body's node_detector"
                 )
             body = integer(row["block"], f"{label}.block", 0, bodies - 1)
             found.append(NodeDetectorRow(name, (), body, False, (), ()))
@@ -251,7 +256,7 @@ def node_detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(NodeDetectorRow(name, nodes, None, True, basis, pattern))
+        found.append(NodeDetectorRow(name, nodes, None, True, basis, pattern, axis))
     if layer:
         found.append(NodeDetectorRow(FACE_NAME, layer, None, False, (), ()))
     return tuple(found)
@@ -359,6 +364,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     laid = [packet.family for packet in packets] + [body.family for body in bodies]
     laid += [whole.family for whole in wholes]
     patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
+    settings_of_the_law([(d.name, d.axis, d.basis, d.pattern) for d in node_detectors], laid, families)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
     # holder of the sign one row per charged record beside the free row (derived.with_records)
     counted = [body.family for body in bodies]
