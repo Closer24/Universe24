@@ -133,13 +133,17 @@ def patterns_of_the_law(
 
 
 def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], tuple[int, ...]]:
-    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand."""
+    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand, and where a region declares a setting with no `pattern` to read it with (a setting is read by the pattern alone; a body's node_detector refuses a setting by its own line)."""
     basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
     axis = basis_of(row["axis"], f"{label}.axis") if "axis" in row else ()
     if axis and basis:
         raise ValueError(
             f"{label} declares both `axis` and `basis`: a side's setting is one of the two, `basis` the setting's "
             "coefficients (p, q) for a record of real-line parts and `axis` the half-angle pair (c, s) for planes"
+        )
+    if (axis or basis) and "pattern" not in row and "block" not in row:
+        raise ValueError(
+            f"{label} declares a setting and no `pattern` to read it with: a setting is read by the pattern alone"
         )
     return basis, axis
 

@@ -5,7 +5,7 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from event_universe import lists, meeting, world_files
+from event_universe import credit, lists, meeting, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import ports_of, settings_of_the_law
 from event_universe.loader.node_detector_declaration import parts_of
@@ -127,6 +127,19 @@ def joint_shares(
     return found
 
 
+def rebooked(board: Lattice, lines: list[dict]) -> dict[tuple[int, ...], int]:  # type: ignore[type-arg]
+    """The engine's own joint credit run again over the run's `parts` lines (the joints are cleared at the window's close): the joints emptied and `credit.joined` fed each interval's sums per region as the meeting feeds it, the shares per combination returned to be compared with the reader's exactly, no statistics."""
+    index = [f.name for f in board.families].index("spin")
+    board.credit.joints.clear()
+    sums: dict[int, dict[str, list[list[int]]]] = {}
+    for row in lines:
+        if row["event"] == "parts" and row["family"] == "spin":
+            sums.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
+    for interval in sorted(sums):
+        credit.joined(board, index, sums[interval])
+    return dict(board.credit.joints[index])
+
+
 def correlation(a: tuple[int, int], b: tuple[int, int]) -> Fraction:
     """The singlet's E(a, b) = -cos(theta_a - theta_b) from the half-angle pairs, exact: -((c_a c_b + s_a s_b)^2 - (c_a s_b - s_a c_b)^2) / ((c_a^2 + s_a^2) (c_b^2 + s_b^2))."""
     (ca, sa), (cb, sb) = a, b
@@ -135,7 +148,7 @@ def correlation(a: tuple[int, int], b: tuple[int, int]) -> Fraction:
 
 
 def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle(tmp_path, monkeypatch):
-    """Stern and Gerlach on the board: one quantum of the two-plane family (the amplitude 90, the lay 75, the share 0.9994 of the record's unit, the count 1) laid in the equal-parts state (psi_1 = psi_2, the Bloch vector along +x), one region at the chain's lower end declaring its axis as the half-angle pair (c, s) with the identity pattern; at the window's close the whole quantum is credited to the plus port or the minus port, two beams and never a smear (one credit line, count 1, nothing left, the parts kept those the port reads with a coefficient other than 0), with the share (c + s)^2 / (2 (c^2 + s^2)) = cos^2 of the half angle between the axis and the state, exact in the integers' rationals: 1 / 2 at the z axis (1, 0), 1 at the x axis (1, 1), 0 at -x (1, -1), 4 / 5 at (3, 1) and 9 / 10 at (2, 1); the shares read from the engine's `parts` lines by the reader's own arithmetic equal the formula exactly, every run's port is one the share allows, and the engine's own draw over the shares (`node_detector.credit_draw`, the states hashed as the trials tool hashes them) gives the plus port within three binomial scatters of the share over 400 draws, exactly all or none along the state."""
+    """Stern and Gerlach on the board: one quantum of the two-plane family (the amplitude 90, the lay 75, the share 0.9994 of the record's unit, the count 1) laid in the equal-parts state (psi_1 = psi_2, the Bloch vector along +x), one region at the chain's lower end declaring its axis as the half-angle pair (c, s) with the identity pattern; at the window's close the whole quantum is credited to the plus port or the minus port, two beams and never a smear (one credit line, count 1, nothing left, `kept` the parts the realised port reads with a coefficient other than 0, no loss, the whole quantum at one port: at the z axis (1, 0) the + port (c, s) = (1, 0) reads part 0 alone and the - port (-s, c) = (0, 1) part 1 alone, so the two beams along z are the two parts themselves), with the share (c + s)^2 / (2 (c^2 + s^2)) = cos^2 of the half angle between the axis and the state, exact in the integers' rationals: 1 / 2 at the z axis (1, 0), 1 at the x axis (1, 1), 0 at -x (1, -1), 4 / 5 at (3, 1) and 9 / 10 at (2, 1); the shares read from the engine's `parts` lines by the reader's own arithmetic equal the formula exactly, every run's port is one the share allows, the engine's own accumulation (`credit.joined`, run again over the same `parts` sums) equals the reader's exactly, and the engine's generator over the reader's shares (`node_detector.credit_draw`, the states hashed as the trials tool hashes them) gives the plus port within three binomial scatters of the share over 400 draws, exactly all or none along the state."""
     for axis, expected in (
         ((1, 0), Fraction(1, 2)),
         ((1, 1), Fraction(1)),
@@ -153,6 +166,9 @@ def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle
             assert clicks[0]["count"] == 1 and clicks[0]["left"] == 0, clicks
             up, down = (shares := joint_shares(lines, {"left": (axis, IDENTITY)}))[(0,)], shares[(1,)]
             assert Fraction(up, up + down) == expected, (axis, up, down)  # the half angle's share, exact
+            assert (
+                rebooked(board, lines) == shares
+            )  # the engine's own accumulation, exactly the reader's
             allowed = {"plus"} if expected == 1 else {"minus"} if expected == 0 else {"plus", "minus"}
             port = clicks[0]["realised"]
             assert port in allowed, (axis, port)
@@ -170,7 +186,7 @@ def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle
 
 
 def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, monkeypatch):
-    """The settings' law (`loader/draw.settings_of_the_law`, `loader/world.node_detectors_of`): a side of a record of planes declares `axis` and a side of a record of real lines declares `basis`, each refused by name on the other kind, the two together refused, one pattern over laid records of both kinds refused, and a setting on a body's node_detector refused; the spin world loads with its axis, and the same world with `basis` in the axis's place (its mode file re-addressed to it) is refused by name."""
+    """The settings' law (`loader/draw.settings_of_the_law`, `loader/world.node_detectors_of`): a side of a record of planes declares `axis` and a side of a record of real lines declares `basis`, each refused by name on the other kind, the two together refused, a setting with no `pattern` refused, one pattern over laid records of both kinds refused, and a setting on a body's node_detector refused; the spin world loads with its axis, and the same world with `basis` in the axis's place (its mode file re-addressed to it) is refused by name."""
     path = spin_world(tmp_path, monkeypatch, {"left": ((1, 0), IDENTITY)})
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
@@ -190,6 +206,15 @@ def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, m
     )
     refused(
         "not on a body", node_detectors_of, [{"name": "d", "block": 0, "axis": [1, 0]}], shape, 1, (), ()
+    )
+    refused(
+        "no `pattern`",
+        node_detectors_of,
+        [{k: v for k, v in row.items() if k != "pattern"}],
+        shape,
+        0,
+        (),
+        (),
     )
     pattern = ((1, 0), (0, 1))
     refused(
@@ -228,7 +253,7 @@ def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, m
 def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bound_at_two_root_two(
     tmp_path, monkeypatch
 ):
-    """The singlet on the board (the Boss's item (d), 2026-10-19): two packets of the two-plane family from the centre toward the two ends, half a quantum each, the two parts laid alike on both, the left region's pattern the identity and the right region's the singlet's [[0, 1], [-1, 0]] (the partner reads the parts crossed with one sign turned, the antisymmetric pair), each region its own `axis`; the joint credit over the window gives E(a, b) = -cos(theta_a - theta_b) exact in the integers' rationals from the engine's `parts` lines at the four Bell settings, -119 / 169, 119 / 169, -120 / 169, -120 / 169, so |S| = 478 / 169 (the photons' S with (a - b) in the place of 2 (a - b)); each side's marginal 1 / 2 whatever the partner's axis; at equal axes the shares of (+, +) and (-, -) are 0 exactly, the anticorrelation, and the combination realised is one of the two the shares allow; the pair is one quantum of the record, each packet half of it (the amplitude 64, the lay 54, the two shares 1.0134 of the record's unit together), and every run credits both sides with the one combination drawn (two credit lines, one per side, count 1, nothing left; `lists.region`); the engine's own draw over the four shares at (a, b) (`node_detector.credit_draw`, 400 hashed states) within three binomial scatters of each share."""
+    """The singlet on the board (the Boss's item (d), 2026-10-19): two packets of the two-plane family from the centre toward the two ends, half a quantum each, the two parts laid alike on both, the left region's pattern the identity and the right region's the singlet's [[0, 1], [-1, 0]] (the partner reads the parts crossed with one sign turned, the antisymmetric pair: through `ports_of` its + port reads (s, -c) and its - port (c, s), the identity's - port (-s, c), the overall sign invisible to the norm), each region its own `axis`; the joint credit over the window gives E(a, b) = -cos(theta_a - theta_b) exact in the integers' rationals from the engine's `parts` lines at the four Bell settings, -119 / 169, 119 / 169, -120 / 169, -120 / 169, so |S| = 478 / 169 (the photons' S with (a - b) in the place of 2 (a - b)); each side's marginal 1 / 2 whatever the partner's axis; at equal axes the shares of (+, +) and (-, -) are 0 exactly, the anticorrelation, and the combination realised is one of the two the shares allow (the generator over the reader's shares never one of the two at 0); the pair is one quantum of the record, each packet half of it (the amplitude 64, the lay 54, the two shares 1.0134 of the record's unit together), and every run credits the one quantum's two sides with the one combination drawn, one line each with the count 1, nothing left (`lists.region`); the engine's own accumulation (`credit.joined` run again over the same `parts` sums) equals the reader's exactly; the engine's generator over the reader's shares at (a, b) (`node_detector.credit_draw`, 400 hashed states) within three binomial scatters of each share."""
     found = {}
     for a in BELL[:2]:
         for b in BELL[2:]:
@@ -241,6 +266,9 @@ def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bou
             assert [c["node_detector"] for c in clicks] == ["left", "right"], clicks
             assert all(c["count"] == 1 and c["left"] == 0 for c in clicks), clicks
             shares = joint_shares(lines, sides)
+            assert (
+                rebooked(board, lines) == shares
+            )  # the engine's own accumulation, exactly the reader's
             total = sum(shares.values())
             same, different = shares[0, 0] + shares[1, 1], shares[0, 1] + shares[1, 0]
             assert Fraction(same - different, total) == correlation(a, b), (a, b, shares)
@@ -286,7 +314,7 @@ def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bou
 
 
 def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_path, monkeypatch):
-    """The exclusion as the declared rule in the detector's lists (the Boss's item (e), 2026-10-19; `lists.full`, `loader/node_detector_declaration.parts_of`): one body of two quanta in g with two excited parts e and f of capacity 1 each, both fed by one drive at one weight and one resonance, two photons arriving one window apart (`exclusion_world` above). At the first close the two transitions share the unit equally and nothing has the weight 0, so the first quantum is taken, into e or into f by the draw; at the second close the part taken is full and its transition stands at the weight 0 by the declaration, the open part at its own share (12,346,544,113,920,016, the same number the open part has without any capacity) and nothing at the rest of the drive's unabsorbed share, so the second quantum is never taken by the full part: it is taken by the open part (the counts [0, 1, 1]) or passes (one quantum in each of g and the part first taken, the photon's count 1 left), over three seeds, both outcomes seen. Without the capacity the occupied part's share is the larger (30,290,997,176,748,100, the standing label's turn) and the two shares sum above the unabsorbed share, nothing at 0, so the second quantum is taken and piles into the occupied part at the seed where it does ([0, 2, 0]): the rule is the declaration's and not derived. The loader refuses a capacity of 0 and a count above its part's capacity; `full` reads a part at its capacity and never a part declaring none."""
+    """The exclusion as the declared rule in the detector's lists (the Boss's item (e), 2026-10-19; `lists.full`, `loader/node_detector_declaration.parts_of`): one body of two quanta in g with two excited parts e and f of capacity 1 each, both fed by one drive at one weight and one resonance, two photons arriving one window apart (`exclusion_world` above). At the first close the two transitions share the unit equally and nothing has the weight 0, so the first quantum is taken, into e or into f by the draw; at the second close the part taken is full and its transition stands at the weight 0 by the declaration, the open part at its own share (12,346,544,113,920,016, the same number the open part has without any capacity) and nothing at the rest of the drive's unabsorbed share, so the second quantum is never taken by the full part: it is taken by the open part (the counts [0, 1, 1]) or passes (one quantum in each of g and the part first taken, the photon's count 1 left), over three seeds, both outcomes seen, and at every seed no part's count stands above its capacity, the exclusion's own line; with every excited part full the absorption's list reads the two transitions at 0 and nothing at the whole unabsorbed share, the engine's draw taking nothing, the quantum passing and the body transparent by its capacity, no refusal by the draw. The body starts with its two quanta in g alone (the loader admits the start's counts in one part) and after one absorption stands in g still, the part of the larger count by the engine's one-part convention (`act.written`, a tie to the first), its second window drawing the transitions out of g; a populated excited part the body does not stand in neither emits nor transitions, the lists per populated part the atom branch's. Without the capacity the occupied part's share is the larger (30,290,997,176,748,100, the standing label's turn) and the two shares sum above the unabsorbed share, nothing at 0, so the second quantum is taken and piles into the occupied part at the seed where it does ([0, 2, 0]): the rule is the declaration's and not derived. The loader refuses a capacity of 0 and a count above its part's capacity; `full` reads a part at its capacity and never a part declaring none."""
     closes: list[tuple[int, list[int], int, int]] = []
     original = lists.absorption
 
@@ -319,6 +347,8 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
         interval, weights, rest, unabsorbed = closes[1]
         assert (interval, weights[full - 1], weights[open_part - 1]) == (108, 0, open_share), closes
         assert rest == unabsorbed - open_share > 0, closes  # the excluded share goes to nothing
+        capacities = books.declared.capacities
+        assert all(n <= cap for n, cap in zip(books.counts, capacities, strict=True) if cap is not None)
         assert max(books.counts) == 1 and books.counts[full] == 1, books.counts  # never two in one part
         if len(taken) == 2:
             assert (taken[1]["interval"], taken[1]["realised"]) == (107, "ef"[open_part - 1])
@@ -330,6 +360,18 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
             f"exclusion: seed {seed}, the first into {first}, the second {'taken' if len(taken) == 2 else 'passed'}"
         )
     assert set(ends.values()) == {1, 2}, ends  # taken by the open part at one seed, passed at another
+    books.part, books.counts, books.labels = (
+        0,
+        [1, 1, 1],
+        [books.labels[0] or 1] * 3,
+    )  # every excited part full
+    photon = [f.name for f in board.families].index("photon")
+    books.shares = {t: 1 for t in books.declared.transitions}
+    board.credit.counts[photon], board.credit.deficits[photon] = 1, 0
+    board.credit.unabsorbed.pop(photon, None), board.credit.unabsorbed_units.pop(photon, None)
+    found = lists.absorption(board, photon, [(books, t) for t in books.declared.transitions])
+    assert [a.weight for a in found] == [0, 0, found[-1].weight] and found[-1].weight > 0, found
+    assert meeting.click(board, books, books.declared.draw, found) == 2  # the quantum passes, no refusal
     closes.clear()
     board = Lattice(
         load_world(exclusion_world(tmp_path / "none", monkeypatch, None, 25)), lambda line: None
