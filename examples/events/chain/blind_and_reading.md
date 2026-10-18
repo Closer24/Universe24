@@ -76,8 +76,8 @@ needs the packet's length W Nodes or more, the declaration C9 (b) names. Its tri
 seeds of `detuned_trials.json` (tools/meeting_trials.py with that file as the design).
 
 7. B7 the line shape: absorbed in at most 4 of the 8 trials. Corrected by derivation on 2026-10-19 from
-   "at most 1 of the 8", written before the run and corrected before any run claim, no fit to a reading
-   (the cold reader): the window's sinc weighs the turn and not the chance; the turn per flat window at
+   "at most 1 of the 8" after the first run (1be7429) had read 3 of 8, the correction the derivation's and
+   no fit to a reading (the cold reader): the window's sinc weighs the turn and not the chance; the turn per flat window at
    the declared weight 6 is 1.27 rad at one Node, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one
    Node and 0.111 with the body's projection over its three Nodes (the factor 1.65 at pi / 8), two windows
    per passage, 0.19 per trial, 1.5 of 8 expected and P(at most 4 of 8) = 0.99; under the first bound,
@@ -90,7 +90,14 @@ turn over S_1 = sqrt(3 W T / (4 sin k)), the plane's size one quantum makes over
 files declare 1 and 6; checked on the Zeno calibration (the drive 392 at the weight 1 carries 75
 quanta per window and its pi pulse is the derived weight's quarter turn scaled by their root), so
 the replacement of the files' weights, with the Zeno drive re-declared at one quantum per window,
-is the owner's call and not made here. This folder's bodies keep the declared weight 6.
+is the owner's call and not made here. This folder's bodies keep the declared weight 6. The cold
+reader's arbitration of 2026-10-19: the declared weight stands, and what the unit gives is a bound,
+k_sat(W) = quarter / S_1(W), the weight at which one window-filling quantum turns exactly the quarter
+turn, the declared weight at or below it for the click's exclusivity (one quantum never read as more
+than one click); with the body's projection over its three Nodes at pi / 4 (the factor 1.39) the bound
+is 5.2, and this folder's declared 6 is the one shipped place above the bound for a flat window-filling
+quantum, its packet of 17 Nodes turning about 0.62 of the quarter (the reader's reading), so no reading
+of this folder is touched; named here as the reader asked.
  Checked on 2026-10-19 before any replacement (the order's own clause): the unit's weight is the quarter
 turn over S_1 = A_1 W / 2, so the window's turn it gives is (pi / 2) sqrt(N_W), N_W the quanta passing
 the Node in the window, the root of the window where the declared weight gives k A W / 2, linear in
