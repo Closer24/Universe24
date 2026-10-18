@@ -1,16 +1,19 @@
 """The spin branch (2026-10-19, stacked on the click branch; ALGEBRA.md, Spin, closed for the paper as a route, and the derivation of the same day: under the 48 every line Rule3 steps is a scalar, no record carries a spinor, and the half angle is the detector's read of two planes under a basis it declares): a quantum of spin one half is a record of two planes as two parts of one record (the family's shape [2, 2], the parts laid as one event and never summed at a Node), and a detector declaring its `axis`, the half-angle pair (c, s) with the Bloch axis (2 c s, c^2 - s^2) / (c^2 + s^2) in the x-z plane, credits the quantum to one of its two ports, up or down the axis, by the joint credit's one form on the parts' plane sums; nothing at the Node. The worlds are the tests' own (`tests.laws.spin_world`), no run beyond them."""
 
 import itertools
+import json
 from fractions import Fraction
 from pathlib import Path
 
+from event_universe import lists, meeting, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import ports_of, settings_of_the_law
+from event_universe.loader.node_detector_declaration import parts_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.node_detector import credit_draw
 from event_universe.world_files import input_digest, load_world
-from tests.laws import ROOT, load_file, refused, spin_world
+from tests.laws import EVENTS, ROOT, TOOL, load_file, refused, spin_world
 
 TRIALS = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
 IDENTITY = [[1, 0], [0, 1]]  # the parts the spinor's two components: the + port reads (c, s)
@@ -27,6 +30,58 @@ BELL = (
 PORT = {"plus": 0, "minus": 1}
 SEEDS = (1, 2)  # the runs per axis; the draw's statistics are read from the engine's own draw below
 DRAWS = 400
+
+
+def exclusion_world(folder, monkeypatch, capacity, seed, window=40, length=112, intervals=125):  # type: ignore[no-untyped-def]
+    """The exclusion's world beside `folder` (the spin branch, item (e)): the two atoms' universe with the atom's family at three parts ([3, 2]: g, e, f, one plane each), one body of two quanta in g at the chain's centre with the transitions g to e and g to f by `photon` at one weight and one resonance, e and f at the declared `capacity` (none where it is None), its window `window` at `seed`; two photons of one quantum each from the two ends toward the body, the second arriving after the first window closes (the lower from 24, the upper from 96, the chain of `length` Nodes open on x with receding faces); the mode file by tools/pixel_mode.py; the world's path."""
+    folder.mkdir(parents=True, exist_ok=True)
+    universe = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
+    universe["families"][0]["dimension"] = [3, 2]
+    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
+    at, held = length // 2 - 9, {} if capacity is None else {"capacity": capacity}
+    parts = [{"part": 0, "name": "g", "count": 2}] + [
+        {"part": k, "name": n, "count": 0, **held} for k, n in ((1, "e"), (2, "f"))
+    ]
+    turns = [
+        {"from": "g", "to": to, "drive": "photon", "weight": 6, "resonance": [5414, 6000]} for to in "ef"
+    ]
+    draw = {
+        "multiplier": 6364136223846793005,
+        "increment": 1442695040888963407,
+        "window": window,
+        "seed": seed,
+    }
+    body = {"family": "atom", "nodes": [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]}
+    body.update(parts=parts, transitions=turns, rates=[], node_detector=draw)
+    photons = [
+        {
+            "family": "photon",
+            "along": "x",
+            "wave": [sign, 4],
+            "phase": [0, 1],
+            "amplitude": 110,
+            "top": {"x": [x, x], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": 8, "y": 0, "z": 0},
+        }
+        for sign, x in ((1, 24), (-1, 96))
+    ]
+    world = {
+        "shape": [length, 1, 1],
+        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+        "face_depth": 1,
+        "intervals": intervals,
+        "universe": "u.json",
+        "engine": "e.json",
+        "bodies": [body],
+        "packets": photons,
+        "node_detectors": [],
+        "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
+    }
+    (path := folder / "exclusion.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    return path
 
 
 def trial(path: Path, seed: int, intervals: int) -> tuple[Lattice, list[dict]]:  # type: ignore[type-arg]
@@ -116,8 +171,6 @@ def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle
 
 def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, monkeypatch):
     """The settings' law (`loader/draw.settings_of_the_law`, `loader/world.node_detectors_of`): a side of a record of planes declares `axis` and a side of a record of real lines declares `basis`, each refused by name on the other kind, the two together refused, one pattern over laid records of both kinds refused, and a setting on a body's node_detector refused; the spin world loads with its axis, and the same world with `basis` in the axis's place (its mode file re-addressed to it) is refused by name."""
-    import json
-
     path = spin_world(tmp_path, monkeypatch, {"left": ((1, 0), IDENTITY)})
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
@@ -230,3 +283,74 @@ def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bou
         p = shares[key] / total
         assert abs(count - DRAWS * p) <= 3 * (DRAWS * p * (1 - p)) ** 0.5, (key, count, p)
     print(f"singlet: the draw at {a}, {b} gives {dict(zip(keys, counts, strict=True))} of {DRAWS}")
+
+
+def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_path, monkeypatch):
+    """The exclusion as the declared rule in the detector's lists (the Boss's item (e), 2026-10-19; `lists.full`, `loader/node_detector_declaration.parts_of`): one body of two quanta in g with two excited parts e and f of capacity 1 each, both fed by one drive at one weight and one resonance, two photons arriving one window apart (`tests.laws.exclusion_world`). At the first close the two transitions share the unit equally and nothing has the weight 0, so the first quantum is taken, into e or into f by the draw; at the second close the part taken is full and its transition stands at the weight 0 by the declaration, the open part at its own share (12,346,544,113,920,016, the same number the open part has without any capacity) and nothing at the rest of the drive's unabsorbed share, so the second quantum is never taken by the full part: it is taken by the open part (the counts [0, 1, 1]) or passes (one quantum in each of g and the part first taken, the photon's count 1 left), over three seeds, both outcomes seen. Without the capacity the occupied part's share is the larger (30,290,997,176,748,100, the standing label's turn) and the two shares sum above the unabsorbed share, nothing at 0, so the second quantum is taken and piles into the occupied part at the seed where it does ([0, 2, 0]): the rule is the declaration's and not derived. The loader refuses a capacity of 0 and a count above its part's capacity; `full` reads a part at its capacity and never a part declaring none."""
+    closes: list[tuple[int, list[int], int, int]] = []
+    original = lists.absorption
+
+    # each close of the absorption's draw: the weights, nothing's, and the unabsorbed share the list reads
+    def kept(board, drive, outcomes):
+        norms = [sum(label * label for label in books.labels) for books, _transition in outcomes]
+        unit, unabsorbed = board.credit.unabsorbed_in(drive, norms)  # the list's own read, booked once
+        found = original(board, drive, outcomes)
+        weights = [a.weight for a in found[:-1]]
+        closes.append((board.interval + 1, weights, found[-1].weight, min(unabsorbed, unit)))
+        return found
+
+    monkeypatch.setattr(meeting.lists, "absorption", kept)
+    open_share, standing = 12346544113920016, 30290997176748100
+    ends = {}
+    for seed in (25, 26, 27):
+        closes.clear()
+        path = exclusion_world(tmp_path / f"capacity_{seed}", monkeypatch, 1, seed)
+        board = Lattice(load_world(path), (lines := []).append)
+        books = board.credit.bodies[0]
+        assert (books.part, books.counts, books.declared.capacities) == (0, [2, 0, 0], (None, 1, 1))
+        for _ in range(board.world.intervals):
+            board.step()
+        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+        first = taken[0]["realised"]
+        assert (taken[0]["interval"], taken[0]["before"], first in "ef") == (67, "g", True), taken
+        interval, weights, rest, _unabsorbed = closes[0]
+        assert interval == 68 and weights[0] == weights[1] > 0 and rest == 0, closes  # the first close
+        full, open_part = (1, 2) if first == "e" else (2, 1)
+        interval, weights, rest, unabsorbed = closes[1]
+        assert (interval, weights[full - 1], weights[open_part - 1]) == (108, 0, open_share), closes
+        assert rest == unabsorbed - open_share > 0, closes  # the excluded share goes to nothing
+        assert max(books.counts) == 1 and books.counts[full] == 1, books.counts  # never two in one part
+        if len(taken) == 2:
+            assert (taken[1]["interval"], taken[1]["realised"]) == (107, "ef"[open_part - 1])
+            assert books.counts == [0, 1, 1] and board.credit.counts[1] == 0
+        else:
+            assert books.counts[0] == 1 and board.credit.counts[1] == 1  # the second quantum passed
+        ends[seed] = len(taken)
+        print(
+            f"exclusion: seed {seed}, the first into {first}, the second {'taken' if len(taken) == 2 else 'passed'}"
+        )
+    assert set(ends.values()) == {1, 2}, ends  # taken by the open part at one seed, passed at another
+    closes.clear()
+    board = Lattice(
+        load_world(exclusion_world(tmp_path / "none", monkeypatch, None, 25)), lambda line: None
+    )
+    books = board.credit.bodies[0]
+    for _ in range(board.world.intervals):
+        board.step()
+    interval, weights, rest, unabsorbed = closes[1]
+    assert (interval, weights, rest) == (108, [standing, open_share], 0) and sum(weights) > unabsorbed, (
+        closes
+    )
+    assert books.counts == [0, 2, 0] and books.declared.capacities == (None, None, None), books.counts
+    assert not lists.full(books, 1) and not lists.full(books, 0)  # no capacity declared, never full
+    rows = [{"part": k, "name": n, "count": 2 if k == 0 else 0} for k, n in enumerate("gef")]
+    refused(
+        "capacity", parts_of, [rows[0], {**rows[1], "capacity": 0}, rows[2]], "bodies[0].parts", 3, 2
+    )
+    refused(
+        "capacity", parts_of, [{**rows[0], "capacity": 1}, rows[1], rows[2]], "bodies[0].parts", 3, 2
+    )
+    names, counts, capacities = parts_of(
+        [{**rows[0], "capacity": 2}, {**rows[1], "capacity": 1}, rows[2]], "p", 3, 2
+    )
+    assert (names, counts, capacities) == (("g", "e", "f"), (2, 0, 0), (2, 1, None))
