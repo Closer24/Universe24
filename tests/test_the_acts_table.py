@@ -72,7 +72,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("credit.py", "record_unit", "division_forward"): "D",  # the mean unit rounded half up
-    ("credit.py", "quanta_through", "division_forward"): "D",  # the inflow over the unit, rounded
+    (
+        "credit.py",
+        "quanta_through",
+        "division_forward",
+    ): "R",  # the inflow over the unit, its remainder carried
     (
         "credit.py",
         "clocked_regions",
@@ -290,6 +294,7 @@ R_OUTSIDE_THE_STEP = frozenset(
             "clocked_regions",
             "division_forward",
         ),  # a region's clock, its remainder in the books
+        ("credit.py", "quanta_through", "division_forward"),  # the credit's remainder carried per record
         ("features/click/__init__.py", "rotated", "rule3"),  # the lay's recurrence with its carry
         ("features/held_write/__init__.py", "held_write", "act"),  # the held write's remainder
         ("features/write/__init__.py", "carried", "division_forward"),  # the write's remainder forward
