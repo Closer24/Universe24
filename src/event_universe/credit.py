@@ -214,10 +214,8 @@ def joined(board: Lattice, index: int, sums: Sums) -> None:
         for member in range(2):
             real, imaginary = 0, 0
             for k in range(parts):
-                product = (
-                    1,
-                    0,
-                )  # the product over the sides as a plane's pair (re, im); a real line (re, 0)
+                # the product over the sides as a plane's pair (re, im); a real line (re, 0)
+                product = (1, 0)
                 for (_name, ports), port, found in zip(books.sides, key, levels, strict=True):
                     factor = ports[port][k]
                     re = factor * found[k * width][member]
