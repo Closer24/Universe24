@@ -126,3 +126,12 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | ghz_x_x_x.json | run_inputs | lines parts | 160 |
 | LATTICE | ghz_x_x_x.json | run_inputs | lines credit | 3 |
 | LATTICE | ghz_x_y_y.json | back_in_time | intervals 60 | MATCH |
+
+## The counts under the click's plan (2026-10-19, branch claude/click-one-act)
+
+The light's unit is the record's own, W_c sin omega at k = pi / 4 (C1), so the lay's count moved with
+the unit and the mode files were written again at it (a5c8f0b): 4,243 per packet, where main carried
+1,829 per packet before C1 and the reading above 1,702 per packet (3,574 for the record); the record
+counts 12,298 by the record's own unit at the lay. The readings' tables above were taken before C1 and
+are not re-run (the owner's word); their M and the gate's verdict are the readers' from the output
+files of their own run.

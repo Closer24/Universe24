@@ -80,3 +80,14 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | bell_a_prime_b_prime.json | run_inputs | lines parts | 126 |
 | LATTICE | bell_a_prime_b_prime.json | run_inputs | lines credit | 2 |
 | LATTICE | bell_a_b.json | back_in_time | intervals 100 | MATCH |
+
+## The counts under the click's plan (2026-10-19, branch claude/click-one-act)
+
+The light's unit is the record's own, W_c sin omega at k = pi / 4 (C1), so the lay's count moved with
+the unit and the mode files were written again at it (a5c8f0b): 225 per packet, where main carried 97
+per packet before C1 and the reading above 85 per packet against the design's 95; the pair's record
+counts 450 by the record's own unit at the lay. The readings' tables above were taken before C1 and
+are not re-run (the owner's word); their S and marginals are the reader's from the output files of
+their own run. The one combination drawn per window over that record is the loose case of the
+one-record convention of the joint credit, the spin branch's one-quantum lay the clean case
+(ALGEBRA.md, Spin, closed for the paper as a route).
