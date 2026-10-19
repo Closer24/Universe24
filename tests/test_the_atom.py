@@ -1,0 +1,312 @@
+"""The atom test (the atom branch, 2026-10-19; the owner's words: only code, without worlds and without experiments, only tests, a clean and generic engine, everything simple and generic in Rule3 in symmetry with the group of 48 of the cube): one charged body of two parts takes one quantum of light, gives one back on light's own family and is dark to the light it gave, on a world the test writes into a tmp folder (`atom_world`, as the spin test's worlds), no file under examples/ and no run beyond the test's own. The universe is the two atoms' with the deuteron's `charge` row (held, sourced by the Wronskian, level weight 1, write weight 1, act `pace`, the plain read into the paces) and the atom family reading it at the weight 1 at the shipped atom's own shape [2, 2] (a body's parts are planes, one per part) and gap [1, 1299]; the family is a toy by name: the sign holder massless and read plainly, the electron's sense on each plane the generator change named and not built, no reading of nature here; light is its own family, the massless `photon`, so the loader's gate `lit_families` keeps atom and photon and `charge`, the holder a charged family reads, is no click's family (the decision (1A)). The body's window is derived at load from its drives' lays (the decision (3) under (D)): the laid packet of 1 + 16 Nodes at k = pi / 4 passes the body of 2 in ceil(18 x 3 x 2586 / 4243) = 33 intervals and the body's own rate giving to `photon` is a source in time of the lifetime's span, so W = max(33, lifetime) = 33 at the lifetime 16 (the cold reader's change 1; 8 is below the resonance's period and refused by the loader, 15 the least span), and the key `window` is refused by name with the derived W. The click lines and the books are read and nothing is stepped by hand; the same world laid along -x, y and z gives the same W and bit for bit the same click lines and levels at the same seed (the 48)."""
+
+import json
+import math
+import time
+from pathlib import Path
+
+import numpy as np
+
+from event_universe import credit, node_detector, world_files
+from event_universe.core.rule3 import largest_below
+from event_universe.emission import Emitter
+from event_universe.features.click import wave_cosine
+from event_universe.lattice import Lattice
+from event_universe.loader.node_detector_declaration import lit_families
+from event_universe.loader.universe import universe_of
+from event_universe.loader.world import bodies_of
+from event_universe.resonance import unit_weight
+from event_universe.twist import quarter_turn
+from event_universe.world_files import load_world
+from tests.laws import EVENTS, TOOL, credit_lines, refused
+
+AXES = "xyz"
+LENGTH, INTERVALS, LIFETIME = 64, 160, 16  # the chain, the run and the body's lifetime, below W = 33
+SEEDS = (25, 26, 27)  # the body's generator at these seeds: the quantum taken at two, passing at one
+CHARGE = {"name": "charge", "pair": [6000, 6000], "reads": {}}  # the deuteron's holder of the sign
+CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1, "act": "pace"}
+GENERATOR = {"multiplier": 6364136223846793005, "increment": 1442695040888963407}  # the shipped atoms'
+TURN = {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
+RATE = {"from": "e", "to": "g", "lifetime": LIFETIME, "gives_to": "photon"}
+SIGNED = (
+    "momentum",
+    "fan",
+    "twist",
+    "recoil",
+)  # a click line's vectors signed per axis; shortfall a size
+Run = tuple[Lattice, list[dict], list[dict]]  # type: ignore[type-arg]
+RUNS: dict[tuple[int, str, int], Run] = {}  # the worlds run, once per process
+
+
+def atom_universe() -> dict:  # type: ignore[type-arg]
+    """The two atoms' universe with the deuteron's `charge` row first and the atom family reading it at the weight 1: the holder of the sign, the charged two-plane atom and light's own massless family."""
+    universe = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
+    atom = next(family for family in universe["families"] if family["name"] == "atom")
+    atom["reads"] = {"charge": 1}
+    universe["families"] = [json.loads(json.dumps(CHARGE)), *universe["families"]]
+    return universe
+
+
+def atom_world(folder, monkeypatch, seed, axis="x", toward=1, lifetime=LIFETIME, window=None):  # type: ignore[no-untyped-def]
+    """The atom world beside `folder` (its universe `atom_universe` as u.json, the engine file as e.json, the repository root turned to `folder`): a chain of 64 Nodes along `axis`, open there with receding faces and periodic across, one body of the atom family on two Nodes at the chain's centre in g with the shipped transition g to e by `photon` (the weight 6, the resonance [5414, 6000]) and one rate e to g at `lifetime` giving to `photon`, its generator the shipped atoms' at `seed` and no `window` key (derived at load; `window` writes the key for the refusal), and one packet of `photon` of one quantum (the amplitude 110 in the record's own unit, the wave [1, 4], the top one Node 23 Nodes below the body, the edge 8) moving up the chain toward the body (`toward` 1), or the chain's mirror image, every coordinate c to 63 - c, the packet moving down from the high side (-1); the mode file by tools/pixel_mode.py; the world's path."""
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "u.json").write_text(json.dumps(atom_universe()), encoding="utf-8")
+    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
+    along = AXES.index(axis)
+
+    def at(coordinate: int) -> list[int]:  # a chain coordinate as a Node, mirrored toward -1
+        node = [0, 0, 0]
+        node[along] = coordinate if toward > 0 else LENGTH - 1 - coordinate
+        return node
+
+    centre, source = LENGTH // 2 - 1, LENGTH // 2 - 24
+    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
+    draw = {**GENERATOR, "seed": seed, **({} if window is None else {"window": window})}
+    body = {"family": "atom", "nodes": [{"node": at(x), "weight": 1} for x in (centre, centre + 1)]}
+    rate = {**RATE, "lifetime": lifetime}
+    body.update(parts=parts, transitions=[dict(TURN)], rates=[rate], node_detector=draw)
+    top, edge = {a: [0, 0] for a in AXES}, {a: 0 for a in AXES}
+    top[axis], edge[axis] = [at(source)[along]] * 2, 8
+    # the generator's wave is cos(k x + phi) in the board's coordinate, so the mirror of cos(k x) about
+    # x = L - 1 is cos(-k x + phi) at phi = (L - 1) k mod 2 pi, 7 pi / 4 at L = 64 and k = pi / 4
+    phase = [0, 1] if toward > 0 else [7, 8]
+    packet = {"family": "photon", "along": axis, "wave": [toward, 4], "phase": phase, "amplitude": 110}
+    packet.update(top=top, edge=edge)
+    shape = [1, 1, 1]
+    shape[along] = LENGTH
+    world = {
+        "shape": shape,
+        "boundary": {a: "open" if a == axis else "periodic" for a in AXES},
+        "face_depth": 1,
+        "intervals": INTERVALS,
+        "universe": "u.json",
+        "engine": "e.json",
+        "bodies": [body],
+        "packets": [packet],
+        "node_detectors": [],
+        "receding": {axis: {"sides": ["low", "high"], "largest": 400, "layers": 16}},
+    }
+    (path := folder / "atom.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    return path
+
+
+def run(folder: Path, monkeypatch, seed: int, axis: str = "x", toward: int = 1) -> Run:  # type: ignore[no-untyped-def]
+    """The atom world at `seed` along `axis` toward the body run over its intervals, once per process (`RUNS`): the board, its lines and per interval the books read: the body's `elapsed`, `windows` and parts, whether it is dark as C2 reads it with nothing excluded (`dark`) and with the families it sources excluded (`shut`, the read C2 makes, C5), the families it sources, the photon's count and its level now at the body's Nodes, and the two rows of `charge`: whether the free row 0 carries any level and the body's own row at its Nodes."""
+    key = (seed, axis, toward)
+    if key not in RUNS:
+        path = atom_world(folder, monkeypatch, seed, axis, toward)
+        board = Lattice(load_world(path), (lines := []).append)
+        photon, charge = ([f.name for f in board.families].index(n) for n in ("photon", "charge"))
+        body, marks = board.credit.bodies[0], []
+        for _ in range(board.world.intervals):
+            board.step()
+            rows, light = board.states[charge].lines, board.states[photon].lines[0].now
+            nodes = [tuple(np.add(n, board.offset)) for n in body.nodes]
+            sourcing = node_detector.sourcing(board, body)
+            marks.append(
+                {
+                    "interval": board.interval,
+                    "elapsed": body.elapsed,
+                    "windows": body.windows,
+                    "parts": list(body.counts),
+                    "dark": node_detector.dark(board, body, set()),
+                    "shut": node_detector.dark(board, body, sourcing),
+                    "sourcing": sorted(board.families[f].name for f in sourcing),
+                    "count": board.credit.counts[photon],
+                    "levels": [int(light[n]) for n in nodes],
+                    "free": bool(rows[0].now.any() or rows[0].before.any()),
+                    "own": [int(rows[1].now[n]) for n in nodes],
+                }
+            )
+        RUNS[key] = (board, lines, marks)
+    return RUNS[key]
+
+
+def closes(lines: list[dict]) -> list[dict]:  # type: ignore[type-arg]
+    """The body's credit lines in order: its clicks (count 1) and the null windows that re-laid a level (count 0)."""
+    return [c for c in lines if c["event"] == "credit" and c["node_detector"] == "body 0"]
+
+
+def framed(line: dict, axis: str, toward: int) -> dict:  # type: ignore[type-arg]
+    """A click line of a world laid along `axis` toward the body brought to the frame of the world along +x: the vectors' chain component moved to x and signed by the direction (the shortfall a size, unsigned)."""
+    along, found = AXES.index(axis), dict(line)
+    for key in (*SIGNED, "shortfall"):
+        if isinstance(found[key], list):
+            vector, sign = found[key], toward if key in SIGNED else 1
+            found[key] = [sign * vector[along], *(v for k, v in enumerate(vector) if k != along)]
+    return found
+
+
+def test_light_is_its_own_family_and_the_window_is_the_lays_passage_derived_at_load(
+    tmp_path, monkeypatch
+):
+    """The gate and the derived window on the atom's universe: the families of quanta are charge (the holder of the sign, its free row 0 the light's record), atom and photon, and the families a click may name (`lit_families`) are atom and photon alone, `charge` being the holder the atom reads, refused by name as a transition's `drive` and as a rate's `gives_to` with the admitted list (the decision (1A)); the body's window as the loader derives it from the lay's declared passage (the decision (3) under (D), `loader/window.py`): the packet of 17 Nodes at k = pi / 4 (den cos k 4242, den cos omega 5414, the sines 4243 and 2586 of 6000 by the search) over the body of 2, ceil((17 + 2 - 1) x 3 x 2586 / 4243) = 33, the body's own source in time of the span 16 the shorter lay, W = max(33, 16) = 33; a declared `window` 48 on the body is refused by name with the body, the drive and W = 33 (the cold reader's change 1), and the lifetime 8 is refused by the span's rule, 15 the least span holding one period of [5414, 6000]."""
+    integers, families = universe_of(atom_universe())
+    quanta = {family.name: index for index, family in enumerate(families) if family.quanta}
+    assert quanta == {"charge": 0, "atom": 1, "photon": 2}  # the holder of the sign carries quanta
+    assert lit_families(families, quanta) == {"atom": 1, "photon": 2}  # and is no click's family
+    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
+    body = {"family": "atom", "nodes": [{"node": [1, 0, 0]}, {"node": [2, 0, 0]}], "parts": parts}
+    body["node_detector"] = {**GENERATOR, "seed": SEEDS[0]}
+
+    def declared(**entry):  # type: ignore[no-untyped-def]
+        rows = [{**body, **entry}]
+        return bodies_of(rows, None, "", families, (4, 1, 1), 9000, (), integers["quantum_action"])
+
+    refusal = str(refused("light its own family", declared, transitions=[{**TURN, "drive": "charge"}]))
+    assert "bodies[0].transitions[0].drive names 'charge'" in refusal and "['atom', 'photon']" in refusal
+    refusal = str(refused("light its own family", declared, rates=[{**RATE, "gives_to": "charge"}]))
+    assert "bodies[0].rates[0].gives_to names 'charge'" in refusal
+    admitted = declared(transitions=[TURN], rates=[RATE])[0].detector
+    assert admitted is not None and admitted.transitions[0].drive == admitted.rates[0].light == 2
+    board = run(tmp_path / "plus", monkeypatch, SEEDS[0])[0]
+    den = board.families[2].pair[1]
+    cosine = wave_cosine(1, 4, den)  # den cos k at k = pi / 4
+    omega = (cosine + 2 * den) // 3  # the massless band's line with the two axes across at 0
+    sines = largest_below(den * den - omega * omega), largest_below(den * den - cosine * cosine)
+    assert (cosine, omega, sines) == (4242, 5414, (2586, 4243))
+    found = board.world.bodies[0].detector.draw.window
+    assert found == -(-(17 + 2 - 1) * 3 * sines[0] // sines[1]) == max(33, LIFETIME) == 33
+    refusal = str(
+        refused("W = 33", load_world, atom_world(tmp_path / "key", monkeypatch, 25, window=48))
+    )
+    assert "bodies[0].node_detector declares the window 48" in refusal and "['photon']" in refusal
+    refusal = str(
+        refused(
+            "least admitted span is 15",
+            load_world,
+            atom_world(tmp_path / "span", monkeypatch, 25, lifetime=8),
+        )
+    )
+    assert "the lifetime 8 does not hold one period of the resonance [5414, 6000]" in refusal
+    print(
+        f"the atom world: the lit families {lit_families(families, quanta)}, the derived window {found}"
+    )
+
+
+def test_the_window_opens_at_the_first_lit_interval_and_the_close_takes_the_quantum_or_lets_it_pass(
+    tmp_path, monkeypatch
+):
+    """C2 and the absorption's draw on the atom world over three seeds (`SEEDS`): the body is dark before the packet reaches it and its window opens at the first lit interval, 28 (`node_detector.dark`, the engine's own read; the books' `elapsed` 0 before it and counting from 1 there), and closes W - 1 = 32 intervals after it at 60 (the books' `windows` from 0 to 1 and `elapsed` begun again at 60; the credit line's window [28, 60] where the close writes a line); at the seeds 25 and 26 the draw at the close takes the quantum, one credit line at 60 inside the window with the count 1 and nothing left, the body from g into e and the photon's count 0 from 60 until the body gives one back, its front begun at 60 from the hole's Node; at the seed 27 the quantum passes: the body stands whole in g, so the null window's re-lay at 60 changes no level and writes no line, the count stays 1 and the body in g over the whole run, no front and no lawful end (the cold reader's change 2: nothing leaves by a receding face, the faces grow zeros ahead), the whole quantum standing beyond the body at the run's end, 1 in the record's own unit on the Nodes above the body and 0 below it; the wake after the close (the pin (a), the finding behind (D): a passing record leaves levels on every Node it crossed and never goes dark at a body): at 61 the photon's level at the body's Nodes is other than 0 at every seed and `elapsed` is 1, C2 re-opening the window, which at the passing seed stays lit to the run's end and closes null at 93, 126 and 159, each re-lay moving a level and writing its line, the windows [61, 93], [94, 126] and [127, 159]; the seconds printed."""
+    started, outcomes = time.perf_counter(), {}
+    for seed in SEEDS:
+        board, lines, marks = run(tmp_path / f"seed_{seed}", monkeypatch, seed)
+        photon, body = [f.name for f in board.families].index("photon"), board.credit.bodies[0]
+        window, found = board.world.bodies[0].detector.draw.window, closes(lines)
+        assert [m["interval"] for m in marks if m["dark"]][:27] == list(range(1, 28))  # dark before 28
+        assert marks[26]["dark"] and not marks[27]["dark"] and 28 + window - 1 == 60  # lit from 28
+        assert [m["elapsed"] for m in marks[:60]] == [0] * 27 + list(range(1, 33)) + [0]  # the window
+        assert [m["windows"] for m in marks[:60]] == [0] * 59 + [1]  # closed at 60, the 33rd interval
+        after = marks[60]  # the interval 61, right after the close
+        assert after["interval"] == 61 and any(after["levels"]) and after["elapsed"] == 1  # the wake
+        taken = credit_lines(lines, "absorbed")
+        outcomes[seed] = len(taken)
+        if taken:
+            (click,) = taken
+            assert click is found[0] and click["window"] == [28, 60] == [28, 28 + window - 1]
+            assert (click["interval"], click["count"], click["left"], click["absorbed"]) == (
+                60,
+                1,
+                0,
+                "photon",
+            )
+            assert (click["before"], click["realised"]) == ("g", "e")
+            given = next(m["interval"] for m in marks if m["interval"] > 60 and m["count"] == 1)
+            assert all(m["count"] == (0 if 60 <= m["interval"] < given else 1) for m in marks)
+            assert marks[59]["parts"] == [0, 1] and marks[58]["parts"] == [1, 0]  # g to e at the close
+            assert [(f.family, f.since) for f in board.credit.fronts] == [(photon, 60)]
+            continue
+        assert all(c["count"] == 0 for c in found) and board.credit.counts[photon] == 1
+        assert [c["window"] for c in found] == [[61, 93], [94, 126], [127, 159]]  # the wake's windows
+        assert body.windows == 4 and all(m["parts"] == [1, 0] and m["count"] == 1 for m in marks)
+        assert all(not m["dark"] for m in marks[27:]) and not board.credit.fronts  # lit by the wake
+        high = max(n[0] for n in body.nodes) + board.offset[0]
+        share, unit = board.share_of(photon)[0].reshape(-1), board.credit.units[photon]
+        beyond, below = (
+            int(share[high + 1 :].sum(dtype=object)),
+            int(share[: high + 1].sum(dtype=object)),
+        )
+        standing = (
+            credit.counted(board, photon, beyond, unit),
+            credit.counted(board, photon, below, unit),
+        )
+        assert standing == (1, 0) and board.ended is None  # the whole quantum beyond the body
+    assert outcomes == {25: 1, 26: 1, 27: 0}  # taken at two seeds, passing at one
+    print(
+        f"the atom world: the window [28, 60] at W 33; the outcomes {outcomes}; "
+        f"{time.perf_counter() - started:.1f} s"
+    )
+
+
+def test_the_emission_is_laid_on_lights_own_family_and_the_body_is_dark_to_the_light_it_gave(
+    tmp_path, monkeypatch
+):
+    """The emission and C5 widened at the seed 25: after the absorption at 60 the body stands in e and is dark from 63 (its Nodes erased by the front), drawing the emission at the hazard 1 / 16 per dark interval, and gives one quantum at 76 (at this seed the lifetime's own number of intervals after the absorption, the draw's), the credit line's family `photon`, before e and realised g, the record's count 1 again, the quantum laid as a source in time on light's own family and never on the holder: the free row 0 of `charge` carries no level at any Node at any interval, exact bit for bit (no source for the row 0, no packet of charge, no `rest` on the sign holder), the holder's count 0 and no credit line names it. The cold reader's change 3 asked both rows at 0; the engine lays a parts body as the standing record of its pair at the sense +1 (`meeting.laid_record`, `twist.relaid`, `features/click.standing`: the level before the level now turned by the rest rotation in the sense, the Wronskian A^2 sin omega_0 at each Node), so the body's own row carries its sign at its Nodes from the start to the end (`Lattice.start`), a holder's level and no light, the finding of this test by name. C5 widened read from the books (the pin (c)): from 76 on the body's sources are {photon} (`node_detector.sourcing`, the emitters' book holding `Emitter(0, 1, False)` beside the file's lay drawn out at the absorption), it is dark to the photon with its own light excluded (`dark`, the read C2 makes) while its Nodes carry that light (lit by the board), so the window the packet's remains re-opened at 61 closes null at 93 and none opens after, the body's windows 2 and `elapsed` 0 to the end, no click after 76 and the body in g with the count 1 standing (nothing leaves by a receding face). The exclusivity bound at the derived W (the pin (b), ALGEBRA.md, the emission row: k_sat(W) = quarter / S_1(W) at one Node, 7.30 at W 48, lowered by the body's projection over its Nodes, 2 cos(pi / 8) / sqrt 2 = 1.307 over two Nodes at k = pi / 4): at W 33 the bound is 7.30 x sqrt(48 / 33) / 1.307 = 6.74 and the declared weight 6 stands below it, where at W 48 it is 5.59 and 6 above it, the known shipped place."""
+    board, lines, marks = run(tmp_path / "plus", monkeypatch, SEEDS[0])
+    photon, charge = ([f.name for f in board.families].index(n) for n in ("photon", "charge"))
+    body, found = board.credit.bodies[0], closes(lines)
+    assert [(c["interval"], c["count"]) for c in found] == [(60, 1), (76, 1), (93, 0)]
+    given = found[1]
+    assert (given["before"], given["realised"], given["emitted"]) == ("e", "g", "photon")
+    assert given["left"] == 1 and given["window"] == [61, 76]
+    assert given["interval"] - found[0]["interval"] == LIFETIME  # the draw's number at this seed
+    assert [m["interval"] for m in marks if m["dark"] and 60 < m["interval"] < 76] == list(range(63, 76))
+    assert not any(m["free"] for m in marks) and all(all(m["own"]) for m in marks)  # the two rows
+    assert board.credit.counts[charge] == 0 and board.books()["charge"]["count"] == 0
+    assert all(c["absorbed"] != "charge" and c["emitted"] != "charge" for c in found)
+    assert all(m["sourcing"] == (["photon"] if m["interval"] >= 76 else []) for m in marks)
+    assert all(m["shut"] for m in marks if m["interval"] >= 76)  # dark to its own light
+    assert any(not m["dark"] for m in marks if m["interval"] >= 76)  # lit by the board
+    assert board.credit.emitters[photon] == [Emitter(None, 0, False), Emitter(0, 1, False)]
+    assert node_detector.sourcing(board, body) == {photon}
+    assert (body.windows, body.elapsed, body.part, body.counts) == (2, 0, 0, [1, 0])
+    assert all(m["elapsed"] == 0 and m["windows"] == 2 for m in marks if m["interval"] > 93)
+    assert all(m["parts"] == [1, 0] and m["count"] == 1 for m in marks if m["interval"] >= 76)
+    assert board.ended is None and not credit_lines(lines[lines.index(given) + 1 :], "absorbed")
+    quarter, action = quarter_turn(board), board.world.quantum_action
+    light, resonance = board.families[photon].pair, (TURN["resonance"][0], TURN["resonance"][1])
+    projection = 2 * math.cos(math.pi / 8) / math.sqrt(2)  # the body's two Nodes at k = pi / 4
+    bounds = {}
+    for window in (33, 48):
+        _quarter, size = unit_weight(quarter, window, action, light, resonance)
+        bounds[window] = quarter / size / projection
+    assert round(projection, 3) == 1.307 and round(bounds[48], 2) == 5.59 < TURN["weight"]
+    assert TURN["weight"] < round(bounds[33], 2) == 6.74  # the exclusivity bound at the derived W
+    print(
+        f"the atom world: the quantum taken at 60 and given at 76 on photon; the free row of charge 0 "
+        f"throughout, the body's own row {marks[-1]['own']} at its Nodes at the end; k_sat {bounds[33]:.2f} "
+        f"at W 33 against the declared {TURN['weight']}"
+    )
+
+
+def test_the_six_directions_of_the_chain_are_one_world_bit_for_bit(tmp_path, monkeypatch):
+    """The 48 (the cold reader's change 4): the atom world laid along -x, -y, +y, -z and +z at the seed 25, each the image of the world along +x under a signed permutation of the cube that carries the chain to a chain (the mirror's packet at the phase 7 pi / 4, cos(k x) about x = 63), gives the same derived W, 33, the same books at every interval (the body's `elapsed`, its windows and parts, the dark reads, the photon's count and its levels at the body's Nodes, the rows of charge) and bit for bit the same click lines brought to the +x frame (`framed`: the vectors' chain component moved to x and signed, the absorption's piece 45385 and its recoil, the twist 9424, the quarter turn, the shortfall 13001, the lost readings), and every level and remainder of every family at the run's end equal under the inverse map; the seconds printed."""
+    started = time.perf_counter()
+    board0, lines0, marks0 = run(tmp_path / "plus", monkeypatch, SEEDS[0])
+    clicks0 = closes(lines0)
+    assert [c["momentum"] for c in clicks0] == [[45385, 0, 0], None, None]
+    assert (clicks0[0]["twist"], clicks0[0]["shortfall"]) == ([9424, 0, 0], [13001, 0, 0])
+    assert clicks0[0]["twist"][0] == quarter_turn(
+        board0
+    )  # P lost to the taker: the quarter turn applied
+    for axis, toward in (("x", -1), ("y", -1), ("y", 1), ("z", -1), ("z", 1)):
+        board, lines, marks = run(tmp_path / f"{axis}_{toward}", monkeypatch, SEEDS[0], axis, toward)
+        assert board.world.bodies[0].detector.draw.window == 33 and marks == marks0
+        clicks = [framed(c, axis, toward) for c in closes(lines)]
+        assert clicks == clicks0, (axis, toward)
+        along = AXES.index(axis)
+        for state, state0 in zip(board.states, board0.states, strict=True):
+            for line, line0 in zip(state.lines, state0.lines, strict=True):
+                arrays = (
+                    (line.now, line.before, line.remainder),
+                    (line0.now, line0.before, line0.remainder),
+                )
+                for array, array0 in zip(*arrays, strict=True):
+                    image = np.moveaxis(array, along, 0)[:: 1 if toward > 0 else -1]
+                    assert image.shape == array0.shape and np.array_equal(image, array0), (axis, toward)
+    print(
+        f"the 48: the six directions one world, {len(clicks0)} click lines; "
+        f"{time.perf_counter() - started:.1f} s"
+    )
