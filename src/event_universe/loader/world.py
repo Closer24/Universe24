@@ -15,6 +15,7 @@ from event_universe.loader.draw import (
     Draw,
     Pattern,
     draw_of,
+    meeting_of_the_law,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -47,19 +48,14 @@ FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
 WORLD_KEYS += ("engine", "bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "engine", "bodies", "node_detectors")
-BODY_KEYS, BODY_REQUIRED, NODE_KEYS = (
-    ("family", "nodes", "weights", "count", *READER_RECORD_KEYS),
-    ("family", "nodes"),
-    ("node", "count", "weight"),
-)
+BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
+BODY_REQUIRED, NODE_KEYS = ("family", "nodes"), ("node", "count", "weight")
 READER_NODE_KEYS = (
     "node",
     "weight",
-)  # a reader's Node: its lay's weight, the record's count declared once
+)  # a reader's Node: the lay's weight, the record's count declared once
 NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern")  # a node_detector's keys
-TRANSITION = (
-    "transition"  # a region's own quantum, declared by no region: its unit is its record's own share
-)
+TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
 START_KEYS = ("mode",)
 
 
@@ -362,15 +358,19 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     node_detectors = node_detectors_of(world["node_detectors"], shape, len(bodies), beyond, layer)
     regions_of_the_law(node_detectors, packets, shape, (periodic[0], periodic[1], periodic[2]), families)
-    laid = [packet.family for packet in packets] + [body.family for body in bodies]
-    laid += [whole.family for whole in wholes]
+    laid = [p.family for p in packets] + [b.family for b in bodies] + [w.family for w in wholes]
     patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
     settings_of_the_law([(d.name, d.axis, d.basis, d.pattern) for d in node_detectors], laid, families)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
     # holder of the sign one row per charged record beside the free row (derived.with_records)
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
-    draw = draw_of(world["draw"], "draw") if "draw" in world else None
+    draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
+    # the meeting that runs back: a joint credit and a birth at one interval (the records given during
+    # the run by the bodies' clicks and the packets laid whole have none the books hold)
+    given = [w.family for w in wholes] + [f for b in bodies if b.detector for f in b.detector.gives]
+    weights = [p.weights for p in packets] + [b.weights for b in bodies] + [()] * len(wholes)
+    meeting_of_the_law(draw, [d.pattern for d in node_detectors], laid, given, families, weights)
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)

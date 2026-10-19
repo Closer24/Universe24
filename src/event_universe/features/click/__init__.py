@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass
 from typing import Any
 
@@ -31,6 +32,12 @@ def drawn(
         if pick < reached:
             return index, state
     return len(weights) - 1, state
+
+
+def hashed(seed: int, name: str, window: int, modulus: int) -> int:
+    """The generator's state of one side at one window, where the meeting runs back and each side draws at its own place with its own state (ALGEBRA.md, The click is the meeting of the future with the past; the owner's word of 2026-10-19): the declared seed, the side's name and the window's number written as one text, its SHA-256 digest read as one integer, the bytes in their order, and reduced to the generator's modulus by the division act (the remainder of `division_forward`), so that the states are distinct per side and per window, declared by the one seed and generic for N sides; a hash and no progression, since the generator is affine and states in arithmetic progression would stay one progression at every depth of the draw (the trials tool's finding, tools/meeting_trials.py)."""
+    digest = hashlib.sha256(f"{int(seed)} {name} {int(window)}".encode()).digest()
+    return int(division_forward(int.from_bytes(digest), int(modulus), 0)[1])
 
 
 @dataclass

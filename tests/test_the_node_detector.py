@@ -356,6 +356,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     rule3 = {("lattice", "step"), ("lattice", "step_inverse"), ("lattice", "held_write")}
     lay = {("lattice", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
     lay |= {("lay", "written")}  # the one lay act's write step, every door's (ALGEBRA.md, the principle)
+    lay |= {("meeting_back", "crossed")}  # the lay act's lines crossed back and forward by the run back
     assert writers == rule3 | lay  # nothing writes a NodeState but Rule3, the lay and the face
 
 

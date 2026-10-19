@@ -1,8 +1,8 @@
-"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: a seed, its draw; #the-click-is-the-meeting, the pair's form and the GHZ gate): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's (`Draw`, `draw_of`); a body with a probe among its transitions (a transition of a part into itself) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate); and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the draw through the root in the run; every defect refused by name and no default written."""
+"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: a seed, its draw; #the-click-is-the-meeting, the pair's form and the GHZ gate): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's (`Draw`, `draw_of`), and the meeting's reading, root or back (`meeting`, ALGEBRA.md, The click is the meeting of the future with the past; the owner's word of 2026-10-19): `root`, the one draw through the root over the joint shares (the default where the key is absent, written nowhere, so every world without the key runs bit for bit), or `back`, the click that runs back (`meeting_back`: the first side draws at its own place, the result runs back along the record to its birth and forward to the partner, the partner draws at its own place on the credit's re-weighted parts), admitted where a joint credit exists and the record's birth is one interval (`meeting_of_the_law`); a body with a probe among its transitions (a transition of a part into itself) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate), and no body's `node_detector` admits the meeting, the world's draw's word; and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the draw through the root in the run; every defect refused by name and no default written."""
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from event_universe.core.integer import MAX_WORK_INT
@@ -20,6 +20,10 @@ DRAW_KEYS = (
     "window",
     *GENERATOR_KEYS,
 )  # the draw with its window: the world's and a body's without a probe
+MEETING = "meeting"  # the world's draw's key: the meeting's reading, root or back
+ROOT, BACK = "root", "back"  # its two words: the one draw through the root, the click that runs back
+MEETINGS = (ROOT, BACK)
+WORLD_DRAW_KEYS = (*DRAW_KEYS, MEETING)  # the world's draw alone declares the meeting's reading
 
 
 @dataclass(frozen=True)
@@ -33,13 +37,14 @@ class Generator:
 
 @dataclass(frozen=True)
 class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19); and the meeting's reading, `root` or `back` (`MEETINGS`), the world's draw's alone, `root` where the file declares none (the one draw through the root as built, written nowhere)."""
 
     window: int
+    meeting: str = ROOT
 
 
 def generator_of(value: object, label: str) -> Generator:
-    """A body's `node_detector` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name."""
+    """A body's `node_detector` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name, the meeting's reading among them (`keyed`: a body's generator admits no `meeting`, the world's draw's word)."""
     if isinstance(value, dict) and "window" in value:
         raise ValueError(
             f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "
@@ -54,15 +59,58 @@ def generator_of(value: object, label: str) -> Generator:
     )
 
 
-def draw_of(value: object, label: str) -> Draw:
-    """The world's `draw`, a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
-    found = keyed(value, label, DRAW_KEYS, DRAW_KEYS)
+def draw_of(value: object, label: str, world: bool = False) -> Draw:
+    """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1; on the world's draw alone the meeting's reading, `meeting`, `root` (the one draw through the root, the default where the key is absent and written nowhere) or `back` (the click that runs back, `meeting_back`), any other value refused by name; every other key refused by name, a body's `meeting` among them (`keyed` on `DRAW_KEYS`)."""
+    found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, DRAW_KEYS)
+    meeting = found.get(MEETING, ROOT)
+    if meeting not in MEETINGS:
+        raise ValueError(f"{label}.{MEETING} is {meeting!r}: the draw's meeting is {ROOT!r} or {BACK!r}")
     return Draw(
         integer(found["seed"], f"{label}.seed", 0),
         integer(found["multiplier"], f"{label}.multiplier", 1),
         integer(found["increment"], f"{label}.increment", 0),
         integer(found["window"], f"{label}.window", 1),
+        str(meeting),
     )
+
+
+def meeting_of_the_law(
+    draw: Draw | None,
+    patterns: Sequence[Pattern],
+    laid: Sequence[int],
+    given: Sequence[int],
+    families: tuple[FamilyRule, ...],
+    weights: Sequence[tuple[int, ...]] = (),
+) -> None:
+    """The click that runs back needs a joint credit, a birth at one interval and parts laid alike (`weights`, the laid records' lines' weights in the order of `laid`, every laid line weighted alike, so every part: the partner's re-weighting lambda_k = e_k(port) at a_k = 1, ALGEBRA.md, The meeting's identity; a record of several parts whose parts carry different weights is refused by name until the credit carries a_k) (ALGEBRA.md, The click is the meeting of the future with the past: the backward run from the first click passes the root; the owner's word of 2026-10-19): where the world's draw declares `meeting: back`, two sides or more declare a pattern (`patterns`, the node_detectors' in the file's order) and a family of several parts is laid at the start (`laid`, the packets', the bodies' and the whole packets' families), refused by name otherwise (no joint credit: fewer than two sides reading the record, or a record of one part); no such family is given a quantum during the run by a rate, a conversion or a packet laid whole (`given`), whose birth the books do not hold as one interval, refused by name (the emitters' book as the birth a later round's); and the sides are two, more refused by name (the three sides await the owner's word); nothing where the draw declares the root or the world none."""
+    if draw is None or draw.meeting != BACK:
+        return
+    sides = sum(1 for pattern in patterns if pattern)
+    if sides < 2 or not any(families[index].parts > 1 for index in laid):
+        raise ValueError(
+            f"draw.{MEETING} is {BACK!r} with {sides} side(s) declaring a pattern over the laid records of "
+            f"{sorted({families[index].parts for index in laid})} part(s): the click that runs back needs a record "
+            "of several parts read at two or more sides (ALGEBRA.md, The click is the meeting of the future with the past)"
+        )
+    if any(families[index].parts > 1 for index in given):
+        raise ValueError(
+            f"draw.{MEETING} is {BACK!r} and a record of several parts is given a quantum during the run (a rate, a "
+            "conversion or a packet laid whole): the click that runs back needs a record born at one interval, the "
+            "lay's; a record born of an emission, its birth the emitters' book, is a later round's"
+        )
+    if sides > 2:
+        raise ValueError(
+            f"draw.{MEETING} is {BACK!r} with {sides} sides: the click that runs back is built for two sides; "
+            "three or more sides are a later round's, on the owner's word"
+        )
+    for index, found in zip(laid, weights, strict=False):
+        if families[index].parts > 1 and found and len(set(found)) > 1:
+            raise ValueError(
+                f"draw.{MEETING} is {BACK!r} and a record of {families[index].name!r} is laid with weights that "
+                f"differ across its lines, {list(found)}: the click that runs back is built for parts laid alike "
+                "(the partner's re-weighting lambda_k = e_k(port) at a_k = 1, ALGEBRA.md, The meeting's identity); "
+                "weighted parts are a later round's, the credit carrying a_k"
+            )
 
 
 def body_draw_of(value: object, label: str) -> Generator:

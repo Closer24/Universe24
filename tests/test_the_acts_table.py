@@ -99,6 +99,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "advanced", "division_forward"): "D",  # the recurrence's one rounding half up
     # features/click
     ("features/click/__init__.py", "drawn", "division_forward"): "D",  # the draw's shares, once each
+    (
+        "features/click/__init__.py",
+        "hashed",
+        "division_forward",
+    ): "D",  # a side's state to the modulus, once
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "presented", "division_forward"): "D",  # the presented share, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square

@@ -1,12 +1,10 @@
 """The spin branch (2026-10-19, stacked on the click branch; ALGEBRA.md, Spin, closed for the paper as a route, and the derivation of the same day: under the 48 every line Rule3 steps is a scalar, no record carries a spinor, and the half angle is the detector's read of two planes under a basis it declares): a quantum of spin one half is a record of two planes as two parts of one record (the family's shape [2, 2], the parts laid as one event and never summed at a Node), and a detector declaring its `axis`, the half-angle pair (c, s) with the Bloch axis (2 c s, c^2 - s^2) / (c^2 + s^2) in the x-z plane, credits the quantum to one of its two ports, up or down the axis, by the joint credit's one form on the parts' plane sums; nothing at the Node. The worlds are the tests' own (`tests.laws.spin_world`), no run beyond them. The family `spin` is a toy by name (2026-10-19): massless ([6000, 6000]) and neutral, its parts laid alike with no second pair and each plane's Wronskian 0, a test of the detector's read of two planes and of no charge; the law's electron is a quantum of the matter family re-declared at the shape [2, 2] with the sense on each plane (the second pair a quarter period on, W = T / 2 per quantum), its packet lay a generator change named and not built (ALGEBRA.md, Spin, closed for the paper as a route)."""
 
-import itertools
 import json
 from dataclasses import replace
 from fractions import Fraction
-from pathlib import Path
 
-from event_universe import credit, lists, meeting, world_files
+from event_universe import lists, meeting, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import ports_of, settings_of_the_law
@@ -15,133 +13,23 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.node_detector import credit_draw
 from event_universe.world_files import input_digest, load_world
-from tests.laws import EVENTS, ROOT, TOOL, ion_world, load_file, refused, spin_world
+from tests.laws import TOOL, ion_world, refused
+from tests.laws_spin import (
+    BELL,
+    IDENTITY,
+    PORT,
+    SINGLET,
+    TRIALS,
+    correlation,
+    exclusion_world,
+    joint_shares,
+    rebooked,
+    spin_world,
+    trial,
+)
 
-TRIALS = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
-IDENTITY = [[1, 0], [0, 1]]  # the parts the spinor's two components: the + port reads (c, s)
-SINGLET = [
-    [0, 1],
-    [-1, 0],
-]  # the partner's pattern in the singlet: its + port reads (s, -c), its - port (c, s)
-BELL = (
-    (1, 0),
-    (1, 1),
-    (12, 5),
-    (5, 12),
-)  # a, a', b, b' as half-angle pairs: 0 and 90 degrees, and cos = 119 / 169
-PORT = {"plus": 0, "minus": 1}
 SEEDS = (1, 2)  # the runs per axis; the draw's statistics are read from the engine's own draw below
 DRAWS = 400
-
-
-def exclusion_world(folder, monkeypatch, capacity, seed, length=112, intervals=125):  # type: ignore[no-untyped-def]
-    """The exclusion's world beside `folder` (the spin branch, item (e)): the two atoms' universe with the atom's family at three parts ([3, 2]: g, e, f, one plane each), one body of two quanta in g at the chain's centre with the transitions g to e and g to f by `photon` at one weight and one resonance, e and f at the declared `capacity` (none where it is None), its window `window` at `seed`; two photons of one quantum each from the two ends toward the body, the second arriving after the first window closes (the lower from 24, the upper from 96, the chain of `length` Nodes open on x with receding faces); the mode file by tools/pixel_mode.py; the world's path."""
-    folder.mkdir(parents=True, exist_ok=True)
-    universe = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
-    universe["families"][0]["dimension"] = [3, 2]
-    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
-    at, held = length // 2 - 9, {} if capacity is None else {"capacity": capacity}
-    parts = [{"part": 0, "name": "g", "count": 2}] + [
-        {"part": k, "name": n, "count": 0, **held} for k, n in ((1, "e"), (2, "f"))
-    ]
-    turns = [
-        {"from": "g", "to": to, "drive": "photon", "weight": 6, "resonance": [5414, 6000]} for to in "ef"
-    ]
-    draw = {"multiplier": 6364136223846793005, "increment": 1442695040888963407, "seed": seed}
-    body = {"family": "atom", "nodes": [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]}
-    body.update(parts=parts, transitions=turns, rates=[], node_detector=draw)
-    photons = [
-        {
-            "family": "photon",
-            "along": "x",
-            "wave": [sign, 4],
-            "phase": [0, 1],
-            "amplitude": 110,
-            "top": {"x": [x, x], "y": [0, 0], "z": [0, 0]},
-            "edge": {"x": 8, "y": 0, "z": 0},
-        }
-        for sign, x in ((1, 24), (-1, 96))
-    ]
-    world = {
-        "shape": [length, 1, 1],
-        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
-        "face_depth": 1,
-        "intervals": intervals,
-        "universe": "u.json",
-        "engine": "e.json",
-        "bodies": [body],
-        "packets": photons,
-        "node_detectors": [],
-        "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
-    }
-    (path := folder / "exclusion.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
-    TOOL.main(["--input", str(path)])
-    return path
-
-
-def trial(path: Path, seed: int, intervals: int) -> tuple[Lattice, list[dict]]:  # type: ignore[type-arg]
-    """One run from the lay with the regions' draw at the trial's seed (`hashed_state`, the trials tool's), the board and its lines."""
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_world(path), lines.append)
-    board.credit.state = TRIALS.hashed_state(seed, board.world.width)
-    for _ in range(intervals):
-        board.step()
-    return board, lines
-
-
-def joint_shares(
-    lines: list[dict], sides: dict[str, tuple[tuple[int, int], list[list[int]]]]
-) -> dict[tuple[int, ...], int]:  # type: ignore[type-arg]
-    """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's (`credit.joined`): per interval and member of the level pair the amplitude SUM_k PROD_sides e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s, the product over the sides of one interval, its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
-    names = list(sides)
-    ports = {
-        n: ports_of(axis, tuple(tuple(pair) for pair in pattern)) for n, (axis, pattern) in sides.items()
-    }
-    intervals: dict[int, dict[str, list[list[int]]]] = {}
-    for row in lines:
-        if row["event"] == "parts" and row["node_detector"] in sides:
-            intervals.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
-    found = {}
-    for key in itertools.product(range(2), repeat=len(names)):
-        total = 0
-        for levels in intervals.values():
-            for member in range(2):
-                re_sum, im_sum = 0, 0
-                for k in range(2):
-                    product = (1, 0)
-                    for name, port in zip(names, key, strict=True):
-                        sums = levels.get(
-                            name, [[0, 0]] * 4
-                        )  # per line [now, before]: re_1, im_1, re_2, im_2
-                        e = ports[name][port][k]
-                        re, im = e * sums[2 * k][member], e * sums[2 * k + 1][member]
-                        product = (product[0] * re - product[1] * im, product[0] * im + product[1] * re)
-                    re_sum, im_sum = re_sum + product[0], im_sum + product[1]
-                total += re_sum * re_sum + im_sum * im_sum
-        found[key] = total
-    return found
-
-
-def rebooked(board: Lattice, lines: list[dict]) -> dict[tuple[int, ...], int]:  # type: ignore[type-arg]
-    """The engine's own joint credit run again over the run's `parts` lines (the joints are cleared at the window's close): the joints emptied and `credit.joined` fed each interval's sums per region as the meeting feeds it, the shares per combination returned to be compared with the reader's exactly, no statistics."""
-    index = [f.name for f in board.families].index("spin")
-    board.credit.joints.clear()
-    sums: dict[int, dict[str, list[list[int]]]] = {}
-    for row in lines:
-        if row["event"] == "parts" and row["family"] == "spin":
-            sums.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
-    for interval in sorted(sums):
-        credit.joined(board, index, sums[interval])
-    return dict(board.credit.joints[index])
-
-
-def correlation(a: tuple[int, int], b: tuple[int, int]) -> Fraction:
-    """The singlet's E(a, b) = -cos(theta_a - theta_b) from the half-angle pairs, exact: -((c_a c_b + s_a s_b)^2 - (c_a s_b - s_a c_b)^2) / ((c_a^2 + s_a^2) (c_b^2 + s_b^2))."""
-    (ca, sa), (cb, sb) = a, b
-    same, different = (ca * sb - sa * cb) ** 2, (ca * cb + sa * sb) ** 2
-    return Fraction(same - different, (ca * ca + sa * sa) * (cb * cb + sb * sb))
 
 
 def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle(tmp_path, monkeypatch):

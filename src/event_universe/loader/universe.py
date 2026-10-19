@@ -14,7 +14,7 @@ from event_universe.loader.keys import integer, keyed, reads_of
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "dimension", "held", "reads"),
+    ("name", "pair", "dimension", "held", "reads", "exchange"),
     ("name", "pair"),
     ("sources", "level_weight", "write_weight", "rest", "act"),
     ("sources", "level_weight", "write_weight", "act"),
@@ -36,6 +36,25 @@ PACE, ROTATION = (
     "rotation",
 )  # how a held row acts on its readers: its level into their paces, or the turn of the two-part record
 ACTS = (PACE, ROTATION)
+EXCHANGE = {
+    "antisymmetric": -1,
+    "symmetric": 1,
+}  # a family's sign under the exchange of two of its parts, the key `exchange` and its two words
+
+
+def exchange_of(row: dict[str, Any], label: str, parts: int) -> int:
+    """A family's sign under the exchange of two of its parts, the key `exchange` (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19): `antisymmetric` -1 or `symmetric` 1, the family's declaration read by the joint credit (`credit.joined`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node; 0 where the key is absent, the lists and the credit as they stand, so that no world without the key changes; refused by name at any other value and on a family of one part, which has no second label to exchange."""
+    if "exchange" not in row:
+        return 0
+    value = row["exchange"]
+    if not isinstance(value, str) or value not in EXCHANGE:
+        raise ValueError(f"{label}.exchange is one of {list(EXCHANGE)}, got {value!r}")
+    if parts < 2:
+        raise ValueError(
+            f"{label}.exchange names a sign under the exchange of parts on a family of one part: no second "
+            "label to exchange"
+        )
+    return EXCHANGE[value]
 
 
 def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, bool]:
@@ -146,7 +165,7 @@ def pair_of(value: object, label: str, rows: Sequence[Row]) -> tuple[int, int]:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta) or its sources with its level weight, its write weight, its rest and its act (a held row; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
+    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -188,6 +207,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                     holds["rest"], f"{label}.held.rest", 0, derived.largest_of(integers["width"])
                 )
         flux = "held" in row and FLUX in row["held"]["sources"]  # the row carries the odd lines
+        exchange = exchange_of(row, label, parts)  # the record's sign under exchange, 0 undeclared
         rows.append(
             Row(
                 name,
@@ -203,6 +223,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 reads,
                 1,
                 flux,
+                exchange,
             )
         )
     families = derived.family_rules(rows)

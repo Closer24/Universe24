@@ -12,7 +12,7 @@ from event_universe import node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.features.click import drawn, spread, squared
+from event_universe.features.click import drawn, hashed, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
@@ -232,14 +232,16 @@ def picked(
     return pick, state
 
 
-def credit_draw(board: Lattice, weights: list[int]) -> int:
-    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`)."""
-    books = board.credit
+def credit_draw(board: Lattice, weights: list[int], side: str | None = None) -> int:
+    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`). Where the meeting runs back each side draws with a state of its own (`side`, the region's name; `credit.Books.states`): begun at the side's first draw of the window from the declared seed, the side's name and the window's number (`hashed`, distinct per side and per window, declared by the one seed, generic for N sides), advanced once per draw, the port, the Node and the piece's source alike, and cleared at the close; the books' one state untouched."""
+    books, modulus = board.credit, board.world.width + 1
     assert books.declaration is not None
     found = books.declaration
-    pick, books.state = drawn(
-        books.state, found.multiplier, found.increment, board.world.width + 1, weights
-    )
+    if side is None:
+        pick, books.state = drawn(books.state, found.multiplier, found.increment, modulus, weights)
+        return pick
+    state = books.states.setdefault(side, hashed(found.seed, side, books.windows, modulus))
+    pick, books.states[side] = drawn(state, found.multiplier, found.increment, modulus, weights)
     return pick
 
 

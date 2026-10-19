@@ -99,11 +99,16 @@ class NodeDetectorDeclaration:
         int | None, ...
     ] = ()  # per part its declared `capacity`, None where none (the exclusion)
 
+    @property
+    def gives(self) -> tuple[int, ...]:
+        """The families this body's clicks give whole quanta to during the run: its rates' light and its conversions' records out, by their positions (the meeting that runs back refuses a record of several parts born of them, its birth no one interval the books hold; `loader/draw.meeting_of_the_law`)."""
+        return tuple(r.light for r in self.rates) + tuple(o for c in self.conversions for o in c.outs)
+
 
 def parts_of(
-    value: object, label: str, parts: int, count: int
+    value: object, label: str, parts: int, count: int, split: bool = False
 ) -> tuple[tuple[str, ...], tuple[int, ...], tuple[int | None, ...]]:
-    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing, and optionally `capacity` (from 1), the most quanta the part holds, the exclusion as a declaration by name (the spin branch, 2026-10-19; `lists.full`: a part whose count has reached its capacity takes no quantum by any list, a part declaring none is never full; a cap on the count in the declared part, reading no sense); the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other), a count above its part's capacity refused; refused by name otherwise. Returns the names, the counts and the capacities (None where none is declared)."""
+    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing, and optionally `capacity` (from 1), the most quanta the part holds, the exclusion as a declaration by name (the spin branch, 2026-10-19; `lists.full`: a part whose count has reached its capacity takes no quantum by any list, a part declaring none is never full; a cap on the count in the declared part, reading no sense); the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other, the one-part convention: the body stands in the part of its largest count, the first of a tie, `node_detector.books_of`), or, with `split`, in several parts, the start of a family declaring its sign under exchange (`FamilyRule.exchange`, the key `exchange`; ALGEBRA.md, Spin, closed for the paper as a route, 2026-10-19), the one-part refusal kept for every other family; a count above its part's capacity refused; refused by name otherwise. Returns the names, the counts and the capacities (None where none is declared)."""
     if not isinstance(value, list) or len(value) != parts:
         raise ValueError(f"{label} lists one entry per part of the body's family, {parts} parts")
     names, counts, capacities = [], [], []
@@ -121,7 +126,7 @@ def parts_of(
                 f"{where} is {capacities[-1]} and the part's count {counts[-1]} stands above it: a part holds at "
                 "most its capacity, the exclusion as a declaration by name"
             )
-    if sum(counts) != count or sum(1 for c in counts if c) > 1:
+    if sum(counts) != count or (sum(1 for c in counts if c) > 1 and not split):
         raise ValueError(
             f"{label} holds the counts {counts}: the body's count {count} stands in one part at the start, a lay "
             "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the lattice (j))"
@@ -355,7 +360,16 @@ def node_detector_of(
             f"{label}: a body laid in its parts is a plane of several parts, one plane per part, and "
             f"{family.name!r} is not"
         )
-    names, counts, capacities = parts_of(body["parts"], f"{label}.parts", family.parts, count)
+    names, counts, capacities = parts_of(
+        body["parts"], f"{label}.parts", family.parts, count, family.exchange != 0
+    )  # a family declaring its sign under exchange starts with its counts split over its parts
+    if family.exchange != 0 and any(capacity is not None for capacity in capacities):
+        raise ValueError(
+            f"{label}.parts: the family {family.name!r} declares its sign under exchange and the detector a "
+            "capacity on its parts: one word for one thing; keep one (the antisymmetric sign makes the capacity "
+            "1 a theorem and the symmetric sign contradicts a cap; ALGEBRA.md, Spin, closed for the paper as a "
+            "route)"
+        )
     transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None

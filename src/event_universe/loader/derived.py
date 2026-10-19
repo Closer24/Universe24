@@ -12,11 +12,8 @@ from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
-REAL_LINE, PLANE_LINE = (
-    "real",
-    "plane",
-)  # the kinds of a record's lines, the shape by name (the two hands)
-KINDS = (REAL_LINE, PLANE_LINE)
+REAL_LINE, PLANE_LINE = "real", "plane"
+KINDS = (REAL_LINE, PLANE_LINE)  # the kinds of a record's lines, the shape by name (the two hands)
 FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard; the sign's pair, whose magnitude is X to the rounding, read at its own extreme, `turned_room`), the integer total per part and no modulus
 
 
@@ -37,6 +34,7 @@ class Row:
     declared: tuple[tuple[str, int], ...]
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
+    exchange: int = 0  # the record's sign under the exchange of two of its parts, the files' key `exchange` on a family of several parts (antisymmetric -1, symmetric 1, 0 where none is declared): the family's declaration, read by the joint credit (`credit.joined`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19)
 
 
 @dataclass(frozen=True)

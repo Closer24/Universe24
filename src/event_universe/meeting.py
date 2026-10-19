@@ -159,7 +159,7 @@ def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
 
 
 def closed(board: Lattice) -> None:
-    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator), then the window's books emptied, the inflows, the joint shares and the passages, the count beginning again."""
+    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator; where the meeting runs back the two readings in the time's order with the run back and forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the joint shares, the passages and the back run's own (the sides' states, the parts' sums per interval and the conditioning), the count beginning again."""
     books = board.credit
     for index in board.order:
         found = lists.region(board, index)
@@ -168,6 +168,9 @@ def closed(board: Lattice) -> None:
     books.intake.clear()
     books.joints.clear()
     books.passages.clear()
+    books.states.clear()
+    books.levels.clear()
+    books.conditioning.clear()
 
 
 def jumped(board: Lattice) -> None:

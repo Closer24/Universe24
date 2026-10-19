@@ -1,0 +1,23 @@
+{
+ "comment": "the recipe's numbers of tools/standing_lay.py, a file's keys and no number in the code (the tools' gate, tests/test_rule3.py): the radii the lay's profile is read within (the verdicts' of 2026-10-19), the eigensolver's levels kept and the pairs solved for (the cut beyond the levels kept) and the fixed point's iterations, its seeded start vector and tolerance, the kinds' threshold on the monopole and the dipole over an eigenvector's size, the fixed point's first Omega below the free rotation, and the free lump's width",
+ "radii": [
+  1,
+  2,
+  3,
+  4,
+  6,
+  8,
+  10,
+  12,
+  14,
+  16
+ ],
+ "levels": 8,
+ "solved": 16,
+ "iterations": 12,
+ "start_seed": 1,
+ "tolerance": 1e-12,
+ "kind_threshold": 0.001,
+ "start_below_omega_0": 0.01,
+ "sigma": 4.0
+}
