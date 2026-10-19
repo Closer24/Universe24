@@ -298,7 +298,7 @@ def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through
 
 
 def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_family_reads():
-    """Light its own family on every clicked world (the owner's word of 2026-10-19, the atom branch claude/atom-events; ALGEBRA.md, The emission of a bound record is the click's act of the taker): a transition's `drive`, a rate's `gives_to` and a conversion's record out name a family of quanta or a holder of the sign no family reads, whose one row is the free row 0, the light's record (the Zeno worlds' pulse, read by no family, stays named), and the holder a charged family reads, whose rows beyond the free row are its records' own writes, is refused by name in each of the three places (`node_detector_declaration.lit_families`, the dict a body's declaration names its families from), on the deuteron's universe, whose nuclide reads the holder charge, with a massless photon row added as light's own family."""
+    """Light its own family on every clicked world (the owner's word of 2026-10-19, the atom branch claude/atom-events; ALGEBRA.md, The emission of a bound record is the click's act of the taker): a transition's `drive`, a rate's `gives_to` and a conversion's record out name a family of quanta or a holder of the sign no family reads, whose one row is the free row 0, the light's record (the Zeno worlds' pulse, read by no family, stays named), and the holder a charged family reads, whose rows beyond the free row are its records' own writes, is refused by name in each of the three places (`node_detector_declaration.lit_families`, the dict a body's declaration names its families from), on the deuteron's universe, whose nuclide reads the holder charge, with a massless photon row added as light's own family; a world of this universe with no nuclide body laid, its one body of light's own family converted whole, refuses `charge` as its record out the same, the rule the universe's and no world's (2026-10-19)."""
     document = json.loads((EVENTS / "deuteron.json").read_text(encoding="utf-8"))
     document["families"].append({"name": "photon", "pair": [6000, 6000], "reads": {}, "dimension": 1})
     families = universe.universe_of(document)[1]
@@ -328,3 +328,7 @@ def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_f
         refusal = str(refused("no holder of the sign a family reads", declared, **entry))
         print(refusal)
         assert key in refusal and "'charge'" in refusal and "['nuclide', 'photon']" in refusal
+    refusal = str(
+        refused("no holder of the sign a family reads", declared, family="photon", **wrong["to[0]"])
+    )
+    assert "to[0]" in refusal and "'charge'" in refusal  # no nuclide body laid: the universe's rule

@@ -295,4 +295,7 @@ shares the passage's within the wake's units (the tail of 2 to 3 levels from 62 
 the readings' tables above are the records of the declared 48 and are not re-run (the owner's word). The
 second atom's P_x at the click reads 33,136 against 32,384 at 76 (tests/test_part_h_fix.py); the oracle
 is re-recorded from the committed tree (tests/oracle/one_photon_derived_window.output.json), its lines
-before 61 the former record's bit for bit, the lay and the stepping untouched before the new close.
+before 61 the former record's (none in either record), the lay and the stepping untouched before the new
+close: the board's every level and remainder at the interval 60 is asserted against the SHA-256 constant
+631c73c7ded2e3e5, computed once on the tree before (3a) at the declared 48 and on the branch at the
+derived 33 (tests/test_part_g_recoil.py, 2026-10-19).

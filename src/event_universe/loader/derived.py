@@ -96,7 +96,7 @@ class FamilyRule(Row):
 
     @property
     def record(self) -> int:
-        """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (the holder of the sign's own record, the light's on its free row 0), its axis lines being held parts."""
+        """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (the holder of the sign's own record, the light's on its free row 0; light its own family, 2026-10-19), its axis lines being held parts."""
         return 1 if self.held else self.lines
 
 

@@ -140,4 +140,6 @@ W = ceil(313 x 3 x 4472 / 5544) = 758 intervals, longer than the run of 168, so 
 closes within the run; and under C5's reach by the lay's end the giver is dark to its own departing
 train while its quantum stands (the self-lit window at the lay, the narrower line's, closed), so its
 window never opens in this folder, which lays no other drive: no reading above moves, the region's 168
-stands.
+stands. The design's giver `window` 48 stands in design.json as the design's number for the run's length
+alone, `intervals` 48 + the passage's 120 = 168 and the region's `draw.window`, read by the builder for
+those and for no body's window (2026-10-19).

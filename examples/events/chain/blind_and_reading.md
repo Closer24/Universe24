@@ -81,7 +81,11 @@ seeds of `detuned_trials.json` (tools/meeting_trials.py with that file as the de
    the declared weight 6 is 1.27 rad at one Node, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one
    Node and 0.111 with the body's projection over its three Nodes (the factor 1.65 at pi / 8), two windows
    per passage, 0.19 per trial, 1.5 of 8 expected and P(at most 4 of 8) = 0.99; under the first bound,
-   which presumed the sinc on the chance, a lawful engine fails about half the time.
+   which presumed the sinc on the chance, a lawful engine fails about half the time. Moved again with the
+   rule under (D) on 2026-10-19 (the atom branch's fix commit, expectation.json and build_world.py alike,
+   as this first correction was moved): at most 1 of the 8 trials at the derived window 116, the
+   envelope's spectral weight at the detuning over the whole passage (finding 4 below), the 4 of 8 above
+   kept inside the row as the record of the declared 48.
 
 The weight from the unit, C9 (a), is a derivation in the engine beside the declared weight
 (`resonance.unit_weight`, tests/test_the_absorption_weights.py): the ratio of the phase line's quarter
@@ -200,4 +204,7 @@ The findings by name (2026-10-19):
    of eight at W 116 (tests/test_the_chain_world.py, the pin moved from 3), and the reading above, 3 of
    8 at the declared 48 (the seeds 25 at 65 and 28 at 161, and 25's own light taken back at 215 from its
    train's wake under the narrower C5), is the record of the narrower line: under C5's reach by the lay's
-   end a body on this open chain is dark to the light it gave while its quantum stands.
+   end a body on this open chain is dark to the light it gave while its quantum stands. The blind's B7 row
+   is moved with the rule in expectation.json and build_world.py (the folder's precedent of the first
+   correction), the record of the declared 48 kept inside it; the design file's `window` row, 48, read by
+   no builder since the key's removal, is dropped from design.json (2026-10-19).
