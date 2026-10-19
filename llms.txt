@@ -1,6 +1,6 @@
 # Universe24
 
-> One line of whole-number arithmetic on a cubic lattice of Nodes, Rule3 in the law's flux form, read through clicks: the formulas it shares with nature and adds. A paper archived on Zenodo and at the tag v1.1.0, its supplement with every proof, the law of the lattice, the derivations as scripts, the engine V2 with its tests and the paper's engine at the tag v1.1.0, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23190113 (the concept DOI, resolving to the latest version); the current software version, 2.1.0: https://doi.org/10.5281/zenodo.23421502
+> One line of whole-number arithmetic on a cubic lattice of Nodes, Rule3 in the law's flux form, read through clicks: the formulas it shares with nature and adds. A paper archived on Zenodo and at the tag v1.1.0, its supplement with every proof, the law of the lattice, the derivations as scripts, the engine V2 with its tests and the paper's engine at the tag v1.1.0, and the two slits' universe. Author: Alon Gonen, independent researcher, Haifa, Israel (ORCID 0009-0008-2701-4599). Licence MIT. Permanent record: https://doi.org/10.5281/zenodo.23466436 (the concept DOI of the releases from 3.0.0 on, resolving to the latest version; the versions 1.1.0 to 2.1.0 under https://doi.org/10.5281/zenodo.23190113); the current software version, 3.0.0: https://doi.org/10.5281/zenodo.23466437
 
 ## In plain words
 
@@ -23,9 +23,9 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 - [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks, how to report an error or a failed reproduction
 - [The claims map](https://closer24.github.io/Universe24/docs/CLAIMS.md): every theorem, identity and quantitative claim of the proofs' inventory as one row, its place, statement, ground, kind, verdict and the function that checks it, generated from the proofs inventory
 - [Errata](https://closer24.github.io/Universe24/docs/ERRATA.md): the findings in the text and what was done about them, with the commits and the versions of record
-- [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 2.1.0 the step in the law's flux form, 2.0.0 the engine V2 against 1.1.0, the paper's engine
+- [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 3.0.0 the click as one act, the spin and the atom, 2.1.0 the step in the law's flux form, 2.0.0 the engine V2 against 1.1.0, the paper's engine
 
 ## The code
 
 - [Repository on GitHub](https://github.com/Closer24/Universe24): the derivations as scripts (tools/derivations/), the implementation (src/event_universe/), the tests, the two slits' universe (examples/events/two_slits/)
-- [Zenodo record](https://doi.org/10.5281/zenodo.23190113): the concept DOI, the permanent record and the one to cite, resolving to the latest version; the current software version, 2.1.0, the step in the law's flux form, is the version record [10.5281/zenodo.23421502](https://doi.org/10.5281/zenodo.23421502); the paper's engine, version 1.1.0, is 10.5281/zenodo.23202100
+- [Zenodo record](https://doi.org/10.5281/zenodo.23466436): the concept DOI of the releases from 3.0.0 on, the permanent record and the one to cite, resolving to the latest version (the versions 1.1.0 to 2.1.0 under [10.5281/zenodo.23190113](https://doi.org/10.5281/zenodo.23190113)); the current software version, 3.0.0, the click as one act, the spin and the atom, is the version record [10.5281/zenodo.23466437](https://doi.org/10.5281/zenodo.23466437); the paper's engine, version 1.1.0, is 10.5281/zenodo.23202100
