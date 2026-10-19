@@ -66,7 +66,7 @@ class FamilyRule(Row):
 
     @property
     def quanta(self) -> bool:
-        """Whether the family carries quanta, stepping at the paces of its reads with its share its count and its currents a node_detector's reading: every family of quanta and the holder of the sign, whose own record is light; a held row sourced by the form holds the content and steps at the pace 1."""
+        """Whether the family carries quanta, stepping at the paces of its reads with its share its count and its currents a node_detector's reading: every family of quanta and the holder of the sign, whose free row 0 is the light's record (light its own family, 2026-10-19: a click names a holder no family reads, `node_detector_declaration.lit_families`); a held row sourced by the form holds the content and steps at the pace 1."""
         return not self.held or self.wronskian
 
     @property
@@ -96,7 +96,7 @@ class FamilyRule(Row):
 
     @property
     def record(self) -> int:
-        """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (light, the holder of the sign's own record), its axis lines being held parts."""
+        """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (the holder of the sign's own record, the light's on its free row 0), its axis lines being held parts."""
         return 1 if self.held else self.lines
 
 

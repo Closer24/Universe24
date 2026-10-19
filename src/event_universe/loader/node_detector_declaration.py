@@ -8,7 +8,7 @@ from dataclasses import dataclass, replace
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
-from event_universe.loader.derived import FamilyRule, count_wall
+from event_universe.loader.derived import FamilyRule, count_wall, readers_of
 from event_universe.loader.draw import Generator, draw_of, generator_of
 from event_universe.loader.keys import integer, keyed
 
@@ -276,12 +276,18 @@ def part_named(value: object, label: str, names: tuple[str, ...]) -> int:
 
 
 def family_named(value: object, label: str, quanta: dict[str, int], own: int) -> int:
-    """A family of quanta by name, not the body's own, its position; refused by name otherwise."""
+    """A family a click may name (`lit_families`), not the body's own, its position; refused by name otherwise."""
     if value not in quanta or quanta[str(value)] == own:
         raise ValueError(
-            f"{label} names {value!r}: a family of quanta other than the body's own, of {sorted(quanta)}"
+            f"{label} names {value!r}: a family of quanta other than the body's own and no holder of "
+            f"the sign a family reads (light its own family), of {sorted(quanta)}"
         )
     return quanta[str(value)]
+
+
+def lit_families(families: tuple[FamilyRule, ...], quanta: dict[str, int]) -> dict[str, int]:
+    """The families a click may name, light its own family on every world (the owner's word of 2026-10-19, the atom world's architecture; ALGEBRA.md, The emission of a bound record is the click's act of the taker): every family of quanta but the holder of the sign that a family reads, whose rows beyond the free row 0 are its charged records' own writes and no light's record; a holder of the sign no family reads has the free row alone, the light's record, as the Zeno worlds' pulse, the shelved ion's drives and the two slits' light are declared."""
+    return {n: i for n, i in quanta.items() if not (families[i].held and readers_of(families, i))}
 
 
 def sense_of(value: object, label: str, plane: bool) -> int:
@@ -328,8 +334,9 @@ def node_detector_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeDetectorDeclaration:
-    """A body's declaration as a NodeDetector (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_detector` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_detector` to draw it; refused by name otherwise."""
+    """A body's declaration as a NodeDetector (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_detector` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_detector` to draw it; refused by name otherwise; every family a click names, a transition's `drive`, a rate's `gives_to` and a conversion's record out, light its own family (`lit_families`, 2026-10-19)."""
     family = families[own]
+    quanta = lit_families(families, quanta)  # light its own family: the families a click may name
     if "conversion" in body:
         if "parts" in body or "transitions" in body or "rates" in body:
             raise ValueError(f"{label} is converted whole: it declares no parts, transitions or rates")
