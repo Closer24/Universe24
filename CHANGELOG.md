@@ -2,7 +2,7 @@
 
 One entry per version, the newest first; what the engine does differently, with the files, and what the documents say. The law is [docs/ALGEBRA.md](docs/ALGEBRA.md), the engine's document [docs/ENGINE.md](docs/ENGINE.md), the decisions in force [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md).
 
-## Version 3.0.0 (2026-10-19; the three branches of the click, the spin and the atom; the results of the shipped worlds move where the law's dated lines say, listed below)
+## Version 3.0.0 (2026-10-19; the three branches of the click, the spin and the atom; the results of the shipped worlds move where the law's dated lines say, listed below), the tag v3.0.0, Zenodo 10.5281/zenodo.23466437
 
 The click is one act of the detector, the Node generic (the owner's words of 2026-10-18 and 2026-10-19: there is no field; on the board there are only records stepped by Rule3 and events; nothing on the board draws, the one draw is the detector's; the Node is generic, the face and the lay its two writes; the atom is what the clicks show; only code, without worlds and without experiments, only tests; a clean and generic engine, simple and generic in Rule3, in symmetry with the group of 48 of the cube). Against 2.1.0, by branch:
 

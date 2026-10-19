@@ -2,16 +2,22 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 2.1.0
-date-released: 2026-10-16
+version: 3.0.0
+date-released: 2026-10-19
 license: MIT
-doi: 10.5281/zenodo.23190113
+doi: 10.5281/zenodo.23466436
 repository-code: "https://github.com/Closer24/Universe24"
 url: "https://github.com/Closer24/Universe24"
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.23466436
+    description: "Zenodo concept DOI of the releases from 3.0.0 on, resolving to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.23466437
+    description: "Zenodo archive of version 3.0.0, the click as one act, the spin and the atom (the engine 3.0)"
+  - type: doi
     value: 10.5281/zenodo.23190113
-    description: "Zenodo concept DOI, resolving to the latest version"
+    description: "Zenodo concept DOI of the versions 1.1.0 to 2.1.0, archived by hand"
   - type: doi
     value: 10.5281/zenodo.23421502
     description: "Zenodo archive of version 2.1.0, the step in the law's flux form"
