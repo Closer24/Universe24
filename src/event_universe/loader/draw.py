@@ -23,7 +23,18 @@ DRAW_KEYS = (
 MEETING = "meeting"  # the world's draw's key: the meeting's reading, root or back
 ROOT, BACK = "root", "back"  # its two words: the one draw through the root, the click that runs back
 MEETINGS = (ROOT, BACK)
-WORLD_DRAW_KEYS = (*DRAW_KEYS, MEETING)  # the world's draw alone declares the meeting's reading
+REACH = "reach"  # the back mode's key: the run back's reach, the owner's word of 2026-10-19
+BOARD, CONE, BOOKS = (
+    "board",
+    "cone",
+    "books",
+)  # its three words: the whole board, the record's light cone, no run
+REACHES = (BOARD, CONE, BOOKS)
+WORLD_DRAW_KEYS = (
+    *DRAW_KEYS,
+    MEETING,
+    REACH,
+)  # the world's draw alone declares the meeting and its reach
 
 
 @dataclass(frozen=True)
@@ -37,10 +48,11 @@ class Generator:
 
 @dataclass(frozen=True)
 class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19); and the meeting's reading, `root` or `back` (`MEETINGS`), the world's draw's alone, `root` where the file declares none (the one draw through the root as built, written nowhere)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19); and the meeting's reading, `root` or `back` (`MEETINGS`), the world's draw's alone, `root` where the file declares none (the one draw through the root as built, written nowhere); beside `back` the run back's reach, `board`, `cone` or `books` (`REACHES`, `meeting_back`), None where the file declares none, which the engine reads as the record's light cone (`credit.Books.reach`, the owner's word of 2026-10-19), written nowhere."""
 
     window: int
     meeting: str = ROOT
+    reach: str | None = None
 
 
 def generator_of(value: object, label: str) -> Generator:
@@ -60,17 +72,27 @@ def generator_of(value: object, label: str) -> Generator:
 
 
 def draw_of(value: object, label: str, world: bool = False) -> Draw:
-    """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1; on the world's draw alone the meeting's reading, `meeting`, `root` (the one draw through the root, the default where the key is absent and written nowhere) or `back` (the click that runs back, `meeting_back`), any other value refused by name; every other key refused by name, a body's `meeting` among them (`keyed` on `DRAW_KEYS`)."""
+    """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1; on the world's draw alone the meeting's reading, `meeting`, `root` (the one draw through the root, the default where the key is absent and written nowhere) or `back` (the click that runs back, `meeting_back`), any other value refused by name, and beside `back` the run back's reach, `reach`, `board` (the whole board stepped back to the birth and forward to the close), `cone` (the record's light cone asserted about the same run, the engine's reading where the key is absent, written nowhere) or `books` (no run, the draws from the books alone), any other value refused by name and the key refused by name beside `root` or where `meeting` is absent (the run back's reach is a word of the back mode); every other key refused by name, a body's `meeting` and `reach` among them (`keyed` on `DRAW_KEYS`)."""
     found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, DRAW_KEYS)
-    meeting = found.get(MEETING, ROOT)
+    meeting, reach = found.get(MEETING, ROOT), found.get(REACH)
     if meeting not in MEETINGS:
         raise ValueError(f"{label}.{MEETING} is {meeting!r}: the draw's meeting is {ROOT!r} or {BACK!r}")
+    if reach is not None and meeting != BACK:
+        raise ValueError(
+            f"{label}.{REACH} is declared with the meeting at {ROOT!r}: the run back's reach is a word of the "
+            f"back mode, `{MEETING}: {BACK}`"
+        )
+    if reach is not None and reach not in REACHES:
+        raise ValueError(
+            f"{label}.{REACH} is {reach!r}: the run back's reach is {BOARD!r}, {CONE!r} or {BOOKS!r}"
+        )
     return Draw(
         integer(found["seed"], f"{label}.seed", 0),
         integer(found["multiplier"], f"{label}.multiplier", 1),
         integer(found["increment"], f"{label}.increment", 0),
         integer(found["window"], f"{label}.window", 1),
         str(meeting),
+        None if reach is None else str(reach),
     )
 
 
@@ -82,7 +104,7 @@ def meeting_of_the_law(
     families: tuple[FamilyRule, ...],
     weights: Sequence[tuple[int, ...]] = (),
 ) -> None:
-    """The click that runs back needs a joint credit, a birth at one interval and parts laid alike (`weights`, the laid records' lines' weights in the order of `laid`, every laid line weighted alike, so every part: the partner's re-weighting lambda_k = e_k(port) at a_k = 1, ALGEBRA.md, The meeting's identity; a record of several parts whose parts carry different weights is refused by name until the credit carries a_k) (ALGEBRA.md, The click is the meeting of the future with the past: the backward run from the first click passes the root; the owner's word of 2026-10-19): where the world's draw declares `meeting: back`, two sides or more declare a pattern (`patterns`, the node_detectors' in the file's order) and a family of several parts is laid at the start (`laid`, the packets', the bodies' and the whole packets' families), refused by name otherwise (no joint credit: fewer than two sides reading the record, or a record of one part); no such family is given a quantum during the run by a rate, a conversion or a packet laid whole (`given`), whose birth the books do not hold as one interval, refused by name (the emitters' book as the birth a later round's); and the sides are two, more refused by name (the three sides await the owner's word); nothing where the draw declares the root or the world none."""
+    """The click that runs back needs a joint credit, a birth at one interval and parts laid alike (`weights`, the laid records' lines' weights in the order of `laid`, every laid line weighted alike, so every part: the partner's re-weighting lambda_k = e_k(port) at a_k = 1, ALGEBRA.md, The meeting's identity; a record of several parts whose parts carry different weights is refused by name until the credit carries a_k) (ALGEBRA.md, The click is the meeting of the future with the past: the backward run from the first click passes the root; the owner's word of 2026-10-19): where the world's draw declares `meeting: back`, two sides or more declare a pattern (`patterns`, the node_detectors' in the file's order) and a family of several parts is laid at the start (`laid`, the packets', the bodies' and the whole packets' families), refused by name otherwise (no joint credit: fewer than two sides reading the record, or a record of one part); no such family is given a quantum during the run by a rate, a conversion or a packet laid whole (`given`), refused by name: a record born during the run stands in one part, the act's lays writing the first part's lines, and its lay across the parts is a declaration the law has not made (the births' book and the lay across parts a later round's); the sides any count from two, each side drawing in the time's order on its conditional from the booked joint (`lists.readings`, N sides the general case, the owner's word of 2026-10-19; the antisymmetric record's two sides the credit's own refusal, `credit.joined`); nothing where the draw declares the root or the world none."""
     if draw is None or draw.meeting != BACK:
         return
     sides = sum(1 for pattern in patterns if pattern)
@@ -95,13 +117,9 @@ def meeting_of_the_law(
     if any(families[index].parts > 1 for index in given):
         raise ValueError(
             f"draw.{MEETING} is {BACK!r} and a record of several parts is given a quantum during the run (a rate, a "
-            "conversion or a packet laid whole): the click that runs back needs a record born at one interval, the "
-            "lay's; a record born of an emission, its birth the emitters' book, is a later round's"
-        )
-    if sides > 2:
-        raise ValueError(
-            f"draw.{MEETING} is {BACK!r} with {sides} sides: the click that runs back is built for two sides; "
-            "three or more sides are a later round's, on the owner's word"
+            "conversion or a packet laid whole): a record born during the run stands in one part, the act's lays "
+            "writing the first part's lines, and its lay across the parts is a declaration the law has not made; "
+            "the births' book and the lay across parts a later round's"
         )
     for index, found in zip(laid, weights, strict=False):
         if families[index].parts > 1 and found and len(set(found)) > 1:
@@ -172,7 +190,7 @@ def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
 def patterns_of_the_law(
     patterns: list[tuple[str, Pattern]], laid: list[int], families: tuple[FamilyRule, ...]
 ) -> None:
-    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its packets' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record."""
+    """A declared pattern reads one record of several parts, one pair per part: its length is the parts of a family of several parts the world lays (its packets' and its bodies' families, `laid`, by their indexes); refused by name where the lengths differ or the world lays no such record; and a laid family declaring the antisymmetric sign under exchange, where a side's pattern reads its parts, is read by two sides exactly, the determinant of two sides' parts (`credit.joined`, the family's declaration), another count of sides refused by name at load, generic for N sides otherwise (the owner's word of 2026-10-19); read at no side, the sign is the shell's and the lists' own (`lists.absorption`) and nothing is asked."""
     parts = sorted({families[index].parts for index in laid if families[index].parts > 1})
     for name, pattern in patterns:
         if pattern and len(pattern) not in parts:
@@ -183,6 +201,14 @@ def patterns_of_the_law(
                     if parts
                     else "no record of several parts"
                 )
+            )
+    for index in sorted({index for index in laid if families[index].exchange < 0}):
+        sides = sum(1 for _name, pattern in patterns if len(pattern) == families[index].parts)
+        if sides and sides != 2:  # read at no side, the sign is the shell's and the lists' alone
+            raise ValueError(
+                f"{families[index].name!r} declares the antisymmetric sign under exchange and {sides} side(s) read "
+                "its parts: the antisymmetric record's determinant is two sides', and another count of sides is a "
+                "declaration the law has not made (ALGEBRA.md, Spin, closed for the paper as a route)"
             )
 
 

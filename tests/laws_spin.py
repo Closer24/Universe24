@@ -24,8 +24,11 @@ def spin_world(
     amplitude=90,
     exchange=None,
     meeting=None,
+    reach=None,
+    regions=None,
+    erasure=None,
 ):  # type: ignore[no-untyped-def]
-    """The spin branch's world beside `folder` (the pair's universe with the massless two-plane family `spin` added, the shape [2, 2]: two parts of a plane each, one quantum one count; as u.json with the engine file as e.json and the repository root turned to `folder`): a chain of `length` Nodes open on x with receding faces, one packet of the family at k = pi / 4 laid at the centre toward the lower side (and one toward the upper side with `both`), one quantum by the share at the amplitude 90 (the generator's lay 75; the laid share 0.9994 of the record's unit `credit.record_unit`, the books' count 1), its parts laid alike by the generator (the equal-parts state, the planes' sense lines at 0); with `both` the two packets at the amplitude 64 each (the lay 54), half a quantum each, the pair one quantum of the record (the share 1.0134 of the unit, the count 1), the regions of four Nodes at the ends with their `axis` and `pattern` from `sides` ({"left": (axis, pattern), "right": ...}), the draw over one window of `intervals`; with `exchange` the family's declared sign under exchange on its row, `antisymmetric` or `symmetric` (the key `exchange`, read by the joint credit as the determinant or the permanent of the two sides' parts, 2026-10-19), none otherwise; with `meeting` the draw's reading of the meeting, `root` or `back` (the key `meeting`, the click that runs back, `meeting_back`), the key absent otherwise; the mode file by tools/pixel_mode.py; the world's path."""
+    """The spin branch's world beside `folder` (the pair's universe with the massless two-plane family `spin` added, the shape [2, 2]: two parts of a plane each, one quantum one count; as u.json with the engine file as e.json and the repository root turned to `folder`): a chain of `length` Nodes open on x with receding faces, one packet of the family at k = pi / 4 laid at the centre toward the lower side (and one toward the upper side with `both`), one quantum by the share at the amplitude 90 (the generator's lay 75; the laid share 0.9994 of the record's unit `credit.record_unit`, the books' count 1), its parts laid alike by the generator (the equal-parts state, the planes' sense lines at 0); with `both` the two packets at the amplitude 64 each (the lay 54), half a quantum each, the pair one quantum of the record (the share 1.0134 of the unit, the count 1), the regions of four Nodes at the ends with their `axis` and `pattern` from `sides` ({"left": (axis, pattern), "right": ...}), the draw over one window of `intervals`; with `exchange` the family's declared sign under exchange on its row, `antisymmetric` or `symmetric` (the key `exchange`, read by the joint credit as the determinant or the permanent of the two sides' parts, 2026-10-19), none otherwise; with `meeting` the draw's reading of the meeting, `root` or `back` (the key `meeting`, the click that runs back, `meeting_back`), and with `reach` the run back's reach beside it, `board`, `cone` or `books` (the key `reach`), each key absent otherwise, with `regions` the regions' x positions by name in place of the ends' four Nodes ({name: [x, ...]}: a third region, or regions of one Node), and with `erasure` the front's taper on the world (the key `erasure`), absent otherwise; the mode file by tools/pixel_mode.py; the world's path."""
     folder.mkdir(parents=True, exist_ok=True)
     universe = json.loads((EVENTS / "pair.json").read_text(encoding="utf-8"))
     universe["families"].append(json.loads(json.dumps(SPIN)))
@@ -48,6 +51,7 @@ def spin_world(
         for sign in ((-1, 1) if both else (-1,))
     ]
     ends = {"left": list(range(depth)), "right": list(range(length - depth, length))}
+    ends.update(regions or {})
     detectors = [
         {
             "name": name,
@@ -62,6 +66,7 @@ def spin_world(
         "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
         "face_depth": 1,
         "intervals": intervals,
+        **({"erasure": erasure} if erasure is not None else {}),
         "universe": "u.json",
         "engine": "e.json",
         "bodies": [],
@@ -74,6 +79,7 @@ def spin_world(
             "multiplier": 6364136223846793005,
             "increment": 1442695040888963407,
             **({"meeting": meeting} if meeting is not None else {}),
+            **({"reach": reach} if reach is not None else {}),
         },
     }
     (path := folder / "spin.json").write_text(json.dumps(world) + "\n", encoding="utf-8")

@@ -124,6 +124,16 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert bare(frames3[3]) == bare(frames3[1]) and bare(frames3[4]) == bare(frames3[0])
     assert [frames3[k]["families"] for k in (5, 6)] == [frames3[k]["families"] for k in (1, 2)]
     assert PAGE.passes(look3) == 3 and PAGE.last_interval(look3) == 3 and PAGE.passes(look) == 1
+    assert [f["tick"] for f in frames3][:5] == [
+        0,
+        1,
+        2,
+        2,
+        2,
+    ]  # the tick advances in step alone, never back
+    assert (
+        "reach" not in look3 and "tick" not in look["frames"][1]
+    )  # no draw, no reach; one pass, no tick
     look3, _html3 = shown(world, monkeypatch, {}, gate, back=2, every=2)  # the stride within each pass
     strided = [(f["interval"], f["pass"]) for f in look3["frames"]]  # each pass's last frame kept
     assert strided == [(0, 1), (2, 1), (0, 2), (2, 3), (3, 3)]

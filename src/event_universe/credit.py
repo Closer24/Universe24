@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import itertools
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from math import gcd
 from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import growth, share
+from event_universe import growth, meeting_back, share
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
@@ -18,10 +18,11 @@ from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
 from event_universe.front import Front
 from event_universe.loader.derived import count_wall
-from event_universe.loader.draw import BACK, Draw, Ports, ports_of
+from event_universe.loader.draw import BACK, CONE, Draw, Ports, ports_of
 from event_universe.loader.keys import Node
 from event_universe.loader.packets import axes_waves
 from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of
+from event_universe.records import NodeState
 from event_universe.reports import PORT_NAMES, weighted
 
 if TYPE_CHECKING:
@@ -74,11 +75,22 @@ class Books:
     conditioning: dict[int, list[int]] = field(default_factory=dict)
     levels: dict[int, list[Levels]] = field(default_factory=dict)
     lays: dict[int, list[dict[str, object]]] = field(default_factory=dict)
+    support: tuple[Node, ...] = ()
+    frame: list[NodeState] = field(default_factory=list)
+    cone: dict[int, int] = field(default_factory=dict)
 
     @property
     def runs_back(self) -> bool:
-        """Whether the world's draw declares the meeting that runs back, `meeting: back` (`loader/draw.py`; `meeting_back`): the sides then draw each at its own place with its own state (`states`, per side, begun at its first draw of the window from the declared seed, its name and the window's number, `features/click.hashed`, and cleared at the close), the partner on the record's parts re-weighted by what the first port read (`conditioning`, per family the integers lambda_k, `conditioned`), its share from the window's parts sums kept per interval (`levels`, per family, `joined`), and the lays the acts wrote stand in the log per interval for the run back to cross (`lays`, the lay lines as `reports.lay` writes them, `lay.written`, `meeting_back.crossed`); every one empty on the root's worlds, which run as built."""
+        """Whether the world's draw declares the meeting that runs back, `meeting: back` (`loader/draw.py`; `meeting_back`): the sides then draw each at its own place with its own state (`states`, per side, begun at its first draw of the window from the declared seed, its name and the window's number, `features/click.hashed`, and cleared at the close), each later side on its conditional from the booked joint with the realised ports fixed (`conditional_of`), the last side's conditional read as the law's re-weighting of the record's parts by what the realised ports read (`conditioning`, per family the integers lambda_k, `conditioned`, the law's words beside the one arithmetic), its share from the window's parts sums kept per interval (`levels`, per family, `joined`), and the lays the acts wrote stand in the log per interval for the run back to cross (`lays`, the lay lines as `reports.lay` writes them, `lay.written`, `meeting_back.crossed`); every one empty on the root's worlds, which run as built."""
         return self.declaration is not None and self.declaration.meeting == BACK
+
+    @property
+    def reach(self) -> str | None:
+        """The run back's reach where the meeting runs back (ALGEBRA.md, The meeting's reading, root or back; the owner's word of 2026-10-19; `loader/draw.REACHES`): the draw's declared word, `board`, `cone` or `books`, and the record's light cone, `cone`, where the back draw declares none, the engine's reading written nowhere; None on the root's worlds. In the cone the books hold the lay's Nodes (`support`, S_0 at the file's coordinates, every record laid at the start, `meeting_back.support_of`), the lay's frame 0 (`frame`, every family's NodeState as laid, kept once at the books' start, `meeting_back.frame_of`) and the cone's volume per interval, |G(t)| the Nodes within t + 1 Links of S_0 (`cone`, written by the run back and forward, `meeting_back.asserted`), the look's header's words."""
+        if not self.runs_back:
+            return None
+        assert self.declaration is not None
+        return self.declaration.reach or CONE
 
     def unabsorbed_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
         """The one denominator of the bodies closing a drive's interval and the record's unabsorbed share read in it (ALGEBRA.md, The absorption, the draw (b); `lists.absorption`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the unabsorbed share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`unabsorbed_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
@@ -119,7 +131,7 @@ class Books:
         for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
             if counts[index] > 0:
                 registered(emitters, index, None, False, counts[index])
-        return cls(
+        books = cls(
             found,
             0,
             found.seed if found is not None else 0,
@@ -135,6 +147,9 @@ class Books:
             {index for index in board.order if counts[index] <= 0},
             emitters=emitters,
         )
+        if books.reach == CONE:  # the lay's Nodes and frame 0, the cone's two readings kept once
+            books.support, books.frame = meeting_back.support_of(board), meeting_back.frame_of(board)
+        return books
 
 
 def counted(board: Lattice, index: int, total: int | None, unit: int) -> int:
@@ -207,7 +222,7 @@ def booked(
 
 
 def joined(board: Lattice, index: int, sums: Sums) -> None:
-    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side. For a record of plane parts (the spin branch, 2026-10-19) a part's sum is its pair (re, im) on its two lines, the product over the sides a plane's product and the square the pair's norm, J += |SUM_k c_k PROD_sides psi^s_k|^2 per member: the spinor amplitude's share under the detectors' declared axes (`loader/draw.settings_of_the_law`), the real-line form the same with im at 0. The pair's amplitude is built from the record's sign under exchange, the family's declaration (`FamilyRule.exchange`, the key `exchange`; ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19), read here and by the lists' factor and by nothing at the Node: the symmetric record, and a family declaring no sign, SUM_k over the same part k at every side, the form as it stood; the antisymmetric record SUM_{k != l} sign(l - k) e^L_k psi^L_k e^R_l psi^R_l over the ordered pairs of parts across two sides, the determinant of the two sides' parts, equal at two parts to the symmetric form with the crossed pattern [[0, 1], [-1, 0]] on one side term by term (e^L_0 e^R_1 - e^L_1 e^R_0), so the singlet's numbers come out with the plain identity pattern on both detectors; more than two sides refused by name, a third quantum's determinant being a third side's declaration the law has not made."""
+    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side. For a record of plane parts (the spin branch, 2026-10-19) a part's sum is its pair (re, im) on its two lines, the product over the sides a plane's product and the square the pair's norm, J += |SUM_k c_k PROD_sides psi^s_k|^2 per member: the spinor amplitude's share under the detectors' declared axes (`loader/draw.settings_of_the_law`), the real-line form the same with im at 0. The pair's amplitude is built from the record's sign under exchange, the family's declaration (`FamilyRule.exchange`, the key `exchange`; ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19), read here and by the lists' factor and by nothing at the Node: the symmetric record, and a family declaring no sign, SUM_k over the same part k at every side, the form as it stood; the antisymmetric record SUM_{k != l} sign(l - k) e^L_k psi^L_k e^R_l psi^R_l over the ordered pairs of parts across two sides, the determinant of the two sides' parts, equal at two parts to the symmetric form with the crossed pattern [[0, 1], [-1, 0]] on one side term by term (e^L_0 e^R_1 - e^L_1 e^R_0), so the singlet's numbers come out with the plain identity pattern on both detectors; another count of sides reading an antisymmetric record is refused by name at load (`loader/draw.patterns_of_the_law`), a third quantum's determinant being a declaration the law has not made."""
     books = board.credit
     if books.declaration is None or not books.sides:
         return
@@ -215,14 +230,9 @@ def joined(board: Lattice, index: int, sums: Sums) -> None:
     parts, width = family.parts, family.width  # the lines per part: one for a real line, two for a plane
     levels = [sums.get(name, [[0, 0]] * (parts * width)) for name, _ports in books.sides]
     joint = books.joints.setdefault(index, {})
-    if family.exchange < 0 and len(books.sides) != 2:
-        raise ValueError(
-            f"{family.name!r} declares the antisymmetric sign under exchange and the world declares "
-            f"{len(books.sides)} sides: the pair's amplitude is the determinant of two sides' parts, and a third "
-            "side's determinant is a declaration the law has not made (ALGEBRA.md, Spin, closed for the paper "
-            "as a route)"
-        )
-    terms = terms_of(family.exchange, parts, len(books.sides))
+    terms = terms_of(
+        family.exchange, parts, len(books.sides)
+    )  # two sides for the antisymmetric: the loader's
     for key in itertools.product(range(len(PORT_NAMES)), repeat=len(books.sides)):
         readers = [
             (ports[port], found)
@@ -263,22 +273,27 @@ def squared(
     return real * real + imaginary * imaginary
 
 
-def marginal_of(joint: Joints, side: int) -> list[int]:
-    """One side's marginal from the credit's joint shares (the meeting that runs back, the first side's weights; ALGEBRA.md, The click is the meeting of the future with the past): per port of the side the sum of J over the other sides' ports, the books' integers as they stand at the close, no new act and no new reading; for parts laid alike it equals the side's parts' shares credited alone and never the coherent one-side sum."""
+def conditional_of(joint: Joints, realised: Mapping[int, int], side: int) -> list[int]:
+    """One side's weights from the credit's joint shares with the realised ports fixed, the one arithmetic of the readings in the time's order (the meeting that runs back; ALGEBRA.md, The click is the meeting of the future with the past: the backward run passes the root and the partner's click meets the re-weighted record): per port of the side the sum of J over the combinations whose ports at the realised sides are theirs (`realised`, by side) and whose port at this side is the port, the later sides summed over, the books' integers as they stand at the close, no new act and no new reading; with none realised the side's marginal, which for parts laid alike equals the side's parts' shares credited alone and never the coherent one-side sum; the chain P(p_1) P(p_2 | p_1) ... P(p_N | p_1 .. p_(N-1)) is J(p_1 .. p_N) / SUM J exactly, the one joint distribution for any count of sides."""
     return [
-        sum(share for key, share in joint.items() if key[side] == port)
+        sum(
+            share
+            for key, share in joint.items()
+            if key[side] == port and all(key[s] == p for s, p in realised.items())
+        )
         for port in range(len(PORT_NAMES))
     ]
 
 
-def conditioned(board: Lattice, index: int, first: int, port: int) -> list[int]:
-    """The re-weighting of the partner's parts by what the first side's port read of them, the credit's reading through the root and never a write (ALGEBRA.md, The click is the meeting of the future with the past, the re-weighting lambda_k = e_k(port_A) a_k; the owner's word of 2026-10-19): from the amplitude's own terms (`terms_of`), per term the sign times the first side's coefficient on the part it reads, added on the part the partner reads, so that lambda_k = e^A_k(p) for the symmetric record and the undeclared and lambda_l = SUM_k sign(l - k) e^A_k(p) for the antisymmetric (at two parts lambda_0 = -e^A_1(p), lambda_1 = e^A_0(p), the determinant's conditional), SUM_l e^B_l(q) lambda_l psi^B_l then the amplitude at the realised p; the part's lay weight a_k is 1, the one lay act laying every part of a record alike (`Lattice.lay`); integers, carried in the books (`Books.conditioning`); two sides, the partner the other."""
+def conditioned(board: Lattice, index: int, realised: Mapping[int, int], side: int) -> list[int]:
+    """The law's words for the last side's conditional: the re-weighting of its parts by what the realised sides' ports read of them, the credit's reading through the root and never a write (ALGEBRA.md, The click is the meeting of the future with the past, the re-weighting lambda_k = e_k(port_A) a_k; the owner's word of 2026-10-19): from the amplitude's own terms (`terms_of`), per term the sign times the product of the realised sides' coefficients on the parts they read, added on the part this side reads, so that lambda_k = PROD over the realised sides of e^s_k(p_s) for the symmetric record and the undeclared (e^A_k(p) at two sides) and lambda_l = SUM_k sign(l - k) e^A_k(p) for the antisymmetric at its two sides (lambda_0 = -e^A_1(p), lambda_1 = e^A_0(p), the determinant's conditional), SUM_l e_l(q) lambda_l psi_l then the amplitude at the realised ports; the part's lay weight a_k is 1, the one lay act laying every part of a record alike (`Lattice.lay`); integers, carried in the books (`Books.conditioning`); the LAST side's words alone: with the parts stepping alike the last side's re-weighted share (`reweighted_share`) is proportional to its conditional from the booked joint (`conditional_of`), the one arithmetic the draw reads, since no later side's read stands inside the square; a middle side's differs by the cross terms over the later sides' ports (the reader's numbers, tests/test_the_meeting_back.py: at three sides the second side's conditional 1 / 2, 1 / 2 against 49 / 50, 1 / 50), so the books carry the lambdas for the last side alone, asserted equal there and read by no draw."""
     family, books = board.families[index], board.credit
-    assert len(books.sides) == 2  # the loader admits the meeting that runs back on two sides
-    partner, coefficients = 1 - first, books.sides[first][1][port]
     lambdas = [0] * family.parts
     for sign, which in terms_of(family.exchange, family.parts, len(books.sides)):
-        lambdas[which[partner]] += sign * coefficients[which[first]]
+        factor = sign
+        for s, port in realised.items():
+            factor *= books.sides[s][1][port][which[s]]
+        lambdas[which[side]] += factor
     return lambdas
 
 

@@ -3,10 +3,10 @@
 import json
 from fractions import Fraction
 
-from event_universe import credit, lists, meeting, world_files
+from event_universe import lists, meeting, world_files
 from event_universe.core.rule3 import division_forward
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import ports_of
+from event_universe.loader.draw import patterns_of_the_law, ports_of
 from event_universe.loader.node_detector_declaration import node_detector_of, parts_of
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import load_world
@@ -210,7 +210,7 @@ def test_a_family_without_the_key_loads_and_steps_as_before(tmp_path, monkeypatc
 
 
 def test_the_refusals_by_name(tmp_path, monkeypatch):
-    """The refusals: `exchange` on a family of one part (no second label to exchange), a value other than the two words, `exchange` beside a detector's `capacity` on the same family (one word for one thing), and the antisymmetric sign with three sides declared (the determinant of two sides' parts, a third side's a declaration the law has not made)."""
+    """The refusals: `exchange` on a family of one part (no second label to exchange), a value other than the two words, `exchange` beside a detector's `capacity` on the same family (one word for one thing), and the antisymmetric sign read by three sides or by one, at load (the determinant of two sides' parts, another count of sides a declaration the law has not made; the owner's word of 2026-10-19, N sides the general case otherwise)."""
     universe = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
     atom = universe["families"][0]
     refused(
@@ -251,5 +251,11 @@ def test_the_refusals_by_name(tmp_path, monkeypatch):
         None,
     )
     spin = [f.name for f in board.families].index("spin")
-    board.credit.sides.append(("third", board.credit.sides[0][1]))
-    refused("3 sides", credit.joined, board, spin, {})
+    pattern = tuple(tuple(pair) for pair in IDENTITY)
+    three = [("left", pattern), ("right", pattern), ("third", pattern)]
+    refused(
+        "3 side", patterns_of_the_law, three, [spin], board.families
+    )  # at load, the determinant two sides'
+    refused("1 side", patterns_of_the_law, three[:1], [spin], board.families)
+    patterns_of_the_law(three[:2], [spin], board.families)  # two sides admitted
+    patterns_of_the_law([], [spin], board.families)  # read at no side: the shell's own world loads
