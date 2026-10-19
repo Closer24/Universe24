@@ -237,6 +237,9 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the composed pair's quotients, once
     ("loader/universe.py", "composed_pair", "largest_below"): "S",  # the sines and the norm
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
+    ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
+    ("loader/window.py", "passage", "largest_below"): "S",  # the two sines by the search
+    ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
     ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm

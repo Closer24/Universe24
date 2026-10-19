@@ -351,7 +351,7 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
 def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_absorption(
     tmp_path, monkeypatch
 ):
-    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/packets.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the intervals 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `interval`, an interval beyond the run and a body without a probe lacking its window are refused by name; the body's draw is the generator and a window's draw a Draw. (ii) The window stands from the lay to the probe's interval: no close before it, the generator at its seed, the body dark under the probe alone; at the interval the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEDETECTOR with the window [1, 3], the body's proper time 3 and the window's index 1, `absorbed` and `emitted` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's absorption is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's intervals' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's intervals are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click. The quantum the probe lays whole at the body's Node arrives through no Port, so the hole's face set is empty and the write books it and faces nothing, the deficit 1 and the reading `NO_SIDE` on the credit line (C6, the cold reader's fix of 2026-10-18; before it two faces stood at 8 and 9 whose presentation would have refused the run); the construction stands outside the law's declared use (the cold reader's line of 2026-10-19): the laid-whole record at a body's Node is the probe, and a quantum laid whole at the body's own Node and taken by a transition has no Port to leave by, so it is booked and not faced, its share standing at the Node at the count 0, the body lit by it under C2; facing all six Ports would break the hole's exactness (SUM_P R_p = 2 w for light). The drive's count at 0 starts its front from the drawn Node, faced or not (C6, the re-fix of 2026-10-19), the origin standing."""
+    """The pulsed gate (ALGEBRA.md, The pulsed gate, the window of a body bounded by the lays' schedule; the two hands of 2026-10-03, #1572 comments 5967698811, 5967783614 and 5967913000; src/event_universe/meeting.py `laid_whole`, `probe_arrived`, `probe_click`, loader/packets.py `wholes_of`, loader/draw.py `generator_of`): the Zeno body at one Node of a minimal periodic box with no drive laid, a probe (a neutral real line) laid whole by the count at its Node at the intervals 3 and 7, the body's transition of g into itself at the probe's family and its generator alone. (i) The loader: a `window` beside the probe, a `weight` on the probe's transition, `whole` or `count` without `interval` and an interval beyond the run are refused by name; the body's draw is the generator and a window's draw a Draw; a body without a probe and without a window reads as the generator alone, its window the loader's at the parse's end, derived from its drives' lays or required where a lay has no end (`loader/window.py`, tests/test_the_derived_window.py, 2026-10-19). (ii) The window stands from the lay to the probe's interval: no close before it, the generator at its seed, the body dark under the probe alone; at the interval the probe is laid by the count ((128, 128) on its line at the Node, its count 1, one lay line), the window closes and the one draw reads the labels' squares: from g untouched the probe's click is certain, the body re-laid in g, one jump line labelled NODEDETECTOR with the window [1, 3], the body's proper time 3 and the window's index 1, `absorbed` and `emitted` the probe's family, no face on the probe and its count standing. (iii) With the labels carried to e by hand (the turn's cos^2 0, sin^2 the unit) the drive's absorption is certain at the next probe: the jump at 7 reads e by the drive with the window [4, 7] and the index 2, the drive's count down by one and its two faces at the Node, the probe's record untouched again; the body's windows 2 and the scale of its reference records the run's intervals' (`resonance.scale_of`). (iv) On the shipped pulsed world `zeno_pulsed_4` the probe's intervals are 192, 384, 576 and 768 and the back-in-time gate reads MATCH over 200 intervals, across the first probe's lay and its click. The quantum the probe lays whole at the body's Node arrives through no Port, so the hole's face set is empty and the write books it and faces nothing, the deficit 1 and the reading `NO_SIDE` on the credit line (C6, the cold reader's fix of 2026-10-18; before it two faces stood at 8 and 9 whose presentation would have refused the run); the construction stands outside the law's declared use (the cold reader's line of 2026-10-19): the laid-whole record at a body's Node is the probe, and a quantum laid whole at the body's own Node and taken by a transition has no Port to leave by, so it is booked and not faced, its share standing at the Node at the count 0, the body lit by it under C2; facing all six Ports would break the hole's exactness (SUM_P R_p = 2 w for light). The drive's count at 0 starts its front from the drawn Node, faced or not (C6, the re-fix of 2026-10-19), the origin standing."""
     path, folder = pulsed_world(tmp_path, monkeypatch), EVENTS / "zeno_pulsed"
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
@@ -360,11 +360,12 @@ def test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its
     families, quanta = universe_of(universe)[1], {"atom": 0, "pulse": 1, "probe": 2}
     wrong = {"beside a probe": {**record, "node_detector": {**draw, "window": 1}}}
     wrong["no weight"] = {**record, "transitions": [*turns, {**probe, "weight": 1}]}
-    wrong["lacks the key 'window'"] = {**record, "transitions": turns}
     for word, body in wrong.items():
         refused(word, node_detector_of, body, "bodies[0]", families, 0, quanta, 1)
     assert node_detector_of(record, "bodies[0]", families, 0, quanta, 1).draw == Generator(**draw)
     assert isinstance(draw_of({**draw, "window": 1}, "node_detector"), Draw)
+    turning = {**record, "transitions": turns}  # no probe and no window: the generator alone at the read
+    assert node_detector_of(turning, "bodies[0]", families, 0, quanta, 1).draw == Generator(**draw)
     untimed = {k: v for k, v in lays[0].items() if k != "interval"}
     for word, packet in (("without `interval`", untimed), ("interval", {**lays[0], "interval": 10})):
         bad = tmp_path / "bad.json"
@@ -547,24 +548,24 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark()
     board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(262):  # dark from the interval 251 (the click at 76, the front from 77 to 261)
+    for _ in range(262):  # dark from the interval 236 (the click at 61, the front from 62 to 246)
         board.step()
         shares.append(board.books()["photon"]["share"])
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     credits = [c for c in credits if c["absorbed"]]
-    assert len(credits) == 1 and credits[0]["interval"] == 76 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 61 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {x["event"] for x in lines if x["interval"] > 76} <= {"erasure", "face", "credit", "lay"}
+    assert {x["event"] for x in lines if x["interval"] > 61} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
-    """The absorption among several drives (ALGEBRA.md, The click writes on the lattice (f); The two-mode line; `meeting.turned_labels`, `absorbed`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands: a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
+    """The absorption among several drives (ALGEBRA.md, The click writes on the lattice (f); The two-mode line; `meeting.turned_labels`, `absorbed`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands (the windows derived from the packets' passage, 33 each, the left atom lit at 13 closing at 45 and the right at 14 closing at 46; 2026-10-19): a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
     seen, turned = [], meeting.turned_labels
 
     def kept(board, books):  # the labels and the shares at the window's close, before the click
         turned(board, books)
         shares = getattr(books, "shares", {})  # none before the fix: the clicks' assertion fails
-        seen.append((list(books.labels), {t.drive: s for t, s in shares.items()}))
+        seen.append((books.number, list(books.labels), {t.drive: s for t, s in shares.items()}))
 
     monkeypatch.setattr(meeting, "turned_labels", kept)
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
@@ -576,9 +577,9 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
         (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
         world = json.loads((folder / "two_photons.json").read_text(encoding="utf-8"))
         world.update(shape=[64, 1, 1], universe="u.json", engine="e.json")
-        for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
+        for body, at in zip(world["bodies"], (15, 47), strict=True):
             body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
-            body["node_detector"] = {**body["node_detector"], "window": window}
+            body["node_detector"] = {k: v for k, v in body["node_detector"].items() if k != "window"}
             body["transitions"] = [{**body["transitions"][0], "drive": d} for d in drives]
         for packet, x, family in zip(world["packets"], (32, 31), ("photon", "photon_b"), strict=True):
             packet.update(top={**packet["top"], "x": [x, x]}, family=family)
@@ -590,10 +591,10 @@ def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_pa
             board.step()
         hits = [c for c in lines if c.get("absorbed")]
         clicks[drives] = [(c["interval"], c["node_detector"], c["absorbed"]) for c in hits]
-    assert clicks["photon", "photon_b"] == [(56, "body 0", "photon_b"), (69, "body 1", "photon")]
-    assert clicks[("photon",)] == [(69, "body 1", "photon")]
-    two, one = seen[:2], seen[2:]  # one window per body, opened by its earliest lit drive
+    assert clicks["photon", "photon_b"] == [(45, "body 0", "photon_b"), (46, "body 1", "photon")]
+    assert clicks[("photon",)] == [(46, "body 1", "photon")]
+    two, one = ({n: (lab, s) for n, lab, s in part} for part in (seen[:2], seen[2:]))  # per body
     print(f"by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
-    assert [labels[1] ** 2 for labels, _ in one] == [shares[1] for _, shares in one]  # one drive
-    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, 69 in both worlds
+    assert all(labels[1] ** 2 == shares[1] for labels, shares in one.values())  # one drive
+    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, 46 in both worlds
     assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

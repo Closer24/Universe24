@@ -57,6 +57,13 @@ class WholePacket:
     interval: int
 
 
+def axes_waves(packet: PacketRow) -> tuple[tuple[int, int], ...]:
+    """A packet's wave number per axis, [p, q] for k = pi p / q per Link: its `wave` along its axis and its `transverse` pairs across ([0, 1] where none), the three the band's line reads (`emission.packet_unit`, the record's unit; `loader/window.packet_passage`, the lay's passage over a body)."""
+    return tuple(
+        packet.wave if axis == packet.along else packet.transverse[axis] for axis in range(len(AXES))
+    )
+
+
 def wholes_of(
     value: object,
     families: tuple[FamilyRule, ...],

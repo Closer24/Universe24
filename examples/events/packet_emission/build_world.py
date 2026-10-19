@@ -97,7 +97,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
                 "width": int(design["width"]),
             }
         ],
-        "node_detector": {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])},
+        "node_detector": {**design["generator"], "seed": int(row["seed"])},  # the window derived at load
     }
     width = int(design["width"])
     positions = [[found["node_detector_x"], y, z] for y in range(width) for z in range(width)]

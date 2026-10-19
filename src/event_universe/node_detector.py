@@ -168,8 +168,14 @@ def piece_momentum(board: Lattice, index: int, passage: Passage) -> list[int]:
 
 
 def sourcing(board: Lattice, books: NodeBooks) -> set[int]:
-    """The families a reader is itself giving a source in time to, while that source has intervals left (`credit.Books.sources`, `emission.Source.emitter`): the click's plan, C5, dark to its own source: its transitions read none of them, no window, no turn and no hole from a quantum it is emitting (L780, a quantum from outside; nature: an atom does not absorb the photon it is emitting)."""
-    return {source.family for source in board.credit.sources if source.emitter == books.number}
+    """The families a reader is dark to as their giver (the click's plan, C5, dark to its own source; its reach by the lay's end on 2026-10-19, the atom branch, the cold reader's change (a) with the reader's fix): the families it is giving a source in time to while that source has intervals left (`credit.Books.sources`, `emission.Source.emitter`), and, where its lay of the family has an end (`Rate.ended`, the window rule's property: an open board, the record departing, the wake no light to take back), every light family in which quanta it gave still stand in the record (`credit.Books.emitters`, `emission.Emitter.outstanding`, kept until a click draws the body as the piece's source and the count reaches 0, `twist.drawn_emitter`); where the lay has no end (a periodic board, the quantum circulating as in a cavity) the first line alone, the body released at the span's end; its transitions read none of them, no window, no turn and no hole from a quantum it gave (L780, a quantum from outside; nature: an atom does not absorb the photon it is emitting); on the narrower line alone a body on an open chain read its own train's wake once the source's span was spent and took its own quantum back (chain_detuned, seed 25, 215, a finding by name), and the emitter of a directed packet was lit by it at the lay; a read of the books and of the lay's end, no geometry of the board's axes, symmetric under the 48 by construction."""
+    departing = {rate.light for rate in books.declared.rates if rate.ended}
+    given = {
+        f
+        for f, book in board.credit.emitters.items()
+        if f in departing and any(e.body == books.number and e.outstanding for e in book)
+    }
+    return given | {source.family for source in board.credit.sources if source.emitter == books.number}
 
 
 def dark(board: Lattice, books: NodeBooks, sourced: set[int]) -> bool:

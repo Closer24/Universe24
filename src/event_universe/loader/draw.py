@@ -33,7 +33,7 @@ class Generator:
 
 @dataclass(frozen=True)
 class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (its window standing by name as the probe that is not laid)."""
+    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19)."""
 
     window: int
 
@@ -55,7 +55,7 @@ def generator_of(value: object, label: str) -> Generator:
 
 
 def draw_of(value: object, label: str) -> Draw:
-    """The world's `draw`, and a body's `node_detector` without a probe: its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
+    """The world's `draw`, a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1, every other key refused by name."""
     found = keyed(value, label, DRAW_KEYS, DRAW_KEYS)
     return Draw(
         integer(found["seed"], f"{label}.seed", 0),
@@ -63,6 +63,12 @@ def draw_of(value: object, label: str) -> Draw:
         integer(found["increment"], f"{label}.increment", 0),
         integer(found["window"], f"{label}.window", 1),
     )
+
+
+def body_draw_of(value: object, label: str) -> Generator:
+    """A body's `node_detector` without a probe: the generator's three keys and, where the declaration carries it, its `window` (`Draw`, `draw_of`), else the generator alone (`Generator`, `generator_of`); the window of a body whose drives are laid with an end is derived at the end of the load from the lays' passage over it, where the key is refused by name, and declared, the instrument's cadence, where a drive is laid with no end or nowhere (`loader/window.windowed`, the atom branch, 2026-10-19)."""
+    found = keyed(value, label, DRAW_KEYS, GENERATOR_KEYS)
+    return draw_of(found, label) if "window" in found else generator_of(found, label)
 
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:

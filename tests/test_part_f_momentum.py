@@ -239,12 +239,12 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
 
 
 def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_path, monkeypatch):
-    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click of 48 at body 0, the piece arriving from the right: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 47 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
+    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click at 61 (the window derived from the packet's passage, 33, 2026-10-19), the piece arriving from the right: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 60 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     num = board.families[light].pair[0]
-    for _ in range(75):
+    for _ in range(60):
         board.step()
     right = (np.arange(board.shape[0]) >= 48).reshape(board.shape)
     packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, right)[0]
@@ -252,7 +252,7 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     board.step()
     credits = [line for line in lines if line["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 76 and credits[0]["absorbed"] == "photon"
+    assert len(credits) == 1 and credits[0]["interval"] == 61 and credits[0]["absorbed"] == "photon"
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
     assert piece[0] > 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
     assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio
@@ -261,7 +261,7 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
     quantum = 2 * T * math.sin(math.pi / 4)
     print(
         f"Part F2 (Tasks 1, 5): the piece's p = {piece}, the fan's P = {fan}, the deficit {deficit}; "
-        f"the whole right packet's P W_rec / (W num) at 75 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
+        f"the whole right packet's P W_rec / (W num) at 60 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
         f"W = {packet_share / 589824000:.3f} W_c), W_rec = {board.credit.units[light] / 589824000:.3f} W_c; "
         f"|p_x| against 2 T sin(pi / 4) = {quantum:.0f}: {abs(piece[0]) / quantum:.3f} of it"
     )
@@ -274,11 +274,11 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
 
 
 def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp_path, monkeypatch):
-    """Task 3: (a) on one_photon at the click of 48 the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `twist.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
+    """Task 3: (a) on one_photon at the click at 61 (the derived window, 2026-10-19) the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `twist.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
-    for _ in range(75):
+    for _ in range(60):
         board.step()
     before = twist.fan_momentum(board, atom)
     board.step()
@@ -294,7 +294,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
         f"(the two-Node atom's reach 4 SUM A^2 = {4 * 2 * 90 * 90} at most; no taker of this lay carries one count of one_photon's photon)"
     )
-    # (b') the reachable case on the first atom, standing in its ground part at 76
+    # (b') the reachable case on the first atom, standing in its ground part at 61
     books = board.credit.bodies[0]
     wanted = 10000
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
@@ -402,6 +402,10 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
     def edit(world):  # type: ignore[no-untyped-def]
         world["boundary"]["x"], world["packets"] = "periodic", []
         world.pop("receding", None)
+        for body in world[
+            "bodies"
+        ]:  # no light laid on the ring: the window is the declaration's (2026-10-19)
+            body["node_detector"]["window"] = 48
         world["bodies"][0]["nodes"] = [
             {"node": [95, 0, 0], "weight": 1},
             {"node": [0, 0, 0], "weight": 1},

@@ -1,5 +1,6 @@
 """Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged line 6091735946): at a click the write conserves the lattice momentum with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, at the click's tick by one twist (`twist.recoiled`, `twist.folded_source`); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window longer than the run, so no null window re-lays it: a null window's re-lay discards a body's twist, Part F's taker's too, a finding reported and not hidden), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
 
+import hashlib
 import json
 import time
 from dataclasses import replace
@@ -21,12 +22,13 @@ from tests.laws import EMIT_RUN as RUN
 from tests.laws import EVENTS, drift_bound, emit_and_take_world, levels_floor, one_photon_board
 
 T = 32768
-ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_before_g.output.json"
+ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_derived_window.output.json"
+EARLIER = ORACLE.with_name("one_photon_before_g.output.json")  # the record at the declared 48 (84b9ca0)
 STRIPPED = {"momentum", "fan", "twist", "lost", "source", "recoil"}  # the Boss's check strips these
 
 
 def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(tmp_path, monkeypatch):
-    """Task 5 (a) to (d). (a) At the emission's intervals (the source in time's 48 lays from 61) the light's P_x over the board stays within the accumulated drift bound (it reads 0: the one-Node lay is even about its Node). (b) At body 1's click (144) the credit line names `source` body 0, `recoil` = -`momentum` per axis and `lost` None: the six-Node taker carries +p and the six-Node source carries -p. (c) P over the board and the two bodies before the emission equals P after the front has passed, to the floor of the two folds' roundings, read after the front and before the taker's next window closes (192, whose null window re-lays the body); the three integers and the floor printed. (d) The reversal with the books through the emission, the click, the two folds and the front is bit for bit (tools/back_in_time: MATCH)."""
+    """Task 5 (a) to (d). (a) At the emission's intervals (the source in time's 48 lays from 61) the light's P_x over the board stays within the accumulated drift bound (it reads 0: the one-Node lay is even about its Node). (b) At body 1's click (169) the credit line names `source` body 0, `recoil` = -`momentum` per axis and `lost` None: the six-Node taker carries +p and the six-Node source carries -p. (c) P over the board and the two bodies before the emission equals P after the front has passed, to the floor of the two folds' roundings, read after the front and before the taker's next window closes (217, beyond the run of 200; its null close at 121 came before the click); the three integers and the floor printed. (d) The reversal with the books through the emission, the click, the two folds and the front is bit for bit (tools/back_in_time: MATCH)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))
     board = Lattice(load_world(path), (lines := []).append)
@@ -94,29 +96,36 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, monkeypatch):
-    """Task 5 (e): one_photon's first click (76, the second atom's window open from the photon's first lit interval, 29, and closed 48 after it, C2, the packets at the amplitude 78 of one quantum in the record's own unit, C1; 48 before C2 and 75 before C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (before them the Part F2 run recorded at 04caccce2; the oracle's lines to 76, the six keys stripped as the Boss's check strips them; the oracle recorded from the committed tree 84b9ca0 by tools/run_inputs.py, its header's `recorded_at` naming that commit, the practice since the cold reader's line of 2026-10-19: the recording is made from a committed tree and says which)."""
+    """Task 5 (e): one_photon's first click (61, the second atom's window open from the photon's first lit interval, 29, and closed 33 after it, the packet's passage derived at load, C2 with (D), 2026-10-19; 76 at the declared 48 before it, 48 before C2 and 75 before C1; the packets at the amplitude 78 of one quantum in the record's own unit, C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (the oracle's lines to 61, the six keys stripped as the Boss's check strips them; the oracle recorded from the committed tree 34d9795da by tools/run_inputs.py, its header's `recorded_at` naming that commit, the practice since the cold reader's line of 2026-10-19: the recording is made from a committed tree and says which; the record at the declared 48, recorded from 84b9ca0, kept beside it); and the pre-close equality, the reader's (d): the two records' lines before the new close, to 60, are the same, both none (no lay, face or credit line stands before the first click on this world), so the derived window adds no act before the close; the lay itself is the mode file's, its levels untouched with the digest alone moved, and the stepping to 60 is Rule3's, in which no window enters: the board's every level and remainder at the interval 60 is asserted against the SHA-256 constant 631c73c7ded2e3e5 of the lines' bytes in order, computed once on the tree before (3a) at the declared 48 and on the branch at the derived 33 (2026-10-19), so the stepping to the former close's eve is the former tree's bit for bit."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
-    for _ in range(76):
+    for _ in range(60):
         board.step()
+    records = [line for state in board.states for line in state.lines]
+    levels = b"".join(a.tobytes() for r in records for a in (r.now, r.before, r.remainder))
+    assert hashlib.sha256(levels).hexdigest()[:16] == "631c73c7ded2e3e5"  # (d): the board at 60
+    board.step()
     credits = [c for c in lines if c["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 76
+    assert len(credits) == 1 and credits[0]["interval"] == 61
     click = credits[0]
     assert click["source"] == THE_LAY and click["recoil"] == [-p for p in click["momentum"]]
     assert click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
-    oracle = json.loads(ORACLE.read_text(encoding="utf-8"))
+    oracle, earlier = (json.loads(p.read_text(encoding="utf-8")) for p in (ORACLE, EARLIER))
     kinds = {"click", "density", "parts", "credit", "erasure", "lay", "face", "conversion"}
 
-    def cleaned(found):  # type: ignore[no-untyped-def]
+    def cleaned(found, last=61):  # type: ignore[no-untyped-def]
         return [
             {k: v for k, v in line.items() if k not in STRIPPED}
             for line in found
-            if line["event"] in kinds and int(str(line["interval"])) <= 76
+            if line["event"] in kinds and int(str(line["interval"])) <= last
         ]
 
     assert cleaned(lines) == cleaned(oracle["lines"])
+    assert (
+        cleaned(oracle["lines"], 60) == cleaned(earlier["lines"], 60) == []
+    )  # (d): no act before the close
     print(
-        f"Part G (5e): one_photon at 76: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's"
+        f"Part G (5e): one_photon at 61: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's, the lines before the close the former record's"
     )
 
 

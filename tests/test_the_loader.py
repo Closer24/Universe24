@@ -6,6 +6,8 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import faces, keys, lay, mode, packets, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
+from event_universe.loader.node_detector_declaration import lit_families
+from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_beside
 
@@ -293,3 +295,40 @@ def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through
     print(refused("not one connected region", load_world, slit_world(tmp_path, TOOL, "open", **board)))
     assert faces.extent_across([0, 4], 5, True) == 2 and faces.extent_across([0, 4], 5, False) == 5
     assert [faces.extent_across(c, 5, True) for c in ([1, 2, 3], range(5), [2, 2])] == [3, 5, 1]
+
+
+def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_family_reads():
+    """Light its own family on every clicked world (the owner's word of 2026-10-19, the atom branch claude/atom-events; ALGEBRA.md, The emission of a bound record is the click's act of the taker): a transition's `drive`, a rate's `gives_to` and a conversion's record out name a family of quanta or a holder of the sign no family reads, whose one row is the free row 0, the light's record (the Zeno worlds' pulse, read by no family, stays named), and the holder a charged family reads, whose rows beyond the free row are its records' own writes, is refused by name in each of the three places (`node_detector_declaration.lit_families`, the dict a body's declaration names its families from), on the deuteron's universe, whose nuclide reads the holder charge, with a massless photon row added as light's own family; a world of this universe with no nuclide body laid, its one body of light's own family converted whole, refuses `charge` as its record out the same, the rule the universe's and no world's (2026-10-19)."""
+    document = json.loads((EVENTS / "deuteron.json").read_text(encoding="utf-8"))
+    document["families"].append({"name": "photon", "pair": [6000, 6000], "reads": {}, "dimension": 1})
+    families = universe.universe_of(document)[1]
+    quanta = {family.name: index for index, family in enumerate(families) if family.quanta}
+    assert quanta == {"charge": 0, "nuclide": 1, "photon": 2}  # the holder of the sign carries quanta
+    assert lit_families(families, quanta) == {"nuclide": 1, "photon": 2}  # and is no click's family
+    zeno = universe.universe_of(json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text("utf-8")))[1]
+    pulse = {family.name: index for index, family in enumerate(zeno) if family.quanta}
+    assert lit_families(zeno, pulse) == pulse == {"atom": 0, "pulse": 1}  # a holder no family reads
+    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
+    draw = {"window": 4, "seed": 1, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
+    turn, rate = {"from": "g", "to": "e", "weight": 1, "resonance": [2, 3]}, {"from": "e", "to": "g"}
+
+    def declared(**entry):
+        body = {"family": "nuclide", "nodes": [{"node": [1, 0, 0]}], "node_detector": draw, **entry}
+        return bodies_of([body], None, "", families, (3, 1, 1), 9000, (), 32768)
+
+    admitted = declared(parts=parts, transitions=[{**turn, "drive": "photon"}])[0].detector
+    assert admitted is not None and admitted.transitions[0].drive == 2  # light's own family named
+    wrong = {
+        "drive": dict(parts=parts, transitions=[{**turn, "drive": "charge"}]),
+        "gives_to": dict(parts=parts, transitions=[{**turn, "drive": "photon"}]),
+        "to[0]": dict(count=1, conversion={"rate": 2, "to": ["charge"], "sense": 1}),
+    }
+    wrong["gives_to"]["rates"] = [{**rate, "lifetime": 8, "gives_to": "charge"}]
+    for key, entry in wrong.items():
+        refusal = str(refused("no holder of the sign a family reads", declared, **entry))
+        print(refusal)
+        assert key in refusal and "'charge'" in refusal and "['nuclide', 'photon']" in refusal
+    refusal = str(
+        refused("no holder of the sign a family reads", declared, family="photon", **wrong["to[0]"])
+    )
+    assert "to[0]" in refusal and "'charge'" in refusal  # no nuclide body laid: the universe's rule
