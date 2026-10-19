@@ -59,7 +59,7 @@ def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monke
 
 
 def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
-    """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 144 with the two receivers; both bodies' windows close with no click at 192, after the click and before the run's end, and P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
+    """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 169 with the two receivers (its null close at 121 before it); the emitter's window never opens on its own light (C5 widened to the emitters' book, 2026-10-19: dark to the light it gave while its quantum stands, where the narrower line lit it by its own train once the source's span was spent and closed a null window on it at 156), and P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=48)
     board = Lattice(load_world(path), (lines := []).append)
@@ -86,9 +86,9 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     click = taken[0]["interval"]
     closes = [b.windows for b in board.credit.bodies]
     assert closes == [
-        1,
+        0,
         2,
-    ]  # C2: the emitter's one window, lit after its source ended, the taker's null and its click
+    ]  # C5 widened: no window of the emitter's on its own light; the taker's null and its click
     assert before == 0 and after is not None and floor is not None
     end = (twist.fan_momentum(board, light)[0], twist.fan_momentum(board, atom)[0])
     assert abs(after[1] + after[2] - before) <= floor, (before, after, floor)

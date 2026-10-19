@@ -12,7 +12,7 @@ import numpy as np
 
 from event_universe import growth, share
 from event_universe.core import paces
-from event_universe.core.ports import AXES, PORTS
+from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
@@ -20,7 +20,7 @@ from event_universe.front import Front
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Ports, ports_of
 from event_universe.loader.keys import Node
-from event_universe.loader.packets import PacketRow
+from event_universe.loader.packets import axes_waves
 from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of
 from event_universe.reports import PORT_NAMES, weighted
 
@@ -143,13 +143,6 @@ def record_unit(board: Lattice, index: int) -> int:
             "record has one unit (C1), and its packets one wave's cosine"
         )
     return units.pop()
-
-
-def axes_waves(packet: PacketRow) -> tuple[tuple[int, int], ...]:
-    """A packet's wave number per axis, [p, q] for k = pi p / q per Link: its `wave` along its axis and its `transverse` pairs across ([0, 1] where none), the three the band's line reads (`emission.packet_unit`)."""
-    return tuple(
-        packet.wave if axis == packet.along else packet.transverse[axis] for axis in range(AXES)
-    )
 
 
 def quanta_through(books: Books, index: int, inflow: int, link_unit: int) -> int:

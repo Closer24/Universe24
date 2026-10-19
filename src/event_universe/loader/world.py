@@ -9,7 +9,7 @@ import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
-from event_universe.loader import derived
+from event_universe.loader import derived, window
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import (
     Draw,
@@ -355,6 +355,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         (periodic[0], periodic[1], periodic[2]),
     )
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
+    bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
     intervals = integer(world["intervals"], "intervals", 0)
     wholes = wholes_of(world.get("packets", []), families, shape, beyond, intervals)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()

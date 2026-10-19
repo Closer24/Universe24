@@ -9,7 +9,7 @@ from event_universe.core.rule3 import division_forward
 from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
 from event_universe.loader.derived import FamilyRule, count_wall, readers_of
-from event_universe.loader.draw import Generator, draw_of, generator_of
+from event_universe.loader.draw import Generator, body_draw_of, draw_of, generator_of
 from event_universe.loader.keys import integer, keyed
 
 READER_RECORD_KEYS = (
@@ -85,7 +85,7 @@ class Conversion:
 
 @dataclass(frozen=True)
 class NodeDetectorDeclaration:
-    """A body as a NodeDetector as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts), and per part its declared `capacity`, None where none is declared (the exclusion, `lists.full`; empty for a record converted whole)."""
+    """A body as a NodeDetector as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`, declared where a drive's lay has no end and derived at the end of the load from its drives' lays' passage otherwise, `loader/window.py`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts), and per part its declared `capacity`, None where none is declared (the exclusion, `lists.full`; empty for a record converted whole)."""
 
     names: tuple[str, ...]
     counts: tuple[int, ...]
@@ -334,7 +334,7 @@ def node_detector_of(
     quanta: dict[str, int],
     count: int,
 ) -> NodeDetectorDeclaration:
-    """A body's declaration as a NodeDetector (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_detector` (its own draw: with its window, `draw_of`, or the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_detector` to draw it; refused by name otherwise; every family a click names, a transition's `drive`, a rate's `gives_to` and a conversion's record out, light its own family (`lit_families`, 2026-10-19)."""
+    """A body's declaration as a NodeDetector (ALGEBRA.md, The click writes on the lattice (j) and (k); the owner's word: the body is at a Node): `parts` (the lay in its modes at the start, admitted alone), and with `node_detector` (its own draw, `body_draw_of`: the generator with its declared window, or the generator alone, the window then derived at the end of the load from its drives' lays with an end and a declared key refused by name where derived, `loader/window.windowed`, 2026-10-19; the generator alone where a probe stands among the transitions, `generator_of`, a window beside a probe refused by name) its `transitions` and its `rates`, each needing the draw and the draw needing the parts; the family a plane of several parts; or `conversion` (`conversion_of`), the record converted whole at its Node, of any shape, one part named by its family at the body's count, its own lay's `sense` beside the table where the record is a plane, with `node_detector` to draw it; refused by name otherwise; every family a click names, a transition's `drive`, a rate's `gives_to` and a conversion's record out, light its own family (`lit_families`, 2026-10-19)."""
     family = families[own]
     quanta = lit_families(families, quanta)  # light its own family: the families a click may name
     if "conversion" in body:
@@ -359,7 +359,7 @@ def node_detector_of(
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None
     if "node_detector" in body:
-        read = generator_of if probed else draw_of
+        read = generator_of if probed else body_draw_of
         draw = read(body["node_detector"], f"{label}.node_detector")
     if draw is None and ("transitions" in body or "rates" in body):
         raise ValueError(

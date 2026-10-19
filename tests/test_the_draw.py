@@ -413,7 +413,9 @@ def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(
         "node_detectors": [],
         "bodies": body([17, 17, 17], width=3, lifetime=8),
     }
-    small["bodies"][0]["node_detector"] = {**giver["node_detector"], "window": 2}
+    small["bodies"][0]["node_detector"] = {
+        k: v for k, v in giver["node_detector"].items() if k != "window"
+    }  # the window derived from the train's passage, 2026-10-19
     del small["draw"]
     (tmp_path / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     load_file("pixel_mode", ROOT / "tools" / "pixel_mode.py").main(
@@ -500,31 +502,31 @@ def test_the_source_in_time_lays_the_form_it_radiates():
 
 
 def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_falls_to_zero(tmp_path):
-    """The control's two photons as two records (ALGEBRA.md, The click writes on the lattice (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre with their windows apart, 44 and 56 intervals from each atom's first lit interval (C2: the left atom lit at 13 closes at 56, the right at 14 closes at 69; the packets at the amplitude 110, one quantum each in the record's own unit, C1), the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the absorption drawn by each drive's own transfer share, `lists.absorption`), body 0 by `photon_b` at 56 and body 1 by `photon` at 69, whichever closes first; after the first absorption that record's count is 0 with its front from the taker's Node at the absorption's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 56 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 69 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every absorption a hole to 0)."""
+    """The control's two photons as two records (ALGEBRA.md, The click writes on the lattice (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms 16 Links from the centre, their windows the packets' passage derived at load, 33 intervals from each atom's first lit interval (C2 with the derived window, 2026-10-19: the left atom lit at 13 closes at 45, the right at 14 closes at 46; the packets at the amplitude 110, one quantum each in the record's own unit, C1), the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the absorption drawn by each drive's own transfer share, `lists.absorption`), body 0 by `photon_b` at 45 and body 1 by `photon` at 46, whichever closes first; after the first absorption that record's count is 0 with its front from the taker's Node at the absorption's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 45 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 46 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every absorption a hole to 0)."""
     world = json.loads((EVENTS / "anticoincidence" / "two_photons.json").read_text(encoding="utf-8"))
-    for body, at, window in zip(world["bodies"], (15, 47), (44, 56), strict=True):
+    for body, at in zip(world["bodies"], (15, 47), strict=True):
         body["nodes"] = [{"node": [at, 0, 0], "weight": 1}, {"node": [at + 1, 0, 0], "weight": 1}]
-        body["node_detector"] = {**body["node_detector"], "window": window}
+        body["node_detector"] = {k: v for k, v in body["node_detector"].items() if k != "window"}
     for packet, x in zip(world["packets"], (32, 31), strict=True):
         packet["top"] = {**packet["top"], "x": [x, x]}
     (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
     TOOL.main(["--input", str(path)])
     board = Lattice(load_world(path), (lines := []).append)
     photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
-    for t in (56, 60, 65, 69, 75):
+    for t in (45, 46, 50, 55, 60):
         while board.interval < t:
             board.step()
         done = credit_lines(lines, "absorbed")
         taken = [(c["interval"], c["node_detector"], c["absorbed"]) for c in done]
         books = {name: (b["quanta"], b["count"], b["deficit"]) for name, b in board.books().items()}
-        second = t >= 69  # the right atom's absorption at its window's close, photon's record then at 0
-        assert taken == [(56, "body 0", "photon_b"), (69, "body 1", "photon")][: 1 + second]
+        second = t >= 46  # the right atom's absorption at its window's close, photon's record then at 0
+        assert taken == [(45, "body 0", "photon_b"), (46, "body 1", "photon")][: 1 + second]
         fronts = [(f.family, f.since) for f in board.credit.fronts]
-        assert fronts == [(photon_b, 56), (photon, 69)][: 1 + second]
+        assert fronts == [(photon_b, 45), (photon, 46)][: 1 + second]
         assert books["photon_b"][1:] == (0, 0) and books["photon"][1:] == (1 - second, 0)
         assert second or books["photon"][0] == 1  # the other record stands whole until its absorption
         origin = board.credit.fronts[0].origin[0] + board.offset[0]  # the hole's Node as the board grew
-        reach = np.abs(np.arange(board.shape[0]) - origin) <= t - 56 - 3  # the shells faced by now
+        reach = np.abs(np.arange(board.shape[0]) - origin) <= t - 45 - 3  # the shells faced by now
         line = board.states[photon_b].lines[0]
         assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()
     assert {c["node_detector"]: c["absorbed"] for c in done} == {
@@ -534,7 +536,7 @@ def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_
 
 
 def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_nulls(tmp_path, monkeypatch):
-    """The one draw over readers of one record closing at different intervals (ALGEBRA.md, The click writes on the lattice (7), the mathematician's line, #1793 comment 5981514001 (5); `lists.absorption`, `credit.Books.unabsorbed`): one photon of count 1 on a chain of 72, laid at the Node 14 over 16 Nodes of edge and travelling +x at the group pace, passes the atom A at 30 and 31, lit from 2, whose window of 48 closes at 49, and the atom B beside it at 32 and 33, lit from 6, whose window of 52 closes at 57 (C2; the packet at the amplitude 78, C1; the two reads of one record staggered in time, not in space); A's null window leaves the wave as laid, so B reads the same packet; over 120 trials (the shipped packet of 78 alone half a quantum in the record's unit, C1, the transitions' weight 3 for shares near 0.45; the packet of 78 alone reads one quantum only by the half-up rounding at exactly one half, (share + W_rec div 2) div W_rec with the laid share one half of W_rec within the lay's rounding, the pin's fragility named; the board copied at the interval before A's close, the lay and the steps before it the same in every trial, every record's generator at the trials tool's hashed state of the trial's label, the seed times the records' number plus the record's number, so that the trials are independent draws and not one Weyl sequence, R342 and R351, the engine's own draws from there; B beside A and its close eight intervals after A's keep the test under the check's bound of 30 seconds on the CI runner's clock) the realised frequency of B's absorption is the one draw's, s_B over the labels' unit, within three standard errors, and not the branch's (1 - s_A) s_B, more than three standard errors away, and given A's null B takes at the law's s_B / (1 - s_A) and not at the branch's s_B, the sharper statistic; A's frequency is s_A; no trial holds two absorptions, the count conserved; the books after a trial of two nulls hold the record's unabsorbed share, the unit less A's share, read in B's unit, less B's share, and after an absorption none; the shares read from the books at the two closes and the four numbers printed."""
+    """The one draw over readers of one record closing at different intervals (ALGEBRA.md, The click writes on the lattice (7), the mathematician's line, #1793 comment 5981514001 (5); `lists.absorption`, `credit.Books.unabsorbed`): one photon of count 1 on a chain of 72, laid at the Node 14 over 16 Nodes of edge and travelling +x at the group pace, passes the atom A at 30 and 31, lit from 2, whose window closes at 64, and the atom B beside it at 32 and 33, lit from 6, whose window closes at 68 (C2 with the window derived at load, 2026-10-19: the packet of 1 + 32 Nodes over 2 at k = pi / 4, ceil(34 x 3 x 2586 / 4243) = 63 at both atoms; the packet at the amplitude 78, C1; the two reads of one record staggered in time, not in space); A's null window leaves the wave as laid, so B reads the same packet; over 120 trials (the shipped packet of 78 alone half a quantum in the record's unit, C1, the transitions' weight 3 for shares near 0.45; the packet of 78 alone reads one quantum only by the half-up rounding at exactly one half, (share + W_rec div 2) div W_rec with the laid share one half of W_rec within the lay's rounding, the pin's fragility named; the board copied at the interval before A's close, the lay and the steps before it the same in every trial, every record's generator at the trials tool's hashed state of the trial's label, the seed times the records' number plus the record's number, so that the trials are independent draws and not one Weyl sequence, R342 and R351, the engine's own draws from there; B beside A and its close four intervals after A's keep the test under the check's bound of 30 seconds on the CI runner's clock) the realised frequency of B's absorption is the one draw's, s_B over the labels' unit, within three standard errors, and not the branch's (1 - s_A) s_B, more than three standard errors away, and given A's null B takes at the law's s_B / (1 - s_A) and not at the branch's s_B, the sharper statistic; A's frequency is s_A; no trial holds two absorptions, the count conserved; the books after a trial of two nulls hold the record's unabsorbed share, the unit less A's share, read in B's unit, less B's share, and after an absorption none; the shares read from the books at the two closes and the four numbers printed."""
     seen, turned = {}, meeting.turned_labels
 
     def kept(board, books):  # the labels' unit and the transfer share at a close while the count stands
@@ -554,28 +556,28 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
     world.update(shape=[72, 1, 1], universe="u.json", engine="e.json", intervals=68)
     top, edge = {**packet["top"], "x": [14, 14]}, dict(x=16, y=0, z=0)  # the packet over 16 Nodes at 14
     world["packets"] = [{**packet, "top": top, "edge": edge}]
-    for body, at, window in zip(world["bodies"], (30, 32), (48, 52), strict=True):
+    for body, at in zip(world["bodies"], (30, 32), strict=True):
         body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]
-        body["node_detector"] = {**body["node_detector"], "window": window}
+        body["node_detector"] = {k: v for k, v in body["node_detector"].items() if k != "window"}
         body["transitions"] = [{**body["transitions"][0], "weight": 3}]  # the shares near 0.45 each
     (path := tmp_path / "staggered.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
     laid, trials, clicks, left = Lattice(load_world(path)), 120, [], {}
     photon = [f.name for f in laid.families].index("photon")
-    while laid.interval < 47:  # the interval before A's close: the same lay and steps in every trial
+    while laid.interval < 63:  # the interval before A's close: the same lay and steps in every trial
         laid.step()
     assert laid.credit.counts[photon] == 1 and photon not in laid.credit.unabsorbed
     for seed in range(trials):
         (board := copy.deepcopy(laid)).output = (lines := []).append
         for books in board.credit.bodies:  # every record's generator at the trial's hashed state (R342)
             books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
-        while board.interval < 57:
+        while board.interval < 68:
             board.step()
         hits = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
         clicks.append(tuple(c["node_detector"] for c in hits))
         left[clicks[-1]] = (board.credit.counts[photon], board.credit.unabsorbed.get(photon))
-    ((unit_a, s_a),), ((unit_b, s_b),) = seen[49, 0], seen[57, 1]
+    ((unit_a, s_a),), ((unit_b, s_b),) = seen[64, 0], seen[68, 1]
     p_a, p_b, read = s_a / unit_a, s_b / unit_b, division_forward((unit_a - s_a) * unit_b, unit_a, 0)[0]
     f_a, f_b = (sum(detector in c for c in clicks) / trials for detector in ("body 0", "body 1"))
     nulls = sum(c == () for c in clicks) + round(f_b * trials)  # the trials A left to B
