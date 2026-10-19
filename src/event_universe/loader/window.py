@@ -93,13 +93,24 @@ def windowed(
     periodic: Wrap,
     action: int,
 ) -> tuple[BodyRow, ...]:
-    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.generator_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every body's rates giving to it (`rate_passage`), the body's own among them; every lay with an end: the longest passage is the window (`longest`), the generator with it the body's `Draw`, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
+    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`), and every rate's lay marked with its end (`Rate.ended`, the same property, read by C5's reach, `node_detector.sourcing`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.generator_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every body's rates giving to it (`rate_passage`), the body's own among them; every lay with an end: the longest passage is the window (`longest`), the generator with it the body's `Draw`, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
     rates = [rate for row in bodies if row.detector is not None for rate in row.detector.rates]
     found = []
     for number, row in enumerate(bodies):
         kind = row.detector
-        if kind is None or kind.draw is None or any(t.leaves == t.enters for t in kind.transitions):
+        if kind is None:
             found.append(row)
+            continue
+        marked = tuple(
+            replace(
+                r,
+                ended=rate_passage(r, families[r.light], row.nodes, shape, periodic, action) is not None,
+            )
+            for r in kind.rates
+        )
+        kind = replace(kind, rates=marked)
+        if kind.draw is None or any(t.leaves == t.enters for t in kind.transitions):
+            found.append(replace(row, detector=kind))
             continue
         drives = sorted({transition.drive for transition in kind.transitions})
         lays = [
@@ -121,7 +132,7 @@ def windowed(
                     f"board all have an end: the window is their passage over the body, derived at load, W = "
                     f"{window} here; remove the key (ALGEBRA.md, The click writes on the lattice, C2)"
                 )
-            found.append(row)
+            found.append(replace(row, detector=kind))
             continue
         if window is None:
             raise ValueError(

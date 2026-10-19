@@ -548,14 +548,14 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark()
     board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), (lines := []).append)
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(262):  # dark from the interval 251 (the click at 76, the front from 77 to 261)
+    for _ in range(262):  # dark from the interval 236 (the click at 61, the front from 62 to 246)
         board.step()
         shares.append(board.books()["photon"]["share"])
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
     credits = [c for c in credits if c["absorbed"]]
-    assert len(credits) == 1 and credits[0]["interval"] == 76 and board.credit.counts[photon] == 0
+    assert len(credits) == 1 and credits[0]["interval"] == 61 and board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert {x["event"] for x in lines if x["interval"] > 76} <= {"erasure", "face", "credit", "lay"}
+    assert {x["event"] for x in lines if x["interval"] > 61} <= {"erasure", "face", "credit", "lay"}
 
 
 def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):

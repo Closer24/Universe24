@@ -50,9 +50,8 @@ def body(design: dict, number: int, axis: str, toward: str) -> dict:
         "rates": [{"from": "e", "to": "g", "lifetime": rows["lifetime"], "gives_to": light}],
         "node_detector": {
             **design["generator"],
-            "window": rows["window"],
             "seed": rows["seeds"][number],
-        },
+        },  # the window derived at load
     }
 
 

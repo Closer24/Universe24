@@ -32,34 +32,34 @@ from tests.laws import (
 )
 from tests.laws import EMIT_RUN as RUN
 
-ATOM_P = 32384  # one_photon's second atom at count 1: the quarter turn's reach about the hole's Node (C6), the +x piece (C2) of 45,652, one quantum's 2 T sin(pi / 4) within 1.5 percent (C1)
+ATOM_P = 33136  # one_photon's second atom at count 1 at the derived close, 61 (2026-10-19; 32,384 about the Node of the click at 76 under the declared 48): the quarter turn's reach about the hole's Node (C6), the most the two-Node taker takes of the +x piece booked over the window (C2, C4), one quantum's 2 T sin(pi / 4) within a few percent (C1)
 
 
 def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monkeypatch):
-    """MUST 1 (the advisor's run): one_photon's second atom takes at 76 with the quarter turn applied ("P lost to the taker"), its P_x 32,384 (the +x piece about the hole's Node, C6); the first atom's window closes with no click at 77 and its re-lay keeps each Node's direction, the taker dark after the click under C1's one quantum: P_x at 76, 77, 78 and the run's end (170) all 32,384 (before the fix 0 from the null close); printed."""
+    """MUST 1 (the advisor's run): one_photon's second atom takes at 61 (the window derived from the packet's passage, 33 from the first lit interval 29; 76 at the declared 48 until 2026-10-19) with the quarter turn applied ("P lost to the taker"), its P_x ATOM_P (the +x piece about the hole's Node, C6); the first atom's window closes with no click at 62 and its re-lay keeps each Node's direction, the taker dark after the click under C1's one quantum: P_x at 61, 62, 63 and the run's end (170) all ATOM_P (before the fix 0 from the null close); printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
     read = {}
     for _ in range(board.world.intervals):
         board.step()
-        if board.interval in (76, 77, 78, board.world.intervals):
+        if board.interval in (61, 62, 63, board.world.intervals):
             read[board.interval] = twist.fan_momentum(board, atom)[0]
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    assert len(credits) == 1 and credits[0]["interval"] == 76
+    assert len(credits) == 1 and credits[0]["interval"] == 61
     assert credits[0]["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
     end = board.world.intervals
     floor = levels_floor(board, atom, board.mask(board.credit.bodies[1].nodes))
-    assert read[76] == ATOM_P
-    assert all(abs(read[t] - ATOM_P) <= floor for t in (77, 78, end)), (read, floor)
+    assert read[61] == ATOM_P
+    assert all(abs(read[t] - ATOM_P) <= floor for t in (62, 63, end)), (read, floor)
     print(
-        f"Part H (MUST 1): one_photon's atom P_x at 76 {read[76]}, at 77 {read[77]}, at 78 {read[78]}, "
+        f"Part H (MUST 1): one_photon's atom P_x at 61 {read[61]}, at 62 {read[62]}, at 63 {read[63]}, "
         f"at the end ({end}) {read[end]}; the floor {floor}"
     )
 
 
 def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
-    """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 169 with the two receivers (its null close at 121 before it); the emitter's window never opens on its own light (C5 widened to the emitters' book, 2026-10-19: dark to the light it gave while its quantum stands, where the narrower line lit it by its own train once the source's span was spent and closed a null window on it at 156), and P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
+    """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 169 with the two receivers (its null close at 121 before it); the emitter, released from its own source at the span's end on this periodic chain (C5's reach by the lay's end, 2026-10-19: the lay has no end on the ring, so the first line stands), is lit by its own circulating train and closes a null window on it at 156, after the emission and before the click, its re-lay keeping its P; P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=48)
     board = Lattice(load_world(path), (lines := []).append)
@@ -86,9 +86,9 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     click = taken[0]["interval"]
     closes = [b.windows for b in board.credit.bodies]
     assert closes == [
-        0,
+        1,
         2,
-    ]  # C5 widened: no window of the emitter's on its own light; the taker's null and its click
+    ]  # C2: the emitter's one window, lit after its source ended, the taker's null and its click
     assert before == 0 and after is not None and floor is not None
     end = (twist.fan_momentum(board, light)[0], twist.fan_momentum(board, atom)[0])
     assert abs(after[1] + after[2] - before) <= floor, (before, after, floor)
@@ -258,13 +258,13 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
 
 
 def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
-    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 48 draws the lay (`source` the lay, the count down by one, the board the Part G test's). The emit-and-take world: after body 0's emission the book holds body 0 at 1; the file's lay of one quantum entered beside it, the draw's weights read [1, 1] through `twist.drawn_emitter`."""
+    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 61 (the derived window) draws the lay (`source` the lay, the count down by one, the board the Part G test's). The emit-and-take world: after body 0's emission the book holds body 0 at 1; the file's lay of one quantum entered beside it, the draw's weights read [1, 1] through `twist.drawn_emitter`."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     photon = next(i for i, f in enumerate(board.families) if f.name == "photon")
     laid = board.credit.counts[photon]
     assert board.credit.emitters[photon] == [emission.Emitter(None, laid, False)] and laid >= 1
-    for _ in range(76):
+    for _ in range(61):
         board.step()
     click = next(c for c in lines if c["event"] == "credit")
     assert click["source"] == THE_LAY and click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -286,7 +286,7 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
     drawn = twist.drawn_emitter(board, light, pick)
     assert weights == [[1, 1]] and drawn is not None and drawn.body is None and drawn.outstanding == 0
     print(
-        f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 76 source {click['source']!r} and the lay's count {laid - 1}; "
+        f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 61 source {click['source']!r} and the lay's count {laid - 1}; "
         f"the emit-and-take world at the emission ({board.interval}): body 0 at 1 beside the lay's 1, the draw's weights {weights[0]}"
     )
 

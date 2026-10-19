@@ -63,7 +63,7 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 @dataclass(frozen=True)
 class Rate:
-    """An emission of a body as a NodeDetector (the fifth act, the emission click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `emission.laid_packet`)."""
+    """An emission of a body as a NodeDetector (the fifth act, the emission click at a declared rate): the excited part, the lower part, the lifetime in intervals (the rate 1 / lifetime per interval, the declared floor) and the family of light the whole quantum is laid on, by their positions; in the open board the packet's `width`, its Nodes across (None inside a guide, the source in time), and the directions the board holds for its lay from the body's Node, (axis, sense) each, drawn by the giver (`packet_form`; `emission.laid_packet`); `ended`, whether the lay has an end on this board (a source in time on a board with no periodic axis above one Node, a packet filling no periodic ring), the property the window rule reads, derived at the parse's end (`loader/window.windowed`, False until then) and read by C5's reach (`node_detector.sourcing`, 2026-10-19)."""
 
     leaves: int
     enters: int
@@ -72,6 +72,7 @@ class Rate:
     resonance: tuple[int, int]
     width: int | None = None
     directions: tuple[tuple[int, int], ...] = ()
+    ended: bool = False
 
 
 @dataclass(frozen=True)

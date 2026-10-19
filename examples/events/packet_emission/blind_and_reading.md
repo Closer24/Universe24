@@ -126,3 +126,18 @@ stands as read; a miss is a report for the hands, not adjusted.
 | the emitter's own credit lines (NODEDETECTOR) | 2 or 1 per seed | the fixed reader's own column |
 | the share at the lay in W_c (LATTICE) | 0.8353 / 0.8359 | 0.786, the item-5 finding by name |
 | cos Omega at the far Node (LATTICE) | 0.6286 in 11 seeds, 0.6460 in 2, 0.6282 in 1 | within 2 / A_far of 2 / 3 |
+
+## The window derived at load (2026-10-19, the atom branch claude/atom-events, (D))
+
+The giver's `window` key is removed from packet_emission.json (the mode file's digest written again,
+the levels untouched; the builder writes no key; the world's `draw` keeps its 168 for the region
+`reach`): a body's window is the passage over it of its drives' lays with an end, and the giver's one
+drive, the pulse, is laid here by its own rate alone, the directed packet of 312 slices at the width 4
+and the lifetime 48 (`features/click.envelope` on the one-line root, the length the loader holds the
+board to), at k_x from the band with the transverse mode cos(pi / 5) on the two axes across (2 den cos
+k_x 4588, den cos k_perp 4853, den cos omega 4000 the resonance's), v_g = 5544 / (3 x 4472) = 0.413,
+W = ceil(313 x 3 x 4472 / 5544) = 758 intervals, longer than the run of 168, so that window never
+closes within the run; and under C5's reach by the lay's end the giver is dark to its own departing
+train while its quantum stands (the self-lit window at the lay, the narrower line's, closed), so its
+window never opens in this folder, which lays no other drive: no reading above moves, the region's 168
+stands.

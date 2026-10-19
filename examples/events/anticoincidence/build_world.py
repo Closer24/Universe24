@@ -42,9 +42,8 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
                 "rates": [],
                 "node_detector": {
                     **design["generator"],
-                    "window": design["trial_intervals"],  # one window per trial
                     "seed": design["records"]["seed"],
-                },
+                },  # the window derived
             }
         )
     centre, edge = design["light"]["centre"], design["light"]["edge"]

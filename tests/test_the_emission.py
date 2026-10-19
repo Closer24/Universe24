@@ -82,22 +82,22 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(76):
+    for _ in range(61):
         board.step()
     credits = [
         c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
     ]
-    assert len(credits) == 1 and credits[0]["interval"] == 76 and board.credit.counts[photon] == 0
-    origin = next(f.at for f in board.credit.faces[77] if f.family == photon)
+    assert len(credits) == 1 and credits[0]["interval"] == 61 and board.credit.counts[photon] == 0
+    origin = next(f.at for f in board.credit.faces[62] if f.family == photon)
     tapered = 0
-    for interval in range(77, 259):  # the band of eight shells leaves the grown board by about 238
+    for interval in range(62, 259):  # the band of eight shells leaves the grown board by about 223
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
         inside, taper = (
-            distance <= interval - 76 - 9,
-            (distance > interval - 76 - 9) & (distance <= interval - 76),
+            distance <= interval - 61 - 9,
+            (distance > interval - 61 - 9) & (distance <= interval - 61),
         )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
@@ -110,20 +110,20 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
 
 
 def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(tmp_path, monkeypatch):
-    """C6's face set at a tie (the cold reader's re-fix of 2026-10-19, the Boss's decision under the owner's word, generic and right: a tied axis contributes both its Ports where the set's read coefficients sum to the wall at most, `node_detector.face_ports`; above the wall the booked path): given by hand on the shipped one_photon world through `arrival_ports` (its packets are not exact mirror images, so no built tie stands). (i) One tied axis, the two x Ports (2 w / 3 for light): the hole is faced on both, two faces per line at 77 and 78 with the set (0, 1), the count 0 with no deficit and no `NO_SIDE`, the front begun from the hole's Node. (ii) Two tied axes, four Ports (4 w / 3, above the wall): the set is emptied, the quantum taken in the books alone (the deficit 1, the reading `NO_SIDE` after the taker's own), no face, and the front begun from the drawn Node all the same (the law's line: from every Node written in that draw), so the quantum's share, standing on the board at 79, is erased by the front as in the faced case, the two runs ending with the same share at 170, the packet's other half beyond the front's reach, 127,530,000 as the Part G oracle's header reads (the hole's Node itself carries no form at this click, the packet having passed it; an origin with form stands while its shells are erased, named in the law)."""
+    """C6's face set at a tie (the cold reader's re-fix of 2026-10-19, the Boss's decision under the owner's word, generic and right: a tied axis contributes both its Ports where the set's read coefficients sum to the wall at most, `node_detector.face_ports`; above the wall the booked path): given by hand on the shipped one_photon world through `arrival_ports` (its packets are not exact mirror images, so no built tie stands). (i) One tied axis, the two x Ports (2 w / 3 for light): the hole is faced on both, two faces per line at 77 and 78 with the set (0, 1), the count 0 with no deficit and no `NO_SIDE`, the front begun from the hole's Node. (ii) Two tied axes, four Ports (4 w / 3, above the wall): the set is emptied, the quantum taken in the books alone (the deficit 1, the reading `NO_SIDE` after the taker's own), no face, and the front begun from the drawn Node all the same (the law's line: from every Node written in that draw), so the quantum's share, standing on the board at 79, is erased by the front as in the faced case, the faced run ending at 170 with the packet's other half beyond the front's reach, 124,482,000 as the Part G oracle's header reads, and the booked run with 162,000 more, the standing origin's remnant: at the derived close, 61, the bulk's end (2026-10-19), the hole's Node still carries the tail's form, which the booked path leaves standing and spreading behind the front at the count 0 (C6, the standing origin, named in the law; at the click of 76 under the declared 48 the packet had passed the Node, it carried no form and the two shares were one, 127,530,000)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     found = {}
     for name, ports in (("tied", (0, 1)), ("above", (0, 1, 2, 3))):
         monkeypatch.setattr(node_detector, "arrival_ports", lambda booked, ports=ports: ports)
         board, lines = one_photon_board(tmp_path)
         photon = [f.name for f in board.families].index("photon")
-        for _ in range(79):
+        for _ in range(64):
             board.step()
         taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
         faces = [f for f in lines if f["event"] == "face"]
         origin = board.credit.fronts[0].origin
-        share = board.books()["photon"]["share"]  # the quantum's share on the board at 79
-        for _ in range(79, 170):
+        share = board.books()["photon"]["share"]  # the quantum's share on the board at 64
+        for _ in range(64, 170):
             board.step()
         dark = board.books()["photon"]["share"]  # the board at the run's end
         faces = [
@@ -142,6 +142,7 @@ def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(t
     lost = ["P lost to the taker", "recoil lost to the lay"]
     assert found["tied"][:7] == (1, lost, 0, 0, [(0, 1)], 1, True)
     assert found["above"][:7] == (1, [*lost, NO_SIDE], 0, 1, [], 1, True)  # booked, the front begun
+    assert found["tied"][7] == 124482000  # the other half beyond the front's reach, the oracle's header
     assert (
-        found["above"][7] == found["tied"][7] == 127530000
-    )  # the other half beyond the front's reach, the oracle's
+        found["above"][7] == 124482000 + 162000
+    )  # the standing origin's remnant beside it, booked and unfaced

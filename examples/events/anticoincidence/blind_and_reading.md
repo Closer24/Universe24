@@ -280,3 +280,19 @@ at the amplitude 78 (116 before) for one quantum together and the control's at 1
 one quantum per record; the piece a click deposits is the quantum's 2 T sin k within 1.5 percent. The
 readings' table above was taken before these two changes; its intervals move to the arrival + 48 and
 its counts stay one quantum, one click.
+
+## The window derived at load (2026-10-19, the atom branch claude/atom-events, (D))
+
+The bodies' `window` keys are removed from one_photon.json and two_photons.json (the mode files'
+digests written again, the levels untouched; the builder writes no key): a body's window is the passage
+over it of its drives' lays with an end, derived at load, W = ceil((L + b - 1) / v_g) at the band's group
+pace of the lay's whole wave, the longest lay the window, every lay of the family counted. Here the
+bodies declare no rate, so the packet alone counts: L = 1 + 16 Nodes at k = pi / 4 over a body of 2,
+den cos k 4242 and den sin k 4243 by the search, den cos omega 5414 and den sin omega 2586 the unit's,
+W = ceil(18 x 3 x 2586 / 4243) = 33 in both worlds. The click moves from the arrival + 47 (76 on
+one_photon, the window [29, 76]) to the arrival + 32 (61, the window [29, 61]), the derived number, the
+shares the passage's within the wake's units (the tail of 2 to 3 levels from 62 stood outside the bulk);
+the readings' tables above are the records of the declared 48 and are not re-run (the owner's word). The
+second atom's P_x at the click reads 33,136 against 32,384 at 76 (tests/test_part_h_fix.py); the oracle
+is re-recorded from the committed tree (tests/oracle/one_photon_derived_window.output.json), its lines
+before 61 the former record's bit for bit, the lay and the stepping untouched before the new close.
