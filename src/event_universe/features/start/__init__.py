@@ -29,7 +29,7 @@ class RestCollapses(ValueError):
 
 @dataclass(frozen=True)
 class FieldAtRest:
-    """The held field at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the iterations to the repeat, the level's remainder at the half wall and the row's own content the paces were read at."""
+    """The held levels at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the iterations to the repeat, the level's remainder at the half wall and the row's own content the paces were read at."""
 
     levels: np.ndarray
     fine: np.ndarray

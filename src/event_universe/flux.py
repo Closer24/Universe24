@@ -80,12 +80,14 @@ def face_differences(
     faces: Faces,
     direction: int,
 ) -> list[tuple[tuple[int, int, int], int, int]]:
-    """The click's faces on one line: at a Node named by a face the arrival through the face's Port is the value the click act computes from the Node's whole total (features/click `presented`, the engine's own, on the line's six arrivals, `ports`), a Node's act in a Link's place, so the Link's flux there changes by the reach times (value - m_true); per Node and Port the difference, once (ALGEBRA.md #the-line, the flux form's wipe clause)."""
+    """The click's faces on one line: at a Node named by a face the arrivals through the face's Ports are the one value the click act computes from the Node's whole total (features/click `presented`, the engine's own, on the line's six arrivals, `ports`), a Node's act in a Link's place, so each Link's flux there changes by the reach times (value - m_true); per Node and Port the difference, once (ALGEBRA.md #the-line, the flux form's wipe clause)."""
     plain = ports(level, wrap, fill)
     shown = presented(plain, rule, level, other, remainder, *faces, direction)
     offset = faces[1]
     touched = {
-        ((f.at[0] + offset[0], f.at[1] + offset[1], f.at[2] + offset[2]), f.port) for f in faces[0]
+        ((f.at[0] + offset[0], f.at[1] + offset[1], f.at[2] + offset[2]), p)
+        for f in faces[0]
+        for p in f.ports
     }
     return [
         (node_at, port, int(shown[port][node_at]) - int(plain[port][node_at]))

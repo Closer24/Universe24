@@ -62,12 +62,13 @@ def node_of(board: Lattice, line: dict[str, object]) -> tuple[int, tuple[int, in
 
 
 def faces_from(board: Lattice, lines: Lines) -> None:
-    """The faces of a run rebuilt from its `face` lines into the books' log, the log emptied first: per line the family, the line, the Node, the Port, the interval and the value, so the inverse presents what the lines carry."""
+    """The faces of a run rebuilt from its `face` lines into the books' log, the log emptied first: per line the family, the line, the Node, the Ports, the interval and the value, so the inverse presents what the lines carry."""
     board.credit.faces = {}
     for line in [line for line in lines if line["event"] == "face"]:
         index, at = node_of(board, line)
-        interval, port, value = (int(str(line[key])) for key in ("interval", "port", "value"))
-        found = Face(index, int(str(line["line"])), at, port, interval, value)
+        interval, value = (int(str(line[key])) for key in ("interval", "value"))
+        ports = tuple(int(str(port)) for port in list(line["ports"]))  # type: ignore[call-overload]
+        found = Face(index, int(str(line["line"])), at, ports, interval, value)
         board.credit.faces.setdefault(interval, []).append(found)
 
 

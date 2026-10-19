@@ -209,3 +209,11 @@ column at every n (the largest difference at n = 64, 63.15 against 62.78). The h
 names for the rows n >= 2 before the partial hole (n = 2 at 0.615) is not in these rows; the branch
 diagnostic of 2026-10-03 at 20 seeds (above) read n = 2 and n = 4 at 0.600 and 0.550, at 480 seeds on
 this main 0.502 and 0.363.
+
+## The counts under the click's plan (2026-10-18, branch claude/click-one-act)
+
+The pulse's unit is its own rotation's under C1, W_c sin omega at k = pi / 2 (439,628,852 (439,716,758 before the quarter turn's cosine read 0 exactly, 2026-10-19)), so its
+books' count over the box reads 1118 (833 before C1, read from the loaded worlds, `Lattice.books`); the
+amplitude stands as declared and the probes' clicks hold; the rows are not re-read on this branch (no
+run but the tests' own, which keep the probes' intervals 192, 384, 576 and 768 and the back-in-time
+gate's MATCH).

@@ -10,7 +10,7 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import conversion, credit, emission, front, growth, meeting, node, reports, share
+from event_universe import credit, emission, front, growth, meeting, node, reports, share, twist
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_forward, wall_of
@@ -19,7 +19,6 @@ from event_universe.features.write import carried
 from event_universe.lay import laid
 from event_universe.loader.derived import (
     PLANE,
-    count_wall,
     held_write_of,
     quanta_records,
     readers_of,
@@ -29,7 +28,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.mode import Levels
 from event_universe.loader.packets import PacketRow
 from event_universe.loader.world import BodyRow, World
-from event_universe.node_detector import Weighed, booked_inflows, weighed_currents
+from event_universe.node_detector import Weighed, booked_inflows, node_detector_nodes, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
 from event_universe.resonance import clear_memo
 
@@ -83,8 +82,8 @@ class Lattice:
         rows = ((r, self.mask(r.positions) if r.body is None else None) for r in world.node_detectors)
         self.node_detectors = [NodeDetector(r.name, at, r.body, r.declared) for r, at in rows]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
-        self.gate()
         self.credit = credit.Books.of(self)
+        self.gate()
 
     def half_wall(self, index: int) -> int:
         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`wall_of`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
@@ -231,10 +230,9 @@ class Lattice:
         return np.asarray(found), frozen
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_c div 2) div W_c, a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
         found, frozen = self.share_of(index, 1, at)
-        wall = count_wall(self.families[index], self.world.quantum_action)
-        return share.quanta_of(found, wall, self.kind), frozen
+        return share.quanta_of(found, self.credit.units[index], self.kind), frozen
 
     def total_share(self, index: int) -> tuple[int | None, int]:
         """A family's share summed over the lattice in the current's units, a reading, None over a lattice holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
@@ -248,11 +246,11 @@ class Lattice:
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:
-        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its wall W_c, its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `meeting.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its own unit W_rec (`credit.record_unit`, C1), its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `twist.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
             family, gamma, credit = self.families[index], self.world.node_clock, self.credit
-            wall = count_wall(family, self.world.quantum_action)
+            wall = credit.units[index]
             (total, cold), laid = self.total_share(index), self.laid[index]
             quanta, drift, deficit = None, None, credit.deficits.get(index, 0)
             if total is not None:
@@ -294,7 +292,7 @@ class Lattice:
         }
 
     def step(self) -> None:
-        """One interval forward, each act one loop over the families or the node_detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the sign holder's phase act, each Link's pair iterated by the potential's difference across it read at the start (`phased`, features/phase); the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeDetectors' acts from outside the Node (`credit.counted_windows`, `meeting.jumped`, `conversion.drawn_conversions`, `emission.sourced`, `front.advanced_fronts`)."""
+        """One interval forward, each act one loop over the families or the node_detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from, and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the sign holder's phase act, each Link's pair iterated by the potential's difference across it read at the start (`phased`, features/phase); the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeDetectors' acts from outside the Node (`credit.counted_windows` with `meeting.closed` at the window's close, `meeting.jumped`, `emission.sourced`, `front.advanced_fronts`)."""
         if self.ended is not None:
             raise RuntimeError(f"the run ended at interval {self.interval}: {self.ended}")
         if not growth.grow(self):
@@ -316,9 +314,9 @@ class Lattice:
         self.report(currents, weighed, forms, begun)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers)
-        credit.counted_windows(self)
+        if credit.counted_windows(self):
+            meeting.closed(self)
         meeting.jumped(self)
-        conversion.drawn_conversions(self)
         emission.sourced(self)
         front.advanced_fronts(self)
 
@@ -360,9 +358,9 @@ class Lattice:
     def report(
         self, currents: Currents, weighed: Weighed, forms: Bookings, begun: list[list[records.Record]]
     ) -> None:
-        """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`meeting.faces_reported`)."""
-        meeting.faces_reported(self)
-        own, union, wrap = self.declared_board(), credit.node_detector_nodes(self), self.wrap
+        """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`twist.faces_reported`)."""
+        twist.faces_reported(self)
+        own, union, wrap = self.declared_board(), node_detector_nodes(self), self.wrap
         where = [(d, reports.region_of(d, self.body_nodes)) for d in self.node_detectors]
         fronts = [(d, at, reports.front(at, wrap, union if d.declared else at, own)) for d, at in where]
         sums: dict[int, dict[str, list[list[int]]]] = {}
@@ -374,7 +372,7 @@ class Lattice:
                 if seen != 0 and self.output is not None:
                     self.output(click(self.interval, family.name, detector.name, seen))
                 if detector.declared:
-                    credit.booked(self, index, detector.name, reports.weighted(facing, weighed[index]))
+                    credit.booked(self, index, detector.name, nodes, facing, weighed)
                 if family.several and detector.declared:
                     levels = level_sums(nodes, begun[index])
                     if any(any(level) for level in levels) and self.output is not None:

@@ -7,11 +7,10 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import emission, meeting, readings, twist, world_files
+from event_universe import act, emission, readings, twist, world_files
 from event_universe.lattice import Lattice
 from event_universe.reports import (
     LOST_TO_LAY,
-    LOST_TO_SOURCE,
     LOST_TO_TAKER,
     PAID_AT_EMISSION,
     THE_LAY,
@@ -19,21 +18,11 @@ from event_universe.reports import (
 from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import EMIT_RUN as RUN
-from tests.laws import EVENTS, emit_and_take_world, levels_floor, one_photon_board
+from tests.laws import EVENTS, drift_bound, emit_and_take_world, levels_floor, one_photon_board
 
 T = 32768
 ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_before_g.output.json"
 STRIPPED = {"momentum", "fan", "twist", "lost", "source", "recoil"}  # the Boss's check strips these
-
-
-def drift_bound(board: Lattice, index: int) -> int:
-    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| (Part F, test (a))."""
-    chain = board.shape[0]
-    found = 0
-    for r in laws.own_lines(board, index):
-        now = r.now.reshape(-1).astype(object)
-        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
-    return 2 * found
 
 
 def test_a_body_emits_and_another_takes_and_the_source_is_folded_by_the_recoil(tmp_path, monkeypatch):
@@ -105,13 +94,13 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, monkeypatch):
-    """Task 5 (e): one_photon's first click (48): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board unchanged against the Part F2 run recorded at 04caccce2 (the oracle's lines to 48, the six keys stripped as the Boss's check strips them)."""
+    """Task 5 (e): one_photon's first click (76, the second atom's window open from the photon's first lit interval, 29, and closed 48 after it, C2, the packets at the amplitude 78 of one quantum in the record's own unit, C1; 48 before C2 and 75 before C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (before them the Part F2 run recorded at 04caccce2; the oracle's lines to 76, the six keys stripped as the Boss's check strips them; the oracle recorded from the committed tree 84b9ca0 by tools/run_inputs.py, its header's `recorded_at` naming that commit, the practice since the cold reader's line of 2026-10-19: the recording is made from a committed tree and says which)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
-    for _ in range(48):
+    for _ in range(76):
         board.step()
     credits = [c for c in lines if c["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 48
+    assert len(credits) == 1 and credits[0]["interval"] == 76
     click = credits[0]
     assert click["source"] == THE_LAY and click["recoil"] == [-p for p in click["momentum"]]
     assert click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -122,12 +111,12 @@ def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, 
         return [
             {k: v for k, v in line.items() if k not in STRIPPED}
             for line in found
-            if line["event"] in kinds and int(str(line["interval"])) <= 48
+            if line["event"] in kinds and int(str(line["interval"])) <= 76
         ]
 
     assert cleaned(lines) == cleaned(oracle["lines"])
     print(
-        f"Part G (5e): one_photon at 48: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the Part F2 run's"
+        f"Part G (5e): one_photon at 76: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's"
     )
 
 
@@ -139,13 +128,14 @@ def test_the_two_node_source_books_the_recoil_lost_to_the_source(tmp_path, monke
     for _ in range(RUN):
         board.step()
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
-    assert len(taken) == 1 and taken[0]["source"] == "body 0" and taken[0]["lost"] == [LOST_TO_SOURCE]
+    assert len(taken) == 1 and taken[0]["source"] == "body 0" and taken[0]["lost"] is None
     click = taken[0]
     remainder = -click["momentum"][0] - click["recoil"][0]
-    assert click["momentum"][0] < 0 < click["recoil"][0] < -click["momentum"][0]
+    assert click["momentum"][0] < 0 < click["recoil"][0] == -click["momentum"][0] and remainder == 0
+    assert click["recoil"][0] < 2 * T * (2 - 1) // 2  # the window-booked piece under the two-Node reach
     print(
         f"Part G (5f): the two-Node source: p = {click['momentum']}, recoil {click['recoil']} ({click['lost']}), "
-        f"the remainder {remainder} against the hands' 46,341 - 32,400 = {46341 - 32400}"
+        f"the remainder {remainder}; the piece booked over the window (C4) under the hands' two-Node reach c T = {T}"
     )
 
 
@@ -169,7 +159,7 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
 
 
 def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
-    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `readings.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`meeting.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
+    """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `readings.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`act.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
     board = Lattice(load_world(EVENTS / "packet_emission" / "packet_emission.json"), [].append)
     light = next(i for i, f in enumerate(board.families) if f.name == "pulse")
@@ -184,7 +174,7 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
     standing = readings.momentum_of(
         board.families[atom].pair[0], board.lines_of(atom, giver.record), board.wrap
     )
-    meeting.written(board, [item])
+    act.written(board, [item])
     num = board.families[light].pair[0]
     born = twist.fan_momentum(board, light)
     recoil, lost = giver.recoil, giver.lost
@@ -201,7 +191,8 @@ def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
         and emitters[0].paid
         and emitters[0].outstanding == 1
     )
-    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
+    at = board.credit.bodies[0].nodes[0]
+    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0, at)
     assert source == "body 0" and owed == [-born[0], 0, 0] and reading == PAID_AT_EMISSION
     assert emitters[0].outstanding == 0
     import math  # the test prints against the hands' sine; the engine reads no sine

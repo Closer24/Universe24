@@ -4,14 +4,15 @@ import json
 
 import numpy as np
 
-from event_universe import world_files
+from event_universe import node_detector, world_files
 from event_universe.emission import holds_period, increments_of, radiated_total
 from event_universe.features.click import SCALE_OF
 from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.loader.derived import count_wall
+from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, packet_world, refused
+from tests.laws import BACK, EVENTS, ROOT, TOOL, one_photon_board, packet_world, refused
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
@@ -66,7 +67,7 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 48 as the shipped one does; from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
+    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 76 as the shipped one does (the hybrid window, C2; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
     folder = EVENTS / "anticoincidence"
     world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
     (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
@@ -81,22 +82,22 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(48):
+    for _ in range(76):
         board.step()
     credits = [
         c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
     ]
-    assert len(credits) == 1 and credits[0]["interval"] == 48 and board.credit.counts[photon] == 0
-    origin = next(f.at for f in board.credit.faces[49] if f.family == photon)
+    assert len(credits) == 1 and credits[0]["interval"] == 76 and board.credit.counts[photon] == 0
+    origin = next(f.at for f in board.credit.faces[77] if f.family == photon)
     tapered = 0
-    for interval in range(49, 231):  # the band of eight shells leaves the grown board by about 210
+    for interval in range(77, 259):  # the band of eight shells leaves the grown board by about 238
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
         inside, taper = (
-            distance <= interval - 48 - 9,
-            (distance > interval - 48 - 9) & (distance <= interval - 48),
+            distance <= interval - 76 - 9,
+            (distance > interval - 76 - 9) & (distance <= interval - 76),
         )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
@@ -106,3 +107,41 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"
+
+
+def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(tmp_path, monkeypatch):
+    """C6's face set at a tie (the cold reader's re-fix of 2026-10-19, the Boss's decision under the owner's word, generic and right: a tied axis contributes both its Ports where the set's read coefficients sum to the wall at most, `node_detector.face_ports`; above the wall the booked path): given by hand on the shipped one_photon world through `arrival_ports` (its packets are not exact mirror images, so no built tie stands). (i) One tied axis, the two x Ports (2 w / 3 for light): the hole is faced on both, two faces per line at 77 and 78 with the set (0, 1), the count 0 with no deficit and no `NO_SIDE`, the front begun from the hole's Node. (ii) Two tied axes, four Ports (4 w / 3, above the wall): the set is emptied, the quantum taken in the books alone (the deficit 1, the reading `NO_SIDE` after the taker's own), no face, and the front begun from the drawn Node all the same (the law's line: from every Node written in that draw), so the quantum's share, standing on the board at 79, is erased by the front as in the faced case, the two runs ending with the same share at 170, the packet's other half beyond the front's reach, 127,530,000 as the Part G oracle's header reads (the hole's Node itself carries no form at this click, the packet having passed it; an origin with form stands while its shells are erased, named in the law)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    found = {}
+    for name, ports in (("tied", (0, 1)), ("above", (0, 1, 2, 3))):
+        monkeypatch.setattr(node_detector, "arrival_ports", lambda booked, ports=ports: ports)
+        board, lines = one_photon_board(tmp_path)
+        photon = [f.name for f in board.families].index("photon")
+        for _ in range(79):
+            board.step()
+        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+        faces = [f for f in lines if f["event"] == "face"]
+        origin = board.credit.fronts[0].origin
+        share = board.books()["photon"]["share"]  # the quantum's share on the board at 79
+        for _ in range(79, 170):
+            board.step()
+        dark = board.books()["photon"]["share"]  # the board at the run's end
+        faces = [
+            f for f in faces if f["node"]["at"] == list(origin)
+        ]  # the hole's own faces, not the front's
+        found[name] = (
+            len(taken),
+            taken[0]["lost"],
+            board.credit.counts[photon],
+            board.credit.deficits.get(photon, 0),
+            sorted({tuple(f["ports"]) for f in faces}),
+            len(board.credit.fronts),
+            share > 0,
+            dark,
+        )
+    lost = ["P lost to the taker", "recoil lost to the lay"]
+    assert found["tied"][:7] == (1, lost, 0, 0, [(0, 1)], 1, True)
+    assert found["above"][:7] == (1, [*lost, NO_SIDE], 0, 1, [], 1, True)  # booked, the front begun
+    assert (
+        found["above"][7] == found["tied"][7] == 127530000
+    )  # the other half beyond the front's reach, the oracle's

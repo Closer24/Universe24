@@ -244,24 +244,24 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
     board, lines = one_photon_board(tmp_path)
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     num = board.families[light].pair[0]
-    for _ in range(47):
+    for _ in range(75):
         board.step()
-    left = (np.arange(board.shape[0]) < 48).reshape(board.shape)
-    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
-    packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
+    right = (np.arange(board.shape[0]) >= 48).reshape(board.shape)
+    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, right)[0]
+    packet_share = int(board.share_of(light, 1, right)[0][right].sum(dtype=object))
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     board.step()
     credits = [line for line in lines if line["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 48 and credits[0]["absorbed"] == "photon"
+    assert len(credits) == 1 and credits[0]["interval"] == 76 and credits[0]["absorbed"] == "photon"
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
-    assert piece[0] < 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
+    assert piece[0] > 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
     assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio
     deficit = [a - b for a, b in zip(fan, piece, strict=True)]
-    assert deficit[0] > 0 and abs(deficit[0] + piece[0]) < abs(piece[0])  # the fan near symmetric
+    assert deficit[0] < 0 and abs(deficit[0] + piece[0]) < abs(piece[0])  # the fan near symmetric
     quantum = 2 * T * math.sin(math.pi / 4)
     print(
         f"Part F2 (Tasks 1, 5): the piece's p = {piece}, the fan's P = {fan}, the deficit {deficit}; "
-        f"the whole left packet's P W_rec / (W num) at 47 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
+        f"the whole right packet's P W_rec / (W num) at 75 = {per_count:.0f} (P / num = {packet_momentum / num:.0f}, "
         f"W = {packet_share / 589824000:.3f} W_c), W_rec = {board.credit.units[light] / 589824000:.3f} W_c; "
         f"|p_x| against 2 T sin(pi / 4) = {quantum:.0f}: {abs(piece[0]) / quantum:.3f} of it"
     )
@@ -278,7 +278,7 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
-    for _ in range(47):
+    for _ in range(75):
         board.step()
     before = twist.fan_momentum(board, atom)
     board.step()
@@ -286,21 +286,21 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
     credits = [line for line in lines if line["event"] == "credit"]
     piece, turned, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
     quarter = twist.quarter_turn(board)
-    assert before == (0, 0, 0) and after[0] < 0 and after[0] * piece[0] > 0
-    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [-quarter, 0, 0]  # Part G: the lay's case
+    assert before == (0, 0, 0) and after[0] > 0 and after[0] * piece[0] > 0
+    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [quarter, 0, 0]  # Part G: the lay's case
     assert abs(after[0]) < abs(piece[0])
     print(
         f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {turned[0]} "
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
         f"(the two-Node atom's reach 4 SUM A^2 = {4 * 2 * 90 * 90} at most; no taker of this lay carries one count of one_photon's photon)"
     )
-    # (b') the reachable case on the second atom, standing in its ground part at 48
-    books = board.credit.bodies[1]
+    # (b') the reachable case on the first atom, standing in its ground part at 76
+    books = board.credit.bodies[0]
     wanted = 10000
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
     standing = twist.fan_momentum(board, atom)[0]
-    found, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0))
+    found, short, nothing = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
     gained = twist.fan_momentum(board, atom)[0] - standing
     assert nothing is None and found[1:] == [0, 0] and 0 < found[0] < quarter
     at = board.mask(books.nodes)
@@ -310,20 +310,22 @@ def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp
         wanted,
         floor,
     )  # one level unit per rounding, the neighbour's level each
+    assert short[1:] == [0, 0] and 0 <= short[0] <= floor  # C3: s_x = p_x - gain_x, under the floor
     shares_after = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_after = board.quanta(atom, board.mask(books.nodes))[0]
     assert np.array_equal(count_before, count_after)
     moved = int((shares_after - shares_before)[board.mask(books.nodes)].sum(dtype=object))
     held = int(shares_before[board.mask(books.nodes)].sum(dtype=object))
     print(
-        f"Part F (Task 3b', 3c): p_x = {wanted} asked, {gained} given by n_x = {found[0]} acts (the floor {floor}); the share "
+        f"Part F (Task 3b', 3c): p_x = {wanted} asked, {gained} given by n_x = {found[0]} acts, s_x = {short[0]} (the floor {floor}); the share "
         f"over the taker's Nodes {held} moved by {moved} ({moved / held:.2e}), the count unchanged"
     )
     # (b) the one-Node taker: the second atom's books on its first Node alone
     single = replace(books, nodes=books.nodes[:1], weights=books.weights[:1])
     kept = [(r.now.copy(), r.before.copy(), r.remainder.copy()) for r in board.states[atom].lines]
-    found, lost = twist.twisted(board, single, single.part, (wanted, 0, 0))
+    found, short, lost = twist.twisted(board, single, single.part, (wanted, 0, 0), single.nodes[0])
     assert found == [0, 0, 0] and lost == LOST_TO_DECLARATION and len(single.nodes) == 1
+    assert short == [wanted, 0, 0]  # C3: the whole of p_x the shortfall where nothing is folded
     assert all(
         np.array_equal(a, b)
         for r, k in zip(board.states[atom].lines, kept, strict=True)
@@ -420,12 +422,12 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
     wanted, deposits, twists = 10000, [], []
     for books in board.credit.bodies:
         standing = twist.fan_momentum(board, atom)[0]
-        found, lost = twist.twisted(board, books, books.part, (wanted, 0, 0))
+        found, short, lost = twist.twisted(board, books, books.part, (wanted, 0, 0), books.nodes[0])
         deposits.append(twist.fan_momentum(board, atom)[0] - standing)
-        twists.append(found[0])
+        twists.append((found[0], short[0]))
         assert lost is None and found[1:] == [0, 0]
     print(
         f"Part F2 (Task 4): p_x = {wanted} asked of the taker across the wrap (95, 0) and of the taker (40, 41): "
-        f"the deposits {deposits}, n_x {twists}"
+        f"the deposits {deposits}, (n_x, s_x) {twists}"
     )
     assert deposits[0] == deposits[1] and twists[0] == twists[1] and 0 < deposits[0] <= wanted

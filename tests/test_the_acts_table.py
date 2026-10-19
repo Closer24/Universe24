@@ -71,8 +71,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
-    ("credit.py", "record_unit", "division_forward"): "D",  # the mean unit rounded half up
-    ("credit.py", "quanta_through", "division_forward"): "D",  # the inflow over the unit, rounded
+    (
+        "credit.py",
+        "quanta_through",
+        "division_forward",
+    ): "R",  # the inflow over the unit, its remainder carried
     (
         "credit.py",
         "clocked_regions",
@@ -83,6 +86,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "radiated_total", "largest_below"): "S",  # the search on the total's square
     ("emission.py", "born_unit", "largest_below"): "S",  # the search on the unit's square
     ("emission.py", "born_unit", "division_forward"): "D",  # the unit over den squared, once
+    ("emission.py", "packet_unit", "division_forward"): "D",  # den cos omega of the packet's wave, once
     ("emission.py", "laid_by_count", "division_forward"): "D",  # the count's lay, one division
     ("emission.py", "laid_packet", "largest_below"): "S",  # the sine and the transverse size
     ("emission.py", "laid_packet", "division_forward"): "D",  # the packet's levels, rounded once
@@ -149,7 +153,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "R",  # the lay's recurrence carrying its remainder
     (
         "features/click/__init__.py",
-        "transverse_cosine",
+        "wave_cosine",
         "division_forward",
     ): "D",  # the cosine's bisection, discarded
     ("features/click/__init__.py", "along_cosine", "division_forward"): "D",  # the along cosine, once
@@ -233,9 +237,9 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the composed pair's quotients, once
     ("loader/universe.py", "composed_pair", "largest_below"): "S",  # the sines and the norm
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
-    # meeting.py
-    ("meeting.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
-    ("meeting.py", "absorbed", "division_forward"): "D",  # the unit over the norm
+    # lists.py
+    ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
+    ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
     ("twist.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
     ("twist.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
     (
@@ -243,11 +247,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "quarter_turn",
         "phase.iterate",
     ): "R",  # the one carried act on a pair (the bisection around it S)
-    (
-        "twist.py",
-        "folded_lines",
-        "phase.iterate",
-    ): "R",  # the one carried act on a pair (the fold's coefficient D)
     ("twist.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
@@ -275,6 +274,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "turned_direction", "division_forward"): "D",  # the turned direction, floors
     ("resonance.py", "window_turn", "largest_below"): "S",  # the plane's size by search
     ("resonance.py", "window_turn", "division_forward"): "D",  # the turn over the scale
+    ("resonance.py", "unit_weight", "largest_below"): "S",  # the sine and S_1 by search
+    ("resonance.py", "unit_weight", "division_forward"): "D",  # (A_1 W)^2 over sin k, and the half
     ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
     # share.py
@@ -290,6 +291,7 @@ R_OUTSIDE_THE_STEP = frozenset(
             "clocked_regions",
             "division_forward",
         ),  # a region's clock, its remainder in the books
+        ("credit.py", "quanta_through", "division_forward"),  # the credit's remainder carried per record
         ("features/click/__init__.py", "rotated", "rule3"),  # the lay's recurrence with its carry
         ("features/held_write/__init__.py", "held_write", "act"),  # the held write's remainder
         ("features/write/__init__.py", "carried", "division_forward"),  # the write's remainder forward
@@ -298,7 +300,6 @@ R_OUTSIDE_THE_STEP = frozenset(
         ("resonance.py", "window_pair", "phase.iterate"),  # the window's pair in the memo
         ("resonance.py", "hopped", "division_forward"),  # the labels' hop with its carries
         ("twist.py", "quarter_turn", "phase.iterate"),  # the pair carried along the bisection's probe
-        ("twist.py", "folded_lines", "phase.iterate"),  # the pair carried to the fold's offset
     }
 )
 

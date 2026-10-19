@@ -22,6 +22,7 @@ from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import Rule, division_forward, largest_below, rule3, rule_integers
+from event_universe.emission import packet_unit
 from event_universe.features import phase
 from event_universe.features.start import (
     RestCollapses,
@@ -1108,6 +1109,15 @@ def half_up(levels: np.ndarray) -> np.ndarray:
     return np.vectorize(int, otypes=[object])(np.floor((2 * levels + 1) / 2))
 
 
+def axes_waves(packet: dict[str, Any], label: str) -> tuple[tuple[int, int], ...]:
+    """A packet's wave number per axis, [p, q] for k = pi p / q per Link: its `wave` along its axis and its `transverse` pairs across ([0, 1] where none), the three the band's line reads for its unit (`emission.packet_unit`, C1)."""
+    along, wave = AXES.index(str(packet["along"])), wave_of(packet, label)
+    sideways = {
+        AXES.index(str(name)): (int(r), int(s)) for name, (r, s) in packet.get("transverse", {}).items()
+    }
+    return tuple(wave if axis == along else sideways.get(axis, (0, 1)) for axis in range(3))
+
+
 def wave_of(packet: dict[str, Any], label: str) -> tuple[int, int]:
     """A packet's wave number as declared, [p, q] for k = pi p / q per Link along its axis, refused by name at p = 0 before any lay (the advisor's breaker and the mathematician's audit, #1793 comments 5981736108 K6, 5982140872 B3; the Boss's 5981734131 item 6; two hands): the generator laid the wave [0, q] as it lays any, for a massless family the now level 0 at every Node (the uniform mode's content out of a level proportional to the envelope, `lay.corrected`) and the before level nonzero, a lay the loader alone refused (loader/packets.py); the tool refuses it itself, naming the packet and the wave."""
     turns, halves = (int(number) for number in packet["wave"])
@@ -1233,11 +1243,15 @@ def packet_entry(
     whole = (
         int(np.asarray(total, dtype=object).sum()) * family.parts
     )  # the board's total, the parts laid alike
+    wall = count_wall_of(
+        board.pair, board.action
+    )  # the count in the record's own unit (C1): W_c sin omega
+    unit = packet_unit(wall, board.pair, axes_waves(packet, label)) if massless else wall
     return {
         "family": packet["family"],
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
-        "count": int(read_quanta(whole, board.pair, board.action, object)),
+        "count": int(quanta_of(whole, unit, object)),
         "moving": {"now": nonzero(now), "before": nonzero(before)},
     }
 

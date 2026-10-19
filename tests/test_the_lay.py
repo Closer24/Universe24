@@ -7,7 +7,6 @@ import pytest
 
 from event_universe import lay, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
@@ -158,7 +157,7 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
 def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_deficit(
     tmp_path, monkeypatch
 ):
-    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `meeting.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per absorption, the deficit the absorptions' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the absorptions, the ion's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `twist.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals: no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per absorption, the deficit the absorptions' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the absorptions, the ion's lays crossed from their lines."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path, alone = (ion_world(tmp_path, TOOL, intervals=170, body=body) for body in (True, False))
     board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
@@ -191,7 +190,7 @@ def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_d
     )
     assert all(f.family != drive for f in board.credit.fronts)
     assert (books["count"], books["deficit"]) == (count - len(absorptions), len(absorptions))
-    wall = count_wall(board.families[drive], board.world.quantum_action)
+    wall = board.credit.units[drive]  # the record's own unit of one quantum (C1)
     within = abs(books["drift"]) // wall + 1  # the share's drift in quanta and the reading's rounding
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert books["quanta"] == its_books["quanta"] and books["drift"] == its_books["drift"]

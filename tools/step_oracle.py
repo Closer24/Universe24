@@ -18,7 +18,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import conversion, credit, emission, flux, front, growth, meeting, node
+from event_universe import credit, emission, flux, front, growth, meeting, node
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
@@ -185,9 +185,9 @@ def oracle_interval(board: Lattice) -> None:
     board.report(currents, weighed, forms, begun)
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers)
-    credit.counted_windows(board)
+    if credit.counted_windows(board):
+        meeting.closed(board)
     meeting.jumped(board)
-    conversion.drawn_conversions(board)
     emission.sourced(board)
     front.advanced_fronts(board)
 

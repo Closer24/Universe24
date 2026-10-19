@@ -4,6 +4,7 @@ import importlib.util
 import json
 import math
 import sys
+from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, Row, quanta_records
+from event_universe.loader.keys import Node
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
@@ -247,8 +249,9 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
         begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
     stepped, counted = {}, credit.counted_windows
 
-    def kept(b: Lattice) -> None:  # the lines after the held write, before the NodeDetectors' acts
-        stepped.update({i: own_lines(b, i) for i in indexes}), counted(b)
+    def kept(b: Lattice) -> bool:  # the lines after the held write, before the NodeDetectors' acts
+        stepped.update({i: own_lines(b, i) for i in indexes})
+        return counted(b)
 
     with monkeypatch.context() as swap:
         swap.setattr(credit, "counted_windows", kept), board.step()
@@ -262,13 +265,21 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
             pairs = zip(step * carried, squares.ravel(), strict=True)
             terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
         for face in [f for f in board.credit.faces.get(board.interval, []) if f.family == index]:
-            here, read_at = tuple(np.add(face.at, board.offset)), reads[face.port]  # the face term
-            read_at = int(np.asarray(read_at)[here]) if np.ndim(read_at) else int(read_at)
-            fill = board.families[index].rest if face.line == 0 else 0
-            arrived = int(readings.ports(records[face.line].now, board.wrap, fill)[face.port][here])
+            here, fill = (
+                tuple(np.add(face.at, board.offset)),
+                board.families[index].rest * (face.line == 0),
+            )
+            arrivals = readings.ports(records[face.line].now, board.wrap, fill)  # the face term per Port
+            reach = [
+                int(np.asarray(reads[p])[here]) if np.ndim(reads[p]) else int(reads[p])
+                for p in face.ports
+            ]
             step = int(stepped[index][face.line].now[here]) - int(records[face.line].before[here])
             wall = 2 * int(squares[here]) * unit * unit
-            terms += Fraction(step * read_at * (face.value - arrived), wall)
+            wiped = sum(
+                r * (face.value - int(arrivals[p][here])) for r, p in zip(reach, face.ports, strict=True)
+            )
+            terms += Fraction(step * wiped, wall)
         floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
         start = int(shares_of(board, index, read, records).sum())
         assert abs(Fraction(fixed - start - net) - terms) < floors, (index, fixed - start - net, terms)
@@ -477,3 +488,39 @@ def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int)
         ),
     ]
     board.states[index].lines = lines
+
+
+def d4_bound(board: Lattice, index: int, nodes: Sequence[Node]) -> list[int]:
+    """D4's bound on a body's lattice momentum change at a re-lay, per axis, in T's unit (the click's plan, section D4; the chain folder's lay_bounds.py reads the same): one level's change per line and Node at most, so over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2; times num in the current's unit."""
+    lines = own_lines(board, index)
+    placed = [tuple(int(v) for v in np.add(node, board.offset)) for node in nodes]
+    found = []
+    for axis in range(3):
+        links = set()
+        for here in placed:
+            for step in (-1, 1):
+                there = list(here)
+                there[axis] += step
+                if board.wrap[axis]:
+                    there[axis] %= board.shape[axis]
+                elif not 0 <= there[axis] < board.shape[axis]:
+                    continue
+                if tuple(there) != here:
+                    links.add(frozenset((here, tuple(there))))
+        total = 0
+        for link in links:
+            for at in link:
+                total += sum(abs(int(r.now[at])) + abs(int(r.before[at])) for r in lines)
+            total += 2 * len(lines)
+        found.append(total)
+    return found
+
+
+def drift_bound(board: Lattice, index: int) -> int:
+    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| over the chain's axis (Part F, test (a); D1, the floors in integers)."""
+    chain = board.shape[0]
+    found = 0
+    for r in own_lines(board, index):
+        now = r.now.reshape(-1).astype(object)
+        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
+    return 2 * found

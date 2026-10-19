@@ -250,3 +250,8 @@ NODEDETECTOR the counts and the clicks, LATTICE the rows at the Node:
 
 The rate's -1.96 standard errors and the shares above 1 at the content 60's paces stand as reports
 for the hands; nothing adjusted.
+
+Under the click's plan (2026-10-18, branch claude/click-one-act) nothing of this folder moved: the
+conversion is the one act's list as before (section 0, `lists.conversion`, `meeting.conversion_drawn`),
+the committed world and its blind reproduce byte for byte under the tests, and no transition and no
+light unit stand here.

@@ -1,0 +1,87 @@
+{
+ "verdict": "NODEDETECTOR",
+ "comment": "The chain world of the click's plan: one law-quantum of light at k = pi / 4 on two bodies of three Nodes along a chain of 96 with receding faces, each body taking the light into e over a window of 48 from the first lit interval and giving it back as a source in time at the lifetime 48; the six worlds the chain under the six signed permutations that carry a chain to a chain. The six blinds below are the conservation section's, each a conservation to the remainder's bound and bit for bit under the inverse, written before any run and never edited after; the readings are the owner's, appended to blind_and_reading.md after the runs (tools/run_inputs.py on each world, tools/meeting_trials.py on the design's seeds, tools/back_in_time.py over the inverse's intervals).",
+ "worlds": {
+  "chain_x_minus": {
+   "axis": "x",
+   "light_toward": "the axis's lower side"
+  },
+  "chain_x_plus": {
+   "axis": "x",
+   "light_toward": "the axis's upper side"
+  },
+  "chain_y_minus": {
+   "axis": "y",
+   "light_toward": "the axis's lower side"
+  },
+  "chain_y_plus": {
+   "axis": "y",
+   "light_toward": "the axis's upper side"
+  },
+  "chain_z_minus": {
+   "axis": "z",
+   "light_toward": "the axis's lower side"
+  },
+  "chain_z_plus": {
+   "axis": "z",
+   "light_toward": "the axis's upper side"
+  }
+ },
+ "detuned_world": {
+  "name": "chain_detuned",
+  "axis": "x",
+  "light_toward": "the axis's lower side",
+  "wave": "pi / 8",
+  "trials": 8,
+  "seeds": "detuned_trials.json, for tools/meeting_trials.py"
+ },
+ "trials": 3,
+ "intervals": 400,
+ "inverse_intervals": 40,
+ "lay_bounds": "lay_bounds.json, the lay's numbers read from the loaded worlds before any run (lay_bounds.py): the light's unit W_rec and its count, each body's amplitudes and D4's bound per axis",
+ "blind": {
+  "B1 count": {
+   "reading": "at every credit line labelled NODEDETECTOR (an absorption naming `absorbed`, an emission naming `emitted`) the change of the light's count, `left` against the line before, and of the body's parts' counts, `kept`; the light's share in whole quanta over the board at every interval, Q_light over W_rec (the books' `quanta`), against its count c_light (the books' `count`)",
+   "blind": "dc_light = -1 at every absorption and +1 at every emission, dc_e = -dc_g = +1 at an absorption and -1 at an emission, exactly, at every click of the run; Q_light / W_rec within 1 / 2 of c_light at every interval outside the front's span (the erasing front after a count reaches 0, D6) and outside a source's span (the lay's increments, D7)",
+   "status": "the books' integers (D2, D3, D4 and D7 of the conservation section); derived, no measurement inside",
+   "fence": "clicks and the books"
+  },
+  "B2 energy": {
+   "reading": "the board's form Q summed over every family (the books' `share` in the current's unit) before and after the pair of one absorption and one emission; the light's invariant I = Q_light / W_rec at the lay and after the source's span",
+   "blind": "under C1 the form after the pair stands within D7's bound of its value before, one unit W_rec exchanged each way and the label carrying no form (D4); I_light = 1 within D7's bound at the lay (the books' count 1 read from the loaded world, lay_bounds.json) and again after the span of the emission",
+   "status": "C1 with D4 and D7; the bound 3 den SUM_t (|a_t| + 1 / 4) over the laid form, read on the source's increments",
+   "fence": "lattice (the books' share), beside the clicks"
+  },
+  "B3 momentum": {
+   "reading": "at every absorption the credit line's `momentum` (the piece p_a, C4), `twist` (n_a) and `shortfall` (s_a, C3); the body's own P_a, its record's momentum terms over its Nodes in T's unit (`readings.momentum_of`, `twist.scaled`), at the click and after its emission; the light's P_a over the board before and after the source's span",
+   "blind": "p_a = gain_a + s_a exactly at every absorption, the probe's integers (D5); P_body kept through the emission within D4's bound computed at the lay and written in lay_bounds.json before the run (C3); the source's residue, the light's P after the span against its value before, within D7's bound named to the source's asymmetry; the open board's identity D8 holds term by term in the packet_emission folder's kind and is not this folder's",
+   "status": "D4, D5, D7 and D8 with C3 and C4",
+   "fence": "clicks (the credit line's three readings) and a lattice reading (P over the body's Nodes)"
+  },
+  "B4 the inverse": {
+   "reading": "tools/back_in_time.py over 40 intervals of chain_x_minus through its first absorption and the emission that follows, the verdict",
+   "blind": "MATCH bit for bit: every array returns through the click's two writes, the fold and the lay lines, the inverse of the one act",
+   "status": "the lay act's inverse (`lay.written`, one `lay` line per Node changed; tools/back_in_time, `crossed`)",
+   "fence": "the tool's verdict, LATTICE"
+  },
+  "B5 the 48": {
+   "reading": "the six worlds run over their intervals (tools/run_inputs.py), each output's click lines, every level and every remainder brought back by the inverse of its signed permutation: the coordinate on the chain's axis to itself for a world toward the lower side and to 95 less itself for a world toward the upper side, the vector components with the axis's sign",
+   "blind": "every click line, level and remainder equal under the six signed permutations, with the draw's order the one named exception: `drawn` takes the first index whose cumulative weight exceeds the pick in the list's order and a tie the lower index (the law's L812, untouched), so the image worlds carry the declaration's lists, the Nodes, the directions and the outcomes, as the images in the original's order, and with that the comparison is exact",
+   "status": "equivariance under the 48 to the bit (L408's acts; the face on a Port set, the lay a scalar per line, the fold about the click's Node: C6)",
+   "fence": "the output lines and the arrays"
+  },
+  "B6 anticoincidence": {
+   "reading": "the anticoincidence folder's trials (tools/meeting_trials.py on examples/events/anticoincidence/one_photon.json over its design's seeds): P(A only), P(B only), P(both) and alpha",
+   "blind": "P(both) = 0 exactly, alpha = 0, |P(A only) - P(B only)| <= 2 sqrt(s (1 - s) / N) with s the anticoincidence folder's blind and N its trials; the identities D3 (the hole) and D6 (the front) per click",
+   "status": "S.57 (b), the credit's one draw per record; D3 and D6",
+   "fence": "clicks (the anticoincidence folder's own)"
+  },
+  "B7 the line shape": {
+   "reading": "chain_detuned over its intervals for each seed of detuned_trials.json (tools/meeting_trials.py with that file as the design): the trials with an absorption at the body, the credit lines naming `absorbed`",
+   "blind": "absorbed in at most 4 of the 8 trials (the bound corrected by derivation on 2026-10-19 from at most 1 of 8 after the first run had read 3 of 8, the correction the derivation's and no fit to a reading: the sinc weighs the turn and not the chance, the turn per flat window 1.27 rad at one Node at the declared weight 6, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one Node and 0.111 with the body's projection over its three Nodes, two windows per passage, 0.19 per trial, 1.5 of 8 expected, P(at most 4 of 8) = 0.99; under the first bound a lawful engine fails about half the time): the packet at k = pi / 8 stands detuned from the transition at [5414, 6000] (k = pi / 4) by Delta = omega(pi / 4) - omega(pi / 8) per interval, and the window's sinc at Delta W / 2 = 5.3 weighs each window's turn by sinc^2 below 1 / 30 (C9: the line shape is the window's own, the width 1 / W); the packet's flat top of 48 Nodes with the raised cosine of 8 beyond is monochromatic within the window, its passage over the body at the group velocity longer than the window, so two or three windows open on it, each weighed so; a packet of one wavelength at pi / 8, the 17-Node kind of the other worlds, would reach the transition with its spectrum and be absorbed at the weight's sin^2, so a detuning claim needs the packet's length W Nodes or more (C9 (b), the declaration)",
+   "status": "C9, the window's sinc; the declaration (b) on the packet's length; written before any run",
+   "fence": "clicks"
+  }
+ },
+ "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3, C9); the blinds asserted by tests/test_the_chain_world.py on every run of tools/check.py (the owner's word of 2026-10-19, write it as a test), the readings and the findings in blind_and_reading.md"
+}

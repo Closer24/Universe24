@@ -233,3 +233,18 @@ and 43 emissions `S by fluorescence`, their spacing 9.69 +/- 6.2, the dark fract
 size over one interval is |a_t| R within the reference records' rounding and one sub-turn is one shear,
 so the turn per window is k |a_t| as the magnitude form had it. The telegraph's bins move with every form of the emission and
 read nothing of the blind until the strong drive's row is fixed, as the advisor's second says.
+
+## The ion under the click's plan (2026-10-18, branch claude/click-one-act)
+
+The two drives are massless families laid as packets at the wave [1, 2], so under C1 their unit is
+their own rotation's, W_c sin omega at k = pi / 2 (439,628,852 (439,716,758 before the quarter turn's cosine read 0 exactly, 2026-10-19) against the bolometer's W_c): the books'
+counts read from the loaded worlds (`Lattice.books`) are the strong drive's 206,350 (153,804 before C1; 206,308 at the search's cosine, before 2026-10-19)
+and the weak drive's 65 (49 before); the amplitudes 3000 and 53 stand as declared and the clicks hold
+(the ion's window of one interval reads the levels). Under C3 the ion is the one shipped body a twist
+meets at an exchange: the strong drive, a travelling packet along x, deposits its piece at the ion's
+two Nodes along x, and the fluorescence that follows (e to g, the lifetime 8) re-lays the ion's parts
+each Node in its own direction, where the engine before C3 laid one direction at every Node and erased
+the gradient; the ion's levels and the born light's phase (`emission.start_of`, the pairs at the first
+Node) move with it, and the telegraph's counts over windows are read by the clicks alone. The telegraph
+is not re-run on this branch (the owner's word, no run but the tests' own); its readings above stand as
+read before C1 and C3.

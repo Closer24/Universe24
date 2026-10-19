@@ -268,3 +268,15 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | one_photon.json | back_in_time | intervals 170 | MATCH |
 | LATTICE | one_photon.json | back_in_time | intervals 72 | MATCH |
 | LATTICE | two_photons.json | back_in_time | intervals 170 | MATCH |
+
+## The intervals under the click's plan (2026-10-18, branch claude/click-one-act)
+
+A body's window is 48 intervals from the first interval its drive is lit at its Nodes, that interval
+included, the close at the arrival + 47 (C2, the hybrid window): on the shipped world the photon is lit at
+the second atom from 29, the window is [29, 76] and the absorption falls at 76, where the reading above
+has 48 counted from the start. The
+light's unit is the record's own, W_c sin omega at k = pi / 4 (C1), so the two packets are re-declared
+at the amplitude 78 (116 before) for one quantum together and the control's at 110 (165 before) for
+one quantum per record; the piece a click deposits is the quantum's 2 T sin k within 1.5 percent. The
+readings' table above was taken before these two changes; its intervals move to the arrival + 48 and
+its counts stay one quantum, one click.
