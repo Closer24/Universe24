@@ -33,7 +33,9 @@ Intake = dict[
 Joints = dict[
     tuple[int, ...], int
 ]  # per combination of the sides' ports (0 the +, 1 the -) the window's J
-Sums = dict[str, list[list[int]]]  # per region the parts' level sums [now, before] of one interval
+Sums = dict[
+    str, list[list[int]]
+]  # per region the record's lines' level sums [now, before] of one interval
 Clock = list[
     int
 ]  # a node_detector's own clock: its proper time in whole intervals and the remainder carried
@@ -94,7 +96,11 @@ class Books:
         found = board.world.draw
         units = {index: record_unit(board, index) for index in board.order}
         counts = {index: counted(board, index, board.laid[index], units[index]) for index in board.order}
-        sides = [(r.name, ports_of(r.basis, r.pattern)) for r in board.world.node_detectors if r.pattern]
+        sides = [
+            (r.name, ports_of(r.axis or r.basis, r.pattern))
+            for r in board.world.node_detectors
+            if r.pattern
+        ]  # a side's setting its `axis` for planes or its `basis` for real lines
         bodies = books_of(board)
         emitters: dict[int, list[Emitter]] = {}
         for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
@@ -124,7 +130,7 @@ def counted(board: Lattice, index: int, total: int | None, unit: int) -> int:
 
 
 def record_unit(board: Lattice, index: int) -> int:
-    """The unit of one quantum of a record, W_rec, from the record's own rotation and not from a reading (the click's plan, C1; the count's line, Q = count x W_c sin omega for a monochromatic record; nature: E = h nu, one count of light carries the form of its own frequency): W_rec = (the largest x with x^2 <= W_c^2 (den^2 - num_r^2) div den^2) with (num_r, den) the record's rotation, W_c = 3 den T; a family with a gap at its rest rotation, W_c sin omega_0, the count's wall as it stands (`loader/derived.count_wall`); a massless family laid as a packet at the wave [p, q] (the family's first packet; a family laid at several waves takes the first's) at the rotation of that wave, den cos omega = (num_l (den cos k + 2 den)) div (3 den_l) by the division act, the band's line with the transverse wave numbers 0, den cos k by the rotation act's integer search, the unit then W_c sin omega through the one form of a born quantum's (`emission.packet_unit`, `features/click.wave_cosine`, `emission.born_unit`; 4242 and 5414 of 6000 at k = pi / 4; the generator reads a packet's count in the same unit, tools/pixel_mode.py); W_c, the massless wall, for a massless family laid by no packet, until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`); held through the run (a face removes one quantum's share with one count). What moves against the reading of the share over the count: a massless packet's count is its share over W_c sin omega and no longer over W_c, one count at pi / 4 the amplitude 110 and not 165 on two_photons' packet, and the beams' counts by 1 / sin omega."""
+    """The unit of one quantum of a record, W_rec, from the record's own rotation and not from a reading (the click's plan, C1; the count's line, Q = count x W_c sin omega for a monochromatic record; nature: E = h nu, one count of light carries the form of its own frequency): W_rec = (the largest x with x^2 <= W_c^2 (den^2 - num_r^2) div den^2) with (num_r, den) the record's rotation, W_c = 3 den T; a family with a gap at its rest rotation, W_c sin omega_0, the count's wall of the record's unit (`loader/derived.count_wall`); a massless family laid as a packet at the wave [p, q] (the family's first packet; a family laid at several waves takes the first's) at the rotation of that wave, den cos omega = (num_l (den cos k + 2 den)) div (3 den_l) by the division act, the band's line with the transverse wave numbers 0, den cos k by the rotation act's integer search, the unit then W_c sin omega through the one form of a born quantum's (`emission.packet_unit`, `features/click.wave_cosine`, `emission.born_unit`; 4242 and 5414 of 6000 at k = pi / 4; the generator reads a packet's count in the same unit, tools/pixel_mode.py); W_c, the massless wall, for a massless family laid by no packet, until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`); held through the run (a face removes one quantum's share with one count). What moves against the reading of the share over the count: a massless packet's count is its share over W_c sin omega and no longer over W_c, one count at pi / 4 the amplitude 110 and not 165 on two_photons' packet, and the beams' counts by 1 / sin omega."""
     family, action = board.families[index], board.world.quantum_action
     wall = count_wall(family, action)
     packets = [p for p in board.world.packets if p.family == index]
@@ -195,23 +201,28 @@ def booked(
 
 
 def joined(board: Lattice, index: int, sums: Sums) -> None:
-    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side."""
+    """The book of the meeting (ALGEBRA.md #the-click-is-the-meeting, the one form): per combination of the sides' ports the joint share J accumulated over the window on both members of the level pair from the sides' parts sums of one interval, J += (SUM_k c_k PROD_sides now_k)^2 + (SUM_k c_k PROD_sides before_k)^2, c_k the product over the sides of e_k at their ports, as the reader `tools/bell_gate.py` reads the same sums; nothing where the world declares no draw or no side. For a record of plane parts (the spin branch, 2026-10-19) a part's sum is its pair (re, im) on its two lines, the product over the sides a plane's product and the square the pair's norm, J += |SUM_k c_k PROD_sides psi^s_k|^2 per member: the spinor amplitude's share under the detectors' declared axes (`loader/draw.settings_of_the_law`), the real-line form the same with im at 0."""
     books = board.credit
     if books.declaration is None or not books.sides:
         return
-    parts = board.families[index].parts
-    levels = [sums.get(name, [[0, 0]] * parts) for name, _ports in books.sides]
+    family = board.families[index]
+    parts, width = family.parts, family.width  # the lines per part: one for a real line, two for a plane
+    levels = [sums.get(name, [[0, 0]] * (parts * width)) for name, _ports in books.sides]
     joint = books.joints.setdefault(index, {})
     for key in itertools.product(range(len(PORT_NAMES)), repeat=len(books.sides)):
         total = 0
         for member in range(2):
-            term = 0
+            real, imaginary = 0, 0
             for k in range(parts):
-                product = 1
+                # the product over the sides as a plane's pair (re, im); a real line (re, 0)
+                product = (1, 0)
                 for (_name, ports), port, found in zip(books.sides, key, levels, strict=True):
-                    product *= ports[port][k] * found[k][member]
-                term += product
-            total += term * term
+                    factor = ports[port][k]
+                    re = factor * found[k * width][member]
+                    im = factor * found[k * width + 1][member] if family.plane else 0
+                    product = (product[0] * re - product[1] * im, product[0] * im + product[1] * re)
+                real, imaginary = real + product[0], imaginary + product[1]
+            total += real * real + imaginary * imaginary
         joint[key] = joint.get(key, 0) + total
 
 

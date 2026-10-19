@@ -19,7 +19,7 @@ READER_RECORD_KEYS = (
     "node_detector",
     "conversion",
 )  # a body as a NodeDetector with a record of its own
-PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count"), ("part", "name", "count")
+PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count", "capacity"), ("part", "name", "count")
 TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
 PROBE_KEYS = ("from", "to", "drive")  # a transition of a part into itself, the probe's: it turns nothing
 RATE_KEYS = (
@@ -85,7 +85,7 @@ class Conversion:
 
 @dataclass(frozen=True)
 class NodeDetectorDeclaration:
-    """A body as a NodeDetector as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts)."""
+    """A body as a NodeDetector as the world declares it: its parts' names (the modes' labels; a record converted whole one part, named by its family), the count in each part at the start, its transitions, its emissions, its own draw (the generator with its window, `Draw`; the generator alone, `Generator`, for a body with a probe among its transitions, whose window is bounded by the probe's lays), its conversions and the sense of its own lay where it is converted whole and a plane (0 for real lines and for a record laid in its parts), and per part its declared `capacity`, None where none is declared (the exclusion, `lists.full`; empty for a record converted whole)."""
 
     names: tuple[str, ...]
     counts: tuple[int, ...]
@@ -94,15 +94,18 @@ class NodeDetectorDeclaration:
     draw: Generator | None
     conversions: tuple[Conversion, ...] = ()
     sense: int = 0
+    capacities: tuple[
+        int | None, ...
+    ] = ()  # per part its declared `capacity`, None where none (the exclusion)
 
 
 def parts_of(
     value: object, label: str, parts: int, count: int
-) -> tuple[tuple[str, ...], tuple[int, ...]]:
-    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing; the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other); refused by name otherwise."""
+) -> tuple[tuple[str, ...], tuple[int, ...], tuple[int | None, ...]]:
+    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing, and optionally `capacity` (from 1), the most quanta the part holds, the exclusion as a declaration by name (the spin branch, 2026-10-19; `lists.full`: a part whose count has reached its capacity takes no quantum by any list, a part declaring none is never full; a cap on the count in the declared part, reading no sense); the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other), a count above its part's capacity refused; refused by name otherwise. Returns the names, the counts and the capacities (None where none is declared)."""
     if not isinstance(value, list) or len(value) != parts:
         raise ValueError(f"{label} lists one entry per part of the body's family, {parts} parts")
-    names, counts = [], []
+    names, counts, capacities = [], [], []
     for index, entry in enumerate(value):
         part = keyed(entry, f"{label}[{index}]", PART_KEYS, PART_REQUIRED)
         integer(part["part"], f"{label}[{index}].part", index, index)
@@ -110,12 +113,19 @@ def parts_of(
             raise ValueError(f"{label}[{index}].name must be a name of its own, the mode's label")
         names.append(part["name"])
         counts.append(integer(part["count"], f"{label}[{index}].count", 0))
+        where = f"{label}[{index}].capacity"
+        capacities.append(integer(part["capacity"], where, 1) if "capacity" in part else None)
+        if capacities[-1] is not None and counts[-1] > capacities[-1]:
+            raise ValueError(
+                f"{where} is {capacities[-1]} and the part's count {counts[-1]} stands above it: a part holds at "
+                "most its capacity, the exclusion as a declaration by name"
+            )
     if sum(counts) != count or sum(1 for c in counts if c) > 1:
         raise ValueError(
             f"{label} holds the counts {counts}: the body's count {count} stands in one part at the start, a lay "
             "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the lattice (j))"
         )
-    return tuple(names), tuple(counts)
+    return tuple(names), tuple(counts), tuple(capacities)
 
 
 def transitions_of(
@@ -337,7 +347,7 @@ def node_detector_of(
             f"{label}: a body laid in its parts is a plane of several parts, one plane per part, and "
             f"{family.name!r} is not"
         )
-    names, counts = parts_of(body["parts"], f"{label}.parts", family.parts, count)
+    names, counts, capacities = parts_of(body["parts"], f"{label}.parts", family.parts, count)
     transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
     probed = any(transition.leaves == transition.enters for transition in transitions)
     draw: Generator | None = None
@@ -349,4 +359,4 @@ def node_detector_of(
             f"{label} declares transitions or rates and no `node_detector` to draw them with"
         )
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
-    return NodeDetectorDeclaration(names, counts, transitions, rates, draw)
+    return NodeDetectorDeclaration(names, counts, transitions, rates, draw, capacities=capacities)
