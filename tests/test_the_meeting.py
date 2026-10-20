@@ -298,8 +298,8 @@ def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothin
     )  # across the absorption and the return
 
 
-def test_a_emission_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tmp_path):
-    """The undepleted beam at the emission (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `act.written`, `twist.faced`, `emission.emitted_quantum`): the Zeno n = 2 world's declaration (`ZENO_2`, inlined; re-pinned 2026-10-20 under the content of the born universe, the box opened along x as the content's sink, the declared window 24 kept since the rate's lay has no end on the axes across) with a rate e to g at the lifetime 8 emission to the pulse itself, the dense record at the reader's Node, under the read of the board, beside the pulse alone (the return by the rate or by the transition's descent, `lists.exchange`, both emissions into the beam): the absorptions and the emission write nothing on the pulse, whose three arrays stand bit for bit as the pulse alone over the run, no source in time begins and no lay line names the pulse, the count down by one per absorption and up by one per emission, the deficit the absorptions less the emissions (the books' line printed); the sparse emission's own tests stand in `tests/test_the_emission.py`."""
+def test_a_emission_into_a_beam_is_read_in_the_books_and_laid_where_the_beam_has_thinned(tmp_path):
+    """The undepleted beam at the emission (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `act.written`, `twist.faced`, `emission.emitted_quantum`): the Zeno n = 2 world's declaration (`ZENO_2`, inlined; re-pinned 2026-10-20 under the content of the born universe, the box opened along x as the content's sink, the declared window 24 kept since the rate's lay has no end on the axes across) with a rate e to g at the lifetime 8 emission to the pulse itself, beside the pulse alone. The law's one comparison at the drawn Node, the record's share there against its own quantum W_rec: the absorption at 24 finds the beam dense at both Nodes of the body (5.3 and 2.7 units) and writes nothing on the pulse, whose three arrays stand bit for bit as the pulse alone to the emission's close, the count down by one and the deficit up by one; the emission's Node is drawn by the body's read of the board, and where the beam is dense there the quantum passes in the books alone (no lay line, no source, the deficit down by one), while where the opened box's sink has thinned the beam to one unit or below the record is local and whole there and takes the lay: one lay line at that Node, a source in time begun, the deficit standing, the arrays differing from the pulse alone at that Node alone. This run, pinned 2026-10-20 with the twist deleted (the body's own levels unfolded, its read drawing the other Node): the emission at 49 falls at [4, 4, 2] where the beam stands at 0.99 of a unit against 9.54 at [5, 4, 2], and the quantum is laid there; the sparse emission's own tests stand in `tests/test_the_emission.py`."""
 
     def rated(world):  # type: ignore[no-untyped-def]
         opened(
@@ -317,31 +317,63 @@ def test_a_emission_into_a_dense_record_is_read_in_the_books_and_lays_nothing(tm
     TOOL.main(["--input", str(alone)])
     board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
     pulse = [f.name for f in board.families].index("pulse")
-    count, given = board.credit.counts[pulse], []
+    unit, nodes = board.credit.units[pulse], board.credit.bodies[0].nodes
+    count, given, shares, same = board.credit.counts[pulse], [], {}, []
     while board.interval < world["intervals"] and not given:
+        standing = board.share_of(pulse, 1, board.mask(nodes))[0]  # the beam at the body before the step
+        shares[board.interval + 1] = [int(standing[tuple(np.add(n, board.offset))]) for n in nodes]
         board.step(), twin.step()
+        same.append(
+            all(
+                np.array_equal(
+                    getattr(board.states[pulse].lines[0], k), getattr(twin.states[pulse].lines[0], k)
+                )
+                for k in ("now", "before", "remainder")
+            )
+        )
         given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     assert given and taken and given[0]["interval"] > taken[0]["interval"]  # absorbed, then emitted
-    for key in ("now", "before", "remainder"):
-        assert np.array_equal(
-            getattr(board.states[pulse].lines[0], key), getattr(twin.states[pulse].lines[0], key)
+    t_a, t_e = taken[0]["interval"], given[0]["interval"]
+    assert all(s > unit for s in shares[t_a]) and all(
+        same[: t_e - 1]
+    )  # the dense absorption writes nothing
+    assert board.credit.counts[pulse] == count  # one quantum taken, one given back
+    laid = [x for x in lines if x["event"] == "lay" and x["family"] == "pulse"]
+    differing = {
+        key: {
+            tuple(int(i) for i in n)
+            for n in np.argwhere(
+                getattr(board.states[pulse].lines[0], key) != getattr(twin.states[pulse].lines[0], key)
+            )
+        }
+        for key in ("now", "before", "remainder")
+    }
+    if laid:  # the beam thinned to one unit or below at the drawn Node: the record local and whole there
+        at = tuple(int(v) for v in laid[0]["node"]["at"])
+        assert shares[t_e][nodes.index(at)] <= unit
+        assert all(x["interval"] == t_e and tuple(x["node"]["at"]) == at for x in laid)
+        assert board.credit.sources and board.credit.deficits[pulse] == 1
+        assert all(
+            found <= {tuple(int(v) for v in np.add(at, board.offset))} for found in differing.values()
         )
-    assert not board.credit.sources and not any(
-        c["family"] == "pulse" for c in lines if c["event"] == "lay"
-    )
+    else:  # the beam dense at the drawn Node: the quantum passes in the books alone
+        assert not board.credit.sources and board.credit.deficits.get(pulse, 0) == 0
+        assert not any(differing.values())
+    thinned = [round(s / unit, 2) for s in shares[t_e]]
+    assert (t_a, t_e, thinned, bool(laid)) == (
+        24,
+        49,
+        [0.99, 9.54],
+        True,
+    )  # pinned 2026-10-20, the twist deleted
     books = board.books()["pulse"]
     print(
-        f"the Zeno pulse after {len(taken)} absorptions and {len(given)} emission at {board.interval}: the books {books}"
+        f"the Zeno pulse after the absorption at {t_a} (the beam {[round(s / unit, 2) for s in shares[t_a]]} units at the "
+        f"body) and the emission at {t_e} (the beam {thinned} units): {'laid at ' + str(laid[0]['node']['at']) if laid else 'nothing laid'}; "
+        f"the books {books}"
     )
-    assert (books["count"], books["deficit"]) == (
-        count - len(taken) + len(given),
-        len(taken) - len(given),
-    )
-    assert (
-        books["quanta"] == twin.books()["pulse"]["quanta"]
-        and books["share"] == twin.books()["pulse"]["share"]
-    )
+    assert (books["count"], books["deficit"]) == (count, board.credit.deficits.get(pulse, 0))
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):

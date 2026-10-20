@@ -320,10 +320,13 @@ def test_the_emission_is_laid_on_lights_own_family_and_the_body_is_dark_to_the_l
     print(
         f"the dark body's {len(dark_draws)} draws read {len(set(dark_draws))} distinct numbers, the period {period}"
     )
-    assert (len(dark_draws), len(set(dark_draws))) == (
-        257,
-        25,
-    )  # the reader's measure, pinned 2026-10-20
+    assert (
+        (len(dark_draws), len(set(dark_draws)))
+        == (
+            257,
+            22,
+        )
+    )  # the reader's measure, pinned 2026-10-20 with the twist deleted (25 distinct numbers with the fold on the body's levels)
     quarter, action = quarter_turn(board.amplitude, board.world.node_clock), board.world.quantum_action
     light, resonance = board.families[photon].pair, (TURN["resonance"][0], TURN["resonance"][1])
     projection = 2 * math.cos(math.pi / 8) / math.sqrt(2)  # the body's two Nodes at k = pi / 4
@@ -341,7 +344,7 @@ def test_the_emission_is_laid_on_lights_own_family_and_the_body_is_dark_to_the_l
 
 
 def test_the_six_directions_of_the_chain_are_one_world_bit_for_bit(tmp_path, monkeypatch):
-    """The 48 (the cold reader's change 4): the atom world laid along -x, -y, +y, -z and +z, each the image of the world along +x under a signed permutation of the cube that carries the chain to a chain (the mirror's packet at the phase 7 pi / 4, cos(k x) about x = 63), gives the same derived W, 33, and the same books at every interval up to the body's first close (the body's `elapsed`, its windows and parts, the dark reads, the photon's count and its levels at the body's Nodes, the rows of charge); the chains carried without a mirror (+y, +z) read the body's two Nodes in the same index order, so their pick at the close is the +x world's and the run is one world bit for bit, the click lines brought to the +x frame (`framed`: the vectors' chain component moved to x and signed, the absorption's piece 44486 and its recoil, the twist 9424, the quarter turn, the shortfall 11678, the lost readings; re-pinned 2026-10-20 under the content of the born universe, 45385 and 13001 at the content 0) and every level and remainder of every family at the run's end equal under the inverse map; a mirror (-x, -y, -z) reads the two Nodes in the other index order (`digits.DIGIT_ORDER`), so its pick at the close is its own, and where it agrees with the +x world's the run is bit for bit the same after the close too; the picks and the seconds printed."""
+    """The 48 (the cold reader's change 4): the atom world laid along -x, -y, +y, -z and +z, each the image of the world along +x under a signed permutation of the cube that carries the chain to a chain (the mirror's packet at the phase 7 pi / 4, cos(k x) about x = 63), gives the same derived W, 33, and the same books at every interval up to the body's first close (the body's `elapsed`, its windows and parts, the dark reads, the photon's count and its levels at the body's Nodes, the rows of charge); the chains carried without a mirror (+y, +z) read the body's two Nodes in the same index order, so their pick at the close is the +x world's and the run is one world bit for bit, the click lines brought to the +x frame (`framed`: the vectors' chain component moved to x and signed, the absorption's piece 44486 and its recoil, the lost readings; re-pinned 2026-10-20 under the content of the born universe, 45385 and 13001 at the content 0) and every level and remainder of every family at the run's end equal under the inverse map; a mirror (-x, -y, -z) reads the two Nodes in the other index order (`digits.DIGIT_ORDER`), so its pick at the close is its own, and where it agrees with the +x world's the run is bit for bit the same after the close too; the picks and the seconds printed."""
     started = time.perf_counter()
     board0, lines0, marks0 = run(tmp_path / "plus", monkeypatch)
     clicks0 = closes(lines0)

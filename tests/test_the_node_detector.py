@@ -301,7 +301,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan twist shortfall lost source recoil".split()
+        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
     )
     assert len(node_draws) == 1 and tuple(node_draws[0][2]) in region  # the hole's one drawn Node
     assert not any(

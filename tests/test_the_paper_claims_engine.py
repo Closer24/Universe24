@@ -17,7 +17,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import rule_integers
-    from event_universe.features import phase
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import quanta_records
@@ -141,7 +140,9 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             42,
             [21],
         )  # the null re-lay at 21 before it
-        assert len([x for x in lays if x["interval"] == click_at]) == 8 + 2  # Part F: the twist's two
+        assert (
+            len([x for x in lays if x["interval"] == click_at]) == 8
+        )  # the re-lay's four lines at two Nodes
         for _ in range(click_at - 1 - since):  # between the writes: nothing crossed, bit for bit
             between.step_inverse()
             assert BACK.first_difference(kept[between.interval], BACK.snapshot(between)) is None
@@ -196,10 +197,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         def read(a, here, *ks):  # [re now, re before, im now, im before] of a part's two lines
             return [int(a[f"atom.lines[{k}].{w}"][here]) for k in ks for w in ("now", "before")]
 
-        twist, gamma, amplitude = clicks[0]["twist"], board.world.node_clock, board.amplitude
-        axis = next(
-            (a for a in range(3) if twist[a]), 0
-        )  # Part F: the write's twist along the piece's axis
         vacuum_pace = [
             entered[0],
             before[0],
@@ -209,12 +206,15 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         direction = read(
             written, at[0], 2, 3
         )  # the engine's write at the first Node: the whole lay entered
-        assert direction == [
-            58,
-            -69,
-            69,
-            57,
-        ]  # pinned 2026-10-20 under the content; the vacuum pace's form beside
+        assert (
+            direction
+            == [
+                68,
+                -59,
+                59,
+                67,
+            ]
+        )  # pinned 2026-10-20 under the content with the twist deleted (the fold's quarter turn had turned it to [58, -69, 69, 57]); the vacuum pace's form beside
         assert (
             isqrt(direction[0] ** 2 + direction[2] ** 2)
             == isqrt(entered[0] ** 2 + entered[1] ** 2)
@@ -222,19 +222,9 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         )
         apart = degrees(atan2(direction[2], direction[0]) - atan2(entered[1], entered[0]))
         for here in at:
-            expected = list(direction)
-            if offset := here[axis] - min(
-                n[axis] for n in at
-            ):  # the fold at x n_a acts beyond the lowest Node
-                c, s = phase.read(
-                    phase.iterate(phase.seed(amplitude, gamma), offset * twist[axis], gamma)
-                )
-                re_t, im_t = phase.fold(direction[0], direction[2], c, s, amplitude)
-                re_tb, im_tb = phase.fold(direction[1], direction[3], c, s, amplitude)
-                expected = [int(re_t), int(re_tb), int(im_t), int(im_tb)]
-            assert (
-                read(written, here, 2, 3) == expected
-            )  # entered, twisted by the piece's momentum (Part F)
+            assert read(written, here, 2, 3) == list(
+                direction
+            )  # the whole lay entered at every Node, nothing written for the piece's momentum
             assert read(written, here, 0, 1) == [0, 0, 0, 0] == read(stood, here, 2, 3)  # left; e
             same_until = read(arrays_of(undrawn_at[since - 1]), here, 0, 1)  # the twin's g, unwritten
             assert same_until == read(
