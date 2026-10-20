@@ -24,11 +24,12 @@ from tests.laws import (
     slit_world,
     vacuum_content,
 )
+from tests.laws_read import load_shipped
 
 
 def vacuum_of(path, family: str) -> tuple[tuple[int, int], int, int, int]:  # type: ignore[no-untyped-def]
     """A world's packet family as the loader reads it: its pair, the universe's Gamma, the content it reads where nothing is laid (`vacuum_content`) and the Link unit, the band's inputs (`band_of`)."""
-    world = load_world(path)
+    world = load_shipped(path)
     rule = next(f for f in world.families if f.name == family)
     return rule.pair, world.node_clock, vacuum_content(world, rule), world.link_unit
 
@@ -183,7 +184,7 @@ def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_pa
     for folder, name in (("two_slits", "two_slits"), ("zeno", "zeno_1")):
         world = EVENTS / folder / f"{name}.json"
         entries = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"]
-        board = Lattice(load_world(world))  # the books at the loaded universe's own paces
+        board = Lattice(load_shipped(world))  # the books at the loaded universe's own paces
         names, books = [family.name for family in board.families], board.credit.counts
         assert [e["count"] for e in entries] == [books[names.index(e["family"])] for e in entries]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)

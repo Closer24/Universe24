@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features.click import along_cosine, envelope, line_total, wave_cosine
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import Draw
 from event_universe.loader.faces import extent_across
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Rate
@@ -93,7 +92,7 @@ def windowed(
     periodic: Wrap,
     action: int,
 ) -> tuple[BodyRow, ...]:
-    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`), and every rate's lay marked with its end (`Rate.ended`, the same property, read by C5's reach, `node_detector.sourcing`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.generator_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every body's rates giving to it (`rate_passage`), the body's own among them; every lay with an end: the longest passage is the window (`longest`), the generator with it the body's `Draw`, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
+    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`), and every rate's lay marked with its end (`Rate.ended`, the same property, read by C5's reach, `node_detector.sourcing`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.windowless_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every body's rates giving to it (`rate_passage`), the body's own among them; every lay with an end: the longest passage is the window (`longest`), the body's `Draw` with it, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
     rates = [rate for row in bodies if row.detector is not None for rate in row.detector.rates]
     found = []
     for number, row in enumerate(bodies):
@@ -125,7 +124,7 @@ def windowed(
         ]
         window, names = longest(lays), [families[drive].name for drive in drives]
         label = f"bodies[{number}].node_detector"
-        if isinstance(kind.draw, Draw):
+        if kind.draw.window is not None:
             if window is not None:
                 raise ValueError(
                     f"{label} declares the window {kind.draw.window}, and the lays of its drives {names} on this "
@@ -140,6 +139,6 @@ def windowed(
                 "filling a periodic ring, a source in time on a periodic board) or none is laid: such a body "
                 "declares its window, the instrument's cadence (ALGEBRA.md, The click writes on the lattice, C2)"
             )
-        draw = Draw(kind.draw.seed, kind.draw.multiplier, kind.draw.increment, window)
+        draw = replace(kind.draw, window=window)
         found.append(replace(row, detector=replace(kind, draw=draw)))
     return tuple(found)

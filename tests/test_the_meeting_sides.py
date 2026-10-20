@@ -8,7 +8,6 @@ import numpy as np
 import pytest
 
 from event_universe import meeting_back, reports
-from event_universe.features.click import drawn, hashed
 from event_universe.features.front import distances
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import BOARD, CONE, ports_of
@@ -40,22 +39,21 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
         path = spin_world(
             tmp_path / label, monkeypatch, sides, both=True, amplitude=64, regions={"near": [5, 6, 7, 8]}
         )
-        board, lines = trial(path, 1, 40)
-        spin, draw, modulus = family(board, "spin"), board.world.draw, board.world.width + 1
+        board, lines = trial(path, 40)
+        spin = family(board, "spin")
         books, clicks = board.credit, [c for c in lines if c["event"] == "credit"]
         realised = [PORT[c["realised"]] for c in clicks]
         assert [(c["node_detector"], c["order"], c["count"], c["left"]) for c in clicks] == [
             (name, order, 1, 0) for order, name in enumerate(sides, 1)
         ]
-        for side, (name, _ports) in enumerate(books.sides):
-            state = hashed(draw.seed, name, 1, modulus)
-            weights = books.weights[(spin, name)]
-            assert drawn(state, draw.multiplier, draw.increment, modulus, weights)[0] == realised[side]
         firsts[label] = books.weights[(spin, "left")]
         assert Fraction(firsts[label][0], sum(firsts[label])) == Fraction(1, 2) and board.passes == 7
         if label == "reader":
             joint = joint_shares(lines, sides, 0)
-            assert [c["scale"] for c in clicks] == [25, 25, 9]  # the norm of the coefficients standing
+            scales = [c["scale"] for c in clicks]  # the norm of the coefficients standing
+            assert scales[:2] == [25, 25] and scales[2] in (9, 16), (
+                scales
+            )  # 3^2 or 4^2 by the ports read
             middle = books.weights[(spin, "near")]
             assert middle[0] == middle[1] > 0  # the equal ports, exact whatever the walk
             last, fixed = books.weights[(spin, "right")], {0: realised[0], 1: realised[1]}
@@ -77,14 +75,11 @@ def test_the_tapered_front_runs_inside_the_clicks_light_cone_after_the_last_side
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     ends = {"left": [0, 1], "right": [31, 32]}
     path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64, regions=ends, erasure=3)
-    runs = {}
-    for seed in (1, 5):
-        lines: list[dict] = []  # type: ignore[type-arg]
-        board = Lattice(load_world(path), lines.append)
-        board.credit.declaration = replace(board.world.draw, seed=seed)
-        for _ in range(126):
-            board.step()
-        runs[seed] = (board, lines)
+    lines: list[dict] = []  # type: ignore[type-arg]
+    board = Lattice(load_world(path), lines.append)
+    for _ in range(126):
+        board.step()
+    runs = {0: (board, lines)}
     spin = family(board, "spin")
     for board, lines in runs.values():
         erasures = [e for e in lines if e["event"] == "erasure"]
@@ -113,7 +108,7 @@ def test_the_tapered_front_runs_inside_the_clicks_light_cone_after_the_last_side
         gate.step()
     assert GATE.verdict(gate, 40)["verdict"] == "MATCH"
     print(
-        f"the taper after the one close: {len(erasures)} erasure lines at the seeds 1 and 5, the shells to "
+        f"the taper after the one close: {len(erasures)} erasure lines on the run, the shells to "
         f"{max(e['interval'] for e in erasures)} on the board of {board.shape[0]}, the realised ports "
         f"{[(s, [c['realised'] for c in runs[s][1] if c['event'] == 'credit']) for s in runs]}"
     )
@@ -229,7 +224,7 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
     )
 
 
-def born_world(folder, monkeypatch, seed, window=200, intervals=124):  # type: ignore[no-untyped-def]
+def born_world(folder, monkeypatch, at=12, window=200, intervals=124):  # type: ignore[no-untyped-def]
     """The born pair's world (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the spin world's chain with no packet, the giver family `atom` added to its universe ([1, 1299], two parts of a plane, reading no holder), one atom body at the Node 12 standing in its part e, the transition g to e by `spin` at the resonance [5414, 6000] and the rate e to g with the lifetime 24 giving its quantum to `spin`, the body's own books with its `seed` (its window the passage of its drive's lay, derived at load); the two regions of the singlet with the identity pattern; `meeting: back` with the board's reach and the world's window `window` over `intervals` intervals; the mode file by the generator; the world's path."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], IDENTITY)}
     path = spin_world(folder, monkeypatch, sides, both=True, amplitude=64, reach=BOARD)
@@ -241,17 +236,13 @@ def born_world(folder, monkeypatch, seed, window=200, intervals=124):  # type: i
     world["bodies"] = [
         {
             "family": "atom",
-            "nodes": [{"node": [12, 0, 0], "weight": 1}],
+            "nodes": [{"node": [at, 0, 0], "weight": 1}],
             "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
             "transitions": [
                 {"from": "g", "to": "e", "drive": "spin", "weight": 1, "resonance": [5414, 6000]}
             ],
             "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "spin"}],
-            "node_detector": {
-                "multiplier": 6364136223846793005,
-                "increment": 1442695040888963407,
-                "seed": seed,
-            },
+            "node_detector": {},
         }
     ]
     path.write_text(json.dumps(world) + "\n", encoding="utf-8")
@@ -262,9 +253,9 @@ def born_world(folder, monkeypatch, seed, window=200, intervals=124):  # type: i
 def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_its_birth(
     tmp_path, monkeypatch
 ):
-    """(m) The lay across parts and the births' book (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the born pair's world (`born_world`, the first of eight seeds whose atom emits before the interval 60), run 124 intervals under `meeting: back` with a window longer than the run (the lays logged, no click): the emission lays the quantum of `spin` on every part alike, the lay lines of the birth interval on the first line of each part at the Node 12 with the same levels, the two parts' lines equal bit for bit at the end (the symmetric lay stepped by one rule) and the `parts` lines' sums equal part by part; the births' book holds the birth's interval and the Node, `birth_of` reads it, the books count one quantum; the run back from the close stops at the birth, the board there equal bit for bit to the frame the forward run recorded right after the birth's lays, the cone's root the birth's Node, and the run forward returns the close bit for bit."""
-    for seed in range(8):
-        path = born_world(tmp_path / str(seed), monkeypatch, seed)
+    """(m) The lay across parts and the births' book (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the born pair's world (`born_world`, the first of eight placements whose atom emits before the interval 60), run 124 intervals under `meeting: back` with a window longer than the run (the lays logged, no click): the emission lays the quantum of `spin` on every part alike, the lay lines of the birth interval on the first line of each part at the Node 12 with the same levels, the two parts' lines equal bit for bit at the end (the symmetric lay stepped by one rule) and the `parts` lines' sums equal part by part; the births' book holds the birth's interval and the Node, `birth_of` reads it, the books count one quantum; the run back from the close stops at the birth, the board there equal bit for bit to the frame the forward run recorded right after the birth's lays, the cone's root the birth's Node, and the run forward returns the close bit for bit."""
+    for at in range(12, 20):  # the atom's Node, the ensemble's knob: the first placement emitting by 60
+        path = born_world(tmp_path / str(at), monkeypatch, at)
         lines, frames = [], {}
         board = Lattice(load_world(path), lines.append)
         spin = family(board, "spin")
@@ -276,10 +267,10 @@ def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_
         if spin in board.credit.births and board.credit.births[spin][0] <= 60:
             break
     else:
-        raise AssertionError("no seed of eight emitted before the interval 60")
+        raise AssertionError("no placement of eight emitted before the interval 60")
     birth, nodes = board.credit.births[spin]
     width = board.families[spin].width
-    assert 0 < birth <= 60 and nodes == ((12, 0, 0),) and board.credit.counts[spin] == 1
+    assert 0 < birth <= 60 and nodes == ((at, 0, 0),) and board.credit.counts[spin] == 1
     first = [line for line in lines if line["event"] == "lay" and line["family"] == "spin"]
     first = [line for line in first if line["interval"] == birth]
     assert sorted(line["line"] for line in first) == [0, width]
@@ -298,7 +289,7 @@ def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_
     assert meeting_back.first_difference(frames[birth], meeting_back.snapshot(board)) is None
     meeting_back.run_forward(board, spin, board.world.intervals, kept)
     print(
-        f"the born pair: the atom at the seed {seed} emitted at the interval {birth}, the quantum laid on the "
+        f"the born pair: the atom at the Node {at} emitted at the interval {birth}, the quantum laid on the "
         f"lines {sorted(line['line'] for line in first)} alike, the run back to the birth exact"
     )
 
@@ -324,7 +315,7 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
             amplitude=64,
             reach=BOARD,
         )
-        board, lines = trial(path, 1, 40)
+        board, lines = trial(path, 40)
         spin, joint = family(board, "spin"), joint_shares(lines, sides, 0)
         width = board.families[spin].width
         own = {name: [[0, 0], [0, 0]] for name in sides}

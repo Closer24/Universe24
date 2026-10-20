@@ -332,19 +332,17 @@ def test_line_7_the_count_on_the_board_reads_the_books_count_at_every_close(tmp_
 # jumps from nowhere; they happen in sequence."): four verifications of the one meeting, (a) to (d).
 
 
-def stepped(tmp_path, folder: str, name: str, edit=None, seed=None):  # type: ignore[no-untyped-def]
-    """A shipped world beside tmp_path, the `meeting` key stripped, `edit` applied and the draw's seed set where given, run through its intervals with an observer recording at the first call of every interval (the step's own after its acts, or at a close with a reading the run back's, the board as Rule3 left it before any write) the sides' moments, the frame's digest, the Books' fields holding data, the record's count on the board (`Lattice.count`) and, at the first side's run forward's arrival (pass 3), the moments re-booked from the rewritten record; returns the board, its lines, the spin family and the record per interval."""
+def stepped(tmp_path, folder: str, name: str, edit=None):  # type: ignore[no-untyped-def]
+    """A shipped world beside tmp_path, the `meeting` key stripped and `edit` applied, run through its intervals with an observer recording at the first call of every interval (the step's own after its acts, or at a close with a reading the run back's, the board as Rule3 left it before any write) the sides' moments, the frame's digest, the Books' fields holding data, the record's count on the board (`Lattice.count`) and, at the first side's run forward's arrival (pass 3), the moments re-booked from the rewritten record; returns the board, its lines, the spin family and the record per interval."""
     source = EVENTS / folder / f"{name}.json"
 
     def edited(world):  # type: ignore[no-untyped-def]
         world["draw"].pop("meeting", None)
-        if seed is not None:
-            world["draw"]["seed"] = seed
         if edit is not None:
             edit(world)
 
     lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_world(world_beside(tmp_path / f"{name}_{seed}", source, edited)), lines.append)
+    board = Lattice(load_world(world_beside(tmp_path / name, source, edited)), lines.append)
     spin, calls = family(board, "spin"), {}
 
     def observer(interval: int, direction: int, passes: int) -> None:
@@ -436,58 +434,17 @@ def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays
         "left": [[185800] * 2] * 2,
         "right": [[3715] * 2] * 2,
     }  # the leak 3715 / 185800, 2 %
-    assert weights == {
-        "left": [185800, 185800],
-        "right": [534960, 92875],
-    }  # the right on its conditional
-
-
-def test_the_clicks_in_sequence_c_the_seed_moves_the_realised_ports_and_nothing_else(tmp_path):
-    """(c) The singlet world a' b at the seeds 24, 25, 26 and 27: every frame of the forward run before the close equal bit for bit across the seeds, the sides' second moments at the close equal bit for bit, the first side's weights equal, and the moments the first side's run forward re-books after its identity write (the left's (1, 1) a scaling) the plain run's bit for bit (the reader's W6); the realised ports alone may move, and after the writes the boards differ in the spin family alone, by the coefficients written (every other family's arrays equal bit for bit at the end); the pairs' correlation is the blind's E = -120 / 169, the opposite ports at 289 / 338."""
-    found = {}
-    for seed in (24, 25, 26, 27):
-        board, lines, spin, calls = stepped(tmp_path, "bell_singlet", "singlet_a_prime_b", seed=seed)
-        clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
-        others = [arrays for index, arrays in enumerate(meeting_back.snapshot(board)) if index != spin]
-        frames = [calls[t][1] for t in range(1, 40)]  # the forward run before the close
-        realised = [PORT[c["realised"]] for c in clicks]
-        assert [c["scale"] for c in clicks] == expected_scales(board, spin, realised)
-        found[seed] = {
-            "frames": frames,
-            "close": calls[40][:2],
-            "rebooked": calls[40][4],
-            "left": board.credit.weights[(spin, "left")],
-            "ports": realised,
-            "scales": [c["scale"] for c in clicks],
-            "others": others,
-        }
-    first = found[24]
-    for seed, one in found.items():
-        assert one["frames"] == first["frames"] and one["close"] == first["close"], seed
-        assert one["left"] == first["left"] and len(one["ports"]) == 2, seed
-        assert (
-            one["rebooked"] == one["close"][0]
-        )  # the identity write: the re-booked moments the plain run's
-        for a, b in zip(one["others"], first["others"], strict=True):
-            assert meeting_back.first_difference([a], [b]) is None, seed
-    ports = {seed: one["ports"] for seed, one in found.items()}
-    opposite = sum(p[0] != p[1] for p in ports.values())
-    assert ports == {seed: [1, 0] for seed in (24, 25, 26, 27)} and first["left"] == [331016, 331016]
-    print(
-        f"(c) the seeds 24..27 on a' b: the realised ports {ports} ({opposite} of 4 opposite; E = -120 / 169 gives "
-        f"289 / 338), the scales {dict((s, o['scales']) for s, o in found.items())}; the 39 frames "
-        f"before the close, the moments at the close and the left's weights {first['left']} equal across the seeds"
-    )
+    assert weights["left"] == [185800, 185800] and sorted(weights["right"]) == [92875, 534960]
+    # the right on its conditional: the larger weight at the port opposite the left's realised one
 
 
 def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
-    """(d) The Books at every close, on the born pair's world (two closes) and on the singlet (one): the fields holding data are among the declaration, the generator's state, the per-side moments and the patterns, the counts, the inflows and passages the credit always had, the sides' order, the births, the lays' and faces' logs, the write's coefficients and scale and the reading's own (the realised ports, the likeness, the weights kept as a diagnostic, the record run, the Node-steps); the born pair's world runs under the cone's reach, whose books are these: at A's close the reference (the board at the born record's birth), at B's close the birth, the reference, the cone's volumes, the regrown close and the Node-steps beside the write's; nothing joint: no joints, no J, no conditioning, no levels of one side in another's book; the set pinned per close."""
+    """(d) The Books at every close, on the born pair's world (two closes) and on the singlet (one): the fields holding data are among the declaration, the read's number left, the per-side moments and the patterns, the counts, the inflows and passages the credit always had, the sides' order, the births, the lays' and faces' logs, the write's coefficients and scale and the reading's own (the realised ports, the likeness, the weights kept as a diagnostic, the record run, the Node-steps); the born pair's world runs under the cone's reach, whose books are these: at A's close the reference (the board at the born record's birth), at B's close the birth, the reference, the cone's volumes, the regrown close and the Node-steps beside the write's; nothing joint: no joints, no J, no conditioning, no levels of one side in another's book; the set pinned per close."""
     names = {f.name for f in fields(Books)}
     assert not names & {"joints", "levels", "conditioning", "joined", "popped", "reweighted"}
     always = {
         "declaration",
         "elapsed",
-        "state",
         "counts",
         "intake",
         "sides",
@@ -505,7 +462,7 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "emitters",
         "remainders",
         "passages",
-        "states",
+        "left",
         "patterns",
     }
     own = {

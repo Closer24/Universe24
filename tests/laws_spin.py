@@ -13,7 +13,7 @@ from event_universe import meeting_back, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import ports_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL, load_file
+from tests.laws import EVENTS, TOOL
 
 SPIN = {"name": "spin", "pair": [6000, 6000], "reads": {"gravity": 1, "binding": 1}, "dimension": [2, 2]}
 
@@ -38,7 +38,6 @@ def spin_world(
     if exchange is not None:
         universe["families"][-1]["exchange"] = exchange
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
     source, depth = length // 2, 4
     packets = [
@@ -71,27 +70,17 @@ def spin_world(
         "intervals": intervals,
         **({"erasure": erasure} if erasure is not None else {}),
         "universe": "u.json",
-        "engine": "e.json",
         "bodies": [],
         "packets": packets,
         "node_detectors": detectors,
         "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
-        "draw": {
-            "window": intervals,
-            "seed": 24,
-            "multiplier": 6364136223846793005,
-            "increment": 1442695040888963407,
-            **({"reach": reach} if reach is not None else {}),
-        },
+        "draw": {"window": intervals, **({"reach": reach} if reach is not None else {})},
     }
     (path := folder / "spin.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     TOOL.main(["--input", str(path)])
     return path
 
 
-TRIALS = load_file(
-    "meeting_trials", ROOT / "tools" / "meeting_trials.py"
-)  # the trials tool: its hashed states
 IDENTITY = [[1, 0], [0, 1]]  # the parts the spinor's two components: the + port reads (c, s)
 SINGLET = [
     [0, 1],
@@ -110,7 +99,6 @@ def exclusion_world(
     folder,
     monkeypatch,
     capacity,
-    seed,
     length=112,
     intervals=125,
     grounds=(("g", 2),),
@@ -124,7 +112,6 @@ def exclusion_world(
     if exchange is not None:
         universe["families"][0]["exchange"] = exchange
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
     at, held = length // 2 - 9, {} if capacity is None else {"capacity": capacity}
     parts = [{"part": k, "name": n, "count": c} for k, (n, c) in enumerate(grounds)] + [
@@ -135,9 +122,8 @@ def exclusion_world(
         for g, _count in grounds
         for e in excited
     ]
-    draw = {"multiplier": 6364136223846793005, "increment": 1442695040888963407, "seed": seed}
     body = {"family": "atom", "nodes": [{"node": [x, 0, 0], "weight": 1} for x in (at, at + 1)]}
-    body.update(parts=parts, transitions=turns, rates=[], node_detector=draw)
+    body.update(parts=parts, transitions=turns, rates=[], node_detector={})  # the window derived
     photons = [
         {
             "family": "photon",
@@ -156,7 +142,6 @@ def exclusion_world(
         "face_depth": 1,
         "intervals": intervals,
         "universe": "u.json",
-        "engine": "e.json",
         "bodies": [body],
         "packets": photons,
         "node_detectors": [],
@@ -167,11 +152,10 @@ def exclusion_world(
     return path
 
 
-def trial(path: Path, seed: int, intervals: int) -> tuple[Lattice, list[dict]]:  # type: ignore[type-arg]
-    """One run from the lay with the regions' draw at the trial's seed (`hashed_state`, the trials tool's), the board and its lines."""
+def trial(path: Path, intervals: int) -> tuple[Lattice, list[dict]]:  # type: ignore[type-arg]
+    """One run from the lay over `intervals`, every draw the click's read of the board: the board and its lines."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(path), lines.append)
-    board.credit.state = TRIALS.hashed_state(seed, board.world.width)
     for _ in range(intervals):
         board.step()
     return board, lines

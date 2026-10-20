@@ -4,76 +4,50 @@ import json
 import math
 from fractions import Fraction
 
-from event_universe import act, meeting
-from event_universe.features.click import drawn
+from event_universe import lists, meeting, world_files
 from event_universe.lattice import Lattice
 from event_universe.resonance import unit_weight
 from event_universe.twist import quarter_turn
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL, load_file
+from tests.laws import EVENTS, TOOL, world_beside
+from tests.laws_read import redeclared
 
 
-def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path, monkeypatch):
-    """Two atoms reading one photon, A of count 1 and B of count 2 (the anticoincidence world's two atoms, B's ground part declared at the count 2; B's norm the engine's own, read from the books and not assumed), closing one drive's interval together over 1,200 trials, each trial the first closing body's generator at the trials tool's hashed state of the trial's number, the write step reduced to the books (the drive's count moved, nothing laid) so that the draw alone is read: (i) both bodies fully turned, each body's entered label squared its own norm, each takes at 1/2 within three standard errors and more than three from the 1/5 and 4/5 the smaller body's label squared against the larger body's norm would give (the engine before this line); (ii) A half turned, its entered label squared half its norm, and B untouched, A takes at 1/2 within three standard errors and more than three from 1/8, and B never; (iii) A alone, half turned, at the count 1, the picks bit for bit those of the click's draw over the weights [s_A, N_A - s_A] from the same states, the form before this line, so that nothing of one body per drive moves; the realised frequencies printed."""
+def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path):
+    """Two atoms reading one photon, A of count 1 and B of count 2 (the anticoincidence world's two atoms, B's ground part declared at the count 2; B's norm the engine's own, read from the books and not assumed), closing one interval: the absorption's list at one denominator (ALGEBRA.md, The absorption, the draw (a) and (b); `lists.absorption`): the unit the norms' least common multiple, each body's weight its transfer share scaled by the unit over its own norm, and the rest the record's unabsorbed share less the weights, 0 where they sum above the unit (both turned whole: the two weights the unit each and nothing to the rest, one quantum one taker; A half turned and B untouched: A's weight half the unit and B's 0; A closing alone: its share in its own norm); the realised frequencies over an ensemble of worlds are the trials tool's reading (tools/meeting_trials.py) and no test's."""
     world = json.loads((EVENTS / "anticoincidence" / "one_photon.json").read_text(encoding="utf-8"))
-    world["bodies"][1]["parts"][0]["count"] = 2  # the second atom's ground part at the count 2
+    redeclared(world)["bodies"][1]["parts"][0]["count"] = (
+        2  # the second atom's ground part at the count 2
+    )
     (path := tmp_path / "two_counts.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
-    hashed_state = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py").hashed_state
     board = Lattice(load_world(path))
     a, b = board.credit.bodies
-    drive, width, trials = a.declared.transitions[0].drive, board.world.width, 1200
+    drive = a.declared.transitions[0].drive
     n_a, n_b = (sum(label * label for label in books.labels) for books in (a, b))
     assert a.counts == [1, 0] and b.counts == [2, 0] and 0 < n_a < n_b  # the engine's own norms
+    unit = n_a * n_b // math.gcd(n_a, n_b)
 
-    def booked(board, items):  # the write step reduced to the books: the drive's count moved, no lay
-        if items:  # the outcome that none takes writes nothing
-            board.credit.counts[items[0].family] += items[0].delta
+    def weights(closing, shares):  # the list's weights with the record's count 1 and no earlier window
+        board.credit.counts[drive] = 1
+        board.credit.account_ended(drive)
+        for books, share in zip(closing, shares, strict=True):
+            books.shares = {books.declared.transitions[0]: share}
+        outcomes = [(books, books.declared.transitions[0]) for books in closing]
+        return [alternative.weight for alternative in lists.absorption(board, drive, outcomes)]
 
-    monkeypatch.setattr(act, "written", booked)
-    monkeypatch.setattr(act, "reported", lambda *args: None)
-
-    def frequencies(closing, shares):
-        taken, picks = {books.number: 0 for books in closing}, []
-        for seed in range(trials):
-            board.credit.counts[drive], closing[0].state = 1, hashed_state(seed, width)
-            board.credit.account_ended(drive)
-            for books, share in zip(closing, shares, strict=True):
-                books.shares = {books.declared.transitions[0]: share}
-            done = meeting.absorptions_drawn(board, closing)
-            picks.append(min(done) if done else len(closing))
-            for number in done:
-                taken[number] += 1
-        return [taken[books.number] / trials for books in closing], picks
-
-    error = 3 * math.sqrt(0.25 / trials)  # three standard errors of a frequency about 1/2
-    (full_a, full_b), _picks = frequencies([a, b], [n_a, n_b])
-    (half_a, none_b), _picks = frequencies([a, b], [n_a // 2, 0])
-    (alone_a,), picks = frequencies([a], [n_a // 2])
-    generator, modulus = a.declared.draw, width + 1
-    before = [
-        drawn(
-            hashed_state(seed, width),
-            generator.multiplier,
-            generator.increment,
-            modulus,
-            [n_a // 2, n_a // 2],
-        )[0]
-        for seed in range(trials)
-    ]
-    print(
-        f"norms {n_a} and {n_b}; both turned A {full_a:.4f} B {full_b:.4f}; A half turned, B untouched"
-        f" A {half_a:.4f} B {none_b:.4f}; A alone {alone_a:.4f}; three standard errors {error:.4f}"
-    )
-    assert abs(full_a - 1 / 2) < error < abs(full_a - 1 / 5) and abs(full_b - 1 / 2) < error
-    assert error < abs(full_b - 4 / 5) and full_a + full_b == 1  # one quantum, one taker per trial
-    assert abs(half_a - 1 / 2) < error < abs(half_a - 1 / 8) and none_b == 0
-    assert picks == before and abs(alone_a - 1 / 2) < error
+    half = n_a // 2
+    assert weights([a, b], [n_a, n_b]) == [unit, unit, 0]  # one quantum, one taker, nothing to the rest
+    assert weights([a, b], [half, 0]) == [half * (unit // n_a), 0, unit - half * (unit // n_a)]
+    assert weights([a], [half]) == [half, n_a - half]  # A alone: its own norm the unit
+    print(f"the norms {n_a} and {n_b}, the unit {unit}: the absorption's weights at one denominator")
 
 
-def test_the_weight_from_the_unit_is_checked_on_the_zeno_calibration():
+def test_the_weight_from_the_unit_is_checked_on_the_zeno_calibration(tmp_path):
     """C9 (a) of the click's plan, the transition's weight from the unit (`resonance.unit_weight`): the weight at which one quantum of the drive at resonance, spread over the window as it passes the Node, turns the quarter turn, the ratio of the phase line's quarter turn (9424 acts at Gamma 6000) over S_1 = sqrt(3 W T / (4 sin k)), the plane's size one quantum makes over the window; at W = 48 and T = 32768 S_1 reads 1086 at the Zeno transition [2, 3] (k = pi / 2) and 1291 at the atoms' [5414, 6000] (k = pi / 4), the ratios 8.68 and 7.30 where the files declare 1 and 6. The check on the Zeno calibration (the drive 392 at the weight 1, Itano's pi pulse): the drive carries A^2 W sin k / (3 T) = 75 + 1 / 32 quanta past the body per window, and the declared weight times the root of that count is the derived weight within one part in four hundred, the pi pulse being the derived weight's quarter turn at one quantum per window scaled by the root of the quanta, an identity of the model; so the replacement of the files' weights keeps Itano's column only with the drive re-declared at one quantum per window, 392 over the root, about 45, the owner's call, and the derivation stands beside the declared weight. None for a massive drive and for a resonance outside the massless band ([1, 3], the resonance folder's detuned taker, stands at cos k = -1). The cold reader's line of 2026-10-19 on this identity: A_1 cancels in it, so it tests neither S_1 nor the premise of one quantum turning the quarter; it says that 392 is the quarter-turn amplitude at the weight 1 over the window 48 (pi Gamma / W = 392.7) and that the derived weight is that amplitude over the one-quantum amplitude, the calibration identity by name; the unit's weight carries 1 / sqrt(W) of its window and is no coupling's constant (the check of the same day: the declared weight stands)."""
-    board = Lattice(load_world(EVENTS / "zeno" / "zeno_1.json"))
+    board = Lattice(
+        load_world(world_beside(tmp_path, EVENTS / "zeno" / "zeno_1.json", lambda world: None))
+    )
     body, action, quarter = board.credit.bodies[0], board.world.quantum_action, quarter_turn(board)
     transition, window = body.declared.transitions[0], body.declared.draw.window
     light, amplitude = board.families[transition.drive].pair, board.world.packets[0].amplitude
@@ -91,3 +65,45 @@ def test_the_weight_from_the_unit_is_checked_on_the_zeno_calibration():
         f"[5414, 6000] over the window {window}; the Zeno drive {amplitude} carries {float(quanta):.2f} quanta per "
         f"window, its one-quantum amplitude {amplitude / math.sqrt(quanta):.1f}"
     )
+
+
+def test_a_body_among_several_drives_takes_each_by_its_own_transfer_share(tmp_path, monkeypatch):
+    """The absorption among several drives (ALGEBRA.md, The click writes on the lattice (f); The two-mode line; `meeting.turned_labels`, `absorbed`): two atoms, each with the transitions g to e by `photon` and by `photon_b`, one packet of each laid at the centre toward one atom, the left atom's window closing first while `photon`'s count stands (the windows derived from the packets' passage, 33 each, the left atom lit at 13 closing at 45 and the right at 14 closing at 46; 2026-10-19): a drive's weight at a body is its own transfer share, so the left atom takes `photon_b`, the drive that passed it, and the right `photon`; with `photon_b` removed the one drive's share is the composed label squared bit for bit at both atoms, and `photon`'s share at each atom is the same number in both worlds."""
+    seen, turned = [], meeting.turned_labels
+
+    def kept(board, books):  # the labels and the shares at the window's close, before the click
+        turned(board, books)
+        shares = getattr(books, "shares", {})  # none before the fix: the clicks' assertion fails
+        seen.append((books.number, list(books.labels), {t.drive: s for t, s in shares.items()}))
+
+    monkeypatch.setattr(meeting, "turned_labels", kept)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    folder, clicks = EVENTS / "anticoincidence", {}
+    for drives in (("photon", "photon_b"), ("photon",)):
+        universe = json.loads((folder / "two_atoms.json").read_text(encoding="utf-8"))
+        universe["families"] += [{**universe["families"][1], "name": d} for d in drives[1:]]
+        (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+        world = redeclared(json.loads((folder / "two_photons.json").read_text(encoding="utf-8")))
+        world.update(shape=[64, 1, 1], universe="u.json")
+        for body, at in zip(world["bodies"], (15, 47), strict=True):
+            body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in range(at, at + 4)]  # 4 Nodes
+            body["node_detector"] = {k: v for k, v in body["node_detector"].items() if k != "window"}
+            body["transitions"] = [{**body["transitions"][0], "drive": d} for d in drives]
+        for packet, x, family in zip(world["packets"], (32, 31), ("photon", "photon_b"), strict=True):
+            packet.update(top={**packet["top"], "x": [x, x]}, family=family)
+        world["packets"] = [m for m in world["packets"] if m["family"] in drives]
+        (path := tmp_path / f"{len(drives)}.json").write_text(json.dumps(world), encoding="utf-8")
+        TOOL.main(["--input", str(path)])
+        board = Lattice(load_world(path), (lines := []).append)
+        while board.interval < 70:
+            board.step()
+        hits = [c for c in lines if c.get("absorbed")]
+        clicks[drives] = [(c["interval"], c["node_detector"], c["absorbed"]) for c in hits]
+    by_share = {("body 0", "photon_b"), ("body 1", "photon")}  # each atom's drive of the larger share
+    assert all((c[1], c[2]) in by_share and 40 <= c[0] <= 52 for c in clicks["photon", "photon_b"])
+    assert all(c[1:] == ("body 1", "photon") and 40 <= c[0] <= 52 for c in clicks[("photon",)])
+    two, one = ({n: (lab, s) for n, lab, s in part} for part in (seen[:2], seen[2:]))  # per body
+    print(f"by the drives' shares {clicks['photon', 'photon_b']}; the left atom's {two[0][1]}")
+    assert all(labels[1] ** 2 == shares[1] for labels, shares in one.values())  # one drive
+    assert two[1][1][1] == one[1][1][1]  # photon's share at the right atom's close, 46 in both worlds
+    assert two[0][1][1] * 1000 < two[0][1][2] and two[1][1][2] * 1000 < two[1][1][1]

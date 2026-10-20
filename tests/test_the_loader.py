@@ -9,7 +9,7 @@ from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.loader.node_detector_declaration import lit_families
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_beside
+from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_beside, world_beside
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
@@ -191,7 +191,8 @@ def test_a_massless_packet_lays_no_uniform_mode_and_the_board_refuses_one_that_d
 ):
     """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The packet lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`Lattice.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
     for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
-        board = Lattice(load_world(EVENTS / f"{world}.json"), lambda line: None)
+        copied = world_beside(tmp_path / "shipped", EVENTS / f"{world}.json", lambda document: None)
+        board = Lattice(load_world(copied), lambda line: None)
         for index, family in enumerate(board.families):
             if family.quanta and family.pair[0] == family.pair[1]:
                 line = board.states[index].lines[0]
@@ -217,7 +218,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1, universe="u.json")
-    world.update(engine="e.json", bodies=[], packets=[], node_detectors=[])
+    world.update(bodies=[], packets=[], node_detectors=[])
 
     def written(name, **changes):
         (path := tmp_path / f"{name}.json").write_text(
@@ -271,7 +272,7 @@ def test_the_region_rule_refuses_a_node_named_twice_and_reads_the_extent_through
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(shape=[4, 4, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1)
-    world.update(universe="u.json", engine="e.json", bodies=[])
+    world.update(universe="u.json", bodies=[])
     for name, positions in (("twice", [[2, 2, 2], [2, 2, 2]]), ("two", [[2, 2, 2], [2, 2, 1]])):
         detectors = [{"name": name, "positions": positions}]
         (tmp_path / f"{name}.json").write_text(
@@ -309,7 +310,7 @@ def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_f
     pulse = {family.name: index for index, family in enumerate(zeno) if family.quanta}
     assert lit_families(zeno, pulse) == pulse == {"atom": 0, "pulse": 1}  # a holder no family reads
     parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
-    draw = {"window": 4, "seed": 1, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
+    draw = {"window": 4}
     turn, rate = {"from": "g", "to": "e", "weight": 1, "resonance": [2, 3]}, {"from": "e", "to": "g"}
 
     def declared(**entry):

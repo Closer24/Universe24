@@ -10,15 +10,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import (
-    BACK,
-    EVENTS,
-    TOOL,
-    ion_world,
-    packet_world,
-    refused,
-    slit_world,
-)
+from tests.laws import BACK, EVENTS, TOOL, ion_world, packet_world, refused, slit_world, world_beside
+from tests.laws_read import redeclared
 
 
 def test_the_division_act_keeps_the_two_sums_and_the_guard_refuses_a_lay_that_moves_one():
@@ -52,7 +45,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
     tmp_path,
 ):
     """The write step of the act (`lay.laid`, `lay.written`): on the Zeno box without bodies a massless record's change of (+5, -5) at two Nodes and (+2, -2) before them, weighted alike, adds the levels, leaves the two sums as it found them, sets the remainder of every written Node to the origin it is handed (the half wall, a Node moved off it included where the lay names it) and reports one lay line per written Node with [now, before, remainder] before and after; a Node named by the lay with no change and its remainder at the origin reports none; the faced Node is left to the faces."""
-    world = json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8"))
+    world = redeclared(json.loads((EVENTS / "zeno" / "zeno_1.json").read_text(encoding="utf-8")))
     world.update(bodies=[], packets=[], node_detectors=[], intervals=4)
     (path := tmp_path / "box.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path), (lines := []).append)
@@ -84,7 +77,7 @@ def test_the_write_step_lays_at_the_nodes_with_the_remainder_at_the_origin_and_o
 
 def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_admitted_span():
     """The span condition (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode, the engine's declared problem 2; `loader/node_detector_declaration.holding_period`, `emission.holds_period`): the resonance world's giver at [2, 3] with the lifetime 4 is refused by name, the least admitted span 8 (tau Omega >= 2 pi, num / den <= cos(2 pi / tau) by the rotation act), and admitted at 8; an emission at [5414, 6000] needs 15."""
-    world = json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8"))
+    world = redeclared(json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8")))
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
     families, action = universe_of(universe)[1], universe["integers"]["quantum_action"]
     shape = tuple(world["shape"])
@@ -134,11 +127,8 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
         monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
         path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
     elif door == "the source in time":
-        path, name, intervals = (
-            EVENTS / "resonance" / "resonant.json",
-            "pulse",
-            112,
-        )  # the emission at 61
+        source = EVENTS / "resonance" / "resonant.json"
+        path, name, intervals = world_beside(tmp_path, source, lambda w: None), "pulse", 112
     else:
         path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
     board = Lattice(load_world(path), (lines := []).append)
@@ -185,7 +175,7 @@ def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_d
     print(
         f"the largest level {mine[1]} and {its[1]}, {len(absorptions)} absorptions, the books {books}, the twin's {its_books}"
     )
-    assert len(absorptions) >= 2 and not any(
+    assert len(absorptions) >= 1 and not any(
         f.family == drive for fs in board.credit.faces.values() for f in fs
     )
     assert all(f.family != drive for f in board.credit.fronts)

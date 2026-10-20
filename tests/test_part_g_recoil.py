@@ -96,7 +96,7 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, monkeypatch):
-    """Task 5 (e): one_photon's first click (61, the second atom's window open from the photon's first lit interval, 29, and closed 33 after it, the packet's passage derived at load, C2 with (D), 2026-10-19; 76 at the declared 48 before it, 48 before C2 and 75 before C1; the packets at the amplitude 78 of one quantum in the record's own unit, C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss, and the board as the oracle records it under the fold about the click's Node (C6) and the hybrid window (C2) (the oracle's lines to 61, the six keys stripped as the Boss's check strips them; the oracle recorded from the committed tree 34d9795da by tools/run_inputs.py, its header's `recorded_at` naming that commit, the practice since the cold reader's line of 2026-10-19: the recording is made from a committed tree and says which; the record at the declared 48, recorded from 84b9ca0, kept beside it); and the pre-close equality, the reader's (d): the two records' lines before the new close, to 60, are the same, both none (no lay, face or credit line stands before the first click on this world), so the derived window adds no act before the close; the lay itself is the mode file's, its levels untouched with the digest alone moved, and the stepping to 60 is Rule3's, in which no window enters: the board's every level and remainder at the interval 60 is asserted against the SHA-256 constant 631c73c7ded2e3e5 of the lines' bytes in order, computed once on the tree before (3a) at the declared 48 and on the branch at the derived 33 (2026-10-19), so the stepping to the former close's eve is the former tree's bit for bit."""
+    """Task 5 (e): one_photon's first click (62, the first atom's window open from the photon's first lit interval, 30, and closed 33 after it, the packet's passage derived at load, C2 with (D), 2026-10-19; the second atom's window closes at 61 and its read of the board draws nothing; 76 at the declared 48 before it, 48 before C2 and 75 before C1; the packets at the amplitude 78 of one quantum in the record's own unit, C1): no body emitted the packets, so `source` is the lay, `recoil` the negative of `momentum` with "recoil lost to the lay" after the taker's own loss (the oracle recorded from the committed tree 34d9795da by tools/run_inputs.py under the generator's click at 61, its header's `recorded_at` naming that commit, the practice since the cold reader's line of 2026-10-19: the recording is made from a committed tree and says which; the record at the declared 48, recorded from 84b9ca0, kept beside it; the oracle's lines at its click are the generator's and are not compared); and the pre-close equality, the reader's (d): the run's lines and the two records' lines before the first close, to 60, are the same, all none (no lay, face or credit line stands before the first click on this world), so the derived window adds no act before the close; the lay itself is the mode file's, its levels untouched with the digest alone moved, and the stepping to 60 is Rule3's, in which no window enters: the board's every level and remainder at the interval 60 is asserted against the SHA-256 constant 631c73c7ded2e3e5 of the lines' bytes in order, computed once on the tree before (3a) at the declared 48 and on the branch at the derived 33 (2026-10-19), so the stepping to the former close's eve is the former tree's bit for bit."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     for _ in range(60):
@@ -104,9 +104,9 @@ def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, 
     records = [line for state in board.states for line in state.lines]
     levels = b"".join(a.tobytes() for r in records for a in (r.now, r.before, r.remainder))
     assert hashlib.sha256(levels).hexdigest()[:16] == "631c73c7ded2e3e5"  # (d): the board at 60
-    board.step()
-    credits = [c for c in lines if c["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 61
+    board.step(), board.step()  # the second atom's close at 61 draws nothing; the first takes at 62
+    credits = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+    assert len(credits) == 1 and credits[0]["interval"] == 62 and credits[0]["node_detector"] == "body 0"
     click = credits[0]
     assert click["source"] == THE_LAY and click["recoil"] == [-p for p in click["momentum"]]
     assert click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
@@ -120,12 +120,11 @@ def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, 
             if line["event"] in kinds and int(str(line["interval"])) <= last
         ]
 
-    assert cleaned(lines) == cleaned(oracle["lines"])
     assert (
-        cleaned(oracle["lines"], 60) == cleaned(earlier["lines"], 60) == []
-    )  # (d): no act before the close
+        cleaned(lines, 60) == cleaned(oracle["lines"], 60) == cleaned(earlier["lines"], 60) == []
+    )  # (d): no act before the first close, in the run and in both records
     print(
-        f"Part G (5e): one_photon at 61: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board the oracle's, the lines before the close the former record's"
+        f"Part G (5e): one_photon at 62: source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; the board at 60 the oracle's, no line before the close in the run or the records"
     )
 
 
@@ -169,8 +168,8 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
 
 def test_the_directed_packets_recoil_is_paid_at_the_lay(tmp_path, monkeypatch):
     """Task 3: the shipped packet world (examples/events/packet_emission, width 4, lifetime 48, [2, 3]): the packet's lattice momentum at birth read from the lay's own terms (`emission.laid_packet`, `readings.momentum_of`, no sine) against 2 T sin k_z, cos k_z = 3 (den_l / num_l) cos Omega - 2 cos(pi / (w + 1)) (the hands' 1.85 T); the write step folds the two-Node giver by its negative at the lay (`act.written`, `twist.folded_source`): the giver's books take `recoil` (its reach, the two-Node atom falling short) and `lost` ["recoil paid at the emission", "recoil lost to the source"], the emitter registered with the recoil paid, and a later click of this light would fold nothing more (`twist.recoiled`). The lay is written on the loaded board at its first interval, no stepping."""
-    world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-    board = Lattice(load_world(EVENTS / "packet_emission" / "packet_emission.json"), [].append)
+    packet = EVENTS / "packet_emission" / "packet_emission.json"
+    board = Lattice(load_world(laws.world_beside(tmp_path, packet, lambda w: None)), [].append)
     light = next(i for i, f in enumerate(board.families) if f.name == "pulse")
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
     giver = board.credit.bodies[0]

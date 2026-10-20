@@ -25,7 +25,7 @@ def test_without_flux_the_step_is_bit_identical(monkeypatch):
     """(a) The two slits world of light.json, no `flux` declared, stepped for 20 intervals: every family's level now equals the frozen engine's look file frame by frame (the oracle recorded before Part A), so the code path without a flux holder is the engine of 441b2399 bit for bit; and no family of the shipped universes is folded."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     look = json.loads(lzma.open(ORACLE).read())
-    board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
+    board = Lattice(laws.load_shipped(EVENTS / "two_slits" / "two_slits.json"))
     assert not any(folds(board.families, i) for i in range(len(board.families)))
     for interval in range(21):
         frame = look["frames"][interval]

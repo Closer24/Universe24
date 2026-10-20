@@ -1,4 +1,4 @@
-"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: a seed, its draw; #the-click-is-the-meeting, the pair's form and the GHZ gate): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click, the seed and the generator's multiplier and increment (x <- (multiplier x + increment) mod 2^width, the width the file's), every one the file's and none the engine's (`Draw`, `draw_of`), and the run back's reach (`reach`, `cone` or `board`; ALGEBRA.md, The meeting's reading, the run back's reach; the owner's words of 2026-10-19 and 2026-10-20): there is one meeting, the click that writes at the record's birth, the sides reading in the order of their closes (`meeting_back`, `lists.readings`), so the key `meeting` is refused by name (2026-10-20); a body with a probe among its transitions (a transition of a part into itself) declares its generator alone (`Generator`, `generator_of`), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate), and no body's `node_detector` admits the meeting, the world's draw's word; and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the sides' draws in the run (`meeting_back.coefficients_of`); every defect refused by name and no default written."""
+"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; #the-click-is-the-meeting, the pair's form and the GHZ gate; The click's read of the board): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click (`Draw`, `draw_of`; the draw itself the click's read of the board, `digits.read_of`, so no seed and no generator: `seed`, `multiplier` and `increment` are unknown keys, refused by name as every unknown key is), and the run back's reach (`reach`, `cone` or `board`; ALGEBRA.md, The meeting's reading, the run back's reach; the owner's words of 2026-10-19 and 2026-10-20): there is one meeting, the click that writes at the record's birth, the sides reading in the order of their closes (`meeting_back`, `lists.readings`), so the key `meeting` is refused by name (2026-10-20); a body with a probe among its transitions (a transition of a part into itself) declares its `node_detector` with no key (`windowless_of`, a `Draw` with no window), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate), and no body's `node_detector` admits the meeting, the world's draw's word; and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the sides' draws in the run (`meeting_back.coefficients_of`); every defect refused by name and no default written."""
 
 from __future__ import annotations
 
@@ -15,15 +15,13 @@ from event_universe.loader.keys import integer, keyed
 
 Pattern = tuple[tuple[int, int], ...]  # per part [alpha_k, beta_k], the part's read of the setting
 Ports = tuple[tuple[int, ...], tuple[int, ...]]  # a side's two ports, + then -, one coefficient per part
-GENERATOR_KEYS = (
-    "seed",
-    "multiplier",
-    "increment",
-)  # a draw's generator: the keys of a body whose window is bounded by its probe's lays
-DRAW_KEYS = (
-    "window",
-    *GENERATOR_KEYS,
-)  # the draw with its window: the world's and a body's without a probe
+DRAW_KEYS = ("window",)
+# the digits' order of the click's read of the board, the one declared constant of the read (`digits.read_of`):
+# the lines outer in the record's declared order (part 0's lines, then part 1's; a plane's two lines in their
+# order; the records of a family in their order), the Nodes read inner in the lattice's index order (x-major,
+# numpy's order of a mask), the first digit the most significant, each digit the remainder's index on its
+# Node's lattice; the realisation depends on this order and the measure does not
+DIGIT_ORDER = "the lines in the record's declared order, each line's Nodes in the lattice's index order, the first digit the most significant, each digit the remainder's index on its Node's lattice, r div F, in the base w div F + 1"  # the draw with its window: the world's and a body's without a probe
 MEETING = "meeting"  # a key of the world's draw refused by name (`draw_of`): there is one meeting
 REACH = "reach"  # the back mode's key: the run back's reach, the owner's word of 2026-10-19
 BOARD, CONE = "board", "cone"  # its two words: the whole board, the record's light cone (the default)
@@ -36,40 +34,26 @@ WORLD_DRAW_KEYS = (
 
 
 @dataclass(frozen=True)
-class Generator:
-    """A draw's generator as the files declare it: the seed and the generator's multiplier and increment, x <- (multiplier x + increment) mod 2^width (features/click); a body with a probe among its transitions declares this alone under `node_detector`, its window bounded by the probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate; the two hands)."""
+class Draw:
+    """A draw as the files declare it, the click's read of the board with its window (features/click, `digits.read_of`): the world's window, the intervals after which every node_detector's window closes and the NodeDetector draws and writes; a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`); None where the window is bounded by a probe's lays at the body's Node, the world's schedule and no number of the body's (`windowless_of`; ALGEBRA.md, The pulsed gate); and the run back's reach of the world's draw alone, `cone` or `board` (`REACHES`, `meeting_back`), None where the file declares none, which the engine reads as the record's light cone (`credit.Books.reach`), written nowhere; no seed, no multiplier and no increment: the draw carries no number of the run outside the world file and Rule3."""
 
-    seed: int
-    multiplier: int
-    increment: int
-
-
-@dataclass(frozen=True)
-class Draw(Generator):
-    """A draw with its declared window beside the generator's three keys: the world's (the intervals after which every node_detector's window closes and the NodeDetector draws and writes), a record converted whole's (its table's rate per window) and a body's without a probe (declared where a drive's lay has no end, derived from the lays' passage over the body otherwise, `loader/window.py`, 2026-10-19); and the run back's reach of the world's draw alone, `cone` or `board` (`REACHES`, `meeting_back`), None where the file declares none, which the engine reads as the record's light cone (`credit.Books.reach`, the owner's word of 2026-10-19), written nowhere."""
-
-    window: int
+    window: int | None
     reach: str | None = None
 
 
-def generator_of(value: object, label: str) -> Generator:
-    """A body's `node_detector` where a probe stands among its transitions: the generator's three keys, the seed and the increment from 0 and the multiplier from 1; a `window` refused by name, the window of a body with a probe being bounded by the probe's lays at its Node, the world's schedule and no number of the body's (ALGEBRA.md, The pulsed gate; the two hands); every other key refused by name, the meeting's reading among them (`keyed`: a body's generator admits no `meeting`, the world's draw's word)."""
+def windowless_of(value: object, label: str) -> Draw:
+    """A body's `node_detector` declaring no window, an object with no key: the body with a probe among its transitions, whose window is bounded by the probe's lays at its Node, the world's schedule and no number of the body's (a `window` refused by name beside a probe; ALGEBRA.md, The pulsed gate), and the body whose window is derived at the end of the load from its drives' lays with an end (`loader/window.windowed`); every key refused by name as unknown (`keyed`), the draw being the click's read of the board and no number of the file's."""
     if isinstance(value, dict) and "window" in value:
         raise ValueError(
             f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "
-            f"probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate); its keys are "
-            f"{list(GENERATOR_KEYS)}"
+            "probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate); it declares no key"
         )
-    found = keyed(value, label, GENERATOR_KEYS, GENERATOR_KEYS)
-    return Generator(
-        integer(found["seed"], f"{label}.seed", 0),
-        integer(found["multiplier"], f"{label}.multiplier", 1),
-        integer(found["increment"], f"{label}.increment", 0),
-    )
+    keyed(value, label, (), ())
+    return Draw(None)
 
 
 def draw_of(value: object, label: str, world: bool = False) -> Draw:
-    """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its four keys, the window from 1, the seed and the increment from 0 and the multiplier from 1; on the world's draw alone the run back's reach, `reach`: `board` (the whole board stepped back to the birth and forward to the close) or `cone` (the record's light cone, the engine's reading where the key is absent); `books` and any other value refused by name; `meeting` refused by name, there being one meeting; every other key refused by name, a body's `meeting` and `reach` among them (`keyed` on `DRAW_KEYS`)."""
+    """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its one key, the window from 1; on the world's draw alone the run back's reach, `reach`: `board` (the whole board stepped back to the birth and forward to the close) or `cone` (the record's light cone, the engine's reading where the key is absent); `books` and any other value refused by name; `meeting` refused by name, there being one meeting; every other key refused by name as unknown, a generator's `seed`, `multiplier` and `increment` among them (the draw is the click's read of the board), a body's `meeting` and `reach` too (`keyed` on `DRAW_KEYS`)."""
     found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, DRAW_KEYS)
     reach = found.get(REACH)
     if MEETING in found:
@@ -84,19 +68,13 @@ def draw_of(value: object, label: str, world: bool = False) -> Draw:
             else f"the run back's reach is {CONE!r} or {BOARD!r}"
         )
         raise ValueError(f"{label}.{REACH} is {reach!r}: {reason}")
-    return Draw(
-        integer(found["seed"], f"{label}.seed", 0),
-        integer(found["multiplier"], f"{label}.multiplier", 1),
-        integer(found["increment"], f"{label}.increment", 0),
-        integer(found["window"], f"{label}.window", 1),
-        None if reach is None else str(reach),
-    )
+    return Draw(integer(found["window"], f"{label}.window", 1), None if reach is None else str(reach))
 
 
-def body_draw_of(value: object, label: str) -> Generator:
-    """A body's `node_detector` without a probe: the generator's three keys and, where the declaration carries it, its `window` (`Draw`, `draw_of`), else the generator alone (`Generator`, `generator_of`); the window of a body whose drives are laid with an end is derived at the end of the load from the lays' passage over it, where the key is refused by name, and declared, the instrument's cadence, where a drive is laid with no end or nowhere (`loader/window.windowed`, the atom branch, 2026-10-19)."""
-    found = keyed(value, label, DRAW_KEYS, GENERATOR_KEYS)
-    return draw_of(found, label) if "window" in found else generator_of(found, label)
+def body_draw_of(value: object, label: str) -> Draw:
+    """A body's `node_detector` without a probe: its `window` where the declaration carries it (`draw_of`), else no key at all (`windowless_of`), the window then derived at the end of the load from the lays' passage over the body, where the key is refused by name, and declared, the instrument's cadence, where a drive is laid with no end or nowhere (`loader/window.windowed`)."""
+    found = keyed(value, label, DRAW_KEYS, ())
+    return draw_of(found, label) if "window" in found else windowless_of(found, label)
 
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:

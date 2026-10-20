@@ -9,8 +9,8 @@ from event_universe.emission import increments_of, radiated_total, start_of
 from event_universe.features.click import SCALE_OF
 from event_universe.lattice import Lattice
 from event_universe.resonance import turned_direction
-from event_universe.world_files import load_world
 from tests.laws import EVENTS
+from tests.laws_read import load_shipped
 
 
 def float_turn(re: int, im: int, x: int, y: int) -> tuple[float, float]:
@@ -61,7 +61,7 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     monkeypatch.setattr(meeting, "turned_labels", held)
     monkeypatch.setattr(act, "relaid", spied)
     monkeypatch.setattr(act, "leaving_phase", read)
-    board = Lattice(load_world(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
+    board = Lattice(load_shipped(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
     taken: list[dict] = []
     while not taken and board.interval < 96:
         board.step()

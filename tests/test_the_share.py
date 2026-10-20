@@ -14,7 +14,7 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, arrivals_rule3, real_rows, universe_beside
+from tests.laws import EVENTS, arrivals_rule3, real_rows, universe_beside, world_beside
 
 
 def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
@@ -111,11 +111,12 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         assert np.array_equal(through[port], expected)
 
 
-def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the resonance world, the shelved ion and the anticoincidence world over 24 intervals, every family. (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
-    worlds = (("zeno", "zeno_1"), ("resonance", "resonant"), ("shelved_ion", "shelved_ion"))
+def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
+    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the pulsed Zeno box, the shelved ion and the anticoincidence world over 24 intervals, every family (the worlds in the read's shape, tests/laws.py `world_beside`). (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
+    worlds = (("zeno", "zeno_1"), ("zeno_pulsed", "zeno_pulsed_1"), ("shelved_ion", "shelved_ion"))
     for folder, name in (*worlds, ("anticoincidence", "one_photon")):
-        board = Lattice(load_world(EVENTS / folder / f"{name}.json"))
+        copied = world_beside(tmp_path / name, EVENTS / folder / f"{name}.json", lambda w: None)
+        board = Lattice(load_world(copied))
         for _ in range(24):
             board.step()  # the board may grow beyond a receding face: the masks at its shape now
             union, everywhere = (
@@ -162,7 +163,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
-    world.update(engine="e.json", bodies=[], node_detectors=[])
+    world.update(bodies=[], node_detectors=[])
     paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
     for name, path in paths.items():
         path.write_text(json.dumps({**world, "universe": f"{name}.json"}), encoding="utf-8")

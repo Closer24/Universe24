@@ -1,4 +1,4 @@
-"""The meeting at a Node, the NodeDetectors' loop (ALGEBRA.md #the-click-is-the-meeting, The click writes on the lattice; HIGHLIGHTS.md, the owner's words; the owner's word, the click the heart): a node_detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the node_detector's own transition's quantum read back from the realised click, the click their meeting; a node_detector always receives two quanta, the arriving one and its own, a region node_detector's own quantum implicit in its declared window and whole, and for a record declared a NodeDetector at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the emission's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of a reader's window at the Node named (the declared window's length, or, for a body with a probe, the interval of the probe's lay at its Node: the window bounded by clicks, opened at the body's last write and closed at the probe's absorption, ALGEBRA.md, The pulsed gate), 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close as W sub-turns with the carry, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `resonance.gathered`, `resonance.window_turn`, `turned_labels`); 2, the draw, with the declared seed and generator, once per window, among the alternatives the declaration's table lists for the close (`lists.py`: the emission's at the clock's grain, the probe's, the absorptions', the null window's and the conversion's; the one act, `act.click`); 3, the write at that Node, one whole quantum passing between the two records there (`lists.exchange`, `act.written`): climbing, the arriving record's levels and remainder to 0 (the hole to 0 where the record's booked share at the Node is at most its own quantum; for a dense record, a beam of many quanta per Node, nothing on the board, the quantum passing in the books alone with the deficit printed, the undepleted beam, `twist.faced`) and its count in the books down by one; descending, stimulated emission, one quantum given back into the drive (by the count where it is local and whole at the Node, nothing where it is a beam) and its count up by one; the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves turned by the arriving record's phase at the Node, atan2(Y', X) of the window's two sums the close held (the phase passing with the quantum, `resonance.turned_direction`, `twist.Item.arrival`), the remainder at the lay's origin, the part it leaves at N - 1 (the absorption); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, `lists.null_window`); 5, the emission, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the emission's lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' directions read before the lay (`lists.emission`, `emission.start_of`, `emission.emitted_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the click line (`node_detector.reported`, the one click line kind of every reader), the window, the reader, the family and the parts, never a Node, the Node written standing in the LATTICE `lay` and `face` lines beside it. The record declared a NodeDetector is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the node_detector's region is), its books the reader's own and at no Node; the Node knows no click. The region NodeDetectors' clicks at the credit's window close through the same act (`closed`, `lists.region`)."""
+"""The meeting at a Node, the NodeDetectors' loop (ALGEBRA.md #the-click-is-the-meeting, The click writes on the lattice; HIGHLIGHTS.md, the owner's words; the owner's word, the click the heart): a node_detector is where the future met the past, the arriving record's quantum run forward from its root meeting at one Node the node_detector's own transition's quantum read back from the realised click, the click their meeting; a node_detector always receives two quanta, the arriving one and its own, a region node_detector's own quantum implicit in its declared window and whole, and for a record declared a NodeDetector at one Node its record there; from the click the new future goes out, the quantum with the taker to its next meeting (the taker's record changed at its Node and stepped on by Rule3), the hole spreading from the entry Node, the emission's light quantum, and the arriving record's wave with its count at 0, the empty wave, stepped on and never credited. The seven steps in the Node's words (the Boss's sequence with the advisor's and the mathematician's hands): 0, every interval every Node steps every record it holds by Rule3, a bijection, no draw; at the end of a reader's window at the Node named (the declared window's length, or, for a body with a probe, the interval of the probe's lay at its Node: the window bounded by clicks, opened at the body's last write and closed at the probe's absorption, ALGEBRA.md, The pulsed gate), 1, the read, the two records at that Node, the arriving family's level there and the record present, the share their product at resonance (the resonant two-mode act, the two-quadrature form: the arriving level summed over the window against the record's two reference records at the transition's declared resonance, the plane's size over the scale the window's turn at the declared weight, applied once at the window's close as W sub-turns with the carry, turning the two parts' labels into each other, the labels' squares the shares, the Rabi form, `resonance.gathered`, `resonance.window_turn`, `turned_labels`); 2, the draw, the click's read of the board (`node_detector.picked`), once per window, among the alternatives the declaration's table lists for the close (`lists.py`: the emission's at the clock's grain, the probe's, the absorptions', the null window's and the conversion's; the one act, `act.click`); 3, the write at that Node, one whole quantum passing between the two records there (`lists.exchange`, `act.written`): climbing, the arriving record's levels and remainder to 0 (the hole to 0 where the record's booked share at the Node is at most its own quantum; for a dense record, a beam of many quanta per Node, nothing on the board, the quantum passing in the books alone with the deficit printed, the undepleted beam, `twist.faced`) and its count in the books down by one; descending, stimulated emission, one quantum given back into the drive (by the count where it is local and whole at the Node, nothing where it is a beam) and its count up by one; the present record's realised part laid at N + 1 at that Node in the direction of the part it leaves turned by the arriving record's phase at the Node, atan2(Y', X) of the window's two sums the close held (the phase passing with the quantum, `resonance.turned_direction`, `twist.Item.arrival`), the remainder at the lay's origin, the part it leaves at N - 1 (the absorption); 4, a window with no meeting at a Node whose record reads its own parts, the record laid again in the complement of its outcome set at its whole count (the null window, `lists.null_window`); 5, the emission, at a Node whose record stands in an upper part, drawn at the lifetime's hazard 1 / tau per interval, per window while a window stands and per interval in the dark at the now (the beat's current of a one-part record at one Node being 0, named): one whole quantum passing from that record to the light family's record at the same Node, the upper part to N - 1, the lower to N + 1, light's record up by one whole quantum laid as a source in time at that Node over the emission's lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' directions read before the lay (`lists.emission`, `emission.start_of`, `emission.emitted_quantum`); 6, after the write the Node and its neighbours step by Rule3, nothing written at any other Node, no front; 7, the click line (`node_detector.reported`, the one click line kind of every reader), the window, the reader, the family and the parts, never a Node, the Node written standing in the LATTICE `lay` and `face` lines beside it. The record declared a NodeDetector is one Node by the world's declaration (its six Link factors 0, `cut`, so that it stays, held by its declaration as the node_detector's region is), its books the reader's own and at no Node; the Node knows no click. The region NodeDetectors' clicks at the credit's window close through the same act (`closed`, `lists.region`)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ import numpy as np
 from event_universe import credit, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
-from event_universe.loader.draw import Draw
 from event_universe.loader.keys import Node
 from event_universe.node_detector import NodeBooks, arriving, clock_advanced, dark, own_clock, sourcing
 from event_universe.records import Booking, Record
@@ -72,7 +71,7 @@ def laid_record(board: Lattice, number: int, record: int) -> None:
     row = board.world.bodies[number]
     kind = row.detector
     assert kind is not None
-    books = NodeBooks(number, row.family, record, row.nodes, row.counts, kind, 0, [], [], 0, 0, [])
+    books = NodeBooks(number, row.family, record, row.nodes, row.counts, kind, 0, [], [], 0, [])
     for part, count in enumerate(kind.counts):
         relaid(board, books, part, count, [((1, 0), 1)] * len(books.nodes))
 
@@ -83,7 +82,7 @@ def laid_whole(board: Lattice) -> None:
         if whole.interval == board.interval:
             den = board.families[whole.family].pair[1]
             items = [Item(whole.family, None, None, whole.count, (whole.at,), (den, den))]
-            click(board, board.credit, None, [Alternative(1, partial(list, items))])
+            click(board, None, [Alternative(1, partial(list, items))])
 
 
 def turned_labels(board: Lattice, books: NodeBooks) -> None:
@@ -107,18 +106,18 @@ def turned_labels(board: Lattice, books: NodeBooks) -> None:
 
 
 def emission_drawn(board: Lattice, books: NodeBooks, grain: int) -> bool:
-    """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the record's own generator; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was."""
+    """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the body's own read of the board; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was."""
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             alternatives = lists.emission(board, books, rate, min(grain, rate.lifetime))
-            pick = click(board, books, books.declared.draw, alternatives)
+            pick = click(board, books, alternatives)
             if pick < len(alternatives) - 1:
                 return True
     return False
 
 
 def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
-    """The absorptions drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the lattice (f); `lists.absorption`): while the arriving record's count stands in the books, the records not done reading it close with one click, the first closing record's generator, the drawn record done for the window; nothing drawn ends the family's draws at this close, its unabsorbed share booked by the row; returns the records done."""
+    """The absorptions drawn at the windows' end, one draw at a time per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the lattice (f); `lists.absorption`): while the arriving record's count stands in the books, the records not done reading it close with one click, the first closing record's read of the board, the drawn record done for the window; nothing drawn ends the family's draws at this close, its unabsorbed share booked by the row; returns the records done."""
     done: set[int] = set()
     pairs = [(b, t) for b in closing for t in b.declared.transitions if t.leaves == b.part]
     for drive in sorted({t.drive for _books, t in pairs}):
@@ -127,7 +126,7 @@ def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
             if not outcomes:
                 break
             first, alternatives = closing[0], lists.absorption(board, drive, outcomes)
-            pick = click(board, first, first.declared.draw, alternatives)
+            pick = click(board, first, alternatives)
             if pick == len(outcomes):
                 break
             done.add(outcomes[pick][0].number)
@@ -135,15 +134,16 @@ def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
 
 
 def conversion_drawn(board: Lattice, books: NodeBooks) -> bool:
-    """The conversion drawn at a record's window's end (`lists.conversion`): while the record's count stands, for each conversion its declaration names one click between the conversion's list and nothing at the weights [the window capped at the rate, the rate less it], the record's own generator; the first conversion drawn is taken, its records out laid and its line written by the act; returns whether one was."""
-    assert isinstance(books.declared.draw, Draw)  # a record converted whole declares its window
+    """The conversion drawn at a record's window's end (`lists.conversion`): while the record's count stands, for each conversion its declaration names one click between the conversion's list and nothing at the weights [the window capped at the rate, the rate less it], the record's own read of the board; the first conversion drawn is taken, its records out laid and its line written by the act; returns whether one was."""
+    assert books.declared.draw is not None  # a record converted whole declares its draw
     window = books.declared.draw.window
+    assert window is not None  # its window its table's, declared
     for table in books.declared.conversions:
         if books.counts[books.part] <= 0:
             return False
         span = window if window <= table.rate else table.rate
         alternatives = lists.conversion(board, books, table, span)
-        pick = click(board, books, books.declared.draw, alternatives)
+        pick = click(board, books, alternatives)
         if pick == 0:
             return True
     return False
@@ -159,7 +159,7 @@ def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
 
 
 def closed(board: Lattice) -> None:
-    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): first the count on the board of every record the sides read at this close against the books' count, refused by name where the board's share lies more than half a quantum and the walk since the lay from the books' count while no front of the record stands (ALGEBRA.md, The count on the board, 2026-10-20; `credit.count_held`, `Lattice.count`), then per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator; for a record of several parts the sides' draws in the order of their closes with the run back, the write at the birth and the run forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the sides' moments, the passages and the sides' states, and the births of the records whose count reached 0 (the write's books, the coefficients, the scale, the realised ports and the reference, stand until the next birth, so the count on the board reads the erased wave over its scale, `credit.born`), the count beginning again."""
+    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): first the count on the board of every record the sides read at this close against the books' count, refused by name where the board's share lies more than half a quantum and the walk since the lay from the books' count while no front of the record stands (ALGEBRA.md, The count on the board, 2026-10-20; `credit.count_held`, `Lattice.count`), then per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it by the credit's read of the board; for a record of several parts the sides' draws in the order of their closes with the run back, the write at the birth and the run forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the sides' moments, the passages and the numbers the reads left, and the births of the records whose count reached 0 (the write's books, the coefficients, the scale, the realised ports and the reference, stand until the next birth, so the count on the board reads the erased wave over its scale, `credit.born`), the count beginning again."""
     books = board.credit
     for index, moments in books.moments.items():  # the records the sides read at this close
         standing = books.counts.get(index, 0) > 0 and not any(f.family == index for f in books.fronts)
@@ -173,7 +173,7 @@ def closed(board: Lattice) -> None:
     for index in board.order:
         found = lists.region(board, index)
         if found is not None:
-            click(board, books, None, [found])
+            click(board, None, [found])
     books.intake.clear()
     books.moments.clear()
     for index in [index for index in books.births if books.counts.get(index, 0) <= 0]:
@@ -181,7 +181,7 @@ def closed(board: Lattice) -> None:
             index
         )  # a record gone: its next quantum a new birth (`credit.born` resets the write's books)
     books.passages.clear()
-    books.states.clear()
+    books.left.clear()
 
 
 def jumped(board: Lattice) -> None:
@@ -190,14 +190,16 @@ def jumped(board: Lattice) -> None:
     laid = {(whole.family, whole.at) for whole in board.world.wholes if whole.interval == board.interval}
     own = {b.number: sourcing(board, b) for b in board.credit.bodies}  # C5: read once per body
     for books in board.credit.bodies:
+        books.left = None  # the click's read of the board: one read per body per interval
         levels = {
             t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions
         }
         gathered(books.references, books.declared.transitions, levels)
-        timed = isinstance(
-            books.declared.draw, Draw
-        )  # C2: a declared window opens at the first lit interval
+        draw = books.declared.draw
+        timed = (
+            draw is not None and draw.window is not None
+        )  # C2: a window opens at the first lit interval
         books.elapsed += (
             1 if books.elapsed or not timed or not dark(board, books, own[books.number]) else 0
         )
@@ -208,7 +210,7 @@ def jumped(board: Lattice) -> None:
         if b.declared.draw is not None
         and (
             probe_arrived(b, laid)
-            or (isinstance(b.declared.draw, Draw) and b.elapsed == b.declared.draw.window)
+            or (b.declared.draw.window is not None and b.elapsed == b.declared.draw.window)
         )
     ]
     for books in closing:
@@ -227,11 +229,11 @@ def jumped(board: Lattice) -> None:
     read = {books.number for books in quiet if probe_arrived(books, laid)}
     for books in quiet:
         if books.number in read:
-            click(board, books, books.declared.draw, lists.probe(board, books))
+            click(board, books, lists.probe(board, books))
     done = absorptions_drawn(board, [books for books in quiet if books.number not in read])
     for books in quiet:
         if books.number not in read | done and len(books.counts) > 1:  # a record of one part reads none
-            click(board, books, books.declared.draw, lists.null_window(board, books))
+            click(board, books, lists.null_window(board, books))
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
     for (

@@ -42,6 +42,7 @@ from tests.laws import (
     design_beside,
     load_file,
     refused,
+    world_beside,
 )
 
 GATED = (  # the smallest shipped world of each builder whose load is seconds; the long loads are the runner's gate
@@ -236,7 +237,10 @@ def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte
         build.main(["--folder", str(shutil.copytree(folder, out))])  # every look's blind its builder's
         assert (out / "expectation.json").read_bytes() == (folder / "expectation.json").read_bytes()
     for folder, name in GATED:  # the gate on the smallest world of every builder whose load is seconds
-        world = Lattice(load_world(EVENTS / folder / f"{name}.json")).world
+        copied = world_beside(
+            tmp_path / "gated" / folder, EVENTS / folder / f"{name}.json", lambda w: None
+        )
+        world = Lattice(load_world(copied)).world
         assert world.bodies or world.packets, (folder, name)
 
 
@@ -259,10 +263,9 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
         {"name": "charged", "pair": list(PAIR), "reads": {"binding": 1, "charge": 1}, "dimension": 2},
     ]
     (tmp_path / "u.json").write_text(json.dumps({"integers": INTEGERS, "families": rows}), "utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     world = dict(shape=[10, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
     quanta = [{"family": "charged", "nodes": [{"node": [x, 0, 0], "count": 1}]} for x in (3, 6)]
-    world.update(intervals=3, universe="u.json", engine="e.json", node_detectors=[], bodies=quanta)
+    world.update(intervals=3, universe="u.json", node_detectors=[], bodies=quanta)
     (path := tmp_path / "quanta.json").write_text(json.dumps(world), encoding="utf-8")
     design_beside(tmp_path, "quanta", senses=[1, -1], pixels=[0, 1])  # the design's keys beside
     TOOL.main(["--input", str(path)])  # each its own record
@@ -343,12 +346,11 @@ def test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the
     for name, reads in (("u", NUCLEON["reads"]), ("t", unread)):  # the universe and the twin's
         universe = {**rule, "families": [*rows, HOLDER, {**NUCLEON, "reads": reads}]}
         (tmp_path / f"{name}.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     centre = (CUBE // 2,) * 3
     world = dict(
         shape=[CUBE] * 3, boundary=dict(x="open", y="open", z="open"), face_depth=1, intervals=40
     )
-    world.update(universe="u.json", engine="e.json", node_detectors=[], lay=COMPACT)
+    world.update(universe="u.json", node_detectors=[], lay=COMPACT)
     world["bodies"] = [{"family": "nucleon", "nodes": [{"node": list(centre), "count": NUCLEUS}]}]
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])

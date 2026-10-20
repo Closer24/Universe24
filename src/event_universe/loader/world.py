@@ -1,4 +1,4 @@
-"""The world's files read into the lattice's world: the universe file (the integers and the families), the world file (the lattice with its inner faces, the bodies, the packets, the node_detectors) and the generator's mode file beside it (every body's and packet's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name, no default written (ALGEBRA.md #a-familys-declaration)."""
+"""The world's files read into the lattice's world: the universe file (the integers and the families), the world file (the lattice with its inner faces, the bodies, the packets, the node_detectors) and the generator's mode file beside it (every body's and packet's levels, `loader/mode.py`); every key checked, every other key refused as unknown by name (a world naming an engine start file under `engine` among them: the engine has no start file to read), no default written (ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -46,8 +46,8 @@ from event_universe.loader.universe import universe_of
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
-WORLD_KEYS += ("engine", "bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
-WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "engine", "bodies", "node_detectors")
+WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
+WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
 READER_NODE_KEYS = (
@@ -56,7 +56,6 @@ READER_NODE_KEYS = (
 )  # a reader's Node: the lay's weight, the record's count declared once
 NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern")  # a node_detector's keys
 TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
-START_KEYS: tuple[str, ...] = ()  # the engine start file holds no key; every key refused by name
 
 
 @dataclass(frozen=True)
@@ -315,10 +314,9 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 
 
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
-    """The world from its document, the files it names (the universe, the engine start file, the mode file beside it, read by the host) and its digest; every defect refused by name."""
+    """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
     erasure = integer(world["erasure"], "erasure", 1) if "erasure" in world else 1  # the front's taper
-    keyed(document_at(files, world["engine"], "engine"), "the engine start file", START_KEYS, START_KEYS)
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
     shape_value = world["shape"]
     if not isinstance(shape_value, list) or len(shape_value) != 3:

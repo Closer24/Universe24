@@ -7,8 +7,8 @@ import numpy as np
 
 from event_universe import readings, twist
 from event_universe.lattice import Lattice
-from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, family, load_file
+from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, family, load_file, world_beside
+from tests.laws_read import load_shipped
 
 CHAIN = EVENTS / "chain"
 DESIGN = json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))
@@ -48,7 +48,7 @@ def shares_about_the_front(board: Lattice, light: int) -> tuple[int, int]:
 
 def run(name: str, intervals: int) -> tuple[Lattice, list[dict], list[dict]]:
     """A chain world run `intervals` intervals from the lay with every interval's books of the light and the bodies kept beside the output lines."""
-    board = Lattice(load_world(CHAIN / f"{name}.json"), (lines := []).append)
+    board = Lattice(load_shipped(CHAIN / f"{name}.json"), (lines := []).append)
     light, atom = family(board, "photon"), family(board, "atom")
     marks = []
     for _ in range(intervals):
@@ -112,7 +112,7 @@ def test_the_chain_conserves_the_count_the_form_and_the_momentum_through_the_pai
     rest = by_interval[t_e + tau]
     assert rest["sources"] == 0 and (rest["count"], rest["quanta"]) == (1, 1)  # C1 after the span
     assert abs(rest["form"] - by_interval[t_a - 1]["form"]) <= bound_q  # B2: the form over the pair
-    fresh = Lattice(load_world(CHAIN / "chain_x_minus.json"))  # the lay, no interval stepped
+    fresh = Lattice(load_shipped(CHAIN / "chain_x_minus.json"))  # the lay, no interval stepped
     laid = fresh.states[light].lines[0].now.reshape(-1)
     lit, amplitude = sum(1 for v in laid if v != 0), max(abs(int(v)) for v in laid)
     bound_lay = (
@@ -151,7 +151,7 @@ def test_the_chain_conserves_the_count_the_form_and_the_momentum_through_the_pai
 
 def test_the_chain_runs_back_through_its_absorption_and_emission():
     """B4, the inverse: tools/back_in_time.py's verdict on chain_x_minus over the first 100 intervals, through the first absorption (74) and the emission that follows (91), MATCH bit for bit: every array returns through the click's two writes, the fold and the lay lines."""
-    found = BACK.verdict(Lattice(load_world(CHAIN / "chain_x_minus.json")), 100)
+    found = BACK.verdict(Lattice(load_shipped(CHAIN / "chain_x_minus.json")), 100)
     assert found["verdict"] == "MATCH" and found["intervals"] == 100, found
 
 
@@ -165,7 +165,7 @@ def image(name: str) -> tuple[list[dict], dict[tuple[int, int], tuple[np.ndarray
     """A world run over the design's intervals and carried back to the original's frame: its credit lines with the vector keys' chain component moved to x and signed (the shortfall a magnitude), and every line's now, before and remainder per family and line; run once per process (`RUNS`)."""
     if name not in RUNS:
         axis, toward = DESIGN["worlds"][name]
-        board = Lattice(load_world(CHAIN / f"{name}.json"), (lines := []).append)
+        board = Lattice(load_shipped(CHAIN / f"{name}.json"), (lines := []).append)
         for _ in range(DESIGN["intervals"]):
             board.step()
         a, sign = AXES.index(axis), -1 if toward == "plus" else 1
@@ -236,18 +236,23 @@ def test_the_three_mirrors_are_one_world_bit_for_bit():
     )
 
 
-def test_the_detuned_packet_is_absorbed_in_at_most_four_of_its_eight_trials():
-    """B7, the line shape (C9 (b)): chain_detuned, the packet of 48 Nodes at k = pi / 8 detuned from the transition at pi / 4, run over its 250 intervals for each of the eight seeds of detuned_trials.json with every record's generator at the hash of the trial's label (tools/meeting_trials.py); the blind as corrected by derivation on 2026-10-19 before any run claim and no fit (the cold reader: the window's sinc weighs the turn and not the chance; the turn per flat window 1.27 rad at one Node at the declared weight 6, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one Node and 0.111 with the body's projection over its three Nodes, two windows per passage, 0.19 per trial, P(at most 4 of 8) = 0.99) reads at most four absorptions over the eight trials at the declared window of 48; under the window derived at load (W 116, the whole passage of the 64-Node packet over the body at v_g 0.570, 2026-10-19) the blind re-derived from the envelope's spectral weight at the detuning (tools/pixel_mode.py envelope read at kappa = Delta / v_g = 0.3857 per Node, Delta = 0.2198 per interval: the weight 0.0657 over the three Nodes; the resonant turn at the weight 6 over three Nodes 1.115 rad, so the detuned turn 0.073 rad, the chance sin^2 = 5.4 x 10^-3 per trial, 0.043 absorptions expected in eight, P(2 or more) 8.0 x 10^-4) reads at most one of eight; the bound first written, at most 1 of 8, presumed the sinc on the chance. The engine reads none of eight at the declared weight 6 and W 116 (three of eight at the declared 48: the seeds 25 at 65 and 28 at 161, and 25's own light taken back at 215 from its train's wake under the narrower C5, the record of the narrower line), pinned here as the engine's reading beside the blind, to move with any change of the weight. The trials' seconds printed."""
+def test_the_detuned_packet_is_absorbed_in_at_most_four_of_its_eight_trials(tmp_path):
+    """B7, the line shape (C9 (b)): chain_detuned, the packet of 48 Nodes at k = pi / 8 detuned from the transition at pi / 4, run over its 250 intervals at eight placements of the packet's source Node (the trials tool's knob `source`, 11 through 18, the ensemble's variety under the read) with every record's generator at the hash of the trial's label (tools/meeting_trials.py); the blind as corrected by derivation on 2026-10-19 before any run claim and no fit (the cold reader: the window's sinc weighs the turn and not the chance; the turn per flat window 1.27 rad at one Node at the declared weight 6, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one Node and 0.111 with the body's projection over its three Nodes, two windows per passage, 0.19 per trial, P(at most 4 of 8) = 0.99) reads at most four absorptions over the eight trials at the declared window of 48; under the window derived at load (W 116, the whole passage of the 64-Node packet over the body at v_g 0.570, 2026-10-19) the blind re-derived from the envelope's spectral weight at the detuning (tools/pixel_mode.py envelope read at kappa = Delta / v_g = 0.3857 per Node, Delta = 0.2198 per interval: the weight 0.0657 over the three Nodes; the resonant turn at the weight 6 over three Nodes 1.115 rad, so the detuned turn 0.073 rad, the chance sin^2 = 5.4 x 10^-3 per trial, 0.043 absorptions expected in eight, P(2 or more) 8.0 x 10^-4) reads at most one of eight; the bound first written, at most 1 of 8, presumed the sinc on the chance. The engine reads none of eight at the declared weight 6 and W 116 (three of eight at the declared 48: the seeds 25 at 65 and 28 at 161, and 25's own light taken back at 215 from its train's wake under the narrower C5, the record of the narrower line), pinned here as the engine's reading beside the blind, to move with any change of the weight. The trials' seconds printed."""
     started = time.perf_counter()
     trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
-    seeds = json.loads((CHAIN / "detuned_trials.json").read_text(encoding="utf-8"))["seeds"]
+    path, sources = (
+        world_beside(tmp_path, CHAIN / "chain_detuned.json", lambda world: None),
+        range(11, 19),
+    )
     absorbed = 0
-    for seed in seeds:
-        _parts, _windows, clicks, refused = trials.one_trial(CHAIN / "chain_detuned.json", seed, 250)
+    for source in sources:
+        _parts, _windows, clicks, refused = trials.one_trial(
+            path, "source", source, 250, tmp_path / "trials"
+        )
         assert refused is None
         absorbed += sum(1 for c in clicks if c["absorbed"])
     assert absorbed <= 1, absorbed  # B7 under the passage's window: at most one of the 8 trials
     assert absorbed == 0, absorbed  # the engine's reading at the declared weight 6 and W 116, pinned
     print(
-        f"B7: {absorbed} absorption(s) in {len(seeds)} trials of the detuned packet; {time.perf_counter() - started:.1f} s"
+        f"B7: {absorbed} absorption(s) in {len(sources)} trials of the detuned packet; {time.perf_counter() - started:.1f} s"
     )

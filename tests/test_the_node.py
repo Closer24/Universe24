@@ -100,7 +100,7 @@ def test_every_act_of_the_interval_reaches_one_link(tmp_path, monkeypatch):
     charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")  # the energy line's T and k_w
     world = dict(shape=[9, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(intervals=2, universe="u.json", engine="e.json", bodies=[], node_detectors=[])
+    world.update(intervals=2, universe="u.json", bodies=[], node_detectors=[])
     (reach := tmp_path / "reach.json").write_text(json.dumps(world), encoding="utf-8")
 
     def centre(board: Lattice) -> list[int]:
@@ -156,7 +156,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)  # the closed cube of 9^3, one body of matter at its centre
     world = dict(shape=[9, 9, 9], boundary=dict(x="closed", y="closed", z="closed"), intervals=8)
-    world.update(universe="u.json", engine="e.json", node_detectors=[])
+    world.update(universe="u.json", node_detectors=[])
     d = np.abs(np.indices((9, 9, 9)) - 4).sum(axis=0)
     levels = np.select([d == 0, d == 1, d == 2], [1200, 600, 200], 0).ravel().tolist()
     mode = {"family": "matter", "pair": [4000, 6000], "moving": {"now": levels, "before": levels}}
@@ -220,7 +220,7 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         world = dict(
             shape=[CHAIN, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), intervals=24
         )
-        world.update(face_depth=1, universe="u.json", engine="e.json", node_detectors=ends)
+        world.update(face_depth=1, universe="u.json", node_detectors=ends)
         body = {"family": family, "nodes": [{"node": [CHAIN // 2, 0, 0], "count": 1}]}
         world = hand_world(tmp_path, "hand", world, body, mode, quantum=turn != 0)
         board = Lattice(load_world(world), (lines := []).append)
@@ -259,9 +259,9 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
     taken = [e for e in lines if e["node_detector"] == "taker" and e["family"] == "charge"]
     assert max(swings) <= body.sum() and board.books()[family.name]["pace"] > 0
     assert taken and all(e["event"] == "click" and e["inflow"] != 0 for e in taken)  # signed, never 0
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     for name in ("bell/bell_a_b",):  # the gate's world, the click at the window's end
-        board = Lattice(load_world(EVENTS / f"{name}.json"), (lines := []).append)
+        copied = laws.world_beside(tmp_path / "gate", EVENTS / f"{name}.json", lambda w: None)
+        board = Lattice(load_world(copied), (lines := []).append)
         left = board.credit.counts[laid := board.world.packets[0].family] - 1  # after the click
         steps = [laws.booked(board, monkeypatch, laid)[0] for _ in range(4)]  # the identity per step
         books, slack = board.books()[board.families[laid].name], sum(b + abs(m) for m, b in steps)
@@ -393,7 +393,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
 def light_alone_world(folder: Path, name: str, extent: int, first: int, **keys: object) -> Path:
     universe_beside(folder, drop=tuple(name for name in NAMES if name != "charge"))
     world = dict(shape=[extent, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), face_depth=1)
-    world.update(intervals=200, universe="u.json", engine="e.json", bodies=[], **keys)
+    world.update(intervals=200, universe="u.json", bodies=[], **keys)
     world["packets"] = [{**PACKET, "top": {"x": [first, first], "y": [0, 0], "z": [0, 0]}}]
     world["node_detectors"] = [{"name": "post", "positions": [[14, 0, 0], [15, 0, 0]]}]
     (path := folder / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
@@ -514,7 +514,7 @@ def test_a_record_of_any_dimension_is_its_real_lines_each_stepped_as_one(tmp_pat
     triple["reads"]["charge"] = 1  # three real lines naming the holder of the sign: no plane
     refused("no plane", universe_of, rows)
     world = dict(shape=[5] * 3, boundary=dict.fromkeys("xyz", "periodic"), intervals=1, bodies=[])
-    world.update(universe="u.json", engine="e.json", node_detectors=[])
+    world.update(universe="u.json", node_detectors=[])
     (cube := tmp_path / "cube.json").write_text(json.dumps(world))
 
     def imaged(board: Lattice, axes, signs) -> list[records.NodeState]:  # the state under one of the 48

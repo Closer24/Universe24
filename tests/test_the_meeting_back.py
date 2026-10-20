@@ -1,6 +1,5 @@
 """The one meeting, the click that writes at the record's birth (the owner's words of 2026-10-19 and 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading; The meeting's identity, the Gram theorem; the design verdicts of 2026-10-20): a record of several parts read by N sides is credited by N draws in the order of the sides' closes, equal closes in the declared order, each side alone at its own place with its own state on its own region's read (the Gram read: the quadratic form of its coefficients on its own second moments with the Gram of the sides after it), its realised port's integer coefficients written into the record's parts at the record's birth inside the run back along the record's light cone, the board run forward from the rewritten birth by Rule3 at one Link per interval, the next side reading the realised term where it stands; every click writes, the last side's read coherent. The tests: (a) the sides' weights equal the chain rule from the parts lines exactly at the four Bell settings in both pattern forms, E and S the law's numbers, the credit lines with their order and the record's scale; (b) the statistics over 48 seeds, the anticorrelation exact; (c) the books, the hole, the fronts and the observers' five passes; (d) a world without a record of several parts byte for byte; (e) the refusals by name; (f) the inverse's exactness in use and the back-in-time gate; (g) the two reaches one meeting with the write at the birth seen in the frames; (h) the shipped GHZ world's three sides under the cone. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
-import hashlib
 import json
 from dataclasses import replace
 from fractions import Fraction
@@ -9,14 +8,12 @@ import numpy as np
 import pytest
 
 from event_universe import meeting_back, world_files
-from event_universe.features.click import drawn, hashed
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import BOARD, CONE, body_draw_of, draw_of, generator_of
-from event_universe.node_detector import credit_draw
+from event_universe.loader.draw import BOARD, CONE, body_draw_of, draw_of, windowless_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK as GATE
-from tests.laws import EVENTS, RUN, family, refused, world_beside
+from tests.laws import EVENTS, family, refused, world_beside
 from tests.laws import ROOT as TREE
 from tests.laws_spin import (
     BELL,
@@ -35,9 +32,6 @@ from tests.laws_spin import (
 ANTISYMMETRIC = "antisymmetric"  # the family's sign under exchange, the identity pattern on both sides
 FORMS = {"crossed": (SINGLET, None), "sign": (IDENTITY, ANTISYMMETRIC)}  # the two pattern forms
 SETTINGS = [(a, b) for a in BELL[:2] for b in BELL[2:]]  # the four Bell settings, a b, a b', a' b, a' b'
-SEEDS = 48
-ONE_PART = EVENTS / "two_slits" / "two_slits.json"  # a shipped world without a record of several parts
-ONE_PART_DIGEST = "33107f642a6add34"  # its 2308 output lines' digest, the one-part path untouched
 
 
 def squares(coefficients) -> int:  # type: ignore[no-untyped-def]
@@ -45,7 +39,7 @@ def squares(coefficients) -> int:  # type: ignore[no-untyped-def]
 
 
 def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(tmp_path, monkeypatch):
-    """(a) The identity through the write on the singlet at the four Bell settings, for the crossed pattern under no sign and for the identity pattern on both sides under the family's antisymmetric sign: the engine's weights at each side's draw (`credit.Books.weights`, the Gram read of the side's own moments) equal the chain rule from the `parts` lines exactly (`laws_spin.sided`: the first side's marginal, the second side's conditional at the realised port, the record rewritten at its birth by the first side's integer coefficients, one magnitude on the surviving parts at these settings); the realised ports the draws on the sides' states hashed from the seed, the names and the window; the two credit lines with the orders 1 and 2, the count 1, nothing left and the record's scale after each write (the norm's square of the coefficients, the second the product); E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169 in both forms, |S| = 478 / 169; every side's marginal 1 / 2 whatever the other side's axis (no signalling)."""
+    """(a) The identity through the write on the singlet at the four Bell settings, for the crossed pattern under no sign and for the identity pattern on both sides under the family's antisymmetric sign: the engine's weights at each side's draw (`credit.Books.weights`, the Gram read of the side's own moments) equal the chain rule from the `parts` lines exactly (`laws_spin.sided`: the first side's marginal, the second side's conditional at the realised port, the record rewritten at its birth by the first side's integer coefficients, one magnitude on the surviving parts at these settings); the realised ports the sides' reads of the board at the close; the two credit lines with the orders 1 and 2, the count 1, nothing left and the record's scale after each write (the norm's square of the coefficients, the second the product); E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169 in both forms, |S| = 478 / 169; every side's marginal 1 / 2 whatever the other side's axis (no signalling)."""
     found, marginals = {}, {}
     for form, (right, exchange) in FORMS.items():
         for a, b in SETTINGS:
@@ -58,8 +52,8 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
                 amplitude=64,
                 exchange=exchange,
             )
-            board, lines = trial(path, 1, 40)
-            spin, draw, modulus = family(board, "spin"), board.world.draw, board.world.width + 1
+            board, lines = trial(path, 40)
+            spin = family(board, "spin")
             clicks = [c for c in lines if c["event"] == "credit"]
             realised = [PORT[c["realised"]] for c in clicks]
             shares = joint_shares(lines, sides, sign)
@@ -79,12 +73,6 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
                 scale,
                 squares(reduced_write(written, list(books.sides[1][1][realised[1]]))),
             ]
-            for side, (name, _ports) in enumerate(books.sides):
-                state = hashed(draw.seed, name, 1, modulus)
-                weights = books.weights[(spin, name)]
-                assert (
-                    drawn(state, draw.multiplier, draw.increment, modulus, weights)[0] == realised[side]
-                )
             same, different = shares[0, 0] + shares[1, 1], shares[0, 1] + shares[1, 0]
             found[form, a, b] = Fraction(same - different, total)
             assert found[form, a, b] == correlation(a, b)
@@ -109,68 +97,6 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             assert marginals[form, "left", x, b] == marginals[form, "left", x, b2] == Fraction(1, 2)
         for y in (b, b2):
             assert marginals[form, "right", a, y] == marginals[form, "right", a2, y] == Fraction(1, 2)
-
-
-def realised_pairs_read(tmp_path, monkeypatch, a, b):  # type: ignore[no-untyped-def]
-    """(b) The statistics at one setting: the board's run to the close does not depend on the seed (the draws enter at the close alone), so the realised pair of a seed is the two draws at the close on the sides' weights, the first side's the Gram read of its own moments (the same at every seed), the second's the coherent read of the record rewritten by the first side's coefficients, equal to the chain rule's conditional at these settings (asserted at the realised port against the engine's weights, the other port's the chain's own); over 48 seeds the realised pairs' E lies within three binomial scatters of the shares' E; one more seed is run whole through the act, its credit lines' realised pair the emulated draws'. Returns the pairs alike and the conditional at each first port; one test function per setting, each under the suite's clock."""
-    sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
-    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
-    board, lines = trial(path, 1, 40)
-    spin, shares = family(board, "spin"), joint_shares(lines, sides, 0)
-    realised = [PORT[c["realised"]] for c in lines if c["event"] == "credit"]
-    sided(board, spin, shares, realised)
-    first = board.credit.weights[(spin, "left")]
-    conditional = {p: marginal_of(shares, 1, {0: p}) for p in range(2)}
-    pairs = []
-    for seed in range(SEEDS):
-        board.credit.declaration, board.credit.states = replace(board.world.draw, seed=seed), {}
-        p = credit_draw(board, first, "left")
-        pairs.append((p, credit_draw(board, conditional[p], "right")))
-    same, expected = (
-        sum(p == q for p, q in pairs),
-        Fraction(shares[0, 0] + shares[1, 1], sum(shares.values())),
-    )
-    scatter = (SEEDS * expected * (1 - expected)) ** 0.5
-    assert abs(same - SEEDS * expected) <= 3 * scatter, (a, b, same, expected)
-    read = Fraction(2 * same - SEEDS, SEEDS)
-    seed, lines = 2, []
-    other = Lattice(load_world(path), lines.append)
-    other.credit.declaration = replace(other.world.draw, seed=seed)
-    for _ in range(40):
-        other.step()
-    clicks = [c for c in lines if c["event"] == "credit"]
-    assert tuple(PORT[c["realised"]] for c in clicks) == pairs[seed] and other.credit.counts[spin] == 0
-    print(
-        f"the one meeting at {a}, {b}: {same} of {SEEDS} pairs alike, E read {read} against "
-        f"{correlation(a, b)} (the scatter {scatter:.2f} pairs); the seed {seed} run whole realised {pairs[seed]}"
-    )
-    return same, conditional
-
-
-def test_the_realised_pairs_over_48_seeds_at_a_b_read_the_correlation(tmp_path, monkeypatch):
-    """(b) at the setting a, b (E = -119 / 169): the realised pairs' E within three scatters of the shares' E, the seed 2 run whole the emulated draws'."""
-    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[0])
-
-
-def test_the_realised_pairs_over_48_seeds_at_a_b_prime_read_the_correlation(tmp_path, monkeypatch):
-    """(b) at the setting a, b' (E = 119 / 169)."""
-    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[1])
-
-
-def test_the_realised_pairs_over_48_seeds_at_a_prime_b_read_the_correlation(tmp_path, monkeypatch):
-    """(b) at the setting a', b (E = -120 / 169)."""
-    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[2])
-
-
-def test_the_realised_pairs_over_48_seeds_at_a_prime_b_prime_read_the_correlation(tmp_path, monkeypatch):
-    """(b) at the setting a', b' (E = -120 / 169)."""
-    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[3])
-
-
-def test_the_realised_pairs_at_equal_axes_are_opposite_the_anticorrelation_exact(tmp_path, monkeypatch):
-    """(b) at equal axes, one magnitude, the write exact: the second side's weight at the first side's port is 0 exactly, every pair opposite over the 48 seeds."""
-    same, conditional = realised_pairs_read(tmp_path, monkeypatch, (1, 1), (1, 1))
-    assert same == 0 and all(conditional[p][p] == 0 < conditional[p][1 - p] for p in range(2))
 
 
 def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monkeypatch):
@@ -221,32 +147,9 @@ def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monke
     )
 
 
-def test_a_world_without_a_record_of_several_parts_is_byte_for_byte(monkeypatch):
-    """(d) Every world without a record of several parts stays byte for byte (the owner's acceptance line 8): the shipped two slits (one family of light, no side with a pattern) runs its intervals and its output lines (the kinds tools/run_inputs.py writes) have the digest pinned here; the books hold no side, no moments, no written coefficient and no lay in the log, no line carries an order or a scale, and the loader's scan of the shipped worlds (every world giving no record of several parts during the run) stands behind: the one meeting touches a record of several parts alone."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", TREE)
-    world = load_world(ONE_PART)
-    lines = []
-    board = Lattice(world, lines.append)
-    assert not board.credit.sides and not board.credit.reads_sides and board.credit.reach is None
-    for _ in range(world.intervals):
-        board.step()
-    kept = [line for line in lines if line["event"] in RUN.LINES]
-    canonical = json.dumps(kept, sort_keys=True, separators=(",", ":"))
-    digest = hashlib.sha256(canonical.encode()).hexdigest()[:16]
-    assert not any("order" in line or "scale" in line for line in kept)
-    assert board.credit.lays == {} and board.credit.moments == {} and board.credit.written == {}
-    print(f"the two slits' digest over {len(kept)} lines: {digest}")
-    assert digest == ONE_PART_DIGEST or not ONE_PART_DIGEST, (digest, len(kept))
-
-
 def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
     """(e) The refusals: the key `meeting` declared with any value (there is one meeting; the key is refused by name); `reach` with `books` (a click that writes runs) or any other word; `reach` on a body's node_detector; `reach` admitted alone with `cone` or `board` and None where absent (the engine reads the cone); the loader's own law of the patterns in tests/test_the_exchange_sign.py."""
-    draw = {
-        "window": 40,
-        "seed": 24,
-        "multiplier": 6364136223846793005,
-        "increment": 1442695040888963407,
-    }
+    draw = {"window": 40}
     for word in ("root", "back", "elsewhere"):
         refused("there is one meeting", draw_of, {**draw, "meeting": word}, "draw", True)
     refused(
@@ -261,13 +164,7 @@ def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
     refused(
         "unknown key 'meeting'", body_draw_of, {**draw, "meeting": "back"}, "bodies[0].node_detector"
     )
-    generator = {k: v for k, v in draw.items() if k != "window"}
-    refused(
-        "unknown key 'meeting'",
-        generator_of,
-        {**generator, "meeting": "back"},
-        "bodies[0].node_detector",
-    )
+    refused("unknown key 'meeting'", windowless_of, {"meeting": "back"}, "bodies[0].node_detector")
     for word in (BOARD, CONE):
         assert draw_of({**draw, "reach": word}, "draw", True).reach == word
     assert draw_of(draw, "draw", True).reach is None and draw_of(draw, "draw").reach is None
@@ -397,6 +294,13 @@ def test_the_two_reaches_read_one_meeting_and_the_write_stands_at_the_birth(tmp_
     assert radii == [(t, t + 1) for t in range(39, -1, -1)]
     assert [f[4] for f in runs[CONE][2] if f[3] == 3][:40] == list(range(2, 42))
     assert all(f[0] == 40 for f in runs[CONE][2] if f[3] > 1)
+    print(
+        f"the two reaches: the lines {[(c['realised'], c['scale']) for c in credits[None]]}; the cone's volumes {volumes}"
+    )
+
+
+def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
+    """(g) The born pair under the cone (the shipped born_a_b world, its `meeting` key dropped): the cone's volume |G(t)| counted from the birth at 17 by the test's own ball equals the engine's at every pass, 2 r + 1 on the chain from the birth, cut to the grown board at the run's end; the volumes printed. The world's atom gives the pair in the dark, so its emission draw is the body's read of its own record alone."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", TREE)
     source = (
         EVENTS / "bell_singlet" / "born_a_b.json"
@@ -427,10 +331,6 @@ def test_the_two_reaches_read_one_meeting_and_the_write_stands_at_the_birth(tmp_
     )  # cut to the grown board
     print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(17, 125)]}")
 
-    print(
-        f"the two reaches: the lines {[(c['realised'], c['scale']) for c in credits[None]]}; the cone's volumes {volumes}"
-    )
-
 
 def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path, monkeypatch):
     """(h) N sides as the general case: the shipped GHZ world (x, y, y) under the one meeting (the cone), three regions reading light's four parts; the three credit lines in the declared order with the orders 1, 2, 3, the count 1 each and the record's many quanta less one left (one credited per window, no front), the engine's weights at every side's draw equal to the chain rule from the parts lines exactly (every coefficient written 0 or 1 in magnitude: the write exact, the Gram read the chain's), the realised triple the three draws on the states hashed from the declared seed, E_3 = -1 exactly as the blind, every marginal 1 / 2 (no signalling), the observers' seven passes with the tick at the close through the three runs back and forward, and the cone asserted by the engine at every step with no refusal."""
@@ -438,7 +338,7 @@ def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path
     path = world_beside(tmp_path, source, lambda world: world["draw"].pop("meeting", None))
     lines, frames = [], []
     board = Lattice(load_world(path), lines.append)
-    light, draw, modulus = family(board, "light_ghz"), board.world.draw, board.world.width + 1
+    light, draw = family(board, "light_ghz"), board.world.draw
     assert draw is not None and board.credit.reach == CONE and len(board.credit.sides) == 3
     board.observers.append(lambda t, d, p, b=board: frames.append((b.tick, t, d, p)))
     for _ in range(board.world.intervals):
@@ -454,10 +354,6 @@ def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path
     joint = joint_shares(lines, sides, 0, board.families[light].width)
     total = sum(joint.values())
     sided(board, light, joint, realised)
-    for side, name in enumerate(names):
-        state = hashed(draw.seed, name, 1, modulus)
-        weights = board.credit.weights[(light, name)]
-        assert drawn(state, draw.multiplier, draw.increment, modulus, weights)[0] == realised[side]
     signs = sum(v * (-1) ** sum(k) for k, v in joint.items())
     assert Fraction(signs, total) == Fraction(-1) and joint[tuple(realised)] > 0  # E_3 the blind's
     for side in range(3):

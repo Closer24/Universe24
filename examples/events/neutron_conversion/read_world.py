@@ -1,4 +1,4 @@
-"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, once per seed of the design's trials (the record's generator at the trials tool's state, the seed times the records declared NodeDetectors plus the record's number), and the blind's rows are read from the lattice, the lines and the books, every number a lattice reading labelled so unless it is a node_detector's line: over the first seed's run and the first converting seed's, at the start and at the conversion's interval, every family's lines at the Node of the reading (the levels now and before and Rule3's remainders; the Node of the reading is the body's first Node until the NODEDETECTOR conversion line names the Node the draw picked by the record's share over its declared Nodes, the law's A2, and that Node from the conversion on, named with its source in the output), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the holders of the sign's rows at the Node with the Nodes each row's level stands on (per interval over the run, the sign row written at the conversion), the reader's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it; over every seed the conversion's interval and the realised conversions against the design's expectation. The tool holds no number of the law and compares nothing.
+"""The neutron conversion's reader (the two hands' blind, #1572 comments 5963954612 (c), 5964082980 (c), 5964484844 and 5964520368): the world is loaded as the runner loads it and stepped by the engine's own step with an observer, one run per world (the conversion's draw is the click's read of the board, the body's remainders at its Nodes, one realisation per world; the ensemble over the rate is a knob of the world and no seed), and the blind's rows are read from the lattice, the lines and the books, every number a lattice reading labelled so unless it is a node_detector's line: over the run, at the start and at the conversion's interval, every family's lines at the Node of the reading (the levels now and before and Rule3's remainders; the Node of the reading is the body's first Node until the NODEDETECTOR conversion line names the Node the draw picked by the record's share over its declared Nodes, the law's A2, and that Node from the conversion on, named with its source in the output), each record's rotation read from its levels (cos omega = before / now on a real line, (re re_b + im im_b) / (re^2 + im^2) on a plane), the Wronskian per family at the Node and summed, the holders of the sign's rows at the Node with the Nodes each row's level stands on (per interval over the run, the sign row written at the conversion), the reader's counts and the credit's counts, the share per family at the Node and over the board in the current's units and in quanta beside the count, the energies T sin omega in and out, the back-in-time gate before the conversion, after it and across it. The tool holds no number of the law and compares nothing.
 
 PYTHONPATH=src python examples/events/neutron_conversion/read_world.py --expectation examples/events/neutron_conversion/expectation.json examples/events/neutron_conversion/neutron_conversion.json
 """
@@ -34,24 +34,10 @@ def back_in_time() -> Any:
     return module
 
 
-def trials_tool() -> Any:
-    """The trials tool's module, loaded from tools/ by its path, for the one seeding rule of a trial (`hashed_state`)."""
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location("meeting_trials", TOOLS / "meeting_trials.py")
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-def loaded(path: Path, seed: int) -> Lattice:
-    """The world loaded with every record's generator at the trial's state, the trials tool's own rule (tools/meeting_trials.py, `hashed_state`: the hash of the seed times the records' number plus the record's number, never the label itself, which with one body would make the trials' states the seeds in arithmetic progression and their draws one Weyl sequence), the lines kept on the board."""
+def loaded(path: Path) -> Lattice:
+    """The world loaded as the runner loads it, the lines kept on the board; every draw in the run is the click's read of the board (src/event_universe/digits.py), so the world carries no seed."""
     board = Lattice(load_world(path), (lines := []).append)
     board.read_lines = lines  # type: ignore[attr-defined]
-    hashed_state = trials_tool().hashed_state
-    for books in board.credit.bodies:
-        books.state = hashed_state(seed * len(board.credit.bodies) + books.number, board.world.width)
     return board
 
 
@@ -130,9 +116,9 @@ def on_the_board(board: Lattice, node: Sequence[int]) -> tuple[int, int, int]:
     return (x, y, z)
 
 
-def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
-    """The first seed's run read in full: the start at the body's first Node; the conversion's interval, the sign rows from that interval on and the run's end at the Node of the reading, the body's first Node until the NODEDETECTOR conversion line names the Node the draw picked by the record's share over its declared Nodes (the law's A2; the line's `node`, a lattice diagnostic at the file's coordinates), that Node from the conversion on, so that the rows are read where the records out were laid; the output names the Node read and its source; the lines, the books and the back-in-time gate before, after and across the conversion."""
-    board = loaded(path, seed)
+def first_trial(path: Path, intervals: int) -> dict[str, Any]:
+    """The world's run read in full: the start at the body's first Node; the conversion's interval, the sign rows from that interval on and the run's end at the Node of the reading, the body's first Node until the NODEDETECTOR conversion line names the Node the draw picked by the record's share over its declared Nodes (the law's A2; the line's `node`, a lattice diagnostic at the file's coordinates), that Node from the conversion on, so that the rows are read where the records out were laid; the output names the Node read and its source; the lines, the books and the back-in-time gate before, after and across the conversion."""
+    board = loaded(path)
     index = board.world.bodies[0].family
     first = on_the_board(board, board.world.bodies[0].nodes[0])
     read_at = first  # the reading's Node, the body's first until a conversion line names the drawn one
@@ -158,19 +144,18 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
     gate = back_in_time()
     crossing: dict[str, Any] = {}
     if k is not None:
-        before = loaded(path, seed)
+        before = loaded(path)
         crossing["before_the_conversion"] = gate.verdict(before, max(k - 2, 0)) if k >= 2 else None
-        after = loaded(path, seed)
+        after = loaded(path)
         for _ in range(k):
             after.step()
         crossing["after_the_conversion"] = gate.verdict(after, max(intervals - k - 1, 0))
-        across = loaded(path, seed)
+        across = loaded(path)
         for _ in range(max(k - 2, 0)):
             across.step()
         crossing["across_the_conversion"] = gate.verdict(across, 2)
     neutron = board.families[index].name
     out = {
-        "seed": seed,
         "node": {  # the Node of the reading and its source, the coordinates the file's
             "label": "LATTICE",
             "at": list(read_at),
@@ -212,31 +197,6 @@ def first_trial(path: Path, seed: int, intervals: int) -> dict[str, Any]:
     return out
 
 
-def trials(path: Path, seeds: list[int], intervals: int) -> dict[str, Any]:
-    """Every seed's run: the conversion's interval (None where none in the run) and the realised conversions."""
-    when: dict[int, int | None] = {}
-    several = 0
-    for seed in seeds:
-        board = loaded(path, seed)
-        for _ in range(intervals):
-            board.step()
-            if board.ended is not None:
-                break
-        lines: list[dict[str, Any]] = board.read_lines  # type: ignore[attr-defined]
-        converted_at = [int(line["interval"]) for line in lines if line["event"] == "conversion"]
-        when[seed] = converted_at[0] if converted_at else None
-        several += len(converted_at) > 1
-    realised = [k for k in when.values() if k is not None]
-    return {
-        "trials": len(seeds),
-        "intervals": intervals,
-        "converted": len(realised),
-        "conversion_intervals": when,
-        "mean_conversion_interval": sum(realised) / len(realised) if realised else None,
-        "runs_with_more_than_one_conversion": several,
-    }
-
-
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("worlds", type=Path, nargs="+", help="the world files")
@@ -244,24 +204,13 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--design", type=Path, default=HERE / "design.json", help="the design, its trials"
     )
-    parser.add_argument("--first-only", action="store_true", help="the first seed's run alone")
     args = parser.parse_args(argv)
     blind = json.loads(args.expectation.read_text(encoding="utf-8"))
     design = json.loads(args.design.read_text(encoding="utf-8"))
-    seeds = [int(s) for s in design["trials"]["seeds"]]
     intervals = int(design["trials"]["intervals"])
     found: dict[str, Any] = {"label": "LATTICE", "blind": blind["blind"], "readings": {}}
     for path in args.worlds:
-        reading = {"first_seed": first_trial(path, seeds[0], intervals)}
-        if not args.first_only:
-            reading["trials"] = trials(path, seeds, intervals)
-            when = reading["trials"]["conversion_intervals"]
-            first = next((seed for seed in seeds if when[seed] is not None), None)
-            if (
-                first is not None and first != seeds[0]
-            ):  # the first seed whose run converts, read in full too
-                reading["first_converting_seed"] = first_trial(path, first, intervals)
-        found["readings"][path.stem] = reading
+        found["readings"][path.stem] = {"run": first_trial(path, intervals)}
     print(json.dumps(found, indent=1, default=str))
 
 

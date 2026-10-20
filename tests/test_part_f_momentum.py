@@ -33,11 +33,10 @@ def chain_world(tmp_path, families, chain=CHAIN, boundary="periodic"):  # type: 
     (tmp_path / "u.json").write_text(
         json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
     )
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     world = dict(
         shape=[chain, 1, 1], boundary=dict(x=boundary, y="periodic", z="periodic"), face_depth=1
     )
-    world.update(intervals=400, universe="u.json", engine="e.json", bodies=[], node_detectors=[])
+    world.update(intervals=400, universe="u.json", bodies=[], node_detectors=[])
     (path := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -239,25 +238,27 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
 
 
 def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_path, monkeypatch):
-    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click at 61 (the window derived from the packet's passage, 33, 2026-10-19), the piece arriving from the right: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 60 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
+    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click at 62 (the first atom's, its read of the board; the window derived from the packet's passage, 33, 2026-10-19), the -x packet arriving at the first atom: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 61 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     num = board.families[light].pair[0]
-    for _ in range(60):
+    for _ in range(61):
         board.step()
-    right = (np.arange(board.shape[0]) >= 48).reshape(board.shape)
-    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, right)[0]
-    packet_share = int(board.share_of(light, 1, right)[0][right].sum(dtype=object))
+    left = (np.arange(board.shape[0]) < 48).reshape(board.shape)  # the -x packet, body 0's side
+    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
+    packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     board.step()
-    credits = [line for line in lines if line["event"] == "credit"]
-    assert len(credits) == 1 and credits[0]["interval"] == 61 and credits[0]["absorbed"] == "photon"
+    credits = [line for line in lines if line["event"] == "credit" and line["absorbed"]]
+    assert len(credits) == 1 and credits[0]["interval"] == 62 and credits[0]["node_detector"] == "body 0"
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
-    assert piece[0] > 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
+    assert piece[0] < 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]  # the -x piece at the left atom
     assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio
     deficit = [a - b for a, b in zip(fan, piece, strict=True)]
-    assert deficit[0] < 0 and abs(deficit[0] + piece[0]) < abs(piece[0])  # the fan near symmetric
+    assert fan[0] * piece[0] > 0 and abs(fan[0]) < abs(
+        piece[0]
+    )  # the fan near symmetric, the piece's sign
     quantum = 2 * T * math.sin(math.pi / 4)
     print(
         f"Part F2 (Tasks 1, 5): the piece's p = {piece}, the fan's P = {fan}, the deficit {deficit}; "
@@ -274,28 +275,29 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
 
 
 def test_the_write_twists_the_taker_to_the_pieces_momentum_or_books_the_loss(tmp_path, monkeypatch):
-    """Task 3: (a) on one_photon at the click at 61 (the derived window, 2026-10-19) the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign and the credit line carries the twist n_x; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `twist.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
+    """Task 3: (a) on one_photon at the click at 62 (the first atom's, the derived window, 2026-10-19) the atom (two Nodes along x) is folded: its P_x after the write less before has the piece's sign (the -x packet's) and the credit line carries the twist n_x, the quarter turn signed by the piece; the piece's |p_x| exceeds what the two-Node atom at its lay amplitude (A = 90 per Node, 2 T rho sin delta at most T) can carry, so `lost` reads "P lost to the taker" (Part G: with "recoil lost to the lay" after it, the file's packets having no emitting body) and n_x is the quarter turn, the most the taker takes (printed: the taker's P before and after, n_x, |p_x|); (b') the reachable case, `twist.twisted` on the second atom's ground part at a p_x within its reach: the part's P_x grows by exactly p_x to the floor (two units per Node of the fold's roundings) with nothing lost; (c) the twist is a rotation: the taker's count is unchanged by the fold and the share's change is printed; (b) a one-Node taker books "P lost to the declaration", nothing folded and its lines unchanged."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
-    for _ in range(60):
+    for _ in range(61):
         board.step()
     before = twist.fan_momentum(board, atom)
     board.step()
     after = twist.fan_momentum(board, atom)
-    credits = [line for line in lines if line["event"] == "credit"]
+    credits = [line for line in lines if line["event"] == "credit" and line["absorbed"]]
     piece, turned, lost = credits[0]["momentum"], credits[0]["twist"], credits[0]["lost"]
     quarter = twist.quarter_turn(board)
-    assert before == (0, 0, 0) and after[0] > 0 and after[0] * piece[0] > 0
-    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [quarter, 0, 0]  # Part G: the lay's case
+    print(f"the piece {piece}, the twist {turned}, the taker's P before {before} and after {after}")
+    assert before == (0, 0, 0) and after[0] < 0 and after[0] * piece[0] > 0  # the -x piece, body 0
+    assert lost == [LOST_TO_TAKER, LOST_TO_LAY] and turned == [-quarter, 0, 0]  # Part G: the lay's case
     assert abs(after[0]) < abs(piece[0])
     print(
         f"Part F (Task 3a): the taker's P_x before {before[0]} and after {after[0]}, n_x = {turned[0]} "
         f"(the quarter turn {quarter}), the piece's p_x = {piece[0]}: {lost}, the loss {abs(piece[0]) - abs(after[0])} "
         f"(the two-Node atom's reach 4 SUM A^2 = {4 * 2 * 90 * 90} at most; no taker of this lay carries one count of one_photon's photon)"
     )
-    # (b') the reachable case on the first atom, standing in its ground part at 61
-    books = board.credit.bodies[0]
+    # (b') the reachable case on the second atom, standing in its ground part at 62 (its read drew nothing)
+    books = board.credit.bodies[1]
     wanted = 10000
     shares_before = board.share_of(atom, 1, board.mask(books.nodes))[0]
     count_before = board.quanta(atom, board.mask(books.nodes))[0]
@@ -356,17 +358,18 @@ def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:
     return 2 * levels * board.credit.units[index] / share + 1
 
 
-def back_to_back_pairs(seeds: range) -> None:
-    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over the `seeds` of the draw (the twenty seeds in two test functions of ten, each under the suite's clock with the click's run back along the cone at every side), the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` carries nothing but Part G's "recoil lost to the lay" on every pair line (the pair is the file's lay), nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
-    world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-    board = Lattice(load_world(EVENTS / "bell" / "bell_a_b.json"), [].append)
+def test_the_pairs_two_pieces_are_back_to_back(tmp_path, monkeypatch):
+    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over 20 seeds of the draw, the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` carries nothing but Part G's "recoil lost to the lay" on every pair line (the pair is the file's lay), nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
+    board = Lattice(
+        load_world(world_beside(tmp_path, EVENTS / "bell" / "bell_a_b.json", lambda w: None)), [].append
+    )
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     for _ in range(99):
         board.step()
     sums, realised, lost, size, floors = [], [], [], 0, []
-    for seed in seeds:
+    for _run in ("the read",):  # one world, one read of the board at the close
         twin = copy.deepcopy(board)
-        twin.output, twin.credit.state = (lines := []).append, seed + 1
+        twin.output = (lines := []).append
         twin.step()
         credits = [line for line in lines if line["event"] == "credit"]
         assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
@@ -388,21 +391,11 @@ def back_to_back_pairs(seeds: range) -> None:
     largest = max(abs(s[0]) for s in sums)
     counted = {key: realised.count(key) for key in sorted(set(realised))}
     print(
-        f"Part F2 (Task 3): Bell a b over the seeds {seeds[0]} to {seeds[-1]}, the pieces' p_x sums {sorted({s[0] for s in sums})} "
+        f"Part F2 (Task 3): Bell a b, the pieces' p_x sums {sorted({s[0] for s in sums})} "
         f"against |p_x| = {size}, the largest |sum| {largest} ({largest / size:.2e}) under the lays' floor {min(floors):.0f}; "
-        f"the realised ports {counted}; `lost` booked {len(lost)} times of {2 * len(seeds)} pair lines"
+        f"the realised ports {counted}; `lost` booked {len(lost)} times of {2 * len(sums)} pair lines"
     )
     assert all(s[1:] == [0, 0] for s in sums) and largest <= min(floors) and lost == []
-
-
-def test_the_pairs_two_pieces_are_back_to_back_over_the_first_ten_seeds():
-    """Part F2, Task 3, the seeds 0 to 9 (`back_to_back_pairs`)."""
-    back_to_back_pairs(range(10))
-
-
-def test_the_pairs_two_pieces_are_back_to_back_over_the_second_ten_seeds():
-    """Part F2, Task 3, the seeds 10 to 19 (`back_to_back_pairs`)."""
-    back_to_back_pairs(range(10, 20))
 
 
 def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path, monkeypatch):

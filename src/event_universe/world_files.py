@@ -1,4 +1,4 @@
-"""The world's files for the loader (a host module): this module reads the world file, the universe and engine start files it names by their repository paths and the generator's mode file beside it, and hands the loader the documents with the world's digest; the loader reads no file."""
+"""The world's files for the loader (a host module): this module reads the world file, the universe file it names by its repository path and the generator's mode file beside it, and hands the loader the documents with the world's digest; the loader reads no file."""
 
 from __future__ import annotations
 
@@ -18,14 +18,13 @@ def input_digest(document: dict[str, object]) -> str:
 
 
 def world_files(document: object) -> dict[str, object]:
-    """The documents a world names by a repository path (the universe file under `universe`, the engine start file under `engine`); a path with no file is left out, and the loader refuses it naming the key."""
+    """The documents a world names by a repository path (the universe file under `universe`); a path with no file is left out, and the loader refuses it naming the key."""
     files: dict[str, object] = {}
     if isinstance(document, dict):
-        for key in ("universe", "engine"):
-            value = document.get(key)
-            path = REPOSITORY_ROOT.joinpath(value) if isinstance(value, str) else None
-            if path is not None and path.is_file():
-                files[str(value)] = json.loads(path.read_text(encoding="utf-8"))
+        value = document.get("universe")
+        path = REPOSITORY_ROOT.joinpath(value) if isinstance(value, str) else None
+        if path is not None and path.is_file():
+            files[str(value)] = json.loads(path.read_text(encoding="utf-8"))
     return files
 
 

@@ -246,7 +246,7 @@ def test_without_a_sign_holder_the_two_slits_are_the_frozen_oracle(monkeypatch):
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     started, look = time.perf_counter(), json.loads(lzma.open(LOOK).read())
-    board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
+    board = Lattice(laws.load_shipped(EVENTS / "two_slits" / "two_slits.json"))
     assert all(state.phases == [] for state in board.states)
     digest = hashlib.sha256()
     for interval in range(21):

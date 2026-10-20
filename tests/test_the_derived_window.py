@@ -11,7 +11,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader import window
 from event_universe.loader.draw import Draw
 from event_universe.loader.world import World, parse_world
-from tests.laws import EVENTS, emit_and_take_world, refused
+from tests.laws import EVENTS, ROOT, emit_and_take_world, refused, world_beside
+from tests.laws_read import redeclared
 
 CHAIN, ANTICOINCIDENCE = EVENTS / "chain", EVENTS / "anticoincidence"
 SIX = sorted(json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))["worlds"])
@@ -21,6 +22,7 @@ def declared(path: Path, window: int | None = None, edit=None) -> World:  # type
     """The shipped world at `path` parsed as a document with every body's `window` key removed, or set to `window`, and `edit` applied to the document, the mode file beside the path read against the file's own digest, so that the lays stand as the generator wrote them; no interval stepped."""
     document = json.loads(path.read_text(encoding="utf-8"))
     files, digest = world_files.world_files(document), world_files.input_digest(document)
+    redeclared(document)  # the read's shape, the digest the shipped mode file's
     beside = path.with_suffix(".mode.json")
     if beside.is_file():
         files[beside.name] = json.loads(beside.read_text(encoding="utf-8"))
@@ -102,11 +104,19 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
     assert windows(declared(resonant, None, opened)) == [48, 48]  # the span tau, both bodies
     assert "W = 48" in str(refused("declares the window 96", declared, resonant, 96, opened))
     zeno = EVENTS / "zeno" / "zeno_1.json"
-    assert windows(world_files.load_world(zeno)) == [48] and windows(declared(zeno, 48)) == [48]
+
+    def shipped(path):  # type: ignore[no-untyped-def]
+        copied = world_beside(tmp_path / path.stem, path, lambda w: None)  # the read's shape
+        try:
+            return world_files.load_world(copied)
+        finally:
+            world_files.REPOSITORY_ROOT = ROOT  # the shipped files read at their paths after
+
+    assert windows(shipped(zeno)) == [48] and windows(declared(zeno, 48)) == [48]
     refusal = str(refused("declares no window", declared, zeno))
     assert "bodies[0].node_detector" in refusal and "['pulse']" in refusal and "no end" in refusal
-    assert windows(world_files.load_world(resonant)) == [48, 96]
-    assert windows(world_files.load_world(EVENTS / "shelved_ion" / "shelved_ion.json")) == [1]
+    assert windows(shipped(resonant)) == [48, 96]
+    assert windows(shipped(EVENTS / "shelved_ion" / "shelved_ion.json")) == [1]
 
     def ring(document):  # type: ignore[no-untyped-def]
         document["boundary"]["x"] = "periodic"

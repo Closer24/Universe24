@@ -10,11 +10,11 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import resonance, world_files
+from event_universe import resonance
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS
+from tests.laws import EVENTS, world_beside
 
 GAMMA, WIDTH, TURN = (
     6000,
@@ -103,13 +103,15 @@ def test_the_back_turn_returns_the_labels_to_the_hops_floor_and_not_bit_for_bit(
     assert max(map(abs, miss)) <= FLOOR_PER_TURN * 2 * TURNS and miss != (0, 0)
 
 
-def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(monkeypatch):
+def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(tmp_path, monkeypatch):
     """The two slits world declares no transition, so no label is hopped (no books with labels), and its 20 intervals equal the frozen look file frame by frame (the oracle of Part A), the levels' digest printed: the sha256 of `tools/run_inputs.py` on it, c50eaa36, stands (run beside the suite and reported)."""
     oracle = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
 
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     started, look = time.perf_counter(), json.loads(lzma.open(oracle).read())
-    board = Lattice(load_world(EVENTS / "two_slits" / "two_slits.json"))
+    slits = world_beside(
+        tmp_path, EVENTS / "two_slits" / "two_slits.json", lambda w: None
+    )  # the read's shape
+    board = Lattice(load_world(slits))
     assert board.credit.bodies == []
     digest = hashlib.sha256()
     for interval in range(21):

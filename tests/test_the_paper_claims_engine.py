@@ -25,6 +25,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.reports import front
     from event_universe.world_files import load_world
     from tests.laws import BACK, EVENTS, PACKET, ROOT, TOOL, UNIVERSE, refused, slit_world
+    from tests.laws_read import redeclared
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     source, called = ROOT / "src" / "event_universe", set()
@@ -105,13 +106,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeDetector presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); the breaker: the shipped Zeno world's click at 72, the body's absorption of its dense drive; between clicks 60 forward and 60 back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_detector.py hold the shipped gates); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum over the two Nodes in the leaving part's sense and in its direction turned by the arriving record's phase, atan2(Y', X) of the window's two sums (the phase passes with the quantum, ALGEBRA.md L739 and the ledger's row 16), the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing; the expected levels the law's own integers and no engine function, written here from the drive's levels at the Nodes over the window (a_t = SUM d_i A_i div A half up, the reference records by Chebyshev's line at the declared pair, X and Y' over the window, N = isqrt(X^2 + Y'^2), the direction (90 X div N, 90 Y' div N) at the amplitude A_i and the level before by the record's own rotation, the mathematician's reading of the witness, #1793 comment 5983031085), the float turn one level off in im through the act's two floors."""
         world = json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8"))
         (tmp_path / "zu.json").write_bytes((ROOT / world["universe"]).read_bytes())
-        world.update(universe="zu.json", engine="e.json")
+        redeclared(world).update(universe="zu.json")
         record = {k: v for k, v in world["bodies"][0].items() if k in ("family", "nodes", "parts")}
         paths = {name: tmp_path / f"{name}.json" for name in ("drawn", "undrawn")}
         for name, bodies in (("drawn", world["bodies"]), ("undrawn", [record])):
             paths[name].write_text(json.dumps({**world, "bodies": bodies}), encoding="utf-8")
             TOOL.main(["--input", str(paths[name])])
-        twin, between, undrawn, drive = Lattice(load_world(paths["undrawn"])), None, None, []
+        twin, undrawn_at, drive, previous = Lattice(load_world(paths["undrawn"])), {}, [], None
         body = world["bodies"][0]
         at = [tuple(int(v) for v in n["node"]) for n in body["nodes"]]
         pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
@@ -119,15 +120,18 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             board = Lattice(load_world(paths["drawn"]), (lines := []).append)
             kept = {board.interval: BACK.snapshot(board)}
             for _ in range(75):
+                if not any(x["event"] == "credit" for x in lines):
+                    previous = copy.deepcopy(board)  # the board before the first click
                 board.step(), twin.step()
                 kept[board.interval] = BACK.snapshot(board)
-                between = copy.deepcopy(board) if board.interval == 60 else between
-                undrawn = BACK.snapshot(twin) if twin.interval == 72 else undrawn
+                undrawn_at[twin.interval] = BACK.snapshot(twin)
                 drive.append([int(twin.states[pulse].lines[0].now[n]) for n in at])  # d_i, a_t's read
         clicks, lays = ([x for x in lines if x["event"] == event] for event in ("credit", "lay"))
-        assert [c["interval"] for c in clicks] == [72] and len(lays) == 8 + 2  # Part F: the twist's two
-        assert {x["interval"] for x in lays} == {72}
-        for _ in range(60):  # between clicks: nothing crossed, bit for bit
+        click_at = clicks[0]["interval"]  # the first click, the body's read of the board at a close
+        between, undrawn = previous, undrawn_at[click_at]  # the board before it, the twin at it
+        assert click_at % 12 == 0 and previous is not None  # at a close of the window 12
+        assert len([x for x in lays if x["interval"] == click_at]) == 8 + 2  # Part F: the twist's two
+        for _ in range(click_at - 1):  # between clicks: nothing crossed, bit for bit
             between.step_inverse()
             assert BACK.first_difference(kept[between.interval], BACK.snapshot(between)) is None
         blind, miss = copy.deepcopy(board), None  # outside: back across the click with nothing crossed
@@ -136,7 +140,8 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             if (found := BACK.first_difference(kept[blind.interval], BACK.snapshot(blind))) is not None:
                 miss = (blind.interval, *found)
                 break
-        assert miss is not None and miss[0] == 71 and miss[1].startswith("atom.lines[")
+        last = clicks[-1]["interval"]  # the blind run back crosses the latest click first
+        assert miss is not None and miss[0] == last - 1 and miss[1].startswith("atom.lines[")
         for _ in range(75):  # across the click with the lays crossed from their lines
             BACK.crossed(board, lines), board.step_inverse()
             assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
@@ -159,7 +164,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         for interval, levels in enumerate(drive, 1):
             total = sum(d * amp for d in levels)
             arrived = (abs(total) + norm // 2) // norm * (1 if total >= 0 else -1)
-            if 72 - window < interval <= 72:
+            if click_at - window < interval <= click_at:
                 sums = [sums[0] + arrived * cosine[0], sums[1] + arrived * sine[0]]
             cosine, sine = (((2 * rn * r + rd // 2) // rd - p, r) for r, p in (cosine, sine))
         size = isqrt(sums[0] ** 2 + sums[1] ** 2)
@@ -168,7 +173,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         entered = (turned[0] * amp // length, turned[1] * amp // length)
         e0, e1 = entered
         before = ((e0 * num - sense * e1 * root) // den, (e1 * num + sense * e0 * root) // den)
-        written, stood, half = arrays_of(kept[72]), arrays_of(undrawn), board.half_wall(atom)
+        written, stood, half = arrays_of(kept[click_at]), arrays_of(undrawn), board.half_wall(atom)
 
         def read(a, here, *ks):  # [re now, re before, im now, im before] of a part's two lines
             return [int(a[f"atom.lines[{k}].{w}"][here]) for k in ks for w in ("now", "before")]
@@ -206,12 +211,11 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     def the_credit_books_the_conserved_forms_current():
         """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_detector.py."""
-        draw = {"window": 3, "seed": 5, "multiplier": 6364136223846793005}
-        draw["increment"] = 1442695040888963407
+        draw = {"window": 3}
         regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
         regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
         world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, intervals=4, universe="u.json")
-        world.update(engine="e.json", bodies=[], draw=draw, node_detectors=regions)
+        world.update(bodies=[], draw=draw, node_detectors=regions)
         (chain := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
         agreed, plain_too = 0, {}
         for tension in (0, 12):

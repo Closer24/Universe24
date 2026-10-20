@@ -1,4 +1,4 @@
-"""Part D, Task 3, gate (3): the acts table as a test (the owner, issue #1793, comment 6077234684: "every act on a level is Rule3's one carried division; integers only; no shears, no rotation act, no sine or cosine, no tables, no declared acts on levels, no root anywhere; only the numbers at the Node"). Every .py of src/event_universe is parsed with `ast`; every call of `division_forward`, `division_back`, `rule3`, `rounded` (or `paces.rounded`), `link_factor`, `phase.act` or `act`, `phase.iterate` or `iterate`, `largest_below`, and every raw `//` or `%` (which tests/test_integer_algebra.py confines to core/rule3.py and the named index wraps) is a call site, keyed by (the file, the qualified name of the function holding it, the callee as written). INVENTORY is the table written by hand from what the code holds, each entry with its kind and a six-word reason: "R", a carried division on levels whose remainder is kept and returned into a record (Rule3's own step, the division act where the carry is a record's remainder); "D", a coefficient's division once, the remainder discarded (the coefficients, the Link factor, the roundings, the rooms, the bounds, the seeds, the index wraps); "S", a search by comparisons (`largest_below` and the bisections' probes). `phase.iterate` is one carried act on a pair and is listed under the one kind R at every site (Part H, the hands' SHOULD): the bisections around it (`paces.rotation_unit`, `meeting.quarter_turn`, their halving of the span) are S and D, and the fold's coefficient (`meeting.folded_lines`, `phase.fold`'s one rounding) is D; `math.gcd`, Euclid's remainders on coefficients (`credit.Books.unabsorbed_in`, `derived.held_write_of`), is a coefficient's division, D. A new division anywhere in src fails this test until it is listed with its kind."""
+"""Part D, Task 3, gate (3): the acts table as a test (the owner, issue #1793, comment 6077234684: "every act on a level is Rule3's one carried division; integers only; no shears, no rotation act, no sine or cosine, no tables, no declared acts on levels, no root anywhere; only the numbers at the Node"). Every .py of src/event_universe is parsed with `ast`; every call of `division_forward`, `division_back`, `rule3`, `rounded` (or `paces.rounded`), `link_factor`, `phase.act` or `act`, `phase.iterate` or `iterate`, `largest_below`, and every raw `//` or `%` (which tests/test_integer_algebra.py confines to core/rule3.py and the named index wraps) is a call site, keyed by (the file, the qualified name of the function holding it, the callee as written). INVENTORY is the table written by hand from what the code holds, each entry with its kind and a six-word reason: "R", a carried division on levels whose remainder is kept and returned into a record (Rule3's own step, the division act where the carry is a record's remainder); "D", a coefficient's division once, the remainder discarded (the coefficients, the Link factor, the roundings, the rooms, the bounds, the seeds, the index wraps); "S", a search by comparisons (`largest_below` and the bisections' probes). `phase.iterate` is one carried act on a pair and is listed under the one kind R at every site (Part H, the hands' SHOULD): the bisections around it (`paces.rotation_unit`, `meeting.quarter_turn`, their halving of the span) are S and D, and the fold's coefficient (`meeting.folded_lines`, `phase.fold`'s one rounding) is D; `math.gcd`, Euclid's remainders on coefficients (`credit.Books.unabsorbed_in`, `derived.held_write_of`, `digits.lattice_of`), is a coefficient's division, D. A new division anywhere in src fails this test until it is listed with its kind."""
 
 import ast
 from pathlib import Path
@@ -102,13 +102,15 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "division_forward"): "D",  # the recurrence's one rounding half up
+    # digits.py, the click's read of the board
+    ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
+    ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
     # features/click
-    ("features/click/__init__.py", "drawn", "division_forward"): "D",  # the draw's shares, once each
     (
         "features/click/__init__.py",
-        "hashed",
+        "drawn_from",
         "division_forward",
-    ): "D",  # a side's state to the modulus, once
+    ): "D",  # the click's read over the total, once per draw
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "presented", "division_forward"): "D",  # the presented share, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square

@@ -23,6 +23,7 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
 from event_universe.world_files import input_digest, load_world
+from tests.laws_read import redeclared, redeclared_file
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -88,7 +89,7 @@ RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the 
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
-    """The tests' universe copied beside a world as u.json (the families `drop` names left out, of every family's reads too, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`) with the engine's start file as e.json."""
+    """The tests' universe copied beside a world as u.json (the families `drop` names left out, of every family's reads too, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`)."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
     universe["families"] += [json.loads(json.dumps(CHARGED))] if charged else []
@@ -96,7 +97,6 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
         family["pair"] = pairs.get(family["name"], family["pair"])
         family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
 def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
@@ -113,7 +113,7 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
     world = dict(
         shape=[chain, 1, 1], node_detectors=node_detectors, bodies=bodies, intervals=400, face_depth=1
     )
-    world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json", engine="e.json")
+    world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json")
     (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     pixels = [n for n, c in enumerate(charged) if c]  # the charged body a one-Node record
     design_beside(folder, path.stem, senses=list(senses), pixels=pixels)  # the design's keys beside
@@ -125,14 +125,14 @@ def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False,
 SLIT = dict(
     shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, intervals=24
 )
-SLIT.update(universe="u.json", engine="e.json", bodies=[], node_detectors=[])
+SLIT.update(universe="u.json", bodies=[], node_detectors=[])
 SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
 PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
 PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
 
 
 def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
-    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`), no reader and no draw, its mode file written by the generator."""
+    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`), the giver's detector declared with no key (its draw the click's read of the board), no world draw, its mode file written by the generator."""
     world = json.loads((EVENTS / "packet_emission" / "packet_emission.json").read_text(encoding="utf-8"))
     giver = world["bodies"][0]
     rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
@@ -141,24 +141,24 @@ def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, interval
     reader = {k: v for k, v in giver["node_detector"].items() if k != "window"}  # the window derived
     small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_detector": reader}]
     del small["draw"]
+    redeclared(small)  # the read's shape: no engine start file, no generator
     (path := folder / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
     tool.main(["--input", str(path)])
     return path
 
 
 def ion_universe_beside(folder: Path) -> None:
-    """The shelved ion's universe copied beside a world as u.json with the engine file as e.json: four families, no holder of the content, so a periodic box needs no sink."""
+    """The shelved ion's universe copied beside a world as u.json: four families, no holder of the content, so a periodic box needs no sink."""
     (folder / "u.json").write_bytes((EVENTS / "shelved_ion" / "mercury_ion.json").read_bytes())
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
 
 
 def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]
-    """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its emission to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
+    """The ion-like world on a periodic box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board): the three-part ion over two Nodes with its transition at [2, 3] from the strong drive and its emission to the fluorescence at the lifetime 8, the drive a plane wave along x at `amplitude`, the counter the plane x = 0 with the world's draw at the window 18, every draw the click's read of the board; the telegraph's shape, its mode file written by the generator; without the ion (`body` False) the drive and the counter alone as beam_alone.json, the twin of the undepleted beam."""
     ion_universe_beside(folder)
     shape = (8, 6, 5)
     at, beside = [3, 3, 2], [4, 3, 2]
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
-    draw = {"window": 1, "seed": 25, "multiplier": 6364136223846793005, "increment": 1}
+    draw = {"window": 1}
     nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
     record = {"family": "ion", "nodes": nodes, "parts": parts, "node_detector": draw}
     record["transitions"] = [
@@ -178,10 +178,8 @@ def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, bod
     world = dict(
         shape=list(shape), boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=intervals
     )
-    world.update(universe="u.json", engine="e.json", bodies=[record] if body else [], packets=[drive])
-    world.update(
-        node_detectors=[{"name": "counter", "positions": plane}], draw={**draw, "window": 18, "seed": 24}
-    )
+    world.update(universe="u.json", bodies=[record] if body else [], packets=[drive])
+    world.update(node_detectors=[{"name": "counter", "positions": plane}], draw={"window": 18})
     (path := folder / ("ion_like.json" if body else "beam_alone.json")).write_text(json.dumps(world))
     tool.main(["--input", str(path)])
     return path
@@ -196,11 +194,10 @@ def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Pat
 
 
 def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-def]
-    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json with the engine file as e.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_detectors; the world's path."""
+    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_detectors; the world's path."""
     (folder / "u.json").write_bytes((EVENTS / "zeno_pulsed" / "pulsed_atom.json").read_bytes())
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
-    draw = {"seed": 25, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
+    draw: dict[str, object] = {}  # a body with a probe: its node_detector declares no key
     parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
     ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
     turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
@@ -209,7 +206,7 @@ def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-
     record["transitions"] = [*turns, {**probe, "drive": "probe"}]
     lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "interval": t} for t in (3, 7)]
     world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=9)
-    world.update(universe="u.json", engine="e.json", bodies=[record], packets=lays, node_detectors=[])
+    world.update(universe="u.json", bodies=[record], packets=lays, node_detectors=[])
     (path := folder / "w.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -335,7 +332,6 @@ COULOMB_UNIVERSE = {
 def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
     """A world on turning.json's universe with one charged record by hand at the count 1 (the count-1 gate: the profile scaled to one quantum, 2 SUM L^2 sin omega_0 = T, as test_the_node lays it): the level now (L, 0) over `profile` and the level before the band's rest rotation in the sense +1, (L cos omega_0, L sin omega_0)."""
     (tmp_path / "u.json").write_bytes(TURNING_FILE.read_bytes())
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     values = [int(v) for v in np.asarray(profile).ravel()]
     scale = math.isqrt(
         TURNING_T * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values))
@@ -345,7 +341,7 @@ def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # 
     moving.update(im_now=[0] * len(levels), im_before=[v * SINE // TURNING_PAIR[1] for v in levels])
     body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
     world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
+    world.update(universe="u.json", node_detectors=[], bodies=[body])
     (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
     mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
     beside = {"world_digest": input_digest(world), "bodies": [mode]}
@@ -362,7 +358,6 @@ def coulomb_world(
 ):  # type: ignore[no-untyped-def]
     """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
     (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
-    (tmp_path / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     profile = np.zeros(shape, dtype=np.int64)
     profile[centre] = 1
     values = [int(v) for v in profile.ravel()]
@@ -375,7 +370,7 @@ def coulomb_world(
     body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
     boundary = boundary or dict(x="open", y="periodic", z="periodic")
     world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", node_detectors=[], bodies=[body])
+    world.update(universe="u.json", node_detectors=[], bodies=[body])
     (path := tmp_path / "coulomb.json").write_text(json.dumps(world), encoding="utf-8")
     mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
     beside = {"world_digest": input_digest(world), "bodies": [mode]}
@@ -384,37 +379,27 @@ def coulomb_world(
 
 
 def one_photon_board(tmp_path, draw: bool = True):  # type: ignore[no-untyped-def]
-    """The anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json) with its committed mode file, its output kept, the repository root the host's; without `draw` the bodies' node_detector keys are dropped (the twin that books nothing), the world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the twin's digest."""
+    """The anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json) copied beside tmp_path with its universe and its mode file at the copy's digest (`world_beside`), its output kept; without `draw` the bodies' node_detector keys are dropped (the twin that books nothing)."""
     source = EVENTS / "anticoincidence" / "one_photon.json"
-    if draw:
-        world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-        return Lattice(load_world(source), (lines := []).append), lines
-    world = json.loads(source.read_text(encoding="utf-8"))
-    for body in world["bodies"]:  # the parts alone: no draw, no transition, no rate
-        body.pop("node_detector"), body.pop("transitions"), body.pop("rates")
-    folder = tmp_path / "examples" / "events" / "anticoincidence"
-    folder.mkdir(parents=True)
-    (folder / "one_photon.json").write_text(json.dumps(world), encoding="utf-8")
-    (folder / "two_atoms.json").write_bytes((EVENTS / "anticoincidence" / "two_atoms.json").read_bytes())
-    (folder.parent / "engine_start.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
-    mode = json.loads((EVENTS / "anticoincidence" / "one_photon.mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (folder / "one_photon.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    world_files.REPOSITORY_ROOT = tmp_path
-    return Lattice(load_world(folder / "one_photon.json"), (lines := []).append), lines
+
+    def twin(world):  # type: ignore[no-untyped-def]
+        for body in world["bodies"]:  # the parts alone: no draw, no transition, no rate
+            body.pop("node_detector"), body.pop("transitions"), body.pop("rates")
+
+    path = world_beside(tmp_path, source, (lambda world: None) if draw else twin)
+    return Lattice(load_world(path), (lines := []).append), lines
 
 
 def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
-    """A shipped world copied under tmp_path at its repository paths with its universe, the engine's start and its mode file at the edited world's digest, `edit` applied to the document; the repository root moved there."""
-    world = json.loads(source.read_text(encoding="utf-8"))
+    """A shipped world copied under tmp_path at its repository paths with its universe and its mode file at the edited world's digest, the document in the read's shape first (`redeclared`) and `edit` applied after; the repository root moved there."""
+    world = redeclared(json.loads(source.read_text(encoding="utf-8")))
     edit(world)
     folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
     folder.mkdir(parents=True, exist_ok=True)
     (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
-    for key in ("universe", "engine"):
-        target = tmp_path / world[key]
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes((EVENTS.parents[1] / world[key]).read_bytes())
+    target = tmp_path / world["universe"]
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes((EVENTS.parents[1] / world["universe"]).read_bytes())
     mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
     mode["world_digest"] = input_digest(world)
     (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
@@ -422,8 +407,8 @@ def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
     return folder / source.name
 
 
-def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, seed=1, window=240):  # type: ignore[no-untyped-def]
-    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, longer than the run by default), body 1 the taker on `taker_nodes` (ground, window 48, its generator at `seed`), 200 intervals on the periodic chain of 48."""
+def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, window=240):  # type: ignore[no-untyped-def]
+    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, longer than the run by default), body 1 the taker on `taker_nodes` (ground, window 48), 200 intervals on the periodic chain of 48."""
 
     def edit(world):  # type: ignore[no-untyped-def]
         world["intervals"] = EMIT_RUN
@@ -431,7 +416,6 @@ def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, seed=1, window=240
         world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in taker_nodes]
         world["bodies"][0]["node_detector"]["window"] = window
         world["bodies"][1]["node_detector"]["window"] = 48
-        world["bodies"][1]["node_detector"]["seed"] = seed
 
     return world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
 
@@ -462,7 +446,7 @@ def flux_world(tmp_path, shape, boundary, intervals=4, level_weight=1):  # type:
     gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", engine="e.json", bodies=[], node_detectors=[])
+    world.update(universe="u.json", bodies=[], node_detectors=[])
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -579,6 +563,7 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
     worlds = {}
     for key in keys or expected["runs"]:
         name = expected["runs"][key]
+        redeclared_file(folder / f"{name}.json")  # the builder's world in the read's shape
         TOOL.main(["--input", str(folder / f"{name}.json")])
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
