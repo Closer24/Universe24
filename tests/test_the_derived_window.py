@@ -132,7 +132,7 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
 def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_the_lay_has_an_end(
     tmp_path,
 ):
-    """C5's reach where the lay has an end (the cold reader's change (a) with the reader's fix of 2026-10-19; `node_detector.sourcing`, `Rate.ended`, `emission.Emitter.outstanding`): the resonance world opened (x open with receding faces, the ring cut, the run 200): body 0's rate lays the pulse as a source in time on an open guide, a lay with an end (`Rate.ended` True; the window of both bodies derived, 48 = tau), so from its emission on body 0 is dark to the pulse while its given quantum stands in the record, through the source's span and after it, its Nodes carrying its own train and wake (lit by the board, dark to its own light: no window opens or closes on it), until body 1 takes the quantum, the piece's source body 0 drawn (`twist.drawn_emitter`), the count 0 and body 0 lit again by what stands at its Nodes, or the run ends with the quantum standing; a read of the books and of the lay's end, symmetric under the 48 by construction."""
+    """C5's reach where the lay has an end (the cold reader's change (a) with the reader's fix of 2026-10-19; `node_detector.sourcing`, `Rate.ended`, `emission.Emitter.outstanding`): the resonance world opened (x open with receding faces, the ring cut, the run 200): body 0's rate lays the pulse as a source in time on an open guide, a lay with an end (`Rate.ended` True; the window of both bodies derived, 48 = tau), body 0's one window counted from its lay and closed by its emission (in the exact dark the emission falls at the window's close, `meeting.emission_fell`), so from its emission on body 0 is dark to the pulse while its given quantum stands in the record, through the source's span and after it, its Nodes carrying its own train and wake (lit by the board, dark to its own light: no window opens or closes on it after), until body 1 takes the quantum, the piece's source body 0 drawn (`twist.drawn_emitter`), the count 0 and body 0 lit again by what stands at its Nodes, or the run ends with the quantum standing; a read of the books and of the lay's end, symmetric under the 48 by construction."""
 
     def opened(document):  # type: ignore[no-untyped-def]
         document["boundary"]["x"], document["face_depth"], document["intervals"] = "open", 1, 200
@@ -156,7 +156,7 @@ def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_th
         dark_to_its_own.append(own == {pulse} and node_detector.dark(board, giver, own))
         board.step()
     assert all(dark_to_its_own) and len(dark_to_its_own) > 40  # widened: its quantum stands, no window
-    assert (giver.windows, giver.elapsed) == (0, 0)
+    assert (giver.windows, giver.elapsed) == (1, 0)  # the emission's window alone, from the lay
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     if taken:
         assert [(c["node_detector"], c["source"]) for c in taken] == [("body 1", "body 0")]

@@ -393,7 +393,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             12: ("credit.py", "quanta_through"),
             13: ("lists.py", "absorption"),
             14: ("resonance.py", "window_turn"),
-            15: ("features/click/__init__.py", "drawn"),
+            15: ("features/click/__init__.py", "drawn_from"),
             16: ("lists.py", "exchange"),
             17: ("emission.py", "emitted_quantum"),
             18: ("lists.py", "conversion"),

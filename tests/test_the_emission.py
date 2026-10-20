@@ -41,10 +41,10 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
 
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
-    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `emission.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
-    board = Lattice(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
+    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `emission.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 in the exact dark lays its packet of 3 across along x at its window's close, 194, its train's passage (`meeting.emission_fell`), and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
+    board = Lattice(load_world(packet_world(tmp_path, TOOL, intervals=200)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
-    while board.interval < 60 and not any(
+    while board.interval < 200 and not any(
         c["event"] == "credit" and c["emitted"] == "pulse" for c in lines
     ):
         board.step()

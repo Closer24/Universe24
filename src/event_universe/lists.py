@@ -20,6 +20,7 @@ from event_universe.node_detector import (
     drawn_weights,
     face_ports,
     hole_node,
+    largest_share_node,
     own_clock,
     piece_momentum,
     share_weights,
@@ -145,14 +146,19 @@ def credited_node(
 
 
 def readings(board: Lattice, index: int) -> list[Item]:
-    """The click of a record of several parts, the sides' sequence with the write at the birth (ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading: the sides draw in the order of their closes, equal closes in the declared order, each alone at its own place with its own read of the board on its own region's moments, the quadratic form of its coefficients on its own second moments with the Gram of the sides after it; The meeting's identity, the Gram theorem; the owner's words of 2026-10-20, the click writes and nothing is in the books but the draw at the click): at a window's close every side whose own moments stand and whose port is unrealised for this record (`credit.Books.taken`) draws in the declared order (`credit_draw` with the side's own read of the board at its region, `meeting_back.side_weights`, the weights kept in the books as a diagnostic, `credit.Books.weights`); its credit line carries its order, the record's scale after its write and the record's count read from the board at the close (`credited_node`, `Lattice.count`); the record runs back along its cone to its birth (`meeting_back.run_back`), the realised port's integer coefficients are written there (`meeting_back.realised`, the one lay act) and the record runs forward again to the close, the sides' books taken again from the rewritten record on the way (`meeting_back.run_forward`), so the next side reads the realised term where it stands; every click writes, the last side's read coherent (no side after it); a side whose beam has not reached it draws at a later close; when every side has drawn, one Item at -1 over the drawn Nodes with their face sets, the count's write and the front the act's as built (`act.written`, `front.started`), and the sequence settled (`credit.Books.taken`: the realised port per side stands until the family's next birth; the reader's ruling of 2026-10-20, precision one: a side already realised that clicks again at a later close in the same setting realises the same port with certainty and writes nothing, its credit line carrying the order of the new sequence, and a side whose realised port carries no overlap with the written factor, a changed setting, is refused by name); N runs for N sides, no number at a Node but Rule3's."""
+    """The click of a record of several parts, the sides' sequence with the write at the birth (ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading: the sides draw in the order of their closes, equal closes in the declared order, each alone at its own place with its own read of the board on its own region's moments, the quadratic form of its coefficients on its own second moments with the Gram of the sides after it; The meeting's identity, the Gram theorem; the owner's words of 2026-10-20, the click writes and nothing is in the books but the draw at the click): at a window's close every side whose own moments stand and whose port is unrealised for this record (`credit.Books.taken`) draws in the declared order (`credit_draw` with the side's own read of the board at its region, `meeting_back.side_weights`, the weights kept in the books as a diagnostic, `credit.Books.weights`); its credit line carries its order, the record's scale after its write and the record's count read from the board at the close (`credited_node`, `Lattice.count`); the record runs back along its cone to its birth (`meeting_back.run_back`), the realised port's integer coefficients are written there (`meeting_back.realised`, the one lay act) and the record runs forward again to the close, the sides' books taken again from the rewritten record on the way (`meeting_back.run_forward`), so the next side reads the realised term where it stands; every click writes, the last side's read coherent (no side after it); a side whose beam has not reached it draws at a later close; when every side has drawn, one Item at -1 over the drawn Nodes with their face sets, the count's write and the front the act's as built (`act.written`, `front.started`), and the sequence settled (`credit.Books.taken`: the realised port per side stands until the family's next birth; the reader's ruling of 2026-10-20, precision one: a side already realised that clicks again at a later close in the same setting realises the same port with certainty and writes nothing, its credit line carrying the order of the new sequence, and a side whose realised port carries no overlap with the written factor, a changed setting, is refused by name); N runs for N sides, no number at a Node but Rule3's. The side's gate (the reader's F4 of 2026-10-20): a side draws where a whole quantum has come through its window, the count's rounding over its region and its window (`credit.quanta_rounded` on the side's booked inflow, `Books.intake`, each front Port's sum over the window floored at 0, what came in through the region's front, so a side the beam passes through reads the beam that entered it, at the scale the window was booked under); a share below it is no click, the side standing as its beam arriving after this close."""
     books, family = board.credit, board.families[index]
     close, fan = board.interval, list(fan_momentum(board, index))
     taken = books.taken.setdefault(index, {})
+    standing = credit.scale_of(board, index)  # the window's scale, before the close's writes
     for name, ports in books.sides:
         moments, earlier = books.moments.get(index, {}).get(name), taken.get(name)
         if moments is None or not any(map(any, moments)) or (earlier is not None and not earlier[2]):
             continue  # its beam arriving after this close, or realised in the sequence standing: no second click
+        came = books.intake.get((index, name), {}).values()  # per Node, per front Port, over the window
+        inflow = sum(max(through, 0) for ports_in in came for through in ports_in)
+        if credit.quanta_rounded(books, index, inflow, board.unit, family.parts, standing) < 1:
+            continue  # the side's gate: a share below one whole quantum through its window is no click
         unrealised = [
             books.patterns[other] for other, _p in books.sides if other != name and other not in taken
         ]
@@ -287,8 +293,10 @@ def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) 
     return [emitted, lifetime * unit - emitted]
 
 
-def emission(board: Lattice, books: NodeBooks, rate: Rate, span: int) -> list[Alternative]:
-    """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19); the emission's weight carries the record's sign under exchange on the lower part, the whole hazard to nothing where the factor is 0 (`exchange_factor`)."""
+def emission(
+    board: Lattice, books: NodeBooks, rate: Rate, span: int, deferred: bool = False
+) -> list[Alternative]:
+    """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19); the emission's weight carries the record's sign under exchange on the lower part, the whole hazard to nothing where the factor is 0 (`exchange_factor`). With `deferred` (the window's close in the exact dark, `meeting.emission_drawn`) the list is the emission alone at the weight 1 along the first declared direction, laid at the body's Node of the largest share (`node_detector.largest_share_node`): no digit stands to draw a direction or a Node by, and the reading `reports.NO_DRAW` goes on the line."""
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     clock, directions = own_clock(board, books), rate.directions or (None,)
     given, rest = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
@@ -299,15 +307,23 @@ def emission(board: Lattice, books: NodeBooks, rate: Rate, span: int) -> list[Al
         given, rest = 0, rate.lifetime * unit
 
     def lit(direction: tuple[int, int] | None) -> list[Item]:
-        laid_at = drawn_node(board, books, share_weights(board, books))
+        if deferred:  # no digit to draw the Node by: the Node of the largest share
+            laid_at = largest_share_node(board, books)
+        else:
+            laid_at = drawn_node(board, books, share_weights(board, books))
         e, g = (levels_at(board, books, p)[:2] for p in (rate.leaves, rate.enters))
         light = Item(rate.light, None, None, 1, (laid_at,), None, rate.resonance, rate.lifetime)
         light = replace(
             light, width=rate.width, direction=direction, levels=(e, g), emitter=books.number
         )
-        return exchange(board, books, rate.leaves, rate.enters) + [light]
+        items = exchange(board, books, rate.leaves, rate.enters) + [light]
+        if deferred:
+            books.lost = [reports.NO_DRAW]  # the reading on the line: the emission at the close, no draw
+        return items
 
     line = Line((rate.enters, rate.leaves), (None, rate.light))
+    if deferred:  # the exact dark at the window's close: the emission falls, one alternative, no draw
+        return [Alternative(1, partial(lit, directions[0]), line, books)]
     found = [Alternative(given, partial(lit, direction), line, books) for direction in directions]
     return [*found, Alternative(len(directions) * rest, nothing)]
 

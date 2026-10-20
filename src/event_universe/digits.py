@@ -30,6 +30,15 @@ def digits_of(board: Lattice, index: int, at: np.ndarray) -> Iterator[tuple[int,
                 yield remainder, found, int(wall)
 
 
+def at_origin(board: Lattice, families: Sequence[int], at: np.ndarray) -> bool:
+    """Whether every digit the read would take at the Nodes `at` names stands at the lay's origin w div 2 (the digits of `digits_of` over `families`): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close; where light stands at the body the emission's hazard is read from the board; `meeting.emission_drawn`)."""
+    return all(
+        remainder == board.half_wall(index)
+        for index in families
+        for remainder, _found, _wall in digits_of(board, index, at)
+    )
+
+
 def lattice_of(rule: Rule, at: np.ndarray) -> list[int]:
     """The digits' lattice at the Nodes `at` names, in the lattice's index order: F = gcd(w, D_i, R_ij over the six Ports) from Rule3's integers at the Node (`node.rule_of`), Euclid's gcd on the rule's coefficients once (kind D in the acts table); the law's line gives r' = r + S_t (mod w) with S_t a sum of multiples of the reaches and the mass, and every line is born at w div 2, so a digit lies on w div 2 + F Z and takes w div F values: w div 3 for light at the exact vacuum paces (every R_ij = w div 3 and D_i = 0 at p_0 = p_i = Gamma with no tension: three values, the lattice the read is refused on, `read_of`), 2 Gamma^2 G^2 gcd(num, 3 den) for any pair there, and 3,072,000 = 2 num G^2 on the shipped universes' content 60, 108,000,000 values per digit."""
     terms = [np.broadcast_to(np.asarray(value), at.shape)[at] for value in (rule.mass, *rule.reaches)]

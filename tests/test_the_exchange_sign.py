@@ -93,9 +93,7 @@ def test_the_singlet_under_the_familys_sign_at_a_prime_b_and_a_prime_b_prime_bre
     assert abs(found[a, b] - found[a, b2] + found[a2, b] + found[a2, b2]) == Fraction(478, 169)
 
 
-def test_the_singlet_under_the_familys_sign_at_equal_axes_realises_opposite_ports(
-    tmp_path, monkeypatch
-):
+def test_the_singlet_under_the_familys_sign_at_equal_axes_realises_opposite_ports(tmp_path, monkeypatch):
     """At equal axes under the sign the shares of (+, +) and (-, -) are 0 exactly, the first side's weights the marginal's, and the realised pair opposite in the one read."""
     sides = {"left": ((3, 1), IDENTITY), "right": ((3, 1), IDENTITY)}
     path = spin_world(

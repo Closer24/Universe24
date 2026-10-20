@@ -132,7 +132,7 @@ PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0,
 
 
 def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
-    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`), the giver's detector declared with no key (its draw the click's read of the board), no world draw, its mode file written by the generator."""
+    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`; in the exact dark the giver gives at that close, `meeting.emission_fell`), the giver's detector declared with no key (its draw the click's read of the board), no world draw, its mode file written by the generator."""
     world = json.loads((EVENTS / "packet_emission" / "packet_emission.json").read_text(encoding="utf-8"))
     giver = world["bodies"][0]
     rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
@@ -407,8 +407,8 @@ def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
     return folder / source.name
 
 
-def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, window=240):  # type: ignore[no-untyped-def]
-    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, longer than the run by default), body 1 the taker on `taker_nodes` (ground, window 48), 200 intervals on the periodic chain of 48."""
+def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, window=61):  # type: ignore[no-untyped-def]
+    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, 61 by default: in the exact dark its emission falls at its window's close, `meeting.emission_fell`), body 1 the taker on `taker_nodes` (ground, window 48), 200 intervals on the periodic chain of 48."""
 
     def edit(world):  # type: ignore[no-untyped-def]
         world["intervals"] = EMIT_RUN

@@ -333,8 +333,8 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
         assert [c["interval"] for c in pulses] == [48]
 
 
-def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(tmp_path):
-    """Step 5 of the emitter/node_detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its emission drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a node_detector's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet emission world's blind is the builder's byte for byte (examples/events/packet_emission)."""
+def test_the_open_boards_emission_is_a_packet_along_one_axis_with_the_carry(tmp_path):
+    """Step 5 of the emitter/node_detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 90 by 35 by 35 Nodes a giver of the lifetime 8 in the exact dark (its read at the lay's origin at the interval 4, the emission's draw deferred, `NodeBooks.deferred`), its fall called there as its window's close calls it (`meeting.emission_fell`; the world's own close at its train's passage), lays its packet of 3 across at one instant along the first of the six directions from its Node of the larger share (no digit to draw either by), one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a node_detector's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet emission world's blind is the builder's byte for byte (examples/events/packet_emission)."""
     total, train = line_total(32768, (2, 3)), envelope(line_total(32768, (2, 3)), 48, 1)
     assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
     assert train[::-1] == sorted(train) and train[-1] == 1
@@ -383,26 +383,27 @@ def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(
     )
     board = Lattice(load_world(tmp_path / "small.json"), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
-    got: list = []
-    while board.interval < 40 and not got:  # until the first emission: the body in g gives no more
+    for _ in range(4):  # the draws at 1, 2 and 3 read the giver's cycling digits and miss
         board.step()
-        got = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
+    books = board.credit.bodies[0]  # at 4 every digit at the lay's origin: the draw deferred
+    assert books.deferred and meeting.emission_fell(board, books)  # the window's close's fall
+    got = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
     lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
     assert len(got) == 1 and {c["interval"] for c in lays} == {got[0]["interval"]} and len(lays) > 100
     nodes = {tuple(c["node"]["at"]) for c in lays}
     spans = [sorted({at[a] for at in nodes}) for a in range(3)]
     along = [a for a in range(3) if len(spans[a]) > 3]
-    # the giver's region, two Nodes along x: the packet from the one Node the draw picked
-    drawn_x = {17, 18}
-    assert len(along) == 1 and (drawn_x if along[0] == 0 else {17}) & {
+    # the giver's region, two Nodes along x: the packet from the one Node of the larger share
+    region_x = {17, 18}
+    assert len(along) == 1 and (region_x if along[0] == 0 else {17}) & {
         spans[along[0]][0],
         spans[along[0]][-1],
-    }  # from the drawn Node, one sense
+    }  # from the one Node, one sense
     for a in (
         a for a in range(3) if a not in along
-    ):  # the top-hat of 3 across, centred at the drawn Node
+    ):  # the top-hat of 3 across, centred at the Node it starts from
         centre = spans[a][1]
-        assert spans[a] == [centre - 1, centre, centre + 1] and centre in (drawn_x if a == 0 else {17})
+        assert spans[a] == [centre - 1, centre, centre + 1] and centre in (region_x if a == 0 else {17})
     train = envelope(line_total(action, (2, 3)), 8, 9)
     assert (
         len(train) - 3 <= len(spans[along[0]]) <= len(train)
@@ -417,12 +418,12 @@ def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(
 
 
 def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path):
-    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_detector's entry; `emission.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, its window 240 so that it takes nothing back before the run's end, over 240 intervals. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the emission's first lay the unit becomes the emission's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the emission 1, kept or absorbed back at the window's close, a click's number. The finding by name beside it, a lattice reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any absorption, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
+    """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_detector's entry; `emission.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, over 240 intervals, its window 192: in the exact dark its emission falls at the window's close (`meeting.emission_fell`), its source in time laid over the lifetime 48 before the run's end, and it takes nothing back. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the emission's first lay the unit becomes the emission's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the emission 1, kept or absorbed back at the window's close, a click's number. The finding by name beside it, a lattice reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any absorption, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = redeclared(json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8")))
     giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
     giver["transitions"][0]["resonance"], giver["node_detector"] = (
         [9, 10],
-        {**giver["node_detector"], "window": 240},
+        {**giver["node_detector"], "window": 192},
     )
     low = {**world, "bodies": [giver], "intervals": 240}
     (path := tmp_path / "low.json").write_text(json.dumps(low))

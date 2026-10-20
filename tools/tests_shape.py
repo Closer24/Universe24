@@ -98,7 +98,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
         "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
     ),
-    "tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry": (
+    "tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_one_axis_with_the_carry": (
         79,
         "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
         "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "

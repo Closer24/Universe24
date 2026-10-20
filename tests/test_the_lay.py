@@ -130,7 +130,7 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
         source = EVENTS / "resonance" / "resonant.json"
         path, name, intervals = world_beside(tmp_path, source, lambda w: None), "pulse", 112
     else:
-        path, name, intervals = packet_world(tmp_path, TOOL), "pulse", 20
+        path, name, intervals = packet_world(tmp_path, TOOL, intervals=196), "pulse", 196  # at 194
     board = Lattice(load_world(path), (lines := []).append)
     index = [f.name for f in board.families].index(name)
     assert not lines and board.families[index].pair[0] == board.families[index].pair[1]

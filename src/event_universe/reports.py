@@ -56,6 +56,7 @@ LOST_TO_REGION, UNPAID_BY_REGION = (
     "P lost to the region",
     "unpaid by the region",
 )  # Part H, MUST 5 (both hands' lines of 2026-10-10 on the whole trial): a region taker (the two slits' screens, bell's sides) has no part to twist, so it takes no +p of its own and folds no source: `lost` reads the piece's P lost to the region and `recoil` the one word, unpaid, the emitter still drawn and its outstanding count down by one (`lists.credited_node`, `twist.unpaid`); the region's +p OPEN by name
+NO_DRAW = "no draw: every digit at the lay's origin, the emission at the window's close"  # the exact dark (the reader's re-ruling of 2026-10-20, (c)): a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close, the detector's declared when, this reading on its credit line
 NO_SIDE = "no side: booked, not faced"  # C6: the hole's Node two-sided on every axis, its face set empty, the quantum taken in the books by the deficit path and the levels standing (`twist.faced`, `act.written`)
 ORDER, SCALE, BOARD_COUNT = (
     "order",

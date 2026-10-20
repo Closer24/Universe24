@@ -71,6 +71,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
+    ("credit.py", "quanta_rounded", "division_forward"): "D",  # the side's gate, the count's rounding
     (
         "credit.py",
         "quanta_through",

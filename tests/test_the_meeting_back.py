@@ -300,7 +300,7 @@ def test_the_two_reaches_read_one_meeting_and_the_write_stands_at_the_birth(tmp_
 
 
 def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
-    """(g) The born pair under the cone (the shipped born_a_b world, its `meeting` key dropped): the cone's volume |G(t)| counted from the birth at 17 by the test's own ball equals the engine's at every pass, 2 r + 1 on the chain from the birth, cut to the grown board at the run's end; the volumes printed. The world's atom gives the pair in the dark, so its emission draw is the body's read of its own record alone."""
+    """(g) The born pair under the cone (the shipped born_a_b world, its `meeting` key dropped): the cone's volume |G(t)| counted from the birth at 24 by the test's own ball equals the engine's at every pass, 2 r + 1 on the chain from the birth, cut to the grown board at the run's end; the volumes printed. The world's atom gives the pair in the exact dark, its read finding every digit at the lay's origin, so the emission falls at its window's close, 24, without a draw (`meeting.emission_drawn`), and the two sides' runs back reach the birth from 62 and 124."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", TREE)
     source = (
         EVENTS / "bell_singlet" / "born_a_b.json"
@@ -322,14 +322,11 @@ def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
     born.observers.append(cone_of)
     for _ in range(born.world.intervals):
         born.step()
-    assert counted and counted == {
-        t: born.credit.cone[t] for t in counted
-    }  # |G(t)| from the birth at 17
-    assert [born.credit.cone[t] for t in (17, 18, 19)] == [3, 5, 7]  # 2 r + 1 from the birth at 17
-    assert (
-        born.credit.cone[124] == int(np.prod(born.shape)) < 2 * (124 - 17) + 3
-    )  # cut to the grown board
-    print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(17, 125)]}")
+    assert counted and counted == {t: born.credit.cone[t] for t in counted}  # |G(t)| from the birth
+    assert born.credit.birth == born.world.bodies[0].detector.draw.window == 24  # the window's close
+    assert [born.credit.cone[t] for t in (24, 25, 26)] == [3, 5, 7]  # 2 r + 1 from the birth at 24
+    assert born.credit.cone[124] == int(np.prod(born.shape)) < 2 * (124 - 24) + 3  # the grown board
+    print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(24, 125)]}")
 
 
 def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path, monkeypatch):

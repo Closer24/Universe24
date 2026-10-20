@@ -143,7 +143,7 @@ def test_the_ghz_gates_second_pair_y_y_x_and_x_x_x_reads_the_blind_exactly(tmp_p
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 39 and 79 at the declared rest 60) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes (the holes, the one-Node write of the count) and along the record the write at the birth rewrote, the part the first side zeroed standing at 0 everywhere and the held rows it sources moved with it (the click writes, the owner's word of 2026-10-20; the second side's write on the one surviving part the identity), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between and across the clicks down to the first: from 100 back to 40 every array returns bit for bit (the holes crossed from the face lines, the second window's write the identity); below 40 the inverse returns the realised past, which differs from the frames the forward run kept before the first close, the possibilities' run (the step back across the first click misses, as the law says); and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 40 intervals, the reports the same lines but the click's (the credit lines and the write's lay lines at the birth); the `draw` key refused by name with a window of 0 and without its seed."""
+    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) At the first close, 40, the beams' share through each side stands below a whole quantum, so no side clicks (the side's gate, the reader's F4 of 2026-10-20, `lists.readings`); one credit line per side at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 79 at the declared rest 60) and the index of the window closed, 2, the region, the port realised, the parts kept and the count 1, the record's count down by one, no Node (the hole's Nodes in the face lines); after the click at 80 the two boards differ at the two written Nodes (the holes, the one-Node write of the count) and along the record the write at the birth rewrote, the part the first side zeroed standing at 0 everywhere and the held rows it sources moved with it (the click writes, the owner's word of 2026-10-20; the second side's write on the one surviving part the identity), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact after the click down to it: from 100 back to 80 every array returns bit for bit (the holes crossed from the face lines); below 80 the inverse returns the realised past, which differs from the frames the forward run kept before the first close, the possibilities' run (the step back across the first click misses, as the law says); and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 80 intervals, the reports the same lines but the click's (the credit lines and the write's lay lines at the birth); the `draw` key refused by name with a window of 0 and without its seed."""
     world = redeclared(json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8")))
     world["draw"]["window"], draw = 40, dict(world["draw"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -154,21 +154,20 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     kept = {}
     for _ in range(100):
         board.step(), kept.__setitem__(board.interval, BACK.snapshot(board))
-        board.interval <= 41 and plain.step()
+        board.interval <= 81 and plain.step()
     credits = [line for line in lines if line["event"] == "credit"]
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     at = [(c["interval"], c["node_detector"], c["count"], c["window"][0], c["left"]) for c in credits]
     left, clock = board.credit.counts[pair], board.world.node_clock - max(f.rest for f in board.families)
-    assert at == [(40, "left", 1, 1, left + 1), (40, "right", 1, 1, left + 1)] + at[2:]
-    assert at[2:] == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]
-    was, now = dict(p for f in kept[41] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    proper = [(n * clock // board.world.node_clock, w) for n, w in ((40, 1), (40, 1), (80, 2), (80, 2))]
-    assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 39, 79 at 60
+    assert at == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]  # nothing through at 40
+    was, now = dict(p for f in kept[81] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
+    proper = [(n * clock // board.world.node_clock, 2) for n in (80, 80)]
+    assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 79 at 60
     keys = "event label interval family node_detector window proper windows before realised kept"
     words = f"{keys} count left absorbed emitted momentum fan twist shortfall lost source recoil"
     report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
     assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
-    holes = [f for f in lines if f["event"] == "face" and f["interval"] == 41]  # the hole's Nodes
+    holes = [f for f in lines if f["event"] == "face" and f["interval"] == 81]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
     differing = {
         tuple(map(int, a)) for k in was for a in np.argwhere(was[k] != now[k])
@@ -176,22 +175,22 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     assert written <= differing and any(not was[f"light_pair.lines[{k}].now"].any() for k in range(2))
     w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
     assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
-    levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
+    levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 81
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
-    assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 42
+    assert all(dict(p for f in kept[82] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 82
     for _ in range(99):  # the faces presented again and the lays crossed from their lines, bit for bit
         BACK.crossed(board, lines)
         board.step_inverse()
         same = BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
         assert same == (
-            board.interval >= 40
-        )  # below the first click the realised past, the possibilities' kept
+            board.interval >= 80
+        )  # below the click the realised past, the possibilities' kept
     assert BACK.verdict(Lattice(load_world(twin)), 39)["verdict"] == "MATCH"
     empty = Lattice(load_world(cut), (none := []).append)
     empty.credit.counts[pair] = 0
-    for _ in range(40):
+    for _ in range(80):
         empty.step()
-    before = [c for c in lines if c["interval"] <= 40 and c["event"] not in ("credit", "lay")]
+    before = [c for c in lines if c["interval"] <= 80 and c["event"] not in ("credit", "lay")]
     assert none == before  # no click's line, no draw
     refused("window", draw_of, {**draw, "window": 0}, "draw")
     refused("unknown key 'seed'", draw_of, {"window": 1, "seed": 1}, "draw")  # no generator, no key

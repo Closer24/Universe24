@@ -141,7 +141,7 @@ def written(board: Lattice, items: list[Item]) -> None:
         giver.recoil, giver.shortfall, short = folded_source(
             board, giver, (owed[0], owed[1], owed[2]), origin
         )  # D8: s_out beside the recoil on the emission's line
-        giver.lost = [PAID_AT_EMISSION, *([short] if short is not None else [])]
+        giver.lost = [*(giver.lost or []), PAID_AT_EMISSION, *([short] if short is not None else [])]
     for family, absorbed in sorted(holes.items()):
         if board.credit.counts[family] <= 0 and absorbed:  # the count at 0: its front from every Node
             front.started(board, family, absorbed)

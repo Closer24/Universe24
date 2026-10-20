@@ -1,4 +1,4 @@
-"""Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged line 6091735946): at a click the write conserves the lattice momentum with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, at the click's tick by one twist (`twist.recoiled`, `twist.folded_source`); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window longer than the run, so no null window re-lays it: a null window's re-lay discards a body's twist, Part F's taker's too, a finding reported and not hidden), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
+"""Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged line 6091735946): at a click the write conserves the lattice momentum with two receivers, the taker's part folded by +p_a and the piece's source's part by -p_a, at the click's tick by one twist (`twist.recoiled`, `twist.folded_source`); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window 61: in the exact dark its emission falls at the window's close, `meeting.emission_fell`; a null window's re-lay keeps the fold, Part H), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
 
 import hashlib
 import json
@@ -20,6 +20,7 @@ from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import EMIT_RUN as RUN
 from tests.laws import EVENTS, drift_bound, emit_and_take_world, levels_floor, one_photon_board
+from tests.laws_read import load_shipped
 
 T = 32768
 ORACLE = Path(__file__).resolve().parent / "oracle" / "one_photon_derived_window.output.json"
@@ -150,7 +151,7 @@ def test_the_two_node_source_books_the_recoil_lost_to_the_source(tmp_path, monke
 def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click():
     """Task 5 (g): examples/events/resonance/resonant.json runs its 96 intervals green (atom 0 gives at 61, its line's `recoil` None: the source in time pays none at the lay); stepped on to the third close of atom 1's window (288; within the file's 96 intervals atom 1 takes nothing, a finding reported) atom 1 takes with `source` body 0; its recoil and lost printed (the two-Node atoms carry this piece: the wave's p at the two-Node region after its circulation reads below their reach)."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-    board = Lattice(load_world(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
+    board = Lattice(load_shipped(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
     for _ in range(board.world.intervals):
         board.step()
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]

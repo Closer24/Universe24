@@ -8,7 +8,7 @@ from dataclasses import fields
 import numpy as np
 import pytest
 
-from event_universe import digits, node, node_detector
+from event_universe import digits, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.credit import Books
@@ -17,7 +17,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, family, refused, world_beside
+from tests.laws import EVENTS, ROOT, family, refused, world_beside
+from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
 LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the walls w = 6 den Gamma^2 G^2
@@ -334,3 +335,46 @@ def test_the_two_slits_many_draw_close_spends_the_digits_at_the_shipped_window(t
     print(
         f"the two slits at the window 130: {len(seen)} draws before the refusal ({len(seen) // 2} quanta), the number {first['number'].bit_length()} bits, the totals {min(bits):.1f} to {max(bits):.1f} bits each, the credit lines {sum(1 for c in lines if c['event'] == 'credit')}"
     )
+
+
+def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_complementary_after(
+    monkeypatch,
+):
+    """The digits' pair identity (the builder's measurement on the read's second commit, bell a' b: in 474 reads of 237 worlds the two lines' indices equal at every Node in 357 and complementary in 117, none else): on the shipped bell worlds each side reads the record's two lines at its four Nodes at the close 100, w div F = 108,000,000 at F = 3,072,000 on light's wall 331,776,000,000,000. At every Node the second line's index r div F equals the first line's before any write (the left side, the parts laid alike) and after a write of equal coefficients, and is w div F less it after the write of (1, -1), the second part negated (the right side of a' b, the left side's basis [1, 1], read after the left side's write at the birth): a side's eight digits are its four Nodes' digits twice. Where the left side's port zeroes a part (a b, the basis [1, 0]) the right side reads that part's line at the lay's origin, w div 2F at every Node, the third form. The read takes both lines (`digits.read_of`); the identity is pinned and nothing in the read changed; the indices and the coefficients standing at the right side's read printed."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
+    whole, found = LIGHT // 3_072_000, {}  # w div F at the shipped content
+    for name in ("bell_a_prime_b", "bell_a_b"):
+        board, standing = Lattice(load_shipped(EVENTS / "bell" / f"{name}.json")), []
+        seen, spy = spied(monkeypatch, lambda board=board: board), node_detector.drawn_from
+
+        def noted(number, weights, label, board=board, standing=standing, spy=spy):  # type: ignore[no-untyped-def]
+            standing.append(list(board.credit.written.get(family(board, "light_pair"), [1, 1])))
+            return spy(number, weights, label)
+
+        monkeypatch.setattr(node_detector, "drawn_from", noted)
+        for _ in range(board.world.intervals):
+            board.step()
+        sides = [
+            (s["label"].split("'")[1], s["digits"], s["walls"])
+            for s in seen
+            if "the side " in s["label"]
+        ]
+        assert [side for side, _d, _b in sides] == [
+            "left",
+            "left",
+            "right",
+            "right",
+        ]  # the port, the Node
+        assert all(len(d) == 8 and set(b) == {whole + 1} for _s, d, b in sides) and whole == 108_000_000
+        found[name] = sides[0][1], sides[2][1], standing[2]  # each side's first draw reads
+    for left, right, written in found.values():
+        assert left[4:] == left[:4]  # no write yet: the second line's index the first's at every Node
+        if written[0] == written[1]:
+            assert right[4:] == right[:4]  # equal coefficients: equal indices
+        elif written[0] == -written[1]:
+            assert right[4:] == [whole - k for k in right[:4]]  # the sign write: w div F less it
+        else:
+            zeroed = written.index(0)  # the part the left side's port zeroed reads the lay's origin
+            assert right[4 * zeroed : 4 * zeroed + 4] == [whole // 2] * 4
+    assert found["bell_a_b"][2].count(0) == 1  # the basis [1, 0] zeroes a part
+    print(f"the pair identity: {found}")
