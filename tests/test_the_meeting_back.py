@@ -111,48 +111,66 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             assert marginals[form, "right", a, y] == marginals[form, "right", a2, y] == Fraction(1, 2)
 
 
-def test_the_realised_pairs_over_48_seeds_read_the_correlation_and_the_anticorrelation_is_exact(
-    tmp_path, monkeypatch
-):
-    """(b) The statistics: the board's run to the close does not depend on the seed (the draws enter at the close alone), so the realised pair of a seed is the two draws at the close on the sides' weights, the first side's the Gram read of its own moments (the same at every seed), the second's the coherent read of the record rewritten by the first side's coefficients, equal to the chain rule's conditional at these settings (asserted at the realised port against the engine's weights, the other port's the chain's own); over 48 seeds per setting the realised pairs' E lies within three binomial scatters of the shares' E, and at equal axes the second side's weight at the first side's port is 0 exactly, every pair opposite; at each setting one more seed is run whole through the act, its credit lines' realised pair the emulated draws'."""
-    for a, b in [*SETTINGS, ((1, 1), (1, 1))]:  # the equal axes at one magnitude: the write exact
-        sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
-        path = spin_world(
-            tmp_path / f"{a[0]}_{a[1]}_{b[0]}_{b[1]}", monkeypatch, sides, both=True, amplitude=64
-        )
-        board, lines = trial(path, 1, 40)
-        spin, shares = family(board, "spin"), joint_shares(lines, sides, 0)
-        realised = [PORT[c["realised"]] for c in lines if c["event"] == "credit"]
-        sided(board, spin, shares, realised)
-        first = board.credit.weights[(spin, "left")]
-        conditional = {p: marginal_of(shares, 1, {0: p}) for p in range(2)}
-        pairs = []
-        for seed in range(SEEDS):
-            board.credit.declaration, board.credit.states = replace(board.world.draw, seed=seed), {}
-            p = credit_draw(board, first, "left")
-            pairs.append((p, credit_draw(board, conditional[p], "right")))
-        same, expected = (
-            sum(p == q for p, q in pairs),
-            Fraction(shares[0, 0] + shares[1, 1], sum(shares.values())),
-        )
-        scatter = (SEEDS * expected * (1 - expected)) ** 0.5
-        assert abs(same - SEEDS * expected) <= 3 * scatter, (a, b, same, expected)
-        read = Fraction(2 * same - SEEDS, SEEDS)
-        if a == b:  # the anticorrelation exact: the second draw has one outcome
-            assert same == 0 and all(conditional[p][p] == 0 < conditional[p][1 - p] for p in range(2))
-        seed, lines = 2, []
-        other = Lattice(load_world(path), lines.append)
-        other.credit.declaration = replace(other.world.draw, seed=seed)
-        for _ in range(40):
-            other.step()
-        clicks = [c for c in lines if c["event"] == "credit"]
-        assert (
-            tuple(PORT[c["realised"]] for c in clicks) == pairs[seed] and other.credit.counts[spin] == 0
-        )
-        print(
-            f"the one meeting at {a}, {b}: {same} of {SEEDS} pairs alike, E read {read} against "
-            f"{correlation(a, b)} (the scatter {scatter:.2f} pairs); the seed {seed} run whole realised {pairs[seed]}"
-        )
+def realised_pairs_read(tmp_path, monkeypatch, a, b):  # type: ignore[no-untyped-def]
+    """(b) The statistics at one setting: the board's run to the close does not depend on the seed (the draws enter at the close alone), so the realised pair of a seed is the two draws at the close on the sides' weights, the first side's the Gram read of its own moments (the same at every seed), the second's the coherent read of the record rewritten by the first side's coefficients, equal to the chain rule's conditional at these settings (asserted at the realised port against the engine's weights, the other port's the chain's own); over 48 seeds the realised pairs' E lies within three binomial scatters of the shares' E; one more seed is run whole through the act, its credit lines' realised pair the emulated draws'. Returns the pairs alike and the conditional at each first port; one test function per setting, each under the suite's clock."""
+    sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
+    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
+    board, lines = trial(path, 1, 40)
+    spin, shares = family(board, "spin"), joint_shares(lines, sides, 0)
+    realised = [PORT[c["realised"]] for c in lines if c["event"] == "credit"]
+    sided(board, spin, shares, realised)
+    first = board.credit.weights[(spin, "left")]
+    conditional = {p: marginal_of(shares, 1, {0: p}) for p in range(2)}
+    pairs = []
+    for seed in range(SEEDS):
+        board.credit.declaration, board.credit.states = replace(board.world.draw, seed=seed), {}
+        p = credit_draw(board, first, "left")
+        pairs.append((p, credit_draw(board, conditional[p], "right")))
+    same, expected = (
+        sum(p == q for p, q in pairs),
+        Fraction(shares[0, 0] + shares[1, 1], sum(shares.values())),
+    )
+    scatter = (SEEDS * expected * (1 - expected)) ** 0.5
+    assert abs(same - SEEDS * expected) <= 3 * scatter, (a, b, same, expected)
+    read = Fraction(2 * same - SEEDS, SEEDS)
+    seed, lines = 2, []
+    other = Lattice(load_world(path), lines.append)
+    other.credit.declaration = replace(other.world.draw, seed=seed)
+    for _ in range(40):
+        other.step()
+    clicks = [c for c in lines if c["event"] == "credit"]
+    assert tuple(PORT[c["realised"]] for c in clicks) == pairs[seed] and other.credit.counts[spin] == 0
+    print(
+        f"the one meeting at {a}, {b}: {same} of {SEEDS} pairs alike, E read {read} against "
+        f"{correlation(a, b)} (the scatter {scatter:.2f} pairs); the seed {seed} run whole realised {pairs[seed]}"
+    )
+    return same, conditional
+
+
+def test_the_realised_pairs_over_48_seeds_at_a_b_read_the_correlation(tmp_path, monkeypatch):
+    """(b) at the setting a, b (E = -119 / 169): the realised pairs' E within three scatters of the shares' E, the seed 2 run whole the emulated draws'."""
+    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[0])
+
+
+def test_the_realised_pairs_over_48_seeds_at_a_b_prime_read_the_correlation(tmp_path, monkeypatch):
+    """(b) at the setting a, b' (E = 119 / 169)."""
+    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[1])
+
+
+def test_the_realised_pairs_over_48_seeds_at_a_prime_b_read_the_correlation(tmp_path, monkeypatch):
+    """(b) at the setting a', b (E = -120 / 169)."""
+    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[2])
+
+
+def test_the_realised_pairs_over_48_seeds_at_a_prime_b_prime_read_the_correlation(tmp_path, monkeypatch):
+    """(b) at the setting a', b' (E = -120 / 169)."""
+    realised_pairs_read(tmp_path, monkeypatch, *SETTINGS[3])
+
+
+def test_the_realised_pairs_at_equal_axes_are_opposite_the_anticorrelation_exact(tmp_path, monkeypatch):
+    """(b) at equal axes, one magnitude, the write exact: the second side's weight at the first side's port is 0 exactly, every pair opposite over the 48 seeds."""
+    same, conditional = realised_pairs_read(tmp_path, monkeypatch, (1, 1), (1, 1))
+    assert same == 0 and all(conditional[p][p] == 0 < conditional[p][1 - p] for p in range(2))
 
 
 def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monkeypatch):
