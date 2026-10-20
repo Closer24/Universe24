@@ -366,28 +366,26 @@ def test_the_pairs_two_pieces_are_back_to_back(tmp_path, monkeypatch):
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     for _ in range(99):
         board.step()
-    sums, realised, lost, size, floors = [], [], [], 0, []
-    for _run in ("the read",):  # one world, one read of the board at the close
-        twin = copy.deepcopy(board)
-        twin.output = (lines := []).append
-        twin.step()
-        credits = [line for line in lines if line["event"] == "credit"]
-        assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
-        left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
-        sums.append([a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)])
-        realised.append(f"{left['realised']} {right['realised']}")
-        lost += [
-            r for c in credits if c["lost"] for r in c["lost"] if r != LOST_TO_REGION
-        ]  # Part H, MUST 5: a region taker books the piece's P lost to the region (no +p of its own); Part G's "recoil lost to the lay" is a body's reading
-        size = abs(left["momentum"][0])
-        floors.append(
-            sum(
-                rounding_floor(twin, pair, d.nodes)
-                for d in twin.node_detectors
-                if d.declared and d.nodes is not None
-            )
+    twin = copy.deepcopy(board)  # one world, one read of the board at the close
+    twin.output = (lines := []).append
+    twin.step()
+    credits = [line for line in lines if line["event"] == "credit"]
+    assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
+    left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
+    sums = [[a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)]]
+    realised = [f"{left['realised']} {right['realised']}"]
+    lost = [
+        r for c in credits if c["lost"] for r in c["lost"] if r != LOST_TO_REGION
+    ]  # Part H, MUST 5: a region taker books the piece's P lost to the region (no +p of its own); Part G's "recoil lost to the lay" is a body's reading
+    size = abs(left["momentum"][0])
+    floors = [
+        sum(
+            rounding_floor(twin, pair, d.nodes)
+            for d in twin.node_detectors
+            if d.declared and d.nodes is not None
         )
-        assert left["momentum"][0] * right["momentum"][0] < 0  # opposite signs along x
+    ]
+    assert left["momentum"][0] * right["momentum"][0] < 0  # opposite signs along x
     largest = max(abs(s[0]) for s in sums)
     counted = {key: realised.count(key) for key in sorted(set(realised))}
     print(

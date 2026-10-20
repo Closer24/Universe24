@@ -248,68 +248,59 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
     alone = {**world["bodies"][0], "transitions": []}
     refused("no transition", bodies_of, [alone], None, "", families, (48, 1, 1), 9000, (), action)
     path, at = tmp_path / "resonant.json", tuple(blind["cos_omega"]["node"])
-    given_at: list[int] = []
-    for _run in ("the read",):  # one world, every draw the click's read of the board
-        board = Lattice(load_world(path), (lines := []).append)
-        light_at = [f.name for f in board.families].index("pulse")
-        gamma, own = (
-            board.world.node_clock,
-            largest_below(wall * wall * 5) // 3,
-        )  # one quantum at [2, 3]
+    board = Lattice(load_world(path), (lines := []).append)  # every draw the read of the board
+    light_at = [f.name for f in board.families].index("pulse")
+    gamma, own = (
+        board.world.node_clock,
+        largest_below(wall * wall * 5) // 3,
+    )  # one quantum at [2, 3]
+    assert record_unit(board, light_at) == wall  # W_rec: W_c, a massless record laid by no packet (C1)
+    assert abs(own / wall - 5**0.5 / 3) < 2 / wall and board.credit.units[light_at] == wall
+    assert hazard_weights(1, 48, gamma, gamma, 9) == [
+        9,
+        47 * 9,
+    ]  # the vacuum: the hazard per board interval
+    assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
+        9,
+        47 * 9,
+    ]  # a well at p_0 = Gamma / 2: half the rate
+    pulse = [f.name for f in board.families].index("pulse")
+    series = {}
+    beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
+    for _ in range(96):
+        board.step()
+        series[board.interval] = (
+            int(board.states[pulse].lines[0].now[at]),
+            int(board.states[pulse].lines[0].now[beyond]),
+        )
+        given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
+    assert given, "the run's emission inside the run (the hazard 1 / 48 per interval)"
+    t = given[0]["interval"]
+    lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
+    span = list(range(t, min(t + 48, 97)))  # the span from t, cut by the run's end
+    when = [c["interval"] for c in lays]  # one lay line per interval whose increment is not 0
+    assert when == sorted(set(when)) and set(when) <= set(span) and len(when) >= len(span) - 3
+    laid_at = {tuple(c["node"]["at"]) for c in lays}
+    # the emission's Node drawn once per click by the record's share, inside the NodeDetector's region
+    assert len(laid_at) == 1 and laid_at <= {(0, 0, 0), (1, 0, 0)}
+    assert all(c["line"] == 0 and c["after"][1:] == c["before"][1:] for c in lays)
+    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+    assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
+    assert board.credit.counts[pulse] + len(taken) == 1  # one quantum given, kept or taken
+    if t <= 49 and not taken:  # the whole span in the run: one quantum by the count's line, either unit
+        total = board.total_share(pulse)[0]
         assert (
-            record_unit(board, light_at) == wall
-        )  # W_rec: W_c, a massless record laid by no packet (C1)
-        assert abs(own / wall - 5**0.5 / 3) < 2 / wall and board.credit.units[light_at] == wall
-        assert hazard_weights(1, 48, gamma, gamma, 9) == [
-            9,
-            47 * 9,
-        ]  # the vacuum: the hazard per board interval
-        assert hazard_weights(2, 48, gamma // 2, gamma, 9) == [
-            9,
-            47 * 9,
-        ]  # a well at p_0 = Gamma / 2: half the rate
-        pulse = [f.name for f in board.families].index("pulse")
-        series = {}
-        beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
-        for _ in range(96):
-            board.step()
-            series[board.interval] = (
-                int(board.states[pulse].lines[0].now[at]),
-                int(board.states[pulse].lines[0].now[beyond]),
-            )
-            given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
-        if not given:
-            continue
-        t = given[0]["interval"]
-        given_at.append(t)
-        lays = [c for c in lines if c["event"] == "lay" and c["family"] == "pulse"]
-        span = list(range(t, min(t + 48, 97)))  # the span from t, cut by the run's end
-        when = [c["interval"] for c in lays]  # one lay line per interval whose increment is not 0
-        assert when == sorted(set(when)) and set(when) <= set(span) and len(when) >= len(span) - 3
-        laid_at = {tuple(c["node"]["at"]) for c in lays}
-        # the emission's Node drawn once per click by the record's share, inside the NodeDetector's region
-        assert len(laid_at) == 1 and laid_at <= {(0, 0, 0), (1, 0, 0)}
-        assert all(c["line"] == 0 and c["after"][1:] == c["before"][1:] for c in lays)
-        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-        assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
-        assert board.credit.counts[pulse] + len(taken) == 1  # one quantum given, kept or taken
-        if (
-            t <= 49 and not taken
-        ):  # the whole span in the run: one quantum by the count's line, either unit
-            total = board.total_share(pulse)[0]
-            assert (
-                total is not None and 0.7 < total / wall < 0.8
-            )  # sin Omega = 0.745 in the band's top's unit
-            for unit in (wall, board.credit.units[pulse]):  # W_c and the record's own unit, the lay's
-                assert division_forward(total, unit, division_forward(unit, 2, 0)[0])[0] == 1
-        if t <= 53:  # the plateau after the front and before the stop, inside the run
-            window, read_at = range(t + 28, t + 43), next(iter(laid_at))[0]  # eight Nodes from the lay
-            levels = {k: pair[read_at] for k, pair in series.items()}
-            numerator = sum(levels[k] * (levels[k + 1] + levels[k - 1]) for k in window)
-            read = numerator / (2 * sum(levels[k] ** 2 for k in window))
-            far = max(abs(levels[k]) for k in window)
-            assert far > 20 and abs(read - 2 / 3) <= 2 / far, (t, read, far)
-    assert given_at, given_at  # the one run's emission inside the run (the hazard 1 / 48 per interval)
+            total is not None and 0.7 < total / wall < 0.8
+        )  # sin Omega = 0.745 in the band's top's unit
+        for unit in (wall, board.credit.units[pulse]):  # W_c and the record's own unit, the lay's
+            assert division_forward(total, unit, division_forward(unit, 2, 0)[0])[0] == 1
+    if t <= 53:  # the plateau after the front and before the stop, inside the run
+        window, read_at = range(t + 28, t + 43), next(iter(laid_at))[0]  # eight Nodes from the lay
+        levels = {k: pair[read_at] for k, pair in series.items()}
+        numerator = sum(levels[k] * (levels[k + 1] + levels[k - 1]) for k in window)
+        read = numerator / (2 * sum(levels[k] ** 2 for k in window))
+        far = max(abs(levels[k]) for k in window)
+        assert far > 20 and abs(read - 2 / 3) <= 2 / far, (t, read, far)
     lit = {**world, "packets": [{"family": "pulse", "along": "x", "wave": [1, 2], "amplitude": 308}]}
     lit["packets"][0]["phase"] = [0, 1]
     lit["packets"][0].update(top={"x": [0, 47], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})

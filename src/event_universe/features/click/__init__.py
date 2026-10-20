@@ -16,11 +16,11 @@ SCALE_OF = (
 )
 
 
-def read_number(digits: Sequence[int], walls: Sequence[int]) -> int:
-    """The click's read of the board as one integer (ALGEBRA.md, The click's read of the board): the digits `digits`, Rule3's kept remainders at the detector's Nodes in the order `digits.DIGIT_ORDER`, each in [0, its line's wall w), as one number with the first digit the most significant, x = ((d_1 w_2 + d_2) w_3 + d_3) ... in the mixed radix of the lines' walls `walls` (one base w = 6 den Gamma^2 G^2 where every line read is one family's, a body reading the arriving record's lines and its own two walls), multiply and add in Python's integers (the number above 2^width at every shipped region: 8 digits of 48 bits), no division and no number of the run born here; the records' remainders are read and never written."""
+def read_number(digits: Sequence[int], bases: Sequence[int]) -> int:
+    """The click's read of the board as one integer (ALGEBRA.md, The click's read of the board): the digits `digits`, each Rule3's kept remainder at one of the detector's Nodes read as its index on the Node's lattice, r div F with F = gcd(w, D_i, R_ij) (`digits.read_of`, the order `loader/draw.DIGIT_ORDER`), each in [0, w div F), as one number with the first digit the most significant, x = ((d_1 b_2 + d_2) b_3 + d_3) ... in the mixed radix of the bases `bases`, each w div F + 1, one above its digit's count of values so that no total built of the wall's primes divides it (a digit carries log2(w div F) bits: 26.7 at the shipped universes' content 60, 11.9 for the atom [1, 1299], 1.6 for light at the exact vacuum paces), multiply and add in Python's integers, no division and no number of the run born here; the records' remainders are read and never written."""
     found = 0
-    for digit, wall in zip(digits, walls, strict=True):
-        found = found * int(wall) + int(digit)
+    for digit, base in zip(digits, bases, strict=True):
+        found = found * int(base) + int(digit)
     return found
 
 

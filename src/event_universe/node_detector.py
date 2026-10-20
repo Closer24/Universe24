@@ -234,8 +234,7 @@ def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
 def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None = None) -> int:
     """The region NodeDetectors' draw of a place, the click's read of the board at the regions' Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): a side of a record of several parts (`side`, the region's name) reads the record's digits at its own region at its first draw of the close, before its write, into the number left (`credit.Books.left`, per record and side, emptied at the close, `meeting.closed`), and a record of one part reads its digits at the union of the declared regions' Nodes (`node_detector_nodes`) at the first draw of the close; every later draw of the close is one division act on the number left, the side's port by its own second moments (`lists.readings`), the region by the window's shares, the boundary Node by the inflows per Node and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`), the remainder the pick and the quotient the number left; one weight consumes nothing."""
     books, family = board.credit, board.families[index]
-    where = f"the side {side!r}" if side is not None else f"the regions{''}"
-    label = f"{where} of {family.name!r} at the interval {board.interval}"
+    label = f"{'the regions' if side is None else f'the side {side!r}'} of {family.name!r} at the interval {board.interval}"
     if (index, side) not in books.left:
         at = (
             node_detector_nodes(board)

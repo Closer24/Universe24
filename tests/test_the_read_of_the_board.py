@@ -186,7 +186,7 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
         family(singlet, "spin"),
         next(d.nodes for d in singlet.node_detectors if d.name == "left"),
     )
-    assert set(digits.remainders_of(singlet, spin, left)) == {singlet.half_wall(spin)}
+    assert {r for r, _f, _w in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
         digits.read_of(singlet, [spin], left, "the test")
     board = Lattice(
@@ -199,9 +199,13 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     photon, atom = family(board, "photon"), family(board, "atom")
     body = board.credit.bodies[0]
     at = board.mask(body.nodes)
-    while set(digits.remainders_of(board, photon, at)) == {board.half_wall(photon)}:
+    while {r for r, _f, _w in digits.digits_of(board, photon, at)} == {board.half_wall(photon)}:
         board.step()
-    assert set(digits.remainders_of(board, photon, at)) <= {LIGHT // 6, LIGHT // 2, 5 * LIGHT // 6}
+    assert {r for r, _f, _w in digits.digits_of(board, photon, at)} <= {
+        LIGHT // 6,
+        LIGHT // 2,
+        5 * LIGHT // 6,
+    }
     with pytest.raises(RuntimeError, match="finds every digit on the lattice of the exact vacuum paces"):
         digits.read_of(board, [photon], at, "the test")
     before = snapshot(board)

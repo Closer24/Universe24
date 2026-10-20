@@ -203,34 +203,33 @@ def test_the_window_opens_at_the_first_lit_interval_and_the_close_takes_the_quan
     tmp_path, monkeypatch
 ):
     """C2 and the absorption's draw on the atom world, one read of the board at the close: the body is dark before the packet reaches it and its window opens at the first lit interval, 28 (`node_detector.dark`, the engine's own read; the books' `elapsed` 0 before it and counting from 1 there), and closes W - 1 = 32 intervals after it at 60 (the books' `windows` from 0 to 1 and `elapsed` begun again at 60; the credit line's window [28, 60] where the close writes a line); where the draw at the close, the body's read of the board, takes the quantum, one credit line at 60 inside the window with the count 1 and nothing left, the body from g into e and the photon's count 0 from 60 until the body gives one back, its front begun at 60 from the hole's Node; where the quantum passes (the read's outcome on this fixture): the body stands whole in g, so the null window's re-lay at 60 changes no level and writes no line, the count stays 1 and the body in g over the whole run, no front and no lawful end (the cold reader's change 2: nothing leaves by a receding face, the faces grow zeros ahead), the whole quantum standing beyond the body at the run's end, 1 in the record's own unit on the Nodes above the body and 0 below it; the wake after the close (the pin (a), the finding behind (D): a passing record leaves levels on every Node it crossed and never goes dark at a body): at 61 the photon's level at the body's Nodes is other than 0 at every seed and `elapsed` is 1, C2 re-opening the window, which where the quantum passes stays lit to the run's end and closes null at 93, 126 and 159, each re-lay moving a level and writing its line, the windows [61, 93], [94, 126] and [127, 159]; the seconds printed."""
-    started, outcomes = time.perf_counter(), {}
-    for seed in ("the read",):  # one world, the close's draw its read of the board: taken or passing
-        board, lines, marks = run(tmp_path / "plus", monkeypatch)
-        photon, body = [f.name for f in board.families].index("photon"), board.credit.bodies[0]
-        window, found = board.world.bodies[0].detector.draw.window, closes(lines)
-        assert [m["interval"] for m in marks if m["dark"]][:27] == list(range(1, 28))  # dark before 28
-        assert marks[26]["dark"] and not marks[27]["dark"] and 28 + window - 1 == 60  # lit from 28
-        assert [m["elapsed"] for m in marks[:60]] == [0] * 27 + list(range(1, 33)) + [0]  # the window
-        assert [m["windows"] for m in marks[:60]] == [0] * 59 + [1]  # closed at 60, the 33rd interval
-        after = marks[60]  # the interval 61, right after the close
-        assert after["interval"] == 61 and any(after["levels"]) and after["elapsed"] == 1  # the wake
-        taken = credit_lines(lines, "absorbed")
-        outcomes[seed] = len(taken)
-        if taken:
-            (click,) = taken
-            assert click is found[0] and click["window"] == [28, 60] == [28, 28 + window - 1]
-            assert (click["interval"], click["count"], click["left"], click["absorbed"]) == (
-                60,
-                1,
-                0,
-                "photon",
-            )
-            assert (click["before"], click["realised"]) == ("g", "e")
-            given = next(m["interval"] for m in marks if m["interval"] > 60 and m["count"] == 1)
-            assert all(m["count"] == (0 if 60 <= m["interval"] < given else 1) for m in marks)
-            assert marks[59]["parts"] == [0, 1] and marks[58]["parts"] == [1, 0]  # g to e at the close
-            assert [(f.family, f.since) for f in board.credit.fronts] == [(photon, 60)]
-            continue
+    started = time.perf_counter()
+    board, lines, marks = run(tmp_path / "plus", monkeypatch)  # the close's draw its read
+    photon, body = [f.name for f in board.families].index("photon"), board.credit.bodies[0]
+    window, found = board.world.bodies[0].detector.draw.window, closes(lines)
+    assert [m["interval"] for m in marks if m["dark"]][:27] == list(range(1, 28))  # dark before 28
+    assert marks[26]["dark"] and not marks[27]["dark"] and 28 + window - 1 == 60  # lit from 28
+    assert [m["elapsed"] for m in marks[:60]] == [0] * 27 + list(range(1, 33)) + [0]  # the window
+    assert [m["windows"] for m in marks[:60]] == [0] * 59 + [1]  # closed at 60, the 33rd interval
+    after = marks[60]  # the interval 61, right after the close
+    assert after["interval"] == 61 and any(after["levels"]) and after["elapsed"] == 1  # the wake
+    taken = credit_lines(lines, "absorbed")
+    outcome = len(taken)
+    if taken:
+        (click,) = taken
+        assert click is found[0] and click["window"] == [28, 60] == [28, 28 + window - 1]
+        assert (click["interval"], click["count"], click["left"], click["absorbed"]) == (
+            60,
+            1,
+            0,
+            "photon",
+        )
+        assert (click["before"], click["realised"]) == ("g", "e")
+        given = next(m["interval"] for m in marks if m["interval"] > 60 and m["count"] == 1)
+        assert all(m["count"] == (0 if 60 <= m["interval"] < given else 1) for m in marks)
+        assert marks[59]["parts"] == [0, 1] and marks[58]["parts"] == [1, 0]  # g to e at the close
+        assert [(f.family, f.since) for f in board.credit.fronts] == [(photon, 60)]
+    else:  # the quantum passes: the body whole in g, the wake lit to the run's end
         assert all(c["count"] == 0 for c in found) and board.credit.counts[photon] == 1
         assert [c["window"] for c in found] == [[61, 93], [94, 126], [127, 159]]  # the wake's windows
         assert body.windows == 4 and all(m["parts"] == [1, 0] and m["count"] == 1 for m in marks)
@@ -246,9 +245,9 @@ def test_the_window_opens_at_the_first_lit_interval_and_the_close_takes_the_quan
             credit.counted(board, photon, below, unit),
         )
         assert standing == (1, 0) and board.ended is None  # the whole quantum beyond the body
-    assert set(outcomes.values()) <= {0, 1}  # taken or passing, the read's one outcome
+    assert outcome in (0, 1)  # taken or passing, the read's one outcome
     print(
-        f"the atom world: the window [28, 60] at W 33; the outcomes {outcomes}; "
+        f"the atom world: the window [28, 60] at W 33; the outcome {outcome} (1 taken, 0 passing); "
         f"{time.perf_counter() - started:.1f} s"
     )
 
