@@ -38,13 +38,13 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .layers label { display: inline-flex; align-items: center; gap: 4px; }
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); }
 .swatch.dashed { border-style: dashed; }
-.time { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }
+.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }  /* the track keeps 12rem at least; the frame's status wraps beside it */
 .track { position: relative; min-width: 0; }
 .track input { width: 100%; margin: 0; position: relative; z-index: 1; }
 .track .window { position: absolute; top: 25%; height: 50%; background: var(--window); border-radius: var(--radius); }
 .track .bounds span { position: absolute; top: 10%; height: 80%; width: 0; border-left: 2px dashed var(--bound); }
 .frame svg { width: 1em; height: 1em; vertical-align: -0.15em; margin-left: 6px; }
-.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
+.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; max-width: 52ch; text-align: right; }
 .lines { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 6px; min-height: 1.4em; }
 .cone { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 4px; }
 .cone:empty { display: none; }
@@ -191,6 +191,7 @@ const AXES = ['x', 'y', 'z'], PARTS = ['x', 'y', 'z', 'xx', 'yy', 'zz', 'xy', 'x
 const colourOf = name => token('--' + ROLES[name].role);
 const esc = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const format = value => typeof value === 'number' ? (value === 0 ? 0 : value).toLocaleString('en-US') : String(value);  // -0 printed as 0
+const ordinal = n => { const tens = n % 100, ones = n % 10; return format(n) + (tens >= 11 && tens <= 13 ? 'th' : ones === 1 ? 'st' : ones === 2 ? 'nd' : ones === 3 ? 'rd' : 'th'); };  // 1st, 2nd, 3rd, 11th, 12th, 13th, 21st
 const nodesWord = n => format(n) + (n === 1 ? ' Node' : ' Nodes'), linksWord = n => format(n) + (n === 1 ? ' Link' : ' Links');
 
 /* The arrays of a frame, dense nested lists or the nonzero Nodes alone over the frame's own shape, as flat x-major arrays over the page's box, the frame's Nodes at their file coordinates. */
@@ -705,8 +706,8 @@ function drawNodeMeasure() {
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${m.node_detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
-  const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n), blind = m.blind.map(v => typeof v === 'number' ? v : null);  // the bars fill the chart's width
   const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
@@ -721,11 +722,15 @@ function drawNodeMeasure() {
     body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
-  if (blind.some(v => v !== null)) {
-    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+  const hasBlind = blind.some(v => v !== null);
+  if (hasBlind && blind.every(v => v !== null)) {
+    const points = blind.map((v, k) => px(k).toFixed(1) + ',' + py(v).toFixed(1)).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  } else if (hasBlind) {  // a blind with gaps (the which-way folder's rows: none at the channel): one dashed mark per bar where the row carries a count
+    blind.forEach((v, k) => { if (v !== null) body += `<line x1="${(px(k) - slot * 0.4).toFixed(1)}" x2="${(px(k) + slot * 0.4).toFixed(1)}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="4 3"><title>the blind ${format(v)} at ${esc(m.labels[k])}</title></line>`; });
+    body += svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
@@ -810,10 +815,10 @@ function blindTable() {
 function drawReading() {
   const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
-  const slot = size('--bar-slot') * 1.8, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
   let body = '';
   if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
@@ -834,7 +839,7 @@ function drawReading() {
   const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)}, the rounded shares per reporter (N by the shares of the output file's click lines, the expectation)</span>` + (clicks ? `<span><i style="border-color:${flash};border-top-width:6px"></i>the clicks the draw credited (the credit lines, the measurement)</span>` : '') + `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(BLIND.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The output file's credit of ${esc(family)} at ${format(n)} reporters across ${esc(r.across)}, beside the blind</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the reading's bars beside the blind">${body}</svg>`;
   const credited = clicks ? clicks.reduce((a, b) => a + b, 0) : null;
-  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw with the seed ${format(r.seed)}` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
+  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
   byId('watch').innerHTML = readingTable();
 }
 function readingTable() {
@@ -926,7 +931,8 @@ function drawArrival() {
 /* The start: the title, the verdict, frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
-byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (SAME_LINES ? ', the look’s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${format(LOOK.every)}th interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
+const biasBound = () => { const pairs = OUTPUT ? OUTPUT.lines.filter(l => l.event === 'credit' && l.bias_bound && l.bias_bound.g && l.bias_bound.total).map(l => [Number(l.bias_bound.g), Number(l.bias_bound.total)]) : []; if (!pairs.length) return ''; const [g, T] = pairs.reduce((a, b) => a[0] * b[1] >= b[0] * a[1] ? a : b); const gcd = (x, y) => y ? gcd(y, x % y) : x, d = gcd(g, T); return `, the bias bound ${format(g / d)} / ${format(T / d)} on the click's line (the worst over the ${format(pairs.length)} credits carrying one)`; };  // the totals' bias as the credit lines carry it (ALGEBRA.md, The digits' base and a total's factors)
+byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (MEASURE ? '' : biasBound()) + (SAME_LINES ? ', the look’s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${ordinal(LOOK.every)} interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
 if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
 function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();

@@ -1,4 +1,4 @@
-"""Part D, Task 3, gate (1): no root anywhere (the owner, issue #1793, comments 6077053307 and 6077234684: "no root anywhere"; "is there a test that checks this?"). No .py of src/event_universe names `division_fixed_point`, `isqrt`, `sqrt` or `math.sqrt` as a token of the code, and no power `** 0.5` stands in any expression; the gate reads the tree recursively and names the file and line of every hit. The sister gates: no shear and no rotation act, tests/test_rule3.py (`test_no_shear_and_no_name_of_features_rotation_remains_in_src`); the acts table, tests/test_the_acts_table.py."""
+"""Part D, Task 3, gate (1): no root anywhere (the owner, issue #1793, comments 6077053307 and 6077234684: "no root anywhere"; "is there a test that checks this?"). No .py of src/event_universe names `division_fixed_point`, `isqrt`, `sqrt` or `math.sqrt` as a token of the code, and no power `** 0.5` stands in any expression; the gate reads the tree recursively and names the file and line of every hit. The sister gate: the acts table, tests/test_the_acts_table.py."""
 
 import ast
 import io

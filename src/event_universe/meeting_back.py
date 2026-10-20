@@ -182,7 +182,7 @@ def side_weights(
     coefficients: Sequence[Sequence[Gauss]],
     gram: Sequence[Sequence[int]],
 ) -> list[int]:
-    """A side's weights at the window's close, one per port (ALGEBRA.md, The meeting's identity, the Gram theorem): w(p) = SUM_kl c_k(p) c_l(p) G_kl M_kl with its own coefficients c per port (`coefficients_of`), the Gram G of the sides unrealised (`gram_of`) and its own second moments M (`moments_booked`), the chain rule of the joint share in its local form, exact in the integers; floored at 0."""
+    """A side's weights at the window's close, one per port (ALGEBRA.md, The meeting's identity, the Gram theorem): w(p) = SUM_kl c_k(p) c_l(p) G_kl M_kl with its own coefficients c per port (`coefficients_of`), the Gram G of the sides unrealised (`gram_of`) and its own second moments M (`moments_booked`), the chain rule of the joint share in its local form, exact in the integers and at or above 0 exactly, G a Gram and M a Gram so their entrywise product is one (the Schur product) and the form a sum of squares; a negative total is a defect of a coefficient's conjugation or of a moment's book and is refused by name, as `drawn` and `largest_below` refuse theirs."""
     found = []
     for port in coefficients:
         total = 0
@@ -192,7 +192,13 @@ def side_weights(
                     m
                 ]  # Re(conj(c_k) c_m M_km), the integers' product where every im is 0
                 total += gram[k][m] * ((a * c + b * d) * re - (a * d - b * c) * im)
-        found.append(max(int(total), 0))
+        if total < 0:
+            raise ValueError(
+                f"the side's weight at the port {port} is {total}, below 0: the Gram's form with the "
+                "Hermitian moments is a sum of squares (ALGEBRA.md, The meeting's identity), so a "
+                "negative total is a defect of a coefficient's conjugation or of a moment's book; refused"
+            )
+        found.append(int(total))
     return found
 
 

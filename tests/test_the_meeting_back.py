@@ -10,7 +10,7 @@ import pytest
 from event_universe import meeting_back, world_files
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import BOARD, CONE, body_draw_of, draw_of, windowless_of
+from event_universe.loader.draw import BOARD, CONE, body_draw_of, draw_of, ports_of, windowless_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK as GATE
 from tests.laws import EVENTS, family, refused, world_beside
@@ -39,7 +39,7 @@ def squares(coefficients) -> int:  # type: ignore[no-untyped-def]
 
 
 def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(tmp_path, monkeypatch):
-    """(a) The identity through the write on the singlet at the four Bell settings, for the crossed pattern under no sign and for the identity pattern on both sides under the family's antisymmetric sign: the engine's weights at each side's draw (`credit.Books.weights`, the Gram read of the side's own moments) equal the chain rule from the `parts` lines exactly (`laws_spin.sided`: the first side's marginal, the second side's conditional at the realised port, the record rewritten at its birth by the first side's integer coefficients, one magnitude on the surviving parts at these settings); the realised ports the sides' reads of the board at the close; the two credit lines with the orders 1 and 2, the count 1, nothing left and the record's scale after each write (the norm's square of the coefficients, the second the product); E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169 in both forms, |S| = 478 / 169; every side's marginal 1 / 2 whatever the other side's axis (no signalling)."""
+    """(a) The identity through the write on the singlet at the four Bell settings, for the crossed pattern under no sign and for the identity pattern on both sides under the family's antisymmetric sign: the engine's weights at each side's draw (`credit.Books.weights`, the Gram read of the side's own moments) equal the chain rule from the `parts` lines exactly (`laws_spin.sided`: the first side's marginal, the second side's conditional at the realised port, the record rewritten at its birth by the first side's integer coefficients, one magnitude on the surviving parts at these settings); the realised ports the sides' reads of the board at the close; the two credit lines with the orders 1 and 2, the count 1, nothing left and the record's scale after each write (the norm's square of the coefficients, the second the product); E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169 in both forms, |S| = 478 / 169; every side's marginal 1 / 2 whatever the other side's axis (no signalling); the realised pair's share above 0; under the sign the reading of the lines equals the crossed pattern's reading of the same lines, whose ports are the determinant's signs on the parts (`ports_of`); at equal axes under the crossed pattern the shares of (+, +) and (-, -) are 0 and the realised pair is opposite."""
     found, marginals = {}, {}
     for form, (right, exchange) in FORMS.items():
         for a, b in SETTINGS:
@@ -59,6 +59,10 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             shares = joint_shares(lines, sides, sign)
             total = sum(shares.values())
             sided(board, spin, shares, realised)
+            assert shares[tuple(realised)] > 0, clicks  # the realised pair's share stands above 0
+            if exchange:  # the sign's reading equals the crossed pattern's of the same lines
+                assert board.families[spin].exchange == -1
+                assert shares == joint_shares(lines, {"left": (a, IDENTITY), "right": (b, SINGLET)}, 0)
             books = board.credit
             first = meeting_back.coefficients_of(board.families[spin], books.sides[0][1], True)
             scale = squares(first[realised[0]])
@@ -97,6 +101,17 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             assert marginals[form, "left", x, b] == marginals[form, "left", x, b2] == Fraction(1, 2)
         for y in (b, b2):
             assert marginals[form, "right", a, y] == marginals[form, "right", a2, y] == Fraction(1, 2)
+    for b in BELL[2:]:  # the crossed pattern's ports are the determinant's signs on the parts
+        crossed = ports_of(b, tuple(tuple(p) for p in SINGLET))
+        plain = ports_of(b, tuple(tuple(p) for p in IDENTITY))
+        for port in range(2):
+            assert tuple(crossed[port]) == (plain[port][1], (-plain[port][0][0], -plain[port][0][1]))
+    sides = {"left": ((3, 1), IDENTITY), "right": ((3, 1), SINGLET)}  # the crossed pattern at equal axes
+    board, lines = trial(spin_world(tmp_path / "equal", monkeypatch, sides, both=True, amplitude=64), 40)
+    shares = joint_shares(lines, sides)
+    assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
+    clicks = [c for c in lines if c["event"] == "credit"]
+    assert tuple(PORT[c["realised"]] for c in clicks) in {(0, 1), (1, 0)}, clicks
 
 
 def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monkeypatch):

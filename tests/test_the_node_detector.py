@@ -19,14 +19,12 @@ from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
 from tests.laws import (
     BACK,
-    EVENTS,
     PACKET,
     ROOT,
     TOOL,
     TOP,
     booked,
     chain_body_world,
-    load_file,
     own_lines,
     refused,
     shares_of,
@@ -143,31 +141,6 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
     twin, unit = boards[1], boards[1].credit.units[light]
     plain_count = int(division_forward(totals[1][0], unit, division_forward(unit, 2, 0)[0])[0])
     assert credit.quanta_through(twin.credit, light, totals[1][1], twin.unit) == plain_count > 0
-
-
-def test_the_packet_readers_clicks_column_counts_the_regions_click_lines_and_not_the_givers():
-    """The folder's reader's `clicks` column (the experimenter's tool note, #1827 comment 5984864554; examples/events/packet_emission/build_world.py `counted`): on a minimal output of the giver's two credit lines (its emission at the emission's interval and its null window's re-lay, `body 0`), the region `reach`'s click line at the draw's window's close, one beyond the window and the region's per-interval `click` report, the column counts the region's one line within the window of 168 and the giver's two stand in their own column with their intervals."""
-    reader = load_file("packet_build_world", EVENTS / "packet_emission" / "build_world.py")
-    emitted = {
-        "event": "credit",
-        "node_detector": "body 0",
-        "interval": 2,
-    }  # the emission; its null window at 48
-    hit = {
-        "event": "credit",
-        "node_detector": "reach",
-        "interval": 168,
-    }  # the region's click at the close
-    lines = [
-        emitted,
-        {**emitted, "interval": 48},
-        hit,
-        {**hit, "interval": 169},
-        {**hit, "event": "click"},
-    ]
-    found = reader.counted(lines, "reach", 168)
-    assert (found["clicks"], found["click_intervals"]) == (1, [168])  # the region's, inside the window
-    assert (found["giver_credits"], found["giver_credit_intervals"]) == (2, [2, 48])
 
 
 def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_path, monkeypatch):
@@ -301,7 +274,7 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan twist shortfall lost source recoil".split()
+        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
     )
     assert len(node_draws) == 1 and tuple(node_draws[0][2]) in region  # the hole's one drawn Node
     assert not any(

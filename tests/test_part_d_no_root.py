@@ -48,8 +48,9 @@ def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
     assert time.perf_counter() - started < 10
 
 
-def test_features_click_reads_the_same_integers_without_a_root():
-    """Task 2 (c), features/click: `squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope` (the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay, against `math.isqrt` on the same products."""
+def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
+    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope`; the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay; emission (`radiated_total`; `born_unit`, `laid_packet`, `start_of` and `increments_of` read a board and are covered by the suite's emission tests and the two slits' frozen output); features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); loader/universe (`composed_pair` on two [2, 3] records at den 6,000: the relative part [5237, 6000] and the centre [2449, 6000] of the docstring); node_detector (the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at the Nodes of a four-Node screen of the two slits, the public function reading a board); resonance (`references_of`, `turned_direction` and `window_turn` on the law's pair at the scale of the width's room)."""
+    # features_click
     num, den = PAIR
     gap = den * den - num * num
     square = click.squared(1, T, PAIR)
@@ -69,25 +70,16 @@ def test_features_click_reads_the_same_integers_without_a_root():
     assert envelope[0] == math.isqrt(total // 48) and envelope[-1] > 0
     assert envelope[1] == math.isqrt((total - envelope[0] ** 2) // 48)
     assert click.squared(1, T, LIGHT) == T // 2 and click.amplitude(1, T, LIGHT) == math.isqrt(T // 2)
-
-
-def test_emission_reads_the_same_integers_without_a_root():
-    """Task 2 (c), emission: `radiated_total` (the site at L81; `born_unit`, `laid_packet`, `start_of` and `increments_of` read a board and are covered by the suite's emission tests and the two slits' frozen output) on the law's pair and T, against `math.isqrt` on the same product."""
+    # emission
     num, den = PAIR
     inner = 3 * num - 2 * den
     expected = math.isqrt((2 * T // 3) ** 2 * (den * den - inner * inner) // (den * den))
     assert emission.radiated_total(T, PAIR) == expected
     assert emission.radiated_total(T, (2, 3)) == 2 * T // 3
-
-
-def test_features_read_reads_the_same_edge_pace_without_a_root():
-    """Task 2 (c), features/read: `edge_of` (the site at L75) on the law's pair and Gamma against `math.isqrt` of `edge_squared`."""
+    # features_read
     assert read.edge_of(PAIR, GAMMA) == math.isqrt(read.edge_squared(PAIR, GAMMA))
     assert read.edge_of(PAIR, GAMMA) == math.isqrt(2 * PAIR[1] * GAMMA**2 // (PAIR[1] + PAIR[0]))
-
-
-def test_loader_derived_reads_the_same_walls_and_rooms_without_a_root():
-    """Task 2 (c), loader/derived: `count_wall` (L245) and `tension_room` (L307) on the law's pair, T and Gamma against `math.isqrt`; `bound_under_rooms` (L394, L403) reads whole families and is covered by the suite's loader tests and the two slits' frozen output."""
+    # loader_derived
     num, den = PAIR
     gap = den * den - num * num
     assert derived.count_wall(SimpleNamespace(pair=PAIR), T) == math.isqrt(9 * T * T * gap) == 439628852
@@ -96,10 +88,7 @@ def test_loader_derived_reads_the_same_walls_and_rooms_without_a_root():
     q_max = 15266
     room = derived.tension_room(PAIR, GAMMA, q_max, False)
     assert room == -((-(edge * edge * (math.isqrt(q_max * edge) + 1))) // GAMMA**3)
-
-
-def test_loader_universe_reads_the_same_composed_pairs_without_a_root():
-    """Task 2 (c), loader/universe: `composed_pair` (the sites at lines 100, 103 and 109) on two [2, 3] records at den 6,000: the relative part [5237, 6000] and the centre [2449, 6000] of the docstring, against the same integers by `math.isqrt`."""
+    # loader_universe
     assert universe.composed_pair((2, 3), (2, 3), 6000, True) == (5237, 6000)
     assert universe.composed_pair((2, 3), (2, 3), 6000, False) == (2449, 6000)
     scale = (6000 * 3 * 3) ** 2
@@ -110,18 +99,12 @@ def test_loader_universe_reads_the_same_composed_pairs_without_a_root():
     assert universe.composed_pair((2, 3), (2, 3), 6000, True)[0] == (2 * 6000 * along + root) // (
         2 * root
     )
-
-
-def test_node_detector_reads_the_same_norm_without_a_root():
-    """Task 2 (c), node_detector: the site at `books_of` L78, the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at the Nodes of a four-Node screen of the two slits (the public function reads a board, so the lay's own numbers stand here), against `math.isqrt`."""
+    # node_detector
     square = click.squared(1, T, LIGHT)
     amplitudes = [click.spread(square, (1, 4)) for _ in range(4)]
     assert max(largest_below(sum(a * a for a in amplitudes)), 1) == math.isqrt(4 * amplitudes[0] ** 2)
     assert amplitudes[0] == math.isqrt(square // 4)
-
-
-def test_resonance_reads_the_same_references_and_turns_without_a_root():
-    """Task 2 (c), resonance: `references_of` (L45), `turned_direction` (L72) and `window_turn` (L82) on the law's pair at the scale of the width's room, against `math.isqrt` on the same products."""
+    # resonance
     num, den = PAIR
     scale = resonance.scale_of(63, 1 << 20, 130)
     (reference,) = resonance.references_of(scale, (SimpleNamespace(resonance=PAIR),))

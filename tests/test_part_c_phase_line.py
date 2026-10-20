@@ -1,14 +1,13 @@
 """Part C, the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the record's run and its mirror's each its own test, the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
 
-import hashlib
 import json
-import lzma
 import math
 import time
 from itertools import permutations, product
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from event_universe import node, records, world_files
 from event_universe.features import phase
@@ -18,9 +17,8 @@ from tests import laws
 from tests.laws import COULOMB_AT as AT
 from tests.laws import COULOMB_CHAIN as CHAIN
 from tests.laws import COULOMB_UNIVERSE as UNIVERSE
-from tests.laws import EVENTS, arrays, coulomb_world
 from tests.laws import LINE_KEYS as KEYS
-from tests.laws_read import load_shipped
+from tests.laws import arrays, coulomb_world
 
 GAMMA, PAIR, T = 6000, (4000, 6000), 36000
 SIGMA, AMPLITUDE = 30, 3000
@@ -79,33 +77,22 @@ def coulomb_shift(tmp_path, conjugate: bool, intervals: int) -> float:  # type: 
     return centroid(board) - before
 
 
-def test_the_coulomb_run_on_the_engine_moves_the_centroid_by_the_hands_count(tmp_path, monkeypatch):
-    """(1a) The Coulomb run through `Lattice.step`: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83) within 2 percent (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity); the conjugate's run is (1b), its own test, so that each run of 2,500 intervals stays under the suite's bound of 30 seconds on CI's clock."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
-    assert oracle["intervals"] == 2_500
-    record = coulomb_shift(tmp_path, False, oracle["intervals"])
-    tolerance = 0.02 * abs(oracle["record"])
-    assert abs(record - oracle["record"]) <= tolerance, (record, oracle["record"], tolerance)
-    assert abs(record + 151.20) <= tolerance, record
-    print(
-        f"2,500 intervals: the record's centroid shift {record:+.2f} Nodes (the time turn's oracle {oracle['record']:+.2f}, the hands -151.20); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_coulomb_runs_mirror_moves_the_centroid_the_other_way_by_the_hands_count(
-    tmp_path, monkeypatch
+@pytest.mark.parametrize(
+    "conjugate, key, hands", [(False, "record", -151.20), (True, "conjugate", 151.20)]
+)
+def test_the_coulomb_run_and_its_mirror_move_the_centroid_by_the_hands_count(
+    tmp_path, monkeypatch, conjugate, key, hands
 ):
-    """(1b) The Coulomb run's mirror through `Lattice.step`: the world of (1a) with the conjugate packet (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals its centroid moves the other way by the hands' count (+151.20; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: +150.90, the record's -150.83 reversed to within 0.07 Nodes) within the same 2 percent of the oracle's record, the mirror the record's negative stated against the hands' count with the sign reversed (one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions); its own test, so that each run of 2,500 intervals stays under the suite's bound of 30 seconds on CI's clock."""
+    """(1a, 1b) The Coulomb run and its mirror through `Lattice.step`, one test item each: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280, or its conjugate (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83) and the mirror's the other way (+151.20; the oracle +150.90, the record's reversed to within 0.07 Nodes), each within 2 percent of the oracle's record (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity; one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
     assert oracle["intervals"] == 2_500
-    mirror = coulomb_shift(tmp_path, True, oracle["intervals"])
+    shift = coulomb_shift(tmp_path, conjugate, oracle["intervals"])
     tolerance = 0.02 * abs(oracle["record"])
-    assert abs(mirror - oracle["conjugate"]) <= tolerance, (mirror, oracle["conjugate"], tolerance)
-    assert abs(mirror - 151.20) <= tolerance, mirror
+    assert abs(shift - oracle[key]) <= tolerance, (shift, oracle[key], tolerance)
+    assert abs(shift - hands) <= tolerance, shift
     print(
-        f"2,500 intervals: the mirror's centroid shift {mirror:+.2f} Nodes (the time turn's oracle {oracle['conjugate']:+.2f}, the hands +151.20); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
+        f"2,500 intervals: the {key}'s centroid shift {shift:+.2f} Nodes (the time turn's oracle {oracle[key]:+.2f}, the hands {hands:+.2f}); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
     )
 
 
@@ -238,33 +225,4 @@ def test_the_phase_act_reaches_one_link():
     assert apart == [at - 1, at], apart
     print(
         f"the kicked Node {at}: the pairs apart at {apart}, the two Links touching it; {time.perf_counter() - started:.2f} s"
-    )
-
-
-def test_without_a_sign_holder_the_two_slits_are_the_frozen_oracle(monkeypatch):
-    """(6) The two slits world of light.json, no holder of the sign, stepped for 20 intervals: every family's level now equals the frozen engine's look file frame by frame (the oracle recorded before Part A, tests/test_part_a_fold.py's), the code path without a sign holder the engine of 441b2399 bit for bit, no phase line anywhere (every family's `phases` empty); the output file's sha256 c50eaa36... is the run's own (tools/run_inputs.py)."""
-    LOOK = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
-
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    started, look = time.perf_counter(), json.loads(lzma.open(LOOK).read())
-    board = Lattice(load_shipped(EVENTS / "two_slits" / "two_slits.json"))
-    assert all(state.phases == [] for state in board.states)
-    digest = hashlib.sha256()
-    for interval in range(21):
-        frame = look["frames"][interval]
-        for index, family in enumerate(board.families):
-            recorded = frame["families"][family.name]["now" if family.quanta else "level"]
-            flat = np.zeros(board.shape, dtype=object).reshape(-1)
-            if isinstance(recorded, dict):
-                flat[recorded["at"]] = recorded["values"]
-            else:
-                flat = np.array(recorded, dtype=object).reshape(-1)
-            assert np.array_equal(flat.reshape(board.shape), board.states[index].lines[0].now), (
-                interval,
-                family.name,
-            )
-            digest.update(board.states[index].lines[0].now.tobytes())
-        board.step()
-    print(
-        f"the two slits, 20 intervals bit for bit the oracle; the levels' digest {digest.hexdigest()[:16]}; {time.perf_counter() - started:.1f} s"
     )

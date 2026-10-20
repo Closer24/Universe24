@@ -48,13 +48,3 @@ def arrival(a: Any, axis: int, sigma: int, wrap: Wrap, fill: Any = 0) -> Any:
         out = out.copy()
     out[wrap.beyond | shifted(wrap.beyond, axis, sigma, wrap[axis], False)] = fill
     return out
-
-
-def run_offsets(coordinates: Any, held: Any, axis: int, periodic: bool, origin: int) -> Any:
-    """The offset of every Node along `axis` from the coordinate `origin`, the click's Node's, along the run the mask `held` holds (Part F2, Task 4; the mathematician's line of 2026-10-09, 6085486079: a taker straddling a periodic wrap folds by consecutive offsets; the click's plan, C6 (ii): the fold's origin is the click's Node and no lowest Node of the run, so the fold's angles are equal at image Nodes under the cube's symmetries): `coordinates` the axis coordinate at every Node (`numpy.indices`); on an open or closed axis the plain difference; on a periodic axis the run's start is the held coordinate whose predecessor around the ring is not held (the lowest where the run is the whole ring), the offsets from it and the origin's offset from it are taken modulo the extent and the one less the other, so the run (N - 1, 0) counts consecutive offsets about the origin and not N - 1, 0, and an origin outside the run is read the run's way round the ring: index arithmetic, the one modulo an index wrap (kind D in the acts table, as `shifted`); no level divided."""
-    if not periodic:
-        return coordinates - origin
-    along = sorted({int(c) for c in coordinates[held]})
-    extent = coordinates.shape[axis]
-    start = next((c for c in along if (c - 1) % extent not in along), along[0])
-    return (coordinates - start) % extent - (origin - start) % extent

@@ -7,7 +7,7 @@
   --bg: #0f1114; --panel: #171a20; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #07080a;
   --cube: #1a1d24; --matter: #6ea1f0; --light: #4ade80; --field: #a3a7ae; --wall: #d7dae0; --ring: #c9c7c0;
   --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); --hole: #ffffff; --front: #c084fc;
-  --forward: #4ade80; --back: #f59e0b; --bound: #9a9ea8;
+  --forward: #4ade80; --back: #f59e0b; --bound: #9a9ea8; --cone: #f59e0b; --cone-tint: 0.62; --cone-above: 0.3;
   --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
   --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
@@ -38,14 +38,17 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .layers label { display: inline-flex; align-items: center; gap: 4px; }
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); }
 .swatch.dashed { border-style: dashed; }
-.time { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }
+.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }  /* the track keeps 12rem at least; the frame's status wraps beside it */
 .track { position: relative; min-width: 0; }
 .track input { width: 100%; margin: 0; position: relative; z-index: 1; }
 .track .window { position: absolute; top: 25%; height: 50%; background: var(--window); border-radius: var(--radius); }
 .track .bounds span { position: absolute; top: 10%; height: 80%; width: 0; border-left: 2px dashed var(--bound); }
 .frame svg { width: 1em; height: 1em; vertical-align: -0.15em; margin-left: 6px; }
-.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
+.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; max-width: 52ch; text-align: right; }
 .lines { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 6px; min-height: 1.4em; }
+.cone { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 4px; }
+.cone:empty { display: none; }
+.cone b { color: var(--cone); font-weight: 600; }
 button, select, input[type=number] { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 10px; }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
 .stack { display: grid; gap: var(--gap); }
@@ -97,6 +100,7 @@ td.num { font-family: var(--font-mono); }
       <div class="frame"><span id="frame"></span><span id="direction"></span></div>
     </div>
     <div class="lines" id="lines"></div>
+    <div class="cone" id="cone"></div>
   </section>
   <section class="panel measure" id="measure-box">
     <h2>Measurement: the node_detectors' report</h2>
@@ -160,11 +164,23 @@ const HIGH = [0, 1, 2].map(a => Math.max(...LOOK.frames.map(fr => originOf(fr)[a
 const [X, Y, Z] = HIGH.map((h, a) => h - LOW[a]), N = X * Y * Z, T = LOOK.frames.length - 1;
 /* A strided look (tools/look/record.py --every K) keeps frame 0, every K-th interval's frame and the last, so a frame's position on the slider is not its interval: every sum "up to the frame shown", every mark at an interval and the window's marker read the frame's own interval, INTERVAL(k), and place an interval at the position of the frame holding it or the first after it, positionOf(interval), the full look's rule (one position per interval) beyond the last frame; on a full look both are the identity. */
 const INTERVAL = k => Number(LOOK.frames[k].interval), LAST = Math.max(...LOOK.frames.map((_, k) => INTERVAL(k)));
-/* The passes (a look recorded from the lattice's observers in the back mode: every frame carries its `pass`, 1 the run to the first close, 2 the run back to the record's birth with its intervals decreasing, 3 the run forward to the partner's close, and its `direction`, +1 or -1): the slider runs over the frames in the look's order, every label reads the frame's own interval with its pass, every sum "up to the frame shown" counts the lines of the frames up to it (a click line belongs to the pass it was written in), and a mark at an interval stands at the frame holding it in its pass, or the first after it in the pass's direction; a look of one pass (no `pass` key) reads PASS 1 and DIRECTION +1 everywhere and renders as before. */
+/* The passes (a look recorded from the lattice's observers on a world of a record read at declared sides: every frame carries its `pass`, 1 the run to the first close, 2 the run back to the record's birth with its intervals decreasing, 3 the run forward to the partner's close, and its `direction`, +1 or -1): the slider runs over the frames in the look's order, every label reads the frame's own interval with its pass, every sum "up to the frame shown" counts the lines of the frames up to it (a click line belongs to the pass it was written in), and a mark at an interval stands at the frame holding it in its pass, or the first after it in the pass's direction; a look of one pass (no `pass` key) reads PASS 1 and DIRECTION +1 everywhere and renders as before. */
 const PASS = k => Number(LOOK.frames[k].pass || 1), DIRECTION = k => Number(LOOK.frames[k].direction || 1);
 const PASSES = Math.max(1, ...LOOK.frames.map((_, k) => PASS(k))), BOUNDS = LOOK.frames.map((_, k) => k).filter(k => k > 0 && PASS(k) !== PASS(k - 1));
 const positionOf = (interval, pass = 1) => { let last = -1; for (let k = 0; k <= T; k++) { if (PASS(k) !== pass) continue; if (DIRECTION(k) > 0 ? INTERVAL(k) >= interval : INTERVAL(k) <= interval) return k; last = k; } return last < 0 ? (pass === 1 ? T + Math.max(0, interval - LAST) : positionOf(interval, 1)) : last + Math.abs(interval - INTERVAL(last)); };
 const passLabel = k => 'pass ' + PASS(k) + ' of ' + PASSES + (DIRECTION(k) < 0 ? ', back' : ', forward');
+/* The board's tick (the loop's forward steps, `tick` on a frame of a look of several passes): it stands at the close while the record is read back and forward, so a frame of the run back is labelled by the tick and by the interval the record is read at; a frame without the key is labelled by its interval as before. */
+const TICK = k => LOOK.frames[k].tick === undefined || LOOK.frames[k].tick === null ? null : Number(LOOK.frames[k].tick);
+const LAST_TICK = Math.max(LAST, ...LOOK.frames.map((_, k) => TICK(k) === null ? LAST : TICK(k)));
+/* The run back's reach (ALGEBRA.md, The meeting's reading, the run back's reach): a look whose header carries `reach` cone has the cone's support, `cone_support` (the birth's Nodes at the file's coordinates, the lay's for a record laid at the start), the cone's Nodes per interval, `cone_volume`, and on every frame of the run back and forward `cone_radius`, t + 1 at the frame's interval t; the page shades the Nodes within that many Links of the support in the Link metric with the wrap as the engine's front counts its shells (per axis |d|, on a periodic axis the lesser of |d| and the extent less |d|, summed over the three axes; features/front.shell), a geometry from the two recorded numbers and nothing of the engine's. The frames' arrays are the engine's as they stand: outside the cone neither read nor written, one ring beyond it read from the board and asserted equal to the record's reference, the board at its birth (the lay's frame 0 for a record laid at the start), by the engine at every step back and forward; at the birth frame of a run back the realised port's coefficients are written into the record's parts (the frame's lay lines), the run forward carrying the realised term. The page's count of the cone's Nodes within the frame's own box stands beside the look's `cone_volume` at the frame's interval. A look without the words draws no cone. */
+const REACH = typeof LOOK.reach === 'string' ? LOOK.reach : null, SUPPORT = Array.isArray(LOOK.cone_support) ? LOOK.cone_support : [], VOLUME = Array.isArray(LOOK.cone_volume) ? LOOK.cone_volume : null;
+const STEPPED = Array.isArray(LOOK.cone_stepped) ? LOOK.cone_stepped : null;  // the Node-steps per interval of the cone stepped alone (the box with its ring), the header's; the page draws the ball alone and never the box
+const CONE_RADIUS = k => LOOK.frames[k].cone_radius === undefined || LOOK.frames[k].cone_radius === null ? null : Number(LOOK.frames[k].cone_radius);
+const CONED = SUPPORT.length > 0 && LOOK.frames.some((_, k) => CONE_RADIUS(k) !== null);
+const supportSpan = () => CONED ? ' (' + [0, 1, 2].filter(a => LOOK.shape[a] > 1).map(a => AXES[a] + ' ' + format(Math.min(...SUPPORT.map(n => n[a]))) + ' to ' + format(Math.max(...SUPPORT.map(n => n[a])))).join(', ') + ')' : '';  // the support's extent along the unfolded axes, from the header's Nodes
+const linkDistance = node => { let least = Infinity; for (const at of SUPPORT) { let d = 0; for (let a = 0; a < 3; a++) { let along = Math.abs(node[a] - at[a]); if (LOOK.boundary[AXES[a]] === 'periodic') along = Math.min(along, LOOK.shape[a] - along); d += along; } if (d < least) least = d; } return least; };  // the least Link distance to the support; a periodic axis never grows, so its extent is the file's
+const inBox = (node, fr) => { const o = originOf(fr), s = shapeOf(fr); return node.every((c, a) => c >= o[a] && c < o[a] + s[a]); };  // within the frame's own box
+const inCone = (i, k) => { const radius = CONE_RADIUS(k); return radius !== null && DISTANCE[i] <= radius && inBox(nodeOf(i), LOOK.frames[k]); };
 /* The view is fixed: the board is seen along one axis, VIEW, and never turned; a folded axis is the one seen along (the board the plane it is), a board of three axes is seen along z one layer at a time, LAYER. The eye stands on the side of the axis from which its two other axes read right and up (ACROSS), and the declared board (the file's own Nodes, from the origin) alone is in the frame. */
 const VIEW = LOOK.folded.indexOf(true) >= 0 ? LOOK.folded.indexOf(true) : 2, SIDE = VIEW === 2 ? 1 : -1;
 const ACROSS = [0, 1, 2].filter(a => a !== VIEW);
@@ -174,7 +190,9 @@ const FAMILIES = LOOK.families, QUANTA = FAMILIES.filter(f => f.quanta), HELD = 
 const AXES = ['x', 'y', 'z'], PARTS = ['x', 'y', 'z', 'xx', 'yy', 'zz', 'xy', 'xz', 'yz'];
 const colourOf = name => token('--' + ROLES[name].role);
 const esc = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-const format = value => typeof value === 'number' ? value.toLocaleString('en-US') : String(value);
+const format = value => typeof value === 'number' ? (value === 0 ? 0 : value).toLocaleString('en-US') : String(value);  // -0 printed as 0
+const ordinal = n => { const tens = n % 100, ones = n % 10; return format(n) + (tens >= 11 && tens <= 13 ? 'th' : ones === 1 ? 'st' : ones === 2 ? 'nd' : ones === 3 ? 'rd' : 'th'); };  // 1st, 2nd, 3rd, 11th, 12th, 13th, 21st
+const nodesWord = n => format(n) + (n === 1 ? ' Node' : ' Nodes'), linksWord = n => format(n) + (n === 1 ? ' Link' : ' Links');
 
 /* The arrays of a frame, dense nested lists or the nonzero Nodes alone over the frame's own shape, as flat x-major arrays over the page's box, the frame's Nodes at their file coordinates. */
 function arrayOf(value, fr) {
@@ -214,13 +232,28 @@ for (let t = 0; t <= T; t++) {
 }
 const indexOf = (x, y, z) => ((x - LOW[0]) * Y + (y - LOW[1])) * Z + (z - LOW[2]);
 const nodeOf = i => [Math.floor(i / (Y * Z)) + LOW[0], Math.floor(i / Z) % Y + LOW[1], i % Z + LOW[2]];
+const DISTANCE = CONED ? Float64Array.from({ length: N }, (_, i) => linkDistance(nodeOf(i))) : null;  // every Node's Link distance to the cone's support, once
+const coneCount = k => { if (!CONED || CONE_RADIUS(k) === null) return null; let n = 0; for (let i = 0; i < N; i++) if (inCone(i, k)) n++; return n; };
+const coneLabel = k => CONE_RADIUS(k) === null ? '' : ', cone ' + linksWord(CONE_RADIUS(k)) + ' about the birth\'s ' + nodesWord(SUPPORT.length) + supportSpan();
+/* The interval from which the cone holds a box whole: the largest Link distance of the box's Nodes from the support, less one (G(t) holds the Nodes within t + 1 Links); the declared board's box and the last frame's, the board as grown. */
+const filledFrom = fr => { if (!CONED) return null; let far = 0; for (let i = 0; i < N; i++) if (inBox(nodeOf(i), fr) && DISTANCE[i] > far) far = DISTANCE[i]; return far - 1; };
+const DECLARED_BOX = { shape: LOOK.shape, offset: [0, 0, 0] }, FILLED = CONED ? { declared: filledFrom(DECLARED_BOX), grown: filledFrom(LOOK.frames[T]) } : null;
 /* The click lines the measurement is drawn from: the output file's where it is given (the run's own output), the look's otherwise; the two are the same engine lines, and the header says so or names the difference. The output file's credit lines (the clicks the draw credited) and density lines (a lattice reading per declared region) beside them. */
 const LOOK_CLICKS = [], reportsAt = {}, CREDITS_AT = {}, DENSITY_AT = {};
 for (const frame of LOOK.frames) for (const line of frame.lines) if (line.event === 'click') LOOK_CLICKS.push(line);
-/* Every line's position, the frame it belongs to: a look line's the frame holding it; an output line's by the look's order (the output's lines and the look's are the same engine lines in the same order): a click or parts line takes the position of its twin in the look, the next of the look's lines with its interval, region, family and inflow, and every other line (a credit, a lay, a face, an erasure, a density) the first frame from the one before it in the output whose interval is its own, else the position the full look's rule gives its interval in that pass; on a look of one pass every position is the frame holding the line's interval, or the first after it. */
-const POSITIONS = new Map(), TWINS = new Map(), keyOf = line => [line.event, line.interval, line.node_detector, line.family, line.inflow].join('|');
+/* Every line's position, the frame it belongs to: a look line's the frame holding it; an output line's by the look's order (the output's lines and the look's are the same engine lines in the same order): a click, parts, credit or lay line takes the position of its twin in the look, the next of the look's lines with its interval, region, family and inflow (a lay line's twin by its content too: its line, Node and levels, so that the write's lines at the birth and a source's lines at the same interval are told apart), and a line with no twin is placed from the cursor, the frame of the line before it in the output: within the cursor's pass where its interval lies at or ahead of the line before it in the pass's direction, at the frame of its interval or the next frame kept in the pass (the lines of an interval between the kept frames shown at the next frame kept), else (an interval behind the line before it, a line of a later pass) at the first frame from the cursor whose interval is its own, else at the next frame kept of the following pass, else at the position the full look's rule gives its interval in the cursor's pass; on a look of one pass every position is the frame holding the line's interval, or the first after it. */
+const POSITIONS = new Map(), TWINS = new Map(), keyOf = line => [line.event, line.interval, line.node_detector, line.family, line.inflow].concat(line.event === 'lay' ? [line.line, JSON.stringify(line.node && line.node.at), JSON.stringify(line.before), JSON.stringify(line.after)] : []).join('|');
+const placed = (interval, cursor, last) => {
+  const c = Math.min(cursor, T), within = (from, pass) => { const d = DIRECTION(from); for (let k = from; k <= T && PASS(k) === pass; k++) if (d * (INTERVAL(k) - interval) >= 0) return k; return null; };
+  if (DIRECTION(c) * (interval - last) >= 0) { const k = within(c, PASS(c)); if (k !== null) return k; }
+  let k = c; while (k <= T && INTERVAL(k) !== interval) k++;
+  if (k <= T) return k;
+  let next = c; while (next <= T && PASS(next) === PASS(c)) next++;
+  if (next <= T) { const k2 = within(next, PASS(next)); if (k2 !== null) return k2; }
+  return positionOf(interval, PASS(c));
+};
 LOOK.frames.forEach((frame, k) => frame.lines.forEach(line => { POSITIONS.set(line, k); const key = keyOf(line); if (!TWINS.has(key)) TWINS.set(key, []); TWINS.get(key).push(k); }));
-if (OUTPUT) { let cursor = 0; for (const line of OUTPUT.lines) { const twins = TWINS.get(keyOf(line)); let k; if (twins && twins.length) k = twins.shift(); else { k = cursor; while (k <= T && INTERVAL(k) !== Number(line.interval)) k++; if (k > T) k = positionOf(Number(line.interval), PASS(Math.min(cursor, T))); } POSITIONS.set(line, k); cursor = Math.max(cursor, Math.min(k, T)); } }
+if (OUTPUT) { let cursor = 0, last = 0; for (const line of OUTPUT.lines) { const twins = TWINS.get(keyOf(line)); const k = twins && twins.length ? twins.shift() : placed(Number(line.interval), cursor, last); POSITIONS.set(line, k); cursor = Math.max(cursor, Math.min(k, T)); last = Number(line.interval); } }
 const positionOfLine = line => POSITIONS.get(line);
 const CLICKS = OUTPUT ? OUTPUT.lines.filter(line => line.event === 'click') : LOOK_CLICKS;
 for (const line of CLICKS) {
@@ -232,9 +265,24 @@ if (OUTPUT) for (const line of OUTPUT.lines) {
   if (line.event === 'density') ((DENSITY_AT[line.family] || (DENSITY_AT[line.family] = {}))[line.node_detector] || (DENSITY_AT[line.family][line.node_detector] = [])).push([line.interval, line.reading, positionOfLine(line)]);
 }
 /* The click act's lines from the output file: the hole (the lay lines' Nodes per interval), the faces presented (the face lines' Nodes per interval: the hole's faces, then the front's shells), the front's erasure lines (the origin, the distance and the sizes taken per interval) and the records' credits (a record declared a NodeDetector, `body n`), the meeting of the future with the past drawn where the engine wrote it. */
-const HOLES_AT = {}, FACES_AT = {}, FRONTS_AT = {}, RECORD_CREDITS = {}, REGION_CREDITS = [];  // the holes and the faces by the frame they belong to; the regions' credit lines (a click that runs back carries its `meeting` and `order`)
+/* The write at the birth (ALGEBRA.md, The meeting's reading: the realised port's integer coefficients, reduced by their greatest common divisor over the record's surviving parts, scaled into the record's parts at its birth; a scaling alone writes nothing): the output's lay lines of a record of several parts whose levels after the lay are a whole multiple of the levels before on both levels of the line, now and before (a source's lay moves the level now alone and is no scaling), grouped by the frame the line's position names and the family: the coefficient per part (1 where no line was written, the engine writing the lines whose coefficient is not 1), the Nodes written; a group holding a line that is no scaling is a lay, an emission's or a packet's, drawn as the hole and never labelled the write; the last frame of a run back with no write's lines is the birth where nothing was written. */
+const PARTS_OF = {}, WIDTH_OF = {};
+for (const f of FAMILIES) { WIDTH_OF[f.name] = f.plane ? 2 : 1; if (f.quanta && f.lines > WIDTH_OF[f.name]) PARTS_OF[f.name] = f.lines / WIDTH_OF[f.name]; }
+const scaleOf = line => { const before = Array.isArray(line.before) ? line.before : [], after = Array.isArray(line.after) ? line.after : []; let c = null; for (let i = 0; i < 2; i++) { const x = Number(before[i]), y = Number(after[i]); if (!Number.isFinite(x) || !Number.isFinite(y)) return null; if (x !== 0) { const r = y / x; if (!Number.isInteger(r) || (c !== null && r !== c)) return null; c = r === 0 ? 0 : r; } else if (y !== 0) return null; } return c; };
+const GROUPS = {};  // per frame and family the lay lines of a record of several parts
+if (OUTPUT) for (const line of OUTPUT.lines) if (line.event === 'lay' && PARTS_OF[line.family] !== undefined) { const g = positionOfLine(line) + '|' + line.family; (GROUPS[g] || (GROUPS[g] = [])).push(line); }
+const WRITTEN = new Set(), WRITES_AT = {};
+for (const g in GROUPS) { const lines = GROUPS[g]; if (lines.some(line => scaleOf(line) === null)) continue; const k = positionOfLine(lines[0]), family = lines[0].family, w = { family, coefficients: Array(PARTS_OF[family]).fill(1), nodes: new Set() }; for (const line of lines) { const part = Math.floor(Number(line.line) / WIDTH_OF[family]); if (part >= 0 && part < w.coefficients.length) w.coefficients[part] = scaleOf(line); if (line.node && Array.isArray(line.node.at)) w.nodes.add(line.node.at.join(',')); WRITTEN.add(line); } if (w.coefficients.some(c => c !== 1)) (WRITES_AT[k] || (WRITES_AT[k] = [])).push(w); }
+const isWrite = line => WRITTEN.has(line);
+const BIRTHS = new Set(LOOK.frames.map((_, k) => k).filter(k => DIRECTION(k) < 0 && (k === T || PASS(k + 1) !== PASS(k))));  // the run backs' last frames, the record's birth
+const scaledWords = (w, html) => (Object.keys(PARTS_OF).length > 1 ? (html ? esc(w.family) : w.family) + "'s parts" : 'the parts') + ' scaled by (' + w.coefficients.map(format).join(', ') + ')';
+const NOTHING_WRITTEN = "nothing written, the realised port's coefficients a scaling of the parts alone (the port realised all the same)";
+const writeLabel = k => WRITES_AT[k] ? ", the click's write at the birth: " + WRITES_AT[k].map(w => scaledWords(w, false)).join('; ') : OUTPUT && BIRTHS.has(k) ? ", the click's write at the birth: " + NOTHING_WRITTEN : '';
+/* The count on the board (ALGEBRA.md, The count on the board, 2026-10-20): the frame's `board_count` per family where the look carries it, the record's count read from the board (the families holding a record, their count other than 0; the family named where the look reads the count of more than one family), and the credit line's `board_count` at the close, read before the write. */
+const countLabel = k => { const found = []; let carrying = 0; for (const f of FAMILIES) { const row = (LOOK.frames[k].families || {})[f.name]; if (row && row.board_count !== undefined && row.board_count !== null) { carrying++; if (row.board_count !== 0) found.push([f.name, row.board_count]); } } return found.length ? ', the count on the board ' + found.map(([name, n]) => carrying > 1 ? format(n) + ' of ' + name : format(n)).join(', ') : ''; };  // the look's own row (frameOf keeps the arrays alone)
+const HOLES_AT = {}, FACES_AT = {}, FRONTS_AT = {}, RECORD_CREDITS = {}, REGION_CREDITS = [];  // the holes and the faces by the frame they belong to; the regions' credit lines (a side's credit line carries its `order`, `scale` and `board_count`)
 if (OUTPUT) for (const line of OUTPUT.lines) {
-  if (line.event === 'lay' && line.node && Array.isArray(line.node.at)) (HOLES_AT[positionOfLine(line)] || (HOLES_AT[positionOfLine(line)] = new Set())).add(line.node.at.join(','));
+  if (line.event === 'lay' && !isWrite(line) && line.node && Array.isArray(line.node.at)) (HOLES_AT[positionOfLine(line)] || (HOLES_AT[positionOfLine(line)] = new Set())).add(line.node.at.join(','));
   if (line.event === 'face' && line.node && Array.isArray(line.node.at)) (FACES_AT[positionOfLine(line)] || (FACES_AT[positionOfLine(line)] = new Set())).add(line.node.at.join(','));
   if (line.event === 'erasure') (FRONTS_AT[line.interval] || (FRONTS_AT[line.interval] = [])).push(line);
   if (line.event === 'credit' && /^body \d+$/.test(String(line.node_detector))) (RECORD_CREDITS[line.node_detector] || (RECORD_CREDITS[line.node_detector] = [])).push(line);
@@ -297,6 +345,7 @@ QUANTA.forEach((f, k) => {
   layers[f.name + ' dots'] = { on: true, objects: [full, hollow] };
   layers[f.name + ' glow'] = { on: true, objects: [] };
 });
+if (CONED) layers['the cone'] = { on: true, objects: [] };  // the run back's reach, shaded on the cubes of the frames that carry a radius
 const mists = {}, bars = {};
 for (const f of HELD) {
   const mist = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: colourOf(f.name), transparent: true, opacity: size('--mist-opacity'), depthWrite: false }), N);
@@ -396,10 +445,11 @@ function themed() {
 let t = 0, playing = null, named = null;
 function draw() {
   const frame = LOOK.frames[t], fr = frameOf(t), glow = size('--glow'), glowPower = size('--glow-power'), glowTint = size('--glow-tint');
-  const base = new THREE.Color(token('--cube'));
+  const base = new THREE.Color(token('--cube')), coneTone = new THREE.Color(token('--cone'));
   boxAt(frame);
   for (let i = 0; i < N; i++) {
     colour.copy(base);
+    if (CONED && layers['the cone'].on && inCone(i, t)) colour.lerp(coneTone, size('--cone-tint'));  // the cone's Nodes in the cone's tone, the floor the record's glow stands on
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
       const a = fr[f.name];  // the glow by the form D at the Node (the wave's intensity, phase-free) against the frame's own largest, where the look holds it, else by the level against the frame's own largest; the dots carry the absolute count
@@ -470,13 +520,26 @@ function draw() {
   for (const layer of Object.values(layers)) layer.objects.forEach(o => { o.visible = layer.on; });
   renderer.render(scene, camera);
   byId('slider').value = t;
-  byId('frame').textContent = (t === 0 ? 'laid, 0 / ' + LAST : 'interval ' + INTERVAL(t) + ' / ' + LAST) + (PASSES > 1 ? ', ' + passLabel(t) : '');
+  byId('frame').textContent = (t === 0 ? 'laid, 0 / ' + LAST : TICK(t) !== null ? 'tick ' + TICK(t) + ' / ' + LAST_TICK + (TICK(t) === INTERVAL(t) ? ', the record at interval ' : ', the record read at interval ') + INTERVAL(t) : 'interval ' + INTERVAL(t) + ' / ' + LAST) + (PASSES > 1 ? ', ' + passLabel(t) : '') + (CONED ? coneLabel(t) : '') + writeLabel(t) + countLabel(t);
   byId('direction').innerHTML = PASSES > 1 ? `<svg viewBox="0 0 12 12" role="img" aria-label="${DIRECTION(t) < 0 ? 'the run back' : 'the run forward'}"><path d="${DIRECTION(t) < 0 ? 'M 11 1 L 1 6 L 11 11 z' : 'M 1 1 L 11 6 L 1 11 z'}" fill="${DIRECTION(t) < 0 ? token('--back') : token('--forward')}"/></svg>` : '';
   const counts = {};
   for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
   const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.node_detector + ': ' + line.family);
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
+  if (REACH) {
+    const radius = CONE_RADIUS(t), count = coneCount(t), volume = VOLUME && VOLUME[INTERVAL(t)] !== undefined && VOLUME[INTERVAL(t)] !== null ? Number(VOLUME[INTERVAL(t)]) : null, cells = shapeOf(LOOK.frames[t]).reduce((p, e) => p * e, 1);
+    const grownShape = shapeOf(LOOK.frames[T]).join(' x '), grownCells = shapeOf(LOOK.frames[T]).reduce((p, e) => p * e, 1), closing = VOLUME && VOLUME[LAST] !== undefined ? Number(VOLUME[LAST]) : null;
+    const fills = CONED ? ` The cone holds the declared board of ${LOOK.shape.join(' x ')} Nodes whole from the interval ${format(FILLED.declared)} on (its farthest Node ${format(FILLED.declared + 1)} Links from the birth\'s Nodes)` + (FILLED.grown <= LAST ? ` and the board as grown, ${grownShape}, whole from the interval ${format(FILLED.grown)} on` : ` and at the close ${closing === null ? '' : format(closing) + ' of '}the grown board\'s ${format(grownCells)} Nodes (${grownShape}), inside it`) + ': the shading shows the record\'s own region shrinking back to the birth\'s Nodes and growing from it.' : '';
+    const stepped = STEPPED ? STEPPED.reduce((s, v) => s + (Number(v) || 0), 0) : null;
+    const alone = stepped === null ? '' : ` Only the record\'s cone is stepped on the run back and forward (${format(stepped)} Node-steps in all, the box with its ring, the header\'s cone_stepped); the rest of the board is neither read nor written.`;
+    const legend = CONED ? '<b>The click is where the past met the future: the record\'s own light cone runs back after the click, the realised term is written at the record\'s birth, and the cone runs forward with it; the rest of the board neither read nor written</b> (one ring beyond the cone read from the board and asserted equal to the record\'s reference, the board at its birth, the lay\'s frame 0 for a record laid at the start, by the engine at every step): at the Nodes Rule3 at -1 and +1 inside the record\'s cone, the draws, the write at the birth and the count\'s write the only acts of the click, the board\'s tick standing at the close while the record is read back and forward, the detectors\' proper clocks the Nodes\' own; the shading a geometry from the frames\' cone_radius and the header\'s cone_support in the front\'s Link metric with the wrap, every number the look\'s.' + alone + fills : REACH === 'board' ? "<b>The click is where the past met the future: the whole board runs back to the record's birth after the click, the realised term is written there, and the board runs forward with it</b> (the reach board, the whole board stepped by Rule3 at -1 and +1: the record's cone not stepped alone, a check of the cone's reach, the two equal bit for bit; the draws, the write at the birth and the count's write the only acts of the click, the board's tick standing at the close while the record is read back and forward" + (stepped === null ? '' : ', ' + format(stepped) + " Node-steps in all, the header's cone_stepped") + ').' : 'the run back\'s reach: ' + esc(REACH) + ' (the run back and forward by Rule3 at -1 and +1, the draws and the count\'s write the only acts of the click).';
+    const now = radius === null ? (CONED ? 'This frame: the run to the first close; the cone on the frames of the run back and forward.' : '') : `This frame: the cone ${linksWord(radius)} about the birth's ${nodesWord(SUPPORT.length)}${esc(supportSpan())}, ${format(count)} Nodes of the frame's ${format(cells)} inside it` + (volume === null ? '' : `, the look's |G| ${format(volume)}${volume === count ? ', the same' : ', differs'}`) + '; outside the cone the board as the engine left it, neither read nor written.';
+    const written = WRITES_AT[t], writeNow = written ? written.map(w => "This frame: the click's write at the record's birth, " + scaledWords(w, true) + ' at ' + nodesWord(w.nodes.size) + " (the output's lay lines, the levels after the write a whole multiple of the levels before); the run forward carries the realised term.").join('<br>') : OUTPUT && BIRTHS.has(t) ? "This frame: the record's birth at the end of the run back, " + NOTHING_WRITTEN + '; the run forward carries the realised term.' : '';
+    const closedHere = OUTPUT ? OUTPUT.lines.filter(line => line.event === 'credit' && positionOfLine(line) === t && line.board_count !== undefined && line.board_count !== null) : [];
+    const countNow = closedHere.map(line => "This frame: the record's count read from the board at the close of " + esc(String(line.node_detector)) + ', ' + format(line.board_count) + ", before the write (the credit line's board_count: the record's share in its unit over the written coefficients' norm)").join('<br>');
+    byId('cone').innerHTML = legend + (now ? '<br>' + now : '') + (writeNow ? '<br>' + writeNow : '') + (countNow ? '<br>' + countNow : '');
+  }
   if (!MEASURE) drawMeasure();
   moveCursors();
 }
@@ -541,7 +604,8 @@ for (const [name, layer] of Object.entries(layers)) {
   input.addEventListener('change', () => { layer.on = input.checked; draw(); });
   label.append(input);
   if (family) { const swatch = document.createElement('i'); swatch.className = 'swatch' + (ROLES[family.name].dashed ? ' dashed' : ''); swatch.style.borderColor = colourOf(family.name); swatch.style.background = name.endsWith(' dots') ? colourOf(family.name) : 'transparent'; label.append(swatch); }
-  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : ''));
+  if (name === 'the cone') { const swatch = document.createElement('i'); swatch.className = 'swatch'; swatch.style.borderColor = token('--cone'); swatch.style.background = token('--cone'); label.append(swatch); }
+  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : name === 'the cone' ? ' (the run back\'s reach: the birth\'s Nodes within the frame\'s radius of Links, the front\'s metric with the wrap)' : ''));
   layerBox.append(label);
 }
 
@@ -563,14 +627,14 @@ const svgText = (text, x, y, anchor) => `<text x="${x}" y="${y}" text-anchor="${
 function graph(container, title, series, kind, marks, shape) {
   const W = size('--graph-width') * (shape ? shape[0] : 1), H = size('--graph-height') * (shape ? shape[1] : 1), pad = size('--graph-pad'), left = pad * 8, frames = series[0] ? series[0].values.length : 0;
   let low = Infinity, high = -Infinity;
-  for (const s of series) for (const v of s.values) { if (v < low) low = v; if (v > high) high = v; }
+  for (const s of series) for (const v of s.values) { if (v === null || Number.isNaN(v)) continue; if (v < low) low = v; if (v > high) high = v; }  // a frame without a value is a gap
   if (!series.length || !isFinite(low)) { container.innerHTML = `<div class="caption"><b>${esc(title)}</b><span>nothing to draw</span></div>`; return; }
   if (low === high) { low -= 1; high += 1; }
   const px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (W - left - pad), py = v => pad + (high - v) / (high - low) * (H - 2 * pad);
   let body = `<rect x="${left}" y="${pad}" width="${W - left - pad}" height="${H - 2 * pad}" fill="none" stroke="${token('--line')}"/>`;
   if (low < 0 && high > 0) body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}" stroke-dasharray="2 3"/>`;
   body += svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText(format(low), left - 3, H - pad, 'end');
-  for (const s of series) body += `<polyline fill="none" stroke="${s.colour}" stroke-width="${size('--line-width')}" ${s.dashed ? 'stroke-dasharray="5 4"' : ''} stroke-linejoin="round" points="${Array.from(s.values, (v, i) => px(i).toFixed(1) + ',' + py(v).toFixed(1)).join(' ')}"/>`;
+  for (const s of series) { const runs = [[]]; Array.from(s.values).forEach((v, i) => { if (v === null || Number.isNaN(v)) { if (runs[runs.length - 1].length) runs.push([]); } else runs[runs.length - 1].push(px(i).toFixed(1) + ',' + py(v).toFixed(1)); }); for (const points of runs) if (points.length) body += `<polyline fill="none" stroke="${s.colour}" stroke-width="${size('--line-width')}" ${s.dashed ? 'stroke-dasharray="5 4"' : ''} stroke-linejoin="round" points="${points.join(' ')}"/>`; }
   if (BOUNDS.length && frames === T + 1) body += BOUNDS.map(k => `<line x1="${px(k).toFixed(1)}" x2="${px(k).toFixed(1)}" y1="${pad}" y2="${H - pad}" stroke="${token('--bound')}" stroke-dasharray="2 3"><title>${passLabel(k)}, from the frame at interval ${INTERVAL(k)}</title></line>`).join('');
   if (marks) body += marks(px, py, low, high);
   body += `<line class="cursor" x1="${px(t)}" x2="${px(t)}" y1="${pad}" y2="${H - pad}" stroke="${token('--fg')}" stroke-width="1"/>`;
@@ -584,7 +648,7 @@ function moveCursors() {
     if (!g.series) return;
     const [left, right, frames] = JSON.parse(g.dataset.px), x = left + (frames > 1 ? t / (frames - 1) : 0) * (right - left);
     g.querySelectorAll('.cursor').forEach(c => { c.setAttribute('x1', x); c.setAttribute('x2', x); });
-    const now = g.querySelector('.now'); if (now) now.innerHTML = g.series.map(s => `<span>${esc(s.name)} <b>${format(s.values[t])}</b></span>`).join('');
+    const now = g.querySelector('.now'); if (now) now.innerHTML = g.series.map(s => `<span>${esc(s.name)} <b>${s.values[t] === null || Number.isNaN(s.values[t]) ? 'none' : format(s.values[t])}</b></span>`).join('');
   });
 }
 const seriesOf = (family, name, values, dashed) => ({ name, values, colour: colourOf(family), dashed: !!dashed });
@@ -593,10 +657,14 @@ function drawGraphs() {
   const at = named ? indexOf(...named) : null, reading = 'lattice reading';
   const add = (title, series) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, series, reading); };
   add('The share per family over the lattice, in quanta (the books per interval, LATTICE; the counts per Node summed where the look holds no share)', QUANTA.map(f => seriesOf(f.name, f.name, TOTALS[f.name], ROLES[f.name].dashed)));
+  if (CONED) { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, 'The cone\'s radius in Links over the frames: down Link by Link on the run back to the birth\'s Nodes, up on the run forward (the frames\' cone_radius; none on the run to the first close)', [{ name: 'cone_radius', values: Float64Array.from({ length: T + 1 }, (_, k) => CONE_RADIUS(k) === null ? NaN : CONE_RADIUS(k)), colour: token('--cone'), dashed: false }], 'the run back\'s reach, the frames\' word'); }
   if (at === null) return;
   const over = key => f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => (frameOf(k)[f.name][key] || [])[at] || 0), ROLES[f.name].dashed);  // frame 0 holds no form
   add('The count at the Node', QUANTA.map(over('count')));
   add('The form at the Node', QUANTA.map(over('form')));
+  const entry = BLIND.worlds && typeof BLIND.worlds === 'object' ? BLIND.worlds[String(LOOK.world).replace(/\.json$/, '')] || BLIND : BLIND;
+  const line = typeof entry.line_per_interval === 'number' ? entry.line_per_interval : null, levels = entry.levels && typeof entry.levels === 'object' && !Array.isArray(entry.levels) ? entry.levels : null;
+  if (line !== null || levels) addSpectrum(line, levels, QUANTA.map(over('form')));
   add('The field at the Node', HELD.map(f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => frameOf(k)[f.name].level[at]))));
   add('The pace\'s minimum', QUANTA.map(f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => frameOf(k)[f.name].pace), ROLES[f.name].dashed)));
   const tension = [];
@@ -606,6 +674,25 @@ function drawGraphs() {
   }
   if (tension.length) add('The tension at the Node', tension);
   moveCursors();
+}
+/* The line at the Node (where the blind names a line, `line_per_interval`, or levels, `levels`, in the world's entry or at its root): the discrete transform of the picked Node's form over the frames after the first (frame 0 holds no form) about its mean, the bins 2 pi m / (N every) per interval with every the look's stride and N the frames used, the amplitudes 2 |X_m| / N, one series per family of quanta; the blind's line a dashed mark at its bin, the levels named from the blind, the peak bin of every family above half a level in the caption; no cursor, the graph being over the bins and not the frames. Every number is the look's or the blind's; the page names no world. */
+function addSpectrum(line, levels, formSeries) {
+  const every = Number(LOOK.every) || 1, used = formSeries.map(s => Array.from(s.values).slice(1));
+  const N = used[0] ? used[0].length : 0;
+  if (N < 4) return;
+  const step = 2 * Math.PI / (N * every), bins = Math.floor(N / 2), four = v => Number(v).toFixed(4);
+  const series = formSeries.map((s, j) => {
+    const v = used[j], mean = v.reduce((a, b) => a + b, 0) / N, amps = new Float64Array(bins + 1);
+    for (let m = 1; m <= bins; m++) { let re = 0, im = 0; for (let k = 0; k < N; k++) { const a = 2 * Math.PI * m * k / N, d = v[k] - mean; re += d * Math.cos(a); im -= d * Math.sin(a); } amps[m] = 2 * Math.hypot(re, im) / N; }
+    return { name: s.name, values: amps, colour: s.colour, dashed: s.dashed };
+  });
+  const marks = (px, py, low, high) => line === null ? '' : `<line x1="${px(line / step).toFixed(1)}" x2="${px(line / step).toFixed(1)}" y1="${py(high).toFixed(1)}" y2="${py(low).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4"><title>the blind\'s line, ${four(line)} per interval</title></line>`;
+  const g = document.createElement('div'); g.className = 'graph'; byId('graphs').append(g);
+  graph(g, `The line at the Node: the transform of the form over the frames, the bins ${four(step)} per interval (the blind\'s line dashed)`, series, 'lattice reading', marks);
+  g.querySelectorAll('.cursor').forEach(c => c.remove()); delete g.series;
+  const peaks = series.filter(s => Math.max(...s.values) > 0.5).map(s => { let best = 1; for (let m = 2; m < s.values.length; m++) if (s.values[m] > s.values[best]) best = m; return `${esc(s.name)} peaks at ${four(best * step)} per interval (${format(Math.round(s.values[best]))})`; }).join('; ');
+  const named = levels ? Object.entries(levels).filter(([, v]) => typeof v === 'number').map(([k, v]) => `${esc(k)} ${four(v)}`).join(', ') : '';
+  g.querySelector('.now').innerHTML = (named ? `the blind\'s levels ${named}; ` : '') + (line !== null ? `the line ${four(line)} per interval, dashed; ` : '') + peaks;
 }
 const picker = byId('node-picker');
 picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="number" id="node-${axis}" min="${LOW[a]}" max="${HIGH[a] - 1}" value="0"></label>`).join(' ') + ' <span>(click a cube to pick it)</span>';
@@ -619,8 +706,8 @@ function drawNodeMeasure() {
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${m.node_detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
-  const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n), blind = m.blind.map(v => typeof v === 'number' ? v : null);  // the bars fill the chart's width
   const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
@@ -635,11 +722,15 @@ function drawNodeMeasure() {
     body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
-  if (blind.some(v => v !== null)) {
-    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+  const hasBlind = blind.some(v => v !== null);
+  if (hasBlind && blind.every(v => v !== null)) {
+    const points = blind.map((v, k) => px(k).toFixed(1) + ',' + py(v).toFixed(1)).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  } else if (hasBlind) {  // a blind with gaps (the which-way folder's rows: none at the channel): one dashed mark per bar where the row carries a count
+    blind.forEach((v, k) => { if (v !== null) body += `<line x1="${(px(k) - slot * 0.4).toFixed(1)}" x2="${(px(k) + slot * 0.4).toFixed(1)}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="4 3"><title>the blind ${format(v)} at ${esc(m.labels[k])}</title></line>`; });
+    body += svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
@@ -687,7 +778,8 @@ function numbers() {
   const ended = LOOK.ended ? `at interval ${format(LOOK.ended.interval)}: the front at the ${LOOK.ended.side} face of ${LOOK.ended.axis} at the largest size ${format(LOOK.ended.largest)}` : 'no';
   let html = '<dl>' + row('world', LOOK.world) + row('shape', LOOK.shape.join(' x ') + (X * Y * Z > LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2] ? ', grown to ' + [X, Y, Z].join(' x ') : '')) + row('boundary', AXES.map(a => a + ' ' + LOOK.boundary[a]).join(', ')) + row('inner faces', inner) + row('receding faces', receding) + row('ended', ended) + row('folded', AXES.filter((a, k) => LOOK.folded[k]).join(', ') || 'none') + row('face depth', LOOK.face_depth)
     + row('Gamma (the Node clock)', format(LOOK.node_clock)) + row('T (the quantum action)', format(LOOK.quantum_action)) + row('the largest integer', LOOK.largest_integer) + row('A (the amplitude bound)', format(LOOK.amplitude_bound))
-    + row('intervals', format(LOOK.intervals) + ' recorded; the world declares ' + format(LOOK.declared_intervals)) + '</dl>';
+    + row('intervals', format(LOOK.intervals) + ' recorded; the world declares ' + format(LOOK.declared_intervals))
+    + (REACH ? row('the run back\'s reach', REACH + (SUPPORT.length ? ', the record\'s light cone about the birth\'s ' + nodesWord(SUPPORT.length) + supportSpan() : '')) : '') + '</dl>';
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>level weight</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
     + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
@@ -723,10 +815,10 @@ function blindTable() {
 function drawReading() {
   const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
-  const slot = size('--bar-slot') * 1.8, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
   let body = '';
   if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
@@ -747,7 +839,7 @@ function drawReading() {
   const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)}, the rounded shares per reporter (N by the shares of the output file's click lines, the expectation)</span>` + (clicks ? `<span><i style="border-color:${flash};border-top-width:6px"></i>the clicks the draw credited (the credit lines, the measurement)</span>` : '') + `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(BLIND.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The output file's credit of ${esc(family)} at ${format(n)} reporters across ${esc(r.across)}, beside the blind</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the reading's bars beside the blind">${body}</svg>`;
   const credited = clicks ? clicks.reduce((a, b) => a + b, 0) : null;
-  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw with the seed ${format(r.seed)}` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
+  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
   byId('watch').innerHTML = readingTable();
 }
 function readingTable() {
@@ -778,7 +870,7 @@ function drawRecords() {
   if (!DETECTOR_BODIES.length && !REGION_CREDITS.length) return;
   const box = byId('records'); box.innerHTML = ''; byId('records-box').hidden = false;
   const names = [], rows = [], byPosition = (a, b) => positionOfLine(a) - positionOfLine(b) || a.interval - b.interval;
-  const WORDS = ['meeting', 'order'].filter(word => OUTPUT.lines.some(line => line.event === 'credit' && line[word] !== undefined));  // the click that runs back names its mode and its order on the line
+  const WORDS = ['order', 'scale', 'board_count'].filter(word => OUTPUT.lines.some(line => line.event === 'credit' && line[word] !== undefined));  // a side of a record of several parts names its order, the record's scale after its write and the count read from the board on the line
   const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => line[word]), line.label];
   for (const n of DETECTOR_BODIES) {
     const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort(byPosition), body = LOOK.bodies[n];
@@ -839,7 +931,8 @@ function drawArrival() {
 /* The start: the title, the verdict, frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
-byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (SAME_LINES ? ', the look’s click lines the same' : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
+const biasBound = () => { const pairs = OUTPUT ? OUTPUT.lines.filter(l => l.event === 'credit' && l.bias_bound && l.bias_bound.g && l.bias_bound.total).map(l => [Number(l.bias_bound.g), Number(l.bias_bound.total)]) : []; if (!pairs.length) return ''; const [g, T] = pairs.reduce((a, b) => a[0] * b[1] >= b[0] * a[1] ? a : b); const gcd = (x, y) => y ? gcd(y, x % y) : x, d = gcd(g, T); return `, the bias bound ${format(g / d)} / ${format(T / d)} on the click's line (the worst over the ${format(pairs.length)} credits carrying one)`; };  // the totals' bias as the credit lines carry it (ALGEBRA.md, The digits' base and a total's factors)
+byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (MEASURE ? '' : biasBound()) + (SAME_LINES ? ', the look’s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${ordinal(LOOK.every)} interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
 if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
 function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();

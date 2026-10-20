@@ -22,6 +22,12 @@ BELL = {  # the four shipped singlet worlds and the blind's E, the settings a b,
     "singlet_a_prime_b_prime": Fraction(-120, 169),
 }
 GHZ = {"ghz_x_x_x": 1, "ghz_x_y_y": -1, "ghz_y_x_y": -1, "ghz_y_y_x": -1}  # the four shipped worlds' E_3
+BORN = {  # the four shipped born-pair worlds and the blind's E, the settings a b, a b', a' b, a' b'
+    "born_a_b": Fraction(-119, 169),
+    "born_a_b_prime": Fraction(119, 169),
+    "born_a_prime_b": Fraction(-120, 169),
+    "born_a_prime_b_prime": Fraction(-120, 169),
+}
 CHSH = ("singlet_a_b", "singlet_a_b_prime", "singlet_a_prime_b", "singlet_a_prime_b_prime")
 
 
@@ -194,16 +200,10 @@ def born_read(tmp_path, name: str) -> Fraction:  # type: ignore[no-untyped-def]
     return found
 
 
-def test_line_4_the_born_pair_a_b_and_a_b_prime(tmp_path):
-    """Line 4, the first two born-pair worlds: E = -119 / 169 at (a, b) and 119 / 169 at (a, b'), read through the sides' own draws at their own closes, A's at 62 and B's at 124."""
-    assert born_read(tmp_path, "born_a_b") == Fraction(-119, 169)
-    assert born_read(tmp_path, "born_a_b_prime") == Fraction(119, 169)
-
-
-def test_line_4_the_born_pair_a_prime_b_and_a_prime_b_prime(tmp_path):
-    """Line 4, the other two born-pair worlds: E = -120 / 169 at (a', b) and at (a', b'); with the first test |S| = 478 / 169 through the born pair."""
-    assert born_read(tmp_path, "born_a_prime_b") == Fraction(-120, 169)
-    assert born_read(tmp_path, "born_a_prime_b_prime") == Fraction(-120, 169)
+@pytest.mark.parametrize("name", list(BORN))
+def test_line_4_each_born_pair_world_reads_the_blinds_e(tmp_path, name):
+    """Line 4, the four born-pair worlds, one test item each (`born_read`): E = -119 / 169 at (a, b), 119 / 169 at (a, b'), -120 / 169 at (a', b) and at (a', b'), read through the sides' own draws at their own closes, A's at 62 and B's at 124; over the four |S| = 478 / 169 through the born pair."""
+    assert born_read(tmp_path, name) == BORN[name]
 
 
 def test_the_born_pair_runs_under_the_cone_reach_since_the_remainders_fix(tmp_path):

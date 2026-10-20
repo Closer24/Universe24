@@ -41,26 +41,26 @@ SETTINGS = {
 
 REAL_PORT_DIGESTS: dict[
     str, tuple[str, str, int]
-] = {  # at the ninth before the tenth's merge, 4c16df037: the lines' digest, the arrays' digest at the end, the lines
-    "singlet_a_b": ("68f8975937ce8302", "29c984886c98a340", 152),
-    "singlet_a_b_prime": ("e0247632210289e9", "29c984886c98a340", 152),
-    "singlet_a_prime_b": ("b923ce9b9d814660", "355f34162a2096bc", 165),
-    "singlet_a_prime_b_prime": ("c3b1f8214317c208", "de0951aaad4762b0", 165),
-    "ghz_x_x_x": ("54b34861b533a520", "d6a774f9d5346e84", 2162),
-    "ghz_x_y_y": ("ccff08ee61756333", "03f76ace05e501e9", 1593),
-    "ghz_y_x_y": ("23627820aeafc4c8", "21422c4532c84b95", 3300),
-    "ghz_y_y_x": ("016e098bfdb7f7a2", "befdc50e632d240e", 5007),
+] = {  # the lines' digest, the arrays' digest at the end, the lines; the lines' digests re-recorded 2026-10-20 under the twist's deletion, the credit line without twist and shortfall, the arrays' digests and the counts as at the ninth
+    "singlet_a_b": ("1b4de9a3ecd0fbe3", "29c984886c98a340", 152),
+    "singlet_a_b_prime": ("3fb0cfd3c2d4f761", "29c984886c98a340", 152),
+    "singlet_a_prime_b": ("cf3ee118d5d5a591", "355f34162a2096bc", 165),
+    "singlet_a_prime_b_prime": ("3a3fa16fd3151ccc", "de0951aaad4762b0", 165),
+    "ghz_x_x_x": ("e3907b49e7107747", "d6a774f9d5346e84", 2162),
+    "ghz_x_y_y": ("df89005705555bb6", "03f76ace05e501e9", 1593),
+    "ghz_y_x_y": ("d37726d4ad3db38b", "21422c4532c84b95", 3300),
+    "ghz_y_y_x": ("3b9802f5a46e3e74", "befdc50e632d240e", 5007),
 }
 REFUSED: dict[
     str, str
 ] = {}  # nothing refused on the landing: the two slits draw at the window 1 and run whole
 REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
     {
-        "two_slits": ("d3e46e78af4c506a", "be63d2ce99f6604a", 2696),  # the landing, 2026-10-20
-        "born_a_b": ("c35111c3692e87aa", "c192784fb41509b1", 290),
-        "born_a_b_prime": ("f5348b8d80b75fd5", "c192784fb41509b1", 290),
-        "born_a_prime_b": ("50959fba5bf17572", "b23542a6b2c460fd", 290),
-        "born_a_prime_b_prime": ("f82d69e0442948ca", "26aa22f2998f8cd6", 290),
+        "two_slits": ("874668d0a958235f", "be63d2ce99f6604a", 2696),  # the landing, 2026-10-20
+        "born_a_b": ("bb97f5dcda1fb8b5", "c192784fb41509b1", 290),
+        "born_a_b_prime": ("0ea65e583fec7beb", "c192784fb41509b1", 290),
+        "born_a_prime_b": ("19285640497e35f7", "b23542a6b2c460fd", 290),
+        "born_a_prime_b_prime": ("1a001543d9083ac1", "26aa22f2998f8cd6", 290),
     }
 )
 

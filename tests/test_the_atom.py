@@ -11,12 +11,12 @@ from event_universe import credit, node_detector, world_files
 from event_universe.core.rule3 import largest_below
 from event_universe.emission import Emitter
 from event_universe.features.click import wave_cosine
+from event_universe.features.phase import quarter_turn
 from event_universe.lattice import Lattice
 from event_universe.loader.node_detector_declaration import lit_families
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.resonance import unit_weight
-from event_universe.twist import quarter_turn
 from event_universe.world_files import load_world
 from tests.laws import TOOL, credit_lines, refused
 from tests.laws_content import TWO_ATOMS, with_content
@@ -27,12 +27,7 @@ CHARGE = {"name": "charge", "pair": [6000, 6000], "reads": {}}  # the deuteron's
 CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1, "act": "pace"}
 TURN = {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
 RATE = {"from": "e", "to": "g", "lifetime": LIFETIME, "gives_to": "photon"}
-SIGNED = (
-    "momentum",
-    "fan",
-    "twist",
-    "recoil",
-)  # a click line's vectors signed per axis; shortfall a size
+SIGNED = ("momentum", "fan", "recoil")  # a click line's vectors signed per axis
 Run = tuple[Lattice, list[dict], list[dict]]  # type: ignore[type-arg]
 RUNS: dict[tuple[str, int, int | None, int], Run] = {}  # the worlds run, once per process
 
@@ -148,12 +143,12 @@ def pick_at(lines: list[dict]) -> str | None:  # type: ignore[type-arg]
 
 
 def framed(line: dict, axis: str, toward: int) -> dict:  # type: ignore[type-arg]
-    """A click line of a world laid along `axis` toward the body brought to the frame of the world along +x: the vectors' chain component moved to x and signed by the direction (the shortfall a size, unsigned)."""
+    """A click line of a world laid along `axis` toward the body brought to the frame of the world along +x: the vectors' chain component moved to x and signed by the direction."""
     along, found = AXES.index(axis), dict(line)
-    for key in (*SIGNED, "shortfall"):
+    for key in SIGNED:
         if isinstance(found[key], list):
-            vector, sign = found[key], toward if key in SIGNED else 1
-            found[key] = [sign * vector[along], *(v for k, v in enumerate(vector) if k != along)]
+            vector = found[key]
+            found[key] = [toward * vector[along], *(v for k, v in enumerate(vector) if k != along)]
     return found
 
 
@@ -325,11 +320,14 @@ def test_the_emission_is_laid_on_lights_own_family_and_the_body_is_dark_to_the_l
     print(
         f"the dark body's {len(dark_draws)} draws read {len(set(dark_draws))} distinct numbers, the period {period}"
     )
-    assert (len(dark_draws), len(set(dark_draws))) == (
-        257,
-        25,
-    )  # the reader's measure, pinned 2026-10-20
-    quarter, action = quarter_turn(board), board.world.quantum_action
+    assert (
+        (len(dark_draws), len(set(dark_draws)))
+        == (
+            257,
+            22,
+        )
+    )  # the reader's measure, pinned 2026-10-20 with the twist deleted (25 distinct numbers with the fold on the body's levels)
+    quarter, action = quarter_turn(board.amplitude, board.world.node_clock), board.world.quantum_action
     light, resonance = board.families[photon].pair, (TURN["resonance"][0], TURN["resonance"][1])
     projection = 2 * math.cos(math.pi / 8) / math.sqrt(2)  # the body's two Nodes at k = pi / 4
     bounds = {}
@@ -346,16 +344,12 @@ def test_the_emission_is_laid_on_lights_own_family_and_the_body_is_dark_to_the_l
 
 
 def test_the_six_directions_of_the_chain_are_one_world_bit_for_bit(tmp_path, monkeypatch):
-    """The 48 (the cold reader's change 4): the atom world laid along -x, -y, +y, -z and +z, each the image of the world along +x under a signed permutation of the cube that carries the chain to a chain (the mirror's packet at the phase 7 pi / 4, cos(k x) about x = 63), gives the same derived W, 33, and the same books at every interval up to the body's first close (the body's `elapsed`, its windows and parts, the dark reads, the photon's count and its levels at the body's Nodes, the rows of charge); the chains carried without a mirror (+y, +z) read the body's two Nodes in the same index order, so their pick at the close is the +x world's and the run is one world bit for bit, the click lines brought to the +x frame (`framed`: the vectors' chain component moved to x and signed, the absorption's piece 44486 and its recoil, the twist 9424, the quarter turn, the shortfall 11678, the lost readings; re-pinned 2026-10-20 under the content of the born universe, 45385 and 13001 at the content 0) and every level and remainder of every family at the run's end equal under the inverse map; a mirror (-x, -y, -z) reads the two Nodes in the other index order (`digits.DIGIT_ORDER`), so its pick at the close is its own, and where it agrees with the +x world's the run is bit for bit the same after the close too; the picks and the seconds printed."""
+    """The 48 (the cold reader's change 4): the atom world laid along -x, -y, +y, -z and +z, each the image of the world along +x under a signed permutation of the cube that carries the chain to a chain (the mirror's packet at the phase 7 pi / 4, cos(k x) about x = 63), gives the same derived W, 33, and the same books at every interval up to the body's first close (the body's `elapsed`, its windows and parts, the dark reads, the photon's count and its levels at the body's Nodes, the rows of charge); the chains carried without a mirror (+y, +z) read the body's two Nodes in the same index order, so their pick at the close is the +x world's and the run is one world bit for bit, the click lines brought to the +x frame (`framed`: the vectors' chain component moved to x and signed, the absorption's piece 44486 and its recoil, the lost readings; re-pinned 2026-10-20 under the content of the born universe, 45385 and 13001 at the content 0) and every level and remainder of every family at the run's end equal under the inverse map; a mirror (-x, -y, -z) reads the two Nodes in the other index order (`digits.DIGIT_ORDER`), so its pick at the close is its own, and where it agrees with the +x world's the run is bit for bit the same after the close too; the picks and the seconds printed."""
     started = time.perf_counter()
     board0, lines0, marks0 = run(tmp_path / "plus", monkeypatch)
     clicks0 = closes(lines0)
-    if clicks0[0]["absorbed"]:  # the quantum taken at 60: the piece's momentum and the taker's twist
+    if clicks0[0]["absorbed"]:  # the quantum taken at 60: the piece's momentum booked
         assert clicks0[0]["momentum"] == [44486, 0, 0]  # 45385 at the content 0; 2026-10-20
-        assert (clicks0[0]["twist"], clicks0[0]["shortfall"]) == ([9424, 0, 0], [11678, 0, 0])
-        assert clicks0[0]["twist"][0] == quarter_turn(
-            board0
-        )  # P lost to the taker: the quarter turn applied
     close = next(m["interval"] for m in marks0 if m["windows"] == 1)  # the body's first close, 61
     picks = {("x", 1): pick_at(run(tmp_path / "plus_close", monkeypatch, until=close)[1])}
     board0, lines0, marks0 = run(tmp_path / "plus_eve", monkeypatch, until=close - 1)  # before any click
