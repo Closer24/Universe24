@@ -10,7 +10,7 @@ from event_universe.lattice import Lattice
 from event_universe.reports import NO_DRAW
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, world_beside
-from tests.laws_read import load_shipped, redeclared
+from tests.laws_read import load_shipped
 
 BACKGROUND = [  # the probe's form: a train of the signal's wave at a tenth of its amplitude along the chain
     {
@@ -43,13 +43,24 @@ def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_
     """The lone [1, 1299] body in e on its two Nodes, no light laid, its window 12 and its rate e to g at the lifetime 48: its read finds every digit at the lay's origin at every multiple of 4 and three cycling numbers between (the exact quarter turn), so the hazard's draws at 1, 2 and 3 miss and the draw at 4 is deferred; at the window's close, 12, the emission falls without a draw, one credit line emitted `pulse` from e to g with the reading NO_DRAW, the quantum laid at the Node of the larger share; the window runs from the lay (an emitter's when); every other draw at the origin is refused by name as before (two weights asked of the fresh board), and one weight reads nothing."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "u.json").write_bytes((EVENTS / "zeno" / "zeno_atom.json").read_bytes())
-    world = redeclared(json.loads((EVENTS / "zeno" / "zeno_4.json").read_text(encoding="utf-8")))
-    body = world["bodies"][0]
-    for part in body["parts"]:
-        part["count"] = int(part["name"] == "e")  # the body in e, its rate out of e
-    body["rates"] = [{"from": "e", "to": "g", "lifetime": 48, "gives_to": "pulse"}]
-    body["node_detector"] = {"window": 12}
-    world.update(packets=[], universe="u.json", intervals=30)
+    body = {  # the Zeno body's declaration (the deleted zeno worlds' atom), in e with its rate out
+        "family": "atom",
+        "nodes": [{"node": [4, 4, 2], "weight": 1}, {"node": [5, 4, 2], "weight": 1}],
+        "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
+        "transitions": [{"from": "g", "to": "e", "drive": "pulse", "weight": 1, "resonance": [2, 3]}],
+        "rates": [{"from": "e", "to": "g", "lifetime": 48, "gives_to": "pulse"}],
+        "node_detector": {"window": 12},
+    }
+    world = {
+        "shape": [8, 8, 5],
+        "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
+        "face_depth": 1,
+        "intervals": 30,
+        "universe": "u.json",
+        "bodies": [body],
+        "packets": [],
+        "node_detectors": [],
+    }
     (path := tmp_path / "dark.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     board = Lattice(load_world(path), (lines := []).append)

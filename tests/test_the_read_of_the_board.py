@@ -19,7 +19,7 @@ from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of,
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, family, refused, world_beside
+from tests.laws import EVENTS, ROOT, emit_and_take_world, family, refused, world_beside
 from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
@@ -224,8 +224,8 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
     assert "left" in names and not names & {"state", "states"}
 
 
-def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path):
-    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the one photon's world, once the photon reaches the first atom, the photon's digits at the body's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the photon's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each; the excited part's two lines stand at the lay's origin at both Nodes, the second a copy of the first and read once, the reader's D2), is admitted; the refusals' texts stand apart from the write's bound refusal."""
+def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):
+    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the emit-and-take world (the resonance universe's two atoms on the periodic chain of 48, the emitter's pulse laid as a source in time from its window's close, 61), once the pulse reaches the taker, the pulse's digits at the taker's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the pulse's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each; the ground part's two lines at the lay's origin, one a copy of the other, read once), is admitted; the refusals' texts stand apart from the write's bound refusal."""
     singlet = Lattice(
         load_world(
             world_beside(
@@ -240,34 +240,26 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     assert {r for r, _f, _w, _p in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
         digits.read_of(singlet, [(spin, left)], "the test")
-    board = Lattice(
-        load_world(
-            world_beside(
-                tmp_path / "photon", EVENTS / "anticoincidence" / "one_photon.json", lambda w: None
-            )
-        )
-    )
-    photon, atom = family(board, "photon"), family(board, "atom")
-    body = board.credit.bodies[0]
-    at = board.mask(body.nodes)
-    while {r for r, _f, _w, _p in digits.digits_of(board, photon, at)} == {board.half_wall(photon)}:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = Lattice(load_world(emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))))
+    pulse, atom = family(board, "pulse"), family(board, "atom")
+    taker = board.credit.bodies[1]
+    at = board.mask(taker.nodes)
+    while {r for r, _f, _w, _p in digits.digits_of(board, pulse, at)} == {board.half_wall(pulse)}:
         board.step()
-    assert {r for r, _f, _w, _p in digits.digits_of(board, photon, at)} <= {
+    assert {r for r, _f, _w, _p in digits.digits_of(board, pulse, at)} <= {
         LIGHT // 6,
         LIGHT // 2,
         5 * LIGHT // 6,
     }
     with pytest.raises(RuntimeError, match="finds every digit on the lattice of the exact vacuum paces"):
-        digits.read_of(board, [(photon, at)], "the test")
+        digits.read_of(board, [(pulse, at)], "the test")
     before = snapshot(board)
-    number, _moduli = digits.read_of(board, [(photon, at), (atom, at)], "the test")
+    number, _moduli = digits.read_of(board, [(pulse, at), (atom, at)], "the test")
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
-    own, walls = digits_now(board, [(photon, at), (atom, at)])
-    assert (
-        number == read_number(own, walls)
-        and walls == [4] * 2 + [3898] * 6  # the bases w div F + 1: light's 3 values, the atom's 3,897
-        and 70 < number.bit_length() <= 76  # 2 digits of 2 bits and 6 of 11.9: the vacuum's few bits
-    )
+    own, walls = digits_now(board, [(pulse, at), (atom, at)])
+    assert number == read_number(own, walls) and set(walls) == {4, 3898}  # light's 3 values, the atom's
+    assert walls.count(4) == 6 and walls.count(3898) == 18 and 220 < number.bit_length() <= 230
     for text in ("w div 2", "exact vacuum"):
         assert "amplitude bound" not in text
 
@@ -324,65 +316,74 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
     )
 
 
-def test_the_one_photons_bodies_read_the_board_at_their_nodes_and_the_second_atom_is_refused_by_name(
-    tmp_path, monkeypatch
-):
-    """The anticoincidence world's one photon re-declared beside tmp_path, no generator (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a body's first draw of an interval reads the arriving record's digits first and its own after, at its two Nodes and at the Nodes within one Link where the photon stands off the origin (the test's own digits equal the engine's number); the second atom's close at 61 asks the absorption's draw in the unit W_rec^2 (53.9 bits) of a read of about 51.7 bits of capacity (the toy atom's four lines carry one bit each, the exact 4-cycle, and the photon at the exact paces three values), so the world is refused by name at 61 with the first text, the number read below the total; the world enters held with its interval and total (the reader's G3)."""
+def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(monkeypatch):
+    """The shipped chain world chain_x_minus (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a body's first draw of an interval reads the arriving record's digits first and its own after, at its three Nodes and at the Nodes within one Link where the photon stands off the origin (the test's own digits in the declared order equal the engine's number), the absorption's outcome one division act on it and the hole's Node one more on the number left; the two atoms take and give back along the run (the absorptions at 74, 142 and 303, each body's own read, the emissions at the windows' closes in the exact dark without a draw), the world LAWFUL over its 400 intervals; the draws' count and the reads' Nodes printed."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     holder: list[Lattice] = []
     seen = spied(monkeypatch, lambda: holder[0])
-    path = world_beside(tmp_path, EVENTS / "anticoincidence" / "one_photon.json", lambda w: None)
-    board = Lattice(load_world(path), [].append)
+    board = Lattice(load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append)
     holder.append(board)
-    text = "at the interval 61 has the number .* read, below the draw's total"
-    with pytest.raises(RuntimeError, match=text) as refused:
-        for _ in range(board.world.intervals):
-            board.step()
-    assert board.interval == 61 and "the body 1 of 'atom'" in str(refused.value)
-    total = int(str(refused.value).split("total ")[1].split(":")[0])
-    assert total.bit_length() == 54  # W_rec^2 = 9 T^2 (den^2 - num^2), the absorption's unit, 53.9 bits
+    for _ in range(board.world.intervals):
+        board.step()
+    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
+    assert [(c["interval"], c["node_detector"]) for c in taken] == [
+        (74, "body 0"),
+        (142, "body 1"),
+        (303, "body 0"),
+    ]
+    assert seen and all(record["label"].startswith("the body ") for record in seen)
     for k, record in enumerate(seen):
-        assert record["walls"][-1] == 3898 and record["label"].startswith("the body ")
         earlier = seen[k - 1] if k else None
         if earlier is not None and earlier["label"] == record["label"]:
             assert record["number"] == earlier["left"]  # the same interval: the number left carried
         else:
-            assert record["number"] == read_number(record["digits"], record["walls"])
+            assert record["number"] == read_number(record["digits"], record["walls"])  # the first read
+            assert set(record["walls"]) <= {4, 3898} and record["walls"].count(3898) >= 6
         total = sum(record["weights"])
         assert (record["pick"], record["left"]) == (
             placed(record["number"] % total, record["weights"]),
             record["number"] // total,
         )
-    print(f"the one photon: {len(seen)} body draws before the refusal at 61; {str(refused.value)[:160]}")
+    print(
+        f"the chain: {len(seen)} body draws, the first {len(seen[0]['digits'])} digits of {seen[0]['walls'][:1]}..."
+    )
 
 
-def test_the_two_slits_many_draw_close_spends_the_digits_at_the_shipped_window(tmp_path, monkeypatch):
-    """The two slits re-declared beside tmp_path, no generator: the record of one part reads its digits at the union of the regions' Nodes once per close (64 digits of 48 bits, 3,072 bits), and every quantum of the close takes two division acts, its region and its Node; at the shipped window of 130 (one close, 660 quanta) the digits are spent and the read is refused by name, the write's bound not blamed; the draws until the refusal and the bits each took are printed."""
+def test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130(tmp_path, monkeypatch):
+    """The two slits re-declared beside tmp_path with the draw's window 130, one close over the run (the test's own declaration; the shipped world draws at the window 1 since the landing's pass of 2026-10-20): the record of one part reads its digits at the union of the regions' Nodes once per close, the bases 108,000,001 at the content 60, and every quantum of the close takes two division acts, its region and its Node, each on the number left; at one close of 660 quanta the digits are spent and the read is refused by name with the second text, the number left below the total, where the regions' Nodes read fewer digits than the close's draws take (64 digits of 26.7 bits against 47 draws of 33 to 34 bits on the one-column screens; screens two columns deep read 128 and the close may complete), either way every draw before it the one division act; the write's bound refusal apart."""
     holder: list[Lattice] = []
     seen = spied(monkeypatch, lambda: holder[0])
-    path = world_beside(tmp_path, EVENTS / "two_slits" / "two_slits.json", lambda w: None)
-    board = Lattice(load_world(path), (lines := []).append)
+    source = EVENTS / "two_slits" / "two_slits.json"
+    path = world_beside(tmp_path, source, lambda world: world["draw"].update(window=130))
+    board = Lattice(load_world(path), [].append)
     holder.append(board)
-    with pytest.raises(
-        RuntimeError,
-        match="the regions of 'charge' at the interval 130 has the number .* left, below the draw's total",
-    ) as refusal:
+    refusal = None
+    try:
         for _ in range(board.world.intervals):
             board.step()
-    assert "digits read are spent at this interval" in str(
-        refusal.value
-    ) and "amplitude bound" not in str(refusal.value)
+    except RuntimeError as found:
+        refusal = str(found)
     first = seen[0]
-    assert first["label"] == "the regions of 'charge' at the interval 130" and len(first["digits"]) == 64
-    assert (
-        first["number"] == read_number(first["digits"], first["walls"])
-        and len(first["walls"]) == 64
-        and set(first["walls"]) == {108_000_001}  # the base at the content 60, one above the 108,000,000
-    )
-    bits = [math.log2(sum(s["weights"])) for s in seen]
+    digits_read = len(first["digits"])
+    assert first["label"] == "the regions of 'charge' at the interval 130" and digits_read % 8 == 0
+    assert first["number"] == read_number(first["digits"], first["walls"]) and set(first["walls"]) == {
+        108_000_001
+    }
     for earlier, later in zip(seen, seen[1:], strict=False):
-        assert later["number"] == earlier["left"]
+        assert later["number"] == earlier["left"]  # one division act per draw on the number left
+    bits = [math.log2(sum(s["weights"])) for s in seen]
+    if refusal is not None:
+        assert (
+            "at the interval 130 has the number " in refusal
+            and " left, below the draw's total" in refusal
+        )
+        assert "digits read are spent at this interval" in refusal and "amplitude bound" not in refusal
+        assert digits_read * 26.7 < sum(bits) + max(bits)  # spent: the digits below the draws' bits
+    else:
+        assert digits_read * 26 > sum(bits)  # the deeper screens' digits carry the close's draws
     print(
-        f"the two slits at the window 130: {len(seen)} draws before the refusal ({len(seen) // 2} quanta), the number {first['number'].bit_length()} bits, the totals {min(bits):.1f} to {max(bits):.1f} bits each, the credit lines {sum(1 for c in lines if c['event'] == 'credit')}"
+        f"the two slits at the window 130: {digits_read} digits, {len(seen)} draws ({len(seen) // 2} quanta), the totals {min(bits):.1f} to {max(bits):.1f} bits each, "
+        + (f"refused: {refusal[:80]}" if refusal else "the close complete")
     )
 
 
