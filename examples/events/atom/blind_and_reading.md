@@ -447,7 +447,17 @@ the ratio 6.66. The ratio falls with the cube and is far from converged: the 2s 
 cube's faces on 11 (its rotation above the free omega_0 = 0.8411 by 0.0035, below it by 0.0120 on 15
 and 0.0208 on 21) while the 1s's binding below omega_0 grows, 0.1759, 0.1839, 0.1897, and the line
 1s to 2s reads 0.1794, 0.1719 and 0.1690 on 11, 15 and 21. The ratio is the cube's and not the law's
-until a cube admits the 2s whole.
+until a cube admits the 2s whole. The cause, the builder's, exact (2026-10-20, entered in the law's
+file with the atom's three findings): the engine's held row on an open cube is the Dirichlet
+solution of Delta a = -3 sigma delta with a = 0 one layer beyond the faces (sigma = k_w / 2; checked
+on 11 to 0.48 level, the integer rounding), shallower than the unbounded board's Green's-function
+row -3 sigma G(r) (G(0) = 0.25273) by a near-constant 70 levels on 11, 38 on 21 and 26 on 31, about
+790 / L, so every level is lifted by 3 x 70 / 6,000 = 0.035 on 11 and the 2s reads above omega_0
+there, the box's lift; on the unbounded board's potential the ladder is cube-free from 11 up, to
+four digits on 11, 21 and 31: the 1s 0.2123 below omega_0, the 2s 0.0400, the 2p 0.0241 three times,
+the ratios 1s : 2s = 5.31 and 1s : 2p = 8.8, the law's number for this well at alpha 0.4135, the
+lattice's 1.31 above hydrogen's 4 (the finite well at the source and the band's cap on a one-Link
+1s); the cube's number is the box's zero of the row, 2.48 of the ratio on 11 and 1.46 on 21.
 
 (2) The 1s breathing when the proton reads at 3 as well (the control: a scratch world and no file of
 the folder, the universe with both reads at 3, the clean 1s lay carried into it with the world's
@@ -492,7 +502,9 @@ the 2s and the three 2p below the band's bottom: the 1s stands 400 intervals to 
 the rotation 0.6638 against the exact frame's 0.66374, and the 1s and the 2s together breathe at the
 centre at 0.18803 per interval against the lay's line 0.1794 and the builder's 0.18072, within one
 bin of 400 intervals: the atom's line is the difference of two standing rates, read from the board.
-The bindings' ratio is the cube's (7.75 on 11, 6.66 on 21, hydrogen's 4 beyond the cubes laid here),
-and a proton reading at 3 as well is a proton coupling at 3 (its read weight the factor of its write
-as well), its well three times deeper, so a level laid for the read 1 breathes in it by the gap of
-the two wells.
+The bindings' ratio is the cube's (7.75 on 11, 6.66 on 21, hydrogen's 4 beyond the cubes laid here;
+the builder's cause, 2026-10-20: the box's zero of the held row, the ladder cube-free on the
+unbounded board's potential at 1s : 2s = 5.31, the law's number for this well at alpha 0.4135), and
+a proton reading at 3 as well is a proton coupling at 3 (its read weight the factor of its write as
+well), its well three times deeper, so a level laid for the read 1 breathes in it by the gap of the
+two wells.
