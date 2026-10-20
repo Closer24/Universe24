@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import replace
+from dataclasses import astuple, replace
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -228,6 +228,18 @@ def grown_at(board: Lattice, reach: int, arrived: int) -> bool:
         board.growths.append((arrived, face.axis, face.side, layers))
         found = True
     return found
+
+
+def copied(board: Lattice) -> list[NodeState]:
+    """Every family's NodeState with every array copied, the lines, the write remainders and the phase lines (`dataclasses.astuple`, a deep copy of each line's three arrays): the close the run back takes (`run_back`), read and never written into the board, resized at the return as the board was resized by the growths the run forward found anew (`grown`, `growth.resized`) and compared bit for bit outside the record's cone (`run_forward`, `first_difference`; ALGEBRA.md, The click is the meeting of the future with the past)."""
+    return [
+        NodeState(
+            [Record(*astuple(r)) for r in state.lines],
+            [np.asarray(a).copy() for a in state.write_remainders],
+            [[Record(*astuple(r)) for r in row] for row in state.phases],
+        )
+        for state in board.states
+    ]
 
 
 def stepped_alone(board: Lattice, direction: int) -> None:

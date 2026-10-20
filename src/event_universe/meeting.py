@@ -163,7 +163,7 @@ def closed(board: Lattice) -> None:
     books = board.credit
     for index, moments in books.moments.items():  # the records the sides read at this close
         standing = books.counts.get(index, 0) > 0 and not any(f.family == index for f in books.fronts)
-        if standing and any(any(any(row) for row in m) for m in moments.values()):
+        if standing and any(credit.standing(m) for m in moments.values()):
             if not credit.count_held(board, index):
                 raise RuntimeError(
                     f"the record's count on the board, {board.count(index)}, differs from the books' count "

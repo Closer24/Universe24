@@ -43,8 +43,13 @@ def fraction(value: object) -> Fraction | None:
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
     """A side's two ports from its declared setting and its parts' pattern, the loader's own (`loader/draw.py`, `ports_of`: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, refused by name where not orthogonal with equal norms), keyed by the ports' names."""
-    plus, minus = loader_ports(basis, pattern)
-    return {PORTS[0]: plus, PORTS[1]: minus}
+    plus, minus = loader_ports(
+        basis, pattern
+    )  # the engine's Gaussian pairs; the gate reads real-port worlds
+    assert all(c[1] == 0 for c in plus + minus), (
+        "the gate's arithmetic is the real ports'; a turned side is the two-term test's"
+    )
+    return {PORTS[0]: tuple(c[0] for c in plus), PORTS[1]: tuple(c[0] for c in minus)}
 
 
 def reports(

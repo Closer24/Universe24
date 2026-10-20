@@ -1,8 +1,8 @@
-"""The credit's books (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the lattice, not in the clicks' books, Rule3 kept): where the world declares the `draw` (its window in intervals, its seed, its generator's multiplier and increment, `loader/draw.py`) the credit keeps the books of a window from the node_detectors' reports, the conserved form's own current through each boundary Node's front Ports, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking), summed over the window per family and region and, for a family of several parts, each declared side's own second moments of the parts' sums over its region (`meeting_back.moments_booked`, the same numbers the parts lines carry; nothing joint in the books, the owner's word of 2026-10-20), and counts the window (`counted_windows`); at the window's end the region NodeDetectors draw with the declared generator and write their click at one Node through the one act (`lists.region`, `act.click`, `meeting.closed`), the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the credit's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
+"""The credit's books (features/click; ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision: after a click the paths are cancelled on the lattice, not in the clicks' books, Rule3 kept): where the world declares the `draw` (its window in intervals, its seed, its generator's multiplier and increment, `loader/draw.py`) the credit keeps the books of a window from the node_detectors' reports, the conserved form's own current through each boundary Node's front Ports, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking), summed over the window per family and region and, for a family of several parts, each declared side's own second moments of the parts' sums over its region (`credit.moments_booked`, the same numbers the parts lines carry; nothing joint in the books, the owner's word of 2026-10-20), and counts the window (`counted_windows`); at the window's end the region NodeDetectors draw with the declared generator and write their click at one Node through the one act (`lists.region`, `act.click`, `meeting.closed`), the loop's act from outside the Node as the lay and the receding face are, forward only; the record's count goes down by one per credited quantum, the run's accounting in the output, and at 0 the record is uncreditable, whatever its levels still show. The books are the credit's and stand at no Node; the Node knows no click and no family of clicks; a world without the key keeps empty books and runs as before bit for bit."""
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from math import gcd
 from typing import TYPE_CHECKING
@@ -16,8 +16,8 @@ from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
 from event_universe.front import Front
-from event_universe.loader.derived import count_wall
-from event_universe.loader.draw import CONE, Draw, Pattern, Ports, ports_of, reduced_write
+from event_universe.loader.derived import FamilyRule, count_wall
+from event_universe.loader.draw import CONE, Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
 from event_universe.loader.keys import Node
 from event_universe.loader.packets import axes_waves
 from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of
@@ -70,9 +70,9 @@ class Books:
     cone: dict[int, int] = field(default_factory=dict)
     births: dict[int, tuple[int, tuple[Node, ...]]] = field(default_factory=dict)
     birth: int = 0
-    moments: dict[int, dict[str, list[list[int]]]] = field(default_factory=dict)
+    moments: dict[int, dict[str, list[list[Gauss]]]] = field(default_factory=dict)
     patterns: dict[str, Pattern] = field(default_factory=dict)
-    written: dict[int, list[int]] = field(default_factory=dict)
+    written: dict[int, list[Gauss]] = field(default_factory=dict)
     scale: dict[int, int] = field(default_factory=dict)
     taken: dict[int, dict[str, tuple[int, tuple[Node, tuple[int, ...]] | None, bool]]] = field(
         default_factory=dict
@@ -100,8 +100,8 @@ class Books:
         if min(norms) <= 0:
             raise ValueError("a body closing a drive's interval holds labels: its norm is above 0")
         unit = norms[0]
-        for norm in norms[1:]:
-            unit = int(division_forward(unit * norm, gcd(unit, norm), 0)[0])
+        for other in norms[1:]:
+            unit = int(division_forward(unit * other, gcd(unit, other), 0)[0])
         kept = self.unabsorbed.setdefault(drive, self.counts[drive] * unit)
         born = self.unabsorbed_units.setdefault(drive, unit)
         self.unabsorbed[drive] = share = int(division_forward(kept * unit, born, 0)[0])
@@ -125,7 +125,7 @@ class Books:
         units = {index: record_unit(board, index) for index in board.order}
         counts = {index: counted(board, index, board.laid[index], units[index]) for index in board.order}
         sides = [
-            (r.name, ports_of(r.axis or r.basis, r.pattern))
+            (r.name, ports_of(r.axis or r.basis, r.pattern, r.turn))
             for r in board.world.node_detectors
             if r.pattern
         ]  # a side's setting its `axis` for planes or its `basis` for real lines
@@ -187,9 +187,14 @@ def counted(board: Lattice, index: int, total: int | None, unit: int) -> int:
     return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), unit, object)[0])
 
 
+def standing(moments: Sequence[Sequence[Gauss]]) -> bool:
+    """Whether a side's second moments hold a number other than 0, the beam arrived in its window (`moments_booked`; the pairs read by their numbers, a pair (0, 0) standing for nothing)."""
+    return any(entry != (0, 0) for row in moments for entry in row)
+
+
 def scale_of(board: Lattice, index: int) -> int:
     """The record's scale, the norm's square of the coefficients standing on its parts, SUM_k w_k^2 with w_k the cumulative coefficient the clicks wrote on the part k at the birth (`Books.written`, `meeting_back.realised`), the parts' count n before any write (every w_k 1): the parts alike at the birth, the record's share over the board after the writes is the unwritten share times the scale over n (ALGEBRA.md, The count on the board, 2026-10-20)."""
-    return sum(w * w for w in board.credit.written.get(index, [1] * board.families[index].parts))
+    return sum(norm(w) for w in board.credit.written.get(index, [(1, 0)] * board.families[index].parts))
 
 
 def count_of(board: Lattice, index: int) -> int | None:
@@ -217,9 +222,9 @@ def record_unit(board: Lattice, index: int) -> int:
     return units.pop()
 
 
-def reduced(board: Lattice, index: int, coefficients: Sequence[int]) -> list[int]:
+def reduced(board: Lattice, index: int, coefficients: Sequence[Gauss]) -> list[Gauss]:
     """The coefficients the click writes on the record's parts (the reader's ruling of 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes): the realised port's integers over the record's surviving parts, a part surviving while its cumulative coefficient in the books is other than 0 (`Books.written`, every part before any write; the books' word and no reading of the board's levels), divided by their greatest common divisor, the direction's least integers, so the write is the realised term's direction among the parts and never its magnitude alone; one value on every surviving part (a scaling, a global sign included) is the identity, 1 on every part, the port realised all the same (`loader/draw.reduced_write`, the one arithmetic, read at load by the bound gate too)."""
-    return reduced_write(board.credit.written.get(index, [1] * len(coefficients)), coefficients)
+    return reduced_write(board.credit.written.get(index, [(1, 0)] * len(coefficients)), coefficients)
 
 
 def count_held(board: Lattice, index: int) -> bool:
@@ -236,7 +241,7 @@ def count_held(board: Lattice, index: int) -> bool:
 
 def quanta_through(books: Books, index: int, inflow: int, link_unit: int, parts: int = 1) -> int:
     """The clicks a window's inflow is worth in the record's own unit, the remainder carried (the click's plan, C7; L759's row 12: the remainder kept in the books for the next window): the inflow booked in the unit G^2 of the Link's factor (`booked`, `reports.weighted`), G the run's Link unit `link_unit`, with the record's carried remainder added, over one quantum's unit W_rec G^2, (inflow + r + W_rec G^2 div 2) div W_rec G^2 by the division act (`record_unit`), one division at the window's close and no rounding per Link, the division's own remainder less the half unit carried per record into the next window (`Books.remainders`, per record and never per detector, so that no share is dropped at a window's edge and the windows' count differs from the dropped-remainder count by at most one per window), the share's own rounding, the count the plain formula reads where no tension stood (ALGEBRA.md #the-click-is-the-meeting, the credit's booking); the cap by the count is the credit's (`lists.region`), and the remainder advances as computed also where the clicks are capped by the count or the count stands at 0, the excess consumed as main dropped it."""
-    scale = sum(w * w for w in books.written.get(index, [1] * parts))  # n before any write
+    scale = sum(norm(w) for w in books.written.get(index, [(1, 0)] * parts))  # n before any write
     unit = books.units[index] * link_unit * link_unit * scale
     half = int(division_forward(unit, 2, 0)[0])
     through, rest = division_forward(inflow * parts + books.remainders.get(index, 0), unit, half)
@@ -262,6 +267,50 @@ def clocked_regions(board: Lattice) -> None:
             own = books.clocks.setdefault((index, node_detector.name), [0, 0])
             whole, rest = division_forward(own[1] + mean, gamma, 0)
             own[0], own[1] = own[0] + int(whole), int(rest)
+
+
+def parts_of(family: FamilyRule, count: int) -> list[int]:
+    """The part of every line of a family's records by the line's number, `count` lines: the records laid out alike, parts times width lines each (`records.record_slice`), each part a block of `width` lines within its record; an enumeration of the blocks, no division."""
+    found: list[int] = []
+    while len(found) < count:
+        found += [part for part in range(family.parts) for _i in range(family.width)]
+    return found[:count]
+
+
+def positions_of(family: FamilyRule, count: int) -> list[int]:
+    """The position of every line within its part, 0 the real line or a plane's cosine line, 1 a plane's sine line (`parts_of`, the same enumeration): the plane's two lines the Gaussian write turns together."""
+    found: list[int] = []
+    while len(found) < count:
+        found += [i for _part in range(family.parts) for i in range(family.width)]
+    return found[:count]
+
+
+def moments_booked(board: Lattice, index: int, sums: Mapping[str, Sequence[Sequence[int]]]) -> None:
+    """The book of a side's own read of a record of several parts (ALGEBRA.md, The meeting's reading; The meeting's identity, the Gram theorem; the owner's word of 2026-10-20): per side the second moments of its own region's parts' sums over the window on both members of the level pair, M_kl += SUM_member sigma_k sigma_l (a plane part's sum its pair (re, im) on its two lines, the product the pair's real inner product re_k re_l + im_k im_l), from the parts' sums of one interval as the `parts` lines carry them (`credit.Books.moments`, per family per side an n x n matrix of integers); nothing of another side enters a side's book: a side's weights at the close are the quadratic form of its coefficients on its own M with the Gram of the sides unrealised (`side_weights`)."""
+    books, family = board.credit, board.families[index]
+    parts, width = family.parts, family.width
+    book = books.moments.setdefault(index, {})
+    for name, _ports in books.sides:
+        found = sums.get(name)
+        if found is None:
+            continue
+        moments = book.setdefault(name, [[(0, 0)] * parts for _k in range(parts)])
+        for member in range(2):
+            for k in range(parts):
+                for m in range(parts):
+                    re_k, re_m = found[k * width][member], found[m * width][member]
+                    im_k, im_m = (
+                        (found[k * width + 1][member], found[m * width + 1][member])
+                        if family.plane
+                        else (0, 0)
+                    )
+                    was = moments[k][
+                        m
+                    ]  # psi_k conj(psi_m): Hermitian, the imaginary part 0 on real lines
+                    moments[k][m] = (
+                        was[0] + re_k * re_m + im_k * im_m,
+                        was[1] + im_k * re_m - re_k * im_m,
+                    )
 
 
 def booked(

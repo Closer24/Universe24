@@ -54,7 +54,7 @@ READER_NODE_KEYS = (
     "node",
     "weight",
 )  # a reader's Node: the lay's weight, the record's count declared once
-NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern")  # a node_detector's keys
+NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern", "turn")  # a reader's keys
 TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
 START_KEYS: tuple[str, ...] = ()  # the engine start file holds no key; every key refused by name
 
@@ -85,6 +85,7 @@ class NodeDetectorRow:
     basis: tuple[int, ...]
     pattern: Pattern
     axis: tuple[int, ...] = ()  # a plane record's setting, the half-angle pair (the spin branch)
+    turn: int = 0  # a plane side's azimuth in quarter turns, i^turn on the second component
 
 
 @dataclass(frozen=True)
@@ -227,7 +228,7 @@ def node_detectors_of(
             raise ValueError(f"{label}.name must be a name of its own, not {FACE_NAME!r}")
         if ("positions" in row) == ("block" in row):
             raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
-        basis, axis = setting_of(row, label)  # one of the two, refused by name together (`loader/draw`)
+        basis, axis, turn = setting_of(row, label)  # one of the two, refused by name together
         setting = axis or basis
         if "pattern" in row and not setting:
             raise ValueError(
@@ -236,7 +237,7 @@ def node_detectors_of(
         pattern = pattern_of(row["pattern"], f"{label}.pattern", setting) if "pattern" in row else ()
         if pattern:
             ports_of(
-                setting, pattern
+                setting, pattern, turn
             )  # the two ports orthogonal with equal norms, refused by name otherwise
         if "block" in row:
             if setting:
@@ -252,7 +253,7 @@ def node_detectors_of(
         nodes = tuple(
             node_of(node, f"{label}.positions[{i}]", shape, beyond) for i, node in enumerate(positions)
         )
-        found.append(NodeDetectorRow(name, nodes, None, True, basis, pattern, axis))
+        found.append(NodeDetectorRow(name, nodes, None, True, basis, pattern, axis, turn))
     if layer:
         found.append(NodeDetectorRow(FACE_NAME, layer, None, False, (), ()))
     return tuple(found)

@@ -55,7 +55,7 @@ def sign_singlet_read(tmp_path, monkeypatch, a, b) -> Fraction:  # type: ignore[
     crossed = ports_of(b, tuple(tuple(p) for p in SINGLET))
     plain = ports_of(b, tuple(tuple(p) for p in IDENTITY))
     for port in range(2):  # the crossed pattern's ports are the determinant's signs on the parts
-        assert tuple(crossed[port]) == (plain[port][1], -plain[port][0])
+        assert tuple(crossed[port]) == (plain[port][1], (-plain[port][0][0], -plain[port][0][1]))
     assert shares == joint_shares(lines, {"left": (a, IDENTITY), "right": (b, SINGLET)}, 0)
     total = sum(shares.values())
     same, different = shares[0, 0] + shares[1, 1], shares[0, 1] + shares[1, 0]

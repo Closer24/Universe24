@@ -11,7 +11,7 @@ import numpy as np
 
 from event_universe import meeting_back, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import ports_of
+from event_universe.loader.draw import ports_of, times
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, load_file
 
@@ -179,14 +179,15 @@ def trial(path: Path, seed: int, intervals: int) -> tuple[Lattice, list[dict]]: 
 
 def joint_shares(
     lines: list[dict],  # type: ignore[type-arg]
-    sides: dict[str, tuple[tuple[int, int], list[list[int]]]],
+    sides: dict[str, tuple],  # type: ignore[type-arg]
     exchange: int = 0,
     width: int = 2,
 ) -> dict[tuple[int, ...], int]:
-    """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's sides' books (`meeting_back.moments_booked`, the second moments per side; the joint is the test's reading alone, nothing joint in the books): per interval and member of the level pair the amplitude's terms, each the product over the sides of e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s (`width` 2, a plane's two lines; 1 a real line, im 0), SUM_k over the same part at every side for a family declaring no sign or the symmetric one (`exchange` 0 or 1, the form as it stood) and SUM_{k != l} sign(l - k) over the ordered pairs of parts across two sides for the antisymmetric (`exchange` -1, the determinant of the two sides' parts), its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
+    """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's sides' books (`credit.moments_booked`, the second moments per side; the joint is the test's reading alone, nothing joint in the books): per interval and member of the level pair the amplitude's terms, each the product over the sides of e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s (`width` 2, a plane's two lines; 1 a real line, im 0), SUM_k over the same part at every side for a family declaring no sign or the symmetric one (`exchange` 0 or 1, the form as it stood) and SUM_{k != l} sign(l - k) over the ordered pairs of parts across two sides for the antisymmetric (`exchange` -1, the determinant of the two sides' parts), its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
     names = list(sides)
-    ports = {
-        n: ports_of(axis, tuple(tuple(pair) for pair in pattern)) for n, (axis, pattern) in sides.items()
+    ports = {  # a side (axis, pattern) or (axis, pattern, turn), the quarter turn of a plane side
+        n: ports_of(side[0], tuple(tuple(pair) for pair in side[1]), *side[2:])
+        for n, side in sides.items()
     }
     parts = len(ports[names[0]][0])
     terms = (
@@ -208,10 +209,9 @@ def joint_shares(
                     product = (sign, 0)
                     for name, port, k in zip(names, key, which, strict=True):
                         sums = levels.get(name, [[0, 0]] * (width * parts))  # per line [now, before]
-                        e = ports[name][port][k]
-                        re = e * sums[width * k][member]
-                        im = e * sums[width * k + 1][member] if width == 2 else 0
-                        product = (product[0] * re - product[1] * im, product[0] * im + product[1] * re)
+                        e = ports[name][port][k]  # a Gaussian integer, (e, 0) on a real-port side
+                        psi = (sums[width * k][member], sums[width * k + 1][member] if width == 2 else 0)
+                        product = times(product, times((e[0], -e[1]), psi))  # <e(port)|psi>: conj(e) psi
                     re_sum, im_sum = re_sum + product[0], im_sum + product[1]
                 total += re_sum * re_sum + im_sum * im_sum
         found[key] = total
@@ -262,13 +262,20 @@ def digest(board: Lattice) -> str:
     return found.hexdigest()
 
 
-def reduced_write(written: list[int], coefficients: list[int]) -> list[int]:
-    """The test's own reading of the click's write (the Boss's amendment of 2026-10-20; `credit.reduced`): the port's coefficients over their greatest common divisor on the surviving parts (the cumulative coefficient other than 0), 1 everywhere when they are one value there (a scaling alone writes nothing) and on a part written 0; the cumulative coefficients after the write."""
-    surviving = [k for k, w in enumerate(written) if w != 0]
+def reduced_write(
+    written: list[tuple[int, int]], coefficients: list[tuple[int, int]]
+) -> list[tuple[int, int]]:
+    """The test's own reading of the click's write (the Boss's amendment of 2026-10-20; `credit.reduced`): the port's coefficients over their greatest common divisor on the surviving parts (the cumulative coefficient other than 0), 1 everywhere when they are one value there (a scaling alone writes nothing) and on a part written 0; the cumulative coefficients after the write. On Gaussian integers (pairs): the common factor the gcd of every component of the surviving coefficients, the identity (1, 0) where one pair stands on every surviving part."""
+    surviving = [k for k, w in enumerate(written) if w != (0, 0)]
     common = 0
     for k in surviving:
-        common = math.gcd(common, abs(coefficients[k]))
-    found = [coefficients[k] // common if common and k in surviving else 1 for k in range(len(written))]
+        common = math.gcd(math.gcd(common, abs(coefficients[k][0])), abs(coefficients[k][1]))
+    found = [
+        (coefficients[k][0] // common, coefficients[k][1] // common)
+        if common and k in surviving
+        else (1, 0)
+        for k in range(len(written))
+    ]
     if len({found[k] for k in surviving}) <= 1:
-        found = [1] * len(written)
-    return [w * c for w, c in zip(written, found, strict=True)]
+        found = [(1, 0)] * len(written)
+    return [times(w, c) for w, c in zip(written, found, strict=True)]
