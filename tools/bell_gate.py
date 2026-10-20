@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from fractions import Fraction
 from itertools import combinations, product
 from math import prod
@@ -330,14 +330,18 @@ def blind_of(
     return found
 
 
-def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
-    """The reading of the four worlds against the expectation: per world the shares, E_n, the marginals, the sub-correlations, the local credits, the combination realised in the run and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
+def reading(
+    expectation: Path,
+    outputs: list[Path],
+    read: Callable[[Path, list[dict[str, object]], dict[str, Any]], dict[str, Any]] = one_world,
+) -> dict[str, object]:
+    """The reading of the four worlds against the expectation, each world by `read` (this file's `one_world`, or the plane's passed by tools/spin_gate.py): per world the shares, E_n, the marginals, the sub-correlations, the local credits, the combination realised in the run and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     worlds: dict[str, dict[str, Any]] = {}
     for path in outputs:
         output = json.loads(path.read_text(encoding="utf-8"))
         name = Path(str(output["input"])).stem
-        worlds[name] = one_world(expectation.with_name(f"{name}.json"), output["lines"], expected)
+        worlds[name] = read(expectation.with_name(f"{name}.json"), output["lines"], expected)
     ordered = [worlds[str(expected["runs"][key])] for key in expected["order"]]
     label, signs = (
         str(expected["combination"]["name"]),

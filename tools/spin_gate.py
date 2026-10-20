@@ -529,14 +529,9 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
     }
 
 
-bell_gate.one_world = (
-    one_world  # the reader's `reading` over the gate's worlds, each world read in the plane's form
-)
-
-
 def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
-    """The reading of the gate's worlds against the expectation, bell_gate's key for key (`correlation` and the combination by the realised branch), with the combination by the joint form beside it (`<name>_by_the_joint_shares`, None where a world's joint form reads nothing), the realised branch per world and the agreement of the local and the joint reads."""
-    found = bell_gate.reading(expectation, outputs)
+    """The reading of the gate's worlds against the expectation, bell_gate's `reading` with this file's `one_world`, key for key (`correlation` and the combination by the realised branch), with the combination by the joint form beside it (`<name>_by_the_joint_shares`, None where a world's joint form reads nothing), the realised branch per world and the agreement of the local and the joint reads."""
+    found = bell_gate.reading(expectation, outputs, one_world)
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     worlds = found["worlds"]
     assert isinstance(worlds, dict)
