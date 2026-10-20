@@ -28,6 +28,9 @@ UNRECORDED_SECONDS = 5.0
 # the suite's bound (the owner's word of 2026-10-03: a test runs under 30 seconds): a test function above
 # it fails the plan by name, on the recorded table at --plan and on the run's own junit after every pytest
 TEST_SECONDS_BOUND = 30.0
+# pytest's workers are the machine's physical cores (pytest-xdist's `auto` with psutil among the dev
+# dependencies), one test per core, so a test's seconds on the run's clock are its own and not the
+# cores' sharing
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 # the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
 # tools/ run by its path and failing with its own message: on every selection, with --full and
