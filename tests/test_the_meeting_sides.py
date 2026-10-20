@@ -302,9 +302,9 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
     ghz = ((1, 0), (0, -1), (0, -1), (-1, 0))
     assert meeting_back.gram_of([ghz], 4) == [[1, 0, 0, -1], [0, 1, 1, 0], [0, 1, 1, 0], [-1, 0, 0, 1]]
     ports = ports_of((12, 5), identity)
-    coefficients = [list(port) for port in ports]
-    assert meeting_back.side_weights([[5, 5], [5, 5]], coefficients, [[1, 0], [0, 1]]) == [845, 845]
-    assert meeting_back.side_weights([[5, 5], [5, 5]], coefficients, [[1, 1], [1, 1]]) == [1445, 245]
+    coefficients, five = [list(port) for port in ports], [[(5, 0), (5, 0)], [(5, 0), (5, 0)]]
+    assert meeting_back.side_weights(five, coefficients, [[1, 0], [0, 1]]) == [845, 845]
+    assert meeting_back.side_weights(five, coefficients, [[1, 1], [1, 1]]) == [1445, 245]
     for a, b in ((BELL[0], BELL[2]), (BELL[1], BELL[3])):
         sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
         path = spin_world(
@@ -331,14 +331,17 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
         assert all(any(map(any, own[name])) for name in sides)
         first = meeting_back.coefficients_of(board.families[spin], board.credit.sides[0][1], True)
         gram = meeting_back.gram_of([board.credit.patterns["right"]], 2)
-        weights = meeting_back.side_weights(own["left"], first, gram)
+        pairs = [[(value, 0) for value in row] for row in own["left"]]  # the real moments as pairs
+        weights = meeting_back.side_weights(pairs, first, gram)
         assert weights == board.credit.weights[(spin, "left")]  # the engine's moments the test's own
         marginal = marginal_of(joint, 0)
         assert Fraction(weights[0], sum(weights)) == Fraction(marginal[0], sum(marginal))
         antisymmetric = meeting_back.coefficients_of(
             replace(board.families[spin], exchange=-1), board.credit.sides[0][1], True
         )
-        assert antisymmetric == [[-port[1], port[0]] for port in board.credit.sides[0][1]]
+        assert antisymmetric == [
+            [(-port[1][0], -port[1][1]), port[0]] for port in board.credit.sides[0][1]
+        ]  # the determinant's lambdas on pairs
         print(
             f"the Gram read at {a}, {b}: the first side's weights {weights}, the marginal of J {marginal}"
         )

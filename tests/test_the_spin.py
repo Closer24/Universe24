@@ -52,7 +52,7 @@ def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle
         assert port in allowed, (axis, port)
         coefficients = ports_of(axis, ((1, 0), (0, 1)))[port == "minus"]
         assert clicks[0]["kept"] == [
-            k for k, e in enumerate(coefficients) if e != 0
+            k for k, e in enumerate(coefficients) if e != (0, 0)
         ]  # the parts the port reads
 
 

@@ -10,6 +10,7 @@ from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import count_wall
+from event_universe.loader.draw import norm, times
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Conversion, Rate, Transition
 from event_universe.node_detector import (
@@ -152,7 +153,7 @@ def readings(board: Lattice, index: int) -> list[Item]:
     standing = credit.scale_of(board, index)  # the window's scale, before the close's writes
     for name, ports in books.sides:
         moments, earlier = books.moments.get(index, {}).get(name), taken.get(name)
-        if moments is None or not any(map(any, moments)) or (earlier is not None and not earlier[2]):
+        if moments is None or not credit.standing(moments) or (earlier is not None and not earlier[2]):
             continue  # its beam arriving after this close, or realised in the sequence standing: no second click
         came = books.intake.get((index, name), {}).values()  # per Node, per front Port, over the window
         inflow = sum(max(through, 0) for ports_in in came for through in ports_in)
@@ -178,13 +179,15 @@ def readings(board: Lattice, index: int) -> list[Item]:
                 "click of a side in a changed setting needs the overlaps with the written factor, which the parts "
                 "carry no more; one setting per side on a record (the reader's ruling of 2026-10-20)"
             )
-        kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
+        kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != (0, 0)]
         piece = piece_momentum(board, index, books.passages.get((index, name), Passage()))
-        written = books.written.get(index, [1] * family.parts)  # the scale after the side's write
+        written = books.written.get(index, [(1, 0)] * family.parts)  # the scale after the side's write
         reduced = (
-            credit.reduced(board, index, coefficients[port]) if earlier is None else [1] * family.parts
+            credit.reduced(board, index, coefficients[port])
+            if earlier is None
+            else [(1, 0)] * family.parts
         )
-        scale = sum((w * c) ** 2 for w, c in zip(written, reduced, strict=True))
+        scale = sum(norm(times(w, c)) for w, c in zip(written, reduced, strict=True))
         order = 1 + sum(
             1 for entry in taken.values() if not entry[2]
         )  # the sides clicked in this sequence
@@ -232,7 +235,7 @@ def region(board: Lattice, index: int) -> Alternative | None:
         ready = [
             name
             for name, _p in books.sides
-            if (name not in taken or taken[name][2]) and any(map(any, moments.get(name, [])))
+            if (name not in taken or taken[name][2]) and credit.standing(moments.get(name, []))
         ]
         if not ready or books.counts[index] <= 0:
             return None

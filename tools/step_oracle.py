@@ -19,7 +19,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import credit, emission, flux, front, growth, meeting, meeting_back, node
+from event_universe import credit, emission, flux, front, growth, meeting, node
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
@@ -253,10 +253,10 @@ def written_lay(board: Lattice, label: str, laid: np.ndarray) -> np.ndarray:
     written = board.credit.written.get(index)
     if written is None:
         return laid
-    part = meeting_back.parts_of(board.families[index], len(board.states[index].lines))[
-        int(found["line"])
-    ]
-    return np.asarray(laid * written[part])
+    part = credit.parts_of(board.families[index], len(board.states[index].lines))[int(found["line"])]
+    re, im = written[part]  # the pair written on the part: the oracle's arithmetic is the real ports'
+    assert im == 0, "the oracle reads real-port worlds; a turned side's write is the two-term test's"
+    return np.asarray(laid * re)
 
 
 def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:

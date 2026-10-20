@@ -1,0 +1,240 @@
+{
+ "lay": "standing",
+ "level": "1s+2s",
+ "Omega": {
+  "1s": 0.665166232460131,
+  "2s": 0.8445527389157045
+ },
+ "omega_0": 0.8410686705679303,
+ "binding_per_interval": {
+  "1s": 0.17590243810779937,
+  "2s": -0.0034840683477741496
+ },
+ "A": {
+  "1s": 2595.3228910446433,
+  "2s": 863.3390641638719
+ },
+ "phi_along_axis": {
+  "1s": [
+   1.0,
+   0.2750964588900567,
+   0.07120163580748254,
+   0.019356693940252318,
+   0.0054975928930629,
+   0.0014896622336226142
+  ],
+  "2s": [
+   1.0,
+   0.0048653732869640386,
+   -0.21787847085604622,
+   -0.20291261781102735,
+   -0.1358106263963367,
+   -0.06528803749536903
+  ]
+ },
+ "levels": {
+  "1s": [
+   {
+    "level": 0,
+    "kind": "s",
+    "Omega": 0.665166232460131,
+    "binding_per_interval": 0.17590243810779937
+   },
+   {
+    "level": 1,
+    "kind": "s",
+    "Omega": 0.8591116001808428,
+    "binding_per_interval": -0.01804292961291243
+   },
+   {
+    "level": 2,
+    "kind": "p",
+    "Omega": 0.8734160532916649,
+    "binding_per_interval": -0.03234738272373461
+   },
+   {
+    "level": 3,
+    "kind": "p",
+    "Omega": 0.8734160532916662,
+    "binding_per_interval": -0.03234738272373583
+   },
+   {
+    "level": 4,
+    "kind": "p",
+    "Omega": 0.8734160532916664,
+    "binding_per_interval": -0.03234738272373605
+   },
+   {
+    "level": 5,
+    "kind": "d",
+    "Omega": 0.9127103146527804,
+    "binding_per_interval": -0.07164164408485008
+   },
+   {
+    "level": 6,
+    "kind": "d",
+    "Omega": 0.912710314652786,
+    "binding_per_interval": -0.07164164408485563
+   },
+   {
+    "level": 7,
+    "kind": "d",
+    "Omega": 0.9127103146527863,
+    "binding_per_interval": -0.07164164408485596
+   }
+  ],
+  "2s": [
+   {
+    "level": 0,
+    "kind": "s",
+    "Omega": 0.5287049773262663,
+    "binding_per_interval": 0.312363693241664
+   },
+   {
+    "level": 1,
+    "kind": "s",
+    "Omega": 0.8445527389157045,
+    "binding_per_interval": -0.0034840683477741496
+   },
+   {
+    "level": 2,
+    "kind": "p",
+    "Omega": 0.8662280361255223,
+    "binding_per_interval": -0.025159365557592017
+   },
+   {
+    "level": 3,
+    "kind": "p",
+    "Omega": 0.866228036125523,
+    "binding_per_interval": -0.025159365557592683
+   },
+   {
+    "level": 4,
+    "kind": "p",
+    "Omega": 0.8662280361255256,
+    "binding_per_interval": -0.025159365557595237
+   },
+   {
+    "level": 5,
+    "kind": "d",
+    "Omega": 0.9090688783659683,
+    "binding_per_interval": -0.06800020779803795
+   },
+   {
+    "level": 6,
+    "kind": "d",
+    "Omega": 0.9090688783659687,
+    "binding_per_interval": -0.06800020779803839
+   },
+   {
+    "level": 7,
+    "kind": "d",
+    "Omega": 0.9090688783659697,
+    "binding_per_interval": -0.06800020779803939
+   }
+  ]
+ },
+ "levels_note": "every Omega of the table is read with the named level's sin Omega in the operator's diagonal; another level at its own sin Omega moves by that term's change, the order of the binding",
+ "rule_over_wall": {
+  "reaches": [
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ]
+  ],
+  "own_weight": [
+   0.0,
+   0.0
+  ],
+  "paces": [
+   6000.0,
+   6000.0
+  ],
+  "note": "R_ij / w per Port, S_i / w and the Node's pace p_i from the engine's own read and rule at the start; the plain rule at Gamma reads num / (3 den) on every Link and 0 at the Node"
+ },
+ "convention": "now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
+ "sum": "the lay is the sum of the named levels' lays, each level at its own Omega in the before term and the common well's angle on the now term, each at 1 / n of the quantum, A_k = sqrt(T / (2 n sin omega_0 SUM phi_k^2)), the four arrays summed before the rounding",
+ "beats": [
+  {
+   "levels": "1s+2s",
+   "per_interval": 0.17938650645557352,
+   "period_intervals": 35.025963944147975,
+   "overlap": -0.3631927855908583,
+   "dipole_overlap_along_axes": [
+    6.5503158452884236e-15,
+    1.7763568394002505e-15,
+    -3.2751579226442118e-15
+   ]
+  }
+ ],
+ "label": "lattice reading",
+ "world": "hydrogen_line.json",
+ "record": "electron",
+ "source": "proton",
+ "holder": "charge",
+ "k_r": 3,
+ "node_clock": 6000,
+ "quantum_action": 36000000,
+ "well_along_axis": [
+  -1446,
+  -446,
+  -187,
+  -95,
+  -50,
+  -22
+ ],
+ "well_centre": 0.723,
+ "profile": {
+  "radii": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "shares": [
+   0.6686806242828756,
+   0.6818637405211836,
+   0.7505458754166681,
+   0.8527263780730137
+  ],
+  "Q": 22507425.0,
+  "peak_level": 3458.1198648976874,
+  "peak_node": [
+   5,
+   5,
+   5
+  ],
+  "size_along_axis": [
+   3458.1198648976874,
+   3.0,
+   103.04368005850722
+  ],
+  "node_plane_share": 0.6648222531009211,
+  "dipole_nodes": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wronskian": 20061251.0
+ }
+}

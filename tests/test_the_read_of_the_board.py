@@ -378,7 +378,7 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         )
 
         def noted(number, weights, label, *moduli, board=board, standing=standing, spy=spy):  # type: ignore[no-untyped-def]
-            standing.append(list(board.credit.written.get(family(board, "light_pair"), [1, 1])))
+            standing.append(list(board.credit.written.get(family(board, "light_pair"), [(1, 0)] * 2)))
             return spy(number, weights, label, *moduli)
 
         def reading(board, families, at, label, read=read):  # type: ignore[no-untyped-def]
@@ -408,14 +408,14 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         assert first.bit_length() <= 4 * 27  # four digits of 26.7 bits: the eight's bits halved
         if written[0] == written[1]:
             assert right[4:] == right[:4]  # equal coefficients: equal indices
-        elif written[0] == -written[1]:
+        elif written[0] == (-written[1][0], -written[1][1]):
             assert right[4:] == [whole - k for k in right[:4]]  # the sign write: w div F less it
         else:
-            zeroed = written.index(0)  # the part the left side's port zeroed reads the lay's origin
+            zeroed = written.index((0, 0))  # the part the left side's port zeroed reads the lay's origin
             assert right[4 * zeroed : 4 * zeroed + 4] == [whole // 2] * 4
         copies = right[4:] in (right[:4], [whole - k for k in right[:4]])
         assert second == read_number(right[:4] if copies else right, [whole + 1] * (4 if copies else 8))
-    assert found["bell_a_b"][2].count(0) == 1  # the basis [1, 0] zeroes a part
+    assert found["bell_a_b"][2].count((0, 0)) == 1  # the basis [1, 0] zeroes a part
     board = Lattice(load_shipped(EVENTS / "bell" / "bell_a_prime_b.json"))  # the copy rule's three cases
     pair = family(board, "light_pair")
     for _ in range(60):  # the left side's beam through its region, before the close
