@@ -167,3 +167,7 @@ inflow behind the lower slit, and the world, the mode and the blind are regenera
 without it (the regenerated world byte for byte the which-way folder's two_gaps.json and its mode
 two_gaps.mode.json, the same digests, so its run is the two_gaps run above, [29, 39, 48, 43, 11, 87,
 74, 28, 31, 54, 37, 42], 523, within 2.79 scatters of this blind).
+
+## The booked bias at the window 1 (2026-10-20)
+
+The screens run whole under the click's read of the board with the totals' bias booked and not refused (the reader's F (b), the sixth commit of the read): every credit line carries `bias_bound`, g the draw's total's gcd with the read's bases less one times its gcd with the last base, T the total, the draw's residue modulo g the digits' sum alone. two_slits: 523 credits, every one booked; g from 6,000 to 1,350,000 against T from 66,120,000 to 8,701,344,000; the worst bound g / T = 1,350,000 / 171,450,000 = 1 / 127 of a port's share, against the run's resolution of one quantum in 523. The one refusal left is g equal to T; no world of this folder reaches it.

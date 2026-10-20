@@ -292,3 +292,7 @@ no fence: the read one-gap shape over the regions 5 to 11 [0.15, 0.25, 0.09, 0.1
 against the Huygens row's [0.08, 0.29, 0.07, 0.08, 0.24, 0.21, 0.09]. tests/test_the_draw.py's bound
 on the quanta (three halves of sqrt 633, 37.7, about the blind's 316.5) stands at the one close and
 not at the window 1 (the channel 54.5 and the screen 39.5 under), the per-close floor's cost named.
+
+## The booked bias at the window 1 (2026-10-20)
+
+The screens run whole under the click's read of the board with the totals' bias booked and not refused (the reader's F (b), the sixth commit of the read): every credit line carries `bias_bound`, g the draw's total's gcd with the read's bases less one times its gcd with the last base, T the total, the draw's residue modulo g the digits' sum alone. two_gaps: 523 credits, every one booked; g from 6,000 to 1,350,000 against T from 66,120,000 to 8,701,344,000; the worst bound g / T = 1,350,000 / 171,450,000 = 1 / 127 of a port's share, against the run's resolution of one quantum in 523. one_gap: 278 credits, every one booked; g from 6,000 to 4,320,000 against T from 34,800,000 to 6,084,156,000; the worst bound g / T = 1,200,000 / 34,800,000 = 1 / 29 of a port's share, against the run's resolution of one quantum in 278. which_way: 539 credits, every one booked; g from 6,000 to 4,320,000 against T from 46,884,000 to 7,221,516,000; the worst bound g / T = 4,320,000 / 246,240,000 = 1 / 57 of a port's share, against the run's resolution of one quantum in 539. The one refusal left is g equal to T; no world of this folder reaches it.
