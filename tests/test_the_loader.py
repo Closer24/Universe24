@@ -190,7 +190,7 @@ def test_a_massless_packet_lays_no_uniform_mode_and_the_board_refuses_one_that_d
     tmp_path, monkeypatch
 ):
     """A massless packet's two levels each sum to 0 over the board on the committed worlds (the generator's `uniform_removed`, ALGEBRA.md, The packet lay), and a mode entry whose level sums otherwise is refused by name at the board's construction, through the one lay act's guard (`Lattice.lay`, `lay.guarded`; the loader builds no board and refuses nothing of this)."""
-    for world in ("anticoincidence/one_photon", "two_slits/two_slits", "bell/bell_a_b"):
+    for world in ("chain/chain_x_minus", "two_slits/two_slits", "bell/bell_a_b"):
         copied = world_beside(tmp_path / "shipped", EVENTS / f"{world}.json", lambda document: None)
         board = Lattice(load_world(copied), lambda line: None)
         for index, family in enumerate(board.families):

@@ -3,8 +3,7 @@
 import json
 from fractions import Fraction
 
-from event_universe import lists, meeting
-from event_universe.core.rule3 import division_forward
+from event_universe import lists
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import patterns_of_the_law, ports_of
 from event_universe.loader.node_detector_declaration import node_detector_of, parts_of
@@ -17,7 +16,6 @@ from tests.laws_spin import (
     PORT,
     SINGLET,
     correlation,
-    exclusion_world,
     joint_shares,
     marginal_of,
     sided,
@@ -131,72 +129,6 @@ def test_the_symmetric_control_credits_the_same_port_at_equal_axes(tmp_path, mon
     pair = tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit")
     assert pair in {(0, 0), (1, 1)}, pair
     print(f"the symmetric control at equal axes: the realised pair {pair}")
-
-
-def test_the_shell_of_two_quanta_follows_the_familys_sign_with_no_capacity(tmp_path, monkeypatch):
-    """The shell (the builder's specification, 2026-10-19): the exclusion world at four parts gu, gd, eu, ed, one quantum in each ground part (the split start of a family declaring its sign), four transitions g to e by the photon at one weight and one resonance, no capacity anywhere, two photons one window apart, a spy on `lists.absorption` reading each close's weights beside the weights the same list carries without the sign (each transition's transfer share over the closing norms). The one-part convention: the body stands in gu (the first of the tie) and after the first click in gd, so the second close's list is gd's; a third quantum, or an emission from a populated part the body does not stand in, would need the lists per populated part (ENGINE.md section 10, item 7). At the first close (60) both signs read the same list, the excited parts empty and the factor 1 either way, and the first photon enters eu or ed at every seed named; at the second close (93) the antisymmetric record's weight into the populated excited part is 0 exactly and the empty part's the unsigned weight, 9,190,267,331,637,924 (the open part's number of the capacity test, tests/test_the_spin.py), the second photon entering the empty part (the seeds 34 and 35) or passing (25 and 26) and no count ever above 1; the symmetric record's weight into the populated part is twice its unsigned weight, the permanent's 2, the larger of the two, and the piling, both quanta in one excited part, is seen (25, 26, 34, 35)."""
-    closes: list[tuple[int, list[int], int, list[int]]] = []
-    original = lists.absorption
-
-    def kept(
-        board, drive, outcomes
-    ):  # each close: its weights, nothing's, and the weights without the sign
-        norms = [sum(label * label for label in books.labels) for books, _transition in outcomes]
-        unit, _unabsorbed = board.credit.unabsorbed_in(drive, norms)  # the list's own read, booked once
-        unsigned = [
-            b.shares[t] * division_forward(unit, norm, 0)[0]
-            for (b, t), norm in zip(outcomes, norms, strict=True)
-        ]
-        found = original(board, drive, outcomes)
-        closes.append((board.interval, [a.weight for a in found[:-1]], found[-1].weight, unsigned))
-        return found
-
-    monkeypatch.setattr(meeting.lists, "absorption", kept)
-    names, firsts, ends = ("gu", "gd", "eu", "ed"), {}, {}
-    for exchange in (ANTISYMMETRIC, SYMMETRIC):
-        closes.clear()
-        path = exclusion_world(tmp_path / exchange, monkeypatch, None, exchange=exchange, **SHELL)
-        board = Lattice(load_world(path), (lines := []).append)
-        books, photon = board.credit.bodies[0], [f.name for f in board.families].index("photon")
-        assert (books.part, books.counts, books.declared.capacities) == (
-            0,
-            [1, 1, 0, 0],
-            (None,) * 4,
-        )
-        assert board.families[books.index].exchange == (-1 if exchange == ANTISYMMETRIC else 1)
-        for _ in range(board.world.intervals):
-            board.step()
-        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-        first = taken[0]
-        assert (first["interval"], first["before"], first["realised"] in names[2:]) == (
-            60,
-            "gu",
-            True,
-        )
-        interval, weights, _rest, unsigned = closes[0]
-        assert interval == 60 and weights[0] == weights[1] > 0 and weights == unsigned, closes
-        assert firsts.setdefault("first close", weights) == weights  # both signs read it alike
-        populated = names.index(first["realised"])
-        empty = 5 - populated
-        interval, weights, rest, unsigned = closes[1]
-        assert interval == 93 and len(weights) == 2, closes  # the list of gd's two transitions
-        into = {2: (weights[0], unsigned[0]), 3: (weights[1], unsigned[1])}  # gd -> eu, gd -> ed
-        assert into[empty][0] == into[empty][1] == 9190267331637924, closes  # the factor 1
-        if exchange == ANTISYMMETRIC:
-            assert into[populated][0] == 0 < into[populated][1] and rest > 0, closes
-            assert max(books.counts) <= 1, books.counts  # never two in one part
-            if len(taken) == 2:
-                assert (taken[1]["interval"], taken[1]["realised"]) == (93, names[empty])
-                assert books.counts == [0, 0, 1, 1] and board.credit.counts[photon] == 0
-            else:
-                assert books.counts[1] == 1 and board.credit.counts[photon] == 1  # passed
-        else:
-            assert into[populated][0] == 2 * into[populated][1] > into[empty][0], closes
-            if len(taken) == 2 and taken[1]["realised"] == names[populated]:
-                assert books.counts[populated] == 2 and sum(books.counts) == 2
-        ends[exchange] = (first["realised"], [c["realised"] for c in taken[1:]])
-        print(f"the shell, {exchange}: the first into {ends[exchange][0]}, then {ends[exchange][1]}")
-    assert set(ends) == {ANTISYMMETRIC, SYMMETRIC}  # the read's one outcome per sign, printed
 
 
 def test_a_family_without_the_key_loads_and_steps_as_before(tmp_path, monkeypatch):

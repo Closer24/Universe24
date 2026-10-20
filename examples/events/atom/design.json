@@ -357,46 +357,6 @@
    ],
    "emission": "none: no light family in the universe, the dipole beats undamped"
   },
-  "atom_shells": {
-   "verdict": "NODEDETECTOR",
-   "fence": "clicks",
-   "yes_or_no": "at the second close the antisymmetric record's weight into the populated excited part is 0 exactly and the empty part's 9,190,267,331,637,924, the second photon entering the empty part or passing, no count above 1",
-   "closes": [
-    60,
-    93
-   ],
-   "first_close": {
-    "into_each_excited_part": 12304515357518400,
-    "rest": 8003945008567134,
-    "note": "both worlds read the same list at the first close, the excited parts empty and the factor 1 either way; the first photon enters eu or ed"
-   },
-   "second_close": {
-    "into_the_populated_part": 0,
-    "into_the_empty_part": 9190267331637924,
-    "note": "the list of gd's two transitions, the body standing in gd after the first click (the one-part convention)"
-   },
-   "counts_never_above": 1,
-   "at_the_seed": "the second photon enters the empty part: the counts end [0, 0, 1, 1] and the photon's count 0"
-  },
-  "atom_shells_symmetric": {
-   "verdict": "NODEDETECTOR",
-   "fence": "clicks",
-   "yes_or_no": "at the second close the symmetric record's weight into the populated excited part is 64,961,076,134,244,168, twice the unsigned weight (the permanent's 2) and the larger of the two, the empty part's 9,190,267,331,637,924; the piling, both quanta in one excited part, [0, 0, 2, 0] or [0, 0, 0, 2]",
-   "closes": [
-    60,
-    93
-   ],
-   "first_close": {
-    "into_each_excited_part": 12304515357518400,
-    "rest": 8003945008567134
-   },
-   "second_close": {
-    "into_the_populated_part": 64961076134244168,
-    "unsigned_into_the_populated_part": 32480538067122084,
-    "into_the_empty_part": 9190267331637924
-   },
-   "at_the_seed": "the second photon piles into the populated part: the counts end [0, 0, 2, 0] or [0, 0, 0, 2] and the photon's count 0"
-  },
   "hydrogen_1s": {
    "yes_or_no": "after 400 intervals the share of Q within r <= 2 at 0.951 within 0.02 with the peak Node at the centre, the overlap of |z| with the lay at least 0.99 at the close, the first six steps leaving the centre's and its neighbour's levels within one level, and the centre's level drifting at most 15 percent of the lay's over the run",
    "share_within_r": 2,
@@ -541,87 +501,6 @@
    ],
    "k_r": 3
   }
- },
- "shells": {
-  "universe_from": "examples/events/anticoincidence/two_atoms.json",
-  "family": "atom",
-  "dimension": [
-   4,
-   2
-  ],
-  "worlds": {
-   "atom_shells": {
-    "exchange": "antisymmetric",
-    "universe": "examples/events/atom/shells.json"
-   },
-   "atom_shells_symmetric": {
-    "exchange": "symmetric",
-    "universe": "examples/events/atom/shells_symmetric.json"
-   }
-  },
-  "length": 112,
-  "largest": 400,
-  "layers": 16,
-  "body": {
-   "nodes": [
-    47,
-    48
-   ],
-   "parts": [
-    [
-     "gu",
-     1
-    ],
-    [
-     "gd",
-     1
-    ],
-    [
-     "eu",
-     0
-    ],
-    [
-     "ed",
-     0
-    ]
-   ],
-   "grounds": [
-    "gu",
-    "gd"
-   ],
-   "excited": [
-    "eu",
-    "ed"
-   ],
-   "weight": 6,
-   "resonance": [
-    5414,
-    6000
-   ]
-  },
-  "photons": {
-   "family": "photon",
-   "amplitude": 110,
-   "from": [
-    24,
-    96
-   ],
-   "quarters": 4,
-   "edge": 8
-  },
-  "seed_candidates": [
-   25,
-   26,
-   34,
-   35
-  ],
-  "seed_rule": "the first of the test's seeds at which the second photon enters the empty excited part under the antisymmetric sign, read before the folder's run by the rule's own runs of the antisymmetric world at each candidate (read_shells.py --rule), the same seed for the control",
-  "seed": 34,
-  "intervals": 125,
-  "closes": [
-   60,
-   93
-  ]
  },
  "status": "declared and laid on 2026-10-19 on the branch atom-arranged: the levels, the line and the shells; the reading in blind_and_reading.md; the hydrogen worlds at the read 3 declared and laid on 2026-10-20 on the branch atom-line, their reading in blind_and_reading.md"
 }

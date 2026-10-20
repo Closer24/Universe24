@@ -43,46 +43,13 @@
    "x",
    "minus"
   ],
-  "chain_x_plus": [
-   "x",
-   "plus"
-  ],
   "chain_y_minus": [
    "y",
    "minus"
   ],
-  "chain_y_plus": [
-   "y",
-   "plus"
-  ],
   "chain_z_minus": [
    "z",
    "minus"
-  ],
-  "chain_z_plus": [
-   "z",
-   "plus"
-  ]
- },
- "detuned": {
-  "name": "chain_detuned",
-  "body": 1,
-  "quarters": 8,
-  "top": [
-   40,
-   87
-  ],
-  "edge": 8,
-  "amplitude": 53,
-  "seeds": [
-   25,
-   26,
-   27,
-   28,
-   29,
-   30,
-   31,
-   32
   ]
  },
  "status": "declared and laid on 2026-10-18 (branch claude/click-one-act, the click's plan built: section 0, C6, C7, C2, C4, C5, C1, C3, C9); the blinds asserted by tests/test_the_chain_world.py on every run of tools/check.py (the owner's word of 2026-10-19, write it as a test), the readings and the findings in blind_and_reading.md"

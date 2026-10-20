@@ -400,74 +400,6 @@
     -22
    ],
    "k_r": 3
-  },
-  "atom_shells": {
-   "window": [
-    60,
-    93
-   ],
-   "exchange": "antisymmetric",
-   "universe": "examples/events/atom/shells.json",
-   "seed": 34,
-   "seed_rule": "the first of the test's seeds at which the second photon enters the empty excited part under the antisymmetric sign, read before the folder's run by the rule's own runs of the antisymmetric world at each candidate (read_shells.py --rule), the same seed for the control",
-   "seed_candidates": [
-    25,
-    26,
-    34,
-    35
-   ],
-   "verdict": "NODEDETECTOR",
-   "fence": "clicks",
-   "yes_or_no": "at the second close the antisymmetric record's weight into the populated excited part is 0 exactly and the empty part's 9,190,267,331,637,924, the second photon entering the empty part or passing, no count above 1",
-   "closes": [
-    60,
-    93
-   ],
-   "first_close": {
-    "into_each_excited_part": 12304515357518400,
-    "rest": 8003945008567134,
-    "note": "both worlds read the same list at the first close, the excited parts empty and the factor 1 either way; the first photon enters eu or ed"
-   },
-   "second_close": {
-    "into_the_populated_part": 0,
-    "into_the_empty_part": 9190267331637924,
-    "note": "the list of gd's two transitions, the body standing in gd after the first click (the one-part convention)"
-   },
-   "counts_never_above": 1,
-   "at_the_seed": "the second photon enters the empty part: the counts end [0, 0, 1, 1] and the photon's count 0"
-  },
-  "atom_shells_symmetric": {
-   "window": [
-    60,
-    93
-   ],
-   "exchange": "symmetric",
-   "universe": "examples/events/atom/shells_symmetric.json",
-   "seed": 34,
-   "seed_rule": "the first of the test's seeds at which the second photon enters the empty excited part under the antisymmetric sign, read before the folder's run by the rule's own runs of the antisymmetric world at each candidate (read_shells.py --rule), the same seed for the control",
-   "seed_candidates": [
-    25,
-    26,
-    34,
-    35
-   ],
-   "verdict": "NODEDETECTOR",
-   "fence": "clicks",
-   "yes_or_no": "at the second close the symmetric record's weight into the populated excited part is 64,961,076,134,244,168, twice the unsigned weight (the permanent's 2) and the larger of the two, the empty part's 9,190,267,331,637,924; the piling, both quanta in one excited part, [0, 0, 2, 0] or [0, 0, 0, 2]",
-   "closes": [
-    60,
-    93
-   ],
-   "first_close": {
-    "into_each_excited_part": 12304515357518400,
-    "rest": 8003945008567134
-   },
-   "second_close": {
-    "into_the_populated_part": 64961076134244168,
-    "unsigned_into_the_populated_part": 32480538067122084,
-    "into_the_empty_part": 9190267331637924
-   },
-   "at_the_seed": "the second photon piles into the populated part: the counts end [0, 0, 2, 0] or [0, 0, 0, 2] and the photon's count 0"
   }
  },
  "beat": {
@@ -499,6 +431,6 @@
    "two_p": 0.00227
   }
  },
- "status": "the levels and the line lattice readings: no NodeDetector, no click, no draw; the shells clicks of a toy atom with the photon's resonance declared; the numbers are the lattice's own at Gamma 6,000 and T 36,000,000 or 72,000,000 and not nature's (the toy's alpha 0.138 and 0.276, nineteen and thirty-eight times nature's)",
- "fence": "lattice for the levels and the line, clicks for the shells"
+ "status": "the levels and the line lattice readings: no NodeDetector, no click, no draw; the numbers are the lattice's own at Gamma 6,000 and T 36,000,000 or 72,000,000 and not nature's (the toy's alpha 0.138 and 0.276, nineteen and thirty-eight times nature's)",
+ "fence": "lattice for the levels and the line"
 }

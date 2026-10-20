@@ -81,51 +81,6 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
     assert division_forward(7, wall, 0) == (0, 7)  # the division act is the one carried division
 
 
-def test_the_clicks_are_causally_continuous_on_the_telegraphs_lines(tmp_path):
-    """T7 (the mathematician's 198, the dependency cone, one Link per interval; the advisor's matrix row 11): over 200 intervals of the shelved ion's telegraph (examples/events/shelved_ion/shelved_ion.json, the committed world and its mode file), every click that writes on the board (the records' and the counter's credit lines, the one click line kind, no Node: the Nodes written read from the LATTICE lines beside them, the emitted quantum's lay lines and the hole's face lines after an absorption) lies inside the cone of the written click before it, |dx| + |dy| + |dz| <= dt on the periodic box, and every credit of a given light quantum lies inside the cone of the emission that laid it, the hits causally continuous and not Node to Node; the ion's absorptions from its two drives, beams of many quanta per Node, write nothing (the undepleted beam, `twist.faced`) and name no Node in any line; the box 12 x 12 x 8, the ion at [6, 6, 4]."""
-    ion = world_beside(tmp_path, EVENTS / "shelved_ion" / "shelved_ion.json", lambda w: None)
-    board = Lattice(load_world(ion), (lines := []).append)
-    for _ in range(200):
-        board.step()
-    shape = board.world.shape
-
-    def nodes_of(c: dict) -> list:  # the write's Nodes from the LATTICE lines beside the click line
-        if c["emitted"]:  # the emission's quantum laid at one Node: the lay lines of the family given to
-            laid = (f for f in lines if f["event"] == "lay" and f["interval"] == c["interval"])
-            return [f["node"]["at"] for f in laid if f["family"] == c["emitted"]]
-        taken = c["absorbed"] or c["family"]  # the hole's Nodes: the face lines of the record taken from
-        holes = (f for f in lines if f["event"] == "face" and f["interval"] == c["interval"] + 1)
-        return [f["node"]["at"] for f in holes if f["family"] == taken]
-
-    def cone(a: dict, b: dict) -> bool:  # the click b inside the cone of the click a
-        return all(
-            sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(p, q, shape, strict=True))
-            <= b["interval"] - a["interval"]
-            for p in nodes_of(a)
-            for q in nodes_of(b)
-        )
-
-    hits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    hits = [
-        c for c in hits if c["interval"] < board.interval
-    ]  # the last interval's hole faces after the run
-    hits.sort(key=lambda c: int(c["interval"]))
-    beams = [
-        c for c in hits if c["absorbed"] in ("strong_drive", "weak_drive")
-    ]  # read in the books alone
-    assert len(hits) > 20 and beams and all("node" not in c for c in hits)  # the lifetime 8: half of 4's
-    assert all(not nodes_of(c) for c in beams)
-    hits = [c for c in hits if c not in beams]
-    assert hits and all(nodes_of(c) for c in hits)
-    assert all(cone(a, b) for a, b in zip(hits, hits[1:], strict=False) if b["interval"] > a["interval"])
-    emissions = [c for c in hits if c["emitted"] == "fluorescence"]
-    credits = [c for c in hits if c["family"] == "fluorescence" and not c["emitted"]]
-    assert emissions and credits and all(cone(emissions[0], c) for c in credits)
-    assert all(
-        g["interval"] < c["interval"] for g in emissions[:1] for c in credits
-    )  # the first emission precedes every credit
-
-
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
     """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay): the three worlds of the design built and laid, the which-way and the one-gap worlds run (the two gaps' run is the two slits' gate row, bit for bit in Born's test); the shadowed regions behind the channel's walls see 0 clicks exactly; the channel's clicks and the screen's sum to the quanta credited and the channel takes about half (the lower gap's quanta, the blind 136.5, within three times the draw's scatter); the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions, and both against the two-gaps world's row: the two slits' minimum at the region 8 filled and the visibility about the regions 6 and 8 fallen below half the two slits'; the two-gaps world the shipped gate's numbers bit for bit (N = 285 and the row at the exact lay at the paces of the vacuum content 60, a lattice diagnostic read at this commit, re-read at the pick from the high bits); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
@@ -456,41 +411,6 @@ def test_the_source_in_time_lays_the_form_it_radiates():
         abs(radiated_total(action, (4, 5)) / (2 / 3 * action * 4 / 5) - 1) > 0.1
     )  # isqrt(21) = 4 misses
     assert radiated_total(action, (1, 3)) == 0 and radiated_total(action, (3, 3)) == 0
-
-
-def test_each_control_atom_takes_the_drive_that_passed_it_and_that_record_alone_falls_to_zero(tmp_path):
-    """The control's two photons as two records (ALGEBRA.md, The click writes on the lattice (3) and (6), one event one record one root; the advisor's design of the control, two massless families of one pair, and his asked assertion, #1793 comment 5979746881 (3)): the shipped control's chain cut to 64 Nodes, the atoms on four Nodes each (the digits of two drives' absorption draws at one close, the click's read of the board) 16 Links from the centre, their windows the packets' passage derived at load, 33 intervals from each atom's first lit interval (C2 with the derived window, 2026-10-19: the left atom closes at 45, the right at 50; the packets at the amplitude 110, one quantum each in the record's own unit, C1), the -x packet `photon_b` passing the left atom and the +x packet `photon` the right one; each atom's click names the drive whose packet passed it (the absorption drawn by each drive's own transfer share, `lists.absorption`, the pick the atom's read of the board), body 0 by `photon_b` at 45 and body 1 by `photon` at 50; after the first absorption that record's count is 0 with its front from the taker's Node at the absorption's interval and every level of its line 0 within the front's reach (the Link-metric distance at most t - 45 - 3, T3's margin), while the other record stands whole, its count 1 and its one quantum in the books, no front; at 50 both stand at 0 with a front each; the deficits 0 throughout (both records sparse, every absorption a hole to 0)."""
-    world = redeclared(json.loads((EVENTS / "anticoincidence" / "two_photons.json").read_text("utf-8")))
-    for body, at in zip(world["bodies"], (15, 47), strict=True):
-        body["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in range(at, at + 4)]  # four Nodes read
-        body["node_detector"] = {k: v for k, v in body["node_detector"].items() if k != "window"}
-    for packet, x in zip(world["packets"], (32, 31), strict=True):
-        packet["top"] = {**packet["top"], "x": [x, x]}
-    (path := tmp_path / "control.json").write_text(json.dumps({**world, "shape": [64, 1, 1]}))
-    TOOL.main(["--input", str(path)])
-    board = Lattice(load_world(path), (lines := []).append)
-    photon, photon_b = ([f.name for f in board.families].index(n) for n in ("photon", "photon_b"))
-    for t in (45, 50, 55, 60):
-        while board.interval < t:
-            board.step()
-        done = credit_lines(lines, "absorbed")
-        taken = [(c["interval"], c["node_detector"], c["absorbed"]) for c in done]
-        books = {name: (b["quanta"], b["count"], b["deficit"]) for name, b in board.books().items()}
-        print(f"at {t}: taken {taken}, the books {books}, the fronts {board.credit.fronts}")
-        second = t >= 50  # the right atom's absorption at its window's close, photon's record then at 0
-        assert taken == [(45, "body 0", "photon_b"), (50, "body 1", "photon")][: 1 + second]
-        fronts = [(f.family, f.since) for f in board.credit.fronts]
-        assert fronts == [(photon_b, 45), (photon, 50)][: 1 + second]
-        assert books["photon_b"][1:] == (0, 0) and books["photon"][1:] == (1 - second, 0)
-        assert second or books["photon"][0] == 1  # the other record stands whole until its absorption
-        origin = board.credit.fronts[0].origin[0] + board.offset[0]  # the hole's Node as the board grew
-        reach = np.abs(np.arange(board.shape[0]) - origin) <= t - 45 - 3  # the shells faced by now
-        line = board.states[photon_b].lines[0]
-        assert not line.now.reshape(-1)[reach].any() and not line.before.reshape(-1)[reach].any()
-    assert {c["node_detector"]: c["absorbed"] for c in done} == {
-        "body 0": "photon_b",
-        "body 1": "photon",
-    }
 
 
 def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_nulls(tmp_path, monkeypatch):

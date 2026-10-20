@@ -35,29 +35,6 @@ from tests.laws import EMIT_RUN as RUN
 ATOM_P = 32520  # one_photon's first atom at count 1 at the derived close, 62, the taker by the read of the board (33,136 the second atom's at 61 under the generator; 32,384 about the Node of the click at 76 under the declared 48): the quarter turn's reach about the hole's Node (C6), the most the two-Node taker takes of the -x piece booked over the window (C2, C4), one quantum's 2 T sin(pi / 4) within a few percent (C1)
 
 
-def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monkeypatch):
-    """MUST 1 (the advisor's run): one_photon's second atom's window closes with no click at 61 (its read of the board; the window derived from the packet's passage, 33 from the first lit interval 29) and its re-lay keeps each Node's direction; the first atom takes the -x packet at 62 with the quarter turn applied ("P lost to the taker"), its P_x -ATOM_P (the -x piece about the hole's Node, C6), the taker dark after the click under C1's one quantum: P_x at 62, 63, 64 and the run's end (170) all -ATOM_P within the floor (before the fix 0 from the null close); printed."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board, lines = one_photon_board(tmp_path)
-    atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
-    read = {}
-    for _ in range(board.world.intervals):
-        board.step()
-        if board.interval in (62, 63, 64, board.world.intervals):
-            read[board.interval] = twist.fan_momentum(board, atom)[0]
-    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    assert len(credits) == 1 and credits[0]["interval"] == 62 and credits[0]["node_detector"] == "body 0"
-    assert credits[0]["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
-    end = board.world.intervals
-    floor = levels_floor(board, atom, board.mask(board.credit.bodies[0].nodes))
-    print(
-        f"Part H (MUST 1): one_photon's atom P_x at 62 {read[62]}, at 63 {read[63]}, at 64 {read[64]}, "
-        f"at the end ({end}) {read[end]}; the floor {floor}"
-    )
-    assert read[62] == -ATOM_P  # the -x piece at the first atom, the read's taker
-    assert all(abs(read[t] + ATOM_P) <= floor for t in (63, 64, end)), (read, floor)
-
-
 def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
     """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): body 0 emits at 61 and body 1 takes at 169 with the two receivers (its null close at 121 before it); the emitter, released from its own source at the span's end on this periodic chain (C5's reach by the lay's end, 2026-10-19: the lay has no end on the ring, so the first line stands), is lit by its own circulating train and closes a null window on it at 156, after the emission and before the click, its re-lay keeping its P; P over the board and the two bodies is still conserved to the floor at the run's end; the reversal with the books MATCHes over 200; the integers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)

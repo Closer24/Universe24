@@ -181,7 +181,7 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
 
 def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_path, monkeypatch):
     """The generator's `count` of a packet is the books' count of its record at the lay (`Lattice.credit.counts`; the mathematician's finding of 2026-10-03): the lines the books count summed over the board and the total read in quanta once, never per Node, so the shipped two slits' 1,809 and the Zeno world's 833 are the books' own at the loaded universe's paces (the generator lays and counts a packet at the declared rests of the holders its family reads, `packet_entry` and `vacuum_of`, as the bodies' lays are laid; the two hands' way (i), #1793 comment 5985967677 (4)), and a dilute wave below half a quantum at every Node reads its one quantum over the board while the per-Node reading sums to 0."""
-    for folder, name in (("two_slits", "two_slits"), ("zeno", "zeno_1")):
+    for folder, name in (("two_slits", "two_slits"), ("chain", "chain_x_minus")):
         world = EVENTS / folder / f"{name}.json"
         entries = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"]
         board = Lattice(load_shipped(world))  # the books at the loaded universe's own paces

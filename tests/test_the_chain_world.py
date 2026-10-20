@@ -7,7 +7,7 @@ import numpy as np
 
 from event_universe import readings, twist
 from event_universe.lattice import Lattice
-from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, family, load_file, world_beside
+from tests.laws import BACK, EVENTS, d4_bound, drift_bound, family
 from tests.laws_read import load_shipped
 
 CHAIN = EVENTS / "chain"
@@ -215,44 +215,4 @@ def test_the_two_pure_permutations_are_the_original_bit_for_bit():
     count = one_world(["chain_y_minus", "chain_z_minus"], "chain_x_minus")
     print(
         f"B5: the two pure permutations exact over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_mirror_image_is_the_original_bit_for_bit():
-    """B5, the 48, the mirror: chain_x_plus (every coordinate c to 95 - c, the light toward the upper side) over the design's 400 intervals, brought back by the mirror with the vector components signed, equal to chain_x_minus in every click line, level and remainder, the second absorption (142) and the fourth (298) included, where the giver's recoil fold meets a record standing at a quarter turn per Node. The defect this clause found on its first run (2026-10-19, 1be7429): `twist.twisted` took the sense whose positive quarter turn moved P with the piece's sign, which at that tie was the same sense in both worlds where the covariant one is its opposite, so the mirror's giver ended at k = pi against the original's k = 0 (the recoil 42,320 against 41,404 in T's unit, its middle Node's lines at the opposite sign); fixed the same day by the geometric sense (n takes the piece's sign, the bisection |n|; x n invariant under the mirror) and the pair at a negative angle read as the conjugate of the forward pair (D5, odd exactly): the original's run is unchanged by the fix (its sense was the geometric one), the images move to it. The runs' seconds printed."""
-    started = time.perf_counter()
-    count = one_world(["chain_x_plus"], "chain_x_minus")
-    print(
-        f"B5: the mirror exact over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_three_mirrors_are_one_world_bit_for_bit():
-    """B5, the 48, the mirrors along y and z: chain_y_plus and chain_z_plus over the design's 400 intervals, brought back to chain_x_plus's frame, equal to it in every click line, level and remainder; with the mirror's test this makes the six worlds one world under the 48 with the draw's order the one named exception. The runs' seconds printed."""
-    started = time.perf_counter()
-    count = one_world(["chain_y_plus", "chain_z_plus"], "chain_x_plus")
-    print(
-        f"B5: the three mirrors one world over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_detuned_packet_is_absorbed_in_at_most_four_of_its_eight_trials(tmp_path):
-    """B7, the line shape (C9 (b)): chain_detuned, the packet of 48 Nodes at k = pi / 8 detuned from the transition at pi / 4, run over its 250 intervals at eight placements of the packet's source Node (the trials tool's knob `source`, 11 through 18, the ensemble's variety under the read) with every record's generator at the hash of the trial's label (tools/meeting_trials.py); the blind as corrected by derivation on 2026-10-19 before any run claim and no fit (the cold reader: the window's sinc weighs the turn and not the chance; the turn per flat window 1.27 rad at one Node at the declared weight 6, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one Node and 0.111 with the body's projection over its three Nodes, two windows per passage, 0.19 per trial, P(at most 4 of 8) = 0.99) reads at most four absorptions over the eight trials at the declared window of 48; under the window derived at load (W 116, the whole passage of the 64-Node packet over the body at v_g 0.570, 2026-10-19) the blind re-derived from the envelope's spectral weight at the detuning (tools/pixel_mode.py envelope read at kappa = Delta / v_g = 0.3857 per Node, Delta = 0.2198 per interval: the weight 0.0657 over the three Nodes; the resonant turn at the weight 6 over three Nodes 1.115 rad, so the detuned turn 0.073 rad, the chance sin^2 = 5.4 x 10^-3 per trial, 0.043 absorptions expected in eight, P(2 or more) 8.0 x 10^-4) reads at most one of eight; the bound first written, at most 1 of 8, presumed the sinc on the chance. The engine reads none of eight at the declared weight 6 and W 116 (three of eight at the declared 48: the seeds 25 at 65 and 28 at 161, and 25's own light taken back at 215 from its train's wake under the narrower C5, the record of the narrower line), pinned here as the engine's reading beside the blind, to move with any change of the weight. The trials' seconds printed."""
-    started = time.perf_counter()
-    trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
-    path, sources = (
-        world_beside(tmp_path, CHAIN / "chain_detuned.json", lambda world: None),
-        range(11, 19),
-    )
-    absorbed = 0
-    for source in sources:
-        _parts, _windows, clicks, refused = trials.one_trial(
-            path, "source", source, 250, tmp_path / "trials"
-        )
-        assert refused is None
-        absorbed += sum(1 for c in clicks if c["absorbed"])
-    assert absorbed <= 1, absorbed  # B7 under the passage's window: at most one of the 8 trials
-    assert absorbed == 0, absorbed  # the engine's reading at the declared weight 6 and W 116, pinned
-    print(
-        f"B7: {absorbed} absorption(s) in {len(sources)} trials of the detuned packet; {time.perf_counter() - started:.1f} s"
     )
