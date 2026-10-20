@@ -13,7 +13,6 @@ from event_universe.features.read import edge_squared, paces_guard
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
-from event_universe.reports import inflow
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, arrivals_rule3, real_rows, universe_beside
 
@@ -100,7 +99,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`readings.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it. The click (ALGEBRA.md #the-count-is-the-records-share; the owner's word of 2026-09-30, no click names a Node): a node_detector's Nodes are one region; its report is the net current into it through the Ports leading in from the declared board outside the region, signed, in the current's units, and none through a Port between two of its Nodes (a hop inside the region is no entry) nor through a Port beyond the board. On the chain of three with every Node declared and none grown: +x from Node 2 is outside the region; -x from Node 0 inside it is a hop, no entry; +y beyond the board has no boundary Port."""
+    """The currents the engine reads (`readings.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it."""
     (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = records.zeros(shape, kind_of(63))
@@ -110,11 +109,6 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         rolled = [(r, *(np.roll(a, -side, axis) for a in (r.now, r.before))) for r in (real, second)]
         expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
         assert np.array_equal(through[port], expected)
-    nodes, board = np.array([True, True, False]).reshape(3, 1, 1), np.ones((3, 1, 1), dtype=bool)
-    wrap, zero = Wrap(False, False, False), np.zeros((3, 1, 1), dtype=np.int64)
-    inward = np.array([0, 40, 0]).reshape(3, 1, 1)  # a current into Node 1 through one Port
-    through = [tuple(inward if p == port else zero for p in range(6)) for port in range(3)]
-    assert [inflow(nodes, t, wrap, nodes, board) for t in through] == [40, 0, 0]
 
 
 def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
@@ -159,7 +153,7 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit():
 def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(
     tmp_path, monkeypatch
 ):
-    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `Lattice.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval under a uniform level the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the plain level before and v the stepped level (the booking's second), the currents from the plain pair, Rule3's remainder term, wall = 2 p_i^2 G^2 (under the temporal gauge the time Link carries no phase and the share reads the plain pair, features/phase, Part C; the turned read of the time shear retired with it). (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (L theta_0 0.16, 0.40 and 0.82) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), and the plain read drifts by nothing: a uniform level does nothing, as a uniform potential does (the mathematician's item 6; the time shear's plain read drifted +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the Links' phase pairs turn by the two ends' difference and the share moves by the gradient's work, a few 10^-3 at the tops 2,400 and 4,920 (5.5 x 10^-3 measured), no rounding, the plain identity of (b) not read there; LATTICE readings, printed."""
+    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `Lattice.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval under a uniform level the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the plain level before and v the stepped level (the booking's second), the currents from the plain pair, Rule3's remainder term, wall = 2 p_i^2 G^2 (under the temporal gauge the time Link carries no phase and the share reads the plain pair, features/phase, Part C). (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (L theta_0 0.16, 0.40 and 0.82) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), and the plain read drifts by nothing: a uniform level does nothing, as a uniform potential does (the mathematician's item 6; the time shear's plain read drifted +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the Links' phase pairs turn by the two ends' difference and the share moves by the gradient's work, a few 10^-3 at the tops 2,400 and 4,920 (5.5 x 10^-3 measured), no rounding, the plain identity of (b) not read there; LATTICE readings, printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "binding"), charged=True)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))

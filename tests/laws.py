@@ -7,12 +7,14 @@ import sys
 from collections.abc import Sequence
 from fractions import Fraction
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pytest
 
 from event_universe import credit, growth, node, readings, share, world_files
 from event_universe.core import paces
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, Row, quanta_records
@@ -81,6 +83,7 @@ def design_beside(folder: Path, stem: str, **keys: object) -> Path:
 
 TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
 TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
+GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")  # the Bell and GHZ gates' reader
 RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
 
 
@@ -524,3 +527,73 @@ def drift_bound(board: Lattice, index: int) -> int:
         now = r.now.reshape(-1).astype(object)
         found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
     return 2 * found
+
+
+LINE_KEYS = ("now", "before", "remainder")  # a record's three arrays
+
+
+def family(board: Lattice, name: str) -> int:
+    return [f.name for f in board.families].index(name)
+
+
+def arrays(board: Lattice) -> list[np.ndarray]:
+    """Every array of the state: the lines, the write remainders and the phase pairs."""
+    found = [getattr(r, k).copy() for s in board.states for r in s.lines for k in LINE_KEYS]
+    found += [r.copy() for s in board.states for r in s.write_remainders]
+    found += [
+        getattr(r, k).copy() for s in board.states for rows in s.phases for r in rows for k in LINE_KEYS
+    ]
+    return found
+
+
+def linear_sum(wall: int, line: Record) -> int:
+    """The linear sum of one line over the board, L = SUM over the Nodes of [w (now - before) + r], w the family's wall 6 den Gamma^2 G^2 (the flux form of Rule3: w (next - 2 now + before) + r' - r = SUM over the Ports of R_ij (arrival - now) - D now, so the Link terms pair off on a closed board read at one rate and L moves by the mass term alone, zero for light); a lattice reading, no level written."""
+    now, before = line.now.astype(object), line.before.astype(object)
+    return int((wall * (now - before) + line.remainder.astype(object)).sum())
+
+
+def linear_exchange(reads: Sequence[Any], line: Record, wrap: Wrap) -> int:
+    """The change of a line's linear sum over one interval by its exchange with the board's faces, a family of light (num = den, so D = 0, at any content): -SUM over the Ports of R_ij times the Node's number over every Node whose Port arrives from beyond a face (the fill 0 there), 0 on a periodic axis; with the step's own six reads R_ij, the expected change of L where no other act writes the line, so that a jump beyond it names a level written outside Rule3's line."""
+    beyond = readings.ports(np.zeros_like(line.now), wrap, 1)
+    now = line.now.astype(object)
+    found = 0
+    for read, mask in zip(reads, beyond, strict=True):
+        where = np.asarray(mask, dtype=bool)
+        found += int(
+            (np.broadcast_to(np.asarray(read, dtype=object), now.shape)[where] * now[where]).sum()
+        )
+    return -found
+
+
+def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
+    """The linear sum weighted by the Node's rate, L'' = SUM over the Nodes of weight_i x [w (now - before) + r] with weight_i = scale div p_i^2, scale the least common multiple of the distinct p_i^2 on the board, so that every weight is a whole number (the caller's, no division here): R_ij / p_i^2 = 2 num Q_ij G^2 is the same at a Link's two ends whatever their rates, so the weighted Link terms of the flux form pair off on a closed board at any fixed content profile and L'' of light is kept exactly where L moves by the pairing term; a lattice reading."""
+    now, before = line.now.astype(object), line.before.astype(object)
+    scaled = np.broadcast_to(np.asarray(weights, dtype=object), now.shape)
+    return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())
+
+
+def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
+    """A gate's folder built from its design beside tmp_path and its worlds run, every one LAWFUL with its parts lines equal across the parts, its credit lines at the window's close and the back-in-time gate MATCH over 4 intervals; `keys` the settings run (every world without): with them each world's own reading (`bell_gate.one_world`) by its setting, without them the folder's reading against the blind (`bell_gate.reading`: the combination, the correlations and the marginals the blind's); with the expectation."""
+    build.main(["--design", str(build.HERE / "design.json"), "--folder", str(folder)])
+    expected = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
+    worlds = {}
+    for key in keys or expected["runs"]:
+        name = expected["runs"][key]
+        TOOL.main(["--input", str(folder / f"{name}.json")])
+        assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
+        lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
+        parts = [line for line in lines if line["event"] == "parts"]
+        equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
+        credits = [line for line in lines if line["event"] == "credit"]
+        assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
+        board = Lattice(load_world(folder / f"{name}.json"))
+        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
+        worlds[key] = GATE.one_world(folder / f"{name}.json", lines, expected)
+    if keys:
+        return worlds, expected
+    outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
+    read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
+    assert read[name] == expected["blind"][name]
+    assert read["correlation"] == expected["blind"]["correlation"]
+    assert read["marginals"] == expected["blind"]["marginals"]
+    return read, expected

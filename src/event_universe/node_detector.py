@@ -126,14 +126,14 @@ def books_of(board: Lattice) -> list[NodeBooks]:
     return found
 
 
-def arriving(board: Lattice, books: NodeBooks, drive: int, direction: int = 1) -> int:
-    """The arriving record's level read into the reader's resonant turn: its level at each of the NodeDetector's Nodes, the level now (`direction` 1) or the level before (-1), projected on the reader's own normalised mode, SUM_i d_i A_i div A with A_i the lay's amplitude of one quantum at the Node and A = (the largest x with x^2 <= SUM A_i^2) (`NodeBooks.amplitudes`, `norm`), rounded half up by the division act: the meeting is bilinear in the two records at each Node and the region's turn is the sum of the Nodes' meetings over the record's norm, the drive's level itself at one Node and (SUM_i d_i) / n^(1/2) over n Nodes in the equal lay (the mathematician's hand with the advisor's second, two hands: the level sum over-weights by n^(1/2), the boundary inflow is quadratic in the drive and turns no phase); a drive whose phase runs along the region carries the form factor of a body of that size. A holder of the sign's time level is summed over every row but the record's own (`records.row_levels`, light), a family of quanta's first line's level otherwise."""
+def arriving(board: Lattice, books: NodeBooks, drive: int) -> int:
+    """The arriving record's level read into the reader's resonant turn: its level at each of the NodeDetector's Nodes, the level now, projected on the reader's own normalised mode, SUM_i d_i A_i div A with A_i the lay's amplitude of one quantum at the Node and A = (the largest x with x^2 <= SUM A_i^2) (`NodeBooks.amplitudes`, `norm`), rounded half up by the division act: the meeting is bilinear in the two records at each Node and the region's turn is the sum of the Nodes' meetings over the record's norm, the drive's level itself at one Node and (SUM_i d_i) / n^(1/2) over n Nodes in the equal lay (the mathematician's hand with the advisor's second, two hands: the level sum over-weights by n^(1/2), the boundary inflow is quadratic in the drive and turns no phase); a drive whose phase runs along the region carries the form factor of a body of that size. A holder of the sign's time level is summed over every row but the record's own (`records.row_levels`, light), a family of quanta's first line's level otherwise."""
     family, lines = board.families[drive], board.states[drive].lines
     if family.wronskian:
         own = row_of(board.families, books.index, books.record)
-        levels = np.asarray(records.row_levels(family, lines, 0, direction, own))
+        levels = np.asarray(records.row_levels(family, lines, 0, 1, own))
     else:
-        levels = lines[0].now if direction == 1 else lines[0].before
+        levels = lines[0].now
     total = sum(
         int(levels[tuple(np.add(at, board.offset))]) * amplitude
         for at, amplitude in zip(books.nodes, books.amplitudes, strict=True)
@@ -233,7 +233,7 @@ def picked(
 
 
 def credit_draw(board: Lattice, weights: list[int], side: str | None = None) -> int:
-    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the combination of the sides' ports by the joint shares and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`). Where the meeting runs back each side draws with a state of its own (`side`, the region's name; `credit.Books.states`): begun at the side's first draw of the window from the declared seed, the side's name and the window's number (`hashed`, distinct per side and per window, declared by the one seed, generic for N sides), advanced once per draw, the port, the Node and the piece's source alike, and cleared at the close; the books' one state untouched."""
+    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the side's port by its own second moments (`lists.readings`) and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`). Each side of a record of several parts draws with a state of its own (`side`, the region's name; `credit.Books.states`): begun at the side's first draw of the window from the declared seed, the side's name and the window's number (`hashed`, distinct per side and per window, declared by the one seed, generic for N sides), advanced once per draw, the port, the Node and the piece's source alike, and cleared at the close; the books' one state untouched."""
     books, modulus = board.credit, board.world.width + 1
     assert books.declaration is not None
     found = books.declaration

@@ -60,7 +60,7 @@ class Lattice:
         self.turning = [index for index in self.order if turns(self.families, index)]  # turned records
         self.writes = {i: held_write_of(self.families, i, world.quantum_action) for i in self.held}
         self.states = [
-            records.empty_state(family, self.shape, self.walls(i), self.kind, (), self.half_wall(i))
+            records.empty_state(family, self.shape, self.walls(i), self.kind, self.half_wall(i))
             for i, family in enumerate(self.families)
         ]
         # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
@@ -233,18 +233,18 @@ class Lattice:
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:
-        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its own unit W_rec (`credit.record_unit`, C1), its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `twist.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
+        """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its own unit W_rec and the written coefficients' norm (`count`, the record's count read from the board, `credit.count_of`, bound as the lattice's method: ALGEBRA.md, The count on the board, 2026-10-20; `credit.record_unit`, C1), its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `twist.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
         for index in self.order:
             family, gamma, books = self.families[index], self.world.node_clock, self.credit
             (total, cold), laid = self.total_share(index), self.laid[index]
-            quanta, drift, deficit = None, None, books.deficits.get(index, 0)
-            if total is not None:
-                quanta = credit.counted(self, index, total, books.units[index])
-                drift = None if laid is None else total - laid
+            quanta, deficit = self.count(index), books.deficits.get(index, 0)
+            drift = None if total is None or laid is None else total - laid
             pace = node.least_pace(index, self.families, self.states, gamma, self.wrap, self.unit)
             found[family.name] = book(total, quanta, books.counts[index], deficit, drift, pace, cold)
         return found
+
+    count = credit.count_of
 
     def stepped(self, index: int, direction: int) -> tuple[list[records.Record], list[records.Booking]]:
         """Every record of a family stepped by Rule3 in `direction` with the rule of its own read (from the held rows' levels the step starts from, the Node's content and its six Links' contents, the Node's twice with each Link's own tension, every sign row but the record's own, the Links the world cuts at 0), every held row of the content among them, with or without a gap, the time line of the massless row reading its rest beyond every face, a turned record's planes under the rotation (`meeting.stepped`, `flux.step_records`), with one booking per record its form and its Wronskian are read from."""
@@ -353,7 +353,7 @@ class Lattice:
     def report(
         self, currents: Currents, weighed: Weighed, forms: Bookings, begun: list[list[records.Record]]
     ) -> None:
-        """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.inflow`, `reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the credit pairs through the root for a record of several parts (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`twist.faces_reported`)."""
+        """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the sides' books take for a record of several parts (`meeting_back.moments_booked`) (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`twist.faces_reported`)."""
         twist.faces_reported(self)
         own, union, wrap = self.declared_board(), node_detector_nodes(self), self.wrap
         where = [(d, reports.region_of(d, self.body_nodes)) for d in self.node_detectors]
@@ -373,9 +373,9 @@ class Lattice:
                     if any(any(level) for level in levels) and self.output is not None:
                         self.output(parts(self.interval, family.name, detector.name, levels))
                     sums.setdefault(index, {})[detector.name] = levels
-        for index, found in sums.items():  # the meeting through the root is several parts' record's
+        for index, found in sums.items():  # the sides' own books of a record of several parts
             if self.families[index].parts > 1:
-                credit.joined(self, index, found)
+                meeting_back.moments_booked(self, index, found)
         booked_inflows(self, weighed, wrap, own)
         self.densities_read(forms, union)
 
@@ -425,7 +425,7 @@ class Lattice:
         books[index] = lines
 
     def step_inverse(self) -> None:
-        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; the host tool crosses them from the lines on the root's worlds, whose log is empty), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass."""
+        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass."""
         meeting_back.logged(self, -1)
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`

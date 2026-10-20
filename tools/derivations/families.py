@@ -95,7 +95,7 @@ def gap_is_the_inverse_reach() -> list[float]:
 
 
 def two_speeds(gamma: int = GAMMA, content: int = 300, links: int = 1000) -> list[float]:
-    """Under Every row reads the content the massless holder's travelling events have light's paces identically, so gamma_GW = gamma_EM and the two Shapiro delays differ by 0, inside GW170817's bounds (line 430; S.12): light and the holder's events both run on rule3's band at the paces p_0 = Gamma N, p_a = Gamma N^2, N^2 / sqrt 3 at long wavelength; [their speeds' difference, their arrivals' difference over the Links in intervals, the superseded version's separation L sqrt 3 (1 / N^2 - 1) with the holder at 1 / sqrt 3, exact in x (182.2 over 1,000 Links at x = 0.05), where S.12's written formula L sqrt 3 [1 / (1 - 2 x) - 1] is its first order in x (192.5); whether 0 lies within GW170817's bounds]."""
+    """Under Every row reads the content the massless holder's travelling events have light's paces identically, so gamma_GW = gamma_EM and the two Shapiro delays differ by 0, inside GW170817's bounds (line 430; S.12): light and the holder's events both run on rule3's band at the paces p_0 = Gamma N, p_a = Gamma N^2, N^2 / sqrt 3 at long wavelength; [their speeds' difference, their arrivals' difference over the Links in intervals, the exact separation L sqrt 3 (1 / N^2 - 1) with the holder at 1 / sqrt 3 (182.2 over 1,000 Links at x = 0.05), of which S.12's formula L sqrt 3 [1 / (1 - 2 x) - 1] is the first order in x (192.5); whether 0 lies within GW170817's bounds]."""
     clock = rule3.clock_pace(gamma, content)
     pace = rule3.node_pace(clock, gamma)
     k = 1e-3

@@ -43,7 +43,7 @@ EXCHANGE = {
 
 
 def exchange_of(row: dict[str, Any], label: str, parts: int) -> int:
-    """A family's sign under the exchange of two of its parts, the key `exchange` (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19): `antisymmetric` -1 or `symmetric` 1, the family's declaration read by the joint credit (`credit.joined`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node; 0 where the key is absent, the lists and the credit as they stand, so that no world without the key changes; refused by name at any other value and on a family of one part, which has no second label to exchange."""
+    """A family's sign under the exchange of two of its parts, the key `exchange` (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19): `antisymmetric` -1 or `symmetric` 1, the family's declaration read by the first side's coefficients (`meeting_back.coefficients_of`, `credit.terms_of`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node; 0 where the key is absent, the lists and the credit as they stand, so that no world without the key changes; refused by name at any other value and on a family of one part, which has no second label to exchange."""
     if "exchange" not in row:
         return 0
     value = row["exchange"]

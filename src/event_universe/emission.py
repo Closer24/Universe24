@@ -31,12 +31,11 @@ if TYPE_CHECKING:
 
 @dataclass
 class Source:
-    """A quantum given as a source in time at one Node (the mathematician's hand with the advisor's second, two hands): the record's family, the Node at the file's coordinates, the resonance (num, den) with cos Omega = num / den, the total S = SUM_t A_t^2 of the span (the largest integer whose square is at most the exact total's square), the span tau, the intervals laid so far, the span's increments computed whole at the source's start (`increments_of`: A_t with the carry times the reference phasor's value at the scale R, advanced by Omega each interval by the recurrence r_(t+1) = (2 num r_t) div den - r_(t-1)) corrected by the division act in time so that they lay no uniform mode (`lay.laid_in_time`; the loader admits no span below its period, `holds_period` its predicate), one laid per interval, and the interval the source was begun at (its first increment laid by the click's write step, the rest by `sourced`, one per interval after)."""
+    """A quantum given as a source in time at one Node (the mathematician's hand with the advisor's second, two hands): the record's family, the Node at the file's coordinates, the resonance (num, den) with cos Omega = num / den, the span tau, the intervals laid so far, the span's increments computed whole at the source's start from the total S = SUM_t A_t^2 of the span, the largest integer whose square is at most the exact total's square (`increments_of`: A_t with the carry times the reference phasor's value at the scale R, advanced by Omega each interval by the recurrence r_(t+1) = (2 num r_t) div den - r_(t-1)) corrected by the division act in time so that they lay no uniform mode (`lay.laid_in_time`; the loader admits no span below its period, `holds_period` its predicate), one laid per interval, and the interval the source was begun at (its first increment laid by the click's write step, the rest by `sourced`, one per interval after)."""
 
     family: int
     at: Node
     resonance: tuple[int, int]
-    total: int
     span: int
     laid: int
     increments: list[int]
@@ -83,10 +82,12 @@ def emitted_quantum(board: Lattice, item: Item) -> tuple[int, int, int] | None:
         wall = count_wall(board.families[item.family], action)
         board.credit.units[item.family] = born_unit(wall, item.resonance)
         board.credit.empty.discard(item.family)
-    total = radiated_total(action, item.resonance)
-    scale = count_wall(board.families[item.family], action) ** SCALE_OF
-    increments, amplitudes = increments_of(total, item.span, item.resonance, scale, item.levels)
     family = board.families[item.family]  # the one lay act in time over the span the loader admitted
+    total = radiated_total(action, item.resonance)
+    if not family.held:  # every part alike, each one n-th of the quantum's share (the lay across parts)
+        total = int(division_forward(total, family.parts, 0)[0])
+    scale = count_wall(family, action) ** SCALE_OF
+    increments, amplitudes = increments_of(total, item.span, item.resonance, scale, item.levels)
     increments = laid_in_time(family.name, family.pair[0] == family.pair[1], increments, amplitudes)
     for at in item.nodes:
         for _ in range(item.delta):
@@ -95,7 +96,6 @@ def emitted_quantum(board: Lattice, item: Item) -> tuple[int, int, int] | None:
                 item.family,
                 where,
                 item.resonance,
-                total,
                 item.span,
                 0,
                 increments,
@@ -135,24 +135,25 @@ def packet_unit(wall: int, pair: tuple[int, int], waves: Sequence[tuple[int, int
 
 
 def emitted_lines(family: FamilyRule) -> list[int]:
-    """The lines a spread record's given quantum is laid on at the Node by the count (`laid_by_count`): every line of one part of its first record, each real line, or each plane's two lines, laid alike; a holder of the sign's time line alone, its record, light (the emission's source in time writes that first line alone)."""
-    return list(range(1 if family.held else family.width))
+    """The lines a quantum born during the run is laid on (`laid_by_count`, `laid_increment`, `laid_packet`; ALGEBRA.md, The lay across parts, the owner's word of 2026-10-20): every line of every part of the family's first record alike, the symmetric lay, each real line or each plane's two lines of each part, as the file's lay lays one event on every part of the record alike; a holder of the sign's time line alone, never its rows."""
+    return [0] if family.held else list(range(family.parts * family.width))
 
 
 def laid_by_count(board: Lattice, item: Item) -> None:
-    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `amplitude`), at the pair the item names, the conversion's records out at their family's massless pair [den, den] (the two hands: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum), every laid line of the record alike, the symmetric lay (`emitted_lines`; the mathematician's hand: the law's form names no line of a record), A_l^2 = count T div (2 laid) with `laid` the record's real lines or its planes (128 on one line or one plane; 73 on each of three planes, the largest integer whose square is at most 5,461, the share then 0.976 of a quantum at T = 32,768, the file's rounding and not the form's, read beside the count: no three squares sum to 2^14, so no exact equal split exists at a power-of-two T, and the alike lay at that largest integer is laid rather than the unequal (74, 74, 73), the record's own unit absorbing the rounding in the count, the advisor's second): a real line at the two levels alike, (A_l, A_l), the level before the level now turned by the pair's rest rotation, none at the massless pair; a plane on its two lines with the sense the item carries from the conversion's table (`Item.sense`, +1 or -1), the real line (A_l, 0) and the sense line (0, sense A_l), the level before the level now turned a quarter in the record's sense as `laid_pairs` lays a plane at the quarter turn [0, den], the one lay at which the count's unit and the charge's unit coincide: the share per plane 3 den (A_l^2 + A_l^2) and the Wronskian re_now im_before - im_now re_before = sense A_l^2, over the planes count W_c and sense count T div 2 to the root's rounding (|W| is at most (|z_now|^2 + |z_before|^2) / 2, so no other lay has both), so that the sign row is written at the Node from the lay on (ALGEBRA.md #the-paces, The sign is the rotation sense; round F of the board, the neutron reading's row 2; the worker's four points to both hands and the mathematician's hand); every laid line's remainder at the lay's origin, the half wall, through the one act with no weights (`lay.laid`, a one-Node lay laid as built, its lay lines the write step's); the record's count in the books up by the change."""
+    """A spread record given `delta` whole quanta at the Nodes named by the count (features/click, `amplitude`, the amplitude from the quantum's share over every part's lines laid alike, ALGEBRA.md, The lay across parts), at the pair the item names, the conversion's records out at their family's massless pair [den, den] (the two hands: a one-Node lay of an open-Link record is a delta over the band and carries no frequency, its share 1 per quantum), every laid line of the record alike, the symmetric lay (`emitted_lines`; the mathematician's hand: the law's form names no line of a record), A_l^2 = count T div (2 laid) with `laid` the record's real lines or its planes (128 on one line or one plane; 73 on each of three planes, the largest integer whose square is at most 5,461, the share then 0.976 of a quantum at T = 32,768, the file's rounding and not the form's, read beside the count: no three squares sum to 2^14, so no exact equal split exists at a power-of-two T, and the alike lay at that largest integer is laid rather than the unequal (74, 74, 73), the record's own unit absorbing the rounding in the count, the advisor's second): a real line at the two levels alike, (A_l, A_l), the level before the level now turned by the pair's rest rotation, none at the massless pair; a plane on its two lines with the sense the item carries from the conversion's table (`Item.sense`, +1 or -1), the real line (A_l, 0) and the sense line (0, sense A_l), the level before the level now turned a quarter in the record's sense as `laid_pairs` lays a plane at the quarter turn [0, den], the one lay at which the count's unit and the charge's unit coincide: the share per plane 3 den (A_l^2 + A_l^2) and the Wronskian re_now im_before - im_now re_before = sense A_l^2, over the planes count W_c and sense count T div 2 to the root's rounding (|W| is at most (|z_now|^2 + |z_before|^2) / 2, so no other lay has both), so that the sign row is written at the Node from the lay on (ALGEBRA.md #the-paces, The sign is the rotation sense; round F of the board, the neutron reading's row 2; the worker's four points to both hands and the mathematician's hand); every laid line's remainder at the lay's origin, the half wall, through the one act with no weights (`lay.laid`, a one-Node lay laid as built, its lay lines the write step's); the record's count in the books up by the change."""
     assert item.pair is not None
     family, at = board.families[item.family], board.mask(item.nodes)
     num, den = item.pair
     lines = 1 if family.held else family.laid  # a holder of the sign: its time line alone, not its rows
-    size = amplitude(item.delta, board.world.quantum_action, item.pair, lines)
+    parts = 1 if family.held else family.parts  # every part alike, each one n-th of the quantum's share
+    size = amplitude(item.delta, board.world.quantum_action, item.pair, lines * parts)
     if family.plane:  # the loader admits a plane given by the count with the table's sense alone
         assert item.sense != 0
         pairs = [pair for _ in range(lines) for pair in ((size, 0), (0, item.sense * size))]
     else:
         pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * lines
     origin = board.half_wall(item.family)  # a fresh lay by the count: the Node's remainder at the origin
-    for number, (now, was) in zip(emitted_lines(family), pairs, strict=True):
+    for number, (now, was) in zip(emitted_lines(family), pairs * parts, strict=True):
         # the one act with no weights: a one-Node lay's uniform part is the lay itself, laid as built, named
         laid(board, item.family, number, (np.where(at, now, 0), np.where(at, was, 0)), None, origin, at)
     board.credit.counts[item.family] += item.delta
@@ -181,7 +182,12 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
                 )
                 for offset in _offsets(axis, width, at, shape)
             ]
-            amplitudes = envelope(line_total(action, item.resonance), item.span, len(section))
+            total = line_total(
+                action, item.resonance
+            )  # the envelope's total, one n-th per part laid alike
+            amplitudes = envelope(
+                int(division_forward(total, family.parts, 0)[0]), item.span, len(section)
+            )
             cosine = int(division_forward(doubled, 2, 0)[0])
             waves = rotated(scale, cosine, doubled, scale, len(amplitudes))
             quadratures = rotated(
@@ -202,14 +208,15 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
                     nows[(here := tuple(np.add(there, board.offset)))] = slice_at[0]
                     befores[here], weights[here] = slice_at[1], slice_at[2]
             origin = None  # the remainders as they stand: the packet adds to light's record (the branch's lay)
-            now, before = laid(board, item.family, 0, (nows, befores), weights, origin)
-            # the packet's own P at birth: the lay's terms alone, read as written (no remainder enters)
-            laid_now, laid_before = np.asarray(now, dtype=object), np.asarray(before, dtype=object)
-            read = [
-                currents.momentum(laid_now, laid_before, axis, board.wrap, family.pair[0])
-                for axis in range(AXES)
-            ]
-            born = [a + b for a, b in zip(born, read, strict=True)]
+            for line in emitted_lines(family)[:: family.width]:  # the first line of every part, alike
+                now, before = laid(board, item.family, line, (nows, befores), weights, origin)
+                # the packet's own P at birth: the lay's terms alone, read as written (no remainder enters)
+                laid_now, laid_before = np.asarray(now, dtype=object), np.asarray(before, dtype=object)
+                read = [
+                    currents.momentum(laid_now, laid_before, axis, board.wrap, family.pair[0])
+                    for axis in range(AXES)
+                ]
+                born = [a + b for a, b in zip(born, read, strict=True)]
     board.credit.counts[item.family] += item.delta
     return born[0], born[1], born[2]
 
@@ -275,11 +282,15 @@ def holds_period(span: int, resonance: tuple[int, int], unit: int) -> bool:
 
 
 def laid_increment(board: Lattice, source: Source) -> None:
-    """One interval of a source: its increment of the interval (`increments_of`, corrected by `lay.laid_in_time`) added to its record's first line's level now at its Node by the write step of the one act (`lay.written`, its lay line), the level before and the remainder as they stand (the previous interval's increment, stepped by Rule3, is the pair's own before: adding the phasor's previous value to the level before as well doubled the action, the share reading 1.63 quanta against sin Omega = 0.745, a check made before the lay entered); the interval counted."""
+    """One interval of a source: its increment of the interval (`increments_of`, corrected by `lay.laid_in_time`) added to the level now of the first line of every part of its record alike at its Node by the write step of the one act (ALGEBRA.md, The lay across parts) (`lay.written`, its lay line), the level before and the remainder as they stand (the previous interval's increment, stepped by Rule3, is the pair's own before: adding the phasor's previous value to the level before as well doubled the action, the share reading 1.63 quanta against sin Omega = 0.745, a check made before the lay entered); the interval counted."""
     at = board.mask((source.at,))
     level = int(source.increments[source.laid])
     origin = None  # the remainder as it stands: the source adds to its record at its one Node
-    written(board, source.family, 0, (np.where(at, level, 0), np.where(at, 0, 0)), origin)
+    family = board.families[source.family]
+    carried = board.credit.written.get(source.family, [1] * family.parts)  # the click's write, if any
+    for part, line in enumerate(emitted_lines(family)[:: family.width]):  # each part's first line, alike
+        scaled = level * carried[part]
+        written(board, source.family, line, (np.where(at, scaled, 0), np.where(at, 0, 0)), origin)
     source.laid += 1
 
 

@@ -6,7 +6,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
-from event_universe import front
+from event_universe import credit, front
 from event_universe.emission import emitted_quantum
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import Draw, Generator
@@ -115,7 +115,7 @@ def written(board: Lattice, items: list[Item]) -> None:
             parted(board, books := books_named(board, item.body), item, phases.get(item.body))
             touched += [books] if books not in touched else []
             continue
-        whole = faced(board, item)
+        whole, was = faced(board, item), board.credit.counts[item.family]
         drawn = list(zip(item.nodes, item.ports or ((),) * len(item.nodes), strict=True))
         unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
         if item.delta > 0 and not unwritten:
@@ -125,6 +125,8 @@ def written(board: Lattice, items: list[Item]) -> None:
         else:
             board.credit.counts[item.family] += item.delta
         board.credit.account_ended(item.family)
+        if item.delta > 0 and not unwritten:  # a lay that raised the count: the births' book
+            credit.born(board, item.family, was)
         if item.delta < 0:  # the front from every drawn Node, faced or not (C6, the re-fix)
             holes.setdefault(item.family, []).extend(drawn)
         if unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone

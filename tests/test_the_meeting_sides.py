@@ -1,154 +1,100 @@
-"""The meeting that runs back at N sides and with the erasure's taper (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading, root or back; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there; no signalling at N sides, every side's marginal its own; (j) the erasure's taper in the back mode, the fronts the act's as built, the erasure lines and the end state equal bit for bit to the root mode's at any seed on regions whose inflow enters at one Node; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever): (k) the shipped fifth world and the shipped GHZ world read under the cone and under the whole board with every line, the close and the lay equal and fewer Node-steps in the cone, (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
+"""The meeting that runs back at N sides and with the erasure's taper (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there; no signalling at N sides, every side's marginal its own; (j) the erasure's taper in the back mode, the fronts the act's as built, the erasure lines and the end state equal bit for bit to the root mode's at any seed on regions whose inflow enters at one Node; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever): (k) the shipped fifth world and the shipped GHZ world read under the cone and under the whole board with every line, the close and the lay equal and fewer Node-steps in the cone, (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
-import hashlib
+import json
 from dataclasses import replace
 from fractions import Fraction
 
 import numpy as np
 import pytest
 
-from event_universe import credit, meeting_back, reports, world_files
+from event_universe import meeting_back, reports
 from event_universe.features.click import drawn, hashed
 from event_universe.features.front import distances
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import BACK, BOARD, CONE
+from event_universe.loader.draw import BOARD, CONE, ports_of
 from event_universe.records import Record
 from event_universe.world_files import load_world
 from tests.laws import BACK as GATE
-from tests.laws import EVENTS, world_beside
-from tests.laws import ROOT as TREE
+from tests.laws import EVENTS, TOOL, family, world_beside
 from tests.laws_spin import (
     BELL,
     IDENTITY,
     PORT,
     SINGLET,
-    TRIALS,
+    digest,
     joint_shares,
-    rebooked,
+    marginal_of,
     spin_world,
     trial,
 )
 
-READER = [9, 16, 9, 16, 16, 9, 16, 9]  # the reader's J over the triples 000 .. 111
 
-
-def family(board: Lattice, name: str = "spin") -> int:
-    return [f.name for f in board.families].index(name)
-
-
-def digest(board: Lattice) -> str:
-    """One hash of every array of the board at a frame (`meeting_back.snapshot`, the arrays' bytes in the families' and the lines' order, the levels' list where the kind is Python's integers): the state of one frame, compared frame by frame between two reaches."""
-    found = hashlib.sha256()
-    for arrays in meeting_back.snapshot(board):
-        for _label, array in arrays:
-            a = np.asarray(array)
-            found.update(a.tobytes() if a.dtype != object else repr(a.ravel().tolist()).encode())
-    return found.hexdigest()
-
-
-def test_a_middle_side_draws_on_the_chain_from_the_joint_and_the_last_on_the_laws_words(
+def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_walk(
     tmp_path, monkeypatch
 ):
-    """(i) N sides, the reader's case (the verdict's point 11 of 2026-10-19): the two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1) and (1, 0), the third region four Nodes inside the left one with one Node between; the three credit lines in the declared order with the count 1 and nothing left, five passes; the engine's booked J equal to the reader's arithmetic over the three sides' `parts` lines and, the parts laid alike, 9, 16, 9, 16, 16, 9, 16, 9 hundredths over the triples 000 .. 111 exactly; at the first side's port p the second side's weights from J by the chain rule (`credit.conditional_of`) 1 / 2 and 1 / 2 against 49 / 50 and 1 / 50 from the re-weighted one-side share at lambda (3, 4) (the mirror at p = 1), the cross terms of the third side's read: the middle side draws on the chain and never on the share; for the last side the chain's weights and the law's words (`conditioned`, `reweighted_share`) proportional at every (p, q), and P(p) P(q | p) P(r | p, q) = J(p, q, r) / SUM J exactly; the realised triple the three draws on the chain's weights at the states hashed from the seed, the names and the window; no signalling at N sides: every side's marginal 1 / 2 here and at other settings of the other sides."""
+    """(i) N sides, the reader's case (the verdict's point 11 of 2026-10-19; B6 and Q1 of 2026-10-20): the two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1) and (1, 0), the third region four Nodes inside the left one with one Node between; the three credit lines in the declared order with the count 1, nothing left and the scales 25, 50 and 50 (the norms' squares cumulative); the first side's weights the marginal exactly (the Gram of the two identity patterns after it the identity, so SUM_k e_k(p)^2 M_kk, 1 / 2 and 1 / 2); its realised coefficients (3, 4) or (-4, 3) written at the birth take two magnitudes, so from there the parts part by the remainders' walk (the law's regime for weighted parts): the middle side's weights 1 / 2 and 1 / 2 EXACTLY whatever the walk (the Gram the identity, the equal ports w(+) = w(-) = M'_00 + M'_11), and the last side's coherent read within the walk's bound of the chain rule's 9 / 25 and 16 / 25 (|w / SUM w - the fraction| under 2 x 10^-3, the deviation printed); the realised triple the three draws on the states hashed from the seed, the names and the window with the engine's weights; no signalling: the first side's weights the same at other settings of the sides after it, 1 / 2 at both."""
     reader = {"left": ((3, 4), IDENTITY), "near": ((1, 1), IDENTITY), "right": ((1, 0), IDENTITY)}
     other = {"left": ((3, 4), IDENTITY), "near": ((5, 12), IDENTITY), "right": ((1, 1), IDENTITY)}
-    marginals, worlds = {}, {}
+    firsts = {}
     for label, sides in (("reader", reader), ("other", other)):
         path = spin_world(
-            tmp_path / label,
-            monkeypatch,
-            sides,
-            both=True,
-            amplitude=64,
-            meeting=BACK,
-            regions={"near": [5, 6, 7, 8]},
+            tmp_path / label, monkeypatch, sides, both=True, amplitude=64, regions={"near": [5, 6, 7, 8]}
         )
         board, lines = trial(path, 1, 40)
-        draw, modulus = board.world.draw, board.world.width + 1
-        clicks = [c for c in lines if c["event"] == "credit"]
+        spin, draw, modulus = family(board, "spin"), board.world.draw, board.world.width + 1
+        books, clicks = board.credit, [c for c in lines if c["event"] == "credit"]
+        realised = [PORT[c["realised"]] for c in clicks]
         assert [(c["node_detector"], c["order"], c["count"], c["left"]) for c in clicks] == [
             (name, order, 1, 0) for order, name in enumerate(sides, 1)
         ]
-        joint, fixed = rebooked(board, lines), {}
-        total = sum(joint.values())
-        assert joint == joint_shares(lines, sides, 0) and total > 0 and board.passes == 5
-        for side, (name, click) in enumerate(zip(sides, clicks, strict=True)):
-            weights = credit.conditional_of(joint, fixed, side)
-            marginals[label, side] = Fraction(credit.conditional_of(joint, {}, side)[0], total)
+        for side, (name, _ports) in enumerate(books.sides):
             state = hashed(draw.seed, name, 1, modulus)
-            fixed[side] = drawn(state, draw.multiplier, draw.increment, modulus, weights)[0]
-            assert fixed[side] == PORT[click["realised"]]  # the draw on the chain's weights
-        worlds[label] = (board, joint, total, fixed)
-    assert set(marginals.values()) == {Fraction(1, 2)}  # no signalling: each side's marginal its own
-    board, joint, total, realised = worlds["reader"]
-    spin = family(board)
-    assert [Fraction(joint[k], total) for k in sorted(joint)] == [Fraction(n, 100) for n in READER]
-    for p in range(2):
-        chain = credit.conditional_of(joint, {0: p}, 1)
-        lambdas = credit.conditioned(board, spin, {0: p}, 1)
-        share = credit.reweighted_share(board, spin, 1, lambdas)
-        assert [Fraction(w, sum(chain)) for w in chain] == [Fraction(1, 2)] * 2
-        assert lambdas == [[3, 4], [-4, 3]][p]
-        assert [Fraction(w, sum(share)) for w in share] == [
-            Fraction(49 - 48 * p, 50),
-            Fraction(1 + 48 * p, 50),
-        ]
-        for q in range(2):
-            last = credit.conditional_of(joint, {0: p, 1: q}, 2)
-            words = credit.reweighted_share(
-                board, spin, 2, credit.conditioned(board, spin, {0: p, 1: q}, 2)
+            weights = books.weights[(spin, name)]
+            assert drawn(state, draw.multiplier, draw.increment, modulus, weights)[0] == realised[side]
+        firsts[label] = books.weights[(spin, "left")]
+        assert Fraction(firsts[label][0], sum(firsts[label])) == Fraction(1, 2) and board.passes == 7
+        if label == "reader":
+            joint = joint_shares(lines, sides, 0)
+            assert [c["scale"] for c in clicks] == [25, 25, 9]  # the norm of the coefficients standing
+            middle = books.weights[(spin, "near")]
+            assert middle[0] == middle[1] > 0  # the equal ports, exact whatever the walk
+            last, fixed = books.weights[(spin, "right")], {0: realised[0], 1: realised[1]}
+            chain = marginal_of(joint, 2, fixed)
+            deviation = abs(Fraction(last[0], sum(last)) - Fraction(chain[0], sum(chain)))
+            assert Fraction(chain[0], sum(chain)) in (Fraction(9, 25), Fraction(16, 25))
+            assert deviation < Fraction(2, 1000), (last, chain)
+            print(
+                f"the reader's case: the realised triple {realised}, the middle side {middle}, the last side "
+                f"{last} against the chain {chain}, the walk's deviation {float(deviation):.2e}"
             )
-            assert [Fraction(w, sum(last)) for w in last] == [Fraction(w, sum(words)) for w in words]
-            for r in range(2):
-                sequential = Fraction(credit.conditional_of(joint, {}, 0)[p], total)
-                sequential *= Fraction(chain[q], sum(chain)) * Fraction(last[r], sum(last))
-                assert sequential == Fraction(joint[p, q, r], total), (p, q, r)
-    print(
-        f"the reader's case at three sides: J {[joint[k] for k in sorted(joint)]}, the realised triple "
-        f"{list(realised.values())}, the other settings' triple {list(worlds['other'][3].values())}"
-    )
+    assert firsts["reader"] == firsts["other"]  # no signalling: the first side's read its own
 
 
-def test_the_tapered_front_erases_alike_in_the_two_modes_inside_the_clicks_light_cone(
+def test_the_tapered_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(
     tmp_path, monkeypatch
 ):
-    """(j) The erasure's taper in the back mode (the verdict's point 13 of 2026-10-19): the singlet world with regions of two Nodes at the chain's ends, whose inflow enters at the inner Node alone, and `erasure` 3, run 126 intervals in the root mode and in the back mode at two seeds; the click's write and the front are the act's as built, so the hole's Node is the inner Node whatever the port realised or the generators' states, and the erasure lines (the shell's distance, its Nodes, the share standing), the faces and the end state are equal bit for bit in the two modes at either seed; the two fronts begin at the close, one shell per interval at the Link distance of the intervals since the click (inside the click's light cone), two Nodes at most on the chain, the shells beyond the grown board the taper's last lines, and end at the close plus the farthest Node's distance, one and the taper, the record's count 0 and its share erased; the back-in-time gate reads MATCH over 60 intervals across the tapered shells."""
+    """(j) The erasure's taper under the one meeting (the verdict's point 13 of 2026-10-19; A3c of 2026-10-20: the fronts begin at the one close after the last side, no front from every click): the singlet world with regions of two Nodes at the chain's ends, whose inflow enters at the inner Node alone, and `erasure` 3, run 126 intervals at two seeds; the two sides draw at the close 40 with the orders 1 and 2 and the count's write follows the last side; the two fronts begin at the close from the hole's Nodes, the regions' inner Nodes whatever the ports realised, one shell per interval at the Link distance of the intervals since the click (inside the click's light cone), two Nodes at most on the chain, the shells beyond the grown board the taper's last lines, and end at the close plus the farthest Node's distance, one and the taper, the record's count 0 and its share erased; the back-in-time gate reads MATCH over the 40 intervals after the close, across the tapered shells (the frames before the close the possibilities' run by the law, the inverse returning the realised past there)."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
-    runs, ends = {}, {"left": [0, 1], "right": [31, 32]}
-    for mode in (None, BACK):
-        path = spin_world(
-            tmp_path / str(mode),
-            monkeypatch,
-            sides,
-            both=True,
-            amplitude=64,
-            meeting=mode,
-            regions=ends,
-            erasure=3,
-        )
-        for seed in (1, 5):
-            lines = []
-            board = Lattice(load_world(path), lines.append)
-            board.credit.declaration = replace(board.world.draw, seed=seed)
-            board.credit.state = TRIALS.hashed_state(seed, board.world.width)
-            for _ in range(126):
-                board.step()
-            runs[mode, seed] = (board, lines)
-    spin = family(board)
+    ends = {"left": [0, 1], "right": [31, 32]}
+    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64, regions=ends, erasure=3)
+    runs = {}
     for seed in (1, 5):
-        boards = [runs[mode, seed][0] for mode in (None, BACK)]
-        kinds = {
-            k: [[e for e in runs[mode, seed][1] if e["event"] == k] for mode in (None, BACK)]
-            for k in ("erasure", "face", "credit")
-        }
-        assert kinds["erasure"][0] == kinds["erasure"][1] and kinds["face"][0] == kinds["face"][1]
-        assert meeting_back.first_difference(*(meeting_back.snapshot(b) for b in boards)) is None
-        for b in boards:
-            assert not b.credit.fronts and b.credit.counts[spin] == 0 and b.total_share(spin)[0] == 0
-        close, erasures = kinds["credit"][1][0]["interval"], kinds["erasure"][1]
-        assert [(c["node_detector"], c["order"]) for c in kinds["credit"][1]] == [
-            ("left", 1),
-            ("right", 2),
+        lines: list[dict] = []  # type: ignore[type-arg]
+        board = Lattice(load_world(path), lines.append)
+        board.credit.declaration = replace(board.world.draw, seed=seed)
+        for _ in range(126):
+            board.step()
+        runs[seed] = (board, lines)
+    spin = family(board, "spin")
+    for board, lines in runs.values():
+        erasures = [e for e in lines if e["event"] == "erasure"]
+        clicks = [c for c in lines if c["event"] == "credit"]
+        assert not board.credit.fronts and board.credit.counts[spin] == 0
+        assert board.total_share(spin)[0] == 0 and board.world.erasure == 3
+        close = clicks[0]["interval"]
+        assert [(c["node_detector"], c["order"], c["interval"]) for c in clicks] == [
+            ("left", 1, 40),
+            ("right", 2, 40),
         ]
         for origin in ((1, 0, 0), (31, 0, 0)):  # the regions' inner Nodes, where the inflow enters
             shells = [e for e in erasures if tuple(e["origin"]) == origin]
@@ -161,32 +107,34 @@ def test_the_tapered_front_erases_alike_in_the_two_modes_inside_the_clicks_light
             assert all(e["distance"] == e["interval"] - close and e["nodes"] <= 2 for e in shells)
             beyond = [e["interval"] for e in shells if e["nodes"] == 0]
             assert beyond == list(range(close + farthest + 1, close + farthest + taper + 2))
-        assert len(erasures) == 2 * len(shells) and taper == 3 and close == 40
-    assert GATE.verdict(Lattice(load_world(path)), 60)["verdict"] == "MATCH"
+        assert len(erasures) == 2 * len(shells)
+    gate = Lattice(load_world(path))
+    for _ in range(41):  # through the close: the click, the writes, the hole and the fronts' start
+        gate.step()
+    assert GATE.verdict(gate, 40)["verdict"] == "MATCH"
     print(
-        f"the taper in the two modes: {len(erasures)} erasure lines equal at the seeds 1 and 5, the shells "
-        f"to {max(e['interval'] for e in erasures)} on the board of {board.shape[0]}, the realised ports "
-        f"{[(m, s, [c['realised'] for c in runs[m, s][1] if c['event'] == 'credit']) for m, s in runs]}"
+        f"the taper after the one close: {len(erasures)} erasure lines at the seeds 1 and 5, the shells to "
+        f"{max(e['interval'] for e in erasures)} on the board of {board.shape[0]}, the realised ports "
+        f"{[(s, [c['realised'] for c in runs[s][1] if c['event'] == 'credit']) for s in runs]}"
     )
 
 
 def test_the_cone_stepped_alone_returns_the_board_runs_close_at_fewer_node_steps(tmp_path, monkeypatch):
-    """(k) The cone stepped alone (the owner's word of 2026-10-20; ALGEBRA.md, The meeting's reading, root or back; The interval's dependency radius is one Link): the shipped fifth world (singlet_back_a_b, the cone by default) and the shipped GHZ world (x, y, y) with `meeting: back`, each run whole under the cone and under `reach: board` beside it; the two runs' every output line equal (the credit lines with the realised ports, the parts, the faces), the two boards equal bit for bit at the end, the books equal; the frames' sequence of tick, interval, direction and pass equal and, at every frame of both runs, the hash of every array of the board equal in order (`digest` over `meeting_back.snapshot`: the cone-alone trajectory is the board's at every step and not at the ends alone, the assertion naming the first frame that differs), and at the birth the board equal to the lay bit for bit (frame 0 inside S_0 and outside it alike, the growths all popped); the Node-steps of the reading (`credit.stepped`, in the cone the box with its ring per step, on the board its volume) counted at the same intervals, the cone's fewer at every interval and in all (the saving modest on the shipped boards, which the cone fills early); the growths of the receding faces popped on the way back and replayed on the way forward, the board's growth log and shape at the end the board run's and the record's history stack empty; no refusal."""
+    """(k) The cone stepped alone (the owner's word of 2026-10-20; ALGEBRA.md, The meeting's reading; The interval's dependency radius is one Link): the shipped fifth world (singlet_back_a_b, the cone by default) and the shipped GHZ world (x, y, y) with `meeting: back`, each run whole under the cone and under `reach: board` beside it; the two runs' every output line equal (the credit lines with the realised ports, the parts, the faces), the two boards equal bit for bit at the end, the books equal; the frames' sequence of tick, interval, direction and pass equal and, at every frame of both runs, the hash of every array of the board equal in order (`digest` over `meeting_back.snapshot`: the cone-alone trajectory is the board's at every step and not at the ends alone, the assertion naming the first frame that differs), and at the birth the board equal to the lay bit for bit (frame 0 inside S_0 and outside it alike, the growths all popped); the Node-steps of the reading (`credit.stepped`, in the cone the box with its ring per step, on the board its volume) counted at the same intervals, the cone's fewer at every interval and in all (the saving modest on the shipped boards, which the cone fills early); the growths of the receding faces popped on the way back and replayed on the way forward, the board's growth log and shape at the end the board run's and the record's history stack empty; no refusal."""
     runs = {}
     for folder, name, edit in (
-        ("bell_singlet", "singlet_back_a_b.json", {}),
-        ("ghz", "ghz_x_y_y.json", {"meeting": BACK}),
+        ("bell_singlet", "singlet_a_b.json", {}),
+        ("ghz", "ghz_x_y_y.json", {}),
     ):
         source = EVENTS / folder / name
         for reach in (None, BOARD):
             edits = {**edit, **({"reach": reach} if reach else {})}
-            if edits:
-                path = world_beside(
-                    tmp_path / f"{folder}_{reach}", source, lambda w, e=edits: w["draw"].update(e)
-                )
-            else:
-                monkeypatch.setattr(world_files, "REPOSITORY_ROOT", TREE)
-                path = source
+
+            def edited(w, e=edits):  # type: ignore[no-untyped-def]
+                w["draw"].pop("meeting", None)  # the one meeting needs no key (the files move with it)
+                w["draw"].update(e)
+
+            path = world_beside(tmp_path / f"{folder}_{reach}", source, edited)
             lines, frames, digests = [], [], []
             board = Lattice(load_world(path), lines.append)
             zero = meeting_back.snapshot(board)
@@ -194,7 +142,7 @@ def test_the_cone_stepped_alone_returns_the_board_runs_close_at_fewer_node_steps
             def seen(t, d, p, b=board, frames=frames, digests=digests, zero=zero):
                 frames.append((b.tick, t, d, p))
                 digests.append(digest(b))  # the frame's state, every array
-                if p > 1 and t == 0:  # the birth: the lay bit for bit, the growths popped
+                if p == 2 and t == 0:  # the first run back reaches the lay bit for bit, unwritten
                     assert meeting_back.first_difference(zero, meeting_back.snapshot(b)) is None
 
             board.observers.append(seen)
@@ -215,14 +163,14 @@ def test_the_cone_stepped_alone_returns_the_board_runs_close_at_fewer_node_steps
             is None
         )
         assert cone[0].books() == whole[0].books() and cone[0].shape == whole[0].shape
-        assert cone[0].growths == whole[0].growths and cone[0].credit.popped == [] and cone[0].growths
+        assert cone[0].growths == whole[0].growths and cone[0].growths
         stepped = {reach: runs[name, reach][0].credit.stepped for reach in (None, BOARD)}
         assert sorted(stepped[None]) == sorted(stepped[BOARD]) and len(stepped[None]) > 1
         assert all(stepped[None][t] <= stepped[BOARD][t] for t in stepped[None])
         assert sum(stepped[None].values()) < sum(stepped[BOARD].values())
         print(
             f"the cone stepped alone on {name}: Node-steps {sum(stepped[None].values())} against the board's "
-            f"{sum(stepped[BOARD].values())}, {len(cone[0].growths)} growths popped and replayed, the lines "
+            f"{sum(stepped[BOARD].values())}, {len(cone[0].growths)} growths read anew from the box, the lines "
             f"{[c['realised'] for c in cone[1] if c['event'] == 'credit']} in both"
         )
 
@@ -242,13 +190,12 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
             both=True,
             amplitude=64,
             length=120,
-            meeting=BACK,
             reach=reach,
             regions=regions,
         )
 
     def moved(board, x):  # a level moved by hand at the chain's Node x, a new array beside the old
-        spin, line = family(board), board.states[family(board)].lines[0]
+        spin, line = family(board, "spin"), board.states[family(board, "spin")].lines[0]
         now = np.array(line.now, copy=True)
         now[x + board.offset[0], 0, 0] += 1
         board.states[spin].lines[0] = Record(now, line.before, line.remainder)
@@ -280,3 +227,127 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
     print(
         f"the three refusals by name; the untouched chain of 120 read alike in the two reaches, |G(0)| {boards[0].credit.cone[0]}"
     )
+
+
+def born_world(folder, monkeypatch, seed, window=200, intervals=124):  # type: ignore[no-untyped-def]
+    """The born pair's world (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the spin world's chain with no packet, the giver family `atom` added to its universe ([1, 1299], two parts of a plane, reading no holder), one atom body at the Node 12 standing in its part e, the transition g to e by `spin` at the resonance [5414, 6000] and the rate e to g with the lifetime 24 giving its quantum to `spin`, the body's own books with its `seed` (its window the passage of its drive's lay, derived at load); the two regions of the singlet with the identity pattern; `meeting: back` with the board's reach and the world's window `window` over `intervals` intervals; the mode file by the generator; the world's path."""
+    sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], IDENTITY)}
+    path = spin_world(folder, monkeypatch, sides, both=True, amplitude=64, reach=BOARD)
+    universe = json.loads((folder / "u.json").read_text(encoding="utf-8"))
+    universe["families"].append({"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}})
+    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    world = json.loads(path.read_text(encoding="utf-8"))
+    world["packets"], world["intervals"], world["draw"]["window"] = [], intervals, window
+    world["bodies"] = [
+        {
+            "family": "atom",
+            "nodes": [{"node": [12, 0, 0], "weight": 1}],
+            "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
+            "transitions": [
+                {"from": "g", "to": "e", "drive": "spin", "weight": 1, "resonance": [5414, 6000]}
+            ],
+            "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "spin"}],
+            "node_detector": {
+                "multiplier": 6364136223846793005,
+                "increment": 1442695040888963407,
+                "seed": seed,
+            },
+        }
+    ]
+    path.write_text(json.dumps(world) + "\n", encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    return path
+
+
+def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_its_birth(
+    tmp_path, monkeypatch
+):
+    """(m) The lay across parts and the births' book (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the born pair's world (`born_world`, the first of eight seeds whose atom emits before the interval 60), run 124 intervals under `meeting: back` with a window longer than the run (the lays logged, no click): the emission lays the quantum of `spin` on every part alike, the lay lines of the birth interval on the first line of each part at the Node 12 with the same levels, the two parts' lines equal bit for bit at the end (the symmetric lay stepped by one rule) and the `parts` lines' sums equal part by part; the births' book holds the birth's interval and the Node, `birth_of` reads it, the books count one quantum; the run back from the close stops at the birth, the board there equal bit for bit to the frame the forward run recorded right after the birth's lays, the cone's root the birth's Node, and the run forward returns the close bit for bit."""
+    for seed in range(8):
+        path = born_world(tmp_path / str(seed), monkeypatch, seed)
+        lines, frames = [], {}
+        board = Lattice(load_world(path), lines.append)
+        spin = family(board, "spin")
+        board.observers.append(
+            lambda t, d, p, b=board, frames=frames: frames.__setitem__(t, meeting_back.snapshot(b))
+        )
+        for _ in range(board.world.intervals):
+            board.step()
+        if spin in board.credit.births and board.credit.births[spin][0] <= 60:
+            break
+    else:
+        raise AssertionError("no seed of eight emitted before the interval 60")
+    birth, nodes = board.credit.births[spin]
+    width = board.families[spin].width
+    assert 0 < birth <= 60 and nodes == ((12, 0, 0),) and board.credit.counts[spin] == 1
+    first = [line for line in lines if line["event"] == "lay" and line["family"] == "spin"]
+    first = [line for line in first if line["interval"] == birth]
+    assert sorted(line["line"] for line in first) == [0, width]
+    assert len({tuple(line["after"]) for line in first}) == 1 and first[0]["after"][0] != 0
+    state = board.states[spin]
+    for k in range(width):  # the parts alike bit for bit: the symmetric lay stepped by one rule
+        for array in ("now", "before", "remainder"):
+            assert (getattr(state.lines[k], array) == getattr(state.lines[width + k], array)).all()
+    parts = [line for line in lines if line["event"] == "parts" and line["family"] == "spin"]
+    assert parts and all(
+        line["levels"][k] == line["levels"][width + k] for line in parts for k in range(width)
+    )
+    assert meeting_back.birth_of(board, spin) == birth and board.books()["spin"]["quanta"] == 1
+    kept = meeting_back.run_back(board, spin)
+    assert board.interval == birth and board.credit.birth == birth and board.credit.support == nodes
+    assert meeting_back.first_difference(frames[birth], meeting_back.snapshot(board)) is None
+    meeting_back.run_forward(board, spin, board.world.intervals, kept)
+    print(
+        f"the born pair: the atom at the seed {seed} emitted at the interval {birth}, the quantum laid on the "
+        f"lines {sorted(line['line'] for line in first)} alike, the run back to the birth exact"
+    )
+
+
+def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tmp_path, monkeypatch):
+    """(n) The per-side books and the Gram read (ALGEBRA.md, The meeting's identity, the Gram theorem; the owner's word of 2026-10-20): the Gram of no side is the matrix of ones, the identity pattern's the identity, the GHZ's third pattern's the reader's matrix; the quadratic form on the moments [[5, 5], [5, 5]] at the setting (12, 5) with the identity pattern reads 845 and 845 under the identity Gram and 1445 and 245 under the ones; the antisymmetric first side's coefficients the determinant's; on the singlet world at two settings the first side's weights at its draw are the Gram read of the test's own second moments from the `parts` lines (the engine's books the same products) with the partner's Gram, and equal the marginal of the joint shares exactly (the chain rule's local form, the Gram theorem)."""
+    identity = tuple(tuple(pair) for pair in IDENTITY)
+    assert meeting_back.gram_of([], 2) == [[1, 1], [1, 1]]
+    assert meeting_back.gram_of([identity], 2) == [[1, 0], [0, 1]]
+    ghz = ((1, 0), (0, -1), (0, -1), (-1, 0))
+    assert meeting_back.gram_of([ghz], 4) == [[1, 0, 0, -1], [0, 1, 1, 0], [0, 1, 1, 0], [-1, 0, 0, 1]]
+    ports = ports_of((12, 5), identity)
+    coefficients = [list(port) for port in ports]
+    assert meeting_back.side_weights([[5, 5], [5, 5]], coefficients, [[1, 0], [0, 1]]) == [845, 845]
+    assert meeting_back.side_weights([[5, 5], [5, 5]], coefficients, [[1, 1], [1, 1]]) == [1445, 245]
+    for a, b in ((BELL[0], BELL[2]), (BELL[1], BELL[3])):
+        sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
+        path = spin_world(
+            tmp_path / f"{a[0]}_{a[1]}_{b[0]}_{b[1]}",
+            monkeypatch,
+            sides,
+            both=True,
+            amplitude=64,
+            reach=BOARD,
+        )
+        board, lines = trial(path, 1, 40)
+        spin, joint = family(board, "spin"), joint_shares(lines, sides, 0)
+        width = board.families[spin].width
+        own = {name: [[0, 0], [0, 0]] for name in sides}
+        for row in (r for r in lines if r["event"] == "parts"):
+            for member in range(2):
+                for k in range(2):
+                    for m in range(2):
+                        levels = row["levels"]
+                        own[row["node_detector"]][k][m] += sum(
+                            levels[k * width + i][member] * levels[m * width + i][member]
+                            for i in range(width)
+                        )
+        assert all(any(map(any, own[name])) for name in sides)
+        first = meeting_back.coefficients_of(board.families[spin], board.credit.sides[0][1], True)
+        gram = meeting_back.gram_of([board.credit.patterns["right"]], 2)
+        weights = meeting_back.side_weights(own["left"], first, gram)
+        assert weights == board.credit.weights[(spin, "left")]  # the engine's moments the test's own
+        marginal = marginal_of(joint, 0)
+        assert Fraction(weights[0], sum(weights)) == Fraction(marginal[0], sum(marginal))
+        antisymmetric = meeting_back.coefficients_of(
+            replace(board.families[spin], exchange=-1), board.credit.sides[0][1], True
+        )
+        assert antisymmetric == [[-port[1], port[0]] for port in board.credit.sides[0][1]]
+        print(
+            f"the Gram read at {a}, {b}: the first side's weights {weights}, the marginal of J {marginal}"
+        )

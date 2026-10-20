@@ -1,4 +1,4 @@
-"""Part C, the time turn replaced by the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the record's run and its mirror's each its own test, the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
+"""Part C, the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the record's run and its mirror's each its own test, the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
 
 import hashlib
 import json
@@ -18,11 +18,12 @@ from tests import laws
 from tests.laws import COULOMB_AT as AT
 from tests.laws import COULOMB_CHAIN as CHAIN
 from tests.laws import COULOMB_UNIVERSE as UNIVERSE
-from tests.laws import EVENTS, coulomb_world
+from tests.laws import EVENTS, arrays, coulomb_world
+from tests.laws import LINE_KEYS as KEYS
 
-GAMMA, PAIR, UNIT, T = 6000, (4000, 6000), 16, 36000
+GAMMA, PAIR, T = 6000, (4000, 6000), 36000
 SIGMA, AMPLITUDE = 30, 3000
-KEYS = ("now", "before", "remainder")
+
 ORACLE = Path(__file__).resolve().parent / "oracle" / "coulomb_before.json"
 
 
@@ -75,16 +76,6 @@ def coulomb_shift(tmp_path, conjugate: bool, intervals: int) -> float:  # type: 
         board.step()
         held_static(board, kept)
     return centroid(board) - before
-
-
-def arrays(board: Lattice) -> list[np.ndarray]:
-    """Every array of the state: the lines, the write remainders and the phase pairs."""
-    found = [getattr(r, k).copy() for s in board.states for r in s.lines for k in KEYS]
-    found += [r.copy() for s in board.states for r in s.write_remainders]
-    found += [
-        getattr(r, k).copy() for s in board.states for rows in s.phases for r in rows for k in KEYS
-    ]
-    return found
 
 
 def test_the_coulomb_run_on_the_engine_moves_the_centroid_by_the_hands_count(tmp_path, monkeypatch):

@@ -21,7 +21,7 @@ from event_universe.lattice import Lattice  # noqa: E402
 from event_universe.world_files import load_world  # noqa: E402
 
 RUNS = REPO / "runs" / "two_bodies"
-GAMMA, NUM, DEN = 6000, 4000, 6000
+GAMMA = 6000
 PAIR, ALONE = "fall_pair_49x17.json", "fall_alone_49x17.json"
 
 

@@ -13,19 +13,13 @@ from event_universe.loader.derived import held_write_of
 from event_universe.plane import link_levels, link_pairs, link_wall, sign_pairs
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import CHARGE, RULE_WALL, TURNING, chain_body_world, imaged, sign_world
+from tests.laws import CHARGE, RULE_WALL, TURNING, arrays, chain_body_world, imaged, sign_world
+from tests.laws import LINE_KEYS as KEYS
 from tests.laws import TURNING_T as T
 
 GAMMA, PAIR, UNIT = 6000, (4000, 6000), 16
 NAMES = [family.name for family in TURNING]
 CHARGED = NAMES.index("charged")
-KEYS = ("now", "before", "remainder")
-
-
-def arrays(board: Lattice) -> list[np.ndarray]:
-    return [getattr(r, k).copy() for s in board.states for r in s.lines for k in KEYS] + [
-        r.copy() for s in board.states for r in s.write_remainders
-    ]
 
 
 def test_the_sign_pair_is_even_and_odd_in_the_links_level():
@@ -174,7 +168,7 @@ def test_two_charges_of_opposite_sense_run_a_hundred_intervals(tmp_path, monkeyp
 
 
 def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():
-    """(d) The sign holder's odd lines over the doubled wall 2 E_s T from the unhalved sum J against the old path, (J + 1) div 2 over E_s T, both by the carried division from the half wall: with 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval (the half unit of current the old path rounded up and the new one keeps in the remainder), so that the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals and on a plane wave's own current, J_x = 2 A^2 sin k, static; the walls of turning.json's sign holder (100 T, 200 T, 200 T, 200 T) per row."""
+    """(d) The sign holder's odd lines over the doubled wall 2 E_s T from the unhalved sum J against the halved path, (J + 1) div 2 over E_s T, both by the carried division from the half wall: with 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval (the half unit of current the halved path rounds up and the unhalved keeps in the remainder), so that the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals and on a plane wave's own current, J_x = 2 A^2 sin k, static; the walls of turning.json's sign holder (100 T, 200 T, 200 T, 200 T) per row."""
     write = held_write_of(TURNING, CHARGE, T)
     weight, wall = TURNING[CHARGE].write, write.walls[0]
     assert write.walls == (wall, 2 * wall, 2 * wall, 2 * wall) * 2 and wall == 100 * T
@@ -182,7 +176,7 @@ def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():
     for sources in (draw.integers(-(10**6), 10**6, 300), 2 * draw.integers(-(10**6), 10**6, 300)):
         old, new, odds = (0, wall // 2), (0, wall), 0
         for current in sources.tolist():
-            gained, r_old = divmod(old[1] + weight * ((current + 1) // 2), wall)  # the old path
+            gained, r_old = divmod(old[1] + weight * ((current + 1) // 2), wall)  # the halved path
             level_old = old[0] + gained
             gained, r_new = divmod(new[1] + weight * current, 2 * wall)  # the unhalved sum, doubled wall
             level_new = new[0] + gained

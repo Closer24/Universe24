@@ -23,7 +23,7 @@ from tests.laws_spin import (
     correlation,
     exclusion_world,
     joint_shares,
-    rebooked,
+    sided,
     spin_world,
     trial,
 )
@@ -33,7 +33,7 @@ DRAWS = 400
 
 
 def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle(tmp_path, monkeypatch):
-    """Stern and Gerlach on the board: one quantum of the two-plane family (the amplitude 90, the lay 75, the share 0.9994 of the record's unit, the count 1) laid in the equal-parts state (psi_1 = psi_2, the Bloch vector along +x), one region at the chain's lower end declaring its axis as the half-angle pair (c, s) with the identity pattern; at the window's close the whole quantum is credited to the plus port or the minus port, two beams and never a smear (one credit line, count 1, nothing left, `kept` the parts the realised port reads with a coefficient other than 0, no loss, the whole quantum at one port: at the z axis (1, 0) the + port (c, s) = (1, 0) reads part 0 alone and the - port (-s, c) = (0, 1) part 1 alone, so the two beams along z are the two parts themselves), with the share (c + s)^2 / (2 (c^2 + s^2)) = cos^2 of the half angle between the axis and the state, exact in the integers' rationals: 1 / 2 at the z axis (1, 0), 1 at the x axis (1, 1), 0 at -x (1, -1), 4 / 5 at (3, 1) and 9 / 10 at (2, 1); the shares read from the engine's `parts` lines by the reader's own arithmetic equal the formula exactly, every run's port is one the share allows, the engine's own accumulation (`credit.joined`, run again over the same `parts` sums) equals the reader's exactly, and the engine's generator over the reader's shares (`node_detector.credit_draw`, the states hashed as the trials tool hashes them) gives the plus port within three binomial scatters of the share over 400 draws, exactly all or none along the state."""
+    """Stern and Gerlach on the board: one quantum of the two-plane family (the amplitude 90, the lay 75, the share 0.9994 of the record's unit, the count 1) laid in the equal-parts state (psi_1 = psi_2, the Bloch vector along +x), one region at the chain's lower end declaring its axis as the half-angle pair (c, s) with the identity pattern; at the window's close the whole quantum is credited to the plus port or the minus port, two beams and never a smear (one credit line, count 1, nothing left, `kept` the parts the realised port reads with a coefficient other than 0, no loss, the whole quantum at one port: at the z axis (1, 0) the + port (c, s) = (1, 0) reads part 0 alone and the - port (-s, c) = (0, 1) part 1 alone, so the two beams along z are the two parts themselves), with the share (c + s)^2 / (2 (c^2 + s^2)) = cos^2 of the half angle between the axis and the state, exact in the integers' rationals: 1 / 2 at the z axis (1, 0), 1 at the x axis (1, 1), 0 at -x (1, -1), 4 / 5 at (3, 1) and 9 / 10 at (2, 1); the shares read from the engine's `parts` lines by the reader's own arithmetic equal the formula exactly, every run's port is one the share allows, the engine's weights at each side (`meeting_back.side_weights`, `sided`) equal the chain rule's over the reader's shares exactly, and the engine's generator over the reader's shares (`node_detector.credit_draw`, the states hashed as the trials tool hashes them) gives the plus port within three binomial scatters of the share over 400 draws, exactly all or none along the state."""
     for axis, expected in (
         ((1, 0), Fraction(1, 2)),
         ((1, 1), Fraction(1)),
@@ -51,9 +51,10 @@ def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle
             assert clicks[0]["count"] == 1 and clicks[0]["left"] == 0, clicks
             up, down = (shares := joint_shares(lines, {"left": (axis, IDENTITY)}))[(0,)], shares[(1,)]
             assert Fraction(up, up + down) == expected, (axis, up, down)  # the half angle's share, exact
-            assert (
-                rebooked(board, lines) == shares
-            )  # the engine's own accumulation, exactly the reader's
+            spin = [f.name for f in board.families].index("spin")
+            sided(
+                board, spin, shares, [PORT[c["realised"]] for c in clicks]
+            )  # the one side's coherent read
             allowed = {"plus"} if expected == 1 else {"minus"} if expected == 0 else {"plus", "minus"}
             port = clicks[0]["realised"]
             assert port in allowed, (axis, port)
@@ -147,7 +148,7 @@ def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, m
 def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bound_at_two_root_two(
     tmp_path, monkeypatch
 ):
-    """The singlet on the board (the Boss's item (d), 2026-10-19): two packets of the two-plane family from the centre toward the two ends, half a quantum each, the two parts laid alike on both, the left region's pattern the identity and the right region's the singlet's [[0, 1], [-1, 0]] (the partner reads the parts crossed with one sign turned, the antisymmetric pair: through `ports_of` its + port reads (s, -c) and its - port (c, s), the identity's - port (-s, c), the overall sign invisible to the norm), each region its own `axis`; the joint credit over the window gives E(a, b) = -cos(theta_a - theta_b) exact in the integers' rationals from the engine's `parts` lines at the four Bell settings, -119 / 169, 119 / 169, -120 / 169, -120 / 169, so |S| = 478 / 169 (the photons' S with (a - b) in the place of 2 (a - b)); each side's marginal 1 / 2 whatever the partner's axis; at equal axes the shares of (+, +) and (-, -) are 0 exactly, the anticorrelation, and the combination realised is one of the two the shares allow (the generator over the reader's shares never one of the two at 0); the pair is one quantum of the record, each packet half of it (the amplitude 64, the lay 54, the two shares 1.0134 of the record's unit together), and every run credits the one quantum's two sides with the one combination drawn, one line each with the count 1, nothing left (`lists.region`); the engine's own accumulation (`credit.joined` run again over the same `parts` sums) equals the reader's exactly; the engine's generator over the reader's shares at (a, b) (`node_detector.credit_draw`, 400 hashed states) within three binomial scatters of each share."""
+    """The singlet on the board (the Boss's item (d), 2026-10-19): two packets of the two-plane family from the centre toward the two ends, half a quantum each, the two parts laid alike on both, the left region's pattern the identity and the right region's the singlet's [[0, 1], [-1, 0]] (the partner reads the parts crossed with one sign turned, the antisymmetric pair: through `ports_of` its + port reads (s, -c) and its - port (c, s), the identity's - port (-s, c), the overall sign invisible to the norm), each region its own `axis`; the joint credit over the window gives E(a, b) = -cos(theta_a - theta_b) exact in the integers' rationals from the engine's `parts` lines at the four Bell settings, -119 / 169, 119 / 169, -120 / 169, -120 / 169, so |S| = 478 / 169 (the photons' S with (a - b) in the place of 2 (a - b)); each side's marginal 1 / 2 whatever the partner's axis; at equal axes the shares of (+, +) and (-, -) are 0 exactly, the anticorrelation, and the combination realised is one of the two the shares allow (the generator over the reader's shares never one of the two at 0); the pair is one quantum of the record, each packet half of it (the amplitude 64, the lay 54, the two shares 1.0134 of the record's unit together), and every run credits the one quantum's two sides with the one combination drawn, one line each with the count 1, nothing left (`lists.region`); the engine's weights at each side (`meeting_back.side_weights`, `sided`) equal the chain rule's over the reader's shares exactly; the engine's generator over the reader's shares at (a, b) (`node_detector.credit_draw`, 400 hashed states) within three binomial scatters of each share."""
     found = {}
     for a in BELL[:2]:
         for b in BELL[2:]:
@@ -160,9 +161,10 @@ def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bou
             assert [c["node_detector"] for c in clicks] == ["left", "right"], clicks
             assert all(c["count"] == 1 and c["left"] == 0 for c in clicks), clicks
             shares = joint_shares(lines, sides)
-            assert (
-                rebooked(board, lines) == shares
-            )  # the engine's own accumulation, exactly the reader's
+            spin = [f.name for f in board.families].index("spin")
+            sided(
+                board, spin, shares, [PORT[c["realised"]] for c in clicks]
+            )  # the sides' reads the chain's
             total = sum(shares.values())
             same, different = shares[0, 0] + shares[1, 1], shares[0, 1] + shares[1, 0]
             assert Fraction(same - different, total) == correlation(a, b), (a, b, shares)

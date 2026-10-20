@@ -21,7 +21,6 @@ except ModuleNotFoundError:  # the gates load a module by its path, the folder n
 
 ACTION = 32768  # T = 2^15, the rule's universe (the paper's line 408)
 MATTER = (2, 3)  # the rule's matter pair (line 170)
-SHIPPED_MATTER = (4000, 6000)  # the shipped matter pair over Gamma = 6,000 (line 395)
 SMALL_GAP = (999, 1000)  # a pair near the closing gap, the paper's second pair (moving_clock.py)
 WIDE_GAP = (
     1,

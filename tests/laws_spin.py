@@ -1,11 +1,15 @@
-"""The spin family's worlds and readers for the law's tests (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route), beside tests/laws.py, whose size the tests' shape caps: the two-plane family's world with its regions' axes and patterns and, optionally, its declared sign under exchange (`spin_world`), the exclusion world of a body of several parts with its drives (`exclusion_world`, the capacity's and the shell's), one run at a seed (`trial`), the reader's own arithmetic of the joint credit beside the engine's (`joint_shares`, the terms by the family's sign), the engine's own accumulation run again (`rebooked`), and the singlet's correlation from the half-angle pairs (`correlation`)."""
+"""The spin family's worlds and readers for the law's tests (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route), beside tests/laws.py, whose size the tests' shape caps: the two-plane family's world with its regions' axes and patterns and, optionally, its declared sign under exchange (`spin_world`), the exclusion world of a body of several parts with its drives (`exclusion_world`, the capacity's and the shell's), one run at a seed (`trial`), the reader's own arithmetic of the joint credit beside the engine's (`joint_shares`, the terms by the family's sign), the chain rule's weights from them (`marginal_of`) and the engine's weights at every side's draw against them (`sided`), and the singlet's correlation from the half-angle pairs (`correlation`)."""
 
+import hashlib
 import itertools
 import json
+import math
 from fractions import Fraction
 from pathlib import Path
 
-from event_universe import credit, world_files
+import numpy as np
+
+from event_universe import meeting_back, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import ports_of
 from event_universe.world_files import load_world
@@ -23,12 +27,11 @@ def spin_world(
     intervals=40,
     amplitude=90,
     exchange=None,
-    meeting=None,
     reach=None,
     regions=None,
     erasure=None,
 ):  # type: ignore[no-untyped-def]
-    """The spin branch's world beside `folder` (the pair's universe with the massless two-plane family `spin` added, the shape [2, 2]: two parts of a plane each, one quantum one count; as u.json with the engine file as e.json and the repository root turned to `folder`): a chain of `length` Nodes open on x with receding faces, one packet of the family at k = pi / 4 laid at the centre toward the lower side (and one toward the upper side with `both`), one quantum by the share at the amplitude 90 (the generator's lay 75; the laid share 0.9994 of the record's unit `credit.record_unit`, the books' count 1), its parts laid alike by the generator (the equal-parts state, the planes' sense lines at 0); with `both` the two packets at the amplitude 64 each (the lay 54), half a quantum each, the pair one quantum of the record (the share 1.0134 of the unit, the count 1), the regions of four Nodes at the ends with their `axis` and `pattern` from `sides` ({"left": (axis, pattern), "right": ...}), the draw over one window of `intervals`; with `exchange` the family's declared sign under exchange on its row, `antisymmetric` or `symmetric` (the key `exchange`, read by the joint credit as the determinant or the permanent of the two sides' parts, 2026-10-19), none otherwise; with `meeting` the draw's reading of the meeting, `root` or `back` (the key `meeting`, the click that runs back, `meeting_back`), and with `reach` the run back's reach beside it, `board`, `cone` or `books` (the key `reach`), each key absent otherwise, with `regions` the regions' x positions by name in place of the ends' four Nodes ({name: [x, ...]}: a third region, or regions of one Node), and with `erasure` the front's taper on the world (the key `erasure`), absent otherwise; the mode file by tools/pixel_mode.py; the world's path."""
+    """The spin branch's world beside `folder` (the pair's universe with the massless two-plane family `spin` added, the shape [2, 2]: two parts of a plane each, one quantum one count; as u.json with the engine file as e.json and the repository root turned to `folder`): a chain of `length` Nodes open on x with receding faces, one packet of the family at k = pi / 4 laid at the centre toward the lower side (and one toward the upper side with `both`), one quantum by the share at the amplitude 90 (the generator's lay 75; the laid share 0.9994 of the record's unit `credit.record_unit`, the books' count 1), its parts laid alike by the generator (the equal-parts state, the planes' sense lines at 0); with `both` the two packets at the amplitude 64 each (the lay 54), half a quantum each, the pair one quantum of the record (the share 1.0134 of the unit, the count 1), the regions of four Nodes at the ends with their `axis` and `pattern` from `sides` ({"left": (axis, pattern), "right": ...}), the draw over one window of `intervals`; with `exchange` the family's declared sign under exchange on its row, `antisymmetric` or `symmetric` (the key `exchange`, read by the joint credit as the determinant or the permanent of the two sides' parts, 2026-10-19), none otherwise; with `reach` the run back's reach, `board` or `cone` (the key `reach`; the one meeting, the click that writes at the birth, needs no key), absent otherwise, with `regions` the regions' x positions by name in place of the ends' four Nodes ({name: [x, ...]}: a third region, or regions of one Node), and with `erasure` the front's taper on the world (the key `erasure`), absent otherwise; the mode file by tools/pixel_mode.py; the world's path."""
     folder.mkdir(parents=True, exist_ok=True)
     universe = json.loads((EVENTS / "pair.json").read_text(encoding="utf-8"))
     universe["families"].append(json.loads(json.dumps(SPIN)))
@@ -78,7 +81,6 @@ def spin_world(
             "seed": 24,
             "multiplier": 6364136223846793005,
             "increment": 1442695040888963407,
-            **({"meeting": meeting} if meeting is not None else {}),
             **({"reach": reach} if reach is not None else {}),
         },
     }
@@ -176,9 +178,12 @@ def trial(path: Path, seed: int, intervals: int) -> tuple[Lattice, list[dict]]: 
 
 
 def joint_shares(
-    lines: list[dict], sides: dict[str, tuple[tuple[int, int], list[list[int]]]], exchange: int = 0
-) -> dict[tuple[int, ...], int]:  # type: ignore[type-arg]
-    """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's (`credit.joined`): per interval and member of the level pair the amplitude's terms, each the product over the sides of e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s, SUM_k over the same part at every side for a family declaring no sign or the symmetric one (`exchange` 0 or 1, the form as it stood) and SUM_{k != l} sign(l - k) over the ordered pairs of parts across two sides for the antisymmetric (`exchange` -1, the determinant of the two sides' parts), its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
+    lines: list[dict],  # type: ignore[type-arg]
+    sides: dict[str, tuple[tuple[int, int], list[list[int]]]],
+    exchange: int = 0,
+    width: int = 2,
+) -> dict[tuple[int, ...], int]:
+    """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's sides' books (`meeting_back.moments_booked`, the second moments per side; the joint is the test's reading alone, nothing joint in the books): per interval and member of the level pair the amplitude's terms, each the product over the sides of e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s (`width` 2, a plane's two lines; 1 a real line, im 0), SUM_k over the same part at every side for a family declaring no sign or the symmetric one (`exchange` 0 or 1, the form as it stood) and SUM_{k != l} sign(l - k) over the ordered pairs of parts across two sides for the antisymmetric (`exchange` -1, the determinant of the two sides' parts), its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
     names = list(sides)
     ports = {
         n: ports_of(axis, tuple(tuple(pair) for pair in pattern)) for n, (axis, pattern) in sides.items()
@@ -202,11 +207,10 @@ def joint_shares(
                 for sign, which in terms:
                     product = (sign, 0)
                     for name, port, k in zip(names, key, which, strict=True):
-                        sums = levels.get(
-                            name, [[0, 0]] * (2 * parts)
-                        )  # per line [now, before]: re_k, im_k
+                        sums = levels.get(name, [[0, 0]] * (width * parts))  # per line [now, before]
                         e = ports[name][port][k]
-                        re, im = e * sums[2 * k][member], e * sums[2 * k + 1][member]
+                        re = e * sums[width * k][member]
+                        im = e * sums[width * k + 1][member] if width == 2 else 0
                         product = (product[0] * re - product[1] * im, product[0] * im + product[1] * re)
                     re_sum, im_sum = re_sum + product[0], im_sum + product[1]
                 total += re_sum * re_sum + im_sum * im_sum
@@ -214,56 +218,31 @@ def joint_shares(
     return found
 
 
-def conditional_shares(
-    lines: list[dict],  # type: ignore[type-arg]
-    sides: dict[str, tuple[tuple[int, int], list[list[int]]]],
-    exchange: int,
-    first: int,
-    port: int,
-) -> tuple[list[int], list[int], list[int]]:
-    """The two readings of the meeting that runs back from the `parts` lines, the reader's own arithmetic beside the engine's books (`credit.marginal_of`, `credit.conditioned`, `credit.reweighted_share`; the identity P(A) P(B | A) = P(A, B) of tests/test_the_meeting_back.py): the first side's marginal per port, the sum of the joint shares over the partner's ports (`joint_shares`); the re-weighting of the partner's parts at the first side's realised `port`, per term of the amplitude (the symmetric form's SUM_k over the same part, the antisymmetric's determinant over the ordered pairs) the sign times the first side's coefficient on its part, added on the partner's part, so lambda_k = e_k(port) and lambda_l = SUM_k sign(l - k) e_k(port); and the partner's share per port q, SUM over the window's intervals and both members of |SUM_k e_k(q) lambda_k psi_k|^2 with psi_k the part's (re, im) sums; returns (marginal, lambdas, conditional)."""
-    names, partner = list(sides), 1 - first
-    ports = {
-        n: ports_of(axis, tuple(tuple(pair) for pair in pattern)) for n, (axis, pattern) in sides.items()
-    }
-    parts, joint = len(ports[names[0]][0]), joint_shares(lines, sides, exchange)
-    marginal = [sum(share for key, share in joint.items() if key[first] == p) for p in range(2)]
-    terms = (
-        [(1, (k, k)) for k in range(parts)]
-        if exchange >= 0
-        else [(1 if k < m else -1, (k, m)) for k in range(parts) for m in range(parts) if k != m]
-    )
-    lambdas = [0] * parts
-    for sign, which in terms:
-        lambdas[which[partner]] += sign * ports[names[first]][port][which[first]]
-    conditional = []
-    for q in range(2):
-        total = 0
-        for row in lines:
-            if row["event"] == "parts" and row["node_detector"] == names[partner]:
-                for member in range(2):
-                    re_sum, im_sum = 0, 0
-                    for k in range(parts):
-                        e = ports[names[partner]][q][k] * lambdas[k]
-                        re_sum += e * row["levels"][2 * k][member]
-                        im_sum += e * row["levels"][2 * k + 1][member]
-                    total += re_sum * re_sum + im_sum * im_sum
-        conditional.append(total)
-    return marginal, lambdas, conditional
+def marginal_of(
+    joint: dict[tuple[int, ...], int], side: int, fixed: dict[int, int] | None = None
+) -> list[int]:
+    """The chain rule's weights from the joint shares (`joint_shares`), the reader's own arithmetic beside the engine's Gram read: per port of `side` the sum of the shares over the keys agreeing with the realised ports `fixed`; the marginal where none is fixed."""
+    realised = fixed or {}
+    return [
+        sum(
+            share
+            for key, share in joint.items()
+            if key[side] == port and all(key[s] == p for s, p in realised.items())
+        )
+        for port in range(2)
+    ]
 
 
-def rebooked(board: Lattice, lines: list[dict], family: str = "spin") -> dict[tuple[int, ...], int]:  # type: ignore[type-arg]
-    """The engine's own joint credit run again over the run's `parts` lines (the joints are cleared at the window's close): the joints emptied, and the window's sums per interval with them where the meeting runs back, and `credit.joined` fed each interval's sums per region as the meeting feeds it, the shares per combination returned to be compared with the reader's exactly, no statistics."""
-    index = [f.name for f in board.families].index(family)
-    board.credit.joints.clear()
-    board.credit.levels.clear()
-    sums: dict[int, dict[str, list[list[int]]]] = {}
-    for row in lines:
-        if row["event"] == "parts" and row["family"] == family:
-            sums.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
-    for interval in sorted(sums):
-        credit.joined(board, index, sums[interval])
-    return dict(board.credit.joints[index])
+def sided(board: Lattice, index: int, joint: dict[tuple[int, ...], int], realised: list[int]) -> None:
+    """The engine's weights at every side's draw (`credit.Books.weights`, the Gram read of the side's own moments of the record as written) against the chain rule from the joint shares of the `parts` lines, exact in the rationals: the first side's the marginal, each later side's the conditional at the ports realised before it (the Gram theorem, ALGEBRA.md, The meeting's identity); exact in the integers where every coefficient written before the side takes one magnitude on the surviving parts, which is the case the caller asserts here."""
+    fixed: dict[int, int] = {}
+    for side, (name, _ports) in enumerate(board.credit.sides):
+        weights, chain = board.credit.weights[(index, name)], marginal_of(joint, side, fixed)
+        assert sum(weights) > 0 and sum(chain) > 0, (name, weights, chain)
+        assert [Fraction(w, sum(weights)) for w in weights] == [
+            Fraction(c, sum(chain)) for c in chain
+        ], name
+        fixed[side] = realised[side]
 
 
 def correlation(a: tuple[int, int], b: tuple[int, int]) -> Fraction:
@@ -271,3 +250,25 @@ def correlation(a: tuple[int, int], b: tuple[int, int]) -> Fraction:
     (ca, sa), (cb, sb) = a, b
     same, different = (ca * sb - sa * cb) ** 2, (ca * cb + sa * sb) ** 2
     return Fraction(same - different, (ca * ca + sa * sa) * (cb * cb + sb * sb))
+
+
+def digest(board: Lattice) -> str:
+    """One hash of every array of the board at a frame (`meeting_back.snapshot`, the arrays' bytes in the families' and the lines' order, the levels' list where the kind is Python's integers): the state of one frame, compared frame by frame between two reaches or two seeds."""
+    found = hashlib.sha256()
+    for arrays in meeting_back.snapshot(board):
+        for _label, array in arrays:
+            a = np.asarray(array)
+            found.update(a.tobytes() if a.dtype != object else repr(a.ravel().tolist()).encode())
+    return found.hexdigest()
+
+
+def reduced_write(written: list[int], coefficients: list[int]) -> list[int]:
+    """The test's own reading of the click's write (the Boss's amendment of 2026-10-20; `credit.reduced`): the port's coefficients over their greatest common divisor on the surviving parts (the cumulative coefficient other than 0), 1 everywhere when they are one value there (a scaling alone writes nothing) and on a part written 0; the cumulative coefficients after the write."""
+    surviving = [k for k, w in enumerate(written) if w != 0]
+    common = 0
+    for k in surviving:
+        common = math.gcd(common, abs(coefficients[k]))
+    found = [coefficients[k] // common if common and k in surviving else 1 for k in range(len(written))]
+    if len({found[k] for k in surviving}) <= 1:
+        found = [1] * len(written)
+    return [w * c for w, c in zip(written, found, strict=True)]

@@ -1,4 +1,4 @@
-"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `Lattice.start`: the form of the record as the held write books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round absorption the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body numbered in the design file's `pixels` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the tests' one-quantum charged body, tests/laws.py; the frozen proton's world left the repository on 2026-10-03 at the owner's word). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
+"""The generator makes a body (ALGEBRA.md #the-generator, the generator is Rule3; the model owner's word of 2026-09-28, 22:05 Israel: no body is reduced to one Node, the generator generates a whole body): the mode file of a world of bodies and the bodies themselves. A body is its quanta, M, about a centre; the world declares it with one Node carrying M (a new body) or with its Nodes and their counts (a body laid before, laid anew here). The generator finds the body's fixed point in whole integers: the counts at its Nodes source every held row of the universe file at the row's level weight, the rest of each row by the start (features/start: the division act iterated from nothing until the levels repeat) is the level every record reads, the body's record is the standing record Rule3 makes in those paces, the held rows then rest under that record by the engine's own start (`start_content`, one act with `Lattice.start`: the form of the record as the held write books it over the write's wall, the lay and the rest iterated to the fixed point; the count is the seed of the first pass alone), and the counts are that record's share in quanta at the paces of its read in those rests (ALGEBRA.md #the-count-is-the-records-share) at every Node of the body's region, until the counts return themselves within the rounding, each round absorption the half step from the counts toward the share (the deep well overshoots under the whole step); the body's Nodes are then the Nodes carrying a quantum, its region those Nodes and a Link around them (widened a Link a round while the share reaches a quantum there, narrowed where it falls below one; the region names the body's Nodes and where its counts are read, not where its record is iterated), and the record written is the top mode of the read act on the board as declared (`on_the_board`: a mode cut at the region is no mode of the board's and relaxes when laid), the content it stands in the board's. The counts the world declares are the engine's own reading at the start, the record's share in quanta at the paces of its read, the held rows at the rests the engine's start lays under the laid records (`read_at_the_start` calls the same act), so one body's declaration is the gate's reading within the rounding. A body of a plane turned by a holder of the sign (ALGEBRA.md, The sign holder rotates the two-part record; The atom is a bound body of the holder of the sign) is laid as the turned top mode (`turned_mode`): the power iteration of Rule3's read with the arrivals turned by the Link angles and the Node by the time angle, in the content holders' paces, the holder under the rotation entering no pace; its region is the board as kept, where its record stands, and where no Node carries a whole quantum of it (the law's count 1 over the Nodes of its mode) its count stands at its declared Node, which the gate admits within its rounding. A body numbered in the design file's `pixels` is laid as the one-Node record of its quanta at its declared Node, a declaration by name and no fixed point (the tests' one-quantum charged body, tests/laws.py). The arrays are of the kind the universe's width chooses, as the loader's are (`loader.world.kind_of`)."""
 
 from __future__ import annotations
 
@@ -88,7 +88,7 @@ def board_of(
 
 @dataclass(frozen=True)
 class Standing:
-    """A body's standing record over its window: the share in quanta its record carries over the region at the vacuum's paces (`carried`, the summed share rounded once to whole quanta, and `share` the sum itself in the current's units), the window's length (the period is [window, 2]), the amplitude b, the clock pair [next + before, now] at the largest level at the centre, the two levels over the board at that moment with the next level after it, and for a plane turned by a holder of the sign its second line's three levels (`second`: im now, im before, im next), None on a real record."""
+    """A body's standing record over its window: the share in quanta its record carries over the region at the vacuum's paces (`carried`, the summed share rounded once to whole quanta, and `share` the sum itself in the current's units), the window's length (the period is [window, 2]), the amplitude b, the clock pair [next + before, now] at the largest level at the centre, the two levels over the board at that moment, and for a plane turned by a holder of the sign its second line's three levels (`second`: im now, im before, im next), None on a real record."""
 
     carried: int
     window: int
@@ -96,7 +96,6 @@ class Standing:
     clock: tuple[int, int]
     now: np.ndarray
     before: np.ndarray
-    next: np.ndarray
     share: int = 0
     second: tuple[np.ndarray, np.ndarray, np.ndarray] | None = None
 
@@ -308,12 +307,11 @@ def top_mode(
 
 
 def refused_turned_path() -> None:
-    """The tool's own step of a record a holder of the sign turns is gone with features/rotation (Part C, the local trial): the Link turn is the fold of the sign's pair in `plane.link_pairs` and the time turn the phase line (features/phase, `node.phased`), neither a shear; the tool laid such a record by `node.turned_ports` and the three shears, a path broken since before Part A (Worker B's finding), so it is refused by name here until the generator reads the plane's step itself."""
+    """The generator lays no record a holder of the sign turns: the Link turn is the fold of the sign's pair (`plane.link_pairs`, features/phase.fold) and its time turn the phase line (`node.phased`); the body is laid in the plain universe or declared at one Node."""
     raise NotImplementedError(
         "pixel_mode lays no record a holder of the sign turns: the engine's Link turn is the fold of the "
         "sign's pair (plane.link_pairs, features/phase.fold) and its time turn the phase line (node.phased); "
-        "the tool's shear path is gone with features/rotation (Part C); lay the body in the plain universe "
-        "or declare it at one Node"
+        "lay the body in the plain universe or declare it at one Node"
     )
 
 
@@ -340,7 +338,7 @@ def standing(
             return None
         before = np.asarray(division_forward(total, 2, 0)[0], dtype=board.kind)
         pairs: Pairs = [(now, before)]
-        nxt, clock, second = total - before, (int(total[node_at]), int(now[node_at])), None
+        clock, second = (int(total[node_at]), int(now[node_at])), None
         reading = period_reading(
             board, content, node_at, [now.copy(), before.copy(), np.zeros(board.shape, dtype=board.kind)]
         )
@@ -359,7 +357,7 @@ def standing(
     else:  # the law's count 1 over the mode's Nodes: the summed share rounded once
         carried = int(read_quanta(summed, board.pair, board.action, object))
     amplitude = max(int(np.abs(a).max()) for a, _b in pairs)
-    return Standing(carried, window, amplitude, clock, now, before, nxt, summed, second)
+    return Standing(carried, window, amplitude, clock, now, before, summed, second)
 
 
 def rows_read(universe: dict[str, Any], family: str, sign: bool) -> list[tuple[int, FamilyRule]]:
@@ -627,7 +625,6 @@ def pixel_record(
         amplitude,
         (2 * num, den),
         re_now,
-        re_before,
         re_before,
         summed,
         (zero.copy(), im_before, -im_before),

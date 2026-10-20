@@ -32,9 +32,6 @@ BERYLLIUM_NEUTRON_FRACTION = 5 / 9  # beryllium-9's neutrons over its nucleons
 TITANIUM_NEUTRON_FRACTION = 26 / 48  # titanium-48's neutrons over its nucleons
 OMEGA_E_LHAASO = 3.7e-10  # the law's rounded bound on the electron's gap, row (i) (The constants)
 OMEGA_E_MAGIC_AXIS = 2.0e-14  # the electron's gap at the MAGIC bound along an axis (S.24)
-MAGIC_E_QG_2_GEV = 6.3e10  # MAGIC's quadratic bound E_QG,2, a number of nature (S.24)
-EOT_WASH_BOUND = 1e-13  # nature's Be-Ti Eotvos bound (Will)
-MICROSCOPE_BOUND = 1e-15  # nature's Ti-Pt bound (MICROSCOPE)
 # the clock in two places (row (a2), S.41): a strontium clock at one metre for one second
 STRONTIUM_LINE_HZ = 429.228e12
 EARTH_GRAVITY = 9.807  # m / s^2

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import flux, lists, node
+from event_universe import credit, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
 from event_universe.loader.draw import Draw
@@ -159,18 +159,29 @@ def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
 
 
 def closed(board: Lattice) -> None:
-    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator; where the meeting runs back the two readings in the time's order with the run back and forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the joint shares, the passages and the back run's own (the sides' states, the parts' sums per interval and the conditioning), the count beginning again."""
+    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): first the count on the board of every record the sides read at this close against the books' count, refused by name where the board's share lies more than half a quantum and the walk since the lay from the books' count while no front of the record stands (ALGEBRA.md, The count on the board, 2026-10-20; `credit.count_held`, `Lattice.count`), then per family of quanta its list from the window's books through the one act (`lists.region`, one alternative and no draw of its own, the places drawn inside it with the credit's generator; for a record of several parts the sides' draws in the order of their closes with the run back, the write at the birth and the run forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the sides' moments, the passages and the sides' states, and the births of the records whose count reached 0 (the write's books, the coefficients, the scale, the realised ports and the reference, stand until the next birth, so the count on the board reads the erased wave over its scale, `credit.born`), the count beginning again."""
     books = board.credit
+    for index, moments in books.moments.items():  # the records the sides read at this close
+        standing = books.counts.get(index, 0) > 0 and not any(f.family == index for f in books.fronts)
+        if standing and any(any(any(row) for row in m) for m in moments.values()):
+            if not credit.count_held(board, index):
+                raise RuntimeError(
+                    f"the record's count on the board, {board.count(index)}, differs from the books' count "
+                    f"{books.counts[index]} at the close {board.interval}: the board's share moved against the "
+                    "books' by more than the walk; the books' line names the deficit"
+                )
     for index in board.order:
         found = lists.region(board, index)
         if found is not None:
             click(board, books, None, [found])
     books.intake.clear()
-    books.joints.clear()
+    books.moments.clear()
+    for index in [index for index in books.births if books.counts.get(index, 0) <= 0]:
+        books.births.pop(
+            index
+        )  # a record gone: its next quantum a new birth (`credit.born` resets the write's books)
     books.passages.clear()
     books.states.clear()
-    books.levels.clear()
-    books.conditioning.clear()
 
 
 def jumped(board: Lattice) -> None:

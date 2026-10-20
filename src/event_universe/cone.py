@@ -1,4 +1,4 @@
-"""The cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever; ALGEBRA.md, The meeting's reading, root or back, the run back's reach `cone`; The interval's dependency radius is one Link): in the cone's reach the run back and the run forward of the meeting (`meeting_back.run_back`, `run_forward`) step the record's light cone and nothing else. The box of one step is the ball with one ring of Nodes (`box_of`: back the ball G(t), whose inverse computes the state at t - 1 on it from the neighbours' level before within one Link; forward the ball G(t + 1), one Link larger at the same interval; the bounding box cut to the board, whole on a periodic axis), every family's arrays in it as a view of the lattice (`viewed`, a shallow copy with every NodeState sliced to the box, `sliced`) stepped by the engine's own `Lattice.step` with no act and `Lattice.step_inverse`, which compute per Node what they compute, the view being which arrays they see. The ring and every box Node outside the record's cone are read from the board's own arrays as the reading left them and asserted equal to frame 0 regrown before the step (`held`, never substituted from frame 0, which would make the premise's check empty); the computed Nodes outside the cone of the interval arrived at are asserted at frame 0 after it, but the box's edge (`edge_of`, an open face to the engine inside the board, its results discarded); the ball's Nodes are written back into the board's arrays as new arrays beside the old (`written_back`); the rest of the board is neither read nor written. The growths of the receding faces are popped on the way back and replayed from the record's own history on the way forward (`credit.Books.popped`, `growth.resize`), never re-detected inside the reading; the acts' logs are clipped to the ball (`acts_inside`); the Node-steps are counted per interval (`credit.Books.stepped`; `counted` for the whole-board run of the board's reach); the ball is one distance transform (`features/front.distance_map`). Nothing at the Node: core/ and flux.py untouched, the whole board stepped at its tick by the loop as ever."""
+"""The cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever; ALGEBRA.md, The meeting's reading, the run back's reach `cone`; The interval's dependency radius is one Link): in the cone's reach the run back and the run forward of the meeting (`meeting_back.run_back`, `run_forward`) step the record's light cone and nothing else. The box of one step is the ball with one ring of Nodes (`box_of`: back the ball G(t), whose inverse computes the state at t - 1 on it from the neighbours' level before within one Link; forward the ball G(t + 1), one Link larger at the same interval; the bounding box cut to the board, whole on a periodic axis), every family's arrays in it as a view of the lattice (`viewed`, a shallow copy with every NodeState sliced to the box, `sliced`) stepped by the engine's own `Lattice.step` with no act and `Lattice.step_inverse`, which compute per Node what they compute, the view being which arrays they see. The ring and every box Node outside the record's cone are read from the board's own arrays as the reading left them and asserted equal to the record's reference regrown before the step (`held`; frame 0 for a record laid at the start, the board at its birth for a record born during the run, `meeting_back.frame_grown`; never substituted from the reference, which would make the premise's check empty); the computed Nodes outside the cone of the interval arrived at are asserted at frame 0 after it, but the box's edge (`edge_of`, an open face to the engine inside the board, its results discarded); the ball's Nodes are written back into the board's arrays as new arrays beside the old (`written_back`); the rest of the board is neither read nor written. The growths of the receding faces are popped on the way back as the lattice's inverse pops them and read anew on the way forward from the box's own face layer where it is the board's (`grown_at`, `growth.resize`; the write at the birth may move the interval a face is reached); the acts' logs are clipped to the ball (`acts_inside`); the Node-steps are counted per interval (`credit.Books.stepped`; `counted` for the whole-board run of the board's reach); the ball is one distance transform (`features/front.distance_map`). Nothing at the Node: core/ and flux.py untouched, the whole board stepped at its tick by the loop as ever."""
 
 from __future__ import annotations
 
@@ -74,7 +74,7 @@ def sliced(state: NodeState, box: Box) -> NodeState:
 
 
 def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
-    """The view the cone's step sees, the lattice's own class over the box (ALGEBRA.md, The meeting's reading, root or back, the cone stepped alone; The interval's dependency radius is one Link): a shallow copy of the lattice whose every NodeState is sliced to the box (`sliced`), the shape the box's, the offset the file's coordinates into the box, the wrap's mask of the Nodes beyond the inner faces sliced with it, the world without its receding faces (`growth.grow` reads the whole board's face layers and is not run in the reading, the growths coming from the record's own history, `stepped_alone`), no growth and no observer of its own, the credit's books shared (the lays' and the faces' log); `Lattice.step` and `Lattice.step_inverse` then compute per Node what they compute, the view being which arrays they see. The box's edge inside the board is an open face to the engine, the fill read there, so the edge's results are discarded (`edge_of`, `written_back`), and two readings of the lattice are cut to the box: the mask of a body's Nodes (the cut Links, `meeting.cut`) and the amplitude bound (`Lattice.bounded`), read at the kept Nodes alone, since a face-rule level at the edge is no level of the board."""
+    """The view the cone's step sees, the lattice's own class over the box (ALGEBRA.md, The meeting's reading, the cone stepped alone; The interval's dependency radius is one Link): a shallow copy of the lattice whose every NodeState is sliced to the box (`sliced`), the shape the box's, the offset the file's coordinates into the box, the wrap's mask of the Nodes beyond the inner faces sliced with it, the world without its receding faces (`growth.grow` reads the whole board's face layers and is not run in the reading, the growths coming from the record's own history, `stepped_alone`), no growth and no observer of its own, the credit's books shared (the lays' and the faces' log); `Lattice.step` and `Lattice.step_inverse` then compute per Node what they compute, the view being which arrays they see. The box's edge inside the board is an open face to the engine, the fill read there, so the edge's results are discarded (`edge_of`, `written_back`), and two readings of the lattice are cut to the box: the mask of a body's Nodes (the cut Links, `meeting.cut`) and the amplitude bound (`Lattice.bounded`), read at the kept Nodes alone, since a face-rule level at the edge is no level of the board."""
     from event_universe.lattice import Lattice as Board  # loaded before this module is used
 
     class Boxed(Board):
@@ -85,7 +85,7 @@ def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
             return np.asarray(board.mask(nodes)[box])
 
         def bounded(self, name: str, record: Record) -> None:
-            """The amplitude bound read at the kept Nodes alone, the lattice's own check on them (`Lattice.bounded`; ALGEBRA.md, The meeting's reading, root or back): a face-rule level at the box's edge is no level of the board and its result is discarded."""
+            """The amplitude bound read at the kept Nodes alone, the lattice's own check on them (`Lattice.bounded`; ALGEBRA.md, The meeting's reading): a face-rule level at the box's edge is no level of the board and its result is discarded."""
             super().bounded(name, Record(record.now[kept], record.before[kept], record.remainder[kept]))
 
     view = Boxed.__new__(Boxed)
@@ -109,7 +109,7 @@ def at_file(board: Lattice, box: Box, here: list[int]) -> list[int]:
 def differing(
     board: Lattice, view: Lattice, frame: list[NodeState], where: np.ndarray
 ) -> tuple[str, list[int]] | None:
-    """The first array and the first Node of the box at which the view's arrays differ from frame 0 regrown (`frame`) among the Nodes `where` names, or None; the Nodes named compared alone, no array copied (the cone's assertions run at every step, `held`)."""
+    """The first array and the first Node of the box at which the view's arrays differ from the record's reference regrown (`frame`, frame 0 for a record laid at the start) among the Nodes `where` names, or None; the Nodes named compared alone, no array copied (the cone's assertions run at every step, `held`)."""
     if not bool(where.any()):
         return None
     nodes = np.argwhere(where)
@@ -132,7 +132,7 @@ def held(
     interval: int,
     edge: bool,
 ) -> None:
-    """One assertion of the cone stepped alone over the box: the view's arrays against frame 0 regrown (`frame`, the box's slices of `credit.Books.regrown`) at the Nodes `where` names, bit for bit (`first_difference`), refused by name where they differ: at the step's start (`edge`), the ring and every box Node outside the record's cone read from the board's own arrays and found moved, the rest no exact fixed point of the step or an act outside the cone; after the step, a computed Node outside the cone of the interval arrived at not at frame 0 (back, the shell the cone left as it shrank by one Link; forward, the box's Nodes outside the grown ball), the record beyond its cone or the rest moving under the step."""
+    """One assertion of the cone stepped alone over the box: the view's arrays against the record's reference regrown (`frame`, the box's slices of `credit.Books.regrown`, frame 0 for a record laid at the start and the board at its birth for a record born during the run) at the Nodes `where` names, bit for bit (`first_difference`), refused by name where they differ: at the step's start (`edge`), the ring and every box Node outside the record's cone read from the board's own arrays and found moved, the rest no exact fixed point of the step or an act outside the cone; after the step, a computed Node outside the cone of the interval arrived at not at frame 0 (back, the shell the cone left as it shrank by one Link; forward, the box's Nodes outside the grown ball), the record beyond its cone or the rest moving under the step."""
     found = differing(board, view, frame, where)
     if found is None:
         return
@@ -169,7 +169,7 @@ def acts_inside(board: Lattice, interval: int, box: Box, kept: np.ndarray) -> No
 def written_back(
     board: Lattice, view: Lattice, box: Box, kept: np.ndarray, before: list[NodeState]
 ) -> None:
-    """The ball's results written back into the board's arrays after one step of the view (ALGEBRA.md, The meeting's reading, root or back, the cone stepped alone): per array a new array beside the old (no array of the board is written in place, frame 0 and the frames sharing none), the kept Nodes the view's and every other Node the board's as it stood (frame 0 outside the cone by the assertions, `held`); an array the step left as it was (the same record as `before`, the view's states before the step) kept as it is; the lines, the write remainders and the phase lines alike."""
+    """The ball's results written back into the board's arrays after one step of the view (ALGEBRA.md, The meeting's reading, the cone stepped alone): per array a new array beside the old (no array of the board is written in place, frame 0 and the frames sharing none), the kept Nodes the view's and every other Node the board's as it stood (frame 0 outside the cone by the assertions, `held`); an array the step left as it was (the same record as `before`, the view's states before the step) kept as it is; the lines, the write remainders and the phase lines alike."""
 
     whole = all(s.start == 0 and s.stop == e for s, e in zip(box, board.shape, strict=True))
     filled = bool(kept.all())
@@ -182,7 +182,7 @@ def written_back(
         return full
 
     def record(old: Record, new: Record, was: Record) -> Record:
-        """One line's three arrays merged (ALGEBRA.md, The meeting's reading, root or back): the line as it was where the step left it, the kept Nodes' results beside the board's values otherwise."""
+        """One line's three arrays merged (ALGEBRA.md, The meeting's reading): the line as it was where the step left it, the kept Nodes' results beside the board's values otherwise."""
         if new is was:
             return old
         return Record(
@@ -207,18 +207,37 @@ def written_back(
         ]
 
 
+def grown_at(board: Lattice, reach: int, arrived: int) -> bool:
+    """The receding faces before a step forward of the cone stepped alone, read from the box alone (ALGEBRA.md, The objects, the unbounded board; the owner's word of 2026-10-20, only the cone moves): where the box's layer on a receding face's side is the board's own face layer, that layer is read for a level other than 0 (`growth.reached` over the box's slices of the board's arrays, the same reading `growth.grow` makes over the board), and the board grows by the face's layers (`growth.resize`), frame 0 regrown with it (`meeting_back.grown`) and the growth logged for the interval entered (`Lattice.growths`); where the box stops short of the face, the face's layer lies outside the record's cone at frame 0, where no level stands, so nothing is read and nothing grows; the growths are read anew on every run forward, since the write at the birth changes the record's history and may move the interval a face is reached (the log the run back pops is the history as it was); the lawful end as `growth.grow` names it where a face is grown to its largest size; whether the board grew."""
+    found = False
+    for face in board.world.receding:
+        box, extent = box_of(board, reach), board.shape[face.axis]  # the box over the board at the step
+        along = box[face.axis]
+        touches = along.start == 0 if face.side < 0 else along.stop == extent
+        if not touches:
+            continue
+        states = [sliced(state, box) for state in board.states]
+        if not growth.reached(states, board.families, face.axis, face.side):
+            continue
+        layers = min(face.layers, face.largest - extent)
+        if layers < 1:
+            board.ended = growth.ended(face, board.interval)
+            raise RuntimeError(f"the run ended at interval {board.interval}: {board.ended}")
+        growth.resize(board, face.axis, face.side, layers, 1)
+        meeting_back.grown(board, board.credit.regrown, (arrived, face.axis, face.side, layers), 1)
+        board.growths.append((arrived, face.axis, face.side, layers))
+        found = True
+    return found
+
+
 def stepped_alone(board: Lattice, direction: int) -> None:
-    """One step of the cone stepped alone, back (-1) or forward (+1) (ALGEBRA.md, The meeting's reading, root or back, the run back's reach `cone`; The interval's dependency radius is one Link; the owner's word of 2026-10-20, only the cone moves): forward, the growths of the interval entered are replayed first from the record's own history of the board's shape (`credit.Books.popped`, `growth.resize` at +1 on the board and frame 0 regrown with it, `grown`), never re-detected; the box of the step is the ball with its ring (`box_of`: back the ball G(t), whose inverse computes the state at t - 1 on it from the neighbours' level before within one Link; forward the ball G(t + 1), one Link larger at the same interval), every family's arrays in it (`viewed`); the ring and every box Node outside the support G(t) are read from the board's own arrays as the reading left them and asserted equal to frame 0 regrown (`held`), never substituted from it, which would make the premise's check empty; the acts of the interval clipped to the ball (`acts_inside`); the Node-steps counted in the books (`credit.Books.stepped`, the box with its ring, per interval arrived at); then `Lattice.step` with no act or `Lattice.step_inverse` on the view, the engine's own step over the box's arrays; after it every computed Node outside the ball of the interval arrived at but the box's edge (`edge_of`, its results discarded) is asserted at frame 0 (back, the shell G(t) less G(t - 1) returned to the lay's frame as the cone shrinks by one Link per step; forward, the box's Nodes outside G(t + 1), the ball holding the record), the ball's Nodes written back into the board's arrays (`written_back`) and the cone's volume |G| at the interval arrived at written into the books (`credit.Books.cone`); back, the growths that served the interval left are popped as `Lattice.step_inverse` pops them and kept on the record's history; the board's interval, passes and heading are the view's, and the observers are called as the lattice calls them; no Node beyond the box is read or written."""
+    """One step of the cone stepped alone, back (-1) or forward (+1) (ALGEBRA.md, The meeting's reading, the run back's reach `cone`; The interval's dependency radius is one Link; the owner's word of 2026-10-20, only the cone moves): forward, the receding faces are read first from the box's own layer where it is the board's face (`grown_at`, `growth.resize` at +1 on the board and frame 0 regrown with it, nothing outside the box read); the box of the step is the ball with its ring (`box_of`: back the ball G(t), whose inverse computes the state at t - 1 on it from the neighbours' level before within one Link; forward the ball G(t + 1), one Link larger at the same interval), every family's arrays in it (`viewed`); the ring and every box Node outside the support G(t) are read from the board's own arrays as the reading left them and asserted equal to frame 0 regrown (`held`), never substituted from it, which would make the premise's check empty; the acts of the interval clipped to the ball (`acts_inside`); the Node-steps counted in the books (`credit.Books.stepped`, the box with its ring, per interval arrived at); then `Lattice.step` with no act or `Lattice.step_inverse` on the view, the engine's own step over the box's arrays; after it every computed Node outside the ball of the interval arrived at but the box's edge (`edge_of`, its results discarded) is asserted at frame 0 (back, the shell G(t) less G(t - 1) returned to the lay's frame as the cone shrinks by one Link per step; forward, the box's Nodes outside G(t + 1), the ball holding the record), the ball's Nodes written back into the board's arrays (`written_back`) and the cone's volume |G| at the interval arrived at, the Nodes within arrived - birth + 1 Links of the birth's Nodes (`meeting_back.radius`'s rule; the reader's F5 of 2026-10-20: a born record's radius counts from its birth, 2 r + 1 on the chain), written into the books (`credit.Books.cone`); back, the growths that served the interval left are popped as `Lattice.step_inverse` pops them and kept on the record's history; the board's interval, passes and heading are the view's, and the observers are called as the lattice calls them; no Node beyond the box is read or written."""
     books, interval = board.credit, board.interval
     arrived = interval + direction
-    if direction > 0:
-        while books.popped and books.popped[-1][0] == arrived:
-            found = books.popped.pop()
-            growth.resize(board, found[1], found[2], found[3], 1)
-            meeting_back.grown(board, books.regrown, found, 1)
-            board.growths.append(found)
     reach = meeting_back.radius(board) + (1 if direction > 0 else 0)
     box = box_of(board, reach)
+    if direction > 0 and grown_at(board, reach, arrived):
+        box = box_of(board, reach)  # the board grew: the box cut to the new shape
     distance = distances_of(board, box)
     kept, live = np.asarray(distance <= reach), np.asarray(distance <= meeting_back.radius(board))
     frame = [sliced(state, box) for state in books.regrown]
@@ -234,7 +253,7 @@ def stepped_alone(board: Lattice, direction: int) -> None:
         view.step(False)
     else:
         view.step_inverse()
-    after = np.asarray(distance <= arrived + 1)
+    after = np.asarray(distance <= arrived - books.birth + 1)  # |G(arrived)|, the radius from the birth
     held(board, view, box, frame, ~after & ~edge_of(board, box), arrived, False)
     books.cone[arrived] = int(after.sum())
     written_back(board, view, box, kept, before)
@@ -245,7 +264,6 @@ def stepped_alone(board: Lattice, direction: int) -> None:
             found = board.growths.pop()
             growth.resize(board, found[1], found[2], found[3], -1)
             meeting_back.grown(board, books.regrown, found, -1)
-            books.popped.append(found)
     for observer in board.observers:
         observer(board.interval, direction, board.passes)
 

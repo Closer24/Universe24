@@ -1,4 +1,4 @@
-"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part and the axis sources (`stresses_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`), the linear sum of a line with its exchange through the board's faces and its rate-weighted form (`linear_sum`, `linear_exchange`, `weighted_linear_sum`; the flux form of Rule3); readings alone, no level written."""
+"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part and the axis sources (`stresses_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`); readings alone, no level written."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
 
 
 def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The sign's current of a two-part record at every Node on each axis, the Node's two a-Links' Wronskian currents summed, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, unhalved (the mathematician's (L2) and the advisor's (c) of 2026-10-09: the halving (J_a + 1) div 2 retired, half a unit of current per Node per interval, the mean of the two Links taken instead by the doubled wall of the odd lines' write, `loader.derived.held_write_of`, 2 E_s T, as Part A takes the flux's), odd under the sense exactly (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation, J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
+    """The sign's current of a two-part record at every Node on each axis, the Node's two a-Links' Wronskian currents summed, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, unhalved (the mathematician's (L2) and the advisor's (c) of 2026-10-09: the mean of the two Links taken by the doubled wall of the odd lines' write, `loader.derived.held_write_of`, 2 E_s T, as Part A takes the flux's), odd under the sense exactly (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation, J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands)."""
     found: list[Any] = [0, 0, 0]
     for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
         re_at, im_at = ports(re_line.now, wrap), ports(im_line.now, wrap)
@@ -81,29 +81,3 @@ def axis_neighbours(
     arrived = ports(now, wrap)
     found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
-
-
-def linear_sum(wall: int, line: Record) -> int:
-    """The linear sum of one line over the board, L = SUM over the Nodes of [w (now - before) + r], w the family's wall 6 den Gamma^2 G^2 (the flux form of Rule3: w (next - 2 now + before) + r' - r = SUM over the Ports of R_ij (arrival - now) - D now, so the Link terms pair off on a closed board read at one rate and L moves by the mass term alone, zero for light); a lattice reading, no level written."""
-    now, before = line.now.astype(object), line.before.astype(object)
-    return int((wall * (now - before) + line.remainder.astype(object)).sum())
-
-
-def linear_exchange(reads: Sequence[Any], line: Record, wrap: Wrap) -> int:
-    """The change of a line's linear sum over one interval by its exchange with the board's faces, a family of light (num = den, so D = 0, at any content): -SUM over the Ports of R_ij times the Node's number over every Node whose Port arrives from beyond a face (the fill 0 there), 0 on a periodic axis; with the step's own six reads R_ij, the expected change of L where no other act writes the line, so that a jump beyond it names a level written outside Rule3's line."""
-    beyond = ports(np.zeros_like(line.now), wrap, 1)
-    now = line.now.astype(object)
-    found = 0
-    for read, mask in zip(reads, beyond, strict=True):
-        where = np.asarray(mask, dtype=bool)
-        found += int(
-            (np.broadcast_to(np.asarray(read, dtype=object), now.shape)[where] * now[where]).sum()
-        )
-    return -found
-
-
-def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
-    """The linear sum weighted by the Node's rate, L'' = SUM over the Nodes of weight_i x [w (now - before) + r] with weight_i = scale div p_i^2, scale the least common multiple of the distinct p_i^2 on the board, so that every weight is a whole number (the caller's, no division here): R_ij / p_i^2 = 2 num Q_ij G^2 is the same at a Link's two ends whatever their rates, so the weighted Link terms of the flux form pair off on a closed board at any fixed content profile and L'' of light is kept exactly where L moves by the pairing term; a lattice reading."""
-    now, before = line.now.astype(object), line.before.astype(object)
-    scaled = np.broadcast_to(np.asarray(weights, dtype=object), now.shape)
-    return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())

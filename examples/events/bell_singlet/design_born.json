@@ -1,0 +1,61 @@
+{
+ "comment": "The born pair (2026-10-20, the owner's word; ALGEBRA.md, The meeting's reading, with The lay across parts and The births' book; ENGINE.md section 3, act 6, and section 10, item 12): the singlet's chain with no packet laid; one atom body standing excited at the Node `source` gives one quantum of the spin family by its one emission, the rate out of e into g at the `lifetime`, laid at its Node as a source in time over the lifetime at the transition's resonance (cos Omega = 5414 / 6000, the chain's wave k = pi / 4 on the band's line) on both parts alike, the emission act's lay across parts, and Rule3 carries the two beams to the two ends, where the singlet's two regions read them under the family's antisymmetric sign with the identity patterns at the four pairs of settings; the one meeting: the left side's click writes the realised port's coefficients into the record at its birth inside the run back, the cone runs forward with the realised term, and the right side reads the rewritten record where it stands. The giver's emission is the body's own draw at the hazard 1 / lifetime per dark interval with its own generator (ALGEBRA.md, The click writes on the lattice (5)); at the body's seed 0 the draw picks the emission at the interval 17 (the engine's own test of the births' book reads (17, [12, 0, 0]) on the singlet's chain), so the record is born at 17 and the source is laid over the 24 intervals from it. The regions' window is the world's one `window`, repeating: the left region reads in the first window, closing at 62 (the first levels at the left about the interval 26), before or as the right beam reaches its region (the first levels at the right about 62 to 75), and the right region reads in the second window, closing at 124, the run's end; a window with no inflow draws nothing. The run back's reach is the cone, the default (the worlds declared `reach: board` until 2026-10-20): the born pair's refusal at the cone's ring (the Node [3, 0, 0] at the interval 24) was the run back's remainders restored from the first pass's log at every crossed lay (`meeting_back.crossed`), found and fixed on 2026-10-20 (the reader's cold diff read, F3: a lay without an origin changes no remainder); the born pair runs under the cone's reach, equal to the board's run bit for bit (the two credit lines, the weights); the run back to the birth, the write there and the run forward with the realised term inside the record's own cone. The blind is the folder's, the singlet's exact fractions: they depend neither on the emission's interval nor on the portion of the beam a window reads, since the parts laid alike step alike and the common factor cancels in every share (ALGEBRA.md, The meeting's identity); the probe's arms belong to the singlet's waves and stand in the folder's blind alone.",
+ "universe": "examples/events/bell_singlet/born.json",
+ "universe_base": "examples/events/bell_singlet/spin.json",
+ "giver": {
+  "name": "atom",
+  "pair": [
+   1,
+   1299
+  ],
+  "dimension": [
+   2,
+   2
+  ],
+  "reads": {}
+ },
+ "body": {
+  "family": "atom",
+  "source": 12,
+  "parts": [
+   {
+    "part": 0,
+    "name": "g",
+    "count": 0
+   },
+   {
+    "part": 1,
+    "name": "e",
+    "count": 1
+   }
+  ],
+  "weight": 1,
+  "lifetime": 24,
+  "resonance": [
+   5414,
+   6000
+  ],
+  "seed": 0,
+  "seed_found": "the body's own draw: at the seed 0 the dark draw picks the emission at the interval 17 (the engine's test of the births' book on the singlet's chain), the record's birth; the fractions depend on no interval"
+ },
+ "length": 61,
+ "intervals": 124,
+ "window": [
+  1,
+  124
+ ],
+ "closes": {
+  "left": 62,
+  "right": 124
+ },
+ "arrivals_expected": {
+  "left": 26,
+  "right": 75
+ },
+ "draw": {
+  "window": 62,
+  "seed": 24,
+  "multiplier": 6364136223846793005,
+  "increment": 1442695040888963407
+ }
+}

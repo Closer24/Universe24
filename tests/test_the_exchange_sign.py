@@ -1,4 +1,4 @@
-"""The family's sign under exchange (2026-10-19, the owner's word; ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange): a family of several parts may declare `exchange: antisymmetric` or `symmetric` in the universe file, a tri-state the loader reads into the family's row (`loader/universe.exchange_of`, `FamilyRule.exchange`, 0 undeclared) and the joint credit and the lists read, nothing at the Node: the credit builds the pair's amplitude as the determinant of the two sides' parts for the antisymmetric record and as the form that stood for the symmetric and the undeclared (`credit.joined`), the lists weigh an entry into a part by the sign's factor, 0 into a populated part for the antisymmetric record, n + 1 at a part holding n for the symmetric, 1 undeclared (`lists.exchange_factor`, beside `full`), and a family declaring the sign starts with its counts split over its parts, the one-part refusal kept for every other family (`loader/node_detector_declaration.parts_of`). The tests declare their own worlds through the helpers of tests/laws.py: the singlet under the sign with the identity pattern on both regions, equal to the crossed pattern's numbers by the determinant's identity at two parts; the symmetric control; the shell of two quanta at four parts with no capacity; the tri-state against the shipped worlds; the refusals by name."""
+"""The family's sign under exchange (2026-10-19, the owner's word; ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange): a family of several parts may declare `exchange: antisymmetric` or `symmetric` in the universe file, a tri-state the loader reads into the family's row (`loader/universe.exchange_of`, `FamilyRule.exchange`, 0 undeclared) and the joint credit and the lists read, nothing at the Node: the first side's coefficients carry the determinant's lambdas for the antisymmetric record and the pattern's own integers for the symmetric and the undeclared (`meeting_back.coefficients_of`, `credit.terms_of`), the lists weigh an entry into a part by the sign's factor, 0 into a populated part for the antisymmetric record, n + 1 at a part holding n for the symmetric, 1 undeclared (`lists.exchange_factor`, beside `full`), and a family declaring the sign starts with its counts split over its parts, the one-part refusal kept for every other family (`loader/node_detector_declaration.parts_of`). The tests declare their own worlds through the helpers of tests/laws.py: the singlet under the sign with the identity pattern on both regions, equal to the crossed pattern's numbers by the determinant's identity at two parts; the symmetric control; the shell of two quanta at four parts with no capacity; the tri-state against the shipped worlds; the refusals by name."""
 
 import json
 from fractions import Fraction
@@ -19,7 +19,8 @@ from tests.laws_spin import (
     correlation,
     exclusion_world,
     joint_shares,
-    rebooked,
+    marginal_of,
+    sided,
     spin_world,
     trial,
 )
@@ -54,7 +55,8 @@ def test_the_singlet_under_the_familys_sign_reads_the_crossed_patterns_numbers_w
             assert [c["node_detector"] for c in clicks] == ["left", "right"], clicks
             assert all(c["count"] == 1 and c["left"] == 0 for c in clicks), clicks
             shares = joint_shares(lines, sides, -1)
-            assert rebooked(board, lines) == shares  # the engine's determinant, exactly the reader's
+            spin = [f.name for f in board.families].index("spin")
+            sided(board, spin, shares, [PORT[c["realised"]] for c in clicks])  # the determinant's reads
             crossed = ports_of(b, tuple(tuple(p) for p in SINGLET))
             plain = ports_of(b, tuple(tuple(p) for p in IDENTITY))
             for port in range(2):  # the crossed pattern's ports are the determinant's signs on the parts
@@ -86,7 +88,11 @@ def test_the_singlet_under_the_familys_sign_reads_the_crossed_patterns_numbers_w
     for seed in range(1, 6):
         board, lines = trial(path, seed, 40)
         shares = joint_shares(lines, sides, -1)
-        assert rebooked(board, lines) == shares
+        spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
+        assert (
+            first[(spin, "left")][0] * marginal_of(shares, 0)[1]
+            == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
+        )
         assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
         pairs.append(tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit"))
     assert all(pair in {(0, 1), (1, 0)} for pair in pairs), pairs  # opposite ports at equal axes
@@ -104,7 +110,12 @@ def test_the_symmetric_control_credits_the_same_port_at_equal_axes(tmp_path, mon
         board, lines = trial(path, seed, 40)
         assert board.families[[f.name for f in board.families].index("spin")].exchange == 1
         shares = joint_shares(lines, sides, 1)
-        assert rebooked(board, lines) == shares == joint_shares(lines, sides, 0)
+        assert shares == joint_shares(lines, sides, 0)
+        spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
+        assert (
+            first[(spin, "left")][0] * marginal_of(shares, 0)[1]
+            == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
+        )
         assert shares[0, 1] == shares[1, 0] == 0 and shares[0, 0] == shares[1, 1] > 0, shares
         pairs.append(tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit"))
     assert all(pair in {(0, 0), (1, 1)} for pair in pairs), pairs

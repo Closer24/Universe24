@@ -1,23 +1,30 @@
-"""The meeting that runs back (ALGEBRA.md, The click is the meeting of the future with the past: backward, to the past, the click is a reading and never a write, the credit's reading through the root, which chooses which tree is the past and gives Bell at a distance; the owner's word of 2026-10-19): where the world's draw declares `meeting: back` (`loader/draw.py`), a record of several parts read at N sides is credited by N readings in the time's order in place of the one draw through the root (`lists.readings`, the root's `lists.region`): at the window's close the first side draws at its own place with its own state on its marginal; its realised port runs back along the record to its root, the whole board stepped back by Rule3 at -1 to the record's birth, the lay's interval 0 (`run_back`, `birth_of`), every act from outside the Node re-presented on the way, the faces from the books' log (`twist.faces_presented`) and the lays undone from the books' log of the lay lines (`logged`, `crossed`; `credit.Books.lays`, written by `lay.written`), and forward again to the close by the step at the Nodes alone (`run_forward`, `Lattice.step` with no act, the lays re-applied), bit for bit the board it left, asserted (`snapshot`, `first_difference`); nothing is written at the birth, the board being deterministic forward: each later side draws at its own place with its own state on its conditional from the booked joint with the realised ports fixed (`credit.conditional_of`, the chain rule), the record run back and forward again before each of them, N - 1 runs; the credit's re-weighting of the last side's parts by what the realised ports read (`credit.conditioned`, carried in the books in integers, the levels untouched) is the law's words for its conditional, its one-side share of the re-weighted record (`credit.reweighted_share`) equal to the chain's weights at the last side and at no middle side; the N readings give the one joint distribution, P(p_1) P(p_2 | p_1) ... P(p_N | p_1, ..., p_(N-1)) = J / SUM J exactly in the books' integers; the credit lines the root's with the meeting's word and the order 1 to N; in the cone's reach, the default, the cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever): the run back and the run forward step the record's light cone and nothing else, the ball with one ring of Nodes read from the board and asserted at frame 0, the rest of the board neither read nor written (`cone.stepped_alone`, `credit.Books.reach`); the antisymmetric sign read at other than two sides refused by name at load. The host tool's crossing of the acts from the LATTICE lines (tools/back_in_time.py: `faces_from`, `crossed` from the `face` and `lay` lines) lives here and the tool imports it; the observers' frames of the run back and forward are the lattice's (`Lattice.observers`)."""
+"""The meeting that runs back, the click that writes (ALGEBRA.md, The click is the meeting of the future with the past: backward, to the past, the click runs back along the record to its birth and writes there, the realised term's integers into the record's parts, and the board runs forward again by Rule3, so that every later side reads the realised term where it stands, which gives Bell at a distance; The meeting's reading; The births' book; the owner's words of 2026-10-19 and 2026-10-20, the click writes and nothing is in the books but the draw at the click): for every record of several parts read at N declared sides, each side draws at its own place with its own state in the order of the closes, equal closes in the declared order (`lists.readings`), on its own region's second moments with the Gram of the sides after it (`moments_booked`, `gram_of`, `coefficients_of`, `side_weights`, the Gram theorem); its realised port runs back along the record to its birth, the board stepped back by Rule3 at -1 to the birth's interval from the births' book (`run_back`, `birth_of`, `credit.Books.births`), every act from outside the Node re-presented on the way, the faces from the books' log (`twist.faces_presented`) and the lays undone from the books' log of the lay lines (`logged`, `crossed`; `credit.Books.lays`, written by `lay.written`); at the birth the port's integer coefficients are written into the record's parts through the one lay act (`realised`, `lay.laid`, exact in the integers); then the board runs forward again to the close by the step at the Nodes alone (`run_forward`, `Lattice.step` with no act, the lays re-applied by their changes, the record's own later lays scaled), the sides' books taken again on the way (`booked_moments`), and the close asserted: outside the record's cone bit for bit the board the run back left, the parts written 0 at zero, the parts written alike equal (`copied`, `snapshot`, `first_difference`); N runs for N sides, the credit lines carrying the side's order and the record's scale; in the cone's reach, the default, the cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever): the run back and the run forward step the record's light cone and nothing else, the ball with one ring of Nodes read from the board and asserted at frame 0, the rest of the board neither read nor written (`cone.stepped_alone`, `credit.Books.reach`); the antisymmetric sign read at other than two sides refused by name at load. The host tool's crossing of the acts from the LATTICE lines (tools/back_in_time.py: `faces_from`, `crossed` from the `face` and `lay` lines) lives here and the tool imports it; the observers' frames of the run back and forward are the lattice's (`Lattice.observers`)."""
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
+from dataclasses import astuple
 from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import cone, growth, reports
+from event_universe import cone, credit, growth, reports
 from event_universe.features import phase
 from event_universe.features.click import Face
-from event_universe.loader.draw import CONE
-from event_universe.loader.keys import Node
-from event_universe.records import NodeState, Record
+from event_universe.features.front import ball
+from event_universe.lay import laid
+from event_universe.loader.derived import FamilyRule
+from event_universe.loader.draw import CONE, Pattern, Ports
+from event_universe.records import NodeState, Record, largest
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 Snapshot = list[tuple[str, np.ndarray]]  # every array of one family's NodeState with its name, copied
 Lines = list[dict[str, object]]  # output lines, as the lattice's output receives them (`reports.py`)
+Kept = tuple[
+    list[NodeState], list[growth.Growth]
+]  # the close as the run back took it: every array copied, the growths standing
 
 
 def named(name: str, state: NodeState) -> list[tuple[str, np.ndarray]]:
@@ -47,6 +54,18 @@ def snapshot(board: Lattice, states: list[NodeState] | None = None) -> list[Snap
     ]
 
 
+def copied(board: Lattice) -> list[NodeState]:
+    """Every family's NodeState with every array copied, the lines, the write remainders and the phase lines (`dataclasses.astuple`, a deep copy of each line's three arrays): the close the run back takes (`run_back`), read and never written into the board, resized at the return as the board was resized by the growths the run forward found anew (`grown`, `growth.resized`) and compared bit for bit outside the record's cone (`run_forward`, `first_difference`; ALGEBRA.md, The click is the meeting of the future with the past)."""
+    return [
+        NodeState(
+            [Record(*astuple(r)) for r in state.lines],
+            [np.asarray(a).copy() for a in state.write_remainders],
+            [[Record(*astuple(r)) for r in row] for row in state.phases],
+        )
+        for state in board.states
+    ]
+
+
 def first_difference(
     before: list[Snapshot], after: list[Snapshot], where: np.ndarray | None = None
 ) -> tuple[str, list[int]] | None:
@@ -61,20 +80,8 @@ def first_difference(
     return None
 
 
-def support_of(board: Lattice) -> tuple[Node, ...]:
-    """The lay's Nodes, S_0, the root of the record's light cone (ALGEBRA.md, The meeting's reading, root or back, the run back's reach; the interval's dependency radius is one Link): every Node where a family of quanta holds a level other than 0, now or before, on the board as laid, every record laid at the start among them (the packets' and the bodies'), at the file's coordinates; read once at the books' start (`credit.Books.support`); a kick on a holder of the content laid after the start lies outside S_0, so a back-mode world with a kick meets the run-time refusal in the cone's reach and declares `reach: board`"""
-    found = np.zeros(board.shape, dtype=bool)
-    for index in board.order:
-        for line in board.states[index].lines:
-            found |= np.asarray((line.now != 0) | (line.before != 0))
-    return tuple(
-        (int(at[0]) - board.offset[0], int(at[1]) - board.offset[1], int(at[2]) - board.offset[2])
-        for at in np.argwhere(found)
-    )
-
-
 def frame_of(board: Lattice) -> list[NodeState]:
-    """Frame 0, the lay's state: every family's NodeState as the start laid it, its lines, its write remainders and its phase lines (immutable records, so no array is copied), kept once at the books' start (`credit.Books.frame`) for the cone's assertions (`cone.held`, through `frame_grown` and `credit.Books.regrown`): outside the record's light cone the board stands at frame 0 while the laid rest is an exact fixed point of the step."""
+    """Frame 0, the lay's state: every family's NodeState as the start laid it, its lines, its write remainders and its phase lines (immutable records, so no array is copied), kept once at the books' start as the reference of every record laid at the start (`credit.Books.reference`; the board at the birth for a record born during the run, `credit.born`) for the cone's assertions (`cone.held`, through `frame_grown` and `credit.Books.regrown`): outside the record's light cone the board stands at frame 0 while the laid rest is an exact fixed point of the step."""
     return [
         NodeState(list(state.lines), list(state.write_remainders), [list(row) for row in state.phases])
         for state in board.states
@@ -92,24 +99,27 @@ def grown(board: Lattice, states: list[NodeState], found: growth.Growth, directi
         )
 
 
-def frame_grown(board: Lattice) -> list[NodeState]:
-    """Frame 0 over the board as grown: the lay's states (`credit.Books.frame`) grown by every growth standing (`Lattice.growths`, in their order, the layers the receding faces added before the origin and beyond the far face) as the board was grown (`grown`); the cone's own copy, kept in the books through the reading and resized with the growths the run back pops and the run forward replays (`credit.Books.regrown`, `cone.stepped_alone`); the lay's states themselves where the books hold no frame yet."""
+def frame_grown(board: Lattice, index: int) -> list[NodeState]:
+    """The record's reference over the board as grown (ALGEBRA.md, The births' book, the born record's reference, 2026-10-20): the board as it stood at the record's birth (`credit.Books.reference`, frame 0 for a record laid at the start, the board at the birth for a record born during the run, one mechanism for both), grown by every growth standing that served an interval after the birth (`Lattice.growths`, in their order, the layers the receding faces added before the origin and beyond the far face, `grown`); the cone's own copy, kept in the books through the reading and resized with the growths the run back pops and the run forward finds anew (`credit.Books.regrown`, `cone.stepped_alone`, `cone.grown_at`); the board's own states where the books hold no reference."""
+    books = board.credit
     found = (
         frame_of(board)
-        if not board.credit.frame
+        if index not in books.reference
         else [
             NodeState(list(s.lines), list(s.write_remainders), [list(r) for r in s.phases])
-            for s in board.credit.frame
+            for s in books.reference[index]
         ]
     )
+    birth = books.births[index][0] if index in books.births else 0
     for growth_found in board.growths:
-        grown(board, found, growth_found, 1)
+        if growth_found[0] > birth:
+            grown(board, found, growth_found, 1)
     return found
 
 
 def radius(board: Lattice) -> int:
-    """The record's light cone's radius at the board's interval t, t + 1 Links about the lay's Nodes (ALGEBRA.md, the run back's reach: the levels within t and the remainders within t + 1, a Node with a lit neighbour walking its remainder before its level leaves 0); the frames' `cone_radius`."""
-    return board.interval + 1
+    """The record's light cone's radius at the board's interval t, (t - t_b) + 1 Links about the birth's Nodes, t_b the birth's interval (`credit.Books.birth`, 0 for a record laid at the start; ALGEBRA.md, the run back's reach: the levels within t - t_b and the remainders within t - t_b + 1, a Node with a lit neighbour walking its remainder before its level leaves 0); the frames' `cone_radius`."""
+    return board.interval - board.credit.birth + 1
 
 
 def node_of(board: Lattice, line: dict[str, object]) -> tuple[int, tuple[int, int, int]]:
@@ -132,40 +142,198 @@ def faces_from(board: Lattice, lines: Lines) -> None:
 
 
 def crossed(board: Lattice, lines: Lines, direction: int = -1) -> None:
-    """The lays of the lattice's interval crossed from their `lay` lines (ALGEBRA.md, The click is the meeting of the future with the past: the backward run brings no new number along the realised orbit, the board is reversible, and the lay is not taken back; the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line): backward (`direction` -1, before the step back, the host tool's way) every line a lay changed at a Node set back to its levels [now, before, remainder] before the lay, the interval's lines in reverse order (two lays on one Node in one interval are two lines, the second's `before` the first's `after`); forward (+1, after the step at the Nodes alone, the run forward of the meeting that runs back) every such line set to its levels after the lay, the lines in their order; every other Node untouched; the same absolute values set twice set once (the tool's crossing and the engine's own on one board agree); the lay act's own values and no new number, the one write site of the engine beside the lay act's write step, Rule3's step and the cone's write-back of Rule3's own results into the board (`cone.written_back`, the fourth site the writers gate admits)."""
+    """The lays of the lattice's interval crossed from their `lay` lines by their changes (ALGEBRA.md, The click is the meeting of the future with the past: the backward run brings no new number along the realised orbit, the board is reversible, and the lay is not taken back; the mathematician's hand: the face's part of the inverse; the one write site of the engine beside the lay act's write step, Rule3's step and the cone's write-back of Rule3's own results into the board (`cone.written_back`, the fourth site the writers gate admits)): per line of the interval, in the lines' order forward and reversed back, the Node at the file's coordinates, the line's levels now and before changed by the lay's own change, after less before, added forward and subtracted back, and the remainder: a lay without an origin changes no remainder and the inverse recovers it; a lay with an origin sets it forward and restores the history's own backward, the board's remainder before the setting logged into the line's `before` on the way forward, so that the log holds the history it is replayed in and the next run back restores it (the reader's fix of 2026-10-20, the residual's root: the source's increments carried pass 1's remainders into the rewritten history); so a lay the click's write scaled at the birth (`realised`, the log's copies carrying the scaled levels) replays scaled, and every other lay replays as it was, the board's value equal to the line's at the line's turn by the inverse's theorem; a copy of each array written, nothing in place. The host tool reads the lines from the run's output (tools/back_in_time.py), the engine from the books' log (`logged`)."""
     event, when = reports.REPORT_KEYS[0], reports.REPORT_KEYS[2]
     own = [line for line in lines if line[event] == reports.LAY and line[when] == board.interval]
-    key = reports.BEFORE if direction < 0 else reports.AFTER
     for line in own if direction > 0 else reversed(own):
         index, at = node_of(board, line)
         here = (at[0] + board.offset[0], at[1] + board.offset[1], at[2] + board.offset[2])
         number = int(str(line[reports.LINE]))
         record = board.states[index].lines[number]
+        was, after = line[reports.BEFORE], line[reports.AFTER]
         arrays = [np.array(a, copy=True) for a in (record.now, record.before, record.remainder)]
-        for array, value in zip(arrays, line[key], strict=True):  # type: ignore[call-overload]
-            array[here] = value
+        for array, before_value, after_value in zip(arrays[:2], was[:2], after[:2], strict=True):  # type: ignore[index]
+            array[here] += direction * (after_value - before_value)
+        if was[2] != after[2]:  # type: ignore[index]  # a lay with an origin: set forward, the history's own back
+            if direction > 0:
+                line[reports.BEFORE] = [was[0], was[1], int(arrays[2][here])]  # type: ignore[index]
+            arrays[2][here] = after[2] if direction > 0 else line[reports.BEFORE][2]  # type: ignore[index]
         board.states[index].lines[number] = Record(arrays[0], arrays[1], arrays[2])
 
 
 def logged(board: Lattice, direction: int) -> None:
-    """The lays the books' log holds at the board's interval, crossed in `direction` (`crossed`; `credit.Books.lays`, filled by `lay.written` where the world's draw runs back): the step at the Nodes alone re-applies them after its Rule3 and the inverse undoes them before its own, so the engine's run back and forward re-present every act from outside the Node from the books; nothing where the log is empty, the root's worlds, whose host tool crosses from the lines."""
+    """The lays the books' log holds at the board's interval, crossed in `direction` (`crossed`; `credit.Books.lays`, filled by `lay.written` where the world's draw runs back): the step at the Nodes alone re-applies them after its Rule3 and the inverse undoes them before its own, so the engine's run back and forward re-present every act from outside the Node from the books; nothing where the log is empty, a world with no record of several parts at declared sides, where the host tool crosses from the lines."""
     crossed(board, board.credit.lays.get(board.interval, []), direction)
 
 
+def moments_booked(board: Lattice, index: int, sums: Mapping[str, Sequence[Sequence[int]]]) -> None:
+    """The book of a side's own read of a record of several parts (ALGEBRA.md, The meeting's reading; The meeting's identity, the Gram theorem; the owner's word of 2026-10-20): per side the second moments of its own region's parts' sums over the window on both members of the level pair, M_kl += SUM_member sigma_k sigma_l (a plane part's sum its pair (re, im) on its two lines, the product the pair's real inner product re_k re_l + im_k im_l), from the parts' sums of one interval as the `parts` lines carry them (`credit.Books.moments`, per family per side an n x n matrix of integers); nothing of another side enters a side's book: a side's weights at the close are the quadratic form of its coefficients on its own M with the Gram of the sides unrealised (`side_weights`)."""
+    books, family = board.credit, board.families[index]
+    parts, width = family.parts, family.width
+    book = books.moments.setdefault(index, {})
+    for name, _ports in books.sides:
+        found = sums.get(name)
+        if found is None:
+            continue
+        moments = book.setdefault(name, [[0] * parts for _k in range(parts)])
+        for member in range(2):
+            for k in range(parts):
+                for m in range(parts):
+                    product = found[k * width][member] * found[m * width][member]
+                    if family.plane:
+                        product += found[k * width + 1][member] * found[m * width + 1][member]
+                    moments[k][m] += product
+
+
+def gram_of(patterns: Sequence[Pattern], parts: int) -> list[list[int]]:
+    """The Gram matrix of the record's parts over the sides whose port is unrealised (ALGEBRA.md, The meeting's identity, the Gram theorem): the part k stands at each such side in the state its declared pattern row (alpha_k, beta_k) names, two parts' states there have the inner product alpha_k alpha_l + beta_k beta_l, and G_kl is the product over those sides; no side left gives the matrix of ones, the coherent read of the last side; a side whose rows are orthonormal gives the identity, the parts' shares alone (Bell's identity pattern, 1 / 2 at every setting)."""
+    found = [[1] * parts for _k in range(parts)]
+    for pattern in patterns:
+        for k in range(parts):
+            for m in range(parts):
+                (a_k, b_k), (a_m, b_m) = pattern[k], pattern[m]
+                found[k][m] *= a_k * a_m + b_k * b_m
+    return found
+
+
+def coefficients_of(family: FamilyRule, ports: Ports, first: bool) -> list[list[int]]:
+    """A side's coefficients per port, the integers its read and its write carry (ALGEBRA.md, The meeting's reading, the write at the birth): the pattern's integers at the setting, e_k(p) (`loader/draw.ports_of`), and for the antisymmetric record at the first side the determinant's, lambda_l = SUM_k sign(l - k) e_k(p) (`terms_of`, the two sides' form), the later side reading and writing its own e_k(p) over the parts already carrying the sign."""
+    if family.exchange >= 0 or not first:
+        return [list(port) for port in ports]
+    found = []
+    for port in ports:
+        lambdas = [0] * family.parts
+        for sign, (k, m) in credit.terms_of(family.exchange, family.parts, 2):
+            lambdas[m] += sign * port[k]
+        found.append(lambdas)
+    return found
+
+
+def side_weights(
+    moments: Sequence[Sequence[int]],
+    coefficients: Sequence[Sequence[int]],
+    gram: Sequence[Sequence[int]],
+) -> list[int]:
+    """A side's weights at the window's close, one per port (ALGEBRA.md, The meeting's identity, the Gram theorem): w(p) = SUM_kl c_k(p) c_l(p) G_kl M_kl with its own coefficients c per port (`coefficients_of`), the Gram G of the sides unrealised (`gram_of`) and its own second moments M (`moments_booked`), the chain rule of the joint share in its local form, exact in the integers; floored at 0."""
+    found = []
+    for port in coefficients:
+        total = 0
+        for k, c_k in enumerate(port):
+            for m, c_m in enumerate(port):
+                total += c_k * c_m * gram[k][m] * moments[k][m]
+        found.append(max(int(total), 0))
+    return found
+
+
+def parts_of(family: FamilyRule, count: int) -> list[int]:
+    """The part of every line of a family's records by the line's number, `count` lines: the records laid out alike, parts times width lines each (`records.record_slice`), each part a block of `width` lines within its record; an enumeration of the blocks, no division."""
+    found: list[int] = []
+    while len(found) < count:
+        found += [part for part in range(family.parts) for _i in range(family.width)]
+    return found[:count]
+
+
+def inside(board: Lattice) -> np.ndarray:
+    """The record's light cone over the whole board at the board's interval, the ball about the birth's Nodes (`credit.Books.support`) at the cone's radius (`radius`, `features/front.ball`): the close's assertion of the cone's outside (`run_forward`)."""
+    offset = board.offset
+    origins = [(at[0] + offset[0], at[1] + offset[1], at[2] + offset[2]) for at in board.credit.support]
+    return ball(board.shape, origins, radius(board), board.world.periodic)
+
+
+def booked_moments(board: Lattice, index: int) -> None:
+    """One reading added to the run forward (ALGEBRA.md, The meeting's reading: the later sides' books taken again from the rewritten record on the way): the parts' sums of the record at every declared region from the state the step starts from (`reports.level_sums`, the numbers the `parts` lines carry), booked into the sides' own books (`moments_booked`); no output line, no number at a Node."""
+    lines = board.states[index].lines
+    sums = {
+        d.name: reports.level_sums(d.nodes, lines)
+        for d in board.node_detectors
+        if d.declared and d.nodes is not None
+    }
+    moments_booked(board, index, sums)
+
+
+def realised(board: Lattice, index: int, coefficients: Sequence[int]) -> None:
+    """The click's write at the record's birth (ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's identity, the write's exactness; the owner's word of 2026-10-20, the click writes): the realised port's integer coefficients c_k (`coefficients_of`, the pattern's integers at the setting, the determinant's for the antisymmetric first side) reduced by their greatest common divisor over the record's surviving parts (`credit.reduced`, the Boss's amendment of 2026-10-20: the write is the realised term's direction among the parts and never its magnitude alone; a scaling alone, a global sign included, writes nothing and the port is realised all the same) and scaled into the record's parts wherever the record stands at the birth, every line of the part k multiplied by c_k on its two levels, the remainder as the birth left it, through the one lay act (`lay.laid` with no uniform-mode weights, the change (c_k - 1) times the level, `lay.written` with its `lay` lines, the books' log where the birth is after the start), exact in the integers, no division, no rounding; the amplitude bound read first, the largest level times the largest coefficient against A, refused by name where the write would pass it; the cumulative coefficients per part (`credit.Books.written`, 1 before any write), whether the parts stood alike before the first write (`credit.Books.alike`) and the record's scale (`credit.Books.scale`, the norm's square of the coefficients standing on the parts, `credit.scale_of`) kept in the books; every later lay line of the record's own birth in the books' log (a source in time's increments after the birth's interval) replaced by a copy with its levels before and after scaled by c_k, so that the replay by changes applies it scaled (`crossed`); the write asserted: every part's arrays after it the coefficient times the arrays before, bit for bit, refused by name otherwise."""
+    books, family, state = board.credit, board.families[index], board.states[index]
+    parts, blocks = family.parts, parts_of(family, len(state.lines))
+    scaled = credit.reduced(board, index, coefficients)  # the direction among the surviving parts
+    tallest, biggest = (
+        max((largest(line) for line in state.lines), default=0),
+        max(abs(c) for c in scaled),
+    )
+    if tallest * biggest > board.world.amplitude_bound:
+        raise RuntimeError(
+            f"the write at the birth would pass the amplitude bound A = {board.world.amplitude_bound} (the level "
+            f"{tallest} times the coefficient {biggest}): lower the lay's amplitude or the setting's integers"
+        )
+    before, standing = list(state.lines), books.written.get(index, [1] * parts)
+    if index not in books.written:
+        width = family.width
+        books.alike[index] = all(
+            (np.asarray(before[k * width + i].now) == np.asarray(before[i].now)).all()
+            and (np.asarray(before[k * width + i].before) == np.asarray(before[i].before)).all()
+            and (np.asarray(before[k * width + i].remainder) == np.asarray(before[i].remainder)).all()
+            for k in range(1, parts)
+            for i in range(width)
+        )
+    books.written[index] = [w * c for w, c in zip(standing, scaled, strict=True)]
+    books.scale[index] = credit.scale_of(board, index)  # the norm's square of the coefficients standing
+    if all(
+        c == 1 for c in scaled
+    ):  # a scaling alone, a sign included: the port realised, nothing written
+        return
+    for number, line in enumerate(before):
+        c = scaled[blocks[number]]
+        if c == 1:
+            continue
+        changes = (
+            np.asarray(line.now, dtype=object) * (c - 1),
+            np.asarray(line.before, dtype=object) * (c - 1),
+        )
+        laid(board, index, number, changes, None, None)
+    for number, (was, now) in enumerate(zip(before, state.lines, strict=True)):
+        c = scaled[blocks[number]]
+        exact = (
+            (np.asarray(now.now) == np.asarray(was.now, dtype=object) * c).all()
+            and (np.asarray(now.before) == np.asarray(was.before, dtype=object) * c).all()
+            and (np.asarray(now.remainder) == np.asarray(was.remainder)).all()
+        )
+        if not exact:
+            raise RuntimeError(
+                f"the write at the birth of {family.name!r} is not the coefficient {c} times the line {number} bit "
+                "for bit: the lay act's write step wrote another number"
+            )
+    birth, names = books.births[index][0], [f.name for f in board.families]
+    for interval, lines in books.lays.items():
+        if interval <= birth:
+            continue
+        for position, entry in enumerate(lines):
+            if names.index(str(entry[reports.REPORT_KEYS[3]])) != index:
+                continue
+            c = scaled[blocks[int(str(entry[reports.LINE]))]]
+            copy = dict(entry)
+            for key in (reports.BEFORE, reports.AFTER):
+                values = list(entry[key])  # type: ignore[call-overload]
+                copy[key] = [values[0] * c, values[1] * c, values[2]]
+            lines[position] = copy
+
+
 def birth_of(board: Lattice, index: int) -> int:
-    """The interval a record of the family `index` was born at, the root the run back reaches: the lay's interval 0 for a record laid at the start, the one birth the loader admits for the meeting that runs back (`loader/draw.meeting_of_the_law`: a record born during the run stands in one part, the act's lays writing the first part's lines, and its lay across the parts is a declaration the law has not made); the births' book, written at the write step for every kind of lay alike with the interval and the Nodes of the lay that raised the count from 0, read here, is a later round's by name (the lay is not taken back: the run back stops at the birth and the lay stands)."""
-    assert board.credit.counts[index] > 0  # a record standing in the books, laid at the start
-    return 0
+    """The interval a family's record standing in the books was born at, the root the run back reaches (ALGEBRA.md, The births' book, 2026-10-20): the births' book's interval (`credit.Books.births`, written by the write step for every kind of lay alike, `credit.born`), 0 for a record laid at the start; the run back stops at the state right after the birth's lays, since the inverse undoes an interval's lays before its own step."""
+    assert (
+        board.credit.counts[index] > 0 and index in board.credit.births
+    )  # a record standing, born once
+    return board.credit.births[index][0]
 
 
-def run_back(board: Lattice, to: int) -> list[Snapshot]:
-    """The run back from the first close to the record's birth (ALGEBRA.md, The click is the meeting of the future with the past: the backward run from the first click reaches the root): the observers called first with the board at the close as Rule3 left it (the frame of the forward run at the close, before any step back; `Lattice.observers`), the board's every array copied (`snapshot`, the inverse's exactness asserted on the return, `run_forward`), then `Lattice.step_inverse` interval by interval down to `to`, each step undoing the acts' lays of its interval from the books' log and presenting the faces from it, every array returning bit for bit (the inverse's theorem), and in the cone's reach the cone stepped alone, the ball with its ring and nothing else, shrinking by one Link to the lay's Nodes at the birth (`cone.stepped_alone`; frame 0 regrown kept in the books for the reading, `frame_grown`); the Node-steps counted in the books either way (`cone.counted`); returns the copy."""
+def run_back(board: Lattice, index: int) -> Kept:
+    """The run back from the close to the birth of the record of the family `index` (ALGEBRA.md, The click is the meeting of the future with the past: the backward run from the first click reaches the root; The births' book: the birth's interval and Nodes from the births' book, `birth_of`, the cone's root the birth's Nodes): the observers called first with the board at the close as Rule3 left it (the frame of the forward run at the close, before any step back; `Lattice.observers`), the board's every array copied with the growths standing (`copied`, `Lattice.growths`; the inverse's exactness asserted on the return, `run_forward`), then `Lattice.step_inverse` interval by interval down to `to`, each step undoing the acts' lays of its interval from the books' log and presenting the faces from it, every array returning bit for bit (the inverse's theorem), and in the cone's reach the cone stepped alone, the ball with its ring and nothing else, shrinking by one Link to the lay's Nodes at the birth (`cone.stepped_alone`; the record's reference regrown kept in the books for the reading, `frame_grown`); the Node-steps counted in the books either way (`cone.counted`); returns the copy."""
     board.passes, board.heading = board.passes + (board.heading < 0), 1
     for observer in board.observers:
         observer(board.interval, 1, board.passes)
-    kept, books = snapshot(board), board.credit
+    kept, books = (copied(board), list(board.growths)), board.credit
+    (books.birth, books.support), to = books.births[index], birth_of(board, index)
     if books.reach == CONE:
-        books.regrown, books.popped = frame_grown(board), []
+        books.regrown = frame_grown(board, index)
     while board.interval > to:
         if books.reach == CONE:
             cone.stepped_alone(board, -1)
@@ -176,17 +344,56 @@ def run_back(board: Lattice, to: int) -> list[Snapshot]:
     return kept
 
 
-def run_forward(board: Lattice, to: int, kept: list[Snapshot]) -> None:
-    """The run forward from the birth to the close again (ALGEBRA.md, The click is the meeting of the future with the past: the backward run passes the root and continues forward on the partner's tree): `Lattice.step` with no act, interval by interval up to `to`, the step at the Nodes alone with the faces from the books' log and the acts' lays re-applied from it, a computation by Rule3 and no re-presentation of kept frames, in the cone's reach the cone stepped alone as it grows by one Link, the growths of the receding faces replayed from the record's own history (`cone.stepped_alone`), then every array compared bit for bit with the copy the run back took (`kept`, `first_difference`): a difference refuses the run by name, the inverse's theorem being the law's own reason for the exact inverse (the re-weighting touches no array, so the board returns whatever the conditioning)."""
+def run_forward(board: Lattice, index: int, to: int, kept: Kept) -> None:
+    """The run forward from the birth to the close again (ALGEBRA.md, The click is the meeting of the future with the past: the board runs forward from the rewritten birth by Rule3 at one Link per interval, so that every later side reads the realised term where it stands): `Lattice.step` with no act, interval by interval up to `to`, the step at the Nodes alone with the faces from the books' log and the acts' lays re-applied from it by their changes (`crossed`, the record's own later lays scaled by the write), a computation by Rule3 and no re-presentation of kept frames; in the cone's reach the cone stepped alone as it grows by one Link, the growths of the receding faces replayed from the record's own history (`cone.stepped_alone`); the sides' own books of the record `index` taken again on the way from the rewritten record over the window closing at `to` (`booked_moments`, the books emptied first); then the close's three assertions, refused by name where one fails: outside the record's cone the board equal bit for bit to the copy the run back took, that copy resized as the board was by the growths the run back popped and the run forward found anew (`kept`, `grown`; the rewritten record may reach a receding face at another interval, the grown layers the state of a Node with no level either way, `growth.resized`; `first_difference`; the reading touched nothing outside), every part written 0 at zero levels bit for bit (a zeroed part is Rule3's fixed point), and the parts written alike equal bit for bit where they stood alike at the birth (identical arrays step identically); the shares' deviation from the rationals where the written coefficients differ in magnitude is the law's regime of the remainders' walk, a diagnostic of the tests and no refusal."""
+    books, family = board.credit, board.families[index]
+    books.moments[index], first = {}, books.window_of(to)[0]
     while board.interval < to:
-        if board.credit.reach == CONE:
+        if board.interval + 1 >= first:
+            booked_moments(board, index)
+        if books.reach == CONE:
             cone.stepped_alone(board, 1)
         else:
             board.step(False)
             cone.counted(board, int(np.prod(board.shape)))
-    found = first_difference(kept, snapshot(board))
+    states, growths = kept
+    shared = 0
+    while shared < min(len(growths), len(board.growths)) and growths[shared] == board.growths[shared]:
+        shared += 1
+    for popped in reversed(growths[shared:]):
+        grown(board, states, popped, -1)
+    for added in board.growths[shared:]:
+        grown(board, states, added, 1)
+    found = first_difference(snapshot(board, states), snapshot(board), ~inside(board))
     if found is not None:
         raise RuntimeError(
             f"the run back and forward of the meeting returned to the interval {board.interval} with the array "
-            f"{found[0]} differing at the Node {found[1]}: the inverse is exact or the meeting is not read"
+            f"{found[0]} differing at the Node {found[1]} outside the record's cone: the inverse is exact or the "
+            "meeting is not read"
         )
+    written, state = books.written.get(index, [1] * family.parts), board.states[index]
+    for number, (part, line) in enumerate(
+        zip(parts_of(family, len(state.lines)), state.lines, strict=True)
+    ):
+        if written[part] == 0 and (np.asarray(line.now).any() or np.asarray(line.before).any()):
+            raise RuntimeError(
+                f"the part {part} of {family.name!r} written 0 at the birth did not stay at 0 to the close (the line "
+                f"{number}): a zeroed part is Rule3's fixed point, or the meeting is not read"
+            )
+    if books.alike.get(index):
+        width = family.width
+        for k in range(1, family.parts):
+            if written[k] != written[0]:
+                continue
+            for i in range(width):
+                one, other = state.lines[i], state.lines[k * width + i]
+                alike = (
+                    (np.asarray(one.now) == np.asarray(other.now)).all()
+                    and (np.asarray(one.before) == np.asarray(other.before)).all()
+                    and (np.asarray(one.remainder) == np.asarray(other.remainder)).all()
+                )
+                if not alike:
+                    raise RuntimeError(
+                        f"the parts 0 and {k} of {family.name!r}, written alike at the birth, parted by the close "
+                        f"(the line {k * width + i}): parts alike step alike by one rule, or the meeting is not read"
+                    )

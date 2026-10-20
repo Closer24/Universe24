@@ -1,4 +1,4 @@
-"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading"; with `--every K` the look keeps frame 0, the frame of every K-th interval and the last frame stepped, each the full look's frame at that interval with its own lines, so that a long run's look fits a page, the intervals between the kept frames in no frame (the readings read a full look recorded locally). The frames are read from the lattice's observers (`Lattice.observers`, one callable called with the interval, the direction and the pass after every `step` and every `step_inverse`; ENGINE.md section 10, item 11): on a world whose draw declares `meeting: back` (ALGEBRA.md, The meeting's reading, root or back) the board runs to the first side's close, back to the record's birth and forward again to the partner's close, and the look holds the three passes in the look's order, every frame carrying `interval` as the board holds it (decreasing on the run back), `direction` (+1 or -1) and `pass` (1 the run to the first close, 2 the run back, 3 the run forward again), the stride within each pass with each pass's last frame kept, a frame's form the one its interval booked (on the run back the form of the interval stepped back through), the credit lines kept in their frames beside the click and parts lines, every frame carrying the board's `tick` (the loop's count of its intervals forward, which never runs back and stands at the close while the record is read back and forward) and, in the run back's reach the cone (the default), the frames of the run back and forward their `cone_radius` (the lay's Nodes within t + 1 Links at the interval t) with the look's header carrying `reach`, `cone_support` (the lay's Nodes at the file's coordinates) and `cone_volume` (the cone's Nodes per interval), the engine's own numbers; a look of one pass (every shipped world) is written as before, no `direction`, no `pass`, the click and parts lines alone, bit for bit. Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta, the engine's own `Lattice.quanta`), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `records.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeDetector's read, the parts' signed level sums per region, which the joint-share reader credits), each line in the frame of the pass it was written in; the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
+"""The look's host reader, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): a world is loaded as tools/run_inputs.py loads it, stepped by the engine's own step, and every family's arrays are read after each interval into one file beside the world's files, `<world>.look.json`, labelled "lattice reading"; with `--every K` the look keeps frame 0, the frame of every K-th interval and the last frame stepped, each the full look's frame at that interval with its own lines, so that a long run's look fits a page, the intervals between the kept frames in no frame (the readings read a full look recorded locally). The frames are read from the lattice's observers (`Lattice.observers`, one callable called with the interval, the direction and the pass after every `step` and every `step_inverse`; ENGINE.md section 10, item 11): on a world of a record of several parts read at declared sides (ALGEBRA.md, The meeting's reading, the one meeting) the board runs to each side's close, back to the record's birth and forward again, and the look holds the passes in the look's order (2 N + 1 for N sides), every frame carrying `interval` as the board holds it (decreasing on the run back), `direction` (+1 or -1) and `pass` (1 the run to the first close, then per side a run back and a run forward), the stride within each pass with each pass's last frame kept, a frame's form the one its interval booked (on the run back the form of the interval stepped back through), the credit lines kept in their frames beside the click and parts lines, every frame carrying the board's `tick` (the loop's count of its intervals forward, which never runs back and stands at the close while the record is read back and forward) and, in the run back's reach the cone (the default), the frames of the run back and forward their `cone_radius` (the lay's Nodes within t + 1 Links at the interval t) with the look's header carrying `reach`, `cone_support` (the lay's Nodes at the file's coordinates) and `cone_volume` (the cone's Nodes per interval), the engine's own numbers; a look of one pass (every shipped world) is written as before, no `direction`, no `pass`, the click and parts lines alone, bit for bit. Per interval: a family of quanta's level now, its second level now where it is a plane, its count (the record's share in quanta per Node, the engine's own `Lattice.quanta`), the record's count read from the board (`board_count`, the engine's own `Lattice.count`, ALGEBRA.md, The count on the board; None where the family holds no share to read), its share over the lattice in the current's units (the books' per interval, the engine's own `Lattice.total_share`), the form the interval booked (D_i over both level pairs, the engine's own `records.form`) and the least Node pace Gamma - 2 c_i its read finds at that state (the engine's own read and `node_pace`); a held family's level (its time part) and its further parts; the bodies' Nodes (where the family's share stands in quanta about the declared Nodes, `Lattice.body_nodes`), each body marked a reader where the file declares it one; the interval's `click` lines and, for a family of several parts, its `parts` lines (the NodeDetector's read, the parts' signed level sums per region, which the joint-share reader credits), each line in the frame of the pass it was written in; the lattice's shape at that interval and its offset, the layers grown before the origin on each axis (a board with a receding face grows, every array of the frame over the shape of its own frame and every Node named at the file's coordinates). At the top the world's declared numbers as the loader read them (Gamma, T, the width, the families, the shape, the boundary, the inner faces with their gaps, the receding faces, the folded axes, the bodies with their declared counts, the node_detectors), at the end the books and the end of the run where it ended at a receding face's largest size. Frame 0 is the world as laid before the first interval, its counts the record's share as the mode file laid it (the gate having admitted each body's declared count within the rounding of that share). Every number is the world's files' or the engine's arrays'; the reader writes no number of its own and touches no state of the engine. An array is nested lists [x][y][z] of integers, or, where the dense file would pass the size limit, its nonzero Nodes alone as flat x-major indexes with their values.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -8,6 +8,7 @@ Run with PYTHONPATH set to the checkout's src:
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 from collections.abc import Callable
 from pathlib import Path
@@ -26,7 +27,10 @@ DENSE, SPARSE = "dense", "sparse"
 SIZE_LIMIT = 16 * 1024 * 1024  # the page's limit: beyond it every array keeps its nonzero Nodes alone
 LINES = ("click", "parts")  # the lines the look keeps per frame: the clicks and the parts' reads
 CONE = "cone"  # the run back's reach whose frames carry the cone's radius and whose header the cone's support and volume
-PASS_LINES = ("credit",)  # kept too in a look of several passes: the clicks the passes are about
+PASS_LINES = (
+    "credit",
+    "lay",
+)  # kept too in a look of several passes: the clicks the passes are about and the write at the birth (the lay lines at the birth's interval, placed in the birth frame of the run back where the run forward holds no frame at that interval)
 Growth = tuple[
     int, int, int, int
 ]  # a growth as the lattice logs it: the interval served, the axis, the side, the layers
@@ -123,7 +127,7 @@ def frame(
     tick: int | None = None,
     cone_radius: int | None = None,
 ) -> dict[str, object]:
-    """One interval's reading of every family's arrays (`kept` the lines the interval started from, None at frame 0): the level now of the record's line, its second where it is a plane, the count as the record's share in quanta (a reading of the record, kept nowhere), the share over the lattice in the current's units (the books' share at this interval, None over a frozen Node), the form the interval booked (forward from the kept lines to the lines now; on the run back, `direction` -1, the booking of the interval stepped back through, from the lines now to the kept ones, the same numbers the forward step booked) and the pace; the bodies' standing Nodes as a report derives them (`Lattice.body_nodes`), the frame's direction and pass, the board's tick where given (the loop's count of its intervals forward, standing at the close while the record is read back and forward) and the cone's radius where given (the run back's reach the cone: the lay's Nodes within that many Links, t + 1 at the interval t), the lattice's shape and offset at the interval and the output lines to come."""
+    """One interval's reading of every family's arrays (`kept` the lines the interval started from, None at frame 0): the level now of the record's line, its second where it is a plane, the count as the record's share in quanta per Node (a reading of the record, kept nowhere), the record's count read from the board (`board_count`, `Lattice.count`; None where the family holds no share to read), the share over the lattice in the current's units (the books' share at this interval, None over a frozen Node), the form the interval booked (forward from the kept lines to the lines now; on the run back, `direction` -1, the booking of the interval stepped back through, from the lines now to the kept ones, the same numbers the forward step booked) and the pace; the bodies' standing Nodes as a report derives them (`Lattice.body_nodes`), the frame's direction and pass, the board's tick where given (the loop's count of its intervals forward, standing at the close while the record is read back and forward) and the cone's radius where given (the run back's reach the cone: the lay's Nodes within that many Links, t + 1 at the interval t), the lattice's shape and offset at the interval and the output lines to come."""
     world, families = board.world, {}
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         row: dict[str, object]
@@ -132,6 +136,7 @@ def frame(
             row = {
                 "now": lines[0].now,
                 "count": board.quanta(index)[0],
+                "board_count": board.count(index),
                 "share": board.total_share(index)[0],
             }
             if family.plane:
@@ -241,6 +246,10 @@ class Frames:
         kinds = LINES + PASS_LINES if passes > 1 else LINES
         for pass_number, line in self.tagged:
             found = at.get((pass_number, int(str(line["interval"])))) if line["event"] in kinds else None
+            if (
+                found is None and line["event"] == "lay" and pass_number > 1
+            ):  # the write at the birth: the run back's last frame
+                found = at.get((pass_number - 1, int(str(line["interval"]))))
             if found is not None:
                 frame_lines = found["lines"]
                 assert isinstance(frame_lines, list)
@@ -253,7 +262,7 @@ class Frames:
 
 
 def reach_of(board: Lattice) -> str | None:
-    """The run back's reach of the world's draw as the credit's books hold it (`board.credit.reach`): board, cone or books on a world whose draw declares `meeting: back` (cone where the file declares no `reach`, the owner's word), None on a root world."""
+    """The run back's reach of the world's draw as the credit's books hold it (`board.credit.reach`): cone or board on a world of a record of several parts read at declared sides (cone where the file declares no `reach`, the owner's word), None on a world drawing nothing."""
     books = getattr(board, "credit", None)
     found = getattr(books, "reach", None)
     return str(found) if found is not None else None
@@ -265,13 +274,17 @@ def reached(board: Lattice) -> dict[str, object]:
     if reach is None:
         return {}
     found: dict[str, object] = {"reach": reach}
-    if reach == CONE:
-        found["cone_support"] = [[int(c) for c in at] for at in board.credit.support]
-        cone = {int(t): int(v) for t, v in dict(board.credit.cone).items()}
-        found["cone_volume"] = [cone[t] for t in range(max(cone) + 1)] if cone else []
-        stepped = {int(t): int(v) for t, v in dict(getattr(board.credit, "stepped", {})).items()}
-        if stepped:  # the cone stepped alone: the Node-steps per interval, the box with its ring, the engine's count
-            found["cone_stepped"] = [stepped.get(t, 0) for t in range(max(stepped) + 1)]
+    support = getattr(board.credit, "support", None)
+    if (
+        support
+    ):  # the birth's Nodes at the file's coordinates, in both reaches (the engine's, 2026-10-20)
+        found["cone_support"] = [[int(c) for c in at] for at in support]
+    cone = {int(t): int(v) for t, v in dict(getattr(board.credit, "cone", {})).items()}
+    if cone:  # |G(t)| per interval, filled by the runs in the cone's reach
+        found["cone_volume"] = [cone.get(t, 0) for t in range(max(cone) + 1)]
+    stepped = {int(t): int(v) for t, v in dict(getattr(board.credit, "stepped", {})).items()}
+    if stepped:  # the Node-steps per interval of the readings' steps: the box with its ring in the cone's reach, the whole board in the board's
+        found["cone_stepped"] = [stepped.get(t, 0) for t in range(max(stepped) + 1)]
     return found
 
 
@@ -281,7 +294,38 @@ def passes_of(frames: list[dict[str, object]]) -> list[int]:
     return [numbers.count(number) for number in range(1, max(numbers, default=1) + 1)]
 
 
-def record(path: Path, intervals: int | None, every: int = 1) -> dict[str, object]:
+def output_lines() -> tuple[str, ...]:
+    """The output file's line kinds as tools/run_inputs.py writes them (its `LINES`, loaded by path: the one list), so that the look's run writes the run's output file too and no second run is needed for the gate's reading."""
+    spec = importlib.util.spec_from_file_location(
+        "run_inputs", Path(__file__).resolve().parents[1] / "run_inputs.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return tuple(module.LINES)
+
+
+def output_written(
+    target: Path, path: Path, document: dict[str, object], lines: list[dict[str, object]], board: Lattice
+) -> None:
+    """The run's output file beside the look, tools/run_inputs.py's file from the same run (`input`, `verdict`, `intervals`, `ended`, `books`, `reason` where refused, and the `lines` of its kinds): the look's page reads it with `--output` and the gates read it, one run per world."""
+    output: dict[str, object] = {
+        "input": path.name,
+        "verdict": document["verdict"],
+        "intervals": board.interval,
+        "ended": board.ended,
+        "books": board.books() if board.interval else {},
+    }
+    if document["verdict"] != "LAWFUL":
+        output["reason"] = document["reason"]
+    kinds = output_lines()
+    output["lines"] = [line for line in lines if line["event"] in kinds]
+    target.write_text(json.dumps(output, indent=1) + "\n", encoding="utf-8")
+
+
+def record(
+    path: Path, intervals: int | None, every: int = 1, output: Path | None = None
+) -> dict[str, object]:
     """The look of one world: loaded, stepped `intervals` intervals (the world's own where None) by the engine's own step, every frame read from the lattice's observers after its interval (and, on a world whose draw runs back, after every step back and every step of the run forward again, the passes in the look's order), and the frames kept at the stride `every` within each pass: frame 0, the frames at the intervals K, 2 K, 3 K, ... and the last interval stepped of each pass (1, the default, every frame), each kept frame the full look's frame at that interval bit for bit with its own `click` and `parts` lines (and, in a look of several passes, its `credit` lines), the lines of the intervals between the kept frames in no frame (the readings read a full look recorded locally; a page of a strided look takes its measurement from the run's output file, `--output`); a refusal is written with its reason and the frames before it; the look returned with the frames' count per pass (one count for a look of one pass), the summary's."""
     if every < 1:
         raise ValueError(f"--every takes an integer from 1, got {every}")
@@ -300,6 +344,8 @@ def record(path: Path, intervals: int | None, every: int = 1) -> dict[str, objec
     except (ValueError, RuntimeError) as refusal:
         document.update(verdict="REFUSED", reason=str(refusal))
     document["ended"] = board.ended
+    if output is not None:
+        output_written(output, path, document, lines, board)
     document.update(reached(board))
     frames = reader.closed()
     document.update(
@@ -343,9 +389,15 @@ def main(argv: list[str] | None = None) -> None:
         "--every", type=int, default=1, help="keep every K-th frame and the last (1, every frame)"
     )
     parser.add_argument("--out", type=Path, default=None, help="the look's file (<world>.look.json)")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="write the run's output file too, tools/run_inputs.py's file from the same run",
+    )
     args = parser.parse_args(argv)
     target: Path = args.out or args.world.with_suffix(".look.json")
-    document = record(args.world, args.intervals, args.every)
+    document = record(args.world, args.intervals, args.every, args.output)
     arrays, length = written(document, target)
     summary: dict[str, Any] = {
         "world": args.world.name,
@@ -358,6 +410,7 @@ def main(argv: list[str] | None = None) -> None:
         "arrays": arrays,
         "bytes": length,
         "look": str(target),
+        **({"output": str(args.output)} if args.output else {}),
     }
     print(json.dumps(summary))
 

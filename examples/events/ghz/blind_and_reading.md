@@ -136,75 +136,99 @@ counts 12,298 by the record's own unit at the lay. The readings' tables above we
 are not re-run (the owner's word); their M and the gate's verdict are the readers' from the output
 files of their own run.
 
-## The click that runs back over three sides: the back world (2026-10-19)
+## The click's reading over three sides, the one meeting (2026-10-20; the back world of 2026-10-19 folded into the (x, x, x) world)
 
-The (x, x, x) world once more with one added word on its draw, `meeting: back`, and nothing more
-(ALGEBRA.md, The meeting's reading, root or back, the owner's words of 2026-10-19, the N sides and
-the run back's reach; ENGINE.md section 3, act 6, and section 10, item 11), written by
-`build_back.py` beside the four as `ghz_back_x_x_x.json` with its mode file: the same square, the
-same three beams, the same regions with their bases and patterns, the same seed 24. The run back's
-reach is the cone, the default where the key is absent: the record's own light cone runs back, the
-rest of the board untouched (neither read nor written; one ring beyond the cone read from the board
-and asserted equal to the lay's frame 0 by the engine at every step). The law's words it reads: the
-click is the meeting of the future with the past; backward, to the past, the click is a reading and
-never a write.
+The (x, x, x) world's run under the one meeting (ALGEBRA.md, The meeting's reading, the owner's
+words of 2026-10-19 and 2026-10-20; ENGINE.md section 3, act 6, and section 10, item 11): the back
+world of 2026-10-19, the (x, x, x) world with `meeting: back` written by `build_back.py` as
+`ghz_back_x_x_x.json`, folded into the (x, x, x) world on 2026-10-20, the key gone (one meeting),
+its files and its blind `expectation_back.json` gone and the blind's words in the folder's blind;
+the same square, the same three beams, the same regions with their bases and patterns, the same seed
+24. The run back's reach is the cone, the default where the key is absent: the record's own light
+cone runs back, the rest of the board untouched (neither read nor written; one ring beyond the cone
+read from the board and asserted equal to the lay's frame 0 by the engine at every step). The law's
+words it reads: the click is the meeting of the future with the past; backward, to the past, the
+click writes the realised term at the record's birth and nothing else, along the record's own light
+cone and never across the board.
 
 ### The design
 
 At the window's close (the interval 60; the one window closes the three regions at one interval, so
 the declared order, `left`, `right`, `top`) the sides draw one after another, each alone at its own
-place with its own generator state: the first on its marginal from the booked joint shares, the sum
-over the other sides' ports; each next side on its conditional from the same shares with the realised
-ports fixed, the chain rule, exact in the books' integers; between the draws the record runs back to
-its birth, the lay's interval 0, by the engine's own inverse inside its own light cone, and forward
-again to the close, bit for bit, a reading and never a write; two runs back and forward for three
-sides, five passes in the look: the run to the first close (pass 1, the intervals 0 to 60), the run
-back (pass 2, 59 down to 0), the run forward to the second side's close (pass 3, 1 to 60), the run
-back (pass 4) and the run forward to the third side's close (pass 5).
+place with its own generator state on its own region's read, the quadratic form of its two ports on
+its window's second moments of the parts' sums with the Gram of the sides after it (the product of
+the two later patterns' Grams the identity for the first side, the third pattern's Gram with its
+cross terms for the second, the all-ones Gram for the last, which reads coherently), the local form
+of the chain rule; after each draw the record runs back to its birth, the lay's interval 0, by the
+engine's own inverse inside its own light cone, the realised port's integer coefficients are written
+into the record's parts at the birth (0 or +-1 at the gate's settings, the cumulative product over
+the realised sides reduced by its greatest common divisor over the surviving parts, so the parts
+stay equal or zero bit for bit; a scaling alone writes nothing with the port realised all the same,
+the reader's ruling of 2026-10-20: the third side's write on the one surviving part is the
+identity), and the cone runs forward again to
+the close with the realised term, the next side reading the rewritten record where it stands; three
+runs back and forward for three sides, the last click writing too; the look holds the run to the
+first close (pass 1, the intervals 0 to 60) and a run back (the intervals decreasing to 0, the write
+at the birth frame) and a run forward (1 to 60) per click.
 
 ### The blind
 
-In `expectation_back.json`, the folder's blind with the back world in the (x, x, x) run's place and
-the key `back`, derived from the folder's blind before the run by `build_back.py`: the first side's
+The folder's blind, `expectation.json`, its `rule` words the one meeting's: the first side's
 marginal 1 / 2 at either port; the second side's conditional 1 / 2 at either port whatever the first
 realised; the third side's conditional 1 and 0 exactly, the port determined by the two before it
 (plus after plus plus and after minus minus, minus after plus minus and after minus plus: an even
 number of minus ports, the joint 0 at an odd); the sequential shares the joint shares exactly, 1 / 4
 at the four even triples and 0 at the four odd; the same E_3 = +1 and, with the three root-mode
-worlds, the same M = -4; three credit lines, `left` with `meeting: back` and `order` 1, `right` with
-`order` 2 and `top` with `order` 3, the count 1 each.
+worlds, the same M = -4; three credit lines, `left` with `order` 1, `right` with `order` 2 and `top`
+with `order` 3, the count 1 each.
 
-### The reading (the branch atom-arranged, 2026-10-19)
+### The reading of 2026-10-19 (the back world, folded on 2026-10-20)
 
-Run by `tools/run_inputs.py` (LAWFUL, 60 intervals, the cone's assertion holding at every step back
-and forward, no refusal), read by `tools/bell_gate.py` over the four output files with the back
-world's in the (x, x, x) run's place against `expectation_back.json`: E_3(x, x, x) = +1, the
-blind's; the eight shares 1 / 4 at the even triples and 0 at the odd, the root mode's; the marginals
-1 / 2; M = -4 with the three root-mode worlds, the blind's; 60 intervals reported, 170 click lines
-and 160 parts lines as in the root mode. The three credit lines at the interval 60: `left` realised
-minus, `meeting: back`, `order` 1; `right` realised minus, `order` 2; `top` realised plus, `order`
-3, the count 1 each and the record's count left 12,297 as in the root mode's lines: the triple (-,
--, +), one of the four the shares allow, the third port the one the two before it determine (minus
-minus: plus, the blind's). The look (`ghz_back_x_x_x.look.json`, the stride 6: frame 0, every sixth
-interval and each pass's last, 51 frames in the five passes, 11 and four times 10, the arrays by
-their nonzero Nodes): the header `reach` cone, `cone_support` the lay's 569 Nodes (the three beams,
-x 4 to 28 and y 2 to 30) and `cone_volume` per interval, 655 at the birth, 1,927 at the interval 12,
-from which the cone holds the declared square of 33 x 33 whole (its farthest Node 13 Links from the
-lay's Nodes), 2,059 at 13, and 8,865 of the grown board's 9,409 Nodes (97 x 97) at the close, inside
-it; every frame carrying the board's tick, 60 through the two readings, and the frames of the passes
-2 to 5 their `cone_radius`, t + 1 at the interval t; the frames' arrays the engine's as they stand,
-outside the cone the board as the engine left it, the lay's frame 0 here. The cone stepped alone
-(2026-10-20, the owner's word): the two runs back and forward step the record's cone and nothing
-else, the ball's box with one ring read beyond it and asserted at the lay's frame 0, the rest of the
-board neither read nor written, each close equal to the board run's bit for bit; the header's
-`cone_stepped` sums to 1,320,928 Node-steps against the board run's 1,357,680 (the declared square
-whole in the cone from the interval 12 and the box about twice the diamond's Nodes, so the saving is
-modest and the principle the point). The page `ghz_back_x_x_x.html` (the blind, the gate's reading
-and the run's output): the slider over the five passes with the bounds marked, the frame's label
-with the tick, the interval the record is read at, the pass, the direction and the cone's radius and
-support, the cone shaded on the board and on the view from above, the legend line and the radius
-graph, the records' clicks table with the three draws in their passes; the page's count of the
-cone's Nodes equals the look's |G| at every frame shown. The screenshots
-`ghz_back_x_x_x.pass2.screenshot.png` (the run back at the interval 6, the cone 7 Links about the
-beams, the square's corners outside it) and `ghz_back_x_x_x.pass3.screenshot.png` (the run forward
-to the second side's close at the interval 6).
+The back world's run of 2026-10-19 (`tools/run_inputs.py`, LAWFUL, 60 intervals, the cone's
+assertion holding at every step back and forward, no refusal), read by `tools/bell_gate.py` over the
+four output files against the blind of that day: E_3(x, x, x) = +1, the blind's; the eight shares 1
+/ 4 at the even triples and 0 at the odd; the marginals 1 / 2; M = -4 with the three other worlds,
+the blind's; 60 intervals reported, 170 click lines and 160 parts lines. The three credit lines at
+the interval 60: `left` realised minus with `order` 1; `right` realised minus with `order` 2; `top`
+realised plus with `order` 3, the count 1 each and the record's count left 12,297: the triple (-, -,
++), one of the four the shares allow, the third port the one the two before it determine (minus
+minus: plus, the blind's). Its look at the stride 6 (frame 0, every sixth interval and each pass's
+last, 51 frames in the five passes, 11 and four times 10, the arrays by their nonzero Nodes): the
+reach the cone, `cone_support` the lay's 569 Nodes (the three beams, x 4 to 28 and y 2 to 30),
+`cone_volume` 655 at the birth, 1,927 at the interval 12, from which the cone holds the declared
+square of 33 x 33 whole (its farthest Node 13 Links from the lay's Nodes), 2,059 at 13, and 8,865 of
+the grown board's 9,409 Nodes (97 x 97) at the close; the board's tick 60 through the two readings;
+the cone stepped alone (2026-10-20, the owner's word), `cone_stepped` 1,320,928 Node-steps against
+the board run's 1,357,680 (the declared square whole in the cone from the interval 12 and the box
+about twice the diamond's Nodes, so the saving is modest and the principle the point); its page's
+count of the cone's Nodes equal to the look's |G| at every frame shown. The world, its blind, its
+look, its page and its two screenshots are gone with the fold (2026-10-20): the (x, x, x) world's
+own reading under the one meeting, from the eighth commit's run, follows.
+
+### The reading (the eighth commit, 2026-10-20)
+
+Run once per world by `tools/look/record.py --every 6` with `--output` (LAWFUL, 60 intervals, the
+cone's assertion holding at every step back and forward, no refusal), read by `tools/bell_gate.py`
+over the four output files against the folder's blind (the joint form, the gate's arithmetic):
+E_3(x, x, x) = +1, the blind's; the eight shares 1 / 4 at the even triples and 0 at the odd; the
+marginals 1 / 2; E_3 = -1 at (x, y, y), (y, x, y) and (y, y, x), M = -4, the blind's; 60 intervals
+reported, 170 click lines and 160 parts lines per world. The credit lines at the interval 60 on (x,
+x, x): `left` realised minus with `order` 1 and `scale` 2 (the parts 2 and 3 kept), `right` realised
+minus with `order` 2 and `scale` 1 (the part 3 kept), `top` realised plus with `order` 3 and `scale`
+1, the count 1 each, the record's count left 12,297 and `board_count` 12,302 on each (the record of
+12,298 quanta at the lay by its own unit, its count on the board walking to 12,302 by the close);
+the triple (-, -, +), the third port the one the two before it determine, the blind's; the other
+worlds' triples (-, -, -) with the scales 2, 2, 2 at (x, y, y), 4, 2, 2 at (y, x, y) and 4, 4, 2 at
+(y, y, x). The writes at the birth on (x, x, x): the first 1,138 `lay` lines at the lay's 569 Nodes
+at the interval 0, the parts 0 and 1 scaled by 0; the second 569 lines, the part 2 by 0; the third
+the identity (the top's -1 on the one surviving part a scaling), nothing written. The look, 71
+frames in seven passes (11, then six times 10) at the stride 6, the arrays by their nonzero Nodes:
+the reach the cone, `cone_support` the lay's 569 Nodes (x 4 to 28, y 2 to 30), `cone_volume` 655 at
+the birth and 8,865 of the grown board's 9,409 Nodes at the close, the tick 60 through the three
+readings, `cone_stepped` 1,981,392 Node-steps (three runs back and forward), the frames'
+`board_count` from 12,298 at the lay to 12,302 at the close. The pages `ghz_x_x_x.html` and the
+three others, built with the blind, the gate's reading and the run's output: the slider over the
+seven passes, the write at the birth frames ("the parts scaled by (0, 0, 1, 1)" at the first, "(1,
+1, 0, 1)" at the second, "nothing written" at the third), the count on the board, the cone shaded on
+the board and from above, and the gate's table with E_3 by the joint form beside the blind, every
+row MATCH.

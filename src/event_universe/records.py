@@ -54,7 +54,7 @@ def record_slice(family: FamilyRule, record: int) -> slice:
     return slice(record * span, (record + 1) * span)
 
 
-def rows_total(family: FamilyRule, lines: Sequence[Record], direction: int = 1) -> Record:
+def rows_total(family: FamilyRule, lines: Sequence[Record]) -> Record:
     """A holder of the sign's record as the board reads it whole, the sum of its rows' time lines at every Node, both levels (a node_detector or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign; the light's record the free row 0 among them, light its own family, 2026-10-19), the remainder the free row's; the row's own line where it has one row, bit for bit."""
     rows = [lines[row * family.width] for row in range(family.records)]
     if len(rows) == 1:
@@ -184,17 +184,9 @@ def complement(remainder: Any, wall: Any) -> Any:
     return wall - 1 - remainder
 
 
-def write_origins(
-    walls: Sequence[int], shape: tuple[int, int, int], kind: type, images: Sequence[Any] = ()
-) -> list[np.ndarray]:
-    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start); a signed line carries the origin's complement at the Nodes its image mask names (`images`, per line the mask of the Nodes on the image side of the line's mirror, None or absent for a scalar line), so that a symmetric lay is symmetric to the bit (`complement`)."""
-    found = []
-    for line, wall in enumerate(walls):
-        origin = division_forward(wall, 2, 0)[0]
-        image = images[line] if line < len(images) else None
-        plain = full(shape, origin, kind)
-        found.append(plain if image is None else np.where(image, complement(plain, wall), plain))
-    return found
+def write_origins(walls: Sequence[int], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
+    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
+    return [full(shape, division_forward(wall, 2, 0)[0], kind) for wall in walls]
 
 
 def empty_state(
@@ -202,11 +194,10 @@ def empty_state(
     shape: tuple[int, int, int],
     walls: Sequence[int],
     kind: type,
-    images: Sequence[Any] = (),
     origin: Any = 0,
 ) -> NodeState:
-    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line), complemented at a signed line's image Nodes (`images`, `write_origins`)."""
+    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line, `write_origins`)."""
     lines = [
         empty_record(shape, kind, origin) for _ in range(family.lines)
     ]  # every line born at the half wall
-    return NodeState(lines, write_origins(walls, shape, kind, images) if family.held else [])
+    return NodeState(lines, write_origins(walls, shape, kind) if family.held else [])

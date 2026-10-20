@@ -1,4 +1,4 @@
-"""Part D, Tasks 1 and 2: no root anywhere (the owner, issue #1793, comments 6077053307 and 6077234684). The largest x with x^2 <= n is found by `rule3.largest_below`, a bisection on the share reading x * x against n (products and comparisons, no division on the count, no root), and every site of src that read the old `division_fixed_point` (Newton's integer iteration) reads it now; the integer is the same at every site, and these tests say so against the old function kept here as the oracle and against Python's `math.isqrt`, which tests alone may use (the gate on src stands in tests/test_the_gates.py)."""
+"""Part D, Tasks 1 and 2: no root anywhere (the owner, issue #1793, comments 6077053307 and 6077234684). The largest x with x^2 <= n is found by `rule3.largest_below`, a bisection on the share reading x * x against n (products and comparisons, no division on the count, no root), and every site of src reads it; the integer is the same at every site, and these tests say so against `division_fixed_point` (Newton's integer iteration), kept here as the oracle and against Python's `math.isqrt`, which tests alone may use (the gate on src stands in tests/test_the_gates.py)."""
 
 import math
 import random
@@ -28,7 +28,7 @@ def division_fixed_point(square: int) -> int:
 
 
 def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
-    """Task 1: `largest_below` on every n in [0, 70000], on 2,000 random n below 2^63, on the squares and the squares minus one up to 2^62, and on 0 and 1 equals the old `division_fixed_point` and `math.isqrt`; a negative count is refused by name; under 10 s."""
+    """Task 1: `largest_below` on every n in [0, 70000], on 2,000 random n below 2^63, on the squares and the squares minus one up to 2^62, and on 0 and 1 equals the oracle `division_fixed_point` and `math.isqrt`; a negative count is refused by name; under 10 s."""
     started = time.perf_counter()
     assert largest_below(0) == 0 and largest_below(1) == 1
     for n in range(70001):
@@ -49,7 +49,7 @@ def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
 
 
 def test_features_click_reads_the_same_integers_without_a_root():
-    """Task 2 (c), features/click: `squared`, `spread`, `amplitude`, `direction`, `invariant`, `exact_total`, `line_total` and `envelope` (the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay, against `math.isqrt` on the same products."""
+    """Task 2 (c), features/click: `squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope` (the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay, against `math.isqrt` on the same products."""
     num, den = PAIR
     gap = den * den - num * num
     square = click.squared(1, T, PAIR)
@@ -63,7 +63,6 @@ def test_features_click_reads_the_same_integers_without_a_root():
         == click.spread(T * den // (2 * sine), (1, 1))
         == math.isqrt(T * den // (2 * sine))
     )
-    assert click.exact_total(T, PAIR) == math.isqrt((T * den // 2) ** 2 // gap)
     assert click.line_total(T, PAIR) == math.isqrt(T * T * den * den // gap)
     total = click.line_total(T, PAIR)
     envelope = click.envelope(total, 48, 1)

@@ -35,7 +35,7 @@ def drawn(
 
 
 def hashed(seed: int, name: str, window: int, modulus: int) -> int:
-    """The generator's state of one side at one window, where the meeting runs back and each side draws at its own place with its own state (ALGEBRA.md, The click is the meeting of the future with the past; the owner's word of 2026-10-19): the declared seed, the side's name and the window's number written as one text, its SHA-256 digest read as one integer, the bytes in their order, and reduced to the generator's modulus by the division act (the remainder of `division_forward`), so that the states are distinct per side and per window, declared by the one seed and generic for N sides; a hash and no progression, since the generator is affine and states in arithmetic progression would stay one progression at every depth of the draw (the trials tool's finding, tools/meeting_trials.py)."""
+    """The generator's state of one side at one window, where a record of several parts is read at declared sides and each side draws at its own place with its own state (ALGEBRA.md, The click is the meeting of the future with the past; the owner's word of 2026-10-19): the declared seed, the side's name and the window's number written as one text, its SHA-256 digest read as one integer, the bytes in their order, and reduced to the generator's modulus by the division act (the remainder of `division_forward`), so that the states are distinct per side and per window, declared by the one seed and generic for N sides; a hash and no progression, since the generator is affine and states in arithmetic progression would stay one progression at every depth of the draw (the trials tool's finding, tools/meeting_trials.py)."""
     digest = hashlib.sha256(f"{int(seed)} {name} {int(window)}".encode()).digest()
     return int(division_forward(int.from_bytes(digest), int(modulus), 0)[1])
 
@@ -187,17 +187,8 @@ def laid_pairs(
     return [pair for _ in range(laid) for pair in ((real, imaginary) if plane else (real,))]
 
 
-def exact_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes of one quantum of light at the resonance, S = SUM A^2 with 2 S sin Omega = T, (the largest x with x^2 <= (T den div 2)^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`) (the advisor's form and the mathematician's hand, two hands), one root of the whole product; one line's share of a plane's quantum, the two lines together (the taker's lay), the source in time's total (`emission.laid_increment`, `emission.emitted_quantum`); the one-line packet's root is `line_total`; the NodeDetector's own act at the lay and no act of the interval."""
-    num, den = resonance
-    half = int(
-        division_forward(action * den, 2, 0)[0]
-    )  # T den div 2, exact for the file's T, a power of two
-    return largest_below(int(division_forward(half * half, den * den - num * num, 0)[0]))
-
-
 def line_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, (the largest x with x^2 <= T^2 den^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`), twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) (`exact_total`) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
+    """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, (the largest x with x^2 <= T^2 den^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`), twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
     num, den = resonance
     return largest_below(int(division_forward(action * action * den * den, den * den - num * num, 0)[0]))
 

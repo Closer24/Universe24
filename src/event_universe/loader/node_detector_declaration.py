@@ -19,7 +19,7 @@ READER_RECORD_KEYS = (
     "node_detector",
     "conversion",
 )  # a body as a NodeDetector with a record of its own
-PART_KEYS, PART_REQUIRED = ("part", "name", "role", "count", "capacity"), ("part", "name", "count")
+PART_KEYS, PART_REQUIRED = ("part", "name", "count", "capacity"), ("part", "name", "count")
 TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
 PROBE_KEYS = ("from", "to", "drive")  # a transition of a part into itself, the probe's: it turns nothing
 RATE_KEYS = (
@@ -101,14 +101,14 @@ class NodeDetectorDeclaration:
 
     @property
     def gives(self) -> tuple[int, ...]:
-        """The families this body's clicks give whole quanta to during the run: its rates' light and its conversions' records out, by their positions (the meeting that runs back refuses a record of several parts born of them, its birth no one interval the books hold; `loader/draw.meeting_of_the_law`)."""
+        """The families this body's clicks give whole quanta to during the run: its rates' light and its conversions' records out, by their positions (a record of several parts born of them is read at its sides from its birth in the births' book, `credit.born`)."""
         return tuple(r.light for r in self.rates) + tuple(o for c in self.conversions for o in c.outs)
 
 
 def parts_of(
     value: object, label: str, parts: int, count: int, split: bool = False
 ) -> tuple[tuple[str, ...], tuple[int, ...], tuple[int | None, ...]]:
-    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), optionally `role`, a word read by nothing, and optionally `capacity` (from 1), the most quanta the part holds, the exclusion as a declaration by name (the spin branch, 2026-10-19; `lists.full`: a part whose count has reached its capacity takes no quantum by any list, a part declaring none is never full; a cap on the count in the declared part, reading no sense); the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other, the one-part convention: the body stands in the part of its largest count, the first of a tie, `node_detector.books_of`), or, with `split`, in several parts, the start of a family declaring its sign under exchange (`FamilyRule.exchange`, the key `exchange`; ALGEBRA.md, Spin, closed for the paper as a route, 2026-10-19), the one-part refusal kept for every other family; a count above its part's capacity refused; refused by name otherwise. Returns the names, the counts and the capacities (None where none is declared)."""
+    """A body's `parts`: one entry per part of its family in order, the declared order the record's energy order, the first part the lowest, the ground (the one order the declaration gives; read by the click's direction, `lists.exchange`: a transition climbing in it takes the drive's quantum, one descending gives it back; the shipped rates descend in it), each `part` (its position), `name` (its own) and `count` (from 0), and optionally `capacity` (from 1), the most quanta the part holds, the exclusion as a declaration by name (the spin branch, 2026-10-19; `lists.full`: a part whose count has reached its capacity takes no quantum by any list, a part declaring none is never full; a cap on the count in the declared part, reading no sense); the counts sum to the body's count and stand in one part (a lay in one mode has no amplitude in any other, the one-part convention: the body stands in the part of its largest count, the first of a tie, `node_detector.books_of`), or, with `split`, in several parts, the start of a family declaring its sign under exchange (`FamilyRule.exchange`, the key `exchange`; ALGEBRA.md, Spin, closed for the paper as a route, 2026-10-19), the one-part refusal kept for every other family; a count above its part's capacity refused; refused by name otherwise. Returns the names, the counts and the capacities (None where none is declared)."""
     if not isinstance(value, list) or len(value) != parts:
         raise ValueError(f"{label} lists one entry per part of the body's family, {parts} parts")
     names, counts, capacities = [], [], []

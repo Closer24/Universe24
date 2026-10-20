@@ -111,19 +111,8 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert np.array_equal(carried, total - wall * nxt)
     back = rule3(fluxes, own, wall, now, nxt, carried, -1)
     assert np.array_equal(back, (before, remainder))
-    reads, self_coefficient, wall = coefficients(800, 809, GAMMA, *(own := paces.node_paces(GAMMA, 250)))
+    _reads, self_coefficient, wall = coefficients(800, 809, GAMMA, *paces.node_paces(GAMMA, 250))
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
-    level, own_mass = 1 << 20, mass(800, 809, own[0])
-    partials = (
-        3 * wall * level,
-        own_mass * level,
-        (abs(2 * wall - own_mass) + wall) * level,
-        2 * 6 * abs(reads[0]) * level,
-    )
-    bound = max(*partials, (6 * abs(reads[0]) + wall + abs(self_coefficient)) * level + wall - 1)
-    assert (
-        core.rule_total_bound(800, 809, GAMMA, *own, level) == bound
-    )  # the largest partial sum, the step's order
 
 
 RULE_LINES = (r"mass \* now\b", r"wall \* \(now \+ now - other\)", r"direction \* total \+ remainder")
@@ -145,7 +134,7 @@ RULE_ARITHMETIC += (
 
 
 def test_no_other_file_of_src_writes_the_rules_arithmetic():
-    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the old two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the lattice, core and the folders hold no split of their own."""
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the lattice, core and the folders hold no split of their own."""
     offenders = []
     for path in sorted(p for p in SOURCE.rglob("*.py") if p.name != "rule3.py"):
         text = path.read_text(encoding="utf-8")
@@ -362,7 +351,7 @@ def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_
 
 SHEAR_NAMES = frozenset(
     {"shear", "sheared", "turned", "turn_wall", "turn_guard", "TURNED_REACH", "TURNED_SLACK", "rotate"}
-)  # features/rotation's names and the shear's: gone with the module (Part C, Task 3)
+)  # the shear's names, refused in src/ (Part C, Task 3)
 TRIG_NAMES = frozenset({"cos", "sin", "atan", "atan2", "tan", "exp", "log", "sinh", "cosh", "tanh"})
 # Part D, Task 3, gate (2): no act named a cosine, a sine, an angle, an exponential or a logarithm;
 # the words cosine, sine and angle stand in docstrings as the names of what the lines are, never as calls

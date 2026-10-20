@@ -8,17 +8,13 @@ import numpy as np
 from event_universe import readings, twist
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, load_file
+from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, family, load_file
 
 CHAIN = EVENTS / "chain"
 DESIGN = json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))
 LAID = json.loads((CHAIN / "lay_bounds.json").read_text(encoding="utf-8"))
 AXES = "xyz"
 RUNS: dict[str, tuple[list[dict], dict[tuple[int, int], tuple[np.ndarray, ...]]]] = {}
-
-
-def family(board: Lattice, name: str) -> int:
-    return [f.name for f in board.families].index(name)
 
 
 def momentum_in_t(board: Lattice, index: int, at: np.ndarray | None = None) -> int:

@@ -14,8 +14,8 @@ from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import (
     Draw,
     Pattern,
+    compounding_of_the_law,
     draw_of,
-    meeting_of_the_law,
     pattern_of,
     patterns_of_the_law,
     ports_of,
@@ -49,14 +49,14 @@ WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "inte
 WORLD_KEYS += ("engine", "bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "engine", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
-BODY_REQUIRED, NODE_KEYS = ("family", "nodes"), ("node", "count", "weight")
+BODY_REQUIRED = ("family", "nodes")
 READER_NODE_KEYS = (
     "node",
     "weight",
 )  # a reader's Node: the lay's weight, the record's count declared once
 NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern")  # a node_detector's keys
 TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
-START_KEYS = ("mode",)
+START_KEYS: tuple[str, ...] = ()  # the engine start file holds no key; every key refused by name
 
 
 @dataclass(frozen=True)
@@ -76,7 +76,7 @@ class BodyRow:
 
 @dataclass(frozen=True)
 class NodeDetectorRow:
-    """A node_detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared NodeDetector, and not for a body's node_detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the reader's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the draw through the root in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name). A side of a record of several parts declares its setting as `basis` (real-line parts, the setting's coefficients at the full angle) or as `axis` (plane parts, the half-angle pair of the detector's axis; the spin branch, 2026-10-19), one of the two, with its `pattern`; the ports' arithmetic is one (`loader/draw.ports_of`)."""
+    """A node_detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared NodeDetector, and not for a body's node_detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the reader's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the sides' draws in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name). A side of a record of several parts declares its setting as `basis` (real-line parts, the setting's coefficients at the full angle) or as `axis` (plane parts, the half-angle pair of the detector's axis; the spin branch, 2026-10-19), one of the two, with its `pattern`; the ports' arithmetic is one (`loader/draw.ports_of`)."""
 
     name: str
     positions: tuple[Node, ...]
@@ -210,7 +210,7 @@ def node_detectors_of(
     beyond: tuple[Node, ...],
     layer: tuple[Node, ...],
 ) -> tuple[NodeDetectorRow, ...]:
-    """The node_detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared NodeDetector, optionally with its `basis`, the reader's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the NodeDetector's declaration and the draw's through the root, `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the declared NodeDetector."""
+    """The node_detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared NodeDetector, optionally with its `basis`, the reader's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the NodeDetector's declaration and the sides' draws', `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the declared NodeDetector."""
     if not isinstance(value, list):
         raise ValueError("node_detectors must be a list")
     found: list[NodeDetectorRow] = []
@@ -358,19 +358,16 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
     node_detectors = node_detectors_of(world["node_detectors"], shape, len(bodies), beyond, layer)
     regions_of_the_law(node_detectors, packets, shape, (periodic[0], periodic[1], periodic[2]), families)
-    laid = [p.family for p in packets] + [b.family for b in bodies] + [w.family for w in wholes]
+    laid = [p.family for p in packets] + [b.family for b in bodies if b.detector is None]
+    laid += [w.family for w in wholes] + [f for b in bodies if b.detector for f in b.detector.gives]
     patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
     settings_of_the_law([(d.name, d.axis, d.basis, d.pattern) for d in node_detectors], laid, families)
+    compounding_of_the_law(node_detectors, laid, families, packets, bound)
     # the world's records: a charged family's bodies each a record owning one row of the sign, every
     # holder of the sign one row per charged record beside the free row (derived.with_records)
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
-    # the meeting that runs back: a joint credit and a birth at one interval (the records given during
-    # the run by the bodies' clicks and the packets laid whole have none the books hold)
-    given = [w.family for w in wholes] + [f for b in bodies if b.detector for f in b.detector.gives]
-    weights = [p.weights for p in packets] + [b.weights for b in bodies] + [()] * len(wholes)
-    meeting_of_the_law(draw, [d.pattern for d in node_detectors], laid, given, families, weights)
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)
