@@ -124,10 +124,24 @@ def ghz_read(tmp_path, name: str, expected: int) -> None:  # type: ignore[no-unt
     )
 
 
-@pytest.mark.parametrize("name", list(GHZ))
-def test_line_2_each_ghz_world_reads_the_gates_sign(tmp_path, name):
-    """Line 2, the four shipped GHZ worlds, one test item each (`ghz_read`): x x x reads E_3 = +1 and x y y, y x y, y y x read E_3 = -1, every marginal 1 / 2, every pairwise correlation 0, the eight shares 0 or 1 / 4; over the four M = 1 - (-1) - (-1) - (-1) = 4 in magnitude, the gate's signs."""
-    ghz_read(tmp_path, name, GHZ[name])
+def test_line_2_the_ghz_world_x_x_x_reads_the_gates_sign(tmp_path):
+    """Line 2, the first of the four shipped GHZ worlds (the clock gives each world its own test): x x x reads E_3 = +1, marginals 1 / 2, pairwise 0, the eight shares 0 or 1 / 4."""
+    ghz_read(tmp_path, "ghz_x_x_x", GHZ["ghz_x_x_x"])
+
+
+def test_line_2_the_ghz_world_x_y_y_reads_the_gates_sign(tmp_path):
+    """Line 2, the second shipped GHZ world: x y y reads E_3 = -1, marginals 1 / 2, pairwise 0, the eight shares 0 or 1 / 4."""
+    ghz_read(tmp_path, "ghz_x_y_y", GHZ["ghz_x_y_y"])
+
+
+def test_line_2_the_ghz_world_y_x_y_reads_the_gates_sign(tmp_path):
+    """Line 2, the third shipped GHZ world: y x y reads E_3 = -1, marginals 1 / 2, pairwise 0, the eight shares 0 or 1 / 4."""
+    ghz_read(tmp_path, "ghz_y_x_y", GHZ["ghz_y_x_y"])
+
+
+def test_line_2_the_ghz_world_y_y_x_reads_the_gates_sign(tmp_path):
+    """Line 2, the fourth shipped GHZ world: y y x reads E_3 = -1, marginals 1 / 2, pairwise 0, the eight shares 0 or 1 / 4; over the four M = 1 - (-1) - (-1) - (-1) = 4 in magnitude, the gate's signs."""
+    ghz_read(tmp_path, "ghz_y_y_x", GHZ["ghz_y_y_x"])
 
 
 def born_read(tmp_path, name: str) -> Fraction:  # type: ignore[no-untyped-def]
