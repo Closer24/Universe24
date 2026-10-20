@@ -221,3 +221,10 @@ where the body had left its part and drawn at the next interval; the eighth (757
 carried span, and under it the three run whole, pass 2 under the eighth at the landing head
 0f77b37dd, 2026-10-20: chain_x_minus (400 intervals, 8 credits, the landing's pass 2); chain_y_minus (400
 intervals, 8 credits, the landing's pass 2); chain_z_minus (400 intervals, 8 credits, the landing's pass 2).
+
+The twist round (2026-10-20, the branch engine-clean, the reader's ruling): without the fold the
+third pair of clicks moves from (303, 351) to (307, 355) on x, y and z alike, the pieces 46,345 and
+45,762, the recoil at 142 reading -p 44,243 against the fold's 42,536, the fold's quarter turn on
+the body 1's e part having entered the born light's phase at 190 under the eighth; the course
+without the fold is the law's course and the third pair is re-pinned so (ALGEBRA.md, The click's
+algebra beyond the law; FURTHER_RESEARCH.md, The recoil's imprint on the emitted light).

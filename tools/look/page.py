@@ -1142,7 +1142,7 @@ function blindTable() {
 function drawReading() {
   const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
+  measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
   const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
   const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
@@ -1166,7 +1166,7 @@ function drawReading() {
   const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)}, the rounded shares per reporter (N by the shares of the output file's click lines, the expectation)</span>` + (clicks ? `<span><i style="border-color:${flash};border-top-width:6px"></i>the clicks the draw credited (the credit lines, the measurement)</span>` : '') + `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(BLIND.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The output file's credit of ${esc(family)} at ${format(n)} reporters across ${esc(r.across)}, beside the blind</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the reading's bars beside the blind">${body}</svg>`;
   const credited = clicks ? clicks.reduce((a, b) => a + b, 0) : null;
-  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw with the seed ${format(r.seed)}` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
+  byId('totals').textContent = `N ${format(r.quanta)} by the shares (the blind ${format(r.blind_quanta)}); ` + (clicks ? `${format(credited)} clicks credited by the draw` : 'no draw declared, no click credited') + `; laid ${format(r.laid)}, elsewhere ${format(r.elsewhere)}` + (r.floored ? '; a region floored at 0' : '');
   byId('watch').innerHTML = readingTable();
 }
 function readingTable() {

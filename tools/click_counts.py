@@ -221,7 +221,6 @@ def reading(world: Path, output: Path, expectation: Path) -> dict[str, object]:
         "elsewhere": int(expected["laid"]) - quanta if "laid" in expected else None,
         "rounded_shares": read_row(rounded, expected, world),
         "clicks": read_row(clicks, expected, world) if clicks is not None else None,
-        "seed": expected.get("seed"),
         "blind": {
             "counts": expected["counts"],
             "maxima": [int(at) for at in expected.get("maxima", [])],

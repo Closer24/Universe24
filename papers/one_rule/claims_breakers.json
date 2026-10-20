@@ -822,8 +822,8 @@
   },
   "S.55": {
     "kind": "a",
-    "breaker": "click_algebra.py's assertions: the beat's factor omega_0 / tan omega_0 and the energy's omega_0 cos^2 omega_0 / sin omega_0 differ at [2, 3] (0.752 against 0.501) and agree as the gap closes; the twist delta k_a = sign(k_a) (|k_a| div M) equal and opposite at +k_a and -k_a and at the boundary |k_a| = M (the hands' text, #2019 and #2020)",
-    "state": "to write",
+    "breaker": "click_algebra.py's assertions: the beat's factor omega_0 / tan omega_0 and the energy's omega_0 cos^2 omega_0 / sin omega_0 differ at [2, 3] (0.752 against 0.501) and agree as the gap closes; the twist delta k_a = sign(k_a) (|k_a| div M) equal and opposite at +k_a and -k_a and at the boundary |k_a| = M (the hands' text, #2019 and #2020); 2026-10-20: the twist left the engine on the branch engine-clean, the fold's formula no longer in it, this clause history and S.55 standing at the tag v1.1.0 as printed",
+    "state": "no breaker",
     "derivation": "the click's algebra beyond the law, Section 2.5.2"
   }
 }
