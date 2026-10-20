@@ -14,8 +14,6 @@ sys.path.insert(
 )  # the folder's root, rule3.py, beside this module
 import rule3  # noqa: E402
 
-COMPUTED_PAIR = (2, 3)  # the rule's own matter pair, the paper's computed pair
-SMALL_GAP_PAIR = (999, 1000)  # the paper's small-gap illustration (Fig. 3)
 LIGHT_SPEED_SQUARED = 1 / 3  # c^2 = 1 / 3 (The lattice constants; rule3.group_velocity as k -> 0)
 ELECTRON_MASS_MEV = 0.511  # nature's electron rest energy
 LHAASO_PHOTON_PEV = (

@@ -30,7 +30,7 @@ WHOLE_KEYS = (
 
 @dataclass(frozen=True)
 class PacketRow:
-    """A laid record as declared, a packet of a family of quanta and no body (or a kick on a holder of the content, laid on the row's rest): its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its phase as a fraction of the turn [r, s] ((0, 1) without the key), its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet), and the weight of the laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
+    """A laid record as declared, a packet of a family of quanta and no body (or a kick on a holder of the content, laid on the row's rest): its family, the axis it travels along, its wave number as a fraction of pi per Link [p, q] (p below 0: the packet travels toward the axis's lower side), its amplitude (the level at the envelope's top), per axis the Nodes [first, last] of its flat top and the half-width of the raised cosine beyond them, its wave number per axis across the beam as a fraction of pi per Link ((0, 1) where none; `transverse`), its two level pairs from the mode file, each the nonzero Nodes' flat x-major indexes with their levels (the second pair 0, a real packet), and the weight of the laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     along: int
@@ -38,7 +38,6 @@ class PacketRow:
     amplitude: int
     top: tuple[tuple[int, int], tuple[int, int], tuple[int, int]]
     edge: tuple[int, int, int]
-    phase: tuple[int, int]
     transverse: tuple[tuple[int, int], tuple[int, int], tuple[int, int]]
     now: Levels
     before: Levels
@@ -147,7 +146,7 @@ def packets_of(
         if not isinstance(phase, list) or len(phase) != 2:
             raise ValueError(f"{label}.phase must be [r, s], the phase 2 pi r / s")
         whole_turn = integer(phase[1], f"{label}.phase's s", 1)
-        fraction = integer(phase[0], f"{label}.phase's r", 0, whole_turn - 1)
+        integer(phase[0], f"{label}.phase's r", 0, whole_turn - 1)
         crossing = tuple(name for name in AXES if name != packet["along"])
         sideways = keyed(packet.get("transverse", {}), f"{label}.transverse", crossing, ())
         across = []
@@ -182,7 +181,6 @@ def packets_of(
                 integer(packet["amplitude"], f"{label}.amplitude", 1, bound),
                 (spans[0], spans[1], spans[2]),
                 (widths[0], widths[1], widths[2]),
-                (fraction, whole_turn),
                 (across[0], across[1], across[2]),
                 *levels,
                 weights_of(

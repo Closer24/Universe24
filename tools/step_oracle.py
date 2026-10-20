@@ -12,13 +12,14 @@ import copy
 import hashlib
 import importlib.util
 import json
+import re
 from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
-from event_universe import credit, emission, flux, front, growth, meeting, node
+from event_universe import credit, emission, flux, front, growth, meeting, meeting_back, node
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
@@ -238,8 +239,28 @@ def first_difference(a: Lattice, b: Lattice) -> str | None:
     return None
 
 
+LINE_LABEL = re.compile(
+    r"^(?P<family>[^.\[]+)\[(?P<line>\d+)\]\.(?P<key>now|before)$"
+)  # a record line's levels
+
+
+def written_lay(board: Lattice, label: str, laid: np.ndarray) -> np.ndarray:
+    """The lay's array as the click's write at the birth left it (ALGEBRA.md, The click is the meeting of the future with the past: the lay is not taken back, the written birth stands): a record line's two levels times the cumulative coefficient written on its part (`credit.Books.written`, `meeting_back.parts_of`), the remainders, the write remainders, the phase lines and every unwritten family the lay's own."""
+    found = LINE_LABEL.match(label)
+    if found is None:
+        return laid
+    index = [family.name for family in board.families].index(found["family"])
+    written = board.credit.written.get(index)
+    if written is None:
+        return laid
+    part = meeting_back.parts_of(board.families[index], len(board.states[index].lines))[
+        int(found["line"])
+    ]
+    return np.asarray(laid * written[part])
+
+
 def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
-    """The oracle against the engine on a loaded board: two boards from the one load, `intervals` forward (fewer where the run ends or the world has fewer) compared at every interval, then the engine's board back with the record to the lay."""
+    """The oracle against the engine on a loaded board: two boards from the one load, `intervals` forward (fewer where the run ends or the world has fewer) compared at every interval, then the engine's board back with the record to the lay. Where a click wrote at the record's birth (the one meeting, 2026-10-20: the sides' draws run the record back to its birth and write the realised port's coefficients there), the frames the forward run recorded before the last click's close are the possibilities' run and the inverse from after the click returns the realised past (ALGEBRA.md, The click is the meeting of the future with the past), so the step back is held to the recorded frames at and after the last such click's close alone (a one-part record's click writes no birth and its world keeps the full comparison), and the lay is held recovered up to the write: each record line's two levels times the cumulative coefficient written on its part (`written_lay`), the remainders and every other array the lay's own; a world without a click is held at every frame and the lay itself, as before."""
     oracle, engine = board, copy.deepcopy(board)
     lines_oracle: list[dict[str, object]] = []
     lines_engine: list[dict[str, object]] = []
@@ -266,22 +287,31 @@ def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
             return {"verdict": "DIFFERS", "interval": engine.interval, "what": difference}
         if lines_oracle != lines_engine:
             return {"verdict": "DIFFERS", "interval": engine.interval, "what": "the output lines differ"}
+    clicks = [
+        int(str(line["interval"]))
+        for line in lines_engine
+        if line["event"] == "credit" and line.get("order") is not None
+    ]  # a click that wrote at the birth: a record of several parts' credit line carries `order`
+    realised_from = max(
+        clicks, default=0
+    )  # below the last click's close the inverse returns the realised past
     BACK.faces_from(engine, lines_engine)
     for _ in range(run):
         BACK.crossed(engine, lines_engine)
         engine.step_inverse()
-        if digest(engine) != digests[engine.interval]:
+        if engine.interval >= realised_from and digest(engine) != digests[engine.interval]:
             return {
                 "verdict": "DIFFERS",
                 "interval": engine.interval,
                 "what": "the step back misses the forward state",
             }
     for (label, was), (_label, now) in zip(lay, arrays(engine), strict=True):
-        if was.shape != now.shape or not np.array_equal(was, now):
+        if was.shape != now.shape or not np.array_equal(written_lay(engine, label, was), now):
             return {
                 "verdict": "DIFFERS",
                 "interval": engine.interval,
-                "what": f"the lay is not recovered on {label}",
+                "what": f"the lay is not recovered on {label}"
+                + (" up to the click's write" if clicks else ""),
             }
     return {
         "verdict": "EQUAL",

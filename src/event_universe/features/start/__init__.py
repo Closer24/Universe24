@@ -29,12 +29,11 @@ class RestCollapses(ValueError):
 
 @dataclass(frozen=True)
 class FieldAtRest:
-    """The held levels at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the iterations to the repeat, the level's remainder at the half wall and the row's own content the paces were read at."""
+    """The held levels at rest: the levels (the nearest integers), the fine levels at the unit, the unit, the level's remainder at the half wall and the row's own content the paces were read at."""
 
     levels: np.ndarray
     fine: np.ndarray
     unit: int
-    iterations: int
     remainder: int
     content: np.ndarray  # the row's own level its paces were read at: the levels where the rest settled, one off at a rounding tie
 
@@ -276,7 +275,7 @@ def rest(
         if returned([rounded], [own], seen, f"the rest of the pair {list(pair)}"):
             break
         own = rounded
-    return FieldAtRest(rounded, fine, unit, iterations, int(division(1, 2, wall)), own)
+    return FieldAtRest(rounded, fine, unit, int(division(1, 2, wall)), own)
 
 
 def read_content(

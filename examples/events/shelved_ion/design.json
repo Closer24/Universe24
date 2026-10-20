@@ -105,19 +105,16 @@
    {
     "part": 0,
     "name": "S",
-    "role": "ground",
     "count_at_interval_0": 1
    },
    {
     "part": 1,
     "name": "P",
-    "role": "excited, fed by the strong drive, gives to the fluorescence at 1 / tau_P",
     "count_at_interval_0": 0
    },
    {
     "part": 2,
     "name": "D",
-    "role": "metastable shelf, fed by the weak drive, gives to the weak drive's row at 1 / tau_D",
     "count_at_interval_0": 0
    }
   ],

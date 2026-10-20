@@ -356,15 +356,15 @@ def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:
     return 2 * levels * board.credit.units[index] / share + 1
 
 
-def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monkeypatch):
-    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over 20 seeds of the draw, the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` carries nothing but Part G's "recoil lost to the lay" on every pair line (the pair is the file's lay), nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
+def back_to_back_pairs(seeds: range) -> None:
+    """Part F2, Task 3 (both hands' lines of 2026-10-09: the tolerance 1 in src was a declared number; the pieces' p are booked as integers and the test judges): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) over the `seeds` of the draw (the twenty seeds in two test functions of ten, each under the suite's clock with the click's run back along the cone at every side), the board stepped once to 99 and copied per seed with the generator at the seed for the window's close at 100: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand); `lost` carries nothing but Part G's "recoil lost to the lay" on every pair line (the pair is the file's lay), nothing booked under a tolerance; the realised port combinations over the seeds printed with the pieces' sums (the J statistics of the draw, left to the seed)."""
     world_files.REPOSITORY_ROOT = EVENTS.parents[1]
     board = Lattice(load_world(EVENTS / "bell" / "bell_a_b.json"), [].append)
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     for _ in range(99):
         board.step()
     sums, realised, lost, size, floors = [], [], [], 0, []
-    for seed in range(20):
+    for seed in seeds:
         twin = copy.deepcopy(board)
         twin.output, twin.credit.state = (lines := []).append, seed + 1
         twin.step()
@@ -388,11 +388,21 @@ def test_the_pairs_two_pieces_are_back_to_back_over_twenty_seeds(tmp_path, monke
     largest = max(abs(s[0]) for s in sums)
     counted = {key: realised.count(key) for key in sorted(set(realised))}
     print(
-        f"Part F2 (Task 3): Bell a b over 20 seeds, the pieces' p_x sums {sorted({s[0] for s in sums})} "
+        f"Part F2 (Task 3): Bell a b over the seeds {seeds[0]} to {seeds[-1]}, the pieces' p_x sums {sorted({s[0] for s in sums})} "
         f"against |p_x| = {size}, the largest |sum| {largest} ({largest / size:.2e}) under the lays' floor {min(floors):.0f}; "
-        f"the realised ports {counted}; `lost` booked {len(lost)} times of 40 pair lines"
+        f"the realised ports {counted}; `lost` booked {len(lost)} times of {2 * len(seeds)} pair lines"
     )
     assert all(s[1:] == [0, 0] for s in sums) and largest <= min(floors) and lost == []
+
+
+def test_the_pairs_two_pieces_are_back_to_back_over_the_first_ten_seeds():
+    """Part F2, Task 3, the seeds 0 to 9 (`back_to_back_pairs`)."""
+    back_to_back_pairs(range(10))
+
+
+def test_the_pairs_two_pieces_are_back_to_back_over_the_second_ten_seeds():
+    """Part F2, Task 3, the seeds 10 to 19 (`back_to_back_pairs`)."""
+    back_to_back_pairs(range(10, 20))
 
 
 def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path, monkeypatch):

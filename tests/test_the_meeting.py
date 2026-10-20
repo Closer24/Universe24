@@ -1,4 +1,4 @@
-"""The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the NodeDetector's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts through the root across the sides (tools/bell_gate.py): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results. The click written on the lattice (src/event_universe/credit.py, features/click): the NodeDetector's draw inside the run and its write at one Node, the board exact between clicks."""
+"""The meeting's gates (ALGEBRA.md #the-click-is-the-meeting, the pair's form and the GHZ gate; HIGHLIGHTS.md, One experiment and one gate): a record of several parts laid as one event and never summed at a Node, the NodeDetector's read of the parts' signed level sums (the parts line) and the joint-share reader pairing the parts across the sides (tools/bell_gate.py, the gate's arithmetic beside the engine's sides' draws): the exact algebra at Bell's four settings and at the GHZ patterns, the local credits as the fence, the determinism of equal parts, and the two gates' four worlds each (examples/events/bell, examples/events/ghz) end to end with the back-in-time gate MATCH; Bell and the GHZ are gates and never results. The click written on the lattice (src/event_universe/credit.py, features/click): the NodeDetector's draw inside the run and its write at one Node, the board exact between clicks."""
 
 import json
 import math
@@ -22,11 +22,9 @@ from event_universe.loader.node_detector_declaration import Transition, node_det
 from event_universe.loader.universe import shape_of, universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, RUN, TOOL, TOP, click_key, load_file, pulsed_world, refused
+from tests import laws
+from tests.laws import BACK, EVENTS, GATE, ROOT, TOOL, click_key, load_file, pulsed_world, refused
 
-TOP_PAIR = (TOP[0], TOP[1])  # the band's top as a resonance, cos Omega = 0
-
-GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")
 BELL, GHZ = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("bell", "ghz"))
 PAIR = ((1, 0), (0, 1))  # the pair's pattern: the + port reads (p, q), the - port (-q, p)
 A, A2, B, B2 = ((1, 0), (1, 1), (12, 5), (5, 12))  # the CHSH settings as the declared bases (p, q)
@@ -48,28 +46,7 @@ def credits(sides, order, patterns, form=GATE.joint):  # type: ignore[no-untyped
     return shares, [GATE.correlation(found) for found in shares]
 
 
-def gate_worlds(build, folder):  # type: ignore[no-untyped-def]
-    build.main(["--design", str(build.HERE / "design.json"), "--folder", str(folder)])
-    expected = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
-    for name in expected["runs"].values():
-        TOOL.main(["--input", str(folder / f"{name}.json")])
-        assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
-        lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
-        parts = [line for line in lines if line["event"] == "parts"]
-        equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
-        credits = [line for line in lines if line["event"] == "credit"]
-        assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
-        board = Lattice(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
-    outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
-    read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
-    assert read[name] == expected["blind"][name]
-    assert read["correlation"] == expected["blind"]["correlation"]
-    assert read["marginals"] == expected["blind"]["marginals"]
-    return read, expected
-
-
-def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_it_exactly(tmp_path):
+def test_the_one_meeting_reads_the_blind_at_the_sides_and_the_engine_implements_it_exactly(tmp_path):
     """(i) Equal parts on both sides over a window whose middle interval reports 0 (no 0 / 0 under the window rule): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at the four settings, S = 478 / 169 exactly and the marginal 1 / 2 whatever the partner's setting; the local credits on the same reports: by the parts' shares S = 238 / 169 (E = cos 2a cos 2b), by the local sums 240 / 169 (sin 2a sin 2b), by the sign 2 (the tie at (1, 0) reads 0, read with the worlds). (ii) What a formula reader fails: the parts (20, 19) against (1, 1), r = 19 / 20, give S = 363518 / 128609 (2.8265), the marginal 66625 / 128609 (0.518) at (12, 5) for both partner settings and rho = 760 / 761; parts (1, 0) give S = 238 / 169 (rho = 0); a setting of one coefficient and a pattern whose ports are not orthogonal are refused by name. (iii) The four worlds of examples/events/bell/design.json built with their mode files (the pair family at the dimension [2, 1]; the regions' bases the settings, their pattern the pair's) and run: the parts equal at every interval, the reader gives E = 119 / 169, -119 / 169, 120 / 169, 120 / 169, S = 478 / 169 and the marginals 1 / 2 exactly, the local credits 238 / 169, 240 / 169 and 2, the ratio and rho 1 and one pair drawn per world, the blind file carrying the same S before the run; a part raised one level at one Node is not equal after the run and reads the ratio off 1; the loader refuses by name a dimension shape of three numbers and a basis of zeros; the back-in-time gate says MATCH on each world over its run."""
     a, b, equal = side((7, -3), (7, -3)), side((5, 11), (5, 11)), side((1, 1), (1, 1))
     a[2] = b[2] = [[0, 0], [0, 0]]
@@ -87,7 +64,7 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     rho_zero = credits([side((1, 1), (0, 0)), b], ORDER, (PAIR, PAIR))[1]
     assert GATE.combination(rho_zero, CHSH) == FENCE[GATE.parts_shares]
     refused("setting", GATE.ports_of, (1,), PAIR), refused("orthogonal", GATE.ports_of, A, ((1, 1),))
-    read, expected = gate_worlds(BELL, tmp_path)
+    read, expected = laws.gate_worlds(BELL, tmp_path)
     assert [Fraction(*read["correlation"][k]) for k in expected["order"]] == MEETING
     assert (read["S_by_the_parts_shares"], read["S_by_the_local_sums"]) == ([238, 169], [240, 169])
     assert read["S_by_the_sign"] == [2, 1] == expected["blind"]["by_the_sign"]["S"]
@@ -105,8 +82,8 @@ def test_the_meeting_is_the_pairing_through_the_root_and_the_engine_implements_i
     refused("not all 0", basis_of, [0, 0], "node_detectors[0].basis")
 
 
-def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(tmp_path):
-    """(i) Equal parts on three sides read with the GHZ patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p): the eight shares are cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, so at (x, y, y), (y, x, y) and (y, y, x) the even shares 0 and the odd 1 / 4 with E_3 = -1, at (x, x, x) the even 1 / 4 and the odd 0 with E_3 = 1, at ((12, 5), x, x) the even 36 / 169 and E_3 = 119 / 169; every single-side and every pairwise E 0 (the marginals 1 / 2); M = -4 (|M| = 4 beside local realism's 2); the three local credits give M = -1 each; the loader refuses by name a pattern of [0, 0], a pattern without a basis, a pattern of the wrong length against the records the world lays and a pattern in a world laying no record of several parts. (ii) The four worlds of examples/events/ghz/design.json (the GHZ family at the dimension [4, 1] on a square board, three beams to three regions) built with the blind, laid and run: the parts equal, the eight shares, E_3, the marginals, the pairwise E and M = -4 from the engine's reports the blind's exactly, the local credits -1, the ratios 1, one triple drawn per world, MATCH on each world over its run."""
+def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
+    """(i) Equal parts on three sides read with the GHZ patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p): the eight shares are cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, so at (x, y, y), (y, x, y) and (y, y, x) the even shares 0 and the odd 1 / 4 with E_3 = -1, at (x, x, x) the even 1 / 4 and the odd 0 with E_3 = 1, at ((12, 5), x, x) the even 36 / 169 and E_3 = 119 / 169; every single-side and every pairwise E 0 (the marginals 1 / 2); M = -4 (|M| = 4 beside local realism's 2); the three local credits give M = -1 each; the loader refuses by name a pattern of [0, 0], a pattern without a basis, a pattern of the wrong length against the records the world lays and a pattern in a world laying no record of several parts. (ii) The four worlds of examples/events/ghz/design.json (the GHZ family at the dimension [4, 1] on a square board, three beams to three regions) are built with the blind, laid and run two at a time in the next test."""
     three = [side((3, 1), (3, 1), (3, 1), (3, 1))] * 3
     shares, found = credits(three, *MERMIN[:1], PATTERNS)
     for joint, settings in zip(shares, MERMIN[0], strict=True):
@@ -125,18 +102,38 @@ def test_the_ghz_gate_pairs_four_parts_through_the_root_on_three_sides_exactly(t
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
-    read, expected = gate_worlds(GHZ, tmp_path)
-    assert read["M"] == [-4, 1] and list(read["correlation"].values()) == [[-1, 1]] * 3 + [[1, 1]]
-    ms = ("M_by_the_parts_shares", "M_by_the_local_sums", "M_by_the_sign")
-    assert all(read[c] == [-1, 1] for c in ms)
-    worlds = [read["worlds"][name] for name in expected["runs"].values()]
-    assert [w["shares"] for w in worlds] == list(expected["blind"]["shares"].values())
-    assert all(len(w["drawn"]) == 3 and w["mismatch"]["ratios"] == [[1, 1]] * 3 for w in worlds)
-    assert all(w["sub_correlations"] == dict.fromkeys(("a b", "a c", "b c"), [0, 1]) for w in worlds)
+
+
+def ghz_gates_read(keys, tmp_path):  # type: ignore[no-untyped-def]
+    (read, expected), f = laws.gate_worlds(GHZ, tmp_path, keys), GATE.fraction
+    b, order, signs = expected["blind"], expected["order"], expected["combination"]["signs"]
+    local = ("by_the_parts_shares", "by_the_local_sums", "by_the_sign")  # the three local credits
+    for key, w in read.items():
+        assert w["shares"] == b["shares"][key] and w["marginals"] == b["marginals"][key]
+        assert (
+            f(w["correlation"]) == f(b["correlation"][key]) and w["mismatch"]["ratios"] == [[1, 1]] * 3
+        )
+        assert w["sub_correlations"] == b["sub_correlations"][key] and len(w["drawn"]) == 3
+        assert all(f(w[c]) == f(b[c]["correlation"][key]) for c in local)
+    assert all(v == dict.fromkeys(("a b", "a c", "b c"), [0, 1]) for v in b["sub_correlations"].values())
+    assert list(b["correlation"].values()) == [[-1, 1]] * 3 + [[1, 1]] and b["M"] == [-4, 1]
+    assert GATE.combination((f(b["correlation"][k]) for k in order), signs) == -4
+    found = [GATE.combination((f(b[c]["correlation"][k]) for k in order), signs) for c in local]
+    assert found == [-1] * 3 == [f(b[c]["M"]) for c in local]
+
+
+def test_the_ghz_gates_first_pair_x_y_y_and_y_x_y_reads_the_blind_exactly(tmp_path):
+    """(ii) The GHZ folder built from its design and its first pair of worlds run, x y y and y x y (the clock gives each pair its own test; `laws.gate_worlds`): every world LAWFUL, its parts lines equal across the parts, its credit lines at the window's close, the back-in-time gate MATCH over 4 intervals; each world's eight shares, E_3, marginals, sub-correlations and the three local credits' correlations the blind's, one triple drawn per world, its mismatch ratios [1, 1] on every side; and the blind's four E_3 (-1 at x y y, y x y, y y x and +1 at x x x) combine to M = -4 by the gate's signs, |M| = 4 beside local realism's 2, where each local credit's combine to -1 (`ghz_gates_read`)."""
+    ghz_gates_read(("x y y", "y x y"), tmp_path)
+
+
+def test_the_ghz_gates_second_pair_y_y_x_and_x_x_x_reads_the_blind_exactly(tmp_path):
+    """(ii) The second pair of the GHZ folder's worlds, y y x and x x x, run and read as the first (`ghz_gates_read`): with the first pair every world of the folder is run, none dropped."""
+    ghz_gates_read(("y y x", "x x x"), tmp_path)
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 39 and 79 at the declared rest 60) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes alone (the one-Node test), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between clicks: from 100 back to 80 every array returns bit for bit, the step back across the click misses, and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 40 intervals, the reports the same lines with no credit line among them; the `draw` key refused by name with a window of 0 and without its seed."""
+    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) One credit line per side at 40 and at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 39 and 79 at the declared rest 60) and the index of the window closed, the region, the port realised, the parts kept and the count 1, the record's count down by one per window, no Node (the hole's Nodes in the face lines); at 40 the two boards differ at the two written Nodes (the holes, the one-Node write of the count) and along the record the write at the birth rewrote, the part the first side zeroed standing at 0 everywhere and the held rows it sources moved with it (the click writes, the owner's word of 2026-10-20; the second side's write on the one surviving part the identity), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact between and across the clicks down to the first: from 100 back to 40 every array returns bit for bit (the holes crossed from the face lines, the second window's write the identity); below 40 the inverse returns the realised past, which differs from the frames the forward run kept before the first close, the possibilities' run (the step back across the first click misses, as the law says); and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 40 intervals, the reports the same lines but the click's (the credit lines and the write's lay lines at the birth); the `draw` key refused by name with a window of 0 and without its seed."""
     world = json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8"))
     world["draw"]["window"], draw = 40, dict(world["draw"])
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
@@ -158,31 +155,34 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     proper = [(n * clock // board.world.node_clock, w) for n, w in ((40, 1), (40, 1), (80, 2), (80, 2))]
     assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 39, 79 at 60
     keys = "event label interval family node_detector window proper windows before realised kept"
-    report = set(
-        f"{keys} count left absorbed emitted momentum fan twist shortfall lost source recoil".split()
-    )  # Part F's four, C3's shortfall, Part G's two
+    words = f"{keys} count left absorbed emitted momentum fan twist shortfall lost source recoil"
+    report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
     assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
     holes = [f for f in lines if f["event"] == "face" and f["interval"] == 41]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
-    assert {tuple(map(int, at)) for k in was for at in np.argwhere(was[k] != now[k])} == written
+    differing = {
+        tuple(map(int, a)) for k in was for a in np.argwhere(was[k] != now[k])
+    }  # the holes, the write
+    assert written <= differing and any(not was[f"light_pair.lines[{k}].now"].any() for k in range(2))
     w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
     assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 41
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
     assert all(dict(p for f in kept[42] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 42
-    for _ in range(99):  # the faces presented again and the lays crossed from their lines
-        (
-            BACK.crossed(board, lines),
-            board.step_inverse(),
-        )  # lines: the inverse crosses the clicks bit for bit
-        assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
+    for _ in range(99):  # the faces presented again and the lays crossed from their lines, bit for bit
+        BACK.crossed(board, lines)
+        board.step_inverse()
+        same = BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
+        assert same == (
+            board.interval >= 40
+        )  # below the first click the realised past, the possibilities' kept
     assert BACK.verdict(Lattice(load_world(twin)), 39)["verdict"] == "MATCH"
     empty = Lattice(load_world(cut), (none := []).append)
     empty.credit.counts[pair] = 0
     for _ in range(40):
         empty.step()
-    before = [line for line in lines if line["interval"] <= 40 and line["event"] != "credit"]
-    assert none == before and empty.credit.state == draw["seed"]  # no credit line, no draw consumed
+    before = [c for c in lines if c["interval"] <= 40 and c["event"] not in ("credit", "lay")]
+    assert none == before and empty.credit.state == draw["seed"]  # no click's line, no draw consumed
     refused("window", draw_of, {**draw, "window": 0}, "draw")
     refused("lacks", draw_of, {"window": 1}, "draw")
 
@@ -228,11 +228,8 @@ def test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate(tmp_pat
     )
     assert all(levels(n, at) == [(0, 0)] * 3 for at in region) and board.credit.bodies[0].counts == [0]
     assert levels(p, drawn) == [(73, 0), (0, -73)] * 3 and levels(e, drawn) == [(128, 0), (0, 128)]
-    assert levels(nu, drawn) == [(128, 128)] and [board.credit.counts[k] for k in (p, e, nu)] == [
-        1,
-        1,
-        1,
-    ]
+    assert levels(nu, drawn) == [(128, 128)]
+    assert [board.credit.counts[k] for k in (p, e, nu)] == [1, 1, 1]
     assert all(
         levels(k, other)[0] == (0, 0) for k in (p, e, nu)
     )  # the other Node of the region untouched
@@ -315,7 +312,7 @@ def test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_wr
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window():
-    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the emission's one recurrence (emission.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the NodeDetector's act; (vi) the window's turn is applied as one hop by the phase line's pair at the window's angle with the carried division (`resonance.window_pair`, `resonance.hopped`, Part C), so the labels' angle at the Zeno world's n = 1 is 9,408 / 6,000 = 1.568 to the angle's rounding, where the first build's 48 sub-turns gave 1.5680 and the one shear 1.330 (tests/test_part_c2_window.py)."""
+    """The resonant two-mode act (ALGEBRA.md #what-is-open, item 50, the two-quadrature form; the mathematician's 223 (c) and 224 (2)(c), #1572 comments 5965727937 and 5966081562, the advisor's seconds, 5965918924 and 5966129376, two hands; src/event_universe/resonance.py and `meeting.turned_labels`): (i) the scale R is derived from the width's room, the file's amplitude bound and the record's window, the largest power of two with 2 (R A W)^2 inside the room, 2^12 at A = 9,266 and W = 48, 2^11 at W = 96 and 2^14 at W = 12, nothing declared; (ii) the two reference records advance by the emission's one recurrence (emission.advanced, through `gathered` at the level 0) and stay within 7 levels of R cos(Omega t) and R sin(Omega t) over 100 intervals at [2, 3]; (iii) a resonant arrival A cos(Omega t + phi) at A = 1,000 over W = 48 turns by A W / 2 within 2 percent at the phases 0, 0.7, pi / 2 and 2.5 (the hands' 23,724 to 24,289 against 24,000), where the magnitude form accumulated (2 / pi) A W at every frequency; (iv) the arrival at [1, 3]'s frequency against the pair [2, 3] turns by less than 2 percent of the resonant turn at W = 48 (sinc(delta W / 2) = 0.007 with the counter-rotating residue) and by sinc within 0.02 at W = 12 (0.30 against 0.31); (v) on the shipped Zeno world zeno_4 (the window 12) the labels stand at their start through the window's first eleven intervals while the two sums gather, and at the twelfth the sums are read once and begin again with the window: the root once per window, the NodeDetector's act; (vi) the window's turn is applied as one hop by the phase line's pair at the window's angle with the carried division (`resonance.window_pair`, `resonance.hopped`, Part C), so the labels' angle at the Zeno world's n = 1 is 9,408 / 6,000 = 1.568 to the angle's rounding (tests/test_part_c2_window.py)."""
     omega, detuned, bound, room = math.acos(2 / 3), math.acos(1 / 3), 6949, 2**63 - 1
     assert [resonance.scale_of(room, bound, w) for w in (48, 96, 12)] == [2**12, 2**11, 2**14]
     scale, transitions = resonance.scale_of(room, bound, 48), (Transition(0, 1, 1, 1, (2, 3)),)

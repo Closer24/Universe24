@@ -96,7 +96,7 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
         divisor = 6 * (den - num) * clock**2 + 6 * num * pace**2
         left = divisor * fine - num * pace**2 * sum(arrivals(fine, faces)) - side
         assert (np.abs(left) < 2 * divisor).all(), (num, den, faces)  # a fine unit off the line at most
-        assert (found.levels == (fine + found.unit // 2) // found.unit).all() and found.iterations > 1
+        assert (found.levels == (fine + found.unit // 2) // found.unit).all()
         assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
         assert (found.levels < 0).any() != (counts >= 0).all()  # only negative sources sink below 0
         assert found.remainder == 3 * den // 2

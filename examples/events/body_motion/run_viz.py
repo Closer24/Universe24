@@ -47,7 +47,6 @@ w0 = json.loads((REPO / "examples/events/matter_alone/pixel.json").read_text())
 m0 = json.loads((REPO / "examples/events/matter_alone/pixel.mode.json").read_text())
 e0 = m0["bodies"][0]
 now0 = np.array(e0["moving"]["now"], dtype=object).reshape(25, 25, 25)
-bef0 = np.array(e0["moving"]["before"], dtype=object).reshape(25, 25, 25)
 
 # the content and the reach over the body, from the engine's own start on the original board
 log("loading the original pixel for its content map")

@@ -10,8 +10,6 @@ from event_universe.core.ports import PORTS
 # the Link to that neighbour; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 
-NO_READ: tuple[int, ...] = (0,) * PORTS
-
 
 class Rule(NamedTuple):
     """Rule3's integers at a Node, the law's four names: the six reaches R_ij in Port order, the own weight S_i of the first form (2 w - D_i - SUM_j R_ij, named by the form's Node term and the click's face), the wall w and the mass D_i (`rule_integers`, `node.rule_of`)."""
@@ -134,15 +132,3 @@ def partial_rooms(
         links,
         arrivals + wall + abs(self_coefficient),
     )
-
-
-def rule_total_bound(
-    num: int, den: int, gamma: int, clock: int, pace: int, amplitude: int, unit: int = 1
-) -> int:
-    """The largest partial sum of Rule3's flux line at a Node of the paces (p_0, p_i) whose levels and arrivals stand within A, in the order the step adds them (`rule3`): w (2 a_now - a_before) at most 3 w A, the mass term D A, their difference A (|2 w - D| + w), the six Links' flux 2 A SUM |R_ij| (a Node at +A among neighbours at -A, the checkerboard at the bound) and the total A (|S| + w + SUM |R_ij|) + w - 1; inside 2^width - 1 or the world is refused (ENGINE.md, The amplitude bound: the engine's promise; the law itself carries no bound, ALGEBRA.md #the-direction). The last of the five is the total of the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integer."""
-    reaches, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
-    links = sum(abs(reach) for reach in reaches)
-    *partials, total = partial_rooms(
-        reaches, self_coefficient, wall, mass(num, den, clock, unit), links + links, links
-    )
-    return int(max(*(room * amplitude for room in partials), total * amplitude + wall - 1))

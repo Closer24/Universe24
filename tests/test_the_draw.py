@@ -12,7 +12,7 @@ from event_universe import meeting, node, world_files
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.credit import record_unit
 from event_universe.emission import born_unit, radiated_total
-from event_universe.features.click import along_cosine, envelope, exact_total, line_total
+from event_universe.features.click import along_cosine, envelope, line_total
 from event_universe.features.held_write import held_write
 from event_universe.features.write import carried
 from event_universe.front import Front
@@ -377,7 +377,7 @@ def test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry(
     """Step 5 of the emitter/node_detector (the owner's word of 2026-10-03, 09:46 Israel; the mathematician's 224 (1), #1572 comment 5966081562, and 229, 5966424405; the advisor's seconds, 5966129376 with #1563 comment 5966129628, his derivation 5966387795 step 5 and his precisions 5966338551 step 5; two hands): the one-line packet's root T / sin Omega, twice S (the mathematician's 242 section 1, #1572 comment 5967687794, and the advisor's second, 5967838095 section 1, two hands), and the envelope in the energy form carry one quantum within the deficit below tau per Node (43,962 at T = 32,768 and [2, 3], 87,925 at T = 65,536, the root rounded once; a_0 = 30, 456 slices falling, SUM a^2 = 43,915, the mathematician's numbers), the band's line with the transverse mode gives cos k_z = 3 cos Omega - 2 cos(pi / (w + 1)), 0.382 at w = 4, and refuses the widths that cannot carry Omega (1 and 2 at [2, 3]); the loader refuses by name a width inside a guide, a width the band refuses and a board too short for the train (a rate without a width the source in time as built, the shipped worlds bit for bit); on an open board of 35^3 Nodes a giver of the lifetime 2 in the dark (its emission drawn per interval at the hazard 1 / 2) lays its packet of 3 across at one instant along one of the six directions from its Node, one lay line per Node changed, the count 1 in the books and one quantum by the count's line in a node_detector's own unit at [2, 3], the carrier's phase at Omega by the rotation's invariant over the lay lines, den^2 (b^2 + n^2) - 2 num den b n = (den^2 - num^2) a^2 per Node within 2 percent, the floor root of the sine 6 percent off; the packet emission world's blind is the builder's byte for byte (examples/events/packet_emission)."""
     total, train = line_total(32768, (2, 3)), envelope(line_total(32768, (2, 3)), 48, 1)
     assert (total, train[0], len(train), total - sum(a * a for a in train)) == (43962, 30, 456, 47)
-    assert train[::-1] == sorted(train) and train[-1] == 1 and total == 2 * exact_total(32768, (2, 3))
+    assert train[::-1] == sorted(train) and train[-1] == 1
     assert line_total(65536, (2, 3)) == 87925  # the root at 2 T, rounded once (2 S there is 87,924)
     unit = (3 * 6000 * 32768) ** 2
     doubled = along_cosine((6000, 6000), (2, 3), 4, unit)

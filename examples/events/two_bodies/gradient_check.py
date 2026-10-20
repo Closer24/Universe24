@@ -37,7 +37,7 @@ def loaded(name):
     return np.asarray(content), axes, np.asarray(board.quanta(mi)[0], dtype=float), board
 
 
-c_pair, _axes, n_pair, _bp = loaded(PAIR)
+c_pair, _axes, _n_pair, _bp = loaded(PAIR)
 c_alone, _axes, n_alone, _ba = loaded(ALONE)
 c_pair = c_pair.astype(float)
 c_alone = c_alone.astype(float)

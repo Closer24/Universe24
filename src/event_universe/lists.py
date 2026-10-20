@@ -1,4 +1,4 @@
-"""The lists of the click from the declaration (ALGEBRA.md, The click writes on the lattice, the table of the one act's lists: the five rows with the probe's close and the record of several parts beside them; the owner's word: every kind of click a declaration and one generic act): one table, one row per kind, each row the alternatives of one draw (`act.Alternative`: the weight, the list built where it is drawn, the click's line), read from the declaration and the books, and the kinds named here and nowhere else. The region NodeDetectors' credit (`region`: the window's whole quanta in the record's own unit, (SUM s + W_rec G^2 div 2) div W_rec G^2 capped by the count, each drawn to a region by the shares and to the boundary Node it entered through by the inflows per Node, the record at -1 there, one credit line per quantum with the piece's source drawn and named, `credited_node`; a record of several parts one combination of the sides' ports drawn through the root by the joint shares, the record at -1 at one Node per side; the window's quanta one list, so that the record's front begins from every Node of the window where its count reaches 0); the absorption (`absorption`: per arriving family one draw over the closing records' transitions reading it, each at its own transfer share brought to one denominator, the norms' least common multiple, and the rest of the record's unabsorbed share as nothing, booked where it is drawn, `credit.Books.unabsorbed_in`; the list `exchange`: the drive at -1 at the hole's Node where the transition climbs and +1, given back, where it descends, the part entered +1 in the leaving part's direction turned by the arrival and carrying the piece's momentum, the part left -1); the emission (`emission`: one alternative per direction the board holds at the hazard's weight, span x p_0 x unit div Gamma, and nothing at the lifetime's rest, `hazard_weights`; the list the part left -1, the lower +1, light +1 at the Node drawn by the record's share, as a source in time or a packet along the direction, the two parts' directions read before the lay for the born phase); the probe's close (`probe`: the transitions out of the part whose drive's count stands, each at its transfer share, the probe's own re-laying the body whole in its part, and the null window as the rest); the null window (`null_window`: the part at 0 at its Nodes, one alternative, no draw); the conversion (`conversion`: the record whole at -1 at its Nodes and each family out at +1 at the Node drawn by the record's share, by the count at its massless pair with the table's sense, at the weights [the window, the rate's rest]). A row draws the place inside the list it builds, with the reader's own generator, after the click's draw and before its write; the act writes and lines (`act.click`)."""
+"""The lists of the click from the declaration (ALGEBRA.md, The click writes on the lattice, the table of the one act's lists: the five rows with the probe's close and the record of several parts beside them; the owner's word: every kind of click a declaration and one generic act): one table, one row per kind, each row the alternatives of one draw (`act.Alternative`: the weight, the list built where it is drawn, the click's line), read from the declaration and the books, and the kinds named here and nowhere else. The region NodeDetectors' credit (`region`: the window's whole quanta in the record's own unit, (SUM s + W_rec G^2 div 2) div W_rec G^2 capped by the count, each drawn to a region by the shares and to the boundary Node it entered through by the inflows per Node, the record at -1 there, one credit line per quantum with the piece's source drawn and named, `credited_node`; a record of several parts read at its sides in the order of their closes, each side's port drawn on its own second moments with the write at the record's birth (`readings`, `meeting_back`), the record at -1 at one Node per side once every side has drawn; the window's quanta one list, so that the record's front begins from every Node of the window where its count reaches 0); the absorption (`absorption`: per arriving family one draw over the closing records' transitions reading it, each at its own transfer share brought to one denominator, the norms' least common multiple, and the rest of the record's unabsorbed share as nothing, booked where it is drawn, `credit.Books.unabsorbed_in`; the list `exchange`: the drive at -1 at the hole's Node where the transition climbs and +1, given back, where it descends, the part entered +1 in the leaving part's direction turned by the arrival and carrying the piece's momentum, the part left -1); the emission (`emission`: one alternative per direction the board holds at the hazard's weight, span x p_0 x unit div Gamma, and nothing at the lifetime's rest, `hazard_weights`; the list the part left -1, the lower +1, light +1 at the Node drawn by the record's share, as a source in time or a packet along the direction, the two parts' directions read before the lay for the born phase); the probe's close (`probe`: the transitions out of the part whose drive's count stands, each at its transfer share, the probe's own re-laying the body whole in its part, and the null window as the rest); the null window (`null_window`: the part at 0 at its Nodes, one alternative, no draw); the conversion (`conversion`: the record whole at -1 at its Nodes and each family out at +1 at the Node drawn by the record's share, by the count at its massless pair with the table's sense, at the weights [the window, the rate's rest]). A row draws the place inside the list it builds, with the reader's own generator, after the click's draw and before its write; the act writes and lines (`act.click`)."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from dataclasses import replace
 from functools import partial
 from typing import TYPE_CHECKING
 
-from event_universe import credit, reports
+from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import count_wall
@@ -46,6 +46,14 @@ def full(books: NodeBooks, part: int) -> bool:
     capacities = books.declared.capacities
     capacity = capacities[part] if part < len(capacities) else None
     return capacity is not None and books.counts[part] >= capacity
+
+
+def exchange_factor(board: Lattice, books: NodeBooks, part: int) -> int:
+    """The factor a quantum's entry into `part` carries from the record's sign under exchange, the family's declaration and nothing per part (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19; the key `exchange`, `loader/universe.exchange_of`, `FamilyRule.exchange`): for an antisymmetric record the determinant of two quanta in one part is 0, so a populated part takes nothing, the exclusion derived from the sign and declared by no capacity; for a symmetric record the permanent, n + 1 at a part holding n quanta, the piling of like quanta; 1 for a family declaring no sign, the lists as they stand. Read beside `full` in the absorption, the emission and the probe, the same determinant the first side's coefficients carry for the antisymmetric family (`meeting_back.coefficients_of`, `credit.terms_of`); nothing at the Node."""
+    sign, held = board.families[books.index].exchange, books.counts[part]
+    if sign < 0:
+        return 0 if held >= 1 else 1
+    return held + 1 if sign > 0 else 1
 
 
 def exchange(
@@ -90,17 +98,20 @@ def credited_node(
     quantum: int,
     piece: list[int],
     fan: list[int],
+    order: int | None = None,
+    scale: int | None = None,
+    board_count: int | None = None,
 ) -> list[tuple[Node, tuple[int, ...]]]:
-    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's generator (Part G; one emitter, no draw), named and not folded, a region taker having no part of its own to twist (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `twist.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit, the record's passage through the region over the window (`node_detector.piece_momentum`, `credit.Books.passages`, C4) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered."""
-    nodes = list(book)
+    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's generator (Part G; one emitter, no draw), named and not folded, a region taker having no part of its own to twist (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `twist.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit, the record's passage through the region over the window (`node_detector.piece_momentum`, `credit.Books.passages`, C4) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered. For a side of a record of several parts (`order`, the side's order among the sides' draws, 1 the first side to N the last, `scale`, the record's scale after the side's write, and `board_count`, the record's count read from the board at the close; `readings`) the Node and the piece's source are drawn with the side's own state (`credit_draw` with the side) and the line carries the three (`reports.ORDER`, `reports.SCALE`, `reports.BOARD_COUNT`)."""
+    nodes, side = list(book), name if order is not None else None
     weights = drawn_weights(board, (sum(book[at]) for at in nodes))
     if sum(weights) <= 0:
         return []
-    at = nodes[credit_draw(board, weights)]
+    at = nodes[credit_draw(board, weights, side)]
     ports = face_ports(board, index, at, book[at])  # the face set, empty on the booked path
     books = board.credit
     left, window = books.counts[index] - quantum, books.window_of(board.interval)
-    source, recoil, reading = unpaid(board, index, partial(credit_draw, board))
+    source, recoil, reading = unpaid(board, index, partial(credit_draw, board, side=side))
     if board.output is not None:
         family, proper = board.families[index].name, books.clocks.get((index, name), [0, 0])[0]
         board.output(
@@ -125,42 +136,107 @@ def credited_node(
                 [reading, *([reports.NO_SIDE] if not ports else [])],
                 source,
                 recoil,
+                order,
+                scale,
+                board_count,
             )
         )
     return [(at, ports)]
 
 
+def readings(board: Lattice, index: int) -> list[Item]:
+    """The click of a record of several parts, the sides' sequence with the write at the birth (ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading: the sides draw in the order of their closes, equal closes in the declared order, each alone at its own place with its own state on its own region's read, the quadratic form of its coefficients on its own second moments with the Gram of the sides after it; The meeting's identity, the Gram theorem; the owner's words of 2026-10-20, the click writes and nothing is in the books but the draw at the click): at a window's close every side whose own moments stand and whose port is unrealised for this record (`credit.Books.taken`) draws in the declared order (`credit_draw` with the side's own state, `meeting_back.side_weights`, the weights kept in the books as a diagnostic, `credit.Books.weights`); its credit line carries its order, the record's scale after its write and the record's count read from the board at the close (`credited_node`, `Lattice.count`); the record runs back along its cone to its birth (`meeting_back.run_back`), the realised port's integer coefficients are written there (`meeting_back.realised`, the one lay act) and the record runs forward again to the close, the sides' books taken again from the rewritten record on the way (`meeting_back.run_forward`), so the next side reads the realised term where it stands; every click writes, the last side's read coherent (no side after it); a side whose beam has not reached it draws at a later close; when every side has drawn, one Item at -1 over the drawn Nodes with their face sets, the count's write and the front the act's as built (`act.written`, `front.started`), and the sequence settled (`credit.Books.taken`: the realised port per side stands until the family's next birth; the reader's ruling of 2026-10-20, precision one: a side already realised that clicks again at a later close in the same setting realises the same port with certainty and writes nothing, its credit line carrying the order of the new sequence, and a side whose realised port carries no overlap with the written factor, a changed setting, is refused by name); N runs for N sides, no number at a Node but Rule3's."""
+    books, family = board.credit, board.families[index]
+    close, fan = board.interval, list(fan_momentum(board, index))
+    taken = books.taken.setdefault(index, {})
+    for name, ports in books.sides:
+        moments, earlier = books.moments.get(index, {}).get(name), taken.get(name)
+        if moments is None or not any(map(any, moments)) or (earlier is not None and not earlier[2]):
+            continue  # its beam arriving after this close, or realised in the sequence standing: no second click
+        unrealised = [
+            books.patterns[other] for other, _p in books.sides if other != name and other not in taken
+        ]
+        first = not taken if earlier is None else next(iter(taken)) == name
+        coefficients = meeting_back.coefficients_of(family, ports, first)
+        weights = meeting_back.side_weights(
+            moments, coefficients, meeting_back.gram_of(unrealised, family.parts)
+        )
+        books.weights[(index, name)] = weights
+        if earlier is None:
+            if sum(weights) <= 0:
+                continue
+            port = credit_draw(board, weights, name)
+        elif weights[port := earlier[0]] <= 0:
+            raise RuntimeError(
+                f"the side {name!r} clicks again on the record of {family.name!r} with its realised port "
+                f"{reports.PORT_NAMES[port]!r} carrying no overlap with the written factor (the weight 0): a later "
+                "click of a side in a changed setting needs the overlaps with the written factor, which the parts "
+                "carry no more; one setting per side on a record (the reader's ruling of 2026-10-20)"
+            )
+        kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
+        piece = piece_momentum(board, index, books.passages.get((index, name), Passage()))
+        written = books.written.get(index, [1] * family.parts)  # the scale after the side's write
+        reduced = (
+            credit.reduced(board, index, coefficients[port]) if earlier is None else [1] * family.parts
+        )
+        scale = sum((w * c) ** 2 for w, c in zip(written, reduced, strict=True))
+        order = 1 + sum(
+            1 for entry in taken.values() if not entry[2]
+        )  # the sides clicked in this sequence
+        found = credited_node(
+            board,
+            index,
+            name,
+            books.intake.get((index, name), {}),
+            reports.PORT_NAMES[port],
+            kept,
+            1,
+            piece,
+            fan,
+            order,
+            scale,
+            board.count(index),
+        )
+        taken[name] = (port, found[0] if found else None, False)
+        if earlier is None:  # the side's first click on the record: the write at the birth
+            left = meeting_back.run_back(board, index)  # the close as the run back left it
+            meeting_back.realised(board, index, coefficients[port])
+            meeting_back.run_forward(board, index, close, left)
+    if len(taken) < len(books.sides) or any(entry[2] for entry in taken.values()):
+        return []
+    drawn = [entry[1] for entry in taken.values() if entry[1] is not None]
+    for name, entry in taken.items():
+        taken[name] = (
+            entry[0],
+            entry[1],
+            True,
+        )  # settled: the next window's clicks begin a new sequence
+    return [Item(index, None, None, -1, tuple(n for n, _p in drawn), ports=tuple(p for _n, p in drawn))]
+
+
 def region(board: Lattice, index: int) -> Alternative | None:
-    """The region NodeDetectors' credit of one family at the window's close, the credit's row (ALGEBRA.md #the-click-is-the-meeting; L759): one alternative, no draw of its own, its list built from the window's books: for a record of several parts one combination of the sides' ports drawn through the root over the joint shares J (as the reader draws its combination), then at each side's region the one Node drawn by the window's inflows per Node with its credit line (`credited_node`, the port realised and the parts it reads with a coefficient other than 0 kept), the record at -1 as one Item over the Nodes drawn, one quantum; for a record of one part the regions' window inflows floored at 0, in the unit G^2 of the booking, give N = (their sum + W_rec G^2 div 2) div W_rec G^2 whole quanta in the record's own unit, one division at the close (`credit.quanta_through`, `credit.record_unit`; the remainder of C7 moves when this alternative is built, before the one act draws, main's order kept), at most the count left, each drawn to a region by the shares, the inflows over G^2 once by the division act, the plain inflows bit for bit where no tension stood (`node_detector.drawn_weights`), and to one Node of it with its line, one Item each; the window's Items one list, so that the record's count goes down by one per quantum and its erasing front begins from every Node written where the count reaches 0; None where nothing entered, where the joint shares are 0 or where the record's count stands at 0, uncreditable whatever its levels still show (the empty wave, a diagnostic, until the front reaches it)."""
+    """The region NodeDetectors' credit of one family at the window's close, the credit's row (ALGEBRA.md #the-click-is-the-meeting; L759): one alternative, no draw of its own, its list built from the window's books: for a record of several parts the sides' sequence (`readings`: every side whose own moments stand and whose port is unrealised, or realised in a sequence the count's write settled, draws at the close, in the declared order, each at its own region the one Node by the window's inflows per Node with its credit line, `credited_node`, the port realised and the parts it reads with a coefficient other than 0 kept, the write at the record's birth between the draws), the record at -1 as one Item over the Nodes drawn once every side has drawn, one quantum; for a record of one part the regions' window inflows floored at 0, in the unit G^2 of the booking, give N = (their sum + W_rec G^2 div 2) div W_rec G^2 whole quanta in the record's own unit, one division at the close (`credit.quanta_through`, `credit.record_unit`; the remainder of C7 moves when this alternative is built, before the one act draws, main's order kept), at most the count left, each drawn to a region by the shares, the inflows over G^2 once by the division act, the plain inflows bit for bit where no tension stood (`node_detector.drawn_weights`), and to one Node of it with its line, one Item each; the window's Items one list, so that the record's count goes down by one per quantum and its erasing front begins from every Node written where the count reaches 0; None where nothing entered, where no side is ready or where the record's count stands at 0, uncreditable whatever its levels still show (the empty wave, a diagnostic, until the front reaches it)."""
     books, names = board.credit, [d.name for d in board.node_detectors if d.declared]
     passages = {name: books.passages.get((index, name), Passage()) for name in names}
     intake = {name: books.intake.get((index, name), {}) for name in names}
-    if board.families[index].parts > 1:
-        joint = books.joints.get(index, {})
-        if sum(joint.values()) <= 0 or books.counts[index] <= 0 or not books.sides:
+    if (
+        board.families[index].parts > 1
+    ):  # the sides' sequence with the write at the birth, the one meeting
+        taken = books.taken.get(index, {})
+        moments = books.moments.get(index, {})
+        ready = [
+            name
+            for name, _p in books.sides
+            if (name not in taken or taken[name][2]) and any(map(any, moments.get(name, [])))
+        ]
+        if not ready or books.counts[index] <= 0:
             return None
-
-        def sides() -> list[Item]:
-            fan, keys = list(fan_momentum(board, index)), sorted(joint)
-            combination = keys[credit_draw(board, [joint[key] for key in keys])]
-            pieces = [piece_momentum(board, index, passages[name]) for name, _ports in books.sides]
-            found: list[tuple[Node, tuple[int, ...]]] = []
-            for (name, ports), port, piece in zip(books.sides, combination, pieces, strict=True):
-                kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != 0]
-                port_name = reports.PORT_NAMES[port]
-                found += credited_node(board, index, name, intake[name], port_name, kept, 1, piece, fan)
-            return [
-                Item(
-                    index, None, None, -1, tuple(n for n, _p in found), ports=tuple(p for _n, p in found)
-                )
-            ]
-
-        return Alternative(1, sides)
+        return Alternative(1, partial(readings, board, index))
     inflows = [max(sum(sum(through) for through in intake[name].values()), 0) for name in names]
     shares = drawn_weights(board, inflows)
     if sum(shares) <= 0:
         return None
-    through = credit.quanta_through(books, index, sum(inflows), board.unit)
+    through = credit.quanta_through(books, index, sum(inflows), board.unit, board.families[index].parts)
 
     def quanta() -> list[Item]:
         fan, items = list(fan_momentum(board, index)), []
@@ -181,14 +257,16 @@ def region(board: Lattice, index: int) -> Alternative | None:
 def absorption(
     board: Lattice, drive: int, outcomes: list[tuple[NodeBooks, Transition]]
 ) -> list[Alternative]:
-    """The absorption's row, one draw per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the lattice (f): the credit draws once over all the NodeDetectors that read one record, one quantum one click; the owner's word): `outcomes` the transitions out of the part each record stands in reading the drive, with their records, each weighted by its transition's own transfer share (`meeting.turned_labels`, `NodeBooks.shares`: the two-mode line's share of the record read at the body, nothing of another drive's transfer, never the composed label of a part several drives feed), the weights of the closing bodies brought to one denominator, the least common multiple of their norms, each body's entered label squared scaled by the denominator over its own norm (ALGEBRA.md, The absorption, the draw (b); `credit.Books.unabsorbed_in`), and the outcome that none takes weighted by the rest of the record's unabsorbed share (`credit.Books.unabsorbed`, the one quantity of the record's books the draw reads: the record's count in that denominator at its first draw, read in a later closing set's denominator by the division act, down by the weights of every window drawn null, dropped when a quantum passes into or out of the record, `act.written`; the rest the smaller of the unabsorbed share and the denominator less the weights drawn, floored at 0; where the weights sum above the denominator the rest is 0 and the quantum goes to one of the bodies in the proportion of their weights, (a)), so that where the readers of one record close at different intervals the later reader's share is read conditionally on the earlier windows' nulls, s_B over (1 - the sum of the earlier readers' shares) in the labels' unit, capped at the unit, the realised frequencies the one draw's, P(B) = s_B, and the count conserved; each outcome's list `exchange` (the drive at -1 at that Node where the transition climbs in the declared order of parts and at +1, given back, where it descends, the record's part entered at +1 and left at -1) with its line, the parts and the family taken from or given to; nothing's list books the unabsorbed share down by the weights drawn, as the one draw's rest; an outcome into a full part stands at the weight 0, the exclusion (`full`, 2026-10-19)."""
+    """The absorption's row, one draw per arriving family over every closing record's outcomes into it (ALGEBRA.md, The click writes on the lattice (f): the credit draws once over all the NodeDetectors that read one record, one quantum one click; the owner's word): `outcomes` the transitions out of the part each record stands in reading the drive, with their records, each weighted by its transition's own transfer share (`meeting.turned_labels`, `NodeBooks.shares`: the two-mode line's share of the record read at the body, nothing of another drive's transfer, never the composed label of a part several drives feed), the weights of the closing bodies brought to one denominator, the least common multiple of their norms, each body's entered label squared scaled by the denominator over its own norm (ALGEBRA.md, The absorption, the draw (b); `credit.Books.unabsorbed_in`), and the outcome that none takes weighted by the rest of the record's unabsorbed share (`credit.Books.unabsorbed`, the one quantity of the record's books the draw reads: the record's count in that denominator at its first draw, read in a later closing set's denominator by the division act, down by the weights of every window drawn null, dropped when a quantum passes into or out of the record, `act.written`; the rest the smaller of the unabsorbed share and the denominator less the weights drawn, floored at 0; where the weights sum above the denominator the rest is 0 and the quantum goes to one of the bodies in the proportion of their weights, (a)), so that where the readers of one record close at different intervals the later reader's share is read conditionally on the earlier windows' nulls, s_B over (1 - the sum of the earlier readers' shares) in the labels' unit, capped at the unit, the realised frequencies the one draw's, P(B) = s_B, and the count conserved; each outcome's list `exchange` (the drive at -1 at that Node where the transition climbs in the declared order of parts and at +1, given back, where it descends, the record's part entered at +1 and left at -1) with its line, the parts and the family taken from or given to; nothing's list books the unabsorbed share down by the weights drawn, as the one draw's rest; an outcome into a full part stands at the weight 0, the exclusion (`full`, 2026-10-19), and every outcome's weight carries the record's sign under exchange on the part entered, 0 into a populated part for the antisymmetric record and n + 1 for the symmetric (`exchange_factor`)."""
     norms = [sum(label * label for label in books.labels) for books, _transition in outcomes]
     unit, unabsorbed = board.credit.unabsorbed_in(drive, norms)
     scaled = zip(outcomes, norms, strict=True)
     weights = [
-        0 if full(b, t.enters) else b.shares[t] * division_forward(unit, norm, 0)[0]
+        0
+        if full(b, t.enters)
+        else exchange_factor(board, b, t.enters) * b.shares[t] * division_forward(unit, norm, 0)[0]
         for (b, t), norm in scaled
-    ]  # the exclusion: a transition into a full part at the weight 0 (`full`)
+    ]  # the exclusion: a transition into a full part at the weight 0 (`full`); the sign's factor on the part entered (`exchange_factor`)
     found = []
     for (books, transition), weight in zip(outcomes, weights, strict=True):
         leaves, enters = transition.leaves, transition.enters
@@ -210,12 +288,14 @@ def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) 
 
 
 def emission(board: Lattice, books: NodeBooks, rate: Rate, span: int) -> list[Alternative]:
-    """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19)."""
+    """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19); the emission's weight carries the record's sign under exchange on the lower part, the whole hazard to nothing where the factor is 0 (`exchange_factor`)."""
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     clock, directions = own_clock(board, books), rate.directions or (None,)
     given, rest = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
-    # the exclusion: no emission into a full lower part, nothing the whole hazard (`full`)
-    if full(books, rate.enters):
+    # the exclusion: no emission into a full lower part, nothing the whole hazard (`full`); the sign's
+    # factor on the part entered, 0 for the antisymmetric record's populated part (`exchange_factor`)
+    given = given * exchange_factor(board, books, rate.enters)
+    if full(books, rate.enters) or given == 0:
         given, rest = 0, rate.lifetime * unit
 
     def lit(direction: tuple[int, int] | None) -> list[Item]:
@@ -233,7 +313,7 @@ def emission(board: Lattice, books: NodeBooks, rate: Rate, span: int) -> list[Al
 
 
 def probe(board: Lattice, books: NodeBooks) -> list[Alternative]:
-    """The probe's close, the body's one draw at the probe's arrival (ALGEBRA.md, The pulsed gate; the two hands): over the transitions out of the part the body stands in whose family's count stands, each at its own transfer share (`meeting.turned_labels`, `NodeBooks.shares`, the record's share at the body) and the probe's own at the part's label squared as the turns left it (the two-mode line's shares, sin^2 and cos^2 of the half window's turn): the probe's own, the transition of the part into itself, re-lays the body whole in that part, its list the part at the change 0 and no write on the probe's record (taken and given back at one interval and one Node, the fluorescence by name the probe's own wave continuing from that Node), its line naming the probe's family as taken and given; a drive's takes the drive's quantum and exchanges the parts as every absorption does (`exchange`, the hole, the count down by one); the rest of the labels' unit is the null window, the body whole in its part (`null_window`), nothing where the record has one part; a drive's transition into a full part stands at the weight 0, the exclusion (`full`, 2026-10-19)."""
+    """The probe's close, the body's one draw at the probe's arrival (ALGEBRA.md, The pulsed gate; the two hands): over the transitions out of the part the body stands in whose family's count stands, each at its own transfer share (`meeting.turned_labels`, `NodeBooks.shares`, the record's share at the body) and the probe's own at the part's label squared as the turns left it (the two-mode line's shares, sin^2 and cos^2 of the half window's turn): the probe's own, the transition of the part into itself, re-lays the body whole in that part, its list the part at the change 0 and no write on the probe's record (taken and given back at one interval and one Node, the fluorescence by name the probe's own wave continuing from that Node), its line naming the probe's family as taken and given; a drive's takes the drive's quantum and exchanges the parts as every absorption does (`exchange`, the hole, the count down by one); the rest of the labels' unit is the null window, the body whole in its part (`null_window`), nothing where the record has one part; a drive's transition into a full part stands at the weight 0, the exclusion (`full`, 2026-10-19), and carries the record's sign under exchange on the part entered (`exchange_factor`), the probe's own transition at its share alone."""
     outcomes = [
         t
         for t in books.declared.transitions
@@ -242,9 +322,10 @@ def probe(board: Lattice, books: NodeBooks) -> list[Alternative]:
     weights = [
         0
         if t.enters != t.leaves and full(books, t.enters)
-        else books.shares.get(t, books.labels[t.enters] ** 2)
+        else (exchange_factor(board, books, t.enters) if t.enters != t.leaves else 1)
+        * books.shares.get(t, books.labels[t.enters] ** 2)
         for t in outcomes
-    ]  # the exclusion: a drive's transition into a full part at the weight 0 (`full`); the probe's own stands
+    ]  # the exclusion: a drive's transition into a full part at the weight 0 (`full`) and the sign's factor on the part entered (`exchange_factor`); the probe's own stands
     found = []
     for transition, weight in zip(outcomes, weights, strict=True):
         leaves, enters, drive = transition.leaves, transition.enters, transition.drive

@@ -78,12 +78,6 @@ class Gaussian:
             return self * other.inverse()
         return Gaussian(self.re / other, self.im / other)
 
-    def to_complex(self) -> complex:
-        return complex(float(self.re), float(self.im))
-
-
-ONE, IMAGINARY_UNIT = Gaussian(1, 0), Gaussian(0, 1)
-
 
 def angle(m: int, n: int) -> Gaussian:
     """The unit Gaussian rational e^(i phi) of the Pythagorean pair (m, n): cos phi = (m^2 - n^2) / (m^2 + n^2), sin phi = 2 m n / (m^2 + n^2), exactly on the circle (the instruments' rational angles, The integer-exact constructions (3))."""
@@ -115,10 +109,6 @@ def angles(draw: random.Random, count: int) -> list[Gaussian]:
     return found[:count]
 
 
-def rational(draw: random.Random, size: int = 50, denominators: int = 7) -> Fraction:
-    return Fraction(draw.randint(-size, size), draw.randint(1, denominators))
-
-
 def pairs(draw: random.Random, count: int, with_symmetric: bool = True) -> list[tuple[int, int]]:
     """Family pairs [num, den] with 0 < num <= den: light [1, 1], the toy's [2, 3], the shipped matter pair's shape [4000, 6000] and the exact bands [1, 2] first, then random ones."""
     found = [(1, 1), (2, 3), (4000, 6000), (1, 2), (5760, 6000)] if with_symmetric else []
@@ -148,26 +138,6 @@ def has_order(
         return True, [math.inf, math.inf]
     measured = [order_of(residual, step), order_of(residual, step / 2)]
     return all(abs(found - order) <= tolerance for found in measured), measured
-
-
-def wave(amplitude: Number, exponent: Gaussian) -> Fraction:
-    """Re(A e^(i phi)) for the unit e^(i phi): a plane wave's level, exact."""
-    return Fraction(amplitude) * exponent.re
-
-
-def plane_wave_levels(
-    amplitude: Number,
-    waves: Sequence[Gaussian],
-    rotation: Gaussian,
-    nodes: Sequence[tuple[int, int, int]],
-    interval: int,
-) -> list[Fraction]:
-    """A cos(k . x - omega t) at every Node x listed, at the interval t, with e^(i k_a) the units `waves` and e^(i omega) the unit `rotation`."""
-    found = []
-    for x, y, z in nodes:
-        phase = (waves[0] ** x) * (waves[1] ** y) * (waves[2] ** z) * (rotation ** (-interval))
-        found.append(wave(amplitude, phase))
-    return found
 
 
 def read(
@@ -236,10 +206,6 @@ def step_integer(
         levels.append(quotient)
         carried.append(remainder)
     return levels, carried
-
-
-def chain_nodes(count: int) -> list[tuple[int, int, int]]:
-    return [(x, 0, 0) for x in range(count)]
 
 
 def box_index(shape: tuple[int, int, int], x: int, y: int, z: int) -> int:

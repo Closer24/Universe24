@@ -1,4 +1,4 @@
-"""Part C, Task 2 (the local trial, Worker C2): the window's turn of the labels by carried divisions. The labels (u, v) are Python integers in the books, so the window's turn is one hop by the phase line's pair at the window's angle, (u', v') = ((C u - S v + r_u) div X, (S u + C v + r_v) div X), the remainders carried in the books between windows (`resonance.window_pair`, `resonance.hopped`, `meeting.turned_labels`, `NodeBooks.carried`), and no shear: features/rotation is gone (Task 3). The numbers here are the first build's (tests/test_the_meeting.py (vi) before this task): the 48 sub-turns of three shears each gave the labels' angle 1.5680 at the Zeno world's n = 1 and the one shear of the whole window 1.330, the tangent half-angle's compression."""
+"""Part C, Task 2 (the local trial, Worker C2): the window's turn of the labels by carried divisions. The labels (u, v) are Python integers in the books, so the window's turn is one hop by the phase line's pair at the window's angle, (u', v') = ((C u - S v + r_u) div X, (S u + C v + r_v) div X), the remainders carried in the books between windows (`resonance.window_pair`, `resonance.hopped`, `meeting.turned_labels`, `NodeBooks.carried`), and no shear. The comparison numbers: 48 sub-turns of three shears each give the labels' angle 1.5680 at the Zeno world's n = 1, one shear of the whole window 1.330, the tangent half-angle's compression."""
 
 import hashlib
 import json
@@ -24,7 +24,7 @@ GAMMA, WIDTH, TURN = (
 SUB_TURNS, ONE_SHEAR = (
     1.5680,
     1.330,
-)  # the first build's numbers: 48 x 2 arctan(9,408 / (12,000 x 48)) and 2 arctan(9,408 / 12,000)
+)  # the comparison numbers: 48 x 2 arctan(9,408 / (12,000 x 48)) and 2 arctan(9,408 / 12,000)
 TURNS, LABEL = 1000, 10**6
 X = phase.amplitude(GAMMA, WIDTH)  # the phase line's amplitude at the Zeno world's width, the hop's wall
 FLOOR_PER_TURN = 3  # the hop's floor: one level per label from the two carried divisions (root 2 on the radius) and under one level from the pair's magnitude, (1.42 |n| + 2.3 Gamma) / X x r below 1 at r = 10^6, |n| <= 12,000, X = 32,025,594,000
@@ -41,7 +41,7 @@ def hop(
 
 
 def test_the_windows_turn_is_one_hop_at_the_phase_lines_angle():
-    """The window's turn: the pair (C, S) at theta_W = 9,408 theta_0 read from the phase line iterated from the seed (`window_pair`), X = 32,025,594,000 its magnitude to the walk's bound; the labels (10^6, 0) hopped once stand at the angle 9,408 / 6,000 = 1.5680 to the angle's own rounding (theta_0 = 1 / Gamma to 2.6 x 10^-9), where the first build's 48 sub-turns of three shears gave 1.5680 to 2 x 10^-3 (the sub-turns' angles adding, each a tangent half-angle) and the one shear of the whole window 1.330 (the compression the advisor's second found): the relation is new = turn x theta_0, the sub-turn form's limit as the pieces grow, with no shear and no float; the radius within a level of 10^6."""
+    """The window's turn: the pair (C, S) at theta_W = 9,408 theta_0 read from the phase line iterated from the seed (`window_pair`), X = 32,025,594,000 its magnitude to the walk's bound; the labels (10^6, 0) hopped once stand at the angle 9,408 / 6,000 = 1.5680 to the angle's own rounding (theta_0 = 1 / Gamma to 2.6 x 10^-9), where 48 sub-turns of three shears give 1.5680 to 2 x 10^-3 (the sub-turns' angles adding, each a tangent half-angle) and the one shear of the whole window 1.330 (the compression the advisor's second found): the relation is new = turn x theta_0, the sub-turn form's limit as the pieces grow, with no shear and no float; the radius within a level of 10^6."""
     resonance.clear_memo()
     resonance.window_pair(
         TURN + 1234, GAMMA, X
@@ -56,7 +56,7 @@ def test_the_windows_turn_is_one_hop_at_the_phase_lines_angle():
     u, v, r_u, r_v = resonance.hopped(LABEL, 0, cosine, sine, amplitude)
     new, exact = math.atan2(v, u), TURN / GAMMA
     print(
-        f"the window's turn at n = 1 of the Zeno world: the first build's 48 sub-turns {SUB_TURNS}, its one shear "
+        f"the window's turn at n = 1 of the Zeno world: 48 sub-turns {SUB_TURNS}, one shear "
         f"{ONE_SHEAR}; the hop {new:.7f} against theta_W = {TURN} / {GAMMA} = {exact:.7f}; the labels ({u}, {v}), "
         f"the remainders ({r_u}, {r_v}) of X = {amplitude}; the pair ({cosine}, {sine})"
     )
@@ -80,7 +80,7 @@ def test_the_labels_square_is_conserved_to_the_hops_floor_over_a_thousand_turns(
 
 
 def test_the_back_turn_returns_the_labels_to_the_hops_floor_and_not_bit_for_bit():
-    """The reversal: 1,000 hops forward and the same 1,000 back in the reverse order by the conjugate pair (C, -S) with the remainders carried (`hopped` at direction -1). The carried remainder does not make the back-turn exact: the hop divides the two labels by X and keeps one remainder per label, and (u, v) are not recoverable from (u', v', r_u', r_v'), since C u - S v = X u' + r_u' - r_u with r_u the remainder before the hop, which the books no longer hold (one hop from (10^6, 12,345) at 777 acts comes back to (999,999, 12,345), one level short); the labels return to the hop's floor, within 3 levels per hop over the 2,000. The law's reading: the window's close is the NodeDetector's own act, a write on its books as the root is (ALGEBRA.md, The two-mode line; the advisor's precision (iii)), outside Rule3's lines; the back-in-time gate is exact between clicks on the lattice's lines, where every act is Rule3's and inverted bit for bit (the phase line among them: `phase.iterate` at direction -1 returns the pair exactly), and the books' labels are re-laid at the click (`meeting`, the counts to labels); the labels' back-turn is no claim of the law, and the first build's three shears, exact in the inverse, are gone with their compression."""
+    """The reversal: 1,000 hops forward and the same 1,000 back in the reverse order by the conjugate pair (C, -S) with the remainders carried (`hopped` at direction -1). The carried remainder does not make the back-turn exact: the hop divides the two labels by X and keeps one remainder per label, and (u, v) are not recoverable from (u', v', r_u', r_v'), since C u - S v = X u' + r_u' - r_u with r_u the remainder before the hop, which the books no longer hold (one hop from (10^6, 12,345) at 777 acts comes back to (999,999, 12,345), one level short); the labels return to the hop's floor, within 3 levels per hop over the 2,000. The law's reading: the window's close is the NodeDetector's own act, a write on its books as the root is (ALGEBRA.md, The two-mode line; the advisor's precision (iii)), outside Rule3's lines; the back-in-time gate is exact between clicks on the lattice's lines, where every act is Rule3's and inverted bit for bit (the phase line among them: `phase.iterate` at direction -1 returns the pair exactly), and the books' labels are re-laid at the click (`meeting`, the counts to labels); the labels' back-turn is no claim of the law."""
     seed = phase.seed(phase.amplitude(GAMMA, WIDTH), GAMMA)
     assert (
         phase.iterate(phase.iterate(seed, 777, GAMMA), 777, GAMMA, -1) == seed

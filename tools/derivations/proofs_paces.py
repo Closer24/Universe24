@@ -265,11 +265,6 @@ def check_the_moving_clock_to_the_fourth_order() -> Check:
         """(v, Omega / omega_0) at the wave number k along the unit vector n, from the exact band by a centred difference."""
         h = 1e-4
 
-        def omega(q: float) -> float:
-            return math.acos(
-                c0 * sum(math.cos(q * n) for n in direction) + c0 * (3 - sum(1 for _ in direction)) * 0
-            )
-
         def full(q: float) -> float:
             return math.acos(1 - (1 - num / den) - c0 * sum(1 - math.cos(q * n) for n in direction))
 

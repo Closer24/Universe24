@@ -960,7 +960,7 @@
     1
    ],
    "digits": 1,
-   "closure_note": "the two speeds' difference and their delays' difference 0; the superseded version's separation over 1,000 Links at x = 0.05 and 0 within GW170817's bounds, nature's, held as constants"
+   "closure_note": "the two speeds' difference and their delays' difference 0; the exact separation over 1,000 Links at x = 0.05 and 0 within GW170817's bounds, nature's, held as constants"
   },
   {
    "line": 430,
@@ -1647,7 +1647,7 @@
    "existing_script": null,
    "proposed_module": "weak_field.py",
    "status": "scripted",
-   "note": "the same estimate; nature's 10^-13 and 10^-15 are the constants EOT_WASH_BOUND and MICROSCOPE_BOUND, which the estimate lies under at either bound",
+   "note": "the same estimate; nature's 10^-13 (the Be-Ti Eotvos bound, Will) and 10^-15 (the Ti-Pt bound, MICROSCOPE), which the estimate lies under at either bound",
    "script": "tools/derivations/weak_field.py",
    "function": "equivalence_between_families",
    "expected": [

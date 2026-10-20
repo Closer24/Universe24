@@ -35,8 +35,8 @@ def body(design: dict, number: int, axis: str, toward: str) -> dict:
             {"node": placed(design, axis, toward, first + i), "weight": 1} for i in range(rows["nodes"])
         ],
         "parts": [
-            {"part": 0, "name": "g", "role": "ground", "count": 1},
-            {"part": 1, "name": "e", "role": "excited", "count": 0},
+            {"part": 0, "name": "g", "count": 1},
+            {"part": 1, "name": "e", "count": 0},
         ],
         "transitions": [
             {

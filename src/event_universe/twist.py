@@ -112,9 +112,6 @@ class Item:
     origin: Node | None = None  # C6 (ii): the click's Node, the fold's origin
 
 
-Lists = list[list[Item]]  # the outcomes of one click, each the list written where it is drawn
-
-
 Phase = tuple[tuple[int, int], int]  # a part's direction (re, im) and its sense, its Wronskian's sign
 
 
@@ -229,7 +226,7 @@ def folded_lines(
     offsets: np.ndarray,
     count: int,
 ) -> tuple[records.Record, records.Record]:
-    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the fold's origin, the click's Node (`core/ports.run_offsets`, C6 (ii)), and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (features/phase: `phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`) at the magnitude of the angle, one per offset, and the pair at a negative angle the conjugate (c, -s) of the pair at its magnitude (features/phase, `phase.read`: the -a end reads the conjugate), so that the fold is odd under the axis's sign exactly, one rounding per level (D5, L408 (4); the backward sequence from the seed, read before 2026-10-19, differed from the conjugate at the roundings' ties); the memo holds non-negative angles alone."""
+    """A part's two lines folded at every Node of the region by the phase pair at the angle x n theta_0, x the Node's offset along the axis from the fold's origin, the click's Node (`core/ports.run_offsets`, C6 (ii)), and n = `count` (signed): at each Node (re, im) now and before each multiplied by the pair (c, s) at x n acts and rounded once into the Link's unit (features/phase: `phase.fold`, `signed_rounded`, the engine's one rounding half up on the magnitude with the sign after), the remainders as they stand; the levels elsewhere untouched. The pairs at the distinct offsets carried from the seed (`phase.iterate`) at the magnitude of the angle, one per offset, and the pair at a negative angle the conjugate (c, -s) of the pair at its magnitude (features/phase, `phase.read`: the -a end reads the conjugate), so that the fold is odd under the axis's sign exactly, one rounding per level (D5, L408 (4): the backward sequence is read from the seed, the conjugate pair differing from it at the roundings' ties); the memo holds non-negative angles alone."""
     re_line, im_line = lines
     gamma, amplitude = board.world.node_clock, board.amplitude
     re_now, im_now = re_line.now.copy(), im_line.now.copy()

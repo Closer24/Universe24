@@ -17,11 +17,6 @@ import rule3  # noqa: E402
 
 PPN_GAMMA = 1.0  # the model's gamma under the composed paces, S.19 in U
 GAMMA = 6000  # the engine's Gamma of the paper's worlds
-GRAVITY_PROBE_B_MAS_PER_YEAR = (37.2, 7.2)  # nature's measurement (Everitt), a comparison
-GENERAL_RELATIVITY_MAS_PER_YEAR = (
-    39.2  # general relativity's prediction for Gravity Probe B, a comparison
-)
-PULSAR_ALPHA_1_BOUND = 4e-5  # nature's |alpha_1| from PSR J1738+0333 (Shao and Wex)
 
 
 def preferred_frame_parameters(

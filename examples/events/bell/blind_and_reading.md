@@ -91,3 +91,25 @@ are not re-run (the owner's word); their S and marginals are the reader's from t
 their own run. The one combination drawn per window over that record is the loose case of the
 one-record convention of the joint credit, the spin branch's one-quantum lay the clean case
 (ALGEBRA.md, Spin, closed for the paper as a route).
+
+## The amplitude moved for the write at the birth (2026-10-20)
+
+The pair family's record is two parts (pair.json, `light_pair`, `dimension [2, 1]`: the parts and
+the dimension, loader/universe.py), so the write at the birth (ALGEBRA.md, The meeting's reading,
+the owner's word of 2026-10-20) reaches it: the realised port's coefficients, reduced by their
+greatest common divisor over the surviving parts (the reader's ruling of 2026-10-20), are scaled
+into the parts, and a world whose sides' patterns compound over the sides times the lay's amplitude
+beyond the amplitude bound is refused by name at load (`loader/draw.compounding_of_the_law`). At the
+folder's earlier amplitude 1,328 the worlds a' b and a' b' met it: the left's (1, 1) is a scaling of
+both parts and writes nothing, the right's (12, 5) stands on the two surviving parts, and 12 x 1,328
+= 15,936 passes A = 6,949; the gate's words: "the sides' patterns compound on the record of
+'light_pair' to the coefficient 12 (the ports [0, 0] in the sides' order, reduced), times the lay's
+amplitude 1328: 15936 passes the amplitude bound A = 6949; lower the amplitude or the settings'
+integers". The design's `amplitude` moved from 1,328 to 320 on 2026-10-20 (12 x 320 = 3,840 under
+the bound), the four worlds, their mode files and the blind `expectation.json` written again by
+`build_world.py --modes`; the blind's fractions are unchanged, every ratio of the shares being the
+ports' alone with the parts' common factor cancelling. The cost, as the reader names it
+(2026-10-20): the record's count falls as A^2; the mode files' declared packet counts fall from 225
+per packet, 450 for the pair's record, at 1,328 to 13 per packet, 26 for the pair's record, at 320
+(the ratio 17.3, (1,328 / 320)^2), so the folder's two windows read a record of 26 quanta where they
+read 450. The readings' tables above stand as taken at 1,328 and are not re-run (the owner's word).

@@ -1,4 +1,4 @@
-"""The flux form of Rule3 and the linear sum L (ALGEBRA.md, the flux form; `readings.linear_sum`, `readings.linear_exchange`): the one line w a_next + r' = SUM R_ij m_ij + S a_now - w a_before + r, written as w (a_next - 2 a_now + a_before) + r' - r = SUM_j R_ij (m_ij - a_now) - D a_now with D = 2 w - S - SUM_j R_ij, holds at every Node, line, family and interval of the small shipped worlds with the arrivals the step used (the neighbour's number, the fill beyond a face, the face's value where one is presented), checked in one subtraction: the step's total w a_next + r' less w (2 a_now - a_before) + r against the flux and the mass; and the linear sum of a line of light changes only by its exchange through the board's faces and the lays the run reports, so that a level written outside Rule3's line shows as a jump not accounted for."""
+"""The flux form of Rule3 and the linear sum L (ALGEBRA.md, the flux form; `linear_sum`, `linear_exchange` and `weighted_linear_sum` of tests/laws.py, the tests' own instruments): the one line w a_next + r' = SUM R_ij m_ij + S a_now - w a_before + r, written as w (a_next - 2 a_now + a_before) + r' - r = SUM_j R_ij (m_ij - a_now) - D a_now with D = 2 w - S - SUM_j R_ij, holds at every Node, line, family and interval of the small shipped worlds with the arrivals the step used (the neighbour's number, the fill beyond a face, the face's value where one is presented), checked in one subtraction: the step's total w a_next + r' less w (2 a_now - a_before) + r against the flux and the mass; and the linear sum of a line of light changes only by its exchange through the board's faces and the lays the run reports, so that a level written outside Rule3's line shows as a jump not accounted for."""
 
 import json
 import math
@@ -11,10 +11,10 @@ from event_universe.core.rule3 import Rule
 from event_universe.features.click import presented
 from event_universe.lattice import Lattice
 from event_universe.plane import NO_FACE
-from event_universe.readings import linear_exchange, linear_sum, ports, weighted_linear_sum
+from event_universe.readings import ports
 from event_universe.records import record_slice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, universe_beside
+from tests.laws import EVENTS, linear_exchange, linear_sum, universe_beside, weighted_linear_sum
 
 WORLDS = (
     "zeno/zeno_1.json",

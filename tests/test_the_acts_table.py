@@ -82,6 +82,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "R",  # the region's clock remainder kept in books
     # emission.py
+    (
+        "emission.py",
+        "emitted_quantum",
+        "division_forward",
+    ): "D",  # the quantum's share over the parts laid alike, once
     ("emission.py", "radiated_total", "division_forward"): "D",  # the total's coefficients, once each
     ("emission.py", "radiated_total", "largest_below"): "S",  # the search on the total's square
     ("emission.py", "born_unit", "largest_below"): "S",  # the search on the unit's square
@@ -99,6 +104,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "advanced", "division_forward"): "D",  # the recurrence's one rounding half up
     # features/click
     ("features/click/__init__.py", "drawn", "division_forward"): "D",  # the draw's shares, once each
+    (
+        "features/click/__init__.py",
+        "hashed",
+        "division_forward",
+    ): "D",  # a side's state to the modulus, once
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "presented", "division_forward"): "D",  # the presented share, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
@@ -134,12 +144,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "laid_pairs",
         "division_forward",
     ): "D",  # the pairs' levels, once each
-    (
-        "features/click/__init__.py",
-        "exact_total",
-        "division_forward",
-    ): "D",  # the total's quotient before search
-    ("features/click/__init__.py", "exact_total", "largest_below"): "S",  # the search on the total
     ("features/click/__init__.py", "line_total", "largest_below"): "S",  # the search on the line's total
     (
         "features/click/__init__.py",
@@ -215,6 +219,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/derived.py", "count_wall", "largest_below"): "S",  # the quantum's wall by search
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
+    ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
+    ("loader/draw.py", "reduced_write", "division_forward"): "D",  # the reduction, exact, no remainder
     ("loader/derived.py", "hill_scale", "division_forward"): "D",  # the hill's room, once
     ("loader/derived.py", "tension_room", "largest_below"): "S",  # the room's factor by search
     ("loader/derived.py", "tension_room", "division_forward"): "D",  # the room's ceiling, once

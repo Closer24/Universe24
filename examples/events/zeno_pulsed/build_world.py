@@ -23,8 +23,8 @@ def world_of(design: dict, n: int) -> dict:
         "family": design["record"]["family"],
         "nodes": [{"node": at, "weight": 1}, {"node": [at[0] + 1, at[1], at[2]], "weight": 1}],
         "parts": [
-            {"part": 0, "name": "g", "role": "ground", "count": 1},
-            {"part": 1, "name": "e", "role": "excited", "count": 0},
+            {"part": 0, "name": "g", "count": 1},
+            {"part": 1, "name": "e", "count": 0},
         ],
         "transitions": [
             {

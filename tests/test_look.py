@@ -18,6 +18,7 @@ from tests.laws import (
 )
 
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
+LATTICE = RECORD.Lattice  # the engine's lattice, before a test's own subclass stands in its place
 COUNTS = load_file("click_counts", ROOT / "tools" / "click_counts.py")
 NARROW = [[[20, 4, 0]], [[20, 4, 0], [20, 5, 0]], [[20, y, 0] for y in (0, 1, 6, 7)]]  # the size rule
 REASONS = ("never one Node", "under half the wavelength", "not one connected region")
@@ -32,22 +33,27 @@ BLIND = {
 BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5}, seed=7)
 
 
-def shown(world, monkeypatch, at, blind):
-    class Clicking(RECORD.Lattice):
-        def step(self) -> None:
-            super().step()
+def shown(world, monkeypatch, at, blind, back=None, every=1):
+    class Clicking(LATTICE):  # type: ignore[misc, valid-type]
+        def step(self, *acts) -> None:  # type: ignore[override]
             charge = next(f for f in self.families if f.name == "charge")
             wall = count_wall(charge, self.world.quantum_action)
-            for name in at.get(self.interval, []):
+            for name in at.get(
+                self.interval + 1, []
+            ):  # the test's own lines, before the observers' call
                 line = {
                     "event": "click",
-                    "interval": self.interval,
+                    "interval": self.interval + 1,
                     "family": "charge",
                     "node_detector": name,
                 }
                 self.output({**line, "inflow": wall})
+            super().step(*acts)
+            if self.interval == back:  # the test's run back and forward again, two intervals each
+                self.step_inverse(), self.step_inverse(), super().step(), super().step()
 
-    monkeypatch.setattr(RECORD, "Lattice", Clicking), RECORD.main([str(world), "--intervals", "3"])
+    arguments = [str(world), "--intervals", "3", "--every", str(every)]
+    monkeypatch.setattr(RECORD, "Lattice", Clicking), RECORD.main(arguments)
     world.with_suffix(".blind.json").write_text(json.dumps(blind), encoding="utf-8")
     PAGE.main([str(world.with_suffix(".look.json")), "--blind", str(world.with_suffix(".blind.json"))])
     look = json.loads(world.with_suffix(".look.json").read_text(encoding="utf-8"))
@@ -55,7 +61,7 @@ def shown(world, monkeypatch, at, blind):
 
 
 def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_path, monkeypatch):
-    """(a) The look of the chain over three intervals (one body of 50 quanta at the chain's centre Node 12 with the node_detectors at 0, 1, 22, 23: the look's roles are the reader's and the page's, not two-body physics, and the same on any length of the chain; the two-body chain lay is an open item of the start round: under the top mode on the board as declared the first of two bodies does not peak at its declared Node, its count at the centre falling 18 to 0 of 50 over the rounds while its share slides toward the second body's well, 14..18 then 17..27 about the declared 16 at 20 Links, until their regions share a Node and the generator refuses the pair by name, the two-body chain of 12 Links having stood only under the cut mode): the label, the file's families, per frame every array sized to the board, frame 0 the record's share in quanta, the bodies' declared counts in all (the gate admitted them within the share's rounding), each click line in its interval's frame (one per interval from the test's own lattice), no inner face, the books; (b) the page: the label, the roles from the file's rows (the holder of the sign light, a holder of the content a field, a holder of nothing matter, a further one dashed), the blind file's window, the per-node_detector bars of an expectation without an axis, and no interpolation between Nodes. The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema (the one rule of the builder and the reader: above the left neighbour and at or above the right a maximum, below and at or below a minimum, the row's ends neither), visibility at the blind `central` (the middle blind maximum where it names none) and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels over every interval of the window, the negative ones included (the peak, the centroid, the half-maximum span), and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the NodeDetector's declaration. (c) A gate's page: with the joint-share reader's file over the gate's worlds (the look's world among them) and a blind of the gate's form, the page embeds the reading, another gate's blind beside it and the gate panels' script; without a reading no panel and no marker remains, the page as before; a reading without the look's world is refused by name."""
+    """(a) The look of the chain over three intervals (one body of 50 quanta at the chain's centre Node 12 with the node_detectors at 0, 1, 22, 23: the look's roles are the reader's and the page's, not two-body physics, and the same on any length of the chain; the two-body chain lay is an open item of the start round: under the top mode on the board as declared the first of two bodies does not peak at its declared Node, its count at the centre falling 18 to 0 of 50 over the rounds while its share slides toward the second body's well, 14..18 then 17..27 about the declared 16 at 20 Links, until their regions share a Node and the generator refuses the pair by name, the two-body chain of 12 Links having stood only under the cut mode): the label, the file's families, per frame every array sized to the board, frame 0 the record's share in quanta, the bodies' declared counts in all (the gate admitted them within the share's rounding), each click line in its interval's frame (one per interval from the test's own lattice), no inner face, the books; (b) the page: the label, the roles from the file's rows (the holder of the sign light, a holder of the content a field, a holder of nothing matter, a further one dashed), the blind file's window, the per-node_detector bars of an expectation without an axis, and no interpolation between Nodes. The slit world with a screen of two regions at x = 20 (the rows 0 to 3 and 4 to 8, never one Node: a click reports its region, and the loader refuses by name one Node, a region narrower than half the wavelength across the beam and a region in two pieces), three intervals with the test's own click lines of one quantum each (two on the upper region and one on the lower within the window [1, 2], one beyond it): the look holds the faces as declared; the page's measurement holds one bar per region ordered by its first row, what each saw summed exactly as tools/click_counts.py sums it, N over the wall to the nearest whole and the rounded shares, the blind counts, the pattern's range, the totals line and the watch lines naming the coordinate; the page embeds it with the look (the faces' cubes) and names the faces' layer; two further regions of four rows at x = 21 to 22 are each one reporter placed at their first row, on the page and in tools/click_counts.py (named, or every declared region over the whole run where the expectation names none), which reads beside the rounded shares (the expectation) the clicks (one draw by the seed), each row's extrema (the one rule of the builder and the reader: above the left neighbour and at or above the right a maximum, below and at or below a minimum, the row's ends neither), visibility at the blind `central` (the middle blind maximum where it names none) and deviation from the blind row's shares, the arrival of the screen's inflow in the engine's labels over every interval of the window, the negative ones included (the peak, the centroid, the half-maximum span), and a bare region named `aside`; a region's seen inflow is floored at 0 before the shares, the NodeDetector's declaration. (c) A gate's page: with the joint-share reader's file over the gate's worlds (the look's world among them) and a blind of the gate's form, the page embeds the reading, another gate's blind beside it and the gate panels' script; without a reading no panel and no marker remains, the page as before; a reading without the look's world is refused by name. (d) A look of several passes (the lattice's observers, the click that runs back): the chain stepped to 2, back to 0 and forward again by the test's own lattice, the look's frames in the look's order with their intervals, directions and passes, the run back's frames the forward frames' arrays bit for bit (the form aside, the booking of the interval stepped back through), the run forward's frames the first pass's whole, every click line in the frame of the pass it was written in, the stride within each pass with each pass's last frame kept, and a look of one pass without the two keys; the page's reading counts a click line reported again by a run forward once."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = chain_body_world(tmp_path, TOOL, taker=True)  # one body at the centre (a pair: an open item)
     blind = {"expected": {"taker": 3}, "family": "charge", "window": [1, 2]}
@@ -102,6 +108,35 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert PAGE.embedded(PAGE.gate(look, gate, reading)) in gated and PAGE.embedded(other) in gated
     assert "drawGate();" in gated and "gate-reading" not in html and "{{" not in html
     refused("not among the reading's worlds", PAGE.page, look, gate, {"worlds": {}})
+    look3, _html3 = shown(world, monkeypatch, {t: ["taker"] for t in (1, 2, 3)}, gate, back=2)
+    frames3 = look3["frames"]
+    passes = [(f["interval"], f["direction"], f["pass"]) for f in frames3]  # the look's order
+    back = [(1, -1, 2), (0, -1, 2)]
+    assert passes == [(0, 1, 1), (1, 1, 1), (2, 1, 1), *back, (1, 1, 3), (2, 1, 3), (3, 1, 3)]
+    own3 = [
+        [x for x in f["lines"] if x["node_detector"] == "taker" and x["inflow"] == wall] for f in frames3
+    ]
+    assert [len(x) for x in own3] == [0, 1, 1, 0, 0, 0, 0, 1]  # a line in the pass it was written in
+
+    def bare(fr):  # the arrays but the form, the booking of the interval stepped back through
+        return {n: {k: v for k, v in r.items() if k != "form"} for n, r in fr["families"].items()}
+
+    assert bare(frames3[3]) == bare(frames3[1]) and bare(frames3[4]) == bare(frames3[0])
+    assert [frames3[k]["families"] for k in (5, 6)] == [frames3[k]["families"] for k in (1, 2)]
+    assert PAGE.passes(look3) == 3 and PAGE.last_interval(look3) == 3 and PAGE.passes(look) == 1
+    assert [f["tick"] for f in frames3][:5] == [
+        0,
+        1,
+        2,
+        2,
+        2,
+    ]  # the tick advances in step alone, never back
+    assert (
+        "reach" not in look3 and "tick" not in look["frames"][1]
+    )  # no draw, no reach; one pass, no tick
+    look3, _html3 = shown(world, monkeypatch, {}, gate, back=2, every=2)  # the stride within each pass
+    strided = [(f["interval"], f["pass"]) for f in look3["frames"]]  # each pass's last frame kept
+    assert strided == [(0, 1), (2, 1), (0, 2), (2, 3), (3, 3)]
     cells = [(21 + c // 4, c % 4) for c in range(8)]
     groups = [{"name": f"g{y}", "positions": [[x, y + r, 0] for x, r in cells]} for y in (0, 4)]
     world = slit_world(tmp_path, TOOL, node_detectors=[*SCREEN, *groups])
@@ -123,6 +158,9 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     watch = [f"y = {y}: {n} by the shares, the blind {b}" for y, n, b in ((4, 2, 2), (0, 1, 1.5))]
     assert measure["watch"] == watch and measure["blind"] == BLIND["counts"]
     assert PAGE.embedded(measure) in html and "the faces (declared)" in html
+    three = [{**f, "pass": 1, "direction": 1} for f in look["frames"]]  # a click reported again: once
+    three += [{**f, "pass": 3, "direction": 1} for f in look["frames"][1:]]
+    assert PAGE.measurement({**look, "frames": three}, BLIND)["seen"] == measure["seen"]
     grouped = {**BLIND, "node_detector": ["g4", "g0"], "counts": [1, 2], "aside": ["s0"]}
     grouped.update(maxima=[1], minima=[0], visibility=1)
     measure = PAGE.measurement(look, grouped)

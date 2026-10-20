@@ -21,7 +21,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import quanta_records
-    from event_universe.loader.universe import universe_of
+    from event_universe.loader.universe import FAMILY_KEYS, universe_of
     from event_universe.reports import front
     from event_universe.world_files import load_world
     from tests.laws import BACK, EVENTS, PACKET, ROOT, TOOL, UNIVERSE, refused, slit_world
@@ -270,7 +270,9 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             others = [*rows[:k], {**row, "band": [1, 3]}, *rows[k + 1 :]]
             bad = {**document, "families": others}
             found = refused(rf"families\[{k}\] holds the unknown key 'band'", universe_of, bad)
-            assert "['name', 'pair', 'dimension', 'held', 'reads']" in str(found)
+            assert str(list(FAMILY_KEYS)) in str(
+                found
+            )  # the loader names its own keys, `exchange` among them
         bare = {k: v for k, v in rows[0].items() if k != "pair"}
         refused("lacks the key 'pair'", universe_of, {**document, "families": [bare, *rows[1:]]})
         shipped = {}
@@ -281,7 +283,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     shipped[path.relative_to(EVENTS).as_posix()] = len(universe_of(document)[1])
         assert len(shipped) >= 10 and all(shipped.values())
         return (
-            f"{len(rows)} rows of the tests' universe each refused by name with a sixth key, a row without its "
+            f"{len(rows)} rows of the tests' universe each refused by name with a key beyond its own, a row without its "
             f"pair refused by name; {len(shipped)} shipped universe files admitted, their families {shipped}"
         )
 

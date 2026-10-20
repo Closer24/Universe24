@@ -36,7 +36,7 @@ ATOM_P = 33136  # one_photon's second atom at count 1 at the derived close, 61 (
 
 
 def test_one_photons_atom_keeps_its_momentum_past_the_null_close(tmp_path, monkeypatch):
-    """MUST 1 (the advisor's run): one_photon's second atom takes at 61 (the window derived from the packet's passage, 33 from the first lit interval 29; 76 at the declared 48 until 2026-10-19) with the quarter turn applied ("P lost to the taker"), its P_x ATOM_P (the +x piece about the hole's Node, C6); the first atom's window closes with no click at 62 and its re-lay keeps each Node's direction, the taker dark after the click under C1's one quantum: P_x at 61, 62, 63 and the run's end (170) all ATOM_P (before the fix 0 from the null close); printed."""
+    """MUST 1 (the advisor's run): one_photon's second atom takes at 61 (the window derived from the packet's passage, 33 from the first lit interval 29) with the quarter turn applied ("P lost to the taker"), its P_x ATOM_P (the +x piece about the hole's Node, C6); the first atom's window closes with no click at 62 and its re-lay keeps each Node's direction, the taker dark after the click under C1's one quantum: P_x at 61, 62, 63 and the run's end (170) all ATOM_P (before the fix 0 from the null close); printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")

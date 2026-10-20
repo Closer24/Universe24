@@ -1,0 +1,446 @@
+{
+ "verdict": "NODEDETECTOR",
+ "comment": "The folder's blind for the born pair's four worlds (born_<a>_<b>, the click that runs back, the one meeting): every fraction the folder's expectation.json's, written before any run, with the born pair's own key `born`. The born pair (2026-10-20, the owner's word; ALGEBRA.md, The meeting's reading, with The lay across parts and The births' book; ENGINE.md section 3, act 6, and section 10, item 12): the singlet's chain with no packet laid; one atom body standing excited at the Node `source` gives one quantum of the spin family by its one emission, the rate out of e into g at the `lifetime`, laid at its Node as a source in time over the lifetime at the transition's resonance (cos Omega = 5414 / 6000, the chain's wave k = pi / 4 on the band's line) on both parts alike, the emission act's lay across parts, and Rule3 carries the two beams to the two ends, where the singlet's two regions read them under the family's antisymmetric sign with the identity patterns at the four pairs of settings; the one meeting: the left side's click writes the realised port's coefficients into the record at its birth inside the run back, the cone runs forward with the realised term, and the right side reads the rewritten record where it stands. The giver's emission is the body's own draw at the hazard 1 / lifetime per dark interval with its own generator (ALGEBRA.md, The click writes on the lattice (5)); at the body's seed 0 the draw picks the emission at the interval 17 (the engine's own test of the births' book reads (17, [12, 0, 0]) on the singlet's chain), so the record is born at 17 and the source is laid over the 24 intervals from it. The regions' window is the world's one `window`, repeating: the left region reads in the first window, closing at 62 (the first levels at the left about the interval 26), before or as the right beam reaches its region (the first levels at the right about 62 to 75), and the right region reads in the second window, closing at 124, the run's end; a window with no inflow draws nothing. The run back's reach is the cone, the default (the worlds declared `reach: board` until 2026-10-20): the born pair's refusal at the cone's ring (the Node [3, 0, 0] at the interval 24) was the run back's remainders restored from the first pass's log at every crossed lay (`meeting_back.crossed`), found and fixed on 2026-10-20 (the reader's cold diff read, F3: a lay without an origin changes no remainder); the born pair runs under the cone's reach, equal to the board's run bit for bit (the two credit lines, the weights); the run back to the birth, the write there and the run forward with the realised term inside the record's own cone. The blind is the folder's, the singlet's exact fractions: they depend neither on the emission's interval nor on the portion of the beam a window reads, since the parts laid alike step alike and the common factor cancels in every share (ALGEBRA.md, The meeting's identity); the probe's arms belong to the singlet's waves and stand in the folder's blind alone.",
+ "family": "spin",
+ "window": [
+  1,
+  124
+ ],
+ "sides": {
+  "a": "left",
+  "b": "right"
+ },
+ "settings": {
+  "a": [
+   1,
+   0
+  ],
+  "a_prime": [
+   1,
+   1
+  ],
+  "b": [
+   12,
+   5
+  ],
+  "b_prime": [
+   5,
+   12
+  ]
+ },
+ "settings_declared_as": "axis",
+ "patterns": {
+  "a": [
+   [
+    1,
+    0
+   ],
+   [
+    0,
+    1
+   ]
+  ],
+  "b": [
+   [
+    1,
+    0
+   ],
+   [
+    0,
+    1
+   ]
+  ]
+ },
+ "exchange": "antisymmetric",
+ "superseded_pattern": [
+  [
+   0,
+   1
+  ],
+  [
+   -1,
+   0
+  ]
+ ],
+ "order": [
+  "a b",
+  "a b_prime",
+  "a_prime b",
+  "a_prime b_prime"
+ ],
+ "runs": {
+  "a b": "born_a_b",
+  "a b_prime": "born_a_b_prime",
+  "a_prime b": "born_a_prime_b",
+  "a_prime b_prime": "born_a_prime_b_prime"
+ },
+ "combination": {
+  "name": "S",
+  "signs": [
+   1,
+   -1,
+   1,
+   1
+  ]
+ },
+ "rule": "the joint share accumulated over the window on both members of the level pair in the sign's form: J(p_A, p_B) = SUM over the window and both members of |SUM_{k != l} sign(l - k) e_k^A(p_A) psi_k^A e_l^B(p_B) psi_l^B|^2, the determinant of the two sides' parts for the family's antisymmetric sign, psi_k the part's (re, im) sums at the side and e_k(+) = alpha_k c + beta_k s and e_k(-) = alpha_k (-s) + beta_k c from the declared axis (c, s) under the side's pattern, the identity on both sides (at two parts the same term by term as the symmetric form SUM_k c_k psi_k^A psi_k^B with the crossed pattern [[0, 1], [-1, 0]] on one side, the 3.0.0 declaration); E = (J_++ + J_-- - J_+- - J_-+) over the four summed; the window the whole passage, the credit's interval the window's close, the two ports drawn one after another by the sides on their own reads with the write at the birth, the realised pair the gate's; J is a sum of norms and never negative, so no floor is needed",
+ "seed": 24,
+ "blind": {
+  "correlation": {
+   "a b": [
+    -119,
+    169
+   ],
+   "a b_prime": [
+    119,
+    169
+   ],
+   "a_prime b": [
+    -120,
+    169
+   ],
+   "a_prime b_prime": [
+    -120,
+    169
+   ]
+  },
+  "marginals": {
+   "a b": {
+    "a": [
+     1,
+     2
+    ],
+    "b": [
+     1,
+     2
+    ]
+   },
+   "a b_prime": {
+    "a": [
+     1,
+     2
+    ],
+    "b": [
+     1,
+     2
+    ]
+   },
+   "a_prime b": {
+    "a": [
+     1,
+     2
+    ],
+    "b": [
+     1,
+     2
+    ]
+   },
+   "a_prime b_prime": {
+    "a": [
+     1,
+     2
+    ],
+    "b": [
+     1,
+     2
+    ]
+   }
+  },
+  "sub_correlations": {
+   "a b": {},
+   "a b_prime": {},
+   "a_prime b": {},
+   "a_prime b_prime": {}
+  },
+  "shares": {
+   "a b": {
+    "plus plus": [
+     25,
+     338
+    ],
+    "plus minus": [
+     72,
+     169
+    ],
+    "minus plus": [
+     72,
+     169
+    ],
+    "minus minus": [
+     25,
+     338
+    ]
+   },
+   "a b_prime": {
+    "plus plus": [
+     72,
+     169
+    ],
+    "plus minus": [
+     25,
+     338
+    ],
+    "minus plus": [
+     25,
+     338
+    ],
+    "minus minus": [
+     72,
+     169
+    ]
+   },
+   "a_prime b": {
+    "plus plus": [
+     49,
+     676
+    ],
+    "plus minus": [
+     289,
+     676
+    ],
+    "minus plus": [
+     289,
+     676
+    ],
+    "minus minus": [
+     49,
+     676
+    ]
+   },
+   "a_prime b_prime": {
+    "plus plus": [
+     49,
+     676
+    ],
+    "plus minus": [
+     289,
+     676
+    ],
+    "minus plus": [
+     289,
+     676
+    ],
+    "minus minus": [
+     49,
+     676
+    ]
+   }
+  },
+  "joint": {
+   "a b": {
+    "plus plus": [
+     25,
+     1
+    ],
+    "plus minus": [
+     144,
+     1
+    ],
+    "minus plus": [
+     144,
+     1
+    ],
+    "minus minus": [
+     25,
+     1
+    ]
+   },
+   "a b_prime": {
+    "plus plus": [
+     144,
+     1
+    ],
+    "plus minus": [
+     25,
+     1
+    ],
+    "minus plus": [
+     25,
+     1
+    ],
+    "minus minus": [
+     144,
+     1
+    ]
+   },
+   "a_prime b": {
+    "plus plus": [
+     49,
+     1
+    ],
+    "plus minus": [
+     289,
+     1
+    ],
+    "minus plus": [
+     289,
+     1
+    ],
+    "minus minus": [
+     49,
+     1
+    ]
+   },
+   "a_prime b_prime": {
+    "plus plus": [
+     49,
+     1
+    ],
+    "plus minus": [
+     289,
+     1
+    ],
+    "minus plus": [
+     289,
+     1
+    ],
+    "minus minus": [
+     49,
+     1
+    ]
+   }
+  },
+  "S": [
+   -478,
+   169
+  ],
+  "by_the_parts_shares": {
+   "correlation": {
+    "a b": [
+     119,
+     169
+    ],
+    "a b_prime": [
+     -119,
+     169
+    ],
+    "a_prime b": [
+     0,
+     1
+    ],
+    "a_prime b_prime": [
+     0,
+     1
+    ]
+   },
+   "S": [
+    238,
+    169
+   ],
+   "status": "theorem: each part's share credited alone is a product form, |S| at most 2; the lower fence (read over the parts with the identity patterns: its sign against the crossed pattern's flips, the magnitude 238 / 169 unchanged)",
+   "fence": "clicks"
+  },
+  "by_the_local_sums": {
+   "correlation": {
+    "a b": null,
+    "a b_prime": null,
+    "a_prime b": null,
+    "a_prime b_prime": null
+   },
+   "S": null,
+   "status": "not read for the born pair: the product form over two sides is defined where both sides read the same intervals, and here the right side reads in the window after the left's close; the blind carried the singlet's fence values until the run of 2026-10-20 showed the two forms undefined for sides closing in different windows; E, S and the marginals untouched, predicted before the run and matched",
+   "fence": "clicks"
+  },
+  "by_the_sign": {
+   "correlation": {
+    "a b": null,
+    "a b_prime": null,
+    "a_prime b": null,
+    "a_prime b_prime": null
+   },
+   "S": null,
+   "status": "not read for the born pair: the product form over two sides is defined where both sides read the same intervals, and here the right side reads in the window after the left's close; the blind carried the singlet's fence values until the run of 2026-10-20 showed the two forms undefined for sides closing in different windows; E, S and the marginals untouched, predicted before the run and matched",
+   "fence": "clicks"
+  },
+  "efficiency": "1, closed by construction: every pair is credited by the draw",
+  "status": "theorem under the declared credit (the one form of the click, the meeting, the pair's amplitude the determinant of the two sides' parts under the family's antisymmetric sign, the plain identity pattern on both sides): E(a, b) = -cos(theta_a - theta_b) exact in the integers' rationals at equal parts, the parts laid alike stepping alike by the determinism of Rule3; S = -478 / 169 with the CHSH signs, |S| = 478 / 169 = 2.8284, above 2 and below 2 sqrt 2 by 2.5 x 10^-5; every marginal 1 / 2 whatever the partner's axis; at equal axes the shares of (+, +) and (-, -) are 0 exactly, the anticorrelation; the numbers the crossed pattern's of 3.0.0 exactly, the determinant at two parts equal to the symmetric form with [[0, 1], [-1, 0]] on one side term by term; a gate of the engine and never a result (HIGHLIGHTS.md, One experiment and one gate)",
+  "fence": "clicks"
+ },
+ "born": {
+  "worlds": {
+   "a b": "born_a_b",
+   "a b_prime": "born_a_b_prime",
+   "a_prime b": "born_a_prime_b",
+   "a_prime b_prime": "born_a_prime_b_prime"
+  },
+  "giver": {
+   "family": "atom",
+   "node": [
+    12,
+    0,
+    0
+   ],
+   "standing_in": "e",
+   "rate": {
+    "from": "e",
+    "to": "g",
+    "lifetime": 24,
+    "gives_to": "spin"
+   },
+   "resonance": [
+    5414,
+    6000
+   ],
+   "seed": 0,
+   "seed_found": "the body's own draw: at the seed 0 the dark draw picks the emission at the interval 17 (the engine's test of the births' book on the singlet's chain), the record's birth; the fractions depend on no interval"
+  },
+  "emission": "the body's own draw at the hazard 1 / lifetime per dark interval with its own generator; at the design's seed the draw picks it at the interval 17, the record's birth (the births' book), and the source is laid over the lifetime on both parts alike (the lay across parts)",
+  "reach": "cone",
+  "windows": {
+   "left": [
+    1,
+    62
+   ],
+   "right": [
+    63,
+    124
+   ]
+  },
+  "order": [
+   "left",
+   "right"
+  ],
+  "arrivals_expected": {
+   "left": 26,
+   "right": 75
+  },
+  "credit_lines": [
+   {
+    "node_detector": "left",
+    "order": 1,
+    "count": 1,
+    "interval": 62
+   },
+   {
+    "node_detector": "right",
+    "order": 2,
+    "count": 1,
+    "interval": 124
+   }
+  ],
+  "correlation": {
+   "a b": [
+    -119,
+    169
+   ],
+   "a b_prime": [
+    119,
+    169
+   ],
+   "a_prime b": [
+    -120,
+    169
+   ],
+   "a_prime b_prime": [
+    -120,
+    169
+   ]
+  },
+  "S": [
+   -478,
+   169
+  ],
+  "status": "theorem under the law's paragraphs The meeting's reading and The meeting's identity: the left side draws at its own place on its own region's read with the Gram of the right side, its realised port's integer coefficients are written into the record at its birth inside the run back, the board runs forward with the realised term and carries it on to the right region, which draws coherently on the rewritten record where it stands; the two draws give the joint distribution J / SUM J, the gate's, E and S the folder's exactly, since the left side's coefficients take one nonzero magnitude on the surviving parts at both its settings ((1, 0) and (1, 1)), and the fractions depend neither on the emission's interval nor on the portion of the beam a window reads; the look of each world holds the passes of the run, the run back to the birth with its intervals decreasing, the write there, and the run forward",
+  "fence": "clicks"
+ }
+}
