@@ -36,20 +36,21 @@ def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and absorption no share), the receding face, the intervals."""
+    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap where the design declares one (what arrives there, read beside the screen; none since 2026-10-20: at the draw's window of one interval a region in a beam's path is an absorber by the law's own gate, the which-way channel in another name, and the gap region credited 171 quanta of the lower slit's beam), the receding face, the intervals."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
     node_detectors = screen_regions(design)
-    region = design["aside"]
-    node_detectors.append(
-        {
-            "name": str(region["name"]),
-            "positions": [
-                [x, y, 0]
-                for x in range(int(region["columns"][0]), int(region["columns"][1]) + 1)
-                for y in range(int(region["rows"][0]), int(region["rows"][1]) + 1)
-            ],
-        }
-    )
+    if "aside" in design:  # a bare region behind one gap, none since 2026-10-20
+        region = design["aside"]
+        node_detectors.append(
+            {
+                "name": str(region["name"]),
+                "positions": [
+                    [x, y, 0]
+                    for x in range(int(region["columns"][0]), int(region["columns"][1]) + 1)
+                    for y in range(int(region["rows"][0]), int(region["rows"][1]) + 1)
+                ],
+            }
+        )
     packet = design["packet"]
     return {
         "shape": [int(design["length"]), int(design["height"]), 1],
@@ -126,7 +127,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "laid": laid,
         "arrival": design["arrival"],
         "wings": design["wings"],
-        "aside": [str(design["aside"]["name"])],
+        "aside": [str(design["aside"]["name"])] if "aside" in design else [],
         "photons": {
             "label": "LATTICE",
             "per_count": round(
