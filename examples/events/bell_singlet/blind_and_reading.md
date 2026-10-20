@@ -337,3 +337,12 @@ moments, not this state; found and fixed on 2026-10-20 (the reader's cold diff r
 finding; the first observation on the drafts of the day read the second side's write at the pass-4
 birth over 25 Nodes about Node 12 on the (a, b) world, before the reader's ruling made that write
 the identity.)
+
+Held at the ninth (2026-10-20, the click's read of the board): the born four are refused by name at
+the interval 85 under the sixth commit of the read, at the atom's re-absorption of its own pair, the
+second draw of the interval below its total (8.2 x 10^14 left against 1.63 x 10^16; the emission's
+58.4 bits of the read's 65.3 leave 6.9 against the absorption's 53.9, the design read's count); the
+draws these four worlds showed before the ninth were the generator's, and their pages stand from
+before the read; the four are held and not deleted, the pair's birth the one declaration of the
+family's board, held for the seventh commit of the read, under which G's capped pass runs them
+whole, 124 intervals (2026-10-20; ALGEBRA.md, What a body reads).
