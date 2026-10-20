@@ -44,7 +44,7 @@
  },
  "intervals": 130,
  "draw": {
-  "window": 130
+  "window": 1
  },
  "channel": {
   "name": "which_way",
