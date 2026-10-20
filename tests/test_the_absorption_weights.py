@@ -5,9 +5,9 @@ import math
 from fractions import Fraction
 
 from event_universe import lists, meeting, world_files
+from event_universe.features.phase import quarter_turn
 from event_universe.lattice import Lattice
 from event_universe.resonance import unit_weight
-from event_universe.twist import quarter_turn
 from event_universe.world_files import load_world
 from tests.laws import TOOL
 from tests.laws_content import (
@@ -57,7 +57,8 @@ def test_the_weight_from_the_unit_is_checked_on_the_zeno_calibration(tmp_path):
     board = Lattice(
         load_world(content_world(tmp_path, "zeno_1", ZENO_1, ZENO_ATOM, content=False))
     )  # the deleted zeno_1, inlined; a load, no run
-    body, action, quarter = board.credit.bodies[0], board.world.quantum_action, quarter_turn(board)
+    body, action = board.credit.bodies[0], board.world.quantum_action
+    quarter = quarter_turn(board.amplitude, board.world.node_clock)
     transition, window = body.declared.transitions[0], body.declared.draw.window
     light, amplitude = board.families[transition.drive].pair, board.world.packets[0].amplitude
     zeno = unit_weight(quarter, window, action, light, transition.resonance)

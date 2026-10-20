@@ -64,10 +64,15 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "rotation_unit",
         "iterate",
     ): "R",  # the one carried act on a pair (the bisection around it S)
+    (
+        "features/phase/__init__.py",
+        "quarter_turn",
+        "division_forward",
+    ): "D",  # halving the quarter turn's span
+    ("features/phase/__init__.py", "quarter_turn", "iterate"): "R",  # the pair carried along the probe
     ("core/paces.py", "turn_factor", "rounded"): "D",  # the turn per interval, once
     # core/ports.py
     ("core/ports.py", "shifted", "%"): "D",  # the periodic index wrap, named exception
-    ("core/ports.py", "run_offsets", "%"): "D",  # the run's offsets around the ring
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
@@ -249,13 +254,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
     ("twist.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
-    ("twist.py", "quarter_turn", "division_forward"): "D",  # halving the quarter turn's span
-    (
-        "twist.py",
-        "quarter_turn",
-        "phase.iterate",
-    ): "R",  # the one carried act on a pair (the bisection around it S)
-    ("twist.py", "twisted", "division_forward"): "D",  # halving the twist's span, discarded
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     # flux.py, the step
@@ -307,7 +305,6 @@ R_OUTSIDE_THE_STEP = frozenset(
         ("node_detector.py", "clock_advanced", "division_forward"),  # the reader's clock remainder
         ("resonance.py", "window_pair", "phase.iterate"),  # the window's pair in the memo
         ("resonance.py", "hopped", "division_forward"),  # the labels' hop with its carries
-        ("twist.py", "quarter_turn", "phase.iterate"),  # the pair carried along the bisection's probe
     }
 )
 

@@ -305,6 +305,8 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
     coefficients, five = [list(port) for port in ports], [[(5, 0), (5, 0)], [(5, 0), (5, 0)]]
     assert meeting_back.side_weights(five, coefficients, [[1, 0], [0, 1]]) == [845, 845]
     assert meeting_back.side_weights(five, coefficients, [[1, 1], [1, 1]]) == [1445, 245]
+    with pytest.raises(ValueError, match="below 0: the Gram's form"):  # a sum of squares read negative
+        meeting_back.side_weights([[(-5, 0)]], [[(1, 0)]], [[1]])  # a moment booked below 0: a defect
     for a, b in ((BELL[0], BELL[2]), (BELL[1], BELL[3])):
         sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
         path = spin_world(

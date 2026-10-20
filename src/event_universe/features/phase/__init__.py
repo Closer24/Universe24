@@ -127,6 +127,19 @@ def amplitude(gamma: Any, width: int) -> int:
     return int(found)
 
 
+def quarter_turn(amplitude: int, gamma: int) -> int:
+    """The count of acts to the quarter turn, the largest n with the cosine line at or above 0, found by bisection on the phase line seeded at the amplitude X as `rotation_unit` finds the rest rotation (kind S), the pair carried along the probe: pi Gamma / 2 to the walk's bound, 9,424 at Gamma 6,000; the exclusivity bound reads it (`resonance.unit_weight`)."""
+    low, high, pair = 0, 2 * gamma, seed(amplitude, gamma)
+    while high - low > 1:
+        middle = int(division_forward(low + high, 2, 0)[0])
+        probe = iterate(pair, middle - low, gamma)
+        if int(read(probe)[0]) >= 0:
+            low, pair = middle, probe
+        else:
+            high = middle
+    return low
+
+
 # the rotation unit's seed: the phase line's amplitude of the hardware's width's size, 2^63 (the largest
 # multiple of Gamma below it, features/phase.seed asking a multiple of Gamma), in Python's integers at load;
 # the cosine line then resolves an angle to 2^-63 and the walk's standing Gamma / 2 levels lie far below one
