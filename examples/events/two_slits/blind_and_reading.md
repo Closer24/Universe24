@@ -129,3 +129,35 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | two_slits.json | run_inputs | books charge quanta | 1812 |
 | LATTICE | two_slits.json | run_inputs | books charge share | 1068675370105 |
 | LATTICE | two_slits.json | back_in_time | intervals 40 | MATCH |
+
+## The reading at the click's read of the board, the regions two columns deep and the window one interval (2026-10-20, the branch atom-arranged-read-declare on the click's read 9694937e2)
+
+The click's read of the board forms the draw's number from the record's remainders at the regions'
+Nodes, one digit per Node in the base w div F + 1 (26.69 bits at the content 60), and spends two
+draws per credited quantum, each of about 31 to 34 bits, so one close holds about 25 quanta per 64
+Nodes read; the beam's arrival at the screen reaches 26 quanta in one interval, so the shipped
+window 130 refused at 130 (522,643,899 left against 11,922,720,000) and the window 1 at the interval
+21 (7 left against 7,202,196,000), and the refusal's third remedy is taken: the screen's regions two
+columns deep (`screen_depth` 2, the columns 43 and 44, 96 Nodes beside the gap's 16), the back
+column carrying no inflow and drawing no click, with the window 1 (`draw.window`). One run whole,
+LAWFUL over 130 intervals, 72 closes, the largest 40 quanta at the interval 68 (the arrival's peak):
+the screen's twelve regions [38, 41, 58, 30, 10, 57, 85, 27, 33, 46, 43, 43], 511 quanta in the
+record's own unit (one quantum per credit, the count left 4,197 -> 3,515 with the gap's 171), the
+gap 171. Against the blind's counts [21, 20, 26, 15, 9, 40, 45, 16, 11, 25, 22, 25] in T's unit,
+brought to the record's own unit by `photons.per_count` 2.3204 (638) and to the read total 511: the
+blind [39.0, 37.2, 48.3, 27.9, 16.7, 74.3, 83.6, 29.7, 20.4, 46.5, 40.9, 46.5], the differences in
+the draw's scatter sqrt(N p (1 - p)) [-0.17, 0.65, 1.46, 0.41, -1.67, -2.17, 0.17, -0.52, 2.84,
+-0.07, 0.35, -0.53], every region within three, the worst the region 8 (the blind's second minimum,
+33 read against 20.4); the maxima 2, 6, 9 as the blind's, the minima 4 and 7 (27, the region 8 at
+33) against the blind's 4 and 8; click_counts' rounded shares over [45, 130] [12, 15, 20, 16, 6, 26,
+36, 11, 11, 20, 17, 21] at N 211 in T's unit (the credits over the same window 224 in that unit),
+its extrema 2, 6, 9 and 4, 7, 10. The quanta: 511 on the screen against the one-close reading 285 in
+T's unit (661 in the record's), about four fifths, every close flooring its quanta once over 72
+closes in place of one. Found, by name: the aside region `gap` behind the lower slit, 0 at the one
+close (no net inflow), credits 171 quanta at the window 1, the beam passing through it credited each
+interval and taken from the record, 4 percent of the lay and about a tenth of the lower slit's beam,
+so the two slits' pattern at the window 1 stands with the lower beam lightened (the regions 4 and 5
+at -1.67 and -2.17 scatters); the clean two slits at the window 1 are the which-way folder's
+two_gaps world, [29, 39, 48, 43, 11, 87, 74, 28, 31, 54, 37, 42], 523, within 2.79 scatters of this
+blind region by region (the worst the region 3). The aside region at the window 1 is the owner's
+decision; the readings are the engine's.

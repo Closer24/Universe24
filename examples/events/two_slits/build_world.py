@@ -23,12 +23,13 @@ from click_counts import extrema  # noqa: E402  # the one extrema rule, the read
 
 
 def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
-    """The screen's node_detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
+    """The screen's node_detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward, each `screen_depth` columns deep ending at the screen's column (1 where the key is absent; 2 since 2026-10-20: the click's read of the board spends two draws per credited quantum on the digits of the regions' Nodes, and the beam's arrival in one interval spent the one column's digits, so the column before the screen is read too, carrying no inflow and drawing no click)."""
     rows, column = int(design["rows_per_region"]), int(design["screen"])
+    columns = range(column - int(design.get("screen_depth", 1)) + 1, column + 1)
     return [
         {
             "name": f"screen_{index}",
-            "positions": [[column, row, 0] for row in range(first, first + rows)],
+            "positions": [[x, row, 0] for x in columns for row in range(first, first + rows)],
         }
         for index, first in enumerate(range(0, int(design["height"]), rows))
     ]
@@ -113,7 +114,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "across": "y",
         "pattern": [first, last],
         "spacing": design["spacing"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks. The regions two columns deep and the draw's window one interval since 2026-10-20 (the design's `screen_depth` and `draw.window`, the digits' budget of the click's read of the board: the arrival of 26 quanta in one interval against the digits of 64 Nodes), the clicks in the record's own unit one quantum each, the row's shape read against these counts brought to the clicks' total within the draw's scatter, the counts themselves standing as written.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,

@@ -259,3 +259,36 @@ reading in the gate's words and the value as its report prints it.
 | LATTICE | two_gaps.json | run_inputs | lines click | 1289 |
 | LATTICE | two_gaps.json | run_inputs | lines credit | 285 |
 | LATTICE | which_way.json | back_in_time | intervals 40 | MATCH |
+
+## The reading at the click's read of the board, the regions two columns deep and the window one interval (2026-10-20, the branch atom-arranged-read-declare on the click's read 9694937e2)
+
+The digits' budget (the two slits' folder, the same date): the two gaps' arrival reaches 20 quanta
+in one interval against the digits of 48 Nodes, refused at the interval 68 at the windows 130, 2 and
+1, so the design's screen regions are two columns deep (`screen_depth` 2, the columns 43 and 44; the
+channel's walls' Nodes in the column 43 left out, nothing standing on a face Node, the regions 3 and
+5 of seven Nodes) with the window 1 (`draw.window`), which held the one-gap and the which-way worlds
+alone at the depth 1 (their rows then [0, 0, 0, 0, 0, 27, 61, 33, 56, 40, 17, 44], 278, and [0, 0,
+0, 0, 306, 34, 48, 21, 43, 47, 22, 36], 251 on the screen and 306 in the channel). The three worlds
+rebuilt (two_gaps byte for byte as before, its regions holding no wall Node) and run whole, one run
+each, LAWFUL over 130 intervals: two_gaps [29, 39, 48, 43, 11, 87, 74, 28, 31, 54, 37, 42], 523 (71
+closes, the largest 35 at the interval 67); one_gap [0, 0, 1, 0, 0, 42, 69, 25, 38, 40, 31, 32], 278
+on the screen (58 closes, the largest 23); which_way [0, 0, 0, 0, 0, 35, 85, 33, 40, 33, 30, 21],
+277 on the screen and 262 in the channel (80 closes, the largest 29); one quantum per credit in the
+record's own unit, the count left 4,197 -> 3,674, 4,198 -> 3,920 and 4,198 -> 3,659. The comparison
+the blind asks: the which-way row against the one-gap row region by region, the differences in the
+draw's scatter sqrt(N p (1 - p)) with p pooled -1.41 (the region 2, 0 against 1), -1.21, 2.14, 1.57,
+0.35, -1.24, -0.19 and -2.24 at the regions 2 and 5 to 11, every one within three; the shadowed
+regions 0 to 3 read 0 in which_way and 0, 0, 1, 0 in one_gap (one quantum of 278 in the region 2);
+the channel 262 against the blind's 316.5 and the screens 277 and 278 against 316.5, two_gaps 523
+against 633, each about a sixth under, every close flooring its quanta once (58 to 80 closes in
+place of one), and a world's quanta sum to its record's credits. Against the two-gaps row at the two
+slits' extrema: at the minimum 8 two_gaps reads 31 of 523 (the share 0.059) where which_way reads 40
+of 277 (0.144) and one_gap 38 of 278 (0.137), the minimum filled; at the maxima 2, 6, 9 two_gaps 48,
+74, 54 (0.092, 0.141, 0.103) against which_way 0, 85, 33 (0, 0.307, 0.119) and one_gap 1, 69, 40
+(0.004, 0.248, 0.144); the visibility about the region 6 against the minimum 8, (r_6 - r_8) / (r_6 +
+r_8), 0.41 in two_gaps, 0.36 in which_way and 0.29 in one_gap, the two slits' second minimum filled
+in the one-gap rows and the first (the region 4) the channel's. The blind's rows for the shape and
+no fence: the read one-gap shape over the regions 5 to 11 [0.15, 0.25, 0.09, 0.14, 0.14, 0.11, 0.12]
+against the Huygens row's [0.08, 0.29, 0.07, 0.08, 0.24, 0.21, 0.09]. tests/test_the_draw.py's bound
+on the quanta (three halves of sqrt 633, 37.7, about the blind's 316.5) stands at the one close and
+not at the window 1 (the channel 54.5 and the screen 39.5 under), the per-close floor's cost named.

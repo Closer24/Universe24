@@ -21,14 +21,22 @@ ROOT = HERE.parents[2]
 
 
 def regions(design: dict[str, Any], channel: bool) -> list[dict[str, object]]:
-    """The screen's node_detectors, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
+    """The screen's node_detectors, the column `screen` in regions of `rows_per_region` rows named screen_0 upward, each `screen_depth` columns deep ending at the screen's column (1 where the key is absent; 2 since 2026-10-20: the click's read of the board spends two draws per credited quantum on the digits of the regions' Nodes, and the beam's arrival in one interval spent the one column's digits, so the column before the screen is read too, carrying no inflow and drawing no click; the channel's walls' Nodes in that column left out, a face Node standing for nothing), the channel's rows left to the channel where it stands, and the channel itself, every Node from the wall to the screen's column between its walls."""
     rows, column, height = int(design["rows_per_region"]), int(design["screen"]), int(design["height"])
+    columns = range(column - int(design.get("screen_depth", 1)) + 1, column + 1)  # the screen's depth
     low, high = (int(r) for r in design["channel"]["rows"])
+    walls = {int(r) for r in design["channel"]["walls"]} if channel else set()
+    first_wall, last_wall = (int(c) for c in design["channel"]["wall_columns"])
     found: list[dict[str, object]] = []
     for index, first in enumerate(range(0, height, rows)):
         if channel and low <= first <= high:
             continue
-        positions = [[column, row, 0] for row in range(first, first + rows)]
+        positions = [
+            [x, row, 0]
+            for x in columns
+            for row in range(first, first + rows)
+            if not (row in walls and first_wall <= x <= last_wall)  # the channel's walls' Nodes
+        ]
         found.append(
             {
                 "name": f"screen_{index}",
