@@ -216,6 +216,7 @@ def closed(board: Lattice) -> None:
         )  # a record gone: its next quantum a new birth (`credit.born` resets the write's books)
     books.passages.clear()
     books.left.clear()
+    books.bias.clear()
 
 
 def jumped(board: Lattice) -> None:
@@ -224,7 +225,7 @@ def jumped(board: Lattice) -> None:
     laid = {(whole.family, whole.at) for whole in board.world.wholes if whole.interval == board.interval}
     own = {b.number: sourcing(board, b) for b in board.credit.bodies}  # C5: read once per body
     for books in board.credit.bodies:
-        books.left = None  # the click's read of the board: one read per body per interval
+        books.left, books.bias = None, None  # the click's read of the board: one per body per interval
         levels = {
             t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions

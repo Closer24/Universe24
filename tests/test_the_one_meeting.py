@@ -474,6 +474,7 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "remainders",
         "passages",
         "left",
+        "bias",
         "patterns",
     }
     own = {
@@ -510,7 +511,7 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "units",
         "windows",
     ]
-    read = ["births", "left", "moments", "patterns", "sides", "support", "taken", "weights"]
+    read = ["bias", "births", "left", "moments", "patterns", "sides", "support", "taken", "weights"]
     cone = ["birth", "reference", "cone", "regrown", "stepped"]  # the cone's reach books these
     assert held == {
         "born_a_b": {

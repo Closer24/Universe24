@@ -140,6 +140,7 @@ def credited_node(
                 order,
                 scale,
                 board_count,
+                books.bias.get((index, side)),
             )
         )
     return [(at, ports)]

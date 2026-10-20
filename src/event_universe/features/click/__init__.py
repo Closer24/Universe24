@@ -25,10 +25,15 @@ def read_number(digits: Sequence[int], bases: Sequence[int]) -> int:
     return found
 
 
+def bias_bound(total: int, moduli: tuple[int, int]) -> list[int]:
+    """The bound of a draw's bias by the read's base (the reader's F of 2026-10-20): the total's gcd with the read's bases less one (modulo it the residue is the distinct digits' sum), its gcd with the last base (modulo it the last digit alone) and the total, so that g / T, g the product of the two, bounds a port's move where the digits cycle; (1, 1, T) for a quotient's draw, which carries no moduli."""
+    return [gcd(total, moduli[0]), gcd(total, moduli[1]), total]
+
+
 def drawn_from(
     number: int, weights: Sequence[int], label: str, moduli: tuple[int, int] = (1, 1)
 ) -> tuple[int, int]:
-    """One draw from the number the click read (ALGEBRA.md, The click's read of the board; `read_number`): among the weights (each at or above 0, their total T above 0, refused by name otherwise) one division act of the number by T, the remainder the pick placed on the cumulative weights in their declared order, the first index whose cumulative weight exceeds it (the lower index on a tie, a weight of 0 never drawn), and the quotient the number left for the close's next draw (the credited Node, the piece's source), returned with the index; one weight consumes nothing, the number returned whole; a number below T is refused by name, the digits read at `label` spent by the close's earlier draws (a residue of a number below T is no residue of the whole). Derived: a residue uniform on [0, T) falls in the cell of the index i with probability w_i / T exactly, Born with no 2^-width term; the equidistribution of the digits' combination modulo T is measured on the ensembles and not derived (the law's honest clause). A total sharing a factor with the read's bases less one or with its last base (`moduli`, the read's first draw, `digits.read_of`; the quotient's draws after it carry none) confines the residue modulo that factor to the digits' plain sum or to the last digit alone and moves a port's probability by at most the product g of the two gcds over T: a named bias where g stands below the smallest weight above 0, refused by name where it reaches it (the reader's D4 of 2026-10-20; the conversion's total 30 at the weight 1 refused, its draw dead)."""
+    """One draw from the number the click read (ALGEBRA.md, The click's read of the board; `read_number`): among the weights (each at or above 0, their total T above 0, refused by name otherwise) one division act of the number by T, the remainder the pick placed on the cumulative weights in their declared order, the first index whose cumulative weight exceeds it (the lower index on a tie, a weight of 0 never drawn), and the quotient the number left for the close's next draw (the credited Node, the piece's source), returned with the index; one weight consumes nothing, the number returned whole; a number below T is refused by name, the digits read at `label` spent by the close's earlier draws (a residue of a number below T is no residue of the whole). Derived: a residue uniform on [0, T) falls in the cell of the index i with probability w_i / T exactly, Born with no 2^-width term; the equidistribution of the digits' combination modulo T is measured on the ensembles and not derived (the law's honest clause). A total sharing a factor with the read's bases less one or with its last base (`moduli`, the read's first draw, `digits.read_of`; the quotient's draws after it carry none) reads its residue through the distinct digits' sum modulo the one gcd and the last digit modulo the other, exactly, and where the digits cycle a port's probability moves by at most g / T, g the product of the two gcds (`bias_bound`, booked on the click's line by the caller): a named bias, measured on the world's reads; the one draw refused by it is g = T with more than one weight above 0, the draw the digits' sum modulo the total alone (the reader's F of 2026-10-20, CHANGED the same day from the refusal where g reached the smallest weight, a model's worst case taken for a measure; the conversion's total 30 at the weight 1 refused, its draw dead)."""
     total = sum(int(weight) for weight in weights)
     if total <= 0:
         raise ValueError("the NodeDetector draws among weights whose total is above 0")
@@ -40,15 +45,13 @@ def drawn_from(
             f"{total}: the digits read are spent at this close by its earlier draws (a residue of a number below "
             "the total is no residue of the whole); a shorter window, fewer quanta per close or more Nodes read"
         )
-    summed, last = gcd(total, moduli[0]), gcd(total, moduli[1])  # the factors the total shares
-    smallest = min(int(weight) for weight in weights if int(weight) > 0)
-    if summed * last > 1 and summed * last >= smallest:
+    summed, last, _total = bias_bound(total, moduli)
+    if summed * last == total and sum(1 for weight in weights if int(weight) > 0) > 1:
         raise RuntimeError(
-            f"the click's read of the board at {label}: the draw's total {total} shares {summed} with the read's "
-            f"bases less one and {last} with its last base, the product {summed * last} at or above the smallest "
-            f"weight {smallest}: the residue modulo a shared factor is the digits' plain sum or the last digit "
-            "alone, a bias at the weights' own resolution, so the draw is refused; a total coprime to the bases "
-            "and to the bases less one reads the whole number"
+            f"the click's read of the board at {label}: the draw's total {total} is the product of its gcd "
+            f"{summed} with the read's bases less one and its gcd {last} with its last base, so the draw is the "
+            "digits' sum modulo the total alone (and the last digit modulo the base's factor), no uniform part "
+            "left to place: the draw is refused"
         )
     left, residue = division_forward(int(number), total, 0)
     reached = 0

@@ -12,7 +12,7 @@ from event_universe import digits, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.credit import Books
-from event_universe.features.click import drawn_from, read_number
+from event_universe.features.click import bias_bound, drawn_from, read_number
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
 from event_universe.meeting_back import first_difference, snapshot
@@ -135,20 +135,24 @@ def test_the_residue_and_the_quotient_of_one_number_are_independent():
     assert len({(x % 6, x % 10) for x in range(60)}) == 30  # the same residue twice: locked pairs
 
 
-def test_a_total_sharing_a_factor_with_the_bases_is_a_named_bias_below_the_smallest_weight_and_refused_at_it():
-    """The reader's D4 of 2026-10-20 (`drawn_from` with the read's moduli, `digits.read_of`): at the shipped content the base is B = w div F + 1 = 108,000,001 = 31 x 1069 x 3259 and B - 1 = 108,000,000 = 2^8 3^3 5^6, so the residue modulo a factor of B - 1 is the digits' plain sum and modulo a factor of B the last digit alone, and the product g of the two gcds bounds a port's move over T: the conversion's total 30 at the weight 1 (g = 30) and the base's prime 31 at the weight 1 (g = 31) refused by name with the two gcds named; a total coprime to both (97), a small shared factor below the smallest weight (194 = 2 x 97 at the weights 97, g = 2) and a total of 1 admitted, the residue placed as before; the quotient's draws carry no moduli and admit the refused totals."""
+def test_a_total_sharing_a_factor_with_the_bases_books_its_bias_bound_and_is_refused_only_as_the_whole_total():
+    """The reader's F of 2026-10-20 (`bias_bound`, `drawn_from` with the read's moduli, `digits.read_of`; CHANGED the same day from D's refusal where the product of the two gcds reached the smallest weight, a model's worst case taken for a measure): at the shipped content the base is B = w div F + 1 = 108,000,001 = 31 x 1069 x 3259 and B - 1 = 108,000,000 = 2^8 3^3 5^6, so the residue modulo a factor of B - 1 is the distinct digits' sum and modulo a factor of B the last digit alone, and g / T, g the product of the two gcds, bounds a port's move where the digits cycle: the bound is booked, [g_sum, g_last, T], and the one draw refused is g = T with two weights above 0, the digits' sum modulo the total alone (the conversion's total 30 at the weight 1, and the base's prime 31 at the weight 1), named so; the screens' class (the total 66,120,000 at the smallest weight 24,000, g = 120,000), a small factor (194 = 2 x 97), a total coprime to both (97) and a certain draw (one weight above 0, g = T = 5) are drawn as before, the residue placed on the weights; the quotient's draws carry no moduli."""
     moduli, number = (108_000_000, 108_000_001), 10**30 + 12345
-    for weights, (summed, last) in (([1, 29], (30, 1)), ([1, 30], (1, 31))):
-        with pytest.raises(
-            RuntimeError, match=f"shares {summed} with the read's bases less one and {last}"
-        ):
+    assert bias_bound(66_120_000, moduli) == [
+        120_000,
+        1,
+        66_120_000,
+    ]  # the two slits' bound 0.18 percent
+    assert bias_bound(30, moduli) == [30, 1, 30] and bias_bound(31, moduli) == [1, 31, 31]
+    for weights in ([1, 29], [1, 30]):
+        with pytest.raises(RuntimeError, match="the draw is the digits' sum modulo the total alone"):
             drawn_from(number, weights, "the test", moduli)
         total = sum(weights)
         assert drawn_from(number, weights, "the test") == (
             placed(number % total, weights),
             number // total,
         )
-    for weights in ([48, 49], [97, 97], [1, 0]):
+    for weights in ([24_000, 66_096_000], [97, 97], [48, 49], [5, 0], [1, 0]):
         total = sum(weights)
         found = drawn_from(number, weights, "the test", moduli)
         assert found == (placed(number % total, weights), number // total)

@@ -170,7 +170,8 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     keys = "event label interval family node_detector window proper windows before realised kept"
     words = f"{keys} count left absorbed emitted momentum fan twist shortfall lost source recoil"
     report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
-    assert all(set(c) == report and c["label"] == "NODEDETECTOR" for c in credits)  # never a Node
+    assert all(set(c) - {"bias_bound"} == report and c["label"] == "NODEDETECTOR" for c in credits)
+    assert all(c["bias_bound"]["g"] < c["bias_bound"]["total"] for c in credits if "bias_bound" in c)
     holes = [f for f in lines if f["event"] == "face" and f["interval"] == 81]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
     differing = {

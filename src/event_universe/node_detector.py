@@ -13,7 +13,7 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.digits import read_of
-from event_universe.features.click import drawn_from, spread, squared
+from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
@@ -50,7 +50,7 @@ class Passage:
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, per Node and per Port, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights by their sums and the hole's Port set by the Ports (`arrival_ports`), `passages` per arriving family its momentum terms and its share at the region summed over the window, the piece's two sums (`Passage`, C4), and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C); `left`, the number the click's read of the board left after the body's last draw of the interval, None before its first (`picked`, emptied every interval, `meeting.jumped`); `deferred`, whether an emission's draw of the window found every digit at the lay's origin or the body's number below the row's total (`carries`), so the emission falls at the window's close (`meeting.emission_fell`, cleared as the window begins again). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis, `shortfall` what the fold could not give per axis, s_a = |p_a| - gain_a at or above 0 (the click's plan, C3; `twist.twisted`), and `lost` the readings of who lost it; Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, per Node and per Port, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights by their sums and the hole's Port set by the Ports (`arrival_ports`), `passages` per arriving family its momentum terms and its share at the region summed over the window, the piece's two sums (`Passage`, C4), and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C); `left`, the number the click's read of the board left after the body's last draw of the interval, None before its first (`picked`, emptied every interval, `meeting.jumped`); `deferred`, whether an emission's draw of the window found every digit at the lay's origin or the body's number below the row's total (`carries`), so the emission falls at the window's close (`meeting.emission_fell`, cleared as the window begins again); `bias`, the bias bound of the interval's first draw, booked on the body's click line (`features/click.bias_bound`). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis, `shortfall` what the fold could not give per axis, s_a = |p_a| - gain_a at or above 0 (the click's plan, C3; `twist.twisted`), and `lost` the readings of who lost it; Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
 
     number: int
     index: int
@@ -81,10 +81,9 @@ class NodeBooks:
     recoil: list[int] | None = (
         None  # Part G: the source's p per axis, the fold given (`twist.folded_source`)
     )
-    left: int | None = (
-        None  # the click's read of the board: the number left within the interval (`picked`)
-    )
+    left: int | None = None  # the read's number left within the interval (`picked`)
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
+    bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -239,6 +238,7 @@ def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
     label = body_label(board, books)
     if books.left is None:  # the interval's first draw reads the board, the number's moduli with it
         number, moduli = read_of(board, read_families(books), board.mask(books.nodes), label)
+        books.bias = bias_bound(sum(weights), moduli)  # booked on the body's click line
         pick, books.left = drawn_from(number, weights, label, moduli)
         return pick
     pick, books.left = drawn_from(books.left, weights, label)
@@ -257,6 +257,7 @@ def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None
         )
         assert at is not None  # a side is a declared region with its Nodes
         number, moduli = read_of(board, [index], at, label)
+        books.bias[(index, side)] = bias_bound(sum(weights), moduli)  # booked on the side's line
         pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
         return pick
     pick, books.left[(index, side)] = drawn_from(books.left[(index, side)], weights, label)
@@ -352,6 +353,7 @@ def reported(
         books.lost,
         books.source,
         books.recoil,
+        bias=books.bias,
     )
     board.output(line)
 

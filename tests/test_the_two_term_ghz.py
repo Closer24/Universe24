@@ -67,8 +67,9 @@ def run_digest(folder: str, name: str) -> tuple[str, str, int]:
     for _ in range(board.world.intervals):
         board.step()
     found = hashlib.sha256()
-    for line in lines:
-        found.update(json.dumps(line, sort_keys=True, default=str).encode())
+    for line in lines:  # the sixth's bias booking aside, the line the ninth wrote
+        kept = {k: v for k, v in line.items() if k != "bias_bound"}
+        found.update(json.dumps(kept, sort_keys=True, default=str).encode())
     return found.hexdigest()[:16], digest(board)[:16], len(lines)
 
 
