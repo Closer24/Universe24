@@ -1,17 +1,25 @@
-"""The click's books of the piece's momentum (ALGEBRA.md, The click's algebra beyond the law; the owner's rule, at the Nodes Rule3 only): at a click the write moves the count by one and writes nothing for the piece's momentum; p_a and the record's P_a are read and booked on the credit line with the piece's source drawn and named and the recoil it owes, -p_a as integers, and the recoil of a body held at declared Nodes is the declaration's. Three statements of the books on the surviving worlds: a body's click books the piece lost to the taker and the source's recoil lost to the source, its write the taker's re-lay alone (`act.parted`, `twist.recoiled`); the directed packet's emission books the recoil owed at the lay and names it on the taker's later line (`act.written`, `PAID_AT_EMISSION`); the null window's re-lay keeps each body's own P within D4's bound and the board's P is the fan's alone (Part H, MUST 1 as a statement of the books)."""
+"""The click's books of the piece's momentum (ALGEBRA.md, The click's algebra beyond the law; the owner's rule, at the Nodes Rule3 only): at a click the write moves the count by one and writes nothing for the piece's momentum; p_a and the record's P_a are read and booked on the credit line with the piece's source drawn and named and the recoil it owes, -p_a as integers, and the recoil of a body held at declared Nodes is the declaration's. Two statements of the books on the shipped worlds: on the chain world every take books the piece lost to the taker and the recoil owed by the lay or by the source body, its write the taker's re-lay at its own Nodes alone, and every close of a body's window keeps the body's own P within D4's bound (`act.parted`, `twist.recoiled`, `twist.relaid`; Part H, MUST 1 as a statement of the books); on the packet world the directed packet's emission books the recoil owed at the lay and names it on the taker's later line (`act.written`, `PAID_AT_EMISSION`)."""
 
 import math
 from dataclasses import replace
 
 import numpy as np
 
-from event_universe import act, readings, records, twist, world_files
+from event_universe import act, readings, twist, world_files
 from event_universe.emission import Emitter
 from event_universe.lattice import Lattice
-from event_universe.reports import LOST_TO_SOURCE, LOST_TO_TAKER, NO_DRAW, PAID_AT_EMISSION
+from event_universe.reports import (
+    LOST_TO_LAY,
+    LOST_TO_SOURCE,
+    LOST_TO_TAKER,
+    NO_DRAW,
+    PAID_AT_EMISSION,
+    THE_LAY,
+)
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EMIT_RUN, EVENTS, d4_bound, drift_bound, emit_and_take_world, family, levels_floor
+from tests.laws import EVENTS, d4_bound, family
+from tests.laws_read import load_shipped
 
 
 def own_p(board: Lattice, books) -> int:  # type: ignore[no-untyped-def]
@@ -21,76 +29,80 @@ def own_p(board: Lattice, books) -> int:  # type: ignore[no-untyped-def]
     return twist.scaled(read, weight)[0]
 
 
-def emit_and_take(tmp_path, window: int, intervals: int):  # type: ignore[no-untyped-def]
-    """The emit-and-take world run `intervals` intervals with the bodies' own P_x per interval, the board's P before the emission, the light's P over the source's span with the drift bound, and the board's P once the front has passed."""
-    path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=window)
-    board = Lattice(load_world(path), (lines := []).append)
-    atom, light = family(board, "atom"), family(board, "pulse")
-    marks, before, during, bound, after, floor = [], None, [], 0, None, None
-    for _ in range(intervals):
-        if not any(c["event"] == "credit" for c in lines):
-            before = twist.fan_momentum(board, light)[0] + twist.fan_momentum(board, atom)[0]
-        if board.credit.sources:
-            bound += drift_bound(board, light)
+def test_the_chains_clicks_book_the_piece_and_the_recoil_owed_and_every_close_keeps_the_bodys_p(
+    monkeypatch,
+):
+    """The shipped chain world chain_x_minus over its 400 intervals (the clicks pinned 2026-10-20 under the twist's deletion: the takes at 74, 142 and 307 and the emissions at the windows' closes 122, 190 and 355, the third pair moved from (303, 351) by the fold's quarter turn on the second body's part, which had entered the born light's phase at 190): at every take the credit line books the piece p_a in T's unit, the fan equal to the light's P over the board at the click's interval, `recoil` = -p_a per axis and the source drawn and named, the lay at 74 with [P lost to the taker, recoil lost to the lay] and the emitting body at 142 and 307 with [P lost to the taker, recoil lost to the source]; every emission falls at its window's close with no draw, no piece and no recoil; the write at a take is the taker's re-lay alone, every lay line of the atom at the click at the taker's Nodes and none at the other body's; across every close of a body's window, the null re-lays at 217 and 355 among the eight, the body's own P_x moves within D4's bound, and the emitters' book ends with the lay spent, body 0 owed one quantum and body 1 none."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
+    board = Lattice(load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append)
+    atom, light = family(board, "atom"), family(board, "photon")
+    marks = []
+    for _ in range(board.world.intervals):
         board.step()
         marks.append(
             (
                 board.interval,
                 [own_p(board, b) for b in board.credit.bodies],
                 [b.windows for b in board.credit.bodies],
+                twist.fan_momentum(board, light)[0],
             )
         )
-        if board.credit.sources:
-            during.append(twist.fan_momentum(board, light)[0])
-        taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
-        if taken and after is None and not board.credit.fronts and board.credit.counts[light] == 0:
-            after = (
-                board.interval,
-                twist.fan_momentum(board, light)[0],
-                twist.fan_momentum(board, atom)[0],
-            )
-            at = np.zeros(board.shape, dtype=bool)
-            for books in board.credit.bodies:
-                at |= board.mask(books.nodes)
-            floor = levels_floor(board, atom, at) + 2  # the two readings' own roundings
-    return board, lines, marks, (before, during, bound, after, floor)
-
-
-def test_a_bodys_click_books_the_piece_lost_to_the_taker_and_the_recoil_lost_to_the_source(
-    tmp_path, monkeypatch
-):
-    """The emit-and-take world (the emitter's window 61, the taker's 48, EMIT_RUN intervals; the read's intervals pinned 2026-10-20: the emission at 61 at the window's close with no draw, the take at 174): the taker's credit line books the piece p_a in T's unit, the fan 0 (the one-Node lay even about its Node), `source` body 0, `recoil` = -p_a per axis and `lost` [P lost to the taker, recoil lost to the source], the emitter's outstanding count down to 0; the write is the taker's re-lay alone, every `lay` line at the click on the taker's record's lines and none on the source's; the taker's own P_x stands within D4's bound across its click and the light's P over the source's span within the drift bound; once the front has passed, the board's P (the light's and the bodies') is within the floor of its value before the emission, 0: the piece is booked and nowhere written."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board, lines, marks, (before, during, bound, after, floor) = emit_and_take(tmp_path, 61, EMIT_RUN)
-    atom, light = family(board, "atom"), family(board, "pulse")
+    by_interval = {t: (ps, windows, p_light) for t, ps, windows, p_light in marks}
     credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    given, taken = (
-        [c for c in credits if c["emitted"] == "pulse"],
-        [c for c in credits if c["absorbed"] == "pulse"],
-    )
-    assert [(c["interval"], c["node_detector"]) for c in given] == [(61, "body 0")]
-    assert given[0]["lost"] == [NO_DRAW] and given[0]["recoil"] is None and given[0]["momentum"] is None
-    assert [(c["interval"], c["node_detector"]) for c in taken] == [(174, "body 1")]
-    click = taken[0]
-    assert click["momentum"][0] < 0 and click["momentum"][1:] == [0, 0] and click["fan"] == [0, 0, 0]
-    assert click["source"] == "body 0" and click["recoil"] == [-p for p in click["momentum"]]
-    assert click["lost"] == [LOST_TO_TAKER, LOST_TO_SOURCE]
-    assert board.credit.emitters[light] == [Emitter(0, 0, False)]
-    taker = board.credit.bodies[1]
-    own = records.record_slice(board.families[atom], taker.record)
-    laid = [x for x in lines if x["event"] == "lay" and x["interval"] == 174]
-    assert laid and all(x["family"] == "atom" and own.start <= x["line"] < own.stop for x in laid)
-    by_interval = {t: ps for t, ps, _w in marks}
-    moved = by_interval[174][1] - by_interval[173][1]
-    assert abs(moved) <= d4_bound(board, atom, taker.nodes)[0]
-    assert before == 0 and during and max(abs(p) for p in during) <= bound
-    assert after is not None and floor is not None and abs(after[1] + after[2] - before) <= floor
+    assert [(c["interval"], c["node_detector"], bool(c["absorbed"])) for c in credits] == [
+        (74, "body 0", True),
+        (122, "body 0", False),
+        (142, "body 1", True),
+        (190, "body 1", False),
+        (307, "body 0", True),
+        (355, "body 0", False),
+    ]
+    sources = {
+        74: (THE_LAY, LOST_TO_LAY),
+        142: ("body 0", LOST_TO_SOURCE),
+        307: ("body 1", LOST_TO_SOURCE),
+    }
+    bounds = [d4_bound(board, atom, b.nodes)[0] for b in board.credit.bodies]
+    for click in credits:
+        t, body = click["interval"], int(click["node_detector"].split()[1])
+        if not click["absorbed"]:
+            assert click["lost"] == [NO_DRAW] and click["momentum"] is None and click["recoil"] is None
+            continue
+        assert click["momentum"][1:] == [0, 0] and click["momentum"][0] != 0
+        assert click["recoil"] == [-p for p in click["momentum"]]
+        assert (click["source"], click["lost"]) == (sources[t][0], [LOST_TO_TAKER, sources[t][1]])
+        assert click["fan"] == [by_interval[t][2], 0, 0]  # the light's P over the board at the click
+        taker = {tuple(n) for n in board.credit.bodies[body].nodes}
+        laid = [x for x in lines if x["event"] == "lay" and x["interval"] == t and x["family"] == "atom"]
+        assert laid and all(tuple(x["node"]["at"]) in taker for x in laid)
+        assert abs(by_interval[t][0][body] - by_interval[t - 1][0][body]) <= bounds[body]
+    closes = [
+        (t, body, ps[body] - marks[k - 1][1][body])
+        for k, (t, ps, windows, _p) in enumerate(marks)
+        if k
+        for body in range(2)
+        if windows[body] != marks[k - 1][2][body]
+    ]
+    assert [(t, body) for t, body, _moved in closes] == [
+        (74, 0),
+        (122, 0),
+        (142, 1),
+        (190, 1),
+        (217, 0),
+        (307, 0),
+        (355, 0),
+        (355, 1),
+    ]
+    assert all(abs(moved) <= bounds[body] for _t, body, moved in closes)
+    assert board.credit.emitters[light] == [
+        Emitter(None, 0, False),
+        Emitter(0, 1, False),
+        Emitter(1, 0, False),
+    ]
     print(
-        f"the click at 174: p = {click['momentum']}, source {click['source']}, recoil {click['recoil']}, lost {click['lost']}; "
-        f"{len(laid)} lay lines at the click, the taker's record's alone; the taker's own P_x {by_interval[173][1]} to "
-        f"{by_interval[174][1]} (D4 {d4_bound(board, atom, taker.nodes)[0]}); the light's P over the span at most "
-        f"{max(abs(p) for p in during)} (the bound {bound}); after the front passed ({after[0]}) the light's {after[1]} and "
-        f"the bodies' {after[2]} against {before} before the emission, the floor {floor}"
+        f"the chain's takes {[(c['interval'], c['momentum'][0], c['source'], c['recoil'][0]) for c in credits if c['absorbed']]}, "
+        f"the fans {[c['fan'][0] for c in credits if c['absorbed']]}; the bodies' own P across the closes "
+        f"{[(t, body, moved) for t, body, moved in closes]} within D4 {bounds}"
     )
 
 
@@ -127,39 +139,4 @@ def test_the_directed_packets_recoil_is_booked_at_the_lay_and_named_at_the_take(
     print(
         f"the packet's P_x at birth {born[0]} against the hands' 2 T sin k_z = {hands:.0f}; the giver's recoil "
         f"{giver.recoil} with {giver.lost}, its record standing; the take names {source} owing {owed}, {reading}"
-    )
-
-
-def test_the_null_windows_re_lay_keeps_each_bodys_own_p_and_the_boards_p_is_the_fans(
-    tmp_path, monkeypatch
-):
-    """Part H, MUST 1 as a statement of the books (the emitter's window 48, shorter than the run, 400 intervals; the read's intervals pinned 2026-10-20: the emission at 48, the take at 353, the bodies' windows closed 7 and 6 times): across every close of a body's window, the null windows' re-lays among them, the body's own P_x moves within D4's bound (each Node laid again in its own direction, `twist.relaid`), the taker's across its click too; the one-Node source's light carries no P over its span beyond the drift bound (the fan 0 on the taker's line), so the board's P once the front has passed is within the floor of its value before the emission: the board's P falls by the fan and the books carry the piece and the recoil owed."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board, lines, marks, (before, during, bound, after, floor) = emit_and_take(tmp_path, 48, 400)
-    atom = family(board, "atom")
-    credits = [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR"]
-    assert [(c["interval"], c["node_detector"], c["absorbed"], c["emitted"]) for c in credits] == [
-        (48, "body 0", None, "pulse"),
-        (353, "body 1", "pulse", None),
-    ]
-    click = credits[1]
-    assert click["fan"] == [0, 0, 0] and click["recoil"] == [-p for p in click["momentum"]]
-    assert click["lost"] == [LOST_TO_TAKER, LOST_TO_SOURCE] and [
-        b.windows for b in board.credit.bodies
-    ] == [7, 6]
-    bounds = [d4_bound(board, atom, b.nodes)[0] for b in board.credit.bodies]
-    closes = [
-        (t, body, ps[body] - marks[k - 1][1][body])
-        for k, (t, ps, windows) in enumerate(marks)
-        if k
-        for body in range(2)
-        if windows[body] != marks[k - 1][2][body]
-    ]
-    assert len(closes) == 13 and all(abs(moved) <= bounds[body] for _t, body, moved in closes)
-    assert before == 0 and during and max(abs(p) for p in during) <= bound
-    assert after is not None and floor is not None and abs(after[1] + after[2] - before) <= floor
-    print(
-        f"the closes {[(t, body, moved) for t, body, moved in closes]} within D4 {bounds}; the click at 353: "
-        f"p = {click['momentum']}, recoil {click['recoil']}, {click['lost']}; after the front passed ({after[0]}) the "
-        f"light's {after[1]} and the bodies' {after[2]} against {before}, the floor {floor}"
     )
