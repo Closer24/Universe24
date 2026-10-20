@@ -239,8 +239,10 @@ def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
     if len(weights) == 1:
         return 0  # one weight consumes nothing and reads nothing
     label = f"the body {books.number} of {board.families[books.index].name!r} at the interval {board.interval}"
-    if books.left is None:
-        books.left = read_of(board, read_families(books), board.mask(books.nodes), label)
+    if books.left is None:  # the interval's first draw reads the board, the number's moduli with it
+        number, moduli = read_of(board, read_families(books), board.mask(books.nodes), label)
+        pick, books.left = drawn_from(number, weights, label, moduli)
+        return pick
     pick, books.left = drawn_from(books.left, weights, label)
     return pick
 
@@ -249,14 +251,16 @@ def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None
     """The region NodeDetectors' draw of a place, the click's read of the board at the regions' Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): a side of a record of several parts (`side`, the region's name) reads the record's digits at its own region at its first draw of the close, before its write, into the number left (`credit.Books.left`, per record and side, emptied at the close, `meeting.closed`), and a record of one part reads its digits at the union of the declared regions' Nodes (`node_detector_nodes`) at the first draw of the close; every later draw of the close is one division act on the number left, the side's port by its own second moments (`lists.readings`), the region by the window's shares, the boundary Node by the inflows per Node and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`), the remainder the pick and the quotient the number left; one weight consumes nothing."""
     books, family = board.credit, board.families[index]
     label = f"{'the regions' if side is None else f'the side {side!r}'} of {family.name!r} at the interval {board.interval}"
-    if (index, side) not in books.left:
+    if (index, side) not in books.left:  # the close's first draw reads the board, its moduli with it
         at = (
             node_detector_nodes(board)
             if side is None
             else next(d.nodes for d in board.node_detectors if d.name == side)
         )
         assert at is not None  # a side is a declared region with its Nodes
-        books.left[(index, side)] = read_of(board, [index], at, label)
+        number, moduli = read_of(board, [index], at, label)
+        pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
+        return pick
     pick, books.left[(index, side)] = drawn_from(books.left[(index, side)], weights, label)
     return pick
 

@@ -50,7 +50,7 @@ def spied(monkeypatch, board_of):  # type: ignore[no-untyped-def]
     seen: list[dict] = []  # type: ignore[type-arg]
     real = node_detector.drawn_from
 
-    def spy(number, weights, label):  # type: ignore[no-untyped-def]
+    def spy(number, weights, label, *moduli):  # type: ignore[no-untyped-def]
         board = board_of()
         words = label.split("'")
         if label.startswith("the side "):
@@ -64,7 +64,7 @@ def spied(monkeypatch, board_of):  # type: ignore[no-untyped-def]
             drives = list(dict.fromkeys(t.drive for t in books.declared.transitions))
             read, at = [*drives, books.index], board.mask(books.nodes)
         own, walls = digits_now(board, read, at)
-        pick, left = real(number, weights, label)
+        pick, left = real(number, weights, label, *moduli)
         seen.append(
             dict(
                 label=label,
@@ -125,6 +125,25 @@ def test_the_residue_and_the_quotient_of_one_number_are_independent():
         assert (pick, again) == (placed(x % 6, first), placed(left % 10, second))
     assert len(counts) == 60 and set(counts.values()) == {7}
     assert len({(x % 6, x % 10) for x in range(60)}) == 30  # the same residue twice: locked pairs
+
+
+def test_a_total_sharing_a_factor_with_the_bases_is_a_named_bias_below_the_smallest_weight_and_refused_at_it():
+    """The reader's D4 of 2026-10-20 (`drawn_from` with the read's moduli, `digits.read_of`): at the shipped content the base is B = w div F + 1 = 108,000,001 = 31 x 1069 x 3259 and B - 1 = 108,000,000 = 2^8 3^3 5^6, so the residue modulo a factor of B - 1 is the digits' plain sum and modulo a factor of B the last digit alone, and the product g of the two gcds bounds a port's move over T: the conversion's total 30 at the weight 1 (g = 30) and the base's prime 31 at the weight 1 (g = 31) refused by name with the two gcds named; a total coprime to both (97), a small shared factor below the smallest weight (194 = 2 x 97 at the weights 97, g = 2) and a total of 1 admitted, the residue placed as before; the quotient's draws carry no moduli and admit the refused totals."""
+    moduli, number = (108_000_000, 108_000_001), 10**30 + 12345
+    for weights, (summed, last) in (([1, 29], (30, 1)), ([1, 30], (1, 31))):
+        with pytest.raises(
+            RuntimeError, match=f"shares {summed} with the read's bases less one and {last}"
+        ):
+            drawn_from(number, weights, "the test", moduli)
+        total = sum(weights)
+        assert drawn_from(number, weights, "the test") == (
+            placed(number % total, weights),
+            number // total,
+        )
+    for weights in ([48, 49], [97, 97], [1, 0]):
+        total = sum(weights)
+        found = drawn_from(number, weights, "the test", moduli)
+        assert found == (placed(number % total, weights), number // total)
 
 
 def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
@@ -210,7 +229,7 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     with pytest.raises(RuntimeError, match="finds every digit on the lattice of the exact vacuum paces"):
         digits.read_of(board, [photon], at, "the test")
     before = snapshot(board)
-    number = digits.read_of(board, [photon, atom], at, "the test")
+    number, _moduli = digits.read_of(board, [photon, atom], at, "the test")
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
     own, walls = digits_now(board, [photon, atom], at)
     assert (
@@ -347,9 +366,9 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         board, standing = Lattice(load_shipped(EVENTS / "bell" / f"{name}.json")), []
         seen, spy = spied(monkeypatch, lambda board=board: board), node_detector.drawn_from
 
-        def noted(number, weights, label, board=board, standing=standing, spy=spy):  # type: ignore[no-untyped-def]
+        def noted(number, weights, label, *moduli, board=board, standing=standing, spy=spy):  # type: ignore[no-untyped-def]
             standing.append(list(board.credit.written.get(family(board, "light_pair"), [1, 1])))
-            return spy(number, weights, label)
+            return spy(number, weights, label, *moduli)
 
         monkeypatch.setattr(node_detector, "drawn_from", noted)
         for _ in range(board.world.intervals):
