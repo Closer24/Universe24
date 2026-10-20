@@ -16,6 +16,7 @@ from event_universe.features.click import drawn_from, read_number
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
 from event_universe.meeting_back import first_difference, snapshot
+from event_universe.records import Record
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, family, refused, world_beside
 from tests.laws_read import load_shipped
@@ -29,8 +30,10 @@ def placed(residue: int, weights: list[int]) -> int:
     return next(i for i in range(len(weights)) if residue < sum(weights[: i + 1]))
 
 
-def digits_now(board: Lattice, families: list[int], at: np.ndarray) -> tuple[list[int], list[int]]:
-    """The digits and their bases by the test's own arithmetic of the declared order: the families in their order, every line of each family's record in the declared order, each line's remainder at the Nodes of `at` in the lattice's index order (`np.argwhere`), the digit the remainder's index on the Node's lattice, r // F (`digits.lattice_of` on the rule's integers there), its base w // F + 1."""
+def digits_now(
+    board: Lattice, families: list[int], at: np.ndarray, distinct: bool = True
+) -> tuple[list[int], list[int]]:
+    """The digits and their bases by the test's own arithmetic of the declared order: the families in their order, every line of each family's record in the declared order, each line's remainder at the Nodes of `at` in the lattice's index order (`np.argwhere`), the digit the remainder's index on the Node's lattice, r // F (`digits.lattice_of` on the rule's integers there), its base w // F + 1; with `distinct` a remainder equal to an earlier line's at the same Node, or w less it, is a copy and left out (the reader's D2), without it every line's digit."""
     found, bases = [], []
     for index in families:
         family, gamma = board.families[index], board.world.node_clock
@@ -38,15 +41,20 @@ def digits_now(board: Lattice, families: list[int], at: np.ndarray) -> tuple[lis
         lattice = digits.lattice_of(
             node.rule_of(family, gamma, *board.read(index, 1, 0), board.unit), at
         )
+        earlier: dict[int, list[int]] = {}  # per Node, the earlier lines' remainders
         for line in board.lines_of(index, 0):
-            for where, step in zip(np.argwhere(at), lattice, strict=True):
-                found.append(int(line.remainder[tuple(where)]) // step)
-                bases.append(wall // step + 1)
+            for k, (where, step) in enumerate(zip(np.argwhere(at), lattice, strict=True)):
+                remainder, seen = int(line.remainder[tuple(where)]), earlier.setdefault(k, [])
+                copied = distinct and any(remainder in (e, wall - e) for e in seen)
+                seen.append(remainder)
+                if not copied:
+                    found.append(remainder // step)
+                    bases.append(wall // step + 1)
     return found, bases
 
 
-def spied(monkeypatch, board_of):  # type: ignore[no-untyped-def]
-    """Every draw of the run recorded as the engine makes it (`node_detector.drawn_from` spied): the label, the number read or left, the weights, the pick, the number left after, and the test's own digits of the records the label names at the Nodes it names, read from the board at that moment."""
+def spied(monkeypatch, board_of, distinct=True):  # type: ignore[no-untyped-def]
+    """Every draw of the run recorded as the engine makes it (`node_detector.drawn_from` spied): the label, the number read or left, the weights, the pick, the number left after, and the test's own digits of the records the label names at the Nodes it names, read from the board at that moment (each Node's distinct digits, or with `distinct` False every line's)."""
     seen: list[dict] = []  # type: ignore[type-arg]
     real = node_detector.drawn_from
 
@@ -63,7 +71,7 @@ def spied(monkeypatch, board_of):  # type: ignore[no-untyped-def]
             books = board.credit.bodies[int(label.split()[2])]
             drives = list(dict.fromkeys(t.drive for t in books.declared.transitions))
             read, at = [*drives, books.index], board.mask(books.nodes)
-        own, walls = digits_now(board, read, at)
+        own, walls = digits_now(board, read, at, distinct)
         pick, left = real(number, weights, label, *moduli)
         seen.append(
             dict(
@@ -194,7 +202,7 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path):
-    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the one photon's world, once the photon reaches the first atom, the photon's digits at the body's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the photon's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each), is admitted; the refusals' texts stand apart from the write's bound refusal."""
+    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the one photon's world, once the photon reaches the first atom, the photon's digits at the body's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the photon's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each; the excited part's two lines stand at the lay's origin at both Nodes, the second a copy of the first and read once, the reader's D2), is admitted; the refusals' texts stand apart from the write's bound refusal."""
     singlet = Lattice(
         load_world(
             world_beside(
@@ -206,7 +214,7 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
         family(singlet, "spin"),
         next(d.nodes for d in singlet.node_detectors if d.name == "left"),
     )
-    assert {r for r, _f, _w in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
+    assert {r for r, _f, _w, _p in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
         digits.read_of(singlet, [spin], left, "the test")
     board = Lattice(
@@ -219,9 +227,9 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     photon, atom = family(board, "photon"), family(board, "atom")
     body = board.credit.bodies[0]
     at = board.mask(body.nodes)
-    while {r for r, _f, _w in digits.digits_of(board, photon, at)} == {board.half_wall(photon)}:
+    while {r for r, _f, _w, _p in digits.digits_of(board, photon, at)} == {board.half_wall(photon)}:
         board.step()
-    assert {r for r, _f, _w in digits.digits_of(board, photon, at)} <= {
+    assert {r for r, _f, _w, _p in digits.digits_of(board, photon, at)} <= {
         LIGHT // 6,
         LIGHT // 2,
         5 * LIGHT // 6,
@@ -234,8 +242,8 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     own, walls = digits_now(board, [photon, atom], at)
     assert (
         number == read_number(own, walls)
-        and walls == [4] * 2 + [3898] * 8  # the bases w div F + 1: light's 3 values, the atom's 3,897
-        and 90 < number.bit_length() <= 100  # 2 digits of 2 bits and 8 of 11.9: the vacuum's few bits
+        and walls == [4] * 2 + [3898] * 6  # the bases w div F + 1: light's 3 values, the atom's 3,897
+        and 70 < number.bit_length() <= 76  # 2 digits of 2 bits and 6 of 11.9: the vacuum's few bits
     )
     for text in ("w div 2", "exact vacuum"):
         assert "amplitude bound" not in text
@@ -244,7 +252,7 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
 def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_later_basis(
     tmp_path, monkeypatch
 ):
-    """The shipped singlet (a, b) and (a, b') re-declared beside tmp_path, no generator: at the close each side draws its port by one division act on the number read from the record's sixteen digits at its own region (two parts of a plane, two lines each, four Nodes) (the test's own digits in the declared order equal the engine's number), its credited Node on the number left (one Node, nothing consumed) and its source on none (one emitter, no draw); the two credit lines, left then right, the orders 1 and 2, the count 1, nothing left; the left side's number, weights and pick equal bit for bit in (a, b) and (a, b'), no signalling toward the first side; the books hold the number left within the close alone and nothing across."""
+    """The shipped singlet (a, b) and (a, b') re-declared beside tmp_path, no generator: at the close each side draws its port by one division act on the number read from the record's distinct digits at its own region (two parts of a plane, two lines each, four Nodes: the left's eight, the second part's lines copies of the first's, laid alike; the right's eight after the left's write zeroed a part, its lines at the lay's origin read once; the reader's D2) (the test's own digits in the declared order equal the engine's number), its credited Node on the number left (one Node, nothing consumed) and its source on none (one emitter, no draw); the two credit lines, left then right, the orders 1 and 2, the count 1, nothing left; the left side's number, weights and pick equal bit for bit in (a, b) and (a, b'), no signalling toward the first side; the books hold the number left within the close alone and nothing across."""
     runs = {}
     for name in ("singlet_a_b", "singlet_a_b_prime"):
         holder: list[Lattice] = []
@@ -263,10 +271,10 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
             f"the side {side!r} of 'spin' at the interval 40"
             for side in ("left", "left", "right", "right")
         ]
-        for port, place in (seen[0:2], seen[2:4]):
+        for (port, place), distinct in zip((seen[0:2], seen[2:4]), (8, 8), strict=True):
             assert (
                 port["number"] == read_number(port["digits"], port["walls"])
-                and len(port["digits"]) == 16
+                and len(port["digits"]) == distinct
             )
             total = sum(port["weights"])
             assert (port["pick"], port["left"]) == (
@@ -359,18 +367,26 @@ def test_the_two_slits_many_draw_close_spends_the_digits_at_the_shipped_window(t
 def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_complementary_after(
     monkeypatch,
 ):
-    """The digits' pair identity (the builder's measurement on the read's second commit, bell a' b: in 474 reads of 237 worlds the two lines' indices equal at every Node in 357 and complementary in 117, none else): on the shipped bell worlds each side reads the record's two lines at its four Nodes at the close 100, w div F = 108,000,000 at F = 3,072,000 on light's wall 331,776,000,000,000. At every Node the second line's index r div F equals the first line's before any write (the left side, the parts laid alike) and after a write of equal coefficients, and is w div F less it after the write of (1, -1), the second part negated (the right side of a' b, the left side's basis [1, 1], read after the left side's write at the birth): a side's eight digits are its four Nodes' digits twice. Where the left side's port zeroes a part (a b, the basis [1, 0]) the right side reads that part's line at the lay's origin, w div 2F at every Node, the third form. The read takes both lines (`digits.read_of`); the identity is pinned and nothing in the read changed; the indices and the coefficients standing at the right side's read printed."""
+    """The digits' pair identity (the builder's measurement on the read's second commit, bell a' b: in 474 reads of 237 worlds the two lines' indices equal at every Node in 357 and complementary in 117, none else) and the read's copy rule on it (the reader's D2 and D5 of 2026-10-20): on the shipped bell worlds a' b, a' b' and a b each side reads the record's two lines at its four Nodes at the close 100, w div F = 108,000,000 at F = 3,072,000 on light's wall 331,776,000,000,000, the moduli of its first draw the base less one and the base. At every Node the second line's index r div F equals the first line's before any write (the left side, the parts laid alike), so the read takes each Node's distinct digits once: the side's eight digits read as four, the number's bits halved (four digits of 26.7 bits); after the left side's write the right side reads equal indices where the coefficients are equal (the basis [1, 1] at its port (1, 1), which writes nothing), w div F less them where the second part is negated, and, where the port zeroes a part (a b, the basis [1, 0]), that part's line at the lay's origin, w div 2F at every Node, no copy, its eight digits kept. The rule's three cases on a' b's left side at 60, its second line set beside the first: equal and w less it read once (four digits), moved by F at two of the four Nodes read at both (six). The indices, the coefficients standing at the right side's read and the numbers printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     whole, found = LIGHT // 3_072_000, {}  # w div F at the shipped content
-    for name in ("bell_a_prime_b", "bell_a_b"):
-        board, standing = Lattice(load_shipped(EVENTS / "bell" / f"{name}.json")), []
-        seen, spy = spied(monkeypatch, lambda board=board: board), node_detector.drawn_from
+    for name in ("bell_a_prime_b", "bell_a_prime_b_prime", "bell_a_b"):
+        board, standing, read = Lattice(load_shipped(EVENTS / "bell" / f"{name}.json")), [], []
+        seen, spy = (
+            spied(monkeypatch, lambda board=board: board, distinct=False),
+            node_detector.drawn_from,
+        )
 
         def noted(number, weights, label, *moduli, board=board, standing=standing, spy=spy):  # type: ignore[no-untyped-def]
             standing.append(list(board.credit.written.get(family(board, "light_pair"), [1, 1])))
             return spy(number, weights, label, *moduli)
 
+        def reading(board, families, at, label, read=read):  # type: ignore[no-untyped-def]
+            read.append(digits.read_of(board, families, at, label))
+            return read[-1]
+
         monkeypatch.setattr(node_detector, "drawn_from", noted)
+        monkeypatch.setattr(node_detector, "read_of", reading)
         for _ in range(board.world.intervals):
             board.step()
         sides = [
@@ -385,9 +401,11 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
             "right",
         ]  # the port, the Node
         assert all(len(d) == 8 and set(b) == {whole + 1} for _s, d, b in sides) and whole == 108_000_000
-        found[name] = sides[0][1], sides[2][1], standing[2]  # each side's first draw reads
-    for left, right, written in found.values():
-        assert left[4:] == left[:4]  # no write yet: the second line's index the first's at every Node
+        assert [moduli for _n, moduli in read] == [(whole, whole + 1)] * 2  # one read per side
+        found[name] = sides[0][1], sides[2][1], standing[2], [number for number, _m in read]
+    for left, right, written, (first, second) in found.values():
+        assert left[4:] == left[:4] and first == read_number(left[:4], [whole + 1] * 4)  # read once
+        assert first.bit_length() <= 4 * 27  # four digits of 26.7 bits: the eight's bits halved
         if written[0] == written[1]:
             assert right[4:] == right[:4]  # equal coefficients: equal indices
         elif written[0] == -written[1]:
@@ -395,5 +413,28 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         else:
             zeroed = written.index(0)  # the part the left side's port zeroed reads the lay's origin
             assert right[4 * zeroed : 4 * zeroed + 4] == [whole // 2] * 4
+        copies = right[4:] in (right[:4], [whole - k for k in right[:4]])
+        assert second == read_number(right[:4] if copies else right, [whole + 1] * (4 if copies else 8))
     assert found["bell_a_b"][2].count(0) == 1  # the basis [1, 0] zeroes a part
+    board = Lattice(load_shipped(EVENTS / "bell" / "bell_a_prime_b.json"))  # the copy rule's three cases
+    pair = family(board, "light_pair")
+    for _ in range(60):  # the left side's beam through its region, before the close
+        board.step()
+    at, (first, second) = (
+        next(d.nodes for d in board.node_detectors if d.name == "left"),
+        board.states[pair].lines[:2],
+    )
+    kept = np.asarray(first.remainder)
+    cases = {
+        "equal": kept,
+        "w less it": LIGHT - kept,
+        "moved": kept + 3_072_000 * (np.arange(kept.size).reshape(kept.shape) % 2),  # F at every other
+    }
+    for case, remainder in cases.items():  # the second line set beside the first: read once, or both
+        board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
+        own, walls = digits_now(board, [pair], at, distinct=False)
+        number, _moduli = digits.read_of(board, [pair], at, "the test")
+        distinct = own[:4] + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j])]
+        assert number == read_number(distinct, walls[: len(distinct)]), case
+        assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved
     print(f"the pair identity: {found}")

@@ -14,6 +14,7 @@ from event_universe.loader.keys import Node
 from event_universe.node_detector import (
     NodeBooks,
     arriving,
+    body_label,
     clock_advanced,
     dark,
     own_clock,
@@ -113,14 +114,27 @@ def turned_labels(board: Lattice, books: NodeBooks) -> None:
         reference.closed()
 
 
+def carries(board: Lattice, books: NodeBooks, total: int) -> bool:
+    """Whether the body's number for its next draw carries `total` (the reader's ruling of 2026-10-20, (iii)): the number left within the interval, or the board read now where the interval holds none (`digits.read_of`, read and never written, so the draw after it reads the same number), at or above the total; the emission's draw alone asks it (`meeting.emission_drawn`), every other draw below its total refused by name (`features/click.drawn_from`)."""
+    if books.left is not None:
+        return books.left >= total
+    return (
+        digits.read_of(board, read_families(books), board.mask(books.nodes), body_label(board, books))[0]
+        >= total
+    )
+
+
 def emission_drawn(board: Lattice, books: NodeBooks, grain: int) -> bool:
-    """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the body's own read of the board; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was. The exact dark (the reader's re-ruling of 2026-10-20, the law's sentence): a body whose read finds every digit at the lay's origin at its emission's draw does not draw (`digits.at_origin` over the families its read takes, `node_detector.read_families`); its emission falls at its window's close, the detector's declared when (`NodeBooks.deferred`, `emission_fell`); where light stands at the body the emission's hazard is read from the board. The refusal by name stays for every other draw at the origin."""
+    """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the body's own read of the board; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was. The exact dark (the reader's re-ruling of 2026-10-20, the law's sentence): a body whose read finds every digit at the lay's origin at its emission's draw does not draw (`digits.at_origin` over the families its read takes, `node_detector.read_families`), nor where its number, read or left within the interval, stands below the emission row's total (`carries`, the reader's (iii) of 2026-10-20: the remainders at the body do not carry the draw, the budget's own count the measure of nothing to read); its emission falls at its window's close, the detector's declared when (`NodeBooks.deferred`, `emission_fell`); where the body's lines carry the total the emission's hazard is read from the board. The refusals by name stay for every other draw at the origin or below its total (an absorption, a probe, a second draw of one interval)."""
     for rate in books.declared.rates:
         if rate.leaves == books.part:
             if digits.at_origin(board, read_families(books), board.mask(books.nodes)):
                 books.deferred = True  # nothing to read: no draw, the emission at the window's close
                 return False
             alternatives = lists.emission(board, books, rate, min(grain, rate.lifetime))
+            if not carries(board, books, sum(a.weight for a in alternatives)):
+                books.deferred = True  # the read below the row's total carries no hazard: no draw
+                return False
             pick = click(board, books, alternatives)
             if pick < len(alternatives) - 1:
                 return True
