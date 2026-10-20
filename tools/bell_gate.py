@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from fractions import Fraction
 from itertools import combinations, product
 from math import prod
@@ -43,8 +43,13 @@ def fraction(value: object) -> Fraction | None:
 
 def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
     """A side's two ports from its declared setting and its parts' pattern, the loader's own (`loader/draw.py`, `ports_of`: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, refused by name where not orthogonal with equal norms), keyed by the ports' names."""
-    plus, minus = loader_ports(basis, pattern)
-    return {PORTS[0]: plus, PORTS[1]: minus}
+    plus, minus = loader_ports(
+        basis, pattern
+    )  # the engine's Gaussian pairs; the gate reads real-port worlds
+    assert all(c[1] == 0 for c in plus + minus), (
+        "the gate's arithmetic is the real ports'; a turned side is the two-term test's"
+    )
+    return {PORTS[0]: tuple(c[0] for c in plus), PORTS[1]: tuple(c[0] for c in minus)}
 
 
 def reports(
@@ -325,14 +330,18 @@ def blind_of(
     return found
 
 
-def reading(expectation: Path, outputs: list[Path]) -> dict[str, object]:
-    """The reading of the four worlds against the expectation: per world the shares, E_n, the marginals, the sub-correlations, the local credits, the combination realised in the run and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
+def reading(
+    expectation: Path,
+    outputs: list[Path],
+    read: Callable[[Path, list[dict[str, object]], dict[str, Any]], dict[str, Any]] = one_world,
+) -> dict[str, object]:
+    """The reading of the four worlds against the expectation, each world by `read` (this file's `one_world`, or the plane's passed by tools/spin_gate.py): per world the shares, E_n, the marginals, the sub-correlations, the local credits, the combination realised in the run and the mismatch; the combination (S or M, named by the expectation with its signs) by the meeting and by each local credit; the blind row copied from the expectation."""
     expected = json.loads(expectation.read_text(encoding="utf-8"))
     worlds: dict[str, dict[str, Any]] = {}
     for path in outputs:
         output = json.loads(path.read_text(encoding="utf-8"))
         name = Path(str(output["input"])).stem
-        worlds[name] = one_world(expectation.with_name(f"{name}.json"), output["lines"], expected)
+        worlds[name] = read(expectation.with_name(f"{name}.json"), output["lines"], expected)
     ordered = [worlds[str(expected["runs"][key])] for key in expected["order"]]
     label, signs = (
         str(expected["combination"]["name"]),

@@ -69,6 +69,37 @@ photon enters the empty excited part under the antisymmetric sign, so that the p
 the same seed for the control (`read_shells.py --rule`: 25 and 26 pass the second photon, 34 and 35
 enter; the seed 34).
 
+The hydrogen worlds at the electron's read 3 (2026-10-20, the owner's order through the builder, the
+atom's own line; the builder's clone 985c818 with his patch the reference, his numbers beside by
+name): the universe hydrogen_read3.json, hydrogen.json with one number changed, the electron reading
+the holder of the sign at the weight 3 (the proton keeps 1); the cube of 11 open on its three axes
+at T = 36,000,000, the proton at [5, 5, 5] as the one-Node pixel record (4,242 and -4,242) and the
+electron declared at [6, 5, 5]; 400 intervals. The well the engine's start writes under the proton
+alone, -1,446, -446, -187, -95, -50, -22 along an axis (the builder's row to the level), U_i = -3
+h_i / Gamma, 0.723 at the centre. Two worlds by the same tool: `hydrogen_1s.json`, the 1s alone
+(`--level 1s`: Omega 0.6652, the recipe's twelfth iterate of the level's fixed point in Omega
+(tools/standing_lay.json's `iterations` 12; the map oscillates with the ratio about -0.67 and
+converges to 0.6638 in forty, the engine's own rotation and the builder's frame; the recipe's
+correction the next commit's, with the ninth's round, where every mode is regenerated), the binding
+below omega_0 0.1759 and below the free band's bottom on the cube, arccos((2 / 3) cos(pi / 12)) =
+0.8712, 0.2060 (0.1773 and 0.2074 at the fixed point); A 3,670, the share 0.558 at the centre and
+0.811, 0.951, 0.993, 0.999 within r <= 1, 2, 3, 4), and `hydrogen_line.json`, the 1s and the 2s
+summed at half a quantum each (`--level 1s+2s`: the 2s at 0.8446, its binding below the band 0.0266;
+A_1 2,595 and A_2 863; the two levels' overlap SUM phi_1 phi_2 -0.363 and their dipole overlap 0
+along every axis, so the cross term 2 A_1 A_2 phi_1 phi_2 cos((Omega_2s - Omega_1s) t) is even in
+every axis and breathes at the centre and not in the dipole: the line Omega_2s - Omega_1s = 0.1794
+per interval, the period 35.0 intervals; the iterate's line, the fixed point's 0.1808 and the
+builder's 0.18072). The eight levels the tool reads on the cube at the 1s's sin Omega are s, s, p,
+p, p, d, d, d; laid alone at their own fixed points the 2s reads 0.8446 and the 2p 0.8654 (three,
+degenerate to 1e-12, the binding below the band 0.0057): five bound modes below the band's bottom,
+the d's above it. The builder's frame (the exact step map of his clone, unitary to 1e-13) reads 1s
+-0.66374, 2s -0.84446 and 2p -0.86535 (the sign his convention), the bindings below the band
+0.20730, 0.02658 and 0.00569, the line 0.18072: the tool's 1s stands 0.0014 above his, the twelfth
+iterate above the fixed point, while the 2s and the 2p agree with him under 0.0001, their maps
+converging within the twelve; the lay is right as a lay, on the standing line at 0.6640 by least
+squares over the cube, the engine's gauge form from it turning at 0.6641 with the overlap 0.99999 at
+60 (the reader's probes of 2026-10-20).
+
 ## The blind
 
 The ground at 36M (`atom.json`, 120 intervals): after 100 intervals the share of Q = SUM |z|^2
@@ -112,6 +143,23 @@ part's 9,190,267,331,637,924, the second photon entering the empty part or passi
 1, the one check that says yes or no; the symmetric control's weight into the populated part
 64,961,076,134,244,168, twice the unsigned weight 32,480,538,067,122,084 (the permanent's 2) and the
 larger of the two, the empty part's 9,190,267,331,637,924, the piling to [0, 0, 2, 0] or [0, 0, 0, 2].
+
+The hydrogen 1s at the read 3 (`hydrogen_1s.json`, 400 intervals): after 400 intervals the share of
+Q within r <= 2 at 0.951 within 0.02 with the peak Node at the centre, the overlap of |z| with the
+lay's at least 0.99 at the close, the first six steps leaving the centre's and its neighbour's
+levels within one level, and the centre's level drifting at most 15 percent of the lay's 3,670 over
+the run, the one check that says yes or no (`read_look.py` for the share and the rotation,
+`read_beat.py` for the overlap, the first steps and the drift); the profile at the lay 0.811, 0.951,
+0.993, 0.999 within 0.02; the rotation less the well's angle 0.6652 within 0.002 at r 0, 1, 2 (the
+binding below omega_0 0.1759, below the band 0.2060); the builder's beside by name, the overlap
+1.000 and 0.9985, the centre 3,676 through the first six steps, its drift between 3,451 and 3,945
+(13 percent, a drift and no line). The line at the read 3 (`hydrogen_line.json`, 400 intervals): the
+centre's |z| breathes at the line, the spectrum of its trace over the run peaking within one bin (2
+pi / 400 = 0.0157 per interval) of 0.1794, the one check that says yes or no (`read_beat.py`); the
+holder's row at r = 3 and 5 along x read for its spectrum beside the line, a reading and no fence
+(the builder's: peaks at 0.564 and 0.768, near three and four times the line); the builder's centre
+peak 0.18803 at the amplitude 190 against his line 0.18072, one bin; no light family in the
+universe, the beat undamped.
 
 ## The reading (the branch atom-arranged on main fe6010be1, 2026-10-19)
 
@@ -300,6 +348,162 @@ a finding written as such; the blind's wording holds by the fit. No light family
 universe: nothing is emitted, the dipole beats undamped, and the line is the Node's own.
 
 
+## The reading at the electron's read 3 (the branch atom-line, 2026-10-20)
+
+The two worlds recorded once each by `tools/look/record.py` at every frame (401 frames, LAWFUL, 20.4
+and 22.1 MB), read by `read_look.py` (the share, the profile, the rotation less the well's angle)
+and `read_beat.py` (the overlap with the lay, the first steps, the centre's drift and spectrum, the
+holder's row), the pages built from the same looks (2.7 and 3.3 MB, the page's graph of the line:
+the transform of the picked Node's form over the frames with the blind's line dashed and the levels
+named, `tools/look/page.py`); the builder's numbers (his clone 985c818 with his patch, 2026-10-20)
+beside by name.
+
+### The hydrogen 1s at the read 3, `hydrogen_1s.json`, LAWFUL, 400 intervals
+
+| interval | centre level |z| | profile within r <= 1, 2, 3, 4 | Q / Q_0 | overlap with the lay | the holder's summed row at +3, +5 |
+| --- | --- | --- | --- | --- | --- |
+| 0, the lay | 3,670.0 | 0.811, 0.951, 0.993, 0.999 | 1 | 1.0000 | 237, 56 |
+| 1 | 3,672.5 | 0.811, 0.951, 0.993, 0.999 | 1.0012 | 1.0000 | 237, 54 |
+| 6 | 3,679.2 | 0.813, 0.952, 0.993, 0.999 | 1.0002 | 1.0000 | 249, 52 |
+| 50 | 3,723.4 | 0.818, 0.951, 0.993, 0.999 | 1.0122 | 0.9998 | 240, 41 |
+| 100 | 3,694.7 | 0.808, 0.951, 0.992, 0.998 | 1.0050 | 0.9996 | 259, 44 |
+| 200 | 3,683.3 | 0.809, 0.949, 0.991, 0.997 | 0.9977 | 0.9992 | 272, 24 |
+| 300 | 3,622.1 | 0.799, 0.948, 0.988, 0.994 | 0.9954 | 0.9979 | 347, 78 |
+| 350 | 3,553.5 | 0.779, 0.940, 0.982, 0.988 | 0.9747 | 0.9947 | 382, 11 |
+| 400 | 3,565.1 | 0.767, 0.933, 0.972, 0.979 | 0.9915 | 0.9898 | 445, 173 |
+
+The one check, clause by clause: the share within r <= 2 at 400 reads 0.933 against the blind's
+0.951 within 0.02, yes; the peak Node is the centre at every one of the 401 intervals, yes; the
+overlap of |z| with the lay 0.9898 at the close against at least 0.99, no, by 0.0002 (0.9998 at 50,
+0.9992 at 200, 0.9947 at 350; the builder's lay 0.9985); the first six steps move the centre's level
+by 9.2 at most (3,670.0, 3,672.5, 3,670.1, 3,673.0, 3,677.4, 3,674.6, 3,679.2) and the neighbour's
+by 2.7 (1,009.9, then 1,007.3 to 1,011.0) against within one level, no (the builder's lay held its
+centre at 3,676 within three units; the tool rounds the lay by half a level per Node and its first
+steps walk a few levels, 0.25 percent of the centre); the centre's level drifts between 3,472.8 and
+3,944.1 over the run, 12.8 percent of the lay against at most 15 percent, yes (the builder's 3,451
+to 3,945). So the one check says no by its two tightest clauses, both bounds taken from the
+builder's lay and not the tool's, a finding written as such: the tool's 1s stands 400 intervals to
+the overlap 0.990 and the profile within 0.044. The profile within 0.02 of the lay's: no, the worst
+deviation 0.044 at the close at r <= 1 (the share within r <= 1 between 0.767 and 0.824, loosening
+from the interval 300 on as the outer radii fall, 0.999 to 0.979 within r <= 4, the open faces of
+the cube of 11 five Links from the centre taking the walk's growth as the 36M ground's outer radii
+did). The rotation less the well's angle at r 0, 1, 2: 0.6638, 0.6638, 0.6637 against the blind's
+0.6652 within 0.002, yes; the engine's rotation agrees with the builder's exact frame, 0.66374, to
+four digits (the reader's re-run over 24 intervals 0.6639, 0.6640, 0.6635 at r 0, 1, 2), and the
+tool's 0.6652 stands 0.0014 above both as the recipe's twelfth iterate of its fixed point in Omega,
+the fixed point 0.6638 the engine's own rotation (the recipe's correction the next commit's; the
+blind's number after it 0.6638). Q / Q_0 between 0.961 and 1.111 over the run and 0.9915 at the
+close; the engine's share_of over the wall climbs to 1.21 at 400 relative to the lay (the count's
+reading, no conserved form under the sign's Link phases; the builder's 1.372 to 1.571). The centre's
+spectrum carries no line: its largest components stand at 2.883, 2.867 and 2.899 per interval (the
+amplitudes 72, 38 and 30 levels, a flicker of period 2.2 intervals near the band's top, in the
+holder's summed row at r = 3 too at the amplitude 68), nothing at the beat's scale; the builder's
+words, a drift and no line. The proton's |z| 4,242 at every interval.
+
+The count on the board (2026-10-20, D's shots of the page: the status line reads the count on the
+board 2 of electron from the interval 2 while the books' count holds 1, the first frame 1): the page
+shows the look's `board_count`, the engine's own `Lattice.count` (`credit.count_of`), the record's
+share over the board in the current's units over its unit W_rec rounded half up, (S + W_rec div 2)
+div W_rec for a record of one part before any write, W_rec = W_c sin omega_0 = isqrt(9 T^2 (den^2 -
+num^2)) = 482,990,683,139 for the electron's pair [4000, 6000] at T 36,000,000; the look's S reads
+680,798,982,000 at the lay (1.4095 W_rec), 699,290,340,000 at the interval 1 (1.4478) and
+731,834,424,000 at 2 (1.5152), then between 726,274,002,000 and 879,296,544,000 over the run (1.50
+to 1.82; 826,148,088,000 at the close, 1.71), so the count reads 1, 1 and 2 from the interval 2 on.
+The share is the plain levels' form at the free rotation's S (`Lattice.share_of`, a turned record's
+from its plain levels too; `share.share`, the plain read of a pair under the sign no conserved form;
+HIGHLIGHTS, The atom's levels from the Node, the share climbing on the standing record), w (now^2 +
+before^2) - S now before less the Links' term: the Node's term alone reads one quantum, T sin
+omega_0, on a pair turning at omega_0 and (1 - cos omega_0 cos theta) / sin^2 omega_0 of it on a
+pair turning at theta, so on the standing record, which turns at Omega + U_i, 1.387 per interval at
+the centre and 0.887 at r = 1 against omega_0 = 0.8411, it reads 1.58 and 1.04 there, and the whole
+form 1.41 over the board at the lay, whose one quantum is the free rotation's, A = sqrt(T / (2 sin
+omega_0 SUM phi^2)), the Wronskian T / 2 (`tools/standing_lay.py`, step 3); the swing between 1.50
+and 1.82 is the centre's breathing read through the same form. The books' `count` 1 is the credited
+count, no click having moved it, and the books' `quanta` 2 the same board reading at the close (the
+proton's 647,804,304,000 over its 648,000,000,000 reads 1): a lattice reading of the engine's own
+count on a standing record in a well, named, and no defect of the page or the look.
+
+### The line at the read 3, `hydrogen_line.json`, LAWFUL, 400 intervals
+
+| interval | centre level |z| | profile within r <= 1, 2, 3, 4 | Q / Q_0 | overlap with the lay | the holder's summed row at +3, +5 |
+| --- | --- | --- | --- | --- | --- |
+| 0, the lay | 3,458.1 | 0.669, 0.682, 0.751, 0.853 | 1 | 1.0000 | 184, 49 |
+| 6 | 3,099.6 | 0.542, 0.606, 0.728, 0.848 | 1.0390 | 0.9767 | 196, 47 |
+| 50 | 1,819.4 | 0.249, 0.433, 0.681, 0.839 | 1.1312 | 0.8377 | 153, 32 |
+| 100 | 3,296.1 | 0.601, 0.642, 0.740, 0.851 | 1.0330 | 0.9902 | 211, 46 |
+| 150 | 2,361.1 | 0.351, 0.491, 0.696, 0.839 | 1.0990 | 0.9028 | 185, 79 |
+| 200 | 2,760.0 | 0.441, 0.546, 0.714, 0.844 | 1.0741 | 0.9423 | 215, 32 |
+| 300 | 2,075.6 | 0.292, 0.458, 0.684, 0.830 | 1.1264 | 0.8678 | 212, 24 |
+| 350 | 3,322.3 | 0.622, 0.653, 0.740, 0.849 | 0.9936 | 0.9945 | 294, -20 |
+| 400 | 1,653.5 | 0.220, 0.420, 0.669, 0.825 | 1.1609 | 0.8139 | 249, 107 |
+
+The one check: the centre's |z| breathes between 1,653.5 and 3,565.1 (the lay 3,458.1; the builder's
+1,676 to 3,736), and the spectrum of its trace over the 400 intervals peaks at 0.18803 per interval
+with the amplitude 592 levels (the cosine's), 0.55 bins of 0.0157 from the lay's line 0.1794 (the
+iterate's), 0.46 bins from the fixed point's 0.1808 and 0.47 from the builder's 0.18072, within one
+bin: yes; the next component 0.1724 at 490 (the line falls between the bins 0.1723 and 0.1880 and
+the transform splits it), the third 0.2037 at 194; the builder's peak 0.18803, the same bin. The
+atom breathes at its own line, from the board. The rotation less the well's angle along x reads the
+two levels in one world: 0.6641 and 0.6638 at r = 0 and 1, where the 1s stands, and 0.8450, 0.8451,
+0.8440 at r = 3, 4, 5, where the 2s stands (the lays' 0.6652 and 0.8446; the builder's 0.66374 and
+0.84446). The peak Node is the centre at every interval. Q / Q_0 beats with the line, between 0.979
+and 1.192 and 1.161 at the close: the two levels' lays are not orthogonal, SUM phi_1 phi_2 = -0.363
+(the tool's reading; each level the eigenvector of the operator at its own sin Omega), so Q carries
+2 A_1 A_2 SUM phi_1 phi_2 cos(Delta t), 7 percent of Q_0 either way, beside the count's slow growth;
+the engine's share_of over the wall climbs to 1.41 at 400 relative to the lay. The holder's summed
+row at r = 3 along x (the look's charge level, the proton's row and the electron's own together)
+carries the flicker at 2.883 per interval (the amplitude 46), its neighbour bin 2.899 (21) and the
+line itself, 0.188 at 16 levels, as its third component; at r = 5 the flicker (16) and components at
+1.63 and 2.08 (14 and 12); the builder's peaks at 0.564 and 0.768, three and four times the line, do
+not stand in the summed row (his row the electron's own, read live, another reading), and the
+radiation outward is not shown here either. The proton's |z| 4,242 at every interval.
+
+### Two findings by name (2026-10-20)
+
+(1) The ratio of the bindings 1s to 2s (the tool's lays alone, no run; the scratch worlds of the
+cubes 15 and 21 at the same universe; the band's bottom on the open cube of L Nodes arccos((2 / 3)
+cos(pi / (L + 1))), the plain rule's lowest free mode): on the cube of 11 the band's bottom 0.8712,
+the 1s 0.6652 and the 2s 0.8446 bound below it by 0.2060 and 0.0266, the ratio 7.75 (the builder's
+7.7 against hydrogen's 4); on 15 the bottom 0.8581, the 1s 0.6572 and the 2s 0.8291, 0.2010 and
+0.0290, the ratio 6.92; on 21 the bottom 0.8501, the 1s 0.6513 and the 2s 0.8203, 0.1988 and 0.0299,
+the ratio 6.66. The ratio falls with the cube and is far from converged: the 2s is bound by the
+cube's faces on 11 (its rotation above the free omega_0 = 0.8411 by 0.0035, below it by 0.0120 on 15
+and 0.0208 on 21) while the 1s's binding below omega_0 grows, 0.1759, 0.1839, 0.1897, and the line
+1s to 2s reads 0.1794, 0.1719 and 0.1690 on 11, 15 and 21. The ratio is the cube's and not the law's
+until a cube admits the 2s whole. The cause, the builder's, exact (2026-10-20, entered in the law's
+file with the atom's three findings): the engine's held row on an open cube is the Dirichlet
+solution of Delta a = -3 sigma delta with a = 0 one layer beyond the faces (sigma = k_w / 2; checked
+on 11 to 0.48 level, the integer rounding), shallower than the unbounded board's Green's-function
+row -3 sigma G(r) (G(0) = 0.25273) by a near-constant 70 levels on 11, 38 on 21 and 26 on 31, about
+790 / L, so every level is lifted by 3 x 70 / 6,000 = 0.035 on 11 and the 2s reads above omega_0
+there, the box's lift; on the unbounded board's potential the ladder is cube-free from 11 up, to
+four digits on 11, 21 and 31: the 1s 0.2123 below omega_0, the 2s 0.0400, the 2p 0.0241 three times,
+the ratios 1s : 2s = 5.31 and 1s : 2p = 8.8, the law's number for this well at alpha 0.4135, the
+lattice's 1.31 above hydrogen's 4 (the finite well at the source and the band's cap on a one-Link
+1s); the cube's number is the box's zero of the row, 2.48 of the ratio on 11 and 1.46 on 21.
+
+(2) The 1s breathing when the proton reads at 3 as well (the control: a scratch world and no file of
+the folder, the universe with both reads at 3, the clean 1s lay carried into it with the world's
+digest, 100 intervals, one run; the tool, asked to lay the 1s in that declaration, finds the well
+three times deeper in its reading pass and refuses, cos U < 0 at the centre, U_c = 3 x 4,338 / 6,000
+= 2.17 beyond a quarter turn: the limit of the tool's symmetrization by sqrt(cos U), not of the
+standing line, which holds at any U, and not of the law, whose bound is the Node's turn below a half
+turn per interval; the builder's unitary frame lays the deeper well). The centre's |z| jumps from
+3,670 to 4,742 at the first interval (the builder's 3,676 to 4,746) and swings between 3,444 and
+4,742 within ten intervals, 35 percent of the lay, and between 3,364 and 4,750 over 100 (the overlap
+with the lay down to 0.84; the proton's |z| 4,242 at every interval). The cause, named: the engine's
+start writes the holder's row from each source's Wronskian times the weight that source reads the
+holder with (`bookings.booked_sources`, `weight_of`; ALGEBRA.md, the reads: every family reads the
+holders its declaration names at the weights it names and sources each at the weight it reads with),
+so the read weight is the coupling at both ends, and a proton reading at 3 is a proton of charge 3
+in units of the unit charge (the law's alpha paragraph: k_r the family's charge in units of the unit
+charge), coupling at 3 at both ends, the unit charge the Wronskian as before, sourcing a row three
+times deeper, -4,338, -1,339, -562, -284, -150, -66 along the axis against -1,446, -446, -187, -95,
+-50, -22 (the builder's -4,338 +- 45 at the centre is that row, three times his clean world's
+-1,446); the 1s laid in the well of the read 1 is not a mode of the well of the read 3, and the lay
+and the stepping differ by the proton's coupling. The builder's open cause closes here: the heavy
+partner reading lightly is the clean world because its well is the one the level was laid in.
+
 ## The conclusion
 
 Seven lays, seven runs, nothing added to Rule 3, the declared holder and the one declared word of the
@@ -315,3 +519,16 @@ weight 0 exactly and enters the empty part, no count above 1 and no capacity dec
 symmetric control piles both quanta into one part at twice the unsigned weight. The Node makes the
 levels and the line, the click makes the shells. The integers are the lattice's: the toy's alpha 0.138
 and 0.276, nineteen and thirty-eight times nature's, and no number here is nature's.
+
+
+At the electron's read 3 (2026-10-20, the branch atom-line) the cube of 11 holds a ladder, the 1s,
+the 2s and the three 2p below the band's bottom: the 1s stands 400 intervals to the overlap 0.990 at
+the rotation 0.6638 against the exact frame's 0.66374, and the 1s and the 2s together breathe at the
+centre at 0.18803 per interval against the lay's line 0.1794 and the builder's 0.18072, within one
+bin of 400 intervals: the atom's line is the difference of two standing rates, read from the board.
+The bindings' ratio is the cube's (7.75 on 11, 6.66 on 21, hydrogen's 4 beyond the cubes laid here;
+the builder's cause, 2026-10-20: the box's zero of the held row, the ladder cube-free on the
+unbounded board's potential at 1s : 2s = 5.31, the law's number for this well at alpha 0.4135), and
+a proton reading at 3 as well is a proton of charge 3 in units of the unit charge, coupling at 3
+(its read weight the factor of its write as well), its well three times deeper, so a level laid for
+the read 1 breathes in it by the gap of the two wells.

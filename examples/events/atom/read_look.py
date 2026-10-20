@@ -67,7 +67,9 @@ def main(argv: list[str] | None = None) -> None:
     )
     tool = json.loads(standing_path.read_text(encoding="utf-8"))
     h_along = [int(v) for v in tool["well_along_axis"]][: len(ALONG)]
-    along = [tuple(c + (d if axis == 0 else 0) for axis, c in enumerate(centre)) for d in ALONG]
+    along = [tuple(c + (d if axis == 0 else 0) for axis, c in enumerate(centre)) for d in ALONG][
+        : len(h_along)
+    ]  # a cube smaller than the reach
     well = np.zeros(shape, dtype=np.float64)
     for node, value in zip(along, h_along, strict=True):
         well[node] = -int(tool["k_r"]) * value / gamma
@@ -106,7 +108,7 @@ def main(argv: list[str] | None = None) -> None:
         previous = z
     q0 = rows[0]["Q"]
     means: list[float | None] = []
-    for k in range(len(ALONG)):
+    for k in range(len(along)):
         values = [
             r["Omega_along_x"][k]
             for r in rows

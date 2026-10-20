@@ -7,9 +7,10 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
-from event_universe import meeting_back
+from event_universe import credit, meeting_back
 from event_universe.credit import Books
 from event_universe.lattice import Lattice
+from event_universe.loader.draw import norm, times
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, family, world_beside
 from tests.laws_spin import PORT, digest, joint_shares, marginal_of, reduced_write, sided
@@ -24,13 +25,21 @@ GHZ = {"ghz_x_x_x": 1, "ghz_x_y_y": -1, "ghz_y_x_y": -1, "ghz_y_y_x": -1}  # the
 CHSH = ("singlet_a_b", "singlet_a_b_prime", "singlet_a_prime_b", "singlet_a_prime_b_prime")
 
 
+def sums(pairs):  # type: ignore[no-untyped-def]
+    """The sum of Gaussian integers, pair by pair."""
+    found = (0, 0)
+    for pair in pairs:
+        found = (found[0] + pair[0], found[1] + pair[1])
+    return found
+
+
 def expected_scales(board: Lattice, index: int, realised: list[int]) -> list[int]:
     """The record's scale after each side's write, the norm's square of the coefficients standing on its parts (`credit.scale_of`): the sides in the declared order, the first side's coefficients the determinant's for an antisymmetric family (`meeting_back.coefficients_of`), each later side's the pattern's own, reduced by their gcd over the surviving parts and multiplied onto them, nothing where they are one value there (`reduced_write`, `credit.reduced`)."""
-    family, written, found = board.families[index], [1] * board.families[index].parts, []
+    family, written, found = board.families[index], [(1, 0)] * board.families[index].parts, []
     for k, ((_name, ports), port) in enumerate(zip(board.credit.sides, realised, strict=True)):
         coefficients = meeting_back.coefficients_of(family, ports, k == 0)[port]
         written = reduced_write(written, list(coefficients))
-        found.append(sum(w * w for w in written))
+        found.append(sum(w[0] * w[0] + w[1] * w[1] for w in written))
     return found
 
 
@@ -77,7 +86,7 @@ def test_line_1_the_four_bell_worlds_read_the_blind_through_the_sides_own_draws(
         first = meeting_back.coefficients_of(board.families[spin], board.credit.sides[0][1], True)
         width = board.families[spin].width
         for part, c in enumerate(first[realised[0]]):
-            if c == 0:  # the part written 0 at the birth stands at 0 after the close
+            if c == (0, 0):  # the part written 0 at the birth stands at 0 after the close
                 for line in board.states[spin].lines[part * width : (part + 1) * width]:
                     assert not line.now.any() and not line.before.any()
         print(
@@ -166,8 +175,11 @@ def born_read(tmp_path, name: str) -> Fraction:  # type: ignore[no-untyped-def]
     assert first[0] == first[1] > 0  # the parts' shares alone, 1 / 2
     (_a, ports_a), (_b, ports_b) = books.sides
     lambdas = meeting_back.coefficients_of(board.families[spin], ports_a, True)  # the determinant's
-    conditional = {
-        p: [sum(e * lam for e, lam in zip(ports_b[q], lambdas[p], strict=True)) ** 2 for q in range(2)]
+    conditional = {  # |SUM_k e_k(q) lambda_k|^2 on Gaussian pairs, the reals here
+        p: [
+            norm(sums(times(e, lam) for e, lam in zip(ports_b[q], lambdas[p], strict=True)))
+            for q in range(2)
+        ]
         for p in range(2)
     }
     second = books.weights[(spin, "right")]
@@ -256,7 +268,7 @@ def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(
         (80, "left", 1),
         (80, "right", 1),
     ]
-    assert written[80] == board.credit.written[pair] and sorted(map(abs, written[80])) == [0, 1]
+    assert written[80] == board.credit.written[pair] and sorted(norm(w) for w in written[80]) == [0, 1]
     assert [c["left"] for c in clicks] == [clicks[0]["left"]] * 2 + [clicks[0]["left"] - 1] * 2
     assert [c["realised"] for c in clicks[2:]] == [
         c["realised"] for c in clicks[:2]
@@ -386,7 +398,7 @@ def test_the_clicks_in_sequence_a_the_far_side_books_nothing_before_its_beam_arr
             if lit:
                 arrival.setdefault(side, board.interval)
             moments = board.credit.moments.get(spin, {}).get(side)
-            if moments is not None and any(any(row) for row in moments):
+            if moments is not None and credit.standing(moments):
                 standing.setdefault(side, board.interval)
     parts = {
         side: min(
@@ -433,8 +445,8 @@ def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays
     )
     assert clicks == [("left", 1, 40), ("right", 2, 40)] and books.counts[spin] == 0  # the leak clicks
     assert moments == {
-        "left": [[185800] * 2] * 2,
-        "right": [[3715] * 2] * 2,
+        "left": [[(185800, 0)] * 2] * 2,
+        "right": [[(3715, 0)] * 2] * 2,
     }  # the leak 3715 / 185800, 2 %
     assert weights == {
         "left": [185800, 185800],

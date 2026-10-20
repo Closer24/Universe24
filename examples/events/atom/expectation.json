@@ -50,6 +50,18 @@
    12,
    14,
    16
+  ],
+  "hydrogen_1s": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "hydrogen_line": [
+   1,
+   2,
+   3,
+   4
   ]
  },
  "worlds": {
@@ -236,6 +248,158 @@
     -3
    ],
    "emission": "none: no light family in the universe, the dipole beats undamped"
+  },
+  "hydrogen_1s": {
+   "window": [
+    0,
+    400
+   ],
+   "yes_or_no": "after 400 intervals the share of Q within r <= 2 at 0.951 within 0.02 with the peak Node at the centre, the overlap of |z| with the lay at least 0.99 at the close, the first six steps leaving the centre's and its neighbour's levels within one level, and the centre's level drifting at most 15 percent of the lay's over the run",
+   "share_within_r": 2,
+   "share": 0.951,
+   "tolerance": 0.02,
+   "read_at_interval": 400,
+   "peak_node": [
+    5,
+    5,
+    5
+   ],
+   "profile_at_the_lay": [
+    0.811,
+    0.951,
+    0.993,
+    0.999
+   ],
+   "profile_tolerance": 0.02,
+   "Omega": 0.6652,
+   "Omega_tolerance": 0.002,
+   "Omega_read_at_r": [
+    0,
+    1,
+    2
+   ],
+   "omega_0": 0.8411,
+   "binding_per_interval": 0.1759,
+   "band_bottom_on_the_cube": 0.8711,
+   "binding_below_the_band": 0.206,
+   "peak_level_at_the_lay": 3670,
+   "overlap_with_the_lay_at_the_close_at_least": 0.99,
+   "first_steps_unchanged_within_levels": 1,
+   "centre_level_drift_at_most": 0.15,
+   "the_builder": {
+    "note": "the builder's clone 985c818 with his patch, his message of 2026-10-20 10:17, beside by name and no number of this blind",
+    "omega": -0.66374,
+    "binding_below_the_band": 0.2073,
+    "band_bottom": 0.87104,
+    "centre_share": 0.56,
+    "within_r_2": 0.952,
+    "overlap_at_0_and_400": [
+     1.0,
+     0.9985
+    ],
+    "centre_levels_first_steps": [
+     3676,
+     3676,
+     3675,
+     3674,
+     3679,
+     3673,
+     3676
+    ],
+    "centre_drift": [
+     3451,
+     3945
+    ],
+    "turn_at_centre": -1.387,
+    "turn_at_r_1": -0.887
+   },
+   "band_note": "the free band's bottom on the open cube of 11, arccos((2 / 3) cos(pi / 12)), the plain rule's lowest free mode (sin(pi x / 12) along each axis); the binding below it the builder's convention, the binding below omega_0 the tool's",
+   "well_along_x": [
+    -1446,
+    -446,
+    -187,
+    -95,
+    -50,
+    -22
+   ],
+   "k_r": 3,
+   "levels_at_the_lay": {
+    "1s": 0.6652,
+    "2s": 0.8446,
+    "2p": 0.8654
+   },
+   "levels_note": "the eight levels' table in hydrogen_1s.standing.json reads every Omega at the 1s's sin Omega; the 2s and the 2p at their own fixed points are 0.8446 and 0.8654 (the tool laid alone on the same cube, the scratch lays of 2026-10-20), the bindings below the band 0.0266 and 0.0057, three 2p degenerate to 1e-12"
+  },
+  "hydrogen_line": {
+   "window": [
+    0,
+    400
+   ],
+   "yes_or_no": "over 400 intervals the centre's |z| breathes at the line: the spectrum of the centre's trace peaks within one bin (2 pi / 400 = 0.0157 per interval) of 0.1794, the two levels' difference at the lay",
+   "line_per_interval": 0.1794,
+   "line_tolerance_bins": 1,
+   "resolution_per_interval": 0.0157,
+   "levels": {
+    "1s": 0.6652,
+    "2s": 0.8446
+   },
+   "bindings_below_the_band": {
+    "1s": 0.206,
+    "2s": 0.0266
+   },
+   "A_at_the_lay": {
+    "1s": 2595,
+    "2s": 863
+   },
+   "peak_node": [
+    5,
+    5,
+    5
+   ],
+   "centre_level_breathes": "the centre's |z| breathes at the line, its spectrum's peak within one bin of the line",
+   "holder_row_read_at": [
+    3,
+    5
+   ],
+   "holder_row": "the holder's row at r = 3 and 5 along x read for its spectrum beside the line (the builder's reading: peaks near three and four times the line, not at the line), a reading and no fence",
+   "emission": "none: no light family in the universe, the beat undamped",
+   "the_builder": {
+    "note": "the builder's clone 985c818 with his patch, his message of 2026-10-20 10:17, beside by name and no number of this blind",
+    "line": 0.18072,
+    "centre_peak": 0.18803,
+    "centre_peak_amplitude": 190.3,
+    "resolution": 0.0157,
+    "centre_range": [
+     1676,
+     3736
+    ],
+    "holder_row_peaks_at_r_3_and_5": [
+     0.564,
+     0.768
+    ],
+    "two_s_omega": -0.84446,
+    "two_s_binding": 0.02658,
+    "two_p_omega": -0.86535,
+    "two_p_binding": 0.00569
+   },
+   "period_intervals": 35.03,
+   "peak_level_at_the_lay": 3458,
+   "overlap_of_the_levels": -0.363,
+   "profile_at_the_lay": [
+    0.669,
+    0.682,
+    0.751,
+    0.853
+   ],
+   "well_along_x": [
+    -1446,
+    -446,
+    -187,
+    -95,
+    -50,
+    -22
+   ],
+   "k_r": 3
   },
   "atom_shells": {
    "window": [

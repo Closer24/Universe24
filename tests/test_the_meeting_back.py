@@ -41,7 +41,7 @@ ONE_PART_DIGEST = "33107f642a6add34"  # its 2308 output lines' digest, the one-p
 
 
 def squares(coefficients) -> int:  # type: ignore[no-untyped-def]
-    return sum(c * c for c in coefficients)
+    return sum(c[0] * c[0] + c[1] * c[1] for c in coefficients)  # the norms of the Gaussian coefficients
 
 
 def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(tmp_path, monkeypatch):
@@ -73,7 +73,7 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
                 ("right", 2, 1, 0),
             ]
             written = reduced_write(
-                [1] * len(first[0]), list(first[realised[0]])
+                [(1, 0)] * len(first[0]), list(first[realised[0]])
             )  # after the first write
             assert [c["scale"] for c in clicks] == [
                 scale,
@@ -379,7 +379,8 @@ def test_the_two_reaches_read_one_meeting_and_the_write_stands_at_the_birth(tmp_
         for number, (label, laid) in enumerate(zero[spin][: 3 * board.families[spin].lines]):
             written = births[4][spin][number][1]
             c = coefficients[(number // 3) // width]
-            expected = laid if label.endswith("remainder") else laid * c
+            assert c[1] == 0  # a real-port world: the integers with 0 behind them
+            expected = laid if label.endswith("remainder") else laid * c[0]
             assert (written == expected).all(), (label, c)  # the write at the birth, bit for bit
         runs[reach] = (board, lines, frames)
     credits = {r: [c for c in lines if c["event"] == "credit"] for r, (_b, lines, _f) in runs.items()}

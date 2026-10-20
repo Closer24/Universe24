@@ -13,8 +13,15 @@ from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.keys import integer, keyed
 
+Gauss = tuple[
+    int, int
+]  # a Gaussian integer (re, im), a part's coefficient: an integer where im is 0, a quarter turn's unit on a plane's second component (the two-term plane GHZ, 2026-10-20)
 Pattern = tuple[tuple[int, int], ...]  # per part [alpha_k, beta_k], the part's read of the setting
-Ports = tuple[tuple[int, ...], tuple[int, ...]]  # a side's two ports, + then -, one coefficient per part
+Ports = tuple[
+    tuple[Gauss, ...], tuple[Gauss, ...]
+]  # a side's two ports, + then -, one coefficient per part
+UNITS: tuple[Gauss, ...] = ((1, 0), (0, 1), (-1, 0), (0, -1))  # i^turn, the azimuth in quarter turns
+TURN = "turn"  # a plane side's key beside `axis`: the azimuth in quarter turns, 0 to 3
 GENERATOR_KEYS = (
     "seed",
     "multiplier",
@@ -99,18 +106,22 @@ def body_draw_of(value: object, label: str) -> Generator:
     return draw_of(found, label) if "window" in found else generator_of(found, label)
 
 
-def ports_of(basis: tuple[int, ...], pattern: Pattern) -> Ports:
-    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no setting of two outcomes."""
+def ports_of(basis: tuple[int, ...], pattern: Pattern, turn: int = 0) -> Ports:
+    """A side's two ports from its declared setting (p, q) and its parts' pattern [[alpha_k, beta_k], ...]: e_k(+) = alpha_k p + beta_k q and e_k(-) = alpha_k (-q) + beta_k p, the - port the + port's with the setting turned a quarter (the pair's pattern [[1, 0], [0, 1]] gives (p, q) and (-q, p)); refused by name: a setting of other than two coefficients, no pattern, and two ports not orthogonal with equal norms, which is no setting of two outcomes. With a quarter turn on a plane side (`turn`, u = i^turn on the second component; the two-term plane GHZ, 2026-10-20): e_k(+) = alpha_k p + beta_k u q and e_k(-) = alpha_k (-conj(u) q) + beta_k p, Gaussian integers, the two ports orthogonal in the Hermitian form, SUM_k conj(e_k(+)) e_k(-) = 0, with equal norms, exact in the integers; at turn 0 the integers as before with 0 behind them."""
     if len(basis) != 2 or not pattern:
         raise ValueError(
             "a side declares its setting (p, q) as `basis` and one pair [alpha, beta] per part as "
             f"`pattern`, got {basis} and {list(pattern)}"
         )
     p, q = basis
-    plus = tuple(alpha * p + beta * q for alpha, beta in pattern)
-    minus = tuple(beta * p - alpha * q for alpha, beta in pattern)
-    crossed = sum(u * v for u, v in zip(plus, minus, strict=True))
-    if crossed or sum(u * u for u in plus) != sum(v * v for v in minus):
+    (u_re, u_im), (c_re, c_im) = UNITS[turn], (UNITS[turn][0], -UNITS[turn][1])  # u and conj(u)
+    plus = tuple((alpha * p + beta * u_re * q, beta * u_im * q) for alpha, beta in pattern)
+    minus = tuple((beta * p - alpha * c_re * q, -alpha * c_im * q) for alpha, beta in pattern)
+    crossed = (
+        sum(a[0] * b[0] + a[1] * b[1] for a, b in zip(plus, minus, strict=True)),
+        sum(a[0] * b[1] - a[1] * b[0] for a, b in zip(plus, minus, strict=True)),
+    )  # SUM conj(e(+)) e(-)
+    if crossed != (0, 0) or sum(norm(a) for a in plus) != sum(norm(b) for b in minus):
         raise ValueError(
             f"the pattern {list(pattern)} at the setting {basis} gives the ports {plus} and {minus}, "
             "not orthogonal with equal norms: no setting of two outcomes"
@@ -123,6 +134,16 @@ def basis_of(value: object, label: str) -> tuple[int, ...]:
     if not isinstance(value, list) or not value or not any(value):
         raise ValueError(f"{label} must be a list of integers, the setting's coefficients, not all 0")
     return tuple(integer(v, f"{label}[{i}]", -MAX_WORK_INT) for i, v in enumerate(value))
+
+
+def times(a: Gauss, b: Gauss) -> Gauss:
+    """The product of two Gaussian integers, (a_re b_re - a_im b_im, a_re b_im + a_im b_re), exact; the integers' product where both im are 0 (ALGEBRA.md, The click is the meeting of the future with the past, the Gaussian clause of 2026-10-20)."""
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def norm(a: Gauss) -> int:
+    """The norm of a Gaussian integer, re^2 + im^2, the square where im is 0: the coefficient's weight in the record's scale."""
+    return a[0] * a[0] + a[1] * a[1]
 
 
 def pattern_of(value: object, label: str, basis: tuple[int, ...]) -> Pattern:
@@ -174,8 +195,8 @@ def patterns_of_the_law(
             )
 
 
-def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], tuple[int, ...]]:
-    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand, and where a region declares a setting with no `pattern` to read it with (a setting is read by the pattern alone; a body's node_detector refuses a setting by its own line)."""
+def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], tuple[int, ...], int]:
+    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand, and where a region declares a setting with no `pattern` to read it with (a setting is read by the pattern alone; a body's node_detector refuses a setting by its own line). With `turn`, the azimuth in quarter turns 0 to 3 on a plane side beside its `axis` (the two-term plane GHZ, 2026-10-20), refused by name beside `basis` or without `axis`, and outside 0 to 3 (`integer`); 0 where the key is absent."""
     basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
     axis = basis_of(row["axis"], f"{label}.axis") if "axis" in row else ()
     if axis and basis:
@@ -187,7 +208,13 @@ def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], 
         raise ValueError(
             f"{label} declares a setting and no `pattern` to read it with: a setting is read by the pattern alone"
         )
-    return basis, axis
+    turn = integer(row[TURN], f"{label}.{TURN}", 0, 3) if TURN in row else 0
+    if TURN in row and not axis:
+        raise ValueError(
+            f"{label}.{TURN} is declared without `axis`: the quarter turn is a plane side's azimuth, declared "
+            "beside its `axis` (a real-line side's `basis` carries none)"
+        )
+    return basis, axis, turn
 
 
 def settings_of_the_law(
@@ -217,19 +244,21 @@ def settings_of_the_law(
             )
 
 
-def reduced_write(written: Sequence[int], coefficients: Sequence[int]) -> list[int]:
-    """The click's write as the law's arithmetic (the reader's ruling of 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes): the realised port's coefficients on the record's surviving parts, a part surviving while its cumulative coefficient `written` is other than 0 (every part before any write), divided by their greatest common divisor, the direction's least integers; where they are one value on every surviving part (a scaling, a global sign included) the write is the identity, 1 on every part; a part written 0 before keeps 1 here, its lines at 0; the gcd Euclid's and the reduction the division act with no remainder (`math.gcd`, `division_forward`); read at the click (`credit.reduced`) and at load by the bound gate (`compounding_of_the_law`). The cumulative coefficients (`credit.Books.written`), the product of the per-write reduced vectors, may carry a common factor no single port had ((2, 3) then (3, 2) gives (6, 6)): it is not reduced later, since between two writes the parts walk under Rule3 and are no longer exact multiples, so a later division would not be exact; it costs the amplitude bound alone, which the load gate accounts for (`compounding_of_the_law`; the Boss's decision on the reader's W2 and Q1, 2026-10-20)."""
-    surviving = [k for k, w in enumerate(written) if w != 0]
+def reduced_write(written: Sequence[Gauss], coefficients: Sequence[Gauss]) -> list[Gauss]:
+    """The click's write as the law's arithmetic (the reader's ruling of 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes): the realised port's coefficients on the record's surviving parts, a part surviving while its cumulative coefficient `written` is other than 0 (every part before any write), divided by their greatest common divisor, the direction's least integers; where they are one value on every surviving part (a scaling, a global sign included) the write is the identity, 1 on every part; a part written 0 before keeps 1 here, its lines at 0; the gcd Euclid's and the reduction the division act with no remainder (`math.gcd`, `division_forward`); read at the click (`credit.reduced`) and at load by the bound gate (`compounding_of_the_law`). The cumulative coefficients (`credit.Books.written`), the product of the per-write reduced vectors, may carry a common factor no single port had ((2, 3) then (3, 2) gives (6, 6)): it is not reduced later, since between two writes the parts walk under Rule3 and are no longer exact multiples, so a later division would not be exact; it costs the amplitude bound alone, which the load gate accounts for (`compounding_of_the_law`; the Boss's decision on the reader's W2 and Q1, 2026-10-20). On Gaussian integers (the two-term plane GHZ, 2026-10-20): a part survives while its cumulative pair is other than (0, 0), the common factor is the gcd of every re and im of the surviving coefficients (the rational integers' gcd: a common Gaussian factor that is no integer, (1, 1) on ((1, 1), (1, -1)), is not reduced and costs the bound alone, which the load gate accounts for), the identity (1, 0) on every part where one pair stands on every surviving part (a scaling or a global unit, a quarter turn of the whole record being a phase and no direction)."""
+    surviving = [k for k, w in enumerate(written) if w != (0, 0)]
     common = 0
     for k in surviving:
-        common = gcd(common, abs(int(coefficients[k])))
+        common = gcd(gcd(common, abs(int(coefficients[k][0]))), abs(int(coefficients[k][1])))
     if common == 0:
-        return [1] * len(written)
+        return [(1, 0)] * len(written)
     found = [
-        int(division_forward(int(coefficients[k]), common, 0)[0]) if k in surviving else 1
-        for k in range(len(written))
+        (int(division_forward(int(c[0]), common, 0)[0]), int(division_forward(int(c[1]), common, 0)[0]))
+        if k in surviving
+        else (1, 0)
+        for k, c in enumerate(coefficients)
     ]
-    return [1] * len(written) if len({found[k] for k in surviving}) == 1 else found
+    return [(1, 0)] * len(written) if len({found[k] for k in surviving}) == 1 else found
 
 
 def compounding_of_the_law(
@@ -245,7 +274,11 @@ def compounding_of_the_law(
     }
     for index in sorted(set(laid)):
         family = families[index]
-        sides = [ports_of(d.axis or d.basis, d.pattern) for d in rows if len(d.pattern) == family.parts]
+        sides = [
+            ports_of(d.axis or d.basis, d.pattern, d.turn)
+            for d in rows
+            if len(d.pattern) == family.parts
+        ]
         if family.parts < 2 or not sides or index not in amplitudes:
             continue
         orders = [
@@ -254,15 +287,18 @@ def compounding_of_the_law(
         for order, combination in itertools.product(
             orders, itertools.product(range(2), repeat=len(sides))
         ):
-            written = [1] * family.parts
+            written: list[Gauss] = [(1, 0)] * family.parts
             for k, (ports, port) in enumerate(zip([sides[o] for o in order], combination, strict=True)):
                 coefficients = list(ports[port])
                 if k == 0 and family.exchange < 0 and family.parts == 2:  # the determinant's lambdas
-                    coefficients = [coefficients[1], -coefficients[0]]
+                    coefficients = [coefficients[1], (-coefficients[0][0], -coefficients[0][1])]
                 written = [
-                    w * c for w, c in zip(written, reduced_write(written, coefficients), strict=True)
+                    times(w, c)
+                    for w, c in zip(written, reduced_write(written, coefficients), strict=True)
                 ]
-            largest = max(abs(w) for w in written)
+            largest = max(
+                abs(w[0]) + abs(w[1]) for w in written
+            )  # the bound of (a, b) on a level, |a| + |b|
             if largest * amplitudes[index] > bound:
                 raise ValueError(
                     f"the sides' patterns compound on the record of {family.name!r} to the coefficient {largest} (the "
