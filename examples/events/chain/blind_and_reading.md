@@ -219,5 +219,5 @@ The seventh commit of the read (43519a1d4, what a body reads) refused the three 
 axes at the interval 238 by its own defect, the emission's span carried past an absorption's close
 where the body had left its part and drawn at the next interval; the eighth (757f58700) drops the
 carried span, and under it the three run whole, pass 2 under the eighth at the landing head
-0f77b37dd, 2026-10-20: chain_x_minus (400 intervals, 8 credits, D's pass 2); chain_y_minus (400
-intervals, 8 credits, D's pass 2); chain_z_minus (400 intervals, 8 credits, D's pass 2).
+0f77b37dd, 2026-10-20: chain_x_minus (400 intervals, 8 credits, the landing's pass 2); chain_y_minus (400
+intervals, 8 credits, the landing's pass 2); chain_z_minus (400 intervals, 8 credits, the landing's pass 2).
