@@ -208,3 +208,16 @@ The findings by name (2026-10-19):
    is moved with the rule in expectation.json and build_world.py (the folder's precedent of the first
    correction), the record of the declared 48 kept inside it; the design file's `window` row, 48, read by
    no builder since the key's removal, is dropped from design.json (2026-10-19).
+
+The chain's detuned and plus worlds, chain_detuned, chain_x_plus, chain_y_plus and chain_z_plus,
+deleted 2026-10-20 at the ninth (CHANGELOG, the ninth): their bodies one-Node atoms in the exact
+vacuum, the digits one bit per line per interval against the draws' totals of 54 bits, their draws
+before the ninth the generator's; the three worlds along the axes stand with their mutual mirror
+identity, the law's line standing (ALGEBRA.md, What a body reads).
+
+The seventh commit of the read (43519a1d4, what a body reads) refused the three worlds along the
+axes at the interval 238 by its own defect, the emission's span carried past an absorption's close
+where the body had left its part and drawn at the next interval; the eighth (757f58700) drops the
+carried span, and under it the three run whole, pass 2 under the eighth at the landing head
+0f77b37dd, 2026-10-20: chain_x_minus (400 intervals, 8 credits, D's pass 2); chain_y_minus (400
+intervals, 8 credits, D's pass 2); chain_z_minus (400 intervals, 8 credits, D's pass 2).

@@ -346,3 +346,23 @@ draws these four worlds showed before the ninth were the generator's, and their 
 before the read; the four are held and not deleted, the pair's birth the one declaration of the
 family's board, held for the seventh commit of the read, under which G's capped pass runs them
 whole, 124 intervals (2026-10-20; ALGEBRA.md, What a body reads).
+
+Pass 2 under the eighth commit of the read (the landing head 0f77b37dd, 2026-10-20), the four pages
+re-recorded: born_a_b (124 intervals, 5 credits): the body 0 at 24, e to g, the spin given (no draw,
+every digit at the lay's origin, the emission at the window's close), the left side at 62 reads
+minus, the body 0 at 85, g to g (no draw, every digit at the lay's origin, the emission at the
+window's close), the body 0 at 110, g to g (no draw, every digit at the lay's origin, the emission
+at the window's close), the right side at 124 reads plus; born_a_b_prime (124 intervals, 5 credits):
+the body 0 at 24, e to g, the spin given (no draw, every digit at the lay's origin, the emission at
+the window's close), the left side at 62 reads minus, the body 0 at 85, g to g (no draw, every digit
+at the lay's origin, the emission at the window's close), the body 0 at 110, g to g (no draw, every
+digit at the lay's origin, the emission at the window's close), the right side at 124 reads minus;
+born_a_prime_b (124 intervals, 5 credits): the body 0 at 24, e to g, the spin given (no draw, every
+digit at the lay's origin, the emission at the window's close), the left side at 62 reads minus, the
+body 0 at 85, g to g (no draw, every digit at the lay's origin, the emission at the window's close),
+the body 0 at 110, g to g (no draw, every digit at the lay's origin, the emission at the window's
+close), the right side at 124 reads plus; born_a_prime_b_prime (124 intervals, 5 credits): the body
+0 at 24, e to g, the spin given (no draw, every digit at the lay's origin, the emission at the
+window's close), the left side at 62 reads minus, the body 0 at 85, g to g (no draw, every digit at
+the lay's origin, the emission at the window's close), the body 0 at 110, g to g (no draw, every
+digit at the lay's origin, the emission at the window's close), the right side at 124 reads plus.
