@@ -24,7 +24,7 @@ from event_universe.loader.world import bodies_of, node_detectors_of, regions_of
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, credit_lines, load_file, refused
-from tests.laws_content import ONE_PHOTON, TWO_ATOMS, content_world
+from tests.laws_content import ONE_PHOTON, TWO_ATOMS, content_world, with_content
 from tests.laws_read import redeclared, redeclared_file
 
 SLITS, WAY, RESONANCE, PACKET = (
@@ -125,16 +125,19 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
         tmp_path, "one_photon", ONE_PHOTON, TWO_ATOMS
     )  # re-pinned 2026-10-20 under the content
     board = Lattice(load_world(photon), (lines := []).append)
-    for _ in range(62):
+    while not credit_lines(lines, "absorbed") and board.interval < board.world.intervals:
         board.step()
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     read = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)[0][0]
     jumps = credit_lines(lines, "absorbed")
-    assert len(jumps) == 1 and jumps[0]["interval"] == 62 and board.credit.counts[light] == 0
+    since = jumps[0]["interval"]
+    assert (
+        len(jumps) == 1 and since == 63 and board.credit.counts[light] == 0
+    )  # 63 under the content (2026-10-20), 62 before
     holes = {
-        (f.at, f.ports) for f in board.credit.faces[63] if f.family == light
+        (f.at, f.ports) for f in board.credit.faces[since + 1] if f.family == light
     }  # the hole's one Node with its Port set, the face books'
-    since, (origin, ports) = 62, next(iter(holes))
+    origin, ports = next(iter(holes))
     assert len(holes) == 1 and "node" not in jumps[0]
     assert board.credit.fronts == [Front(light, (origin[0], origin[1], origin[2]), since, ports)]
     checked = 0
@@ -432,9 +435,10 @@ def test_a_later_readers_share_is_read_conditionally_on_the_earlier_windows_null
 
     monkeypatch.setattr(meeting, "turned_labels", kept)
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    folder = EVENTS / "anticoincidence"
-    (tmp_path / "u.json").write_bytes((folder / "two_atoms.json").read_bytes())
-    world = redeclared(json.loads((folder / "one_photon.json").read_text(encoding="utf-8")))
+    (tmp_path / "u.json").write_text(
+        json.dumps(with_content(TWO_ATOMS)), encoding="utf-8"
+    )  # the content, 2026-10-20
+    world = json.loads(json.dumps(ONE_PHOTON))
     packet = world["packets"][0]
     world.update(shape=[72, 1, 1], universe="u.json", intervals=68)
     top, edge = {**packet["top"], "x": [14, 14]}, dict(x=16, y=0, z=0)  # the packet over 16 Nodes at 14

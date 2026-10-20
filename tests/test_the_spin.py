@@ -176,7 +176,7 @@ def test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bou
 
 
 def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_path, monkeypatch):
-    """The exclusion as the declared rule in the detector's lists (the Boss's item (e), 2026-10-19; `lists.full`, `loader/node_detector_declaration.parts_of`): one body of two quanta in g with two excited parts e and f of capacity 1 each, both fed by one drive at one weight and one resonance, two photons of one quantum each by the record's own unit (each at the amplitude 110 lays 252,384,000 of the unit 254,237,103, W_c sin omega at k = pi / 4, 0.9927, the two 1.9854: one quantum each by the unit and not by the rounding; on main's W_c of 589,824,000 the pair reads 0.856 and counts 1) arriving one window apart (`exclusion_world` above; the body's window the packets' passage derived at load, 33, the atom branch of 2026-10-19); the closes read from the absorption's list by a spy that names each close by the board's interval as the credit lines do (60 and 93) and whose own `unabsorbed_in` read is the identity, the engine's numbers untouched. At the first close the two transitions share the unit equally and nothing has the weight 0, so the first quantum is taken, into e or into f by the draw; at the second close the part taken is full and its transition stands at the weight 0 by the declaration, the open part at its own share (9,190,267,331,637,924, the same number the open part has without any capacity) and nothing at the rest of the drive's unabsorbed share, so the second quantum is never taken by the full part: it is taken by the open part (the counts [0, 1, 1]) or passes (one quantum in each of g and the part first taken, the photon's count 1 left), over three seeds (25 and 27 pass it, 33 takes it), both outcomes seen, and at every seed no part's count stands above its capacity, the exclusion's own line; with every excited part full the absorption's list reads the two transitions at 0 and nothing at the whole unabsorbed share, the engine's draw taking nothing, the quantum passing and the body transparent by its capacity, no refusal by the draw. The body starts with its two quanta in g alone (the loader admits the start's counts in one part) and after one absorption stands in g still, the part of the largest count, the first of a tie in the declared order (`act.written`, the engine's one-part convention), its transitions and rates read from the standing part alone, its second window drawing the transitions out of g; a populated excited part the body does not stand in neither emits nor transitions, the lists per populated part the atom branch's. Without the capacity the occupied part's share is the larger (32,480,538,067,122,084, the standing label's turn) and the two shares sum above the unabsorbed share, nothing at 0, so the second quantum is taken and piles into the occupied part at the seed where it does ([0, 2, 0]): the rule is the declaration's and not derived. The loader refuses a capacity of 0 and a count above its part's capacity; `full` reads a part at its capacity and never a part declaring none."""
+    """The exclusion as the declared rule in the detector's lists (the Boss's item (e), 2026-10-19; `lists.full`, `loader/node_detector_declaration.parts_of`): one body of two quanta in g with two excited parts e and f of capacity 1 each, both fed by one drive at one weight and one resonance, two photons of one quantum each by the record's own unit (each at the amplitude 110 lays 252,384,000 of the unit 254,237,103, W_c sin omega at k = pi / 4, 0.9927, the two 1.9854: one quantum each by the unit and not by the rounding; on main's W_c of 589,824,000 the pair reads 0.856 and counts 1) arriving one window apart (`exclusion_world` above; the body's window the packets' passage derived at load, 33, the atom branch of 2026-10-19); the closes read from the absorption's list by a spy that names each close by the board's interval as the credit lines do (61 and 94) and whose own `unabsorbed_in` read is the identity, the engine's numbers untouched (re-pinned 2026-10-20 under the content of the born universe: the closes 61 and 94, the shares below the run's; 60 and 93 and the shares 9,190,267,331,637,924 and 32,480,538,067,122,084 at the content 0). At the first close the two transitions share the unit equally and nothing has the weight 0, so the first quantum is taken, into e or into f by the draw; at the second close the part taken is full and its transition stands at the weight 0 by the declaration, the open part at its own share (7,270,651,435,653,225, the same number the open part has without any capacity) and nothing at the rest of the drive's unabsorbed share, so the second quantum is never taken by the full part: it is taken by the open part (the counts [0, 1, 1]) or passes (one quantum in each of g and the part first taken, the photon's count 1 left), over three seeds (25 and 27 pass it, 33 takes it), both outcomes seen, and at every seed no part's count stands above its capacity, the exclusion's own line; with every excited part full the absorption's list reads the two transitions at 0 and nothing at the whole unabsorbed share, the engine's draw taking nothing, the quantum passing and the body transparent by its capacity, no refusal by the draw. The body starts with its two quanta in g alone (the loader admits the start's counts in one part) and after one absorption stands in g still, the part of the largest count, the first of a tie in the declared order (`act.written`, the engine's one-part convention), its transitions and rates read from the standing part alone, its second window drawing the transitions out of g; a populated excited part the body does not stand in neither emits nor transitions, the lists per populated part the atom branch's. Without the capacity the occupied part's share is the larger (32,517,153,591,467,689, the standing label's turn) and the two shares sum above the unabsorbed share, nothing at 0, so the second quantum is taken and piles into the occupied part at the seed where it does ([0, 2, 0]): the rule is the declaration's and not derived. The loader refuses a capacity of 0 and a count above its part's capacity; `full` reads a part at its capacity and never a part declaring none."""
     closes: list[tuple[int, list[int], int, int]] = []
     original = lists.absorption
 
@@ -190,33 +190,33 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
         return found
 
     monkeypatch.setattr(meeting.lists, "absorption", kept)
-    open_share, standing = 9190267331637924, 32480538067122084
+    open_share, standing = 7270651435653225, 32517153591467689  # re-pinned 2026-10-20 under the content
     ends = {}
     for run in ("capacity",):  # one world, one read of the board: the second quantum taken or passed
         closes.clear()
         path = exclusion_world(tmp_path / run, monkeypatch, 1)
         board = Lattice(load_world(path), (lines := []).append)
-        books = board.credit.bodies[0]
+        books, photon = board.credit.bodies[0], [f.name for f in board.families].index("photon")
         assert (books.part, books.counts, books.declared.capacities) == (0, [2, 0, 0], (None, 1, 1))
         for _ in range(board.world.intervals):
             board.step()
         taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
         first = taken[0]["realised"]
-        assert (taken[0]["interval"], taken[0]["before"], first in "ef") == (60, "g", True), taken
+        assert (taken[0]["interval"], taken[0]["before"], first in "ef") == (61, "g", True), taken
         interval, weights, rest, _unabsorbed = closes[0]
-        assert interval == 60 and weights[0] == weights[1] > 0 and rest == 0, closes  # the first close
+        assert interval == 61 and weights[0] == weights[1] > 0 and rest == 0, closes  # the first close
         full, open_part = (1, 2) if first == "e" else (2, 1)
         interval, weights, rest, unabsorbed = closes[1]
-        assert (interval, weights[full - 1], weights[open_part - 1]) == (93, 0, open_share), closes
+        assert (interval, weights[full - 1], weights[open_part - 1]) == (94, 0, open_share), closes
         assert rest == unabsorbed - open_share > 0, closes  # the excluded share goes to nothing
         capacities = books.declared.capacities
         assert all(n <= cap for n, cap in zip(books.counts, capacities, strict=True) if cap is not None)
         assert max(books.counts) == 1 and books.counts[full] == 1, books.counts  # never two in one part
         if len(taken) == 2:
-            assert (taken[1]["interval"], taken[1]["realised"]) == (93, "ef"[open_part - 1])
-            assert books.counts == [0, 1, 1] and board.credit.counts[1] == 0
+            assert (taken[1]["interval"], taken[1]["realised"]) == (94, "ef"[open_part - 1])
+            assert books.counts == [0, 1, 1] and board.credit.counts[photon] == 0
         else:
-            assert books.counts[0] == 1 and board.credit.counts[1] == 1  # the second quantum passed
+            assert books.counts[0] == 1 and board.credit.counts[photon] == 1  # the second quantum passed
         ends[run] = len(taken)
         print(
             f"exclusion: the first into {first}, the second {'taken' if len(taken) == 2 else 'passed'}"
@@ -229,7 +229,6 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
         [1, 1, 1],
         [books.labels[0] or 1] * 3,
     )  # every excited part full
-    photon = [f.name for f in board.families].index("photon")
     books.shares = {t: 1 for t in books.declared.transitions}
     board.credit.counts[photon], board.credit.deficits[photon] = 1, 0
     board.credit.unabsorbed.pop(photon, None), board.credit.unabsorbed_units.pop(photon, None)
@@ -246,7 +245,7 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
     interval, weights, rest, unabsorbed = closes[1]
     first = next(c["realised"] for c in lines if c["event"] == "credit" and c["absorbed"])
     occupied = "ef".index(first)  # the part the first quantum entered: the standing label's share
-    assert (interval, weights[occupied], weights[1 - occupied], rest) == (93, standing, open_share, 0), (
+    assert (interval, weights[occupied], weights[1 - occupied], rest) == (94, standing, open_share, 0), (
         closes
     )
     assert sum(weights) > unabsorbed and books.declared.capacities == (None, None, None)

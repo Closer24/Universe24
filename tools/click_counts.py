@@ -122,17 +122,19 @@ def extrema(row: Sequence[float], first: int, last: int) -> tuple[list[int], lis
     return maxima, minima
 
 
-def blind_counts(expected: dict[str, object], world: Path) -> list[object]:
+def blind_counts(expected: dict[str, object], world: Path | None) -> list[object]:
     """The blind's counts per reporter: the `counts` list where the blind carries one, else the row of this world in `rows` by its stem (the which-way folder's blind, the screen's counts per region by world); refused by name where neither stands."""
     if isinstance(expected.get("counts"), list):
         return list(expected["counts"])  # type: ignore[arg-type]
     rows = expected.get("rows")
-    if isinstance(rows, dict) and isinstance(rows.get(world.stem), list):
+    if world is not None and isinstance(rows, dict) and isinstance(rows.get(world.stem), list):
         return list(rows[world.stem])
-    raise ValueError(f"the expectation carries no `counts` and no `rows` entry for {world.stem!r}")
+    raise ValueError(
+        f"the expectation carries no `counts` and no `rows` entry for {None if world is None else world.stem!r}"
+    )
 
 
-def read_row(row: list[int], expected: dict[str, object], world: Path) -> dict[str, object]:
+def read_row(row: list[int], expected: dict[str, object], world: Path | None) -> dict[str, object]:
     """One row's readings against the expectation: the row, its local maxima and minima within the pattern's range, the visibility at the blind central maximum (the expectation's `central`; the middle of the blind maxima where it names none) against the blind minima as [most x the minima's count - least, the same sum] and the deviation from the blind row's shares; the visibility None where the blind names no minima; the wings the expectation names, the row's counts there."""
     first, last = int(expected["pattern"][0]), int(expected["pattern"][1])  # type: ignore[index]
     maxima, minima = extrema(row, first, last)

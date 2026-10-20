@@ -234,20 +234,24 @@ def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_towa
 
 
 def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_path, monkeypatch):
-    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click at 62 (the first atom's, its read of the board; the window derived from the packet's passage, 33, 2026-10-19), the -x packet arriving at the first atom: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 61 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line."""
+    """Tasks 2 and 5, rebooked in Part F2 (both hands' correction, 6085442608 and 6085486079): one_photon to the click at 62 (the first atom's, its read of the board; the window derived from the packet's passage, 33, 2026-10-19), the -x packet arriving at the first atom: the credit line carries `momentum` [p_x, 0, 0], one credited count's momentum, the photon's momentum terms at the atom's two Nodes over its share there times W_rec, read at the close (`node_detector.piece_momentum`), p_x below 0, the sign of travel; it stands within ten percent of the whole left packet's own P W_rec / (W num) read at 61 (the region's two Nodes read the packet's local wave number at its edge), and against 2 T sin(pi / 4) = 46,341, one quantum of action's p, it carries W_rec's worth: on one_photon one count is the two packets' lay, W_rec = 0.956 W_c = 2.2 quanta of action (the mathematician's "W_rec count 100,289"), so the booked p is about twice 46,341 and not 46,341 itself (the Boss's number presumed a one-quantum count: a decision reported, not hidden); `fan` the photon's P over the board at the click in the same unit (688, a true P, the two packets near cancelling), and the deficit fan minus the piece, the three integers printed; the twin without the draw books nothing: no books, no credit line. Re-pinned 2026-10-20 under the content (tests.laws_content, the born universe's holders beside the two atoms): the first atom's click at 63 where it fell at 62 at the exact vacuum, the packet read the interval before it."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     light = next(i for i, f in enumerate(board.families) if f.name == "photon")
     num = board.families[light].pair[0]
-    for _ in range(61):
-        board.step()
     left = (np.arange(board.shape[0]) < 48).reshape(board.shape)  # the -x packet, body 0's side
-    packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
-    packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
+    credits: list[dict] = []
+    while (
+        not credits and board.interval < board.world.intervals
+    ):  # the packet read the interval before the click
+        packet_momentum = readings.momentum_of(num, board.lines_of(light, 0), board.wrap, left)[0]
+        packet_share = int(board.share_of(light, 1, left)[0][left].sum(dtype=object))
+        board.step()
+        credits = [line for line in lines if line["event"] == "credit" and line["absorbed"]]
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
-    board.step()
-    credits = [line for line in lines if line["event"] == "credit" and line["absorbed"]]
-    assert len(credits) == 1 and credits[0]["interval"] == 62 and credits[0]["node_detector"] == "body 0"
+    assert (
+        len(credits) == 1 and credits[0]["interval"] == 63 and credits[0]["node_detector"] == "body 0"
+    )  # 63 under the content (2026-10-20), 62 before
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
     assert piece[0] < 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]  # the -x piece at the left atom
     assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio

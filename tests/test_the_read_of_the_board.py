@@ -20,7 +20,6 @@ from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, family, refused, world_beside
-from tests.laws_content import emit_and_take_world
 from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
@@ -226,7 +225,7 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):
-    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the emit-and-take world (the resonance universe's two atoms on the periodic chain of 48, the emitter's pulse laid as a source in time from its window's close, 61), once the pulse reaches the taker, the pulse's digits at the taker's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the pulse's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each; the ground part's two lines at the lay's origin, one a copy of the other, read once), is admitted; the refusals' texts stand apart from the write's bound refusal."""
+    """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the shipped resonance world at the content 0 (examples/events/resonance/resonant.json, two atoms of two Nodes on the periodic chain of 48, the emitter's pulse laid as a source in time from its window's close, 48; re-read 2026-10-20 there by the reader's ruling, the content fixture's pulse reading the content), once the pulse reaches the taker, the pulse's digits at the taker's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the pulse's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each, the lines read once where one is a copy of another or stands at the lay's origin: four of the atom's digits and two of the pulse's at the two Nodes, 51 bits, re-pinned 2026-10-20 on the shipped ring), is admitted; the refusals' texts stand apart from the write's bound refusal."""
     singlet = Lattice(
         load_world(
             world_beside(
@@ -241,8 +240,10 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     assert {r for r, _f, _w, _p in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
         digits.read_of(singlet, [(spin, left)], "the test")
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))))
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
+    board = Lattice(
+        load_shipped(EVENTS / "resonance" / "resonant.json")
+    )  # the shipped ring at the content 0
     pulse, atom = family(board, "pulse"), family(board, "atom")
     taker = board.credit.bodies[1]
     at = board.mask(taker.nodes)
@@ -260,7 +261,11 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
     own, walls = digits_now(board, [(pulse, at), (atom, at)])
     assert number == read_number(own, walls) and set(walls) == {4, 3898}  # light's 3 values, the atom's
-    assert walls.count(4) == 6 and walls.count(3898) == 18 and 220 < number.bit_length() <= 230
+    assert (walls.count(4), walls.count(3898), number.bit_length()) == (
+        2,
+        4,
+        51,
+    )  # two Nodes, 2026-10-20
     for text in ("w div 2", "exact vacuum"):
         assert "amplitude bound" not in text
 

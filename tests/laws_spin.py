@@ -14,6 +14,7 @@ from event_universe.lattice import Lattice
 from event_universe.loader.draw import ports_of, times
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, TOOL
+from tests.laws_content import with_content
 
 SPIN = {"name": "spin", "pair": [6000, 6000], "reads": {"gravity": 1, "binding": 1}, "dimension": [2, 2]}
 
@@ -108,9 +109,10 @@ def exclusion_world(
     """The exclusion's world beside `folder` (the spin branch, item (e)): the two atoms' universe with the atom's family at the parts `grounds` (each a name with its count at the start; one part g of two quanta) and `excited` (the names, each at the count 0 and at the declared `capacity`, none where it is None), one plane each, one body at the chain's centre with a transition from every ground part to every excited part by `photon` at one weight and one resonance, its window at `seed`; with `exchange` the family's declared sign under exchange on its row (`antisymmetric` or `symmetric`, the key `exchange`), so that the start splits its counts over several ground parts (the shell's world, one quantum in gu and one in gd), none otherwise; two photons of one quantum each from the two ends toward the body, the second arriving after the first window closes (the lower from 24, the upper from 96, the chain of `length` Nodes open on x with receding faces); the mode file by tools/pixel_mode.py; the world's path."""
     folder.mkdir(parents=True, exist_ok=True)
     universe = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
-    universe["families"][0]["dimension"] = [len(grounds) + len(excited), 2]
+    universe = with_content(universe)  # the content of the born universe, 2026-10-20
+    universe["families"][2]["dimension"] = [len(grounds) + len(excited), 2]
     if exchange is not None:
-        universe["families"][0]["exchange"] = exchange
+        universe["families"][2]["exchange"] = exchange
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
     at, held = length // 2 - 9, {} if capacity is None else {"capacity": capacity}

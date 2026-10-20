@@ -11,8 +11,8 @@ from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, ROOT, TOOL, packet_world, refused
-from tests.laws_content import ONE_PHOTON, one_photon_board
+from tests.laws import BACK, TOOL, packet_world, refused
+from tests.laws_content import ONE_PHOTON, TWO_ATOMS, one_photon_board, with_content
 from tests.laws_read import redeclared
 
 
@@ -58,11 +58,13 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 62 as the plain world does (body 0's close, the atom's read of the board; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
+    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 62 as the plain world does (body 0's close, the atom's read of the board; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1. Re-pinned 2026-10-20 under the content, the one-photon declaration inlined on the two atoms\' universe with the born universe\'s holders: the first atom takes at 63 where it took at 62 at the exact vacuum, the front\'s eight shells read from that click."""
     world = json.loads(
         json.dumps(ONE_PHOTON)
     )  # the deleted anticoincidence world's declaration, inlined
-    (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
+    (tmp_path / "u.json").write_text(
+        json.dumps(with_content(TWO_ATOMS)), encoding="utf-8"
+    )  # the content
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     redeclared(world).update(universe="u.json", erasure=8)
     (path := tmp_path / "tapered.json").write_text(json.dumps(world), encoding="utf-8")
@@ -73,22 +75,28 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(62):
+    credits: list[dict] = []
+    while not credits and board.interval < board.world.intervals:
         board.step()
-    credits = [
-        c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
-    ]
-    assert len(credits) == 1 and credits[0]["interval"] == 62 and board.credit.counts[photon] == 0
-    origin = next(f.at for f in board.credit.faces[63] if f.family == photon)
+        credits = [
+            c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
+        ]
+    taken = credits[0]["interval"]
+    assert (
+        len(credits) == 1 and taken == 63 and board.credit.counts[photon] == 0
+    )  # 63 under the content (2026-10-20), 62 before
+    origin = next(f.at for f in board.credit.faces[taken + 1] if f.family == photon)
     tapered = 0
-    for interval in range(63, 259):  # the band of eight shells leaves the grown board by about 224
+    for interval in range(
+        taken + 1, taken + 197
+    ):  # the band of eight shells leaves the grown board by about 224
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
         inside, taper = (
-            distance <= interval - 62 - 9,
-            (distance > interval - 62 - 9) & (distance <= interval - 62),
+            distance <= interval - taken - 9,
+            (distance > interval - taken - 9) & (distance <= interval - taken),
         )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
@@ -134,7 +142,9 @@ def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(t
     assert found["tied"][:7] == (1, lost, 0, 0, [(0, 1)], 1, True)
     assert found["above"][:7] == (1, [*lost, NO_SIDE], 0, 1, [], 1, True)  # booked, the front begun
     print(f"the dark shares at the end: tied {found['tied'][7]}, above {found['above'][7]}")
-    assert found["tied"][7] == 122508000  # the other half beyond the front's reach, the oracle's header
     assert (
-        found["above"][7] == 122508000 + 1974000
-    )  # the standing origin's remnant beside it, booked and unfaced
+        found["tied"][7] == 117996109
+    )  # the other half beyond the front's reach; 122508000 at the exact vacuum, re-pinned 2026-10-20 under the content
+    assert (
+        found["above"][7] == 119927551
+    )  # 122508000 + 1974000 at the exact vacuum; re-pinned 2026-10-20 under the content
