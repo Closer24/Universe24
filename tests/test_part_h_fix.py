@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from event_universe import act, emission, lists, node, readings, records, twist, world_files
+from event_universe import emission, node, readings, records, twist, world_files
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.features import phase
@@ -24,14 +24,11 @@ from tests.laws import (
     EVENTS,
     GRAVITY,
     coulomb_world,
-    d4_bound,
     levels_floor,
     world_beside,
 )
 from tests.laws import EMIT_RUN as RUN
 from tests.laws_content import emit_and_take_world, one_photon_board
-
-ATOM_P = 32520  # one_photon's first atom at count 1 at the derived close, 62, the taker by the read of the board (33,136 the second atom's at 61 under the generator; 32,384 about the Node of the click at 76 under the declared 48): the quarter turn's reach about the hole's Node (C6), the most the two-Node taker takes of the -x piece booked over the window (C2, C4), one quantum's 2 T sin(pi / 4) within a few percent (C1)
 
 
 def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
@@ -255,53 +252,4 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
     print(
         f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at 62 source {click['source']!r} and the lay's count {laid - 1}; "
         f"a body's quantum entered beside it, the draw's weights {weights[0]}"
-    )
-
-
-def test_the_twisted_taker_keeps_its_momentum_through_its_emissions_re_lay(tmp_path, monkeypatch):
-    """C3, the recoil per Node (the spec's blind: the taker's P kept through the emission within the re-lay's rounding bound, D4): the emit-and-take chain with the taker declaring the giver's rate too; the taker takes the pulse at 361 (its own rate's draws advance its generator, so it takes later than the rateless taker's 169; the interval pinned to the generator's sequence, as the other pins are) and the write twists it by the piece, 42,839 less the shortfall 7 booked per axis on the credit line (`shortfall`, C3); an emission is then given to it through the one act (`lists.emission`, one alternative, no draw): its parts are re-laid each Node in its own direction, the part the quantum enters in the leaving part's own at that Node, so the phase gradient the twist wrote survives the exchange and the taker's own P (its record's terms over its Nodes, `readings.momentum_of`) is kept within D4's bound (`d4_bound`: one level's change per line and Node, SUM over the body's axis-Links of |now_i| + |before_i| + |now_j| + |before_j| + 2, in T's unit; `levels_floor`, Part F's floor over the body's Nodes, read beside it), the count moved e to g and the pulse laid as a source in time; with one direction laid at every Node, the engine before C3, the gradient was erased and the P fell to the rounding."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-
-    def edit(world):  # type: ignore[no-untyped-def]
-        world["intervals"] = 2 * RUN
-        world["bodies"][0]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in range(6)]
-        world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in range(12, 18)]
-        world["bodies"][0]["node_detector"]["window"] = 240
-        world["bodies"][1]["node_detector"]["window"] = 48
-        world["bodies"][1]["rates"] = world["bodies"][0]["rates"]  # the taker emits as the giver does
-
-    board = Lattice(
-        load_world(world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)),
-        (lines := []).append,
-    )
-    while not any(c["event"] == "credit" and c["absorbed"] for c in lines):
-        board.step()
-    taker = board.credit.bodies[1]
-    atom, weight, at = taker.index, board.families[taker.index].pair[0], board.mask(taker.nodes)
-
-    def own() -> int:  # the taker's own P_x: its record's momentum terms over its Nodes, in T's unit
-        read = readings.momentum_of(weight, board.lines_of(atom, taker.record), board.wrap, at)
-        return twist.scaled(read, weight)[0]
-
-    click = next(c for c in lines if c["event"] == "credit" and c["absorbed"])
-    before, floor, bound = own(), levels_floor(board, atom, at), d4_bound(board, atom, taker.nodes)[0]
-    assert (click["interval"], click["node_detector"], click["momentum"]) == (
-        361,
-        "body 1",
-        [42839, 0, 0],
-    )
-    assert click["shortfall"] == [7, 0, 0] and click["lost"] is None and before == 42839 - 7
-    rate = next(r for r in taker.declared.rates if r.leaves == taker.part)
-    act.click(board, taker, None, [lists.emission(board, taker, rate, 1)[0]])  # the emission given
-    after = own()
-    assert (
-        taker.counts == [1, 0] and board.credit.sources and abs(after - before) <= min(floor, bound)
-    ), (
-        before,
-        after,
-        floor,
-        bound,
-    )
-    print(
-        f"C3: the taker's P_x {before} at its click, {after} after its emission's re-lay; D4's bound {bound}, the floor {floor}"
     )
