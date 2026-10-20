@@ -9,13 +9,13 @@ from event_universe.lattice import Lattice
 from event_universe.resonance import unit_weight
 from event_universe.twist import quarter_turn
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, TOOL, world_beside
+from tests.laws import EVENTS, ONE_PHOTON, TOOL, world_beside
 from tests.laws_read import redeclared
 
 
 def test_bodies_of_different_counts_take_by_their_own_transfer_shares(tmp_path):
     """Two atoms reading one photon, A of count 1 and B of count 2 (the anticoincidence world's two atoms, B's ground part declared at the count 2; B's norm the engine's own, read from the books and not assumed), closing one interval: the absorption's list at one denominator (ALGEBRA.md, The absorption, the draw (a) and (b); `lists.absorption`): the unit the norms' least common multiple, each body's weight its transfer share scaled by the unit over its own norm, and the rest the record's unabsorbed share less the weights, 0 where they sum above the unit (both turned whole: the two weights the unit each and nothing to the rest, one quantum one taker; A half turned and B untouched: A's weight half the unit and B's 0; A closing alone: its share in its own norm); the realised frequencies over an ensemble of worlds are the trials tool's reading (tools/meeting_trials.py) and no test's."""
-    world = json.loads((EVENTS / "anticoincidence" / "one_photon.json").read_text(encoding="utf-8"))
+    world = json.loads(json.dumps(ONE_PHOTON))  # the deleted anticoincidence world's declaration
     redeclared(world)["bodies"][1]["parts"][0]["count"] = (
         2  # the second atom's ground part at the count 2
     )

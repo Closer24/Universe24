@@ -11,7 +11,7 @@ from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, one_photon_board, packet_world, refused
+from tests.laws import BACK, ONE_PHOTON, ROOT, TOOL, one_photon_board, packet_world, refused
 from tests.laws_read import redeclared
 
 
@@ -58,8 +58,9 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     tmp_path, monkeypatch
 ):
     """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 62 as the plain world does (body 0's close, the atom's read of the board; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
-    folder = EVENTS / "anticoincidence"
-    world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
+    world = json.loads(
+        json.dumps(ONE_PHOTON)
+    )  # the deleted anticoincidence world's declaration, inlined
     (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     redeclared(world).update(universe="u.json", erasure=8)

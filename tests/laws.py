@@ -381,15 +381,94 @@ def coulomb_world(
     return path
 
 
+CONTENT_HOLDERS = [  # the content of the born universe (bell_singlet/born.json, pair.json): the holders of the content
+    f
+    for f in json.loads((EVENTS / "pair.json").read_text(encoding="utf-8"))["families"]
+    if f["name"] in ("gravity", "binding")
+]
+TWO_ATOMS = json.loads((EVENTS / "anticoincidence" / "two_atoms.json").read_text(encoding="utf-8"))
+ONE_PHOTON = {
+    "shape": [96, 1, 1],
+    "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+    "face_depth": 1,
+    "intervals": 170,
+    "universe": "examples/events/anticoincidence/two_atoms.json",
+    "bodies": [
+        {
+            "family": "atom",
+            "nodes": [{"node": [23, 0, 0], "weight": 1}, {"node": [24, 0, 0], "weight": 1}],
+            "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
+            "transitions": [
+                {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
+            ],
+            "rates": [],
+            "node_detector": {},
+        },
+        {
+            "family": "atom",
+            "nodes": [{"node": [71, 0, 0], "weight": 1}, {"node": [72, 0, 0], "weight": 1}],
+            "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
+            "transitions": [
+                {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
+            ],
+            "rates": [],
+            "node_detector": {},
+        },
+    ],
+    "packets": [
+        {
+            "family": "photon",
+            "along": "x",
+            "wave": [1, 4],
+            "phase": [0, 1],
+            "amplitude": 78,
+            "top": {"x": [48, 48], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": 8, "y": 0, "z": 0},
+        },
+        {
+            "family": "photon",
+            "along": "x",
+            "wave": [-1, 4],
+            "phase": [0, 1],
+            "amplitude": 78,
+            "top": {"x": [47, 47], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": 8, "y": 0, "z": 0},
+        },
+    ],
+    "node_detectors": [],
+    "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
+}  # the deleted anticoincidence world's one photon, inlined 2026-10-20
+
+
+def with_content(universe):  # type: ignore[no-untyped-def]
+    """A toy universe re-declared with the vacuum content (the reader's ruling of 2026-10-20, section H (1); G's probe): the born universe's holders gravity and binding prepended as they stand in pair.json, every toy family reading them at 1, so that light's remainders walk on w div F = 108,000,000 and a body's read carries its draw's total."""
+    families = [
+        {**f, "reads": {**f.get("reads", {}), "gravity": 1, "binding": 1}} for f in universe["families"]
+    ]
+    return {**universe, "families": CONTENT_HOLDERS + families}
+
+
+def content_world(tmp_path, name, document, universe, edit=None):  # type: ignore[no-untyped-def]
+    """A toy world beside tmp_path under the content: the universe with the content written as u.json, the document in the read's shape with its universe u.json and `edit` applied, the generator laying its packets (tools/pixel_mode.py) where it has any; the repository root pointed at tmp_path (the conftest restores it); the world's path."""
+    (tmp_path / "u.json").write_text(json.dumps(with_content(universe)), encoding="utf-8")
+    world = {**redeclared(json.loads(json.dumps(document))), "universe": "u.json"}
+    if edit is not None:
+        edit(world)
+    (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
+    world_files.REPOSITORY_ROOT = tmp_path
+    if world.get("packets"):
+        TOOL.main(["--input", str(path)])
+    return path
+
+
 def one_photon_board(tmp_path, draw: bool = True):  # type: ignore[no-untyped-def]
-    """The anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json) copied beside tmp_path with its universe and its mode file at the copy's digest (`world_beside`), its output kept; without `draw` the bodies' node_detector keys are dropped (the twin that books nothing)."""
-    source = EVENTS / "anticoincidence" / "one_photon.json"
+    """The one-photon world (`ONE_PHOTON`, the deleted anticoincidence world's declaration) under the content on the two atoms' universe (`content_world`, re-pinned 2026-10-20 under the content of the born universe), its output lines collected; with `draw` False the twin without the detector's draw, transitions and rates (the parts alone)."""
 
     def twin(world):  # type: ignore[no-untyped-def]
         for body in world["bodies"]:  # the parts alone: no draw, no transition, no rate
             body.pop("node_detector"), body.pop("transitions"), body.pop("rates")
 
-    path = world_beside(tmp_path, source, (lambda world: None) if draw else twin)
+    path = content_world(tmp_path, "one_photon", ONE_PHOTON, TWO_ATOMS, None if draw else twin)
     return Lattice(load_world(path), (lines := []).append), lines
 
 
@@ -411,7 +490,7 @@ def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
 
 
 def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, window=61):  # type: ignore[no-untyped-def]
-    """The resonance world rewritten beside tmp_path: body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, 61 by default: in the exact dark its emission falls at its window's close, `meeting.emission_fell`), body 1 the taker on `taker_nodes` (ground, window 48), 200 intervals on the periodic chain of 48."""
+    """The resonance world rewritten beside tmp_path under the content of the born universe (`with_content`, re-pinned 2026-10-20; the box open on x with its faces, the content's sink): body 0 the emitter on `emitter_nodes` (excited, [2, 3], lifetime 48, its window `window`, 61 by default: in the exact dark its emission falls at its window's close, `meeting.emission_fell`), body 1 the taker on `taker_nodes` (ground, window 48), 200 intervals on the periodic chain of 48."""
 
     def edit(world):  # type: ignore[no-untyped-def]
         world["intervals"] = EMIT_RUN
@@ -419,8 +498,17 @@ def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes, window=61):  # typ
         world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in taker_nodes]
         world["bodies"][0]["node_detector"]["window"] = window
         world["bodies"][1]["node_detector"]["window"] = 48
+        world["boundary"]["x"], world["face_depth"] = (
+            "open",
+            1,
+        )  # the content needs a sink: the faces open along x
 
-    return world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
+    path = world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
+    universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
+    (tmp_path / "examples" / "events" / "zeno" / "zeno_atom.json").write_text(
+        json.dumps(with_content(universe)), encoding="utf-8"
+    )  # the content
+    return path
 
 
 def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:

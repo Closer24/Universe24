@@ -21,7 +21,15 @@ from event_universe.reports import (
 )
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import EVENTS, GRAVITY, one_photon_board, world_beside
+from tests.laws import (
+    EVENTS,
+    GRAVITY,
+    ONE_PHOTON,
+    TWO_ATOMS,
+    content_world,
+    one_photon_board,
+    world_beside,
+)
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "reads": {}, "dimension": 1}
@@ -416,9 +424,7 @@ def test_a_taker_across_the_periodic_wrap_folds_by_consecutive_offsets(tmp_path,
             {"node": [41, 0, 0], "weight": 1},
         ]
 
-    board = Lattice(
-        load_world(world_beside(tmp_path, EVENTS / "anticoincidence" / "one_photon.json", edit))
-    )
+    board = Lattice(load_world(content_world(tmp_path, "one_photon", ONE_PHOTON, TWO_ATOMS, edit)))
     atom = next(i for i, f in enumerate(board.families) if f.name == "atom")
     assert board.wrap.x and [b.nodes for b in board.credit.bodies] == [
         ((95, 0, 0), (0, 0, 0)),

@@ -23,7 +23,19 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of, node_detectors_of, regions_of_the_law
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, credit_lines, load_file, refused, world_beside
+from tests.laws import (
+    EVENTS,
+    ONE_PHOTON,
+    ROOT,
+    RUN,
+    TOOL,
+    TOP,
+    TWO_ATOMS,
+    content_world,
+    credit_lines,
+    load_file,
+    refused,
+)
 from tests.laws_read import redeclared, redeclared_file
 
 SLITS, WAY, RESONANCE, PACKET = (
@@ -120,7 +132,9 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant(tmp_path):
     """T3 (the mathematician's 193 (2) and 197 precision 3 with the advisor's second; the matrix row 3): on the anticoincidence world's one photon (examples/events/anticoincidence/one_photon.json, the chain of 96 with its receding faces, the committed world and its mode file) one record takes the photon at the interval 61 (the second atom's window, open from the photon's first lit interval, 29, and closed 33 after it, the passage derived at load, C2 with (D), 2026-10-19; the packets at the amplitude 78, one quantum in the record's own unit, C1), the photon's count reaches 0 and the front presents its faces shell by shell from the taker's Node; at every interval after, inside the ball of the shells whose two faces are done and whose outer neighbours stand at 0 (the Link-metric distance at most t - 61 - 3), every line of the photon's record stands at (0, 0) with its remainder below one read coefficient R of the photon's rule at the vacuum's paces and unchanged from one interval to the next: the erasure is Rule3's own write and nothing assigned; the erasure lines one per interval from the interval after the click."""
-    photon = world_beside(tmp_path, EVENTS / "anticoincidence" / "one_photon.json", lambda w: None)
+    photon = content_world(
+        tmp_path, "one_photon", ONE_PHOTON, TWO_ATOMS
+    )  # re-pinned 2026-10-20 under the content
     board = Lattice(load_world(photon), (lines := []).append)
     for _ in range(62):
         board.step()
