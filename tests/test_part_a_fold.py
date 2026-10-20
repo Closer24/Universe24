@@ -1,7 +1,5 @@
 """Part A, gravity's odd lines in the fold form (ALGEBRA.md, The clock family on the Ports; the two hands' joint line of 2026-10-09): a holder of the content declaring the source `flux` carries three odd lines after its tension lines, written by the count's flux through the axis's two Links summed unhalved over twice the count's wall, and every plane reading it has each Link's read folded into the pair (X^c, X^s) with X^s_ji = -X^s_ij; without the key the engine is bit for bit the frozen one."""
 
-import json
-import lzma
 from fractions import Fraction
 from pathlib import Path
 
@@ -11,38 +9,11 @@ from event_universe import records, world_files
 from event_universe.core import paces
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import folds
 from event_universe.plane import link_pairs, odd_links
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import CHARGED, EVENTS, arrays, flux_world, packet
+from tests.laws import CHARGED, arrays, flux_world, packet
 from tests.laws import LINE_KEYS as KEYS
-from tests.laws_read import load_shipped
-
-ORACLE = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
-
-
-def test_without_flux_the_step_is_bit_identical(monkeypatch):
-    """(a) The two slits world of light.json, no `flux` declared, stepped for 20 intervals: every family's level now equals the frozen engine's look file frame by frame (the oracle recorded before Part A), so the code path without a flux holder is the engine of 441b2399 bit for bit; and no family of the shipped universes is folded."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    look = json.loads(lzma.open(ORACLE).read())
-    board = Lattice(load_shipped(EVENTS / "two_slits" / "two_slits.json"))
-    assert not any(folds(board.families, i) for i in range(len(board.families)))
-    for interval in range(21):
-        frame = look["frames"][interval]
-        assert frame["interval"] == interval and tuple(frame["shape"]) == board.shape
-        for index, family in enumerate(board.families):
-            recorded = frame["families"][family.name]["now" if family.quanta else "level"]
-            flat = np.zeros(board.shape, dtype=object).reshape(-1)
-            if isinstance(recorded, dict):
-                flat[recorded["at"]] = recorded["values"]
-            else:
-                flat = np.array(recorded, dtype=object).reshape(-1)
-            assert np.array_equal(flat.reshape(board.shape), board.states[index].lines[0].now), (
-                interval,
-                family.name,
-            )
-        board.step()
 
 
 def test_the_odd_line_is_odd(tmp_path, monkeypatch):

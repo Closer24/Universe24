@@ -91,37 +91,27 @@ def worlds_read(monkeypatch, folder: str, names: tuple[str, ...]) -> None:  # ty
         assert found == REAL_PORT_DIGESTS[name], name
 
 
-def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped singlet worlds of bell_singlet, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; the clock gives each folder its own test)."""
-    worlds_read(
-        monkeypatch,
-        "bell_singlet",
-        ("singlet_a_b", "singlet_a_b_prime", "singlet_a_prime_b", "singlet_a_prime_b_prime"),
-    )
+SHIPPED = (  # every real-port world the branch ships: four singlet, four born, the two slits, four GHZ
+    ("bell_singlet", "singlet_a_b"),
+    ("bell_singlet", "singlet_a_b_prime"),
+    ("bell_singlet", "singlet_a_prime_b"),
+    ("bell_singlet", "singlet_a_prime_b_prime"),
+    ("bell_singlet", "born_a_b"),
+    ("bell_singlet", "born_a_b_prime"),
+    ("bell_singlet", "born_a_prime_b"),
+    ("bell_singlet", "born_a_prime_b_prime"),
+    ("two_slits", "two_slits"),
+    ("ghz", "ghz_x_x_x"),
+    ("ghz", "ghz_x_y_y"),
+    ("ghz", "ghz_y_x_y"),
+    ("ghz", "ghz_y_y_x"),
+)
 
 
-def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped born-pair worlds of bell_singlet, digest for digest the recording at the ninth's seventh commit (what a body reads, the reader's G2 of 2026-10-20: the atom's absorption draws at 85 and 110 read the pair's wake within one Link and carry their totals; `worlds_read`)."""
-    worlds_read(
-        monkeypatch,
-        "bell_singlet",
-        ("born_a_b", "born_a_b_prime", "born_a_prime_b", "born_a_prime_b_prime"),
-    )
-
-
-def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording at the landing head (`worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
-    worlds_read(monkeypatch, "two_slits", ("two_slits",))
-
-
-def test_the_ghz_worlds_x_x_x_and_x_y_y_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """Two of the four shipped GHZ worlds of four real parts, x x x and x y y, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; two per test for the clock)."""
-    worlds_read(monkeypatch, "ghz", ("ghz_x_x_x", "ghz_x_y_y"))
-
-
-def test_the_ghz_worlds_y_x_y_and_y_y_x_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The other two shipped GHZ worlds, y x y and y y x, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`); with the first pair every real-port world the branch ships is run."""
-    worlds_read(monkeypatch, "ghz", ("ghz_y_x_y", "ghz_y_y_x"))
+@pytest.mark.parametrize("folder, name", SHIPPED)
+def test_each_shipped_real_port_world_runs_digest_for_digest(monkeypatch, folder, name):  # type: ignore[no-untyped-def]
+    """Every real-port world the branch ships, one test item each (`worlds_read`): the four singlet worlds and the four born-pair worlds of bell_singlet, the four GHZ worlds of four real parts and the two slits world, each digest for digest its recording in REAL_PORT_DIGESTS (the lines' digest, the arrays' digest at the end, the count of lines), a world named in REFUSED refused by name instead."""
+    worlds_read(monkeypatch, folder, (name,))
 
 
 def conj_times(a: Gauss, b: Gauss) -> Gauss:
@@ -335,24 +325,10 @@ def setting_read(name: str, tmp_path, monkeypatch) -> None:  # type: ignore[no-u
     )
 
 
-def test_the_two_term_plane_ghz_at_x_x_x_reads_e_3_plus_one(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The two-term plane GHZ at x x x (the clock gives each setting its own test): E_3 = +1 exactly with the eight shares 0 or 1 / 4, the marginals 1 / 2, the pairwise correlations 0, the weights the chain rule's, the three credit lines (`setting_read`)."""
-    setting_read("x_x_x", tmp_path, monkeypatch)
-
-
-def test_the_two_term_plane_ghz_at_x_y_y_reads_e_3_minus_one(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The two-term plane GHZ at x y y: E_3 = -1 exactly, the same reading (`setting_read`)."""
-    setting_read("x_y_y", tmp_path, monkeypatch)
-
-
-def test_the_two_term_plane_ghz_at_y_x_y_reads_e_3_minus_one(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The two-term plane GHZ at y x y: E_3 = -1 exactly, the same reading (`setting_read`)."""
-    setting_read("y_x_y", tmp_path, monkeypatch)
-
-
-def test_the_two_term_plane_ghz_at_y_y_x_reads_e_3_minus_one(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The two-term plane GHZ at y y x: E_3 = -1 exactly, the same reading (`setting_read`); over the four settings M = 1 - (-1) - (-1) - (-1) = 4 in magnitude, the gate's signs."""
-    setting_read("y_y_x", tmp_path, monkeypatch)
+@pytest.mark.parametrize("name", list(SETTINGS))
+def test_the_two_term_plane_ghz_reads_e_3_at_each_setting(tmp_path, monkeypatch, name):  # type: ignore[no-untyped-def]
+    """The two-term plane GHZ at each of the four settings, one test item each (`setting_read`): x x x reads E_3 = +1 and x y y, y x y, y y x read E_3 = -1 exactly, with the eight shares 0 or 1 / 4, the marginals 1 / 2, the pairwise correlations 0, the weights the chain rule's and the three credit lines; over the four settings M = 1 - (-1) - (-1) - (-1) = 4 in magnitude, the gate's signs."""
+    setting_read(name, tmp_path, monkeypatch)
 
 
 def test_the_two_term_plane_ghz_is_exact_at_another_amplitude(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]

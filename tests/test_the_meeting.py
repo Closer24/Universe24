@@ -5,6 +5,7 @@ import math
 from fractions import Fraction
 
 import numpy as np
+import pytest
 
 from event_universe import resonance, twist
 from event_universe.emission import laid_by_count
@@ -141,14 +142,10 @@ def ghz_gates_read(keys, tmp_path):  # type: ignore[no-untyped-def]
     assert found == [-1] * 3 == [f(b[c]["M"]) for c in local]
 
 
-def test_the_ghz_gates_first_pair_x_y_y_and_y_x_y_reads_the_blind_exactly(tmp_path):
-    """(ii) The GHZ folder built from its design and its first pair of worlds run, x y y and y x y (the clock gives each pair its own test; `laws.gate_worlds`): every world LAWFUL, its parts lines equal across the parts, its credit lines at the window's close, the back-in-time gate MATCH over 4 intervals; each world's eight shares, E_3, marginals, sub-correlations and the three local credits' correlations the blind's, one triple drawn per world, its mismatch ratios [1, 1] on every side; and the blind's four E_3 (-1 at x y y, y x y, y y x and +1 at x x x) combine to M = -4 by the gate's signs, |M| = 4 beside local realism's 2, where each local credit's combine to -1 (`ghz_gates_read`)."""
-    ghz_gates_read(("x y y", "y x y"), tmp_path)
-
-
-def test_the_ghz_gates_second_pair_y_y_x_and_x_x_x_reads_the_blind_exactly(tmp_path):
-    """(ii) The second pair of the GHZ folder's worlds, y y x and x x x, run and read as the first (`ghz_gates_read`): with the first pair every world of the folder is run, none dropped."""
-    ghz_gates_read(("y y x", "x x x"), tmp_path)
+@pytest.mark.parametrize("keys", [("x y y", "y x y"), ("y y x", "x x x")])
+def test_the_ghz_gates_worlds_read_the_blind_exactly_pair_by_pair(tmp_path, keys):
+    """(ii) The GHZ folder built from its design and its four worlds run two per test item, x y y with y x y and y y x with x x x (`laws.gate_worlds`, `ghz_gates_read`; none dropped): every world LAWFUL, its parts lines equal across the parts, its credit lines at the window's close, the back-in-time gate MATCH over 4 intervals; each world's eight shares, E_3, marginals, sub-correlations and the three local credits' correlations the blind's, one triple drawn per world, its mismatch ratios [1, 1] on every side; and the blind's four E_3 (-1 at x y y, y x y, y y x and +1 at x x x) combine to M = -4 by the gate's signs, |M| = 4 beside local realism's 2, where each local credit's combine to -1."""
+    ghz_gates_read(keys, tmp_path)
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):

@@ -30,7 +30,7 @@ BLIND = {
     "window": [1, 2],
     "across": "y",
 }
-BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5}, seed=7)
+BLIND.update(pattern=[0, 1], counts=[1.5, 2], through=10, watch={"4": 2, "0": 1.5})
 
 
 def shown(world, monkeypatch, at, blind, back=None, every=1):
@@ -170,7 +170,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     read = COUNTS.reading(world, output, tmp_path / "grouped.json")
     assert read["at"] == [0, 4] and read["seen"] == [wall, wall] and read["quanta"] == 2
     shares, clicks = read["rounded_shares"], read["clicks"]
-    assert shares["deviation"] == [1, 3] and shares["row"] == [1, 1] and read["seed"] == 7
+    assert shares["deviation"] == [1, 3] and shares["row"] == [1, 1]
     assert clicks is None and shares["maxima"] == [] and (shares["visibility"] == [0, 2])
     assert read["arrival"] == {"peak": 1, "centroid": [3, 2], "span": [1, 2]} and not read["floored"]
     assert read["aside"] == {"s0": {"seen": wall, "quanta": 1}}

@@ -168,13 +168,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
         "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
     ),
-    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
-        51,
-        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
-        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
-        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
-        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
-    ),
     "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
         48,
         "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
@@ -245,11 +238,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         60,
         "F2 fenced by way (alpha), the owner's words of 2026-10-04: the vacuum content at 60 above the holders' swing over "
         "the declared run; the Boss's grant of 60 lines",
-    ),
-    "tests/test_the_node_detector.py::test_the_packet_readers_clicks_column_counts_the_regions_click_lines_and_not_the_givers": (
-        9,
-        "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (#1827 comment 5984864554): the packet "
-        "reader's `clicks` column the region's click lines within the draw's window, the giver's credit lines in their own column",
     ),
     "tests/test_part_h_fix.py::test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum": (
         92,
