@@ -323,7 +323,7 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
 
 
 def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(monkeypatch):
-    """The shipped chain world chain_x_minus (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a body's first draw of an interval reads the arriving record's digits first and its own after, at its three Nodes and at the Nodes within one Link where the photon stands off the origin (the test's own digits in the declared order equal the engine's number), the absorption's outcome one division act on it and the hole's Node one more on the number left; the two atoms take and give back along the run (the absorptions at 74, 142 and 303, each body's own read, the emissions at the windows' closes in the exact dark without a draw), the world LAWFUL over its 400 intervals; the draws' count and the reads' Nodes printed."""
+    """The shipped chain world chain_x_minus (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a body's first draw of an interval reads the arriving record's digits first and its own after, at its three Nodes and at the Nodes within one Link where the photon stands off the origin (the test's own digits in the declared order equal the engine's number), the absorption's outcome one division act on it and the hole's Node one more on the number left; the two atoms take and give back along the run (the absorptions at 74, 142 and 307, each body's own read, the emissions at the windows' closes in the exact dark without a draw; the third pair pinned 2026-10-20 under the twist's deletion, (307, 355) with the piece 45,762 and the recoil at 142 reading 44,243, where the fold's quarter turn on body 1's e part had entered the born light's phase at 190 and moved body 0's read to 303: the recoil's imprint on the emitted light's phase is not written on the board, the recoil booked on the credit line alone), the world LAWFUL over its 400 intervals; the draws' count and the reads' Nodes printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     holder: list[Lattice] = []
     seen = spied(monkeypatch, lambda: holder[0])
@@ -335,7 +335,7 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
     assert [(c["interval"], c["node_detector"]) for c in taken] == [
         (74, "body 0"),
         (142, "body 1"),
-        (303, "body 0"),
+        (307, "body 0"),
     ]
     assert seen and all(record["label"].startswith("the body ") for record in seen)
     for k, record in enumerate(seen):
