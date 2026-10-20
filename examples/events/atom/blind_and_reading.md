@@ -400,6 +400,29 @@ amplitudes 72, 38 and 30 levels, a flicker of period 2.2 intervals near the band
 holder's summed row at r = 3 too at the amplitude 68), nothing at the beat's scale; the builder's
 words, a drift and no line. The proton's |z| 4,242 at every interval.
 
+The count on the board (2026-10-20, D's shots of the page: the status line reads the count on the
+board 2 of electron from the interval 2 while the books' count holds 1, the first frame 1): the page
+shows the look's `board_count`, the engine's own `Lattice.count` (`credit.count_of`), the record's
+share over the board in the current's units over its unit W_rec rounded half up, (S + W_rec div 2)
+div W_rec for a record of one part before any write, W_rec = W_c sin omega_0 = isqrt(9 T^2 (den^2 -
+num^2)) = 482,990,683,139 for the electron's pair [4000, 6000] at T 36,000,000; the look's S reads
+680,798,982,000 at the lay (1.4095 W_rec), 699,290,340,000 at the interval 1 (1.4478) and
+731,834,424,000 at 2 (1.5152), then between 726,274,002,000 and 879,296,544,000 over the run (1.50
+to 1.82; 826,148,088,000 at the close, 1.71), so the count reads 1, 1 and 2 from the interval 2 on.
+The share is the plain levels' form at the free rotation's S (`Lattice.share_of`, a turned record's
+from its plain levels too; `share.share`, the plain read of a pair under the sign no conserved form;
+HIGHLIGHTS, The atom's levels from the Node, the share climbing on the standing record), w (now^2 +
+before^2) - S now before less the Links' term: the Node's term alone reads one quantum, T sin
+omega_0, on a pair turning at omega_0 and (1 - cos omega_0 cos theta) / sin^2 omega_0 of it on a
+pair turning at theta, so on the standing record, which turns at Omega + U_i, 1.387 per interval at
+the centre and 0.887 at r = 1 against omega_0 = 0.8411, it reads 1.58 and 1.04 there, and the whole
+form 1.41 over the board at the lay, whose one quantum is the free rotation's, A = sqrt(T / (2 sin
+omega_0 SUM phi^2)), the Wronskian T / 2 (`tools/standing_lay.py`, step 3); the swing between 1.50
+and 1.82 is the centre's breathing read through the same form. The books' `count` 1 is the credited
+count, no click having moved it, and the books' `quanta` 2 the same board reading at the close (the
+proton's 647,804,304,000 over its 648,000,000,000 reads 1): a lattice reading of the engine's own
+count on a standing record in a well, named, and no defect of the page or the look.
+
 ### The line at the read 3, `hydrogen_line.json`, LAWFUL, 400 intervals
 
 | interval | centre level |z| | profile within r <= 1, 2, 3, 4 | Q / Q_0 | overlap with the lay | the holder's summed row at +3, +5 |
@@ -472,13 +495,14 @@ with the lay down to 0.84; the proton's |z| 4,242 at every interval). The cause,
 start writes the holder's row from each source's Wronskian times the weight that source reads the
 holder with (`bookings.booked_sources`, `weight_of`; ALGEBRA.md, the reads: every family reads the
 holders its declaration names at the weights it names and sources each at the weight it reads with),
-so the read weight is the coupling at both ends, and a proton reading at 3 is a proton coupling at
-3, its charge the Wronskian as before, sourcing a row three times deeper, -4,338, -1,339, -562,
--284, -150, -66 along the axis against -1,446, -446, -187, -95, -50, -22 (the builder's -4,338 +- 45
-at the centre is that row, three times his clean world's -1,446); the 1s laid in the well of the
-read 1 is not a mode of the well of the read 3, and the lay and the stepping differ by the proton's
-coupling. The builder's open cause closes here: the heavy partner reading lightly is the clean world
-because its well is the one the level was laid in.
+so the read weight is the coupling at both ends, and a proton reading at 3 is a proton of charge 3
+in units of the unit charge (the law's alpha paragraph: k_r the family's charge in units of the unit
+charge), coupling at 3 at both ends, the unit charge the Wronskian as before, sourcing a row three
+times deeper, -4,338, -1,339, -562, -284, -150, -66 along the axis against -1,446, -446, -187, -95,
+-50, -22 (the builder's -4,338 +- 45 at the centre is that row, three times his clean world's
+-1,446); the 1s laid in the well of the read 1 is not a mode of the well of the read 3, and the lay
+and the stepping differ by the proton's coupling. The builder's open cause closes here: the heavy
+partner reading lightly is the clean world because its well is the one the level was laid in.
 
 ## The conclusion
 
@@ -505,6 +529,6 @@ bin of 400 intervals: the atom's line is the difference of two standing rates, r
 The bindings' ratio is the cube's (7.75 on 11, 6.66 on 21, hydrogen's 4 beyond the cubes laid here;
 the builder's cause, 2026-10-20: the box's zero of the held row, the ladder cube-free on the
 unbounded board's potential at 1s : 2s = 5.31, the law's number for this well at alpha 0.4135), and
-a proton reading at 3 as well is a proton coupling at 3 (its read weight the factor of its write as
-well), its well three times deeper, so a level laid for the read 1 breathes in it by the gap of the
-two wells.
+a proton reading at 3 as well is a proton of charge 3 in units of the unit charge, coupling at 3
+(its read weight the factor of its write as well), its well three times deeper, so a level laid for
+the read 1 breathes in it by the gap of the two wells.
