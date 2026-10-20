@@ -280,7 +280,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_part_h_fix.py::test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close": (
         45,
-        "the engine V2 (Part H, MUST 1; #2122): the null window's re-lay keeps each Node's own direction, the fold surviving the close",
+        "the engine V2 (Part H, MUST 1; #2122): the null window's re-lay keeps each Node's own direction through the close",
     ),
     "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
         42,

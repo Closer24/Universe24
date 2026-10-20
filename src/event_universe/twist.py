@@ -22,10 +22,10 @@ from event_universe.node_detector import (
 from event_universe.plane import Faces
 from event_universe.reports import (
     BODY,
+    BOOKED_AT_EMISSION,
     LOST_TO_LAY,
     LOST_TO_REGION,
     LOST_TO_SOURCE,
-    PAID_AT_EMISSION,
     THE_LAY,
     UNPAID_BY_REGION,
     face,
@@ -146,12 +146,12 @@ def scaled(found: Sequence[int], weight: int) -> list[int]:
 def recoiled(
     board: Lattice, family: int, momentum: Sequence[int], pick: Callable[[list[int]], int]
 ) -> tuple[str, list[int], str]:
-    """The piece's source at a click and the recoil it owes (Part G, both hands' lines of 2026-10-10, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources; ALGEBRA.md, The click's algebra beyond the law: the write moves the count and writes nothing for the piece's momentum, the recoil of a body held at declared Nodes the declaration's): among the light family's emitters with outstanding quanta in the record (`credit.Books.emitters`, `emission.Emitter`) one is drawn by those counts through `pick`, the click's own read of the board as the Node is drawn (the body's for a record's click, `parted`; the credit's for a region's, `lists.credited_node`; one emitter, weight 1, no draw), one taken from its outstanding count, and the recoil it owes, -p_a per axis as integers, is booked on the credit line and written nowhere, the source's part standing as laid: `LOST_TO_SOURCE` the reading; where the recoil was booked at the lay (the directed packet's emission line, `act.written`) `PAID_AT_EMISSION` is read; where no emitter stands for the family the piece is the file's lay's, no receiver, `THE_LAY` with `LOST_TO_LAY`. Returns the source's name (`body n` by its number in the world's order, or the lay), the recoil owed per axis and the reading for `lost`."""
+    """The piece's source at a click and the recoil it owes (Part G, both hands' lines of 2026-10-10, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources; ALGEBRA.md, The click's algebra beyond the law: the write moves the count and writes nothing for the piece's momentum, the recoil of a body held at declared Nodes the declaration's): among the light family's emitters with outstanding quanta in the record (`credit.Books.emitters`, `emission.Emitter`) one is drawn by those counts through `pick`, the click's own read of the board as the Node is drawn (the body's for a record's click, `parted`; the credit's for a region's, `lists.credited_node`; one emitter, weight 1, no draw), one taken from its outstanding count, and the recoil it owes, -p_a per axis as integers, is booked on the credit line and written nowhere, the source's part standing as laid: `LOST_TO_SOURCE` the reading; where the recoil was booked at the lay (the directed packet's emission line, `act.written`) `BOOKED_AT_EMISSION` is read; where no emitter stands for the family the piece is the file's lay's, no receiver, `THE_LAY` with `LOST_TO_LAY`. Returns the source's name (`body n` by its number in the world's order, or the lay), the recoil owed per axis and the reading for `lost`."""
     owed = [-int(value) for value in momentum]
     emitter = drawn_emitter(board, family, pick)
     if emitter is None or emitter.body is None:  # the file's lay, drawn or alone: no receiver
         return THE_LAY, owed, LOST_TO_LAY
-    return f"{BODY} {emitter.body}", owed, PAID_AT_EMISSION if emitter.paid else LOST_TO_SOURCE
+    return f"{BODY} {emitter.body}", owed, BOOKED_AT_EMISSION if emitter.booked else LOST_TO_SOURCE
 
 
 def drawn_emitter(board: Lattice, family: int, pick: Callable[[list[int]], int]) -> Emitter | None:
