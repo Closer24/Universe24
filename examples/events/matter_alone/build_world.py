@@ -27,7 +27,6 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "face_depth": 1,
         "intervals": int(row["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [
             {
                 "family": design["family"],

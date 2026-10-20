@@ -43,11 +43,7 @@ def world_of(design: dict, n: int) -> dict:
             },
         ],
         "rates": [],
-        "node_detector": {
-            **design["generator"],
-            "window": design["intervals"] // n,
-            "seed": design["record"]["seed"],
-        },
+        "node_detector": {"window": design["intervals"] // n},
     }
     drive = design["drive"]
     packet = {
@@ -64,7 +60,6 @@ def world_of(design: dict, n: int) -> dict:
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
         "intervals": design["intervals"],
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [record],
         "packets": [packet],
         "node_detectors": [],

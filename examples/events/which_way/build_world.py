@@ -76,7 +76,6 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "faces": faces,
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [],
         "packets": [packet],
         "node_detectors": regions(design, bool(kind["channel"])),
@@ -121,7 +120,6 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "family": design["family"],
         "window": [1, int(design["intervals"])],
         "across": "y",
-        "seed": design["draw"]["seed"],
         "comment": design["comment"],
         "rows": {"two_gaps": per_region(two), "one_gap": per_region(one), "which_way": per_region(one)},
         "channel_region": [

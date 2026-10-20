@@ -84,7 +84,6 @@
   ]
  },
  "rule": "the joint share accumulated over the window on both members of the level pair in the sign's form: J(p_A, p_B) = SUM over the window and both members of |SUM_{k != l} sign(l - k) e_k^A(p_A) psi_k^A e_l^B(p_B) psi_l^B|^2, the determinant of the two sides' parts for the family's antisymmetric sign, psi_k the part's (re, im) sums at the side and e_k(+) = alpha_k c + beta_k s and e_k(-) = alpha_k (-s) + beta_k c from the declared axis (c, s) under the side's pattern, the identity on both sides (at two parts the same term by term as the symmetric form SUM_k c_k psi_k^A psi_k^B with the crossed pattern [[0, 1], [-1, 0]] on one side, the 3.0.0 declaration); E = (J_++ + J_-- - J_+- - J_-+) over the four summed; the window the whole passage, the credit's interval the window's close, the two ports drawn one after another by the sides on their own reads with the write at the birth, the realised pair the gate's; J is a sum of norms and never negative, so no floor is needed",
- "seed": 24,
  "arms": {
   "A": {
    "name": "the engine's one draw through the root over the joint credit",

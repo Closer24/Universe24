@@ -29,7 +29,6 @@ def world(design: dict[str, Any], row: dict[str, Any]) -> dict[str, object]:
         "face_depth": 1,
         "intervals": int(row["intervals"]),
         "universe": row["universe"],
-        "engine": design["engine"],
         "bodies": [
             {"family": families["source"], "nodes": [{"node": [centre, centre, centre], "count": 1}]},
             {
@@ -77,7 +76,7 @@ def shells_world(design: dict[str, Any], row: dict[str, Any], seed: int) -> dict
         "parts": parts,
         "transitions": transitions,
         "rates": [],
-        "node_detector": {**shells["generator"], "seed": seed},
+        "node_detector": {},
     }
     packets = [
         {
@@ -97,7 +96,6 @@ def shells_world(design: dict[str, Any], row: dict[str, Any], seed: int) -> dict
         "face_depth": 1,
         "intervals": int(shells["intervals"]),
         "universe": row["universe"],
-        "engine": shells["engine"],
         "bodies": [record],
         "packets": packets,
         "node_detectors": [],

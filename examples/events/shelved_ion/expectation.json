@@ -15,7 +15,6 @@
  ],
  "bin": 160,
  "bins": 600,
- "seed": 24,
  "rule": "the counter's `credit` lines of the family `fluorescence` (branch click-ends: one line per credited quantum, with its window), counted per window of B intervals, are the counts per bin; a bin with 0 counts is dark and a bin with 1 or more is bright (Poisson at the mean 20 gives 0 with the probability 2 x 10^-9, so no bright bin reads 0 and the two kinds are told apart by the count alone); a run of bright bins between two dark ones is a bright period and a run of dark bins a dark period, their lengths in bins times B in intervals, the first and the last period dropped as cut by the window; the counter's `credit` lines of the family `weak_drive` are the returns, one per dark period's end; `click` lines are the inflows per interval, read by no row (the drives' net inflow 0 but for the rounding, the fluorescence's the quanta's passage), and `field` lines, the books and every array are lattice readings",
  "numbers": {
   "tau_P": 4,

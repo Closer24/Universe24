@@ -40,10 +40,7 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
                     for light in dict.fromkeys(lights)
                 ],
                 "rates": [],
-                "node_detector": {
-                    **design["generator"],
-                    "seed": design["records"]["seed"],
-                },  # the window derived
+                "node_detector": {},  # the window derived
             }
         )
     centre, edge = design["light"]["centre"], design["light"]["edge"]
@@ -65,7 +62,6 @@ def world_of(design: dict, amplitude: int, control: dict | None = None) -> dict:
         "face_depth": 1,
         "intervals": design["intervals"],  # the run goes on past the window's close: the front spreads
         "universe": control["universe"] if control else design["universe"],
-        "engine": design["engine"],
         "bodies": records,
         "packets": packets,
         "node_detectors": [],

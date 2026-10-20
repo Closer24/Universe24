@@ -72,7 +72,6 @@ def world(design: dict[str, Any], settings: tuple[str, ...]) -> dict[str, object
         "face_depth": 1,
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [],
         "packets": packets,
         "node_detectors": node_detectors,
@@ -134,7 +133,6 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "runs": {" ".join(settings): "ghz_" + "_".join(settings) for settings in ORDER},
         "combination": COMBINATION,
         "rule": "the joint share accumulated over the window on both members of the level pair over the three sides: J(p_A, p_B, p_C) = SUM over the window of (SUM_k c_k now_k^A now_k^B now_k^C)^2 + (SUM_k c_k before_k^A before_k^B before_k^C)^2 with c_k = e_k(p_A) e_k(p_B) e_k(p_C), e_k(+) = alpha_k p + beta_k q by the side's declared pattern at its basis (p, q) and e_k(-) = alpha_k (-q) + beta_k p; E_3 = the eight shares signed by the product of the ports' signs over their sum, a marginal the side's + shares over the sum, a pairwise E the shares signed by two sides' signs over the sum; the window the whole passage, the three ports drawn one after another by the sides on their own reads with the write at the birth, the realised triple the gate's; J is a sum of squares and never negative, so no floor is needed (the mathematician, #1572 comment 5927559738; the advisor, 5927745013)",
-        "seed": int(design["seed"]),
         "blind": blind(design),
     }
 

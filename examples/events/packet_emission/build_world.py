@@ -97,7 +97,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
                 "width": int(design["width"]),
             }
         ],
-        "node_detector": {**design["generator"], "seed": int(row["seed"])},  # the window derived at load
+        "node_detector": {},  # the window derived at load
     }
     width = int(design["width"])
     positions = [[found["node_detector_x"], y, z] for y in range(width) for z in range(width)]
@@ -111,15 +111,10 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "face_depth": int(design["face_depth"]),
         "intervals": intervals,
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [giver],
         "packets": [],
         "node_detectors": [node_detector],
-        "draw": {
-            **design["generator"],
-            "window": intervals,
-            "seed": int(design["node_detector"]["seed"]),
-        },
+        "draw": {"window": intervals},
     }
 
 

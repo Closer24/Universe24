@@ -91,7 +91,6 @@ def build(name, centres):
         "face_depth": 1,
         "intervals": INTERVALS,
         "universe": "examples/events/rule.json",
-        "engine": "examples/events/engine_start.json",
         "bodies": bodies,
         "node_detectors": [],
     }

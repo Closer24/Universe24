@@ -48,10 +48,7 @@ def body(design: dict, number: int, axis: str, toward: str) -> dict:
             }
         ],
         "rates": [{"from": "e", "to": "g", "lifetime": rows["lifetime"], "gives_to": light}],
-        "node_detector": {
-            **design["generator"],
-            "seed": rows["seeds"][number],
-        },  # the window derived at load
+        "node_detector": {},  # the window derived at load
     }
 
 
@@ -86,7 +83,6 @@ def world_of(design: dict, name: str) -> dict:
         "face_depth": design["face_depth"],
         "intervals": design["intervals"],
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [
             body(design, number, axis, toward) for number in range(len(design["bodies"]["first"]))
         ],

@@ -65,7 +65,6 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "face_depth": 1,
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [],
         "packets": packets,
         "node_detectors": node_detectors,
@@ -137,7 +136,6 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "runs": {" ".join(pair): "bell_" + "_".join(pair) for pair in ORDER},
         "combination": COMBINATION,
         "rule": "the joint share accumulated over the window on both members of the level pair: J(p_A, p_B) = SUM over the window of (SUM_k c_k now_k^A now_k^B)^2 + (SUM_k c_k before_k^A before_k^B)^2 with c_k = e_k(p_A) e_k(p_B), e(+) = (p, q) the declared basis under the pair's pattern [[1, 0], [0, 1]] and e(-) = (-q, p); E = (J_++ + J_-- - J_+- - J_-+) over the four summed; the window the whole passage, the credit's interval the draw's by the shares over it, one pair per world drawn with the seed; J is a sum of squares and never negative, so no floor is needed (the advisor, #1563 comment 5924731760; the mathematician, #1572 comment 5925374010)",
-        "seed": int(design["seed"]),
         "blind": blind(design),
     }
 
