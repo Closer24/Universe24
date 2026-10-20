@@ -403,10 +403,9 @@ def test_a_reader_with_its_own_record_stands_on_one_node(tmp_path):
         board.step(), plain.step()
         level = int(plain.states[drv].lines[0].now[here])  # d, the drive's level at the Node
         assert meeting.arriving(plain, reader, drv) == level  # the turn reads |d| exactly, signed
-    number, _moduli = digits.read_of(
-        board, [drv, atom], board.mask(reader.nodes), "the test"
-    )  # the eve's
-    spent = "the body 0 of 'atom' at the interval 12 has the number .* left, below the draw's total"
+    at = board.mask(reader.nodes)
+    number, _moduli = digits.read_of(board, [(drv, at), (atom, at)], "the test")  # the eve's read
+    spent = "the body 0 of 'atom' at the interval 12 has the number .* read, below the draw's total"
     with pytest.raises(RuntimeError, match=spent) as refusal:  # the one Node's digits below one draw
         board.step()
     total = int(str(refusal.value).split("total ")[1].split(":")[0])

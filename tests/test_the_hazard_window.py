@@ -1,7 +1,7 @@
 def test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain(
     tmp_path, monkeypatch
 ):
-    """The emission's hazard over a declared window (ALGEBRA.md, The dark, step 4, and The click writes on the lattice (5), KNOWN, the rate drawn per window; A3 of the alignment audit, #1793 comment 5982140872, with the advisor's second, 5982171035 (2); `meeting.jumped`, `lists.emission`, `NodeBooks.lit`): the resonance world's giver, in e at the lifetime 48, its window set to W = 8, `dark` replaced by a schedule over the giver alone and `emitted` by a spy recording the span it is drawn at and emission nothing; (i) over a window whose intervals 2, 3 and 6 are dark, each dark interval draws at the span 1 as it passes and the close at the lit count 5, the spans summing to W = 8, every interval in exactly one draw's span; (ii) a window with no dark interval draws once, at its close, at the span W, the shipped behaviour bit for bit; (iii) a window whose close is dark draws the close at 1 and then its seven lit intervals at 7, the sum W again; the lit count and the elapsed count 0 again after every close."""
+    """The emission's hazard over a declared window (ALGEBRA.md, The dark, step 4, and The click writes on the lattice (5), KNOWN, the rate drawn per window; A3 of the alignment audit, #1793 comment 5982140872, with the advisor's second, 5982171035 (2); `meeting.jumped`, `lists.emission`, `NodeBooks.lit`): the resonance world's giver, in e at the lifetime 48, its window set to W = 8, `dark` replaced by a schedule over the giver alone and `emitted` by a spy recording the span it is drawn at and emission nothing; (i) over a window whose intervals 2, 3 and 6 are dark, each dark interval draws at the span 1 as it passes and the close at the lit count 5, the spans summing to W = 8, every interval in exactly one draw's span; (ii) a window with no dark interval draws once, at its close, at the span W, the shipped behaviour bit for bit; (iii) a window whose close is dark draws once at the close, over the interval and its seven lit intervals together, the span 8 (one draw per body per interval, ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20), the sum W again; the lit count and the elapsed count 0 again after every close."""
     from dataclasses import replace
 
     from event_universe import meeting
@@ -37,5 +37,5 @@ def test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_on
         print(f"window {w}: " + ", ".join(f"interval {i} span {span}" for i, span in draws))
     assert drawn[1] == [(2, 1), (3, 1), (6, 1), (8, 5)]  # the dark ones at 1, the close the lit count
     assert drawn[2] == [(8, 8)]  # no dark interval: the window's length, as shipped
-    assert drawn[3] == [(8, 1), (8, 7)]  # a dark close: the interval, then the lit intervals
+    assert drawn[3] == [(8, 8)]  # a dark close: one draw over the interval and the lit intervals
     assert all(sum(span for _i, span in draws) == 8 for draws in drawn.values())  # each interval once

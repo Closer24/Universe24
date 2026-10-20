@@ -13,6 +13,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.credit import Books
 from event_universe.features.click import bias_bound, drawn_from, read_number
+from event_universe.features.front import ball
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
 from event_universe.meeting_back import first_difference, snapshot
@@ -30,12 +31,25 @@ def placed(residue: int, weights: list[int]) -> int:
     return next(i for i in range(len(weights)) if residue < sum(weights[: i + 1]))
 
 
-def digits_now(
-    board: Lattice, families: list[int], at: np.ndarray, distinct: bool = True
-) -> tuple[list[int], list[int]]:
-    """The digits and their bases by the test's own arithmetic of the declared order: the families in their order, every line of each family's record in the declared order, each line's remainder at the Nodes of `at` in the lattice's index order (`np.argwhere`), the digit the remainder's index on the Node's lattice, r // F (`digits.lattice_of` on the rule's integers there), its base w // F + 1; with `distinct` a remainder equal to an earlier line's at the same Node, or w less it, is a copy and left out (the reader's D2), without it every line's digit."""
-    found, bases = [], []
+def body_reads(board: Lattice, families: list[int], at: np.ndarray) -> list[tuple[int, np.ndarray]]:
+    """What a body reads by the test's own arithmetic (the reader's G2): each family at the body's Nodes `at` and at the Nodes within one Link of them (the ball of radius 1, `features/front.ball`) where a line of its record holds a remainder other than w // 2."""
+    centres = [tuple(int(k) for k in where) for where in np.argwhere(at)]
+    near = ball(board.shape, centres, 1, board.world.periodic)
+    found = []
     for index in families:
+        off = np.zeros(board.shape, dtype=bool)
+        for line in board.lines_of(index, 0):
+            off |= np.asarray(line.remainder) != board.half_wall(index)
+        found.append((index, at | (near & off)))
+    return found
+
+
+def digits_now(
+    board: Lattice, reads: list[tuple[int, np.ndarray]], distinct: bool = True
+) -> tuple[list[int], list[int]]:
+    """The digits and their bases by the test's own arithmetic of the declared order: the families in their order, each at its own Nodes (`reads`, a side's region or a body's `body_reads`), every line of each family's record in the declared order, each line's remainder at the Nodes in the lattice's index order (`np.argwhere`), the digit the remainder's index on the Node's lattice, r // F (`digits.lattice_of` on the rule's integers there), its base w // F + 1; with `distinct` a remainder equal to an earlier line's at the same Node, or w less it, is a copy and left out (the reader's D2), without it every line's digit."""
+    found, bases = [], []
+    for index, at in reads:
         family, gamma = board.families[index], board.world.node_clock
         wall = wall_of(family.pair[1], gamma, board.unit)
         lattice = digits.lattice_of(
@@ -62,16 +76,17 @@ def spied(monkeypatch, board_of, distinct=True):  # type: ignore[no-untyped-def]
         board = board_of()
         words = label.split("'")
         if label.startswith("the side "):
-            name, read = words[1], [family(board, words[3])]
-            at = next(d.nodes for d in board.node_detectors if d.name == name)
+            name = words[1]
+            reads = [
+                (family(board, words[3]), next(d.nodes for d in board.node_detectors if d.name == name))
+            ]
         elif label.startswith("the regions "):
-            read = [family(board, words[1])]
-            at = node_detector.node_detector_nodes(board)
+            reads = [(family(board, words[1]), node_detector.node_detector_nodes(board))]
         else:
             books = board.credit.bodies[int(label.split()[2])]
             drives = list(dict.fromkeys(t.drive for t in books.declared.transitions))
-            read, at = [*drives, books.index], board.mask(books.nodes)
-        own, walls = digits_now(board, read, at, distinct)
+            reads = body_reads(board, [*drives, books.index], board.mask(books.nodes))
+        own, walls = digits_now(board, reads, distinct)
         pick, left = real(number, weights, label, *moduli)
         seen.append(
             dict(
@@ -91,7 +106,7 @@ def spied(monkeypatch, board_of, distinct=True):  # type: ignore[no-untyped-def]
 
 
 def test_the_read_is_the_digits_number_and_each_draw_one_division_act():
-    """The number is the digits in base w, the first the most significant (`read_number`, multiply and add, equal to the plain sum and to Horner's form with the base reduced); each draw one division act by the weights' total (`drawn_from`): the quotient the number left, the remainder placed on the cumulative weights (the lower index on a tie, a weight of 0 never drawn); the mixed radix of two walls; one weight consumes nothing; a total at or below 0 and a number below the total refused by name, the text apart from the write's bound refusal."""
+    """The number is the digits in base w, the first the most significant (`read_number`, multiply and add, equal to the plain sum and to Horner's form with the base reduced); each draw one division act by the weights' total (`drawn_from`): the quotient the number left, the remainder placed on the cumulative weights (the lower index on a tie, a weight of 0 never drawn); the mixed radix of two walls; one weight above 0 is a certain draw and consumes nothing (a weight of 0 never drawn); a total at or below 0 and a number below the total refused by name in the two texts (the number left, a quotient's draw; the number read, the interval's first), the texts apart from the write's bound refusal."""
     chance = random.Random(24)  # the test's own vectors; the engine draws by nothing of the kind
     for _ in range(60):
         count = chance.randint(1, 12)
@@ -110,7 +125,8 @@ def test_the_read_is_the_digits_number_and_each_draw_one_division_act():
         assert horner == residue
     assert read_number([5, 7], [LIGHT, ATOM]) == 5 * ATOM + 7  # the mixed radix: each digit its own base
     assert drawn_from(12345, [9], "the test") == (0, 12345)  # one weight consumes nothing
-    assert drawn_from(12345, [0, 3, 0], "the test") == (1, 4115)  # a weight of 0 never drawn
+    assert drawn_from(12345, [0, 3, 0], "the test") == (1, 12345)  # one weight above 0: certain, whole
+    assert drawn_from(12345, [0, 3, 4], "the test") == (placed(12345 % 7, [0, 3, 4]), 12345 // 7)
     with pytest.raises(ValueError, match="weights whose total is above 0"):
         drawn_from(12345, [0, 0], "the test")
     with pytest.raises(
@@ -119,6 +135,8 @@ def test_the_read_is_the_digits_number_and_each_draw_one_division_act():
         drawn_from(5, [3, 4], "the test")
     spent = str(pytest.raises(RuntimeError, drawn_from, 5, [3, 4], "the test").value)
     assert spent.startswith("the click's read of the board") and "amplitude bound" not in spent
+    with pytest.raises(RuntimeError, match="has the number 5 read, below the draw's total 7"):
+        drawn_from(5, [3, 4], "the test", (1, 2))  # the interval's read itself below the total
 
 
 def test_the_residue_and_the_quotient_of_one_number_are_independent():
@@ -136,7 +154,7 @@ def test_the_residue_and_the_quotient_of_one_number_are_independent():
 
 
 def test_a_total_sharing_a_factor_with_the_bases_books_its_bias_bound_and_is_refused_only_as_the_whole_total():
-    """The reader's F of 2026-10-20 (`bias_bound`, `drawn_from` with the read's moduli, `digits.read_of`; CHANGED the same day from D's refusal where the product of the two gcds reached the smallest weight, a model's worst case taken for a measure): at the shipped content the base is B = w div F + 1 = 108,000,001 = 31 x 1069 x 3259 and B - 1 = 108,000,000 = 2^8 3^3 5^6, so the residue modulo a factor of B - 1 is the distinct digits' sum and modulo a factor of B the last digit alone, and g / T, g the product of the two gcds, bounds a port's move where the digits cycle: the bound is booked, [g_sum, g_last, T], and the one draw refused is g = T with two weights above 0, the digits' sum modulo the total alone (the conversion's total 30 at the weight 1, and the base's prime 31 at the weight 1), named so; the screens' class (the total 66,120,000 at the smallest weight 24,000, g = 120,000), a small factor (194 = 2 x 97), a total coprime to both (97) and a certain draw (one weight above 0, g = T = 5) are drawn as before, the residue placed on the weights; the quotient's draws carry no moduli."""
+    """The reader's F of 2026-10-20 (`bias_bound`, `drawn_from` with the read's moduli, `digits.read_of`; CHANGED the same day from D's refusal where the product of the two gcds reached the smallest weight, a model's worst case taken for a measure): at the shipped content the base is B = w div F + 1 = 108,000,001 = 31 x 1069 x 3259 and B - 1 = 108,000,000 = 2^8 3^3 5^6, so the residue modulo a factor of B - 1 is the distinct digits' sum and modulo a factor of B the last digit alone, and g / T, g the product of the two gcds, bounds a port's move where the digits cycle: the bound is booked, [g_sum, g_last, T], and the one draw refused is g = T with two weights above 0, the digits' sum modulo the total alone (the conversion's total 30 at the weight 1, and the base's prime 31 at the weight 1), named so; the screens' class (the total 66,120,000 at the smallest weight 24,000, g = 120,000), a small factor (194 = 2 x 97), a total coprime to both (97) are drawn as before, the residue placed on the weights, and a certain draw (one weight above 0, g = T = 5) consumes nothing; the quotient's draws carry no moduli."""
     moduli, number = (108_000_000, 108_000_001), 10**30 + 12345
     assert bias_bound(66_120_000, moduli) == [
         120_000,
@@ -152,10 +170,12 @@ def test_a_total_sharing_a_factor_with_the_bases_books_its_bias_bound_and_is_ref
             placed(number % total, weights),
             number // total,
         )
-    for weights in ([24_000, 66_096_000], [97, 97], [48, 49], [5, 0], [1, 0]):
+    for weights in ([24_000, 66_096_000], [97, 97], [48, 49]):
         total = sum(weights)
         found = drawn_from(number, weights, "the test", moduli)
         assert found == (placed(number % total, weights), number // total)
+    for weights in ([5, 0], [1, 0]):  # a certain draw: nothing read, nothing consumed, g = T no refusal
+        assert drawn_from(number, weights, "the test", moduli) == (0, number)
 
 
 def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
@@ -220,7 +240,7 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     )
     assert {r for r, _f, _w, _p in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
-        digits.read_of(singlet, [spin], left, "the test")
+        digits.read_of(singlet, [(spin, left)], "the test")
     board = Lattice(
         load_world(
             world_beside(
@@ -239,11 +259,11 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
         5 * LIGHT // 6,
     }
     with pytest.raises(RuntimeError, match="finds every digit on the lattice of the exact vacuum paces"):
-        digits.read_of(board, [photon], at, "the test")
+        digits.read_of(board, [(photon, at)], "the test")
     before = snapshot(board)
-    number, _moduli = digits.read_of(board, [photon, atom], at, "the test")
+    number, _moduli = digits.read_of(board, [(photon, at), (atom, at)], "the test")
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
-    own, walls = digits_now(board, [photon, atom], at)
+    own, walls = digits_now(board, [(photon, at), (atom, at)])
     assert (
         number == read_number(own, walls)
         and walls == [4] * 2 + [3898] * 6  # the bases w div F + 1: light's 3 values, the atom's 3,897
@@ -305,19 +325,24 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
     )
 
 
-def test_the_one_photons_bodies_read_the_board_at_their_nodes(tmp_path, monkeypatch):
-    """The anticoincidence world's one photon re-declared beside tmp_path, no generator: a body's first draw of an interval reads the arriving record's digits first and its own after at its two Nodes, in the mixed radix of the two walls (the test's own digits equal the engine's number), the absorption's outcome one division act on it and the hole's Node one more on the number left; one photon, at most one atom takes it and the other stands in its ground part."""
+def test_the_one_photons_bodies_read_the_board_at_their_nodes_and_the_second_atom_is_refused_by_name(
+    tmp_path, monkeypatch
+):
+    """The anticoincidence world's one photon re-declared beside tmp_path, no generator (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a body's first draw of an interval reads the arriving record's digits first and its own after, at its two Nodes and at the Nodes within one Link where the photon stands off the origin (the test's own digits equal the engine's number); the second atom's close at 61 asks the absorption's draw in the unit W_rec^2 (53.9 bits) of a read of about 51.7 bits of capacity (the toy atom's four lines carry one bit each, the exact 4-cycle, and the photon at the exact paces three values), so the world is refused by name at 61 with the first text, the number read below the total; the world enters held with its interval and total (the reader's G3)."""
     holder: list[Lattice] = []
     seen = spied(monkeypatch, lambda: holder[0])
     path = world_beside(tmp_path, EVENTS / "anticoincidence" / "one_photon.json", lambda w: None)
-    board = Lattice(load_world(path), (lines := []).append)
+    board = Lattice(load_world(path), [].append)
     holder.append(board)
-    for _ in range(board.world.intervals):
-        board.step()
-    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-    assert len(taken) <= 1 and seen, (taken, len(seen))
+    text = "at the interval 61 has the number .* read, below the draw's total"
+    with pytest.raises(RuntimeError, match=text) as refused:
+        for _ in range(board.world.intervals):
+            board.step()
+    assert board.interval == 61 and "the body 1 of 'atom'" in str(refused.value)
+    total = int(str(refused.value).split("total ")[1].split(":")[0])
+    assert total.bit_length() == 54  # W_rec^2 = 9 T^2 (den^2 - num^2), the absorption's unit, 53.9 bits
     for k, record in enumerate(seen):
-        assert record["walls"] == [4] * 2 + [3898] * 8 and record["label"].startswith("the body ")
+        assert record["walls"][-1] == 3898 and record["label"].startswith("the body ")
         earlier = seen[k - 1] if k else None
         if earlier is not None and earlier["label"] == record["label"]:
             assert record["number"] == earlier["left"]  # the same interval: the number left carried
@@ -328,13 +353,7 @@ def test_the_one_photons_bodies_read_the_board_at_their_nodes(tmp_path, monkeypa
             placed(record["number"] % total, record["weights"]),
             record["number"] // total,
         )
-    parts = [b.declared.names[b.part] for b in board.credit.bodies]
-    assert parts.count("e") == len(taken) and board.credit.counts[family(board, "photon")] == 1 - len(
-        taken
-    )
-    print(
-        f"the one photon: {len(seen)} draws, the outcome {[(c['node_detector'], c['interval']) for c in taken]}, the parts {parts}"
-    )
+    print(f"the one photon: {len(seen)} body draws before the refusal at 61; {str(refused.value)[:160]}")
 
 
 def test_the_two_slits_many_draw_close_spends_the_digits_at_the_shipped_window(tmp_path, monkeypatch):
@@ -350,9 +369,9 @@ def test_the_two_slits_many_draw_close_spends_the_digits_at_the_shipped_window(t
     ) as refusal:
         for _ in range(board.world.intervals):
             board.step()
-    assert "digits read are spent at this close" in str(refusal.value) and "amplitude bound" not in str(
+    assert "digits read are spent at this interval" in str(
         refusal.value
-    )
+    ) and "amplitude bound" not in str(refusal.value)
     first = seen[0]
     assert first["label"] == "the regions of 'charge' at the interval 130" and len(first["digits"]) == 64
     assert (
@@ -385,8 +404,8 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
             standing.append(list(board.credit.written.get(family(board, "light_pair"), [(1, 0)] * 2)))
             return spy(number, weights, label, *moduli)
 
-        def reading(board, families, at, label, read=read):  # type: ignore[no-untyped-def]
-            read.append(digits.read_of(board, families, at, label))
+        def reading(board, reads, label, read=read):  # type: ignore[no-untyped-def]
+            read.append(digits.read_of(board, reads, label))
             return read[-1]
 
         monkeypatch.setattr(node_detector, "drawn_from", noted)
@@ -436,8 +455,8 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
     }
     for case, remainder in cases.items():  # the second line set beside the first: read once, or both
         board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
-        own, walls = digits_now(board, [pair], at, distinct=False)
-        number, _moduli = digits.read_of(board, [pair], at, "the test")
+        own, walls = digits_now(board, [(pair, at)], distinct=False)
+        number, _moduli = digits.read_of(board, [(pair, at)], "the test")
         distinct = own[:4] + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j])]
         assert number == read_number(distinct, walls[: len(distinct)]), case
         assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved

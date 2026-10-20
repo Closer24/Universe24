@@ -12,7 +12,7 @@ from event_universe import node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.digits import read_of
+from event_universe.digits import read_of, reads_of
 from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
@@ -77,13 +77,12 @@ class NodeBooks:
     twist: list[int] | None = None
     shortfall: list[int] | None = None  # C3: s_a = |p_a| - gain_a per axis, at or above 0
     lost: list[str] | None = None
-    source: str | None = None  # Part G: the piece's source, `body n` or the lay (`twist.recoiled`)
-    recoil: list[int] | None = (
-        None  # Part G: the source's p per axis, the fold given (`twist.folded_source`)
-    )
+    source: str | None = None  # Part G: the piece's source (`twist.recoiled`)
+    recoil: list[int] | None = None  # Part G: the source's p per axis (`twist.folded_source`)
     left: int | None = None  # the read's number left within the interval (`picked`)
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
     bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
+    due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -232,16 +231,17 @@ def body_label(board: Lattice, books: NodeBooks) -> str:
 
 
 def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
-    """A body's draw, the click's read of the board at the body's Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): the body's first draw of the interval reads the digits of the records it reads, the arriving records' (its transitions' drives, in the declared order) first and its own after, at its Nodes, into the number left (`NodeBooks.left`, emptied every interval, `meeting.jumped`), and every draw of the interval is one division act on it, the outcome of the click act (`act.click`), the Node of the write (`drawn_node`) and the piece's source (`act.parted`) alike, the remainder the pick and the quotient the number left; one weight reads nothing and consumes nothing, its pick the one alternative (the deferred emission's one, `lists.emission`); the lower index on a tie."""
-    if len(weights) == 1:
-        return 0  # one weight consumes nothing and reads nothing
-    label = body_label(board, books)
-    if books.left is None:  # the interval's first draw reads the board, the number's moduli with it
-        number, moduli = read_of(board, read_families(books), board.mask(books.nodes), label)
+    """A body's draw, the click's read of the board at the body's Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): the body's first draw of the interval reads the digits of the records it reads, the arriving records' (its transitions' drives, in the declared order) first and its own after, at its Nodes, into the number left (`NodeBooks.left`, emptied every interval, `meeting.jumped`), and every draw of the interval is one division act on it, the outcome of the click act (`act.click`), the Node of the write (`drawn_node`) and the piece's source (`act.parted`) alike, the remainder the pick and the quotient the number left; the read is what a body reads (`digits.reads_of`, the reader's G2 of 2026-10-20: its Nodes and, within one Link, the Nodes where each record it reads stands off the origin); one weight above 0 is a certain draw, reads nothing and consumes nothing (the deferred emission's one alternative, `lists.emission`; an absorption into a full part at the weight 0 beside the rest); the lower index on a tie."""
+    live = [k for k, weight in enumerate(weights) if int(weight) > 0]
+    if len(live) <= 1:
+        return live[0] if live else 0  # a certain draw consumes nothing and reads nothing
+    label, number, moduli = body_label(board, books), books.left, None
+    if number is None:  # the interval's first draw reads the board, the number's moduli with it
+        number, moduli = read_of(
+            board, reads_of(board, read_families(books), board.mask(books.nodes)), label
+        )
         books.bias = bias_bound(sum(weights), moduli)  # booked on the body's click line
-        pick, books.left = drawn_from(number, weights, label, moduli)
-        return pick
-    pick, books.left = drawn_from(books.left, weights, label)
+    pick, books.left = drawn_from(number, weights, label, moduli)
     return pick
 
 
@@ -256,11 +256,11 @@ def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None
             else next(d.nodes for d in board.node_detectors if d.name == side)
         )
         assert at is not None  # a side is a declared region with its Nodes
-        number, moduli = read_of(board, [index], at, label)
+        number, moduli = read_of(board, [(index, at)], label)
         books.bias[(index, side)] = bias_bound(sum(weights), moduli)  # booked on the side's line
-        pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
-        return pick
-    pick, books.left[(index, side)] = drawn_from(books.left[(index, side)], weights, label)
+    else:
+        number, moduli = books.left[(index, side)], None
+    pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
     return pick
 
 

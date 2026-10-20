@@ -52,12 +52,16 @@ REAL_PORT_DIGESTS: dict[
     "ghz_y_y_x": ("016e098bfdb7f7a2", "befdc50e632d240e", 5007),
 }
 REFUSED = {  # the ninth's read refuses these by name: the digits spent at a second draw of one interval
-    "born_a_b": "the body 0 of 'atom' at the interval 85 has the number 820497826588916 left",
-    "born_a_b_prime": "the body 0 of 'atom' at the interval 85 has the number 820497826588916 left",
-    "born_a_prime_b": "the body 0 of 'atom' at the interval 85 has the number 820497826588916 left",
-    "born_a_prime_b_prime": "the body 0 of 'atom' at the interval 85 has the number 820497826588916 left",
     "two_slits": "the regions of 'charge' at the interval 130 has the number 522643899 left",
 }
+REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
+    {
+        "born_a_b": ("c35111c3692e87aa", "c192784fb41509b1", 290),
+        "born_a_b_prime": ("f5348b8d80b75fd5", "c192784fb41509b1", 290),
+        "born_a_prime_b": ("50959fba5bf17572", "b23542a6b2c460fd", 290),
+        "born_a_prime_b_prime": ("f82d69e0442948ca", "26aa22f2998f8cd6", 290),
+    }
+)
 
 
 def run_digest(folder: str, name: str) -> tuple[str, str, int]:
@@ -95,8 +99,8 @@ def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):
     )
 
 
-def test_the_four_born_worlds_are_refused_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped born-pair worlds of bell_singlet, refused by name at the atom's second draw of the interval 85 as the ninth refuses them (the digits spent, the reader's finding of 2026-10-20; `worlds_read`)."""
+def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
+    """The four shipped born-pair worlds of bell_singlet, digest for digest the recording at the ninth's seventh commit (what a body reads, the reader's G2 of 2026-10-20: the atom's absorption draws at 85 and 110 read the pair's wake within one Link and carry their totals; `worlds_read`)."""
     worlds_read(
         monkeypatch,
         "bell_singlet",

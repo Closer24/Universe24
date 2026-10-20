@@ -246,7 +246,7 @@
   "tests/test_the_spin.py::test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines": 0.0,
   "tests/test_the_spin.py::test_the_singlet_reads_minus_the_cosine_of_the_axes_angle_and_breaks_the_bound_at_two_root_two": 10.3,
   "tests/test_the_two_term_ghz.py::test_a_unit_coefficient_turns_a_planes_two_lines_bit_for_bit_and_a_global_unit_writes_nothing": 0.7,
-  "tests/test_the_two_term_ghz.py::test_the_four_born_worlds_are_refused_as_at_the_ninth": 15.1,
+  "tests/test_the_two_term_ghz.py::test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth": 15.1,
   "tests/test_the_two_term_ghz.py::test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_ninth": 6.9,
   "tests/test_the_two_term_ghz.py::test_the_ghz_worlds_x_x_x_and_x_y_y_run_byte_for_byte_as_at_the_ninth": 18.7,
   "tests/test_the_two_term_ghz.py::test_the_ghz_worlds_y_x_y_and_y_y_x_run_byte_for_byte_as_at_the_ninth": 18.9,

@@ -31,21 +31,31 @@ def bias_bound(total: int, moduli: tuple[int, int]) -> list[int]:
 
 
 def drawn_from(
-    number: int, weights: Sequence[int], label: str, moduli: tuple[int, int] = (1, 1)
+    number: int, weights: Sequence[int], label: str, moduli: tuple[int, int] | None = None
 ) -> tuple[int, int]:
-    """One draw from the number the click read (ALGEBRA.md, The click's read of the board; `read_number`): among the weights (each at or above 0, their total T above 0, refused by name otherwise) one division act of the number by T, the remainder the pick placed on the cumulative weights in their declared order, the first index whose cumulative weight exceeds it (the lower index on a tie, a weight of 0 never drawn), and the quotient the number left for the close's next draw (the credited Node, the piece's source), returned with the index; one weight consumes nothing, the number returned whole; a number below T is refused by name, the digits read at `label` spent by the close's earlier draws (a residue of a number below T is no residue of the whole). Derived: a residue uniform on [0, T) falls in the cell of the index i with probability w_i / T exactly, Born with no 2^-width term; the equidistribution of the digits' combination modulo T is measured on the ensembles and not derived (the law's honest clause). A total sharing a factor with the read's bases less one or with its last base (`moduli`, the read's first draw, `digits.read_of`; the quotient's draws after it carry none) reads its residue through the distinct digits' sum modulo the one gcd and the last digit modulo the other, exactly, and where the digits cycle a port's probability moves by at most g / T, g the product of the two gcds (`bias_bound`, booked on the click's line by the caller): a named bias, measured on the world's reads; the one draw refused by it is g = T with more than one weight above 0, the draw the digits' sum modulo the total alone (the reader's F of 2026-10-20, CHANGED the same day from the refusal where g reached the smallest weight, a model's worst case taken for a measure; the conversion's total 30 at the weight 1 refused, its draw dead)."""
+    """One draw from the number the click read (ALGEBRA.md, The click's read of the board; `read_number`): among the weights (each at or above 0, their total T above 0, refused by name otherwise) one division act of the number by T, the remainder the pick placed on the cumulative weights in their declared order, the first index whose cumulative weight exceeds it (the lower index on a tie, a weight of 0 never drawn), and the quotient the number left for the close's next draw (the credited Node, the piece's source), returned with the index; one weight above 0 (one weight, or one beside weights of 0) is a certain draw and consumes nothing, the number returned whole; a number below T is refused by name in two texts (the reader's G2 of 2026-10-20): the number read, the interval's read itself below the total (`moduli` given, the first draw: the board at the detector does not carry the draw and the world's declaration answers), and the number left, spent by the interval's earlier draws (a residue of a number below T is no residue of the whole). Derived: a residue uniform on [0, T) falls in the cell of the index i with probability w_i / T exactly, Born with no 2^-width term; the equidistribution of the digits' combination modulo T is measured on the ensembles and not derived (the law's honest clause). A total sharing a factor with the read's bases less one or with its last base (`moduli`, the read's first draw, `digits.read_of`; the quotient's draws after it carry none) reads its residue through the distinct digits' sum modulo the one gcd and the last digit modulo the other, exactly, and where the digits cycle a port's probability moves by at most g / T, g the product of the two gcds (`bias_bound`, booked on the click's line by the caller): a named bias, measured on the world's reads; the one draw refused by it is g = T with more than one weight above 0, the draw the digits' sum modulo the total alone (the reader's F of 2026-10-20, CHANGED the same day from the refusal where g reached the smallest weight, a model's worst case taken for a measure; the conversion's total 30 at the weight 1 refused, its draw dead)."""
     total = sum(int(weight) for weight in weights)
     if total <= 0:
         raise ValueError("the NodeDetector draws among weights whose total is above 0")
-    if len(weights) == 1:
-        return 0, int(number)
+    live = [index for index, weight in enumerate(weights) if int(weight) > 0]
+    if len(live) == 1:
+        return live[0], int(number)  # a certain draw: one weight above 0 consumes nothing
     if number < total:
+        if (
+            moduli is not None
+        ):  # the interval's read itself below the total: the board does not carry the draw
+            raise RuntimeError(
+                f"the click's read of the board at {label} has the number {number} read, below the draw's total "
+                f"{total}: the digits read at this interval do not carry the draw (a residue of a number below the "
+                "total is no residue of the whole); the world's declaration answers, the body's record over more "
+                "Nodes, a well, a drive with a content, no key on the draw"
+            )
         raise RuntimeError(
             f"the click's read of the board at {label} has the number {number} left, below the draw's total "
-            f"{total}: the digits read are spent at this close by its earlier draws (a residue of a number below "
-            "the total is no residue of the whole); a shorter window, fewer quanta per close or more Nodes read"
+            f"{total}: the digits read are spent at this interval by its earlier draws (a residue of a number below "
+            "the total is no residue of the whole); a shorter window, fewer draws per close or more Nodes read"
         )
-    summed, last, _total = bias_bound(total, moduli)
+    summed, last, _total = bias_bound(total, moduli or (1, 1))
     if summed * last == total and sum(1 for weight in weights if int(weight) > 0) > 1:
         raise RuntimeError(
             f"the click's read of the board at {label}: the draw's total {total} is the product of its gcd "

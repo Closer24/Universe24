@@ -11,10 +11,13 @@ import numpy as np
 from event_universe import node
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
+from event_universe.features.front import ball
 from event_universe.loader.derived import quanta_records
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
+
+Reads = Sequence[tuple[int, np.ndarray]]  # what a detector reads: each family with the mask of its Nodes
 
 
 def digits_of(
@@ -32,11 +35,25 @@ def digits_of(
                 yield remainder, found, int(wall), (record, place)
 
 
-def at_origin(board: Lattice, families: Sequence[int], at: np.ndarray) -> bool:
-    """Whether every digit the read would take at the Nodes `at` names stands at the lay's origin w div 2 (the digits of `digits_of` over `families`): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close; where light stands at the body the emission's hazard is read from the board; `meeting.emission_drawn`)."""
+def reads_of(board: Lattice, families: Sequence[int], at: np.ndarray) -> list[tuple[int, np.ndarray]]:
+    """What a body reads (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): each of `families` (its drives, then its own record, `node_detector.read_families`) at the body's Nodes `at` and at the Nodes within one Link of them (`features/front.ball`, the Link metric with the wrap) where that family's record stands off the lay's origin, a remainder other than w div 2 on one of its lines: the light standing beside the body and the well's region the body's own record fills; a record at the origin beside the body adds no digit (a constant digit carries no entropy), each Node's distinct digits once (`read_of`), the digits of this interval alone; no key, no number, nothing at the Node."""
+    centres = [(int(a), int(b), int(c)) for a, b, c in np.argwhere(at)]
+    near = ball(board.shape, centres, 1, board.world.periodic)
+    found = []
+    for index in families:
+        half, standing = board.half_wall(index), np.zeros(board.shape, dtype=bool)
+        for record in quanta_records(board.families, index):
+            for line in board.lines_of(index, record):
+                standing |= np.asarray(line.remainder) != half
+        found.append((index, at | (near & standing)))
+    return found
+
+
+def at_origin(board: Lattice, reads: Reads) -> bool:
+    """Whether every digit the read would take stands at the lay's origin w div 2 (the digits of `digits_of` over `reads`, each family at its Nodes): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close; where light stands at the body the emission's hazard is read from the board; `meeting.emission_drawn`)."""
     return all(
         remainder == board.half_wall(index)
-        for index in families
+        for index, at in reads
         for remainder, _found, _wall, _place in digits_of(board, index, at)
     )
 
@@ -47,12 +64,10 @@ def lattice_of(rule: Rule, at: np.ndarray) -> list[int]:
     return [gcd(int(rule.wall), *(int(term[k]) for term in terms)) for k in range(int(at.sum()))]
 
 
-def read_of(
-    board: Lattice, families: Sequence[int], at: np.ndarray, label: str
-) -> tuple[int, tuple[int, int]]:
-    """The click's read of the board at the Nodes `at` names, one integer (ALGEBRA.md, The click's read of the board): the remainders of the records of every family in `families` in that order (a region detector the record it reads; a body detector the arriving records, its transitions' drives, first and its own record after), each family's in the order `DIGIT_ORDER` (`digits_of`, the remainder with its Node's lattice F and the family's wall), each read as its index on the lattice, r div F (one division act per digit), as one number in the mixed radix of the bases w div F + 1 (`features/click.read_number`; the base one above the digit's count of values, so that a total T of the wall's primes never divides it and every digit enters the residue); a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits (the reader's D2 of 2026-10-20: a record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once; a record whose lines differ keeps every digit), one comparison per later line and no act; returned with the number's two moduli for its first draw, the gcd of the bases less one after the first digit's (the residue modulo a factor of it the digits' plain sum) and the last digit's base (modulo a factor of it the last digit alone; `features/click.drawn_from`, the reader's D4); read at the draw's moment, the close before that click's write, and never written, so the run back and the inverse stand as they are. Refused by name, `label` naming the detector and the interval: every remainder at the lay's origin w div 2 (the records untouched at the Nodes read, or an exactly periodic standing record returned to its origin: nothing to read), and every digit on the lattice of the exact vacuum paces, at most three values each (3 F at or above w: light's remainders at p_0 = p_i = Gamma with no tension; a record read for its digits reads a content, the shipped universes' 60)."""
+def read_of(board: Lattice, reads: Reads, label: str) -> tuple[int, tuple[int, int]]:
+    """The click's read of the board, one integer (ALGEBRA.md, The click's read of the board): the remainders of the records of every family in `reads` in that order, each at the Nodes its mask names (a region detector the record it reads at its region; a body detector the arriving records, its transitions' drives, first and its own record after, at its Nodes and within one Link where each stands, `reads_of`), each family's in the order `DIGIT_ORDER` (`digits_of`, the remainder with its Node's lattice F and the family's wall), each read as its index on the lattice, r div F (one division act per digit), as one number in the mixed radix of the bases w div F + 1 (`features/click.read_number`; the base one above the digit's count of values, so that a total T of the wall's primes never divides it and every digit enters the residue); a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits (the reader's D2 of 2026-10-20: a record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once; a record whose lines differ keeps every digit), one comparison per later line and no act; returned with the number's two moduli for its first draw, the gcd of the bases less one after the first digit's (the residue modulo a factor of it the digits' plain sum) and the last digit's base (modulo a factor of it the last digit alone; `features/click.drawn_from`, the reader's D4); read at the draw's moment, the close before that click's write, and never written, so the run back and the inverse stand as they are. Refused by name, `label` naming the detector and the interval: every remainder at the lay's origin w div 2 (the records untouched at the Nodes read, or an exactly periodic standing record returned to its origin: nothing to read), and every digit on the lattice of the exact vacuum paces, at most three values each (3 F at or above w: light's remainders at p_0 = p_i = Gamma with no tension; a record read for its digits reads a content, the shipped universes' 60)."""
     digits, bases, origin, coarse = [], [], True, True
-    for index in families:
+    for index, at in reads:
         half, earlier = board.half_wall(index), dict[tuple[int, int], list[int]]()
         for remainder, found, wall, place in digits_of(board, index, at):
             origin = origin and remainder == half

@@ -100,14 +100,30 @@ def test_a_side_draws_only_where_a_whole_quantum_came_through_its_window(tmp_pat
     )
 
 
-def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful():
-    """The four born worlds as shipped, in the read's shape: each atom alone in the dark gives the pair at its window's close without a draw (the reading NO_DRAW), the run is LAWFUL to its end, and the two sides click once each on the pair, the left at the first close and the right, whose beam comes through in the second window, at the second; the emission's interval and the sides' closes and realised ports printed per world."""
+def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
+    """The four born worlds as shipped, in the read's shape: each atom alone in the dark gives the pair at its window's close without a draw (the reading NO_DRAW), the run is LAWFUL to its end, and the two sides click once each on the pair, the left at the first close and the right, whose beam comes through in the second window, at the second. What the atom reads (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): at its later closes, 85 and 110, lit by its own pair's wake once the left side has taken the source, the absorption's draw in the unit W_rec^2 (53.9 bits) reads the spin record at the atom's Node and at its two neighbours within one Link, where the wake stands off the origin, with its own lines at its Node: 156 and 184 bits, above the total, so the draw is the board's and the world runs whole (before G2 the Node alone read 50 bits and the world was refused at 85); the reads' Nodes per family and bits printed per world."""
     world_files.REPOSITORY_ROOT = ROOT
-    found = {}
+    found, reads, real = {}, [], node_detector.read_of
+
+    def spied(board, what, label):  # type: ignore[no-untyped-def]
+        number, moduli = real(board, what, label)
+        nodes = [(board.families[f].name, int(at.sum())) for f, at in what]
+        reads.append((board.interval, nodes, number.bit_length()))
+        return number, moduli
+
+    monkeypatch.setattr(node_detector, "read_of", spied)
     for name in BORN:
+        reads.clear()
         board = run_whole(
             Lattice(load_shipped(EVENTS / "bell_singlet" / f"{name}.json"), (lines := []).append)
         )
+        atom = [(at, nodes, bits) for at, nodes, bits in reads if nodes[-1][0] == "atom" and at > 24]
+        assert [(at, nodes) for at, nodes, _b in atom] == [
+            (85, [("spin", 3), ("atom", 1)]),
+            (110, [("spin", 3), ("atom", 1)]),
+        ]
+        assert all(bits > 54 for _a, _n, bits in atom), atom  # above the absorption's unit, 53.9 bits
+        found[f"{name} reads"] = atom
         given = [c for c in clicks(lines) if c["emitted"]]
         sides = [
             (c["interval"], c["node_detector"], c["realised"])
