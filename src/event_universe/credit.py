@@ -78,6 +78,9 @@ class Books:
     support: tuple[Node, ...] = ()
     frame: list[NodeState] = field(default_factory=list)
     cone: dict[int, int] = field(default_factory=dict)
+    regrown: list[NodeState] = field(default_factory=list)
+    popped: list[growth.Growth] = field(default_factory=list)
+    stepped: dict[int, int] = field(default_factory=dict)
 
     @property
     def runs_back(self) -> bool:
@@ -86,7 +89,7 @@ class Books:
 
     @property
     def reach(self) -> str | None:
-        """The run back's reach where the meeting runs back (ALGEBRA.md, The meeting's reading, root or back; the owner's word of 2026-10-19; `loader/draw.REACHES`): the draw's declared word, `board`, `cone` or `books`, and the record's light cone, `cone`, where the back draw declares none, the engine's reading written nowhere; None on the root's worlds. In the cone the books hold the lay's Nodes (`support`, S_0 at the file's coordinates, every record laid at the start, `meeting_back.support_of`), the lay's frame 0 (`frame`, every family's NodeState as laid, kept once at the books' start, `meeting_back.frame_of`) and the cone's volume per interval, |G(t)| the Nodes within t + 1 Links of S_0 (`cone`, written by the run back and forward, `meeting_back.asserted`), the look's header's words."""
+        """The run back's reach where the meeting runs back (ALGEBRA.md, The meeting's reading, root or back; the owner's word of 2026-10-19; `loader/draw.REACHES`): the draw's declared word, `board`, `cone` or `books`, and the record's light cone, `cone`, where the back draw declares none, the engine's reading written nowhere; None on the root's worlds. In the cone the books hold the lay's Nodes (`support`, S_0 at the file's coordinates, every record laid at the start, `meeting_back.support_of`), the lay's frame 0 (`frame`, every family's NodeState as laid, kept once at the books' start, `meeting_back.frame_of`) and the cone's volume per interval, |G(t)| the Nodes within t + 1 Links of S_0 (`cone`, written by the run back and forward, `meeting_back.stepped_alone`), the look's header's words; and, through the reading alone, the cone stepped alone's own books (the owner's word of 2026-10-20): frame 0 regrown to the board's shape (`regrown`), the growths popped on the way back and replayed on the way forward (`popped`, the record's own history of the board's shape) and the Node-steps per interval (`stepped`, the box with its ring in the cone's reach, the whole board's volume in the board's reach, the header's `cone_stepped`)."""
         if not self.runs_back:
             return None
         assert self.declaration is not None

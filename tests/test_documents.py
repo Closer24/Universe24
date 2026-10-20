@@ -73,7 +73,14 @@ def test_every_derived_number_is_its_scripts_output():
 
 def test_the_engines_module_count_is_the_trees():
     """ENGINE.md's "The engine is N modules" counts the Python files of src/event_universe beside __init__.py, the folders' modules their own."""
-    words = {"eighteen": 18, "nineteen": 19, "twenty": 20, "twenty-one": 21, "twenty-two": 22}
+    words = {
+        "eighteen": 18,
+        "nineteen": 19,
+        "twenty": 20,
+        "twenty-one": 21,
+        "twenty-two": 22,
+        "twenty-three": 23,
+    }
     text = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8")
     stated = re.search(r"The engine is ([a-z-]+) modules", text)
     assert stated is not None and stated.group(1) in words, stated

@@ -27,7 +27,15 @@ PHYSICAL_MODULES += (
     "front.py",
     "plane.py",
 )
-PHYSICAL_MODULES += ("emission.py", "lay.py", "twist.py", "readings.py", "flux.py", "meeting_back.py")
+PHYSICAL_MODULES += (
+    "emission.py",
+    "lay.py",
+    "twist.py",
+    "readings.py",
+    "flux.py",
+    "meeting_back.py",
+    "cone.py",
+)
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")

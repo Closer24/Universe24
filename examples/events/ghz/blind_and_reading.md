@@ -139,14 +139,15 @@ files of their own run.
 ## The click that runs back over three sides: the back world (2026-10-19)
 
 The (x, x, x) world once more with one added word on its draw, `meeting: back`, and nothing more
-(ALGEBRA.md, The meeting's reading, root or back, the owner's words of 2026-10-19, the N sides and the
-run back's reach; ENGINE.md section 3, act 6, and section 10, item 11), written by `build_back.py`
-beside the four as `ghz_back_x_x_x.json` with its mode file: the same square, the same three beams,
-the same regions with their bases and patterns, the same seed 24. The run back's reach is the cone,
-the default where the key is absent: the record's own light cone runs back, the rest of the board
-untouched, the lay's frame 0, asserted bit for bit by the engine at every step. The law's words it
-reads: the click is the meeting of the future with the past; backward, to the past, the click is a
-reading and never a write.
+(ALGEBRA.md, The meeting's reading, root or back, the owner's words of 2026-10-19, the N sides and
+the run back's reach; ENGINE.md section 3, act 6, and section 10, item 11), written by
+`build_back.py` beside the four as `ghz_back_x_x_x.json` with its mode file: the same square, the
+same three beams, the same regions with their bases and patterns, the same seed 24. The run back's
+reach is the cone, the default where the key is absent: the record's own light cone runs back, the
+rest of the board untouched (neither read nor written; one ring beyond the cone read from the board
+and asserted equal to the lay's frame 0 by the engine at every step). The law's words it reads: the
+click is the meeting of the future with the past; backward, to the past, the click is a reading and
+never a write.
 
 ### The design
 
@@ -177,26 +178,33 @@ worlds, the same M = -4; three credit lines, `left` with `meeting: back` and `or
 
 Run by `tools/run_inputs.py` (LAWFUL, 60 intervals, the cone's assertion holding at every step back
 and forward, no refusal), read by `tools/bell_gate.py` over the four output files with the back
-world's in the (x, x, x) run's place against `expectation_back.json`: E_3(x, x, x) = +1, the blind's;
-the eight shares 1 / 4 at the even triples and 0 at the odd, the root mode's; the marginals 1 / 2;
-M = -4 with the three root-mode worlds, the blind's; 60 intervals reported, 170 click lines and 160
-parts lines as in the root mode. The three credit lines at the interval 60: `left` realised minus,
-`meeting: back`, `order` 1; `right` realised minus, `order` 2; `top` realised plus, `order` 3, the
-count 1 each and the record's count left 12,297 as in the root mode's lines: the triple (-, -, +),
-one of the four the shares allow, the third port the one the two before it determine (minus minus:
-plus, the blind's). The look (`ghz_back_x_x_x.look.json`, the stride 6: frame 0, every sixth interval
-and each pass's last, 51 frames in the five passes, 11 and four times 10, the arrays by their nonzero
-Nodes): the header `reach` cone, `cone_support` the lay's 569 Nodes (the three beams, x 4 to 28 and
-y 2 to 30) and `cone_volume` per interval, 655 at the birth, 1,927 at the interval 12, from which the
-cone holds the declared square of 33 x 33 whole (its farthest Node 13 Links from the lay's Nodes), 2,059 at 13,
-and 8,865 of the grown board's 9,409 Nodes (97 x 97) at the close, inside it; every frame carrying the
-board's tick, 60 through the two readings, and the frames of the passes 2 to 5 their `cone_radius`,
-t + 1 at the interval t; the frames' arrays the engine's as they stand, outside the cone the lay's
-frame 0. The page `ghz_back_x_x_x.html` (the blind, the gate's reading and the run's output): the
-slider over the five passes with the bounds marked, the frame's label with the tick, the interval the
-record is read at, the pass, the direction and the cone's radius and support, the cone shaded on the
-board and on the view from above, the legend line and the radius graph, the records' clicks table with
-the three draws in their passes; the page's count of the cone's Nodes equals the look's |G| at every
-frame shown. The screenshots `ghz_back_x_x_x.pass2.screenshot.png` (the run back at the interval 6,
-the cone 7 Links about the beams, the square's corners outside it) and
-`ghz_back_x_x_x.pass3.screenshot.png` (the run forward to the second side's close at the interval 6).
+world's in the (x, x, x) run's place against `expectation_back.json`: E_3(x, x, x) = +1, the
+blind's; the eight shares 1 / 4 at the even triples and 0 at the odd, the root mode's; the marginals
+1 / 2; M = -4 with the three root-mode worlds, the blind's; 60 intervals reported, 170 click lines
+and 160 parts lines as in the root mode. The three credit lines at the interval 60: `left` realised
+minus, `meeting: back`, `order` 1; `right` realised minus, `order` 2; `top` realised plus, `order`
+3, the count 1 each and the record's count left 12,297 as in the root mode's lines: the triple (-,
+-, +), one of the four the shares allow, the third port the one the two before it determine (minus
+minus: plus, the blind's). The look (`ghz_back_x_x_x.look.json`, the stride 6: frame 0, every sixth
+interval and each pass's last, 51 frames in the five passes, 11 and four times 10, the arrays by
+their nonzero Nodes): the header `reach` cone, `cone_support` the lay's 569 Nodes (the three beams,
+x 4 to 28 and y 2 to 30) and `cone_volume` per interval, 655 at the birth, 1,927 at the interval 12,
+from which the cone holds the declared square of 33 x 33 whole (its farthest Node 13 Links from the
+lay's Nodes), 2,059 at 13, and 8,865 of the grown board's 9,409 Nodes (97 x 97) at the close, inside
+it; every frame carrying the board's tick, 60 through the two readings, and the frames of the passes
+2 to 5 their `cone_radius`, t + 1 at the interval t; the frames' arrays the engine's as they stand,
+outside the cone the board as the engine left it, the lay's frame 0 here. The cone stepped alone
+(2026-10-20, the owner's word): the two runs back and forward step the record's cone and nothing
+else, the ball's box with one ring read beyond it and asserted at the lay's frame 0, the rest of the
+board neither read nor written, each close equal to the board run's bit for bit; the header's
+`cone_stepped` sums to 1,320,928 Node-steps against the board run's 1,357,680 (the declared square
+whole in the cone from the interval 12 and the box about twice the diamond's Nodes, so the saving is
+modest and the principle the point). The page `ghz_back_x_x_x.html` (the blind, the gate's reading
+and the run's output): the slider over the five passes with the bounds marked, the frame's label
+with the tick, the interval the record is read at, the pass, the direction and the cone's radius and
+support, the cone shaded on the board and on the view from above, the legend line and the radius
+graph, the records' clicks table with the three draws in their passes; the page's count of the
+cone's Nodes equals the look's |G| at every frame shown. The screenshots
+`ghz_back_x_x_x.pass2.screenshot.png` (the run back at the interval 6, the cone 7 Links about the
+beams, the square's corners outside it) and `ghz_back_x_x_x.pass3.screenshot.png` (the run forward
+to the second side's close at the interval 6).

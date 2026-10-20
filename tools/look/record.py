@@ -260,7 +260,7 @@ def reach_of(board: Lattice) -> str | None:
 
 
 def reached(board: Lattice) -> dict[str, object]:
-    """The header's words of the run back's reach after the run, the engine's own numbers (ENGINE.md section 10, item 11): `reach` on a back world, and in the cone's reach `cone_support`, the lay's Nodes S_0 at the file's coordinates (`board.credit.support`), and `cone_volume`, the cone's Nodes |G(t)| per interval from 0 to the close (`board.credit.cone`); nothing on a root world, whose look is as before bit for bit."""
+    """The header's words of the run back's reach after the run, the engine's own numbers (ENGINE.md section 10, item 11): `reach` on a back world, and in the cone's reach `cone_support`, the lay's Nodes S_0 at the file's coordinates (`board.credit.support`), and `cone_volume`, the cone's Nodes |G(t)| per interval from 0 to the close (`board.credit.cone`), and `cone_stepped`, the Node-steps per interval of the cone stepped alone, the box with its ring, where the books count them; nothing on a root world, whose look is as before bit for bit."""
     reach = reach_of(board)
     if reach is None:
         return {}
@@ -269,6 +269,9 @@ def reached(board: Lattice) -> dict[str, object]:
         found["cone_support"] = [[int(c) for c in at] for at in board.credit.support]
         cone = {int(t): int(v) for t, v in dict(board.credit.cone).items()}
         found["cone_volume"] = [cone[t] for t in range(max(cone) + 1)] if cone else []
+        stepped = {int(t): int(v) for t, v in dict(getattr(board.credit, "stepped", {})).items()}
+        if stepped:  # the cone stepped alone: the Node-steps per interval, the box with its ring, the engine's count
+            found["cone_stepped"] = [stepped.get(t, 0) for t in range(max(stepped) + 1)]
     return found
 
 

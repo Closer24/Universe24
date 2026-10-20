@@ -102,11 +102,12 @@ The (a, b) world once more with one added word on its draw, `meeting: back`, and
 (ALGEBRA.md, The meeting's reading, root or back, the owner's words of 2026-10-19, the run back's
 reach among them; ENGINE.md section 3, act 6, and section 10, item 11), written by `build_back.py`
 beside the four as `singlet_back_a_b.json` with its mode file: the same chain, the same packets, the
-same regions with the family's sign and the identity patterns, the same seed 24. The run back's reach
-is the cone, the default where the key is absent: the record's own light cone runs back, the rest of
-the board untouched, the lay's frame 0, asserted bit for bit by the engine at every step. The law's
-words it reads: the click is the meeting of the future with the past; backward, to the past, the click
-is a reading and never a write.
+same regions with the family's sign and the identity patterns, the same seed 24. The run back's
+reach is the cone, the default where the key is absent: the record's own light cone runs back, the
+rest of the board untouched (neither read nor written; one ring beyond the cone read from the board
+and asserted equal to the lay's frame 0 by the engine at every step). The law's words it reads: the
+click is the meeting of the future with the past; backward, to the past, the click is a reading and
+never a write.
 
 ### The design
 
@@ -136,37 +137,42 @@ the first side's port 0 exactly.
 
 ### The reading (the branch atom-arranged, 2026-10-19)
 
-Run by `tools/run_inputs.py` (LAWFUL, 40 intervals, the cone's assertion holding at every step back and
-forward, no refusal), read by `tools/spin_gate.py` over the four output
-files with the fifth world's in the (a, b) run's place against `expectation_back.json`:
-E(a, b) = -119 / 169, the blind's; the joint integers 34,123,570,350 and 196,551,765,216, the root
-mode's to the digit (the parts lines the same board's); the marginals 1 / 2; S = -478 / 169 with the
-three root-mode worlds, the blind's; 28 intervals reported, 56 click lines and 56 parts lines as in the
-root mode, no line reported twice by the run forward again. The two credit lines at the interval 40:
-`left` realised minus, `meeting: back`, `order` 1, the count 1 and 0 left; `right` realised plus,
-`order` 2, the count 1 and 0 left: the pair (-, +), one of the two the shares favour (72 / 169 each),
-and the pair the root mode's one draw realised at the seed 24 too, here by two local draws. The look
+Run by `tools/run_inputs.py` (LAWFUL, 40 intervals, the cone's assertion holding at every step back
+and forward, no refusal), read by `tools/spin_gate.py` over the four output files with the fifth
+world's in the (a, b) run's place against `expectation_back.json`: E(a, b) = -119 / 169, the
+blind's; the joint integers 34,123,570,350 and 196,551,765,216, the root mode's to the digit (the
+parts lines the same board's); the marginals 1 / 2; S = -478 / 169 with the three root-mode worlds,
+the blind's; 28 intervals reported, 56 click lines and 56 parts lines as in the root mode, no line
+reported twice by the run forward again. The two credit lines at the interval 40: `left` realised
+minus, `meeting: back`, `order` 1, the count 1 and 0 left; `right` realised plus, `order` 2, the
+count 1 and 0 left: the pair (-, +), one of the two the shares favour (72 / 169 each), and the pair
+the root mode's one draw realised at the seed 24 too, here by two local draws. The look
 (`singlet_back_a_b.look.json`, 121 frames, every frame): 41 frames of pass 1 (the intervals 0 to 40,
-the first side's click lines and credit line in the frame at 40), 40 of pass 2 (39 down to 0, the lay
-reached from the future) and 40 of pass 3 (1 to 40, the partner's credit line in the frame at 40);
-every frame of the run back equals the forward frame at its interval bit for bit in every array (the
-form aside, the run back's frame carrying the booking of the interval it stepped back through), every
-frame of the run forward again equals the first pass's frame whole but the last, the board after the
-two writes; the board grown to 65 x 1 x 1 on the way out and back to it on the way back as the receding
-faces' layers return. The run back's reach, the cone: the look's header `reach` cone, `cone_support` the
-lay's 13 Nodes at x 10 to 22 and `cone_volume` per interval, 15 at the birth, 33 from the interval 9
-(the chain of 33 whole, its farthest Node 10 Links from the lay's Nodes) to 17, 51 at 18 when the faces
-grew, 65 from 25 (the grown chain whole); every frame carrying the board's tick, 40 through the
-reading, and the frames of the run back and forward their `cone_radius`, t + 1 at the interval t; the
-frames' arrays the engine's as they stand, outside the cone the lay's frame 0. The page
-`singlet_back_a_b.html`, built with the blind, the gate's reading and the run's output: the slider over
-the three passes with the passes' bounds marked, the frame's label with the tick, the interval the
-record is read at, the pass, the direction and the cone's radius and support ("tick 40 / 40, the record
-read at interval 4, pass 2 of 3, back, cone 5 Links about the lay's 13 Nodes (x 10 to 22)"), the
-marker of the direction, the cone's Nodes shaded on the chain and on the view from above, shrinking
-Link by Link to the lay's Nodes and growing back, the legend line and the radius graph, the records'
-clicks table with the two credit lines in their passes, the gate's reading beside the blind; the page's
-count of the cone's Nodes equals the look's |G| at every frame shown. The screenshots
-`singlet_back_a_b.pass2.screenshot.png` (the run back at the interval 4, the cone 5 Links, 23 of the
-chain's 33 Nodes inside it) and `singlet_back_a_b.pass3.screenshot.png` (the run forward again at the
-interval 4).
+the first side's click lines and credit line in the frame at 40), 40 of pass 2 (39 down to 0, the
+lay reached from the future) and 40 of pass 3 (1 to 40, the partner's credit line in the frame at
+40); every frame of the run back equals the forward frame at its interval bit for bit in every array
+(the form aside, the run back's frame carrying the booking of the interval it stepped back through),
+every frame of the run forward again equals the first pass's frame whole but the last, the board
+after the two writes; the board grown to 65 x 1 x 1 on the way out and back to it on the way back as
+the receding faces' layers return. The run back's reach, the cone: the look's header `reach` cone,
+`cone_support` the lay's 13 Nodes at x 10 to 22 and `cone_volume` per interval, 15 at the birth, 33
+from the interval 9 (the chain of 33 whole, its farthest Node 10 Links from the lay's Nodes) to 17,
+51 at 18 when the faces grew, 65 from 25 (the grown chain whole); every frame carrying the board's
+tick, 40 through the reading, and the frames of the run back and forward their `cone_radius`, t + 1
+at the interval t; the frames' arrays the engine's as they stand, outside the cone the board as the
+engine left it, the lay's frame 0 here. The cone stepped alone (2026-10-20, the owner's word): the
+run back and forward step the record's cone and nothing else, the ball's box with one ring read
+beyond it and asserted at the lay's frame 0, the rest of the board neither read nor written, the
+close equal to the board run's bit for bit; the header's `cone_stepped` sums to 3,916 Node-steps
+against the board run's 4,112 (the chain whole in the cone from the interval 9, so the saving is
+modest and the principle the point). The page `singlet_back_a_b.html`, built with the blind, the
+gate's reading and the run's output: the slider over the three passes with the passes' bounds
+marked, the frame's label with the tick, the interval the record is read at, the pass, the direction
+and the cone's radius and support ("tick 40 / 40, the record read at interval 4, pass 2 of 3, back,
+cone 5 Links about the lay's 13 Nodes (x 10 to 22)"), the marker of the direction, the cone's Nodes
+shaded on the chain and on the view from above, shrinking Link by Link to the lay's Nodes and
+growing back, the legend line and the radius graph, the records' clicks table with the two credit
+lines in their passes, the gate's reading beside the blind; the page's count of the cone's Nodes
+equals the look's |G| at every frame shown. The screenshots `singlet_back_a_b.pass2.screenshot.png`
+(the run back at the interval 4, the cone 5 Links, 23 of the chain's 33 Nodes inside it) and
+`singlet_back_a_b.pass3.screenshot.png` (the run forward again at the interval 4).
