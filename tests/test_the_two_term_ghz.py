@@ -1,4 +1,4 @@
-"""The two-term plane GHZ (the reader's design verdict of 2026-10-20, Part B; ALGEBRA.md, The meeting's identity, the Gram theorem's identity case; The click is the meeting of the future with the past): the Gaussian clause of the write, a side's quarter turn on a plane record, and the record of two terms of planes read at three sides; and first the byte-for-byte test of every real-port world the branch ships, pinned at the eighth commit as pushed (5efd3b4d7), the real path before the Gaussian pairs, so that the real path's identity is a test and no claim."""
+"""The two-term plane GHZ (the reader's design verdict of 2026-10-20, Part B; ALGEBRA.md, The meeting's identity, the Gram theorem's identity case; The click is the meeting of the future with the past): the Gaussian clause of the write, a side's quarter turn on a plane record, and the record of two terms of planes read at three sides; and first the byte-for-byte test of every real-port world the branch ships, recorded by this test at the eighth commit as pushed (5efd3b4d7), the real path before the Gaussian pairs (the eighth's own tests pin none of them; the reader's run at that commit confirms every one), so that the real path's identity is a test and no claim."""
 
 import hashlib
 import json
@@ -86,7 +86,7 @@ def run_digest(folder: str, name: str) -> tuple[str, str, int]:
 
 @pytest.mark.parametrize(("folder", "name"), REAL_PORT_WORLDS)
 def test_every_real_port_world_runs_byte_for_byte_as_at_the_eighth_commit(folder, name, monkeypatch):  # type: ignore[no-untyped-def]
-    """Every real-port world the branch ships (the four singlet, the four GHZ of four real parts, the four born, the two slits), run whole: its output lines and its board at the end equal, digest for digest, the eighth commit's as pushed (5efd3b4d7), recorded on the real path; a coefficient with the imaginary part 0 is the eighth's integer in every formula, so the path is the same path."""
+    """Every real-port world the branch ships (the four singlet, the four GHZ of four real parts, the four born, the two slits), run whole: its output lines and its board at the end equal, digest for digest, this test's own recording at the eighth commit as pushed (5efd3b4d7), the real path, confirmed by the reader's run at that commit; a coefficient with the imaginary part 0 is the eighth's integer in every formula, so the path is the same path."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     found = run_digest(folder, name)
     print(f"{folder}/{name}: {found}")
@@ -213,7 +213,7 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
     along=6,
     centres=(16, 16, 16),
 ):
-    """The two-term plane GHZ declared here (B3 of the reader's design): the spin family [2, 2] (two planes, no sign) on a 33 x 33 board open on x and y with receding faces, three packets from the centre toward -x, +x and +y at the shipped GHZ's amplitude 1328 (6,149 quanta at the lay: a one-quantum lay, amplitude 20, reads 3 at the close, the integer step's share noise in two dimensions being about 2.4 quanta over 60 intervals whatever the amplitude), both terms laid alike, three regions at the three ends (the four-real-parts GHZ's beams and regions), each side the identity pattern at `axis` [1, 1] with its `turn`, 0 the x basis and 3 the y basis; the draw's window the run."""
+    """The two-term plane GHZ declared here (B3 of the reader's design): the spin family [2, 2] (two planes, no sign) on a 33 x 33 board open on x and y with receding faces, three packets from the centre toward -x, +x and +y at the shipped GHZ's amplitude 1328 (6,149 quanta at the lay: a one-quantum lay, amplitude 20, reads 3 at the close, the integer step's share noise in two dimensions being about 2.4 quanta over 60 intervals at both amplitudes tried, 20 and 1,328), both terms laid alike, three regions at the three ends (the four-real-parts GHZ's beams and regions), each side the identity pattern at `axis` [1, 1] with its `turn`, 0 the x basis and 3 the y basis; the draw's window the run."""
     folder.mkdir(parents=True, exist_ok=True)
     universe = json.loads((EVENTS / "pair.json").read_text(encoding="utf-8"))
     universe["families"].append(json.loads(json.dumps(SPIN)))
@@ -314,7 +314,7 @@ def test_the_two_term_plane_ghz_reads_the_gates_signs_exactly(name, tmp_path, mo
 
 
 def test_the_two_term_plane_ghz_is_exact_at_another_seed(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The writes Gaussian units, so the numbers are exact at every seed: x y y at the seed 25 reads E_3 = -1 with the parity odd, the shares 0 or 1 / 4."""
+    """The writes Gaussian units and the two terms standing unit for unit bit for bit at every side's read on this family (the third side's one port exactly 0 in the engine's own read), so the numbers are exact at every seed: x y y at the seed 25 reads E_3 = -1 with the parity odd, the shares 0 or 1 / 4."""
     board, lines, clicks, realised = ghz_plane_read(tmp_path, monkeypatch, "x_y_y", seed=25)
     turns, sign = SETTINGS["x_y_y"]
     shares = joint_shares(
