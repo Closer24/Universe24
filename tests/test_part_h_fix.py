@@ -25,12 +25,11 @@ from tests.laws import (
     GRAVITY,
     coulomb_world,
     d4_bound,
-    emit_and_take_world,
     levels_floor,
-    one_photon_board,
     world_beside,
 )
 from tests.laws import EMIT_RUN as RUN
+from tests.laws_content import emit_and_take_world, one_photon_board
 
 ATOM_P = 32520  # one_photon's first atom at count 1 at the derived close, 62, the taker by the read of the board (33,136 the second atom's at 61 under the generator; 32,384 about the Node of the click at 76 under the declared 48): the quarter turn's reach about the hole's Node (C6), the most the two-Node taker takes of the -x piece booked over the window (C2, C4), one quantum's 2 T sin(pi / 4) within a few percent (C1)
 

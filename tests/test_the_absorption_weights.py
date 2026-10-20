@@ -9,7 +9,8 @@ from event_universe.lattice import Lattice
 from event_universe.resonance import unit_weight
 from event_universe.twist import quarter_turn
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ONE_PHOTON, TOOL, world_beside
+from tests.laws import EVENTS, TOOL, world_beside
+from tests.laws_content import ONE_PHOTON
 from tests.laws_read import redeclared
 
 

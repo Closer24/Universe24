@@ -10,7 +10,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, TOOL, ion_world, packet_world, refused, slit_world, world_beside
+from tests.laws import BACK, EVENTS, TOOL, packet_world, refused, slit_world, world_beside
+from tests.laws_content import ion_world
 from tests.laws_read import redeclared
 
 

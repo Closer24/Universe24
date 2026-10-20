@@ -12,7 +12,8 @@ from event_universe.loader.node_detector_declaration import parts_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.world_files import input_digest, load_world
-from tests.laws import TOOL, ion_world, refused
+from tests.laws import TOOL, refused
+from tests.laws_content import ion_world
 from tests.laws_spin import (
     BELL,
     IDENTITY,

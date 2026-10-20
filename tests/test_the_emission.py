@@ -11,7 +11,8 @@ from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, ONE_PHOTON, ROOT, TOOL, one_photon_board, packet_world, refused
+from tests.laws import BACK, ROOT, TOOL, packet_world, refused
+from tests.laws_content import ONE_PHOTON, one_photon_board
 from tests.laws_read import redeclared
 
 

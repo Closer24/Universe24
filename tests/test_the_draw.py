@@ -23,19 +23,8 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of, node_detectors_of, regions_of_the_law
 from event_universe.share import quanta_of
 from event_universe.world_files import load_world
-from tests.laws import (
-    EVENTS,
-    ONE_PHOTON,
-    ROOT,
-    RUN,
-    TOOL,
-    TOP,
-    TWO_ATOMS,
-    content_world,
-    credit_lines,
-    load_file,
-    refused,
-)
+from tests.laws import EVENTS, ROOT, RUN, TOOL, TOP, credit_lines, load_file, refused
+from tests.laws_content import ONE_PHOTON, TWO_ATOMS, content_world
 from tests.laws_read import redeclared, redeclared_file
 
 SLITS, WAY, RESONANCE, PACKET = (

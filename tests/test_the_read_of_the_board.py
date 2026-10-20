@@ -19,7 +19,8 @@ from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of,
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, emit_and_take_world, family, refused, world_beside
+from tests.laws import EVENTS, ROOT, family, refused, world_beside
+from tests.laws_content import emit_and_take_world
 from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G

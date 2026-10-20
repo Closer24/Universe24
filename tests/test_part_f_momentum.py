@@ -21,15 +21,8 @@ from event_universe.reports import (
 )
 from event_universe.world_files import load_world
 from tests import laws
-from tests.laws import (
-    EVENTS,
-    GRAVITY,
-    ONE_PHOTON,
-    TWO_ATOMS,
-    content_world,
-    one_photon_board,
-    world_beside,
-)
+from tests.laws import EVENTS, GRAVITY, world_beside
+from tests.laws_content import ONE_PHOTON, TWO_ATOMS, content_world, one_photon_board
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "reads": {}, "dimension": 1}

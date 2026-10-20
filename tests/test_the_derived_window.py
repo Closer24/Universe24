@@ -11,7 +11,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader import window
 from event_universe.loader.draw import Draw
 from event_universe.loader.world import World, parse_world
-from tests.laws import EVENTS, ROOT, emit_and_take_world, refused, world_beside
+from tests.laws import EVENTS, ROOT, refused, world_beside
+from tests.laws_content import emit_and_take_world
 from tests.laws_read import redeclared
 
 CHAIN = EVENTS / "chain"
