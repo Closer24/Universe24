@@ -176,7 +176,7 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     assert read["aside"] == {"s0": {"seen": wall, "quanta": 1}}
     assert COUNTS.apportioned(10, [3, 1]) == [8, 2]
     blind = {"pattern": [0, 3], "maxima": [0, 2, 3], "minima": [1], "counts": [1, 1, 1, 1]}
-    rows = [COUNTS.read_row([5, 1, 4, 2], b) for b in ({**blind, "central": 0}, blind)]
+    rows = [COUNTS.read_row([5, 1, 4, 2], b, world) for b in ({**blind, "central": 0}, blind)]
     assert [(r["maxima"], r["minima"]) for r in rows] == [([2], [1])] * 2  # the ends 0 and 3 are neither
     assert [r["visibility"] for r in rows] == [[4, 6], [3, 5]]  # `central` read; else the middle maximum
     assert COUNTS.arrival({1: 3, 2: -1, 3: 2}) == {"peak": 1, "centroid": [7, 4], "span": [1, 3]}

@@ -3,21 +3,19 @@
 import json
 from fractions import Fraction
 
-from event_universe import lists, meeting, world_files
-from event_universe.core.rule3 import division_forward
+from event_universe import lists
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import patterns_of_the_law, ports_of
 from event_universe.loader.node_detector_declaration import node_detector_of, parts_of
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, refused
+from tests.laws import EVENTS, refused, world_beside
 from tests.laws_spin import (
     BELL,
     IDENTITY,
     PORT,
     SINGLET,
     correlation,
-    exclusion_world,
     joint_shares,
     marginal_of,
     sided,
@@ -30,7 +28,6 @@ SHELL = {
     "grounds": (("gu", 1), ("gd", 1)),
     "excited": ("eu", "ed"),
 }  # the shell's four parts, one quantum in each ground part, the excited parts empty
-SEEDS = (25, 26, 34, 35)  # the shell's seeds, the draws read from the engine's own generator
 
 
 def sign_singlet_read(tmp_path, monkeypatch, a, b) -> Fraction:  # type: ignore[no-untyped-def]
@@ -44,7 +41,7 @@ def sign_singlet_read(tmp_path, monkeypatch, a, b) -> Fraction:  # type: ignore[
         amplitude=64,
         exchange=ANTISYMMETRIC,
     )
-    board, lines = trial(path, 1, 40)
+    board, lines = trial(path, 40)
     assert board.families[[f.name for f in board.families].index("spin")].exchange == -1
     clicks = [c for c in lines if c["event"] == "credit"]
     assert [c["node_detector"] for c in clicks] == ["left", "right"], clicks
@@ -94,27 +91,23 @@ def test_the_singlet_under_the_familys_sign_at_a_prime_b_and_a_prime_b_prime_bre
     assert abs(found[a, b] - found[a, b2] + found[a2, b] + found[a2, b2]) == Fraction(478, 169)
 
 
-def test_the_singlet_under_the_familys_sign_at_equal_axes_realises_opposite_ports_over_five_seeds(
-    tmp_path, monkeypatch
-):
-    """At equal axes under the sign the shares of (+, +) and (-, -) are 0 exactly, the first side's weights the marginal's, and the realised pair is opposite over five seeds run whole."""
+def test_the_singlet_under_the_familys_sign_at_equal_axes_realises_opposite_ports(tmp_path, monkeypatch):
+    """At equal axes under the sign the shares of (+, +) and (-, -) are 0 exactly, the first side's weights the marginal's, and the realised pair opposite in the one read."""
     sides = {"left": ((3, 1), IDENTITY), "right": ((3, 1), IDENTITY)}
     path = spin_world(
         tmp_path / "equal", monkeypatch, sides, both=True, amplitude=64, exchange=ANTISYMMETRIC
     )
-    pairs = []
-    for seed in range(1, 6):
-        board, lines = trial(path, seed, 40)
-        shares = joint_shares(lines, sides, -1)
-        spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
-        assert (
-            first[(spin, "left")][0] * marginal_of(shares, 0)[1]
-            == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
-        )
-        assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
-        pairs.append(tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit"))
-    assert all(pair in {(0, 1), (1, 0)} for pair in pairs), pairs  # opposite ports at equal axes
-    print(f"the sign's singlet at equal axes: the realised pairs {pairs}")
+    board, lines = trial(path, 40)  # one world, one read of the board at the close
+    shares = joint_shares(lines, sides, -1)
+    spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
+    assert (
+        first[(spin, "left")][0] * marginal_of(shares, 0)[1]
+        == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
+    )
+    assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
+    pair = tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit")
+    assert pair in {(0, 1), (1, 0)}, pair  # opposite ports at equal axes
+    print(f"the sign's singlet at equal axes: the realised pair {pair}")
 
 
 def test_the_symmetric_control_credits_the_same_port_at_equal_axes(tmp_path, monkeypatch):
@@ -123,96 +116,19 @@ def test_the_symmetric_control_credits_the_same_port_at_equal_axes(tmp_path, mon
     path = spin_world(
         tmp_path / "control", monkeypatch, sides, both=True, amplitude=64, exchange=SYMMETRIC
     )
-    pairs = []
-    for seed in range(1, 4):
-        board, lines = trial(path, seed, 40)
-        assert board.families[[f.name for f in board.families].index("spin")].exchange == 1
-        shares = joint_shares(lines, sides, 1)
-        assert shares == joint_shares(lines, sides, 0)
-        spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
-        assert (
-            first[(spin, "left")][0] * marginal_of(shares, 0)[1]
-            == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
-        )
-        assert shares[0, 1] == shares[1, 0] == 0 and shares[0, 0] == shares[1, 1] > 0, shares
-        pairs.append(tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit"))
-    assert all(pair in {(0, 0), (1, 1)} for pair in pairs), pairs
-    print(f"the symmetric control at equal axes: the realised pairs {pairs}")
-
-
-def test_the_shell_of_two_quanta_follows_the_familys_sign_with_no_capacity(tmp_path, monkeypatch):
-    """The shell (the builder's specification, 2026-10-19): the exclusion world at four parts gu, gd, eu, ed, one quantum in each ground part (the split start of a family declaring its sign), four transitions g to e by the photon at one weight and one resonance, no capacity anywhere, two photons one window apart, a spy on `lists.absorption` reading each close's weights beside the weights the same list carries without the sign (each transition's transfer share over the closing norms). The one-part convention: the body stands in gu (the first of the tie) and after the first click in gd, so the second close's list is gd's; a third quantum, or an emission from a populated part the body does not stand in, would need the lists per populated part (ENGINE.md section 10, item 7). At the first close (60) both signs read the same list, the excited parts empty and the factor 1 either way, and the first photon enters eu or ed at every seed named; at the second close (93) the antisymmetric record's weight into the populated excited part is 0 exactly and the empty part's the unsigned weight, 9,190,267,331,637,924 (the open part's number of the capacity test, tests/test_the_spin.py), the second photon entering the empty part (the seeds 34 and 35) or passing (25 and 26) and no count ever above 1; the symmetric record's weight into the populated part is twice its unsigned weight, the permanent's 2, the larger of the two, and the piling, both quanta in one excited part, is seen (25, 26, 34, 35)."""
-    closes: list[tuple[int, list[int], int, list[int]]] = []
-    original = lists.absorption
-
-    def kept(
-        board, drive, outcomes
-    ):  # each close: its weights, nothing's, and the weights without the sign
-        norms = [sum(label * label for label in books.labels) for books, _transition in outcomes]
-        unit, _unabsorbed = board.credit.unabsorbed_in(drive, norms)  # the list's own read, booked once
-        unsigned = [
-            b.shares[t] * division_forward(unit, norm, 0)[0]
-            for (b, t), norm in zip(outcomes, norms, strict=True)
-        ]
-        found = original(board, drive, outcomes)
-        closes.append((board.interval, [a.weight for a in found[:-1]], found[-1].weight, unsigned))
-        return found
-
-    monkeypatch.setattr(meeting.lists, "absorption", kept)
-    names, firsts, piled, entered, ends = ("gu", "gd", "eu", "ed"), {}, 0, 0, {}
-    for exchange in (ANTISYMMETRIC, SYMMETRIC):
-        for seed in SEEDS:
-            closes.clear()
-            path = exclusion_world(
-                tmp_path / f"{exchange}_{seed}", monkeypatch, None, seed, exchange=exchange, **SHELL
-            )
-            board = Lattice(load_world(path), (lines := []).append)
-            books, photon = board.credit.bodies[0], [f.name for f in board.families].index("photon")
-            assert (books.part, books.counts, books.declared.capacities) == (
-                0,
-                [1, 1, 0, 0],
-                (None,) * 4,
-            )
-            assert board.families[books.index].exchange == (-1 if exchange == ANTISYMMETRIC else 1)
-            for _ in range(board.world.intervals):
-                board.step()
-            taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-            first = taken[0]
-            assert (first["interval"], first["before"], first["realised"] in names[2:]) == (
-                60,
-                "gu",
-                True,
-            )
-            interval, weights, _rest, unsigned = closes[0]
-            assert interval == 60 and weights[0] == weights[1] > 0 and weights == unsigned, closes
-            assert firsts.setdefault(seed, weights) == weights  # both signs read the first close alike
-            populated = names.index(first["realised"])
-            empty = 5 - populated
-            interval, weights, rest, unsigned = closes[1]
-            assert interval == 93 and len(weights) == 2, closes  # the list of gd's two transitions
-            into = {2: (weights[0], unsigned[0]), 3: (weights[1], unsigned[1])}  # gd -> eu, gd -> ed
-            assert into[empty][0] == into[empty][1] == 9190267331637924, closes  # the factor 1
-            if exchange == ANTISYMMETRIC:
-                assert into[populated][0] == 0 < into[populated][1] and rest > 0, closes
-                assert max(books.counts) <= 1, books.counts  # never two in one part
-                if len(taken) == 2:
-                    assert (taken[1]["interval"], taken[1]["realised"]) == (93, names[empty])
-                    assert books.counts == [0, 0, 1, 1] and board.credit.counts[photon] == 0
-                    entered += 1
-                else:
-                    assert books.counts[1] == 1 and board.credit.counts[photon] == 1  # passed
-            else:
-                assert into[populated][0] == 2 * into[populated][1] > into[empty][0], closes
-                if len(taken) == 2 and taken[1]["realised"] == names[populated]:
-                    piled += 1
-                    assert books.counts[populated] == 2 and sum(books.counts) == 2
-            ends[exchange, seed] = (first["realised"], [c["realised"] for c in taken[1:]])
-            print(
-                f"the shell, {exchange}, seed {seed}: the first into {ends[exchange, seed][0]}, then {ends[exchange, seed][1]}"
-            )
-    assert entered == 2 and piled == 4, (
-        ends
-    )  # the empty part entered at two seeds; the piling at every seed
+    board, lines = trial(path, 40)  # one world, one read of the board at the close
+    assert board.families[[f.name for f in board.families].index("spin")].exchange == 1
+    shares = joint_shares(lines, sides, 1)
+    assert shares == joint_shares(lines, sides, 0)
+    spin, first = [f.name for f in board.families].index("spin"), board.credit.weights
+    assert (
+        first[(spin, "left")][0] * marginal_of(shares, 0)[1]
+        == first[(spin, "left")][1] * marginal_of(shares, 0)[0]
+    )
+    assert shares[0, 1] == shares[1, 0] == 0 and shares[0, 0] == shares[1, 1] > 0, shares
+    pair = tuple(PORT[c["realised"]] for c in lines if c["event"] == "credit")
+    assert pair in {(0, 0), (1, 1)}, pair
+    print(f"the symmetric control at equal axes: the realised pair {pair}")
 
 
 def test_a_family_without_the_key_loads_and_steps_as_before(tmp_path, monkeypatch):
@@ -220,9 +136,11 @@ def test_a_family_without_the_key_loads_and_steps_as_before(tmp_path, monkeypatc
     for universe in ("rule.json", "pair.json", "anticoincidence/two_atoms.json", "charged.json"):
         families = universe_of(json.loads((EVENTS / universe).read_text(encoding="utf-8")))[1]
         assert all(family.exchange == 0 for family in families), universe
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    board = Lattice(load_world(EVENTS / "anticoincidence" / "one_photon.json"), lambda line: None)
-    assert board.credit.bodies, "the one-photon world declares its bodies"
+    born = world_beside(
+        tmp_path, EVENTS / "bell_singlet" / "born_a_b.json", lambda w: None
+    )  # re-pinned 2026-10-20
+    board = Lattice(load_world(born), lambda line: None)
+    assert board.credit.bodies, "the born world declares its body"
     for books in board.credit.bodies:
         assert [lists.exchange_factor(board, books, part) for part in range(len(books.counts))] == [
             1

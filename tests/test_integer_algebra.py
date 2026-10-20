@@ -17,7 +17,15 @@ from tests.laws import arrivals_rule3
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES = ("node.py", "lattice.py", "share.py", "reports.py", "credit.py", "world_files.py")
+PHYSICAL_MODULES = (
+    "node.py",
+    "lattice.py",
+    "share.py",
+    "reports.py",
+    "credit.py",
+    "world_files.py",
+    "digits.py",
+)
 PHYSICAL_MODULES += (
     "records.py",
     "bookings.py",

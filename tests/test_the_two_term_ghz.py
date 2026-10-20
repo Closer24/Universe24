@@ -12,6 +12,7 @@ from event_universe.lattice import Lattice
 from event_universe.loader.draw import UNITS, Gauss, norm, ports_of, setting_of, times
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL
+from tests.laws_read import load_shipped
 from tests.laws_spin import (
     IDENTITY,
     PORT,
@@ -40,46 +41,58 @@ SETTINGS = {
 
 REAL_PORT_DIGESTS: dict[
     str, tuple[str, str, int]
-] = {  # at the eighth as pushed, 5efd3b4d7: the lines' digest, the arrays' digest at the end, the lines
+] = {  # at the ninth before the tenth's merge, 4c16df037: the lines' digest, the arrays' digest at the end, the lines
     "singlet_a_b": ("68f8975937ce8302", "29c984886c98a340", 152),
     "singlet_a_b_prime": ("e0247632210289e9", "29c984886c98a340", 152),
-    "singlet_a_prime_b": ("1d0916c9550e34ce", "de0951aaad4762b0", 152),
-    "singlet_a_prime_b_prime": ("33780197b7e675dc", "355f34162a2096bc", 152),
-    "ghz_x_x_x": ("13e23d322bc5c53f", "3bfce96e335b2fdc", 2162),
-    "ghz_x_y_y": ("28c13ee859a36722", "03f76ace05e501e9", 2731),
-    "ghz_y_x_y": ("da5d905b61cd7425", "54de862b6e47b098", 3300),
+    "singlet_a_prime_b": ("b923ce9b9d814660", "355f34162a2096bc", 165),
+    "singlet_a_prime_b_prime": ("c3b1f8214317c208", "de0951aaad4762b0", 165),
+    "ghz_x_x_x": ("54b34861b533a520", "d6a774f9d5346e84", 2162),
+    "ghz_x_y_y": ("ccff08ee61756333", "03f76ace05e501e9", 1593),
+    "ghz_y_x_y": ("23627820aeafc4c8", "21422c4532c84b95", 3300),
     "ghz_y_y_x": ("016e098bfdb7f7a2", "befdc50e632d240e", 5007),
-    "born_a_b": ("e73740150c73c91e", "513bd94421a5916c", 309),
-    "born_a_b_prime": ("b35971c64acf88e4", "513bd94421a5916c", 309),
-    "born_a_prime_b": ("6861def98e747011", "b0fce0cf8999f1ba", 309),
-    "born_a_prime_b_prime": ("dd8262d6be7e2394", "d80fcc0903ae3f58", 309),
-    "two_slits": ("5a0c959c4d20c925", "599a0bb0cfb51d39", 2308),
 }
+REFUSED: dict[
+    str, str
+] = {}  # nothing refused on the landing: the two slits draw at the window 1 and run whole
+REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
+    {
+        "two_slits": ("d3e46e78af4c506a", "be63d2ce99f6604a", 2696),  # the landing, 2026-10-20
+        "born_a_b": ("c35111c3692e87aa", "c192784fb41509b1", 290),
+        "born_a_b_prime": ("f5348b8d80b75fd5", "c192784fb41509b1", 290),
+        "born_a_prime_b": ("50959fba5bf17572", "b23542a6b2c460fd", 290),
+        "born_a_prime_b_prime": ("f82d69e0442948ca", "26aa22f2998f8cd6", 290),
+    }
+)
 
 
 def run_digest(folder: str, name: str) -> tuple[str, str, int]:
     """One shipped world run through its intervals: the sha256 (16 hex digits) of its output lines in order (each line's JSON with sorted keys), the hash of every array of the board at the end (`laws_spin.digest`) and the count of lines."""
     lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_world(EVENTS / folder / f"{name}.json"), lines.append)
+    board = Lattice(load_shipped(EVENTS / folder / f"{name}.json"), lines.append)
     for _ in range(board.world.intervals):
         board.step()
     found = hashlib.sha256()
-    for line in lines:
-        found.update(json.dumps(line, sort_keys=True, default=str).encode())
+    for line in lines:  # the sixth's bias booking aside, the line the ninth wrote
+        kept = {k: v for k, v in line.items() if k != "bias_bound"}
+        found.update(json.dumps(kept, sort_keys=True, default=str).encode())
     return found.hexdigest()[:16], digest(board)[:16], len(lines)
 
 
 def worlds_read(monkeypatch, folder: str, names: tuple[str, ...]) -> None:  # type: ignore[no-untyped-def]
-    """Every real-port world the branch ships (the four singlet, the four GHZ of four real parts, the four born, the two slits), run whole: its output lines and its board at the end equal, digest for digest, this test's own recording at the eighth commit as pushed (5efd3b4d7), the real path, confirmed by the reader's run at that commit; a coefficient with the imaginary part 0 is the eighth's integer in every formula, so the path is the same path."""
+    """Every real-port world the branch ships (the four singlet, the four GHZ of four real parts, the four born, the two slits), run whole: its output lines and its board at the end equal, digest for digest, this test's own recording at the ninth's head before the tenth's merge (4c16df037, the click's read of the board), or refused by name as the ninth refuses it (the born four at 85, the two slits at 130: the digits spent at a second draw); a coefficient with the imaginary part 0 is the integer of the ninth's formulas, so the path is the same path."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     for name in names:
+        if name in REFUSED:  # refused by name as the ninth's read refuses it, the same with the tenth
+            with pytest.raises(RuntimeError, match=REFUSED[name]):
+                run_digest(folder, name)
+            continue
         found = run_digest(folder, name)
         print(f"{folder}/{name}: {found}")
         assert found == REAL_PORT_DIGESTS[name], name
 
 
-def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_eighth_commit(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped singlet worlds of bell_singlet, digest for digest the recording at 5efd3b4d7 (`worlds_read`; the clock gives each folder its own test)."""
+def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
+    """The four shipped singlet worlds of bell_singlet, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; the clock gives each folder its own test)."""
     worlds_read(
         monkeypatch,
         "bell_singlet",
@@ -87,8 +100,8 @@ def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_eighth_commit(monke
     )
 
 
-def test_the_four_born_worlds_run_byte_for_byte_as_at_the_eighth_commit(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped born-pair worlds of bell_singlet, digest for digest the recording at 5efd3b4d7 (`worlds_read`)."""
+def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
+    """The four shipped born-pair worlds of bell_singlet, digest for digest the recording at the ninth's seventh commit (what a body reads, the reader's G2 of 2026-10-20: the atom's absorption draws at 85 and 110 read the pair's wake within one Link and carry their totals; `worlds_read`)."""
     worlds_read(
         monkeypatch,
         "bell_singlet",
@@ -96,18 +109,18 @@ def test_the_four_born_worlds_run_byte_for_byte_as_at_the_eighth_commit(monkeypa
     )
 
 
-def test_the_two_slits_world_runs_byte_for_byte_as_at_the_eighth_commit(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world, digest for digest the recording at 5efd3b4d7 (`worlds_read`)."""
+def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
+    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording at the landing head (`worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
     worlds_read(monkeypatch, "two_slits", ("two_slits",))
 
 
-def test_the_ghz_worlds_x_x_x_and_x_y_y_run_byte_for_byte_as_at_the_eighth_commit(monkeypatch):  # type: ignore[no-untyped-def]
-    """Two of the four shipped GHZ worlds of four real parts, x x x and x y y, digest for digest the recording at 5efd3b4d7 (`worlds_read`; two per test for the clock)."""
+def test_the_ghz_worlds_x_x_x_and_x_y_y_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
+    """Two of the four shipped GHZ worlds of four real parts, x x x and x y y, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; two per test for the clock)."""
     worlds_read(monkeypatch, "ghz", ("ghz_x_x_x", "ghz_x_y_y"))
 
 
-def test_the_ghz_worlds_y_x_y_and_y_y_x_run_byte_for_byte_as_at_the_eighth_commit(monkeypatch):  # type: ignore[no-untyped-def]
-    """The other two shipped GHZ worlds, y x y and y y x, digest for digest the recording at 5efd3b4d7 (`worlds_read`); with the first pair every real-port world the branch ships is run."""
+def test_the_ghz_worlds_y_x_y_and_y_y_x_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
+    """The other two shipped GHZ worlds, y x y and y y x, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`); with the first pair every real-port world the branch ships is run."""
     worlds_read(monkeypatch, "ghz", ("ghz_y_x_y", "ghz_y_y_x"))
 
 
@@ -226,7 +239,6 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
     turns,
     amplitude=1328,
     intervals=60,
-    seed=24,
     across=4,
     along=6,
     centres=(16, 16, 16),
@@ -236,7 +248,6 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
     universe = json.loads((EVENTS / "pair.json").read_text(encoding="utf-8"))
     universe["families"].append(json.loads(json.dumps(SPIN)))
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    (folder / "e.json").write_bytes((EVENTS / "engine_start.json").read_bytes())
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
     wide = {"x": [13, 19], "y": [13, 19], "z": [0, 0]}
     packets = [
@@ -267,27 +278,21 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
         "face_depth": 1,
         "intervals": intervals,
         "universe": "u.json",
-        "engine": "e.json",
         "bodies": [],
         "packets": packets,
         "node_detectors": detectors,
         "receding": {"x": receding, "y": receding},
-        "draw": {
-            "window": intervals,
-            "seed": seed,
-            "multiplier": 6364136223846793005,
-            "increment": 1442695040888963407,
-        },
+        "draw": {"window": intervals},
     }
     (path := folder / "ghz2.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     TOOL.main(["--input", str(path)])
     return path
 
 
-def ghz_plane_read(tmp_path, monkeypatch, name, seed=24):  # type: ignore[no-untyped-def]
+def ghz_plane_read(tmp_path, monkeypatch, name, amplitude=1328):  # type: ignore[no-untyped-def]
     """One setting of the two-term plane GHZ run under the cone (the default): the board, its lines, the credit lines in the declared order and the realised ports."""
     turns, _sign = SETTINGS[name]
-    path = ghz_plane_world(tmp_path / f"{name}_{seed}", monkeypatch, turns, seed=seed)
+    path = ghz_plane_world(tmp_path / f"{name}_{amplitude}", monkeypatch, turns, amplitude=amplitude)
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(path), lines.append)
     for _ in range(board.world.intervals):
@@ -350,9 +355,9 @@ def test_the_two_term_plane_ghz_at_y_y_x_reads_e_3_minus_one(tmp_path, monkeypat
     setting_read("y_y_x", tmp_path, monkeypatch)
 
 
-def test_the_two_term_plane_ghz_is_exact_at_another_seed(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The writes Gaussian units and the two terms standing unit for unit bit for bit at every side's read on this family (the third side's one port exactly 0 in the engine's own read), so the numbers are exact at every seed: x y y at the seed 25 reads E_3 = -1 with the parity odd, the shares 0 or 1 / 4."""
-    board, lines, clicks, realised = ghz_plane_read(tmp_path, monkeypatch, "x_y_y", seed=25)
+def test_the_two_term_plane_ghz_is_exact_at_another_amplitude(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The writes Gaussian units and the two terms standing unit for unit bit for bit at every side's read on this family (the third side's one port exactly 0 in the engine's own read), so the numbers are exact at every read: x y y at the amplitude 1300, another board for the click's read, reads E_3 = -1 with the parity odd, the shares 0 or 1 / 4."""
+    board, lines, clicks, realised = ghz_plane_read(tmp_path, monkeypatch, "x_y_y", amplitude=1300)
     turns, sign = SETTINGS["x_y_y"]
     shares = joint_shares(
         lines,

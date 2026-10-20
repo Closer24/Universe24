@@ -29,7 +29,6 @@ def world(design: dict[str, Any], row: dict[str, Any]) -> dict[str, object]:
         "face_depth": 1,
         "intervals": int(row["intervals"]),
         "universe": row["universe"],
-        "engine": design["engine"],
         "bodies": [
             {"family": families["source"], "nodes": [{"node": [centre, centre, centre], "count": 1}]},
             {
@@ -41,93 +40,12 @@ def world(design: dict[str, Any], row: dict[str, Any]) -> dict[str, object]:
     }
 
 
-def shells_universe(design: dict[str, Any], exchange: str) -> dict[str, Any]:
-    """The shells' universe: the design's source universe read from the repository with the atom family's row at the design's dimension and the sign `exchange` declared under the key `exchange`; every other row unchanged."""
-    shells = design["shells"]
-    universe = json.loads((ROOT / str(shells["universe_from"])).read_text(encoding="utf-8"))
-    for family in universe["families"]:
-        if family["name"] == shells["family"]:
-            family["dimension"] = list(shells["dimension"])
-            family["exchange"] = exchange
-    return dict(universe)
-
-
-def shells_world(design: dict[str, Any], row: dict[str, Any], seed: int) -> dict[str, object]:
-    """One shells world: the chain open on x with both faces receding, the body of the design's parts at its two Nodes with a transition from every ground part to every excited part by the photon at the design's weight and resonance, its generator at the seed (the window derived at load), no capacity; the two photons from the design's Nodes toward the body at the design's amplitude; the intervals."""
-    shells = design["shells"]
-    body, photons = shells["body"], shells["photons"]
-    parts = [
-        {"part": k, "name": str(name), "count": int(count)}
-        for k, (name, count) in enumerate(body["parts"])
-    ]
-    transitions = [
-        {
-            "from": str(g),
-            "to": str(e),
-            "drive": photons["family"],
-            "weight": int(body["weight"]),
-            "resonance": [int(v) for v in body["resonance"]],
-        }
-        for g in body["grounds"]
-        for e in body["excited"]
-    ]
-    record = {
-        "family": shells["family"],
-        "nodes": [{"node": [int(x), 0, 0], "weight": 1} for x in body["nodes"]],
-        "parts": parts,
-        "transitions": transitions,
-        "rates": [],
-        "node_detector": {**shells["generator"], "seed": seed},
-    }
-    packets = [
-        {
-            "family": photons["family"],
-            "along": "x",
-            "wave": [sign, int(photons["quarters"])],
-            "phase": [0, 1],
-            "amplitude": int(photons["amplitude"]),
-            "top": {"x": [int(x), int(x)], "y": [0, 0], "z": [0, 0]},
-            "edge": {"x": int(photons["edge"]), "y": 0, "z": 0},
-        }
-        for x, sign in zip(photons["from"], (1, -1), strict=True)
-    ]
-    return {
-        "shape": [int(shells["length"]), 1, 1],
-        "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
-        "face_depth": 1,
-        "intervals": int(shells["intervals"]),
-        "universe": row["universe"],
-        "engine": shells["engine"],
-        "bodies": [record],
-        "packets": packets,
-        "node_detectors": [],
-        "receding": {
-            "x": {
-                "sides": ["low", "high"],
-                "largest": int(shells["largest"]),
-                "layers": int(shells["layers"]),
-            }
-        },
-    }
-
-
 def expectation(design: dict[str, Any]) -> dict[str, object]:
-    """The blind expectation file: per level the one check that says yes or no (a lattice reading, no click), the line's period and amplitude with the sign row's breathing, the shells' weights at the two closes and the counts with the seed by the blind's rule (clicks), the beat and the law's units; every number the design's, written before any run."""
-    shells = design["shells"]
+    """The blind expectation file: per level the one check that says yes or no (a lattice reading, no click), the line's period and amplitude with the sign row's breathing, the beat and the law's units; every number the design's, written before any run."""
     worlds = {
         name: {"window": [int(v) for v in row["window"]], **design["blind"][name]}
         for name, row in design["worlds"].items()
     }
-    for name, row in shells["worlds"].items():
-        worlds[name] = {
-            "window": [int(shells["closes"][0]), int(shells["closes"][1])],
-            "exchange": row["exchange"],
-            "universe": row["universe"],
-            "seed": int(shells["seed"]),
-            "seed_rule": shells["seed_rule"],
-            "seed_candidates": [int(v) for v in shells["seed_candidates"]],
-            **design["blind"][name],
-        }
     return {
         "verdict": "LATTICE",
         "family": design["roles"]["record"],
@@ -136,8 +54,8 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "worlds": worlds,
         "beat": design["blind"]["beat"],
         "law_units": design["blind"]["law_units"],
-        "status": "the levels and the line lattice readings: no NodeDetector, no click, no draw; the shells clicks of a toy atom with the photon's resonance declared; the numbers are the lattice's own at Gamma 6,000 and T 36,000,000 or 72,000,000 and not nature's (the toy's alpha 0.138 and 0.276, nineteen and thirty-eight times nature's)",
-        "fence": "lattice for the levels and the line, clicks for the shells",
+        "status": "the levels and the line lattice readings: no NodeDetector, no click, no draw; the numbers are the lattice's own at Gamma 6,000 and T 36,000,000 or 72,000,000 and not nature's (the toy's alpha 0.138 and 0.276, nineteen and thirty-eight times nature's)",
+        "fence": "lattice for the levels and the line",
     }
 
 
@@ -152,12 +70,6 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument(
         "--only", nargs="*", default=None, help="the worlds to write (every world without it)"
-    )
-    parser.add_argument(
-        "--seed",
-        type=int,
-        default=None,
-        help="the shells' seed in place of the design's (the rule's confirmation runs)",
     )
     args = parser.parse_args(argv)
     design = json.loads(args.design.read_text(encoding="utf-8"))
@@ -189,34 +101,6 @@ def main(argv: list[str] | None = None) -> None:
                 command += ["--level", str(row["level"])]
             subprocess.run(command, check=True, cwd=ROOT)
         print(json.dumps({"world": str(path), "lay": row["lay"], "level": row.get("level")}))
-    shells = design["shells"]
-    seed = int(shells["seed"]) if args.seed is None else int(args.seed)
-    for name, row in shells["worlds"].items():
-        if args.only is not None and name not in args.only:
-            continue
-        universe = args.folder / Path(str(row["universe"])).name
-        universe.write_text(
-            json.dumps(shells_universe(design, str(row["exchange"]))) + "\n", encoding="utf-8"
-        )
-        path = args.folder / f"{name}.json"
-        path.write_text(json.dumps(shells_world(design, row, seed)) + "\n", encoding="utf-8")
-        if args.modes:
-            subprocess.run(
-                [sys.executable, str(ROOT / "tools" / "pixel_mode.py"), "--input", str(path)],
-                check=True,
-                cwd=ROOT,
-                stdout=subprocess.DEVNULL,
-            )
-        print(
-            json.dumps(
-                {
-                    "world": str(path),
-                    "universe": str(universe),
-                    "exchange": row["exchange"],
-                    "seed": seed,
-                }
-            )
-        )
     written = expectation(design)
     (args.folder / "expectation.json").write_text(json.dumps(written, indent=1) + "\n", encoding="utf-8")
     print(

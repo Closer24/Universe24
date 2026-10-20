@@ -34,9 +34,7 @@
   "resonance": [
    5414,
    6000
-  ],
-  "seed": 0,
-  "seed_found": "the body's own draw: at the seed 0 the dark draw picks the emission at the interval 17 (the engine's test of the births' book on the singlet's chain), the record's birth; the fractions depend on no interval"
+  ]
  },
  "length": 61,
  "intervals": 124,
@@ -53,9 +51,6 @@
   "right": 75
  },
  "draw": {
-  "window": 62,
-  "seed": 24,
-  "multiplier": 6364136223846793005,
-  "increment": 1442695040888963407
+  "window": 62
  }
 }

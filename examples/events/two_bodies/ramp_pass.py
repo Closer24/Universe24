@@ -62,7 +62,6 @@ def world(name, centres):
         "face_depth": 1,
         "intervals": T,
         "universe": "examples/events/rule.json",
-        "engine": "examples/events/engine_start.json",
         "bodies": [],
         "node_detectors": [],
     }

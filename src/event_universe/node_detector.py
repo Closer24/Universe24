@@ -12,9 +12,9 @@ from event_universe import node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.features.click import drawn, hashed, spread, squared
+from event_universe.digits import read_of, reads_of
+from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
-from event_universe.loader.draw import Draw, Generator
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
@@ -50,7 +50,7 @@ class Passage:
 
 @dataclass
 class NodeBooks:
-    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the generator's state, the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, per Node and per Port, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights by their sums and the hole's Port set by the Ports (`arrival_ports`), `passages` per arriving family its momentum terms and its share at the region summed over the window, the piece's two sums (`Passage`, C4), and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis, `shortfall` what the fold could not give per axis, s_a = |p_a| - gain_a at or above 0 (the click's plan, C3; `twist.twisted`), and `lost` the readings of who lost it; Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
+    """The books of a record declared a NodeDetector over a region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment): the declaration's number among the world's `bodies`, the record's family and its record number, its Nodes with the lay's weights (the weights' proportion), its declaration, the part carrying the count, the counts per part, the labels, the intervals elapsed in the window and the lit ones among them (`lit`, the span of the emission's draw at the window's close, the dark intervals drawn at their own grain as they pass, `meeting.jumped`), the two reference records per transition, the windows closed and its own clock; `amplitudes` the lay's amplitude of one quantum at each Node, (the largest x with x^2 <= A^2 w_i div SUM w), `norm` the record's amplitude over the region, (the largest x with x^2 <= SUM A_i^2), the mode's norm, `intake` per arriving family the window's inflow through each Node's front Ports, per Node and per Port, the conserved form's own current in the unit G^2 (`booked_inflow`), the absorption's Node's draw weights by their sums and the hole's Port set by the Ports (`arrival_ports`), `passages` per arriving family its momentum terms and its share at the region summed over the window, the piece's two sums (`Passage`, C4), and `shares` per transition out of the part, at the window's close, its own transfer share, the weight of its absorption (`meeting.turned_labels`, `lists.absorption`). `carried`, the hop's remainders per label, one per part, kept between windows and cleared with the labels at the re-lay (`resonance.hopped`, Part C); `left`, the number the click's read of the board left after the body's last draw of the interval, None before its first (`picked`, emptied every interval, `meeting.jumped`); `deferred`, whether an emission's draw of the window found every digit at the lay's origin or the body's number below the row's total (`carries`), so the emission falls at the window's close (`meeting.emission_fell`, cleared as the window begins again); `bias`, the bias bound of the interval's first draw, booked on the body's click line (`features/click.bias_bound`). Part F (the two hands' lines of 2026-10-09): the last click's four readings for its credit line, `piece` the piece's p_a in T's unit, read at the close from the arriving record's momentum terms and share at the region's Nodes (`piece_momentum`), `fan` the arriving record's P_a over the board at the click, `twist` the write's n_a per axis, `shortfall` what the fold could not give per axis, s_a = |p_a| - gain_a at or above 0 (the click's plan, C3; `twist.twisted`), and `lost` the readings of who lost it; Part G (both hands' lines of 2026-10-10, the click with two receivers): `source`, the piece's source drawn among the light's emitters by their outstanding quanta, and `recoil`, the source's p per axis, the fold given its part by the same twist (`twist.recoiled`), or on the emission's own line the directed packet's recoil paid at the lay (`act.written`)."""
 
     number: int
     index: int
@@ -62,7 +62,6 @@ class NodeBooks:
     counts: list[int]
     labels: list[int]
     elapsed: int
-    state: int
     references: list[Reference]
     windows: int = 0
     lit: int = 0
@@ -78,14 +77,16 @@ class NodeBooks:
     twist: list[int] | None = None
     shortfall: list[int] | None = None  # C3: s_a = |p_a| - gain_a per axis, at or above 0
     lost: list[str] | None = None
-    source: str | None = None  # Part G: the piece's source, `body n` or the lay (`twist.recoiled`)
-    recoil: list[int] | None = (
-        None  # Part G: the source's p per axis, the fold given (`twist.folded_source`)
-    )
+    source: str | None = None  # Part G: the piece's source (`twist.recoiled`)
+    recoil: list[int] | None = None  # Part G: the source's p per axis (`twist.folded_source`)
+    left: int | None = None  # the read's number left within the interval (`picked`)
+    deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
+    bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
+    due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
-    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units, the window begun and the generator at the declared seed; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
+    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or row.detector is None or row.detector.draw is None:
@@ -95,9 +96,8 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
         draw = row.detector.draw
-        longest = draw.window if isinstance(draw, Draw) else max(board.world.intervals, 1)
+        longest = draw.window if draw.window is not None else max(board.world.intervals, 1)
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
-        seed = draw.seed
         references = references_of(scale, row.detector.transitions)
         square, total = (
             squared(1, board.world.quantum_action, board.families[row.family].pair),
@@ -117,7 +117,6 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 parted,
                 labels,
                 0,
-                seed,
                 references,
                 amplitudes=amplitudes,
                 norm=norm,
@@ -221,46 +220,58 @@ def clock_advanced(board: Lattice, books: NodeBooks) -> None:
     books.clock[0], books.clock[1] = books.clock[0] + int(whole), int(rest)
 
 
-def picked(
-    board: Lattice, state: int, generator: Generator | None, weights: list[int], outcomes: int
-) -> tuple[int, int]:
-    """The draw of the one click act, the outcome alone: with more than one outcome, one draw by the weights with the generator (its state carried in the books), the lower index on a tie; one outcome, no draw and the state kept (where `credit_draw`, the regions' draw of a place, advances its state on one weight too: main's two rules, each kept for the byte equality of section 0). The Node of the realised write is drawn after it, for that write alone (the advisor's hand, the mathematician's hand, two hands: one draw per click, none for a candidate not realised)."""
-    pick, modulus = 0, board.world.width + 1
-    if outcomes > 1:
-        assert generator is not None  # a draw among outcomes is the declared generator's
-        pick, state = drawn(state, generator.multiplier, generator.increment, modulus, weights)
-    return pick, state
+def read_families(books: NodeBooks) -> list[int]:
+    """The families a body's read takes its digits from, in the read's order: its transitions' drives first, each once in the declared order, and its own record after (`digits.read_of`)."""
+    return [*dict.fromkeys(t.drive for t in books.declared.transitions), books.index]
 
 
-def credit_draw(board: Lattice, weights: list[int], side: str | None = None) -> int:
-    """The region NodeDetectors' draw of a place (features/click, `drawn`): the index drawn among the weights by the world's declared generator, its state kept in the credit's books and advanced at every draw (a draw among one weight advances it too, where `picked`, the bodies' draw, keeps its state on one outcome: main's two rules, each kept for the byte equality of section 0), the modulus the width's own, 2^width; the region by the window's shares, the boundary Node by the inflows per Node, the side's port by its own second moments (`lists.readings`) and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`). Each side of a record of several parts draws with a state of its own (`side`, the region's name; `credit.Books.states`): begun at the side's first draw of the window from the declared seed, the side's name and the window's number (`hashed`, distinct per side and per window, declared by the one seed, generic for N sides), advanced once per draw, the port, the Node and the piece's source alike, and cleared at the close; the books' one state untouched."""
-    books, modulus = board.credit, board.world.width + 1
-    assert books.declaration is not None
-    found = books.declaration
-    if side is None:
-        pick, books.state = drawn(books.state, found.multiplier, found.increment, modulus, weights)
-        return pick
-    state = books.states.setdefault(side, hashed(found.seed, side, books.windows, modulus))
-    pick, books.states[side] = drawn(state, found.multiplier, found.increment, modulus, weights)
+def body_label(board: Lattice, books: NodeBooks) -> str:
+    """The body's name in the read's refusals: its number, its family and the interval."""
+    return f"the body {books.number} of {board.families[books.index].name!r} at the interval {board.interval}"
+
+
+def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
+    """A body's draw, the click's read of the board at the body's Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): the body's first draw of the interval reads the digits of the records it reads, the arriving records' (its transitions' drives, in the declared order) first and its own after, at its Nodes, into the number left (`NodeBooks.left`, emptied every interval, `meeting.jumped`), and every draw of the interval is one division act on it, the outcome of the click act (`act.click`), the Node of the write (`drawn_node`) and the piece's source (`act.parted`) alike, the remainder the pick and the quotient the number left; the read is what a body reads (`digits.reads_of`, the reader's G2 of 2026-10-20: its Nodes and, within one Link, the Nodes where each record it reads stands off the origin); one weight above 0 is a certain draw, reads nothing and consumes nothing (the deferred emission's one alternative, `lists.emission`; an absorption into a full part at the weight 0 beside the rest); the lower index on a tie."""
+    live = [k for k, weight in enumerate(weights) if int(weight) > 0]
+    if len(live) <= 1:
+        return live[0] if live else 0  # a certain draw consumes nothing and reads nothing
+    label, number, moduli = body_label(board, books), books.left, None
+    if number is None:  # the interval's first draw reads the board, the number's moduli with it
+        number, moduli = read_of(
+            board, reads_of(board, read_families(books), board.mask(books.nodes)), label
+        )
+        books.bias = bias_bound(sum(weights), moduli)  # booked on the body's click line
+    pick, books.left = drawn_from(number, weights, label, moduli)
+    return pick
+
+
+def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None = None) -> int:
+    """The region NodeDetectors' draw of a place, the click's read of the board at the regions' Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): a side of a record of several parts (`side`, the region's name) reads the record's digits at its own region at its first draw of the close, before its write, into the number left (`credit.Books.left`, per record and side, emptied at the close, `meeting.closed`), and a record of one part reads its digits at the union of the declared regions' Nodes (`node_detector_nodes`) at the first draw of the close; every later draw of the close is one division act on the number left, the side's port by its own second moments (`lists.readings`), the region by the window's shares, the boundary Node by the inflows per Node and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`), the remainder the pick and the quotient the number left; one weight consumes nothing."""
+    books, family = board.credit, board.families[index]
+    label = f"{'the regions' if side is None else f'the side {side!r}'} of {family.name!r} at the interval {board.interval}"
+    if (index, side) not in books.left:  # the close's first draw reads the board, its moduli with it
+        at = (
+            node_detector_nodes(board)
+            if side is None
+            else next(d.nodes for d in board.node_detectors if d.name == side)
+        )
+        assert at is not None  # a side is a declared region with its Nodes
+        number, moduli = read_of(board, [(index, at)], label)
+        books.bias[(index, side)] = bias_bound(sum(weights), moduli)  # booked on the side's line
+    else:
+        number, moduli = books.left[(index, side)], None
+    pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
     return pick
 
 
 def drawn_node(board: Lattice, books: NodeBooks, weights: list[int]) -> Node:
-    """The one Node of the region a write is laid at, drawn by `weights` over the NodeDetector's Nodes with its own generator (features/click, `drawn`; ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: the write of a click is at one Node of the region, the absorption's by the inflow booked, `hole_node`, the emission's and the conversion's by the record's share at the body's Nodes as the board holds it at the close, `share_weights`, the share at a Node a lattice reading and no measurement); the file's lay weights enter no draw and stand alone where every weight is 0."""
-    assert books.declared.draw is not None
+    """The one Node of the region a write is laid at, drawn by `weights` over the NodeDetector's Nodes by the body's read of the board (`picked`; ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: the write of a click is at one Node of the region, the absorption's by the inflow booked, `hole_node`, the emission's and the conversion's by the record's share at the body's Nodes as the board holds it at the close, `share_weights`, the share at a Node a lattice reading and no measurement); the file's lay weights enter no draw and stand alone where every weight is 0."""
     found = weights if sum(weights) > 0 else list(books.weights)
-    pick, books.state = drawn(
-        books.state,
-        books.declared.draw.multiplier,
-        books.declared.draw.increment,
-        board.world.width + 1,
-        found,
-    )
-    return books.nodes[pick]
+    return books.nodes[picked(board, books, found)]
 
 
 def drawn_weights(board: Lattice, inflows: Iterable[int]) -> list[int]:
-    """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the generator draws in (features/click, `drawn`: the pick the state's fraction of the weights' total, (state times total) div 2^width, so the weights' ratios realise the draw and their one rounding at the close is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
+    """The draw's weights from the books' inflows booked in the unit G^2 (`booked_inflow`, `credit.booked`): each floored at 0 and divided once at the close by G^2 by the division act, the current's units the draw is made in (features/click, `drawn_from`: the pick the residue of the read's number by the weights' total on the cumulative weights, so the weights' ratios realise the draw and their one rounding at the close is part of the realisation), the plain inflows bit for bit where no tension stood and the draw's realisation with them (ALGEBRA.md #the-click-is-the-meeting, the credit's booking: every reading at the vacuum's paces unchanged bit for bit), the law's ratios under tension; one division at the close and none per Link, the count's own division by W_rec G^2 beside it (`credit.quanta_through`)."""
     square = board.unit * board.unit
     return [int(division_forward(max(int(inflow), 0), square, 0)[0]) for inflow in inflows]
 
@@ -342,6 +353,7 @@ def reported(
         books.lost,
         books.source,
         books.recoil,
+        bias=books.bias,
     )
     board.output(line)
 

@@ -854,7 +854,7 @@ def unit_fixed_point(
     )
 
 
-ENGINE_LAID = ("parts", "conversion")  # a body the engine lays at its one Node, no mode entry
+ENGINE_LAID = ("parts",)  # a body the engine lays at its one Node, no mode entry
 QUANTA = "quanta"  # the design file's key naming a body's count, the generator's input
 SENSES = "senses"  # the design file's key: the rotation sense of each body in the world's order
 PIXELS = "pixels"  # the design file's key: the numbers of the bodies laid as one-Node records

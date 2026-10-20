@@ -14,7 +14,7 @@ from event_universe.core.ports import AXES, run_offsets
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter
 from event_universe.features import phase
-from event_universe.features.click import Face, laid_pairs, standing
+from event_universe.features.click import Face, standing
 from event_universe.lay import laid
 from event_universe.lay import written as lay_written
 from event_universe.loader.derived import quanta_records
@@ -49,15 +49,8 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
     levels: list[tuple[np.ndarray, np.ndarray]] = []
     for here, weight, (direction, sense) in zip(books.nodes, books.weights, phases, strict=True):
         share = (weight, total)
-        if books.declared.conversions:
-            pairs = laid_pairs(
-                count, action, family.pair, books.declared.sense, family.plane, family.laid, share
-            )
-        else:
-            (re, im), (re_before, im_before) = standing(
-                count, action, family.pair, direction, sense, share
-            )
-            pairs = [(re, re_before), (im, im_before)]
+        (re, im), (re_before, im_before) = standing(count, action, family.pair, direction, sense, share)
+        pairs = [(re, re_before), (im, im_before)]
         levels = levels or [
             (records.zeros(board.shape, object), records.zeros(board.shape, object)) for _ in pairs
         ]
@@ -174,7 +167,7 @@ def folded_source(
 def recoiled(
     board: Lattice, family: int, momentum: Sequence[int], pick: Callable[[list[int]], int], origin: Node
 ) -> tuple[str, list[int], str | None]:
-    """The piece's source at a click and its fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources): among the light family's emitters with outstanding quanta in the record (`credit.Books.emitters`, `emission.Emitter`) one is drawn by those counts through `pick`, the click's own generator as the Node is drawn (the body's for a record's click, `parted`; the credit's for a region's, `lists.credited_node`; one emitter, weight 1, no draw), one taken from its outstanding count, and its part folded by -p_a at the click's tick by the same twist about the click's Node `origin` (`folded_source`); where its recoil was paid at the lay (the directed packet) nothing more is folded and `PAID_AT_EMISSION` is read; where no emitter stands for the family the piece is the file's lay's, no receiver, `THE_LAY` with -p_a as integers and `LOST_TO_LAY`. Returns the source's name (`body n` by its number in the world's order, or the lay), the recoil per axis and the reading for `lost` (None where the source carries it). OPEN by name (both hands): the per-source share at the taker's region (one record per source), the fan's remainder on a board uneven about the source, the front's delay."""
+    """The piece's source at a click and its fold (Part G, both hands' lines of 2026-10-10, the click with two receivers, the attribution: -p is one body's, whole, Bothe-Geiger 1925 refuting a split among sources): among the light family's emitters with outstanding quanta in the record (`credit.Books.emitters`, `emission.Emitter`) one is drawn by those counts through `pick`, the click's own read of the board as the Node is drawn (the body's for a record's click, `parted`; the credit's for a region's, `lists.credited_node`; one emitter, weight 1, no draw), one taken from its outstanding count, and its part folded by -p_a at the click's tick by the same twist about the click's Node `origin` (`folded_source`); where its recoil was paid at the lay (the directed packet) nothing more is folded and `PAID_AT_EMISSION` is read; where no emitter stands for the family the piece is the file's lay's, no receiver, `THE_LAY` with -p_a as integers and `LOST_TO_LAY`. Returns the source's name (`body n` by its number in the world's order, or the lay), the recoil per axis and the reading for `lost` (None where the source carries it). OPEN by name (both hands): the per-source share at the taker's region (one record per source), the fan's remainder on a board uneven about the source, the front's delay."""
     owed = [-int(value) for value in momentum]
     emitter = drawn_emitter(board, family, pick)
     if emitter is None or emitter.body is None:  # the file's lay, drawn or alone: no receiver

@@ -1,6 +1,6 @@
 """The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the lattice as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames (a strided look, record.py's `--every K`, one frame per kept interval, every sum up to the frame shown, every mark at an interval and the window's marker reading the frame's own interval and never its position), the reading's window marked on the slider; a look of several passes (record.py's frames from the lattice's observers on a world of a record read at declared sides, each frame carrying its `pass`, 1 the run to the first close, then per side a run back to the record's birth with its intervals decreasing and a run forward to the next close, and its `direction`, +1 or -1) runs the slider over the frames in the look's order, labels the frame with its own interval, its pass and its direction, marks the direction beside the slider and the passes' bounds on the slider and on every graph over the frames, counts every sum up to the frame shown over the lines of the frames up to it, a click line belonging to the pass it was written in, and places every line of the run's output at the frame of its pass, a look of one pass (no `pass` key) rendering as before; a look whose header carries the run back's reach (`reach` cone, the record's light cone; `cone_support`, the birth's Nodes at the file's coordinates (the lay's for a record laid at the start); `cone_volume`, the cone's Nodes per interval) and whose frames of the run back and forward carry `cone_radius` (t + 1 at the interval t) shades the Nodes within that many Links of the support in a tone of their own, on the board and on the gate's view from above, the Link metric with the wrap as the engine's front counts its shells (per axis |d|, on a periodic axis the lesser of |d| and the extent less |d|, summed over the three axes), a geometry from the two recorded numbers and nothing of the engine's, draws the radius over the frames as a graph, names the radius and the support in the frame's label, says under the board that the click is where the past met the future, the record's own light cone running back after the click, the realised term written at the record's birth and the cone running forward with it, the rest of the board neither read nor written (the frames' arrays are the engine's as they stand, one ring beyond the cone read from the board and asserted equal to the record's reference, the board at its birth, the lay's frame 0 for a record laid at the start) and reads its own count of the cone's Nodes beside the look's, and where the header carries `cone_stepped` (the Node-steps per interval of the cone stepped alone, the box with its ring) says so with the sum, drawing the ball alone and never the box; a frame carrying the board's `tick` (the loop's forward steps, standing at the close while the record is read back and forward) is labelled by its tick and the interval the record is read at; the view fixed, the board seen along one axis and never turned (a folded axis is the one seen along, the board the plane it is; a board of three axes is seen along z one layer at a time, the layer picked beside the board, the first body's layer or the middle one first), the declared board alone in the frame and never the layers a receding face grew, the wheel and two buttons bringing it closer or farther; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the declared node_detectors' Nodes as rings (the open faces' layer reports but is drawn as no ring), seen at rest and brighter and larger the interval they click; the node_detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum, and where the blind names a line or levels (`line_per_interval`, `levels`) the transform of the form at the Node over the frames with the blind's line as a dashed mark and the levels named), every one labelled "lattice reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, the sums its bars draw and the transform of one Node's form where the blind names a line, and draws no curve, surface or interpolation between Nodes. The blind's numbers stand in a table of their own (every number and short list of the expectation file a row, a nested object's rows named key.subkey, its words under a fold) and never as a raw dump; with an expectation across an axis the NodeDetectors' arrival over the intervals is drawn beside the bars, the reporters' inflow per interval in quanta over the family's wall and the quanta gathered within the window up to each interval, the blind's peak, centroid, span and total marked where the blind names them. With `--output <world>.output.json` (tools/run_inputs.py's file, the run's own output) the page's measurement is the output file's: its `click` lines feed the bars and the arrival, its `credit` lines the clicks credited up to each interval, its `density` lines the lattice density over the reporters' regions, and the header says whether the look's click lines are the output's (they are the same engine lines; a difference is named); with `--reading <reading>.json` (tools/click_counts.py's file, the output file read against the blind) the bars are the reading's rounded shares beside the clicks the draw credited and the blind curve, and one table holds every row the reader compares, read against blind with the difference. The output file's click act is drawn too, the meeting of the future with the past (ENGINE.md section 3, act 6): the hole, the Nodes the `lay` lines write at their interval, marked as wire cubes; the faces the act presents, the `face` lines' Nodes at their interval (the hole's over two intervals, then the front's shells), marked as small cubes, what is erased behind the front seen in the record's own glow and dots going out; the `erasure` lines' distance and the sizes taken per interval as a graph; a record declared a NodeDetector (a body with `credit` lines) ringed at its standing Nodes and flashing at its absorption; and one panel of the records' clicks, the part each record stands in over the intervals from its `credit` lines (before and realised) and the lines themselves in a table. The page is dark, one theme and no switch; the moving quanta of light are green; a cube glows by the record's form D at its Node where the look holds it, the wave's own intensity, else by its level. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
 
-The blind file, optional, in one of two formats. The expectation `tools/click_counts.py` reads, `{"node_detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_detectors' totals, `{"expected": {node_detector name: count, ...} or [one count per node_detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_detector": name, "count": the one number to watch}}`, every key optional, one bar per node_detector, what it saw over W_c up to the frame shown.
+The blind file, optional, in one of two formats (a third, the which-way folder's, holds `rows`, the screen's counts per region by world, and `quanta` by world; the page draws its row at the screen reporters and prints its total in words). The expectation `tools/click_counts.py` reads, `{"node_detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_detectors' totals, `{"expected": {node_detector name: count, ...} or [one count per node_detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_detector": name, "count": the one number to watch}}`, every key optional, one bar per node_detector, what it saw over W_c up to the frame shown.
 
 A gate's reading, optional: with `--gate <reading>.json`, the gate's reader's file (`tools/bell_gate.py`'s or `tools/spin_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a lattice reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the NodeDetector's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
 
@@ -13,6 +13,7 @@ import argparse
 import base64
 import gzip
 import json
+from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
@@ -22,10 +23,38 @@ CDN_THREE = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
 
 
 def shown(value: object) -> str:
-    """A number as the page prints it: an integer with its thousands separated, a blind's nested object or list as JSON, any other value as written."""
+    """A number as the page prints it: an integer with its thousands separated (a whole float the same), a blind's nested object or list as JSON, any other value as written."""
     if isinstance(value, int) and not isinstance(value, bool):
         return f"{value:,}"
+    if isinstance(value, float) and value.is_integer():
+        return f"{int(value):,}"
     return json.dumps(value) if isinstance(value, dict | list) else str(value)
+
+
+def blind_words(value: object) -> str:
+    """A blind's total as the totals line prints it: one number as written, an object by its keys in words ("316.5 at the channel, 316.5 at the screen")."""
+    if isinstance(value, dict):
+        return ", ".join(f"{shown(v)} at the {k}" for k, v in value.items())
+    return shown(value)
+
+
+def bias_words(output: dict[str, Any] | None) -> str:
+    """The totals' bias bound as the output's credit lines carry it (`bias_bound`, g and the total; ALGEBRA.md, The digits' base and a total's factors): the worst g / T over the credits, reduced, or nothing where no line carries one."""
+    if not isinstance(output, dict) or not isinstance(output.get("lines"), list):
+        return ""
+    bounds = [
+        (int(line["bias_bound"]["g"]), int(line["bias_bound"]["total"]))
+        for line in output["lines"]
+        if line.get("event") == "credit"
+        and isinstance(line.get("bias_bound"), dict)
+        and line["bias_bound"].get("g")
+        and line["bias_bound"].get("total")
+    ]
+    if not bounds:
+        return ""
+    g, total = max(bounds, key=lambda pair: Fraction(pair[0], pair[1]))
+    worst = Fraction(g, total)
+    return f"; the bias bound {worst.numerator} / {worst.denominator} on the click's line, the worst over the {len(bounds)} credits carrying one (g {g:,} against T {total:,})"
 
 
 Reporter = tuple[int, str]  # its coordinate on the axis (the least of its Nodes'), its node_detector
@@ -78,7 +107,9 @@ def passes(look: dict[str, Any]) -> int:
     return max(int(frame.get("pass", 1)) for frame in look["frames"]) if look["frames"] else 1
 
 
-def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str, Any] | None:
+def measurement(
+    look: dict[str, Any], blind: dict[str, Any] | None, output: dict[str, Any] | None = None
+) -> dict[str, Any] | None:
     """The one measurement from an expectation in tools/click_counts.py's format (`node_detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
     if blind is None or "across" not in blind:
         return None
@@ -103,7 +134,24 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
     shares = [max(value, 0) for value in seen]  # the credit's floor, the NodeDetector's declaration
     quanta = (sum(shares) + wall // 2) // wall
     rounded = apportioned(quanta, shares)
-    watch = blind.get("watch") if isinstance(blind.get("watch"), dict) else {}
+    watch: dict[str, Any] = blind["watch"] if isinstance(blind.get("watch"), dict) else {}
+    stem = str(look.get("world", "")).rsplit(".", 1)[0]
+    labels = [name for _at, name in placed]
+    if isinstance(blind.get("counts"), list):
+        per_bar: list[Any] = list(blind["counts"])
+    elif isinstance(blind.get("rows"), dict) and isinstance(
+        blind["rows"].get(stem), list
+    ):  # the which-way folder's blind: the screen's counts per region by world, none at a channel
+        row = blind["rows"][stem]
+        per_bar = [
+            row[k] if k < len(row) and str(label).startswith("screen") else None
+            for k, label in enumerate(labels)
+        ]
+    else:
+        per_bar = []
+    total_blind = blind.get("quanta", blind.get("through"))
+    if isinstance(total_blind, dict) and stem in total_blind:
+        total_blind = total_blind[stem]
     lines = [
         f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, rounded, strict=True) if at == int(key)))} by the shares, the blind {shown(value)}"
         for key, value in watch.items()
@@ -115,13 +163,13 @@ def measurement(look: dict[str, Any], blind: dict[str, Any] | None) -> dict[str,
         "across": blind["across"],
         "axis": axis,
         "at": [at for at, _name in placed],
-        "labels": [name for _at, name in placed],
+        "labels": labels,
         "seen": seen,
         "quanta": quanta,
         "rounded_shares": rounded,
-        "blind": list(blind.get("counts", [])),
+        "blind": per_bar,
         "pattern": blind.get("pattern"),
-        "totals": f"N {shown(quanta)} by the shares (the blind {shown(blind.get('quanta', blind.get('through')))})",
+        "totals": f"N {shown(quanta)} by the shares (the blind {blind_words(total_blind)}){bias_words(output)}",
         "watch": lines,
         "recorded": last_interval(look),
     }
@@ -234,7 +282,7 @@ def page(
         .replace("{{LOOK}}", packed(look))
         .replace("{{ROLES}}", embedded(roles(look["families"])))
         .replace("{{BLIND}}", embedded(blind))
-        .replace("{{MEASURE}}", embedded(measurement(look, blind)))
+        .replace("{{MEASURE}}", embedded(measurement(look, blind, output)))
         .replace("{{OUTPUT}}", embedded(trimmed(output) if output is not None else None))
         .replace("{{READ}}", embedded(checked_reading(read) if read is not None else None))
         .replace("{{GATE}}", embedded(gated))
@@ -317,13 +365,13 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .layers label { display: inline-flex; align-items: center; gap: 4px; }
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); }
 .swatch.dashed { border-style: dashed; }
-.time { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }
+.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }  /* the track keeps 12rem at least; the frame's status wraps beside it */
 .track { position: relative; min-width: 0; }
 .track input { width: 100%; margin: 0; position: relative; z-index: 1; }
 .track .window { position: absolute; top: 25%; height: 50%; background: var(--window); border-radius: var(--radius); }
 .track .bounds span { position: absolute; top: 10%; height: 80%; width: 0; border-left: 2px dashed var(--bound); }
 .frame svg { width: 1em; height: 1em; vertical-align: -0.15em; margin-left: 6px; }
-.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; text-align: right; }
+.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; max-width: 52ch; text-align: right; }
 .lines { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 6px; min-height: 1.4em; }
 .cone { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 4px; }
 .cone:empty { display: none; }
@@ -470,6 +518,7 @@ const AXES = ['x', 'y', 'z'], PARTS = ['x', 'y', 'z', 'xx', 'yy', 'zz', 'xy', 'x
 const colourOf = name => token('--' + ROLES[name].role);
 const esc = text => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const format = value => typeof value === 'number' ? (value === 0 ? 0 : value).toLocaleString('en-US') : String(value);  // -0 printed as 0
+const ordinal = n => { const tens = n % 100, ones = n % 10; return format(n) + (tens >= 11 && tens <= 13 ? 'th' : ones === 1 ? 'st' : ones === 2 ? 'nd' : ones === 3 ? 'rd' : 'th'); };  // 1st, 2nd, 3rd, 11th, 12th, 13th, 21st
 const nodesWord = n => format(n) + (n === 1 ? ' Node' : ' Nodes'), linksWord = n => format(n) + (n === 1 ? ' Link' : ' Links');
 
 /* The arrays of a frame, dense nested lists or the nonzero Nodes alone over the frame's own shape, as flat x-major arrays over the page's box, the frame's Nodes at their file coordinates. */
@@ -984,8 +1033,8 @@ function drawNodeMeasure() {
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${m.node_detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
-  const slot = size('--bar-slot'), pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n), blind = m.blind.map(v => typeof v === 'number' ? v : null);  // the bars fill the chart's width
   const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
@@ -1000,11 +1049,15 @@ function drawNodeMeasure() {
     body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
-  if (blind.some(v => v !== null)) {
-    const points = blind.map((v, k) => v === null ? null : px(k).toFixed(1) + ',' + py(v).toFixed(1)).filter(Boolean).join(' ');
+  const hasBlind = blind.some(v => v !== null);
+  if (hasBlind && blind.every(v => v !== null)) {
+    const points = blind.map((v, k) => px(k).toFixed(1) + ',' + py(v).toFixed(1)).join(' ');
     body += `<polyline fill="none" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="5 4" points="${points}"/>` + svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
+  } else if (hasBlind) {  // a blind with gaps (the which-way folder's rows: none at the channel): one dashed mark per bar where the row carries a count
+    blind.forEach((v, k) => { if (v !== null) body += `<line x1="${(px(k) - slot * 0.4).toFixed(1)}" x2="${(px(k) + slot * 0.4).toFixed(1)}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="4 3"><title>the blind ${format(v)} at ${esc(m.labels[k])}</title></line>`; });
+    body += svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span><span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals;
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
@@ -1090,9 +1143,9 @@ function drawReading() {
   const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}, the seed ${format(r.seed)}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
-  const slot = size('--bar-slot') * 1.8, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
-  const W = Math.max(size('--graph-width'), left + slot * n + pad), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
   let body = '';
   if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
@@ -1205,7 +1258,8 @@ function drawArrival() {
 {{GATE_SCRIPT}}/* The start: the title, the verdict, frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
-byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (SAME_LINES ? ', the look\u2019s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${format(LOOK.every)}th interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look\u2019s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look\u2019s own lines';
+const biasBound = () => { const pairs = OUTPUT ? OUTPUT.lines.filter(l => l.event === 'credit' && l.bias_bound && l.bias_bound.g && l.bias_bound.total).map(l => [Number(l.bias_bound.g), Number(l.bias_bound.total)]) : []; if (!pairs.length) return ''; const [g, T] = pairs.reduce((a, b) => a[0] * b[1] >= b[0] * a[1] ? a : b); const gcd = (x, y) => y ? gcd(y, x % y) : x, d = gcd(g, T); return `, the bias bound ${format(g / d)} / ${format(T / d)} on the click's line (the worst over the ${format(pairs.length)} credits carrying one)`; };  // the totals' bias as the credit lines carry it (ALGEBRA.md, The digits' base and a total's factors)
+byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (MEASURE ? '' : biasBound()) + (SAME_LINES ? ', the look\u2019s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${ordinal(LOOK.every)} interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look\u2019s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look\u2019s own lines';
 if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
 function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();

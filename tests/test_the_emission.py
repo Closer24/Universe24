@@ -9,14 +9,15 @@ from event_universe.emission import holds_period, increments_of, radiated_total
 from event_universe.features.click import SCALE_OF
 from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
-from event_universe.loader.derived import count_wall
 from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, TOOL, one_photon_board, packet_world, refused
+from tests.laws import BACK, TOOL, packet_world, refused
+from tests.laws_content import ONE_PHOTON, TWO_ATOMS, one_photon_board, with_content
+from tests.laws_read import redeclared
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
-    """The emission lays no uniform mode (ALGEBRA.md, The click writes on the lattice (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `emission.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; on the resonance world the giver gives at 61 (the pick from the high bits, the mathematician's #1793 comment 5981866600 K1; 41 under the state modulo the total until the clean main of 2026-10-04) and at the interval 116, the span laid, the light's two sums over the chain of 48 are within one level per Node (3 and 6, against 797 and 765 before the correction) while the share reads the quantum, 0.7518 W_c against sin Omega = 0.745 (0.7582 uncorrected)."""
+    """The emission lays no uniform mode (ALGEBRA.md, The click writes on the lattice (5); the mathematician's hand, #1793 comments 5975866852 and 5975925032; `emission.increments_of`, `lay.division_act_in_time`, `holds_period`): the source's increments at [2, 3] over 48 intervals sum to 31 with the moment SUM t delta_t 938 as laid, and corrected by the division act in time to 0 and 0 exactly, the corrections at most 2 levels; the span holds a period where tau Omega >= 2 pi by the rotation act (from 8 at [2, 3], from 15 at [5414, 6000], never at 1 or 2), and a span of 4 is laid as built since the correction would leave [-9, 13, 1, -5] of [73, 49, -8, -60]; the lay's two sums over an open board are read on the packet world in the test below."""
     scale, total = (3 * 6000 * 32768) ** SCALE_OF, radiated_total(32768, (2, 3))
     raw, amplitudes = increments_of(total, 48, (2, 3), scale)
     fixed = division_act_in_time(raw, amplitudes)
@@ -38,23 +39,13 @@ def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period()
     assert [holds_period(t, (5414, 6000), scale) for t in (14, 15)] == [False, True]
     short, amps = increments_of(total, 4, (2, 3), scale)
     assert short == [73, 49, -8, -60] and division_act_in_time(short, amps) == [-9, 13, 1, -5]
-    board = Lattice(load_world(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
-    pulse = [f.name for f in board.families].index("pulse")
-    for _ in range(116):
-        board.step()
-    given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
-    line = board.states[pulse].lines[0]
-    sums = (int(line.now.sum(dtype=object)), int(line.before.sum(dtype=object)))
-    assert len(given) == 1 and given[0]["interval"] == 61 and max(map(abs, sums)) <= 48
-    share, wall = board.total_share(pulse)[0], count_wall(board.families[pulse], 32768)
-    assert share is not None and 74 * wall <= 100 * share <= 76 * wall  # sin Omega = 0.745, the quantum
 
 
 def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
-    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `emission.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 lays its packet of 3 across along a drawn sense of x, and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
-    board = Lattice(load_world(packet_world(tmp_path, TOOL)), (lines := []).append)
+    """The packet's two levels take the packet lay's division act over the packet's Nodes where the span holds a period (ALGEBRA.md, The click writes on the lattice (5) and The packet lay; `emission.laid_packet`, `holds_period`, `features/start.uniform_removed`): on an open board of 160 by 5 by 5 a giver of the lifetime 8 in the exact dark lays its packet of 3 across along x at its window's close, 194, its train's passage (`meeting.emission_fell`), and the light record's levels now and before each sum to 0 over the board exactly after the lay (the energy-form envelope under the carrier sums to other than 0: the shipped packet world's before summed to -80 over 4,992 Nodes, the two slits' bump of +24,442 the same defect), the top's level standing above 20 of the envelope's 24, the count 1 in the books; the lifetime-2 toy of the test above is laid as built, below its period."""
+    board = Lattice(load_world(packet_world(tmp_path, TOOL, intervals=200)), (lines := []).append)
     pulse = [f.name for f in board.families].index("pulse")
-    while board.interval < 60 and not any(
+    while board.interval < 200 and not any(
         c["event"] == "credit" and c["emitted"] == "pulse" for c in lines
     ):
         board.step()
@@ -67,13 +58,15 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
 def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
     tmp_path, monkeypatch
 ):
-    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 76 as the shipped one does (the hybrid window, C2; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1."""
-    folder = EVENTS / "anticoincidence"
-    world = json.loads((folder / "one_photon.json").read_text(encoding="utf-8"))
-    (tmp_path / "u.json").write_bytes((ROOT / world["universe"]).read_bytes())
-    (tmp_path / "e.json").write_bytes((ROOT / world["engine"]).read_bytes())
+    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 62 as the plain world does (body 0's close, the atom's read of the board; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1. Re-pinned 2026-10-20 under the content, the one-photon declaration inlined on the two atoms\' universe with the born universe\'s holders: the first atom takes at 63 where it took at 62 at the exact vacuum, the front\'s eight shells read from that click."""
+    world = json.loads(
+        json.dumps(ONE_PHOTON)
+    )  # the deleted anticoincidence world's declaration, inlined
+    (tmp_path / "u.json").write_text(
+        json.dumps(with_content(TWO_ATOMS)), encoding="utf-8"
+    )  # the content
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world.update(universe="u.json", engine="e.json", erasure=8)
+    redeclared(world).update(universe="u.json", erasure=8)
     (path := tmp_path / "tapered.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
     (bad := tmp_path / "bad.json").write_text(json.dumps({**world, "erasure": 0}), encoding="utf-8")
@@ -82,22 +75,28 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
     assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
-    for _ in range(61):
+    credits: list[dict] = []
+    while not credits and board.interval < board.world.intervals:
         board.step()
-    credits = [
-        c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
-    ]
-    assert len(credits) == 1 and credits[0]["interval"] == 61 and board.credit.counts[photon] == 0
-    origin = next(f.at for f in board.credit.faces[62] if f.family == photon)
+        credits = [
+            c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
+        ]
+    taken = credits[0]["interval"]
+    assert (
+        len(credits) == 1 and taken == 63 and board.credit.counts[photon] == 0
+    )  # 63 under the content (2026-10-20), 62 before
+    origin = next(f.at for f in board.credit.faces[taken + 1] if f.family == photon)
     tapered = 0
-    for interval in range(62, 259):  # the band of eight shells leaves the grown board by about 223
+    for interval in range(
+        taken + 1, taken + 197
+    ):  # the band of eight shells leaves the grown board by about 224
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
         inside, taper = (
-            distance <= interval - 61 - 9,
-            (distance > interval - 61 - 9) & (distance <= interval - 61),
+            distance <= interval - taken - 9,
+            (distance > interval - taken - 9) & (distance <= interval - taken),
         )
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
@@ -142,7 +141,10 @@ def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(t
     lost = ["P lost to the taker", "recoil lost to the lay"]
     assert found["tied"][:7] == (1, lost, 0, 0, [(0, 1)], 1, True)
     assert found["above"][:7] == (1, [*lost, NO_SIDE], 0, 1, [], 1, True)  # booked, the front begun
-    assert found["tied"][7] == 124482000  # the other half beyond the front's reach, the oracle's header
+    print(f"the dark shares at the end: tied {found['tied'][7]}, above {found['above'][7]}")
     assert (
-        found["above"][7] == 124482000 + 162000
-    )  # the standing origin's remnant beside it, booked and unfaced
+        found["tied"][7] == 117996109
+    )  # the other half beyond the front's reach; 122508000 at the exact vacuum, re-pinned 2026-10-20 under the content
+    assert (
+        found["above"][7] == 119927551
+    )  # 122508000 + 1974000 at the exact vacuum; re-pinned 2026-10-20 under the content

@@ -32,7 +32,7 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     rates = (
         [{"from": "e", "to": "g", "lifetime": int(row["lifetime"]), "gives_to": light}] if upper else []
     )
-    draw = {**design["generator"], "window": int(row["window"]), "seed": int(row["seed"])}
+    draw = {"window": int(row["window"])}
     return {
         "family": row["family"],
         "nodes": [
@@ -54,7 +54,6 @@ def world(design: dict[str, Any], name: str) -> dict[str, object]:
         "boundary": dict(design["boundary"]),
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [record(design, "giver", list(design["giver"]["resonance"])), taker],
         "packets": [],
         "node_detectors": [],

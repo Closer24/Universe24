@@ -23,32 +23,34 @@ from click_counts import extrema  # noqa: E402  # the one extrema rule, the read
 
 
 def screen_regions(design: dict[str, Any]) -> list[dict[str, object]]:
-    """The screen's node_detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward."""
+    """The screen's node_detectors: the column `screen` in regions of `rows_per_region` rows, named screen_0 upward, each `screen_depth` columns deep ending at the screen's column (1 where the key is absent; 2 since 2026-10-20: the click's read of the board spends two draws per credited quantum on the digits of the regions' Nodes, and the beam's arrival in one interval spent the one column's digits, so the column before the screen is read too, carrying no inflow and drawing no click)."""
     rows, column = int(design["rows_per_region"]), int(design["screen"])
+    columns = range(column - int(design.get("screen_depth", 1)) + 1, column + 1)
     return [
         {
             "name": f"screen_{index}",
-            "positions": [[column, row, 0] for row in range(first, first + rows)],
+            "positions": [[x, row, 0] for x in columns for row in range(first, first + rows)],
         }
         for index, first in enumerate(range(0, int(design["height"]), rows))
     ]
 
 
 def world(design: dict[str, Any]) -> dict[str, object]:
-    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap (what arrives there, read beside the screen and absorption no share), the receding face, the intervals."""
+    """The world file: the board, the wall with its two gaps, the packet, the screen's regions, the bare region `aside` behind one gap where the design declares one (what arrives there, read beside the screen; none since 2026-10-20: at the draw's window of one interval a region in a beam's path is an absorber by the law's own gate, the which-way channel in another name, and the gap region credited 171 quanta of the lower slit's beam), the receding face, the intervals."""
     gaps = [{"y": list(gap), "z": [0, 0]} for gap in design["gaps"]]
     node_detectors = screen_regions(design)
-    region = design["aside"]
-    node_detectors.append(
-        {
-            "name": str(region["name"]),
-            "positions": [
-                [x, y, 0]
-                for x in range(int(region["columns"][0]), int(region["columns"][1]) + 1)
-                for y in range(int(region["rows"][0]), int(region["rows"][1]) + 1)
-            ],
-        }
-    )
+    if "aside" in design:  # a bare region behind one gap, none since 2026-10-20
+        region = design["aside"]
+        node_detectors.append(
+            {
+                "name": str(region["name"]),
+                "positions": [
+                    [x, y, 0]
+                    for x in range(int(region["columns"][0]), int(region["columns"][1]) + 1)
+                    for y in range(int(region["rows"][0]), int(region["rows"][1]) + 1)
+                ],
+            }
+        )
     packet = design["packet"]
     return {
         "shape": [int(design["length"]), int(design["height"]), 1],
@@ -57,7 +59,6 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "faces": [{"axis": "x", "at": int(design["wall"]), "gaps": gaps}],
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [],
         "packets": [
             {
@@ -114,8 +115,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "across": "y",
         "pattern": [first, last],
         "spacing": design["spacing"],
-        "seed": design["seed"],
-        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks.",
+        "comment": "The bright world's blind row per region of four rows (the advisor's per-Node row, #1515 comment 5903745976, the Huygens sum summed by four; ALGEBRA.md row (g)): the rounded shares per region N times the region's share, the expectation, and the clicks one draw of N by the shares with the seed, the draw's, with the draw's scatter sqrt(N p (1 - p)) per region; the near field, the first minima at the rows 15.3 and 32.7 (the regions 4 and 8 of the twelve, the visibility read there against the central maximum, the region 6) and the outer maxima at the edges; `quanta` is N's blind, the Huygens total 273, the twelve counts summing to 275 by their rounding; `laid` the generator's count of the lay; the arrival of the clicks in the engine's labels and the wings the lattice's own numbers; a region's seen inflow floored at 0 before the shares; written before the run and never touched after. Status: the row computed from the Huygens sum (1.7 percent under the law's own real line with the source side absorbing over the whole passage, 277.8), the arrival and the wings computed from the law's line over the same passage; fence: clicks. The regions two columns deep and the draw's window one interval since 2026-10-20 (the design's `screen_depth` and `draw.window`, the digits' budget of the click's read of the board: the arrival of 26 quanta in one interval against the digits of 64 Nodes), the clicks in the record's own unit one quantum each, the row's shape read against these counts brought to the clicks' total within the draw's scatter, the counts themselves standing as written.",
         "counts": rounded(blind),
         "through": through,
         "maxima": maxima,
@@ -127,7 +127,7 @@ def expectation(design: dict[str, Any], laid: int) -> dict[str, object]:
         "laid": laid,
         "arrival": design["arrival"],
         "wings": design["wings"],
-        "aside": [str(design["aside"]["name"])],
+        "aside": [str(design["aside"]["name"])] if "aside" in design else [],
         "photons": {
             "label": "LATTICE",
             "per_count": round(

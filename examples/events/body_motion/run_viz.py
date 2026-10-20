@@ -118,7 +118,6 @@ def write_world(name, now, bef):
         "face_depth": 1,
         "intervals": INTERVALS,
         "universe": "examples/events/rule.json",
-        "engine": "examples/events/engine_start.json",
         "bodies": [{"family": "matter", "nodes": nodes}],
         "node_detectors": [],
     }

@@ -1,4 +1,4 @@
-"""The acceptance lines of the one meeting (the builder's nine lines endorsed by the owner, 2026-10-20, as the branch's tests; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's identity, the Gram theorem): 1 the four shipped Bell worlds read E = -119 / 169, 119 / 169, -120 / 169, -120 / 169 as the settings fall (a b, a b', a' b, a' b'), S = 478 / 169, every marginal 1 / 2, the credit lines one per side with its realised port, its order and the record's scale, the part written 0 at 0 after the close; 2 the four shipped GHZ worlds E_3 = +1, -1, -1, -1 (x x x, x y y, y x y, y y x), every marginal 1 / 2, every pairwise correlation 0, the eight shares 0 or 1 / 4, two worlds per test for the clock; 4 the born pair's four worlds (the atom giving the pair family at the interval 17, A reading in the first window and B in the second) the same E and S through the sides' own reads, two worlds per test; 5 by design, the write stands at the record's birth inside the run back and never at the close (`meeting_back.realised` from `lists.readings`); 6 the inverse across the write in tests/test_the_meeting_back.py (f), MATCH before and after the close and the engine's own exactness inside the act; 3 and 7 the reader's later design; 8 the byte-for-byte digest of a world without a record of several parts in (d) there; 9 the gates (tools/check.py). The numbers from the parts lines by the reader's arithmetic (tests/laws_spin.py) and the engine's weights at every draw against them (`sided`)."""
+"""The acceptance lines of the one meeting (the builder's nine lines endorsed by the owner, 2026-10-20, as the branch's tests; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's identity, the Gram theorem): 1 the four shipped Bell worlds read E = -119 / 169, 119 / 169, -120 / 169, -120 / 169 as the settings fall (a b, a b', a' b, a' b'), S = 478 / 169, every marginal 1 / 2, the credit lines one per side with its realised port, its order and the record's scale, the part written 0 at 0 after the close; 2 the four shipped GHZ worlds E_3 = +1, -1, -1, -1 (x x x, x y y, y x y, y y x), every marginal 1 / 2, every pairwise correlation 0, the eight shares 0 or 1 / 4, two worlds per test for the clock; 4 the born pair's four worlds (the atom giving the pair family at its window's close, 24, in the exact dark, A reading in the first window and B in the second) the same E and S through the sides' own reads, two worlds per test; 5 by design, the write stands at the record's birth inside the run back and never at the close (`meeting_back.realised` from `lists.readings`); 6 the inverse across the write in tests/test_the_meeting_back.py (f), MATCH before and after the close and the engine's own exactness inside the act; 3 and 7 the reader's later design; 8 the byte-for-byte digest of a world without a record of several parts in (d) there; 9 the gates (tools/check.py). The numbers from the parts lines by the reader's arithmetic (tests/laws_spin.py) and the engine's weights at every draw against them (`sided`)."""
 
 import copy
 from dataclasses import fields
@@ -139,13 +139,13 @@ def test_line_2_the_ghz_world_y_y_x_reads_the_gates_sign(tmp_path):
 
 
 def born_read(tmp_path, name: str) -> Fraction:  # type: ignore[no-untyped-def]
-    """One born-pair world (examples/events/bell_singlet, the atom at the Node 12 giving the pair family at the interval 17 under the board's reach, A's window closing at 62 before B's beam arrives, B's at 124): the two credit lines, left at 62 with the order 1 and right at 124 with the order 2 (the sides drawing in the order of their closes), the record's scale on each; A's weights the parts' shares, 1 / 2 and 1 / 2 (the Gram of B's identity pattern the identity, the parts laid alike); B's weights at the realised port the singlet's amplitude on the record rewritten by A's determinant coefficients, exactly (one magnitude); E read from the two conditionals, -cos(theta_a - theta_b). The finding of 2026-10-20 (Hand E's drafts), fixed the same day (the reader's F3): B's run back once returned, where A's write zeroed a part, the surviving part spread over 21 Nodes with the largest level 9 at the birth, a residual of levels the inverse could not undo, since `meeting_back.crossed` restored a crossed lay's remainder from pass 1's log at each of the source's increments (the Node 12, the intervals 18 to 28) while the run forward from the rewritten birth carried other remainders; the fix: a lay without an origin changes no remainder, a lay with an origin logs the board's remainder into its `before` on the way forward and the inverse restores that; the record at the birth as each run back returns it, (Nodes lit, largest level) per line, is the lay's one Node at the level 11 on every surviving part from both run backs (B's run back finds the part A's determinant coefficient zeroed at 0), pinned here; the E fractions were untouched by the residual (one surviving part, or parts alike)."""
+    """One born-pair world (examples/events/bell_singlet, the atom at the Node 12 giving the pair family at its window's close, 24, in the exact dark (no draw), under the board's reach, A's window closing at 62 before B's beam arrives, B's at 124): the two credit lines, left at 62 with the order 1 and right at 124 with the order 2 (the sides drawing in the order of their closes), the record's scale on each; A's weights the parts' shares, 1 / 2 and 1 / 2 (the Gram of B's identity pattern the identity, the parts laid alike); B's weights at the realised port the singlet's amplitude on the record rewritten by A's determinant coefficients, exactly (one magnitude); E read from the two conditionals, -cos(theta_a - theta_b). The finding of 2026-10-20 (Hand E's drafts), fixed the same day (the reader's F3): B's run back once returned, where A's write zeroed a part, the surviving part spread over 21 Nodes with the largest level 9 at the birth, a residual of levels the inverse could not undo, since `meeting_back.crossed` restored a crossed lay's remainder from pass 1's log at each of the source's increments (the Node 12, the intervals 18 to 28) while the run forward from the rewritten birth carried other remainders; the fix: a lay without an origin changes no remainder, a lay with an origin logs the board's remainder into its `before` on the way forward and the inverse restores that; the record at the birth as each run back returns it, (Nodes lit, largest level) per line, is the lay's one Node at the level 11 on every surviving part from both run backs (B's run back finds the part A's determinant coefficient zeroed at 0), pinned here; the E fractions were untouched by the residual (one surviving part, or parts alike)."""
     board, lines = loaded(tmp_path, "bell_singlet", name)
     spin, births = family(board, "spin"), {}
 
     def at_the_birth(interval: int, direction: int, passes: int) -> None:
         if (
-            direction < 0 and interval == 17
+            direction < 0 and interval == board.credit.birth
         ):  # the run back arrived at the birth: the record as the inverse returns it
             levels = [np.asarray(line.now) for line in board.states[spin].lines]
             births[passes] = [(int((a != 0).sum()), int(abs(a).max())) for a in levels]
@@ -244,11 +244,11 @@ def test_the_born_pair_runs_under_the_cone_reach_since_the_remainders_fix(tmp_pa
 
 
 def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(tmp_path):
-    """The Boss's amendment of 2026-10-20 to the write's design (`credit.reduced`): the shipped bell world (a, b) with the draw's window cut to 40 over its 100 intervals, the record of many quanta clicking once per window: at 40 the left's write leaves one part (the identity pattern's port, the scale 1) and the right's (12, 5) on the one surviving part reduces to 1 and writes nothing (the scale stays 1); at 80 both sides click again on the one-part record and write nothing (the reader's ruling, precision one: a side already realised that clicks again in the same setting realises the same port with certainty), the coefficients standing bit for bit the same before and after the close, the scale 1 on every line, the orders 1 and 2 of a new sequence, the count down by one per window; on a two-part write with coprime coefficients the gcd is 1 and the write stands (a' b: (12, 5) onto (-1, 1), the scale 169, `test_line_1`)."""
+    """The Boss's amendment of 2026-10-20 to the write's design (`credit.reduced`): the shipped bell world (a, b) with the draw's window cut to 50 over its 100 intervals (at 40 the beams' share through the sides stands below a whole quantum, the side's gate; by 50 it is through), the record of many quanta clicking once per window: at 50 the left's write leaves one part (the identity pattern's port, the scale 1) and the right's (12, 5) on the one surviving part reduces to 1 and writes nothing (the scale stays 1); at 100 both sides click again on the one-part record and write nothing (the reader's ruling, precision one: a side already realised that clicks again in the same setting realises the same port with certainty), the coefficients standing bit for bit the same before and after the close, the scale 1 on every line, the orders 1 and 2 of a new sequence, the count down by one per window; on a two-part write with coprime coefficients the gcd is 1 and the write stands (a' b: (12, 5) onto (-1, 1), the scale 169, `test_line_1`)."""
     source = EVENTS / "bell" / "bell_a_b.json"
 
     def cut(world):  # type: ignore[no-untyped-def]
-        world["draw"]["window"] = 40
+        world["draw"]["window"] = 50
 
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(world_beside(tmp_path / "bell_cut", source, cut)), lines.append)
@@ -263,34 +263,34 @@ def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(
         board.step()
     clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
     assert [(c["interval"], c["node_detector"], c["scale"]) for c in clicks] == [
-        (40, "left", 1),
-        (40, "right", 1),
-        (80, "left", 1),
-        (80, "right", 1),
+        (50, "left", 1),
+        (50, "right", 1),
+        (100, "left", 1),
+        (100, "right", 1),
     ]
-    assert written[80] == board.credit.written[pair] and sorted(norm(w) for w in written[80]) == [0, 1]
+    assert written[100] == board.credit.written[pair] and sorted(norm(w) for w in written[100]) == [0, 1]
     assert [c["left"] for c in clicks] == [clicks[0]["left"]] * 2 + [clicks[0]["left"] - 1] * 2
     assert [c["realised"] for c in clicks[2:]] == [
         c["realised"] for c in clicks[:2]
     ]  # the same ports, certain
     assert [c["order"] for c in clicks] == [1, 2, 1, 2]  # the second window's clicks a new sequence
     print(
-        f"the bell world cut to 40: the coefficients standing {board.credit.written[pair]}, the lines' left {[c['left'] for c in clicks]}"
+        f"the bell world cut to 50: the coefficients standing {board.credit.written[pair]}, the lines' left {[c['left'] for c in clicks]}"
     )
 
 
 def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader_reads_the_compounding(
     tmp_path,
 ):
-    """The reader's ruling of 2026-10-20, the two precisions. One: a later click of a side in a changed setting needs the overlaps with the written factor, which the parts carry no more, refused by name; no setting changes within a run, so the test turns the booked port of the bell world's left side after its first window (the port whose part the first write zeroed, its weight 0 on the written record) and steps to the second close. Two: the loader refuses by name a world whose sides' patterns compound past the amplitude bound: the singlet world (a, b) with the left's axis turned to (-12, 5) beside the right's (12, 5) compounds to (-25, 144) on its two terms (the determinant's lambdas (5, 12) first), 144 times the lay's amplitude 64 = 9216 over A = 6949; the shipped worlds all pass the gate (the bell folder's record compounds to a unit after its first write)."""
+    """The reader's ruling of 2026-10-20, the two precisions. One: a later click of a side in a changed setting needs the overlaps with the written factor, which the parts carry no more, refused by name; no setting changes within a run, so the test turns the booked port of the bell world's left side after its first window, cut to 50 (the port whose part the first write zeroed, its weight 0 on the written record), and steps to the second close. Two: the loader refuses by name a world whose sides' patterns compound past the amplitude bound: the singlet world (a, b) with the left's axis turned to (-12, 5) beside the right's (12, 5) compounds to (-25, 144) on its two terms (the determinant's lambdas (5, 12) first), 144 times the lay's amplitude 64 = 9216 over A = 6949; the shipped worlds all pass the gate (the bell folder's record compounds to a unit after its first write)."""
     cut = EVENTS / "bell" / "bell_a_b.json"
 
     def window(world):  # type: ignore[no-untyped-def]
-        world["draw"]["window"] = 40
+        world["draw"]["window"] = 50  # the beams' share through the sides by the first close
 
     board = Lattice(load_world(world_beside(tmp_path / "bell_turned", cut, window)))
     pair = family(board, "light_pair")
-    for _ in range(40):
+    for _ in range(50):
         board.step()
     port, node, settled = board.credit.taken[pair]["left"]
     board.credit.taken[pair]["left"] = (
@@ -299,7 +299,7 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
         settled,
     )  # the setting turned: the other port booked
     with pytest.raises(RuntimeError, match="carrying no overlap with the written factor"):
-        for _ in range(40):
+        for _ in range(50):
             board.step()
 
     def turned(world):  # type: ignore[no-untyped-def]
@@ -318,7 +318,7 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
 def test_line_7_the_count_on_the_board_reads_the_books_count_at_every_close(tmp_path):
     """Line 7, the count on the board (ALGEBRA.md, The count on the board, the owner's word of 2026-10-20; the builder's line read on the branch's form): `Lattice.count`, (n S + scale W div 2) div (scale W), read at every interval of the singlet world (a, b) and of the born pair's world: 1 at every interval from the lay (the singlet) or from the birth (the born pair, 0 before it) through the last close, the writes at the birth moving the share by the scale over n and the count by nothing; the credit lines' `board_count` 1 at both sides; equal to the books' count at every close by the engine's own check before the acts (`meeting.closed`, refused by name otherwise); after the close where every side has drawn the books' count is 0 and the board's follows the erasing front."""
     found = {}
-    for name, birth in (("singlet_a_b", 0), ("born_a_b", 17)):
+    for name, birth in (("singlet_a_b", 0), ("born_a_b", 24)):
         board, lines, spin, calls = stepped(tmp_path, "bell_singlet", name)
         counts = [calls[t][3] for t in range(1, board.world.intervals + 1)]
         clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
@@ -336,27 +336,25 @@ def test_line_7_the_count_on_the_board_reads_the_books_count_at_every_close(tmp_
     )
     assert found == {
         "singlet_a_b": (1, 1, 1),
-        "born_a_b": (29, 1, 1),
-    }  # the born increments past half at 29
+        "born_a_b": (36, 1, 1),
+    }  # the born increments past half at 36, from the birth at the atom's close, 24
 
 
 # The clicks in sequence (the owner's word of 2026-10-20, through the builder: "Clicks are discrete, but no click
 # jumps from nowhere; they happen in sequence."): four verifications of the one meeting, (a) to (d).
 
 
-def stepped(tmp_path, folder: str, name: str, edit=None, seed=None):  # type: ignore[no-untyped-def]
-    """A shipped world beside tmp_path, the `meeting` key stripped, `edit` applied and the draw's seed set where given, run through its intervals with an observer recording at the first call of every interval (the step's own after its acts, or at a close with a reading the run back's, the board as Rule3 left it before any write) the sides' moments, the frame's digest, the Books' fields holding data, the record's count on the board (`Lattice.count`) and, at the first side's run forward's arrival (pass 3), the moments re-booked from the rewritten record; returns the board, its lines, the spin family and the record per interval."""
+def stepped(tmp_path, folder: str, name: str, edit=None):  # type: ignore[no-untyped-def]
+    """A shipped world beside tmp_path, the `meeting` key stripped and `edit` applied, run through its intervals with an observer recording at the first call of every interval (the step's own after its acts, or at a close with a reading the run back's, the board as Rule3 left it before any write) the sides' moments, the frame's digest, the Books' fields holding data, the record's count on the board (`Lattice.count`) and, at the first side's run forward's arrival (pass 3), the moments re-booked from the rewritten record; returns the board, its lines, the spin family and the record per interval."""
     source = EVENTS / folder / f"{name}.json"
 
     def edited(world):  # type: ignore[no-untyped-def]
         world["draw"].pop("meeting", None)
-        if seed is not None:
-            world["draw"]["seed"] = seed
         if edit is not None:
             edit(world)
 
     lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_world(world_beside(tmp_path / f"{name}_{seed}", source, edited)), lines.append)
+    board = Lattice(load_world(world_beside(tmp_path / name, source, edited)), lines.append)
     spin, calls = family(board, "spin"), {}
 
     def observer(interval: int, direction: int, passes: int) -> None:
@@ -422,7 +420,7 @@ def test_the_clicks_in_sequence_a_the_far_side_books_nothing_before_its_beam_arr
 
 
 def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays_leak(tmp_path):
-    """(b) The singlet's chain with the packet toward +x removed, declared here: the right side receives no beam by the lay's word, and what the engine gives is measured, not presumed. The short packet (edge 6 at the wave 1 / 4) is laid at the even phase at its top (cos(4 pi) = 1 at x = 16), so its levels sum to 1.017 b over the row and the massless correction takes 0.17 b e_i out of each level (`lay.corrected`): a standing hump of 5.8 percent of the form, half of it moving +x on the massless row, the lay's own backward root 3e-4 beside it (ALGEBRA.md, The packet lay; the exact lay is on shell per component), so the right side reads the hump's part, measured here at 2 percent of the moments; the remedy an edge of one wavelength or the odd phase; the builder's third of 2026-10-20 was his build's: the right's moments, its weights against the left's and whether a credit line appears are pinned as the engine gives them; the left draws first at its own place on its full marginal, 1 / 2 and 1 / 2, since its parts stand alike; the owner's line, nothing clicks where nothing arrived, is what the test states, and here the leak arrives."""
+    """(b) The singlet's chain with the packet toward +x removed, declared here: the right side receives no beam by the lay's word, and what the engine gives is measured, not presumed. The short packet (edge 6 at the wave 1 / 4) is laid at the even phase at its top (cos(4 pi) = 1 at x = 16), so its levels sum to 1.017 b over the row and the massless correction takes 0.17 b e_i out of each level (`lay.corrected`): a standing hump of 5.8 percent of the form, half of it moving +x on the massless row, the lay's own backward root 3e-4 beside it (ALGEBRA.md, The packet lay; the exact lay is on shell per component), so the right side reads the hump's part, measured here at 2 percent of the moments; the remedy an edge of one wavelength or the odd phase; the builder's third of 2026-10-20 was his build's: the right's moments, its weights against the left's and whether a credit line appears are pinned as the engine gives them; the left draws first at its own place on its full marginal, 1 / 2 and 1 / 2, since its parts stand alike; the owner's line, nothing clicks where nothing arrived, is what the test states, and here the leak arrives below one whole quantum through the right side's window, so the side's gate keeps it from drawing (the reader's F4 of 2026-10-20, `lists.readings`): the left side clicks alone, the right's moments booked and its weights never drawn, the record's count standing at 1."""
 
     def one_beam(world):  # type: ignore[no-untyped-def]
         world["packets"] = [
@@ -443,63 +441,21 @@ def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays
         f"(b) one packet: the credit lines {clicks}; the moments at the close {moments}; the weights {weights}; the "
         f"right's weights over the left's {ratio}; the count left {books.counts[spin]}"
     )
-    assert clicks == [("left", 1, 40), ("right", 2, 40)] and books.counts[spin] == 0  # the leak clicks
+    assert clicks == [("left", 1, 40)] and books.counts[spin] == 1  # the leak below a quantum: no click
     assert moments == {
         "left": [[(185800, 0)] * 2] * 2,
         "right": [[(3715, 0)] * 2] * 2,
     }  # the leak 3715 / 185800, 2 %
-    assert weights == {
-        "left": [185800, 185800],
-        "right": [534960, 92875],
-    }  # the right on its conditional
-
-
-def test_the_clicks_in_sequence_c_the_seed_moves_the_realised_ports_and_nothing_else(tmp_path):
-    """(c) The singlet world a' b at the seeds 24, 25, 26 and 27: every frame of the forward run before the close equal bit for bit across the seeds, the sides' second moments at the close equal bit for bit, the first side's weights equal, and the moments the first side's run forward re-books after its identity write (the left's (1, 1) a scaling) the plain run's bit for bit (the reader's W6); the realised ports alone may move, and after the writes the boards differ in the spin family alone, by the coefficients written (every other family's arrays equal bit for bit at the end); the pairs' correlation is the blind's E = -120 / 169, the opposite ports at 289 / 338."""
-    found = {}
-    for seed in (24, 25, 26, 27):
-        board, lines, spin, calls = stepped(tmp_path, "bell_singlet", "singlet_a_prime_b", seed=seed)
-        clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
-        others = [arrays for index, arrays in enumerate(meeting_back.snapshot(board)) if index != spin]
-        frames = [calls[t][1] for t in range(1, 40)]  # the forward run before the close
-        realised = [PORT[c["realised"]] for c in clicks]
-        assert [c["scale"] for c in clicks] == expected_scales(board, spin, realised)
-        found[seed] = {
-            "frames": frames,
-            "close": calls[40][:2],
-            "rebooked": calls[40][4],
-            "left": board.credit.weights[(spin, "left")],
-            "ports": realised,
-            "scales": [c["scale"] for c in clicks],
-            "others": others,
-        }
-    first = found[24]
-    for seed, one in found.items():
-        assert one["frames"] == first["frames"] and one["close"] == first["close"], seed
-        assert one["left"] == first["left"] and len(one["ports"]) == 2, seed
-        assert (
-            one["rebooked"] == one["close"][0]
-        )  # the identity write: the re-booked moments the plain run's
-        for a, b in zip(one["others"], first["others"], strict=True):
-            assert meeting_back.first_difference([a], [b]) is None, seed
-    ports = {seed: one["ports"] for seed, one in found.items()}
-    opposite = sum(p[0] != p[1] for p in ports.values())
-    assert ports == {seed: [1, 0] for seed in (24, 25, 26, 27)} and first["left"] == [331016, 331016]
-    print(
-        f"(c) the seeds 24..27 on a' b: the realised ports {ports} ({opposite} of 4 opposite; E = -120 / 169 gives "
-        f"289 / 338), the scales {dict((s, o['scales']) for s, o in found.items())}; the 39 frames "
-        f"before the close, the moments at the close and the left's weights {first['left']} equal across the seeds"
-    )
+    assert weights["left"] == [185800, 185800] and weights["right"] is None  # the right never draws
 
 
 def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
-    """(d) The Books at every close, on the born pair's world (two closes) and on the singlet (one): the fields holding data are among the declaration, the generator's state, the per-side moments and the patterns, the counts, the inflows and passages the credit always had, the sides' order, the births, the lays' and faces' logs, the write's coefficients and scale and the reading's own (the realised ports, the likeness, the weights kept as a diagnostic, the record run, the Node-steps); the born pair's world runs under the cone's reach, whose books are these: at A's close the reference (the board at the born record's birth), at B's close the birth, the reference, the cone's volumes, the regrown close and the Node-steps beside the write's; nothing joint: no joints, no J, no conditioning, no levels of one side in another's book; the set pinned per close."""
+    """(d) The Books at every close, on the born pair's world (two closes) and on the singlet (one): the fields holding data are among the declaration, the read's number left, the per-side moments and the patterns, the counts, the inflows and passages the credit always had, the sides' order, the births, the lays' and faces' logs, the write's coefficients and scale and the reading's own (the realised ports, the likeness, the weights kept as a diagnostic, the record run, the Node-steps); the born pair's world runs under the cone's reach, whose books are these: at A's close the reference (the board at the born record's birth), at B's close the birth, the reference, the cone's volumes, the regrown close and the Node-steps beside the write's; nothing joint: no joints, no J, no conditioning, no levels of one side in another's book; the set pinned per close."""
     names = {f.name for f in fields(Books)}
     assert not names & {"joints", "levels", "conditioning", "joined", "popped", "reweighted"}
     always = {
         "declaration",
         "elapsed",
-        "state",
         "counts",
         "intake",
         "sides",
@@ -517,7 +473,8 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "emitters",
         "remainders",
         "passages",
-        "states",
+        "left",
+        "bias",
         "patterns",
     }
     own = {
@@ -554,13 +511,13 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "units",
         "windows",
     ]
-    read = ["births", "moments", "patterns", "sides", "state", "states", "support", "taken", "weights"]
+    read = ["bias", "births", "left", "moments", "patterns", "sides", "support", "taken", "weights"]
     cone = ["birth", "reference", "cone", "regrown", "stepped"]  # the cone's reach books these
     assert held == {
         "born_a_b": {
             62: sorted(
                 credit + read + ["bodies", "lays", "reference"]
-            ),  # A's draw, the record born at 17
+            ),  # A's draw, the record born at 24
             124: sorted(
                 credit
                 + read

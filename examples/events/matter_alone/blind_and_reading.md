@@ -835,3 +835,7 @@ well, the held rows, the books; the generator's own lines for the lays and the r
 declare no NodeDetector but the open faces' layer, whose `click` lines (labelled the NodeDetector's by the
 engine) are read only as the total of matter that left the board (0.018, 1.75, 12.5 and 0.47
 quanta); no verdict rests on them. The intervals are the board's.
+
+## The mode's numbers (2026-10-20)
+
+The mode file regenerated under the click's read of the board carries the generator's lay as the builder gives it: the amplitude 1213, the seed 1213, the carried count 9996 and the clock [1663, 1213], where the shipped file held 1202, 1202, 10007 and [1646, 1202]; the builder gives these numbers at every commit read back to the lay's own (126b1644b), the shipped numbers are reproduced by none in this environment, the cause is not named, and the generator's lay stands.

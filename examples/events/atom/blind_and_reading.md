@@ -458,6 +458,25 @@ line itself, 0.188 at 16 levels, as its third component; at r = 5 the flicker (1
 not stand in the summed row (his row the electron's own, read live, another reading), and the
 radiation outward is not shown here either. The proton's |z| 4,242 at every interval.
 
+The builder's long row (2026-10-20, the 1s + 2s world on the 11-cube at the electron's read 3, the
+series 0 to 900, the engine's own gate refusing the run at the interval 901 at the charge family's
+level 7,143 against the bound 6,949, 900 intervals admitted; the builder's measurement by name,
+nothing of the folder re-run, its 400-interval numbers above standing beside): the share within r <=
+2 breathes at 0.1813 per interval (the resolution 2 pi / 901 = 0.007; the line 0.18072 within one
+bin), the centre's |z| at 0.1813 with the sidebands 0.1743 and 0.1883 (the growth's modulation), the
+400-interval 0.18803 the coarser bin's; the electron's own row carries the line at r = 2, 3, 4 and 5
+with the amplitudes 17.5, 6.0, 2.8 and 1.2 levels (230, 130, 69 and 43 times the noise), falling as
+1 / r^2 to 1 / r^3, the near zone; the proton's row carries no line (0.01 level), its mean flat
+(-187.2 at r = 2 in all nine windows), only the integer row's dither at 2.880 per interval (5.9, 4.8
+and 3.4 levels at r = 2, 3 and 4), which the own row carries too (101 levels at r = 2) and the
+summed row; the summed row's line is the electron's own row's and nothing else (17.4, 5.9, 2.7 and
+1.2 levels), the finding (2)'s two readings one; the growth: the own row's mean at r = 2 over nine
+windows of 100 intervals 492, 493, 497, 501, 503, 510, 525, 560 and 608 (r = 3 288 to 326, r = 4 165
+to 192, r = 5 75 to 79), the share within r <= 2 1.06, 1.03, 1.06, 1.06, 1.11, 1.13, 1.23, 1.41 and
+1.54 quanta (the lay 1.09, the last interval 1.88, the whole 0.65 to 2.10), 0.5 percent per 100
+intervals at first and 9 percent in the last hundred, the beating record and its own row feeding
+each other until the bound.
+
 ### Two findings by name (2026-10-20)
 
 (1) The ratio of the bindings 1s to 2s (the tool's lays alone, no run; the scratch worlds of the
@@ -532,3 +551,8 @@ unbounded board's potential at 1s : 2s = 5.31, the law's number for this well at
 a proton reading at 3 as well is a proton of charge 3 in units of the unit charge, coupling at 3
 (its read weight the factor of its write as well), its well three times deeper, so a level laid for
 the read 1 breathes in it by the gap of the two wells.
+
+The shells' worlds atom_shells and atom_shells_symmetric deleted 2026-10-20 at the ninth: a one-Node
+body in the exact vacuum, its digits one bit per line per interval against its draws' totals of 54
+bits, its draws before the ninth the generator's; the law's line standing (the exclusion from the
+family's sign on the singlet, ALGEBRA.md, What a body reads).

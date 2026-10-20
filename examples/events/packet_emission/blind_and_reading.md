@@ -80,7 +80,7 @@ the run of 168 intervals ((47 / 48)^168 = 0.029 per seed, 0.6 expected over 20).
    at the emission's weight (`meeting.emitted`, the record's own generator). The two seeds without an emission are
    the hazard's, not the direction's.
 
-The test `tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_a_drawn_axis_with_the_carry`
+The test `tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_one_axis_with_the_carry`
 holds the one-line root and the envelope (43,962 at T = 32,768 and [2, 3], twice S; 456 slices at one
 Node across, SUM a^2 = 43,915, the mathematician's numbers; 87,925 at T = 65,536, the root rounded once),
 the band's line at w = 4 and its refusals at w = 1 and 2, the loader's three refusals, a packet laid on an

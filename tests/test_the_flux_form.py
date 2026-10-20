@@ -15,12 +15,12 @@ from event_universe.readings import ports
 from event_universe.records import record_slice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, linear_exchange, linear_sum, universe_beside, weighted_linear_sum
+from tests.laws_read import load_shipped
 
-WORLDS = (
-    "zeno/zeno_1.json",
-    "resonance/resonant.json",
-    "anticoincidence/one_photon.json",
+WORLDS = (  # re-pinned 2026-10-20 from the deleted toy atom worlds (zeno_1, zeno_pulsed_1, one_photon)
     "bell/bell_a_b.json",
+    "bell_singlet/singlet_a_b.json",
+    "resonance/resonant.json",
 )
 
 
@@ -83,10 +83,10 @@ def step_alone(board: Lattice):  # type: ignore[no-untyped-def]
 
 
 def test_the_flux_form_holds_at_every_node_line_family_and_interval(monkeypatch):
-    """At every interval of the four small worlds (zeno_1, resonant, one_photon, bell_a_b) the step's total less w (2 now - before) + r equals the flux SUM R_ij (m_ij - now) less D now at every Node of every line, held lines, planes at no turn (no sign holder on these worlds) and the wipe's faced Nodes included, in integers: the residual is 0 everywhere."""
+    """At every interval of the three small worlds (bell_a_b, singlet_a_b, resonant; re-pinned 2026-10-20 from zeno_1, zeno_pulsed_1 and one_photon, deleted with the toy atom worlds; the born world and the chain lay at closes without a click line, outside the second function's premise) the step's total less w (2 now - before) + r equals the flux SUM R_ij (m_ij - now) less D now at every Node of every line, held lines, planes at no turn (no sign holder on these worlds) and the wipe's faced Nodes included, in integers: the residual is 0 everywhere."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     for name in WORLDS:
-        board, checked = Lattice(load_world(EVENTS / name)), 0
+        board, checked = Lattice(load_shipped(EVENTS / name)), 0
         for _ in range(board.world.intervals):
             for family, number, residual in step_alone(board):
                 assert not residual.any(), (
@@ -109,7 +109,7 @@ def test_the_linear_sum_of_matter_moves_by_the_mass_term_alone(monkeypatch):
     checked = 0
     for name in WORLDS:
         lines: list[dict[str, object]] = []
-        board = Lattice(load_world(EVENTS / name), lines.append)
+        board = Lattice(load_shipped(EVENTS / name), lines.append)
         gamma, square = board.world.node_clock, board.unit * board.unit
         matter = [
             (index, 6 * family.pair[1] * gamma * gamma * square)
@@ -160,20 +160,20 @@ def test_the_linear_sum_of_light_moves_by_the_faces_exchange_and_the_lays_alone(
                 {"family": "matter", "whole": [3, 3, 3], "count": 1, "interval": t} for t in (10, 20)
             ]
             world = dict(shape=[7, 7, 7], face_depth=1, intervals=30, node_detectors=[], bodies=[])
-            world.update(packets=packets, universe="u.json", engine="e.json")
+            world.update(packets=packets, universe="u.json")
             world.update(boundary=dict(x="periodic", y="periodic", z="periodic"))
             (path := tmp_path / "lays.json").write_text(json.dumps(world), encoding="utf-8")
             board = Lattice(load_world(path), lines.append)
         else:
             monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-            board = Lattice(load_world(EVENTS / name), lines.append)
+            board = Lattice(load_shipped(EVENTS / name), lines.append)
         gamma, square = board.world.node_clock, board.unit * board.unit
         light = [
             (index, 6 * family.pair[1] * gamma * gamma * square)
             for index, family in enumerate(board.families)
             if family.pair[0] == family.pair[1] and not family.held
         ]
-        if not light:  # zeno_1's and resonant's pulse is a held source in time, no line of light
+        if not light:  # a held source in time has no line of light
             continue
         checked = 0
         for _ in range(board.world.intervals):
@@ -253,9 +253,7 @@ def test_the_linear_sum_of_light_is_constant_on_a_closed_board(tmp_path, monkeyp
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
     world = dict(shape=[7, 7, 7], face_depth=1, intervals=40, node_detectors=[], bodies=[])
-    world.update(
-        boundary=dict(x="periodic", y="periodic", z="periodic"), universe="u.json", engine="e.json"
-    )
+    world.update(boundary=dict(x="periodic", y="periodic", z="periodic"), universe="u.json")
     (path := tmp_path / "closed.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path))
     now = records.zeros(board.shape, board.kind)
@@ -276,9 +274,7 @@ def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content(tm
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
     world = dict(shape=[60, 1, 1], face_depth=1, intervals=200, node_detectors=[], bodies=[])
-    world.update(
-        boundary=dict(x="periodic", y="periodic", z="periodic"), universe="u.json", engine="e.json"
-    )
+    world.update(boundary=dict(x="periodic", y="periodic", z="periodic"), universe="u.json")
     (path := tmp_path / "ring.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path))
     family, gamma, unit = board.families[0], board.world.node_clock, board.unit

@@ -42,7 +42,7 @@ def universe(design: dict[str, Any]) -> dict[str, object]:
 
 def body(design: dict[str, Any]) -> dict[str, object]:
     """The giver: one body of the giver's family at the source, standing in its upper part, the transition between its parts driven by the pair family at the declared resonance (the frequency the light is born at), the rate out of the upper part at the lifetime giving to the pair family (no `width`: the source in time on the chain, its window derived at load), and its own generator with the seed the design names."""
-    row, generator = design["body"], design["draw"]
+    row = design["body"]
     return {
         "family": row["family"],
         "nodes": [{"node": [int(row["source"]), 0, 0], "weight": 1}],
@@ -64,11 +64,7 @@ def body(design: dict[str, Any]) -> dict[str, object]:
                 "gives_to": design["family"],
             }
         ],
-        "node_detector": {
-            "multiplier": int(generator["multiplier"]),
-            "increment": int(generator["increment"]),
-            "seed": int(row["seed"]),
-        },
+        "node_detector": {},
     }
 
 
@@ -95,7 +91,6 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         "face_depth": 1,
         "intervals": int(design["intervals"]),
         "universe": design["universe"],
-        "engine": design["engine"],
         "bodies": [body(design)],
         "packets": [],
         "node_detectors": node_detectors,
@@ -139,8 +134,6 @@ def blind(design: dict[str, Any], build: Any) -> dict[str, Any]:
                 "gives_to": design["family"],
             },
             "resonance": [int(v) for v in row["resonance"]],
-            "seed": int(row["seed"]),
-            "seed_found": row["seed_found"],
         },
         "emission": (
             "the body's own draw at the hazard 1 / lifetime per dark interval with its own generator; at the "

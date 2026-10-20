@@ -7,8 +7,8 @@ import numpy as np
 
 from event_universe import readings, twist
 from event_universe.lattice import Lattice
-from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, ROOT, d4_bound, drift_bound, family, load_file
+from tests.laws import BACK, EVENTS, d4_bound, drift_bound, family
+from tests.laws_read import load_shipped
 
 CHAIN = EVENTS / "chain"
 DESIGN = json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))
@@ -48,7 +48,7 @@ def shares_about_the_front(board: Lattice, light: int) -> tuple[int, int]:
 
 def run(name: str, intervals: int) -> tuple[Lattice, list[dict], list[dict]]:
     """A chain world run `intervals` intervals from the lay with every interval's books of the light and the bodies kept beside the output lines."""
-    board = Lattice(load_world(CHAIN / f"{name}.json"), (lines := []).append)
+    board = Lattice(load_shipped(CHAIN / f"{name}.json"), (lines := []).append)
     light, atom = family(board, "photon"), family(board, "atom")
     marks = []
     for _ in range(intervals):
@@ -77,7 +77,7 @@ def run(name: str, intervals: int) -> tuple[Lattice, list[dict], list[dict]]:
 
 
 def test_the_chain_conserves_the_count_the_form_and_the_momentum_through_the_pair():
-    """B1, B2 and B3 with C1's and C5's lines on chain_x_minus over its 400 intervals (the blinds written before the run, examples/events/chain/expectation.json; no measured number inside them): B1, at every absorption the light's count falls by 1 and the body's e rises by 1 as its g falls by 1, at every emission the reverse, exactly, and outside the fronts' and the sources' spans the light's share in whole quanta over its own unit W_rec equals its count, the front's span read from the board: at every interval outside a source's span the light's share behind the latest front, the shells it has erased, is the live light and in whole quanta equals the count, and the share ahead of it is the levels the front has still to erase, the span, decreasing as the front catches them (`shares_about_the_front`; on this receding board the front itself never ends, its shells reaching the growing faces, a wave moving away from the hole at the group velocity is caught late, the first emission's half toward +x erased by the second absorption's front over about 200 intervals, and a ripple of one level from the lay's edge runs ahead of every front below the rounding; the whole share equals the count where nothing stands ahead, before the first click); C1, the count 1 and the quanta 1 at the lay and again after the emission's span; C5, no body takes the light it is itself sourcing (no absorption line names its own body as the source); B2, the board's form after the pair of one absorption and one emission within D7's bound of its value before, 3 den SUM_t (|a_t| + 1 / 4) over the source's increments, the light's I = Q / W_rec at 1 within the lay's own rounding at the lay, 2 x 3 den (2 A + 1) per lit Node (the amplitude's form, its two products), and within D7's bound after the span; B3, at every absorption the body's own P moves by the piece less the shortfall, p_a = gain_a + s_a, within D4's bound in the amplitude form, 4 A + 2 per line per Link along the axis (lay_bounds.json, 2352 in T's unit; the lay's phase-0 value 902 of `tests.laws.d4_bound` the consistency pin), the body's P is kept through its emission within the same bound, and the light's P after the source's span is the emitted light's alone (the absorbed quantum's fan, carrying its P until the front reaches it, is erased over the span, D6, its P the taker's since the click, "P lost to the taker"), equal to D7's identity term, 2 SUM_t a_t (before_(i-x) - before_(i+x)) at the source's Node in T's unit (an increment d at a Node moves P_x by 2 d times the neighbours' difference exactly, `momentum_of` counting each Link from both ends), plus the integers' floors over the span (D1), within the hands' bound of their sum, 2 SUM_i |now_(i+1) - now_(i-1)| per interval (`tests.laws.drift_bound`). FINDING by name (2026-10-19, the cold reader's three causes told apart and printed): the identity's term is 0, the source standing on a region the front erased before the emission, and the light's P after the span reads 30 in T's unit: Rule3's floors over the span on a row asymmetric as a whole, the absorbed fan toward -x erased during it (the third cause; not the front unfinished at the emission as such, and not the increments, laid at one Node). The run's seconds printed."""
+    """B1, B2 and B3 with C1's and C5's lines on chain_x_minus over its 400 intervals (the blinds written before the run, examples/events/chain/expectation.json; no measured number inside them): B1, at every absorption the light's count falls by 1 and the body's e rises by 1 as its g falls by 1, at every emission the reverse, exactly, and outside the fronts' and the sources' spans the light's share in whole quanta over its own unit W_rec equals its count, the front's span read from the board: at every interval outside a source's span the light's share behind the latest front, the shells it has erased, is the live light and in whole quanta equals the count, and the share ahead of it is the levels the front has still to erase, the span, decreasing as the front catches them (`shares_about_the_front`; on this receding board the front itself never ends, its shells reaching the growing faces, a wave moving away from the hole at the group velocity is caught late, the first emission's half toward +x erased by the second absorption's front over about 200 intervals, and a ripple of one level from the lay's edge runs ahead of every front below the rounding; the whole share equals the count where nothing stands ahead, before the first click); C1, the count 1 and the quanta 1 at the lay and again after the emission's span; C5, no body takes the light it is itself sourcing (no absorption line names its own body as the source); B2, the board's form after the pair of one absorption and one emission within D7's bound of its value before, 3 den SUM_t (|a_t| + 1 / 4) over the source's increments, the light's I = Q / W_rec at 1 within the lay's own rounding at the lay, 2 x 3 den (2 A + 1) per lit Node (the amplitude's form, its two products), and within D7's bound after the span; B3, at every absorption the body's own P moves by the piece less the shortfall, p_a = gain_a + s_a, within D4's bound in the amplitude form, 4 A + 2 per line per Link along the axis (lay_bounds.json, 2352 in T's unit; the lay's phase-0 value 902 of `tests.laws.d4_bound` the consistency pin), the body's P is kept through its emission within the same bound, and the light's P after the source's span is the emitted light's alone (the absorbed quantum's fan, carrying its P until the front reaches it, is erased over the span, D6, its P the taker's since the click, "P lost to the taker"), equal to D7's identity term, 2 SUM_t a_t (before_(i-x) - before_(i+x)) at the source's Node in T's unit (an increment d at a Node moves P_x by 2 d times the neighbours' difference exactly, `momentum_of` counting each Link from both ends), plus the integers' floors over the span (D1), within the hands' bound of their sum, 2 SUM_i |now_(i+1) - now_(i-1)| per interval (`tests.laws.drift_bound`). FINDING by name (2026-10-19, the cold reader's three causes told apart and printed): the identity's term is 0, the source standing on a region the front erased before the emission, and the light's P after the span reads 30 in T's unit: Rule3's floors over the span on a row asymmetric as a whole, the absorbed fan toward -x erased during it (the third cause; not the front unfinished at the emission as such, and not the increments, laid at one Node). The run's seconds printed. Under the eighth commit of the read (2026-10-20, the carried span dropped where the body left its part) body 1 absorbs at 142 inside body 0's emission span, so the lines at the span's end 170 derive rather than pin: the count 1 less the takes inside the span (0), the share the count plus the share still ahead of the front in quanta (1), the form less the taken units plus the share ahead within D7's bound (913,836 against 9,972,000), the live light behind the front the count's; B2 is read where no front erases and no source lays (G's line of the same day, the reader's ruling after the eighth, 2026-10-20: ALGEBRA's conservation at the click, line by line, the front taking the record to 0 shell by shell and the emission's lay giving W_rec over the source's increments): the take's unit leaves as the front erases its fan over its travel and the give's is laid over the source's span, so Rule3's conservation holds on the calm stretches alone, 1 to 73 and after body 1's emission span to 302, each within D7's bound of its start with no click inside; the two complete pairs back within one bound at 302 with the live light one unit; the third pair (303, 351) is not read, its front still erasing at the run's end; the pins before, (1, 1) at 170 and the share one unit there, read a span with no other click in it."""
     started = time.perf_counter()
     board, lines, marks = run("chain_x_minus", DESIGN["intervals"])
     light, atom = family(board, "photon"), family(board, "atom")
@@ -110,15 +110,53 @@ def test_the_chain_conserves_the_count_the_form_and_the_momentum_through_the_pai
     tau = len(increments)
     bound_q = 3 * den * sum(abs(a) for a in increments) + (3 * den * tau) // 4  # D7's form bound
     rest = by_interval[t_e + tau]
-    assert rest["sources"] == 0 and (rest["count"], rest["quanta"]) == (1, 1)  # C1 after the span
-    assert abs(rest["form"] - by_interval[t_a - 1]["form"]) <= bound_q  # B2: the form over the pair
-    fresh = Lattice(load_world(CHAIN / "chain_x_minus.json"))  # the lay, no interval stepped
+    assert rest["sources"] == 0
+    # B2 (G's line of 2026-10-20, the reader's eye on it): the take's unit leaves the board as the front erases its
+    # fan (D6) and the give's unit is laid by the source over its span (D7), so Rule3's conservation reads where no
+    # front is erasing and no source is laying: the calm stretches (no source, the levels ahead of the fronts within
+    # the bound), each held within D7's bound of its own start with no click inside
+    calm = [
+        t
+        for t in sorted(by_interval)
+        if by_interval[t]["sources"] == 0 and by_interval[t]["about"][1] <= bound_q
+    ]
+    edges = {c["interval"] for c in clicks}
+    stretches: list[list[int]] = []
+    for t in calm:
+        if stretches and t == stretches[-1][-1] + 1 and t not in edges:
+            stretches[-1].append(t)
+        else:
+            stretches.append([t])
+    long = [s for s in stretches if len(s) > 20]
+    assert len(long) >= 2 and long[0][0] == 1 and long[0][-1] == t_a - 1, [(s[0], s[-1]) for s in long]
+    for s in long:
+        assert all(abs(by_interval[t]["form"] - by_interval[s[0]]["form"]) <= bound_q for t in s), (
+            s[0],
+            s[-1],
+        )
+    # at the span's end: the form less the units taken inside the span plus the share still ahead of the front
+    taken_inside = [c for c in clicks if c["absorbed"] and t_e < c["interval"] <= t_e + tau]
+    assert (
+        abs(rest["form"] - by_interval[t_a - 1]["form"] + unit * len(taken_inside) - rest["about"][1])
+        <= bound_q
+    )
+    assert rest["count"] == 1 - len(taken_inside)  # C1 after the span, derived: the take inside the span
+    assert rest["quanta"] == rest["count"] + (rest["about"][1] + half) // unit
+    assert (
+        abs(rest["about"][0] - unit * rest["count"]) <= bound_q
+    )  # the live light behind the front, the count
+    back = by_interval[
+        clicks[4]["interval"] - 1
+    ]  # 302: the two complete pairs back, the third pair not read
+    assert abs(back["form"] - by_interval[t_a - 1]["form"]) <= bound_q and back["count"] == 1
+    assert abs(back["about"][0] - unit) <= bound_q  # I = 1: the live light behind the front one unit
+    fresh = Lattice(load_shipped(CHAIN / "chain_x_minus.json"))  # the lay, no interval stepped
     laid = fresh.states[light].lines[0].now.reshape(-1)
     lit, amplitude = sum(1 for v in laid if v != 0), max(abs(int(v)) for v in laid)
     bound_lay = (
         2 * 3 * den * (2 * amplitude + 1) * lit
     )  # the lay's rounding, the two products of the form
-    assert abs(marks[0]["share"] - unit) <= bound_lay and abs(rest["share"] - unit) <= bound_q  # I = 1
+    assert abs(marks[0]["share"] - unit) <= bound_lay  # I = 1 at the lay
     body = int(clicks[0]["node_detector"].split()[1])
     nodes = board.credit.bodies[body].nodes
     at = sorted(c["interval"] for c in clicks)
@@ -151,7 +189,7 @@ def test_the_chain_conserves_the_count_the_form_and_the_momentum_through_the_pai
 
 def test_the_chain_runs_back_through_its_absorption_and_emission():
     """B4, the inverse: tools/back_in_time.py's verdict on chain_x_minus over the first 100 intervals, through the first absorption (74) and the emission that follows (91), MATCH bit for bit: every array returns through the click's two writes, the fold and the lay lines."""
-    found = BACK.verdict(Lattice(load_world(CHAIN / "chain_x_minus.json")), 100)
+    found = BACK.verdict(Lattice(load_shipped(CHAIN / "chain_x_minus.json")), 100)
     assert found["verdict"] == "MATCH" and found["intervals"] == 100, found
 
 
@@ -165,7 +203,7 @@ def image(name: str) -> tuple[list[dict], dict[tuple[int, int], tuple[np.ndarray
     """A world run over the design's intervals and carried back to the original's frame: its credit lines with the vector keys' chain component moved to x and signed (the shortfall a magnitude), and every line's now, before and remainder per family and line; run once per process (`RUNS`)."""
     if name not in RUNS:
         axis, toward = DESIGN["worlds"][name]
-        board = Lattice(load_world(CHAIN / f"{name}.json"), (lines := []).append)
+        board = Lattice(load_shipped(CHAIN / f"{name}.json"), (lines := []).append)
         for _ in range(DESIGN["intervals"]):
             board.step()
         a, sign = AXES.index(axis), -1 if toward == "plus" else 1
@@ -215,39 +253,4 @@ def test_the_two_pure_permutations_are_the_original_bit_for_bit():
     count = one_world(["chain_y_minus", "chain_z_minus"], "chain_x_minus")
     print(
         f"B5: the two pure permutations exact over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_mirror_image_is_the_original_bit_for_bit():
-    """B5, the 48, the mirror: chain_x_plus (every coordinate c to 95 - c, the light toward the upper side) over the design's 400 intervals, brought back by the mirror with the vector components signed, equal to chain_x_minus in every click line, level and remainder, the second absorption (142) and the fourth (298) included, where the giver's recoil fold meets a record standing at a quarter turn per Node. The defect this clause found on its first run (2026-10-19, 1be7429): `twist.twisted` took the sense whose positive quarter turn moved P with the piece's sign, which at that tie was the same sense in both worlds where the covariant one is its opposite, so the mirror's giver ended at k = pi against the original's k = 0 (the recoil 42,320 against 41,404 in T's unit, its middle Node's lines at the opposite sign); fixed the same day by the geometric sense (n takes the piece's sign, the bisection |n|; x n invariant under the mirror) and the pair at a negative angle read as the conjugate of the forward pair (D5, odd exactly): the original's run is unchanged by the fix (its sense was the geometric one), the images move to it. The runs' seconds printed."""
-    started = time.perf_counter()
-    count = one_world(["chain_x_plus"], "chain_x_minus")
-    print(
-        f"B5: the mirror exact over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_three_mirrors_are_one_world_bit_for_bit():
-    """B5, the 48, the mirrors along y and z: chain_y_plus and chain_z_plus over the design's 400 intervals, brought back to chain_x_plus's frame, equal to it in every click line, level and remainder; with the mirror's test this makes the six worlds one world under the 48 with the draw's order the one named exception. The runs' seconds printed."""
-    started = time.perf_counter()
-    count = one_world(["chain_y_plus", "chain_z_plus"], "chain_x_plus")
-    print(
-        f"B5: the three mirrors one world over {DESIGN['intervals']} intervals, {count} click lines; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_detuned_packet_is_absorbed_in_at_most_four_of_its_eight_trials():
-    """B7, the line shape (C9 (b)): chain_detuned, the packet of 48 Nodes at k = pi / 8 detuned from the transition at pi / 4, run over its 250 intervals for each of the eight seeds of detuned_trials.json with every record's generator at the hash of the trial's label (tools/meeting_trials.py); the blind as corrected by derivation on 2026-10-19 before any run claim and no fit (the cold reader: the window's sinc weighs the turn and not the chance; the turn per flat window 1.27 rad at one Node at the declared weight 6, 0.206 rad under the sinc's 0.162, sin^2 0.042 at one Node and 0.111 with the body's projection over its three Nodes, two windows per passage, 0.19 per trial, P(at most 4 of 8) = 0.99) reads at most four absorptions over the eight trials at the declared window of 48; under the window derived at load (W 116, the whole passage of the 64-Node packet over the body at v_g 0.570, 2026-10-19) the blind re-derived from the envelope's spectral weight at the detuning (tools/pixel_mode.py envelope read at kappa = Delta / v_g = 0.3857 per Node, Delta = 0.2198 per interval: the weight 0.0657 over the three Nodes; the resonant turn at the weight 6 over three Nodes 1.115 rad, so the detuned turn 0.073 rad, the chance sin^2 = 5.4 x 10^-3 per trial, 0.043 absorptions expected in eight, P(2 or more) 8.0 x 10^-4) reads at most one of eight; the bound first written, at most 1 of 8, presumed the sinc on the chance. The engine reads none of eight at the declared weight 6 and W 116 (three of eight at the declared 48: the seeds 25 at 65 and 28 at 161, and 25's own light taken back at 215 from its train's wake under the narrower C5, the record of the narrower line), pinned here as the engine's reading beside the blind, to move with any change of the weight. The trials' seconds printed."""
-    started = time.perf_counter()
-    trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
-    seeds = json.loads((CHAIN / "detuned_trials.json").read_text(encoding="utf-8"))["seeds"]
-    absorbed = 0
-    for seed in seeds:
-        _parts, _windows, clicks, refused = trials.one_trial(CHAIN / "chain_detuned.json", seed, 250)
-        assert refused is None
-        absorbed += sum(1 for c in clicks if c["absorbed"])
-    assert absorbed <= 1, absorbed  # B7 under the passage's window: at most one of the 8 trials
-    assert absorbed == 0, absorbed  # the engine's reading at the declared weight 6 and W 116, pinned
-    print(
-        f"B7: {absorbed} absorption(s) in {len(seeds)} trials of the detuned packet; {time.perf_counter() - started:.1f} s"
     )

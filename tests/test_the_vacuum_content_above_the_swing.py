@@ -8,11 +8,11 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
     from event_universe import node
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import count_wall
-    from event_universe.world_files import load_world
     from tests.laws import EVENTS, ROOT, load_file
+    from tests.laws_read import load_shipped
 
     intervals, face = 30, (0, 12, 12)  # the CI clock: the shipped world's start alone is 22 s here
-    board = Lattice(load_world(EVENTS / "matter_alone" / "pixel.json"))
+    board = Lattice(load_shipped(EVENTS / "matter_alone" / "pixel.json"))
     gamma, unit, names = board.world.node_clock, board.unit, [f.name for f in board.families]
     gravity, binding = (names.index(name) for name in ("gravity", "binding"))
     rest, levels = board.families[gravity].rest, {gravity: set(), binding: set()}
@@ -37,7 +37,7 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
     assert lowest[0] >= 1, (lowest, at)  # (a) every content above 0, inside the edge
     assert edge[0] > -2, edge  # (b) the guard's edge never reached
     assert {abs(level - rest) for level in levels[gravity]} <= {0, 1}, (rest, levels)  # (c) at the face
-    world, lines = load_world(EVENTS / "two_slits" / "two_slits.json"), []
+    world, lines = load_shipped(EVENTS / "two_slits" / "two_slits.json"), []
     declared = Lattice(world, lines.append)
     bare = Lattice(replace(world, families=tuple(replace(f, rest=0) for f in world.families)))
     light, first = world.packets[0].family, None

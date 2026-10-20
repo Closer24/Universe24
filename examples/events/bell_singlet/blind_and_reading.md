@@ -337,3 +337,32 @@ moments, not this state; found and fixed on 2026-10-20 (the reader's cold diff r
 finding; the first observation on the drafts of the day read the second side's write at the pass-4
 birth over 25 Nodes about Node 12 on the (a, b) world, before the reader's ruling made that write
 the identity.)
+
+Held at the ninth (2026-10-20, the click's read of the board): the born four are refused by name at
+the interval 85 under the sixth commit of the read, at the atom's re-absorption of its own pair, the
+second draw of the interval below its total (8.2 x 10^14 left against 1.63 x 10^16; the emission's
+58.4 bits of the read's 65.3 leave 6.9 against the absorption's 53.9, the design read's count); the
+draws these four worlds showed before the ninth were the generator's, and their pages stand from
+before the read; the four are held and not deleted, the pair's birth the one declaration of the
+family's board, held for the seventh commit of the read, under which the capped pass of 2026-10-20 runs them
+whole, 124 intervals (2026-10-20; ALGEBRA.md, What a body reads).
+
+Pass 2 under the eighth commit of the read (the landing head 0f77b37dd, 2026-10-20), the four pages
+re-recorded: born_a_b (124 intervals, 5 credits): the body 0 at 24, e to g, the spin given (no draw,
+every digit at the lay's origin, the emission at the window's close), the left side at 62 reads
+minus, the body 0 at 85, g to g (no draw, every digit at the lay's origin, the emission at the
+window's close), the body 0 at 110, g to g (no draw, every digit at the lay's origin, the emission
+at the window's close), the right side at 124 reads plus; born_a_b_prime (124 intervals, 5 credits):
+the body 0 at 24, e to g, the spin given (no draw, every digit at the lay's origin, the emission at
+the window's close), the left side at 62 reads minus, the body 0 at 85, g to g (no draw, every digit
+at the lay's origin, the emission at the window's close), the body 0 at 110, g to g (no draw, every
+digit at the lay's origin, the emission at the window's close), the right side at 124 reads minus;
+born_a_prime_b (124 intervals, 5 credits): the body 0 at 24, e to g, the spin given (no draw, every
+digit at the lay's origin, the emission at the window's close), the left side at 62 reads minus, the
+body 0 at 85, g to g (no draw, every digit at the lay's origin, the emission at the window's close),
+the body 0 at 110, g to g (no draw, every digit at the lay's origin, the emission at the window's
+close), the right side at 124 reads plus; born_a_prime_b_prime (124 intervals, 5 credits): the body
+0 at 24, e to g, the spin given (no draw, every digit at the lay's origin, the emission at the
+window's close), the left side at 62 reads minus, the body 0 at 85, g to g (no draw, every digit at
+the lay's origin, the emission at the window's close), the body 0 at 110, g to g (no draw, every
+digit at the lay's origin, the emission at the window's close), the right side at 124 reads plus.
