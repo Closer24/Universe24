@@ -173,7 +173,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     proper = [(n * clock // board.world.node_clock, 2) for n in (80, 80)]
     assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 79 at 60
     keys = "event label interval family node_detector window proper windows before realised kept"
-    words = f"{keys} count left absorbed emitted momentum fan twist shortfall lost source recoil"
+    words = f"{keys} count left absorbed emitted momentum fan lost source recoil"
     report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
     assert all(set(c) - {"bias_bound"} == report and c["label"] == "NODEDETECTOR" for c in credits)
     assert all(c["bias_bound"]["g"] < c["bias_bound"]["total"] for c in credits if "bias_bound" in c)
