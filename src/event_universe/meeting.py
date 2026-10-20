@@ -10,7 +10,6 @@ import numpy as np
 from event_universe import credit, digits, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
-from event_universe.loader.keys import Node
 from event_universe.node_detector import (
     NodeBooks,
     arriving,
@@ -86,7 +85,7 @@ def laid_record(board: Lattice, number: int, record: int) -> None:
 
 
 def laid_whole(board: Lattice) -> None:
-    """The packets laid whole at this interval's end (`loader/packets.py`, `WholePacket`: the probe of the pulsed gate, the two hands): each its count of whole quanta laid at its Node through the one act with one alternative and no draw (`act.click`, `emission.emitted_quantum`, `laid_by_count` at the family's massless pair [den, den], A^2 = count T div 2 on the record's first line), the record's count in the books up by the count and one lay line for the host's tool; the experimenter's lay in time, from outside the Node as every lay is, before the records at Nodes read their arrivals."""
+    """The packets laid whole at this interval's end (`loader/packets.py`, `WholePacket`, a packet the world's schedule lays at an interval of the run): each its count of whole quanta laid at its Node through the one act with one alternative and no draw (`act.click`, `emission.emitted_quantum`, `laid_by_count` at the family's massless pair [den, den], A^2 = count T div 2 on the record's first line), the record's count in the books up by the count and one lay line for the host's tool; the experimenter's lay in time, from outside the Node as every lay is, before the records at Nodes read their arrivals."""
     for whole in board.world.wholes:
         if whole.interval == board.interval:
             den = board.families[whole.family].pair[1]
@@ -167,36 +166,10 @@ def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
     return done
 
 
-def conversion_drawn(board: Lattice, books: NodeBooks) -> bool:
-    """The conversion drawn at a record's window's end (`lists.conversion`): while the record's count stands, for each conversion its declaration names one click between the conversion's list and nothing at the weights [the window capped at the rate, the rate less it], the record's own read of the board; the first conversion drawn is taken, its records out laid and its line written by the act; returns whether one was."""
-    assert books.declared.draw is not None  # a record converted whole declares its draw
-    window = books.declared.draw.window
-    assert window is not None  # its window its table's, declared
-    for table in books.declared.conversions:
-        if books.counts[books.part] <= 0:
-            return False
-        span = window if window <= table.rate else table.rate
-        alternatives = lists.conversion(board, books, table, span)
-        pick = click(board, books, alternatives)
-        if pick == 0:
-            return True
-    return False
-
-
-def absorbing(board: Lattice, books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
-    """Whether an absorption's or a probe's draw falls due for the body at this close (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20: one draw per body per interval, the absorption at the window's end and the emission at the clock's grain on different intervals where both fall due): a probe's lay at its Node (`probe_arrived`), or a transition out of its part by a drive whose count stands in the books (`lists.absorption`)."""
-    return probe_arrived(books, laid) or any(
-        t.leaves == books.part and t.leaves != t.enters and board.credit.counts[t.drive] > 0
-        for t in books.declared.transitions
-    )
-
-
-def probe_arrived(books: NodeBooks, laid: set[tuple[int, Node]]) -> bool:
-    """Whether a probe arrived at the body this interval: a lay at its Node (`laid_whole`, the world's schedule) of the family of one of its transitions of a part into itself; the window's close at the declared interval, no level read (ALGEBRA.md, The pulsed gate: the window bounded by the lays' schedule; the two hands)."""
+def absorbing(board: Lattice, books: NodeBooks) -> bool:
+    """Whether an absorption's or a probe's draw falls due for the body at this close (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20: one draw per body per interval, the absorption at the window's end and the emission at the clock's grain on different intervals where both fall due): a transition out of its part by a drive whose count stands in the books (`lists.absorption`)."""
     return any(
-        t.leaves == t.enters and (t.drive, at) in laid
-        for t in books.declared.transitions
-        for at in books.nodes
+        t.leaves == books.part and board.credit.counts[t.drive] > 0 for t in books.declared.transitions
     )
 
 
@@ -228,9 +201,8 @@ def closed(board: Lattice) -> None:
 
 
 def jumped(board: Lattice) -> None:
-    """The records at Nodes that are NodeDetectors at the end of an interval: first the packets the world lays whole at this interval (`laid_whole`, the probe's lay at the body's Node by the schedule); then each record gathers the records arriving at its Node into its window's sums (`resonance.gathered`, the arriving level per drive family read once, `arriving`), one more interval elapsed and its own clock advanced (`node_detector.clock_advanced`); the window closes at its declared length, or, for a body with a probe among its transitions, at the interval of the probe's lay at its Node (`probe_arrived`: the window bounded by clicks, opened at the body's last write and closed at the probe's absorption, no level read; ALGEBRA.md, The pulsed gate, the two hands); at the close the window's turn of the labels (`turned_labels`, once per window, as W sub-turns with the carry) and the body's windows counted, then the draws and the writes, every one the one act's over the table's rows (`act.click`, `lists.py`): the emissions first record by record (`emission_drawn`: at the window's close while a window stands, the grain the count of the window's lit intervals, `NodeBooks.lit`, at every interval in the dark, `dark`, the grain 1, the lifetime's hazard 1 / tau per interval either way; one draw per body per interval (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a dark interval at the window's close draws once over the interval and the window's lit intervals together, so every interval of the window enters exactly one draw's span and the summed hazard over a window is W / tau whatever its dark intervals, ALGEBRA.md, The dark; a window with no dark interval the length itself, bit for bit; where an absorption or a probe falls due at the close too (`absorbing`), the absorption draws at the window's end and the emission's span is carried to the next interval (`NodeBooks.due`), the acts' order the declared one; a body whose read found every digit at the lay's origin at an emission's draw of the window gives at the close where the draws gave none, `emission_fell`), then at a probe's close the body's own one draw over its outcomes (`lists.probe`), at a declared window's the absorptions in one draw per arriving family over the records that gave none (`absorptions_drawn`), then the null window of every record of several parts that neither gave nor took (`lists.null_window`; a record of one part reads no part of itself and has none); the windows begun again; last, after the records' clicks, the conversion of every record converted whole whose window closed at this interval (`conversion_drawn`, its window read as the clicks left it). A body standing in a part it gives from (a rate out of it) counts its window from its lay, its emission's when, lit or dark; a taker's window opens at its first lit interval (C2)."""
+    """The records at Nodes that are NodeDetectors at the end of an interval: first the packets the world lays whole at this interval (`laid_whole`, the probe's lay at the body's Node by the schedule); then each record gathers the records arriving at its Node into its window's sums (`resonance.gathered`, the arriving level per drive family read once, `arriving`), one more interval elapsed and its own clock advanced (`node_detector.clock_advanced`); the window closes at its declared length; at the close the window's turn of the labels (`turned_labels`, once per window, as W sub-turns with the carry) and the body's windows counted, then the draws and the writes, every one the one act's over the table's rows (`act.click`, `lists.py`): the emissions first record by record (`emission_drawn`: at the window's close while a window stands, the grain the count of the window's lit intervals, `NodeBooks.lit`, at every interval in the dark, `dark`, the grain 1, the lifetime's hazard 1 / tau per interval either way; one draw per body per interval (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): a dark interval at the window's close draws once over the interval and the window's lit intervals together, so every interval of the window enters exactly one draw's span and the summed hazard over a window is W / tau whatever its dark intervals, ALGEBRA.md, The dark; a window with no dark interval the length itself, bit for bit; where an absorption falls due at the close too (`absorbing`), the absorption draws at the window's end and the emission's span is carried to the next interval (`NodeBooks.due`), dropped where the body left its part, the acts' order the declared one; a body whose read found every digit at the lay's origin at an emission's draw of the window gives at the close where the draws gave none, `emission_fell`), then the absorptions in one draw per arriving family over the records that gave none (`absorptions_drawn`), then the null window of every record of several parts that neither gave nor took (`lists.null_window`; a record of one part reads no part of itself and has none); the windows begun again. A body standing in a part it gives from (a rate out of it) counts its window from its lay, its emission's when, lit or dark; a taker's window opens at its first lit interval (C2)."""
     laid_whole(board)
-    laid = {(whole.family, whole.at) for whole in board.world.wholes if whole.interval == board.interval}
     own = {b.number: sourcing(board, b) for b in board.credit.bodies}  # C5: read once per body
     for books in board.credit.bodies:
         books.left, books.bias = None, None  # the click's read of the board: one per body per interval
@@ -252,10 +224,8 @@ def jumped(board: Lattice) -> None:
         b
         for b in board.credit.bodies
         if b.declared.draw is not None
-        and (
-            probe_arrived(b, laid)
-            or (b.declared.draw.window is not None and b.elapsed == b.declared.draw.window)
-        )
+        and b.declared.draw.window is not None
+        and b.elapsed == b.declared.draw.window
     ]
     for books in closing:
         turned_labels(board, books)
@@ -268,7 +238,7 @@ def jumped(board: Lattice) -> None:
         books.lit += lit
         span = books.due + (0 if lit else 1) + (books.lit if closes else 0)  # one draw, G2
         books.due, given = 0, False
-        if span and closes and absorbing(board, books, laid):
+        if span and closes and absorbing(board, books):
             books.due = (
                 span  # the absorption at the window's end; the emission's draw at the next interval
             )
@@ -279,19 +249,12 @@ def jumped(board: Lattice) -> None:
         if given:
             lit_numbers.add(books.number)
     quiet = [books for books in closing if books.number not in lit_numbers]
-    read = {books.number for books in quiet if probe_arrived(books, laid)}
+    done = absorptions_drawn(board, quiet)
     for books in quiet:
-        if books.number in read:
-            click(board, books, lists.probe(board, books))
-    done = absorptions_drawn(board, [books for books in quiet if books.number not in read])
-    for books in quiet:
-        if books.number not in read | done and len(books.counts) > 1:  # a record of one part reads none
+        if books.number in done:
+            books.due = 0  # the body left its part at the close: the carried span was that part's
+        elif len(books.counts) > 1:  # a record of one part reads none
             click(board, books, lists.null_window(board, books))
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
         books.deferred = False
-    for (
-        books
-    ) in board.credit.bodies:  # the conversions after the records' clicks, the window as they left it
-        if books.declared.conversions and books.elapsed == 0:
-            conversion_drawn(board, books)

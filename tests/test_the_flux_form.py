@@ -19,7 +19,6 @@ from tests.laws_read import load_shipped
 
 WORLDS = (
     "zeno/zeno_1.json",
-    "zeno_pulsed/zeno_pulsed_1.json",
     "anticoincidence/one_photon.json",
     "bell/bell_a_b.json",
 )

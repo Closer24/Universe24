@@ -12,7 +12,7 @@ from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import norm, times
 from event_universe.loader.keys import Node
-from event_universe.loader.node_detector_declaration import Conversion, Rate, Transition
+from event_universe.loader.node_detector_declaration import Rate, Transition
 from event_universe.node_detector import (
     NodeBooks,
     Passage,
@@ -338,54 +338,7 @@ def emission(
     return [*found, Alternative(len(directions) * rest, nothing)]
 
 
-def probe(board: Lattice, books: NodeBooks) -> list[Alternative]:
-    """The probe's close, the body's one draw at the probe's arrival (ALGEBRA.md, The pulsed gate; the two hands): over the transitions out of the part the body stands in whose family's count stands, each at its own transfer share (`meeting.turned_labels`, `NodeBooks.shares`, the record's share at the body) and the probe's own at the part's label squared as the turns left it (the two-mode line's shares, sin^2 and cos^2 of the half window's turn): the probe's own, the transition of the part into itself, re-lays the body whole in that part, its list the part at the change 0 and no write on the probe's record (taken and given back at one interval and one Node, the fluorescence by name the probe's own wave continuing from that Node), its line naming the probe's family as taken and given; a drive's takes the drive's quantum and exchanges the parts as every absorption does (`exchange`, the hole, the count down by one); the rest of the labels' unit is the null window, the body whole in its part (`null_window`), nothing where the record has one part; a drive's transition into a full part stands at the weight 0, the exclusion (`full`, 2026-10-19), and carries the record's sign under exchange on the part entered (`exchange_factor`), the probe's own transition at its share alone."""
-    outcomes = [
-        t
-        for t in books.declared.transitions
-        if t.leaves == books.part and board.credit.counts[t.drive] > 0
-    ]
-    weights = [
-        0
-        if t.enters != t.leaves and full(books, t.enters)
-        else (exchange_factor(board, books, t.enters) if t.enters != t.leaves else 1)
-        * books.shares.get(t, books.labels[t.enters] ** 2)
-        for t in outcomes
-    ]  # the exclusion: a drive's transition into a full part at the weight 0 (`full`) and the sign's factor on the part entered (`exchange_factor`); the probe's own stands
-    found = []
-    for transition, weight in zip(outcomes, weights, strict=True):
-        leaves, enters, drive = transition.leaves, transition.enters, transition.drive
-        traded = (drive if enters >= leaves else None, drive if enters <= leaves else None)
-        own = leaves == enters
-        items = (
-            partial(part_at, books, leaves, 0)
-            if own
-            else partial(exchange, board, books, leaves, enters, drive)
-        )
-        found.append(Alternative(weight, items, Line((enters, leaves), traded), books))
-    rest = sum(label * label for label in books.labels) - sum(weights)
-    quiet = null_window(board, books)[0] if len(books.counts) > 1 else Alternative(0, nothing)
-    return [*found, replace(quiet, weight=rest if rest > 0 else 0)]
-
-
 def null_window(board: Lattice, books: NodeBooks) -> list[Alternative]:
     """The window with no click (the owner's words, "Yes, both of them" and "I approve the four things"; the mathematician's hand; the advisor's clause 8): one alternative and no draw, the record's own reading of itself written at its one Node, the part it stands in at the change 0 (`part_at`): the record laid again in the complement of its outcome set, the part it stands in, at its whole count, in that part's own direction and sense at every Node of the region (the levels of what stands there within the lay's rounding, each Node's own direction kept so that a twist across the region survives, Part H, MUST 1; the remainder at the lay's origin), the parts' counts unchanged, and the labels' coherence ended; its line at the count 0, written where the re-lay changed a level at any Node of the region (Part H: every Node read, the re-lay standing per Node), one click line labelled LATTICE with the `lay` lines beside it for the host's tool (a null window that changes nothing writes none; `act.click`)."""
     line = Line((books.part, books.part), (None, None), 0)
     return [Alternative(1, partial(part_at, books, books.part, 0), line, books)]
-
-
-def conversion(board: Lattice, books: NodeBooks, table: Conversion, span: int) -> list[Alternative]:
-    """The conversion's row, a record converted whole at its one Node (ALGEBRA.md, A family's declaration, item 5, The conversion's table and rate; The click is the meeting, what the click's picture derives of the conversions; the two hands, the advisor's (c), the mathematician's hand, and their agreement on the one-Node lay): one draw between the conversion's list and nothing at the weights [`span`, the rate less it], the span the window capped at the rate (the rate the intervals per expected conversion, the declared floor, as the emission's); the list the record whole at -1 at its Nodes (`part_at`, its hole its lay at the count 0) and each family out at +1 at the one Node of the region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), one whole quantum laid by the count at its family's massless pair [den, den] on every laid line of its record alike, a plane's two lines per plane with the sense the table declares for it (`emission.emitted_quantum`, `Item.pair`, `Item.sense`; the mathematician's hand); the act writes one lay line per line the write changed, every line of the record in and every laid line of each record out, so that the back-in-time tool crosses the write as it crosses the absorption and the emission, and one conversion line (`act.lined`, `reports.conversion`); the rotations' sum and the sines' difference at the Node are the reader's to book from the levels (the world `examples/events/neutron_conversion/`)."""
-
-    def whole() -> list[Item]:
-        items = part_at(books, books.part, -1)
-        laid_at = drawn_node(board, books, share_weights(board, books))
-        for out, sense in zip(table.outs, table.senses, strict=True):
-            den = board.families[out].pair[1]
-            items.append(Item(out, None, None, 1, (laid_at,), (den, den), sense=sense))
-        return items
-
-    return [
-        Alternative(span, whole, Line(into=table.outs), books),
-        Alternative(table.rate - span, nothing),
-    ]

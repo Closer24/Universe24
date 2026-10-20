@@ -60,7 +60,6 @@ RUN_READINGS = (
     "inflow <node_detector> <family>",
     "absorptions <node_detector>",
     "emissions <node_detector>",
-    "conversions <node_detector>",
 )  # the readings of one run's output file
 TRIAL_READINGS = ("trials", "refused", "ends in <part> <node_detector>", *COINCIDENCE, "clicks <kind>")
 SEPARATOR = re.compile(r":?-+:?")  # a cell of a markdown table's separator row
@@ -193,11 +192,6 @@ def run_reading(output: dict[str, Any], words: list[str]) -> tuple[str, object]:
         return MEASUREMENT, credits(output, " ".join(rest) or None)
     if kind in EXCHANGES and rest:
         return MEASUREMENT, credits(output, " ".join(rest), EXCHANGES[kind])
-    if kind == "conversions" and rest:
-        name = " ".join(rest)
-        return MEASUREMENT, sum(
-            line["event"] == "conversion" and line["node_detector"] == name for line in lines
-        )
     if kind == "inflow" and len(rest) >= 2:
         name, family = " ".join(rest[:-1]), rest[-1]
         at = [line for line in lines if line["event"] == "click" and line["node_detector"] == name]

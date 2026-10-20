@@ -193,29 +193,6 @@ def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Pat
     return path
 
 
-def pulsed_world(folder: Path, monkeypatch) -> Path:  # type: ignore[no-untyped-def]
-    """The minimal pulsed world (ALGEBRA.md, The pulsed gate): the shipped pulsed universe beside `folder` as u.json and the repository root turned to `folder`, the Zeno body over two adjacent Nodes of a periodic 3 by 3 by 3 box with the drive's two turns and the probe's transition of g into itself, no drive laid, the probe laid whole by the count at its Node at the intervals 3 and 7, no node_detectors; the world's path."""
-    (folder / "u.json").write_bytes((EVENTS / "zeno_pulsed" / "pulsed_atom.json").read_bytes())
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
-    draw: dict[str, object] = {}  # a body with a probe: its node_detector declares no key
-    parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
-    ways, drive = (("g", "e"), ("e", "g")), {"drive": "pulse", "weight": 1, "resonance": [2, 3]}
-    turns, probe = [{"from": a, "to": b, **drive} for a, b in ways], {"from": "g", "to": "g"}
-    region = [{"node": [1, 1, 1], "weight": 1}, {"node": [2, 1, 1], "weight": 1}]  # two adjacent Nodes
-    record = {"family": "atom", "nodes": region, "parts": parts, "rates": [], "node_detector": draw}
-    record["transitions"] = [*turns, {**probe, "drive": "probe"}]
-    lays = [{"family": "probe", "whole": [1, 1, 1], "count": 1, "interval": t} for t in (3, 7)]
-    world = dict(shape=[3, 3, 3], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=9)
-    world.update(universe="u.json", bodies=[record], packets=lays, node_detectors=[])
-    (path := folder / "w.json").write_text(json.dumps(world), encoding="utf-8")
-    return path
-
-
-def click_key(line: dict[str, object]) -> str:
-    """A click line's key as tools/meeting_trials.py counts the kinds: the reader, the part realised and the family taken or given."""
-    return f"{line['node_detector']} {line['realised']} by {line['absorbed'] or line['emitted']}"
-
-
 def credit_lines(lines: list[dict[str, object]], key: str) -> list[dict[str, object]]:
     """The NodeDetectors' click lines with `key` set: the credit lines labelled NODEDETECTOR whose `key` is not None."""
     return [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c[key]]

@@ -12,7 +12,7 @@ from event_universe.emission import emitted_quantum
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.node_detector import NodeBooks, picked, reported
-from event_universe.reports import NO_SIDE, PAID_AT_EMISSION, conversion
+from event_universe.reports import NO_SIDE, PAID_AT_EMISSION
 from event_universe.resonance import turned_direction
 from event_universe.twist import (
     Item,
@@ -40,7 +40,6 @@ class Line:
     parts: tuple[int, int] = (0, 0)
     exchanged: tuple[int | None, int | None] = (None, None)
     count: int = 1
-    into: tuple[int, ...] | None = None
 
 
 @dataclass(frozen=True)
@@ -85,17 +84,7 @@ def lined(board: Lattice, chosen: Alternative, items: list[Item]) -> None:
     """The click's line after the write: the one click line kind of every reader (`node_detector.reported`: the parts, the families exchanged and the count), or for a record converted whole the conversion line (`reports.conversion`: the reader by its number, its window, the families out and the one Node the records out were laid at, the first spread Item's, a diagnostic beside the result)."""
     books, line = chosen.books, chosen.line
     assert books is not None and line is not None
-    if line.into is None:
-        reported(board, books, line.parts, line.exchanged, line.count)
-        return
-    if board.output is None:
-        return
-    draw = books.declared.draw
-    assert draw is not None and draw.window is not None  # a record converted whole declares its window
-    window = [board.interval - draw.window + 1, board.interval]
-    name, *into = [board.families[k].name for k in (books.index, *line.into)]
-    at = list(next(item.nodes[0] for item in items if item.body is None))
-    board.output(conversion(board.interval, name, books.number, window, into, at))
+    reported(board, books, line.parts, line.exchanged, line.count)
 
 
 def written(board: Lattice, items: list[Item]) -> None:

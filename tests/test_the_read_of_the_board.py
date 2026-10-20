@@ -206,7 +206,6 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
     refused("holds the unknown key 'increment'", draw_of, {"window": 40, **generator}, "draw", True)
     refused("holds the unknown key 'seed'", body_draw_of, {"seed": 25}, label)
     refused("holds the unknown key 'multiplier'", windowless_of, {"multiplier": 5}, label)
-    refused("declares a window beside a probe", windowless_of, {"window": 3}, label)
     assert body_draw_of({}, label) == windowless_of({}, label) == Draw(None)
     assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
         {"window": 40}, "draw", True

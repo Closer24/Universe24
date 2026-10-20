@@ -5,7 +5,7 @@ import json
 from event_universe import act, lists, meeting, node_detector, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL, load_file, packet_world, world_beside
+from tests.laws import EVENTS, ROOT, TOOL, packet_world
 from tests.laws_read import redeclared
 
 
@@ -23,9 +23,7 @@ def forced_write(monkeypatch):  # type: ignore[no-untyped-def]
     return noted
 
 
-def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_and_not_by_the_weights(
-    tmp_path, monkeypatch
-):
+def test_the_emission_lays_its_node_by_the_records_share_and_not_by_the_weights(tmp_path, monkeypatch):
     """The Zeno reader on two Nodes with the lay weights 1 and 2 and its atom at the pair [2, 3], real hopping across its inner Link (the shipped pair [1, 1299] hops by 1 in 1,299, the two Nodes' shares then standing at the lay's proportion for the whole window): at the lay the record's share at its Nodes stands near the weights' proportion, A_i^2 = A^2 w_i / SUM w with the inner Link's term and the amplitudes' rounding (0.306 against 1 / 3), and over ten intervals of Rule3's own step inside the window the record beats between its Nodes, so that the board's share departs from the weights' proportion by more than a fifth; `share_weights` reads the board's shares floored at 0 and not the weights, and the Node drawn through `drawn_node` is one of the body's by its read of the board; `lists.emission` on the packet world's giver and `lists.conversion` on the neutron's record, each stepped one interval (the read has digits off the origin) and forced to its write, hand `drawn_node` the shares the board holds and never the file's weights."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
@@ -56,33 +54,7 @@ def test_the_emission_and_the_conversion_draw_their_node_by_the_records_share_an
     giver.step()  # one interval: the record's remainders leave the origin, the read has its digits
     emitter, given = giver.credit.bodies[0], forced_write(monkeypatch)
     standing = node_detector.share_weights(giver, emitter)  # read before the write, as the row reads it
-    assert meeting.emission_drawn(giver, emitter, 2) and given == [standing]
-    assert given[0] != list(emitter.weights)
-    source = EVENTS / "neutron_conversion" / "neutron_conversion.json"
-    longer = lambda world: world["bodies"][0]["node_detector"].update(window=4)  # noqa: E731
-    neutron = Lattice(load_world(world_beside(tmp_path / "neutron", source, longer)))
-    neutron.step()  # one interval inside the window: the read's digits at the body's Nodes
-    whole, converted = neutron.credit.bodies[0], forced_write(monkeypatch)
-    standing = node_detector.share_weights(neutron, whole)
-    assert meeting.conversion_drawn(neutron, whole) and converted == [standing]
-    assert converted[0] != list(whole.weights)
-
-
-def test_the_neutron_readers_rows_stand_at_the_conversions_drawn_node(tmp_path):
-    """The folder's reader at the drawn Node (the experimenter's tool note, #1827 comment 5984864554; examples/events/neutron_conversion/read_world.py): the shipped neutron conversion world at the rate 1 and the window 1 converts at the first interval at one of the body's two Nodes, A2's draw by the record's share, the draw the click's read of the board; the reader's rows stand at the Node drawn and the output names the Node as the conversion line's: the Wronskians -15,987, 16,384 and 0 (row 1), one quantum per record out (row 3) and the rotations' sum pi (row 5); with no conversion the body's first Node, named so."""
-    reader = load_file("neutron_read_world", EVENTS / "neutron_conversion" / "read_world.py")
-    source = EVENTS / "neutron_conversion" / "neutron_conversion.json"
-    world = redeclared(json.loads(source.read_text("utf-8")))
-    body, path = world["bodies"][0], tmp_path / "w.json"
-    body["conversion"]["rate"], body["node_detector"]["window"], world["intervals"] = 1, 1, 3
-    path.write_text(json.dumps(world), encoding="utf-8")
-    found = reader.first_trial(path, 3)  # one world, the conversion's Node the read's
-    drawn = found["conversion"]["line"]["node"]["at"]
-    assert drawn in [node["node"] for node in body["nodes"]]
-    assert found["node"]["at"] == drawn and "conversion line" in found["node"]["source"]
-    out = [found["conversion"]["families"][n] for n in ("proton", "electron", "antineutrino")]
-    assert [f["wronskian"] for f in out] == [-15987, 16384, 0]  # row 1 at the drawn Node
-    assert [round(f["quanta_at_the_node"]) for f in out] == [1, 1, 1]  # row 3
-    assert round(found["rotations_sum"]["out_at_the_conversion"], 4) == 3.1416  # row 5
-    none = reader.first_trial(path, 0)  # no conversion: the body's first Node, named so
-    assert none["node"]["at"] == body["nodes"][0]["node"] and "first Node" in none["node"]["source"]
+    assert not meeting.emission_drawn(giver, emitter, 2) and emitter.deferred and given == []
+    fell = lists.largest_share_node(giver, emitter)  # the deferred emission's Node: the largest share
+    assert fell == emitter.nodes[max(range(len(standing)), key=standing.__getitem__)]
+    assert standing != list(emitter.weights) and meeting.emission_fell(giver, emitter)

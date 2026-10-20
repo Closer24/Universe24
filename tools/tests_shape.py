@@ -138,11 +138,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
         "line's take and unit, the board dark at 200 and the back-in-time gate MATCH across the tapered faces",
     ),
-    "tests/test_the_meeting.py::test_a_record_converted_whole_at_its_node_lays_the_table_at_the_rate": (
-        36,
-        "the conversion's dedicated test (the Boss, 2026-10-03): the committed neutron conversion world's lays by "
-        "the invariant and by the count, the back-in-time crossing from the lay lines, the six loader refusals",
-    ),
     "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
         35,
         "the step's speed's dedicated test (the owner's word of 2026-10-03, 15:12 Israel, let them do it): every "
@@ -153,13 +148,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         12,
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
-    ),
-    "tests/test_the_meeting.py::test_a_given_plane_is_laid_on_every_plane_alike_with_the_tables_sense_and_writes_the_sign_row": (
-        60,
-        "the lay by the count with the sense (round F of the board, the Boss's brief at the owner's word of 2026-10-03, "
-        "everything now and in parallel): the conversion table's sense per record out and its refusals, the given "
-        "planes laid alike at the quarter turn on the committed neutron conversion world, the Wronskians and the shares "
-        "at the Node, the twelve lay lines and the crossing, the sign rows' first write",
     ),
     "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
         104,
@@ -199,13 +187,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
         "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
         "self-read 0 to the bit over three intervals, a count above 1 refused by name",
-    ),
-    "tests/test_the_meeting.py::test_the_pulsed_gates_window_is_bounded_by_the_probes_lays_and_closes_at_its_absorption": (
-        70,
-        "the pulsed gate's dedicated test (the Boss's brief at the owner's word of 2026-10-03, about 80 lines): the "
-        "window bounded by the probe's lays, the lay by the count at the declared interval, the probe's click and the "
-        "drive's absorption by the labels' squares, the body's clock and the window's index on the click line, the "
-        "loader's five refusals, the back-in-time gate across the probe's lay on the shipped pulsed world",
     ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
         172,
@@ -254,12 +235,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
     ),
-    "tests/test_the_meeting.py::test_the_pulsed_closes_two_keys_are_g_by_pulse_from_e_and_g_by_probe_from_g": (
-        30,
-        "the F4 pin of the two keys of a pulsed body's close (#1793 comments 5983460299, 5983478474; the Boss's grant "
-        "5983514044): the return from e is the pulse's click 'g by pulse' and the probe finds g from g alone, 'g by probe', "
-        "one draw per close",
-    ),
     "tests/test_pixel_mode.py::test_a_packet_of_a_gapped_family_is_advanced_by_its_own_band_and_a_massless_one_by_the_vacuums": (
         20,
         "R370: the generator's exact lay advances a packet by its family's own band, cos omega = (num / den) sum cos q_a / 3 "
@@ -270,12 +245,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         60,
         "F2 fenced by way (alpha), the owner's words of 2026-10-04: the vacuum content at 60 above the holders' swing over "
         "the declared run; the Boss's grant of 60 lines",
-    ),
-    "tests/test_the_emission_node.py::test_the_neutron_readers_rows_stand_at_the_conversions_drawn_node": (
-        16,
-        "the folders' readers at the drawn Node, the Boss's round of 2026-10-04 (the experimenter's tool notes, #1827 "
-        "comment 5984864554): the neutron reader's rows 1, 3 and 5 read at the conversion line's Node, the body's second "
-        "where the draw picks it and the first where no conversion happened, the Node named with its source",
     ),
     "tests/test_the_node_detector.py::test_the_packet_readers_clicks_column_counts_the_regions_click_lines_and_not_the_givers": (
         9,

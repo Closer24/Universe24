@@ -112,7 +112,7 @@ def test_the_lays_case_on_one_photon_books_the_recoil_lost_to_the_lay(tmp_path, 
     assert click["source"] == THE_LAY and click["recoil"] == [-p for p in click["momentum"]]
     assert click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
     oracle, earlier = (json.loads(p.read_text(encoding="utf-8")) for p in (ORACLE, EARLIER))
-    kinds = {"click", "density", "parts", "credit", "erasure", "lay", "face", "conversion"}
+    kinds = {"click", "density", "parts", "credit", "erasure", "lay", "face"}
 
     def cleaned(found, last=61):  # type: ignore[no-untyped-def]
         return [

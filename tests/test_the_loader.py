@@ -322,14 +322,9 @@ def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_f
     wrong = {
         "drive": dict(parts=parts, transitions=[{**turn, "drive": "charge"}]),
         "gives_to": dict(parts=parts, transitions=[{**turn, "drive": "photon"}]),
-        "to[0]": dict(count=1, conversion={"rate": 2, "to": ["charge"], "sense": 1}),
     }
     wrong["gives_to"]["rates"] = [{**rate, "lifetime": 8, "gives_to": "charge"}]
     for key, entry in wrong.items():
         refusal = str(refused("no holder of the sign a family reads", declared, **entry))
         print(refusal)
         assert key in refusal and "'charge'" in refusal and "['nuclide', 'photon']" in refusal
-    refusal = str(
-        refused("no holder of the sign a family reads", declared, family="photon", **wrong["to[0]"])
-    )
-    assert "to[0]" in refusal and "'charge'" in refusal  # no nuclide body laid: the universe's rule

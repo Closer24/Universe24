@@ -23,8 +23,7 @@ LINES = (
     "erasure",
     "lay",
     "face",
-    "conversion",
-)  # the lines written: the clicks, the field readings, the parts' levels, the clicks written (the regions' and the records'), the fronts' shells, the lines laid and the values presented from outside the Node, the records converted whole
+)  # the lines written: the clicks, the field readings, the parts' levels, the clicks written (the regions' and the records'), the fronts' shells, the lines laid and the values presented from outside the Node
 
 
 def run_input(path: str, out_dir: str) -> dict[str, object]:

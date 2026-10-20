@@ -396,7 +396,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             15: ("features/click/__init__.py", "drawn_from"),
             16: ("lists.py", "exchange"),
             17: ("emission.py", "emitted_quantum"),
-            18: ("lists.py", "conversion"),
+            18: None,  # the conversion left the engine on 2026-10-20 with its world, a hypothesis
             19: ("lists.py", "null_window"),
             20: ("features/click/__init__.py", "presented"),
             21: ("front.py", "erased"),

@@ -15,7 +15,7 @@ MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
     "LATTICE",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, DENSITY, PARTS, CREDIT, ERASURE, LAY, FACE, CONVERSION = (
+CLICK, DENSITY, PARTS, CREDIT, ERASURE, LAY, FACE = (
     "click",
     "density",
     "parts",
@@ -23,8 +23,7 @@ CLICK, DENSITY, PARTS, CREDIT, ERASURE, LAY, FACE, CONVERSION = (
     "erasure",
     "lay",
     "face",
-    "conversion",
-)  # the output's eight lines: the node_detector's report, the lattice reading, the parts' levels, the click written (every reader's, the region's credit and a record's absorption and emission alike), the front's shell, one line laid at one Node, one value presented at one Port, a record converted whole at its Node
+)  # the output's seven lines: the node_detector's report, the lattice reading, the parts' levels, the click written (every reader's, the region's credit and a record's absorption and emission alike), the front's shell, one line laid at one Node, one value presented at one Port
 REPORT_KEYS = ("event", "label", "interval", "family", "node_detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 EXCHANGED = (
@@ -83,8 +82,6 @@ CREDIT_KEYS = (
     RECOIL,
 )  # the credit line's own keys, the one click line kind's
 ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
-INTO = "into"  # the conversion line's own key, the families of the records out
-CONVERSION_KEYS = ("window", INTO, "node")  # the conversion line's keys
 LINE, BEFORE, AFTER, PORT_SET, VALUE = (
     "line",
     "before",
@@ -117,7 +114,6 @@ OUTPUT = (
     *LAY_KEYS[:3],
     PORT_SET,
     VALUE,
-    INTO,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
@@ -212,18 +208,6 @@ def credit(
         bias is not None and bias[0] * bias[1] > 1
     ):  # the draw's bias bound g / T with its two gcds by name
         line[BIAS_BOUND] = {"g": bias[0] * bias[1], "total": bias[2], "sum": bias[0], "last": bias[1]}
-    return line
-
-
-def conversion(
-    interval: int, family: str, body: int, window: list[int], into: list[str], node: list[int]
-) -> dict[str, object]:
-    """The conversion line, the click of a record converted whole at its one Node (the fifth list of the act, ALGEBRA.md, A family's declaration, item 5; the two hands on the table, the rate and the lay; src/event_universe/conversion.py), labelled NODEDETECTOR: the interval, the record's family (the record in, its count down by one), the reader by its number among the world's `bodies`, the window [first, last] drawn over and `into`, the families of the records out in the table's order, each up by one whole quantum laid at the Node by the count; beside the result, under `node` and labelled LATTICE, the one Node written at the file's coordinates, a diagnostic for the host's tool; the lay lines of the write beside it."""
-    line = dict(
-        zip(REPORT_KEYS, (CONVERSION, MEASUREMENT, interval, family, f"{BODY} {body}"), strict=True)
-    )
-    written = {OUTPUT[1]: DIAGNOSTIC, AT: node}
-    line.update(zip(CONVERSION_KEYS, (window, into, written), strict=True))
     return line
 
 

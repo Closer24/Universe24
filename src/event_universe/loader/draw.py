@@ -50,11 +50,6 @@ class Draw:
 
 def windowless_of(value: object, label: str) -> Draw:
     """A body's `node_detector` declaring no window, an object with no key: the body with a probe among its transitions, whose window is bounded by the probe's lays at its Node, the world's schedule and no number of the body's (a `window` refused by name beside a probe; ALGEBRA.md, The pulsed gate), and the body whose window is derived at the end of the load from its drives' lays with an end (`loader/window.windowed`); every key refused by name as unknown (`keyed`), the draw being the click's read of the board and no number of the file's."""
-    if isinstance(value, dict) and "window" in value:
-        raise ValueError(
-            f"{label} declares a window beside a probe, and the window of a body with a probe is bounded by the "
-            "probe's lays at its Node, the world's schedule (ALGEBRA.md, The pulsed gate); it declares no key"
-        )
     keyed(value, label, (), ())
     return Draw(None)
 

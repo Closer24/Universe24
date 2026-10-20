@@ -202,23 +202,6 @@ def invariant(
     return spread(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]), share)
 
 
-def laid_pairs(
-    count: int,
-    action: int,
-    pair: tuple[int, int],
-    sense: int,
-    plane: bool,
-    laid: int,
-    share: tuple[int, int] = (1, 1),
-) -> list[tuple[int, int]]:
-    """The level pairs (now, before) of `count` whole quanta on every line of a record at one Node, the lay of a record converted whole at the start (the two hands; the generator's one-Node declaration, equal phases): per real line or plane the amplitude `invariant` on the level now and the level before turned by the pair's rest rotation, (A, A num div den), and for a plane its second line's pair, the sense, (0, sense A s div den) with s the largest integer whose square is at most den^2 - num^2, so that its Wronskian is sense x A^2 sin omega; `laid` pairs for real lines, 2 `laid` for planes, every one alike; every level 0 at the count 0."""
-    num, den = pair
-    size, sine = invariant(count, action, pair, laid, share), largest_below(den * den - num * num)
-    real = (size, int(division_forward(size * num, den, 0)[0]))
-    imaginary = (0, sense * int(division_forward(size * sine, den, 0)[0]))
-    return [pair for _ in range(laid) for pair in ((real, imaginary) if plane else (real,))]
-
-
 def line_total(action: int, resonance: tuple[int, int]) -> int:
     """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, (the largest x with x^2 <= T^2 den^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`), twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
     num, den = resonance

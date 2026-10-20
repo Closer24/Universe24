@@ -14,7 +14,7 @@ from event_universe.core.ports import AXES, run_offsets
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter
 from event_universe.features import phase
-from event_universe.features.click import Face, laid_pairs, standing
+from event_universe.features.click import Face, standing
 from event_universe.lay import laid
 from event_universe.lay import written as lay_written
 from event_universe.loader.derived import quanta_records
@@ -49,15 +49,8 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
     levels: list[tuple[np.ndarray, np.ndarray]] = []
     for here, weight, (direction, sense) in zip(books.nodes, books.weights, phases, strict=True):
         share = (weight, total)
-        if books.declared.conversions:
-            pairs = laid_pairs(
-                count, action, family.pair, books.declared.sense, family.plane, family.laid, share
-            )
-        else:
-            (re, im), (re_before, im_before) = standing(
-                count, action, family.pair, direction, sense, share
-            )
-            pairs = [(re, re_before), (im, im_before)]
+        (re, im), (re_before, im_before) = standing(count, action, family.pair, direction, sense, share)
+        pairs = [(re, re_before), (im, im_before)]
         levels = levels or [
             (records.zeros(board.shape, object), records.zeros(board.shape, object)) for _ in pairs
         ]

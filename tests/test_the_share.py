@@ -113,7 +113,7 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
 
 def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
     """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the pulsed Zeno box, the shelved ion and the anticoincidence world over 24 intervals, every family (the worlds in the read's shape, tests/laws.py `world_beside`). (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
-    worlds = (("zeno", "zeno_1"), ("zeno_pulsed", "zeno_pulsed_1"), ("shelved_ion", "shelved_ion"))
+    worlds = (("zeno", "zeno_1"), ("shelved_ion", "shelved_ion"))
     for folder, name in (*worlds, ("anticoincidence", "one_photon")):
         copied = world_beside(tmp_path / name, EVENTS / folder / f"{name}.json", lambda w: None)
         board = Lattice(load_world(copied))

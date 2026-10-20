@@ -49,14 +49,12 @@ GATED = (  # the smallest shipped world of each builder whose load is seconds; t
     ("anticoincidence", "one_photon"),
     ("bell", "bell_a_prime_b_prime"),
     ("ghz", "ghz_y_x_y"),
-    ("neutron_conversion", "neutron_conversion"),
     ("packet_emission", "packet_emission"),
     ("resonance", "detuned"),
     ("shelved_ion", "shelved_ion"),
     ("two_slits", "two_slits"),
     ("which_way", "one_gap"),
     ("zeno", "zeno_1"),
-    ("zeno_pulsed", "zeno_pulsed_1"),
 )
 GAMMA, PAIR, RING = 6000, (4000, 6000), Wrap(True, True, True)
 INTEGERS, TURNING = universe_of(json.loads((EVENTS / "turning.json").read_text(encoding="utf-8")))

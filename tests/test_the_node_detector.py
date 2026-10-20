@@ -299,7 +299,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     assert logged == {f for f in faced if f[4] <= board.interval} == set()  # no face: the drive a beam
     assert BACK.verdict(Lattice(load_world(path)), 120)["verdict"] == "MATCH"  # every act crossed
-    fresh = Lattice(load_world(path), (conv := []).append)  # the conversion's list through the one act
+    fresh = Lattice(
+        load_world(path), (conv := []).append
+    )  # records given by the count through the one act
     counts, items = dict(fresh.credit.counts), [twist.Item(drv, None, None, -1, (here,))]
     items += [twist.Item(k, None, None, 1, (here,), TOP_PAIR, 1) for k in (weak, light)]
     one = [act.Alternative(1, lambda: items)]

@@ -143,12 +143,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "invariant",
         "division_forward",
     ): "D",  # the invariant's quotient, once
-    ("features/click/__init__.py", "laid_pairs", "largest_below"): "S",  # the sine den by the search
-    (
-        "features/click/__init__.py",
-        "laid_pairs",
-        "division_forward",
-    ): "D",  # the pairs' levels, once each
     ("features/click/__init__.py", "line_total", "largest_below"): "S",  # the search on the line's total
     (
         "features/click/__init__.py",
