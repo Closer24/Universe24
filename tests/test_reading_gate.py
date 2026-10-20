@@ -9,9 +9,11 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     from tests.laws import EVENTS, ROOT, load_file, world_beside
 
     gate = load_file("reading_gate", ROOT / "tools" / "reading_gate.py")
-    copied = world_beside(tmp_path, EVENTS / "zeno" / "zeno_4.json", lambda world: None)
+    copied = world_beside(
+        tmp_path, EVENTS / "resonance" / "resonant.json", lambda world: None
+    )  # re-pinned 2026-10-20
     folder, world, document = copied.parent, copied.name, copied.parent / "blind_and_reading.md"
-    design = json.loads((EVENTS / "zeno" / "design.json").read_text(encoding="utf-8"))
+    design = json.loads((EVENTS / "resonance" / "design.json").read_text(encoding="utf-8"))
     design.pop("seeds", None)
     design["knob"], design["knob_values"] = "amplitude", [392, 393, 394]  # three worlds, the knob
     (folder / "design.json").write_text(json.dumps(design), encoding="utf-8")
@@ -19,7 +21,11 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     for _ in range(board.world.intervals):
         board.step()
     clicks = [line for line in lines if line["event"] == "credit" and line["label"] == "NODEDETECTOR"]
-    absorptions, quanta = sum(1 for line in clicks if line["absorbed"]), board.books()["pulse"]["quanta"]
+    absorptions = sum(
+        1 for line in clicks if line["absorbed"] and line["node_detector"] == "body 1"
+    )  # the taker
+    quanta, total = board.books()["pulse"]["quanta"], sum(int(line["count"]) for line in clicks)
+    body_0 = sum(int(line["count"]) for line in clicks if line["node_detector"] == "body 0")
     emissions = sum(
         1 for line in clicks if line["emitted"]
     )  # the record takes climbing, emits descending
@@ -27,8 +33,8 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     trials = gate.trials_reading(folder / world, folder / "design.json", None)
     ends = trials["ends_in_part"]["body 0"].get("e", [0])[0]
     rows = [
-        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions),
-        ("NODEDETECTOR", "run_inputs", "clicks", absorptions),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 1", absorptions),
+        ("NODEDETECTOR", "run_inputs", "clicks", total),
         ("LATTICE", "run_inputs", "books pulse quanta", quanta),
         ("LATTICE", "run_inputs", "intervals", board.world.intervals),
         ("LATTICE", "back_in_time", f"intervals {board.world.intervals}", "MATCH"),
@@ -36,12 +42,10 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         ("LATTICE", "meeting_trials", "trials", 3),
     ]
     wrong = [
-        ("NODEDETECTOR", "run_inputs", "absorptions body 0", absorptions + 1),
+        ("NODEDETECTOR", "run_inputs", "absorptions body 1", absorptions + 1),
         ("NODEDETECTOR", "run_inputs", "intervals", 48),
     ]
-    head = (
-        "# A copy of the Zeno world\n\n## The gate's table\n\n| label | world | by | reading | value |\n"
-    )
+    head = "# A copy of the resonant world\n\n## The gate's table\n\n| label | world | by | reading | value |\n"
 
     def written(table):
         body = "".join(
@@ -86,7 +90,7 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
         str(absorptions + 1),
     ) and "reason" not in read[-2]
     assert read[-1]["reason"] == "the reading's own label is LATTICE"
-    screen = f"| region | zeno_4 clicks | zeno_4 share |\n| --- | --- | --- |\n| body 0 | {absorptions} | 1.0 |\n| N | {absorptions} | |\n"
+    screen = f"| region | resonant clicks | resonant share |\n| --- | --- | --- |\n| body 0 | {body_0} | 1.0 |\n| N | {total} | |\n"
     document.write_text("# A copy\n\n## The reading\n\n" + screen, encoding="utf-8")
     read = report(0)
     assert [(line["reading"], line["table"]) for line in read] == [
@@ -108,11 +112,13 @@ def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_p
     from tests.laws import EVENTS, ROOT, load_file, world_beside
 
     trials = load_file("meeting_trials", ROOT / "tools" / "meeting_trials.py")
-    folder = EVENTS / "anticoincidence"
-    path = world_beside(tmp_path, folder / "one_photon.json", lambda world: None)
+    folder = (
+        EVENTS / "resonance"
+    )  # re-pinned 2026-10-20 from the anticoincidence folder: two records, no packet
+    path = world_beside(tmp_path, folder / "resonant.json", lambda world: None)
     design = json.loads((folder / "design.json").read_text(encoding="utf-8"))
     design = {k: v for k, v in design.items() if k != "seeds"}
-    design.update(knob="source", knob_values=[48, 47, 46])  # three worlds, the packets' source moved
+    design.update(knob="source", knob_values=[0, 1, 2], trial_intervals=48)  # three worlds
     (tmp_path / "design.json").write_text(json.dumps(design), "utf-8")
     found = trials.reading(path, tmp_path / "design.json", None, tmp_path / "trials")
     seeded = {**design, "seeds": [1, 2, 3]}

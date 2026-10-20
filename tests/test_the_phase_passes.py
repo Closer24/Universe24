@@ -61,9 +61,11 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     monkeypatch.setattr(meeting, "turned_labels", held)
     monkeypatch.setattr(act, "relaid", spied)
     monkeypatch.setattr(act, "leaving_phase", read)
-    board = Lattice(load_shipped(EVENTS / "zeno" / "zeno_2.json"), (lines := []).append)
+    board = Lattice(
+        load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append
+    )  # re-pinned 2026-10-20 from zeno_2
     taken: list[dict] = []
-    while not taken and board.interval < 96:
+    while not taken and board.interval < 400:
         board.step()
         taken = [
             c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
@@ -77,7 +79,7 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     entered = (count, phases[0][0], phases[0][1])
     assert phases == [(turned_direction(r, i, x, y), s) for (r, i), s in own]  # C3: each Node its own
     print(
-        f"the Zeno world's first absorption at {interval}: the leaving part {leaves} stands at {(re, im)}, the arrival "
+        f"the chain world's first absorption at {interval}: the leaving part {leaves} stands at {(re, im)}, the arrival "
         f"(X, Y') = {(x, y)}, atan2 = {math.degrees(math.atan2(y, x)):.3f} degrees, the entered part laid at {entered[1]}"
     )
     assert y != 0 and entered == (1, turned_direction(re, im, x, y), sense) and entered[1] != (re, im)

@@ -51,11 +51,12 @@ REAL_PORT_DIGESTS: dict[
     "ghz_y_x_y": ("23627820aeafc4c8", "21422c4532c84b95", 3300),
     "ghz_y_y_x": ("016e098bfdb7f7a2", "befdc50e632d240e", 5007),
 }
-REFUSED = {  # the ninth's read refuses these by name: the digits spent at a second draw of one interval
-    "two_slits": "the regions of 'charge' at the interval 130 has the number 522643899 left",
-}
+REFUSED: dict[
+    str, str
+] = {}  # nothing refused on the landing: the two slits draw at the window 1 and run whole
 REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
     {
+        "two_slits": ("d3e46e78af4c506a", "be63d2ce99f6604a", 2696),  # the landing, 2026-10-20
         "born_a_b": ("c35111c3692e87aa", "c192784fb41509b1", 290),
         "born_a_b_prime": ("f5348b8d80b75fd5", "c192784fb41509b1", 290),
         "born_a_prime_b": ("50959fba5bf17572", "b23542a6b2c460fd", 290),
@@ -108,8 +109,8 @@ def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  #
     )
 
 
-def test_the_two_slits_world_is_refused_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world, refused by name at its window's close 130 as the ninth refuses it (the digits spent by the many-draw close; `worlds_read`)."""
+def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
+    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording at the landing head (`worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
     worlds_read(monkeypatch, "two_slits", ("two_slits",))
 
 

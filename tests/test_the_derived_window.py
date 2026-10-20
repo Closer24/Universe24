@@ -14,8 +14,109 @@ from event_universe.loader.world import World, parse_world
 from tests.laws import EVENTS, ROOT, emit_and_take_world, refused, world_beside
 from tests.laws_read import redeclared
 
-CHAIN, ANTICOINCIDENCE = EVENTS / "chain", EVENTS / "anticoincidence"
-SIX = sorted(json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))["worlds"])
+CHAIN = EVENTS / "chain"
+# the deleted two-photons world's declaration and its universe, inlined 2026-10-20 (the loader's derived window reads
+# the files alone, no interval stepped): two drives, one lay without an end
+TWO_PHOTONS = {
+    "shape": [96, 1, 1],
+    "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
+    "face_depth": 1,
+    "intervals": 170,
+    "universe": "examples/events/anticoincidence/two_atoms_two_records.json",
+    "bodies": [
+        {
+            "family": "atom",
+            "nodes": [{"node": [23, 0, 0], "weight": 1}, {"node": [24, 0, 0], "weight": 1}],
+            "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
+            "transitions": [
+                {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]},
+                {"from": "g", "to": "e", "drive": "photon_b", "weight": 6, "resonance": [5414, 6000]},
+            ],
+            "rates": [],
+            "node_detector": {},
+        },
+        {
+            "family": "atom",
+            "nodes": [{"node": [71, 0, 0], "weight": 1}, {"node": [72, 0, 0], "weight": 1}],
+            "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
+            "transitions": [
+                {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]},
+                {"from": "g", "to": "e", "drive": "photon_b", "weight": 6, "resonance": [5414, 6000]},
+            ],
+            "rates": [],
+            "node_detector": {},
+        },
+    ],
+    "packets": [
+        {
+            "family": "photon",
+            "along": "x",
+            "wave": [1, 4],
+            "phase": [0, 1],
+            "amplitude": 110,
+            "top": {"x": [48, 48], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": 8, "y": 0, "z": 0},
+        },
+        {
+            "family": "photon_b",
+            "along": "x",
+            "wave": [-1, 4],
+            "phase": [0, 1],
+            "amplitude": 110,
+            "top": {"x": [47, 47], "y": [0, 0], "z": [0, 0]},
+            "edge": {"x": 8, "y": 0, "z": 0},
+        },
+    ],
+    "node_detectors": [],
+    "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
+}
+TWO_PHOTONS_MODE = {
+    "world_digest": "f8826ef1ec30537e8c4af9c498395b136e6722b60e8277c649857fde5c65c72b",
+    "bodies": [],
+    "packets": [
+        {
+            "family": "photon",
+            "pair": [6000, 6000],
+            "amplitude": 110,
+            "count": 1,
+            "moving": {
+                "now": {
+                    "at": [41, 43, 44, 45, 47, 48, 49, 51, 52, 53, 55],
+                    "values": [3, -24, -55, -54, 75, 110, 75, -54, -55, -24, 3],
+                },
+                "before": {
+                    "at": [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56],
+                    "values": [2, 3, -11, -43, -60, -29, 43, 103, 98, 34, -36, -61, -39, -8, 4, 1, -1],
+                },
+            },
+        },
+        {
+            "family": "photon_b",
+            "pair": [6000, 6000],
+            "amplitude": 106,
+            "count": 1,
+            "moving": {
+                "now": {
+                    "at": [40, 41, 43, 44, 45, 47, 48, 49, 51, 52, 53],
+                    "values": [4, 11, -39, -76, -66, 78, 106, 66, -39, -34, -11],
+                },
+                "before": {
+                    "at": [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55],
+                    "values": [8, 10, -14, -58, -80, -43, 37, 99, 95, 37, -22, -41, -24, -5, 1],
+                },
+            },
+        },
+    ],
+}
+TWO_RECORDS = {
+    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+    "families": [
+        {"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}},
+        {"name": "photon", "pair": [6000, 6000], "dimension": 1, "reads": {}},
+        {"name": "photon_b", "pair": [6000, 6000], "dimension": 1, "reads": {}},
+    ],
+}
+THREE = sorted(json.loads((CHAIN / "design.json").read_text(encoding="utf-8"))["worlds"])
 
 
 def declared(path: Path, window: int | None = None, edit=None) -> World:  # type: ignore[no-untyped-def]
@@ -72,38 +173,39 @@ def test_the_shipped_lays_passages_are_derived_at_load_and_one_along_every_axis_
     assert (
         -(-18 * 3 * sines[0] // sines[1]) == 33
     )  # ceil((L + b - 1) / v_g), v_g = sin k / (3 sin omega)
-    for name in ("one_photon", "two_photons"):
-        world = declared(ANTICOINCIDENCE / f"{name}.json")
-        assert windows(world) == [33, 33] and passages(world, 0)[:1] == [33]
-        assert all(not body.detector.rates for body in world.bodies if body.detector is not None)
-    for name in SIX:
+    for name in (
+        THREE
+    ):  # re-pinned 2026-10-20: the chain's three worlds along the axes, the toy atom worlds deleted
         world = declared(CHAIN / f"{name}.json")
         assert windows(world) == [48, 48] and passages(world, 0) == [35, 48, 48], name  # the longest 48
         assert [r.lifetime for b in world.bodies if b.detector for r in b.detector.rates] == [48, 48]
-    detuned = declared(CHAIN / "chain_detuned.json")
-    assert windows(detuned) == [116] and passages(detuned, 0) == [116, 48]
+    for name in sorted(
+        json.loads((EVENTS / "chain" / "design.json").read_text(encoding="utf-8"))["worlds"]
+    ):
+        world = declared(EVENTS / "chain" / f"{name}.json")
+        assert windows(world) == [48, 48] and passages(world, 0) == [35, 48, 48], name  # the longest 48
+        assert [r.lifetime for b in world.bodies if b.detector for r in b.detector.rates] == [48, 48]
     emitted = declared(EVENTS / "packet_emission" / "packet_emission.json")
     assert windows(emitted) == [758] and passages(emitted, 0) == [758]
     assert (wave_cosine(1, 5, den), largest_below(den * den - 4000 * 4000)) == (4853, 4472)
     print(
-        f"the derived windows: one_photon {windows(declared(ANTICOINCIDENCE / 'one_photon.json'))}, the chain's six "
-        f"{[windows(declared(CHAIN / f'{n}.json')) for n in SIX]} (the lays {passages(world, 0)}), chain_detuned "
-        f"{windows(detuned)} (the lays {passages(detuned, 0)}), packet_emission {windows(emitted)}"
+        f"the derived windows: the chain's three (the lays {passages(world, 0)}), packet_emission {windows(emitted)}"
     )
 
 
 def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_no_end(tmp_path):
     """The refusals and the kept keys: a declared window on a body whose drives' lays all have an end is refused by name with the body, the drives and the derived W (one_photon's declaration with its key, W = 33; the resonance world with its ring opened, W = 48 = tau, the source in time's own duration, the emitter's own train counted for itself and read by the taker); a lay with no end keeps the declared key and its absence is refused by name with the body and the drive: the Zeno pulse filling the periodic box (zeno_1's 48 as shipped and set again), the resonance ring's source in time (48 and 96), the ion's two drives filling its box (1); mixed drives, one laid with an end and one without (two_photons on a ring with `photon_b`'s top the whole ring), the same, declared."""
-    one, resonant = ANTICOINCIDENCE / "one_photon.json", EVENTS / "resonance" / "resonant.json"
-    refusal = str(refused("W = 33", declared, one, 48))
-    assert "bodies[0].node_detector declares the window 48" in refusal and "['photon']" in refusal
+    chain, resonant = CHAIN / "chain_x_minus.json", EVENTS / "resonance" / "resonant.json"
+    refusal = str(
+        refused("W = 48", declared, chain, 96)
+    )  # re-pinned 2026-10-20 from one_photon's W = 33
+    assert "bodies[0].node_detector declares the window 96" in refusal and "['photon']" in refusal
 
     def opened(document):  # type: ignore[no-untyped-def]
         document["boundary"]["x"], document["face_depth"] = "open", 1
 
     assert windows(declared(resonant, None, opened)) == [48, 48]  # the span tau, both bodies
     assert "W = 48" in str(refused("declares the window 96", declared, resonant, 96, opened))
-    zeno = EVENTS / "zeno" / "zeno_1.json"
 
     def shipped(path):  # type: ignore[no-untyped-def]
         copied = world_beside(tmp_path / path.stem, path, lambda w: None)  # the read's shape
@@ -112,18 +214,18 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
         finally:
             world_files.REPOSITORY_ROOT = ROOT  # the shipped files read at their paths after
 
-    assert windows(shipped(zeno)) == [48] and windows(declared(zeno, 48)) == [48]
-    refusal = str(refused("declares no window", declared, zeno))
-    assert "bodies[0].node_detector" in refusal and "['pulse']" in refusal and "no end" in refusal
     assert windows(shipped(resonant)) == [48, 96]
-    assert windows(shipped(EVENTS / "shelved_ion" / "shelved_ion.json")) == [1]
 
     def ring(document):  # type: ignore[no-untyped-def]
         document["boundary"]["x"] = "periodic"
         del document["face_depth"], document["receding"]
         document["packets"][1]["top"]["x"] = [0, document["shape"][0] - 1]  # photon_b fills the ring
 
-    two = ANTICOINCIDENCE / "two_photons.json"
+    (universe := tmp_path / "two_records.json").write_text(json.dumps(TWO_RECORDS), encoding="utf-8")
+    document = {**TWO_PHOTONS, "universe": str(universe)}
+    (two := tmp_path / "two_photons.json").write_text(json.dumps(document), encoding="utf-8")
+    mode = {**TWO_PHOTONS_MODE, "world_digest": world_files.input_digest(document)}
+    two.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
     assert windows(declared(two, 48, ring)) == [48, 48]  # mixed drives: the declared key stands
     assert passages(declared(two, 48, ring), 0) == [33, None]
     refused("declares no window", declared, two, None, ring)
@@ -171,7 +273,7 @@ def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_th
 def test_an_emitter_on_a_periodic_board_is_dark_to_its_source_alone_and_released_at_the_spans_end(
     tmp_path, monkeypatch
 ):
-    """C5's reach where the lay has no end (the reader's fix of 2026-10-19: a periodic board, the quantum circulating as in a cavity, the first line as on main): on the emit-and-take world (`tests.laws`, a periodic chain of 48) body 0's rate lays the pulse on the ring, a lay with no end (`Rate.ended` False), so body 0 is dark to the pulse while its source has intervals left (61 to 108) and released at the span's end, lit by its own circulating train, closing a null window on it (156) and keeping its P through the re-lay (tests/test_part_h_fix.py); body 1 takes at 169 with the piece's source body 0, the count 0: the readings of the periodic worlds (the resonance ring, the shelved ion) stand as on main."""
+    """C5's reach where the lay has no end (the reader's fix of 2026-10-19: a periodic board, the quantum circulating as in a cavity, the first line as on main): on the emit-and-take world (`tests.laws`, a periodic chain of 48) body 0's rate lays the pulse on the ring, a lay with no end (`Rate.ended` False), so body 0 is dark to the pulse while its source has intervals left (61 to 108) and released at the span's end, lit by its own circulating train, closing a null window on it (156) and keeping its P through the re-lay (tests/test_part_h_fix.py); body 1 takes at 169 with the piece's source body 0, the count 0: the readings of the periodic worlds (the resonance ring, the shelved ion) stand as on main. Re-pinned 2026-10-20 under the eighth commit of the read (the carried span dropped where the body left its part): the taker's click at 353 where it read 169 before, the null window at 143 where it read 156."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)), window=48)
     board = Lattice(world_files.load_world(path), (lines := []).append)
@@ -198,14 +300,16 @@ def test_an_emitter_on_a_periodic_board_is_dark_to_its_source_alone_and_released
         board.step()
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     assert [(c["interval"], c["node_detector"], c["source"]) for c in taken] == [
-        (169, "body 1", "body 0")
+        (353, "body 1", "body 0")  # 169 before the eighth commit of the read (2026-10-20)
     ]
     nulls = [
         c["interval"]
         for c in lines
         if c["event"] == "credit" and c["node_detector"] == "body 0" and c["count"] == 0
     ]
-    assert giver.windows >= 1 and nulls == [156]  # its window on its own train, closed with no click
+    assert giver.windows >= 1 and nulls == [
+        143
+    ]  # its window on its own train, closed with no click; 156 before the eighth
     print(
         f"C5 on the ring: body 0 gave at {given}, released at {given + 48}, its null window at {nulls}, "
         f"body 1 took at {taken[0]['interval']}"

@@ -181,7 +181,7 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
 
 def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_path, monkeypatch):
     """The generator's `count` of a packet is the books' count of its record at the lay (`Lattice.credit.counts`; the mathematician's finding of 2026-10-03): the lines the books count summed over the board and the total read in quanta once, never per Node, so the shipped two slits' 1,809 and the Zeno world's 833 are the books' own at the loaded universe's paces (the generator lays and counts a packet at the declared rests of the holders its family reads, `packet_entry` and `vacuum_of`, as the bodies' lays are laid; the two hands' way (i), #1793 comment 5985967677 (4)), and a dilute wave below half a quantum at every Node reads its one quantum over the board while the per-Node reading sums to 0."""
-    for folder, name in (("two_slits", "two_slits"), ("chain", "chain_x_minus")):
+    for folder, name in (("two_slits", "two_slits"), ("which_way", "one_gap")):
         world = EVENTS / folder / f"{name}.json"
         entries = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))["packets"]
         board = Lattice(load_shipped(world))  # the books at the loaded universe's own paces
@@ -195,7 +195,7 @@ def test_a_packets_mode_count_is_the_books_count_read_once_over_the_board(tmp_pa
     assert entry["count"] == board.credit.counts[charge] == 1 and not board.quanta(charge)[0].any()
 
 
-def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rounding():
+def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rounding(tmp_path):
     """The exact packet lay (ALGEBRA.md, The packet lay; the hands' route, #1793 comments 5978111549 (c) and 5978208136 (3)) on the shipped worlds whose packets carry an envelope, the two slits, the which-way, the GHZ and Bell worlds (the anticoincidence's photons at the amplitudes 116 and 112 are left out: their rounding bound is 7 x 10^-2, above the bound that means something): each packet laid by the generator as the mode file holds it (`pixel_mode`, through the division act) and read mode by mode against the law's exact lay in real numbers, the test's own floats from the file's keys (a_i = b e_i cos(k x_i + phi) and s_i = b e_i sin(k x_i + phi), the band cos omega(q) = (cos q_x + cos q_y + cos q_z) / 3 at the board's wave numbers, the before level the real part of the packet z = a + i s with every component advanced by its own omega(q), the uniform content of each level out in proportion to the envelope). The roots per bin, N_q = fftn(now) and B_q = fftn(before), u_q = (B_q - N_q e^(-i omega_q)) / (2 i sin omega_q) forward in time and v_q = (N_q e^(i omega_q) - B_q) / (2 i sin omega_q) backward, the bins with sin omega_q = 0 skipped (the uniform mode the division act removed, the staggered mode); a real pair's mirror bins carry the conjugate roots, u_(-q) = conj(v_q), so the backward root is read over the carrier's half-space, 0 < sign(p) q_along < pi, as its departure from the exact lay's own v*_q (the packet's mirror content, 0 beyond it before the rounding): misplaced = SUM_q |v_q - v*_q|^2 sin omega_q over the exact lay's forward form F* = SUM_q |u*_q|^2 sin omega_q. The backward root's absolute share, SUM_q |v_q|^2 sin omega_q over F*, stays at the analytic packet's own leakage into the mirror bins (a + i s of a finite envelope is not one-sided; the advisor's remark, #1793 comment 5980093560 (2)), 3.6 x 10^-4 of the form at the two slits at the weight sin omega and 2.3 x 10^-4 at sin^2 omega (Bell's 3.1 x 10^-4 and 2.7 x 10^-4, the GHZ's 6.8 x 10^-3 with its envelope across the beam), and the misplaced share is the integer lay's departure from it, the rounding's. The same number for the plain lay's pair, before_i = b e_i cos(k x_i + phi + omega_k) from the same a and s (the engine's lay before this commit, the law's beta per component), rounded the same way. The bound from the rounding alone, from the file's own numbers: every laid level is off the real line by at most one half at every Node (the exact before level's tails reach every Node of the board, sqrt(1 - **L**^2) being no local read), so each level's error has the form at most N^2 / 4 over the bins (Parseval, N the board's Nodes) and the two levels' errors add in amplitude, SUM_q |R_q e^(i omega_q) - T_q|^2 <= N^2, the backward form from the error at most N^2 / (4 sin omega_min), sin omega_min the board's smallest nonzero sin omega_q: bound = N^2 / (4 sin omega_min F*). The transform runs over the board at its largest declared extents (a receding axis's `largest`, the packet at its coordinates, the before level cropped to the board), as the generator's does. Printed per file, the plain lay's share, the exact lay's and the bound (a lattice diagnostic read at this commit, re-read at the frozen hash): the two slits 6.6 x 10^-2, 6.8 x 10^-6 and 2.3 x 10^-4, the which-way 6.6 x 10^-2, 6.2 x 10^-6 and 2.3 x 10^-4, the GHZ's three beams 2.8 x 10^-2, 4.3 x 10^-6 and 3.4 x 10^-4, Bell's two 7.6 x 10^-2, 9.5 x 10^-6 and 6.5 x 10^-6 and 3.1 x 10^-4 (the law's first-order estimate of the plain lay's share, 3.4 percent at the top 1 and the edge 6, is the band's narrow-width line; the exact per-component share at the shipped widths is larger); asserted: the exact lay's share below the bound and below the plain lay's by two orders, the bound below 10^-3. A single plane wave over a whole periodic box (the shipped Zeno drive, no edge, the top the whole axis) has one component, so its before level is the plain lay's, b cos(k x + phi + omega_k) by the same rounding, at every Node exactly."""
 
     def real_line(document, packet, path):
@@ -297,8 +297,28 @@ def test_the_exact_before_level_puts_no_form_in_the_backward_root_beyond_the_rou
                 shares["exact"] < bound and shares["exact"] < 1e-3
             )  # the share, not the bound, under 10^-3
             assert 100 * shares["exact"] < shares["plain"]
-    path = EVENTS / "zeno" / "zeno_1.json"  # one plane wave at the content 0: no gravity row
-    document = json.loads(path.read_text(encoding="utf-8"))
+    plane = {
+        "shape": [8, 8, 5],
+        "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
+        "intervals": 48,
+        "universe": "examples/events/zeno/zeno_atom.json",
+        "packets": [
+            {
+                "family": "pulse",
+                "along": "x",
+                "wave": [1, 2],
+                "phase": [0, 1],
+                "amplitude": 392,
+                "top": {"x": [0, 7], "y": [0, 7], "z": [0, 4]},
+                "edge": {"x": 0, "y": 0, "z": 0},
+            }
+        ],
+        "node_detectors": [],
+        "bodies": [],
+    }  # one plane wave at the content 0, no gravity row: the deleted zeno_1's packet on its universe (2026-10-20)
+    (path := tmp_path / "plane.json").write_text(json.dumps(plane), encoding="utf-8")
+    TOOL.main(["--input", str(path)])
+    document = plane
     a, s, _envelope, omega_k = real_line(document, document["packets"][0], path)
     assert (
         laid_by(document, path)[0][0][1] == rounded(a * math.cos(omega_k) - s * math.sin(omega_k))

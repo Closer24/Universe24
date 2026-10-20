@@ -147,9 +147,35 @@ def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, interval
     return path
 
 
+ION_UNIVERSE = {
+    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+    "families": [
+        {"name": "ion", "pair": [1, 1299], "dimension": [3, 2], "reads": {}},
+        {
+            "name": "strong_drive",
+            "pair": [6000, 6000],
+            "held": {"sources": ["wronskian"], "level_weight": 1, "act": "rotation", "write_weight": 1},
+            "reads": {},
+        },
+        {
+            "name": "weak_drive",
+            "pair": [6000, 6000],
+            "held": {"sources": ["wronskian"], "level_weight": 1, "act": "rotation", "write_weight": 1},
+            "reads": {},
+        },
+        {
+            "name": "fluorescence",
+            "pair": [6000, 6000],
+            "held": {"sources": ["wronskian"], "level_weight": 1, "act": "rotation", "write_weight": 1},
+            "reads": {},
+        },
+    ],
+}
+
+
 def ion_universe_beside(folder: Path) -> None:
-    """The shelved ion's universe copied beside a world as u.json: four families, no holder of the content, so a periodic box needs no sink."""
-    (folder / "u.json").write_bytes((EVENTS / "shelved_ion" / "mercury_ion.json").read_bytes())
+    """The ion-like universe written beside a world as u.json (the shelved ion's, inlined 2026-10-20 when its folder left with the toy atom worlds): four families, the ion of dimension [3, 2] and three drives held by the Wronskian at the level weight 1, no holder of the content, so a periodic box needs no sink."""
+    (folder / "u.json").write_text(json.dumps(ION_UNIVERSE), encoding="utf-8")
 
 
 def ion_world(folder: Path, tool, intervals: int = 23, amplitude: int = 600, body: bool = True) -> Path:  # type: ignore[no-untyped-def]

@@ -136,9 +136,11 @@ def test_a_family_without_the_key_loads_and_steps_as_before(tmp_path, monkeypatc
     for universe in ("rule.json", "pair.json", "anticoincidence/two_atoms.json", "charged.json"):
         families = universe_of(json.loads((EVENTS / universe).read_text(encoding="utf-8")))[1]
         assert all(family.exchange == 0 for family in families), universe
-    photon = world_beside(tmp_path, EVENTS / "anticoincidence" / "one_photon.json", lambda w: None)
-    board = Lattice(load_world(photon), lambda line: None)
-    assert board.credit.bodies, "the one-photon world declares its bodies"
+    born = world_beside(
+        tmp_path, EVENTS / "bell_singlet" / "born_a_b.json", lambda w: None
+    )  # re-pinned 2026-10-20
+    board = Lattice(load_world(born), lambda line: None)
+    assert board.credit.bodies, "the born world declares its body"
     for books in board.credit.bodies:
         assert [lists.exchange_factor(board, books, part) for part in range(len(books.counts))] == [
             1
