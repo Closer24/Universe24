@@ -176,7 +176,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
             "gate": "within sqrt(N p (1 - p)) of N p over the seeds",
         },
         "seeds": len(design["seeds"]),
-        "status": "the two hands' lines (224, 229, the advisor's seconds; the root 242 section 1, the advisor's second); fence: clicks for the count, a lattice reading for the cosine, the lay lines for the direction",
+        "status": "the two hands' lines (224, 229, the advisor's seconds; the root 242 section 1, the advisor's second); fence: clicks for the count, a lattice reading for the cosine, the lay lines for the direction; 2026-10-20: read again under the click's read of the board with the body's window 48 derived from its own rate's lifetime, the blind as written before the lay, the count's MISS by name standing (the region credits 0 within 168), the direction the first declared +x with no digit to draw one",
     }
 
 
