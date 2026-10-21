@@ -1,0 +1,5 @@
+{"integers": {"node_clock": 6000, "quantum_action": 11988000, "width": 63, "link_unit": 16},
+ "families": [
+  {"name": "charge", "pair": [6000, 6000], "reads": {}, "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1332, "act": "rotation"}},
+  {"name": "proton", "pair": [0, 6000], "reads": {"charge": 3}, "dimension": 2},
+  {"name": "electron", "pair": [4000, 6000], "reads": {"charge": 3}, "dimension": 2}]}

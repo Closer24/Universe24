@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import credit, digits, flux, lists, node
+from event_universe import credit, digits, flux, lists, node, taker
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
 from event_universe.node_detector import (
@@ -258,3 +258,4 @@ def jumped(board: Lattice) -> None:
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
         books.deferred = False
+    taker.jumped(board)  # the world's takers under the key `takers`, after the declared bodies' acts

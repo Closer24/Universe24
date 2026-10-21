@@ -26,6 +26,7 @@ PHYSICAL_MODULES = (
     "world_files.py",
     "digits.py",
 )
+PHYSICAL_MODULES += ("frame.py", "taker.py", "loader/takers.py")  # the sprint's taker, 2026-10-21
 PHYSICAL_MODULES += (
     "records.py",
     "bookings.py",

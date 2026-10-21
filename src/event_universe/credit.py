@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import meeting_back, share
+from event_universe import meeting_back, share, taker
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
@@ -82,6 +82,9 @@ class Books:
     weights: dict[tuple[int, str], list[int]] = field(default_factory=dict)
     regrown: list[NodeState] = field(default_factory=list)
     stepped: dict[int, int] = field(default_factory=dict)
+    takers: list[taker.Taker] = field(
+        default_factory=list
+    )  # the world's takers under the key `takers`, read once at the lay (taker.takers_of; empty without the key)
 
     @property
     def reads_sides(self) -> bool:
@@ -157,6 +160,8 @@ class Books:
         books.support = tuple(sorted({at for _t, nodes in books.births.values() for at in nodes}))
         if books.reach == CONE:  # frame 0, the reference of every record laid at the start, kept once
             books.reference = dict.fromkeys(books.births, meeting_back.frame_of(board))
+        board.credit = books  # the takers' lay reads the books through the board
+        books.takers = taker.takers_of(board)
         return books
 
 

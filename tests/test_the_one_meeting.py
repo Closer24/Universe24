@@ -485,6 +485,7 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "cone",
         "regrown",
         "stepped",
+        "takers",
         "lays",
         "moments",
         "written",
