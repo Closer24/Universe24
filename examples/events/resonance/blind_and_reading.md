@@ -477,3 +477,7 @@ re-laid on main, are gone, its emission drawn per interval at the hazard 1 / 48 
 it, and its first window opens when its own light stands at its Node after the span (C5: while the
 source has intervals left the giver reads none of it, no self-click). The readings above were taken
 before C2 and C5; the emission's interval and the far Node's cosine stand as read.
+
+## The two pages show one run (2026-10-21, the branch packet-window; the packet emission's design read, section 8)
+
+The giver emits at 48, the window's close in the exact dark, and the pulse runs the ring; the tuned and the detuned taker are lit at 66 and their first close falls at 161, beyond the run of 96, so neither takes within it, the two runs one to the frame; the pair cannot be run to that close as declared, the giver's own second close at 143 reading its circulating light below the draw's total (a two-Node body at the exact vacuum, refused by name); the tuned against the detuned take is the next round's, the bodies re-declared over three Nodes as the chain's (2026-10-21). The giver's window 48 is declared, the ring having no end; the taker's declared window 96 opens at the first interval its drive is lit at its Nodes, 66 on both worlds (C2), and the detuning enters only at the taker's draw, so the two pages are one run frame for frame by the law; the intervals key alone is unlawful, refused at 143, and no pin of the pair moves in this round. The readings above, the emission at 27 and the take at 96 at the design's seed 1 and the counts over seeds, are the generator's, history.
