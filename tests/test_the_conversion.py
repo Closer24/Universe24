@@ -70,7 +70,7 @@ def table_of(document, name: str) -> list:  # type: ignore[no-untyped-def, type-
 
 
 def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_conservations_and_refuses_by_name():
-    """The shipped universe derives n -> p + e from the pairs, the electron's -1 the sum's from the proton's declared 1 and nothing else typed, and no other family has a list, the proton's stability by the baryon and the electron's by having no lighter charged family; a plane at [4800, 6000] or a real line at the electron's pair adds a list exact in rotation that the charge cuts, a second plane at the electron's pair a second list keeping both, refused; the old electron's universe is lawful with no key and nothing converts, and refused where the neutron declares senses for no list; the deleted key `converts`, a non-Pythagorean parent, a held row's and a plane parent's senses, a stray name, a contradiction of the sum and the missing declaration are refused by name; the flipped declaration is the anti-list."""
+    """The shipped universe derives n -> p + e from the pairs, the electron's -1 the sum's from the proton's declared 1 and nothing else typed, and no other family has a list, the proton's stability by the baryon and the electron's by having no lighter charged family; a plane at [4800, 6000] or a real line at the electron's pair adds a list exact in rotation that the charge cuts, a second plane at the electron's pair a second list keeping both, refused; the old electron's universe is lawful with no key and nothing converts, and refused where the neutron declares senses for no list; the deleted key `converts`, a non-Pythagorean parent, a held row's and a plane parent's senses, a stray name, a contradiction of the sum and the missing declaration are refused by name; the flipped declaration is the anti-list; two parents' lists: the capture p + e -> n irreducible, two neutrons' and a neutron with an electron's lists reducible to the quanta's own clicks, no list for two like senses."""
     assert table_of(UNIVERSE, "neutron") == [("proton", 1), ("electron", -1)]
     _integers, families = universe_of(UNIVERSE)
     assert all(not f.converts for f in families if f.name != "neutron")
@@ -119,6 +119,22 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
     assert table_of(
         universe_with(neutron={"senses": {"proton": 1, "electron": -1}}), "neutron"
     ) == table_of(UNIVERSE, "neutron")
+    n, p, e = (
+        next(k for k, f in enumerate(families) if f.name == name)
+        for name in ("neutron", "proton", "electron")
+    )
+    senses = dict(families[n].senses)
+    assert conversion.listed(families, ((p, 1), (e, -1)), senses) == [
+        ((n, 0),)
+    ]  # the capture, irreducible
+    assert conversion.listed(families, ((p, 1), (e, 1)), senses) == []  # the senses' sum 2 keeps no list
+    assert (
+        conversion.listed(families, ((n, 0), (n, 0)), senses) == []
+    )  # {n, p, e} and {p, p, e, e} reducible
+    assert (
+        conversion.listed(families, ((n, 0), (e, 1)), senses) == []
+    )  # {p, e, e} is n's list beside e passing
+    assert conversion.reducible(families, ((n, 0), (n, 0)), ((n, 0), (p, 1), (e, -1)))
 
 
 def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():

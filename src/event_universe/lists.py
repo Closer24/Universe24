@@ -6,7 +6,7 @@ from dataclasses import replace
 from functools import partial
 from typing import TYPE_CHECKING
 
-from event_universe import conversion, credit, meeting_back, reports
+from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
@@ -100,13 +100,15 @@ def credited_node(
     order: int | None = None,
     scale: int | None = None,
     board_count: int | None = None,
+    at: Node | None = None,
 ) -> list[tuple[Node, tuple[int, ...]]]:
-    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's read of the board (Part G; one emitter, no draw), named, a region taker having no part of its own (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `take.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit, the record's passage through the region over the window (`node_detector.piece_momentum`, `credit.Books.passages`, C4) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered. For a side of a record of several parts (`order`, the side's order among the sides' draws, 1 the first side to N the last, `scale`, the record's scale after the side's write, and `board_count`, the record's count read from the board at the close; `readings`) the Node and the piece's source are drawn on the side's own read, the number left of its port's draw (`credit_draw` with the side), and the line carries the three (`reports.ORDER`, `reports.SCALE`, `reports.BOARD_COUNT`)."""
+    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's read of the board (Part G; one emitter, no draw), named, a region taker having no part of its own (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `take.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit, the record's passage through the region over the window (`node_detector.piece_momentum`, `credit.Books.passages`, C4) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered. For a side of a record of several parts (`order`, the side's order among the sides' draws, 1 the first side to N the last, `scale`, the record's scale after the side's write, and `board_count`, the record's count read from the board at the close; `readings`) the Node and the piece's source are drawn on the side's own read, the number left of its port's draw (`credit_draw` with the side), and the line carries the three (`reports.ORDER`, `reports.SCALE`, `reports.BOARD_COUNT`). With `at`, the Node of a meeting of several families' quanta, drawn once for them all by the product of their inflows per Node (`meeting`): no draw of its own, the line and the face set at that Node."""
     nodes, side = list(book), name if order is not None else None
-    weights = drawn_weights(board, (sum(book[at]) for at in nodes))
-    if sum(weights) <= 0:
-        return []
-    at = nodes[credit_draw(board, index, weights, side)]
+    if at is None:
+        weights = drawn_weights(board, (sum(book[node]) for node in nodes))
+        if sum(weights) <= 0:
+            return []
+        at = nodes[credit_draw(board, index, weights, side)]
     ports = face_ports(board, index, at, book[at])  # the face set, empty on the booked path
     books = board.credit
     left, window = books.counts[index] - quantum, books.window_of(board.interval)
@@ -219,46 +221,19 @@ def readings(board: Lattice, index: int) -> list[Item]:
     return [Item(index, None, None, -1, tuple(n for n, _p in drawn), ports=tuple(p for _n, p in drawn))]
 
 
-def region(board: Lattice, index: int) -> Alternative | None:
-    """The region NodeDetectors' credit of one family at the window's close, the credit's row (ALGEBRA.md #the-click-is-the-meeting; L759): one alternative, no draw of its own, its list built from the window's books: for a record of several parts the sides' sequence (`readings`: every side whose own moments stand and whose port is unrealised, or realised in a sequence the count's write settled, draws at the close, in the declared order, each at its own region the one Node by the window's inflows per Node with its credit line, `credited_node`, the port realised and the parts it reads with a coefficient other than 0 kept, the write at the record's birth between the draws), the record at -1 as one Item over the Nodes drawn once every side has drawn, one quantum; for a record of one part the regions' window inflows floored at 0, in the unit G^2 of the booking, give N = (their sum + the carried remainder) div W_rec G^2 whole quanta in the record's own unit, the floor, one division at the close, and one more where the remainder below one quantum is drawn as the click's whether by the credit's read of the board at the regions' Nodes, the close's first draw, the carry then signed (`credit.whether`, `credit.quanta_through`, `credit.record_unit`; the owner's word of 2026-10-21, the floor and the remainder's draw in place of the half-up rounding; the count and the carry move when this alternative is built, before the quanta's Items draw their places), at most the count left, each drawn to a region by the shares, the inflows over G^2 once by the division act, the plain inflows bit for bit where no tension stood (`node_detector.drawn_weights`), and to one Node of it with its line, one Item each; the window's Items one list, so that the record's count goes down by one per quantum and its erasing front begins from every Node written where the count reaches 0; None where nothing entered, where no side is ready or where the record's count stands at 0, uncreditable whatever its levels still show (the empty wave, a diagnostic, until the front reaches it)."""
-    books, names = board.credit, [d.name for d in board.node_detectors if d.declared]
-    passages = {name: books.passages.get((index, name), Passage()) for name in names}
-    intake = {name: books.intake.get((index, name), {}) for name in names}
-    if (
-        board.families[index].parts > 1
-    ):  # the sides' sequence with the write at the birth, the one meeting
-        taken = books.taken.get(index, {})
-        moments = books.moments.get(index, {})
-        ready = [
-            name
-            for name, _p in books.sides
-            if (name not in taken or taken[name][2]) and credit.standing(moments.get(name, []))
-        ]
-        if not ready or books.counts[index] <= 0:
-            return None
-        return Alternative(1, partial(readings, board, index))
-    inflows = [max(sum(sum(through) for through in intake[name].values()), 0) for name in names]
-    shares = drawn_weights(board, inflows)
-    if sum(shares) <= 0:
+def sides(board: Lattice, index: int) -> Alternative | None:
+    """A record of several parts at the close: the sides' sequence with the write at the birth (`readings`), one alternative and no draw of its own, where a side whose own moments stand and whose port is unrealised, or realised in a sequence the count's write settled, is ready and the record's count stands; None otherwise."""
+    books = board.credit
+    taken = books.taken.get(index, {})
+    moments = books.moments.get(index, {})
+    ready = [
+        name
+        for name, _p in books.sides
+        if (name not in taken or taken[name][2]) and credit.standing(moments.get(name, []))
+    ]
+    if not ready or books.counts[index] <= 0:
         return None
-    through = credit.whether(board, index, sum(inflows), board.unit, board.families[index].parts)
-
-    def quanta() -> list[Item]:
-        fan, items = list(fan_momentum(board, index)), []
-        for quantum in range(min(through, books.counts[index])):
-            name = names[credit_draw(board, index, shares)]
-            piece = piece_momentum(board, index, passages[name])
-            found = credited_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
-            nodes = tuple(n for n, _p in found)
-            items.append(Item(index, None, None, -1, nodes, ports=tuple(p for _n, p in found)))
-            for out, sense in (
-                conversion.converted(board, (index,), name, nodes[0]) if nodes else []
-            ):  # the records out
-                den = board.families[out].pair[1]
-                items.append(Item(out, None, None, 1, nodes, (den, den), sense=sense))
-        return items
-
-    return Alternative(1, quanta)
+    return Alternative(1, partial(readings, board, index))
 
 
 def absorption(
