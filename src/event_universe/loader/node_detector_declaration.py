@@ -5,6 +5,7 @@ from __future__ import annotations
 import itertools
 from dataclasses import dataclass, replace
 
+from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
@@ -12,14 +13,17 @@ from event_universe.loader.derived import FamilyRule, count_wall, readers_of
 from event_universe.loader.draw import Draw, body_draw_of
 from event_universe.loader.keys import integer, keyed
 
-READER_RECORD_KEYS = (
-    "parts",
-    "transitions",
-    "rates",
-    "node_detector",
-)  # a body as a NodeDetector with a record of its own
+# a body as a NodeDetector with a record of its own; `shares` its declared start in several parts
+READER_RECORD_KEYS = ("parts", "transitions", "rates", "node_detector", "shares")
 PART_KEYS, PART_REQUIRED = ("part", "name", "count", "capacity"), ("part", "name", "count")
-TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
+TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance", "dipole")  # a transition's keys
+TRANSITION_REQUIRED = (
+    "from",
+    "to",
+    "drive",
+    "weight",
+    "resonance",
+)  # `dipole` where the body couples by it
 RATE_KEYS = (
     "from",
     "to",
@@ -40,6 +44,41 @@ class Transition:
     drive: int
     weight: int
     resonance: tuple[int, int]
+    weight_den: int = 1  # the weight's denominator where the file declares `weight` as a pair [num, den], 1 for an integer weight: the coupling k = weight / weight_den, so that a body compiled from an extended record's run may couple below the integer grain
+    dipole: tuple[int, int, int] | None = (
+        None  # the transition's dipole, a declared vector in the Link unit as three integers over `dipole_scale` (ALGEBRA.md, The pixel's representation theorem, Theorem 2: a one-Node body reads the drive's Link gradient against the transition's dipole vector, the uniform level turning no Link); None where the transition couples by the level at the Node times `weight`, the path as it stood
+    )
+    dipole_scale: int = 1
+
+
+def weight_of(value: object, label: str) -> tuple[int, int]:
+    """A transition's `weight`: an integer from 1, the pair (k, 1), or a pair [num, den] with num from 1 and den from 1, the coupling k = num / den, a number of the file as the integer weight is (a body compiled from an extended record's run couples below the integer grain: 0.248 at the run-4 pulse); refused by name otherwise."""
+    if isinstance(value, list):
+        if len(value) != 2:
+            raise ValueError(f"{label} is an integer from 1 or a pair [num, den], got {value!r}")
+        return integer(value[0], f"{label}[0]", 1), integer(value[1], f"{label}[1]", 1)
+    return integer(value, label, 1), 1
+
+
+def dipole_of(value: object, label: str) -> tuple[tuple[int, int, int], int]:
+    """A transition's `dipole`: [[n_x, n_y, n_z], den], the transition's dipole vector in the Link unit as three integers over den from 1, not all 0, the frame's element SUM_i (x_i - c) phi_e(i) phi_g(i) sin(U_i + (omega_e + omega_g) / 2) / sqrt(N_e N_g) times the body's read weight of its holder (ALGEBRA.md, The pixel's representation theorem, Theorem 2); the unit: the level read per interval is SUM_a n_a (L_{c+a} - L_{c-a}) over 2 den by the carried division, a level as the scalar path's, so the window's turn is k |SUM_t a_t e^(i Omega t)| in either form; refused by name otherwise."""
+    if (
+        not isinstance(value, list)
+        or len(value) != 2
+        or not isinstance(value[0], list)
+        or len(value[0]) != 3
+    ):
+        raise ValueError(
+            f"{label} is [[n_x, n_y, n_z], den], the vector in the Link unit over den, got {value!r}"
+        )
+    vector = tuple(
+        integer(value[0][axis], f"{label}[0][{axis}]", -MAX_WORK_INT, MAX_WORK_INT) for axis in range(3)
+    )
+    if not any(vector):
+        raise ValueError(
+            f"{label} is the zero vector: a transition coupling by nothing is no transition"
+        )
+    return (vector[0], vector[1], vector[2]), integer(value[1], f"{label}[1]", 1)
 
 
 def pair_of(value: object, label: str) -> tuple[int, int]:
@@ -77,6 +116,9 @@ class NodeDetectorDeclaration:
     capacities: tuple[
         int | None, ...
     ] = ()  # per part its declared `capacity`, None where none (the exclusion)
+    shares: tuple[
+        tuple[int, int], ...
+    ] = ()  # the record's declared start in several parts, per part its share of the count as a pair [num, den] summing to 1 (`shares_of`): the labels at the roots of the shares and the lay in each part at its share; empty: the count in one part, the start as it stood
 
     @property
     def gives(self) -> tuple[int, ...]:
@@ -113,15 +155,39 @@ def parts_of(
     return tuple(names), tuple(counts), tuple(capacities)
 
 
+def shares_of(value: object, label: str, names: tuple[str, ...]) -> tuple[tuple[int, int], ...]:
+    """A record's `shares`, its declared start in several parts (ALGEBRA.md, The pixel's representation theorem, Theorem 3: a one-Node body standing in a superposition of two parts beats, and its beat's dipole is what a reader at a distance books): per part's name a pair [num, den] with num from 0 and den from 1, the part's share of the count, the shares summing to 1 exactly in the rationals, a part named nowhere at 0; the labels stand at the roots of the shares, the lay in each part at its share (`node_detector.books_of`, `meeting.laid_record`); refused by name otherwise."""
+    if not isinstance(value, dict) or any(key not in names for key in value):
+        raise ValueError(
+            f"{label} names the record's parts {list(names)} with a pair [num, den] each, got {value!r}"
+        )
+    found = []
+    for name in names:
+        pair = value.get(name, [0, 1])
+        if not isinstance(pair, list) or len(pair) != 2:
+            raise ValueError(f"{label}.{name} is a pair [num, den], the part's share of the count")
+        found.append(
+            (integer(pair[0], f"{label}.{name}[0]", 0), integer(pair[1], f"{label}.{name}[1]", 1))
+        )
+    whole, parts = 1, 0
+    for num, den in found:  # the shares summed as one fraction by products alone, parts over whole
+        whole, parts = whole * den, parts * den + num * whole
+    if parts != whole:
+        raise ValueError(
+            f"{label}: the shares {[list(p) for p in found]} do not sum to 1: the record is its whole count"
+        )
+    return tuple(found)
+
+
 def transitions_of(
-    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int
+    value: object, label: str, names: tuple[str, ...], quanta: dict[str, int], own: int, nodes: int = 1
 ) -> tuple[Transition, ...]:
     """A record's `transitions`: each `from` and `to`, two of its parts' names, `drive`, a family of quanta other than the record's own whose arriving quantum it takes, and `weight` from 1, the coupling the arriving level is read with, at its `resonance`; a transition of a part into itself is the probe's and declares its three keys alone, no `weight` and no `resonance` (it turns nothing; the two hands); refused by name otherwise."""
     if not isinstance(value, list):
         raise ValueError(f"{label} must be a list of the body's transitions")
     found = []
     for index, entry in enumerate(value):
-        row = keyed(entry, f"{label}[{index}]", TRANSITION_KEYS, TRANSITION_KEYS)
+        row = keyed(entry, f"{label}[{index}]", TRANSITION_KEYS, TRANSITION_REQUIRED)
         leaves, enters = (
             part_named(row["from"], f"{label}[{index}].from", names),
             part_named(row["to"], f"{label}[{index}].to", names),
@@ -132,9 +198,17 @@ def transitions_of(
                 "(the probe of a part into itself, the pulsed gate's key, left the engine on 2026-10-20 with its world)"
             )
         drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
-        weight = integer(row["weight"], f"{label}[{index}].weight", 1)
+        weight, den = weight_of(row["weight"], f"{label}[{index}].weight")
         resonance = pair_of(row["resonance"], f"{label}[{index}].resonance")
-        found.append(Transition(leaves, enters, drive, weight, resonance))
+        dipole, scale = (None, 1)
+        if "dipole" in row:  # the body coupling by its dipole: a one-Node body's declaration
+            if nodes != 1:
+                raise ValueError(
+                    f"{label}[{index}].dipole: the vector coupling reads the drive's central difference across one "
+                    f"Node's six Links, and this body stands on {nodes} Nodes"
+                )
+            dipole, scale = dipole_of(row["dipole"], f"{label}[{index}].dipole")
+        found.append(Transition(leaves, enters, drive, weight, resonance, den, dipole, scale))
     return tuple(found)
 
 
@@ -300,7 +374,15 @@ def node_detector_of(
             "1 a theorem and the symmetric sign contradicts a cap; ALGEBRA.md, Spin, closed for the paper as a "
             "route)"
         )
-    transitions = transitions_of(body.get("transitions", []), f"{label}.transitions", names, quanta, own)
+    nodes = body.get("nodes")
+    transitions = transitions_of(
+        body.get("transitions", []),
+        f"{label}.transitions",
+        names,
+        quanta,
+        own,
+        len(nodes) if isinstance(nodes, list) else 1,
+    )
     draw: Draw | None = None
     if "node_detector" in body:
         draw = body_draw_of(body["node_detector"], f"{label}.node_detector")
@@ -309,4 +391,7 @@ def node_detector_of(
             f"{label} declares transitions or rates and no `node_detector` to draw them with"
         )
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
-    return NodeDetectorDeclaration(names, counts, transitions, rates, draw, capacities=capacities)
+    shares = shares_of(body["shares"], f"{label}.shares", names) if "shares" in body else ()
+    return NodeDetectorDeclaration(
+        names, counts, transitions, rates, draw, capacities=capacities, shares=shares
+    )

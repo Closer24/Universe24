@@ -75,6 +75,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # core/ports.py
     ("core/ports.py", "shifted", "%"): "D",  # the periodic index wrap, named exception
     # credit.py
+    ("conversion.py", "sine_of", "largest_below"): "S",  # the pair's integer sine by the search
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("credit.py", "quanta_rounded", "paces.rounded"): "D",  # the side's gate, the count's rounding
@@ -133,6 +134,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("features/click/__init__.py", "spread", "largest_below"): "S",  # the search on the spread square
     ("features/click/__init__.py", "spread", "division_forward"): "D",  # the Node's share of the square
     ("features/click/__init__.py", "amplitude", "largest_below"): "S",  # the amplitude by the search
+    (
+        "features/click/__init__.py",
+        "two_squares",
+        "largest_below",
+    ): "S",  # a plane's (re, im) by the search
+    ("features/click/__init__.py", "plane_squares", "division_forward"): "D",  # the planes' target, once
     ("features/click/__init__.py", "direction", "largest_below"): "S",  # the pair's norm by the search
     (
         "features/click/__init__.py",
@@ -337,6 +344,18 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("taker.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice and its base
     ("taker.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
     ("taker.py", "rows_read", "division_forward"): "D",  # the rows' digits and bases alike
+    (
+        "meeting.py",
+        "dipole_sources",
+        "division_forward",
+    ): "D",  # the beat's dipole source, the carry in the books
+    ("meeting.py", "dipole_sources", "largest_below"): "S",  # the two parts' labels' roots, searched
+    ("node_detector.py", "books_of", "division_forward"): "D",  # the declared shares' squares, one each
+    (
+        "resonance.py",
+        "projected",
+        "division_forward",
+    ): "D",  # the gradient's half on the dipole, the carry kept
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):

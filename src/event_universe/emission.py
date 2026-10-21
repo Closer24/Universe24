@@ -18,7 +18,9 @@ from event_universe.features.click import (
     amplitude,
     envelope,
     line_total,
+    plane_squares,
     rotated,
+    squared,
     wave_cosine,
 )
 from event_universe.front import on_board
@@ -151,7 +153,11 @@ def laid_by_count(board: Lattice, item: Item) -> None:
     size = amplitude(item.delta, board.world.quantum_action, item.pair, lines * parts)
     if family.plane:  # the loader admits a plane given by the count with the table's sense alone
         assert item.sense != 0
-        pairs = [pair for _ in range(lines) for pair in ((size, 0), (0, item.sense * size))]
+        squares = [(size, 0)] * lines  # one plane: the rounding is exact where the total is a square
+        if lines > 1:  # several planes: the part's total in exact squares, the Wronskian whole
+            total = squared(item.delta, board.world.quantum_action, item.pair, parts)
+            squares = plane_squares(total, lines) or squares
+        pairs = [pair for re, im in squares for pair in ((re, -item.sense * im), (im, item.sense * re))]
     else:
         pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * lines
     origin = board.half_wall(item.family)  # a fresh lay by the count: the Node's remainder at the origin

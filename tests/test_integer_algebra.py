@@ -44,6 +44,7 @@ PHYSICAL_MODULES += (
     "flux.py",
     "meeting_back.py",
     "cone.py",
+    "conversion.py",
 )
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))

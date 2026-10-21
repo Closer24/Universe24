@@ -82,6 +82,7 @@ def test_the_engines_module_count_is_the_trees():
         "twenty-three": 23,
         "twenty-four": 24,
         "twenty-six": 26,
+        "twenty-seven": 27,
         "twenty-eight": 28,
         "twenty-nine": 29,
     }

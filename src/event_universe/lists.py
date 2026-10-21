@@ -6,7 +6,7 @@ from dataclasses import replace
 from functools import partial
 from typing import TYPE_CHECKING
 
-from event_universe import credit, meeting_back, reports
+from event_universe import conversion, credit, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
@@ -249,11 +249,11 @@ def region(board: Lattice, index: int) -> Alternative | None:
             name = names[credit_draw(board, index, shares)]
             piece = piece_momentum(board, index, passages[name])
             found = credited_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
-            items.append(
-                Item(
-                    index, None, None, -1, tuple(n for n, _p in found), ports=tuple(p for _n, p in found)
-                )
-            )
+            nodes = tuple(n for n, _p in found)
+            items.append(Item(index, None, None, -1, nodes, ports=tuple(p for _n, p in found)))
+            for out, sense in conversion.converted(board, index, name, found):  # the records out
+                den = board.families[out].pair[1]
+                items.append(Item(out, None, None, 1, nodes, (den, den), sense=sense))
         return items
 
     return Alternative(1, quanta)

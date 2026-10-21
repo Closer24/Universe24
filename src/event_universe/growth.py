@@ -75,7 +75,7 @@ def resized(
     half: int = 0,
     seed: phase.Pair = ((0, 0, 0), (0, 0, 0)),
 ) -> None:
-    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), the sign holder's phase lines at their seed, the Link at the angle 0 (`seed`, features/phase.seed, the cosine line then the sine line per axis), everything else 0; or the same layers taken off (direction -1)."""
+    """Every array of a family's NodeState grown by `layers` layers beyond the face on `side` of `axis` (direction +1) at the NodeState of a Node with no level: the time line of every row, the first line of each (the massless row's one, a holder of the sign's one per row), at the family's `rest` (the vacuum content of the massless row, 0 for every other) with its remainder at `origin`, the remainder the start gave the row, every write remainder at half its wall (`walls`, one per held line), the sign holder's phase lines at their seed, the Link at the angle 0 (`seed`, features/phase.seed, the cosine line then the sine line per axis) with their count lines at 0 (a grown Link's count, 2026-10-21), everything else 0; or the same layers taken off (direction -1)."""
 
     def grown(a: Any, value: int = 0) -> Any:
         return sized(a, axis, side, layers, direction, value)
@@ -98,9 +98,9 @@ def resized(
     state.phases = [
         [
             records.Record(
-                grown(r.now, seeds[k % 2 * 3]),
-                grown(r.before, seeds[k % 2 * 3 + 1]),
-                grown(r.remainder, seeds[k % 2 * 3 + 2]),
+                grown(r.now, seeds[k % 2 * 3] if k < len(seeds) else 0),
+                grown(r.before, seeds[k % 2 * 3 + 1] if k < len(seeds) else 0),
+                grown(r.remainder, seeds[k % 2 * 3 + 2] if k < len(seeds) else 0),
             )
             for k, r in enumerate(lines)
         ]

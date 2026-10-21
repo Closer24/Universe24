@@ -36,14 +36,24 @@ if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 
-def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequence[Phase]) -> None:
+def relaid(
+    board: Lattice,
+    books: NodeBooks,
+    part: int,
+    count: int,
+    phases: Sequence[Phase],
+    fraction: tuple[int, int] = (1, 1),
+) -> None:
     """The lay of one part of the record over the NodeDetector's Nodes through the one act (features/click, `standing`, `laid_pairs`; `lay.laid`): at every Node of the region the part's lines move to the levels of its share of `count` quanta, A_i^2 = A^2 weight_i / total in the counts' proportion, each Node standing in its own direction and sense, `phases` one per Node of the region in the books' order (the click's plan, C3: the recoil per Node, `act.leaving_phase` read per Node and not at the first Node), the change from what stands handed to the act with no weights (a record at its Node is laid as built, named) and the remainder at the division's origin at every Node of the region, the lay lines the write step's; the count's own lines alone, the other parts untouched. Part H (both hands' lines of 2026-10-10 on the whole trial, MUST 1: the null window's re-lay keeps each Node's own direction) and C3 (every re-lay, the exchange's too): each Node's direction is the pair (re, im) standing at that Node on the part's two lines, turned by the arrival for the part a quantum enters (`act.parted`), so that a phase gradient across the region survives the re-lay to the lay's rounding, the emission's re-lay among them, and the lattice momentum the record carries is not discarded unbooked; the acts the same lay act's, the count's share laid as before; the part a quantum enters stands at each Node in the leaving part's direction there turned by the arrival (`act.parted`)."""
     family, action = board.families[books.index], board.world.quantum_action
     first = records.record_slice(family, books.record).start + part * family.width
     total, at = sum(books.weights), board.mask(books.nodes)
     levels: list[tuple[np.ndarray, np.ndarray]] = []
     for here, weight, (direction, sense) in zip(books.nodes, books.weights, phases, strict=True):
-        share = (weight, total)
+        share = (
+            weight * fraction[0],
+            total * fraction[1],
+        )  # `fraction` the part's declared share of the count (`shares`), (1, 1) the whole
         (re, im), (re_before, im_before) = standing(count, action, family.pair, direction, sense, share)
         pairs = [(re, re_before), (im, im_before)]
         levels = levels or [

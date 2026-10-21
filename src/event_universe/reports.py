@@ -25,6 +25,11 @@ CLICK, DENSITY, PARTS, CREDIT, ERASURE, LAY, FACE = (
     "face",
 )  # the output's seven lines: the node_detector's report, the lattice reading, the parts' levels, the click written (every reader's, the region's credit and a record's absorption and emission alike), the front's shell, one line laid at one Node, one value presented at one Port
 REPORT_KEYS = ("event", "label", "interval", "family", "node_detector")  # every line's first keys
+CONVERSION, INTO, SENSES = (
+    "conversion",
+    "into",
+    "senses",
+)  # the conversion line: its event and its own keys, the families of the records out and their senses as laid (conversion.py)
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 EXCHANGED = (
     "absorbed",

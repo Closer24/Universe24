@@ -1,0 +1,3 @@
+# The conversion in the toy: the blind and the reading
+
+The blind is written in tests/test_the_conversion.py (the chain test) and in S/runs/clicks/conversion/builderM.md before the shipped run; the reading in S/runs/clicks/conversion/DEMO_conversion.md. The world neutron_chain.json: a neutron packet of two quanta laid at 24..36 travelling +x on a closed chain of 61 Nodes, the target 40..60 the declared instrument (the region of the law), the window 12. The universe nucleons_pythagorean.json: the toy of nucleons.json with the electron at [3600, 6000] (sin 4/5), the neutron declaring `converts` with `keeps` [wronskian, baryon] and the senses proton 1, electron -1; the table n -> p + e derived from the pairs: (3 + 4i) i = -4 + 3i.

@@ -9,7 +9,10 @@ import numpy as np
 
 from event_universe import credit, digits, flux, lists, node, taker
 from event_universe.act import Alternative, click
-from event_universe.core.ports import arrival
+from event_universe.core.ports import AXES, arrival
+from event_universe.core.rule3 import division_forward, largest_below, wall_of
+from event_universe.emission import advanced
+from event_universe.loader.derived import count_wall, weight_of
 from event_universe.node_detector import (
     NodeBooks,
     arriving,
@@ -21,8 +24,8 @@ from event_universe.node_detector import (
     sourcing,
 )
 from event_universe.records import Booking, Record
-from event_universe.resonance import gathered, hopped, window_pair, window_turn
-from event_universe.take import Item, faces_presented, relaid
+from event_universe.resonance import gathered, hopped, projected, window_pair, window_turn
+from event_universe.take import Item, faces_presented, levels_at, relaid
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -80,6 +83,11 @@ def laid_record(board: Lattice, number: int, record: int) -> None:
     kind = row.detector
     assert kind is not None
     books = NodeBooks(number, row.family, record, row.nodes, row.counts, kind, 0, [], [], 0, [])
+    if kind.shares:  # the declared start in several parts: each part at its share of the count, the first in the direction (1, 0) and the others a quarter turn from it, (0, 1), so that every beat between two parts begins at its zero crossing and the row's rest at the lay carries no dipole (`dipole_sources`: the charge the sine record's, 0 at the lay)
+        for part, share in enumerate(kind.shares):
+            direction = (1, 0) if part == 0 else (0, 1)
+            relaid(board, books, part, sum(kind.counts), [(direction, 1)] * len(books.nodes), share)
+        return
     for part, count in enumerate(kind.counts):
         relaid(board, books, part, count, [((1, 0), 1)] * len(books.nodes))
 
@@ -93,6 +101,99 @@ def laid_whole(board: Lattice) -> None:
             click(board, None, [Alternative(1, partial(list, items))])
 
 
+def dipole_sources(board: Lattice, turns: dict[Any, Any], senses: dict[Any, Any]) -> None:
+    """The beat of a one-Node body standing in two parts written into its row of the holder of the sign as the lattice dipole of its transition (ALGEBRA.md, The pixel's representation theorem, Theorems 1 and 3; the held write per Node as it stands, the Node's step untouched): for every transition declaring its dipole whose two labels u, v both stand, the Wronskian density of the extended record's beat, T Re(c_g conj(c_e) e^{i Omega t}) phi_g phi_e sin(U + (omega_g + omega_e) / 2) / sqrt(N_g N_e) per Node (the cross term of the plane's bilinear, whose monopole vanishes by the biorthogonality and whose dipole moment is the transition's vector d_eg), placed at the one Node as its dipole moment: the half charge q_a = T u v d_a cos(Omega t + phi_g - phi_e) / (2 W_c^2) on the +a neighbour and -q_a on the -a neighbour along each axis a (d_a the declared vector over its scale and over the body's read weight of the holder, the absorption's vector k_r d_eg read back to d_eg; cos(Omega t + phi) from the transition's two reference records at the step's end and the two parts' directions at the Node, the charge booked after the step as the record's Wronskian is), added to the record's Wronskian booking before the held write; and the flow of that charge, the two Links' Wronskian current (q_a(t + 1) - q_a(t)) per interval, as the source of the odd lines: under the holder's Lorentz form the step's flux through each of the two Links, w / p^2 times the flow (the law's continuity identity, w (W_i(t) - W_i(t + 1)) = p^2 SUM_a (Phi_a(i) - Phi_a(i - a)), `covector.link_fluxes`), booked at the two Nodes owning the Links, c and c - a; under the plain rotation the sign current 3 den / num times the flow per Link (J_a = (6 den / num) W v, `readings.sense_current_of`), the two Links' currents summed unhalved at c and one each at c +- a; every division the carried division act with the remainder kept in the books (`NodeBooks.dipole_carry`). A body reading no holder of the sign under the rotation writes nothing (its beat has no row); a body with no dipole or in one part writes as before, bit for bit."""
+    families, gamma, action, unit = (
+        board.families,
+        board.world.node_clock,
+        board.world.quantum_action,
+        board.unit,
+    )
+    for books in board.credit.bodies:
+        family = families[books.index]
+        if not any(t.dipole is not None for t in books.declared.transitions) or not family.plane:
+            continue
+        holders = [r.family for r in family.reads if families[r.family].rotation]
+        if len(holders) != 1:
+            continue
+        holder, key = holders[0], (books.index, books.record)
+        if key not in turns or not np.ndim(turns[key]):
+            continue
+        read_weight = weight_of(holder, family)
+        whole = sum(books.counts) * count_wall(family, action)
+        here = tuple(int(v) for v in np.add(books.nodes[0], board.offset))
+        content = board.read(books.index, 1, books.record)[0]
+        clock, pace = paces.node_paces(
+            gamma, int(np.asarray(content)[here]) if np.ndim(content) else int(content)
+        )
+        num_f, den_f = family.pair
+        time = turns[key]
+        odd = list(senses[key]) if key in senses else None
+        shape = time.shape
+        for j, (t, ref) in enumerate(zip(books.declared.transitions, books.references, strict=True)):
+            if t.dipole is None:
+                continue
+            u, v = books.labels[t.leaves], books.labels[t.enters]
+            if u == 0 or v == 0:
+                continue
+            re_g, im_g, _rb, _ib = levels_at(board, books, t.leaves)
+            re_e, im_e, _rb2, _ib2 = levels_at(board, books, t.enters)
+            magnitude = largest_below(re_g * re_g + im_g * im_g) * largest_below(
+                re_e * re_e + im_e * im_e
+            )
+            if magnitude == 0:
+                continue
+            dot, cross = re_g * re_e + im_g * im_e, im_g * re_e - re_g * im_e
+            r_now, s_now = ref.cosine[0], ref.sine[0]
+            r_next, s_next = advanced(*ref.cosine, t.resonance)[0], advanced(*ref.sine, t.resonance)[0]
+            divisor = 2 * whole * whole * t.dipole_scale * read_weight * ref.scale * magnitude
+            for axis in range(AXES):
+                n = t.dipole[axis]
+                if n == 0:
+                    continue
+                numer_now = action * u * v * n * (r_now * dot + s_now * cross)
+                numer_next = action * u * v * n * (r_next * dot + s_next * cross)
+                charge, books.dipole_carry[(j, axis, 0)] = division_forward(
+                    numer_next, divisor, books.dipole_carry.get((j, axis, 0), 0)
+                )  # the charge at the step's end, as the held write books the record's Wronskian after the step
+                flow, books.dipole_carry[(j, axis, 1)] = division_forward(
+                    numer_next - numer_now, divisor, books.dipole_carry.get((j, axis, 1), 0)
+                )
+                plus, minus = list(here), list(here)
+                plus[axis] += 1
+                minus[axis] -= 1
+                inside = [all(0 <= at[a] < shape[a] for a in range(AXES)) for at in (plus, minus)]
+                if inside[0]:
+                    time[tuple(plus)] = time[tuple(plus)] + int(charge)
+                if inside[1]:
+                    time[tuple(minus)] = time[tuple(minus)] - int(charge)
+                if odd is None or not np.ndim(odd[axis]):
+                    continue
+                line = np.array(odd[axis], dtype=object)
+                if families[
+                    holder
+                ].lorentz:  # the step's flux through each of the two Links, w / p^2 times the flow
+                    flux, books.dipole_carry[(j, axis, 2)] = division_forward(
+                        wall_of(den_f, gamma, unit) * int(flow),
+                        pace * pace,
+                        books.dipole_carry.get((j, axis, 2), 0),
+                    )
+                    line[here] = line[here] + int(flux)
+                    if inside[1]:
+                        line[tuple(minus)] = line[tuple(minus)] + int(flux)
+                else:  # the sign current 3 den / num times the flow per Link, the two Links summed unhalved at c
+                    current, books.dipole_carry[(j, axis, 2)] = division_forward(
+                        3 * den_f * int(flow), num_f, books.dipole_carry.get((j, axis, 2), 0)
+                    )
+                    line[here] = line[here] + 2 * int(current)
+                    for at, ok in zip((plus, minus), inside, strict=True):
+                        if ok:
+                            line[tuple(at)] = line[tuple(at)] + int(current)
+                odd[axis] = line
+        if odd is not None:
+            senses[key] = tuple(odd)
+
+
 def turned_labels(board: Lattice, books: NodeBooks) -> None:
     """The resonant two-mode act at the window's close, once per window (ALGEBRA.md, The two-mode line; The click writes on the lattice (b), the share at resonance; item 50, the two-quadrature form, two hands): for every transition out of the part the record stands in, the window's turn (`resonance.window_turn`, the plane's size over the scale) scaled to the record's own proper interval by its clock (`paces.turn_factor`, one rounding half up: the window's angle theta_W in units of the phase line's theta_0 = 1 / Gamma) turns the two parts' labels into each other by one hop with the phase line's pair at that angle (`resonance.window_pair`, `resonance.hopped`: (C u - S v + r_u) div X and (S u + C v + r_v) div X, the remainders carried in the books (`NodeBooks.carried`) between windows and cleared with the labels at the re-lay), the plane's size over the wall read once and not a turn per interval, no shear; the labels' squares are the parts' population after the window; the window's draw reads each transition's own transfer share, kept in the books (`NodeBooks.shares`): the pair as it stood before the window's turns hopped by that transition's turn alone (no remainder carried: a read for the share, not the books' write), its entered label squared, sin^2 of the turn, the Rabi form, the record's share at the body (`lists.absorption`, `lists.probe`), the composed label squared itself where one transition alone feeds the part; the complement outcome at the close, none takes, is the null window (`lists.null_window`, the record re-laid in its part at its count, the labels' coherence ended); every transition's two sums then begin again, the reference records running on."""
     gamma, clock = board.world.node_clock, own_clock(board, books)
@@ -102,7 +203,11 @@ def turned_labels(board: Lattice, books: NodeBooks) -> None:
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
         leaves, enters = transition.leaves, transition.enters
         if leaves == books.part and leaves != enters:  # the probe's turns nothing
-            turn = int(paces.turn_factor(window_turn(reference, transition.weight), clock, gamma))
+            turn = int(
+                paces.turn_factor(
+                    window_turn(reference, transition.weight, transition.weight_den), clock, gamma
+                )
+            )
             pair = window_pair(turn, gamma, board.amplitude)
             own = hopped(before[leaves], before[enters], *pair)
             remainders = (books.carried[leaves], books.carried[enters])
@@ -210,7 +315,16 @@ def jumped(board: Lattice) -> None:
             t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions
         }
-        gathered(books.references, books.declared.transitions, levels)
+        vector = {}  # the transitions declaring their dipole: the drive's Link gradient projected on each (`resonance.projected`)
+        for t in books.declared.transitions:
+            if t.dipole is not None:
+                if t.drive in own[books.number]:
+                    vector[t] = 0
+                else:
+                    vector[t], books.gradient_carry[t] = projected(
+                        board, books, t, books.gradient_carry.get(t, 0)
+                    )
+        gathered(books.references, books.declared.transitions, levels, vector or None)
         draw = books.declared.draw
         timed = (
             draw is not None and draw.window is not None

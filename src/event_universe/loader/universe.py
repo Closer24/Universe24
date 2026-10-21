@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe import conversion
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.loader import derived
 from event_universe.loader.derived import KINDS, PLANE, PLANE_LINE, FamilyRule, Row
@@ -12,7 +13,7 @@ from event_universe.loader.keys import integer, keyed, reads_of
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "dimension", "held", "reads", "exchange"),
+    ("name", "pair", "dimension", "held", "reads", "exchange", "converts"),
     ("name", "pair"),
     ("sources", "level_weight", "write_weight", "rest", "act", "form"),
     ("sources", "level_weight", "write_weight", "act"),
@@ -182,9 +183,14 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
     rows: list[Row] = []
+    converting: dict[
+        int, object
+    ] = {}  # the parents' `converts`, their tables derived once every pair is read
     for index, entry in enumerate(entries):
         label = f"families[{index}]"
         row = keyed(entry, label, FAMILY_KEYS, FAMILY_REQUIRED)
+        if "converts" in row:
+            converting[index] = row["converts"]
         name = row["name"]
         if not isinstance(name, str) or not name or name in [found.name for found in rows]:
             raise ValueError(f"{label}.name must be a name of its own")
@@ -237,4 +243,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         )
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
-    return integers, families
+    return integers, conversion.declared(
+        families, converting
+    )  # the tables from the pairs, refused by name

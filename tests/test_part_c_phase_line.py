@@ -109,7 +109,7 @@ def test_the_reversal_returns_every_array_with_the_phase_pairs(tmp_path, monkeyp
     moved = arrays(board)
     assert any(not np.array_equal(a, b) for a, b in zip(start, moved, strict=True))
     phases = board.states[0].phases[1]
-    assert any((p.now != q).any() for p, q in zip(phases, [a for a in start[-18:]][0::3], strict=True))
+    assert any((p.now != q).any() for p, q in zip(phases, start[-3 * len(phases) :][0::3], strict=True))
     for _ in range(40):
         board.step_inverse()
     assert all(np.array_equal(a, b) for a, b in zip(start, arrays(board), strict=True))
@@ -151,8 +151,11 @@ def test_the_static_field_is_bounded_by_the_walks_bound():
         np.array_equal(a[1], b[1]) for a, b in zip(seed, after, strict=True)
     )  # the Node 1's +x Link beyond
     assert all(
-        np.array_equal(a, b) for a, b in zip(seed[6:], after[6:], strict=True)
+        np.array_equal(a, b) for a, b in zip(seed[6:18], after[6:18], strict=True)
     )  # the y and z Links
+    assert after[18].tolist() == [[[acts]], [[0]]] and all(
+        np.array_equal(a, b) for a, b in zip(seed[21:], after[21:], strict=True)
+    )  # the x Link's count line at the acts, 0 beyond the face; the y and z count lines untouched
     print(
         f"10^4 acts on one Link: worst |c + i s| - X {worst:.0f} levels (bound {bound:.0f}), angle {angle:.6f}; {time.perf_counter() - started:.1f} s"
     )

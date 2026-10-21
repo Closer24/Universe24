@@ -1,0 +1,8 @@
+# The pixel's worlds (2026-10-21)
+
+- universe_pixel_absorption.json: the pixel's universe for the absorption test (the holder of the content at rest 1 read by the photon and the electron at weight 1, so the photon's paces are 5999 / 6000 of the free row's and the body's digits carry the draw; the electron a plane of five parts).
+- pixel_absorption_z_pi8_vector.json (+ .mode.json): run 4's board, the one-Node body at [5, 5, 24] with the five parts, the four transitions coupling by their compiled dipole vectors ([[n_x, n_y, n_z], 10^6] = k_r d_eg in Links), the photon packet laid with builder B's run-4 pulse along z (k = pi / 8, amplitude 1.05 sqrt(T / 2), the zero mode taken out), the derived window 48.
+- pixel_absorption_z_pi8_scalar.json: the same with the one scalar transition at the checker's pair weight [6818063, 27502775] (k = 0.248).
+- table_run4_board.json: the table compiled from the frame of run 4's board (own_click's modes): the resonances, the dual-weighted dipole vectors, the form factors, the per-mode scalar pairs.
+- universe_pixel_giver.json, pixel_giver_c15_box.json (+ .mode.json), table_c15_box.json: RUN1's box (the 15-cube, T 36M, the sign holder under the Lorentz form) with the extended atom replaced by the one-Node body at [8, 7, 7] standing in the declared superposition `shares` {g: 1/5, e: 4/5}, its transition g -> e with the 15-cube frame's dipole; the body writes its beat's lattice dipole into its row (meeting.dipole_sources); the taker (src/event_universe/taker.py, builder A's region taker) is attached by the host script S/runs/clicks/equiv/emit_pixel.py.
+The mode files carry the digests of these world files (regenerated for this folder); each world loads from the repository root as shipped.

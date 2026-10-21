@@ -203,7 +203,7 @@ def shares_of(board: Lattice, frame: Frame) -> tuple[list[float], list[np.ndarra
         found.append(own)
         at += width
     total = sum(energies)
-    return [e / total if total > 0 else 0 / 1 for e in energies], found
+    return [e / total if total > 0 else 0 for e in energies], found
 
 
 def transition_of(fractions: list[float]) -> tuple[int, int]:
