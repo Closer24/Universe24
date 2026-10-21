@@ -2,7 +2,7 @@
 
 Run with PYTHONPATH set to the checkout's src, after the mode file is written (tools/standing_lay.py or tools/pixel_mode.py):
 
-    PYTHONPATH=src python tools/frame_of.py --input <world>.json
+    PYTHONPATH=src python tools/frame_of.py --input <world>.json [--root <folder>]
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node, share
+from event_universe import node, share, world_files
 from event_universe.core import paces
 from event_universe.core.ports import PORT_SIDES, PORTS, arrival
 from event_universe.core.rule3 import division_forward, largest_below
@@ -321,8 +321,16 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--input", type=Path, required=True, help="the world file; its mode file beside it is rewritten"
     )
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="the repository root the world's universe path is read against (the checkout's by default)",
+    )
     args = parser.parse_args(argv)
     path: Path = args.input
+    if args.root is not None:
+        world_files.REPOSITORY_ROOT = args.root
     world = load_world(path)
     board = Lattice(world, None)
     mode_path = path.with_suffix(".mode.json")
