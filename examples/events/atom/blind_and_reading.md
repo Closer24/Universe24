@@ -532,7 +532,7 @@ exactly, for every such holder by the loader's flag of the act and no form's nam
 of 2026-10-21: the engine corrected to the law's stated line, no line of the law changing). Before
 this date the booking took its trial step with the Links' phase lines at the seed angle 0 while the
 first step turned the Links once, so the two Wronskians differed and the first write moved the
-electron's own row of the sign (FURTHER_RESEARCH.md, The start's booking kick on every turned world):
+electron's own row of the sign (ALGEBRA.md, (g) The field at rest, the start of a world, the dated clause of 2026-10-21; the numbers in CHANGELOG.md):
 at the centre of hydrogen_1s that row read 3254 at the lay and 4043 after the first interval, of
 hydrogen_line 2825 and 3355; with the booking corrected it reads 3659 and 3658, 3092 and 3092
 (tests/test_the_start_on_a_turned_world.py, every held row within 2 units of its lay at every Node
