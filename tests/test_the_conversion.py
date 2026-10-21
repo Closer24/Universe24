@@ -60,6 +60,11 @@ def test_the_rotations_sum_exactly_iff_every_pair_is_pythagorean_and_the_split_c
     assert plane_squares(HALF_ACTION * 2, 2) == [(128, 0), (128, 0)]
 
 
+def laid_row(family: int, count: int):  # type: ignore[no-untyped-def]
+    """A laid row as the loader's multiset check reads it: its family and its quanta."""
+    return type("Row", (), {"family": family, "count": count})()
+
+
 def table_of(document, name: str) -> list:  # type: ignore[no-untyped-def, type-arg]
     """A family's list as the loader derives it from a universe document, (family name, sense) per record out."""
     _integers, families = universe_of(document)
@@ -135,6 +140,9 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
         conversion.listed(families, ((n, 0), (e, 1)), senses) == []
     )  # {p, e, e} is n's list beside e passing
     assert conversion.reducible(families, ((n, 0), (n, 0)), ((n, 0), (p, 1), (e, -1)))
+    assert (
+        conversion.together(families, [], [laid_row(n, 2), laid_row(e, 1)]) is None
+    )  # no several lists
 
 
 def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():

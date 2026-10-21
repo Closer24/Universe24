@@ -26,6 +26,8 @@ Parents = tuple[
     tuple[int, int], ...
 ]  # the records in, each its family and its sense as read, 0 for real lines
 
+MET = 3  # the search's bound on the quanta met at one close, named and no law: the world's multisets of two to MET laid quanta derived at load
+
 
 def sine_of(pair: Pair) -> int | None:
     """The integer sine of a pair, s with s^2 = den^2 - num^2 (sin omega times den), None where the pair is not Pythagorean: the rotation's cosine and sine are both rational iff den^2 - num^2 is a square."""
@@ -231,6 +233,37 @@ def declared(
             )
         found[index] = replace(family, converts=tables[0], senses=tuple(sorted(senses.items())))
     return tuple(found)
+
+
+def together(families: tuple[FamilyRule, ...], bodies: Sequence[Any], packets: Sequence[Any]) -> None:
+    """The lists of every multiset the world can credit at one close, derived at load (The conversion, the reader's sentence of 2026-10-21; `loader/world.parse_world`): the gapped Pythagorean families of quanta laid, each up to its laid count, a body's counts over its parts and a packet's count as the generator read it (`loader/world.BodyRow`, `loader/packets.PacketRow`), two to MET quanta at a time, every plane parent at either sense and the real-line parents' declared senses; refused by name where several irreducible lists keep both conservations for one multiset, the law having no share among them (`listed`)."""
+    counts: dict[int, int] = {}
+    for family, count in [(b.family, sum(b.counts)) for b in bodies] + [
+        (p.family, p.count) for p in packets
+    ]:
+        counts[family] = counts.get(family, 0) + int(count)
+    laid = [
+        k
+        for k in candidates(families)
+        if counts.get(k, 0) > 0 and gaussian(families[k].pair) is not None
+    ]
+    for size in range(2, MET + 1):
+        for outs in combinations_with_replacement(laid, size):
+            if any(outs.count(k) > counts[k] for k in set(outs)):
+                continue
+            planes = [at for at, k in enumerate(outs) if families[k].plane]
+            declared = {out: sense for k in set(outs) for out, sense in families[k].senses}
+            for choice in product((1, -1), repeat=len(planes)):
+                senses = [0] * size
+                for at, sense in zip(planes, choice, strict=True):
+                    senses[at] = sense
+                tables = listed(families, tuple(zip(outs, senses, strict=True)), declared)
+                if len(tables) > 1:
+                    raise ValueError(
+                        f"the quanta {names(families, [(k, 0) for k in outs])} the world can credit at one close, at "
+                        f"the senses {senses}, have several irreducible lists keeping the charge and the baryon: "
+                        f"{[names(families, table) for table in tables]}; the law has no share among them"
+                    )
 
 
 def sense_at(board: Lattice, index: int, at: Node) -> int:

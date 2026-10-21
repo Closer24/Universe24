@@ -45,6 +45,7 @@ class PacketRow:
     second_now: Levels
     second_before: Levels
     weights: tuple[int, ...] = ()
+    count: int = 0  # the packet's whole quanta as the generator read them from its lay (the mode entry's `count`), the loader's bound on the quanta a close can credit together (conversion.together)
 
 
 @dataclass(frozen=True)
@@ -180,14 +181,11 @@ def packets_of(
             span_of(top[name], f"{label}.top.{name}", shape[axis]) for axis, name in enumerate(AXES)
         )
         widths = tuple(integer(edge[name], f"{label}.edge.{name}", 0) for name in AXES)
+        entry = entry_of(entries, placed, label)
         levels = levels_of(
-            entry_of(entries, placed, label),
-            f"the mode file's packets[{placed}]",
-            families[family],
-            shape,
-            bound,
-            beyond,
+            entry, f"the mode file's packets[{placed}]", families[family], shape, bound, beyond
         )
+        count = int(entry["count"]) if isinstance(entry, dict) and "count" in entry else 0
         sense_of(packet, label, families[family])
         placed += 1
         found.append(
@@ -206,6 +204,7 @@ def packets_of(
                     families[family].laid,
                     families[family].plane,
                 ),
+                count,
             )
         )
     return tuple(found)
