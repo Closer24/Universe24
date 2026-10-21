@@ -29,7 +29,7 @@ def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_th
 
 
 def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(tmp_path, monkeypatch):
-    """Task 5 (g): examples/events/resonance/resonant.json runs its 96 intervals green (atom 0 gives at 48, the close of its window, the emission in the exact dark falling at the window's close; its line's `recoil` None: the source in time pays none at the lay; within the file's 96 intervals atom 1 takes nothing, a finding reported). Re-read 2026-10-20 under the click's read of the board: the 96 intervals run as they stand (the shipped world whole), and stepped on, the read of the board at atom 0's close 143 is refused by name, the digits read there below the draw's total (light at the exact paces three values a digit); atom 1's take beyond 96, read before on the stepped-on world (288), is not read: on the content-declared copy (the universe with the holders of the content, the box opened along x as the content's sink, the windows derived 48 for both) stepped to 400, atom 0's first close at 48 reads no emission and the emission is drawn at 83, its window closes null at 96, and atom 1's six closes, 146 to 386, take nothing, the quantum leaving by the faces (the reader's and G's measurement)."""
+    """Task 5 (g): examples/events/resonance/resonant.json runs its 162 intervals green (the pair over three Nodes since 2026-10-21, the reader's ruling; 96 intervals over two Nodes before: atom 0 gives at 48, the close of its window, the emission in the exact dark falling at the window's close; its line's `recoil` None: the source in time pays none at the lay; within the file's intervals atom 1 takes nothing, its close at 161 a count of 0, a finding reported; stepped on, the giver's third window closes at the exact vacuum and is refused at 191, as the two-Node pair's second was at 143). Re-read 2026-10-20 under the click's read of the board: the 96 intervals run as they stand (the shipped world whole), and stepped on, the read of the board at atom 0's close 143 is refused by name, the digits read there below the draw's total (light at the exact paces three values a digit); atom 1's take beyond 96, read before on the stepped-on world (288), is not read: on the content-declared copy (the universe with the holders of the content, the box opened along x as the content's sink, the windows derived 48 for both) stepped to 400, atom 0's first close at 48 reads no emission and the emission is drawn at 83, its window closes null at 96, and atom 1's six closes, 146 to 386, take nothing, the quantum leaving by the faces (the reader's and G's measurement)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     board = Lattice(load_shipped(EVENTS / "resonance" / "resonant.json"), (lines := []).append)
     for _ in range(board.world.intervals):
@@ -40,9 +40,9 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
     with pytest.raises(
         RuntimeError, match="do not carry the draw"
     ) as refusal:  # stepped on: atom 0's close
-        for _ in range(96, 400):
+        for _ in range(board.world.intervals, 400):
             board.step()
-    assert board.interval == 143 and "the body 0 of 'atom' at the interval 143" in str(refusal.value)
+    assert board.interval == 191 and "the body 0 of 'atom' at the interval 191" in str(refusal.value)
 
     def long_run(world):  # type: ignore[no-untyped-def]
         opened(world)
@@ -56,9 +56,22 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
     for _ in range(400):
         copy.step()
     found = [(c["interval"], c["node_detector"], c["emitted"]) for c in copied if c["event"] == "credit"]
-    nulls = [(t, "body 1", None) for t in (146, 194, 242, 290, 338, 386)]
-    assert found == [(48, "body 0", None), (83, "body 0", "pulse"), (96, "body 0", None), *nulls]
-    assert not [c for c in copied if c["event"] == "credit" and c["absorbed"]]
+    nulls = [
+        (t, "body 1", None) for t in (75, 123, 171, 219, 267)
+    ]  # the taker's closes every 48 from its window's opening at 28
+    assert found == [
+        (10, "body 0", "pulse"),
+        (48, "body 0", None),
+        *nulls,
+        (315, "body 0", None),
+        (315, "body 1", None),
+    ]
+    taken = [
+        c for c in copied if c["event"] == "credit" and c["absorbed"]
+    ]  # the taking click, the source named (the pair over three Nodes, 2026-10-21; over two Nodes the copy's emission fell at 83 and nothing took to 400)
+    assert [
+        (c["interval"], c["node_detector"], c["absorbed"], c["source"], c["recoil"]) for c in taken
+    ] == [(267, "body 1", "pulse", "body 0", [51680, 0, 0])]
     print(
-        f"Part G (5g): resonant.json green over 96, atom 0 gives at {credits[0]['interval']}; the read at 143 refused by name; the content copy's emission at 83, no take to 400"
+        f"Part G (5g): resonant.json green over {board.world.intervals}, atom 0 gives at {credits[0]['interval']}; the read at 191 refused by name; the content copy's emission at 10, the take at 267 with atom 0 named as the source"
     )

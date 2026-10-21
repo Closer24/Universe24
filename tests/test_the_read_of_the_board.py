@@ -261,11 +261,14 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
     own, walls = digits_now(board, [(pulse, at), (atom, at)])
     assert number == read_number(own, walls) and set(walls) == {4, 3898}  # light's 3 values, the atom's
-    assert (walls.count(4), walls.count(3898), number.bit_length()) == (
-        2,
-        4,
-        51,
-    )  # two Nodes, 2026-10-20
+    assert (
+        (walls.count(4), walls.count(3898), number.bit_length())
+        == (
+            3,
+            6,
+            77,
+        )
+    )  # three Nodes since 2026-10-21 (the pair re-declared as the chain's; two Nodes, (2, 4, 51), 2026-10-20)
     for text in ("w div 2", "exact vacuum"):
         assert "amplitude bound" not in text
 
