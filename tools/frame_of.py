@@ -2,7 +2,7 @@
 
 Run with PYTHONPATH set to the checkout's src, after the mode file is written (tools/standing_lay.py or tools/pixel_mode.py):
 
-    PYTHONPATH=src python tools/frame_of.py --input <world>.json --light <family> [--lifetime N] [--width w] [--weight k] [--region half|whole] [--root <folder>]
+    PYTHONPATH=src python tools/frame_of.py --input <world>.json --light <family> [--lifetime N] [--width w] [--weight k] [--root <folder>]
 """
 
 from __future__ import annotations
@@ -273,26 +273,21 @@ def standing_region(
     index: int,
     record: int,
     declared: tuple[tuple[int, int, int], ...],
-    whole: bool = False,
+    part: int = 0,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """A body's standing region at the lay: its record's share at every Node (share.family_share at the record's own read), the Nodes taken in the order of their shares until they hold half the record's share, the count's own rounding as the floor (`--region half`), or every Node where the share stands above 0, the record's whole support (`--region whole`, `whole`: the exchange's write then moves the board's share by the lay's rounding alone, where the half region leaves the tail outside it standing, the remainder the conservation table names), the body's declared Nodes among them, and the pieces joined into one region through the six Ports along the shortest Link paths between them (the loader's rule for every NodeDetector, loader/faces.connected; a level odd about a plane holds half its share in two lobes, its nodal plane carrying none, so the joining Nodes stand at the weight 1, the least, where their share is 0); the declared Node alone where the share is nowhere above 0; returned as the region's mask with the record's share at every Node, at least 1, the lay's weights the region's Nodes carry."""
+    """A body's standing region at the lay, the laid part's whole support by rule (2026-10-21, the cold reader's first finding: a region holding half the share left the part's tail standing outside it at the write, charge the write created against the exchange of (3), which moves the whole quantum; the loader refuses a region leaving a level of the laid part outside it, loader/instrument.py): every Node where a level of the part's lines stands other than 0 (now or before, re or im) or where the record's share stands above 0 (share.family_share at the record's own read), the body's declared Nodes among them, and the pieces joined into one region through the six Ports along the shortest Link paths between them (the loader's rule for every NodeDetector, loader/faces.connected; a level odd about a plane holds its share in two lobes with its nodal plane carrying none, so the joining Nodes stand at the weight 1, the least, where their share is 0); returned as the region's mask with the record's share at every Node, at least 1, the lay's weights the region's Nodes carry."""
     family, gamma = board.families[index], board.world.node_clock
     content, factors = board.read(index, 1, record)
-    shares = share.family_share(
-        family, board.lines_of(index, record), board.wrap, gamma, content, factors, board.unit
-    )
+    lines = board.lines_of(index, record)
+    shares = share.family_share(family, lines, board.wrap, gamma, content, factors, board.unit)
     shape, periodic = board.shape, board.world.periodic
-    flat = np.asarray(shares, dtype=object).ravel()
-    order = sorted(range(flat.size), key=lambda k: -int(flat[k]))
-    total, taken, found = int(sum(int(v) for v in flat)), 0, np.zeros(flat.size, dtype=bool)
+    region = np.asarray(shares, dtype=object) > 0
+    for line in lines[part * family.width : (part + 1) * family.width]:
+        region |= (np.asarray(line.now, dtype=object) != 0) | (
+            np.asarray(line.before, dtype=object) != 0
+        )
     for at in declared:
-        found[int(np.ravel_multi_index(tuple(int(v) for v in at), shape))] = True
-    for place in order:
-        if (2 * taken >= total and not whole) or int(flat[place]) <= 0:
-            break
-        if not found[place]:
-            found[place], taken = True, taken + int(flat[place])
-    region = found.reshape(shape)
+        region[tuple(int(v) for v in at)] = True
     while not connected(tuple(tuple(int(v) for v in at) for at in np.argwhere(region)), shape, periodic):
         region |= joining_path(region, shape, periodic)
     weights = np.where(np.asarray(shares, dtype=object) > 0, np.asarray(shares, dtype=object), 1)
@@ -314,7 +309,7 @@ def joining_path(
                 if periodic[axis]:
                     there[axis] %= shape[axis]
                 at = (there[0], there[1], there[2])
-                if region[at] and at not in piece and all(0 <= at[a] < shape[a] for a in range(3)):
+                if all(0 <= at[a] < shape[a] for a in range(3)) and region[at] and at not in piece:
                     piece.add(at)
                     front.append(at)
     came: dict[tuple[int, int, int], tuple[int, int, int] | None] = dict.fromkeys(piece, None)
@@ -375,7 +370,6 @@ def instrument_entry(
     lifetime: int | None,
     width: int | None,
     declared: tuple[tuple[int, int, int], ...] = (),
-    whole: bool = False,
     part: int = 0,
 ) -> dict[str, Any] | None:
     """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at the weight (the record's read weight of its holder where none is given) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object where a rate is declared or a packet of the light family is laid (the window then derived at load from the lays' passage) and the transition's period as the window otherwise, the steady beat's declared window; None for a record with no transition."""
@@ -383,7 +377,7 @@ def instrument_entry(
     if reading is None:
         return None
     fractions, _coefficients, peaks = shares_of(board, reading)
-    region, shares = standing_region(board, index, record, declared, whole)
+    region, shares = standing_region(board, index, record, declared, part)
     low, high = reading.levels[reading.lower], reading.levels[reading.upper]
     den = low.pair[1]
     cosine = int(
@@ -483,12 +477,6 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the transition's coupling; the record's read weight of its holder where none is given",
     )
-    parser.add_argument(
-        "--region",
-        default="half",
-        choices=("half", "whole"),
-        help="the standing region: the Nodes of the largest shares holding half the record's share, or its whole support",
-    )
     args = parser.parse_args(argv)
     path: Path = args.input
     if args.root is not None:
@@ -522,7 +510,6 @@ def main(argv: list[str] | None = None) -> None:
             args.lifetime,
             args.width,
             row.nodes,
-            args.region == "whole",
             part,
         )
         if found is None:

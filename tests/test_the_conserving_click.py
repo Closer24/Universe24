@@ -20,9 +20,9 @@ LOWER, UPPER = "level [4580, 6000] x1", "level [3288, 6000] x3"  # the two level
 RESONANCE, LIFETIME, REGION, FIRST = (
     (5751, 6000),
     30,
-    21,
-    23,
-)  # the declaration and the world's own click
+    101,
+    12,
+)  # the declaration, the whole support with its one joining Node, and the world's own click
 WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 and [4000, 6000]
 PIECE, FAN, RECOIL = (
     11055256,
@@ -30,14 +30,14 @@ PIECE, FAN, RECOIL = (
     4906083,
 )  # the taker world's click: the piece's p_z, the photon's P_z, the body's P_z after
 T = 36000000  # the clock's unit of both worlds, the energies' scale
-GIVER_BEFORE = ((1, 0), 21018468, (0, 0, 0), 756495160000, 0)  # the giver at 22: see table_of
-GIVER_AFTER = ((1, 1), 26953355, (22025, 0, 0), 1217089960000, 6675858000)  # the giver at 23
+GIVER_BEFORE = ((1, 0), 21029078, (0, 0, 0), 692879288000, 0)  # the giver at 11: see table_of
+GIVER_AFTER = ((1, 1), 18000211, (2500, 0, 0), 650975322000, 6675858000)  # the giver at 12
 TAKER_BEFORE = ((1, 1), 21310641, (0, 0, 0), 903766398000, 186746982000)  # the taker at 17
 TAKER_AFTER = ((1, 0), 18008518, (0, 0, RECOIL), 980418680000, 186776658000)  # the taker at 18
 
 
 def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_bodys_path():
-    """The loader reads the tool's declaration as a declared layer (the emission's hazard with the beat's term beside the constant, `hazard_weights`: the constant alone where no beat stands, a quarter of a light quantum out over the window a quarter of the row's total more, the weight capped at the total; the body's own record's current through its own front booked each interval into `NodeBooks.beat`, its outflow read at the close alone): the parts by the two levels' names with the count in the upper, the transition and its resonance, the rate at its lifetime, the region of 21 Nodes holding the declared Node with the record's shares as weights, the window 30 derived (no key); the record laid from the mode file into the upper part alone, the lower part's lines at 0, and no Link cut (the step untouched); the books on the region, the body standing in the upper part with its labels at the count's wall. The run to the first emission: the click at 23 (the giver paying by (5) at its own Nodes: the upper part down to 0 over the region, the lower up to one quantum re-laid there, the photon's record up by one, a source in time over the lifetime at the drawn Node), its line the body's with the parts by name and the photon emitted, the photon's count 1 in the books and the body's emitter entry; every lay line of the click at a Node of the region or the photon's one Node and none on the holder's rows (the holder's rows untouched by the click); the upper part's tail outside the region standing (the remainder of a region holding half the share, named); the null window of a bound record lays nothing: an empty list, no lay line, the labels' coherence ended in the books."""
+    """The loader reads the tool's declaration as a declared layer (the emission's hazard with the beat's term beside the constant, `hazard_weights`: the constant alone where no beat stands, a quarter of a light quantum out over the window a quarter of the row's total more, the weight capped at the total; the body's own record's current through its own front booked each interval into `NodeBooks.beat`, 0 at every interval on the laid part's whole support, whose front Ports lead to Nodes at the level 0, so the hazard is the constant alone; its outflow read at the close alone): the parts by the two levels' names with the count in the upper, the transition and its resonance, the rate at its lifetime, the region the laid part's whole support by rule (the cold reader's first finding of 2026-10-21, the half region's tail out), 100 Nodes with one joining Node across the level's nodal plane at the weight 1, holding the declared Node with the record's shares as weights, the window 30 derived (no key); the record laid from the mode file into the upper part alone, the lower part's lines at 0, and no Link cut (the step untouched); the books on the region, the body standing in the upper part with its labels at the count's wall. The run to the first emission: the click at 12 (the giver paying by (5) at its own Nodes: the upper part down to 0 over the region, the lower up to one quantum re-laid there, the charge T / 2 + 211 after against the well's 1.17 T / 2 before, the photon's record up by one, a source in time over the lifetime at the drawn Node), its line the body's with the parts by name and the photon emitted, the photon's count 1 in the books and the body's emitter entry; every lay line of the click at a Node of the region or the photon's one Node and none on the holder's rows (the holder's rows untouched by the click); no level of the upper part standing outside the region after the write, the whole support re-laid and no charge created by the write; the null window of a bound record lays nothing: an empty list, no lay line, the labels' coherence ended in the books."""
     lines: list[dict] = []  # type: ignore[type-arg]
     world = load_shipped(FOLDER / "giver_c5.json")
     row = world.bodies[1]
@@ -88,9 +88,7 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
         [1, FIRST],
     )
     assert (books.part, books.counts, books.labels) == (0, [1, 0], [WALL, 0])
-    assert (
-        books.beat != 0 and books.outflow == 0
-    )  # the beat booked each interval, the outflow the close's
+    assert (books.beat, books.outflow) == (0, 0)  # the whole support's front at the level 0: no beat
     assert board.credit.counts[photon] == 1 and board.credit.counts[electron] == 1
     (source,) = board.credit.sources
     assert (source.family, source.span, source.emitter, source.begun) == (photon, LIFETIME, 1, FIRST)
@@ -102,7 +100,7 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     assert len({tuple(row["node"]["at"]) for row in lays if row["family"] == "photon"}) == 1
     after = board.lines_of(electron, 0)
     assert after[0].now[region].any() and not after[2].now[region].any()  # the exchange over the region
-    assert after[2].now[~region].any() or after[3].now[~region].any()  # the tail outside it standing
+    assert not after[2].now[~region].any() and not after[3].now[~region].any()  # no tail outside
     assert not board.states[charge].lines[0].now.any()  # light its own family: the free row exactly 0
     alternatives = lists.null_window(board, books)
     assert len(alternatives) == 1 and alternatives[0].items() == [] and alternatives[0].line is not None
@@ -115,7 +113,7 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
 def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective_one_by_name(
     tmp_path, monkeypatch
 ):
-    """The tool run on a copy of the shipped giver world writes the shipped declaration again, word for word (the mode file's digest the world's); the loader refuses by name a region in pieces, a region without the body's declared Node, the count in both parts, a transition naming the body's own family as its drive, and an unknown key of the declaration."""
+    """The tool run on a copy of the shipped giver world writes the shipped declaration again, word for word (the mode file's digest the world's); the loader refuses by name a region in pieces, a region without the body's declared Node, a region leaving a level of the laid part outside it (the whole support by rule), the count in both parts, a transition naming the body's own family as its drive, and an unknown key of the declaration."""
     for name in ("giver_c5.json", "giver_c5.mode.json"):
         (tmp_path / name).write_text((FOLDER / name).read_text(encoding="utf-8"), encoding="utf-8")
     (tmp_path / "u.json").write_text(
@@ -141,10 +139,13 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
         return path
 
     def in_pieces(instrument: dict) -> None:  # type: ignore[type-arg]
-        instrument["nodes"] = [instrument["nodes"][0], {"node": [0, 0, 0], "weight": 1}]
+        instrument["nodes"] = [{"node": [3, 2, 2], "weight": 1}, {"node": [0, 0, 0], "weight": 1}]
 
     def without_the_node(instrument: dict) -> None:  # type: ignore[type-arg]
         instrument["nodes"] = [n for n in instrument["nodes"] if n["node"] != [3, 2, 2]]
+
+    def with_a_tail(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["nodes"] = [n for n in instrument["nodes"] if n["node"][0] != 0]
 
     def both_parts(instrument: dict) -> None:  # type: ignore[type-arg]
         instrument["parts"][0]["count"] = 1
@@ -158,6 +159,7 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
     for change, reason in (
         (in_pieces, "one connected region of distinct Nodes"),
         (without_the_node, "holds none of the body's declared Nodes"),
+        (with_a_tail, "leaves the laid part's level standing outside the region"),
         (both_parts, "stands in one part at the start"),
         (own_drive, "a family of quanta other than the body's own"),
         (unknown, "unknown key 'frame'"),

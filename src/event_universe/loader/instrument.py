@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
@@ -49,7 +50,7 @@ def instrument_body(
     action: int,
     periodic: tuple[bool, bool, bool],
 ) -> BodyRow:
-    """A bound body declared an instrument body by the host's frame tool (the mode entry's `instrument`): the declaration read in the form the loader reads for every detector body (`node_detector_of`: its `parts` with the count in the level it stands in, its `transitions`, its `rates`, its `node_detector`, the emissions' lay decided by the board's shape from every Node of its region, `packet_form`), its `nodes` the standing region with the lay's weights (one connected region of distinct Nodes through the six Ports holding one of the body's declared Nodes, none beyond the board, refused by name otherwise), the body's levels the mode file's as laid (its record standing in its well, its Links uncut, the step untouched); the count the body's declared count, read by the gate at its declared Node as for every laid body."""
+    """A bound body declared an instrument body by the host's frame tool (the mode entry's `instrument`): the declaration read in the form the loader reads for every detector body (`node_detector_of`: its `parts` with the count in the level it stands in, its `transitions`, its `rates`, its `node_detector`, the emissions' lay decided by the board's shape from every Node of its region, `packet_form`), its `nodes` the standing region with the lay's weights (one connected region of distinct Nodes through the six Ports holding one of the body's declared Nodes and every Node where a level of the laid part stands other than 0, the laid part's whole support, so that the exchange's write moves the whole quantum and leaves no tail of the part standing outside the region, charge the write would create; none beyond the board; refused by name otherwise, 2026-10-21, the cold reader's first finding on the half region), the body's levels the mode file's as laid (its record standing in its well, its Links uncut, the step untouched); the count the body's declared count, read by the gate at its declared Node as for every laid body."""
     nodes = instrument["nodes"]
     if not isinstance(nodes, list) or not nodes:
         raise ValueError(f"{label}.nodes must list the standing region's Nodes with their weights")
@@ -58,15 +59,29 @@ def instrument_body(
         keyed(line, f"{label}.nodes[{index}]", REGION_NODE_KEYS, ("node",))
         region.append(node_of(line["node"], f"{label}.nodes[{index}].node", shape, beyond))
         shares.append(integer(line.get("weight", 1), f"{label}.nodes[{index}].weight", 1))
+    if not any(node in region for node in row.nodes):
+        raise ValueError(
+            f"{label}.nodes holds none of the body's declared Nodes {[list(n) for n in row.nodes]}: the standing "
+            "region stands about the Node the body is declared at"
+        )
     if len(set(region)) != len(region) or not connected(tuple(region), shape, periodic):
         raise ValueError(
             f"{label}.nodes is one connected region of distinct Nodes through the six Ports, the body's standing "
             "region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment)"
         )
-    if not any(node in region for node in row.nodes):
+    inside = {(int(x) * shape[1] + int(y)) * shape[2] + int(z) for x, y, z in region}
+    levels = (row.now, row.before, row.second_now, row.second_before)
+    outside = sorted({at for laid in levels for at, level in laid if level and at not in inside})
+    if outside:  # the reader's line of 2026-10-21: a tail outside the region is charge the write creates
+        first = next(
+            at
+            for at in itertools.product(*(range(n) for n in shape))
+            if (at[0] * shape[1] + at[1]) * shape[2] + at[2] == outside[0]
+        )
         raise ValueError(
-            f"{label}.nodes holds none of the body's declared Nodes {[list(n) for n in row.nodes]}: the standing "
-            "region stands about the Node the body is declared at"
+            f"{label}.nodes leaves the laid part's level standing outside the region at {len(outside)} Nodes, "
+            f"{list(first)} the first: the standing region is the laid part's whole support, the exchange "
+            "moving the whole quantum (ALGEBRA.md, The click writes on the lattice (3))"
         )
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
     declaration = packet_form(declaration, label, families, tuple(region), shape, action)
