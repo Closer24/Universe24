@@ -17,6 +17,7 @@ from event_universe.loader.derived import count_wall, quanta_records
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
+    from event_universe.node_detector import Weighed
 
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
 Stresses = dict[
@@ -34,10 +35,10 @@ class UniformMode(NamedTuple):
     nodes: int
 
 
-def currents(board: Lattice) -> Currents:
-    """Every family of quanta's current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); light's the current of its rows' sum; a turned record's the flux line's own with the Link pairs its step reads, per record and the records added (`turned_currents`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), every plain record's the plain bilinear bit for bit; the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`)."""
+def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
+    """Every family of quanta's current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); light's the current of its rows' sum; a turned record's the flux line's own with the Link pairs its step reads, per record and the records added (`turned_currents`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), every plain record's the plain bilinear bit for bit; the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`); `weighed`, the bookings' read of the same interval where the step holds it, whose per-record currents of a turned family are the same integers and are added instead of read again."""
     return {
-        index: turned_currents(board, index)
+        index: turned_currents(board, index, weighed)
         if index in board.turning
         else readings.currents_of(
             board.families[index].pair[0],
@@ -78,9 +79,15 @@ def turned_read(
     )
 
 
-def turned_currents(board: Lattice, index: int) -> tuple[np.ndarray, ...]:
-    """A turned family's currents through each Port at every Node, every record's read with the Link pairs its own step reads (`turned_read`, `readings.currents_of`), the records added."""
+def turned_currents(
+    board: Lattice, index: int, weighed: Weighed | None = None
+) -> tuple[np.ndarray, ...]:
+    """A turned family's currents through each Port at every Node, every record's read with the Link pairs its own step reads (`turned_read`, `readings.currents_of`), the records added; where the bookings' read of the interval is given (`weighed`, node_detector.weighed_currents, the same call per record), its records' currents added and the lines not read twice."""
     found: list[Any] = [0] * PORTS
+    if weighed is not None and index in weighed:
+        for through, _factors, _shares in weighed[index]:
+            found = [a + b for a, b in zip(found, through, strict=True)]
+        return tuple(np.asarray(value) for value in found)
     for record in quanta_records(board.families, index):
         through = readings.currents_of(
             board.families[index].pair[0],
