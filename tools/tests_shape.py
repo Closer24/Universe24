@@ -47,16 +47,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "window's close, one conversion per credited quantum, the counts n -1 p +1 e +1, the Wronskian's sum 0 at the "
         "lay by the exact split and the rotations' identity exact in the integers",
     ),
-    "tests/test_the_takers.py::test_a_body_in_a_well_is_a_taker_with_its_instrument_read_from_the_board": (
-        52,
-        "the sprint's takers of 2026-10-21 (ENGINE.md section 4, the key `takers`; taker.py, frame.py): the instrument read "
-        "from the board at the lay, the books filled each interval, the close's whether-draw, the key refused by name",
-    ),
-    "tests/test_the_takers.py::test_a_standing_electron_books_no_credit_through_a_ball_the_blind_of_the_fix": (
-        24,
-        "the blind of the books' fix of 2026-10-21 on builder D's detector world at the cube of 5: the ball's click lines "
-        "within a hundredth of a quantum over the window where the plain bilinear sums to tenths, no credit",
-    ),
     "tests/test_the_hazard_window.py::test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain": (
         39,
         "the emission's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "

@@ -32,7 +32,7 @@ from event_universe.loader.faces import (
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
-from event_universe.loader.mode import FrameEntry, Levels, body_entry, mode_entries
+from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
 from event_universe.loader.node_detector_declaration import (
     READER_RECORD_KEYS,
     NodeDetectorDeclaration,
@@ -41,7 +41,6 @@ from event_universe.loader.node_detector_declaration import (
 )
 from event_universe.loader.node_detector_rows import reader_count
 from event_universe.loader.packets import PacketRow, WholePacket, packets_of, wholes_of
-from event_universe.loader.takers import TAKERS, takers_of
 from event_universe.loader.uniform import UNIFORM, uniform_of
 from event_universe.loader.universe import universe_of
 
@@ -49,11 +48,13 @@ FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
 WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure", UNIFORM)
-WORLD_KEYS += (TAKERS,)
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
-READER_NODE_KEYS = ("node", "weight")  # a reader's Node: the lay's weight; the record's count once
+READER_NODE_KEYS = (
+    "node",
+    "weight",
+)  # a reader's Node: the lay's weight, the record's count declared once
 NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern", "turn")  # a reader's keys
 TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
 
@@ -71,9 +72,6 @@ class BodyRow:
     second_before: Levels
     weights: tuple[int, ...] = ()
     detector: NodeDetectorDeclaration | None = None
-    frame: FrameEntry | None = (
-        None  # a bound body's frame from the mode file (`loader/mode.frame_of`, the host's frame tool's integers), the taker's instrument (taker.py)
-    )
 
 
 @dataclass(frozen=True)
@@ -118,7 +116,6 @@ class World:
     ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
     erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
     uniform: bool = False  # the world's `uniform: carried`: on a board periodic on every axis every held row's rest is the zero-mean part and its k = 0 component is carried by Rule3's own line (features/start `rest`; ALGEBRA.md, The closed lattice has no rest, item 6 of what is open); False where absent, the sink refusal as before
-    takers: bool = False  # the world's `takers: bodies` (`takers_of`): every laid body in a holder's well a taker, with the declared regions where the bodies carry one transition (taker.py; ALGEBRA.md, The emission of a bound record is the click's act of the taker); False where absent, the engine as before bit for bit
 
 
 def kind_of(width: int) -> type:
@@ -191,16 +188,29 @@ def bodies_of(
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
-        levels, frame = body_entry(entries, placed, label, families[family], shape, bound, beyond)
+        now, before, second_now, second_before = levels_of(
+            entry_of(entries, placed, label),
+            f"the mode file's bodies[{placed}]",
+            families[family],
+            shape,
+            bound,
+            beyond,
+        )
         weights = weights_of(
             body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
         )
-        found.append(BodyRow(family, tuple(nodes), tuple(counts), *levels, weights, None, frame))
+        found.append(
+            BodyRow(family, tuple(nodes), tuple(counts), now, before, second_now, second_before, weights)
+        )
     return tuple(found)
 
 
 def node_detectors_of(
-    value: object, shape: Node, bodies: int, beyond: tuple[Node, ...], layer: tuple[Node, ...]
+    value: object,
+    shape: Node,
+    bodies: int,
+    beyond: tuple[Node, ...],
+    layer: tuple[Node, ...],
 ) -> tuple[NodeDetectorRow, ...]:
     """The node_detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared NodeDetector, optionally with its `basis`, the reader's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the NodeDetector's declaration and the sides' draws', `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the declared NodeDetector."""
     if not isinstance(value, list):
@@ -360,7 +370,6 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     counted = [body.family for body in bodies]
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
-    takers = takers_of(world[TAKERS]) if TAKERS in world else False
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)
@@ -387,5 +396,4 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         wholes,
         erasure,
         carried,
-        takers=takers,
     )

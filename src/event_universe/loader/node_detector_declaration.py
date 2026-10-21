@@ -13,8 +13,12 @@ from event_universe.loader.derived import FamilyRule, count_wall, readers_of
 from event_universe.loader.draw import Draw, body_draw_of
 from event_universe.loader.keys import integer, keyed
 
-# a body as a NodeDetector with a record of its own; `shares` its declared start in several parts
-READER_RECORD_KEYS = ("parts", "transitions", "rates", "node_detector", "shares")
+READER_RECORD_KEYS = (
+    "parts",
+    "transitions",
+    "rates",
+    "node_detector",
+)  # a body as a NodeDetector with a record of its own
 PART_KEYS, PART_REQUIRED = ("part", "name", "count", "capacity"), ("part", "name", "count")
 TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance", "dipole")  # a transition's keys
 TRANSITION_REQUIRED = (
@@ -116,9 +120,6 @@ class NodeDetectorDeclaration:
     capacities: tuple[
         int | None, ...
     ] = ()  # per part its declared `capacity`, None where none (the exclusion)
-    shares: tuple[
-        tuple[int, int], ...
-    ] = ()  # the record's declared start in several parts, per part its share of the count as a pair [num, den] summing to 1 (`shares_of`): the labels at the roots of the shares and the lay in each part at its share; empty: the count in one part, the start as it stood
 
     @property
     def gives(self) -> tuple[int, ...]:
@@ -153,30 +154,6 @@ def parts_of(
             "in one mode having no amplitude in any other (ALGEBRA.md, The click writes on the lattice (j))"
         )
     return tuple(names), tuple(counts), tuple(capacities)
-
-
-def shares_of(value: object, label: str, names: tuple[str, ...]) -> tuple[tuple[int, int], ...]:
-    """A record's `shares`, its declared start in several parts (ALGEBRA.md, The pixel's representation theorem, Theorem 3: a one-Node body standing in a superposition of two parts beats, and its beat's dipole is what a reader at a distance books): per part's name a pair [num, den] with num from 0 and den from 1, the part's share of the count, the shares summing to 1 exactly in the rationals, a part named nowhere at 0; the labels stand at the roots of the shares, the lay in each part at its share (`node_detector.books_of`, `meeting.laid_record`); refused by name otherwise."""
-    if not isinstance(value, dict) or any(key not in names for key in value):
-        raise ValueError(
-            f"{label} names the record's parts {list(names)} with a pair [num, den] each, got {value!r}"
-        )
-    found = []
-    for name in names:
-        pair = value.get(name, [0, 1])
-        if not isinstance(pair, list) or len(pair) != 2:
-            raise ValueError(f"{label}.{name} is a pair [num, den], the part's share of the count")
-        found.append(
-            (integer(pair[0], f"{label}.{name}[0]", 0), integer(pair[1], f"{label}.{name}[1]", 1))
-        )
-    whole, parts = 1, 0
-    for num, den in found:  # the shares summed as one fraction by products alone, parts over whole
-        whole, parts = whole * den, parts * den + num * whole
-    if parts != whole:
-        raise ValueError(
-            f"{label}: the shares {[list(p) for p in found]} do not sum to 1: the record is its whole count"
-        )
-    return tuple(found)
 
 
 def transitions_of(
@@ -391,7 +368,4 @@ def node_detector_of(
             f"{label} declares transitions or rates and no `node_detector` to draw them with"
         )
     rates = rates_of(body.get("rates", []), f"{label}.rates", names, quanta, own, transitions)
-    shares = shares_of(body["shares"], f"{label}.shares", names) if "shares" in body else ()
-    return NodeDetectorDeclaration(
-        names, counts, transitions, rates, draw, capacities=capacities, shares=shares
-    )
+    return NodeDetectorDeclaration(names, counts, transitions, rates, draw, capacities=capacities)

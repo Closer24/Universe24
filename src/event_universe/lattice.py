@@ -144,6 +144,7 @@ class Lattice:
             for row in range(self.families[i].records)
         ]
         rows, gamma = holders + signs, self.world.node_clock
+
         line_of = {row: int(records.record_slice(self.families[row[0]], row[1]).start) for row in rows}
         walls = {row: self.walls(row[0])[0] for row in rows}
         packets = {row: self.states[row[0]].lines[line_of[row]] for row in rows}
@@ -289,7 +290,6 @@ class Lattice:
             state.lines = lines
         if acts:
             self.report(currents, weighed, forms, begun)
-            meeting.dipole_sources(self, turns, senses)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers)
         if acts:

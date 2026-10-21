@@ -1,11 +1,9 @@
-"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per packet its two level pairs over the lattice, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; and per bound body, where the host's frame tool wrote it (tools/frame_of.py, 2026-10-21), its frame under the key `frame`, integers alone (`frame_of`, `FrameEntry`): its levels as rotation pairs over the family's den with their sines and degenerate counts, its transition, its unit W_rec, its period, its standing region's flat indexes, its shares at the lay in parts of the unit and per level one compiled profile at one quantum, the declared layer the engine's taker reads (src/event_universe/frame.py) so that no float stands in the engine; every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
+"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per packet its two level pairs over the lattice, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.keys import Node, integer, keyed
+from event_universe.loader.keys import Node, keyed
 
 MODE_KEYS, MODE_REQUIRED = ("world_digest", "bodies", "packets"), ("world_digest", "bodies")
 MODE_BODY_KEYS = (
@@ -20,10 +18,7 @@ MODE_BODY_KEYS = (
     "profile",
     "moving",
     "lay",
-    "frame",
 )
-FRAME = "frame"  # a bound body's frame, the host's frame tool's integers (tools/frame_of.py; `frame_of`)
-FRAME_KEYS = ("levels", "sines", "modes", "transition", "unit", "period", "region", "shares", "profiles")
 MOVING_KEYS = ("now", "before", "im_now", "im_before")
 LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
 SPARSE_KEYS = ("at", "values")  # a level's nonzero Nodes alone: their flat x-major indexes and levels
@@ -116,90 +111,3 @@ def entry_of(entries: list[object], number: int, label: str) -> object:
             f"{label} has no entry in the mode file beside the world: its levels are the generator's"
         )
     return entries[number]
-
-
-@dataclass(frozen=True)
-class FrameEntry:
-    """A bound record's frame as the host's frame tool wrote it into the mode file (tools/frame_of.py), integers alone: its levels as rotation pairs (den cos Omega, den) in energy order with their sines den sin Omega and the count of each level's degenerate modes, the two levels of its transition (`lower`, `upper`), its unit W_rec = W_c sin(Omega_upper - Omega_lower), its period in intervals, its standing region as flat x-major indexes, its shares per level at the lay in parts of the unit and per level its compiled profile at one quantum as the nonzero Nodes' levels."""
-
-    levels: tuple[tuple[int, int], ...]
-    sines: tuple[int, ...]
-    modes: tuple[int, ...]
-    lower: int
-    upper: int
-    unit: int
-    period: int
-    region: tuple[int, ...]
-    shares: tuple[int, ...]
-    profiles: tuple[Levels, ...]
-
-
-def integers_of(given: object, label: str, count: int, least: int) -> tuple[int, ...]:
-    """A list of `count` integers from `least` up, refused by name otherwise."""
-    if not isinstance(given, list) or len(given) != count:
-        raise ValueError(f"{label} must be a list of {count} integers")
-    return tuple(integer(value, f"{label}[{k}]", least) for k, value in enumerate(given))
-
-
-def frame_of(
-    entry: object, label: str, family: FamilyRule, shape: Node, bound: int
-) -> FrameEntry | None:
-    """A body's frame from its mode entry's key `frame`, None where the tool wrote none (a source, the frozen pair, a record with no transition): at least two levels [num, den] over the family's den with num within the circle, as many sines from 0 through den and as many degenerate counts from 1, the transition two distinct level indexes, the unit and the period from 1, the region at least one flat index below the board's size, each once, as many shares from 0 as levels and as many profiles, each a level over the lattice (`pairs_of`) within the amplitude bound; refused by name otherwise."""
-    if not isinstance(entry, dict) or FRAME not in entry:
-        return None
-    frame = keyed(entry[FRAME], f"{label}.{FRAME}", FRAME_KEYS, FRAME_KEYS)
-    name, den = f"{label}.{FRAME}", family.pair[1]
-    given = frame["levels"]
-    if not isinstance(given, list) or len(given) < 2:
-        raise ValueError(
-            f"{name}.levels must list at least two rotation pairs [num, den] in energy order"
-        )
-    levels = []
-    for k, pair in enumerate(given):
-        if not isinstance(pair, list) or len(pair) != 2 or pair[1] != den:
-            raise ValueError(
-                f"{name}.levels[{k}] must be a rotation pair [num, {den}] over the family's den"
-            )
-        levels.append((integer(pair[0], f"{name}.levels[{k}][0]", -den, den), den))
-    count = len(levels)
-    sines = integers_of(frame["sines"], f"{name}.sines", count, 0)
-    if any(sine > den for sine in sines):
-        raise ValueError(f"{name}.sines must stand from 0 through den {den}")
-    modes = integers_of(frame["modes"], f"{name}.modes", count, 1)
-    lower, upper = integers_of(frame["transition"], f"{name}.transition", 2, 0)
-    if lower == upper or max(lower, upper) >= count:
-        raise ValueError(f"{name}.transition must name two distinct levels below {count}")
-    unit = integer(frame["unit"], f"{name}.unit", 1)
-    period = integer(frame["period"], f"{name}.period", 1)
-    size = shape[0] * shape[1] * shape[2]
-    places = frame["region"]
-    if not isinstance(places, list) or not places:
-        raise ValueError(f"{name}.region must list the region's flat x-major indexes, at least one")
-    region = integers_of(places, f"{name}.region", len(places), 0)
-    if max(region) >= size or len(set(region)) != len(region):
-        raise ValueError(f"{name}.region must list flat x-major indexes below {size}, each once")
-    shares = integers_of(frame["shares"], f"{name}.shares", count, 0)
-    given = frame["profiles"]
-    if not isinstance(given, list) or len(given) != count:
-        raise ValueError(f"{name}.profiles must list one compiled profile per level, {count}")
-    profiles = tuple(pairs_of(profile, f"{name}.profiles[{k}]", size) for k, profile in enumerate(given))
-    if any(abs(value) > bound for profile in profiles for _at, value in profile):
-        raise ValueError(f"{name}.profiles stand above the amplitude bound A = {bound}")
-    return FrameEntry(tuple(levels), sines, modes, lower, upper, unit, period, region, shares, profiles)
-
-
-def body_entry(
-    entries: list[object],
-    placed: int,
-    label: str,
-    family: FamilyRule,
-    shape: Node,
-    bound: int,
-    beyond: tuple[Node, ...],
-) -> tuple[tuple[Levels, Levels, Levels, Levels], FrameEntry | None]:
-    """A laid body's mode entry read whole: its two level pairs (`levels_of`) and its frame where the host's frame tool wrote one (`frame_of`)."""
-    entry = entry_of(entries, placed, label)
-    name = f"the mode file's bodies[{placed}]"
-    return levels_of(entry, name, family, shape, bound, beyond), frame_of(
-        entry, name, family, shape, bound
-    )

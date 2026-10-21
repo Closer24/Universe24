@@ -314,18 +314,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
-    ("frame.py", "act_pair", "largest_below"): "D",  # the one act's pair: the sine by the one search
-    ("frame.py", "powered", "division_forward"): "D",  # the count's halving in the pair's powers
-    ("taker.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice and its base
-    ("taker.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
-    ("taker.py", "rows_read", "division_forward"): "D",  # the rows' digits and bases alike
-    (
-        "meeting.py",
-        "dipole_sources",
-        "division_forward",
-    ): "D",  # the beat's dipole source, the carry in the books
-    ("meeting.py", "dipole_sources", "largest_below"): "S",  # the two parts' labels' roots, searched
-    ("node_detector.py", "books_of", "division_forward"): "D",  # the declared shares' squares, one each
     (
         "resonance.py",
         "projected",

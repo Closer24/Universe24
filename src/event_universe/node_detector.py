@@ -87,9 +87,6 @@ class NodeBooks:
     gradient_carry: dict[Transition, int] = field(
         default_factory=dict
     )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
-    dipole_carry: dict[tuple[int, int, int], int] = field(
-        default_factory=dict
-    )  # the beat's write (`meeting.dipole_sources`): per transition, axis and kind (the half charge, the flow, the flux) the carried remainder of its division act between intervals
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -102,13 +99,6 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         wall = count_wall(board.families[row.family], board.world.quantum_action)
         part = max(range(len(parted)), key=lambda k: parted[k])
         labels = [count * wall for count in parted]
-        if (
-            row.detector.shares
-        ):  # the declared start in several parts: the labels at the roots of the shares
-            whole = sum(parted) * wall
-            squares = (division_forward(whole * whole * n, d, 0)[0] for n, d in row.detector.shares)
-            labels = [largest_below(square) for square in squares]
-            part = max(range(len(labels)), key=lambda k: labels[k])
         draw = row.detector.draw
         longest = draw.window if draw.window is not None else max(board.world.intervals, 1)
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)

@@ -100,38 +100,6 @@ FACE_KEYS = (
     "node",
 )  # the face line's own keys: the line, the Ports and the value presented
 BODY = "body"  # a NodeDetector with a record of its own in the output, by its number among the world's bodies
-TAKER = "taker"  # the takers' LATTICE line under the world's key `takers` (taker.py): the instrument at the lay, the window's close with its whether-draw, the write
-NODES, FRONT, UNIT, SHARES, BOOKED, WEIGHTS, TAKEN = (
-    "nodes",
-    "front",
-    "unit",
-    "shares",
-    "books",
-    "weights",
-    "taken",
-)  # the taker line's words: its Nodes and front Ports, its unit W_rec, a body's shares per level, the running books, the whether's two weights, the outcome
-DIGITS, WRITTEN, GIVER, LIGHT, ENERGY, SUM, WINDOW_WORD = (
-    "digits",
-    "written",
-    "giver",
-    "light",
-    "energy",
-    "sum",
-    "window",
-)  # the bits read, the write's readings, the giver drawn, the light's hole or its held row, the energy books before and after, their sum, the window
-REALISED, COUNT = (
-    "realised",
-    "count",
-)  # the credit line's two words the taker line carries too: the level realised, the count taken
-UNFRAMED = "no frame in the mode file beside the world: the host's frame tool writes a turned record's frame as integers (tools/frame_of.py) and none for a record with no transition, no taker"  # the taker line of a body without its frame
-FROZEN = (
-    "no hop: the frozen pair, no frame and no taker"  # the taker line of a body at the pair [0, den]
-)
-NOTHING, HELD_LIGHT, HOLE = (
-    "nothing to take: the window's inflow at or below 0",
-    "no hole: the light stands in a held row, a body's own write",
-    "the hole: the free row's levels at the Node to 0",
-)  # the taker's three readings of a close and a write
 AT = "at"  # the one Node written, a lattice diagnostic beside the credit's result
 OUTPUT = (
     *REPORT_KEYS,
@@ -257,15 +225,6 @@ def face(
         zip(REPORT_KEYS, (FACE, DIAGNOSTIC, interval, family, None), strict=True)
     )
     found.update(zip(FACE_KEYS, (line, ports, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
-    return found
-
-
-def taker(interval: int, family: str, name: str, reading: dict[str, object]) -> dict[str, object]:
-    """The taker line, labelled LATTICE (taker.py; ALGEBRA.md, The emission of a bound record is the click's act of the taker): the family read (the holder of the sign, light), the taker by name (`body n` or the region's), and its readings of the lay or of a window's close, the reader's numbers and the write's; the take itself is the credit line (`credit`), the one click line kind."""
-    found: dict[str, object] = dict(
-        zip(REPORT_KEYS, (TAKER, DIAGNOSTIC, interval, family, name), strict=True)
-    )
-    found.update(reading)
     return found
 
 
