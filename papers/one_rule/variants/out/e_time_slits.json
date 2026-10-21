@@ -1,0 +1,288 @@
+{
+ "band": {
+  "k": 0.7853981633974483,
+  "cos_omega": 0.9023689270621824,
+  "omega": 0.4455612539433266,
+  "v_g": 0.5469181606780269,
+  "period_intervals": 14.101731808077682
+ },
+ "packets": {
+  "length_nodes": 17,
+  "separation_links": 60,
+  "tau_arrival_intervals": 109.70562748477145
+ },
+ "fringe_spacing_in_omega_2pi_over_tau": 0.057273135856697716,
+ "single_P2_peak_at": 0.41056125394332654,
+ "double_P2_minima": [
+  0.2106,
+  0.2706,
+  0.3306,
+  0.3881,
+  0.4456,
+  0.5031,
+  0.5581,
+  0.6131,
+  0.6656
+ ],
+ "beats_zeros_k(omega)d=(2m+1)pi": [
+  0.2108,
+  0.2704,
+  0.3294,
+  0.3879,
+  0.4456,
+  0.5024,
+  0.5582,
+  0.6129,
+  0.6663
+ ],
+ "ratio_P2double_over_P2single_vs_4cos2": [
+  {
+   "omega_d": 0.1956,
+   "ratio": 2.063,
+   "4cos^2(k d/2)": 2.063,
+   "P2single_rel": 0.3802
+  },
+  {
+   "omega_d": 0.2081,
+   "ratio": 0.083,
+   "4cos^2(k d/2)": 0.083,
+   "P2single_rel": 0.4223
+  },
+  {
+   "omega_d": 0.2206,
+   "ratio": 0.961,
+   "4cos^2(k d/2)": 0.961,
+   "P2single_rel": 0.4666
+  },
+  {
+   "omega_d": 0.2331,
+   "ratio": 3.392,
+   "4cos^2(k d/2)": 3.392,
+   "P2single_rel": 0.5127
+  },
+  {
+   "omega_d": 0.2456,
+   "ratio": 3.738,
+   "4cos^2(k d/2)": 3.738,
+   "P2single_rel": 0.5601
+  },
+  {
+   "omega_d": 0.2581,
+   "ratio": 1.472,
+   "4cos^2(k d/2)": 1.472,
+   "P2single_rel": 0.6084
+  },
+  {
+   "omega_d": 0.2706,
+   "ratio": 0.0,
+   "4cos^2(k d/2)": 0.0,
+   "P2single_rel": 0.6568
+  },
+  {
+   "omega_d": 0.2831,
+   "ratio": 1.55,
+   "4cos^2(k d/2)": 1.55,
+   "P2single_rel": 0.7047
+  },
+  {
+   "omega_d": 0.2956,
+   "ratio": 3.783,
+   "4cos^2(k d/2)": 3.783,
+   "P2single_rel": 0.7514
+  },
+  {
+   "omega_d": 0.3081,
+   "ratio": 3.304,
+   "4cos^2(k d/2)": 3.305,
+   "P2single_rel": 0.7962
+  },
+  {
+   "omega_d": 0.3206,
+   "ratio": 0.834,
+   "4cos^2(k d/2)": 0.834,
+   "P2single_rel": 0.8381
+  },
+  {
+   "omega_d": 0.3331,
+   "ratio": 0.148,
+   "4cos^2(k d/2)": 0.148,
+   "P2single_rel": 0.8767
+  },
+  {
+   "omega_d": 0.3456,
+   "ratio": 2.31,
+   "4cos^2(k d/2)": 2.31,
+   "P2single_rel": 0.9111
+  },
+  {
+   "omega_d": 0.3581,
+   "ratio": 3.994,
+   "4cos^2(k d/2)": 3.995,
+   "P2single_rel": 0.9406
+  },
+  {
+   "omega_d": 0.3706,
+   "ratio": 2.589,
+   "4cos^2(k d/2)": 2.588,
+   "P2single_rel": 0.9647
+  },
+  {
+   "omega_d": 0.3831,
+   "ratio": 0.265,
+   "4cos^2(k d/2)": 0.265,
+   "P2single_rel": 0.983
+  },
+  {
+   "omega_d": 0.3956,
+   "ratio": 0.654,
+   "4cos^2(k d/2)": 0.654,
+   "P2single_rel": 0.9948
+  },
+  {
+   "omega_d": 0.4081,
+   "ratio": 3.159,
+   "4cos^2(k d/2)": 3.159,
+   "P2single_rel": 0.9998
+  },
+  {
+   "omega_d": 0.4206,
+   "ratio": 3.836,
+   "4cos^2(k d/2)": 3.836,
+   "P2single_rel": 0.9981
+  },
+  {
+   "omega_d": 0.4331,
+   "ratio": 1.599,
+   "4cos^2(k d/2)": 1.599,
+   "P2single_rel": 0.9894
+  },
+  {
+   "omega_d": 0.4456,
+   "ratio": 0.0,
+   "4cos^2(k d/2)": 0.0,
+   "P2single_rel": 0.9736
+  },
+  {
+   "omega_d": 0.4581,
+   "ratio": 1.608,
+   "4cos^2(k d/2)": 1.608,
+   "P2single_rel": 0.9514
+  },
+  {
+   "omega_d": 0.4706,
+   "ratio": 3.85,
+   "4cos^2(k d/2)": 3.85,
+   "P2single_rel": 0.9227
+  },
+  {
+   "omega_d": 0.4831,
+   "ratio": 3.092,
+   "4cos^2(k d/2)": 3.091,
+   "P2single_rel": 0.888
+  },
+  {
+   "omega_d": 0.4956,
+   "ratio": 0.549,
+   "4cos^2(k d/2)": 0.55,
+   "P2single_rel": 0.8482
+  },
+  {
+   "omega_d": 0.5081,
+   "ratio": 0.389,
+   "4cos^2(k d/2)": 0.389,
+   "P2single_rel": 0.8034
+  },
+  {
+   "omega_d": 0.5206,
+   "ratio": 2.893,
+   "4cos^2(k d/2)": 2.893,
+   "P2single_rel": 0.7548
+  },
+  {
+   "omega_d": 0.5331,
+   "ratio": 3.912,
+   "4cos^2(k d/2)": 3.912,
+   "P2single_rel": 0.7032
+  },
+  {
+   "omega_d": 0.5456,
+   "ratio": 1.725,
+   "4cos^2(k d/2)": 1.725,
+   "P2single_rel": 0.649
+  },
+  {
+   "omega_d": 0.5581,
+   "ratio": 0.0,
+   "4cos^2(k d/2)": 0.0,
+   "P2single_rel": 0.5935
+  },
+  {
+   "omega_d": 0.5706,
+   "ratio": 1.678,
+   "4cos^2(k d/2)": 1.678,
+   "P2single_rel": 0.5377
+  },
+  {
+   "omega_d": 0.5831,
+   "ratio": 3.909,
+   "4cos^2(k d/2)": 3.91,
+   "P2single_rel": 0.4818
+  },
+  {
+   "omega_d": 0.5956,
+   "ratio": 2.842,
+   "4cos^2(k d/2)": 2.841,
+   "P2single_rel": 0.4273
+  },
+  {
+   "omega_d": 0.6081,
+   "ratio": 0.304,
+   "4cos^2(k d/2)": 0.304,
+   "P2single_rel": 0.3747
+  },
+  {
+   "omega_d": 0.6206,
+   "ratio": 0.748,
+   "4cos^2(k d/2)": 0.748,
+   "P2single_rel": 0.3243
+  },
+  {
+   "omega_d": 0.6331,
+   "ratio": 3.415,
+   "4cos^2(k d/2)": 3.414,
+   "P2single_rel": 0.2773
+  },
+  {
+   "omega_d": 0.6456,
+   "ratio": 3.548,
+   "4cos^2(k d/2)": 3.549,
+   "P2single_rel": 0.2336
+  },
+  {
+   "omega_d": 0.6581,
+   "ratio": 0.884,
+   "4cos^2(k d/2)": 0.883,
+   "P2single_rel": 0.1938
+  },
+  {
+   "omega_d": 0.6706,
+   "ratio": 0.255,
+   "4cos^2(k d/2)": 0.255,
+   "P2single_rel": 0.1582
+  },
+  {
+   "omega_d": 0.6831,
+   "ratio": 2.846,
+   "4cos^2(k d/2)": 2.846,
+   "P2single_rel": 0.1266
+  },
+  {
+   "omega_d": 0.6956,
+   "ratio": 3.863,
+   "4cos^2(k d/2)": 3.862,
+   "P2single_rel": 0.0994
+  }
+ ],
+ "max_abs_ratio_minus_beats_where_envelope_above_2pc": 0.0018164431398228764,
+ "envelope_width_above_2pc_in_omega": 0.5
+}
