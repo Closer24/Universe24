@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
+from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_forward, largest_below, mass, partial_rooms
 from event_universe.features.currents import PRODUCTS
@@ -106,8 +107,8 @@ class FamilyRule(Row):
 
     @property
     def link_read(self) -> tuple[int, int]:
-        """How a Link reads an odd line of this holder, two declared integers the Port consumes blindly (`plane.link_levels`): the weight of the Node owning the +a Link and the weight of its far end; (1, 1) the two ends' sum, the law's standing line (ALGEBRA.md, The sign holder rotates the two-part record); (-2, 0) under the Lorentz form, where the odd line is the +a Link's own level, sourced by the Link's own flux (L_a = + j_a / c^2 over the time line's rho, the odd level over the time level + v / c^2 as the law's line reads it), and the Link reads minus twice it from its owner alone: the hop's phase is then -q A along the Link, Peierls' p - q A beside the time line's + q phi on the step, so that the strength the record is turned by is -d_a L_0 - d_t L_a, Maxwell's induction with its sign; the same magnitude for a smooth line as the two ends' sum, the Link's own line where it varies (covector.py)."""
-        return (-2, 0) if self.lorentz else (1, 1)
+        """How a Link reads an odd line of this holder, two declared integers the Port consumes blindly (`plane.link_levels`): the weight of the Node owning the +a Link and the weight of its far end; (-1, -1) the two ends' sum with the sign opposite to the time line's (since 2026-10-21, the law's row (b2) read on the engine: the Link's hop carries the odd line as Peierls' p - q A under the hop's convention omega(k + theta), beside the time line's + q phi on the step, so that the strength the record is turned by is -d_a L_0 - d_t L_a, Maxwell's induction with its sign, and a co-moving reader of the source's family reads gamma_s (1 - beta_s^2) = 1 / gamma_s, 0.987, 0.958 and 0.919 at beta_s = 0.150, 0.286 and 0.395 against the law's 0.989, 0.958 and 0.919 (ALGEBRA.md, The sign holder rotates the two-part record; The rows against nature (b2)); (-2, 0) under the Lorentz form, where the odd line is the +a Link's own level, sourced by the Link's own flux, and the Link reads minus twice it from its owner alone, the same magnitude for a smooth line as the two ends' sum, the Link's own line where it varies (covector.py). History: (1, 1), the two ends' sum with the time line's own sign, the shipped read until 2026-10-21 (gravity's dragging sign, +theta along the current, The clock family on the Ports), under which the same co-moving reader read gamma_s (1 + beta_s^2), 1.031, 1.130 and 1.254 at the three beta_s, since the odd line is sourced at + v / c_s^2 of the time line (The odd line's source is the sign's own current)."""
+        return (-2, 0) if self.lorentz else (-1, -1)
 
 
 def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
@@ -244,13 +245,12 @@ def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): (the largest x with x^2 <= 9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one search on the whole product (`rule3.largest_below`), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
+    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): (the largest x with x^2 <= 9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one search on the whole product (`paces.sine_den`, the engine's one integer sine, `rule3.largest_below`), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
     num, den = family.pair
-    gap = den * den - num * num
-    if gap:
-        wall = 3 * action  # Rule3's 3 den over the den of sin omega_0, the search on gap over den
-        return largest_below(wall * wall * gap)  # one search on the whole product
-    return 3 * den * action
+    if abs(num) == den:
+        return 3 * den * action
+    # Rule3's 3 den over the den of sin omega_0: one search on the whole product
+    return sine_den(num, den, 3 * action)
 
 
 def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, unit: int = 1) -> HeldWrite:

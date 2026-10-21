@@ -89,7 +89,9 @@ def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
     states[CHARGE].lines = [time[0], *odd]
     angles = node.turning(CHARGED, TURNING, states, 1)  # the sign's odd levels, static
     assert angles is not None
-    pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], RING))  # the Links' pairs
+    pairs = link_pairs(
+        PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], RING, (-1, -1))
+    )  # the Links' pairs
     for t in range(steps):
         states[CHARGE].lines, states[CHARGED].lines = [time[t], *odd], lines
         kept.append(np.array([getattr(r, k) for r in lines for k in KEYS]))
@@ -174,9 +176,12 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
         found, booked, plain = turned_run(wave(0, OMEGA), levels, (ZERO,) * 3, len(levels) - 2)
         assert START > 0 and abs(found + OMEGA) < 3e-4, found  # a uniform level turns nothing
         assert booked * 1000 < START and plain == booked, (booked, plain)
-    for level in (600, -600):
+    for level in (
+        600,
+        -600,
+    ):  # a static odd level turns the band to omega(k + theta), the Link's angle theta = -2 atan(level / (2 Gamma)) at the read (-1, -1) (since 2026-10-21, the sign opposite to the time line's, the law's row (b2); k + 2 atan under the read (1, 1) until then)
         found = turned_run(wave(k, band(k)), [0] * 62, (np.full_like(ZERO, level), ZERO, ZERO), 60)[0]
-        assert abs(found + band(k + 2 * math.atan(level / (2 * GAMMA)))) < 1e-3, (level, found)
+        assert abs(found + band(k - 2 * math.atan(level / (2 * GAMMA)))) < 1e-3, (level, found)
     for sense in (1, -1):
         lines = wave(k, band(k), sense)
         for _ in range(100):

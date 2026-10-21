@@ -6,7 +6,8 @@ from collections.abc import Iterable
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
-from event_universe.core.rule3 import division_forward, largest_below
+from event_universe.core.paces import sine_den
+from event_universe.core.rule3 import division_forward
 from event_universe.features.click import along_cosine, envelope, line_total, wave_cosine
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import extent_across
@@ -29,13 +30,13 @@ def passage(
     shape: Node,
     periodic: Wrap,
 ) -> int | None:
-    """The intervals a lay of `length` Nodes along `axis` takes to pass the body at `nodes`, ceil((L + b - 1) / v_g), b the body's extent along the axis (`faces.extent_across`, through the wrap on a periodic axis) and v_g = (num / den) sin k / (3 sin omega) the band's group pace of the lay's wave: `cosines` den cos k_a on the three axes by the rotation act's search (`features/click.wave_cosine`), den cos omega = (num SUM_a den cos k_a) div (3 den) the band's line as the record's unit reads it (`emission.packet_unit`; the massless family at num = den, a gapped one by its pair), the sines by the search, so W = ceil(3 den (L + b - 1) sin omega / (|num| sin k)) by the division act with the carry; |sin k| alone enters, so the opposite direction and every reflection of the lay give one W; None where the lay has no end: a lay filling a periodic ring, or one that does not move (sin k = 0 at the band's edge, a frozen pair)."""
+    """The intervals a lay of `length` Nodes along `axis` takes to pass the body at `nodes`, ceil((L + b - 1) / v_g), b the body's extent along the axis (`faces.extent_across`, through the wrap on a periodic axis) and v_g = (num / den) sin k / (3 sin omega) the band's group pace of the lay's wave: `cosines` den cos k_a on the three axes by the rotation act's search (`features/click.wave_cosine`), den cos omega = (num SUM_a den cos k_a) div (3 den) the band's line as the record's unit reads it (`emission.packet_unit`; the massless family at num = den, a gapped one by its pair), the sines by the search (`paces.sine_den`), so W = ceil(3 den (L + b - 1) sin omega / (|num| sin k)) by the division act with the carry; |sin k| alone enters, so the opposite direction and every reflection of the lay give one W; None where the lay has no end: a lay filling a periodic ring, or one that does not move (sin k = 0 at the band's edge, a frozen pair)."""
     num, den = pair
     if periodic[axis] and length >= shape[axis]:
         return None
     omega = int(division_forward(num * sum(cosines), 3 * den, 0)[0])
-    sine = largest_below(den * den - omega * omega)
-    pace = abs(num) * largest_below(den * den - cosines[axis] * cosines[axis])
+    sine = sine_den(omega, den)
+    pace = abs(num) * sine_den(cosines[axis], den)
     if pace == 0:
         return None
     extent = extent_across([node[axis] for node in nodes], shape[axis], periodic[axis])

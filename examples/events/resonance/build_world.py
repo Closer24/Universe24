@@ -19,7 +19,7 @@ ROOT = HERE.parents[2]
 
 
 def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str, object]:
-    """One atom declared a NodeDetector at its Node: the giver standing in e with its emission, or the taker standing in g; the transition g to e by the light at the resonance given."""
+    """One atom declared a NodeDetector over its Nodes (`body_nodes` along x from its node): the giver standing in e with its emission, or the taker standing in g; the transition g to e by the light at the resonance given."""
     row, light = design[which], design["light"]
     upper = which == "giver"
     parts = [
@@ -36,9 +36,9 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     return {
         "family": row["family"],
         "nodes": [
-            {"node": list(row["node"]), "weight": 1},
-            {"node": [int(row["node"][0]) + 1, *row["node"][1:]], "weight": 1},
-        ],
+            {"node": [int(row["node"][0]) + k, *row["node"][1:]], "weight": 1}
+            for k in range(int(design.get("body_nodes", 2)))
+        ],  # the body's Nodes along x from its node, `body_nodes` of the design (three since 2026-10-21, the chain's declaration; two before, refused at the giver's second close at the exact vacuum)
         "parts": parts,
         "transitions": transitions,
         "rates": rates,

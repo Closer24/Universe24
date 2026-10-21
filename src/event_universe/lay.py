@@ -9,6 +9,7 @@ import numpy as np
 
 from event_universe import records
 from event_universe.core.rule3 import division_forward
+from event_universe.front import declared
 from event_universe.reports import lay
 
 if TYPE_CHECKING:
@@ -119,7 +120,7 @@ def written(
             was = [int(r[where]) for r in (record.now, record.before, record.remainder)]
             after = [int(r[where]) for r in (laid_line.now, laid_line.before, laid_line.remainder)]
             if was != after:
-                node = [int(a - o) for a, o in zip(here, board.offset, strict=True)]
+                node = list(declared(board, here))
                 found = lay(board.interval, name, line, node, was, after)
                 if board.output is not None:
                     board.output(found)

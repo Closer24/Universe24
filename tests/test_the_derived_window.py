@@ -239,7 +239,7 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
 def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_the_lay_has_an_end(
     tmp_path,
 ):
-    """C5's reach where the lay has an end (the cold reader's change (a) with the reader's fix of 2026-10-19; `node_detector.sourcing`, `Rate.ended`, `emission.Emitter.outstanding`): the resonance world opened (x open with receding faces, the ring cut, the run 200): body 0's rate lays the pulse as a source in time on an open guide, a lay with an end (`Rate.ended` True; the window of both bodies derived, 48 = tau), so from its emission on body 0 is dark to the pulse while its given quantum stands in the record, through the source's span and after it, its Nodes carrying its own train and wake (lit by the board, dark to its own light: no window opens or closes on it after), until body 1 takes the quantum, the piece's source body 0 drawn (`take.drawn_emitter`), the count 0 and body 0 lit again by what stands at its Nodes, or the run ends with the quantum standing; a read of the books and of the lay's end, symmetric under the 48 by construction. Re-pinned 2026-10-20 under the content of the born universe (the reader's ruling: the sentence needs only the emission): the universe with the holders of the content, the box opened along x as the content's sink; body 0's first close at 48 reads no emission (e standing: under the content the emission is drawn within the span by the digits, not at the window's close as in the exact dark), the emission falls at 83, the window open at the emission closes null at 96 and none after, the body's windows 2; body 1's closes at 146 and 194 take nothing and the run ends with the quantum standing in the books, the light leaving by the faces: no take falls in the run."""
+    """C5's reach where the lay has an end (the cold reader's change (a) with the reader's fix of 2026-10-19; `node_detector.sourcing`, `Rate.ended`, `emission.Emitter.outstanding`): the resonance world opened (x open with receding faces, the ring cut, the run 200; the pair over three Nodes since 2026-10-21, the bodies the chain's, so the giver emits at 10, its quantum stands 18 intervals and the taker takes at 75): body 0's rate lays the pulse as a source in time on an open guide, a lay with an end (`Rate.ended` True; the window of both bodies derived, 48 = tau), so from its emission on body 0 is dark to the pulse while its given quantum stands in the record, through the source's span and after it, its Nodes carrying its own train and wake (lit by the board, dark to its own light: no window opens or closes on it after), until body 1 takes the quantum, the piece's source body 0 drawn (`take.drawn_emitter`), the count 0 and body 0 lit again by what stands at its Nodes, or the run ends with the quantum standing; a read of the books and of the lay's end, symmetric under the 48 by construction. Re-pinned 2026-10-20 under the content of the born universe (the reader's ruling: the sentence needs only the emission): the universe with the holders of the content, the box opened along x as the content's sink; body 0's first close at 48 reads no emission (e standing: under the content the emission is drawn within the span by the digits, not at the window's close as in the exact dark), the emission falls at 83, the window open at the emission closes null at 96 and none after, the body's windows 2; body 1's closes at 146 and 194 take nothing and the run ends with the quantum standing in the books, the light leaving by the faces: no take falls in the run."""
 
     def receding(document):  # type: ignore[no-untyped-def]
         opened(document)  # the box opened along x as the content's sink, the windows derived
@@ -264,18 +264,23 @@ def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_th
         own = node_detector.sourcing(board, giver)
         dark_to_its_own.append(own == {pulse} and node_detector.dark(board, giver, own))
         board.step()
-    assert all(dark_to_its_own) and len(dark_to_its_own) > 40  # widened: its quantum stands, no window
-    assert (giver.windows, giver.elapsed) == (2, 0)  # the null close at 48 and the emission's window
+    assert (
+        all(dark_to_its_own) and len(dark_to_its_own) == 18
+    )  # its quantum stands 18 intervals, no window, until the taker takes it (the pair over three Nodes since 2026-10-21; over two Nodes above 40 intervals and no take in the run)
+    assert (giver.windows, giver.elapsed) == (1, 0)  # the emission's window, closed null at 48
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     closes = [(c["interval"], c["node_detector"], c["emitted"]) for c in lines if c["event"] == "credit"]
-    assert closes == [
-        (48, "body 0", None),
-        (83, "body 0", "pulse"),
-        (96, "body 0", None),
-        (146, "body 1", None),
-        (194, "body 1", None),
-    ]
-    assert taken == [] and board.credit.counts[pulse] == 1  # no take falls in the run (2026-10-20)
+    assert (
+        closes
+        == [
+            (10, "body 0", "pulse"),
+            (48, "body 0", None),
+            (75, "body 1", None),
+        ]
+    )  # three Nodes, 2026-10-21 (two Nodes, 2026-10-20: the emission at 83, the null closes at 48, 96, 146 and 194)
+    assert [c["interval"] for c in taken] == [75] and board.credit.counts[
+        pulse
+    ] == 0  # the take falls at the taker's first close (2026-10-21)
     print(
         f"C5 where the lay has an end: body 0 gave at {given}, its source spent at {given + 47}, dark to its own "
         f"light over {len(dark_to_its_own)} intervals after it; taken {[c['interval'] for c in taken]}"

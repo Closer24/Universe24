@@ -1,4 +1,4 @@
-"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the lattice as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames (a strided look, record.py's `--every K`, one frame per kept interval, every sum up to the frame shown, every mark at an interval and the window's marker reading the frame's own interval and never its position), the reading's window marked on the slider; a look of several passes (record.py's frames from the lattice's observers on a world of a record read at declared sides, each frame carrying its `pass`, 1 the run to the first close, then per side a run back to the record's birth with its intervals decreasing and a run forward to the next close, and its `direction`, +1 or -1) runs the slider over the frames in the look's order, labels the frame with its own interval, its pass and its direction, marks the direction beside the slider and the passes' bounds on the slider and on every graph over the frames, counts every sum up to the frame shown over the lines of the frames up to it, a click line belonging to the pass it was written in, and places every line of the run's output at the frame of its pass, a look of one pass (no `pass` key) rendering as before; a look whose header carries the run back's reach (`reach` cone, the record's light cone; `cone_support`, the birth's Nodes at the file's coordinates (the lay's for a record laid at the start); `cone_volume`, the cone's Nodes per interval) and whose frames of the run back and forward carry `cone_radius` (t + 1 at the interval t) shades the Nodes within that many Links of the support in a tone of their own, on the board and on the gate's view from above, the Link metric with the wrap as the engine's front counts its shells (per axis |d|, on a periodic axis the lesser of |d| and the extent less |d|, summed over the three axes), a geometry from the two recorded numbers and nothing of the engine's, draws the radius over the frames as a graph, names the radius and the support in the frame's label, says under the board that the click is where the past met the future, the record's own light cone running back after the click, the realised term written at the record's birth and the cone running forward with it, the rest of the board neither read nor written (the frames' arrays are the engine's as they stand, one ring beyond the cone read from the board and asserted equal to the record's reference, the board at its birth, the lay's frame 0 for a record laid at the start) and reads its own count of the cone's Nodes beside the look's, and where the header carries `cone_stepped` (the Node-steps per interval of the cone stepped alone, the box with its ring) says so with the sum, drawing the ball alone and never the box; a frame carrying the board's `tick` (the loop's forward steps, standing at the close while the record is read back and forward) is labelled by its tick and the interval the record is read at; the view fixed, the board seen along one axis and never turned (a folded axis is the one seen along, the board the plane it is; a board of three axes is seen along z one layer at a time, the layer picked beside the board, the first body's layer or the middle one first), the declared board alone in the frame and never the layers a receding face grew, the wheel and two buttons bringing it closer or farther; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the declared node_detectors' Nodes as rings (the open faces' layer reports but is drawn as no ring), seen at rest and brighter and larger the interval they click; the node_detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum, and where the blind names a line or levels (`line_per_interval`, `levels`) the transform of the form at the Node over the frames with the blind's line as a dashed mark and the levels named), every one labelled "lattice reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, the sums its bars draw and the transform of one Node's form where the blind names a line, and draws no curve, surface or interpolation between Nodes. The blind's numbers stand in a table of their own (every number and short list of the expectation file a row, a nested object's rows named key.subkey, its words under a fold) and never as a raw dump; with an expectation across an axis the NodeDetectors' arrival over the intervals is drawn beside the bars, the reporters' inflow per interval in quanta over the family's wall and the quanta gathered within the window up to each interval, the blind's peak, centroid, span and total marked where the blind names them. With `--output <world>.output.json` (tools/run_inputs.py's file, the run's own output) the page's measurement is the output file's: its `click` lines feed the bars and the arrival, its `credit` lines the clicks credited up to each interval and, where the file carries credit lines at the reporters, the clicks the draw credited per reporter as a second bar beside the shares' (one quantum, one click, where the family's unit rounds every share to 0; 2026-10-21), its `density` lines the lattice density over the reporters' regions, and the header says whether the look's click lines are the output's (they are the same engine lines; a difference is named); with `--reading <reading>.json` (tools/click_counts.py's file, the output file read against the blind) the bars are the reading's rounded shares beside the clicks the draw credited and the blind curve, and one table holds every row the reader compares, read against blind with the difference. The output file's click act is drawn too, the meeting of the future with the past (ENGINE.md section 3, act 6): the hole, the Nodes the `lay` lines write at their interval, marked as wire cubes; the faces the act presents, the `face` lines' Nodes at their interval (the hole's over two intervals, then the front's shells), marked as small cubes, what is erased behind the front seen in the record's own glow and dots going out; the `erasure` lines' distance and the sizes taken per interval as a graph; a record declared a NodeDetector (a body with `credit` lines) ringed at its standing Nodes and flashing at its absorption; and one panel of the records' clicks, the part each record stands in over the intervals from its `credit` lines (before and realised) and the lines themselves in a table. The page is dark, one theme and no switch; the moving quanta of light are green; a cube glows by the record's form D at its Node where the look holds it, the wave's own intensity, else by its level. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
+"""The look's page builder, a diagnostic (docs/ENGINE.md #6-how-to-run-a-world): one self-contained HTML page from a look file written by `tools/look/record.py` and, if the world's folder holds one, its blind expectation file, the look embedded gzip-compressed and base64-encoded and inflated by the browser's own DecompressionStream at load, so that a look of many frames fits one page with every number untouched. The page shows the lattice as cubes (a folded axis as a plane of thin slabs; the inner faces the world declares as dark cubes with their gaps open, "the faces (declared)" in the legend; a board with a receding face at the shape of each frame, its box drawn per frame and every Node at the file's coordinates), one frame per interval with a slider and play and nothing between frames (a strided look, record.py's `--every K`, one frame per kept interval, every sum up to the frame shown, every mark at an interval and the window's marker reading the frame's own interval and never its position), the reading's window marked on the slider; a look of several passes (record.py's frames from the lattice's observers on a world of a record read at declared sides, each frame carrying its `pass`, 1 the run to the first close, then per side a run back to the record's birth with its intervals decreasing and a run forward to the next close, and its `direction`, +1 or -1) runs the slider over the frames in the look's order, labels the frame with its own interval, its pass and its direction, marks the direction beside the slider and the passes' bounds on the slider and on every graph over the frames, counts every sum up to the frame shown over the lines of the frames up to it, a click line belonging to the pass it was written in, and places every line of the run's output at the frame of its pass, a look of one pass (no `pass` key) rendering as before; a look whose header carries the run back's reach (`reach` cone, the record's light cone; `cone_support`, the birth's Nodes at the file's coordinates (the lay's for a record laid at the start); `cone_volume`, the cone's Nodes per interval) and whose frames of the run back and forward carry `cone_radius` (t + 1 at the interval t) shades the Nodes within that many Links of the support in a tone of their own, on the board and on the gate's view from above, the Link metric with the wrap as the engine's front counts its shells (per axis |d|, on a periodic axis the lesser of |d| and the extent less |d|, summed over the three axes), a geometry from the two recorded numbers and nothing of the engine's, draws the radius over the frames as a graph, names the radius and the support in the frame's label, says under the board that the click is where the past met the future, the record's own light cone running back after the click, the realised term written at the record's birth and the cone running forward with it, the rest of the board neither read nor written (the frames' arrays are the engine's as they stand, one ring beyond the cone read from the board and asserted equal to the record's reference, the board at its birth, the lay's frame 0 for a record laid at the start) and reads its own count of the cone's Nodes beside the look's, and where the header carries `cone_stepped` (the Node-steps per interval of the cone stepped alone, the box with its ring) says so with the sum, drawing the ball alone and never the box; a frame carrying the board's `tick` (the loop's forward steps, standing at the close while the record is read back and forward) is labelled by its tick and the interval the record is read at; the view fixed, the board seen along one axis and never turned (a folded axis is the one seen along, the board the plane it is; a board of three axes is seen along z one layer at a time, the layer picked beside the board, the first body's layer or the middle one first), the declared board alone in the frame, the layers a receding face grew on the board's own switch, off by default, the frame's label counting the Nodes with a count out there (2026-10-21), the wheel and two buttons bringing it closer or farther; whole quanta as dots sized by the square root of the count (a hole, a count below 0, a hollow dot), resting on the slabs' face where an axis is folded, the wave as the glow of the Node's cube, a field as grey mist, the declared node_detectors' Nodes as rings (the open faces' layer reports but is drawn as no ring), seen at rest and brighter and larger the interval they click; the node_detectors' report as a bar chart with the dashed blind curve behind it, labelled blind, the one measurement; graphs over the intervals beside the board (the total count per family, the count, the form, the field and the tension at a named Node, the pace's minimum, and where the blind names a line or levels (`line_per_interval`, `levels`) the transform of the form at the Node over the frames with the blind's line as a dashed mark and the levels named), every one labelled "lattice reading" as the board is in its corner; the world's files' numbers listed beside frame 0, the world as laid. The family roles come from the file's rows and never from the look: a family that holds nothing is matter, the holder of the sign is light, a holder of the content is a field; a further family that holds nothing is drawn in the same colour, dashed. Every number on the page is the look's (the world's files' and the engine's arrays') or the blind file's; the page computes nothing but the totals its graphs draw, the sums its bars draw and the transform of one Node's form where the blind names a line, and draws no curve, surface or interpolation between Nodes. The blind's numbers stand in a table of their own (every number and short list of the expectation file a row, a nested object's rows named key.subkey, its words under a fold) and never as a raw dump; with an expectation across an axis the NodeDetectors' arrival over the intervals is drawn beside the bars, the reporters' inflow per interval in quanta over the family's wall and the quanta gathered within the window up to each interval, the blind's peak, centroid, span and total marked where the blind names them. With `--output <world>.output.json` (tools/run_inputs.py's file, the run's own output) the page's measurement is the output file's: its `click` lines feed the bars and the arrival, its `credit` lines the clicks credited up to each interval and, where the file carries credit lines at the reporters, the clicks the draw credited per reporter as a second bar beside the shares' (one quantum, one click, where the family's unit rounds every share to 0; 2026-10-21), its `density` lines the lattice density over the reporters' regions, and the header says whether the look's click lines are the output's (they are the same engine lines; a difference is named); with `--reading <reading>.json` (tools/click_counts.py's file, the output file read against the blind) the bars are the reading's rounded shares beside the clicks the draw credited and the blind curve, and one table holds every row the reader compares, read against blind with the difference. The output file's click act is drawn too, the meeting of the future with the past (ENGINE.md section 3, act 6): the hole, the Nodes the `lay` lines write at their interval, marked as wire cubes; the faces the act presents, the `face` lines' Nodes at their interval (the hole's over two intervals, then the front's shells), marked as small cubes, what is erased behind the front seen in the record's own glow and dots going out; the `erasure` lines' distance and the sizes taken per interval as a graph; a record declared a NodeDetector (a body with `credit` lines) ringed at its standing Nodes and flashing at its absorption; and one panel of the records' clicks, the part each record stands in over the intervals from its `credit` lines (before and realised) and the lines themselves in a table. The page is dark, one theme and no switch; the moving quanta of light are green; a cube glows by the record's form D at its Node where the look holds it, the wave's own intensity, else by its level. The page's own layout (every colour and size) stands in the one block at the top of the template's style and nowhere else.
 
 The blind file, optional, in one of two formats (a third, the which-way folder's, holds `rows`, the screen's counts per region by world, and `quanta` by world; the page draws its row at the screen reporters and prints its total in words). The expectation `tools/click_counts.py` reads, `{"node_detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_detectors' totals, `{"expected": {node_detector name: count, ...} or [one count per node_detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_detector": name, "count": the one number to watch}}`, every key optional, one bar per node_detector, what it saw over W_c up to the frame shown.
 
@@ -13,6 +13,7 @@ import argparse
 import base64
 import gzip
 import json
+import re
 from fractions import Fraction
 from pathlib import Path
 from typing import Any
@@ -91,6 +92,23 @@ def apportioned(quanta: int, shares: list[int]) -> list[int]:
     return floors
 
 
+def credited(
+    output: dict[str, Any] | None, labels: list[str], family: str, window: tuple[int, int]
+) -> list[int] | None:
+    """The clicks the draw credited per reporter within the window, in the record's own unit: the run's output file's credit lines at the reporters, their `count` summed (the engine's division act N = (SUM s + W_rec div 2) div W_rec in the record's own unit W_rec and its draw among the regions, ALGEBRA.md R101 and B2; a record's own credit lines, `body n`, are no reporter's); None without an output file or where no credit line of the family stands at a reporter within the window (no draw declared: the clicks are in no unit)."""
+    if not isinstance(output, dict) or not isinstance(output.get("lines"), list):
+        return None
+    found, seen = dict.fromkeys(labels, 0), False
+    for line in output["lines"]:
+        if line.get("event") != "credit" or line.get("node_detector") not in found:
+            continue
+        if line.get("family") != family or not window[0] <= int(line["interval"]) <= window[1]:
+            continue
+        found[str(line["node_detector"])] += int(line.get("count") or 0)
+        seen = True
+    return [found[label] for label in labels] if seen else None
+
+
 def reporters(node_detectors: list[dict[str, Any]], axis: int) -> list[Reporter]:
     """The reporters across `axis` as tools/click_counts.py places them, one per node_detector, ordered by their coordinate on it, the least of the node_detector's Nodes' (a region across the beam at its first row)."""
     return sorted((min(int(node[axis]) for node in d["nodes"]), str(d["name"])) for d in node_detectors)
@@ -110,7 +128,7 @@ def passes(look: dict[str, Any]) -> int:
 def measurement(
     look: dict[str, Any], blind: dict[str, Any] | None, output: dict[str, Any] | None = None
 ) -> dict[str, Any] | None:
-    """The one measurement from an expectation in tools/click_counts.py's format (`node_detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more."""
+    """The one measurement from an expectation in tools/click_counts.py's format (`node_detector`, one name or a list, or none for every declared region but the faces' layer, `family`, `window`, or none for the whole look, `across`, `counts`), None from any other: the reporters ordered by their coordinate on the across axis (`reporters`), what each one saw within the window, floored at 0, N over the family's wall to the nearest whole and the rounded shares (`apportioned`, as the tool reads them), the blind counts, the pattern's range, the totals line and the watch lines, each key of `watch` named as the coordinate on the across axis; the page draws these and computes nothing more. With the run's output file carrying credit lines at the reporters (2026-10-21), the bars stand in the record's own unit, the unit a credit stands in: `clicks`, the clicks the draw credited within the window (the engine's N in W_rec, `credited`), apportioned by the same shares as `record_shares`, the expectation in that unit, with `credited` per reporter, where the draw fell; the totals line names both units, and the watch lines read the bars drawn (one quantum's click no longer reads 0 where the family's unit W_c rounds every share to 0)."""
     if blind is None or "across" not in blind:
         return None
     if blind["across"] not in AXES:
@@ -152,10 +170,18 @@ def measurement(
     total_blind = blind.get("quanta", blind.get("through"))
     if isinstance(total_blind, dict) and stem in total_blind:
         total_blind = total_blind[stem]
+    clicks = credited(output, labels, str(blind["family"]), window)
+    record_shares = apportioned(sum(clicks), shares) if clicks is not None else None
+    bars = rounded if record_shares is None else record_shares
     lines = [
-        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, rounded, strict=True) if at == int(key)))} by the shares, the blind {shown(value)}"
+        f"{blind['across']} = {key}: {shown(sum(c for (at, _n), c in zip(placed, bars, strict=True) if at == int(key)))} by the shares, the blind {shown(value)}"
         for key, value in watch.items()
     ]
+    totals = (
+        f"N {shown(quanta)} by the shares (the blind {blind_words(total_blind)}){bias_words(output)}"
+        if clicks is None
+        else f"N {shown(sum(clicks))} by the shares in the record's own unit, the clicks the draw credited within the window apportioned by the shares of the click lines (the blind {blind_words(total_blind)}); N {shown(quanta)} over the family's wall W_c in T's unit{bias_words(output)}"
+    )
     return {
         "node_detector": named if named is not None else names,
         "family": blind["family"],
@@ -167,9 +193,12 @@ def measurement(
         "seen": seen,
         "quanta": quanta,
         "rounded_shares": rounded,
+        "credited": clicks,
+        "clicks": None if clicks is None else sum(clicks),
+        "record_shares": record_shares,
         "blind": per_bar,
         "pattern": blind.get("pattern"),
-        "totals": f"N {shown(quanta)} by the shares (the blind {blind_words(total_blind)}){bias_words(output)}",
+        "totals": totals,
         "watch": lines,
         "recorded": last_interval(look),
     }
@@ -290,9 +319,57 @@ def page(
     )
 
 
+BLOCKS = (
+    "look",
+    "roles",
+    "blind",
+    "measurement",
+    "output",
+    "reading",
+    "gate",
+    "beside",
+)  # the page's embedded blocks, by their script ids
+BLOCK = re.compile(r'<script id="([a-z]+)" type="application/[a-z0-9+]+">(.*?)</script>', re.S)
+
+
+def recorded(html: str) -> dict[str, Any]:
+    """A recorded page's embedded data read back (2026-10-21): the look inflated from its gzip+base64 block, the other blocks' JSON by their ids (None where the page holds no such block: a gate's two stand on a gate's page alone); refused by name where the page holds no look."""
+    blocks = dict(BLOCK.findall(html))
+    if "look" not in blocks:
+        raise ValueError("the page holds no embedded look (tools/look/page.py's block `look`)")
+    look = json.loads(gzip.decompress(base64.b64decode(blocks["look"])))
+    return {
+        "look": look,
+        **{key: json.loads(blocks[key]) if key in blocks else None for key in BLOCKS[1:]},
+    }
+
+
+def retemplated(html: str) -> str:
+    """A recorded page written again from its own embedded data with the current template and nothing else changed (`--retemplate`, 2026-10-21): the look, the blind, the output file's lines, tools/click_counts.py's reading, a gate's reading and the other gate's blind as the page recorded them, the measurement computed from them again as at the first build; the way a template fix reaches every shipped page without the engine run again, the frames and every number theirs byte for byte."""
+    data = recorded(html)
+    gated = data["gate"]
+    return page(
+        data["look"],
+        data["blind"],
+        gated["reading"] if isinstance(gated, dict) else None,
+        data["beside"],
+        output=data["output"],
+        read=data["reading"],
+    )
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("look", type=Path, help="the look file (<world>.look.json)")
+    parser.add_argument(
+        "look",
+        type=Path,
+        help="the look file (<world>.look.json); with --retemplate, a recorded page (<world>.html)",
+    )
+    parser.add_argument(
+        "--retemplate",
+        action="store_true",
+        help="read the page's embedded data and write the page again with the current template",
+    )
     parser.add_argument("--blind", type=Path, default=None, help="the blind expectation file")
     parser.add_argument("--gate", type=Path, default=None, help="a gate's reading (tools/bell_gate.py)")
     parser.add_argument("--beside", type=Path, default=None, help="another gate's blind, for one line")
@@ -307,6 +384,11 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.look.html)")
     args = parser.parse_args(argv)
+    if args.retemplate:
+        target = args.out or args.look
+        target.write_text(retemplated(args.look.read_text(encoding="utf-8")), encoding="utf-8")
+        print(json.dumps({"page": str(target), "bytes": target.stat().st_size, "retemplated": True}))
+        return
     look = json.loads(args.look.read_text(encoding="utf-8"))
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
     reading = json.loads(args.gate.read_text(encoding="utf-8")) if args.gate else None
@@ -340,7 +422,7 @@ TEMPLATE = """<meta charset="utf-8">
   --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
   --side-min: 300px; --board-height: min(76vh, 900px); --graph-width: 360; --graph-height: 84; --graph-pad: 6;
   --bar-slot: 12; --measure-width: 960px; --blind-words: 100; --blind-list: 48; --blind-rows: 24; --arrival-width: 2.6; --arrival-height: 1.6;
-  --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
+  --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-least: 3; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
   --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12; --hole-size: 1.08; --front-size: 0.5;
   --view-margin: 1; --node-least: 6; --node-fit-least: 3; --node-most: 24; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
@@ -365,7 +447,8 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .layers label { display: inline-flex; align-items: center; gap: 4px; }
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--fg); }
 .swatch.dashed { border-style: dashed; }
-.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }  /* the track keeps 12rem at least; the frame's status wraps beside it */
+.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) minmax(0, auto); align-items: center; gap: var(--gap); margin-top: var(--gap); }  /* the track keeps 12rem at least; the frame's status wraps beside it, never wider than the row leaves it (2026-10-21) */
+@media (max-width: 600px) { .time { grid-template-columns: auto minmax(0, 1fr); } .frame { grid-column: 1 / -1; max-width: none; text-align: left; } }  /* at the phone width the frame's status on its own row under the track */
 .track { position: relative; min-width: 0; }
 .track input { width: 100%; margin: 0; position: relative; z-index: 1; }
 .track .window { position: absolute; top: 25%; height: 50%; background: var(--window); border-radius: var(--radius); }
@@ -378,9 +461,9 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .cone b { color: var(--cone); font-weight: 600; }
 button, select, input[type=number] { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 10px; }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
-.stack { display: grid; gap: var(--gap); }
-.graph { display: grid; gap: 2px; }
-.graph .caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px var(--gap); font-size: var(--small); color: var(--muted); }
+.stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap); }
+.graph { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; min-width: 0; }  /* a graph's column never wider than its panel: a long caption wraps and the chart scales to the panel, no overflow at the phone width (2026-10-21) */
+.graph .caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px var(--gap); font-size: var(--small); color: var(--muted); overflow-wrap: anywhere; }
 .graph .caption b { color: var(--fg); font-weight: 600; }
 .graph svg { width: 100%; height: auto; display: block; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px var(--gap); font-size: var(--small); }
@@ -396,7 +479,7 @@ th { color: var(--muted); font-weight: 600; }
 td.num { font-family: var(--font-mono); }
 .scroll { overflow-x: auto; }
 .measure { border-color: var(--fg); }
-.measure svg, #arrival svg { max-width: var(--measure-width); }
+.measure svg, #arrival svg { width: 100%; max-width: min(var(--measure-width), 100%); }  /* the chart bound by its panel and so by the viewport, --measure-width its widest (2026-10-21) */
 .totals, .watch { font-family: var(--font-mono); font-size: var(--small); margin-top: 6px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -531,7 +614,10 @@ function arrayOf(value, fr) {
   else value.at.forEach((k, j) => put(Math.floor(k / (fy * fz)), Math.floor(k / fz) % fy, k % fz, value.values[j]));
   return out;
 }
-const inside = i => { const n = nodeOf(i); return n.every((c, a) => c >= 0 && c < LOOK.shape[a]) && (LOOK.folded[VIEW] || n[VIEW] === LAYER); };  // the declared board, the layer seen
+/* The declared board alone is in the frame; the layers a receding face grew stand on the board's own switch, off by default (2026-10-21: a record that has left the declared board, the GHZ close, is otherwise an emptied board), the frame's label counting the Nodes with a count out there. */
+const GROWN = { on: false, objects: [] }, GROWS = N > LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2];
+const declared = n => n.every((c, a) => c >= 0 && c < LOOK.shape[a]);
+const inside = i => { const n = nodeOf(i); return (GROWN.on || declared(n)) && (LOOK.folded[VIEW] || n[VIEW] === LAYER); };  // the declared board (the grown layers with it where switched on), the layer seen
 const cache = new Map();
 function frameOf(t) {
   if (cache.has(t)) return cache.get(t);
@@ -606,6 +692,7 @@ const scaledWords = (w, html) => (Object.keys(PARTS_OF).length > 1 ? (html ? esc
 const NOTHING_WRITTEN = "nothing written, the realised port's coefficients a scaling of the parts alone (the port realised all the same)";
 const writeLabel = k => WRITES_AT[k] ? ", the click's write at the birth: " + WRITES_AT[k].map(w => scaledWords(w, false)).join('; ') : OUTPUT && BIRTHS.has(k) ? ", the click's write at the birth: " + NOTHING_WRITTEN : '';
 /* The count on the board (ALGEBRA.md, The count on the board, 2026-10-20): the frame's `board_count` per family where the look carries it, the record's count read from the board (the families holding a record, their count other than 0; the family named where the look reads the count of more than one family), and the credit line's `board_count` at the close, read before the write. */
+const outsideLabel = k => { if (!GROWS) return ''; const fr = frameOf(k), found = []; for (const f of QUANTA) { const count = fr[f.name].count; let n = 0; for (let i = 0; i < N; i++) if (count[i] && !declared(nodeOf(i))) n++; if (n) found.push(nodesWord(n) + ' of ' + f.name); } return found.length ? ', with a count on the layers the receding faces grew, outside the declared board: ' + found.join(', ') + (GROWN.on ? '' : ' (the layers\\' switch under the board)') : ''; };  // the Nodes with a count beyond the declared board, the frame's own arrays
 const countLabel = k => { const found = []; let carrying = 0; for (const f of FAMILIES) { const row = (LOOK.frames[k].families || {})[f.name]; if (row && row.board_count !== undefined && row.board_count !== null) { carrying++; if (row.board_count !== 0) found.push([f.name, row.board_count]); } } return found.length ? ', the count on the board ' + found.map(([name, n]) => carrying > 1 ? format(n) + ' of ' + name : format(n)).join(', ') : ''; };  // the look's own row (frameOf keeps the arrays alone)
 const HOLES_AT = {}, FACES_AT = {}, FRONTS_AT = {}, RECORD_CREDITS = {}, REGION_CREDITS = [];  // the holes and the faces by the frame they belong to; the regions' credit lines (a side's credit line carries its `order`, `scale` and `board_count`)
 if (OUTPUT) for (const line of OUTPUT.lines) {
@@ -630,7 +717,7 @@ const scene = new THREE.Scene();
 const EXTENT = Math.max(X, Y, Z);
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, EXTENT * size('--camera-far'));
 /* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS.
-   The default camera (2026-10-20, the frame's box 2026-10-21): the board's own fit where a Node then spans --node-least pixels or more; else the lit extent, the Nodes any family of quanta lights with the bodies' Nodes and the regions' (a region a node_detector of Nodes alone other than the declared faces' `face`, and one spanning half the board or more frames nothing): the frame's own lit box framed whole wherever it fits at --node-fit-least pixels per Node or more (the pixels per Node the whole number the stage allows, at most --node-most), and where it does not, a window of --node-least pixels per Node along the long axis following the frame's lit Nodes within the run's lit extent; the whole board one zoom step out (the buttons step between the two frames). The camera is presentation: it frames and computes no number but the box it frames. */
+   The default camera (2026-10-20, the lit box 2026-10-21): the board's own fit where a Node then spans --node-least pixels or more; else the lit extent, the Nodes any family of quanta lights with the bodies' Nodes and the regions' (a region a node_detector of Nodes alone other than the declared faces' `face`, and one spanning half the board or more frames nothing): the union of the frames' lit boxes over the run framed whole wherever it fits at --node-fit-least pixels per Node or more (the pixels per Node the whole number the stage allows, at most --node-most), and where it does not, a window of --node-least pixels per Node along the long axis following the frame's lit Nodes within that extent; either way one scale over the run, held frame to frame where the lit box grows (the frame's own box moved the zoom with it, 2026-10-21); the whole board one zoom step out (the buttons step between the two frames). The camera is presentation: it frames and computes no number but the box it frames. */
 const litNodes = fr => { const found = [], [fy, fz] = shapeOf(fr).slice(1), o = originOf(fr); for (const f of QUANTA) { const now = ((fr.families || {})[f.name] || {}).now; if (!now) continue; if (Array.isArray(now)) now.forEach((plane, x) => plane.forEach((row, y) => row.forEach((v, z) => { if (v) found.push([x + o[0], y + o[1], z + o[2]]); }))); else now.at.forEach((k, j) => { if (now.values[j]) found.push([Math.floor(k / (fy * fz)) + o[0], Math.floor(k / fz) % fy + o[1], k % fz + o[2]]); }); } return found; };
 const emptyBox = () => [0, 1, 2].map(() => [Infinity, -Infinity]);
 const grow = (box, nodes) => { for (const n of nodes) for (let a = 0; a < 3; a++) { if (box[a][0] > n[a]) box[a][0] = n[a]; if (box[a][1] < n[a]) box[a][1] = n[a]; } return box; };
@@ -642,7 +729,7 @@ const LIT = LIT_AT.reduce(merge, merge(emptyBox(), FIXED_BOX));  // over the run
 const LIT_SEEN = LIT.every(([lo, hi]) => Number.isFinite(lo) && Number.isFinite(hi));
 const LONG = LIT_SEEN ? ACROSS.reduce((best, a) => LIT[a][1] - LIT[a][0] > LIT[best][1] - LIT[best][0] ? a : best, ACROSS[0]) : ACROSS[0];  // the across axis of the longer lit extent
 const sceneOf = (c, a) => c - LOW[a] - ([X, Y, Z][a] - 1) / 2;  // a file coordinate in the scene, as position() places the Nodes
-let FRAMING = null, LIT_DEFAULT = false, shown = 0;  // the frame in force, 'board' or 'lit', decided at the first fit with a stage; whether the lit frame is the page's default; the frame drawn
+let FRAMING = null, LIT_DEFAULT = false, shown = 0, PIXELS_PER_NODE = 1;  // the frame in force, 'board' or 'lit', decided at the first fit with a stage; whether the lit frame is the page's default; the frame drawn; the fit's pixels per Node
 const litCentre = k => { const b = merge(merge(emptyBox(), LIT_AT[k] || emptyBox()), FIXED_BOX)[LONG]; return Number.isFinite(b[0]) ? (b[0] + b[1]) / 2 : (LIT[LONG][0] + LIT[LONG][1]) / 2; };
 const aimed = (half, margin) => { const [lo, hi] = LIT[LONG]; if (hi - lo + 1 + 2 * margin <= 2 * half) return (lo + hi) / 2; return Math.min(hi + 0.5 + margin - half, Math.max(lo - 0.5 - margin + half, litCentre(shown))); };  // the view's centre along the long axis: the extent's where it fits, else the frame's lit Nodes within the extent
 function fit() {
@@ -653,14 +740,14 @@ function fit() {
   if (FRAMING === null && w > 1) { LIT_DEFAULT = LIT_SEEN && w / (2 * halfW) < size('--node-least'); FRAMING = LIT_DEFAULT ? 'lit' : 'board'; }
   const centre = new THREE.Vector3(...CENTRE);
   if (FRAMING === 'lit') {
-    let box = merge(merge(emptyBox(), LIT_AT[shown] || emptyBox()), FIXED_BOX);  // the frame's lit Nodes with the bodies' and the regions'
-    if (!ACROSS.every(a => Number.isFinite(box[a][0]))) box = LIT;
-    const along = LONG === ACROSS[0] ? w : h, whole = Math.min(size('--node-most'), Math.floor(along / (box[LONG][1] - box[LONG][0] + 1 + 2 * margin)));  // the pixels per Node at which the frame's box fits whole
+    const box = LIT;  // the union of the frames' lit boxes over the run with the bodies' and the regions' Nodes: one box, one scale, held frame to frame
+    const along = LONG === ACROSS[0] ? w : h, whole = Math.min(size('--node-most'), Math.floor(along / (box[LONG][1] - box[LONG][0] + 1 + 2 * margin)));  // the pixels per Node at which the run's box fits whole
     const fits = whole >= size('--node-fit-least'), px = fits ? whole : size('--node-least');
     halfW = w / (2 * px); halfH = h / (2 * px);
     for (const a of ACROSS) centre.setComponent(a, sceneOf((box[a][0] + box[a][1]) / 2, a));
-    if (!fits) centre.setComponent(LONG, sceneOf(aimed(LONG === ACROSS[0] ? halfW : halfH, margin), LONG));
+    if (!fits) centre.setComponent(LONG, sceneOf(aimed(LONG === ACROSS[0] ? halfW : halfH, margin), LONG));  // the scale held, the window following the frame's lit Nodes
   } else if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
+  PIXELS_PER_NODE = w / (2 * halfW);  // the fit's scale, for the dots' least size in pixels
   camera.left = -halfW; camera.right = halfW; camera.top = halfH; camera.bottom = -halfH; camera.updateProjectionMatrix();
   const eye = centre.clone(), up = new THREE.Vector3();
   eye.setComponent(VIEW, CENTRE[VIEW] + SIDE * EXTENT * size('--camera-far') / 2); up.setComponent(ACROSS[1], 1);
@@ -745,8 +832,8 @@ const box = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry
 /* The box is the declared board's, drawn once at its place; the cubes outside the declared board, and outside the layer seen, are hidden. */
 let boxKey = null;
 function boxAt() {
-  if (boxKey === LAYER) return;
-  boxKey = LAYER;
+  if (boxKey === LAYER + '|' + GROWN.on) return;
+  boxKey = LAYER + '|' + GROWN.on;
   for (let i = 0; i < N; i++) cubes.setMatrixAt(i, inside(i) ? matrix.makeTranslation(...position(i).toArray()) : hidden);
   cubes.instanceMatrix.needsUpdate = true;
 }
@@ -781,6 +868,7 @@ AXES.forEach((axis, a) => {
 const frameGroup = new THREE.Group();
 frameGroup.position.set(...CENTRE); frameGroup.add(box, faces, plane, labels); scene.add(frameGroup);
 layers['the box and its axes'] = { on: true, objects: [box, faces, plane, labels] };
+if (GROWS) layers['the layers the receding faces grew (' + [X, Y, Z].join(' x ') + ' as grown; zoom out to see them)'] = GROWN;
 
 function themed() {
   scene.background = new THREE.Color(token('--board'));
@@ -812,7 +900,7 @@ function draw() {
     cubes.setColorAt(i, colour);
   }
   cubes.instanceColor.needsUpdate = true;
-  const radius = size('--dot-radius'), floor = size('--dot-floor');
+  const radius = size('--dot-radius'), floor = Math.max(size('--dot-floor'), size('--dot-least') / (PIXELS_PER_NODE * camera.zoom));  // a dot's least radius in Links, and --dot-least pixels at the fit's scale, so that a Node with quanta is seen at the board's own fit (2026-10-21)
   for (const f of QUANTA) {
     const { full, hollow, offset } = dots[f.name], count = fr[f.name].count, most = Math.sqrt(MOST[f.name].count) || 1;
     for (let i = 0; i < N; i++) {
@@ -873,7 +961,7 @@ function draw() {
   shown = t; if (FRAMING === 'lit') fit();  // the view along the long axis follows the frame's lit Nodes where the extent does not fit
   renderer.render(scene, camera);
   byId('slider').value = t;
-  byId('frame').textContent = (t === 0 ? 'laid, 0 / ' + LAST : TICK(t) !== null ? 'tick ' + TICK(t) + ' / ' + LAST_TICK + (TICK(t) === INTERVAL(t) ? ', the record at interval ' : ', the record read at interval ') + INTERVAL(t) : 'interval ' + INTERVAL(t) + ' / ' + LAST) + (PASSES > 1 ? ', ' + passLabel(t) : '') + (CONED ? coneLabel(t) : '') + writeLabel(t) + countLabel(t);
+  byId('frame').textContent = (t === 0 ? 'laid, 0 / ' + LAST : TICK(t) !== null ? 'tick ' + TICK(t) + ' / ' + LAST_TICK + (TICK(t) === INTERVAL(t) ? ', the record at interval ' : ', the record read at interval ') + INTERVAL(t) : 'interval ' + INTERVAL(t) + ' / ' + LAST) + (PASSES > 1 ? ', ' + passLabel(t) : '') + (CONED ? coneLabel(t) : '') + writeLabel(t) + countLabel(t) + outsideLabel(t);
   byId('direction').innerHTML = PASSES > 1 ? `<svg viewBox="0 0 12 12" role="img" aria-label="${DIRECTION(t) < 0 ? 'the run back' : 'the run forward'}"><path d="${DIRECTION(t) < 0 ? 'M 11 1 L 1 6 L 11 11 z' : 'M 1 1 L 11 6 L 1 11 z'}" fill="${DIRECTION(t) < 0 ? token('--back') : token('--forward')}"/></svg>` : '';
   const counts = {};
   for (const line of frame.lines) counts[line.event] = (counts[line.event] || 0) + 1;
@@ -976,13 +1064,15 @@ document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' && 
 if (WINDOW && T) { const w = byId('window'); w.hidden = false; w.style.left = (positionOf(WINDOW[0]) / T * 100) + '%'; w.style.width = (Math.max(0, positionOf(WINDOW[1]) - positionOf(WINDOW[0])) / T * 100) + '%'; w.title = 'the reading\\'s window: intervals ' + WINDOW[0] + ' to ' + WINDOW[1]; }
 
 /* The graphs, inline SVG: polylines through the frames' values, nothing between frames. */
+const axisLeft = (pad, ...values) => Math.max(pad * 8, pad + Math.max(...values.map(v => format(v).length)) * size('--small') * 0.5);  // the axis's left margin, wide enough for the longest label (2026-10-21: a high of 1,811.855 was clipped at the edge)
 const svgText = (text, x, y, anchor) => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size('--small') * 0.75}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${esc(text)}</text>`;
 function graph(container, title, series, kind, marks, shape) {
-  const W = size('--graph-width') * (shape ? shape[0] : 1), H = size('--graph-height') * (shape ? shape[1] : 1), pad = size('--graph-pad'), left = pad * 8, frames = series[0] ? series[0].values.length : 0;
+  const W = size('--graph-width') * (shape ? shape[0] : 1), H = size('--graph-height') * (shape ? shape[1] : 1), pad = size('--graph-pad'), frames = series[0] ? series[0].values.length : 0;
   let low = Infinity, high = -Infinity;
   for (const s of series) for (const v of s.values) { if (v === null || Number.isNaN(v)) continue; if (v < low) low = v; if (v > high) high = v; }  // a frame without a value is a gap
   if (!series.length || !isFinite(low)) { container.innerHTML = `<div class="caption"><b>${esc(title)}</b><span>nothing to draw</span></div>`; return; }
   if (low === high) { low -= 1; high += 1; }
+  const left = axisLeft(pad, low, high);
   const px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (W - left - pad), py = v => pad + (high - v) / (high - low) * (H - 2 * pad);
   let body = `<rect x="${left}" y="${pad}" width="${W - left - pad}" height="${H - 2 * pad}" fill="none" stroke="${token('--line')}"/>`;
   if (low < 0 && high > 0) body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}" stroke-dasharray="2 3"/>`;
@@ -1057,13 +1147,13 @@ const measurePicker = byId('measure-picker'), select = document.createElement('s
 function drawNodeMeasure() {
   const m = MEASURE, n = m.rounded_shares.length, family = m.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg');
   byId('measure-box').classList.add('wide');
-  measurePicker.textContent = `${m.node_detector}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
+  measurePicker.textContent = `${[].concat(m.node_detector).join(', ')}, ${family}, within the window ${m.window[0]} to ${m.window[1]}: one bar per reporter across ${m.across} (a group at the coordinate its Nodes share, else a Node)`
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
-  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
-  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n), blind = m.blind.map(v => typeof v === 'number' ? v : null);  // the bars fill the chart's width
-  const clicks = OUTPUT ? m.labels.map(name => (CREDITS_AT[name] || []).filter(([k]) => k >= m.window[0] && k <= m.window[1]).reduce((s, [, count]) => s + count, 0)) : [];  // the clicks the draw credited per reporter within the window, the output file's credit lines
-  const credited = clicks.some(v => v > 0);  // drawn as a second bar beside the shares' where the file carries one (one quantum, one click, where the family's unit rounds every share to 0; 2026-10-21)
-  const high = Math.max(1, ...m.rounded_shares, ...clicks, ...blind.filter(v => v !== null));
+  const pad = size('--graph-pad'), bottom = pad * 3, H = size('--graph-height') * 2, blind = m.blind.map(v => typeof v === 'number' ? v : null);
+  /* The bars' unit (2026-10-21): where the output file carries credit lines at the reporters the bars stand in the record's own unit W_rec, the unit a credit stands in, m.record_shares (the clicks the draw credited within the window, the engine's N in that unit, apportioned by the shares of the click lines: the expectation), and the clicks credited per reporter, m.credited, stand beside them as a second bar, where the draw fell (the sample against the expectation); without credit lines the bars are the rounded shares over the family's wall W_c, N in T's unit, as tools/click_counts.py reads them. */
+  const shares = m.record_shares || m.rounded_shares, clicks = m.credited || [], credited = clicks.length > 0, unit = m.record_shares ? "in the record's own unit" : "over W_c, in T's unit";
+  const high = Math.max(1, ...shares, ...clicks, ...blind.filter(v => v !== null)), left = axisLeft(pad, high);
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n);  // the bars fill the chart's width
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
   let body = '';
@@ -1073,9 +1163,9 @@ function drawNodeMeasure() {
   }
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
-  m.rounded_shares.forEach((v, k) => {
+  shares.forEach((v, k) => {
     const bw = credited ? w / 2 : w;
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${bw.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${bw.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares ${unit}, saw ${format(m.seen[k])} of ${format(m.seen.reduce((a, b) => a + Math.max(0, b), 0))}${m.record_shares ? ' (' + format(m.rounded_shares[k]) + ' over W_c)' : ''}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (credited) body += `<rect x="${px(k).toFixed(1)}" y="${py(Math.max(0, clicks[k])).toFixed(1)}" width="${bw.toFixed(1)}" height="${(py(0) - py(Math.max(0, clicks[k]))).toFixed(1)}" fill="${token('--flash')}"><title>${esc(m.labels[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
@@ -1087,8 +1177,8 @@ function drawNodeMeasure() {
     blind.forEach((v, k) => { if (v !== null) body += `<line x1="${(px(k) - slot * 0.4).toFixed(1)}" x2="${(px(k) + slot * 0.4).toFixed(1)}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="4 3"><title>the blind ${format(v)} at ${esc(m.labels[k])}</title></line>`; });
     body += svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (credited ? `<span><i style="border-color:${token('--flash')};border-top-width:6px"></i>the clicks the draw credited (the output file's credit lines, the measurement)</span>` : '') + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
-  box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter ${unit} (${m.record_shares ? "N the clicks the draw credited within the window, the engine's division act in the record's unit W_rec, apportioned by the shares of the click lines" : "N over the family's wall by the shares of the click lines"}: the expectation)</span>` + (credited ? `<span><i style="border-color:${token('--flash')};border-top-width:6px"></i>the clicks the draw credited per reporter (the output file's credit lines: where the draw fell, the measurement)</span>` : '') + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind, the expectation file's counts as written</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc([].concat(m.node_detector).join(', '))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
   byId('totals').textContent = m.totals + (credited ? `; ${format(clicks.reduce((a, b) => a + b, 0))} clicks credited by the draw (the credit lines)` : '');
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
 }
@@ -1108,8 +1198,8 @@ function drawMeasure() {
   const family = select.value, node_detectors = LOOK.node_detectors, box = byId('measure');
   const expected = node_detectors.map((d, k) => Array.isArray(BLIND.expected) ? BLIND.expected[k] : BLIND.expected && typeof BLIND.expected === 'object' ? BLIND.expected[d.name] : undefined);
   const counts = node_detectors.map(d => reported(d.name, family));
-  const W = size('--graph-width'), H = size('--graph-height') * 1.5, pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3;
-  const high = Math.max(1, ...counts, ...expected.filter(v => typeof v === 'number'));
+  const W = size('--graph-width'), H = size('--graph-height') * 1.5, pad = size('--graph-pad'), bottom = pad * 3;
+  const high = Math.max(1, ...counts, ...expected.filter(v => typeof v === 'number')), left = axisLeft(pad, high);
   const slot = (W - left - pad) / Math.max(node_detectors.length, 1), py = v => pad + (high - v) / high * (H - pad - bottom);
   let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   if (expected.some(v => typeof v === 'number')) {
@@ -1173,9 +1263,10 @@ function drawReading() {
   const r = READ, rs = r.rounded_shares, n = rs.row.length, family = r.family, box = byId('measure'), hex = ROLES[family] ? colourOf(family) : token('--fg'), flash = token('--flash');
   byId('measure-box').classList.add('wide');
   measurePicker.textContent = `${r.node_detector.join(', ')}, ${family}, within the window ${r.window[0]} to ${r.window[1]}: the output file read by tools/click_counts.py, one bar per reporter across ${r.across}`;
-  const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
+  const pad = size('--graph-pad'), bottom = pad * 3, H = size('--graph-height') * 2;
   const clicks = r.clicks ? r.clicks.row : null, blind = (r.blind.counts || []).map(v => typeof v === 'number' ? v : null);
-  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n), high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null));
+  const high = Math.max(1, ...rs.row, ...(clicks || []), ...blind.filter(v => v !== null)), left = axisLeft(pad, high);
+  const W = Math.max(size('--graph-width'), left + size('--bar-slot') * 1.8 * n + pad), slot = Math.max(size('--bar-slot') * 1.8, (W - left - pad) / n);
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom), w = Math.max(1, slot * 0.3);
   let body = '';
   if (Array.isArray(BLIND.pattern) && BLIND.pattern.length === 2 && n) {
@@ -1268,7 +1359,7 @@ function drawArrival() {
     [['peak', '5 4'], ['centroid', '2 3']].forEach(([key, dash], k) => { if (typeof arrival[key] !== 'number') return; body += `<line x1="${px(positionOf(arrival[key])).toFixed(1)}" x2="${px(positionOf(arrival[key])).toFixed(1)}" y1="${py(high).toFixed(1)}" y2="${py(low).toFixed(1)}" stroke="${token('--blind')}" stroke-dasharray="${dash}"><title>the blind ${key}, interval ${arrival[key]}</title></line>` + svgText('blind ' + key + ' ' + format(arrival[key]), px(positionOf(arrival[key])) + 2, py(high) + size('--small') * (0.75 + 0.85 * k), 'start'); });
     return body;
   };
-  const line = (px, py, low, high) => isFinite(total) && total >= low && total <= high ? `<line x1="${px(0).toFixed(1)}" x2="${px(T).toFixed(1)}" y1="${py(total).toFixed(1)}" y2="${py(total).toFixed(1)}" stroke="${token('--blind')}" stroke-dasharray="5 4"><title>the blind total ${format(total)}</title></line>` + svgText('blind ' + format(total), px(T), py(total) - 2, 'end') : '';
+  const line = (px, py, low, high) => isFinite(total) && total >= low && total <= high ? `<line x1="${px(0).toFixed(1)}" x2="${px(T).toFixed(1)}" y1="${py(total).toFixed(1)}" y2="${py(total).toFixed(1)}" stroke="${token('--blind')}" stroke-dasharray="5 4"><title>the blind total ${format(total)}</title></line>` + svgText('blind ' + format(total), px(T), py(total) - 2 < size('--small') ? py(total) + size('--small') : py(total) - 2, 'end') : '';  // the label under the line where the line stands at the top, inside the chart (2026-10-21)
   const add = (title, name, values, extra) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, [{ name, values, colour: hex, dashed: false }], 'measurement', extra, [size('--arrival-width'), size('--arrival-height')]); };
   add(`The inflow of ${m.family} at the ${m.labels.length} reporters per interval, in quanta over W_c ${format(wall)}`, "the reporters' click lines summed", per, marks);
   add(`The quanta gathered within the window ${m.window[0]} to ${m.window[1]}, up to each interval`, 'N so far, the inflow over W_c', gathered, line);
@@ -1355,7 +1446,7 @@ function drawAbove() {
       body += `<text x="${cx.toFixed(1)}" y="${(cy + letter * 0.35).toFixed(1)}" text-anchor="middle" font-size="${letter}" font-family="${esc(token('--font-mono'))}" font-weight="600" fill="${stroke}">${esc(label)}</text>`;
     }
   });
-  body += `<text x="${s[U] - 0.3}" y="${s[V] - 0.5}" text-anchor="end" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[U]}</text><text x="0.3" y="${letter}" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[V]}</text>`;
+  body += `<text x="${s[U] - 0.3}" y="${s[V] - letter * 0.4}" text-anchor="end" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[U]}</text><text x="0.3" y="${letter}" font-size="${letter}" font-family="${esc(token('--font-mono'))}" fill="${token('--muted')}">${AXES[V]}</text>`;
   const title = t === 0 ? `The input as laid: ${esc(GATE_FAMILY)}'s record at its Nodes and the ${SIDES.length} regions` : `Interval ${INTERVAL(t)}: the beams of ${esc(GATE_FAMILY)} and the ${SIDES.length} regions` + (CONED && CONE_RADIUS(t) !== null ? `, the record's cone of ${format(CONE_RADIUS(t))} Links shaded` : '');
   byId('gate-above').innerHTML = `<div class="caption"><b>${title}</b><span>Lattice reading, a diagnostic</span></div><svg viewBox="0 0 ${s[U]} ${s[V]}" role="img" aria-label="the board from above" shape-rendering="crispEdges" style="max-height: var(--board-height)">${body}</svg><div class="caption"><span>${AXES[U]} across, ${AXES[V]} up; a Node's count of ${esc(GATE_FAMILY)} as the cell's depth against the frame's largest (a hollow cell a count below 0); the box the frame's own, ${s[U]} x ${s[V]} at the file's coordinates from (${left}, ${o[V]})</span></div>`;
 }
@@ -1379,9 +1470,9 @@ function drawParts() {
     graph(g, `The parts at ${region.name} (${label}): ${parts} parts${width > 1 ? ' of a plane, re and im,' : ''} overlaid, the sums now`, series, "the parts lines, the NodeDetector's read");
     const clicks = (reportsAt[region.name] || {})[GATE_FAMILY] || [];
     if (!g.dataset.px) return;
-    const [left, right, frames] = JSON.parse(g.dataset.px), W = size('--graph-width'), h = size('--graph-pad') * 3, px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (right - left);
+    const [left, right, frames] = JSON.parse(g.dataset.px), W = size('--graph-width'), h = size('--graph-pad') * 4, px = i => left + (frames > 1 ? i / (frames - 1) : 0) * (right - left);
     const marks = clicks.map(([interval, inflow, p]) => `<line x1="${px(p).toFixed(1)}" x2="${px(p).toFixed(1)}" y1="0" y2="${h - size('--small')}" stroke="${token('--flash')}" stroke-width="1"><title>click at interval ${interval}: the inflow ${format(inflow)}</title></line>`).join('');
-    g.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="the click lines of ${esc(region.name)}">${marks}${svgText(format(clicks.length) + ' click lines of ' + region.name + ' (the measurement)', right, h - 1, 'end')}</svg>`);
+    g.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 ${W} ${h}" role="img" aria-label="the click lines of ${esc(region.name)}">${marks}${svgText(format(clicks.length) + ' click lines of ' + region.name + ' (the measurement)', right, h - size('--graph-pad'), 'end')}</svg>`);
   });
   moveCursors();
 }

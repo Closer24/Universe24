@@ -44,6 +44,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # halving the candidates' span, discarded
     # core/paces.py
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
+    ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
     ("core/paces.py", "frozen_content", "rounded"): "D",  # the bisection's probe, a clock reading
@@ -76,12 +77,13 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # credit.py
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
-    ("credit.py", "quanta_rounded", "division_forward"): "D",  # the side's gate, the count's rounding
+    ("credit.py", "quanta_rounded", "paces.rounded"): "D",  # the side's gate, the count's rounding
     (
         "credit.py",
         "quanta_through",
         "division_forward",
     ): "R",  # the inflow over the unit, its remainder carried
+    ("credit.py", "clocked_regions", "paces.rounded"): "D",  # the region's mean clock, rounded once
     (
         "credit.py",
         "clocked_regions",
@@ -99,15 +101,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "born_unit", "division_forward"): "D",  # the unit over den squared, once
     ("emission.py", "packet_unit", "division_forward"): "D",  # den cos omega of the packet's wave, once
     ("emission.py", "laid_by_count", "division_forward"): "D",  # the count's lay, one division
-    ("emission.py", "laid_packet", "largest_below"): "S",  # the sine and the transverse size
-    ("emission.py", "laid_packet", "division_forward"): "D",  # the packet's levels, rounded once
+    ("emission.py", "laid_packet", "division_forward"): "D",  # the envelope's part and the half cosine
+    ("emission.py", "laid_packet", "rounded"): "D",  # the packet's levels, rounded once
     ("emission.py", "_offsets", "division_forward"): "D",  # the half width, an index
     ("emission.py", "start_of", "largest_below"): "S",  # the parts' sizes by the search
-    ("emission.py", "start_of", "division_forward"): "D",  # the start's two levels, rounded
-    ("emission.py", "increments_of", "division_forward"): "D",  # the aimed share and the increment
+    ("emission.py", "start_of", "rounded"): "D",  # the start's two levels, rounded
+    ("emission.py", "increments_of", "division_forward"): "D",  # the aimed share, once
+    ("emission.py", "increments_of", "rounded"): "D",  # the increment, rounded once
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
-    ("emission.py", "advanced", "division_forward"): "D",  # the recurrence's one rounding half up
+    ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
@@ -136,13 +139,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "direction",
         "division_forward",
     ): "D",  # the direction's two levels, once
-    ("features/click/__init__.py", "standing", "largest_below"): "S",  # the sine den by the search
     (
         "features/click/__init__.py",
         "standing",
         "division_forward",
     ): "D",  # the before level, rounded once
-    ("features/click/__init__.py", "invariant", "largest_below"): "S",  # the sine den by the search
     (
         "features/click/__init__.py",
         "invariant",
@@ -237,7 +238,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/faces.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
-    ("loader/derived.py", "count_wall", "largest_below"): "S",  # the quantum's wall by search
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
@@ -264,12 +264,10 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the half width, an index
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
     ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
-    ("loader/window.py", "passage", "largest_below"): "S",  # the two sines by the search
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
-    ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
+    ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
-    ("take.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     # flux.py, the step
@@ -281,17 +279,15 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("flux.py", "step_plane", "rule3"): "R",  # the same on each part of a turned or folded plane
     # node_detector.py
     ("node_detector.py", "books_of", "largest_below"): "S",  # the record's norm by search
-    ("node_detector.py", "arriving", "division_forward"): "D",  # the projected level, rounded once
-    ("node_detector.py", "own_clock", "division_forward"): "D",  # the mean clock, rounded once
+    ("node_detector.py", "own_clock", "paces.rounded"): "D",  # the mean clock, rounded once
     ("node_detector.py", "clock_advanced", "division_forward"): "R",  # the reader's clock remainder kept
     ("node_detector.py", "drawn_weights", "division_forward"): "D",  # the inflow over the unit
-    ("node_detector.py", "piece_momentum", "division_forward"): "D",  # one count's P over the share
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
     ("records.py", "write_origins", "division_forward"): "D",  # the write's origin, once
     # resonance.py
-    ("resonance.py", "references_of", "division_forward"): "D",  # the references' levels, rounded once
-    ("resonance.py", "references_of", "largest_below"): "S",  # the sine's level by search
+    ("resonance.py", "references_of", "paces.rounded"): "D",  # the cosine record's level, rounded once
+    ("resonance.py", "references_of", "division_forward"): "D",  # the sine record's level, the floor
     ("resonance.py", "turned_direction", "largest_below"): "S",  # the arriving size by search
     ("resonance.py", "turned_direction", "division_forward"): "D",  # the turned direction, floors
     ("resonance.py", "window_turn", "largest_below"): "S",  # the plane's size by search
