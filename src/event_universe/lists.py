@@ -251,7 +251,9 @@ def region(board: Lattice, index: int) -> Alternative | None:
             found = credited_node(board, index, name, intake[name], None, [0], quantum + 1, piece, fan)
             nodes = tuple(n for n, _p in found)
             items.append(Item(index, None, None, -1, nodes, ports=tuple(p for _n, p in found)))
-            for out, sense in conversion.converted(board, index, name, found):  # the records out
+            for out, sense in (
+                conversion.converted(board, (index,), name, nodes[0]) if nodes else []
+            ):  # the records out
                 den = board.families[out].pair[1]
                 items.append(Item(out, None, None, 1, nodes, (den, den), sense=sense))
         return items

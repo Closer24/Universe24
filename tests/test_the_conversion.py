@@ -1,4 +1,4 @@
-"""The conversion in the toy as a test (the round of 2026-10-21, the conversion built in the toy; ALGEBRA.md, The conversion, Only a click moves a quantum between families; src/event_universe/conversion.py): the exactness clause and the table derived from the pairs, the loader's refusals by name, and the chain world examples/events/conversion/neutron_chain.json run to its first conversion with the blind written before the run: no conversion before the packet reaches the target, one conversion per credited quantum at the window's close, the counts n -1, p +1, e +1, the Wronskian's sum 0 at the lay by the exact split and the rotations' identity exact in the integers."""
+"""The conversion in the toy as a test (2026-10-21; ALGEBRA.md, The conversion, Only a click moves a quantum between families; src/event_universe/conversion.py): the exactness clause, every family's list derived from the pairs under the law's conservations with no key (the owner's word of 2026-10-21, the table's declaration deleted; the senses of a real-line parent's plane records out the one residual declaration, the row's key `senses`), the loader's refusals by name, and the chain world examples/events/conversion/neutron_chain.json run to its first conversion with the blind written before the run: no conversion before the packet reaches the target, one conversion per credited quantum at the window's close, the counts n -1, p +1, e +1, the Wronskian's sum 0 at the lay by the exact split and the rotations' identity exact in the integers."""
 
 import copy
 import json
@@ -34,17 +34,23 @@ def wronskian(line_re: dict, line_im: dict) -> int:  # type: ignore[type-arg]
 
 
 def test_the_rotations_sum_exactly_iff_every_pair_is_pythagorean_and_the_split_carries_the_quantum_whole():
-    """The exactness clause: the neutron's point (-4800, 3600) is the proton's (0, 6000) times the electron's (3600, 4800) over den, so pi/2 + arccos(3/5) = arccos(-4/5) in the integers, and no list with the old electron [4000, 6000] is exact (its sine irrational); the lay's exact split of T div 2 over three planes is (73, 11), (57, 47), (74, 0), the sums 5450 + 5458 + 5476 = 16384 within a spread of 26 where 3 x 73^2 falls 397 short; one plane takes (128, 0)."""
+    """The exactness clause: the neutron's point (-4800, 3600) is the proton's (0, 6000) times the electron's (3600, 4800) over den, so pi/2 + arccos(3/5) = arccos(-4/5) in the integers, and no list with the old electron [4000, 6000] is exact (its sine irrational); two parents' rotations the Gaussian product of their points over their dens, p + e summing to n exactly; the lay's exact split of T div 2 over three planes is (73, 11), (57, 47), (74, 0), the sums 5450 + 5458 + 5476 = 16384 within a spread of 26 where 3 x 73^2 falls 397 short; one plane takes (128, 0)."""
     assert conversion.gaussian(NEUTRON) == (-4800, 3600) and conversion.gaussian(PROTON) == (0, 6000)
     assert conversion.gaussian(ELECTRON) == (3600, 4800) and conversion.gaussian(OLD_ELECTRON) is None
-    assert conversion.exact(NEUTRON, [PROTON, ELECTRON]) and conversion.exact(
-        NEUTRON, [ELECTRON, PROTON]
+    assert conversion.exact([NEUTRON], [PROTON, ELECTRON]) and conversion.exact(
+        [NEUTRON], [ELECTRON, PROTON]
     )
-    assert not conversion.exact(NEUTRON, [PROTON, OLD_ELECTRON]) and not conversion.exact(
-        NEUTRON, [PROTON]
+    assert not conversion.exact([NEUTRON], [PROTON, OLD_ELECTRON]) and not conversion.exact(
+        [NEUTRON], [PROTON]
     )
-    assert not conversion.exact(NEUTRON, [ELECTRON, ELECTRON]) and not conversion.exact(
-        NEUTRON, [PROTON, PROTON]
+    assert not conversion.exact([NEUTRON], [ELECTRON, ELECTRON]) and not conversion.exact(
+        [NEUTRON], [PROTON, PROTON]
+    )
+    assert conversion.exact([PROTON, ELECTRON], [NEUTRON]) and conversion.rotation(
+        [PROTON, ELECTRON]
+    ) == (
+        (-28800000, 21600000),
+        36000000,
     )
     split = plane_squares(HALF_ACTION, 3)
     assert split == [(73, 11), (57, 47), (74, 0)]
@@ -54,43 +60,65 @@ def test_the_rotations_sum_exactly_iff_every_pair_is_pythagorean_and_the_split_c
     assert plane_squares(HALF_ACTION * 2, 2) == [(128, 0), (128, 0)]
 
 
-def test_the_loader_derives_the_table_from_the_pairs_and_refuses_by_name():
-    """The shipped universe derives n -> p + e with the senses declared (proton 1, electron -1) and nothing typed; the old electron's universe is refused naming the irrational sine; a key that names what the law has no count for, a held row converting, a plane record out without its sense and a sense on a family of real lines are refused by name."""
-    _integers, families = universe_of(UNIVERSE)
-    neutron = next(f for f in families if f.name == "neutron")
-    assert [(families[out].name, sense) for out, sense in neutron.converts] == [
-        ("proton", 1),
-        ("electron", -1),
+def table_of(document, name: str) -> list:  # type: ignore[no-untyped-def, type-arg]
+    """A family's list as the loader derives it from a universe document, (family name, sense) per record out."""
+    _integers, families = universe_of(document)
+    return [
+        (families[out].name, sense)
+        for out, sense in next(f for f in families if f.name == name).converts
     ]
+
+
+def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_conservations_and_refuses_by_name():
+    """The shipped universe derives n -> p + e from the pairs, the electron's -1 the sum's from the proton's declared 1 and nothing else typed, and no other family has a list, the proton's stability by the baryon and the electron's by having no lighter charged family; a plane at [4800, 6000] or a real line at the electron's pair adds a list exact in rotation that the charge cuts, a second plane at the electron's pair a second list keeping both, refused; the old electron's universe is lawful with no key and nothing converts, and refused where the neutron declares senses for no list; the deleted key `converts`, a non-Pythagorean parent, a held row's and a plane parent's senses, a stray name, a contradiction of the sum and the missing declaration are refused by name; the flipped declaration is the anti-list."""
+    assert table_of(UNIVERSE, "neutron") == [("proton", 1), ("electron", -1)]
+    _integers, families = universe_of(UNIVERSE)
     assert all(not f.converts for f in families if f.name != "neutron")
+    reads = {"gravity": 1, "binding": 1, "charge": 1}  # a plane's reads, the sign among them
+    muon = {"name": "muon", "pair": [4800, 6000], "dimension": 2, "reads": reads}
+    neutral = {
+        "name": "neutral",
+        "pair": [3600, 6000],
+        "dimension": 1,
+        "reads": {"gravity": 1, "binding": 1},
+    }
+    for row in (muon, neutral):
+        added = universe_with()
+        added["families"].append(row)
+        assert table_of(added, "neutron") == [
+            ("proton", 1),
+            ("electron", -1),
+        ]  # the charge cuts the second list
+    added["families"].append({"name": "twin", "pair": [3600, 6000], "dimension": 2, "reads": reads})
+    refused("several exact lists keep the charge and the baryon", universe_of, added)
+    old = universe_with(electron={"pair": [4000, 6000]}, neutron={"senses": None})
+    assert all(not f.converts for f in universe_of(old)[1])  # no exact split: nothing converts
     refused(
         "no square: its sine is irrational", universe_of, universe_with(electron={"pair": [4000, 6000]})
     )
-    refused(
-        "no list of at most 3 whole quanta", universe_of, universe_with(electron={"pair": [4000, 6000]})
-    )
     refused("no list sums to it exactly", universe_of, universe_with(neutron={"pair": [-4000, 6000]}))
-    refused("no lepton number", universe_of, universe_with(neutron={"converts": {"keeps": ["lepton"]}}))
-    refused("declare no sense", universe_of, universe_with(neutron={"converts": {"keeps": ["baryon"]}}))
+    refused("'converts', deleted", universe_of, universe_with(neutron={"senses": None, "converts": {}}))
+    refused("a held row converts nothing", universe_of, universe_with(binding={"senses": {"proton": 1}}))
     refused(
-        "names 'antineutrino'",
+        "a plane parent's records out", universe_of, universe_with(proton={"senses": {"electron": 1}})
+    )
+    refused("names 'antineutrino'", universe_of, universe_with(neutron={"senses": {"antineutrino": 1}}))
+    stray = universe_with(neutron={"senses": {"proton": 1, "muon": 1}})
+    stray["families"].append(muon)
+    refused("no record out of its one list", universe_of, stray)
+    refused(
+        "contradicts the Wronskian's sum",
         universe_of,
-        universe_with(neutron={"converts": {"keeps": [], "senses": {"antineutrino": 1}}}),
+        universe_with(neutron={"senses": {"proton": 1, "electron": 1}}),
     )
-    refused(
-        "a held row converts nothing", universe_of, universe_with(binding={"converts": {"keeps": []}})
-    )
-    senses = {"proton": 1, "electron": -1, "twin": -1}
-    doubled = universe_with(neutron={"converts": {"keeps": ["baryon"], "senses": senses}})
-    doubled["families"].append(
-        {
-            "name": "twin",
-            "pair": [3600, 6000],
-            "reads": {"gravity": 1, "binding": 1, "charge": 1},
-            "dimension": 2,
-        }
-    )  # a second plane family at the electron's pair: two exact lists, one table per family
-    refused("several exact lists", universe_of, doubled)
+    refused("is required", universe_of, universe_with(neutron={"senses": None}))
+    assert table_of(universe_with(neutron={"senses": {"electron": 1}}), "neutron") == [
+        ("proton", -1),
+        ("electron", 1),
+    ]
+    assert table_of(
+        universe_with(neutron={"senses": {"proton": 1, "electron": -1}}), "neutron"
+    ) == table_of(UNIVERSE, "neutron")
 
 
 def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
@@ -135,6 +163,6 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
         sum(proton_w) + wronskian(of["electron"][0], of["electron"][1]) == 0
     )  # the charge kept exactly
     assert conversion.exact(
-        board.families[neutron].pair, [board.families[k].pair for k in (proton, electron)]
+        [board.families[neutron].pair], [board.families[k].pair for k in (proton, electron)]
     )
     assert not any(c["event"] == "conversion" and c["interval"] < first for c in lines)

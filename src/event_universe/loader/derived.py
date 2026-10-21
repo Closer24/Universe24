@@ -55,7 +55,10 @@ class FamilyRule(Row):
     reads: tuple[Read, ...] = ()
     converts: tuple[
         tuple[int, int], ...
-    ] = ()  # the conversion's table, (family, sense) per record out, derived at load from the key `converts` (conversion.py)
+    ] = ()  # the conversion's one list, (family, sense) per record out, derived at load from the pairs under the law's conservations with no key, () for a family with no list, which never converts (conversion.py)
+    senses: tuple[
+        tuple[int, int], ...
+    ] = ()  # the row's key `senses` resolved, the sense 1 or -1 per plane family out by index: the one residual declaration of The conversion, a real-line parent's (conversion.py)
 
     @property
     def held(self) -> bool:
