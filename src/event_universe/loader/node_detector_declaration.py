@@ -244,11 +244,11 @@ def packet_form(
     found: NodeDetectorDeclaration,
     label: str,
     families: tuple[FamilyRule, ...],
-    nodes: tuple[tuple[int, int, int], ...],
+    at: tuple[int, int, int],
     shape: tuple[int, int, int],
     action: int,
 ) -> NodeDetectorDeclaration:
-    """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from every Node of the body (`nodes`, one for a body at one Node, the standing region of a bound body declared through the mode file): along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board from each of them, none refused by name; the three refusals."""
+    """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from the body's Node: along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board, none refused by name; the three refusals."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
     for index, declared in enumerate(found.rates):
@@ -286,19 +286,14 @@ def packet_form(
             (axis, sense)
             for axis in range(3)
             if shape[axis] > 1
-            and all(
-                at[a] - low >= 0 and at[a] + high < shape[a]
-                for at in nodes
-                for a in range(3)
-                if a != axis
-            )
+            and all(at[a] - low >= 0 and at[a] + high < shape[a] for a in range(3) if a != axis)
             for sense in (1, -1)
-            if all(0 <= at[axis] + sense * (length - 1) < shape[axis] for at in nodes)
+            if 0 <= at[axis] + sense * (length - 1) < shape[axis]
         )
         if not directions:
             raise ValueError(
                 f"{name}: no axis of the board {list(shape)} holds the packet of {length} slices and {rate.width} "
-                f"across from every Node of the body, {[list(at) for at in nodes]}"
+                f"across from the Node {list(at)}"
             )
         rates.append(replace(rate, directions=directions))
     return replace(found, rates=tuple(rates))

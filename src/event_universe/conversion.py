@@ -319,7 +319,7 @@ def rows_at(board: Lattice, parents: Sequence[int], name: str, at: Node) -> Tabl
 
 
 def converted(board: Lattice, parents: Sequence[int], name: str, at: Node) -> list[tuple[int, int]]:
-    """The records out of the quanta credited at one Node, the rows the conversion adds to the credit's list (`lists.alone`, `lists.meeting`): the one list at the Node (`rows_at`) with the conversion line written beside the credit's where it stands; the list lays each record out as one whole quantum at the credited Node by the count at its family's massless pair (`emission.laid_by_count`)."""
+    """The records out of the quanta credited at one Node, the rows the conversion adds to the credit's list (`meeting.alone`, `meeting.met`): the one list at the Node (`rows_at`) with the conversion line written beside the credit's where it stands; the list lays each record out as one whole quantum at the credited Node by the count at its family's massless pair (`emission.laid_by_count`)."""
     table = rows_at(board, parents, name, at)
     if table and board.output is not None:
         board.output(line(board, parents, name, table))

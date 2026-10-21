@@ -31,7 +31,6 @@ from event_universe.loader.faces import (
     layer_of,
     receding_of,
 )
-from event_universe.loader.instrument import declared_body
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
@@ -63,7 +62,7 @@ TRANSITION = "transition"  # a region's own quantum, declared by no region: its 
 
 @dataclass(frozen=True)
 class BodyRow:
-    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_detector_declaration.py`: its parts the modes' labels with the count in one of them, and as a NodeDetector its transitions, its emissions and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the lattice (j); the owner's word, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`). A bound body declared an instrument body by the host's frame tool (the mode entry's `instrument`, 2026-10-21; loader/instrument.py) carries its declaration in `detector` beside its levels, its standing region in `region`, the Nodes its click writes over beside its declared Node, and the region's lay weights in `shares`, the record's share at each Node as the tool read it, the proportion the exchange re-lays a part in (`take.relaid`); both empty for every other body."""
+    """A body as declared: its family, its Nodes in the declared order with their counts (checked at the start against its record's share in quanta, a reading), and its family's two levels and its second level pair (the rotation sense, 0 for a neutral body) from the mode file, each the nonzero Nodes' flat x-major indexes with their levels; or, a body laid in its parts at one Node (`reader`, `loader/node_detector_declaration.py`: its parts the modes' labels with the count in one of them, and as a NodeDetector its transitions, its emissions and its own draw), whose lay is the engine's own at the start and whose levels the mode file does not hold (ALGEBRA.md, The click writes on the lattice (j); the owner's word, the body is at a Node). A laid body carries the weight of its laid pair on each line of its record (`weights`, 1 on every line without the key; `keys.weights_of`)."""
 
     family: int
     nodes: tuple[Node, ...]
@@ -74,12 +73,6 @@ class BodyRow:
     second_before: Levels
     weights: tuple[int, ...] = ()
     detector: NodeDetectorDeclaration | None = None
-    region: tuple[
-        Node, ...
-    ] = ()  # a bound body's standing region, declared an instrument body (loader/instrument.py)
-    shares: tuple[
-        int, ...
-    ] = ()  # the standing region's lay weights, the record's share at each of its Nodes
 
 
 @dataclass(frozen=True)
@@ -192,16 +185,23 @@ def bodies_of(
                 )
             count = reader_count(body, label, families, family)
             parts = node_detector_of(body, label, families, family, quanta, count)
-            parts = packet_form(parts, label, families, tuple(nodes), shape, action)
+            parts = packet_form(parts, label, families, nodes[0], shape, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
-        placed, kind = laid.index(entry), families[family]
-        written, name = entry_of(entries, placed, label), f"the mode file's bodies[{placed}]"
-        levels = levels_of(written, name, kind, shape, bound, beyond)
-        weights = weights_of(body.get("weights"), f"{label}.weights", kind.laid, kind.plane)
-        row = BodyRow(family, tuple(nodes), tuple(counts), *levels, weights)
+        placed = laid.index(entry)
+        now, before, second_now, second_before = levels_of(
+            entry_of(entries, placed, label),
+            f"the mode file's bodies[{placed}]",
+            families[family],
+            shape,
+            bound,
+            beyond,
+        )
+        weights = weights_of(
+            body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
+        )
         found.append(
-            declared_body(row, written, name, families, quanta, shape, beyond, action, periodic)
+            BodyRow(family, tuple(nodes), tuple(counts), now, before, second_now, second_before, weights)
         )
     return tuple(found)
 

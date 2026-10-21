@@ -87,13 +87,10 @@ class NodeBooks:
     gradient_carry: dict[Transition, int] = field(
         default_factory=dict
     )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
-    bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
-    outflow: int = 0  # the beat's outflow the emission's draw reads at the window's close, the window's `beat` floored at 0 and signed outward, 0 at every other interval (`meeting.jumped`, `meeting.emission_drawn`)
-    beat: int = 0  # the beat's current of (5): the window's sum of the body's own record's conserved current through its own front Ports, inward positive, in the unit G^2 as the intake is booked (`booked_inflows`; ALGEBRA.md, The click writes on the lattice (5): the emission's hazard the beat's current through the declared boundary over W_c plus the declared constant, `lists.hazard_weights`), begun again at the window's close (`meeting.jumped`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
-    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node (or, for a bound body declared an instrument body through the mode file, its standing region with the lay's weights, `BodyRow.region`, `BodyRow.shares`, 2026-10-21), its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
+    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or row.detector is None or row.detector.draw is None:
@@ -107,18 +104,16 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         references = references_of(scale, row.detector.transitions)
         square = squared(1, board.world.quantum_action, board.families[row.family].pair)
-        # a bound body declared through the mode file: its standing region with the lay's weights (2026-10-21)
-        nodes, weights = (row.region, row.shares) if row.region else (row.nodes, row.counts)
-        total = sum(weights)
-        amplitudes = tuple(spread(square, (weight, total)) for weight in weights)
+        total = sum(row.counts)
+        amplitudes = tuple(spread(square, (weight, total)) for weight in row.counts)
         norm = max(largest_below(sum(a * a for a in amplitudes)), 1)
         found.append(
             NodeBooks(
                 number,
                 row.family,
                 record,
-                nodes,
-                weights,
+                row.nodes,
+                row.counts,
                 row.detector,
                 part,
                 parted,
@@ -127,7 +122,6 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 references,
                 amplitudes=amplitudes,
                 norm=norm,
-                bound=bool(row.region),
             )
         )
     return found
@@ -384,16 +378,12 @@ def weighed_currents(board: Lattice) -> Weighed:
 
 
 def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray) -> None:
-    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own. An emitter, a body with a rate, books beside them the beat's current of (5) (2026-10-21, the reader's design of the conserving click, (d)): its own record's conserved current through the same front Ports this interval (a turned record's the flux line's own with the Link's pair, `readings.turned_currents_of`, the same read the credit books), inward positive, into `NodeBooks.beat`, the window's sum the emission's hazard reads at the close over W_c (`lists.hazard_weights`); a one-Node body's static record carries no beat and books 0 to the walk."""
+    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own."""
     for books in board.credit.bodies:
         drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
-        beating = books.declared.rates and books.index in weighed  # an emitter: its own record's current
-        if drives or beating:
+        if drives:
             region = board.mask(books.nodes)
             facing = front(region, wrap, region, own)
             for drive in drives:
                 booked_inflow(board, books, drive, weighted(facing, weighed[drive]))
                 books.passages.setdefault(drive, Passage()).booked(region, weighed[drive])
-            if beating:  # the beat's current of (5): the body's own record through its own front
-                through = weighted(facing, [weighed[books.index][books.record]])
-                books.beat += sum(int(np.asarray(came).sum(dtype=object)) for came in through)

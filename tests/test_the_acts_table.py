@@ -274,18 +274,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
     ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
-    (
-        "lists.py",
-        "hazard_weights",
-        "division_forward",
-    ): "D",  # the beat's term over W_c G^2, once (2026-10-21)
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
-    # take.py
-    (
-        "take.py",
-        "recoil_phases",
-        "largest_below",
-    ): "S",  # den cos k_a from den sin k_a by search (2026-10-21)
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     # flux.py, the step

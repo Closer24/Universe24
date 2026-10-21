@@ -45,7 +45,6 @@ SOURCE, RECOIL = (
     "source",
     "recoil",
 )  # Part G: the piece's source, the emitting body by its number in the world's order or the lay, and the recoil it owes, -p_a per axis as integers, booked and written nowhere (both hands' lines of 2026-10-10, 6091663984 and 6091670073)
-WRITTEN_AS_PHASE = "P written as the part's phase"  # the recoil as the per-Node phase (2026-10-21): the piece's P written into the entered part over a bound record of two Nodes or more standing free in its well as the phase k . (x - c) per Node (`act.parted`, `take.recoil_phases`), the light's piece gone with the hole; a body held at declared Nodes keeps `LOST_TO_TAKER`
 LOST_TO_TAKER = "P lost to the taker"  # Part F: the piece's P booked on the credit line and written into no part, the recoil of a body held at declared Nodes the declaration's (the two hands' lines of 2026-10-09); Part F2 dropped the pair's "no back-to-back region", a declared tolerance's miss: the two pieces' p stand in their two credit lines and the test judges their sum against the lays' floor
 LOST_TO_SOURCE, LOST_TO_LAY, BOOKED_AT_EMISSION = (
     "recoil lost to the source",
