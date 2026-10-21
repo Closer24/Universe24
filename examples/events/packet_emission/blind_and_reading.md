@@ -159,8 +159,9 @@ the window's close"); the recoil [-62016, 0, 0] is booked on the emission's line
 direction, there being no digit to draw one; the design's seeds are gone with the draw's generator, the
 twenty readings above the generator's. The lay at 48: 4,992 lay lines on the pulse's one line, the 312
 slices from the body's first Node x = 313 to the far face x = 624 over the 4 x 4 section, 4,096 Nodes of
-the pulse nonzero at 48; the far face's inflow lines begin at 50; the trailing edge walks back toward
-the body, the lowest nonzero x 305 at 68, 294 at 108, 287 at 128, 281 at 148 and 275 at 168. The region
+the pulse nonzero at 48; the far face's inflow lines begin at 50; the trailing edge walks back along -x
+past the body, the laid packet's backward component (the engine's declared open problem 4), the lowest
+nonzero x 305 at 68, 294 at 108, 287 at 128, 281 at 148 and 275 at 168. The region
 `reach` at x = 341 reads the pulse's levels from 49 and its inflow from 51 and credits nothing within 168,
 the count 0 against the blind's 1, the MISS by name as before. The books at 168: the pulse's share
 2,009,304,000, 3 quanta, the count 1; the atom in g at the count 1. The run is LAWFUL over the 168
