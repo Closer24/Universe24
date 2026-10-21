@@ -30,7 +30,7 @@ def declared_body(
     action: int,
     periodic: tuple[bool, bool, bool],
 ) -> BodyRow:
-    """A laid body's row with its declaration where its mode entry `written` carries the key `instrument` (`instrument_of`, `instrument_body`), the row as it stands otherwise."""
+    """A laid body's row with its declaration where its mode entry `written` carries the key `instrument` (`instrument_of`, `instrument_body`), the row otherwise unchanged."""
     instrument = instrument_of(written, label)
     if instrument is None:
         return row
