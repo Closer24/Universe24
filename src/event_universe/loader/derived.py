@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
+from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_forward, largest_below, mass, partial_rooms
 from event_universe.features.currents import PRODUCTS
@@ -244,13 +245,12 @@ def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:
 
 
 def count_wall(family: FamilyRule, action: int) -> int:
-    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): (the largest x with x^2 <= 9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one search on the whole product (`rule3.largest_below`), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
+    """The wall of one quantum of the family, the unit in which its share is read as quanta (ALGEBRA.md #the-count-is-the-records-share; the two hands' word of 2026-10-03 on R8, #1793, the Boss's 5972724842: a count is one quantum of the invariant, the form T sin omega_0 of the family's gap): (the largest x with x^2 <= 9 T^2 (den^2 - num^2)) for a family with a gap, W_c sin omega_0 to the unit by one search on the whole product (`paces.sine_den`, the engine's one integer sine, `rule3.largest_below`), the share per quantum of a record standing at its rest; 3 den T, the bolometer's W_c, for a massless family, whose quantum is read at its wave's own frequency by the books (`credit.record_unit`) and whose inflow a region reads in units of T."""
     num, den = family.pair
-    gap = den * den - num * num
-    if gap:
-        wall = 3 * action  # Rule3's 3 den over the den of sin omega_0, the search on gap over den
-        return largest_below(wall * wall * gap)  # one search on the whole product
-    return 3 * den * action
+    if abs(num) == den:
+        return 3 * den * action
+    # Rule3's 3 den over the den of sin omega_0: one search on the whole product
+    return sine_den(num, den, 3 * action)
 
 
 def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, unit: int = 1) -> HeldWrite:
