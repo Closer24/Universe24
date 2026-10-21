@@ -16,13 +16,14 @@ from tests.laws import ROOT, load_file
 STANDING = load_file(
     "standing_lay_takers", ROOT / "tools" / "standing_lay.py"
 )  # the standing lay's tool
+FRAME = load_file("frame_of_takers", ROOT / "tools" / "frame_of.py")  # the frame's tool, the integers
 UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen_read3.json"  # the hydrogen worlds' integers
 CUBE, WINDOW = 5, 12  # the ball's window: twelve intervals, a third of the beat, enough for the contrast
 HUNDREDTH = 100
 
 
 def standing_world(folder: Path, ball: bool, takers: object = None, intervals: int = 8) -> Path:
-    """The world: the open cube of CUBE Nodes, the proton's pixel at the centre and the electron at its +x neighbour laid standing by the tool, with the ball region of seven Nodes and the draw's window WINDOW where `ball`, the key `takers` where given."""
+    """The world: the open cube of CUBE Nodes, the proton's pixel at the centre and the electron at its +x neighbour laid standing by the tool, with the ball region of seven Nodes and the draw's window WINDOW where `ball`, the key `takers` where given and with it the frame's integers in the mode file (tools/frame_of.py, 2026-10-21)."""
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
     c = CUBE // 2
@@ -48,6 +49,8 @@ def standing_world(folder: Path, ball: bool, takers: object = None, intervals: i
     path = folder / "w.json"
     path.write_text(json.dumps(world) + "\n", encoding="utf-8")
     STANDING.main(["--input", str(path), "--record", "electron", "--source", "proton", "--sense", "-1"])
+    if takers is not None:  # the frame's integers written into the mode file by the host's tool
+        FRAME.main(["--input", str(path)])
     return path
 
 
@@ -64,6 +67,9 @@ def test_a_body_in_a_well_is_a_taker_with_its_instrument_read_from_the_board(tmp
     (one,) = board.credit.takers
     frame = one.frame
     assert one.body == 1 and frame is not None and frame.index == electron
+    assert (
+        said[1][reports.SHARES] == list(frame.shares) and sum(frame.shares) > 0
+    )  # in parts of the unit
     num, den = board.families[electron].pair
     pairs = [level.pair[0] for level in frame.levels]
     assert pairs == sorted(pairs, reverse=True) and all(-den < p < den for p in pairs)  # energy order

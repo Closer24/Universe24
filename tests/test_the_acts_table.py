@@ -314,33 +314,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
-    (
-        "frame.py",
-        "act_pair",
-        "largest_below",
-    ): "D",  # the phase line's one act as a pair: the sine by the one search
-    (
-        "frame.py",
-        "integer_pair",
-        "largest_below",
-    ): "D",  # a level's rotation pair: den sin Omega by the one search
-    (
-        "frame.py",
-        "levels_of",
-        "largest_below",
-    ): "D",  # the rest rotation's sine and the secant's sines by the one search
-    ("frame.py", "relaid", "division_forward"): "D",  # the invariant's A^2 at the profile, one division
-    ("frame.py", "relaid", "largest_below"): "D",  # the amplitude's root by the one search
-    (
-        "frame.py",
-        "rooted",
-        "largest_below",
-    ): "D",  # sqrt(cos U) by the one search at the phase line's amplitude
-    (
-        "frame.py",
-        "transition_unit",
-        "division_forward",
-    ): "D",  # W_c sin(Omega_u - Omega_l) over den^2, one division
+    ("frame.py", "act_pair", "largest_below"): "D",  # the one act's pair: the sine by the one search
+    ("frame.py", "powered", "division_forward"): "D",  # the count's halving in the pair's powers
     ("taker.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice and its base
     ("taker.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
     ("taker.py", "rows_read", "division_forward"): "D",  # the rows' digits and bases alike

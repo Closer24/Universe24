@@ -123,7 +123,7 @@ REALISED, COUNT = (
     "realised",
     "count",
 )  # the credit line's two words the taker line carries too: the level realised, the count taken
-UNMOVED = "no transition: the record's levels stand at one rotation, no taker"  # the taker line of a record whose frame has one level
+UNFRAMED = "no frame in the mode file beside the world: the host's frame tool writes a turned record's frame as integers (tools/frame_of.py) and none for a record with no transition, no taker"  # the taker line of a body without its frame
 FROZEN = (
     "no hop: the frozen pair, no frame and no taker"  # the taker line of a body at the pair [0, den]
 )

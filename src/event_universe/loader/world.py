@@ -32,7 +32,7 @@ from event_universe.loader.faces import (
 )
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
-from event_universe.loader.mode import Levels, entry_of, levels_of, mode_entries
+from event_universe.loader.mode import FrameEntry, Levels, body_entry, mode_entries
 from event_universe.loader.node_detector_declaration import (
     READER_RECORD_KEYS,
     NodeDetectorDeclaration,
@@ -71,6 +71,9 @@ class BodyRow:
     second_before: Levels
     weights: tuple[int, ...] = ()
     detector: NodeDetectorDeclaration | None = None
+    frame: FrameEntry | None = (
+        None  # a bound body's frame from the mode file (`loader/mode.frame_of`, the host's frame tool's integers), the taker's instrument (taker.py)
+    )
 
 
 @dataclass(frozen=True)
@@ -188,20 +191,11 @@ def bodies_of(
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed = laid.index(entry)
-        now, before, second_now, second_before = levels_of(
-            entry_of(entries, placed, label),
-            f"the mode file's bodies[{placed}]",
-            families[family],
-            shape,
-            bound,
-            beyond,
-        )
+        levels, frame = body_entry(entries, placed, label, families[family], shape, bound, beyond)
         weights = weights_of(
             body.get("weights"), f"{label}.weights", families[family].laid, families[family].plane
         )
-        found.append(
-            BodyRow(family, tuple(nodes), tuple(counts), now, before, second_now, second_before, weights)
-        )
+        found.append(BodyRow(family, tuple(nodes), tuple(counts), *levels, weights, None, frame))
     return tuple(found)
 
 
