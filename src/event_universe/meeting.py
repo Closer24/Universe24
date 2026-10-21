@@ -12,6 +12,7 @@ import numpy as np
 from event_universe import conversion, credit, digits, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
+from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.node_detector import (
     NodeBooks,
@@ -63,11 +64,11 @@ def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], l
 
 
 def cut(board: Lattice, index: int) -> node.Factors | None:
-    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; None where the family has no such record."""
+    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record."""
     regions = [
         board.mask(row.nodes)
         for row in board.world.bodies
-        if row.family == index and row.detector is not None
+        if row.family == index and row.detector is not None and not row.region
     ]
     if not regions:
         return None
@@ -175,6 +176,13 @@ def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
                 break
             done.add(outcomes[pick][0].number)
     return done
+
+
+def coherence_ended(board: Lattice, books: NodeBooks) -> None:
+    """The labels' coherence ended at a bound body's null window without a lay (the reader's design of 2026-10-21, (b); ALGEBRA.md, The click writes on the lattice (4) and (6): the null window re-lays a record laid by the engine's own act in its part, and a bound record standing in its well, laid from the mode file, is re-laid by no act, "no body-wide re-lay in the realised mode is an act of the law"): the labels at their counts in the count's unit and the hop's remainders at 0, as the write step leaves a touched body's (`act.written`), so that every window's share is that window's turn alone, the Rabi share and never a count-up; the record's levels untouched."""
+    wall = count_wall(board.families[books.index], board.world.quantum_action)
+    books.labels = [count * wall for count in books.counts]
+    books.carried = [0 for _count in books.counts]
 
 
 def absorbing(board: Lattice, books: NodeBooks) -> bool:
@@ -389,6 +397,8 @@ def jumped(board: Lattice) -> None:
             books.due = 0  # the body left its part at the close: the carried span was that part's
         elif len(books.counts) > 1:  # a record of one part reads none
             click(board, books, lists.null_window(board, books))
+            if books.bound:  # a bound record: the labels' coherence ended in the books, nothing laid
+                coherence_ended(board, books)
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
         books.deferred = False

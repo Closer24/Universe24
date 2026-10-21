@@ -1,0 +1,1 @@
+{"shape": [15, 15, 15], "boundary": {"x": "open", "y": "open", "z": "open"}, "face_depth": 1, "intervals": 600, "universe": "examples/events/conserve/universe_conserve.json", "node_detectors": [], "bodies": [{"family": "proton", "nodes": [{"node": [7, 7, 7], "count": 1}]}, {"family": "electron", "nodes": [{"node": [8, 7, 7], "count": 1}]}]}

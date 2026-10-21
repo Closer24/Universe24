@@ -87,10 +87,11 @@ class NodeBooks:
     gradient_carry: dict[Transition, int] = field(
         default_factory=dict
     )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
+    bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
-    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
+    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node (or, for a bound body declared an instrument body through the mode file, its standing region with the lay's weights, `BodyRow.region`, `BodyRow.shares`, 2026-10-21), its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or row.detector is None or row.detector.draw is None:
@@ -104,16 +105,18 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         references = references_of(scale, row.detector.transitions)
         square = squared(1, board.world.quantum_action, board.families[row.family].pair)
-        total = sum(row.counts)
-        amplitudes = tuple(spread(square, (weight, total)) for weight in row.counts)
+        # a bound body declared through the mode file: its standing region with the lay's weights (2026-10-21)
+        nodes, weights = (row.region, row.shares) if row.region else (row.nodes, row.counts)
+        total = sum(weights)
+        amplitudes = tuple(spread(square, (weight, total)) for weight in weights)
         norm = max(largest_below(sum(a * a for a in amplitudes)), 1)
         found.append(
             NodeBooks(
                 number,
                 row.family,
                 record,
-                row.nodes,
-                row.counts,
+                nodes,
+                weights,
                 row.detector,
                 part,
                 parted,
@@ -122,6 +125,7 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 references,
                 amplitudes=amplitudes,
                 norm=norm,
+                bound=bool(row.region),
             )
         )
     return found
