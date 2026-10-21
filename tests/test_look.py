@@ -185,3 +185,52 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
     every = COUNTS.reading(pair, output, tmp_path / "unnamed.json")
     assert every["node_detector"] == ["g0", "g4"] and every["rounded_shares"]["row"] == [1, 2]
     assert every["window"] == [0, 3] and PAGE.measurement(look, unnamed)["rounded_shares"][:2] == [1, 1]
+
+
+def test_the_template_fixes_of_the_pages_visual_pass_and_the_retemplate_path(tmp_path, monkeypatch):
+    """The page tool's four faults of the visual pass of 2026-10-21 (docs/FURTHER_RESEARCH.md, The pages' camera and the dots' scale) and the path that carries a template fix to a recorded page without the engine run again. (a) The measurement chart bound by its panel and so by the viewport: the chart's svg at width 100% and max-width the lesser of --measure-width and 100%, a graph's grid column minmax(0, 1fr) so that a long caption wraps instead of widening the column (the one-quantum page's thirteen reporters' names, one unbroken token of 721 px at the phone width of 390 px), the frame's status under the track at the phone width. (b) The bars in the record's own unit: with the run's output file carrying credit lines at the reporters, the measurement holds the clicks the draw credited per reporter within the window (`credited`, the credit lines' counts, in W_rec), their sum (`clicks`, the engine's N in that unit) apportioned by the shares as `record_shares`, the totals line naming both units and the watch lines reading the bars drawn; a credit line outside the window or of a record (`body n`) counts for nothing; without credit lines every new key is None and the totals line as before. (c) The camera's scale held over the run: the lit frame's box is the union of the frames' lit boxes (LIT) and never the frame's own. (d) The dots' least size in pixels at the fit's scale (--dot-least), and the layers a receding face grew on the board's own switch, off by default, with the frame's label counting the Nodes with a count out there (the GHZ close frame: every counted Node on the grown layers, outside the declared board). (e) The re-template path: `recorded` reads a page's embedded blocks back (the look inflated, the others' JSON, None where absent), `retemplated` writes the page again from them with the current template, byte for byte the page the same template builds from the files, and the command line's --retemplate writes it in place; a page without a look is refused by name."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    world = slit_world(tmp_path, TOOL, node_detectors=SCREEN)
+    at = {1: ["s4"], 2: ["s0", "s4"], 3: ["s4"]}
+    look, html = shown(world, monkeypatch, at, BLIND)
+    wall = next(f["wall"] for f in look["families"] if f["name"] == "charge")
+    assert "max-width: min(var(--measure-width), 100%)" in html and ".measure svg, #arrival svg { width: 100%;" in html
+    assert ".graph { display: grid; grid-template-columns: minmax(0, 1fr);" in html
+    assert ".stack { display: grid; grid-template-columns: minmax(0, 1fr);" in html
+    assert "@media (max-width: 600px) { .time { grid-template-columns: auto minmax(0, 1fr); }" in html
+    assert "const box = LIT;" in html and "LIT_AT[shown]" not in html and "PIXELS_PER_NODE = w / (2 * halfW)" in html
+    assert "--dot-least: 3;" in html and "size('--dot-least') / (PIXELS_PER_NODE * camera.zoom)" in html
+    assert "the layers the receding faces grew" in html and "outside the declared board" in html
+    bare = PAGE.measurement(look, BLIND)
+    assert bare["credited"] is None and bare["clicks"] is None and bare["record_shares"] is None
+    assert bare["rounded_shares"] == [1, 2] and bare["totals"] == "N 3 by the shares (the blind 10)"
+    credit = {"event": "credit", "label": "NODEDETECTOR", "family": "charge", "count": 1}
+    flat = [x for fr in look["frames"] for x in fr["lines"]]
+    lines = [
+        *flat,
+        {**credit, "interval": 2, "node_detector": "s0"},
+        {**credit, "interval": 3, "node_detector": "s4"},  # beyond the window [1, 2]
+        {**credit, "interval": 2, "node_detector": "body 0"},  # a record's own line, no reporter
+        {**credit, "interval": 2, "node_detector": "s4", "family": "matter"},  # another family
+    ]
+    output = {"input": "slit.json", "verdict": "LAWFUL", "intervals": 3, "ended": None, "books": {}, "lines": lines}
+    unit = PAGE.measurement(look, BLIND, output)
+    assert unit["credited"] == [1, 0] and unit["clicks"] == 1 and unit["seen"] == [wall, 2 * wall]
+    assert unit["record_shares"] == PAGE.apportioned(1, unit["seen"]) == [0, 1] and unit["rounded_shares"] == [1, 2]
+    assert unit["totals"].startswith("N 1 by the shares in the record's own unit, the clicks the draw credited")
+    assert "(the blind 10); N 3 over the family's wall W_c in T's unit" in unit["totals"]
+    assert unit["watch"] == ["y = 4: 1 by the shares, the blind 2", "y = 0: 0 by the shares, the blind 1.5"]
+    assert PAGE.credited(output, ["s0", "s4"], "charge", (1, 2)) == [1, 0]
+    assert PAGE.credited(output, ["s0", "s4"], "charge", (1, 1)) is None and PAGE.credited(None, ["s0"], "charge", (1, 2)) is None
+    built = PAGE.page(look, BLIND, output=output)
+    assert PAGE.embedded(unit) in built and '"record_shares":[0,1]' in built
+    data = PAGE.recorded(built)
+    assert data["look"] == look and data["blind"] == BLIND and data["measurement"] == unit
+    assert data["output"] == PAGE.trimmed(output) and data["gate"] is None and data["beside"] is None
+    assert PAGE.retemplated(built) == built and PAGE.retemplated(html) == html
+    refused("holds no embedded look", PAGE.retemplated, "<meta charset=\"utf-8\"><title>a page</title>")
+    (recorded := tmp_path / "recorded.html").write_text(built, encoding="utf-8")
+    PAGE.main([str(recorded), "--retemplate"])
+    assert recorded.read_text(encoding="utf-8") == built
+    PAGE.main([str(recorded), "--retemplate", "--out", str(tmp_path / "again.html")])
+    assert (tmp_path / "again.html").read_text(encoding="utf-8") == built
