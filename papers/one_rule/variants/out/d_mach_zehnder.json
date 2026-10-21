@@ -1,0 +1,119 @@
+{
+ "one_line_form_s_half": {
+  "Delta L = 0": {
+   "cross": 1.0,
+   "straight": 0.0
+  },
+  "Delta L = 1": {
+   "cross": 0.8536,
+   "straight": 0.1464
+  },
+  "Delta L = 2": {
+   "cross": 0.5,
+   "straight": 0.5
+  },
+  "Delta L = 3": {
+   "cross": 0.1464,
+   "straight": 0.8536
+  },
+  "Delta L = 4": {
+   "cross": 0.0,
+   "straight": 1.0
+  }
+ },
+ "two_part_form": {
+  "Delta L = 0": {
+   "BS2 in, (1, 1): P(cross), P(straight)": [
+    1.0,
+    0.0
+   ],
+   "BS2 out, (1, 0): P(arm 1), P(arm 2)": [
+    0.5,
+    0.5
+   ],
+   "sum of the exit side's weights, in and out": [
+    223305312,
+    111652656
+   ],
+   "the exit side with a side after it (Gram identity), either port": [
+    111652656,
+    111652656
+   ]
+  },
+  "Delta L = 1": {
+   "BS2 in, (1, 1): P(cross), P(straight)": [
+    0.854,
+    0.146
+   ],
+   "BS2 out, (1, 0): P(arm 1), P(arm 2)": [
+    0.4977,
+    0.5023
+   ],
+   "sum of the exit side's weights, in and out": [
+    224331766,
+    112165883
+   ],
+   "the exit side with a side after it (Gram identity), either port": [
+    112165883,
+    112165883
+   ]
+  },
+  "Delta L = 2": {
+   "BS2 in, (1, 1): P(cross), P(straight)": [
+    0.503,
+    0.497
+   ],
+   "BS2 out, (1, 0): P(arm 1), P(arm 2)": [
+    0.4984,
+    0.5016
+   ],
+   "sum of the exit side's weights, in and out": [
+    224007496,
+    112003748
+   ],
+   "the exit side with a side after it (Gram identity), either port": [
+    112003748,
+    112003748
+   ]
+  },
+  "Delta L = 3": {
+   "BS2 in, (1, 1): P(cross), P(straight)": [
+    0.1481,
+    0.8519
+   ],
+   "BS2 out, (1, 0): P(arm 1), P(arm 2)": [
+    0.5007,
+    0.4993
+   ],
+   "sum of the exit side's weights, in and out": [
+    222982444,
+    111491222
+   ],
+   "the exit side with a side after it (Gram identity), either port": [
+    111491222,
+    111491222
+   ]
+  },
+  "Delta L = 4": {
+   "BS2 in, (1, 1): P(cross), P(straight)": [
+    0.0,
+    1.0
+   ],
+   "BS2 out, (1, 0): P(arm 1), P(arm 2)": [
+    0.5,
+    0.5
+   ],
+   "sum of the exit side's weights, in and out": [
+    223305312,
+    111652656
+   ],
+   "the exit side with a side after it (Gram identity), either port": [
+    111652656,
+    111652656
+   ]
+  }
+ },
+ "splitter": {
+  "the one-Node splitter's content for s = 1/2 at k = pi/4 (row (l))": "U = 0.2294, 1,376 of Gamma = 6,000 under the linear Link pace; 0.3070 under the composed paces"
+ }
+}
