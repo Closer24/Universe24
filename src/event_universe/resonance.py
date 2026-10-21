@@ -37,13 +37,12 @@ def scale_of(room: int, bound: int, window: int) -> int:
 
 
 def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Reference]:
-    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up, the emission's own start), the sine record at (0, -r'_1) with r'_1 = (the largest x with x^2 <= R^2 (den^2 - num^2)) div den, the one root at the declaration, and the window's sums at 0."""
+    """One `Reference` per transition at the scale: the cosine record at (R, R num div den rounded half up (`paces.rounded`), the emission's own start), the sine record at (0, -r'_1) with r'_1 = (the largest x with x^2 <= R^2 (den^2 - num^2)) div den, the one root at the declaration (`paces.sine_den`, the engine's one integer sine), and the window's sums at 0."""
     found = []
     for transition in transitions:
         num, den = transition.resonance
-        cosine = int(division_forward(scale * num, den, division_forward(den, 2, 0)[0])[0])
-        square = scale * scale * (den * den - num * num)
-        sine = int(division_forward(largest_below(square), den, 0)[0])
+        cosine = int(paces.rounded(scale * num, den))
+        sine = int(division_forward(paces.sine_den(num, den, scale), den, 0)[0])
         found.append(Reference(transition.resonance, scale, (scale, cosine), (0, -sine), 0, 0))
     return found
 
@@ -96,7 +95,7 @@ def unit_weight(
     cosine = 3 * den_d * num_r - 2 * num_d * den_r  # D cos k
     if abs(cosine) >= scale:
         return None
-    sine = largest_below(scale * scale - cosine * cosine)  # D sin k
+    sine = paces.sine_den(cosine, scale)  # D sin k
     squared = division_forward(3 * window * action * scale, sine, 0)[0]  # (A_1 W)^2 = 3 W T / sin k
     return quarter, int(division_forward(largest_below(int(squared)), 2, 0)[0])  # S_1 = A_1 W / 2
 

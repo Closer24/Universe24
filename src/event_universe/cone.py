@@ -10,6 +10,7 @@ import numpy as np
 from event_universe import growth, meeting_back
 from event_universe.core.ports import AXES
 from event_universe.features.front import distance_map
+from event_universe.front import declared, on_board
 from event_universe.loader.keys import Node
 from event_universe.records import NodeState, Record
 
@@ -30,10 +31,9 @@ def extent_of(board: Lattice, box: Box) -> tuple[int, int, int]:
 def distances_of(board: Lattice, box: Box) -> np.ndarray:
     """The Link distance of every Node of the box from the lay's Nodes (`credit.Books.support`, S_0 at the file's coordinates, on the board as grown by the offset), the Link metric with the wrap as the front's shell counts it (`features/front.distance_map`), over the box alone: the box holds the ball with its ring and is whole on a periodic axis (`box_of`), so the distances within it are the board's; the record's light cone at the interval t is the Nodes at distance t + 1 or less (`radius`)."""
     lo = (int(box[0].start), int(box[1].start), int(box[2].start))
-    offset = board.offset
     origins = [
-        (at[0] + offset[0] - lo[0], at[1] + offset[1] - lo[1], at[2] + offset[2] - lo[2])
-        for at in board.credit.support
+        (here[0] - lo[0], here[1] - lo[1], here[2] - lo[2])
+        for here in [on_board(board, at) for at in board.credit.support]
     ]
     return distance_map(extent_of(board, box), origins, board.world.periodic)
 
@@ -102,8 +102,8 @@ def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
 
 
 def at_file(board: Lattice, box: Box, here: list[int]) -> list[int]:
-    """A Node of the box at the file's coordinates: the box's start added, the layers grown before the origin taken back."""
-    return [h + int(s.start) - o for h, s, o in zip(here, box, board.offset, strict=True)]
+    """A Node of the box at the file's coordinates: the box's start added, the layers grown before the origin taken back (`front.declared`)."""
+    return list(declared(board, [h + int(s.start) for h, s in zip(here, box, strict=True)]))
 
 
 def differing(
@@ -157,7 +157,7 @@ def acts_inside(board: Lattice, interval: int, box: Box, kept: np.ndarray) -> No
     nodes = [meeting_back.node_of(board, line)[1] for line in books.lays.get(interval, [])]
     nodes += [face.at for face in books.faces.get(interval, [])]
     for at in nodes:
-        here = tuple(at[a] + board.offset[a] - int(box[a].start) for a in range(AXES))
+        here = tuple(h - int(s.start) for h, s in zip(on_board(board, at), box, strict=True))
         inside = all(0 <= h < extent for h, extent in zip(here, kept.shape, strict=True))
         if not inside or not bool(kept[here]):
             raise RuntimeError(

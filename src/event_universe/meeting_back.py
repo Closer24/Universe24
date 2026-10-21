@@ -11,6 +11,7 @@ from event_universe import cone, credit, growth, reports
 from event_universe.features import phase
 from event_universe.features.click import Face
 from event_universe.features.front import ball
+from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import CONE, Gauss, Pattern, Ports, times
@@ -134,7 +135,7 @@ def crossed(board: Lattice, lines: Lines, direction: int = -1) -> None:
     own = [line for line in lines if line[event] == reports.LAY and line[when] == board.interval]
     for line in own if direction > 0 else reversed(own):
         index, at = node_of(board, line)
-        here = (at[0] + board.offset[0], at[1] + board.offset[1], at[2] + board.offset[2])
+        here = on_board(board, at)
         number = int(str(line[reports.LINE]))
         record = board.states[index].lines[number]
         was, after = line[reports.BEFORE], line[reports.AFTER]
@@ -204,8 +205,7 @@ def side_weights(
 
 def inside(board: Lattice) -> np.ndarray:
     """The record's light cone over the whole board at the board's interval, the ball about the birth's Nodes (`credit.Books.support`) at the cone's radius (`radius`, `features/front.ball`): the close's assertion of the cone's outside (`run_forward`)."""
-    offset = board.offset
-    origins = [(at[0] + offset[0], at[1] + offset[1], at[2] + offset[2]) for at in board.credit.support]
+    origins = [on_board(board, at) for at in board.credit.support]
     return ball(board.shape, origins, radius(board), board.world.periodic)
 
 

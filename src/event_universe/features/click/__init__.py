@@ -9,6 +9,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import Rule, division_forward, flux_total, largest_below, rule3
 
@@ -180,12 +181,12 @@ def standing(
     sense: int,
     share: tuple[int, int] = (1, 1),
 ) -> tuple[tuple[int, int], tuple[int, int]]:
-    """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the largest integer whose square is at most den^2 - num^2 (sin omega den), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
+    """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the largest integer whose square is at most den^2 - num^2 (sin omega den, `paces.sine_den`), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
     if count <= 0:
         return (0, 0), (0, 0)
     num, den = pair
     re, im = direction(phase[0], phase[1], spread(squared(count, action, pair), share))
-    sine = sense * largest_below(den * den - num * num)
+    sine = sense * sine_den(num, den)
     re_before = int(division_forward(re * num - im * sine, den, 0)[0])
     im_before = int(division_forward(im * num + re * sine, den, 0)[0])
     return (re, im), (re_before, im_before)
@@ -194,9 +195,9 @@ def standing(
 def invariant(
     count: int, action: int, pair: tuple[int, int], laid: int, share: tuple[int, int] = (1, 1)
 ) -> int:
-    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands, the advisor's (b) and (c) and the mathematician's hand: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the largest integer whose square is at most den^2 - num^2, sin omega den; the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`take.relaid`); the share form of `amplitude` beside it, the reader's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
+    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands, the advisor's (b) and (c) and the mathematician's hand: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the largest integer whose square is at most den^2 - num^2, sin omega den (`paces.sine_den`); the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`take.relaid`); the share form of `amplitude` beside it, the reader's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
     num, den = pair
-    sine = largest_below(den * den - num * num)
+    sine = sine_den(num, den)
     if count <= 0 or sine == 0:
         return 0
     return spread(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]), share)
