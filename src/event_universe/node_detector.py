@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import node, readings, records, share
+from event_universe import board_readings, node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
@@ -151,13 +151,16 @@ def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Sequence[A
 
 
 def piece_momentum(board: Lattice, index: int, passage: Passage) -> list[int]:
-    """The piece's momentum p_a per axis in T's unit, the momentum one credited count of the arriving record deposits (Part F2; both hands' correction of Part F, 2026-10-09, the advisor's 6085442608 and the mathematician's 6085486079: the faces' throughput summed over a window is no momentum, the sin k cancels in it; the piece is the region's lattice momentum over its share, scaled to one count; the click's plan, C4: the ratio booked over the window and not read at one instant): p_a = (SUM_t P_a(region, t) x W_rec + h) div (num x SUM_t Q(region, t)), h = (num x SUM_t Q) div 2, the sums the record's passage through the region over the window (`Passage`: the momentum terms at the region's Nodes and the share there, booked each interval beside the inflow, `readings.momentum_of`, `Lattice.share_of`) and W_rec the unit of one credited count (`credit.Books.units`, `record_unit`), one division at the close, rounded half up on the magnitude with the sign after (kind D in the acts table, as `credit.quanta_through` divides once; the engine's one signed rounding, `features/phase.signed_rounded`), exact for a monochromatic record, whose ratio is constant, and the form-weighted mean over the passage for a packet, so that the piece deposited is one count's whatever fraction of the packet stands in the region at the close and whichever unit the record holds: one quantum of action (SUM A^2 sin omega = T) at the wave number k carries 2 T sin k in this normalisation (46,341 at k = pi / 4), a count of W_c carries 2 T sin k / sin omega, and a record whose count holds several packets carries their action's worth at the region's own wave number; the sign that of +k, a piece entering from the +a side carries p_a below 0; 0 where nothing passed."""
+    """The piece's momentum p_a per axis in T's unit, the momentum one credited count of the arriving record deposits (Part F2; both hands' correction of Part F, 2026-10-09, the advisor's 6085442608 and the mathematician's 6085486079: the faces' throughput summed over a window is no momentum, the sin k cancels in it; the piece is the region's lattice momentum over its share, scaled to one count; the click's plan, C4: the ratio booked over the window and not read at one instant): p_a = (SUM_t P_a(region, t) x W_rec + h) div (num x SUM_t Q(region, t)), h = (num x SUM_t Q) div 2, the sums the record's passage through the region over the window (`Passage`: the momentum terms at the region's Nodes and the share there, booked each interval beside the inflow, `readings.momentum_of`, `Lattice.share_of`) and W_rec the unit of one credited count (`credit.Books.units`, `record_unit`), one division at the close, rounded half up on the magnitude with the sign after (kind D in the acts table, as `credit.quanta_through` divides once; the engine's one signed rounding, `features/phase.signed_rounded`), exact for a monochromatic record, whose ratio is constant, and the form-weighted mean over the passage for a packet, so that the piece deposited is one count's whatever fraction of the packet stands in the region at the close and whichever unit the record holds: one quantum of action (SUM A^2 sin omega = T) at the wave number k carries 2 T sin k in this normalisation (46,341 at k = pi / 4), a count of W_c carries 2 T sin k / sin omega, and a record whose count holds several packets carries their action's worth at the region's own wave number; the sign that of +k, a piece entering from the +a side carries p_a below 0; 0 where nothing passed, the share W(region) at 0 or below, the one guard, and at the frozen pair num = 0, whose reaches and currents are 0 (2026-10-21: the guard stood on the signed wall num x W(region), reading a negative numerator's passage as nothing passed; the law's divisor is the signed wall, so a record of a negative numerator, the pair [-4800, 6000] of the builder's chain, deposits its piece with the sign of its P_a, against its motion as the fan's, where the engine gave [0, 0, 0])."""
     weight = board.families[index].pair[0]
     unit = board.credit.units[index]
-    wall = weight * passage.share
-    if wall <= 0:
+    if passage.share <= 0 or weight == 0:  # nothing passed, or the frozen pair, whose currents are 0
         return [0] * AXES
-    return [int(signed_rounded(int(value) * unit, wall)) for value in passage.momenta]
+    sign = (
+        -1 if weight < 0 else 1
+    )  # the wall's sign, num's, attached after the rounding on the magnitude
+    wall = abs(weight) * passage.share
+    return [sign * int(signed_rounded(int(value) * unit, wall)) for value in passage.momenta]
 
 
 def sourcing(board: Lattice, books: NodeBooks) -> set[int]:
@@ -357,7 +360,7 @@ def node_detector_nodes(board: Lattice) -> np.ndarray:
 
 
 def weighed_currents(board: Lattice) -> Weighed:
-    """Every record of quanta's read for the bookings at the pair the step starts from, once per interval: its current through each Port at every Node (`readings.currents_of`, as `Lattice.currents` reads it, per record) with the factor Q_ij of each of its six Links in the unit G^2 (`Lattice.read`, the record's read with the world's cuts), by which the credit books the conserved form's own current through a region's front Ports (`reports.weighted`, `credit.booked`, `booked_inflows`), and its share at the readers' Nodes, the declared regions' (`node_detector_nodes`) and the bodies' own, at the same read (`share.family_share` with the read's content and factors, as `Lattice.share_of` reads it), the passage's share (`Passage.booked`, the click's plan, C4)."""
+    """Every record of quanta's read for the bookings at the pair the step starts from, once per interval: its current through each Port at every Node (`readings.currents_of`, as `Lattice.currents` reads it, per record; a turned record's the flux line's own with the Link pairs its step reads, `board_readings.turned_read`, read after the interval's phase act, ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21) with the factor Q_ij of each of its six Links in the unit G^2 (`Lattice.read`, the record's read with the world's cuts), by which the credit books the conserved form's own current through a region's front Ports (`reports.weighted`, `credit.booked`, `booked_inflows`), and its share at the readers' Nodes, the declared regions' (`node_detector_nodes`) and the bodies' own, at the same read (`share.family_share` with the read's content and factors, as `Lattice.share_of` reads it), the passage's share (`Passage.booked`, the click's plan, C4)."""
     at, gamma = node_detector_nodes(board), board.world.node_clock
     for books in board.credit.bodies:
         at = at | board.mask(books.nodes)
@@ -370,7 +373,12 @@ def weighed_currents(board: Lattice) -> Weighed:
             shares = share.family_share(
                 family, lines, board.wrap, gamma, content, factors, board.unit, at, None, weights(family)
             )
-            through = readings.currents_of(family.pair[0], lines, board.wrap, weights(family))
+            turned = (
+                board_readings.turned_read(board, index, record, 1, (content, factors))
+                if index in board.turning
+                else None
+            )
+            through = readings.currents_of(family.pair[0], lines, board.wrap, weights(family), turned)
             found[index].append((through, factors, shares))
     return found
 

@@ -1,4 +1,4 @@
-"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), and a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
+"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`; a turned record's with the Link pairs its step reads, `turned_read`, `turned_currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), and a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
 
 from __future__ import annotations
 
@@ -11,10 +11,13 @@ import event_universe.records as records
 from event_universe import covector, flux, node
 from event_universe.bookings import sources_of
 from event_universe.core import paces
+from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
+from event_universe.loader.derived import count_wall, quanta_records
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
+    from event_universe.node_detector import Weighed
 
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
 Stresses = dict[
@@ -32,10 +35,12 @@ class UniformMode(NamedTuple):
     nodes: int
 
 
-def currents(board: Lattice) -> Currents:
-    """Every family of quanta's plain current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); a charged family's records' currents added, light's the current of its rows' sum; a turned record's from its plain pair as its share reads it (`record`); the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`)."""
+def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
+    """Every family of quanta's current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); light's the current of its rows' sum; a turned record's the flux line's own with the Link pairs its step reads, per record and the records added (`turned_currents`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), every plain record's the plain bilinear bit for bit; the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`); `weighed`, the bookings' read of the same interval where the step holds it, whose per-record currents of a turned family are the same integers and are added instead of read again."""
     return {
-        index: readings.currents_of(
+        index: turned_currents(board, index, weighed)
+        if index in board.turning
+        else readings.currents_of(
             board.families[index].pair[0],
             board.record(index),
             board.wrap,
@@ -43,6 +48,56 @@ def currents(board: Lattice) -> Currents:
         )
         for index in board.order
     }
+
+
+def turned_read(
+    board: Lattice,
+    index: int,
+    record: int,
+    direction: int = 1,
+    read: tuple[Any, node.Factors] | None = None,
+) -> readings.Turned:
+    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall) and the quantum's measure of a current W_c = 3 den T."""
+    gamma, action, family = board.world.node_clock, board.world.quantum_action, board.families[index]
+    content, factors = board.read(index, direction, record) if read is None else read
+    pairs = flux.pairs_of(
+        index,
+        board.families,
+        board.states,
+        direction,
+        board.wrap,
+        gamma,
+        content,
+        factors,
+        record,
+        board.amplitude,
+    )
+    assert pairs is not None  # a turned record reads its holder's pairs
+    pace = paces.link_pace_of(gamma, content)
+    return readings.Turned(
+        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action
+    )
+
+
+def turned_currents(
+    board: Lattice, index: int, weighed: Weighed | None = None
+) -> tuple[np.ndarray, ...]:
+    """A turned family's currents through each Port at every Node, every record's read with the Link pairs its own step reads (`turned_read`, `readings.currents_of`), the records added; where the bookings' read of the interval is given (`weighed`, node_detector.weighed_currents, the same call per record), its records' currents added and the lines not read twice."""
+    found: list[Any] = [0] * PORTS
+    if weighed is not None and index in weighed:
+        for through, _factors, _shares in weighed[index]:
+            found = [a + b for a, b in zip(found, through, strict=True)]
+        return tuple(np.asarray(value) for value in found)
+    for record in quanta_records(board.families, index):
+        through = readings.currents_of(
+            board.families[index].pair[0],
+            board.lines_of(index, record),
+            board.wrap,
+            None,
+            turned_read(board, index, record),
+        )
+        found = [a + b for a, b in zip(found, through, strict=True)]
+    return tuple(np.asarray(value) for value in found)
 
 
 def stresses(board: Lattice) -> Stresses:
@@ -72,23 +127,8 @@ def sense_fluxes(
     holder = board.families[node.sign_holder(index, board.families)]
     if not holder.lorentz:
         return readings.sense_current_of(lines, board.wrap)
-    gamma = board.world.node_clock
-    content, factors = board.read(index, direction, record)
-    pairs = flux.pairs_of(
-        index,
-        board.families,
-        board.states,
-        direction,
-        board.wrap,
-        gamma,
-        content,
-        factors,
-        record,
-        board.amplitude,
-    )
-    assert pairs is not None  # a turned record reads its holder's pairs
-    pace = paces.link_pace_of(gamma, content)
-    return covector.link_fluxes(lines, pairs, pace * pace, board.wrap)
+    read = turned_read(board, index, record, direction)
+    return covector.link_fluxes(lines, read.pairs, read.square, board.wrap)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:

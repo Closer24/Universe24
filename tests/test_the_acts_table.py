@@ -298,6 +298,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
     # covector.py
     ("covector.py", "link_fluxes", "division_forward"): "D",  # the pace squared off the pair, exact
+    # readings.py
+    (
+        "readings.py",
+        "turned_currents_of",
+        "division_forward",
+    ): "D",  # the pace squared off the pair, exact
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
