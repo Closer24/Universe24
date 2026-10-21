@@ -21,7 +21,7 @@ from event_universe.node_detector import (
     sourcing,
 )
 from event_universe.records import Booking, Record
-from event_universe.resonance import gathered, hopped, window_pair, window_turn
+from event_universe.resonance import gathered, hopped, projected, window_pair, window_turn
 from event_universe.take import Item, faces_presented, relaid
 
 if TYPE_CHECKING:
@@ -102,7 +102,11 @@ def turned_labels(board: Lattice, books: NodeBooks) -> None:
     for transition, reference in zip(books.declared.transitions, books.references, strict=True):
         leaves, enters = transition.leaves, transition.enters
         if leaves == books.part and leaves != enters:  # the probe's turns nothing
-            turn = int(paces.turn_factor(window_turn(reference, transition.weight), clock, gamma))
+            turn = int(
+                paces.turn_factor(
+                    window_turn(reference, transition.weight, transition.weight_den), clock, gamma
+                )
+            )
             pair = window_pair(turn, gamma, board.amplitude)
             own = hopped(before[leaves], before[enters], *pair)
             remainders = (books.carried[leaves], books.carried[enters])
@@ -210,7 +214,16 @@ def jumped(board: Lattice) -> None:
             t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions
         }
-        gathered(books.references, books.declared.transitions, levels)
+        vector = {}  # the transitions declaring their dipole: the drive's Link gradient projected on each (`resonance.projected`)
+        for t in books.declared.transitions:
+            if t.dipole is not None:
+                if t.drive in own[books.number]:
+                    vector[t] = 0
+                else:
+                    vector[t], books.gradient_carry[t] = projected(
+                        board, books, t, books.gradient_carry.get(t, 0)
+                    )
+        gathered(books.references, books.declared.transitions, levels, vector or None)
         draw = books.declared.draw
         timed = (
             draw is not None and draw.window is not None

@@ -165,6 +165,44 @@ def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> 
     return largest_below(squared(count, action, pair, laid))
 
 
+def two_squares(total: int) -> tuple[int, int] | None:
+    """`total` as a sum of two squares, (a, b) with a >= b >= 0 and the largest a, by the search on the square (`rule3.largest_below`); None where no such pair exists: a plane's (re, im) at the quarter-turn lay carrying the Wronskian re^2 + im^2 = total exactly."""
+    a = largest_below(total)
+    while a * a * 2 >= total:
+        b = largest_below(total - a * a)
+        if a * a + b * b == total:
+            return a, b
+        a -= 1
+    return None
+
+
+def plane_squares(total: int, planes: int) -> list[tuple[int, int]] | None:
+    """The tightest split of `total` over `planes` planes as sums of two squares, one (re, im) per plane with the planes' sums within the least spread about total div planes (the search widening the spread from 0, the sums nondecreasing), so that a record of several planes laid by the count at one Node carries its quantum's A^2 = T div 2 exactly in its Wronskian where the rounding per plane falls short (three planes at T div 6: 5450 + 5458 + 5476 = 16384 where 3 x 73^2 = 15987); None where no split exists (one plane whose total is no sum of two squares)."""
+    if planes <= 1:
+        squares = two_squares(total)
+        return None if squares is None else [squares]
+    target = int(division_forward(total, planes, 0)[0])
+
+    def chain(left: int, lowest: int, top: int, planes_left: int) -> list[tuple[int, int]] | None:
+        if planes_left == 0:
+            return [] if left == 0 else None
+        for one in range(lowest, min(top, left) + 1):
+            squares = two_squares(one)
+            if squares is None:
+                continue
+            rest = chain(left - one, one, top, planes_left - 1)
+            if rest is not None:
+                return [squares, *rest]
+        return None
+
+    for spread in range(target + 1):
+        for first in range(max(target - spread, 0), target + 1):
+            found = chain(total, first, first + spread, planes)
+            if found is not None:
+                return found
+    return None
+
+
 def direction(re: int, im: int, size: int) -> tuple[int, int]:
     """A level pair of the size `size` in the direction of (re, im) by the division act, (size, 0) where the pair is 0: the phase of the part the quantum leaves passed to the part it enters."""
     norm = largest_below(re * re + im * im)

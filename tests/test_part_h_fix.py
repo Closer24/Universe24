@@ -87,7 +87,7 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
         )
         expected = phase.iterate(
             ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
-            count,
+            np.abs(count),  # the pair at the count's size, read with the count's sign (2026-10-21)
             gamma,
             1,
         )

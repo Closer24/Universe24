@@ -558,6 +558,33 @@ then 133 against 131 then 130, and 103 then 104 against 104 then 105). The readi
 from the shipped looks and stand as read, each a reading of the shipped engine by name; the
 corrected engine's readings of the same worlds are the next round's.
 
+The seven pages under the conjugate fix of the phase act (2026-10-21, the sprint branch on main's
+head 5200884b0; features/phase `orbit_moves` and `signed_read`: a Link whose count stands below 0
+reads the conjugate of the pair at the count's size on the one orbit from the seed, where before it
+iterated the inverse act from the seed). Measured before any re-recording: atom.json re-recorded
+under the fix at its stride (120 intervals, every 4th frame, 258 s on the cube of 25 under the day's
+load) equals the shipped page in every array of its 31 frames and in the books; the same world under
+main's head gives the same arrays and books, and one reading apart, the electron's `inflow` through
+the faces at 112, 9,192,294 under the fix against 9,192,282 on main's head, twelve in nine million,
+the whole of what the fix moves on this world. The six other worlds probed under the fix over their
+first intervals: atom_free (6 frames at every 4th to 20), hydrogen_1s and hydrogen_line (21 frames
+each to 20), atom_2p (5 frames at every 5th to 20) and atom_1s (8 frames at every 3rd to 21, equal
+to the line) with every array equal to the shipped frames; atom_line (3 frames at every 16th to 32)
+equal at 0 and 16, and at 32 the electron's level one unit apart at the five Nodes (18, 16, 16),
+(18, 15, 16), (18, 17, 16), (18, 16, 15) and (18, 16, 17) of the cube of 33 (the shipped -369
+against -368 under the fix at the first, -237 against -238 at the four), main's head giving the
+shipped levels there, so the move is the fix's: the one level the probes see the fix move, the
+frames beyond the probes not re-read. What the shipped pages do not carry is main's own books of
+2026-10-21, the books' read of a turned record's current with the Link's pair (#2180, merged after
+the pages were recorded): the electron's `inflow` on the faces' click lines after the first interval
+where the electron reaches the faces (hydrogen_1s at 2: -831,492 for the shipped -1,056,000;
+hydrogen_line at 2: 76,032,408 for 130,728,000; the charge holder's inflow unchanged; atom_1s's
+lines equal), a reading of the books and no level of any frame. A re-recording of the seven at their
+shipped strides costs about ninety minutes of machine time under the day's load (atom_2p's start and
+20 intervals 279 s and atom_line's start and 32 intervals 410 s on the cube of 33, the whole of
+atom_line about forty minutes alone) and is the next round's; the pages stand as recorded, each
+probed frame named above.
+
 ## The conclusion
 
 Seven lays, seven runs, nothing added to Rule 3, the declared holder and the one declared word of the

@@ -99,11 +99,15 @@ def force_of(board: Lattice, time_line: bool, odd_line: bool) -> float:
     def kinetic() -> float:
         re, im = board.states[electron].lines
         z = re.now.astype(float) + 1j * im.now.astype(float)
-        cosine, sine = (
+        cosine, sine, count = (
             board.states[charge].phases[1][2],
             board.states[charge].phases[1][3],
-        )  # the record's row, the y axis
-        theta = np.arctan2(np.asarray(sine.now, dtype=float), np.asarray(cosine.now, dtype=float))
+            board.states[charge].phases[1][7],
+        )  # the record's row, the y axis: its pair and its count line, the sine read with the count's sign (2026-10-21)
+        sense = np.where(np.asarray(count.now) < 0, -1.0, 1.0)
+        theta = np.arctan2(
+            sense * np.asarray(sine.now, dtype=float), np.asarray(cosine.now, dtype=float)
+        )
         return float(np.angle((np.conj(z[:, :-1]) * z[:, 1:] * np.exp(1j * theta[:, :-1])).sum()))
 
     restore()

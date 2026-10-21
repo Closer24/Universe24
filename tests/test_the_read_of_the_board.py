@@ -191,7 +191,7 @@ def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
 
 
 def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypatch):
-    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2): on the shipped hydrogen_1s the electron reads its holder's phase pairs at the exact vacuum paces (its content 0, T = p_0^2 = Gamma^2 = 36,000,000), so F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) is T at the 33 Nodes about the centre over four intervals but at one Node of one interval 2 T (every pair part even there; two digits of 264, the record's two lines at 33 Nodes), and every kept remainder lies on w div 2 + F Z and off the plain lattice w div 2 + (w div 9) Z after the first step (the builder's finding on 400 intervals: 36,000,000 the gcd of r - w div 2 over 26,466 remainders, 66 on the plain lattice, frame 0's origins); the plain reaches alone read w div 9, nine values, kept by name."""
+    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2): on the shipped hydrogen_1s the electron reads its holder's phase pairs at the exact vacuum paces (its content 0, T = p_0^2 = Gamma^2 = 36,000,000), so F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) is T at the 33 Nodes about the centre over four intervals but at two Node-intervals 2 T (every pair part even there; four digits of 264, the record's two lines at 33 Nodes; one Node-interval and two digits before 2026-10-21, when the pair at -n was defined as the conjugate of the pair at +n and the pairs read through a -a Port moved by one Link unit at some angles), and every kept remainder lies on w div 2 + F Z and off the plain lattice w div 2 + (w div 9) Z after the first step (the builder's finding on 400 intervals: 36,000,000 the gcd of r - w div 2 over 26,466 remainders, 66 on the plain lattice, frame 0's origins); the plain reaches alone read w div 9, nine values, kept by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     board = Lattice(load_shipped(EVENTS / "atom" / "hydrogen_1s.json"))
     electron, gamma = family(board, "electron"), board.world.node_clock
@@ -206,7 +206,7 @@ def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypat
         assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
         assert {w for _r, _f, w, _p in read} == {2 * half}
         found.update(f for _r, f, _w, _p in read)
-    assert found == Counter({quantum: 262, 2 * quantum: 2}) and sum(found.values()) == 4 * 2 * 33
+    assert found == Counter({quantum: 260, 2 * quantum: 4}) and sum(found.values()) == 4 * 2 * 33
     rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
     assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
 

@@ -132,7 +132,7 @@ def sign_holder(index: int, families: Families) -> int:
 def phased(
     index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
 ) -> list[list[Record]]:
-    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), each end's level scaled by its own clock, the reader's p_0 at that Node over Gamma in one coefficient rounding half up (`paces.turn_factor`, kind D; Part H, MUST 3, both hands' lines of 2026-10-10 on the whole trial: the turn per proper interval, ALGEBRA.md, The turn per proper interval; in the temporal gauge the Link's phase per interval is the two ends' difference), so that on each axis the Link's count is n_ij = rounded(L(i) p_0(i), Gamma) - rounded(L(i + a) p_0(i + a), Gamma), L(i) - L(i + a) exactly at the vacuum's clock p_0 = Gamma (flat worlds bit for bit), 0 beyond a face (`arrival`), by which the Link's cosine and sine lines take |n_ij| rotation acts in n's sense (the pair then at X e^(i SUM_t n_ij theta_0), the temporal gauge's Link phase; n_ji = -n_ij by construction, the pair Hermitian and the count exact), forward; at `direction` -1 the same acts back, bit for bit, the inverse's act once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the state untouched."""
+    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), each end's level scaled by its own clock, the reader's p_0 at that Node over Gamma in one coefficient rounding half up (`paces.turn_factor`, kind D; Part H, MUST 3, both hands' lines of 2026-10-10 on the whole trial: the turn per proper interval, ALGEBRA.md, The turn per proper interval; in the temporal gauge the Link's phase per interval is the two ends' difference), so that on each axis the Link's count is n_ij = rounded(L(i) p_0(i), Gamma) - rounded(L(i + a) p_0(i + a), Gamma), L(i) - L(i + a) exactly at the vacuum's clock p_0 = Gamma (flat worlds bit for bit), 0 beyond a face (`arrival`), by which the Link's count line moves to N_ij + n_ij and the Link's cosine and sine lines take the acts that carry the pair from the size of the count standing to the size of the count reached along the one orbit from the seed (features/phase `orbit_moves`, `iterate`: the pair then at X e^(i |SUM_t n_ij| theta_0), read with the count's sign, the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels, 2026-10-21; the temporal gauge's Link phase; n_ji = -n_ij by construction, the pair Hermitian and the count exact), forward; at `direction` -1 the count line back to N_ij - n_ij and the same acts back, bit for bit, the inverse act exact as before, once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the six lines then the three count lines, the state untouched."""
     family, state = families[index], states[index]
     readers = {
         row_of(families, reader, record): (reader, record)
@@ -153,21 +153,23 @@ def phased(
             potential, clock, gamma
         )  # per end, L p_0 / Gamma rounded once (kind D)
         phased_lines: list[Record] = []
+        counts: list[Record] = []
         for axis in range(AXES):
             neighbour = arrival(clocked, axis, 1, wrap)
             beyond = (
                 arrival(np.ones_like(np.asarray(potential)), axis, 1, wrap) == 0
             )  # the Link beyond a face
             count = np.where(beyond, 0, clocked - neighbour)
-            cosine, sine = lines[2 * axis], lines[2 * axis + 1]
+            cosine, sine, standing = lines[2 * axis], lines[2 * axis + 1], lines[2 * AXES + axis]
+            reached, moved = phase.orbit_moves(np.asarray(standing.now), count, direction)
             pair = phase.iterate(
                 ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
-                count,
+                moved,
                 gamma,
-                direction,
             )
             phased_lines += [Record(*(np.asarray(a) for a in line)) for line in pair]
-        found.append(phased_lines)
+            counts.append(Record(np.asarray(reached), np.asarray(0 * reached), np.asarray(0 * reached)))
+        found.append(phased_lines + counts)
     return found
 
 

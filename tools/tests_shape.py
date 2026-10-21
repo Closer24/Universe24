@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
+        45,
+        "the conversion in the toy (2026-10-21): the chain world run to its first conversion at a "
+        "window's close, one conversion per credited quantum, the counts n -1 p +1 e +1, the Wronskian's sum 0 at the "
+        "lay by the exact split and the rotations' identity exact in the integers",
+    ),
     "tests/test_the_hazard_window.py::test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain": (
         39,
         "the emission's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "

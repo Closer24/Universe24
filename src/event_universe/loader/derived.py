@@ -53,6 +53,9 @@ class FamilyRule(Row):
     """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the held write's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
 
     reads: tuple[Read, ...] = ()
+    converts: tuple[
+        tuple[int, int], ...
+    ] = ()  # the conversion's table, (family, sense) per record out, derived at load from the key `converts` (conversion.py)
 
     @property
     def held(self) -> bool:

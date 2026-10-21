@@ -22,7 +22,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
 from event_universe.reports import BODY, credit, front, weighted
-from event_universe.resonance import Reference, references_of, scale_of
+from event_universe.resonance import Reference, references_of, scale_of, sloped
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -84,6 +84,9 @@ class NodeBooks:
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
     bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
     due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
+    gradient_carry: dict[Transition, int] = field(
+        default_factory=dict
+    )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -100,10 +103,8 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         longest = draw.window if draw.window is not None else max(board.world.intervals, 1)
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         references = references_of(scale, row.detector.transitions)
-        square, total = (
-            squared(1, board.world.quantum_action, board.families[row.family].pair),
-            sum(row.counts),
-        )
+        square = squared(1, board.world.quantum_action, board.families[row.family].pair)
+        total = sum(row.counts)
         amplitudes = tuple(spread(square, (weight, total)) for weight in row.counts)
         norm = max(largest_below(sum(a * a for a in amplitudes)), 1)
         found.append(
@@ -189,22 +190,18 @@ def dark(board: Lattice, books: NodeBooks, sourced: set[int]) -> bool:
                 levels = lines[0].now if side == 1 else lines[0].before
             if any(int(levels[on_board(board, at)]) for at in books.nodes):
                 return False
+        declared = any(t.dipole is not None and t.drive == drive for t in books.declared.transitions)
+        if declared and sloped(board, books, drive):  # the six neighbours read: lit where any differs
+            return False
     return True
 
 
 def own_clock(board: Lattice, books: NodeBooks) -> int:
     """The reader's own clock, the composed clock p_0 under its record's read of the content (`paces.clock_of`) at each of its Nodes, their mean rounded half up once (`paces.rounded`, as a region's clock is read, `credit.clocked_regions`): Gamma in the vacuum and below it in a well, the number the turn per proper interval and the dark's hazard read."""
     gamma = board.world.node_clock
-    content = board.read(books.index, 1, books.record)[0]
-    clocks = [
-        int(
-            paces.clock_of(
-                gamma,
-                int(np.asarray(content)[on_board(board, at)]) if np.ndim(content) else int(content),
-            )
-        )
-        for at in books.nodes
-    ]
+    content = np.asarray(board.read(books.index, 1, books.record)[0])
+    levels = [int(content[on_board(board, at)]) if content.ndim else int(content) for at in books.nodes]
+    clocks = [int(paces.clock_of(gamma, level)) for level in levels]
     return int(paces.rounded(sum(clocks), len(clocks)))
 
 
@@ -317,10 +314,7 @@ def reported(
     if board.output is None:
         return
     names, families = books.declared.names, board.families
-    window = [
-        board.interval - max(books.elapsed, 1) + 1,
-        board.interval,
-    ]  # a dark draw: its own interval
+    window = [board.interval - max(books.elapsed, 1) + 1, board.interval]  # a dark draw: the interval
     absorbed, light = (families[k].name if k is not None else None for k in exchanged)
     moved = next((k for k in exchanged if k is not None), None)
     left = board.credit.counts[moved] if moved is not None else None
