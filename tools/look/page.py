@@ -2,7 +2,7 @@
 
 The blind file, optional, in one of two formats (a third, the which-way folder's, holds `rows`, the screen's counts per region by world, and `quanta` by world; the page draws its row at the screen reporters and prints its total in words). The expectation `tools/click_counts.py` reads, `{"node_detector": name or a list, "family": name, "window": [first interval, last interval], "across": the axis across the node_detector, "counts": [the blind count per reporter in that order], "pattern": [first, last] (the range of bars), "through": the blind total, "watch": {coordinate on the across axis: the blind number, ...}}`: the chart draws one bar per reporter ordered by its coordinate on that axis, the rounded shares as click_counts.py reads them (what it saw within the window summed from the look's click lines, floored at 0, N the screen's total over the family's wall W_c to the nearest whole, N apportioned by the shares: the expectation, the clicks being the tool's draw), the blind counts as the dashed curve, the pattern's range, the totals line and one watch line per key. Or the node_detectors' totals, `{"expected": {node_detector name: count, ...} or [one count per node_detector in the look's order], "family": the family the curve is of, "window": [first interval, last interval], "watch": {"node_detector": name, "count": the one number to watch}}`, every key optional, one bar per node_detector, what it saw over W_c up to the frame shown.
 
-A gate's reading, optional: with `--gate <reading>.json`, the gate's reader's file (`tools/bell_gate.py`'s or `tools/spin_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a lattice reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the NodeDetector's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
+A gate's reading, optional: with `--gate <reading>.json`, the gate's reader's file (`tools/bell_gate.py`'s or `tools/spin_gate.py`'s output over the gate's worlds, the look's world among them), and the gate's blind as `--blind` (the expectation of the gate's form: `family`, `sides`, `order`, `runs`, `combination`, `blind`), the page adds the gate's panels, inserted at three markers of the template and absent without a reading (a page without one holds none of them): the board seen from above at the frame shown (frame 0 the input as laid, the record's counts at its Nodes and each side's region with its declared setting and pattern as the reader read them; the beams leaving the record and meeting the regions over the intervals; a region brighter the interval it clicks), labelled a lattice reading; the gate's family's `parts` lines per region over the intervals (the parts overlaid, one curve where they are equal) with the region's `click` lines marked, the NodeDetector's read; and the reader's credit beside the blind: the 2^n joint shares as bars, the run filled and the blind outlined, the drawn combination (the click) named, E_n, the marginals, the sub-correlations and the three local credits of the look's world in one table against the blind, the combination over the gate's worlds (its formula from the blind's order and signs, the run's value beside the blind's) on a ruler from minus to plus the number of its terms (the algebraic maximum, one per term) with the fence the blind's theorem lines name ("at most") shaded and the local credits marked on it. `--beside <other>.json` adds one line with another gate's blind combination, read from that file and typed nowhere. `--notes <file.md>` (2026-10-21) embeds a Markdown text and renders it as one prose section in the page's tokens, its first heading the section's, then headings, paragraphs and numbered or bulleted lists: what one sees in the run and why it is like nature, stated beside the look, deciding nothing and computing nothing. Every number of the panels is the reader's file's, the blind's or the look's; the page compares them and sums nothing new.
 
     python tools/look/page.py <world>.look.json [--blind <world>.blind.json] [--output <world>.output.json] [--reading <reading>.json] [--gate <reading>.json] [--beside <other>.json] [--out <world>.look.html]
 """
@@ -291,8 +291,9 @@ def page(
     other: dict[str, Any] | None = None,
     output: dict[str, Any] | None = None,
     read: dict[str, Any] | None = None,
+    notes: str | None = None,
 ) -> str:
-    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind); with the run's output file and tools/click_counts.py's reading of it, the measurement from them."""
+    """The page's HTML from the look and the blind expectation, if any; with a gate's reading, the gate's panels inserted at the template's three markers (`other` the line of another gate's blind); with the run's output file and tools/click_counts.py's reading of it, the measurement from them; with `notes`, a Markdown text (`--notes`, 2026-10-21), its headings, paragraphs and lists rendered by the page as one prose section in the page's own tokens, what one sees and why it is like nature, stated beside the look and deciding nothing."""
     if not isinstance(look, dict) or "frames" not in look or "families" not in look:
         raise ValueError("the look file must hold the frames and the families (tools/look/record.py)")
     if blind is not None and not isinstance(blind, dict):
@@ -316,6 +317,7 @@ def page(
         .replace("{{READ}}", embedded(checked_reading(read) if read is not None else None))
         .replace("{{GATE}}", embedded(gated))
         .replace("{{BESIDE}}", embedded(other))
+        .replace("{{NOTES}}", embedded(notes))
     )
 
 
@@ -328,7 +330,8 @@ BLOCKS = (
     "reading",
     "gate",
     "beside",
-)  # the page's embedded blocks, by their script ids
+    "notes",
+)  # the page's embedded blocks, by their script ids (`notes` the Markdown text of `--notes`, a string)
 BLOCK = re.compile(r'<script id="([a-z]+)" type="application/[a-z0-9+]+">(.*?)</script>', re.S)
 
 
@@ -355,6 +358,7 @@ def retemplated(html: str) -> str:
         data["beside"],
         output=data["output"],
         read=data["reading"],
+        notes=data["notes"] if isinstance(data["notes"], str) else None,
     )
 
 
@@ -382,6 +386,12 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the output read against the blind (tools/click_counts.py)",
     )
+    parser.add_argument(
+        "--notes",
+        type=Path,
+        default=None,
+        help="a Markdown file rendered as one prose section: what one sees and why it is like nature",
+    )
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.look.html)")
     args = parser.parse_args(argv)
     if args.retemplate:
@@ -401,6 +411,7 @@ def main(argv: list[str] | None = None) -> None:
             beside(args.beside) if args.beside else None,
             output=json.loads(args.output.read_text(encoding="utf-8")) if args.output else None,
             read=json.loads(args.reading.read_text(encoding="utf-8")) if args.reading else None,
+            notes=args.notes.read_text(encoding="utf-8") if args.notes else None,
         ),
         encoding="utf-8",
     )
@@ -467,6 +478,13 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .graph .caption b { color: var(--fg); font-weight: 600; }
 .graph svg { width: 100%; height: auto; display: block; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px var(--gap); font-size: var(--small); }
+.prose { max-width: 90ch; }  /* the notes: one prose section in the page's tokens (--notes, 2026-10-21) */
+.prose p, .prose ol, .prose ul { margin: 0 0 var(--gap); }
+.prose ol, .prose ul { padding-left: 1.6em; }
+.prose li { margin-bottom: 6px; }
+.prose h3 { font-size: var(--text); font-weight: 600; margin: var(--gap) 0 6px; }
+.prose h4 { font-size: var(--small); font-weight: 600; color: var(--muted); margin: var(--gap) 0 4px; }
+.prose code { font-family: var(--font-mono); font-size: var(--small); }
 .legend i { display: inline-block; width: 14px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 4px; }
 .legend i.dashed { border-top-style: dashed; }
 .picker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--small); }
@@ -489,6 +507,7 @@ td.num { font-family: var(--font-mono); }
 <script id="measurement" type="application/json">{{MEASURE}}</script>
 <script id="output" type="application/json">{{OUTPUT}}</script>
 <script id="reading" type="application/json">{{READ}}</script>
+<script id="notes" type="application/json">{{NOTES}}</script>
 <header>
   <h1 id="title"></h1>
   <span class="verdict" id="verdict"></span>
@@ -528,6 +547,10 @@ td.num { font-family: var(--font-mono); }
     <div class="stack" id="records"></div>
     <div class="scroll" id="credits"></div>
   </section>
+  <section class="panel wide" id="notes-box" hidden>
+    <h2 id="notes-heading">Notes</h2>
+    <div class="prose" id="notes"></div>
+  </section>
   <section class="panel">
     <h2>The blind, written before the run</h2>
     <div id="blind-box"></div>
@@ -563,6 +586,7 @@ const BLIND = JSON.parse(document.getElementById('blind').textContent) || {};
 const MEASURE = JSON.parse(document.getElementById('measurement').textContent);
 const OUTPUT = JSON.parse(document.getElementById('output').textContent);
 const READ = JSON.parse(document.getElementById('reading').textContent);
+const NOTES = JSON.parse(document.getElementById('notes').textContent);  // the Markdown text of --notes, or null
 const root = document.documentElement;
 const token = name => getComputedStyle(root).getPropertyValue(name).trim();
 const size = name => parseFloat(token(name));
@@ -1376,13 +1400,41 @@ function drawArrival() {
   moveCursors();
 }
 
+/* The notes (--notes, 2026-10-21): a Markdown text rendered as one prose section, its first heading the section's, its other headings, paragraphs, numbered and bulleted lists, `code` and **bold**; escaped, nothing computed, nothing decided. */
+function drawNotes() {
+  if (typeof NOTES !== 'string' || !NOTES.trim()) return;
+  const inline = text => esc(text).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\\*\\*([^*]+)\\*\\*/g, '<b>$1</b>');
+  const box = byId('notes'); box.innerHTML = ''; byId('notes-box').hidden = false;
+  let heading = null, paragraph = [], list = null, listKind = null;
+  const flushParagraph = () => { if (paragraph.length) { const p = document.createElement('p'); p.innerHTML = inline(paragraph.join(' ')); box.append(p); paragraph = []; } };
+  const flushList = () => { if (list) { box.append(list); list = null; listKind = null; } };
+  for (const raw of NOTES.split(/\\r?\\n/)) {
+    const line = raw.trim();
+    const head = /^(#{1,3})\\s+(.*)$/.exec(line), item = /^(\\d+)\\.\\s+(.*)$/.exec(line), bullet = /^[-*]\\s+(.*)$/.exec(line);
+    if (!line) { flushParagraph(); flushList(); continue; }
+    if (head) {
+      flushParagraph(); flushList();
+      if (head[1].length === 1 && heading === null) { heading = head[2]; byId('notes-heading').innerHTML = inline(heading); continue; }
+      const h = document.createElement(head[1].length <= 2 ? 'h3' : 'h4'); h.innerHTML = inline(head[2]); box.append(h); continue;
+    }
+    if (item || bullet) {
+      flushParagraph();
+      const kind = item ? 'ol' : 'ul';
+      if (!list || listKind !== kind) { flushList(); list = document.createElement(kind); listKind = kind; }
+      const li = document.createElement('li'); li.innerHTML = inline(item ? item[2] : bullet[1]); list.append(li); continue;
+    }
+    if (list && /^\\s/.test(raw) && list.lastElementChild) { list.lastElementChild.innerHTML += ' ' + inline(line); continue; }
+    flushList(); paragraph.push(line);
+  }
+  flushParagraph(); flushList();
+}
 {{GATE_SCRIPT}}/* The start: the title, the verdict, frame 0. */
 byId('title').textContent = document.title;
 byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason : '') + ' (' + LOOK.label + ')';
 const biasBound = () => { const pairs = OUTPUT ? OUTPUT.lines.filter(l => l.event === 'credit' && l.bias_bound && l.bias_bound.g && l.bias_bound.total).map(l => [Number(l.bias_bound.g), Number(l.bias_bound.total)]) : []; if (!pairs.length) return ''; const [g, T] = pairs.reduce((a, b) => a[0] * b[1] >= b[0] * a[1] ? a : b); const gcd = (x, y) => y ? gcd(y, x % y) : x, d = gcd(g, T); return `, the bias bound ${format(g / d)} / ${format(T / d)} on the click's line (the worst over the ${format(pairs.length)} credits carrying one)`; };  // the totals' bias as the credit lines carry it (ALGEBRA.md, The digits' base and a total's factors)
 byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (MEASURE ? '' : biasBound()) + (SAME_LINES ? ', the look\u2019s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${ordinal(LOOK.every)} interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look\u2019s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look\u2019s own lines';
 if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
-function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
+function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); drawNotes(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();
 })();
 </script>
