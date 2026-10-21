@@ -246,3 +246,33 @@ examples/events/two_slits/one_quantum.json --intervals 130 --out runs/two_slits/
 --output runs/two_slits/one_quantum.output.json`; `python tools/look/page.py
 runs/two_slits/one_quantum.look.json --blind examples/events/two_slits/one_quantum.expectation.json
 --output runs/two_slits/one_quantum.output.json --out examples/events/two_slits/one_quantum.html`.
+
+## The two slits' flow with the draw removed, 2026-10-21 (two_slits_flow.json, the board the weak trajectories are read on)
+
+The weak-measurement trajectories of the variants' derivation (papers/one_rule/variants/README.md,
+section C, verdict WORKS as a reading) are the streamlines of the conserved form's current summed over
+the run, a lattice reading and no click, on the law's real line and on the engine's integer board with
+the draw removed (its c_streamlines.py --engine: the shipped world stepped with its `draw` key removed,
+the regions reporting and nothing credited, no hole and no front). The world the script steps stands in
+this folder as `two_slits_flow.json`, two_slits.json without its `draw` key and nothing else (the same
+lay: its mode file `two_slits_flow.mode.json` by tools/pixel_mode.py is two_slits.mode.json but for
+the digest, the count 4,197), with its page `two_slits_flow.html`, the look of the board the
+streamlines are integrated on, recorded with tools/look/record.py over the 130 intervals with the run's
+own output file and built with tools/look/page.py with the output and no blind. The reading (main
+30e6d48f2): LAWFUL over 130 intervals, no credit line (1,313 click lines, the regions' reports, and
+no draw), the count 4,197 standing in the books at the close with 4,203 quanta read on the board, the
+record leaving through the two receding faces; the regions' reports build the two slits' pattern in
+the current's units over the run with no click, the page's measurement panel showing what each region
+saw over W_c up to the frame shown. The streamlines themselves are not on the page: the page tool
+draws no curve between Nodes by its own rule, and the derivation's two pictures beside its README
+(c_streamlines_real_line.png and c_streamlines_engine.png: forty-four lines seeded at equal flux at
+the two gaps, 44 of 44 reaching the screen, non-crossing to 0.18 Node of the midline, the arrivals per
+region bunched at the maxima) stand on the variants page's card with the link to this page. The two
+slits' page `two_slits.html` is not the same board run: at the window 1 every close credits quanta and
+the click writes on the lattice, where this run credits nothing. The commands, from the root with
+PYTHONPATH set to src: the world, `python -c "import json; w = json.load(open('examples/events/two_slits/two_slits.json')); w.pop('draw'); open('examples/events/two_slits/two_slits_flow.json', 'w').write(json.dumps(w) + chr(10))"`;
+its mode file, `python tools/pixel_mode.py --input examples/events/two_slits/two_slits_flow.json`;
+the look, `python tools/look/record.py examples/events/two_slits/two_slits_flow.json --intervals 130
+--out runs/two_slits/two_slits_flow.look.json --output runs/two_slits/two_slits_flow.output.json`;
+the page, `python tools/look/page.py runs/two_slits/two_slits_flow.look.json --output
+runs/two_slits/two_slits_flow.output.json --out examples/events/two_slits/two_slits_flow.html`.
