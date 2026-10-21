@@ -58,6 +58,7 @@ class Reading:
     unit: int
     period: int
     acts: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=object))
+    part: int = 0  # the part of the record carrying its count, whose plane the fit reads (0 for a body laid without parts)
 
 
 def act_pair(amplitude: int, gamma: int) -> complex:
@@ -186,7 +187,7 @@ def levels_of(board: Lattice, reading: Reading, kept: int) -> list[Level]:
 
 def gauge_flat(board: Lattice, reading: Reading) -> tuple[np.ndarray, np.ndarray]:
     """The record's level pair in the static frame at the lay, u = z conj(P) with P = act^acts the phasor of the acts accumulated at the Node (now) and one interval fewer (before): complex arrays over the Nodes."""
-    lines = board.lines_of(reading.index, reading.record)
+    lines = board.lines_of(reading.index, reading.record)[2 * reading.part : 2 * reading.part + 2]
     now = np.asarray(lines[0].now, dtype=float) + complex(0, 1) * np.asarray(lines[1].now, dtype=float)
     before = np.asarray(lines[0].before, dtype=float) + complex(0, 1) * np.asarray(
         lines[1].before, dtype=float
@@ -197,27 +198,28 @@ def gauge_flat(board: Lattice, reading: Reading) -> tuple[np.ndarray, np.ndarray
     return now.ravel() * np.conj(phasor), before.ravel() * np.conj(earlier)
 
 
-def shares_of(board: Lattice, reading: Reading) -> tuple[list[float], list[np.ndarray]]:
-    """The record's share in each level at the lay: the gauge-flat level now fitted on every level's columns by least squares, the level's energy SUM over its columns of |a|^2 weight, as fractions of their total, with the coefficients per level (the direction a degenerate level's profile is compiled in)."""
+def shares_of(board: Lattice, reading: Reading) -> tuple[list[float], list[np.ndarray], list[float]]:
+    """The record's share in each level at the lay: the gauge-flat level now fitted on every level's columns by least squares, the level's energy SUM over its columns of |a|^2 weight, as fractions of their total, with the coefficients per level (the direction a degenerate level's profile is compiled in) and the peak of each level's fitted component over the board in levels (the lay's own grain: a component below one level at its peak was laid by nothing and is the fit's rounding)."""
     flat, _before = gauge_flat(board, reading)
     basis = np.column_stack([level.profiles for level in reading.levels])
     coefficients, *_ = np.linalg.lstsq(basis, flat, rcond=None)
-    energies, found, at = [], [], 0
+    energies, found, peaks, at = [], [], [], 0
     for level in reading.levels:
         width = level.profiles.shape[1]
         own = coefficients[at : at + width]
         energies.append(float((np.abs(own) ** 2 * level.weights).sum()))
         found.append(own)
+        peaks.append(float(np.abs(level.profiles @ own).max()))
         at += width
     total = sum(energies)
-    return [e / total if total > 0 else 0 for e in energies], found
+    return [e / total if total > 0 else 0 for e in energies], found, peaks
 
 
-def transition_of(fractions: list[float], unit: int) -> tuple[int, int]:
-    """The transition a record carries from its shares: the two levels of its largest shares in energy order, the record standing in the larger's (the beat between its two laid levels; a record laid in one level has no second: the lowest level and the one above it then, the gap to the next level); a share counts where it stands above 0 in the unit's integers, as the mode file writes it."""
+def transition_of(fractions: list[float], peaks: list[float]) -> tuple[int, int]:
+    """The transition a record carries from its shares: the two levels of its largest shares in energy order, the record standing in the larger's (the beat between its two laid levels; a record laid in one level has no second: the lowest level and the one above it then, the gap to the next level); a level counts where its fitted component reaches one level at its peak, the lay's own grain (`shares_of`), below it the fit's rounding of a lay that holds none of it."""
     order = sorted(range(len(fractions)), key=lambda k: -fractions[k])
     first, second = order[0], order[1]
-    if int(round(fractions[second] * unit)) <= 0:
+    if peaks[second] < 1:
         return (0, 1) if first == 0 else (0, first)
     return min(first, second), max(first, second)
 
@@ -248,20 +250,20 @@ def period_of(reading: Reading) -> int:
     return count
 
 
-def reading_of(board: Lattice, index: int, record: int) -> Reading | None:
+def reading_of(board: Lattice, index: int, record: int, part: int = 0) -> Reading | None:
     """A turned record's frame at the lay (`turns_of`, `levels_of`, `shares_of`, `transition_of`, `transition_unit`, `period_of`), None where it carries no transition with an angle (a frozen record, every level at one rotation)."""
     holder = node.sign_holder(index, board.families)
     act = act_pair(board.amplitude, board.world.node_clock)
     turns_now = turns_of(board, index, record)
     cosine, sine = well_pair(turns_now, act)
     reading = Reading(
-        index, record, holder, turns_now, cosine, sine, act, [], 0, 0, 0, 0, turns_now.copy()
+        index, record, holder, turns_now, cosine, sine, act, [], 0, 0, 0, 0, turns_now.copy(), part
     )
     reading.levels = levels_of(board, reading, PORTS)
     if len(reading.levels) < 2:  # a frozen record: every level at one rotation, no transition
         return None
-    fractions, _coefficients = shares_of(board, reading)
-    reading.lower, reading.upper = transition_of(fractions, board.world.quantum_action)
+    fractions, _coefficients, peaks = shares_of(board, reading)
+    reading.lower, reading.upper = transition_of(fractions, peaks)
     reading.unit, reading.period = transition_unit(board, reading), period_of(reading)
     return reading if reading.unit > 0 and reading.period > 0 else None
 
@@ -374,20 +376,23 @@ def instrument_entry(
     width: int | None,
     declared: tuple[tuple[int, int, int], ...] = (),
     whole: bool = False,
+    part: int = 0,
 ) -> dict[str, Any] | None:
-    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at the weight (the record's read weight of its holder where none is given) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object where a rate is declared and the transition's period as the window otherwise; None for a record with no transition."""
-    reading = reading_of(board, index, record)
+    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at the weight (the record's read weight of its holder where none is given) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object where a rate is declared or a packet of the light family is laid (the window then derived at load from the lays' passage) and the transition's period as the window otherwise, the steady beat's declared window; None for a record with no transition."""
+    reading = reading_of(board, index, record, part)
     if reading is None:
         return None
-    fractions, _coefficients = shares_of(board, reading)
+    fractions, _coefficients, peaks = shares_of(board, reading)
     region, shares = standing_region(board, index, record, declared, whole)
     low, high = reading.levels[reading.lower], reading.levels[reading.upper]
     den = low.pair[1]
     cosine = int(
         paces.rounded(high.pair[0] * low.pair[0] + high.sine * low.sine, den)
     )  # den cos(Omega_u - Omega_l)
-    second = sorted(fractions, reverse=True)[1]  # the second level's share: a beating record
-    stands = reading.upper if int(round(second * reading.unit)) > 0 else reading.lower
+    beating = min(peaks[reading.lower], peaks[reading.upper]) >= 1  # both levels laid: a beating record
+    stands = (
+        reading.upper if beating else max((reading.lower, reading.upper), key=lambda k: fractions[k])
+    )
     names = [level_name(low), level_name(high)]
     parts = [
         {"part": 0, "name": names[0], "count": 1 if stands == reading.lower else 0},
@@ -417,21 +422,27 @@ def instrument_entry(
     nodes = [
         {"node": [int(v) for v in at], "weight": int(shares[tuple(at)])} for at in np.argwhere(region)
     ]
+    laid = any(packet.family == families_index(board, light) for packet in board.world.packets)
     return {
         "nodes": nodes,
         "parts": parts,
         "transitions": transitions,
         "rates": rates,
-        "node_detector": {} if lifetime is not None else {"window": reading.period},
+        "node_detector": {} if lifetime is not None or laid else {"window": reading.period},
     }
 
 
-def readings_of(board: Lattice, index: int, record: int) -> dict[str, Any] | None:
+def families_index(board: Lattice, name: str) -> int:
+    """A family's index by its name on the board; -1 where the universe has none (the loader then refuses the drive by name)."""
+    return next((k for k, family in enumerate(board.families) if family.name == name), -1)
+
+
+def readings_of(board: Lattice, index: int, record: int, part: int = 0) -> dict[str, Any] | None:
     """The tool's own readings of a bound record beside its declaration: its levels as pairs [den cos Omega, den] with their sines and degenerate counts, the two of its transition, its unit W_rec and its period, its shares at the lay in parts of the unit; None for a record with no transition."""
-    reading = reading_of(board, index, record)
+    reading = reading_of(board, index, record, part)
     if reading is None:
         return None
-    fractions, _coefficients = shares_of(board, reading)
+    fractions, _coefficients, _peaks = shares_of(board, reading)
     return {
         "levels": [[level.pair[0], level.pair[1]] for level in reading.levels],
         "sines": [level.sine for level in reading.levels],
@@ -501,6 +512,7 @@ def main(argv: list[str] | None = None) -> None:
                 "no instrument: the record is not turned or stands at the frozen pair"
             )
             continue
+        part = next((p for p, c in enumerate(row.detector.counts) if c), 0) if row.detector else 0
         found = instrument_entry(
             board,
             row.family,
@@ -511,6 +523,7 @@ def main(argv: list[str] | None = None) -> None:
             args.width,
             row.nodes,
             args.region == "whole",
+            part,
         )
         if found is None:
             entry.pop(INSTRUMENT, None)
@@ -522,7 +535,7 @@ def main(argv: list[str] | None = None) -> None:
                 key: found[key] for key in ("parts", "transitions", "rates", "node_detector")
             },
             "region": len(found["nodes"]),
-            "readings": readings_of(board, row.family, record),
+            "readings": readings_of(board, row.family, record, part),
         }
     mode_path.write_text(json.dumps(mode) + "\n", encoding="utf-8")
     load_world(path)  # the loader admits the mode file beside the world
