@@ -150,7 +150,7 @@ def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
 
 
 def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at_the_close():
-    """The resonance pair and the packet emission world as shipped, in the read's shape: the giver alone in the dark emits at its window's close where the hazard's draws from its own cycling digits missed (the resonant and the detuned world at 48, their windows), the taker's own draws read from the light; the packet world's giver has its window 48 derived from its own rate's lifetime (a body's own rate enters its window's derivation as the lifetime whatever the form of its lay; its train's passage 758 is read beside it and is no window, 2026-10-20), so its directed packet falls at 48, the recoil owed booked on the emission's line beside the no-draw reading; every run LAWFUL to its end; the emission intervals printed."""
+    """The resonance pair and the packet emission world as shipped, in the read's shape: the giver alone in the dark emits at its window's close where the hazard's draws from its own cycling digits missed (the resonant and the detuned world at 48, their windows), the taker's own draws read from the light; the packet world's giver has its window 48 derived from its own rate's lifetime (a body's own rate enters its window's derivation as the lifetime whatever the form of its lay; its train's passage 758 is read beside it and is no window, 2026-10-20), so its directed packet falls at 48, the recoil owed booked on the emission's line beside the no-draw reading; every run LAWFUL to its end but the packet world's, refused by name at its one close, 168 (2026-10-21, the floor and the remainder's draw, `credit.whether`: the reach region's window holds a remainder of the pulse's quantum below one unit, so the close draws it by the read of the board, and light at the exact vacuum paces of a universe without a content holder carries three-valued digits, the read refused as the law has it; the half-up rounding counted none and read nothing); the emission intervals printed."""
     world_files.REPOSITORY_ROOT = ROOT
     found = {}
     for folder, name in (
@@ -158,10 +158,22 @@ def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at
         ("resonance", "detuned"),
         ("packet_emission", "packet_emission"),
     ):
-        board = run_whole(Lattice(load_shipped(EVENTS / folder / f"{name}.json"), (lines := []).append))
+        board, refusal = (
+            Lattice(load_shipped(EVENTS / folder / f"{name}.json"), (lines := []).append),
+            None,
+        )
+        try:
+            run_whole(board)
+        except RuntimeError as refused:
+            refusal = str(refused)  # the packet world's reach at its close: light's digits three-valued
         given = [(c["interval"], c["node_detector"], c["lost"]) for c in clicks(lines) if c["emitted"]]
         window = board.world.bodies[0].detector.draw.window
         assert board.ended is None, name
+        assert (refusal or "")[:62] == (
+            "the click's read of the board at the regions of 'pulse' at the"
+            if folder == "packet_emission"
+            else ""
+        ), (name, refusal)
         directed = any(r.width is not None for r in board.credit.bodies[0].declared.rates)
         readings = [NO_DRAW, *([BOOKED_AT_EMISSION, LOST_TO_SOURCE] if directed else [])]
         if window <= board.world.intervals:

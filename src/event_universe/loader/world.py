@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from event_universe import conversion
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived, window
@@ -354,6 +355,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     )
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
     bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
+    conversion.together(families, bodies, packets)  # the multisets a close can credit, refused by name
     intervals = integer(world["intervals"], "intervals", 0)
     wholes = wholes_of(world.get("packets", []), families, shape, beyond, intervals)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
@@ -365,9 +367,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
     settings_of_the_law([(d.name, d.axis, d.basis, d.pattern) for d in node_detectors], laid, families)
     compounding_of_the_law(node_detectors, laid, families, packets, bound)
-    # the world's records: a charged family's bodies each a record owning one row of the sign, every
-    # holder of the sign one row per charged record beside the free row (derived.with_records)
-    counted = [body.family for body in bodies]
+    counted = [body.family for body in bodies]  # a charged family's bodies each own a row of the sign
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
     lay = lay_of(world["lay"], "lay") if "lay" in world else None

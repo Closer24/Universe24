@@ -89,16 +89,3 @@ def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
             raise ValueError(f"{at} is 0: a holder read at the weight 0 is no read, leave it out")
         found.append((name, int(weight)))
     return tuple(found)
-
-
-CONVERTS_KEYS, CONVERTS_REQUIRED = (
-    (
-        "keeps",
-        "senses",
-    ),
-    ("keeps",),
-)  # a family's `converts`: what its table keeps and the sense of each plane record out (conversion.py)
-KEEPS = (
-    "wronskian",
-    "baryon",
-)  # what a table may be declared to keep beyond the write's own: the senses' sum (the law's one charge), the records of three lines

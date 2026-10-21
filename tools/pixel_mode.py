@@ -1233,7 +1233,7 @@ def packet_entry(
     largest: Axis,
     content: int = 0,
 ) -> dict[str, Any]:
-    """One packet's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (its share in quanta as the engine's books read it at the lay, `Lattice.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes. The vacuum's paces are those of `content`, the declared rests the packet's family reads (`vacuum_of`): the lay and its count at the paces of the world it is laid in, the books' count at the start."""
+    """One packet's mode entry: its family and pair, its amplitude, the count its record reads over the board at the vacuum's paces (a plane's over both its lines, its second pair the wave's quadrature at the declared sense, the key `sense`, the Wronskian then the sense's sign and the plane's charge read by every region, 2026-10-21) (its share in quanta as the engine's books read it at the lay, `Lattice.credit.counts`: the share summed over the board and over the lines the books count, every laid line of a family of quanta at its weight, `laid_weights`, and the time line alone of a holder of the sign, whose three odd axis lines carry the wave and no count, `derived.quanta_records`, the one event laid on each part alike, the parts summed, and the total read in quanta once, (total + W_c div 2) div W_c, never per Node, so that a dilute wave below half a quantum at every Node still reads its quanta over the board) and its two levels as their nonzero Nodes. The vacuum's paces are those of `content`, the declared rests the packet's family reads (`vacuum_of`): the lay and its count at the paces of the world it is laid in, the books' count at the start."""
     massless = family.quanta and family.pair[0] == family.pair[1]  # light: no uniform mode laid
     now, before = packet_levels(board, packet, beyond, massless, largest, label, content)
     weights = (1,) if family.plane else laid_weights(packet, label, family)
@@ -1241,6 +1241,22 @@ def packet_entry(
         weights[:1] if family.wronskian else weights
     )  # the books read a sign holder's time line alone
     total = sum(share_of(board, content, w * now, w * before) for w in counted)
+    moving = {"now": nonzero(now), "before": nonzero(before)}
+    if (
+        family.plane and "sense" in packet
+    ):  # the second pair: the wave's quadrature a quarter turn on, in the declared sense
+        turned, whole_turn = packet["phase"]
+        quarter_turn = (
+            2 * 2
+        )  # the quadrature's phase, a quarter turn back: cos(theta - pi / 2) = sin theta
+        quadrature = {
+            **packet,
+            "phase": [quarter_turn * int(turned) - int(whole_turn), quarter_turn * int(whole_turn)],
+        }
+        im_now, im_before = packet_levels(board, quadrature, beyond, massless, largest, label, content)
+        im_now, im_before = int(packet["sense"]) * im_now, int(packet["sense"]) * im_before
+        total = total + share_of(board, content, im_now, im_before)
+        moving.update(im_now=nonzero(im_now), im_before=nonzero(im_before))
     whole = (
         int(np.asarray(total, dtype=object).sum()) * family.parts
     )  # the board's total, the parts laid alike
@@ -1253,7 +1269,7 @@ def packet_entry(
         "pair": list(board.pair),
         "amplitude": int(np.abs(now).max()),
         "count": int(quanta_of(whole, unit, object)),
-        "moving": {"now": nonzero(now), "before": nonzero(before)},
+        "moving": moving,
     }
 
 

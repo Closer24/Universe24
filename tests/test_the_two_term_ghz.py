@@ -56,7 +56,11 @@ REFUSED: dict[
 ] = {}  # nothing refused on the landing: the two slits draw at the window 1 and run whole
 REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
     {
-        "two_slits": ("874668d0a958235f", "be63d2ce99f6604a", 2696),  # the landing, 2026-10-20
+        "two_slits": (
+            "c065a075ed83c487",
+            "7742549762b6ec9d",
+            2683,
+        ),  # 2026-10-21, the floor and the remainder's draw: every window's remainder drawn, N 546 (the landing's 874668d0a958235f, be63d2ce99f6604a, 2696 lines, N 500, under the half-up rounding)
         "born_a_b": ("bb97f5dcda1fb8b5", "c192784fb41509b1", 290),
         "born_a_b_prime": ("0ea65e583fec7beb", "c192784fb41509b1", 290),
         "born_a_prime_b": ("19285640497e35f7", "b23542a6b2c460fd", 290),
@@ -110,7 +114,7 @@ def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  #
 
 
 def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording at the landing head (`worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
+    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording of 2026-10-21 under the floor and the remainder's draw (`credit.whether`: 88 closes drew their remainder, 30 of them a quantum, N 546 where the half-up rounding's carry gave 500; `worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
     worlds_read(monkeypatch, "two_slits", ("two_slits",))
 
 

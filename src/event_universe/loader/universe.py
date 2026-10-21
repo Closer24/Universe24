@@ -13,7 +13,7 @@ from event_universe.loader.keys import integer, keyed, reads_of
 UNIVERSE_KEYS = ("integers", "families")
 INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
-    ("name", "pair", "dimension", "held", "reads", "exchange", "converts"),
+    ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
     ("sources", "level_weight", "write_weight", "rest", "act", "form"),
     ("sources", "level_weight", "write_weight", "act"),
@@ -169,7 +169,7 @@ def form_of(row: dict[str, Any], label: str, rotation: bool, flux: bool, massles
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
+    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta; a real-line family optionally the senses of its plane records out, the key `senses`, the one residual declaration of The conversion, `conversion.declared`, 2026-10-21) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -183,14 +183,20 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     if not isinstance(entries, list) or not entries:
         raise ValueError("families must be a list of the families' rows")
     rows: list[Row] = []
-    converting: dict[
+    declaring: dict[
         int, object
-    ] = {}  # the parents' `converts`, their tables derived once every pair is read
+    ] = {}  # the rows' `senses`, the lists derived once every pair is read (conversion.py)
     for index, entry in enumerate(entries):
         label = f"families[{index}]"
+        if isinstance(entry, dict) and "converts" in entry:
+            raise ValueError(
+                f"{label} holds the key 'converts', deleted 2026-10-21 by the owner's word: the conversion's list is "
+                "derived from the pairs under the law's conservations, and a real-line parent's plane records out "
+                "take the senses of the row's key 'senses' (ALGEBRA.md, The conversion)"
+            )
         row = keyed(entry, label, FAMILY_KEYS, FAMILY_REQUIRED)
-        if "converts" in row:
-            converting[index] = row["converts"]
+        if "senses" in row:
+            declaring[index] = row["senses"]
         name = row["name"]
         if not isinstance(name, str) or not name or name in [found.name for found in rows]:
             raise ValueError(f"{label}.name must be a name of its own")
@@ -244,5 +250,5 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
     return integers, conversion.declared(
-        families, converting
-    )  # the tables from the pairs, refused by name
+        families, declaring
+    )  # the lists from the pairs under the law's conservations, refused by name

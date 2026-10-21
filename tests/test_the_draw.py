@@ -34,7 +34,20 @@ SLITS, WAY, RESONANCE, PACKET = (
 SRC = ROOT / "src" / "event_universe"
 # the two slits' gate row at the draw's window of one interval (2026-10-20): the two gaps' world, the two slits'
 # byte for byte, run whole on the read, one quantum per credit in the record's own unit
-GATE_ROW = [29, 37, 49, 36, 12, 63, 83, 26, 34, 51, 42, 38]  # N 500 credited over the window
+GATE_ROW = [
+    49,
+    35,
+    69,
+    36,
+    11,
+    77,
+    96,
+    19,
+    25,
+    54,
+    39,
+    36,
+]  # N 546 credited over the window under the floor and the remainder's draw (2026-10-21; N 500 under the half-up rounding)
 
 
 def clicks_and_shares(output: Path) -> tuple[dict[str, int], dict[str, int], int]:
@@ -84,7 +97,7 @@ def test_the_one_division_act_serves_rule3_the_hold_and_the_credit():
 
 
 def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone(tmp_path):
-    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay), at the draw's window of one interval with the screens two columns deep (the folder's words of 2026-10-20): the three worlds of the design built and laid, the which-way and the one-gap worlds run, the two gaps' world the two slits' byte for byte and its run the gate row pinned here (GATE_ROW, N 500); the shadowed regions behind the channel's walls see 0 clicks in the which-way world and at most one quantum in the one gap's 274 (the window 1's leak, 0 in this run), the channel's region 0 in both; the channel's clicks and the screen's sum to the quanta credited, 549 of the blind's one-close 633 (the per-close floor's loss, 84), and the channel takes half of what is credited within three times the draw's scatter; the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions (region by region the largest departure 3.03 times the larger scatter, at the region 11: a per-region line at three scatters is not asserted, a bound the draw crosses by chance); the fringes read ordinally from the blind's own shape: the two gaps' row's three largest regions [5, 6, 9] where the blind's maxima are [2, 6, 9], its two smallest among the regions 3 to 10 [4, 7] where the blind's minima are [4, 8], the two slits' minimum at the region 8 filled in the which-way world; the smallest region among 5 to 11 is 7 in the which-way row and 7 in the two gaps' (the one gap's own minimum, the same region in both); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
+    """T2, the experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC; the advisor's matrix row 2; examples/events/which_way, the blind written by its builder before any lay), at the draw's window of one interval with the screens two columns deep (the folder's words of 2026-10-20): the three worlds of the design built and laid, the which-way and the one-gap worlds run, the two gaps' world the two slits' byte for byte and its run the gate row pinned here (GATE_ROW, N 546 under the floor and the remainder's draw of 2026-10-21, `credit.whether`, every window's remainder drawn where the half-up rounding counted it; N 500 before); the shadowed regions behind the channel's walls see 0 clicks in the which-way world and at most one quantum in the one gap's 260 (the window 1's leak, 0 in this run), the channel's region 0 in both; the channel's clicks and the screen's sum to the quanta credited, 576 of the blind's one-close 633 (the remainder's draw recovering the per-close floor's loss in the mean; 549 under the half-up), and the channel takes half of what is credited within three times the draw's scatter; the decisive comparison, the which-way world's screen row against the one-gap world's, one draw against another at the same shares, within the 1 percent band of chi-square on 7 regions (region by region the largest departure 3.03 times the larger scatter, at the region 11: a per-region line at three scatters is not asserted, a bound the draw crosses by chance); the fringes read ordinally from the blind's own shape: the two gaps' row's three largest regions [5, 6, 9] where the blind's maxima are [2, 6, 9], its two smallest among the regions 3 to 10 [4, 7] where the blind's minima are [4, 8], the two slits' minimum at the region 8 filled in the which-way world; the smallest region among 5 to 11 is 7 in the which-way row and 7 in the two gaps' (the one gap's own minimum, the same region in both); one quantum one click per record (every credit's count 1, the count left falling by one per click)."""
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
@@ -105,18 +118,25 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
     way, one, two = rows["which_way"], rows["one_gap"], GATE_ROW
     credited, scatter = totals["which_way"], 3 * math.sqrt(totals["which_way"]) / 2
     channel = credited - sum(way)
-    assert totals["one_gap"] == sum(one) and sum(two) == 500 and credited < blind["quanta"]["two_gaps"]
+    assert totals["one_gap"] == sum(one) and sum(two) == 546 and credited < blind["quanta"]["two_gaps"]
     assert abs(channel - credited / 2) < scatter and abs(sum(way) - sum(one)) < scatter, (channel, way)
     pairs = [(way[k], one[k]) for k in range(5, 12)]
     assert sum((a - b) ** 2 / (a + b) for a, b in pairs if a + b) < 18.5, pairs  # chi-square, 7 degrees
     largest = sorted(sorted(range(12), key=lambda k: -two[k])[:3])
     smallest = sorted(sorted(range(3, 11), key=lambda k: two[k])[:2])
-    assert (largest, smallest) == ([5, 6, 9], [4, 7])  # the blind's maxima [2, 6, 9], its minima [4, 8]
+    assert (largest, smallest) == (
+        [2, 5, 6],
+        [4, 7],
+    )  # the blind's maxima [2, 6, 9], its minima [4, 8]; [5, 6, 9] under the half-up
     way_min, two_min = (min(range(5, 12), key=row.__getitem__) for row in (way, two))
-    assert two[8] < way[8] and (way_min, two_min) == (
-        7,
-        7,
-    )  # the minimum 8 filled; the smallest regions the run's
+    assert (
+        two[8] < way[8]
+        and (way_min, two_min)
+        == (
+            5,
+            7,
+        )
+    )  # the minimum 8 filled; the smallest regions the run's (29 at 5 against 30 at 7 in the which-way row; (7, 7) under the half-up)
 
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant(tmp_path):

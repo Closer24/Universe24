@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.keys import AXES, Node, integer, keyed, node_of, span_of, weights_of
@@ -18,7 +19,7 @@ MESSAGE_KEYS: tuple[str, ...] = (
     "phase",
     "transverse",
 )
-MESSAGE_KEYS += ("whole", "weights", "count", "interval")
+MESSAGE_KEYS += ("whole", "weights", "count", "interval", "sense")
 MESSAGE_REQUIRED = ("family", "along", "wave", "amplitude", "top", "edge", "phase")
 WHOLE_KEYS = (
     "family",
@@ -44,6 +45,7 @@ class PacketRow:
     second_now: Levels
     second_before: Levels
     weights: tuple[int, ...] = ()
+    count: int = 0  # the packet's whole quanta as the generator read them from its lay (the mode entry's `count`), the loader's bound on the quanta a close can credit together (conversion.together)
 
 
 @dataclass(frozen=True)
@@ -90,6 +92,21 @@ def wholes_of(
         interval = integer(packet["interval"], f"{label}.interval", 1, intervals)
         found.append(WholePacket(family, at, count, interval))
     return tuple(found)
+
+
+def sense_of(packet: dict[str, Any], label: str, family: FamilyRule) -> int:
+    """A plane family's packet may declare its `sense`, 1 or -1, the rotation sense the generator lays its second pair in (the wave's quadrature at that sign, tools/pixel_mode.py; the Wronskian's sign, the plane's charge; ALGEBRA.md #the-paces, the sign is the rotation sense), 0 where absent, the packet then laid on its real line alone as before; refused by name on a record of real lines, which has no sense to lay, and at any other value."""
+    if "sense" not in packet:
+        return 0
+    if not family.plane:
+        raise ValueError(
+            f"{label}.sense is declared on {family.name!r}, a family whose lines are no plane: the sense is a "
+            "plane's second pair, and a record of real lines has none"
+        )
+    sense = packet["sense"]
+    if sense not in (1, -1):
+        raise ValueError(f"{label}.sense is 1 or -1, got {sense!r}")
+    return int(sense)
 
 
 def packets_of(
@@ -164,14 +181,12 @@ def packets_of(
             span_of(top[name], f"{label}.top.{name}", shape[axis]) for axis, name in enumerate(AXES)
         )
         widths = tuple(integer(edge[name], f"{label}.edge.{name}", 0) for name in AXES)
+        entry = entry_of(entries, placed, label)
         levels = levels_of(
-            entry_of(entries, placed, label),
-            f"the mode file's packets[{placed}]",
-            families[family],
-            shape,
-            bound,
-            beyond,
+            entry, f"the mode file's packets[{placed}]", families[family], shape, bound, beyond
         )
+        count = int(entry["count"]) if isinstance(entry, dict) and "count" in entry else 0
+        sense_of(packet, label, families[family])
         placed += 1
         found.append(
             PacketRow(
@@ -189,6 +204,7 @@ def packets_of(
                     families[family].laid,
                     families[family].plane,
                 ),
+                count,
             )
         )
     return tuple(found)
