@@ -10,7 +10,7 @@ from event_universe import records
 from event_universe.features import phase
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
-from event_universe.loader.keys import AXES, Node
+from event_universe.loader.keys import AXES
 from event_universe.reports import NodeDetector, end
 
 if TYPE_CHECKING:
@@ -165,11 +165,6 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
         offset = list(board.offset)
         offset[axis] += direction * layers
         board.offset = (offset[0], offset[1], offset[2])
-
-
-def declared(at: object, offset: Node) -> list[int]:
-    """A Node of the lattice as grown at the file's coordinates: its index less the layers grown before the origin on each axis."""
-    return [int(index) - before for index, before in zip(list(at), offset, strict=True)]  # type: ignore[call-overload]
 
 
 def ended(face: RecedingFace, interval: int) -> dict[str, object]:

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
+from event_universe.core.paces import rounded, sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features import currents
@@ -20,6 +21,7 @@ from event_universe.features.click import (
     rotated,
     wave_cosine,
 )
+from event_universe.front import on_board
 from event_universe.lay import laid, laid_in_time, written
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
@@ -160,7 +162,7 @@ def laid_by_count(board: Lattice, item: Item) -> None:
 
 
 def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
-    """The open board's emission (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_detector also needs to enter"): the emitted quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the packet lay's form (ALGEBRA.md, The packet lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_detector_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`lists.emission`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = (the largest x with x^2 <= (R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeDetector's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level (the largest x with x^2 <= R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = (the largest x with x^2 <= R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale, (the largest x with x^2 <= R^2 (den^2 - num^2)), one carried rounding, the carrier's phase exact (the floor root (the largest x with x^2 <= den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the one lay act over the packet's Nodes (`lay.laid`, the division act in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest; the loader admits no emission whose span is below its period, `loader/node_detector_declaration.holding_period`), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent) (ALGEBRA.md, The click writes on the lattice (5), the emission lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet by the act's write step, the remainder as it stands, one `lay` line per Node changed for the host's tool to cross; the record's count in the books up by the change. Part G (both hands' lines of 2026-10-10, the click with two receivers, the emission's write): the directed packet carries 2 T sin k_z per quantum at birth because its direction is the emission's own draw, so -P belongs to the emission's write; the packet's lattice momentum per axis is read from the lay's own terms as written, the corrected changes `lay.laid` returns (`features/currents.momentum` on the two laid arrays, the antisymmetric sum of the Link currents, no sine, no record built), summed over the item's quanta in the current's unit num, and returned for the write step to book the recoil the emitting body owes (`act.written`); the hands' 1.85 T at birth in packet_emission is read, not declared."""
+    """The open board's emission (the mathematician's hand; the advisor's seconds, his derivation and his precisions; the owner's word, "a new emitter node_detector also needs to enter"): the emitted quantum laid from the body's Node as a packet along the drawn direction at one instant, the lay (A) in the packet lay's form (ALGEBRA.md, The packet lay) with the carry, in place of the source in time where the body stands in the open board (the loader decides by the board's shape against the width, `loader/node_detector_declaration.packet_form`). The direction, an assumption by name, the price of the floor: drawn by the giver among the cube's equivalent directions the board holds with its own generator in the click's one draw (`lists.emission`), nature's dipole pattern not in it. The shape: `width` Nodes across on each transverse axis, the top-hat around the body's Node (the offsets -(w div 2) through w - 1 - (w div 2)), the one declared number; L slices along, derived from the lifetime and T by the envelope in the energy form (`features/click.envelope`: the energy left R_0 the one-line packet's root T / sin Omega, `features/click.line_total`, the slice's a_t = (the largest x with x^2 <= (R_t div tau) div w^2), the carry R_(t+1) = R_t - w^2 a_t^2, the lay ending where a_t falls below 1, the deficit below tau level squared per Node), the slice at the distance z from the body carrying the envelope's interval t = z, so the body's Node holds a_0 and the train falls away from it along the drawn direction and travels outward; the invariant SUM over the Nodes of a^2 sin Omega = T within the deficit, one real line carrying the one quantum, its root T / sin Omega twice S, the plane's share per line (`line_total`, one root at the lay, the NodeDetector's own act; the mathematician's hand and the advisor's second, two hands). The wave along the axis at the reference scale R = W_c^SCALE_OF (the phasor's scale, the register): 2 R cos k_z = (6 R den_l num) div (num_l den) - 4 R cos(pi / (w + 1)) by the band's line with the transverse mode (`along_cosine`, the loader having refused a width that cannot carry Omega), R cos(k_z z) and R sin(k_z z) by the rotation act (`rotated`, the sine's first level (the largest x with x^2 <= R^2 - (R cos k_z)^2), one root at the lay, named), the level now a_t cos(k_z z) and the level before a_t cos(k_z z + Omega) = a_t (R cos(k_z z) num R - R sin(k_z z) s_R) div (den R^2) with s_R = (the largest x with x^2 <= R^2 (den^2 - num^2)), the sine's root on the large number at the reference scale (`paces.sine_den`, the engine's one integer sine), one carried rounding (`paces.rounded`), the carrier's phase exact (the floor root (the largest x with x^2 <= den^2 - num^2) = 2 for 2.236 at [2, 3] had laid the before level at 0.943 a_t cos(k z + pi / 4), its mean square 8 / 9 of now's, the form short by 0.075 of the top's unit at the one-line root: Worker PACKET-DIAG's reading of the branch), the wave one interval earlier so that the Node oscillates at the transition's resonance and the packet travels outward, the top-hat flat across; the two levels then taken through the one lay act over the packet's Nodes (`lay.laid`, the division act in proportion to the envelope's amplitudes, the leftover one unit each at the heaviest; the loader admits no emission whose span is below its period, `loader/node_detector_declaration.holding_period`), so that now and before each sum to 0 over the packet and the lay carries no uniform mode (on the shipped packet world before's sum -80 over 4,992 Nodes taken out, the share +0.17 percent) (ALGEBRA.md, The click writes on the lattice (5), the emission lays no uniform mode: the energy-form envelope under the carrier has E(k_z) = SUM e_z e^(i k_z z) other than 0 at every top, the two slits' bump of +24,442 in before the same defect; the mathematician's hand); added to the light record's first line at every Node of the packet by the act's write step, the remainder as it stands, one `lay` line per Node changed for the host's tool to cross; the record's count in the books up by the change. Part G (both hands' lines of 2026-10-10, the click with two receivers, the emission's write): the directed packet carries 2 T sin k_z per quantum at birth because its direction is the emission's own draw, so -P belongs to the emission's write; the packet's lattice momentum per axis is read from the lay's own terms as written, the corrected changes `lay.laid` returns (`features/currents.momentum` on the two laid arrays, the antisymmetric sum of the Link currents, no sine, no record built), summed over the item's quanta in the current's unit num, and returned for the write step to book the recoil the emitting body owes (`act.written`); the hands' 1.85 T at birth in packet_emission is read, not declared."""
     assert item.resonance is not None and item.span > 0 and item.width and item.direction is not None
     num, den = item.resonance
     family, action = board.families[item.family], board.world.quantum_action
@@ -169,9 +171,7 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
     assert doubled is not None  # the loader refused a width that cannot carry Omega
     axis, sign = item.direction
     width, shape = item.width, board.world.shape
-    sine = largest_below(scale * scale * (den * den - num * num))  # R sin Omega den, at the scale
-    half_scale = division_forward(scale, 2, 0)[0]
-    half_wall = division_forward(scale * scale * den, 2, 0)[0]
+    sine = sine_den(num, den, scale)  # R sin Omega den, at the scale
     born = [0] * AXES
     for at in item.nodes:
         for _ in range(item.delta):
@@ -190,14 +190,12 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
             )
             cosine = int(division_forward(doubled, 2, 0)[0])
             waves = rotated(scale, cosine, doubled, scale, len(amplitudes))
-            quadratures = rotated(
-                0, largest_below(scale * scale - cosine * cosine), doubled, scale, len(amplitudes)
-            )
+            quadratures = rotated(0, sine_den(cosine, scale), doubled, scale, len(amplitudes))
             levels, earliers = [], []
             for size, wave, quadrature in zip(amplitudes, waves, quadratures, strict=True):
-                levels.append(int(division_forward(size * wave, scale, half_scale)[0]))
+                levels.append(int(rounded(size * wave, scale)))
                 earlier = size * (wave * num * scale - quadrature * sine)
-                earliers.append(int(division_forward(earlier, scale * scale * den, half_wall)[0]))
+                earliers.append(int(rounded(earlier, scale * scale * den)))
             # the one lay act over the packet's Nodes: each level's sum over the train and the
             # cross-section to 0 exactly, in proportion to the envelope (the uniform mode laid none)
             nows, befores, weights = (np.zeros(board.shape, dtype=object) for _ in range(3))
@@ -205,7 +203,7 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
                 for node_at in section:
                     there = list(node_at)
                     there[axis] += sign * distance
-                    nows[(here := tuple(np.add(there, board.offset)))] = slice_at[0]
+                    nows[(here := on_board(board, there))] = slice_at[0]
                     befores[here], weights[here] = slice_at[1], slice_at[2]
             origin = None  # the remainders as they stand: the packet adds to light's record (the branch's lay)
             for line in emitted_lines(family)[:: family.width]:  # the first line of every part, alike
@@ -240,18 +238,16 @@ Levels = tuple[tuple[int, int], tuple[int, int]]  # e's and g's (re, im) at the 
 
 
 def start_of(scale: int, resonance: tuple[int, int], levels: Levels | None) -> tuple[int, int]:
-    """The source's start (r_0, r_(-1)) = (R cos phi, R cos(phi - Omega)) at the phase phi = phi_e - phi_g, the angle from the ground part's direction g to the excited part's e at the Node, read by the division act from the two parts' (re, im) pairs (ALGEBRA.md, The click writes on the lattice (j), the emission; the two-mode line's rotation): D = e . g = R_e R_g cos phi, C = g x e = R_e R_g sin phi, M = (the largest x with x^2 <= |e|^2 |g|^2), r_0 = R D div M and r_(-1) = R (D num + C (the largest x with x^2 <= R^2 (den^2 - num^2)) div R) div (M den), each rounded half up as the recurrence rounds, cos Omega = num / den and R sin Omega the root the reference records take (`resonance.references_of`); where a part stands at 0 (M = 0) or no parts are named, the phase 0: (R, R num div den), the start as before, which the parallel case (C = 0, D = M) reproduces bit for bit."""
+    """The source's start (r_0, r_(-1)) = (R cos phi, R cos(phi - Omega)) at the phase phi = phi_e - phi_g, the angle from the ground part's direction g to the excited part's e at the Node, read by the division act from the two parts' (re, im) pairs (ALGEBRA.md, The click writes on the lattice (j), the emission; the two-mode line's rotation): D = e . g = R_e R_g cos phi, C = g x e = R_e R_g sin phi, M = (the largest x with x^2 <= |e|^2 |g|^2), r_0 = R D div M and r_(-1) = R (D num + C (the largest x with x^2 <= R^2 (den^2 - num^2)) div R) div (M den), each rounded half up as the recurrence rounds (`paces.rounded`), cos Omega = num / den and R sin Omega den the integer sine the reference records take (`paces.sine_den`, `resonance.references_of`); where a part stands at 0 (M = 0) or no parts are named, the phase 0: (R, R num div den), the start as before, which the parallel case (C = 0, D = M) reproduces bit for bit."""
     num, den = resonance
     (re_e, im_e), (re_g, im_g) = levels or ((1, 0), (1, 0))
     dot, cross = re_e * re_g + im_e * im_g, re_g * im_e - im_g * re_e
     size = largest_below((re_e * re_e + im_e * im_e) * (re_g * re_g + im_g * im_g))
     if size == 0:
         dot, cross, size = 1, 0, 1
-    sine = largest_below(scale * scale * (den * den - num * num))  # R sin Omega den
-    first = int(division_forward(scale * dot, size, division_forward(size, 2, 0)[0])[0])
-    wall = size * den
-    earlier = division_forward(scale * dot * num + cross * sine, wall, division_forward(wall, 2, 0)[0])
-    return first, int(earlier[0])
+    sine = sine_den(num, den, scale)  # R sin Omega den
+    first = int(rounded(scale * dot, size))
+    return first, int(rounded(scale * dot * num + cross * sine, size * den))
 
 
 def increments_of(
@@ -259,12 +255,11 @@ def increments_of(
 ) -> tuple[list[int], list[int]]:
     """The span's increments and amplitudes of a source in time, computed whole at its start as the interval-by-interval lay held them: the amplitude A_t = (the largest x with x^2 <= (S (t + 1)) div tau - the carry) with the carry gaining A_t^2, so that the cumulative sum of the squares tracks S t / tau within one level squared and the amplitudes differ by one level now and then; the reference phasor at the scale R, R cos(Omega t + phi), advanced by the resonance (`advanced`) from r_0 = R cos phi and r_(-1) = R cos(phi - Omega), the phase phi_e - phi_g read from the two parts' directions `levels` at the Node (`start_of`; 0 where none are named or a part stands at 0); the increment A_t r_t div R, rounded half up; one list of each, so that the division act in time reads the whole span before the first interval is laid."""
     phasor, previous = start_of(scale, resonance, levels)
-    half_scale = division_forward(scale, 2, 0)[0]
     carried, increments, amplitudes = 0, [], []
     for interval in range(span):
         aimed = division_forward(total * (interval + 1), span, 0)[0]
         amplitude = largest_below(int(aimed) - carried)
-        increments.append(int(division_forward(amplitude * phasor, scale, half_scale)[0]))
+        increments.append(int(rounded(amplitude * phasor, scale)))
         amplitudes.append(amplitude)
         phasor, previous = advanced(phasor, previous, resonance)
         carried += amplitude * amplitude
@@ -295,10 +290,9 @@ def laid_increment(board: Lattice, source: Source) -> None:
 
 
 def advanced(phasor: int, previous: int, resonance: tuple[int, int]) -> tuple[int, int]:
-    """One interval of a reference phasor at the resonance (num, den), cos Omega = num / den, Chebyshev's recurrence r_(t+1) = 2 cos Omega r_t - r_(t-1), an identity of the cosine: the turn 2 num r_t div den rounded half up without a carry (one stated choice, the phase error below W / (2 R) over a window of W intervals at the scale R either way; the hands), then the turn minus r_(t-1); returns (r_(t+1), r_t). The emission's phasor and the taker's two reference records (`resonance.gathered`) advance by this one recurrence."""
+    """One interval of a reference phasor at the resonance (num, den), cos Omega = num / den, Chebyshev's recurrence r_(t+1) = 2 cos Omega r_t - r_(t-1), an identity of the cosine: the turn 2 num r_t div den rounded half up without a carry (`paces.rounded`; one stated choice, the phase error below W / (2 R) over a window of W intervals at the scale R either way; the hands), then the turn minus r_(t-1); returns (r_(t+1), r_t). The emission's phasor and the taker's two reference records (`resonance.gathered`) advance by this one recurrence."""
     num, den = resonance
-    doubled = division_forward(2 * num * phasor, den, division_forward(den, 2, 0)[0])[0]
-    return int(doubled) - previous, phasor
+    return int(rounded(2 * num * phasor, den)) - previous, phasor
 
 
 def sourced(board: Lattice) -> None:

@@ -88,7 +88,7 @@ def pixel_entry(
             "here is one plane's"
         )
     num, den = family.pair
-    sine = largest_below(den * den - num * num)
+    sine = paces.sine_den(num, den)
     amplitude = largest_below(int(division_forward(count * action * den, 2 * sine, 0)[0]))
     before = int(division_forward(amplitude * num, den, 0)[0])
     im_before = sense * int(division_forward(amplitude * sine, den, 0)[0])
@@ -435,7 +435,7 @@ def gaussian(
 ) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
     """The free lump, the builder's probe's lay that does not stand: a Gaussian of width sigma at the free rotation, with the floor divisions of that lay."""
     num, den = pair
-    sine = largest_below(den * den - num * num)
+    sine = paces.sine_den(num, den)
     axes = [np.arange(extent) - extent // 2 for extent in shape]
     g = np.exp(
         -(axes[0][:, None, None] ** 2 + axes[1][None, :, None] ** 2 + axes[2][None, None, :] ** 2)
