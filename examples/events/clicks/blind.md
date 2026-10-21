@@ -25,3 +25,7 @@ The run: the generator `tools/pixel_mode.py --input examples/events/clicks/click
 6. The digits' draw: the one draw of the run, the absorption at 32, fell to the absorption against 6.4 parts in a million. OPEN, read.
 
 The blind stands whole: every DERIVED line held and the one OPEN line was read.
+
+## The three kinds against the five (2026-10-21)
+
+Of the five generic kinds of the law's clicks, this world shows the conversion (N = 1), light's click at a declared region (the screen) and the pixel's kind (the one-Node absorber body with its declared transition, the declared detector's click in its body form); a massive record's plain credit at a region is not in this run, and the bound body's click of a body of Rule3 in a holder's well is absent and open by name (no sign holder in the universe; the research items The absorber as an instrument body of its own transition and The recoil on the body). The README's explanation of what one sees, what the law does and nature's counterpart is beside this file.
