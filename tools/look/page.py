@@ -343,7 +343,7 @@ TEMPLATE = """<meta charset="utf-8">
   --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
   --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12; --hole-size: 1.08; --front-size: 0.5;
-  --view-margin: 1; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
+  --view-margin: 1; --node-least: 6; --node-fit-least: 3; --node-most: 24; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
   --label-size: 1.4;
   color-scheme: dark;
 }
@@ -629,15 +629,40 @@ renderer.setPixelRatio(window.devicePixelRatio || 1);
 const scene = new THREE.Scene();
 const EXTENT = Math.max(X, Y, Z);
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, EXTENT * size('--camera-far'));
-/* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS. */
+/* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS.
+   The default camera (2026-10-20, the frame's box 2026-10-21): the board's own fit where a Node then spans --node-least pixels or more; else the lit extent, the Nodes any family of quanta lights with the bodies' Nodes and the regions' (a region a node_detector of Nodes alone other than the declared faces' `face`, and one spanning half the board or more frames nothing): the frame's own lit box framed whole wherever it fits at --node-fit-least pixels per Node or more (the pixels per Node the whole number the stage allows, at most --node-most), and where it does not, a window of --node-least pixels per Node along the long axis following the frame's lit Nodes within the run's lit extent; the whole board one zoom step out (the buttons step between the two frames). The camera is presentation: it frames and computes no number but the box it frames. */
+const litNodes = fr => { const found = [], [fy, fz] = shapeOf(fr).slice(1), o = originOf(fr); for (const f of QUANTA) { const now = ((fr.families || {})[f.name] || {}).now; if (!now) continue; if (Array.isArray(now)) now.forEach((plane, x) => plane.forEach((row, y) => row.forEach((v, z) => { if (v) found.push([x + o[0], y + o[1], z + o[2]]); }))); else now.at.forEach((k, j) => { if (now.values[j]) found.push([Math.floor(k / (fy * fz)) + o[0], Math.floor(k / fz) % fy + o[1], k % fz + o[2]]); }); } return found; };
+const emptyBox = () => [0, 1, 2].map(() => [Infinity, -Infinity]);
+const grow = (box, nodes) => { for (const n of nodes) for (let a = 0; a < 3; a++) { if (box[a][0] > n[a]) box[a][0] = n[a]; if (box[a][1] < n[a]) box[a][1] = n[a]; } return box; };
+const merge = (box, other) => { for (let a = 0; a < 3; a++) { box[a][0] = Math.min(box[a][0], other[a][0]); box[a][1] = Math.max(box[a][1], other[a][1]); } return box; };
+const REGION_NODES = LOOK.node_detectors.filter(d => d.body === null && d.name !== 'face' && d.nodes.length * 2 < LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2]).flatMap(d => d.nodes);
+const FIXED_BOX = grow(emptyBox(), [...LOOK.bodies.flatMap(b => b.nodes), ...REGION_NODES]);  // the bodies' and the regions' Nodes, lit or not
+const LIT_AT = LOOK.frames.map(fr => grow(emptyBox(), litNodes(fr)));  // per frame, the box of the Nodes lit in it
+const LIT = LIT_AT.reduce(merge, merge(emptyBox(), FIXED_BOX));  // over the run
+const LIT_SEEN = LIT.every(([lo, hi]) => Number.isFinite(lo) && Number.isFinite(hi));
+const LONG = LIT_SEEN ? ACROSS.reduce((best, a) => LIT[a][1] - LIT[a][0] > LIT[best][1] - LIT[best][0] ? a : best, ACROSS[0]) : ACROSS[0];  // the across axis of the longer lit extent
+const sceneOf = (c, a) => c - LOW[a] - ([X, Y, Z][a] - 1) / 2;  // a file coordinate in the scene, as position() places the Nodes
+let FRAMING = null, LIT_DEFAULT = false, shown = 0;  // the frame in force, 'board' or 'lit', decided at the first fit with a stage; whether the lit frame is the page's default; the frame drawn
+const litCentre = k => { const b = merge(merge(emptyBox(), LIT_AT[k] || emptyBox()), FIXED_BOX)[LONG]; return Number.isFinite(b[0]) ? (b[0] + b[1]) / 2 : (LIT[LONG][0] + LIT[LONG][1]) / 2; };
+const aimed = (half, margin) => { const [lo, hi] = LIT[LONG]; if (hi - lo + 1 + 2 * margin <= 2 * half) return (lo + hi) / 2; return Math.min(hi + 0.5 + margin - half, Math.max(lo - 0.5 - margin + half, litCentre(shown))); };  // the view's centre along the long axis: the extent's where it fits, else the frame's lit Nodes within the extent
 function fit() {
   const w = stage.clientWidth || 1, margin = size('--view-margin');
   let halfW = (LOOK.shape[ACROSS[0]] + 2 * margin) / 2, halfH = (LOOK.shape[ACROSS[1]] + 2 * margin) / 2;
   stage.style.height = Math.round(Math.max(size('--board-least'), Math.min(size('--board-most'), w * halfH / halfW))) + 'px';  // the stage the board's own shape, within bounds
   const h = stage.clientHeight || 1;
-  if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
+  if (FRAMING === null && w > 1) { LIT_DEFAULT = LIT_SEEN && w / (2 * halfW) < size('--node-least'); FRAMING = LIT_DEFAULT ? 'lit' : 'board'; }
+  const centre = new THREE.Vector3(...CENTRE);
+  if (FRAMING === 'lit') {
+    let box = merge(merge(emptyBox(), LIT_AT[shown] || emptyBox()), FIXED_BOX);  // the frame's lit Nodes with the bodies' and the regions'
+    if (!ACROSS.every(a => Number.isFinite(box[a][0]))) box = LIT;
+    const along = LONG === ACROSS[0] ? w : h, whole = Math.min(size('--node-most'), Math.floor(along / (box[LONG][1] - box[LONG][0] + 1 + 2 * margin)));  // the pixels per Node at which the frame's box fits whole
+    const fits = whole >= size('--node-fit-least'), px = fits ? whole : size('--node-least');
+    halfW = w / (2 * px); halfH = h / (2 * px);
+    for (const a of ACROSS) centre.setComponent(a, sceneOf((box[a][0] + box[a][1]) / 2, a));
+    if (!fits) centre.setComponent(LONG, sceneOf(aimed(LONG === ACROSS[0] ? halfW : halfH, margin), LONG));
+  } else if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
   camera.left = -halfW; camera.right = halfW; camera.top = halfH; camera.bottom = -halfH; camera.updateProjectionMatrix();
-  const centre = new THREE.Vector3(...CENTRE), eye = centre.clone(), up = new THREE.Vector3();
+  const eye = centre.clone(), up = new THREE.Vector3();
   eye.setComponent(VIEW, CENTRE[VIEW] + SIDE * EXTENT * size('--camera-far') / 2); up.setComponent(ACROSS[1], 1);
   camera.position.copy(eye); camera.up.copy(up); camera.lookAt(centre);
 }
@@ -845,6 +870,7 @@ function draw() {
   for (; front < fronts.count; front++) fronts.setMatrixAt(front, hidden);
   fronts.instanceMatrix.needsUpdate = true;
   for (const layer of Object.values(layers)) layer.objects.forEach(o => { o.visible = layer.on; });
+  shown = t; if (FRAMING === 'lit') fit();  // the view along the long axis follows the frame's lit Nodes where the extent does not fit
   renderer.render(scene, camera);
   byId('slider').value = t;
   byId('frame').textContent = (t === 0 ? 'laid, 0 / ' + LAST : TICK(t) !== null ? 'tick ' + TICK(t) + ' / ' + LAST_TICK + (TICK(t) === INTERVAL(t) ? ', the record at interval ' : ', the record read at interval ') + INTERVAL(t) : 'interval ' + INTERVAL(t) + ' / ' + LAST) + (PASSES > 1 ? ', ' + passLabel(t) : '') + (CONED ? coneLabel(t) : '') + writeLabel(t) + countLabel(t);
@@ -876,8 +902,8 @@ canvas.addEventListener('pointermove', hover);
 canvas.addEventListener('pointerleave', () => hover(null));
 canvas.addEventListener('wheel', e => { e.preventDefault(); zoom(Math.exp(e.deltaY * size('--zoom-rate'))); }, { passive: false });
 function zoom(factor) { camera.zoom = Math.min(size('--zoom-most'), Math.max(1 / size('--zoom-most'), camera.zoom / factor)); camera.updateProjectionMatrix(); renderer.render(scene, camera); }
-byId('zoom-in').addEventListener('click', () => zoom(size('--zoom-step')));
-byId('zoom-out').addEventListener('click', () => zoom(1 / size('--zoom-step')));
+byId('zoom-in').addEventListener('click', () => { if (FRAMING === 'board' && LIT_DEFAULT && camera.zoom >= 1) { FRAMING = 'lit'; camera.zoom = 1; fit(); renderer.render(scene, camera); } else zoom(size('--zoom-step')); });  // one step in from the whole board: the lit extent
+byId('zoom-out').addEventListener('click', () => { if (FRAMING === 'lit' && camera.zoom <= 1) { FRAMING = 'board'; camera.zoom = 1; fit(); renderer.render(scene, camera); } else zoom(1 / size('--zoom-step')); });  // one step out from the lit extent: the whole board
 const viewPicker = byId('view-picker');
 if (LOOK.folded[VIEW]) viewPicker.textContent = `Seen along ${AXES[VIEW]}, the board the plane it is: ${AXES[ACROSS[0]]} to the right, ${AXES[ACROSS[1]]} up; the declared board alone, ${LOOK.shape[ACROSS[0]]} x ${LOOK.shape[ACROSS[1]]} Nodes; no turning.`;
 else {
@@ -1046,7 +1072,7 @@ function drawNodeMeasure() {
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
   m.rounded_shares.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
   const hasBlind = blind.some(v => v !== null);
@@ -1089,7 +1115,7 @@ function drawMeasure() {
   const every = Math.max(1, Math.ceil(node_detectors.length / 12));
   node_detectors.forEach((d, k) => {
     const x = left + slot * (k + 0.5), w = Math.max(1, slot * 0.6);
-    body += `<rect x="${(x - w / 2).toFixed(1)}" y="${py(counts[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(counts[k])).toFixed(1)}" fill="${colourOf(family)}"><title>${esc(d.name)}: ${counts[k].toFixed(2)} quanta seen</title></rect>`;
+    body += `<rect x="${(x - w / 2).toFixed(1)}" y="${py(Math.max(0, counts[k])).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, counts[k]))).toFixed(1)}" fill="${colourOf(family)}"><title>${esc(d.name)}: ${counts[k].toFixed(2)} quanta seen</title></rect>`;  // the bar the region's credit, max(s_R, 0) (ALGEBRA.md, The share's sign and the credit's floor), the saw as it is in the title
     if (k % every === 0) body += svgText(d.name, x, H - pad, 'middle');
   });
   box.innerHTML = `<div class="caption"><b>The reports of ${esc(family)} (what each node_detector saw over W_c)</b><span>measurement</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' report">${body}</svg>`;
@@ -1155,8 +1181,8 @@ function drawReading() {
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16));
   rs.row.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w).toFixed(1)}" y="${py(v).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(v)).toFixed(1)}" fill="${hex}"><title>${esc(r.node_detector[k])}: ${format(v)} by the shares, saw ${format(r.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
-    if (clicks) body += `<rect x="${px(k).toFixed(1)}" y="${py(clicks[k]).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(clicks[k])).toFixed(1)}" fill="${flash}"><title>${esc(r.node_detector[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
+    body += `<rect x="${(px(k) - w).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(r.node_detector[k])}: ${format(v)} by the shares, saw ${format(r.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (clicks) body += `<rect x="${px(k).toFixed(1)}" y="${py(Math.max(0, clicks[k])).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, clicks[k]))).toFixed(1)}" fill="${flash}"><title>${esc(r.node_detector[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(r.at[k], px(k), H - pad, 'middle');
   });
   if (blind.some(v => v !== null)) {
@@ -1364,8 +1390,8 @@ function shareBars() {
   let body = `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText('1', left - 3, pad + small * 0.4, 'end') + svgText('0', left - 3, py(0), 'end');
   keys.forEach((key, k) => {
     const x = left + slot * (k + 0.5), run = WORLD.shares[key], expected = blind[key], rv = run ? ratio(run) : 0;
-    body += `<rect x="${(x - w).toFixed(1)}" y="${py(rv).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(rv)).toFixed(1)}" fill="${gateHex()}"><title>${port(key)}: the run's share ${frac(run)}, J = ${frac(WORLD.joint[key])}</title></rect>`;
-    if (expected) body += `<rect x="${x.toFixed(1)}" y="${py(ratio(expected)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(ratio(expected))).toFixed(1)}" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>${port(key)}: the blind's share ${frac(expected)}</title></rect>`;
+    body += `<rect x="${(x - w).toFixed(1)}" y="${py(Math.max(0, rv)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, rv))).toFixed(1)}" fill="${gateHex()}"><title>${port(key)}: the run's share ${frac(run)}, J = ${frac(WORLD.joint[key])}</title></rect>`;
+    if (expected) body += `<rect x="${x.toFixed(1)}" y="${py(Math.max(0, ratio(expected))).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, ratio(expected)))).toFixed(1)}" fill="none" stroke="${token('--blind')}" stroke-dasharray="3 2"><title>${port(key)}: the blind's share ${frac(expected)}</title></rect>`;
     body += svgText(port(key), x, H - bottom + small * 1.2, 'middle') + svgText(frac(run), x, H - bottom + small * 2.4, 'middle') + (expected ? svgText('blind ' + frac(expected), x, H - bottom + small * 3.6, 'middle') : '') + (key === drawn ? svgText('drawn: the click', x, H - bottom + small * 4.8, 'middle') : '');
   });
   const identical = n > 0 && keys.every(key => same(WORLD.shares[key], blind[key]));

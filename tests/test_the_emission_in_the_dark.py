@@ -7,7 +7,7 @@ import pytest
 
 from event_universe import credit, node_detector, world_files
 from event_universe.lattice import Lattice
-from event_universe.reports import NO_DRAW
+from event_universe.reports import BOOKED_AT_EMISSION, LOST_TO_SOURCE, NO_DRAW
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, TOOL, world_beside
 from tests.laws_read import load_shipped
@@ -150,7 +150,7 @@ def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
 
 
 def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at_the_close():
-    """The resonance pair and the packet emission world as shipped, in the read's shape: the giver alone in the dark emits at its window's close where the hazard's draws from its own cycling digits missed (the resonant and the detuned world at 48, their windows), the taker's own draws read from the light; the packet world's giver has its window derived from its train's passage, 758, beyond the run's 168 intervals, so no emission falls inside the run; every run LAWFUL to its end; the emission intervals printed."""
+    """The resonance pair and the packet emission world as shipped, in the read's shape: the giver alone in the dark emits at its window's close where the hazard's draws from its own cycling digits missed (the resonant and the detuned world at 48, their windows), the taker's own draws read from the light; the packet world's giver has its window 48 derived from its own rate's lifetime (a body's own rate enters its window's derivation as the lifetime whatever the form of its lay; its train's passage 758 is read beside it and is no window, 2026-10-20), so its directed packet falls at 48, the recoil owed booked on the emission's line beside the no-draw reading; every run LAWFUL to its end; the emission intervals printed."""
     world_files.REPOSITORY_ROOT = ROOT
     found = {}
     for folder, name in (
@@ -162,8 +162,10 @@ def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at
         given = [(c["interval"], c["node_detector"], c["lost"]) for c in clicks(lines) if c["emitted"]]
         window = board.world.bodies[0].detector.draw.window
         assert board.ended is None, name
+        directed = any(r.width is not None for r in board.credit.bodies[0].declared.rates)
+        readings = [NO_DRAW, *([BOOKED_AT_EMISSION, LOST_TO_SOURCE] if directed else [])]
         if window <= board.world.intervals:
-            assert given[:1] == [(window, "body 0", [NO_DRAW])], (name, given)
+            assert given[:1] == [(window, "body 0", readings)], (name, given)
         else:
             assert given == [], (name, given)
         found[name] = (window, given)

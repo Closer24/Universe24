@@ -143,3 +143,27 @@ window never opens in this folder, which lays no other drive: no reading above m
 stands. The design's giver `window` 48 stands in design.json as the design's number for the run's length
 alone, `intervals` 48 + the passage's 120 = 168 and the region's `draw.window`, read by the builder for
 those and for no body's window (2026-10-19).
+
+## The window by the lifetime (2026-10-20, the branch packet-window on main 67faa0d2d)
+
+The giver's window is 48 again, derived at load: a body's own rate enters its window's derivation as
+the lifetime, the emission's span at the body, whatever the form of its lay, and another body's lay as
+its passage over the body (`loader/window.windowed`; ALGEBRA.md, The click writes on the lattice (2), the
+dark emitter's when: the lifetime the hazard, in the exact dark the window the when). The 758 of
+2026-10-19 was the own train's passage over the body read as an arrival, 590 intervals beyond the run of
+168, so the page showed no run. Under the click's read of the board the giver stands in the exact dark,
+every digit at the lay's origin at its Nodes, its emission's draw deferred each interval, and the emission
+falls at the window's close, 48, with no draw ("no draw: every digit at the lay's origin, the emission at
+the window's close"); the recoil [-62016, 0, 0] is booked on the emission's line and written into no part
+("recoil booked at the emission", "recoil lost to the source"); the direction is +x, the first declared
+direction, there being no digit to draw one; the design's seeds are gone with the draw's generator, the
+twenty readings above the generator's. The lay at 48: 4,992 lay lines on the pulse's one line, the 312
+slices from the body's first Node x = 313 to the far face x = 624 over the 4 x 4 section, 4,096 Nodes of
+the pulse nonzero at 48; the far face's inflow lines begin at 50; the trailing edge walks back along -x
+past the body, the laid packet's backward component (the engine's declared open problem 4), the lowest
+nonzero x 305 at 68, 294 at 108, 287 at 128, 281 at 148 and 275 at 168. The region
+`reach` at x = 341 reads the pulse's levels from 49 and its inflow from 51 and credits nothing within 168,
+the count 0 against the blind's 1, the MISS by name as before. The books at 168: the pulse's share
+2,009,304,000, 3 quanta, the count 1; the atom in g at the count 1. The run is LAWFUL over the 168
+intervals in 9 s, the look at every frame 8.7 MB; the page is re-recorded once the page tool frames the
+lit extent.
