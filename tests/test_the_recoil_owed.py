@@ -1,11 +1,11 @@
-"""The click's books of the piece's momentum (ALGEBRA.md, The click's algebra beyond the law; the owner's rule, at the Nodes Rule3 only): at a click the write moves the count by one and writes nothing for the piece's momentum; p_a and the record's P_a are read and booked on the credit line with the piece's source drawn and named and the recoil it owes, -p_a as integers, and the recoil of a body held at declared Nodes is the declaration's. Two statements of the books on the shipped worlds: on the chain world every take books the piece lost to the taker and the recoil owed by the lay or by the source body, its write the taker's re-lay at its own Nodes alone, and every close of a body's window keeps the body's own P within D4's bound (`act.parted`, `twist.recoiled`, `twist.relaid`; Part H, MUST 1 as a statement of the books); on the packet world the directed packet's emission books the recoil owed at the lay and names it on the taker's later line (`act.written`, `BOOKED_AT_EMISSION`)."""
+"""The click's books of the piece's momentum (ALGEBRA.md, The click's algebra beyond the law; the owner's rule, at the Nodes Rule3 only): at a click the write moves the count by one and writes nothing for the piece's momentum; p_a and the record's P_a are read and booked on the credit line with the piece's source drawn and named and the recoil it owes, -p_a as integers, and the recoil of a body held at declared Nodes is the declaration's. Two statements of the books on the shipped worlds: on the chain world every take books the piece lost to the taker and the recoil owed by the lay or by the source body, its write the taker's re-lay at its own Nodes alone, and every close of a body's window keeps the body's own P within D4's bound (`act.parted`, `take.recoiled`, `take.relaid`; Part H, MUST 1 as a statement of the books); on the packet world the directed packet's emission books the recoil owed at the lay and names it on the taker's later line (`act.written`, `BOOKED_AT_EMISSION`)."""
 
 import math
 from dataclasses import replace
 
 import numpy as np
 
-from event_universe import act, readings, twist, world_files
+from event_universe import act, readings, take, world_files
 from event_universe.emission import Emitter
 from event_universe.lattice import Lattice
 from event_universe.reports import (
@@ -23,10 +23,10 @@ from tests.laws_read import load_shipped
 
 
 def own_p(board: Lattice, books) -> int:  # type: ignore[no-untyped-def]
-    """A body's own P_x in T's unit: its record's momentum terms over its Nodes (`readings.momentum_of`, `twist.scaled`)."""
+    """A body's own P_x in T's unit: its record's momentum terms over its Nodes (`readings.momentum_of`, `take.scaled`)."""
     weight, at = board.families[books.index].pair[0], board.mask(books.nodes)
     read = readings.momentum_of(weight, board.lines_of(books.index, books.record), board.wrap, at)
-    return twist.scaled(read, weight)[0]
+    return take.scaled(read, weight)[0]
 
 
 def test_the_chains_clicks_book_the_piece_and_the_recoil_owed_and_every_close_keeps_the_bodys_p(
@@ -44,7 +44,7 @@ def test_the_chains_clicks_book_the_piece_and_the_recoil_owed_and_every_close_ke
                 board.interval,
                 [own_p(board, b) for b in board.credit.bodies],
                 [b.windows for b in board.credit.bodies],
-                twist.fan_momentum(board, light)[0],
+                take.fan_momentum(board, light)[0],
             )
         )
     by_interval = {t: (ps, windows, p_light) for t, ps, windows, p_light in marks}
@@ -114,14 +114,14 @@ def test_the_directed_packets_recoil_is_booked_at_the_lay_and_named_at_the_take(
     giver, action = board.credit.bodies[0], board.world.quantum_action
     rate = giver.declared.rates[0]
     assert rate.width == 4 and rate.resonance == (2, 3) and (0, 1) in rate.directions
-    item = twist.Item(
+    item = take.Item(
         light, None, None, 1, (giver.nodes[0],), None, rate.resonance, rate.lifetime, emitter=0
     )
     stood = [
         (r.now.copy(), r.before.copy(), r.remainder.copy()) for r in board.lines_of(atom, giver.record)
     ]
     act.written(board, [replace(item, width=rate.width, direction=(0, 1))])
-    born = twist.fan_momentum(board, light)
+    born = take.fan_momentum(board, light)
     cosine = 3 * (2 / 3) - 2 * math.cos(math.pi / (rate.width + 1))
     hands = 2 * action * math.sqrt(1 - cosine * cosine)
     assert born[1:] == (0, 0) and abs(born[0] - hands) < 0.1 * hands
@@ -133,7 +133,7 @@ def test_the_directed_packets_recoil_is_booked_at_the_lay_and_named_at_the_take(
         for a, b in zip((r.now, r.before, r.remainder), kept, strict=True)
     )
     assert board.credit.emitters[light] == [Emitter(0, 1, True)]
-    source, owed, reading = twist.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
+    source, owed, reading = take.recoiled(board, light, (born[0], 0, 0), lambda weights: 0)
     assert (source, owed, reading) == ("body 0", [-born[0], 0, 0], BOOKED_AT_EMISSION)
     assert board.credit.emitters[light][0].outstanding == 0
     print(

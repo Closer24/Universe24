@@ -30,7 +30,7 @@ from event_universe.node_detector import weighed_currents
 from event_universe.plane import NO_FACE, Faces
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, level_at, record_slice
-from event_universe.twist import faces_presented
+from event_universe.take import faces_presented
 from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]

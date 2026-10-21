@@ -113,6 +113,7 @@ about 1.0, 0.32, 0.50, 0.50 and 0.50 at n = 1, 2, 4, 8 and 16 against Itano's, s
 not made and the declared weight stands as the number of the file by the owner's word.
 
 ## The lay's numbers (lay_bounds.json, 2026-10-18; the loaded worlds, no interval stepped)
+The json re-recorded 2026-10-21 by `lay_bounds.py` re-pointed to `features/phase.quarter_turn` (the twist module's `quarter_turn(board)` gone since 2026-10-20) on the folder's three worlds, each entry byte for byte as on 2026-10-18; the entries of the four worlds gone at the ninth (the plus worlds and the detuned) out of it with their files.
 
 | reading | value | by |
 | --- | --- | --- |

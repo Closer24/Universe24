@@ -1,9 +1,9 @@
-"""Part H, the fix pass before the owner reads (both hands' lines of 2026-10-10 on the whole local trial, the advisor's 6092354791 and the mathematician's 6092368671, the Boss's merged list 6092388848). MUST 1: the null window's re-lay keeps the fold: `twist.relaid` with no direction named lays each Node of the region in the direction standing there, so the taker's twist and the source's fold (the lattice momentum given at a click) survive a body's null close instead of being discarded unbooked (one_photon's atom kept -32,040 only to its next close at 96 before). MUST 5: a region taker (the two slits' screens, bell's sides) takes no +p of its own, so it folds no source: the source is drawn and named, its outstanding count down by one, `recoil` reads "unpaid by the region" and `lost` "P lost to the region" (`twist.unpaid`, `lists.credited_node`), the body's P unchanged (its test deleted 2026-10-20 with the twist's under the owner's rule, the reader's ruling: its sentence the write's booking at a region, its world's region read at the content 0 refused by the exact vacuum; the booking stands in the code until the twist round)."""
+"""Part H, the fix pass before the owner reads (both hands' lines of 2026-10-10 on the whole local trial, the advisor's 6092354791 and the mathematician's 6092368671, the Boss's merged list 6092388848). MUST 1: the null window's re-lay keeps the fold: `take.relaid` with no direction named lays each Node of the region in the direction standing there, so the taker's twist and the source's fold (the lattice momentum given at a click) survive a body's null close instead of being discarded unbooked (one_photon's atom kept -32,040 only to its next close at 96 before). MUST 5: a region taker (the two slits' screens, bell's sides) takes no +p of its own, so it folds no source: the source is drawn and named, its outstanding count down by one, `recoil` reads "unpaid by the region" and `lost` "P lost to the region" (`take.unpaid`, `lists.credited_node`), the body's P unchanged (its test deleted 2026-10-20 with the twist's under the owner's rule, the reader's ruling: its sentence the write's booking at a region, its world's region read at the content 0 refused by the exact vacuum; the booking stands in the code until the twist round)."""
 
 import numpy as np
 import pytest
 
-from event_universe import emission, node, records, twist, world_files
+from event_universe import emission, node, records, take, world_files
 from event_universe.core import paces
 from event_universe.core.ports import arrival
 from event_universe.features import phase
@@ -129,7 +129,7 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
 
 
 def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
-    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 62 (the derived window, the first atom's read) draws the lay (`source` the lay, the count down by one, the board the Part G test's). The file's lay of one more quantum and a body's quantum entered beside it, the draw's weights read [1, 1] through `twist.drawn_emitter` and the body's entry drawn. Re-pinned 2026-10-20 under the content: the first atom\'s click at 63 where it fell at 62."""
+    """The hands' SHOULD: the file's lay enters the emitters' book at the books' start with the laid count (`credit.Books.of`, `emission.registered` with no body), so a laid light beside an emitter is drawn between the body and the lay by their counts. one_photon: the photon's book holds the lay alone with the laid count, and its click at 62 (the derived window, the first atom's read) draws the lay (`source` the lay, the count down by one, the board the Part G test's). The file's lay of one more quantum and a body's quantum entered beside it, the draw's weights read [1, 1] through `take.drawn_emitter` and the body's entry drawn. Re-pinned 2026-10-20 under the content: the first atom\'s click at 63 where it fell at 62."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board, lines = one_photon_board(tmp_path)
     photon = next(i for i, f in enumerate(board.families) if f.name == "photon")
@@ -151,7 +151,7 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
         weights.append(list(found))
         return 1
 
-    drawn = twist.drawn_emitter(board, photon, pick)
+    drawn = take.drawn_emitter(board, photon, pick)
     assert weights == [[laid, 1]] and drawn is not None and drawn.body == 0 and drawn.outstanding == 0
     print(
         f"Part H (SHOULD, the lay in the draw): one_photon's book at the start [the lay, {laid}], at {click['interval']} source {click['source']!r} and the lay's count {laid - 1}; "
