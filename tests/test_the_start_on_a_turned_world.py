@@ -20,7 +20,9 @@ def time_lines(board: Lattice) -> list[tuple[str, int, np.ndarray]]:
     for index, family in enumerate(board.families):
         if family.held:
             for row in range(family.records):
-                found.append((family.name, row, board.states[index].lines[row * family.width].now.copy()))
+                found.append(
+                    (family.name, row, board.states[index].lines[row * family.width].now.copy())
+                )
     return found
 
 
