@@ -171,3 +171,78 @@ two_gaps.mode.json, the same digests, so its run is the two_gaps run above, [29,
 ## The booked bias at the window 1 (2026-10-20)
 
 The screens run whole under the click's read of the board with the totals' bias booked and not refused (the reader's F (b), the sixth commit of the read; the counts the seventh's, what a body reads): every credit line carries `bias_bound`, g the draw's total's gcd with the read's bases less one times its gcd with the last base, T the total, the draw's residue modulo g the digits' sum alone. two_slits: 500 credits, every one booked; g from 6,000 to 720,000 against T from 66,120,000 to 10,308,648,000; the worst bound g / T = 372,000 / 155,868,000 = 1 / 419 of a port's share, against the run's resolution of one quantum in 500. The one refusal left is g equal to T; no world of this folder reaches it.
+
+## The one-quantum world, 2026-10-21 (one_quantum.json, the eighteenth of the derivation's forty)
+
+The owner's word of 2026-10-21 (every slit experiment on the site with a description and an
+animation): one of the forty one-quantum worlds of the variants' derivation
+(papers/one_rule/variants/README.md, section A, verdict WORKS; its a_one_quantum.py --ensemble 40
+writes the forty at run time under a scratch folder and ships none) stands in this folder as
+`one_quantum.json`, with its design `one_quantum.design.json` (every number with its reason), its
+builder `build_one_quantum.py` (the universe file `light_x4096.json`, the world, its mode file by
+tools/pixel_mode.py and the blind `one_quantum.expectation.json`, written from the design and no
+run) and its page `one_quantum.html`, built as `two_slits.html` is (tools/look/record.py over the
+130 intervals with the run's own output file, tools/look/page.py with the blind and the output). The
+two slits' files stand untouched byte for byte; the folder's `build_world.py` and `expectation.json`
+are the two slits' alone.
+
+The world: the shipped two_slits.json with the packet's amplitude 1234 at the column 10 (the
+eighteenth world of the ensemble, the one-quantum amplitude 1240 less 18 div 3 at the column
+(10, 9, 11)[18 mod 3]), the universe light.json with the quantum action times 2^12 = 134,217,728
+(the energy line binds no family of this file), the region `return` two columns deep at the source's
+receding face (x = 0 and 1, every row), backed by that face as the screen is backed by its own, and
+the draw's window 130, the whole passage, one close. The two are declarations of the world and no
+act (the derivation's two findings by name): at the shipped T one quantum spread over the packet's
+344 Nodes stands at the integer floor, and the shipped world's receding face lets the wall's return
+leave uncredited, so that the division act gives N = 0 in every one-quantum run of the shipped
+geometry. The generator lays one quantum (the mode file: the amplitude 925 at the peak against the
+shipped beam's 931, 344 Nodes, the count 1), the wave carried at the shipped beam's own levels.
+
+The blind (the design's, from the law's real line with every exit credited, the derivation's
+a_real_line.py, no run of the engine): N = 1, one click at the close 130 and nothing left; the
+shares of the one click over the thirteen regions, 0.841 at `return` and 0.159 over the screen, per
+region 0.0102, 0.0107, 0.0160, 0.0116, 0.0045, 0.0227, 0.0273, 0.0069, 0.0088, 0.0166, 0.0120,
+0.0117 (the maxima 2, 6 and 9; the first minima about the central maximum 6 at 4 and 7 by the one
+extrema rule, tools/click_counts.py's, the region 7 at 0.0434 of the screen below the region 8 at
+0.0555 on this row, where the bright world's Huygens row has its minimum at 8; the visibility
+0.2717 / 0.4151 = 0.65 at 4 and 7, 0.61 at 4 and 8); the fairness bound g / T below 10^-5 of a
+port's share; the return's inflow from the interval 45, its peak at 56.
+
+The reading (main 30e6d48f2, 2026-10-21, tools/look/record.py with --output): LAWFUL over 130
+intervals; one credit line, at the interval 130 at `screen_9`, the count 1, nothing left; the bias
+bound g / T = 18,000 / 1,045,769,922,000 = 1 / 58,098,329 of a port's share, booked on the line;
+the window's inflows per region (the draw's weights, in the current's units) 10,702,620,000,
+11,144,442,000, 16,815,570,000, 12,126,516,000, 4,684,992,000, 23,648,706,000, 28,524,882,000,
+7,214,352,000, 9,231,312,000, 17,409,138,000, 12,590,334,000, 12,218,850,000 at the screen's twelve
+regions and 879,458,208,000 at `return`, the shares 0.0102, 0.0107, 0.0161, 0.0116, 0.0045, 0.0226,
+0.0273, 0.0069, 0.0088, 0.0166, 0.0120, 0.0117 and 0.841, the blind's to the fourth digit (the
+regions 2 and 5 off by 0.0001); the number read at the close 5,124 bits over the thirteen regions'
+192 Nodes (26.69 bits per digit), its residue 0.124 of the weights' total placed on the cumulative
+weights at the region 9, the pick reproduced by the law's own arithmetic from the board's remainders
+(the derivation's `read_again`); the books at the close the share 1,054,695,215,300 against the
+record's unit 1,041,355,175,409, the count 0 after the click. The derivation's scratch world
+ensemble_18 is this world but for the universe file's path and the mode file's digest, and its
+credit line is this one to the digit.
+
+The forty worlds of the derivation (its out/a_ensemble.json): every one LAWFUL with exactly one
+credit line at the close, the count 1; `return` in 34 worlds and the screen in 6 (screen_1 twice,
+screen_9 twice, screen_3 once, screen_10 once; the screen's share 0.1588 to 0.1611 per world, 6.4
+clicks expected of 40); the 3,240 reads of the screen's Nodes at every interval from 50 to 130,
+placed on the regions' cumulative inflows (a_reads.py), give the fringes, the maxima at 2, 6 and 9
+and the minima at 4 and 8, chi-square 6.1 on 11 degrees against the mean shares. The pattern of
+single quanta is the clicks' histogram over worlds, one world one click; the page shows one of them,
+and the dashed blind beside its one bar is the pattern the forty sample.
+
+The page (`one_quantum.html`): the board frame by frame over the 130 intervals, the one quantum's
+wave through the two gaps and its return toward the source's face from the interval 45; the bars the
+credit lines' clicks per region, one at screen_9 at the close, beside the dashed blind, the law's
+shares of the one click per region, 0.841 at the return region; the page's "N by the shares" reads 0
+in T's unit, the one quantum at k = pi / 4 carrying T sin omega, 0.4366 of the family's wall (the
+share 1,054,695,215,300 over W_c 2,415,919,104,000; `photons.per_count` 2.3204 of the two slits'
+blind the factor between the units), while the click stands in the record's own unit, one quantum
+one click (the two slits' reading of 2026-10-20 above). The commands, from the root with PYTHONPATH
+set to src: `python examples/events/two_slits/build_one_quantum.py`; `python tools/look/record.py
+examples/events/two_slits/one_quantum.json --intervals 130 --out runs/two_slits/one_quantum.look.json
+--output runs/two_slits/one_quantum.output.json`; `python tools/look/page.py
+runs/two_slits/one_quantum.look.json --blind examples/events/two_slits/one_quantum.expectation.json
+--output runs/two_slits/one_quantum.output.json --out examples/events/two_slits/one_quantum.html`.

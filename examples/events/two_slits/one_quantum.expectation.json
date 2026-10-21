@@ -1,0 +1,92 @@
+{
+ "verdict": "NODEDETECTOR",
+ "node_detector": [
+  "return",
+  "screen_0",
+  "screen_1",
+  "screen_2",
+  "screen_3",
+  "screen_4",
+  "screen_5",
+  "screen_6",
+  "screen_7",
+  "screen_8",
+  "screen_9",
+  "screen_10",
+  "screen_11"
+ ],
+ "family": "charge",
+ "window": [
+  1,
+  130
+ ],
+ "across": "y",
+ "pattern": [
+  2,
+  11
+ ],
+ "comment": "The blind of the one-quantum world, the law's real line from the mode file's lay with every exit credited (a_real_line.py, out/a_real_line.json under papers/one_rule/variants/, 2026-10-21, computed on the law's real line and no run of the engine): N = 1 exactly in every world, one click at the close 130 and nothing left; P(return) 0.841 and P(screen) 0.159 (the real line's 0.835 and 0.158 of the lay, 0.993 credited by the close, the rest the tail on the board at 130, the credit's rounding reaching 1); the thirteen regions' shares of the one click over every exit `per_region`, within the screen `within_screen` (the maxima at the regions 2, 6 and 9 and the first minima about the central maximum 6 at 4 and 7 by the one extrema rule, tools/click_counts.py's, the builder's and the reader's, the region 7 at 0.0434 below the region 8 at 0.0555 on this row, where the Huygens row of the bright world has its minimum at 8; the visibility at 6 against the two minima the pair `visibility`, the numerator and the denominator, 0.65 as a quotient at 4 and 7 and 0.61 at 4 and 8, the derivation's README writing 0.60 at the Huygens regions); the fluctuation over K worlds sqrt(K p (1 - p)) per region; the fairness bound g / T below 10^-5 of a port's share, booked on the click's line; the return's inflow begins at the interval 45 and peaks at 56. Fence: clicks.",
+ "counts": [
+  0.841,
+  0.0102,
+  0.0107,
+  0.016,
+  0.0116,
+  0.0045,
+  0.0227,
+  0.0273,
+  0.0069,
+  0.0088,
+  0.0166,
+  0.012,
+  0.0117
+ ],
+ "through": 1,
+ "quanta": 1,
+ "close": 130,
+ "exits": {
+  "return": 0.841,
+  "screen": 0.159
+ },
+ "within_screen": [
+  0.0641,
+  0.067,
+  0.1009,
+  0.073,
+  0.0283,
+  0.1427,
+  0.1717,
+  0.0434,
+  0.0555,
+  0.1044,
+  0.0756,
+  0.0733
+ ],
+ "maxima": [
+  2,
+  6,
+  9
+ ],
+ "minima": [
+  4,
+  7
+ ],
+ "central": 6,
+ "visibility": [
+  0.2717,
+  0.4151
+ ],
+ "scatter": "sqrt(K p (1 - p)) per region over K worlds",
+ "bias_bound": {
+  "below": 1e-05,
+  "of": "a port's share, g / T, booked on the click's line"
+ },
+ "return_arrival": {
+  "first": 45,
+  "peak": 56
+ },
+ "watch": {
+  "24": 0.0273
+ },
+ "status": "computed from the law's real line from the mode file's lay with every exit credited (papers/one_rule/variants/scripts/a_real_line.py, 2026-10-21), no run of the engine; the counts the shares of the one click, N = 1; fence: clicks"
+}
