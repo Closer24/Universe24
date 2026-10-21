@@ -12,7 +12,6 @@ import numpy as np
 from event_universe import conversion, credit, digits, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
-from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.node_detector import (
     NodeBooks,
@@ -178,13 +177,6 @@ def absorptions_drawn(board: Lattice, closing: list[NodeBooks]) -> set[int]:
                 break
             done.add(outcomes[pick][0].number)
     return done
-
-
-def coherence_ended(board: Lattice, books: NodeBooks) -> None:
-    """The labels' coherence ended at a bound body's null window without a lay (the reader's design of 2026-10-21, (b); ALGEBRA.md, The click writes on the lattice (4) and (6): the null window re-lays a record laid by the engine's own act in its part, and a bound record standing in its well, laid from the mode file, is re-laid by no act, "no body-wide re-lay in the realised mode is an act of the law"): the labels at their counts in the count's unit and the hop's remainders at 0, as the write step leaves a touched body's (`act.written`), so that every window's share is that window's turn alone, the Rabi share and never a count-up; the record's levels untouched."""
-    wall = count_wall(board.families[books.index], board.world.quantum_action)
-    books.labels = [count * wall for count in books.counts]
-    books.carried = [0 for _count in books.counts]
 
 
 def absorbing(board: Lattice, books: NodeBooks) -> bool:
@@ -386,9 +378,7 @@ def jumped(board: Lattice) -> None:
             books.due = (
                 span  # the absorption at the window's end; the emission's draw at the next interval
             )
-        elif (
-            span
-        ):  # at the close the beat's outflow over the window enters the hazard beside the constant
+        elif span:  # at the close the beat's outflow over the window enters the hazard
             books.outflow = max(-books.beat, 0) if closes else 0
             given = emission_drawn(board, books, span)
         if not given and closes and books.deferred:
@@ -403,7 +393,7 @@ def jumped(board: Lattice) -> None:
         elif len(books.counts) > 1:  # a record of one part reads none
             click(board, books, lists.null_window(board, books))
             if books.bound:  # a bound record: the labels' coherence ended in the books, nothing laid
-                coherence_ended(board, books)
+                lists.coherence_ended(board, books)
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
         books.deferred, books.beat, books.outflow = False, 0, 0

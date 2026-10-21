@@ -322,3 +322,10 @@ def null_window(board: Lattice, books: NodeBooks) -> list[Alternative]:
     if books.bound:  # a bound record standing in its well: no re-lay of a spread body, (6); its coherence ended in the books
         return [Alternative(1, nothing, line, books)]
     return [Alternative(1, partial(part_at, books, books.part, 0), line, books)]
+
+
+def coherence_ended(board: Lattice, books: NodeBooks) -> None:
+    """The labels' coherence ended at a bound body's null window without a lay (the reader's design of 2026-10-21, (b); ALGEBRA.md, The click writes on the lattice (4) and (6): the null window re-lays a record laid by the engine's own act in its part, and a bound record standing in its well, laid from the mode file, is re-laid by no act, "no body-wide re-lay in the realised mode is an act of the law"): the labels at their counts in the count's unit and the hop's remainders at 0, as the write step leaves a touched body's (`act.written`), so that every window's share is that window's turn alone, the Rabi share and never a count-up; the record's levels untouched."""
+    wall = count_wall(board.families[books.index], board.world.quantum_action)
+    books.labels = [count * wall for count in books.counts]
+    books.carried = [0 for _count in books.counts]
