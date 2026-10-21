@@ -108,7 +108,7 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
 
 
 def pair_of(value: object, label: str) -> tuple[int, int]:
-    """A family's pair: [num, den] as the file writes it (den from 1, num from -den through den, |num| = den only as den itself, the massless pair; ALGEBRA.md); a pair derived from two bound records' pairs, {`relative_of` | `centre_of`: [a, b], `den`} by `composed_pair`, was read here until 2026-10-21 and is deleted with no world and no test (ALGEBRA.md, The pair of two bound records, a hypothesis under its own name), so a dict is refused with the list's form."""
+    """A family's pair: [num, den] as the file writes it (den from 1, num from -den through den, |num| = den only as den itself, the massless pair; ALGEBRA.md); a pair derived from two bound records' pairs, {`relative_of` | `centre_of`: [a, b], `den`} by `composed_pair`, was read here until 2026-10-21 and is deleted 2026-10-21 with no world, its loader test, its no-root assertions and its two acts-table rows gone with it (ALGEBRA.md, The pair of two bound records, a hypothesis under its own name), so a dict is refused with the list's form."""
     if not isinstance(value, list) or len(value) != 2:
         raise ValueError(f"{label} must be [num, den]")
     den = integer(value[1], f"{label}'s den", 1)
