@@ -319,7 +319,16 @@ def page(
     )
 
 
-BLOCKS = ("look", "roles", "blind", "measurement", "output", "reading", "gate", "beside")  # the page's embedded blocks, by their script ids
+BLOCKS = (
+    "look",
+    "roles",
+    "blind",
+    "measurement",
+    "output",
+    "reading",
+    "gate",
+    "beside",
+)  # the page's embedded blocks, by their script ids
 BLOCK = re.compile(r'<script id="([a-z]+)" type="application/[a-z0-9+]+">(.*?)</script>', re.S)
 
 
@@ -329,7 +338,10 @@ def recorded(html: str) -> dict[str, Any]:
     if "look" not in blocks:
         raise ValueError("the page holds no embedded look (tools/look/page.py's block `look`)")
     look = json.loads(gzip.decompress(base64.b64decode(blocks["look"])))
-    return {"look": look, **{key: json.loads(blocks[key]) if key in blocks else None for key in BLOCKS[1:]}}
+    return {
+        "look": look,
+        **{key: json.loads(blocks[key]) if key in blocks else None for key in BLOCKS[1:]},
+    }
 
 
 def retemplated(html: str) -> str:

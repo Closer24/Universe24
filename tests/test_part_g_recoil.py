@@ -56,12 +56,22 @@ def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(
     for _ in range(400):
         copy.step()
     found = [(c["interval"], c["node_detector"], c["emitted"]) for c in copied if c["event"] == "credit"]
-    nulls = [(t, "body 1", None) for t in (75, 123, 171, 219, 267)]  # the taker's closes every 48 from its window's opening at 28
-    assert found == [(10, "body 0", "pulse"), (48, "body 0", None), *nulls, (315, "body 0", None), (315, "body 1", None)]
-    taken = [c for c in copied if c["event"] == "credit" and c["absorbed"]]  # the taking click, the source named (the pair over three Nodes, 2026-10-21; over two Nodes the copy's emission fell at 83 and nothing took to 400)
-    assert [(c["interval"], c["node_detector"], c["absorbed"], c["source"], c["recoil"]) for c in taken] == [
-        (267, "body 1", "pulse", "body 0", [51680, 0, 0])
+    nulls = [
+        (t, "body 1", None) for t in (75, 123, 171, 219, 267)
+    ]  # the taker's closes every 48 from its window's opening at 28
+    assert found == [
+        (10, "body 0", "pulse"),
+        (48, "body 0", None),
+        *nulls,
+        (315, "body 0", None),
+        (315, "body 1", None),
     ]
+    taken = [
+        c for c in copied if c["event"] == "credit" and c["absorbed"]
+    ]  # the taking click, the source named (the pair over three Nodes, 2026-10-21; over two Nodes the copy's emission fell at 83 and nothing took to 400)
+    assert [
+        (c["interval"], c["node_detector"], c["absorbed"], c["source"], c["recoil"]) for c in taken
+    ] == [(267, "body 1", "pulse", "body 0", [51680, 0, 0])]
     print(
         f"Part G (5g): resonant.json green over {board.world.intervals}, atom 0 gives at {credits[0]['interval']}; the read at 191 refused by name; the content copy's emission at 10, the take at 267 with atom 0 named as the source"
     )
