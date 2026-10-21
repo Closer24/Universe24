@@ -48,7 +48,8 @@ PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/pace
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
 PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
-PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py")
+PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", "covector.py")
+PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/uniform.py")
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

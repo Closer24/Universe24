@@ -41,12 +41,13 @@ from event_universe.loader.node_detector_declaration import (
 )
 from event_universe.loader.node_detector_rows import reader_count
 from event_universe.loader.packets import PacketRow, WholePacket, packets_of, wholes_of
+from event_universe.loader.uniform import UNIFORM, uniform_of
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
-WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
+WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure", UNIFORM)
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
@@ -114,6 +115,7 @@ class World:
         WholePacket, ...
     ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
     erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
+    uniform: bool = False  # the world's `uniform: carried`: on a board periodic on every axis every held row's rest is the zero-mean part and its k = 0 component is carried by Rule3's own line (features/start `rest`; ALGEBRA.md, The closed lattice has no rest, item 6 of what is open); False where absent, the sink refusal as before
 
 
 def kind_of(width: int) -> type:
@@ -330,6 +332,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     periodic = tuple(faces[axis] == "periodic" for axis in AXES)
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
     even_box_refused(shape, periodic, families)
+    carried = uniform_of(world[UNIFORM], faces) if UNIFORM in world else False
     if any(open_axes) and "face_depth" not in world:
         raise ValueError("face_depth is required on a lattice with an open face: the depth of its layer")
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
@@ -392,4 +395,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         lay,
         wholes,
         erasure,
+        carried,
     )

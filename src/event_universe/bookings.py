@@ -8,7 +8,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import records
+from event_universe import node, records
 from event_universe.core.ports import Wrap
 from event_universe.features.start import Sourced
 from event_universe.flux import step_records as stepped_records
@@ -65,12 +65,15 @@ def booked_sources(
     unit: int,
     amplitude: int,
 ) -> tuple[list[Sourced], list[Sourced]]:
-    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`flux.step_records`, every sign row but the record's own, the phase lines at their seed with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`records.form`, `records.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
+    """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py; where a holder of the sign declares the Lorentz form, the booking is taken after the first interval's phase act at these levels, the Links' pairs the first step reads, and the phase lines are turned back to the angle 0 after it, so that the first write returns the rest and the lattice Lorenz constraint stands from the first interval, covector.py): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`flux.step_records`, every sign row but the record's own, the phase lines at their seed with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`records.form`, `records.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest and its reads of the content holders by position; the holders' sources then the sign rows'."""
     for (index, row), level in zip(rows, levels, strict=True):
         packet, laid = packets[(index, row)], level + families[index].rest
         line = records.record_slice(families[index], row).start
         states[index].lines[line] = replace(packet, now=packet.now + laid, before=packet.before + laid)
     forms, turns = Bookings(), Bookings()
+    phased = [index for index, family in enumerate(families) if family.held and family.lorentz]
+    if phased:  # the first interval's phase act before its step: the booking the first write takes
+        node.phase_act(phased, families, states, 1, wrap, gamma)
     for index, family in enumerate(families):
         if not family.quanta:
             continue
@@ -81,6 +84,8 @@ def booked_sources(
         )
         forms.update(booked_forms)
         turns.update(booked_turns)
+    if phased:  # the phase lines returned to the angle 0, the state the run starts from, exactly
+        node.phase_act(phased, families, states, -1, wrap, gamma)
     found: list[Sourced] = []
     content = [held for held, _row in holders]
     for index, row in rows:

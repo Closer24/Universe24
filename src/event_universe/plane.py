@@ -27,11 +27,17 @@ Faces = tuple[list[Face], Offset]  # the faces presented to a line at this step,
 NO_FACE: Faces = ([], (0, 0, 0))
 
 
-def link_levels(levels: tuple[Any, Any, Any], wrap: Wrap) -> tuple[Any, ...]:
-    """An odd line's level along each of a Node's six Links in Port order, the two ends' sum with the direction's sign: L_a(i) + L_a(i + a) through the +a Port and -(L_a(i - a) + L_a(i)) through the -a Port, so that the Link read from its other end is the same size with the opposite sign, n_ji = -n_ij exactly (ALGEBRA.md #the-rows-against-nature (b2), Peierls' coupling; the sign holder's odd lines and the flux holder's alike)."""
+def link_levels(
+    levels: tuple[Any, Any, Any], wrap: Wrap, ends: tuple[int, int] = (1, 1)
+) -> tuple[Any, ...]:
+    """An odd line's level along each of a Node's six Links in Port order, the two ends weighed by the holder's declared pair `ends` (the owner's weight and the far end's, `FamilyRule.link_read`, the Port consuming the two integers blindly) with the direction's sign: own L_a(i) + far L_a(i + a) through the +a Port and -(own L_a(i - a) + far L_a(i)) through the -a Port, so that the Link read from its other end is the same size with the opposite sign, n_ji = -n_ij exactly (ALGEBRA.md #the-rows-against-nature (b2), Peierls' coupling); at (1, 1) the two ends' sum, the sign holder's odd lines and the flux holder's alike as the law's line reads them, and at (-2, 0), the Lorentz form's (covector.py), minus twice the +a Link's own line, the line the Link's own flux sources, with the hop's sign of Peierls' p - q A."""
+    own, far = ends
     found: list[Any] = []
     for axis, level in enumerate(levels):
-        found += [level + arrival(level, axis, 1, wrap), -(level + arrival(level, axis, -1, wrap))]
+        found += [
+            own * level + far * arrival(level, axis, 1, wrap),
+            -(own * arrival(level, axis, -1, wrap) + far * level),
+        ]
     return tuple(found)
 
 

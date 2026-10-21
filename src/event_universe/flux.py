@@ -273,7 +273,11 @@ def pairs_of(
     """A record's Link pairs where it is turned or folded (`node.turning`, the sign's odd levels along the Links, `plane.link_levels`; `plane.odd_links`, the flux holder's; the record's row's phase lines through the six Ports at the amplitude X, `plane.phase_links`; `plane.link_pairs`, the pair (R^c, R^s) per Port), None for a plain record."""
     angles = node.turning(index, families, states, direction, record)
     flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
-    sign = None if angles is None else link_levels(angles[1], wrap)  # the sign's Link levels n_ij
+    sign = (  # the sign's Link levels n_ij, the two ends weighed as the holder declares (`link_read`)
+        None
+        if angles is None
+        else link_levels(angles[1], wrap, families[node.sign_holder(index, families)].link_read)
+    )
     phases = None
     if angles is not None:  # the record's row's phase pairs, the Link's hop through each Port
         row = row_of(families, index, record)

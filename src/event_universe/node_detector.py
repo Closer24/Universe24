@@ -12,6 +12,7 @@ from event_universe import node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
+from event_universe.covector import weights
 from event_universe.digits import read_of, reads_of
 from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.loader.derived import count_wall, quanta_records, row_of
@@ -372,14 +373,13 @@ def weighed_currents(board: Lattice) -> Weighed:
     for index in board.order:
         family, found[index] = board.families[index], []
         for record in quanta_records(board.families, index):
-            lines = board.lines_of(index, record)
+            lines = board.record(index) if family.lorentz else board.lines_of(index, record)
             content, factors = board.read(index, 1, record)
             shares = share.family_share(
-                family, lines, board.wrap, gamma, content, factors, board.unit, at
+                family, lines, board.wrap, gamma, content, factors, board.unit, at, None, weights(family)
             )
-            found[index].append(
-                (readings.currents_of(family.pair[0], lines, board.wrap), factors, shares)
-            )
+            through = readings.currents_of(family.pair[0], lines, board.wrap, weights(family))
+            found[index].append((through, factors, shares))
     return found
 
 

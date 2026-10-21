@@ -199,6 +199,21 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the lay's iteration, remainder discarded
     ("features/start/__init__.py", "settled", "act"): "D",  # the iteration to the fixed point
     ("features/start/__init__.py", "rest", "division_forward"): "D",  # the rest's rounding, once
+    (
+        "features/start/__init__.py",
+        "without_uniform",
+        "division_forward",
+    ): "D",  # the carried torus's source less its read-weighted mean, discarded
+    (
+        "features/start/__init__.py",
+        "recentred",
+        "division_forward",
+    ): "D",  # the carried torus's gauge, the levels' mean, discarded
+    (
+        "features/start/__init__.py",
+        "settled_free",
+        "division_forward",
+    ): "D",  # the carried torus's iteration, remainder discarded
     # features/write
     (
         "features/write/__init__.py",
@@ -215,6 +230,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("growth.py", "resized", "%"): "D",  # a line's index wrap, named
     # lattice.py, lay.py
     ("lattice.py", "Lattice.half_wall", "division_forward"): "D",  # the half wall, once
+    # board_readings.py
+    ("board_readings.py", "uniform_mode", "division_forward"): "D",  # the uniform level read, once
     ("lay.py", "shares_of", "division_forward"): "D",  # the shares' floors, once each
     # loader
     ("loader/faces.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
@@ -225,9 +242,14 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
     ("loader/draw.py", "reduced_write", "division_forward"): "D",  # the reduction, exact, no remainder
-    ("loader/derived.py", "hill_scale", "division_forward"): "D",  # the hill's room, once
-    ("loader/derived.py", "tension_room", "largest_below"): "S",  # the room's factor by search
-    ("loader/derived.py", "tension_room", "division_forward"): "D",  # the room's ceiling, once
+    ("loader/rooms.py", "hill_scale", "division_forward"): "D",  # the hill's room, once
+    ("loader/rooms.py", "tension_room", "largest_below"): "S",  # the room's factor by search
+    ("loader/rooms.py", "tension_room", "division_forward"): "D",  # the room's ceiling, once
+    (
+        "loader/rooms.py",
+        "write_rooms",
+        "largest_below",
+    ): "S",  # the covector's Link room, X 2^(1/2) by search
     (
         "loader/derived.py",
         "bound_under_rooms",
@@ -278,6 +300,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "unit_weight", "division_forward"): "D",  # (A_1 W)^2 over sin k, and the half
     ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
+    # covector.py
+    ("covector.py", "link_fluxes", "division_forward"): "D",  # the pace squared off the pair, exact
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once

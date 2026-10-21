@@ -10,7 +10,7 @@ import pytest
 from event_universe import emission, resonance
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features import click, read
-from event_universe.loader import derived
+from event_universe.loader import derived, rooms
 
 PAIR, GAMMA, T, LIGHT = (4000, 6000), 6000, 32768, (6000, 6000)  # the law's own numbers, the examples' T
 
@@ -86,7 +86,7 @@ def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
     assert derived.count_wall(SimpleNamespace(pair=LIGHT), T) == 3 * 6000 * T
     edge = read.edge_of(PAIR, GAMMA)
     q_max = 15266
-    room = derived.tension_room(PAIR, GAMMA, q_max, False)
+    room = rooms.tension_room(PAIR, GAMMA, q_max, False)
     assert room == -((-(edge * edge * (math.isqrt(q_max * edge) + 1))) // GAMMA**3)
     # node_detector
     square = click.squared(1, T, LIGHT)

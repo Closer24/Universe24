@@ -19,7 +19,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import credit, emission, flux, front, growth, meeting, node
+from event_universe import board_readings, credit, emission, flux, front, growth, meeting, node
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
@@ -170,7 +170,11 @@ def oracle_interval(board: Lattice) -> None:
     if not growth.grow(board):
         return
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
-    currents, senses, stresses = board.currents(), board.sense_currents(), board.stresses()
+    currents, senses, stresses = (
+        board_readings.currents(board),
+        board_readings.sense_currents(board),
+        board_readings.stresses(board),
+    )
     rulers, begun, weighed = board.rulers(1), [s.lines for s in board.states], weighed_currents(board)
     node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
     found = {index: oracle_step_records(board, index, 1) for index in range(len(board.families))}

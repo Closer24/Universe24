@@ -21,7 +21,7 @@ Families = tuple[FamilyRule, ...]  # the families as the loader derived them, in
 
 @dataclass
 class NodeState:
-    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): its lines, each a record of dimension one (two levels and Rule3's remainder), one shape for every family, and per held line the one remainder of its write. A family of quanta's lines are its record, one line (dimension 1) or two (a plane, re and im); a held row's lines are its sources' count, the time line and, where the tensions source it, the three axis lines; the holder of the sign's time line is its record, the light's record on the free row 0, the row no body owns (light its own family, 2026-10-19). The holder of the sign under the rotation carries beside its rows the phase lines (`phases`, the line kind "phase" after the odd lines; features/phase, the mathematician's repaired form of item (g)): per row of the sign beyond the free row six lines of the same shape, the cosine and the sine line of each axis's Link at the Node that owns it (the +a Link of i), the Link's phase as the record owning the row reads it, every row but its own (ALGEBRA.md, No record reads its own write of the sign), 18 integers per Node per record; empty on every other family and on the free row. Its count, currents, tension, form and Wronskian are readings of the lines (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
+    """A family's NodeState at every Node, the law's numbers and nothing else (ALGEBRA.md #the-postulates): its lines, each a record of dimension one (two levels and Rule3's remainder), one shape for every family, and per held line the one remainder of its write. A family of quanta's lines are its record, one line (dimension 1) or two (a plane, re and im); a held row's lines are its sources' count, the time line and, where the tensions source it, the three axis lines, then the flux's three odd lines and the three shear lines xy, yz, zx where its declaration names them; the holder of the sign's time line is its record, the light's record on the free row 0, the row no body owns (light its own family, 2026-10-19). The holder of the sign under the rotation carries beside its rows the phase lines (`phases`, the line kind "phase" after the odd lines; features/phase, the mathematician's repaired form of item (g)): per row of the sign beyond the free row six lines of the same shape, the cosine and the sine line of each axis's Link at the Node that owns it (the +a Link of i), the Link's phase as the record owning the row reads it, every row but its own (ALGEBRA.md, No record reads its own write of the sign), 18 integers per Node per record; empty on every other family and on the free row. Its count, currents, tension, form and Wronskian are readings of the lines (share.py, features/currents, `form`, `wronskian`) and stand nowhere."""
 
     lines: list[Record]
     write_remainders: list[np.ndarray]
@@ -116,7 +116,7 @@ def write_sources(
     rulers: dict[Sourcing, Rulers],
     gamma: int,
 ) -> list[Any]:
-    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), times its factor of the common wall (`HeldWrite`, one wall per line)."""
+    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), and for each shear line xy, yz, zx, where the row declares the shear, SUM over them of w x factor x the shear's part of each, the product of the Node's two axis differences D_a D_b (`readings.off_diagonals_of`), scaled by the count's factor, two powers, over its doubled wall 2 E_s W_c, each line's reading by its position among the record's axis readings (`axis_positions`), times its factor of the common wall (`HeldWrite`, one wall per line)."""
     family = families[held]
     intervals = paces.WRONSKIAN_POWER if family.wronskian else paces.COUNT_POWER
     found: list[Any] = []
@@ -127,17 +127,28 @@ def write_sources(
             scaled = rulers_write_factor(bookings.get(source, 0), rulers[source], gamma, intervals)
             time = time + weight_of(held, families[source[0]]) * scaled
         found.append(time)
-        for axis in range(family.width - 1):
+        for position in axis_positions(family):
             total: Any = 0
             for source in sources:
                 if source in stresses:
-                    scaled = rulers_write_factor(stresses[source][axis], rulers[source], gamma, 2)
+                    scaled = rulers_write_factor(stresses[source][position], rulers[source], gamma, 2)
                     total = (
                         total
                         + weight_of(held, families[source[0]]) * write.factors.get(source[0], 0) * scaled
                     )
             found.append(total)
     return [family.write * numerator for numerator in found]  # the row's write weight k_w
+
+
+def axis_positions(family: FamilyRule) -> list[int]:
+    """The position, among a source record's axis readings (`readings.axis_sources_of`: the three tensions, the three fluxes, the three shears, in that order; a turned record's three sign currents for the holder of the sign under the rotation), that each axis line of one row of a held family takes, in the row's order after its time line: the three tension lines or the three odd lines of the sign read the first three; the flux's odd lines the next three; the shear lines xy, yz, zx the last three (`FamilyRule.off_diagonal_lines`)."""
+    positions = list(range(AXES)) if family.axes else []  # a row sourced by the form alone has none
+    if family.flux:
+        positions += [AXES + axis for axis in range(AXES)]
+    if family.off_diagonal:
+        positions += [2 * AXES + axis for axis in range(AXES)]
+    assert len(positions) == family.width - 1, f"{family.name!r}: {family.width - 1} axis lines"
+    return positions
 
 
 def largest(record: Record) -> int:

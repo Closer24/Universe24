@@ -24,18 +24,14 @@ from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import Rule, division_forward, largest_below, rule3, rule_integers
 from event_universe.emission import packet_unit
 from event_universe.features import phase
-from event_universe.features.start import (
-    RestCollapses,
-    Sourced,
-    held_rests,
-    returned,
-    settled_rows,
-)
+from event_universe.features.start import RestCollapses, Sourced, returned
+from event_universe.features.start.rests import held_rests, settled_rows
 from event_universe.lay import corrected
 from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
 from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
+from event_universe.loader.uniform import UNIFORM, uniform_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
 from event_universe.node import read as content_read
@@ -62,6 +58,7 @@ class Board:
     width: int  # the largest integer of the universe's width, 2^width - 1
     unit: int  # the Link's unit G, the run's declaration like Gamma (ALGEBRA.md #the-paces)
     kind: type = np.int64  # the arrays' kind by the width, the loader's one choice (`kind_of`)
+    carried: bool = False  # the world's `uniform: carried`: a massless rest on a board with no sink its zero-mean part (features/start `rest`, loader/world.py `uniform_of`)
 
     @property
     def room(self) -> int:
@@ -70,9 +67,14 @@ class Board:
 
 
 def board_of(
-    shape: Axis, wrap: Wrap, gamma: int, integers: dict[str, Any], pair: tuple[int, int]
+    shape: Axis,
+    wrap: Wrap,
+    gamma: int,
+    integers: dict[str, Any],
+    pair: tuple[int, int],
+    carried: bool = False,
 ) -> Board:
-    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width."""
+    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width; `carried` the world's `uniform: carried`, read by the loader's own door (`uniform_of`) so that a malformed key is refused by name before any lay."""
     width = int(integers["width"])
     return Board(
         shape,
@@ -83,6 +85,7 @@ def board_of(
         int(2**width - 1),
         int(integers["link_unit"]),
         kind_of(width),
+        carried,
     )
 
 
@@ -405,7 +408,7 @@ def rests(rows: Rows, counts: np.ndarray, board: Board) -> np.ndarray:
         )
         for _position, row in rows
     ]
-    fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit)
+    fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit, (), board.carried)
     return sum(
         (
             np.asarray(field.levels, dtype=board.kind) + row[3]
@@ -427,7 +430,7 @@ def start_content(
 ) -> tuple[np.ndarray, Angles]:
     """The content a body's record reads at the engine's own start, by the engine's own act and no copy of it (`Lattice.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its record's lines and the other bodies' and the packets' on theirs (`others`, each its family and its record, `record_slice`; the symmetric lay over a record's parts, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and every row of the holders of the sign a laid plane sources (the form of every record and its Wronskian as the held write books them, the Wronskian into the record's own row, over the write's wall E_s T, the fine form and no whole quanta), and the record's read of those rests (every holder of the content, and for a plane every row of the holders of the sign but its own, plainly), the content the engine steps its record in (ALGEBRA.md, No record reads its own write of the sign); beside it the angles the record is turned by where a holder declares the rotation (`node.turning`: the time angle's numerators from every sign row but the record's own at the record's own clock, and the odd lines), None where no holder turns it."""
     walls = {
-        number: held_write_of(families, number, board.action).walls
+        number: held_write_of(families, number, board.action, board.unit).walls
         for number, f in enumerate(families)
         if f.held
     }
@@ -481,6 +484,7 @@ def start_content(
         board.width,
         board.gamma,
         board.unit,
+        board.carried,
     )
     booked([field.levels for field in fields])  # the rests as found laid into the rows for the read
     content = np.asarray(
@@ -1287,6 +1291,7 @@ def pixel_mode(
     wrap = Wrap(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
+    carried = uniform_of(document[UNIFORM], document["boundary"]) if UNIFORM in document else False
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
     kept = [n for n, body in enumerate(rows) if not laid_by_the_engine(body)]
@@ -1309,7 +1314,7 @@ def pixel_mode(
             raise ValueError(
                 f"bodies[{number}] declares a Node beyond the board's inner face: nothing stands there"
             )
-        board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
+        board = board_of(shape, wrap, gamma, integers, pairs[body["family"]], carried)
         rows = held_rows(universe, str(body["family"]))
         if number in pixels:  # the one-Node record's declaration, its own seed
             first = counts
@@ -1342,7 +1347,7 @@ def pixel_mode(
     )
     for number, packet in enumerate(document_packets):
         family = str(packet["family"])
-        board = board_of(shape, wrap, gamma, integers, pairs[family])
+        board = board_of(shape, wrap, gamma, integers, pairs[family], carried)
         slot = records[len(bodies) + number]
         rule = families[names.index(family)]
         massless = rule.quanta and rule.pair[0] == rule.pair[1]
@@ -1367,7 +1372,7 @@ def pixel_mode(
                     others.append(
                         (names.index(str(bodies[other]["family"])), records[other], laid_pairs)
                     )
-            board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
+            board = board_of(shape, wrap, gamma, integers, pairs[body["family"]], carried)
             rows = held_rows(universe, str(body["family"]))
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
@@ -1473,7 +1478,7 @@ def pixel_mode(
         body["nodes"] = entry.pop("nodes")
     packets = []
     for number, packet in enumerate(document_packets):
-        board = board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])])
+        board = board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])], carried)
         content = vacuum_of(universe, str(packet["family"]), board)  # the declared rests it reads
         packets.append(
             packet_entry(

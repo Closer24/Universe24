@@ -68,7 +68,7 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
         "held": family.held,
         "sign": family.wronskian,
         "level_weight": family.level_weight,
-        "parts": [1, 3] if family.axes else [1],
+        "parts": [1] + [len(AXES)] * ((family.width - 1) // len(AXES)),
         "quanta": family.quanta,
         "reads": [families[read.family].name for read in family.reads],
         "wall": count_wall(family, action) if family.quanta else None,
