@@ -110,7 +110,7 @@ def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_tur
     rule = rule_integers(*PAIR, GAMMA, GAMMA, GAMMA)
     angles = node.turning(CHARGED, TURNING, states, 1)
     assert angles is not None
-    pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], ring))
+    pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], ring, (-1, -1)))
     assert pairs is not None and any(np.asarray(p).any() for p in pairs[1])
     started = int(records.wronskian(lines, True).sum(dtype=object))
     floor = 0
@@ -123,7 +123,7 @@ def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_tur
     print(f"the ring of 64: W {started}, the drift over 200 intervals {drift} within the floor {floor}")
     n = 9  # the rational mirror: the same step in Fractions, the pairs the engine's integers
     levels = draw.integers(-3000, 3001, n)
-    links = link_levels((levels.reshape(n, 1, 1), zero[:n], zero[:n]), ring)
+    links = link_levels((levels.reshape(n, 1, 1), zero[:n], zero[:n]), ring, (-1, -1))
     even, odd_part = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, links)  # type: ignore[misc]
     even = [np.asarray(p, dtype=object).ravel() for p in even]
     odd_part = [np.asarray(p, dtype=object).ravel() for p in odd_part]

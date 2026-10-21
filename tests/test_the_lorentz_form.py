@@ -68,7 +68,7 @@ def test_the_form_is_declared_into_the_walls_and_the_links_read_and_refused_by_n
     assert write.factors == {charged: 1}
     for form in (None, "positive"):
         _integers, plain = universe_of(universe_with(form))
-        assert not plain[charge].lorentz and plain[charge].link_read == (1, 1)
+        assert not plain[charge].lorentz and plain[charge].link_read == (-1, -1)
         plain_write = held_write_of(plain, charge, action, UNIT)
         assert (
             plain_write.walls == (e_s * action, 2 * e_s * action, 2 * e_s * action, 2 * e_s * action) * 2
