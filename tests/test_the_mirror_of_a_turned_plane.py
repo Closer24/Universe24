@@ -14,7 +14,7 @@ from tests.laws import LINE_KEYS, arrays
 
 ATOM = Path(world_files.REPOSITORY_ROOT) / "examples" / "events" / "atom" / "hydrogen_1s.json"
 WHOLE, CUBE, CUT = 11, 7, 2  # the 7-cube about the 11-cube's centre: the file's x, y, z from 2 through 8
-INTERVALS, BACK = 5, 2  # the intervals side by side; the last ones stepped back against the snapshot
+INTERVALS, BACK = 4, 2  # side by side (the unfixed engine first parts at 4); the last ones stepped back
 
 
 def cut(flat: list[int], mirror: bool) -> list[int]:
