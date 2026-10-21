@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 THIRDS = 3  # the covector's unit in the time line's: the odd lines enter the form at c^2 = 1 / 3 against the time line's 1, so the form L_0^2 - (1 / 3) SUM_a L_a^2 is read in thirds, 3 L_0^2 - SUM_a L_a^2
-TIME_WEIGHT = -THIRDS  # the time line's entry, negative: the scalar and the longitudinal wave of a conserved source carry opposite energies and cancel, the two transverse lines carry Larmor's (the remedy)
+TIME_WEIGHT = -THIRDS  # the time line's entry, negative: the scalar and the longitudinal wave of a conserved source carry opposite energies and cancel, the two transverse lines carry Larmor's
 Pairs = tuple[
     tuple[Any, ...], tuple[Any, ...]
 ]  # each Link's pair (R^c, R^s) in Port order, `plane.link_pairs`
