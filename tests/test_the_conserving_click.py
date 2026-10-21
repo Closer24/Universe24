@@ -27,13 +27,13 @@ WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 
 PIECE, FAN, RECOIL = (
     11055256,
     8012902,
-    4906083,
+    10191633,
 )  # the taker world's click: the piece's p_z, the photon's P_z, the body's P_z after
 T = 36000000  # the clock's unit of both worlds, the energies' scale
 GIVER_BEFORE = ((1, 0), 21029078, (0, 0, 0), 692879288000, 0)  # the giver at 11: see table_of
 GIVER_AFTER = ((1, 1), 18000211, (2500, 0, 0), 650975322000, 6675858000)  # the giver at 12
 TAKER_BEFORE = ((1, 1), 21310641, (0, 0, 0), 903766398000, 186746982000)  # the taker at 17
-TAKER_AFTER = ((1, 0), 18008518, (0, 0, RECOIL), 980418680000, 186776658000)  # the taker at 18
+TAKER_AFTER = ((1, 0), 18010750, (0, 0, RECOIL), 979032106000, 186776658000)  # the taker at 18
 
 
 def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_bodys_path():
@@ -169,7 +169,7 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
 
 
 def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
-    """The recoil as the per-Node phase (the reader's design, (c); ALGEBRA.md, The lattice momentum) on the shipped taker world examples/events/conserve/taker_c5.json: the board of 5 x 5 x 7 with the electron standing in its 1s at the centre, declared through the tool over its whole support (175 Nodes, `--region whole`, the transition to the level [3536, 6000] at the weight 51 and the resonance [5822, 6000], no rate), and a photon packet of one quantum laid at the near end along z (the wave [1, 6], the amplitude 2300, the count 1), the window 9 derived at load from the packet's passage. The body's lattice momentum read as its books read a turned record, with the Link's pair (`take.fan_momentum`): 0 exactly on every axis at the lay and at every interval to the click (a standing record moves nowhere). The click at the second close, 18 (the first close at 9 drew null at the share 0.14, the packet half arrived): the piece's p_z 11055256 in T's unit (the packet's momentum over its share through the body's Nodes, 0.31 of a plane wave's 2 T sin k at k = pi / 6, the five-Node packet's own), the photon's P over the board 8012902 at the click, the reading `WRITTEN_AS_PHASE` with the lay's source and no side (the hole's Node two-sided, the quantum taken in the books, the front from it at the count 0); after the write the body carries P_z 4906083 and nothing on x and y, the sign the piece's and the size 0.44 of it, the entered part's own envelope (SUM over the Links of A_i A_(i+1) against SUM over the Nodes of A_i^2 of the lay in the 1s's weights, 1 for a plane wave), the light's piece gone with its count; the charge of the electron's record T / 2 + 8518 after against 21310641 at the close before (the standing form's one quantum at its unit; the well's reading, 21311362 at the lay and the walk since), its share 980418680000 against 903766398000 at the close before (689673994000 at the lay, the plain share's climb in the well; the lay at the free rotation in the well after, the run's reading), named for the table."""
+    """The recoil as the per-Node phase (the reader's design, (c); ALGEBRA.md, The lattice momentum) on the shipped taker world examples/events/conserve/taker_c5.json: the board of 5 x 5 x 7 with the electron standing in its 1s at the centre, declared through the tool over its whole support (175 Nodes, `--region whole`, the transition to the level [3536, 6000] at the weight 51 and the resonance [5822, 6000], no rate), and a photon packet of one quantum laid at the near end along z (the wave [1, 6], the amplitude 2300, the count 1), the window 9 derived at load from the packet's passage. The body's lattice momentum read as its books read a turned record, with the Link's pair (`take.fan_momentum`): 0 exactly on every axis at the lay and at every interval to the click (a standing record moves nowhere). The click at the second close, 18 (the first close at 9 drew null at the share 0.14, the packet half arrived): the piece's p_z 11055256 in T's unit (the packet's momentum over its share through the body's Nodes, 0.31 of a plane wave's 2 T sin k at k = pi / 6, the five-Node packet's own), the photon's P over the board 8012902 at the click, the reading `WRITTEN_AS_PHASE` with the lay's source and no side (the hole's Node two-sided, the quantum taken in the books, the front from it at the count 0); after the write the body carries P_z 10191633 and nothing on x and y, the sign the piece's and the size 0.92 of it: the phase written at the envelope's k (the cold reader's second finding of 2026-10-21; `take.recoil_phases`, den sin k' = p_z den SUM A_i^2 div (2 T SUM A_i A_(i+1)) over the lay's own amplitudes, 1913 at den 6000 for the envelope 0.4817, where k from p_z alone, 921, carried 0.44), the lay's own reading 2 T sin k' e = 11057921, the piece to 0.03 percent, and the board's turned read 0.92 of it, the remainder 0.08 the well's reading through the Link's pair, named for item 48; the light's piece gone with its count; the charge of the electron's record T / 2 + 10750 after against 21310641 at the close before (the standing form's one quantum at its unit; the well's reading, 21311362 at the lay and the walk since), its share 979032106000 against 903766398000 at the close before (689673994000 at the lay, the plain share's climb in the well; the lay at the free rotation in the well after, the run's reading), named for the table."""
     lines: list[dict] = []  # type: ignore[type-arg]
     world = load_shipped(FOLDER / "taker_c5.json")
     row = world.bodies[1]
@@ -202,13 +202,11 @@ def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
     assert click["lost"] == [reports.WRITTEN_AS_PHASE, reports.LOST_TO_LAY, reports.NO_SIDE]
     assert (click["source"], click["recoil"]) == (reports.THE_LAY, [0, 0, -PIECE])
     after = fan_momentum(board, electron)
-    assert (
-        after == (0, 0, RECOIL) and 0 < RECOIL < PIECE
-    )  # the sign the piece's, the size the envelope's
+    assert after == (0, 0, RECOIL) and PIECE * 9 // 10 < RECOIL < PIECE  # the piece to the remainder
     assert (books.part, books.counts) == (1, [0, 1]) and board.credit.counts[photon] == 0
     assert board.credit.deficits == {photon: 1} and len(board.credit.fronts) == 1
-    assert (charge, wronskian_of(board, electron)) == (21310641, 18008518)
-    assert (share, board.total_share(electron)[0]) == (903766398000, 980418680000)
+    assert (charge, wronskian_of(board, electron)) == (21310641, 18010750)
+    assert (share, board.total_share(electron)[0]) == (903766398000, 979032106000)
 
 
 def wronskian_of(board: Lattice, index: int) -> int:

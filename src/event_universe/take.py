@@ -13,7 +13,7 @@ from event_universe import board_readings, readings, records
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
 from event_universe.emission import Emitter
-from event_universe.features.click import Face, rotated, standing
+from event_universe.features.click import Face, rotated, spread, squared, standing
 from event_universe.features.phase import fold, signed_rounded
 from event_universe.front import on_board
 from event_universe.lay import laid
@@ -64,13 +64,31 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
 
 
 def recoil_phases(
-    board: Lattice, books: NodeBooks, momentum: tuple[int, int, int] | None
-) -> list[tuple[int, int] | None]:
-    """The recoil's phase per Node of the body, k . (x - c) as a pair (den cos, den sin) at every Node in the books' order (2026-10-21, the reader's design of the conserving click, (c); ALGEBRA.md, The lattice momentum: a plane wave's P_a is the sign of +k, one quantum at the wave number k carrying 2 T sin k_a per axis): k the light's wave number per axis from the piece's momentum `momentum`, p_a in T's unit (`node_detector.piece_momentum`), den sin k_a = p_a den div 2 T by the engine's one signed rounding and den cos k_a by the one search on den^2 - (den sin k_a)^2 (the pair at the body's family's den; the cosine the positive root, the piece carrying sin k alone); at each Node the three axes' pairs at the angles (x_a - c_a) k_a by the rotation act's recurrence (`features/click.rotated`, Rule3 with no Links, the sine's sign the offset's) composed as Gaussian integers with one signed rounding per product (`features/phase.fold`), c the body's declared Node, so that the entered part re-laid in these directions carries the piece's P_a over the body's Nodes to the lay's rounding; None at every Node where no momentum stands, where it is 0 on every axis, where the body stands at one Node, or where the body is held at declared Nodes by its cut Links (every body laid in its parts by the engine's own act, `meeting.cut`, `meeting.laid_record`; the recoil of a body held at declared Nodes the declaration's, ALGEBRA.md, The click's algebra beyond the law, item 48), the reading `LOST_TO_TAKER` then: the phase is written on a bound record standing free in its well (`NodeBooks.bound`), whose Links stand open so that the gradient moves it as a plane wave's does."""
+    board: Lattice, books: NodeBooks, momentum: tuple[int, int, int] | None, count: int
+) -> tuple[list[tuple[int, int] | None], bool]:
+    """The recoil's phase per Node of the body, k . (x - c) as a pair (den cos, den sin) at every Node in the books' order (2026-10-21, the reader's design of the conserving click, (c); ALGEBRA.md, The lattice momentum: a plane wave's P_a is the sign of +k, one quantum at the wave number k carrying 2 T sin k_a per axis): k the wave number per axis the entered part must carry so that its lay carries the piece's momentum `momentum`, p_a in T's unit (`node_detector.piece_momentum`): a part laid in the lay's weights at the phase k . x carries P_a = 2 T sin k_a e_a per quantum, e_a = SUM over the Links along a of A_i A_(i+a) over SUM over the Nodes of A_i^2 (the momentum's bilinear reads the Link's product of the two amplitudes, 1 for a plane wave), the amplitudes the lay's own, A_i = spread(squared(count), weight_i / total) as `relaid` lays them (`features/click.standing`), so den sin k_a = p_a den SUM A_i^2 div (2 T SUM A_i A_(i+a)) by the engine's one signed rounding, one division act per axis (the cold reader's second finding of 2026-10-21, the body carrying 0.44 of the piece at k from p_a alone), capped at den where |p_a| exceeds 2 T e_a, the excess past sin 1 lost (the second value True, the reading `LOST_TO_TAKER` beside `WRITTEN_AS_PHASE`; where no Link along a joins two Nodes of the region the axis carries nothing and the piece's p_a there is the excess), and den cos k_a by the one search on den^2 - (den sin k_a)^2 (the pair at the body's family's den; the cosine the positive root, the piece carrying sin k alone); at each Node the three axes' pairs at the angles (x_a - c_a) k_a by the rotation act's recurrence (`features/click.rotated`, Rule3 with no Links, the sine's sign the offset's) composed as Gaussian integers with one signed rounding per product (`features/phase.fold`), c the body's declared Node, so that the entered part re-laid in these directions carries the piece's P_a over the body's Nodes to the lay's rounding; None at every Node where no momentum stands, where it is 0 on every axis, where the body stands at one Node, or where the body is held at declared Nodes by its cut Links (every body laid in its parts by the engine's own act, `meeting.cut`, `meeting.laid_record`; the recoil of a body held at declared Nodes the declaration's, ALGEBRA.md, The click's algebra beyond the law, item 48), the reading `LOST_TO_TAKER` then: the phase is written on a bound record standing free in its well (`NodeBooks.bound`), whose Links stand open so that the gradient moves it as a plane wave's does."""
     if momentum is None or not any(momentum) or len(books.nodes) < 2 or not books.bound:
-        return [None for _node in books.nodes]
-    den, action = board.families[books.index].pair[1], board.world.quantum_action
-    sines = [int(signed_rounded(p * den, 2 * action)) for p in momentum]
+        return [None for _node in books.nodes], False
+    family, action = board.families[books.index], board.world.quantum_action
+    den, total, shape = family.pair[1], sum(books.weights), board.shape
+    square = squared(count, action, family.pair)
+    sizes = {
+        tuple(int(v) for v in here): spread(square, (weight, total))
+        for here, weight in zip(books.nodes, books.weights, strict=True)
+    }  # the lay's own amplitudes
+    norm, sines, excess = sum(size * size for size in sizes.values()), [], False
+    for axis, p in enumerate(momentum):
+        links = 0  # SUM over the Links along the axis of A_i A_(i+a), the envelope's numerator
+        for here, size in sizes.items():
+            ahead = list(here)
+            ahead[axis] += 1
+            if ahead[axis] == shape[axis]:
+                ahead[axis] = 0 if board.world.periodic[axis] else -1
+            links += size * sizes.get(tuple(ahead), 0)
+        sine = int(signed_rounded(p * den * norm, 2 * action * links)) if links else p * den
+        if abs(sine) > den:
+            sine, excess = (den if sine > 0 else -den), True
+        sines.append(sine)
     cosines = [largest_below(den * den - s * s) for s in sines]
     centre = board.world.bodies[books.number].nodes[0]
     found: list[tuple[int, int] | None] = []
@@ -84,7 +102,7 @@ def recoil_phases(
             turned = fold(pair[0], pair[1], cosine, -sine if offset < 0 else sine, den)
             pair = (int(turned[0]), int(turned[1]))
         found.append(pair)
-    return found
+    return found, excess
 
 
 def levels_at(
