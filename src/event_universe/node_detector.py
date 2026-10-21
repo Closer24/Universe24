@@ -88,6 +88,8 @@ class NodeBooks:
         default_factory=dict
     )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
     bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
+    outflow: int = 0  # the beat's outflow the emission's draw reads at the window's close, the window's `beat` floored at 0 and signed outward, 0 at every other interval (`meeting.jumped`, `meeting.emission_drawn`)
+    beat: int = 0  # the beat's current of (5): the window's sum of the body's own record's conserved current through its own front Ports, inward positive, in the unit G^2 as the intake is booked (`booked_inflows`; ALGEBRA.md, The click writes on the lattice (5): the emission's hazard the beat's current through the declared boundary over W_c plus the declared constant, `lists.hazard_weights`), begun again at the window's close (`meeting.jumped`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
@@ -382,12 +384,16 @@ def weighed_currents(board: Lattice) -> Weighed:
 
 
 def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray) -> None:
-    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own."""
+    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own. An emitter, a body with a rate, books beside them the beat's current of (5) (2026-10-21, the reader's design of the conserving click, (d)): its own record's conserved current through the same front Ports this interval (a turned record's the flux line's own with the Link's pair, `readings.turned_currents_of`, the same read the credit books), inward positive, into `NodeBooks.beat`, the window's sum the emission's hazard reads at the close over W_c (`lists.hazard_weights`); a one-Node body's static record carries no beat and books 0 to the walk."""
     for books in board.credit.bodies:
         drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
-        if drives:
+        beating = books.declared.rates and books.index in weighed  # an emitter: its own record's current
+        if drives or beating:
             region = board.mask(books.nodes)
             facing = front(region, wrap, region, own)
             for drive in drives:
                 booked_inflow(board, books, drive, weighted(facing, weighed[drive]))
                 books.passages.setdefault(drive, Passage()).booked(region, weighed[drive])
+            if beating:  # the beat's current of (5): the body's own record through its own front
+                through = weighted(facing, [weighed[books.index][books.record]])
+                books.beat += sum(int(np.asarray(came).sum(dtype=object)) for came in through)
