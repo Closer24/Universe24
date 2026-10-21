@@ -1,4 +1,4 @@
-"""The click's read of the board (ALGEBRA.md, The click's read of the board; the owner's words: the board is deterministic, the click is the only instrument that reads it, and the new draw is built from the remainders and Rule3 only): at a detector's draw Rule3's kept remainders of the records the detector reads, one per line per Node in [0, w), at the detector's Nodes (a region detector its region's Nodes, a body detector the body's Nodes) are read as the digits of one number, read and never written (`digits_of`, the one realisation of the order `loader/draw.DIGIT_ORDER`, one declared constant; `read_of`, the number by `features/click.read_number`), and every draw of the close is one division act on it (`features/click.drawn_from`, called by `node_detector.credit_draw`, `node_detector.picked` and `node_detector.drawn_node`). A record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once (the reader's D2 of 2026-10-20: a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits). A remainder lies on the digits' lattice, F = gcd(w, D_i, R_ij) at the Node, every one on w div 2 + F Z (`lattice_of`), so the digit is the remainder's index on its lattice, r div F, one of w div F values, in the base w div F + 1, one above the count so that no total built of the wall's primes divides the base and every digit enters the draw's residue (the remainders themselves as digits in the base w would leave the residue on a total T dividing w to the last remainder alone, confined to the classes of gcd(F, T): the conversion's draw at the weights [span, rate - span] one outcome for ever); the read is refused by name where every digit lies on the lattice of the exact vacuum paces, three values each, and where every digit stands at the lay's origin, nothing read; no generator, no seed and no number of the run born outside the world file and Rule3."""
+"""The click's read of the board (ALGEBRA.md, The click's read of the board; the owner's words: the board is deterministic, the click is the only instrument that reads it, and the new draw is built from the remainders and Rule3 only): at a detector's draw Rule3's kept remainders of the records the detector reads, one per line per Node in [0, w), at the detector's Nodes (a region detector its region's Nodes, a body detector the body's Nodes) are read as the digits of one number, read and never written (`digits_of`, the one realisation of the order `loader/draw.DIGIT_ORDER`, one declared constant; `read_of`, the number by `features/click.read_number`), and every draw of the close is one division act on it (`features/click.drawn_from`, called by `node_detector.credit_draw`, `node_detector.picked` and `node_detector.drawn_node`). A record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once (the reader's D2 of 2026-10-20: a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits). A remainder lies on the digits' lattice, F = gcd(w, D_i, R_ij) at the Node, and on a turned plane gcd(w, D_i, R_ij, R^c_ij, R^s_ij), the Link pairs the step reads (2026-10-21, the reader's ruling on issue #2169), every one on w div 2 + F Z (`lattice_of`), so the digit is the remainder's index on its lattice, r div F, one of w div F values, in the base w div F + 1, one above the count so that no total built of the wall's primes divides the base and every digit enters the draw's residue (the remainders themselves as digits in the base w would leave the residue on a total T dividing w to the last remainder alone, confined to the classes of gcd(F, T): the conversion's draw at the weights [span, rate - span] one outcome for ever); the read is refused by name where every digit lies on the lattice of the exact vacuum paces, three values each, and where every digit stands at the lay's origin, nothing read; no generator, no seed and no number of the run born outside the world file and Rule3."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import node
+from event_universe import flux, node
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
 from event_universe.features.front import ball
@@ -23,12 +23,17 @@ Reads = Sequence[tuple[int, np.ndarray]]  # what a detector reads: each family w
 def digits_of(
     board: Lattice, index: int, at: np.ndarray
 ) -> Iterator[tuple[int, int, int, tuple[int, int]]]:
-    """One family's digits at the Nodes the mask `at` names, in the order `loader/draw.DIGIT_ORDER`, the one realisation of that order: every record of quanta of the family in its order (`loader/derived.quanta_records`; a holder of the sign its one record, light's free row, `Lattice.lines_of`), the digits' lattice F at the Nodes from Rule3's integers of the record's read (`lattice_of`), then every line of the record in the declared order and each line's kept remainder at the Nodes in the lattice's index order; per digit the remainder, its Node's F, the family's wall w and its place, the record and the Node's index in the lattice's order (the copies' comparison, `read_of`), Python's integers, the arrays read and never written."""
+    """One family's digits at the Nodes the mask `at` names, in the order `loader/draw.DIGIT_ORDER`, the one realisation of that order: every record of quanta of the family in its order (`loader/derived.quanta_records`; a holder of the sign its one record, light's free row, `Lattice.lines_of`), the digits' lattice F at the Nodes from Rule3's integers of the record's read and, where the record is turned or folded, the Link pairs its step reads (`lattice_of`, `flux.pairs_of` at the same read, None for a plain record), then every line of the record in the declared order and each line's kept remainder at the Nodes in the lattice's index order; per digit the remainder, its Node's F, the family's wall w and its place, the record and the Node's index in the lattice's order (the copies' comparison, `read_of`), Python's integers, the arrays read and never written."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     wall = wall_of(family.pair[1], gamma, unit)
     for record in quanta_records(board.families, index):
-        rule = node.rule_of(family, gamma, *board.read(index, 1, record), unit)
-        lattice = lattice_of(rule, at)
+        content, factors = board.read(index, 1, record)
+        rule = node.rule_of(family, gamma, content, factors, unit)
+        families, states, amplitude = board.families, board.states, board.amplitude
+        pairs = flux.pairs_of(
+            index, families, states, 1, board.wrap, gamma, content, factors, record, amplitude
+        )
+        lattice = lattice_of(rule, at, pairs)
         for line in board.lines_of(index, record):
             kept = [int(remainder) for remainder in np.asarray(line.remainder)[at]]
             for place, (remainder, found) in enumerate(zip(kept, lattice, strict=True)):
@@ -58,9 +63,12 @@ def at_origin(board: Lattice, reads: Reads) -> bool:
     )
 
 
-def lattice_of(rule: Rule, at: np.ndarray) -> list[int]:
-    """The digits' lattice at the Nodes `at` names, in the lattice's index order: F = gcd(w, D_i, R_ij over the six Ports) from Rule3's integers at the Node (`node.rule_of`), Euclid's gcd on the rule's coefficients once (kind D in the acts table); the law's line gives r' = r + S_t (mod w) with S_t a sum of multiples of the reaches and the mass, and every line is born at w div 2, so a digit lies on w div 2 + F Z and takes w div F values: w div 3 for light at the exact vacuum paces (every R_ij = w div 3 and D_i = 0 at p_0 = p_i = Gamma with no tension: three values, the lattice the read is refused on, `read_of`), 2 Gamma^2 G^2 gcd(num, 3 den) for any pair there, and 3,072,000 = 2 num G^2 on the shipped universes' content 60, 108,000,000 values per digit."""
-    terms = [np.broadcast_to(np.asarray(value), at.shape)[at] for value in (rule.mass, *rule.reaches)]
+def lattice_of(rule: Rule, at: np.ndarray, pairs: flux.Pairs | None = None) -> list[int]:
+    """The digits' lattice at the Nodes `at` names, in the lattice's index order: F = gcd(w, D_i, R_ij over the six Ports) from Rule3's integers at the Node (`node.rule_of`) and, where the record is turned or folded, the Link pairs' R^c_ij and R^s_ij over the six Ports beside them (`pairs`, the pairs the step reads, `flux.pairs_of`, (R^c, R^s) = p_i^2 (X^c, X^s) per Port; None for a plain record, the plain reaches alone), Euclid's gcd on the line's coefficients once (kind D in the acts table); the law's line gives r' = r + S_t (mod w) with S_t a sum of multiples of the line's terms and the mass, the plain reaches on a plain line and the pairs' products on a turned one (ALGEBRA.md, The flux form on a turned or folded Link; the reader's ruling of 2026-10-21 on issue #2169: the plain reaches alone gave the hydrogen electron w div 9, nine values, where its remainders walk on w div 2 + T Z, T = p_i^2 at the vacuum paces, 9,216,000 values per digit), and every line is born at w div 2, so a digit lies on w div 2 + F Z and takes w div F values: w div 3 for light at the exact vacuum paces (every R_ij = w div 3 and D_i = 0 at p_0 = p_i = Gamma with no tension: three values, the lattice the read is refused on, `read_of`), 2 Gamma^2 G^2 gcd(num, 3 den) for any plain pair there, and 3,072,000 = 2 num G^2 on the shipped universes' content 60, 108,000,000 values per digit."""
+    read = (
+        (rule.mass, *rule.reaches) if pairs is None else (rule.mass, *rule.reaches, *pairs[0], *pairs[1])
+    )
+    terms = [np.broadcast_to(np.asarray(value), at.shape)[at] for value in read]
     return [gcd(int(rule.wall), *(int(term[k]) for term in terms)) for k in range(int(at.sum()))]
 
 
