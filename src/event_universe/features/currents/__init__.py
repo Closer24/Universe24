@@ -1,4 +1,4 @@
-"""The currents (ALGEBRA.md #the-count-is-the-records-share): the current through each of a Node's six Ports from the record's level pairs, F_ij = num (now_i before_j - before_i now_j) into Node i from its neighbour j, the booking of the family's two levels at the Link's two ends, positive inward, the reading a node_detector makes at its boundary Ports; the share's change over one step of Rule3 is exactly the six currents summed, at the pair the step started from. Beside it the tension's part at the Node on each axis from the levels, h_a(i) = now_(i-a) now_(i+a) - now_i^2 times the weight, the Node's own reading of its two neighbours along the axis, one Link's reach: the stress booking on the Link (i, i + a), G_aa(i) = now_i (now_(i+2a) - now_i) - now_(i+a) (now_(i+a) - now_(i-a)), the flux of the a-momentum through the Link at one time, is the sum of its two ends' parts, G_aa(i) = h_a(i) + h_a(i + a), so each Node sources its own part into the held row's axis part and the Link's tension is read from the two ends' parts through the Ports (ALGEBRA.md #the-primitives, The tension; #the-interval, the dependency radius). Both are readings of the record as it stands at the interval's start and never a write to it."""
+"""The currents (ALGEBRA.md #the-count-is-the-records-share): the current through each of a Node's six Ports from the record's level pairs, F_ij = num (now_i before_j - before_i now_j) into Node i from its neighbour j, the booking of the family's two levels at the Link's two ends, positive inward, the reading a node_detector makes at its boundary Ports; the share's change over one step of Rule3 is exactly the six currents summed, at the pair the step started from. Beside it the tension's part at the Node on each axis from the levels, h_a(i) = now_(i-a) now_(i+a) - now_i^2 times the weight, the Node's own reading of its two neighbours along the axis, one Link's reach: the stress booking on the Link (i, i + a), G_aa(i) = now_i (now_(i+2a) - now_i) - now_(i+a) (now_(i+a) - now_(i-a)), the flux of the a-momentum through the Link at one time, is the sum of its two ends' parts, G_aa(i) = h_a(i) + h_a(i + a), so each Node sources its own part into the held row's axis part and the Link's tension is read from the two ends' parts through the Ports (ALGEBRA.md #the-primitives, The tension; #the-interval, the dependency radius). Beside them the shear's part on each axis pair, weight x D_a now_i x D_b now_i, the product of the Node's own two axis differences (`off_diagonal_part`), the two ends' halves of the Link's off-diagonal booking G_ab in the mean, written into a held row's shear lines where its declaration names the shear. All three are readings of the record's levels at the interval's start and never a write to it."""
 
 from __future__ import annotations
 
@@ -57,3 +57,23 @@ def stress(weight: int, neighbours: tuple[Neighbours, Neighbours, Neighbours]) -
     """The tension's part on each axis at every Node from one level pair's neighbours."""
     x, y, z = (tension(weight, n) for n in neighbours)
     return x, y, z
+
+
+def difference(n: Neighbours) -> Any:
+    """The Node's own axis difference of the level now, D_a now_i = now_(i+a) - now_(i-a), the two a-Ports' differences summed, one Link's reach: the axis booking the shear's product takes (ALGEBRA.md, The tension: D_a the centred difference along the axis a)."""
+    return n.ahead - n.behind
+
+
+def off_diagonal_part(weight: int, first: Neighbours, second: Neighbours) -> Any:
+    """The Node's own part of the shear on one axis pair, weight x D_a now_i x D_b now_i, the product of its two axis differences at the same Node and the same interval, one Link's reach and no read at the reach sqrt 2 (the owner's word of 2026-10-20): over the doubled wall 2 E_s W_c it is the Node's half of the Link's off-diagonal booking, the flux of the a-momentum across a b-Link, -num G_ab(i) = -num [now_i D_a now_(i+b) - now_(i+b) D_a now_i], in the mean (ALGEBRA.md, The tension: a plane record of the amplitude b has G_ab = -2 b^2 sin k_a sin k_b, and D_a now D_b now = 4 b^2 sin^2(theta) sin k_a sin k_b, whose mean over the record's phase theta is 2 b^2 sin k_a sin k_b, the Link's -G_ab, so the two ends' halves meet the Link's booking as -num h_a(i) - num h_a(i + a) meets -num G_aa(i) exactly; a uniform record's part 0; a narrow-band packet of count c and velocity v the dust's c v_a v_b beside the tension's c v_a^2, within the rounding); the sign the tension's, a record's stress deepening the content; no division."""
+    return weight * difference(first) * difference(second)
+
+
+def off_diagonal(weight: int, neighbours: tuple[Neighbours, Neighbours, Neighbours]) -> Vector:
+    """The shear's part on each axis pair at every Node from one level pair's neighbours, in the order xy, yz, zx (`off_diagonal_part`)."""
+    x, y, z = neighbours
+    return (
+        off_diagonal_part(weight, x, y),
+        off_diagonal_part(weight, y, z),
+        off_diagonal_part(weight, z, x),
+    )

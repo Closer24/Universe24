@@ -7,7 +7,7 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import credit, digits, meeting, node_detector, reports, world_files
+from event_universe import board_readings, credit, digits, meeting, node_detector, reports, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import amplitude, spread, squared
@@ -99,7 +99,10 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
     misses, totals = [], [[0, 0], [0, 0]]
     for _interval in range(8):
         for k, b in enumerate(boards):
-            read, flow = b.read(light), [np.asarray(c, dtype=object) for c in b.currents()[light]]
+            read, flow = (
+                b.read(light),
+                [np.asarray(c, dtype=object) for c in board_readings.currents(b)[light]],
+            )
             factors = [np.broadcast_to(np.asarray(q, dtype=object), b.shape) for q in read[1]]
             weighed = [q * c for q, c in zip(factors, flow, strict=True)]
             plain, weighted = (

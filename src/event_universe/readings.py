@@ -1,8 +1,8 @@
-"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part and the axis sources (`stresses_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`); readings alone, no level written."""
+"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`), the tension's part, the shear's part and the axis sources (`stresses_of`, `off_diagonals_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`); readings alone, no level written."""
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from typing import Any
 
 import numpy as np
@@ -10,6 +10,10 @@ import numpy as np
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.features import currents
 from event_universe.records import Record
+
+Part = Callable[
+    [int, tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]], currents.Vector
+]  # a reading of one level's neighbours per axis or axis pair, the tension's or the shear's
 
 
 def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
@@ -32,15 +36,18 @@ def sense_current_of(lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
     return np.asarray(found[0]), np.asarray(found[1]), np.asarray(found[2])
 
 
-def currents_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[np.ndarray, ...]:
-    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary."""
+def currents_of(
+    weight: int, lines: Sequence[Record], wrap: Wrap, weights: Sequence[int] | None = None
+) -> tuple[np.ndarray, ...]:
+    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights)."""
     found: list[Any] = [0] * 6
-    for record in lines:
+    scales = [1] * len(lines) if weights is None else list(weights)
+    for record, scale in zip(lines, scales, strict=True):
         here = currents.Levels(record.now, record.before)
         now, before = ports(record.now, wrap), ports(record.before, wrap)
         for port in range(6):
             there = currents.Levels(now[port], before[port])
-            found[port] = found[port] + currents.current(weight, here, there)
+            found[port] = found[port] + currents.current(weight * scale, here, there)
     return tuple(np.asarray(value) for value in found)
 
 
@@ -58,20 +65,30 @@ def momentum_of(
     return int(found[0]), int(found[1]), int(found[2])
 
 
-def stresses_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
-    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension)."""
+def stresses_of(
+    weight: int, lines: Sequence[Record], wrap: Wrap, part: Part = currents.stress
+) -> currents.Vector:
+    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension); `part` the reading of one line's neighbours summed over the lines, the tension's (features/currents `stress`) or, through `off_diagonals_of`, the shear's, one body for the two."""
     tensions: currents.Vector = (0, 0, 0)
     for record in lines:
-        found = currents.stress(weight, axis_neighbours(record.now, wrap))
+        found = part(weight, axis_neighbours(record.now, wrap))
         tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
     return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
 
 
-def axis_sources_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> tuple[Any, ...]:
-    """The axis sources of a record at every Node, six readings of its lines at the interval's start, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports; a holder without them reads the first three, `write_sources`)."""
+def off_diagonals_of(weight: int, lines: Sequence[Record], wrap: Wrap) -> currents.Vector:
+    """The shear's part at every Node on each axis pair, xy, yz, zx, from a record's levels now as they stand at the interval's start, weight x D_a now_i x D_b now_i with D_a now_i = now_(i+a) - now_(i-a), the product of the Node's own two axis differences, every line's parts added, a reading of the lines into the held rows' shear lines, one Link's reach and the same interval (features/currents `off_diagonal`; ALGEBRA.md, The tension, the off-diagonal booking G_ab met in the mean at the Link's two ends) (one body with `stresses_of`, the shear's part in the tension's place)."""
+    return stresses_of(weight, lines, wrap, currents.off_diagonal)
+
+
+def axis_sources_of(
+    weight: int, lines: Sequence[Record], wrap: Wrap, off_diagonal: bool = False
+) -> tuple[Any, ...]:
+    """The axis sources of a record at every Node, six readings of its lines at the interval's start, nine where a held row of the world declares the shear, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports), then, with `off_diagonal`, the shear's part on each axis pair xy, yz, zx (`off_diagonals_of`, into the shear lines); a holder takes the readings its lines name, by position (`records.write_sources`)."""
     through = currents_of(weight, lines, wrap)
     fluxes = [through[2 * axis + 1] - through[2 * axis] for axis in range(AXES)]
-    return (*stresses_of(weight, lines, wrap), *fluxes)
+    off = off_diagonals_of(weight, lines, wrap) if off_diagonal else ()
+    return (*stresses_of(weight, lines, wrap), *fluxes, *off)
 
 
 def axis_neighbours(

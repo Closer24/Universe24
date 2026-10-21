@@ -12,7 +12,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import credit, growth, node, readings, share, world_files
+from event_universe import board_readings, credit, growth, node, readings, share, world_files
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
@@ -179,7 +179,7 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
     for index in indexes:
         read = board.read(index)
         pace = np.asarray(paces.link_pace_of(gamma, read[0])).astype(object)
-        flow = [np.asarray(current, dtype=object) for current in board.currents()[index]]
+        flow = [np.asarray(current, dtype=object) for current in board_readings.currents(board)[index]]
         factors = [np.asarray(q).astype(object) - unit * unit for q in read[1]]
         skew = [q * c for q, c in zip(factors, flow, strict=True)]
         terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())

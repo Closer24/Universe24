@@ -35,6 +35,8 @@ class Row:
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
     exchange: int = 0  # the record's sign under the exchange of two of its parts, the files' key `exchange` on a family of several parts (antisymmetric -1, symmetric 1, 0 where none is declared): the family's declaration, read by the first side's coefficients (`meeting_back.coefficients_of`, `credit.terms_of`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19)
+    off_diagonal: bool = False  # a holder of the content sourced by the shear too, the files' word `shear` beside `tensions`: three off-diagonal lines xy, yz, zx after its other axis lines, each the product of the Node's own two axis differences of its sources' records, D_a D_b over the doubled wall 2 E_s W_c, stepped by Rule3 as the tension lines are and read by no record (the held rows' own wave sector; ALGEBRA.md, The lattice's frame is read by gravity alone, and its carrier is a pair of Links: the three space pairs, 2026-10-20)
+    lorentz: bool = False  # the files' key `form` of a held row under the rotation, `lorentz`: its time line and its three odd lines booked as one covector with the Lorentz form (covector.py; ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21), the odd line of the axis a the Node's +a Link's own, sourced by the Link's own flux of the record's step over the wall 2 den_s G^2 E_s T and read by that Link alone with the hop's sign (`link_read`, (-2, 0)), the time line's entry negative in every reading of the holder's record; False where the key is absent or `positive`, the rows as the engine books them without the key
 
 
 @dataclass(frozen=True)
@@ -96,6 +98,16 @@ class FamilyRule(Row):
     def record(self) -> int:
         """The lines of the family's record of quanta, the ones its share, its currents, its form and its Wronskian are read from: every line of a family of quanta; the time line alone of a held row (the holder of the sign's own record, the light's on its free row 0; light its own family, 2026-10-19), its axis lines being held parts."""
         return 1 if self.held else self.lines
+
+    @property
+    def off_diagonal_lines(self) -> range:
+        """The positions of a held row's three shear lines within one row, xy, yz, zx in that order: the last three lines of the row where the row declares the shear (after the time line, the three tension lines and the flux's three odd lines where it carries them), none otherwise; read by no record, written by the held write and stepped by Rule3 as every line is (the files' word `shear`; `held_write_of`, `write_rooms`, `records.write_sources`)."""
+        return range(self.width - AXES, self.width) if self.off_diagonal else range(0)
+
+    @property
+    def link_read(self) -> tuple[int, int]:
+        """How a Link reads an odd line of this holder, two declared integers the Port consumes blindly (`plane.link_levels`): the weight of the Node owning the +a Link and the weight of its far end; (1, 1) the two ends' sum, the law's standing line (ALGEBRA.md, The sign holder rotates the two-part record); (-2, 0) under the Lorentz form, where the odd line is the +a Link's own level, sourced by the Link's own flux (L_a = + j_a / c^2 over the time line's rho, the odd level over the time level + v / c^2 as the law's line reads it), and the Link reads minus twice it from its owner alone: the hop's phase is then -q A along the Link, Peierls' p - q A beside the time line's + q phi on the step, so that the strength the record is turned by is -d_a L_0 - d_t L_a, Maxwell's induction with its sign; the same magnitude for a smooth line as the two ends' sum, the Link's own line where it varies (covector.py)."""
+        return (-2, 0) if self.lorentz else (1, 1)
 
 
 def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
@@ -241,8 +253,8 @@ def count_wall(family: FamilyRule, action: int) -> int:
     return 3 * den * action
 
 
-def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
-    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; the odd lines of either holder at twice their measure's wall, the two Links' currents summed unhalved over the doubled wall (the two hands' lines of 2026-10-09, the mathematician's (L2) and the advisor's (c)): the sign holder's three odd lines at 2 E_s T, the Node's two a-Links' Wronskian currents summed (`readings.sense_current_of`, unhalved), and a flux holder's three odd lines at 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the joint line, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'."""
+def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, unit: int = 1) -> HeldWrite:
+    """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; the odd lines of either holder at twice their measure's wall, the two Links' currents summed unhalved over the doubled wall (the two hands' lines of 2026-10-09, the mathematician's (L2) and the advisor's (c)): the sign holder's three odd lines at 2 E_s T, the Node's two a-Links' Wronskian currents summed (`readings.sense_current_of`, unhalved), and a flux holder's three odd lines at 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the joint line, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'; and a holder's three shear lines, where it declares the shear, at the same doubled wall 2 E_s W_c, the Node's product of its two axis differences D_a D_b being the two ends' halves of the Link's off-diagonal booking -num G_ab (ALGEBRA.md, The tension: G_ab(i) the stress booking on the b-Link, -2 b^2 sin k_a sin k_b on a plane record, met in the mean by -(D_a D_b) / 2 at each end as G_aa is met by h_a at each end exactly), the same factor per source as the tensions'. Under the Lorentz form (`Row.lorentz`, the key `form`: `lorentz`) the sign holder's odd line a is sourced by the +a Link's own flux of the record's step in the Link unit, Phi_a(i) = Im(conj(z_i) (X^c + i X^s) z_(i+a)) with (X^c, X^s) the Link's pair the step reads, X = 2 num_s Q_ij (`covector.link_fluxes`), over the wall 2 den_s G^2 E_s T, `unit` the run's Link unit G and den_s the source's den (the multiple of the sources' den where they differ, each source's factor the multiple over its own den, as the tensions'), so that the odd level over the time level is Phi / (2 den_s G^2 W) = (num_s / den_s) (g / W) = v / c^2 at light's c^2 = 1 / 3, the pairing at the holder's own light speed under which the massless line propagates the lattice Lorenz constraint exactly (covector.py; the pairing at c_s of ALGEBRA.md, The odd line's source is the sign's own current, is this times den_s / num_s, 1 - 2 x 10^-28 in nature)."""
     family = families[index]
     assert family.level_weight is not None
     sources = readers_of(families, index)
@@ -256,11 +268,17 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> 
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
         row[1:] = [SIDES * family.level_weight * measure] * AXES
+    if family.lorentz:  # the Lorentz form: the Link's own flux in the Link unit over 2 den_s G^2 E_s T
+        row[1:] = [SIDES * multiple * unit * unit * family.level_weight * action] * AXES
+    for line in family.off_diagonal_lines:  # the shear lines: the Node's two ends' halves over 2 E_s W_c
+        row[line] = SIDES * family.level_weight * measure
     walls = (
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike
     factors = {
-        other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
+        other: 1
+        if family.rotation and not family.lorentz
+        else int(division_forward(multiple, families[other].pair[1], 0)[0])
         for other in sources
     }
     return HeldWrite(tuple(walls), factors)
@@ -269,77 +287,6 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> 
 def largest_of(width: int) -> int:
     """The largest integer of the file's width in bits, 2^width - 1, the bound every total of the law stays inside (ALGEBRA.md #the-bound)."""
     return int(2**width - 1)
-
-
-def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
-    """The room of one source's booking at the amplitude A, its size over A^2: the Wronskian's two products per plane of the part (three planes thrice), or the form's two per line of its record (now^2 and next x before); a turned record's bookings are read from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), so no turned level enters a booking."""
-    if wronskian:
-        return PRODUCTS * (families[index].planes or 1)  # every plane of the part its two products
-    return families[index].record * PRODUCTS
-
-
-def hill_scale(pair: tuple[int, int], gamma: int) -> int:
-    """The write's factor's room at a source's hill's edge (ALGEBRA.md, The write per proper volume and per proper interval; The guard): P the edge's pace of the source's pair, the largest the guard admits (`features/read`, `edge_of`), where the factor N^k p_x p_y p_z / p_0^3, one rounding of the count times the three paces over the one wall (`paces.write_factor`, the product exact beyond the width), is at most (P / Gamma)^3 (1 at most in a hollow, every pace at or below Gamma): P^3 div Gamma^3 rounded up, which multiplies the booking's room in the write's numerator, the one place the factor meets the width."""
-    edge = edge_of(pair, gamma)
-    cube = gamma * gamma * gamma
-    return int(division_forward(edge * edge * edge, cube, cube - 1)[0])
-
-
-def factor_bound(families: tuple[FamilyRule, ...], index: int, gamma: int, bound: int) -> int:
-    """The largest Link factor q_max the axis lines within the level `bound` admit on a Link of the family `index`'s record (ALGEBRA.md, The write per proper volume and per proper interval): the Link's factor is q = Gamma - t (`paces.axis_pace`), t the Link's tension, SUM over the held rows with axis lines the family reads of W_a times the mean of the row's axis line at the Link's two ends (`read.link_tension`), each end within the bound, so q_max = Gamma + SUM W_a x bound over those rows (the mathematician's hand with the advisor's precision: Gamma + W A on the one axis line a Link carries today, the sum where more than one held row's axis lines are read on a Link); Gamma where the family reads no axis line, the odd lines of a holder under the rotation entering no Link's factor (`node.read_lines`)."""
-    weights = sum(
-        abs(read.weight)
-        for read in families[index].reads
-        if families[read.family].axes and not families[read.family].rotation
-    )
-    return gamma + weights * bound
-
-
-def tension_room(pair: tuple[int, int], gamma: int, q_max: int, wronskian: bool) -> int:
-    """The write's factor's room at a source's hill's edge under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's hand and the advisor's second, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q itself, so under a negative tension q exceeds Gamma, up to q_max, the largest Link factor the axis lines within the bound admit (`factor_bound`), and in a hollow the factor reaches (P / Gamma)^3 (q_max / P)^(1/2) on a count and (P / Gamma)^3 q_max / P on a Wronskian, P the edge's pace of the source's pair (`edge_of`), beyond the hill's room (`hill_scale`); the room is the ceiling of P^2 ((the largest x with x^2 <= q_max P) + 1) / Gamma^3 on a count and of P^2 q_max / Gamma^3 on a Wronskian, the ceiling by the division act with the carry Gamma^3 - 1 and the root's integer the largest whose square is at most the product, plus one, so that the floor never under-bounds (at the rule's universe, Gamma 6,000 and q_max 15,266: 3 and 4 on matter's pair against the hill's 2, 2 and 3 on the massless pairs against 1)."""
-    edge = edge_of(pair, gamma)
-    cube = gamma * gamma * gamma
-    factor = q_max if wronskian else largest_below(q_max * edge) + 1
-    return int(division_forward(edge * edge * factor, cube, cube - 1)[0])
-
-
-def source_room(
-    families: tuple[FamilyRule, ...], index: int, gamma: int, wronskian: bool, hill: int | None
-) -> int:
-    """The room of the write's factor of the source `index` in a row's write (ALGEBRA.md, The write per proper volume and per proper interval): the hill's room alone (`hill_scale`) where `hill` is None, the first pass of `amplitude_bound`, which finds the hill's own bound A_1; else the larger of the hill's room and the tension's room at the largest Link factor the axis lines within A_1 = `hill` admit (`tension_room`, `factor_bound`), one pass and no fixed point, since the bound found is at most A_1 and q_max(A_1) bounds q_max(A)."""
-    room = hill_scale(families[index].pair, gamma)
-    if hill is None:
-        return room
-    q_max = factor_bound(families, index, gamma, hill)
-    return max(room, tension_room(families[index].pair, gamma, q_max, wronskian))
-
-
-def write_rooms(
-    families: tuple[FamilyRule, ...], index: int, write: HeldWrite, gamma: int, hill: int | None
-) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`source_room`: the hill's, `hill_scale`, 1 in a hollow under tensions at or above 0, where `hill` is None, and the larger of it and the tension's room at the hill's own bound `hill`, `tension_room`, where it is given); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays)."""
-    family = families[index]
-    sources = readers_of(families, index)
-    time = sum(
-        abs(weight_of(index, families[other]))
-        * booking_room(families, other, family.wronskian)
-        * source_room(families, other, gamma, family.wronskian, hill)
-        for other in sources
-    )
-    axis = sum(
-        abs(weight_of(index, families[other]))
-        * write.factors[other]
-        * families[other].record
-        * PRODUCTS
-        * (SIDES if family.rotation else abs(families[other].pair[0]))
-        for other in sources
-    )
-    rooms = [time] + [axis] * (family.width - 1)
-    if (
-        family.flux
-    ):  # an odd line: the flux through the axis's two Ports, two products each, |num| on each
-        rooms[1 + AXES :] = [SIDES * axis] * AXES
-    return [abs(family.write) * room for room in rooms * family.records]
 
 
 def amplitude_bound(
@@ -380,8 +327,10 @@ def bound_under_rooms(
             room = PORTS * PRODUCTS * family.record * abs(num)
             found = min(found, largest_below(int(division_forward(largest, room, 0)[0])))
         if family.held:
-            write = held_write_of(families, index, action)
-            rooms = write_rooms(families, index, write, gamma, hill)
+            from event_universe.loader.rooms import write_rooms  # rooms reads this module: imported here
+
+            write = held_write_of(families, index, action, unit)
+            rooms = write_rooms(families, index, write, gamma, hill, unit)
             for wall, room in zip(write.walls, rooms, strict=True):
                 if wall > largest:
                     found = 0

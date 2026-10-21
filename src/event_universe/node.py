@@ -26,6 +26,7 @@ from event_universe.plane import (
     Angles,
     fold_guard,
     link_guard,
+    link_levels,
     link_wall,
     odd_links,
 )
@@ -180,12 +181,10 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
         if links is not None:  # a folded record's fold at every Link within the tangent 1
             fold_guard(families[index].pair, gamma, links, families[index].name)
         angles = turning(index, families, states, 1, record)
-        if angles is not None:  # a turned record's Links at both ends
-            sign_holder(index, families)
-            for a in range(3):
-                for side in (1, -1):
-                    link = angles[1][a] + arrival(angles[1][a], a, side, wrap)
-                    link_guard(link, link_wall(gamma), families[index].name, a)
+        if angles is not None:  # a turned record's Links at both ends, read as the holder declares
+            ends = families[sign_holder(index, families)].link_read
+            for a, link in zip((0, 0, 1, 1, 2, 2), link_levels(angles[1], wrap, ends), strict=True):
+                link_guard(link, link_wall(gamma), families[index].name, a)
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:

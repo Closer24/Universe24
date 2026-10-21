@@ -20,7 +20,8 @@ from event_universe.features.read import (
     paces_guard,
     stability_bound,
 )
-from event_universe.features.start import arrivals, read_content, rest, scaled_source
+from event_universe.features.start import arrivals, rest, scaled_source
+from event_universe.features.start.rests import read_content
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
@@ -277,7 +278,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     from fractions import Fraction
     from math import ceil, isqrt
 
-    from event_universe.loader import derived
+    from event_universe.loader import derived, rooms
 
     gamma, hill_bound = (
         6000,
@@ -296,11 +297,11 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         values = ((edge / gamma) ** 3 * (q_max / edge) ** 0.5, (edge / gamma) ** 3 * q_max / edge)
         assert [round(v, 3) for v in values] == ([1.845, 2.589] if matter else [1.469, 2.158])
         assert (hill, count, wronskian) == ((2, 2, 3) if matter else (1, 2, 3))
-        assert all(value > hill - 1 for value in values) and derived.hill_scale(pair, gamma) == hill
+        assert all(value > hill - 1 for value in values) and rooms.hill_scale(pair, gamma) == hill
         assert (
-            derived.tension_room(pair, gamma, q_max, False) == count >= hill
+            rooms.tension_room(pair, gamma, q_max, False) == count >= hill
         )  # equal at matter's pair at A = 6,949
-        assert derived.tension_room(pair, gamma, q_max, True) == wronskian > hill
+        assert rooms.tension_room(pair, gamma, q_max, True) == wronskian > hill
     for name in ("rule", "light", "ghz", "pair"):
         integers, families = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
         keys = ("node_clock", "quantum_action", "width", "link_unit")
@@ -322,7 +323,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
     assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
     two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]
-    assert derived.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7  # the two rows read, summed
+    assert rooms.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7  # the two rows read, summed
 
 
 def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
@@ -358,9 +359,8 @@ def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
         2,
         4,
     ]  # 216 / (36 x 3), 216 / (6 x 9)
-    text = (ROOT / "src" / "event_universe" / "features" / "start" / "__init__.py").read_text(
-        encoding="utf-8"
-    )
+    start = ROOT / "src" / "event_universe" / "features" / "start"
+    text = "".join(path.read_text(encoding="utf-8") for path in sorted(start.glob("*.py")))
     assert [text.count(f"intervals=paces.{k}") for k in ("COUNT_POWER", "WRONSKIAN_POWER")] == [1, 1]
     for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
         cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
