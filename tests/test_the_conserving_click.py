@@ -108,7 +108,7 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     assert len(alternatives) == 1 and alternatives[0].items() == [] and alternatives[0].line is not None
     before = len(lines)
     act.click(board, books, alternatives)
-    meeting.coherence_ended(board, books)
+    lists.coherence_ended(board, books)
     assert len(lines) == before and books.labels == [WALL, 0] and books.carried == [0, 0]
 
 
