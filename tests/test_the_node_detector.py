@@ -79,7 +79,7 @@ def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_pat
 def test_the_node_detector_books_the_conserved_forms_own_current_through_its_front(
     tmp_path, monkeypatch
 ):
-    """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands): a NodeDetector books through each front Port the conserved form's own current, num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, summed in the unit G^2 and divided once at the close by W_rec G^2, equal to the plain current where no tension stands. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's weighted share changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, while the plain inflow misses it by far more; the twin without the tension books the plain current times G^2 exactly and `quanta_through` reads the count the plain formula read."""
+    """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands): a NodeDetector books through each front Port the conserved form's own current, num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, summed in the unit G^2 and divided once at the close by W_rec G^2, equal to the plain current where no tension stands. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's weighted share changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, while the plain inflow misses it by far more; the twin without the tension books the plain current times G^2 exactly and `quanta_through` takes the floor the plain formula takes, the remainder below one quantum beside it in the unit G^2 (the floor and the remainder's draw, 2026-10-21; the half-up rounding before)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     region, draw = [[13, 0, 0], [14, 0, 0]], {"window": 400}
     packet = {**PACKET, "top": {"x": [8, 8], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 4, "y": 0, "z": 0}}
@@ -142,8 +142,9 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
     assert max(m for k, m in misses if k == 0) > 2 and all(m < 2 for k, m in misses if k == 1)
     assert totals[1][1] == totals[1][0] * square  # the twin: the plain current times G^2 exactly
     twin, unit = boards[1], boards[1].credit.units[light]
-    plain_count = int(division_forward(totals[1][0], unit, division_forward(unit, 2, 0)[0])[0])
-    assert credit.quanta_through(twin.credit, light, totals[1][1], twin.unit) == plain_count > 0
+    plain_count, plain_rest = (int(n) for n in division_forward(totals[1][0], unit, 0))
+    through, rest, _unit = credit.quanta_through(twin.credit, light, totals[1][1], twin.unit)
+    assert (through, rest) == (plain_count, plain_rest * square) and plain_count > 0
 
 
 def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_path, monkeypatch):
