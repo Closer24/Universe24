@@ -9,10 +9,12 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import readings, records
+from event_universe import board_readings, readings, records
+from event_universe.core.ports import AXES
+from event_universe.core.rule3 import largest_below
 from event_universe.emission import Emitter
-from event_universe.features.click import Face, standing
-from event_universe.features.phase import signed_rounded
+from event_universe.features.click import Face, rotated, standing
+from event_universe.features.phase import fold, signed_rounded
 from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import quanta_records
@@ -59,6 +61,30 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
         line = board.states[books.index].lines[first + number]
         changes = (np.where(at, nows - line.now, 0), np.where(at, befores - line.before, 0))
         laid(board, books.index, first + number, changes, None, origin, at)
+
+
+def recoil_phases(
+    board: Lattice, books: NodeBooks, momentum: tuple[int, int, int] | None
+) -> list[tuple[int, int] | None]:
+    """The recoil's phase per Node of the body, k . (x - c) as a pair (den cos, den sin) at every Node in the books' order (2026-10-21, the reader's design of the conserving click, (c); ALGEBRA.md, The lattice momentum: a plane wave's P_a is the sign of +k, one quantum at the wave number k carrying 2 T sin k_a per axis): k the light's wave number per axis from the piece's momentum `momentum`, p_a in T's unit (`node_detector.piece_momentum`), den sin k_a = p_a den div 2 T by the engine's one signed rounding and den cos k_a by the one search on den^2 - (den sin k_a)^2 (the pair at the body's family's den; the cosine the positive root, the piece carrying sin k alone); at each Node the three axes' pairs at the angles (x_a - c_a) k_a by the rotation act's recurrence (`features/click.rotated`, Rule3 with no Links, the sine's sign the offset's) composed as Gaussian integers with one signed rounding per product (`features/phase.fold`), c the body's declared Node, so that the entered part re-laid in these directions carries the piece's P_a over the body's Nodes to the lay's rounding; None at every Node where no momentum stands, where it is 0 on every axis, where the body stands at one Node, or where the body is held at declared Nodes by its cut Links (every body laid in its parts by the engine's own act, `meeting.cut`, `meeting.laid_record`; the recoil of a body held at declared Nodes the declaration's, ALGEBRA.md, The click's algebra beyond the law, item 48), the reading `LOST_TO_TAKER` then: the phase is written on a bound record standing free in its well (`NodeBooks.bound`), whose Links stand open so that the gradient moves it as a plane wave's does."""
+    if momentum is None or not any(momentum) or len(books.nodes) < 2 or not books.bound:
+        return [None for _node in books.nodes]
+    den, action = board.families[books.index].pair[1], board.world.quantum_action
+    sines = [int(signed_rounded(p * den, 2 * action)) for p in momentum]
+    cosines = [largest_below(den * den - s * s) for s in sines]
+    centre = board.world.bodies[books.number].nodes[0]
+    found: list[tuple[int, int] | None] = []
+    for here in books.nodes:
+        pair = (den, 0)
+        for axis in range(len(here)):
+            offset = int(here[axis]) - int(centre[axis])
+            steps = abs(offset)
+            cosine = rotated(den, cosines[axis], 2 * cosines[axis], den, steps + 1)[steps]
+            sine = rotated(0, sines[axis], 2 * cosines[axis], den, steps + 1)[steps]
+            turned = fold(pair[0], pair[1], cosine, -sine if offset < 0 else sine, den)
+            pair = (int(turned[0]), int(turned[1]))
+        found.append(pair)
+    return found
 
 
 def levels_at(
@@ -125,11 +151,21 @@ def faced(board: Lattice, item: Item) -> list[tuple[Node, tuple[int, ...]]]:
 
 
 def fan_momentum(board: Lattice, index: int) -> tuple[int, int, int]:
-    """A family's lattice momentum P_a over the board in T's unit (Part F, Task 5; the two hands' lines of 2026-10-09 (c)): every record of the family read at the weight num (`readings.momentum_of`) and the sum over num once by the division act, rounded half up on the magnitude with the sign after (kind D), the same unit as the piece's p_a (`node_detector.piece_momentum`) so that the credit line's two integers differ by the erasure's deficit; the fan's P before the erasure starts, read at the click's interval."""
+    """A family's lattice momentum P_a over the board in T's unit (Part F, Task 5; the two hands' lines of 2026-10-09 (c)): every record of the family read at the weight num (`readings.momentum_of`) and the sum over num once by the division act, rounded half up on the magnitude with the sign after (kind D), the same unit as the piece's p_a (`node_detector.piece_momentum`) so that the credit line's two integers differ by the erasure's deficit; the fan's P before the erasure starts, read at the click's interval. A turned record's momentum is read as its books are (2026-10-21; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21): the antisymmetric sum of its two Link currents along the axis with the Link's pair, F_(i,i-a) - F_(i,i+a) over the flux line's own currents (`readings.turned_currents_of` through `board_readings.turned_read`, the same read the passage books, `node_detector.Passage.booked`), since the plain bilinear of a turned pair turns at the two Nodes' angles and reads the gauge and no motion."""
     weight = board.families[index].pair[0]
     found = [0, 0, 0]
     for record in quanta_records(board.families, index):
-        read = readings.momentum_of(weight, board.lines_of(index, record), board.wrap)
+        lines = board.lines_of(index, record)
+        if index in board.turning:  # the turned read, the books' own: the Link's pair in every current
+            through = readings.currents_of(
+                weight, lines, board.wrap, None, board_readings.turned_read(board, index, record)
+            )
+            read = tuple(
+                int((through[2 * axis + 1] - through[2 * axis]).sum(dtype=object))
+                for axis in range(AXES)
+            )
+        else:
+            read = readings.momentum_of(weight, lines, board.wrap)
         found = [a + b for a, b in zip(found, read, strict=True)]
     signed = scaled(found, weight)
     return signed[0], signed[1], signed[2]
