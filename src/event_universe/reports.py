@@ -30,6 +30,7 @@ CONVERSION, INTO, SENSES = (
     "into",
     "senses",
 )  # the conversion line: its event and its own keys, the families of the records out and their senses as laid (conversion.py)
+MET = " + "  # the conversion line's `family` where several families' quanta met at one Node: their names joined (conversion.line)
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 EXCHANGED = (
     "absorbed",

@@ -145,15 +145,14 @@ def declared(
         senses = {} if value is None else senses_of(value, label, families)
         gapped = not family.held and family.pair[0] != family.pair[1]
         if not gapped or gaussian(family.pair) is None:
-            if value is not None:
-                why = (
-                    "a held row converts nothing; the key is a family of quanta's"
-                    if family.held
-                    else "a massless family has no gap and converts nothing"
-                    if not gapped
-                    else f"{irrational(family.pair)}, and no list sums to it exactly"
+            if value is not None and family.held:
+                raise ValueError(
+                    f"{label}: a held row converts nothing; the key is a family of quanta's"
                 )
-                raise ValueError(f"{label}: {why}")
+            if value is not None and not gapped:
+                raise ValueError(f"{label}: a massless family has no gap and converts nothing")
+            if value is not None:
+                raise ValueError(f"{label}: {irrational(family.pair)}, and no list sums to it exactly")
             continue
         if family.plane and value is not None:
             raise ValueError(
@@ -228,7 +227,7 @@ def sense_at(board: Lattice, index: int, at: Node) -> int:
 
 def line(board: Lattice, parents: Sequence[int], name: str, table: Table) -> dict[str, Any]:
     """The conversion line beside the credit's, labelled NODEDETECTOR: the interval, the records converted (one family's name, several joined with +, each one's count the credit line's), the region by name, the window drawn over, `into`, the families of the records out in the list's order, each up by one whole quantum laid at the credited Node, and their senses as laid; no Node, the lay lines carrying it."""
-    families = " + ".join(board.families[k].name for k in parents)
+    families = reports.MET.join(board.families[k].name for k in parents)
     found = dict(
         zip(
             reports.REPORT_KEYS,
