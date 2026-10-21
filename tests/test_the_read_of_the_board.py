@@ -88,17 +88,8 @@ def spied(monkeypatch, board_of, distinct=True):  # type: ignore[no-untyped-def]
             reads = body_reads(board, [*drives, books.index], board.mask(books.nodes))
         own, walls = digits_now(board, reads, distinct)
         pick, left = real(number, weights, label, *moduli)
-        seen.append(
-            dict(
-                label=label,
-                number=number,
-                weights=list(weights),
-                pick=pick,
-                left=left,
-                digits=own,
-                walls=walls,
-            )
-        )
+        drawn = dict(label=label, number=number, weights=list(weights), pick=pick, left=left)
+        seen.append(dict(drawn, digits=own, walls=walls))
         return pick, left
 
     monkeypatch.setattr(node_detector, "drawn_from", spy)
@@ -199,6 +190,27 @@ def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
     )
 
 
+def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypatch):
+    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2): on the shipped hydrogen_1s the electron reads its holder's phase pairs at the exact vacuum paces (its content 0, T = p_0^2 = Gamma^2 = 36,000,000), so F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) is T at the 33 Nodes about the centre over four intervals but at one Node of one interval 2 T (every pair part even there; two digits of 264, the record's two lines at 33 Nodes), and every kept remainder lies on w div 2 + F Z and off the plain lattice w div 2 + (w div 9) Z after the first step (the builder's finding on 400 intervals: 36,000,000 the gcd of r - w div 2 over 26,466 remainders, 66 on the plain lattice, frame 0's origins); the plain reaches alone read w div 9, nine values, kept by name."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
+    board = Lattice(load_shipped(EVENTS / "atom" / "hydrogen_1s.json"))
+    electron, gamma = family(board, "electron"), board.world.node_clock
+    quantum, half = board.world.quantum_action, board.half_wall(electron)
+    assert quantum == gamma * gamma and electron in board.turning  # T = p_0^2 at the vacuum paces
+    at = ((np.indices(board.shape) - board.shape[0] // 2) ** 2).sum(axis=0) <= 4  # r^2 <= 4: 33 Nodes
+    found: Counter[int] = Counter()
+    for _ in range(4):
+        board.step()
+        read = list(digits.digits_of(board, electron, at))
+        assert all((r - half) % f == 0 for r, f, _w, _p in read)  # on w div 2 + F Z, every one
+        assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
+        assert {w for _r, _f, w, _p in read} == {2 * half}
+        found.update(f for _r, f, _w, _p in read)
+    assert found == Counter({quantum: 262, 2 * quantum: 2}) and sum(found.values()) == 4 * 2 * 33
+    rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
+    assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
+
+
 def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_path):
     """No generator: `seed`, `multiplier` and `increment` are unknown keys of the world's `draw` and of a body's `node_detector`, refused by name as every unknown key is; a body's `node_detector` is `{}` (its window derived or a probe's) or `{"window": n}` (`body_draw_of`, `windowless_of`, `Draw`); a window beside a probe refused; the world's `engine` key refused as unknown, the start file gone; the books keep no state and the number left of the read alone (`credit.Books.left`)."""
     label = "bodies[0].node_detector"
@@ -226,34 +238,24 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):
     """The read's two refusals (`digits.read_of`): on the singlet world at its start the left region stands untouched, every digit at the lay's origin w div 2, so a read there is refused by name; on the shipped resonance world at the content 0 (examples/events/resonance/resonant.json, two atoms of two Nodes on the periodic chain of 48, the emitter's pulse laid as a source in time from its window's close, 48; re-read 2026-10-20 there by the reader's ruling, the content fixture's pulse reading the content), once the pulse reaches the taker, the pulse's digits at the taker's Nodes lie on the lattice of the exact vacuum paces (its family reads no content: three values each, in {w / 6, w / 2, 5 w / 6}), so the pulse's record alone is refused by name, and the body's read, the arriving record's digits with its own record's (3,897 values each, the lines read once where one is a copy of another or stands at the lay's origin: four of the atom's digits and two of the pulse's at the two Nodes, 51 bits, re-pinned 2026-10-20 on the shipped ring), is admitted; the refusals' texts stand apart from the write's bound refusal."""
-    singlet = Lattice(
-        load_world(
-            world_beside(
-                tmp_path / "singlet", EVENTS / "bell_singlet" / "singlet_a_b.json", lambda w: None
-            )
-        )
+    path = world_beside(
+        tmp_path / "singlet", EVENTS / "bell_singlet" / "singlet_a_b.json", lambda w: None
     )
-    spin, left = (
-        family(singlet, "spin"),
-        next(d.nodes for d in singlet.node_detectors if d.name == "left"),
-    )
+    singlet = Lattice(load_world(path))
+    spin = family(singlet, "spin")
+    left = next(d.nodes for d in singlet.node_detectors if d.name == "left")
     assert {r for r, _f, _w, _p in digits.digits_of(singlet, spin, left)} == {singlet.half_wall(spin)}
     with pytest.raises(RuntimeError, match="at the test finds every digit at the lay's origin w div 2"):
         digits.read_of(singlet, [(spin, left)], "the test")
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    board = Lattice(
-        load_shipped(EVENTS / "resonance" / "resonant.json")
-    )  # the shipped ring at the content 0
+    board = Lattice(load_shipped(EVENTS / "resonance" / "resonant.json"))  # the shipped ring, content 0
     pulse, atom = family(board, "pulse"), family(board, "atom")
     taker = board.credit.bodies[1]
     at = board.mask(taker.nodes)
     while {r for r, _f, _w, _p in digits.digits_of(board, pulse, at)} == {board.half_wall(pulse)}:
         board.step()
-    assert {r for r, _f, _w, _p in digits.digits_of(board, pulse, at)} <= {
-        LIGHT // 6,
-        LIGHT // 2,
-        5 * LIGHT // 6,
-    }
+    thirds = {LIGHT // 6, LIGHT // 2, 5 * LIGHT // 6}
+    assert {r for r, _f, _w, _p in digits.digits_of(board, pulse, at)} <= thirds
     with pytest.raises(RuntimeError, match="finds every digit on the lattice of the exact vacuum paces"):
         digits.read_of(board, [(pulse, at)], "the test")
     before = snapshot(board)
@@ -261,14 +263,8 @@ def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_
     assert first_difference(before, snapshot(board)) is None  # the read writes nothing
     own, walls = digits_now(board, [(pulse, at), (atom, at)])
     assert number == read_number(own, walls) and set(walls) == {4, 3898}  # light's 3 values, the atom's
-    assert (
-        (walls.count(4), walls.count(3898), number.bit_length())
-        == (
-            3,
-            6,
-            77,
-        )
-    )  # three Nodes since 2026-10-21 (the pair re-declared as the chain's; two Nodes, (2, 4, 51), 2026-10-20)
+    # three Nodes since 2026-10-21 (the pair re-declared as the chain's; two Nodes, (2, 4, 51), 2026-10-20)
+    assert (walls.count(4), walls.count(3898), number.bit_length()) == (3, 6, 77)
     for text in ("w div 2", "exact vacuum"):
         assert "amplitude bound" not in text
 
@@ -314,12 +310,8 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
         assert board.credit.left == {} and all(b.left is None for b in board.credit.bodies)
         runs[name] = seen
     first, other = (runs[n][0] for n in ("singlet_a_b", "singlet_a_b_prime"))
-    assert (first["number"], first["weights"], first["pick"], first["digits"]) == (
-        other["number"],
-        other["weights"],
-        other["pick"],
-        other["digits"],
-    )
+    keys = ("number", "weights", "pick", "digits")
+    assert [first[k] for k in keys] == [other[k] for k in keys]
     print(
         f"the singlet's left read: {first['number'].bit_length()} bits, the weights {first['weights']}, the pick {first['pick']}; the right's {runs['singlet_a_b'][2]['weights']} and {runs['singlet_a_b_prime'][2]['weights']}"
     )
