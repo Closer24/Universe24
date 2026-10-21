@@ -5,9 +5,10 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import act, lists, meeting, reports, world_files
+from event_universe import act, lists, meeting, records, reports, world_files
 from event_universe.lattice import Lattice
 from event_universe.lists import hazard_weights
+from event_universe.take import fan_momentum
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, family, load_file, refused
 from tests.laws_read import load_shipped
@@ -22,6 +23,11 @@ RESONANCE, LIFETIME, REGION, FIRST = (
     23,
 )  # the declaration and the world's own click
 WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 and [4000, 6000]
+PIECE, FAN, RECOIL = (
+    11055256,
+    8012902,
+    4906083,
+)  # the taker world's click: the piece's p_z, the photon's P_z, the body's P_z after
 PIECE, FAN, RECOIL = (
     11055256,
     8012902,
@@ -154,3 +160,51 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
     ):
         refused(reason, lambda c=change: load_world(tampered(c)))
     assert np.array_equal(np.zeros(1), np.zeros(1))  # the tool's doubles stand in the tool alone
+
+
+def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
+    """The recoil as the per-Node phase (the reader's design, (c); ALGEBRA.md, The lattice momentum) on the shipped taker world examples/events/conserve/taker_c5.json: the board of 5 x 5 x 7 with the electron standing in its 1s at the centre, declared through the tool over its whole support (175 Nodes, `--region whole`, the transition to the level [3536, 6000] at the weight 51 and the resonance [5822, 6000], no rate), and a photon packet of one quantum laid at the near end along z (the wave [1, 6], the amplitude 2300, the count 1), the window 9 derived at load from the packet's passage. The body's lattice momentum read as its books read a turned record, with the Link's pair (`take.fan_momentum`): 0 exactly on every axis at the lay and at every interval to the click (a standing record moves nowhere). The click at the second close, 18 (the first close at 9 drew null at the share 0.14, the packet half arrived): the piece's p_z 11055256 in T's unit (the packet's momentum over its share through the body's Nodes, 0.31 of a plane wave's 2 T sin k at k = pi / 6, the five-Node packet's own), the photon's P over the board 8012902 at the click, the reading `WRITTEN_AS_PHASE` with the lay's source and no side (the hole's Node two-sided, the quantum taken in the books, the front from it at the count 0); after the write the body carries P_z 4906083 and nothing on x and y, the sign the piece's and the size 0.44 of it, the entered part's own envelope (SUM over the Links of A_i A_(i+1) against SUM over the Nodes of A_i^2 of the lay in the 1s's weights, 1 for a plane wave), the light's piece gone with its count; the charge of the electron's record T / 2 + 8518 after against 21310641 at the close before (the standing form's one quantum at its unit; the well's reading, 21311362 at the lay and the walk since), its share 980418680000 against 903766398000 at the close before (689673994000 at the lay, the plain share's climb in the well; the lay at the free rotation in the well after, the run's reading), named for the table."""
+    lines: list[dict] = []  # type: ignore[type-arg]
+    world = load_shipped(FOLDER / "taker_c5.json")
+    row = world.bodies[1]
+    assert row.detector is not None and row.detector.draw is not None
+    (transition,) = row.detector.transitions
+    assert (transition.weight, transition.resonance, row.detector.rates) == (51, (5822, 6000), ())
+    assert row.detector.draw.window == 9 and len(row.region) == 175 and row.detector.counts == (1, 0)
+    board = Lattice(world, lines.append)
+    electron, photon = family(board, "electron"), family(board, "photon")
+    (books,) = board.credit.bodies
+    assert board.credit.counts[photon] == 1 and fan_momentum(board, electron) == (0, 0, 0)
+    before = fan_momentum(board, photon)
+    assert before[0] == before[1] == 0 < before[2]  # the packet moves toward +z
+    for _ in range(17):
+        board.step()
+        assert fan_momentum(board, electron) == (0, 0, 0)  # the standing record moves nowhere
+    assert [c["interval"] for c in lines if c["event"] == reports.CREDIT] == []
+    charge, share = wronskian_of(board, electron), board.total_share(electron)[0]
+    board.step()
+    (click,) = [c for c in lines if c["event"] == reports.CREDIT]
+    assert (click["interval"], click["node_detector"], click["absorbed"], click["count"]) == (
+        18,
+        "body 1",
+        "photon",
+        1,
+    )
+    assert (click["momentum"], click["fan"]) == ([0, 0, PIECE], [0, 0, FAN])
+    assert click["lost"] == [reports.WRITTEN_AS_PHASE, reports.LOST_TO_LAY, reports.NO_SIDE]
+    assert (click["source"], click["recoil"]) == (reports.THE_LAY, [0, 0, -PIECE])
+    after = fan_momentum(board, electron)
+    assert (
+        after == (0, 0, RECOIL) and 0 < RECOIL < PIECE
+    )  # the sign the piece's, the size the envelope's
+    assert (books.part, books.counts) == (1, [0, 1]) and board.credit.counts[photon] == 0
+    assert board.credit.deficits == {photon: 1} and len(board.credit.fronts) == 1
+    assert (charge, wronskian_of(board, electron)) == (21310641, 18008518)
+    assert (share, board.total_share(electron)[0]) == (903766398000, 980418680000)
+
+
+def wronskian_of(board: Lattice, index: int) -> int:
+    """The Wronskian of a two-part plane record summed over its parts and the board, the charge the click conserves exactly."""
+    lines = board.lines_of(index, 0)
+    planes = [lines[2 * part : 2 * part + 2] for part in range(len(lines) // 2)]
+    return sum(int(np.asarray(records.wronskian(plane, True)).sum(dtype=object)) for plane in planes)
