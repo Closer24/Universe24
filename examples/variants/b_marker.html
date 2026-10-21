@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The marker and the eraser on the law's real line</title>
+<meta name="description" content="The law's real line on the shipped two slits' board: the screen's row per region as the bolometer reads a two-part record whose parts are rotated at the two gaps by the marker's half angle, F[L] + F[U] + 2 cos theta F[L, U], beside the plain row (theta 0), the visibility cos theta and the distinguishability sin theta (Englert, V^2 + D^2 = 1 exact); below, the eraser's two conditional rows F[L + U] and F[L - U], fringes and anti-fringes, summing back to twice the incoherent row; no click.">
+<style>
+/* The page's own layout: the look pages' tokens (tools/look/page.py), every colour and size in this one block. */
+:root {
+  --bg: #0f1114; --panel: #171a20; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #07080a;
+  --light: #4ade80; --matter: #6ea1f0; --blind: #b4b8c0; --flash: #ff5a1f; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2);
+  --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
+  --stage-height: min(64vh, 620px); --frames-per-second: 12;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding-inline: var(--gutter); padding-block: var(--pad); background: var(--bg); color: var(--fg); font: var(--text)/1.45 var(--font-body); }
+h1 { font-size: var(--title); margin: 0; font-weight: 600; text-wrap: balance; }
+h2 { font-size: var(--text); margin: 0 0 6px; font-weight: 600; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--gap); margin-bottom: 6px; }
+header .verdict { font-family: var(--font-mono); color: var(--muted); }
+p.line { margin: 0 0 var(--gap); color: var(--muted); max-width: 110ch; }
+a { color: var(--focus); }
+.page { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap); align-items: start; }
+.wide { grid-column: 1 / -1; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); min-width: 0; }
+.stage { position: relative; height: var(--stage-height); border-radius: var(--radius); overflow: hidden; background: var(--board); border: 1px solid var(--line); }
+.stage canvas { display: block; width: 100%; height: 100%; }
+.corner { position: absolute; top: var(--gap); left: var(--gap); font: 500 var(--small)/1.2 var(--font-mono); color: var(--muted); pointer-events: none; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px var(--gap); align-items: center; margin-top: var(--gap); font-size: var(--small); }
+.controls:empty { display: none; }
+.time { display: grid; grid-template-columns: auto minmax(12rem, 1fr) auto; align-items: center; gap: var(--gap); margin-top: var(--gap); }
+.track input { width: 100%; margin: 0; }
+.frame { font-family: var(--font-mono); font-variant-numeric: tabular-nums; min-width: 9ch; max-width: 60ch; text-align: right; font-size: var(--small); }
+.lines { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 6px; min-height: 1.4em; }
+button, select { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 10px; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px var(--gap); margin: 0; font-size: var(--small); }
+dt { color: var(--muted); } dd { margin: 0; font-family: var(--font-mono); overflow-wrap: anywhere; }
+footer { margin-top: var(--gap); font-size: var(--small); color: var(--muted); }
+@media (max-width: 640px) { dl { grid-template-columns: 1fr; } .time { grid-template-columns: auto 1fr; } .frame { grid-column: 1 / -1; text-align: left; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header><h1>The marker and the eraser on the law's real line</h1><span class="verdict">the law's real line, no click</span></header>
+<p class="line">The law's real line on the shipped two slits' board: the screen's row per region as the bolometer reads a two-part record whose parts are rotated at the two gaps by the marker's half angle, F[L] + F[U] + 2 cos theta F[L, U], beside the plain row (theta 0), the visibility cos theta and the distinguishability sin theta (Englert, V^2 + D^2 = 1 exact); below, the eraser's two conditional rows F[L + U] and F[L - U], fringes and anti-fringes, summing back to twice the incoherent row; no click. <a href="../variants.html#marker-eraser">The variants page's card</a>, with nature's experiment, the law's statement and the verdict.</p>
+<div class="page">
+  <section class="panel wide">
+    <div class="stage"><canvas id="stage"></canvas><div class="corner">the law's real line</div></div>
+    <div class="controls" id="controls"></div>
+    <div class="time">
+      <button type="button" id="play">Play</button>
+      <div class="track"><input type="range" id="slider" min="0" value="0" step="1" aria-label="the frame"></div>
+      <div class="frame" id="frame"></div>
+    </div>
+    <div class="lines" id="lines"></div>
+  </section>
+  <section class="panel"><h2>The numbers, the script's</h2><dl id="numbers"></dl></section>
+  <section class="panel"><h2>The sources</h2><dl id="sources"></dl></section>
+</div>
+<footer>Universe24: the law's derivations under papers/one_rule/variants/, every number on this page the script's or its output's; the page draws them and computes nothing else.</footer>
+<script id="data" type="application/json">{"kind":"marker","card":"marker-eraser","title":"The marker and the eraser on the law's real line","line":"The law's real line on the shipped two slits' board: the screen's row per region as the bolometer reads a two-part record whose parts are rotated at the two gaps by the marker's half angle, F[L] + F[U] + 2 cos theta F[L, U], beside the plain row (theta 0), the visibility cos theta and the distinguishability sin theta (Englert, V^2 + D^2 = 1 exact); below, the eraser's two conditional rows F[L + U] and F[L - U], fringes and anti-fringes, summing back to twice the incoherent row; no click.","regions":["screen_0","screen_1","screen_2","screen_3","screen_4","screen_5","screen_6","screen_7","screen_8","screen_9","screen_10","screen_11"],"plain":[18.18,18.7,28.15,20.3,7.91,39.87,47.93,12.19,15.38,29.16,21.08,20.74],"incoherent":[19.0,17.24,20.57,24.02,26.99,28.77,28.85,27.77,25.14,22.02,18.3,21.24],"frames":[{"degrees":0,"row":[18.18,18.7,28.15,20.3,7.91,39.87,47.93,12.19,15.38,29.16,21.08,20.74],"N":279.59,"V":1.0,"D":0.0,"visibility":0.6091},{"degrees":1,"row":[18.18,18.7,28.15,20.3,7.91,39.87,47.93,12.19,15.38,29.16,21.08,20.74],"N":279.59,"V":0.9998,"D":0.0175,"visibility":0.609},{"degrees":2,"row":[18.18,18.7,28.15,20.3,7.92,39.86,47.92,12.2,15.39,29.16,21.08,20.74],"N":279.59,"V":0.9994,"D":0.0349,"visibility":0.6088},{"degrees":3,"row":[18.18,18.7,28.14,20.31,7.94,39.85,47.9,12.21,15.39,29.15,21.08,20.74],"N":279.59,"V":0.9986,"D":0.0523,"visibility":0.6084},{"degrees":4,"row":[18.18,18.7,28.13,20.31,7.96,39.84,47.88,12.23,15.4,29.14,21.07,20.74],"N":279.59,"V":0.9976,"D":0.0698,"visibility":0.6078},{"degrees":5,"row":[18.18,18.69,28.12,20.31,7.98,39.83,47.86,12.25,15.42,29.13,21.07,20.74],"N":279.59,"V":0.9962,"D":0.0872,"visibility":0.6071},{"degrees":6,"row":[18.18,18.69,28.11,20.32,8.01,39.81,47.83,12.28,15.43,29.12,21.06,20.74],"N":279.59,"V":0.9945,"D":0.1045,"visibility":0.6062},{"degrees":7,"row":[18.19,18.69,28.09,20.33,8.05,39.79,47.79,12.31,15.45,29.11,21.06,20.74],"N":279.59,"V":0.9925,"D":0.1219,"visibility":0.6052},{"degrees":8,"row":[18.19,18.69,28.08,20.34,8.1,39.76,47.74,12.34,15.47,29.09,21.05,20.74],"N":279.59,"V":0.9903,"D":0.1392,"visibility":0.6041},{"degrees":9,"row":[18.19,18.68,28.06,20.35,8.14,39.73,47.7,12.38,15.5,29.07,21.05,20.75],"N":279.59,"V":0.9877,"D":0.1564,"visibility":0.6027},{"degrees":10,"row":[18.19,18.68,28.03,20.36,8.2,39.7,47.64,12.43,15.53,29.05,21.04,20.75],"N":279.59,"V":0.9848,"D":0.1736,"visibility":0.6012},{"degrees":11,"row":[18.2,18.67,28.01,20.37,8.26,39.67,47.58,12.48,15.56,29.03,21.03,20.75],"N":279.6,"V":0.9816,"D":0.1908,"visibility":0.5996},{"degrees":12,"row":[18.2,18.67,27.98,20.38,8.33,39.63,47.51,12.53,15.59,29.0,21.02,20.75],"N":279.6,"V":0.9781,"D":0.2079,"visibility":0.5978},{"degrees":13,"row":[18.2,18.66,27.96,20.4,8.4,39.59,47.44,12.59,15.63,28.98,21.01,20.75],"N":279.6,"V":0.9744,"D":0.225,"visibility":0.5958},{"degrees":14,"row":[18.2,18.66,27.92,20.41,8.48,39.54,47.36,12.65,15.67,28.95,21.0,20.75],"N":279.6,"V":0.9703,"D":0.2419,"visibility":0.5937},{"degrees":15,"row":[18.21,18.65,27.89,20.43,8.56,39.49,47.28,12.72,15.71,28.92,20.99,20.76],"N":279.6,"V":0.9659,"D":0.2588,"visibility":0.5915},{"degrees":16,"row":[18.21,18.64,27.86,20.44,8.65,39.44,47.19,12.79,15.76,28.88,20.97,20.76],"N":279.6,"V":0.9613,"D":0.2756,"visibility":0.5891},{"degrees":17,"row":[18.22,18.64,27.82,20.46,8.74,39.38,47.1,12.87,15.81,28.85,20.96,20.76],"N":279.6,"V":0.9563,"D":0.2924,"visibility":0.5865},{"degrees":18,"row":[18.22,18.63,27.78,20.48,8.84,39.33,47.0,12.95,15.86,28.81,20.94,20.76],"N":279.61,"V":0.9511,"D":0.309,"visibility":0.5838},{"degrees":19,"row":[18.22,18.62,27.74,20.5,8.95,39.27,46.89,13.04,15.91,28.77,20.93,20.77],"N":279.61,"V":0.9455,"D":0.3256,"visibility":0.5809},{"degrees":20,"row":[18.23,18.61,27.69,20.52,9.06,39.2,46.78,13.13,15.97,28.73,20.91,20.77],"N":279.61,"V":0.9397,"D":0.342,"visibility":0.5779},{"degrees":21,"row":[18.23,18.6,27.65,20.55,9.18,39.13,46.66,13.22,16.03,28.69,20.9,20.77],"N":279.61,"V":0.9336,"D":0.3584,"visibility":0.5747},{"degrees":22,"row":[18.24,18.59,27.6,20.57,9.3,39.06,46.54,13.32,16.09,28.64,20.88,20.78],"N":279.61,"V":0.9272,"D":0.3746,"visibility":0.5714},{"degrees":23,"row":[18.25,18.58,27.55,20.6,9.43,38.99,46.41,13.43,16.16,28.59,20.86,20.78],"N":279.62,"V":0.9205,"D":0.3907,"visibility":0.5679},{"degrees":24,"row":[18.25,18.57,27.49,20.62,9.56,38.91,46.28,13.54,16.22,28.54,20.84,20.78],"N":279.62,"V":0.9135,"D":0.4067,"visibility":0.5643},{"degrees":25,"row":[18.26,18.56,27.44,20.65,9.7,38.83,46.14,13.65,16.29,28.49,20.82,20.79],"N":279.62,"V":0.9063,"D":0.4226,"visibility":0.5605},{"degrees":26,"row":[18.26,18.55,27.38,20.68,9.84,38.75,46.0,13.77,16.37,28.44,20.8,20.79],"N":279.62,"V":0.8988,"D":0.4384,"visibility":0.5566},{"degrees":27,"row":[18.27,18.54,27.32,20.71,9.99,38.66,45.85,13.89,16.44,28.38,20.78,20.79],"N":279.62,"V":0.891,"D":0.454,"visibility":0.5525},{"degrees":28,"row":[18.28,18.53,27.26,20.74,10.14,38.57,45.7,14.01,16.52,28.32,20.75,20.8],"N":279.63,"V":0.8829,"D":0.4695,"visibility":0.5483},{"degrees":29,"row":[18.28,18.52,27.2,20.77,10.3,38.48,45.54,14.14,16.6,28.26,20.73,20.8],"N":279.63,"V":0.8746,"D":0.4848,"visibility":0.5439},{"degrees":30,"row":[18.29,18.5,27.13,20.8,10.47,38.38,45.37,14.28,16.69,28.2,20.71,20.81],"N":279.63,"V":0.866,"D":0.5,"visibility":0.5394},{"degrees":31,"row":[18.3,18.49,27.07,20.83,10.64,38.28,45.2,14.42,16.77,28.14,20.68,20.81],"N":279.64,"V":0.8572,"D":0.515,"visibility":0.5347},{"degrees":32,"row":[18.3,18.48,27.0,20.87,10.81,38.18,45.03,14.56,16.86,28.08,20.66,20.82],"N":279.64,"V":0.848,"D":0.5299,"visibility":0.5299},{"degrees":33,"row":[18.31,18.46,26.93,20.9,10.99,38.08,44.85,14.7,16.95,28.01,20.63,20.82],"N":279.64,"V":0.8387,"D":0.5446,"visibility":0.525},{"degrees":34,"row":[18.32,18.45,26.85,20.94,11.17,37.97,44.67,14.85,17.05,27.94,20.6,20.83],"N":279.64,"V":0.829,"D":0.5592,"visibility":0.5199},{"degrees":35,"row":[18.33,18.44,26.78,20.97,11.36,37.86,44.48,15.01,17.15,27.87,20.58,20.83],"N":279.65,"V":0.8192,"D":0.5736,"visibility":0.5147},{"degrees":36,"row":[18.34,18.42,26.7,21.01,11.55,37.75,44.29,15.17,17.24,27.8,20.55,20.84],"N":279.65,"V":0.809,"D":0.5878,"visibility":0.5093},{"degrees":37,"row":[18.35,18.41,26.62,21.05,11.75,37.63,44.09,15.33,17.35,27.72,20.52,20.84],"N":279.65,"V":0.7986,"D":0.6018,"visibility":0.5038},{"degrees":38,"row":[18.35,18.39,26.54,21.09,11.95,37.52,43.89,15.49,17.45,27.65,20.49,20.85],"N":279.66,"V":0.788,"D":0.6157,"visibility":0.4981},{"degrees":39,"row":[18.36,18.37,26.46,21.13,12.16,37.4,43.68,15.66,17.56,27.57,20.46,20.85],"N":279.66,"V":0.7771,"D":0.6293,"visibility":0.4923},{"degrees":40,"row":[18.37,18.36,26.38,21.17,12.37,37.27,43.47,15.84,17.66,27.49,20.43,20.86],"N":279.66,"V":0.766,"D":0.6428,"visibility":0.4864},{"degrees":41,"row":[18.38,18.34,26.29,21.21,12.59,37.15,43.25,16.01,17.77,27.41,20.4,20.86],"N":279.67,"V":0.7547,"D":0.6561,"visibility":0.4803},{"degrees":42,"row":[18.39,18.32,26.2,21.26,12.81,37.02,43.03,16.19,17.89,27.33,20.37,20.87],"N":279.67,"V":0.7431,"D":0.6691,"visibility":0.4742},{"degrees":43,"row":[18.4,18.31,26.11,21.3,13.04,36.89,42.8,16.38,18.0,27.24,20.33,20.87],"N":279.68,"V":0.7314,"D":0.682,"visibility":0.4678},{"degrees":44,"row":[18.41,18.29,26.02,21.34,13.26,36.75,42.58,16.56,18.12,27.16,20.3,20.88],"N":279.68,"V":0.7193,"D":0.6947,"visibility":0.4614},{"degrees":45,"row":[18.42,18.27,25.93,21.39,13.5,36.62,42.34,16.75,18.24,27.07,20.27,20.89],"N":279.68,"V":0.7071,"D":0.7071,"visibility":0.4548},{"degrees":46,"row":[18.43,18.25,25.84,21.44,13.74,36.48,42.1,16.95,18.36,26.98,20.23,20.89],"N":279.69,"V":0.6947,"D":0.7193,"visibility":0.4481},{"degrees":47,"row":[18.44,18.24,25.74,21.48,13.98,36.34,41.86,17.14,18.48,26.89,20.2,20.9],"N":279.69,"V":0.682,"D":0.7314,"visibility":0.4412},{"degrees":48,"row":[18.45,18.22,25.64,21.53,14.22,36.2,41.62,17.34,18.61,26.8,20.16,20.91],"N":279.7,"V":0.6691,"D":0.7431,"visibility":0.4342},{"degrees":49,"row":[18.46,18.2,25.54,21.58,14.47,36.05,41.37,17.55,18.74,26.7,20.12,20.91],"N":279.7,"V":0.6561,"D":0.7547,"visibility":0.4272},{"degrees":50,"row":[18.47,18.18,25.44,21.63,14.73,35.9,41.11,17.76,18.87,26.61,20.09,20.92],"N":279.7,"V":0.6428,"D":0.766,"visibility":0.4199},{"degrees":51,"row":[18.48,18.16,25.34,21.68,14.98,35.76,40.86,17.97,19.0,26.51,20.05,20.93],"N":279.71,"V":0.6293,"D":0.7771,"visibility":0.4126},{"degrees":52,"row":[18.5,18.14,25.24,21.73,15.24,35.6,40.6,18.18,19.13,26.42,20.01,20.93],"N":279.71,"V":0.6157,"D":0.788,"visibility":0.4051},{"degrees":53,"row":[18.51,18.12,25.13,21.78,15.51,35.45,40.33,18.39,19.27,26.32,19.97,20.94],"N":279.72,"V":0.6018,"D":0.7986,"visibility":0.3975},{"degrees":54,"row":[18.52,18.1,25.03,21.83,15.78,35.29,40.06,18.61,19.4,26.22,19.93,20.95],"N":279.72,"V":0.5878,"D":0.809,"visibility":0.3898},{"degrees":55,"row":[18.53,18.08,24.92,21.89,16.05,35.14,39.79,18.83,19.54,26.12,19.89,20.95],"N":279.73,"V":0.5736,"D":0.8192,"visibility":0.382},{"degrees":56,"row":[18.54,18.06,24.81,21.94,16.32,34.98,39.52,19.06,19.68,26.01,19.85,20.96],"N":279.73,"V":0.5592,"D":0.829,"visibility":0.3741},{"degrees":57,"row":[18.55,18.04,24.7,21.99,16.6,34.82,39.24,19.28,19.82,25.91,19.81,20.97],"N":279.74,"V":0.5446,"D":0.8387,"visibility":0.366},{"degrees":58,"row":[18.57,18.01,24.59,22.05,16.88,34.65,38.96,19.51,19.97,25.8,19.77,20.98],"N":279.74,"V":0.5299,"D":0.848,"visibility":0.3579},{"degrees":59,"row":[18.58,17.99,24.47,22.1,17.16,34.49,38.68,19.75,20.11,25.7,19.73,20.98],"N":279.75,"V":0.515,"D":0.8572,"visibility":0.3496},{"degrees":60,"row":[18.59,17.97,24.36,22.16,17.45,34.32,38.39,19.98,20.26,25.59,19.69,20.99],"N":279.75,"V":0.5,"D":0.866,"visibility":0.3413},{"degrees":61,"row":[18.6,17.95,24.24,22.22,17.74,34.15,38.1,20.22,20.41,25.48,19.65,21.0],"N":279.75,"V":0.4848,"D":0.8746,"visibility":0.3328},{"degrees":62,"row":[18.62,17.93,24.13,22.27,18.03,33.98,37.81,20.46,20.56,25.37,19.61,21.01],"N":279.76,"V":0.4695,"D":0.8829,"visibility":0.3242},{"degrees":63,"row":[18.63,17.9,24.01,22.33,18.33,33.81,37.51,20.7,20.71,25.26,19.56,21.01],"N":279.76,"V":0.454,"D":0.891,"visibility":0.3155},{"degrees":64,"row":[18.64,17.88,23.89,22.39,18.63,33.64,37.21,20.94,20.86,25.15,19.52,21.02],"N":279.77,"V":0.4384,"D":0.8988,"visibility":0.3067},{"degrees":65,"row":[18.65,17.86,23.77,22.45,18.93,33.46,36.91,21.19,21.02,25.04,19.47,21.03],"N":279.77,"V":0.4226,"D":0.9063,"visibility":0.2978},{"degrees":66,"row":[18.67,17.83,23.65,22.51,19.23,33.28,36.61,21.43,21.17,24.92,19.43,21.04],"N":279.78,"V":0.4067,"D":0.9135,"visibility":0.2889},{"degrees":67,"row":[18.68,17.81,23.53,22.57,19.53,33.11,36.31,21.68,21.33,24.81,19.39,21.04],"N":279.78,"V":0.3907,"D":0.9205,"visibility":0.2798},{"degrees":68,"row":[18.69,17.79,23.41,22.63,19.84,32.93,36.0,21.93,21.48,24.69,19.34,21.05],"N":279.79,"V":0.3746,"D":0.9272,"visibility":0.2706},{"degrees":69,"row":[18.71,17.76,23.29,22.69,20.15,32.75,35.69,22.19,21.64,24.58,19.3,21.06],"N":279.8,"V":0.3584,"D":0.9336,"visibility":0.2614},{"degrees":70,"row":[18.72,17.74,23.16,22.75,20.46,32.57,35.38,22.44,21.8,24.46,19.25,21.07],"N":279.8,"V":0.342,"D":0.9397,"visibility":0.252},{"degrees":71,"row":[18.73,17.72,23.04,22.81,20.78,32.38,35.06,22.7,21.96,24.34,19.21,21.08],"N":279.81,"V":0.3256,"D":0.9455,"visibility":0.2426},{"degrees":72,"row":[18.75,17.69,22.91,22.87,21.09,32.2,34.75,22.96,22.12,24.23,19.16,21.09],"N":279.81,"V":0.309,"D":0.9511,"visibility":0.2331},{"degrees":73,"row":[18.76,17.67,22.79,22.93,21.41,32.02,34.43,23.21,22.29,24.11,19.11,21.09],"N":279.82,"V":0.2924,"D":0.9563,"visibility":0.2235},{"degrees":74,"row":[18.77,17.64,22.66,22.99,21.73,31.83,34.11,23.48,22.45,23.99,19.07,21.1],"N":279.82,"V":0.2756,"D":0.9613,"visibility":0.2139},{"degrees":75,"row":[18.79,17.62,22.53,23.06,22.05,31.64,33.79,23.74,22.61,23.87,19.02,21.11],"N":279.83,"V":0.2588,"D":0.9659,"visibility":0.2041},{"degrees":76,"row":[18.8,17.59,22.4,23.12,22.37,31.46,33.47,24.0,22.78,23.75,18.97,21.12],"N":279.83,"V":0.2419,"D":0.9703,"visibility":0.1943},{"degrees":77,"row":[18.82,17.57,22.28,23.18,22.7,31.27,33.14,24.27,22.94,23.63,18.93,21.13],"N":279.84,"V":0.225,"D":0.9744,"visibility":0.1844},{"degrees":78,"row":[18.83,17.54,22.15,23.25,23.02,31.08,32.82,24.53,23.11,23.5,18.88,21.14],"N":279.84,"V":0.2079,"D":0.9781,"visibility":0.1745},{"degrees":79,"row":[18.84,17.52,22.02,23.31,23.35,30.89,32.49,24.8,23.28,23.38,18.83,21.14],"N":279.85,"V":0.1908,"D":0.9816,"visibility":0.1645},{"degrees":80,"row":[18.86,17.49,21.89,23.37,23.68,30.7,32.16,25.06,23.45,23.26,18.78,21.15],"N":279.85,"V":0.1736,"D":0.9848,"visibility":0.1544},{"degrees":81,"row":[18.87,17.47,21.76,23.44,24.01,30.51,31.83,25.33,23.61,23.14,18.73,21.16],"N":279.86,"V":0.1564,"D":0.9877,"visibility":0.1442},{"degrees":82,"row":[18.89,17.44,21.62,23.5,24.33,30.31,31.51,25.6,23.78,23.01,18.69,21.17],"N":279.87,"V":0.1392,"D":0.9903,"visibility":0.134},{"degrees":83,"row":[18.9,17.42,21.49,23.57,24.66,30.12,31.18,25.87,23.95,22.89,18.64,21.18],"N":279.87,"V":0.1219,"D":0.9925,"visibility":0.1238},{"degrees":84,"row":[18.91,17.39,21.36,23.63,25.0,29.93,30.84,26.14,24.12,22.77,18.59,21.19],"N":279.88,"V":0.1045,"D":0.9945,"visibility":0.1135},{"degrees":85,"row":[18.93,17.37,21.23,23.7,25.33,29.74,30.51,26.41,24.29,22.64,18.54,21.2],"N":279.88,"V":0.0872,"D":0.9962,"visibility":0.1031},{"degrees":86,"row":[18.94,17.34,21.1,23.76,25.66,29.54,30.18,26.68,24.46,22.52,18.49,21.21],"N":279.89,"V":0.0698,"D":0.9976,"visibility":0.0927},{"degrees":87,"row":[18.96,17.32,20.97,23.83,25.99,29.35,29.85,26.95,24.63,22.39,18.45,21.21],"N":279.89,"V":0.0523,"D":0.9986,"visibility":0.0823},{"degrees":88,"row":[18.97,17.29,20.83,23.89,26.32,29.16,29.52,27.23,24.8,22.27,18.4,21.22],"N":279.9,"V":0.0349,"D":0.9994,"visibility":0.0718},{"degrees":89,"row":[18.99,17.27,20.7,23.96,26.66,28.96,29.18,27.5,24.97,22.14,18.35,21.23],"N":279.9,"V":0.0175,"D":0.9998,"visibility":0.0613},{"degrees":90,"row":[19.0,17.24,20.57,24.02,26.99,28.77,28.85,27.77,25.14,22.02,18.3,21.24],"N":279.91,"V":0.0,"D":1.0,"visibility":0.0507}],"half_angle_degrees":53.13,"eraser":{"plus":[18.17,18.69,28.15,20.3,7.91,39.86,47.93,12.19,15.39,29.15,21.08,20.75],"minus":[19.83,15.79,13.0,27.73,46.08,17.68,9.77,43.36,34.89,14.88,15.52,21.74],"sum":[37.99,34.48,41.15,48.03,53.98,57.54,57.7,55.55,50.28,44.03,36.6,42.49],"twice":[37.99,34.48,41.15,48.03,53.98,57.54,57.7,55.55,50.28,44.03,36.6,42.49],"visibilities":[0.609,-0.6111,0.0507]},"numbers":[["the rows","the two gaps' real line 279.59 W_c over the window; the coherent sum of the paths F[L + U] 279.56, the incoherent F[L] + F[U] 279.91"],["the marker's rows","unmarked (theta 0): N 279.56, the visibility at 6 against 4 and 8 0.609; half marked, half angle (2, 1): cos theta 3/5: N 279.7, the visibility at 6 against 4 and 8 0.3965; fully marked (theta 90): cos theta 0: N 279.91, the visibility at 6 against 4 and 8 0.0507"],["Englert, exact","the half angle (2, 1): P(+ | L) = 9/10, P(+ | U) = 1/10, D = 4/5, V = 3/5, V^2 + D^2 = 1"],["the eraser","F[L + U] the fringes (the visibility 0.609), F[L - U] the anti-fringes (-0.6111), their sum twice the incoherent row (0.0507)"],["the Gram theorem","the last side's two ports sum to twice a first side's one port in exact integers at the central region (the script's gram_theorem_integers_central_region)"],["the verdict","works with one act (the README's section B): the marking rotation of the parts on the gap's Links; Englert exact (V = 3/5, D = 4/5); the eraser by the one form and the write at the birth in the eraser-first order, the position-first order out of the engine's reach as built, named"]],"sources":[["the script","papers/one_rule/variants/scripts/b_marker.py, its output out/b_marker.json"],["the frames","the script's three rows (the lower gap alone, the upper gap alone, the symmetrised cross current) combined as the bolometer's F[L] + F[U] + 2 cos theta F[L, U], one frame per degree; the eraser's rows the output's"],["this page","written by tools/look/line_page.py"]]}</script>
+<script>
+'use strict';
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const byId = id => document.getElementById(id);
+const token = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const size = name => parseFloat(token(name));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})[c]);
+const format = v => typeof v === 'number' ? (Number.isInteger(v) ? v.toLocaleString('en-US') : String(v)) : String(v);
+const canvas = byId('stage'), ctx = canvas.getContext('2d');
+let t = 0, playing = null, choice = {delta: 0, splitter: true};
+
+/* The lists: the numbers and the sources, each a row. */
+for (const [id, rows] of [['numbers', DATA.numbers], ['sources', DATA.sources]]) {
+  byId(id).innerHTML = rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+}
+
+/* The frames of the page shown: the time slits' and the marker's one list, the Mach-Zehnder's per arm difference. */
+function frames() { return DATA.kind === 'mach_zehnder' ? DATA.sets[choice.delta].frames : DATA.frames; }
+function last() { return frames().length - 1; }
+
+/* The canvas at the device's pixels. */
+function fit() {
+  const r = canvas.parentElement.getBoundingClientRect(), s = window.devicePixelRatio || 1;
+  canvas.width = Math.round(r.width * s); canvas.height = Math.round(r.height * s);
+  ctx.setTransform(s, 0, 0, s, 0, 0);
+  draw();
+}
+
+/* Drawing helpers: a boxed graph area, text, a polyline, bars. */
+function box(x, y, w, h) { ctx.strokeStyle = token('--line'); ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w, h); }
+function text(s, x, y, colour, align, mono) {
+  ctx.fillStyle = colour || token('--muted'); ctx.textAlign = align || 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.font = (mono ? '500 ' : '') + size('--small') + 'px ' + (mono ? token('--font-mono') : token('--font-body'));
+  ctx.fillText(s, x, y);
+}
+function polyline(points, colour, width, dashed) {
+  if (!points.length) return;
+  ctx.save(); ctx.strokeStyle = colour; ctx.lineWidth = width || 1.6; ctx.setLineDash(dashed ? [5, 4] : []);
+  ctx.beginPath(); points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); ctx.restore();
+}
+function dashedLine(x0, y0, x1, y1, colour) { polyline([[x0, y0], [x1, y1]], colour, 1, true); }
+function bars(x, y, w, h, values, high, colour, outline) {
+  const n = values.length, slot = w / n, bw = slot * 0.62;
+  values.forEach((v, k) => {
+    const bh = Math.max(0, v) / high * h, bx = x + slot * (k + 0.5) - bw / 2, by = y + h - bh;
+    if (outline) { ctx.save(); ctx.strokeStyle = colour; ctx.lineWidth = 1.2; ctx.setLineDash([4, 3]); ctx.strokeRect(bx + 0.5, by + 0.5, bw, bh); ctx.restore(); }
+    else { ctx.fillStyle = colour; ctx.fillRect(bx, by, bw, bh); }
+  });
+}
+function glowNodes(x, y, cell, levels, amplitude, colour) {
+  /* a row of Nodes as squares, each glowing by its level squared against the amplitude squared (the look pages' glow by the wave's intensity) */
+  levels.forEach((v, k) => {
+    const a = Math.min(1, (v / amplitude) ** 2);
+    ctx.fillStyle = token('--panel'); ctx.fillRect(x + k * cell, y, cell - 1, cell - 1);
+    ctx.globalAlpha = 0.15 + 0.85 * a; ctx.fillStyle = colour; ctx.fillRect(x + k * cell + 1, y + 1, cell - 3, cell - 3); ctx.globalAlpha = 1;
+  });
+}
+
+/* E: the chain's levels over the Nodes drawn and, below, P^2 across the band up to the frame's interval. */
+function drawTimeSlits(W, H) {
+  const f = frames()[t], pad = 10, left = 44, top = 24, split = Math.round(H * 0.52);
+  const gw = W - left - pad, gh = split - top - 28, A = DATA.amplitude, n = f.levels.length;
+  const px = i => left + i / (n - 1) * gw, py = v => top + (1 - v / A) / 2 * gh;
+  box(left, top, gw, gh);
+  text('the chain: the record\'s level per Node, the two packets (the second the first\'s copy laid ' + (DATA.lays[0] - DATA.lays[1]) + ' Links behind)', left, top - 8, token('--fg'));
+  text(format(A), left - 4, top + 10, token('--muted'), 'right', true); text('-' + format(A), left - 4, top + gh, token('--muted'), 'right', true);
+  text('Node ' + DATA.span[0], left, split - 10, token('--muted'), 'left', true); text('Node ' + (DATA.span[1] - 1), left + gw, split - 10, token('--muted'), 'right', true);
+  dashedLine(px(0), py(0), px(n - 1), py(0), token('--line'));
+  const probe = px(DATA.probe - DATA.span[0]);
+  dashedLine(probe, top, probe, top + gh, token('--blind')); text('the probe, the Node ' + DATA.probe, probe + 4, top + 12, token('--blind'), 'left', true);
+  for (const lay of DATA.lays) { const lx = px(lay - DATA.span[0]); dashedLine(lx, top + gh - 10, lx, top + gh, token('--window')); }
+  text('the two slits in time: the lays at the Nodes ' + DATA.lays[1] + ' and ' + DATA.lays[0], px(DATA.lays[1] - DATA.span[0]), top + gh - 14, token('--muted'), 'left', true);
+  polyline(f.levels.map((v, i) => [px(i), py(v)]), token('--light'), 1.4);
+  /* the spectrum */
+  const stop = split + 24, sh = H - stop - 30, grid = DATA.grid, m = grid.length, high = 4.2;
+  const qx = i => left + i / (m - 1) * gw, qy = v => stop + (1 - Math.min(v, high) / high) * sh;
+  box(left, stop, gw, sh);
+  text('P^2 = X^2 + Y^2 at the probe up to this interval, over the body\'s resonance omega_d (the single packet dashed, its final peak 1; the two packets solid)', left, stop - 8, token('--fg'));
+  text('4', left - 4, stop + 10, token('--muted'), 'right', true); text('0', left - 4, stop + sh, token('--muted'), 'right', true);
+  text('omega_d ' + grid[0].toFixed(3), left, H - 12, token('--muted'), 'left', true); text(grid[m - 1].toFixed(3), left + gw, H - 12, token('--muted'), 'right', true);
+  const cx = qx((DATA.carrier - grid[0]) / (grid[m - 1] - grid[0]) * (m - 1));
+  dashedLine(cx, stop, cx, stop + sh, token('--window')); text('the carrier ' + DATA.carrier.toFixed(4), cx + 4, stop + sh - 6, token('--muted'), 'left', true);
+  for (const z of DATA.zeros) { const zx = qx((z - grid[0]) / (grid[m - 1] - grid[0]) * (m - 1)); dashedLine(zx, stop + sh - 12, zx, stop + sh, token('--blind')); }
+  text('the beats\' zeros, k(omega_d) d = (2 m + 1) pi', left + gw - 4, stop + sh - 16, token('--blind'), 'right', true);
+  polyline(f.single.map((v, i) => [qx(i), qy(v)]), token('--blind'), 1.2, true);
+  polyline(f.double.map((v, i) => [qx(i), qy(v)]), token('--light'), 1.6);
+  byId('frame').textContent = 'interval ' + f.interval + ' of ' + DATA.intervals;
+  byId('lines').textContent = 'P^2 at the carrier: the single packet ' + f.single[Math.round((m - 1) / 2)].toFixed(3) + ', the two packets ' + f.double[Math.round((m - 1) / 2)].toFixed(3) + ' of the single\'s final peak; the second packet arrives at the probe about ' + (DATA.lays[0] - DATA.lays[1]) + ' / v_g intervals after the first';
+}
+
+/* D: the two arms and the exits as rows of glowing Nodes, the exit side's weights as bars. */
+function drawMachZehnder(W, H) {
+  const set = DATA.sets[choice.delta], f = set.frames[t], A = DATA.amplitude, pad = 16;
+  const cell = Math.max(6, Math.min(18, Math.floor((W * 0.6 - 2 * pad) / (DATA.arm + 4 + DATA.exit + 2))));
+  const x0 = pad + 3 * cell, yTop = Math.round(H * 0.3), yBottom = Math.round(H * 0.62), colour = token('--light');
+  text('the record\'s plane wave through the two arms, Delta L = ' + set.delta + (set.delta === 1 ? ' Link' : ' Links') + '; the second splitter ' + (choice.splitter ? 'in' : 'out'), pad, 18, token('--fg'));
+  /* the first splitter */
+  ctx.fillStyle = token('--blind'); ctx.fillRect(x0 - 2 * cell, yTop, cell * 0.5, yBottom - yTop + cell);
+  text('BS1', x0 - 2 * cell, yTop - 6, token('--muted'), 'left', true);
+  glowNodes(x0, yTop, cell, f.arm2, A, colour); text('arm 2, ' + (DATA.arm + set.delta) + ' Nodes', x0, yTop - 6, token('--muted'), 'left', true);
+  glowNodes(x0, yBottom, cell, f.arm1, A, colour); text('arm 1, ' + DATA.arm + ' Nodes', x0, yBottom + cell + 14, token('--muted'), 'left', true);
+  /* the second splitter at the first arm's end, the second arm's extra Nodes reaching past it */
+  const xs = x0 + DATA.arm * cell + cell * 0.5;
+  if (choice.splitter) { ctx.fillStyle = token('--blind'); ctx.fillRect(xs, yTop - cell * 0.5, cell * 0.5, yBottom - yTop + 2 * cell); }
+  else { ctx.save(); ctx.strokeStyle = token('--blind'); ctx.setLineDash([3, 3]); ctx.strokeRect(xs + 0.5, yTop - cell * 0.5 + 0.5, cell * 0.5, yBottom - yTop + 2 * cell); ctx.restore(); }
+  text(choice.splitter ? 'BS2 in' : 'BS2 out', xs - cell, yBottom + 2 * cell + 14, token('--muted'), 'left', true);
+  /* the exits: the cross exit above, the straight exit below, each a row of Nodes leaving to the right */
+  const xe = xs + cell * 1.5 + set.delta * cell;
+  const upper = choice.splitter ? f.cross : f.through[1], lower = choice.splitter ? f.straight : f.through[0];
+  glowNodes(xe, yTop, cell, upper, A, colour); glowNodes(xe, yBottom, cell, lower, A, colour);
+  text(choice.splitter ? 'the cross exit, (arm 1 + arm 2) / root 2' : 'exit 2: arm 2 straight on', xe, yTop - 6, token('--muted'), 'left', true);
+  text(choice.splitter ? 'the straight exit, (arm 1 - arm 2) / root 2' : 'exit 1: arm 1 straight on', xe, yBottom + cell + 14, token('--muted'), 'left', true);
+  /* the exit side's weights up to the interval, the two bars, the script's final shares dashed */
+  const w = choice.splitter ? f.in : f.out, total = w[0] + w[1] || 1, shares = [w[0] / total, w[1] / total];
+  const blind = choice.splitter ? set.two_part_in : set.two_part_out;
+  const bx = W - pad - 150, by = Math.round(H * 0.2), bw = 150, bh = Math.round(H * 0.55);
+  box(bx, by, bw, bh);
+  text('the exit side\'s weights so far', bx, by - 8, token('--fg'));
+  bars(bx, by, bw, bh, shares, 1, colour, false); bars(bx, by, bw, bh, blind, 1, token('--blind'), true);
+  text(choice.splitter ? 'cross' : 'arm 1', bx + bw * 0.25, by + bh + 14, token('--muted'), 'center', true);
+  text(choice.splitter ? 'straight' : 'arm 2', bx + bw * 0.75, by + bh + 14, token('--muted'), 'center', true);
+  text(shares[0].toFixed(3), bx + bw * 0.25, by - 22 + bh * (1 - shares[0]) + 18, token('--fg'), 'center', true);
+  text(shares[1].toFixed(3), bx + bw * 0.75, by - 22 + bh * (1 - shares[1]) + 18, token('--fg'), 'center', true);
+  byId('frame').textContent = 'interval ' + f.interval + ' of ' + DATA.steps;
+  byId('lines').textContent = (choice.splitter
+    ? 'the splitter in: P(cross) by the one-line form 4 s (1 - s) cos^2(Delta / 2) at s = 1 / 2 is ' + set.one_line[0] + ', by the two-part form ' + set.two_part_in[0] + ' (dashed); the weights so far ' + format(w[0]) + ' and ' + format(w[1])
+    : 'the splitter out: the exits read the arms, P(arm 1), P(arm 2) = ' + set.two_part_out.join(', ') + ' by the two-part form (dashed); the weights so far ' + format(w[0]) + ' and ' + format(w[1]))
+    + '; with a side after this one its two weights are ' + format(f.first[0]) + ' each (the Gram identity)';
+}
+
+/* B: the plain row beside the marked row at the angle, and the eraser's two rows summing back. */
+function drawMarker(W, H) {
+  const f = frames()[t], pad = 10, left = 36, n = DATA.regions.length, top = 24, gap = 24;
+  const half = (W - left - pad - gap) / 2, gh = Math.round(H * 0.36), high = Math.max(...DATA.plain, ...DATA.eraser.sum) * 1.05;
+  box(left, top, half, gh); box(left + half + gap, top, half, gh);
+  text('the plain row, theta 0: F[L] + F[U] + 2 F[L, U] per region (W_c over the window)', left, top - 8, token('--fg'));
+  text('the marked row at theta = ' + f.degrees + ' degrees: F[L] + F[U] + 2 cos theta F[L, U] (the plain row dashed)', left + half + gap, top - 8, token('--fg'));
+  text(format(Math.round(high)), left - 4, top + 10, token('--muted'), 'right', true); text('0', left - 4, top + gh, token('--muted'), 'right', true);
+  bars(left, top, half, gh, DATA.plain, high, token('--blind'), false);
+  bars(left + half + gap, top, half, gh, f.row, high, token('--light'), false);
+  bars(left + half + gap, top, half, gh, DATA.plain, high, token('--blind'), true);
+  DATA.regions.forEach((name, k) => { const slot = half / n; text(String(k), left + slot * (k + 0.5), top + gh + 12, token('--muted'), 'center', true); text(String(k), left + half + gap + slot * (k + 0.5), top + gh + 12, token('--muted'), 'center', true); });
+  /* the eraser */
+  const etop = top + gh + 44, eh = H - etop - 30;
+  box(left, etop, W - left - pad, eh);
+  text('the eraser\'s two conditional rows: F[L + U] the fringes (green) and F[L - U] the anti-fringes (orange), stacked; their sum twice the incoherent row F[L] + F[U] (dashed)', left, etop - 8, token('--fg'));
+  text(format(Math.round(high)), left - 4, etop + 10, token('--muted'), 'right', true); text('0', left - 4, etop + eh, token('--muted'), 'right', true);
+  const ew = W - left - pad, slot = ew / n, bw = slot * 0.62;
+  DATA.eraser.plus.forEach((v, k) => {
+    const x = left + slot * (k + 0.5) - bw / 2, hp = v / high * eh, hm = DATA.eraser.minus[k] / high * eh;
+    ctx.fillStyle = token('--light'); ctx.fillRect(x, etop + eh - hp, bw, hp);
+    ctx.fillStyle = token('--flash'); ctx.fillRect(x, etop + eh - hp - hm, bw, hm);
+    text(String(k), left + slot * (k + 0.5), etop + eh + 12, token('--muted'), 'center', true);
+  });
+  bars(left, etop, ew, eh, DATA.eraser.twice, high, token('--blind'), true);
+  byId('frame').textContent = 'theta ' + f.degrees + ' degrees';
+  byId('lines').textContent = 'V = cos theta = ' + f.V.toFixed(4) + ', D = sin theta = ' + f.D.toFixed(4) + ', V^2 + D^2 = ' + (f.V * f.V + f.D * f.D).toFixed(4) + '; the row\'s N ' + f.N + ', the visibility at the region 6 against 4 and 8 ' + f.visibility.toFixed(3) + ' (the Pythagorean half angle (2, 1) at ' + DATA.half_angle_degrees + ' degrees, cos theta 3 / 5; the eraser\'s visibilities ' + DATA.eraser.visibilities.join(', ') + ')';
+}
+
+function draw() {
+  const W = canvas.width / (window.devicePixelRatio || 1), H = canvas.height / (window.devicePixelRatio || 1);
+  ctx.fillStyle = token('--board'); ctx.fillRect(0, 0, W, H);
+  if (DATA.kind === 'time_slits') drawTimeSlits(W, H);
+  else if (DATA.kind === 'mach_zehnder') drawMachZehnder(W, H);
+  else drawMarker(W, H);
+  byId('slider').value = t;
+}
+
+/* The controls: the Mach-Zehnder's arm difference and its second splitter, in or out at any frame. */
+if (DATA.kind === 'mach_zehnder') {
+  const controls = byId('controls');
+  const label = document.createElement('label'); label.textContent = 'the arm difference Delta L ';
+  const select = document.createElement('select');
+  DATA.sets.forEach(set => { const o = document.createElement('option'); o.value = set.delta; o.textContent = set.delta + (set.delta === 1 ? ' Link' : ' Links') + ' (the cross exit ' + set.one_line[0] + ')'; select.append(o); });
+  select.addEventListener('change', () => { choice.delta = Number(select.value); draw(); });
+  label.append(select); controls.append(label);
+  const toggle = document.createElement('button'); toggle.type = 'button'; toggle.textContent = 'the second splitter: in (take it out)';
+  toggle.addEventListener('click', () => { choice.splitter = !choice.splitter; toggle.textContent = choice.splitter ? 'the second splitter: in (take it out)' : 'the second splitter: out (put it in)'; draw(); });
+  controls.append(toggle);
+  const note = document.createElement('span'); note.textContent = 'the choice may be made at any frame: the exits read the configuration the record meets at the second splitter\'s place';
+  controls.append(note);
+}
+
+/* The time: one frame per slider step, play at the frames per second, the arrow keys stepping. */
+const slider = byId('slider'); slider.max = last();
+slider.addEventListener('input', () => { t = Number(slider.value); draw(); });
+byId('play').addEventListener('click', () => {
+  if (playing) { clearInterval(playing); playing = null; byId('play').textContent = 'Play'; return; }
+  if (t >= last()) t = 0;
+  byId('play').textContent = 'Pause';
+  playing = setInterval(() => { if (t >= last()) { clearInterval(playing); playing = null; byId('play').textContent = 'Play'; return; } t++; draw(); }, 1000 / size('--frames-per-second'));
+});
+document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT' && e.target.type !== 'range') return; if (e.key === 'ArrowRight' && t < last()) { t++; draw(); } if (e.key === 'ArrowLeft' && t > 0) { t--; draw(); } });
+window.addEventListener('resize', fit);
+fit();
+</script>
+</body>
+</html>
