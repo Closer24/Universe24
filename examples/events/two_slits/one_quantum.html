@@ -734,7 +734,9 @@ function drawNodeMeasure() {
     + (m.recorded < m.window[1] ? ` (the look holds intervals 0 to ${m.recorded})` : '');
   const pad = size('--graph-pad'), left = pad * 8, bottom = pad * 3, H = size('--graph-height') * 2;
   const W = Math.max(size('--graph-width'), left + size('--bar-slot') * n + pad), slot = Math.max(size('--bar-slot'), (W - left - pad) / n), blind = m.blind.map(v => typeof v === 'number' ? v : null);  // the bars fill the chart's width
-  const high = Math.max(1, ...m.rounded_shares, ...blind.filter(v => v !== null));
+  const clicks = OUTPUT ? m.labels.map(name => (CREDITS_AT[name] || []).filter(([k]) => k >= m.window[0] && k <= m.window[1]).reduce((s, [, count]) => s + count, 0)) : [];  // the clicks the draw credited per reporter within the window, the output file's credit lines
+  const credited = clicks.some(v => v > 0);  // drawn as a second bar beside the shares' where the file carries one (one quantum, one click, where the family's unit rounds every share to 0; 2026-10-21)
+  const high = Math.max(1, ...m.rounded_shares, ...clicks, ...blind.filter(v => v !== null));
   const px = k => left + slot * (k + 0.5), py = v => pad + (high - v) / high * (H - pad - bottom);
   const coordinate = k => m.at[k];
   let body = '';
@@ -745,7 +747,9 @@ function drawNodeMeasure() {
   body += `<line x1="${left}" x2="${W - pad}" y1="${py(0)}" y2="${py(0)}" stroke="${token('--line')}"/>` + svgText(format(high), left - 3, pad + size('--small') * 0.3, 'end') + svgText('0', left - 3, py(0), 'end');
   const every = Math.max(1, Math.ceil(n / 16)), w = Math.max(1, slot * 0.6);
   m.rounded_shares.forEach((v, k) => {
-    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${w.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    const bw = credited ? w / 2 : w;
+    body += `<rect x="${(px(k) - w / 2).toFixed(1)}" y="${py(Math.max(0, v)).toFixed(1)}" width="${bw.toFixed(1)}" height="${(py(0) - py(Math.max(0, v))).toFixed(1)}" fill="${hex}"><title>${esc(m.labels[k])}: ${format(v)} by the shares, saw ${format(m.seen[k])}${blind[k] === null ? '' : ', the blind ' + format(blind[k])}</title></rect>`;
+    if (credited) body += `<rect x="${px(k).toFixed(1)}" y="${py(Math.max(0, clicks[k])).toFixed(1)}" width="${bw.toFixed(1)}" height="${(py(0) - py(Math.max(0, clicks[k]))).toFixed(1)}" fill="${token('--flash')}"><title>${esc(m.labels[k])}: ${format(clicks[k])} clicks credited by the draw</title></rect>`;
     if (k % every === 0 || k === n - 1) body += svgText(coordinate(k), px(k), H - pad, 'middle');
   });
   const hasBlind = blind.some(v => v !== null);
@@ -756,9 +760,9 @@ function drawNodeMeasure() {
     blind.forEach((v, k) => { if (v !== null) body += `<line x1="${(px(k) - slot * 0.4).toFixed(1)}" x2="${(px(k) + slot * 0.4).toFixed(1)}" y1="${py(v).toFixed(1)}" y2="${py(v).toFixed(1)}" stroke="${token('--blind')}" stroke-width="${size('--line-width')}" stroke-dasharray="4 3"><title>the blind ${format(v)} at ${esc(m.labels[k])}</title></line>`; });
     body += svgText('blind', W - pad, pad + size('--small') * 0.3, 'end');
   }
-  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
+  const legend = `<span><i style="border-color:${hex};border-top-width:6px"></i>${esc(family)} the rounded shares per reporter (N by the shares of the look's click lines, the expectation)</span>` + (credited ? `<span><i style="border-color:${token('--flash')};border-top-width:6px"></i>the clicks the draw credited (the output file's credit lines, the measurement)</span>` : '') + (hasBlind ? `<span><i class="dashed" style="border-color:${token('--blind')}"></i>blind</span>` : '') + (Array.isArray(m.pattern) ? `<span><i style="border-color:${token('--window')};border-top-width:6px"></i>the pattern's range</span>` : '');
   box.innerHTML = `<div class="caption"><b>The credit of ${esc(family)} at ${esc(String(m.node_detector))} across ${esc(m.across)}</b><span>measurement</span></div><div class="legend">${legend}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="the node_detectors' credit per reporter">${body}</svg>`;
-  byId('totals').textContent = m.totals;
+  byId('totals').textContent = m.totals + (credited ? `; ${format(clicks.reduce((a, b) => a + b, 0))} clicks credited by the draw (the credit lines)` : '');
   byId('watch').innerHTML = m.watch.map(esc).join('<br>');
 }
 if (!MEASURE) {

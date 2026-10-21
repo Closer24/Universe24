@@ -32,6 +32,14 @@ PICTURES = HERE.parent
 SCALE = 10  # pixels per Node in the pictures
 PER_GAP = 22  # streamlines per gap, seeded at equal flux
 STEP = 0.1  # the integration's step along the unit tangent, in Nodes
+# the pictures' colours on the dark ground (the site shows one colour scheme, dark; 2026-10-21)
+GROUND = (15, 17, 20)  # the look pages' background
+SHARE = (110, 161, 240)  # the summed share's glow at its largest, the look pages' blue
+WALL = (215, 218, 224)  # the wall's Nodes, the look pages' light grey
+SCREEN = (120, 112, 72)  # the screen's regions, a dim yellow
+LOWER_LINE = (255, 96, 96)  # the lower gap's streamlines, red
+UPPER_LINE = (96, 224, 112)  # the upper gap's streamlines, green
+MIDLINE = (150, 150, 150)  # the midline, grey
 
 
 def png(path: Path, rgb: np.ndarray) -> None:
@@ -191,27 +199,32 @@ def seeds_of(jx: np.ndarray, wall_x: int) -> tuple[list[tuple[float, float]], di
 
 
 def picture(board, rho, lines, mid: float, target: Path) -> None:  # type: ignore[no-untyped-def]
-    """The board in the summed share's blue, the wall black, the screen's column yellow, the lower gap's
-    lines red, the upper's green, the midline grey; SCALE pixels per Node."""
-    img = np.full((board.height * SCALE, board.length * SCALE, 3), 255, dtype=np.uint8)
+    """The board on the site's dark ground (rgb(15, 17, 20), the look pages' background; the figure dark
+    since 2026-10-21, the site's one colour scheme), the summed share as a blue glow, the wall light grey,
+    the screen's column a dim yellow, the lower gap's lines red, the upper's green, the midline grey;
+    SCALE pixels per Node."""
+    img = np.zeros((board.height * SCALE, board.length * SCALE, 3), dtype=np.uint8)
+    img[:, :] = GROUND
     dens = rho / rho.max()
     for x in range(board.length):
         for y in range(board.height):
-            g = int(255 - 160 * min(dens[x, y] ** 0.5, 1.0))
-            img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = (g, g, 255)
+            a = min(dens[x, y] ** 0.5, 1.0)
+            img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = tuple(
+                int(round(g + a * (s - g))) for g, s in zip(GROUND, SHARE, strict=True)
+            )
     for x, y in board.beyond:
-        img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = (40, 40, 40)
+        img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = WALL
     for name in board.screen:
         for x, y in board.regions[name]:
-            img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = (230, 230, 200)
+            img[y * SCALE : (y + 1) * SCALE, x * SCALE : (x + 1) * SCALE] = SCREEN
     half = SCALE / 2
     for k, path in enumerate(lines):
-        colour = (200, 30, 30) if k < PER_GAP else (30, 120, 30)
+        colour = LOWER_LINE if k < PER_GAP else UPPER_LINE
         for (x0, y0), (x1, y1) in zip(path[:-1], path[1:], strict=True):
             line_to(
                 img, x0 * SCALE + half, y0 * SCALE + half, x1 * SCALE + half, y1 * SCALE + half, colour
             )
-    line_to(img, 0, mid * SCALE + half, board.length * SCALE, mid * SCALE + half, (120, 120, 120))
+    line_to(img, 0, mid * SCALE + half, board.length * SCALE, mid * SCALE + half, MIDLINE)
     png(target, img)
 
 

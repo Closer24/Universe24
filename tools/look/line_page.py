@@ -499,6 +499,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', 
 const format = v => typeof v === 'number' ? (Number.isInteger(v) ? v.toLocaleString('en-US') : String(v)) : String(v);
 const canvas = byId('stage'), ctx = canvas.getContext('2d');
 let t = 0, playing = null, choice = {delta: 0, splitter: true};
+let narrow = false, fontSize = 12, head = 46;  /* set per draw from the canvas's width: the layout and the type scale with it; the drawing starts under the corner caption */
 
 /* The lists: the numbers and the sources, each a row. */
 for (const [id, rows] of [['numbers', DATA.numbers], ['sources', DATA.sources]]) {
@@ -517,13 +518,21 @@ function fit() {
   draw();
 }
 
-/* Drawing helpers: a boxed graph area, text, a polyline, bars. */
-function box(x, y, w, h) { ctx.strokeStyle = token('--line'); ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w, h); }
-function text(s, x, y, colour, align, mono) {
-  ctx.fillStyle = colour || token('--muted'); ctx.textAlign = align || 'left'; ctx.textBaseline = 'alphabetic';
-  ctx.font = (mono ? '500 ' : '') + size('--small') + 'px ' + (mono ? token('--font-mono') : token('--font-body'));
-  ctx.fillText(s, x, y);
+/* Drawing helpers: every text is cut to the width it is given, so nothing runs off the canvas at any width, and the long labels have a short form for a narrow canvas. */
+function font(mono) { ctx.font = (mono ? '500 ' : '') + fontSize + 'px ' + (mono ? token('--font-mono') : token('--font-body')); }
+function cut(s, max) {
+  if (!(max > 0)) return '';
+  if (ctx.measureText(s).width <= max) return s;
+  let kept = s;
+  while (kept.length > 1 && ctx.measureText(kept + '...').width > max) kept = kept.slice(0, -1);
+  return kept + '...';
 }
+function text(s, x, y, colour, align, mono, max) {
+  font(mono); ctx.fillStyle = colour || token('--muted'); ctx.textAlign = align || 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText(max === undefined ? s : cut(s, max), x, y);
+}
+const pick = (long, short) => narrow ? short : long;
+function box(x, y, w, h) { ctx.strokeStyle = token('--line'); ctx.lineWidth = 1; ctx.strokeRect(x + 0.5, y + 0.5, w, h); }
 function polyline(points, colour, width, dashed) {
   if (!points.length) return;
   ctx.save(); ctx.strokeStyle = colour; ctx.lineWidth = width || 1.6; ctx.setLineDash(dashed ? [5, 4] : []);
@@ -549,107 +558,115 @@ function glowNodes(x, y, cell, levels, amplitude, colour) {
 
 /* E: the chain's levels over the Nodes drawn and, below, P^2 across the band up to the frame's interval. */
 function drawTimeSlits(W, H) {
-  const f = frames()[t], pad = 10, left = 44, top = 24, split = Math.round(H * 0.52);
-  const gw = W - left - pad, gh = split - top - 28, A = DATA.amplitude, n = f.levels.length;
+  const f = frames()[t], pad = 10, left = narrow ? 40 : 52, top = head, split = Math.round(H * 0.52), fg = token('--fg'), muted = token('--muted'), blind = token('--blind');
+  const gw = W - left - pad, gh = split - top - 30, A = DATA.amplitude, n = f.levels.length, d = DATA.lays[0] - DATA.lays[1];
   const px = i => left + i / (n - 1) * gw, py = v => top + (1 - v / A) / 2 * gh;
   box(left, top, gw, gh);
-  text('the chain: the record\\'s level per Node, the two packets (the second the first\\'s copy laid ' + (DATA.lays[0] - DATA.lays[1]) + ' Links behind)', left, top - 8, token('--fg'));
-  text(format(A), left - 4, top + 10, token('--muted'), 'right', true); text('-' + format(A), left - 4, top + gh, token('--muted'), 'right', true);
-  text('Node ' + DATA.span[0], left, split - 10, token('--muted'), 'left', true); text('Node ' + (DATA.span[1] - 1), left + gw, split - 10, token('--muted'), 'right', true);
+  text(pick("the chain: the record's level per Node, the two packets (the second the first's copy laid " + d + " Links behind)", "the chain: the level per Node, the two packets"), left, top - 8, fg, 'left', false, gw);
+  text(format(A), left - 4, top + 10, muted, 'right', true, left - 6); text('-' + format(A), left - 4, top + gh, muted, 'right', true, left - 6);
+  text('Node ' + DATA.span[0], left, split - 12, muted, 'left', true, gw / 2 - 4); text('Node ' + (DATA.span[1] - 1), left + gw, split - 12, muted, 'right', true, gw / 2 - 4);
   dashedLine(px(0), py(0), px(n - 1), py(0), token('--line'));
   const probe = px(DATA.probe - DATA.span[0]);
-  dashedLine(probe, top, probe, top + gh, token('--blind')); text('the probe, the Node ' + DATA.probe, probe + 4, top + 12, token('--blind'), 'left', true);
+  dashedLine(probe, top, probe, top + gh, blind);
+  text(pick('the probe, the Node ' + DATA.probe, 'probe ' + DATA.probe), probe + 4, top + 12, blind, 'left', true, left + gw - probe - 6);
   for (const lay of DATA.lays) { const lx = px(lay - DATA.span[0]); dashedLine(lx, top + gh - 10, lx, top + gh, token('--window')); }
-  text('the two slits in time: the lays at the Nodes ' + DATA.lays[1] + ' and ' + DATA.lays[0], px(DATA.lays[1] - DATA.span[0]), top + gh - 14, token('--muted'), 'left', true);
+  const lx = px(DATA.lays[1] - DATA.span[0]);
+  text(pick('the two slits in time: the lays at the Nodes ' + DATA.lays[1] + ' and ' + DATA.lays[0], 'the lays at ' + DATA.lays[1] + ' and ' + DATA.lays[0]), lx, top + gh - 14, muted, 'left', true, probe - lx - 8);
   polyline(f.levels.map((v, i) => [px(i), py(v)]), token('--light'), 1.4);
   /* the spectrum */
-  const stop = split + 24, sh = H - stop - 30, grid = DATA.grid, m = grid.length, high = 4.2;
+  const stop = split + 26, sh = H - stop - 30, grid = DATA.grid, m = grid.length, high = 4.2, span = grid[m - 1] - grid[0];
   const qx = i => left + i / (m - 1) * gw, qy = v => stop + (1 - Math.min(v, high) / high) * sh;
   box(left, stop, gw, sh);
-  text('P^2 = X^2 + Y^2 at the probe up to this interval, over the body\\'s resonance omega_d (the single packet dashed, its final peak 1; the two packets solid)', left, stop - 8, token('--fg'));
-  text('4', left - 4, stop + 10, token('--muted'), 'right', true); text('0', left - 4, stop + sh, token('--muted'), 'right', true);
-  text('omega_d ' + grid[0].toFixed(3), left, H - 12, token('--muted'), 'left', true); text(grid[m - 1].toFixed(3), left + gw, H - 12, token('--muted'), 'right', true);
-  const cx = qx((DATA.carrier - grid[0]) / (grid[m - 1] - grid[0]) * (m - 1));
-  dashedLine(cx, stop, cx, stop + sh, token('--window')); text('the carrier ' + DATA.carrier.toFixed(4), cx + 4, stop + sh - 6, token('--muted'), 'left', true);
-  for (const z of DATA.zeros) { const zx = qx((z - grid[0]) / (grid[m - 1] - grid[0]) * (m - 1)); dashedLine(zx, stop + sh - 12, zx, stop + sh, token('--blind')); }
-  text('the beats\\' zeros, k(omega_d) d = (2 m + 1) pi', left + gw - 4, stop + sh - 16, token('--blind'), 'right', true);
-  polyline(f.single.map((v, i) => [qx(i), qy(v)]), token('--blind'), 1.2, true);
+  text(pick("P^2 = X^2 + Y^2 at the probe up to this interval, over the body's resonance omega_d (the single packet dashed, its final peak 1; the two packets solid)", 'P^2 at the probe up to this interval (single dashed, two packets solid)'), left, stop - 8, fg, 'left', false, gw);
+  text('4', left - 4, stop + 10, muted, 'right', true, left - 6); text('0', left - 4, stop + sh, muted, 'right', true, left - 6);
+  text('omega_d ' + grid[0].toFixed(3), left, H - 12, muted, 'left', true, gw / 2 - 4); text(grid[m - 1].toFixed(3), left + gw, H - 12, muted, 'right', true, gw / 2 - 4);
+  const cx = qx((DATA.carrier - grid[0]) / span * (m - 1));
+  dashedLine(cx, stop, cx, stop + sh, token('--window'));
+  text(pick('the carrier ' + DATA.carrier.toFixed(4), 'carrier'), cx + 4, stop + sh - 6, muted, 'left', true, left + gw - cx - 6);
+  for (const z of DATA.zeros) { const zx = qx((z - grid[0]) / span * (m - 1)); dashedLine(zx, stop + sh - 12, zx, stop + sh, blind); }
+  text(pick("the beats' zeros, k(omega_d) d = (2 m + 1) pi", "the beats' zeros"), left + gw - 4, stop + sh - 18, blind, 'right', true, gw * 0.5);
+  polyline(f.single.map((v, i) => [qx(i), qy(v)]), blind, 1.2, true);
   polyline(f.double.map((v, i) => [qx(i), qy(v)]), token('--light'), 1.6);
   byId('frame').textContent = 'interval ' + f.interval + ' of ' + DATA.intervals;
-  byId('lines').textContent = 'P^2 at the carrier: the single packet ' + f.single[Math.round((m - 1) / 2)].toFixed(3) + ', the two packets ' + f.double[Math.round((m - 1) / 2)].toFixed(3) + ' of the single\\'s final peak; the second packet arrives at the probe about ' + (DATA.lays[0] - DATA.lays[1]) + ' / v_g intervals after the first';
+  const mid = Math.round((m - 1) / 2);
+  byId('lines').textContent = 'P^2 at the carrier: the single packet ' + f.single[mid].toFixed(3) + ', the two packets ' + f.double[mid].toFixed(3) + " of the single's final peak; the second packet arrives at the probe about " + d + ' / v_g intervals after the first';
 }
 
-/* D: the two arms and the exits as rows of glowing Nodes, the exit side's weights as bars. */
+/* D: the two arms and the exits as rows of glowing Nodes, the exit side's weights booked so far as bars over the window's total. */
 function drawMachZehnder(W, H) {
-  const set = DATA.sets[choice.delta], f = set.frames[t], A = DATA.amplitude, pad = 16;
-  const cell = Math.max(6, Math.min(18, Math.floor((W * 0.6 - 2 * pad) / (DATA.arm + 4 + DATA.exit + 2))));
-  const x0 = pad + 3 * cell, yTop = Math.round(H * 0.3), yBottom = Math.round(H * 0.62), colour = token('--light');
-  text('the record\\'s plane wave through the two arms, Delta L = ' + set.delta + (set.delta === 1 ? ' Link' : ' Links') + '; the second splitter ' + (choice.splitter ? 'in' : 'out'), pad, 18, token('--fg'));
-  /* the first splitter */
-  ctx.fillStyle = token('--blind'); ctx.fillRect(x0 - 2 * cell, yTop, cell * 0.5, yBottom - yTop + cell);
-  text('BS1', x0 - 2 * cell, yTop - 6, token('--muted'), 'left', true);
-  glowNodes(x0, yTop, cell, f.arm2, A, colour); text('arm 2, ' + (DATA.arm + set.delta) + ' Nodes', x0, yTop - 6, token('--muted'), 'left', true);
-  glowNodes(x0, yBottom, cell, f.arm1, A, colour); text('arm 1, ' + DATA.arm + ' Nodes', x0, yBottom + cell + 14, token('--muted'), 'left', true);
-  /* the second splitter at the first arm's end, the second arm's extra Nodes reaching past it */
+  const set = DATA.sets[choice.delta], f = set.frames[t], final = set.frames[set.frames.length - 1], A = DATA.amplitude, pad = 12;
+  const fg = token('--fg'), muted = token('--muted'), colour = token('--light'), stacked = W < 760;
+  const panel = stacked ? 0 : 200, cells = DATA.arm + 4 + DATA.exit + 3;
+  const cell = Math.max(5, Math.min(18, Math.floor((W - 2 * pad - panel - (stacked ? 0 : pad)) / cells)));
+  const x0 = pad + 2 * cell, rowGap = Math.max(3 * cell, 40), yTop = head + 14, yBottom = yTop + rowGap + cell, below = yBottom + cell + 14;
+  const inOut = choice.splitter ? 'in' : 'out', links = set.delta + (set.delta === 1 ? ' Link' : ' Links');
+  text(pick("the record's plane wave through the two arms, Delta L = " + links + '; the second splitter ' + inOut, 'Delta L = ' + links + '; the splitter ' + inOut), pad, head - 8, fg, 'left', false, W - 2 * pad);
+  /* the first splitter, the two arms, the second splitter at the first arm's end */
+  ctx.fillStyle = token('--blind'); ctx.fillRect(x0 - 1.5 * cell, yTop, cell * 0.5, yBottom - yTop + cell);
+  text('BS1', x0 - 1.25 * cell, below, muted, 'center', true, 3 * cell + 12);
   const xs = x0 + DATA.arm * cell + cell * 0.5;
+  glowNodes(x0, yTop, cell, f.arm2, A, colour); glowNodes(x0, yBottom, cell, f.arm1, A, colour);
+  text('arm 2, ' + (DATA.arm + set.delta) + ' Nodes', x0 + 2 * cell, yTop - 6, muted, 'left', true, xs - x0 - 2 * cell - 4);
+  text('arm 1, ' + DATA.arm + ' Nodes', x0 + 2 * cell, below, muted, 'left', true, xs - x0 - 2.5 * cell - 4);
   if (choice.splitter) { ctx.fillStyle = token('--blind'); ctx.fillRect(xs, yTop - cell * 0.5, cell * 0.5, yBottom - yTop + 2 * cell); }
   else { ctx.save(); ctx.strokeStyle = token('--blind'); ctx.setLineDash([3, 3]); ctx.strokeRect(xs + 0.5, yTop - cell * 0.5 + 0.5, cell * 0.5, yBottom - yTop + 2 * cell); ctx.restore(); }
-  text(choice.splitter ? 'BS2 in' : 'BS2 out', xs - cell, yBottom + 2 * cell + 14, token('--muted'), 'left', true);
-  /* the exits: the cross exit above, the straight exit below, each a row of Nodes leaving to the right */
-  const xe = xs + cell * 1.5 + set.delta * cell;
+  /* the exits to the right of the second splitter, the second arm's extra Nodes reaching past it */
+  const xe = xs + cell * 1.5 + set.delta * cell, right = (stacked ? W : W - panel) - pad;
   const upper = choice.splitter ? f.cross : f.through[1], lower = choice.splitter ? f.straight : f.through[0];
   glowNodes(xe, yTop, cell, upper, A, colour); glowNodes(xe, yBottom, cell, lower, A, colour);
-  text(choice.splitter ? 'the cross exit, (arm 1 + arm 2) / root 2' : 'exit 2: arm 2 straight on', xe, yTop - 6, token('--muted'), 'left', true);
-  text(choice.splitter ? 'the straight exit, (arm 1 - arm 2) / root 2' : 'exit 1: arm 1 straight on', xe, yBottom + cell + 14, token('--muted'), 'left', true);
-  /* the exit side's weights up to the interval, the two bars, the script's final shares dashed */
-  const w = choice.splitter ? f.in : f.out, total = w[0] + w[1] || 1, shares = [w[0] / total, w[1] / total];
+  text('BS2 ' + inOut, xs + cell, (yTop + yBottom) / 2 + cell, muted, 'left', true, right - xs - cell);
+  text(choice.splitter ? pick('the cross exit, (arm 1 + arm 2) / root 2', 'cross: (1 + 2) / root 2') : pick('exit 2: arm 2 straight on', 'exit 2: arm 2'), xe, yTop - 6, muted, 'left', true, right - xe);
+  text(choice.splitter ? pick('the straight exit, (arm 1 - arm 2) / root 2', 'straight: (1 - 2) / root 2') : pick('exit 1: arm 1 straight on', 'exit 1: arm 1'), xe, below, muted, 'left', true, right - xe);
+  /* the weights booked so far over the window's total, the two bars growing to the script's final shares (dashed) */
+  const w = choice.splitter ? f.in : f.out, total = (choice.splitter ? final.in : final.out).reduce((a, b) => a + b, 0) || 1, shares = [w[0] / total, w[1] / total];
   const blind = choice.splitter ? set.two_part_in : set.two_part_out;
-  const bx = W - pad - 150, by = Math.round(H * 0.2), bw = 150, bh = Math.round(H * 0.55);
+  const bx = stacked ? pad + 36 : W - pad - panel + 20, by = stacked ? below + 30 : head + 14, bw = stacked ? W - 2 * pad - 36 : panel - 20, bh = Math.max(40, H - by - 44);
   box(bx, by, bw, bh);
-  text('the exit side\\'s weights so far', bx, by - 8, token('--fg'));
+  text('the weights booked so far', bx, by - 8, fg, 'left', false, bw);
+  text('1', bx - 4, by + 10, muted, 'right', true, 30); text('0', bx - 4, by + bh, muted, 'right', true, 30);
   bars(bx, by, bw, bh, shares, 1, colour, false); bars(bx, by, bw, bh, blind, 1, token('--blind'), true);
-  text(choice.splitter ? 'cross' : 'arm 1', bx + bw * 0.25, by + bh + 14, token('--muted'), 'center', true);
-  text(choice.splitter ? 'straight' : 'arm 2', bx + bw * 0.75, by + bh + 14, token('--muted'), 'center', true);
-  text(shares[0].toFixed(3), bx + bw * 0.25, by - 22 + bh * (1 - shares[0]) + 18, token('--fg'), 'center', true);
-  text(shares[1].toFixed(3), bx + bw * 0.75, by - 22 + bh * (1 - shares[1]) + 18, token('--fg'), 'center', true);
+  text(choice.splitter ? 'cross' : 'arm 1', bx + bw * 0.25, by + bh + 14, muted, 'center', true, bw / 2 - 4);
+  text(choice.splitter ? 'straight' : 'arm 2', bx + bw * 0.75, by + bh + 14, muted, 'center', true, bw / 2 - 4);
+  shares.forEach((s, k) => text(s.toFixed(3), bx + bw * (0.25 + 0.5 * k), Math.max(by + 12, by + bh * (1 - s) - 4), fg, 'center', true, bw / 2 - 4));
   byId('frame').textContent = 'interval ' + f.interval + ' of ' + DATA.steps;
   byId('lines').textContent = (choice.splitter
-    ? 'the splitter in: P(cross) by the one-line form 4 s (1 - s) cos^2(Delta / 2) at s = 1 / 2 is ' + set.one_line[0] + ', by the two-part form ' + set.two_part_in[0] + ' (dashed); the weights so far ' + format(w[0]) + ' and ' + format(w[1])
-    : 'the splitter out: the exits read the arms, P(arm 1), P(arm 2) = ' + set.two_part_out.join(', ') + ' by the two-part form (dashed); the weights so far ' + format(w[0]) + ' and ' + format(w[1]))
-    + '; with a side after this one its two weights are ' + format(f.first[0]) + ' each (the Gram identity)';
+    ? 'the splitter in: the weights booked so far ' + format(w[0]) + ' and ' + format(w[1]) + " of the window's " + format(total) + ' (the shares so far ' + shares.map(s => s.toFixed(3)).join(', ') + '); P(cross) by the one-line form 4 s (1 - s) cos^2(Delta / 2) at s = 1 / 2 is ' + set.one_line[0] + ', by the two-part form ' + set.two_part_in[0] + ' (dashed)'
+    : 'the splitter out: the exits read the arms; the weights booked so far ' + format(w[0]) + ' and ' + format(w[1]) + " of the window's " + format(total) + ' (the shares so far ' + shares.map(s => s.toFixed(3)).join(', ') + '); P(arm 1), P(arm 2) = ' + set.two_part_out.join(', ') + ' by the two-part form (dashed)')
+    + '; with a side after this one its two weights are ' + format(f.first[0]) + ' each so far (the Gram identity)';
 }
 
 /* B: the plain row beside the marked row at the angle, and the eraser's two rows summing back. */
 function drawMarker(W, H) {
-  const f = frames()[t], pad = 10, left = 36, n = DATA.regions.length, top = 24, gap = 24;
-  const half = (W - left - pad - gap) / 2, gh = Math.round(H * 0.36), high = Math.max(...DATA.plain, ...DATA.eraser.sum) * 1.05;
+  const f = frames()[t], pad = 10, left = narrow ? 34 : 40, n = DATA.regions.length, top = head, gap = narrow ? 14 : 24, fg = token('--fg'), muted = token('--muted');
+  const half = (W - left - pad - gap) / 2, gh = Math.round(H * 0.34), high = Math.max(...DATA.plain, ...DATA.eraser.sum) * 1.05, every = narrow ? 2 : 1;
   box(left, top, half, gh); box(left + half + gap, top, half, gh);
-  text('the plain row, theta 0: F[L] + F[U] + 2 F[L, U] per region (W_c over the window)', left, top - 8, token('--fg'));
-  text('the marked row at theta = ' + f.degrees + ' degrees: F[L] + F[U] + 2 cos theta F[L, U] (the plain row dashed)', left + half + gap, top - 8, token('--fg'));
-  text(format(Math.round(high)), left - 4, top + 10, token('--muted'), 'right', true); text('0', left - 4, top + gh, token('--muted'), 'right', true);
+  text(pick('the plain row, theta 0: F[L] + F[U] + 2 F[L, U] per region (W_c over the window)', 'plain, theta 0'), left, top - 8, fg, 'left', false, half);
+  text(pick('the marked row at theta = ' + f.degrees + ' degrees: F[L] + F[U] + 2 cos theta F[L, U] (the plain row dashed)', 'marked, theta ' + f.degrees + ' deg'), left + half + gap, top - 8, fg, 'left', false, half);
+  text(format(Math.round(high)), left - 4, top + 10, muted, 'right', true, left - 6); text('0', left - 4, top + gh, muted, 'right', true, left - 6);
   bars(left, top, half, gh, DATA.plain, high, token('--blind'), false);
   bars(left + half + gap, top, half, gh, f.row, high, token('--light'), false);
   bars(left + half + gap, top, half, gh, DATA.plain, high, token('--blind'), true);
-  DATA.regions.forEach((name, k) => { const slot = half / n; text(String(k), left + slot * (k + 0.5), top + gh + 12, token('--muted'), 'center', true); text(String(k), left + half + gap + slot * (k + 0.5), top + gh + 12, token('--muted'), 'center', true); });
+  const slot = half / n;
+  DATA.regions.forEach((name, k) => { if (k % every) return; text(String(k), left + slot * (k + 0.5), top + gh + 12, muted, 'center', true, slot * every); text(String(k), left + half + gap + slot * (k + 0.5), top + gh + 12, muted, 'center', true, slot * every); });
   /* the eraser */
-  const etop = top + gh + 44, eh = H - etop - 30;
-  box(left, etop, W - left - pad, eh);
-  text('the eraser\\'s two conditional rows: F[L + U] the fringes (green) and F[L - U] the anti-fringes (orange), stacked; their sum twice the incoherent row F[L] + F[U] (dashed)', left, etop - 8, token('--fg'));
-  text(format(Math.round(high)), left - 4, etop + 10, token('--muted'), 'right', true); text('0', left - 4, etop + eh, token('--muted'), 'right', true);
-  const ew = W - left - pad, slot = ew / n, bw = slot * 0.62;
+  const etop = top + gh + 44, eh = H - etop - 30, ew = W - left - pad, eslot = ew / n, bw = eslot * 0.62;
+  box(left, etop, ew, eh);
+  text(pick("the eraser's two conditional rows: F[L + U] the fringes (green) and F[L - U] the anti-fringes (orange), stacked; their sum twice the incoherent row F[L] + F[U] (dashed)", 'the eraser: F[L + U] (green) + F[L - U] (orange) = 2 (F[L] + F[U]) (dashed)'), left, etop - 8, fg, 'left', false, ew);
+  text(format(Math.round(high)), left - 4, etop + 10, muted, 'right', true, left - 6); text('0', left - 4, etop + eh, muted, 'right', true, left - 6);
   DATA.eraser.plus.forEach((v, k) => {
-    const x = left + slot * (k + 0.5) - bw / 2, hp = v / high * eh, hm = DATA.eraser.minus[k] / high * eh;
+    const x = left + eslot * (k + 0.5) - bw / 2, hp = v / high * eh, hm = DATA.eraser.minus[k] / high * eh;
     ctx.fillStyle = token('--light'); ctx.fillRect(x, etop + eh - hp, bw, hp);
     ctx.fillStyle = token('--flash'); ctx.fillRect(x, etop + eh - hp - hm, bw, hm);
-    text(String(k), left + slot * (k + 0.5), etop + eh + 12, token('--muted'), 'center', true);
+    if (k % every === 0) text(String(k), left + eslot * (k + 0.5), etop + eh + 12, muted, 'center', true, eslot * every);
   });
   bars(left, etop, ew, eh, DATA.eraser.twice, high, token('--blind'), true);
   byId('frame').textContent = 'theta ' + f.degrees + ' degrees';
-  byId('lines').textContent = 'V = cos theta = ' + f.V.toFixed(4) + ', D = sin theta = ' + f.D.toFixed(4) + ', V^2 + D^2 = ' + (f.V * f.V + f.D * f.D).toFixed(4) + '; the row\\'s N ' + f.N + ', the visibility at the region 6 against 4 and 8 ' + f.visibility.toFixed(3) + ' (the Pythagorean half angle (2, 1) at ' + DATA.half_angle_degrees + ' degrees, cos theta 3 / 5; the eraser\\'s visibilities ' + DATA.eraser.visibilities.join(', ') + ')';
+  byId('lines').textContent = 'V = cos theta = ' + f.V.toFixed(4) + ', D = sin theta = ' + f.D.toFixed(4) + ', V^2 + D^2 = ' + (f.V * f.V + f.D * f.D).toFixed(4) + "; the row's N " + f.N + ', the visibility at the region 6 against 4 and 8 ' + f.visibility.toFixed(3) + ' (the Pythagorean half angle (2, 1) at ' + DATA.half_angle_degrees + " degrees, cos theta 3 / 5; the eraser's visibilities " + DATA.eraser.visibilities.join(', ') + ')';
 }
 
 function draw() {
   const W = canvas.width / (window.devicePixelRatio || 1), H = canvas.height / (window.devicePixelRatio || 1);
+  narrow = W < 600; fontSize = narrow ? 10 : 12;
   ctx.fillStyle = token('--board'); ctx.fillRect(0, 0, W, H);
   if (DATA.kind === 'time_slits') drawTimeSlits(W, H);
   else if (DATA.kind === 'mach_zehnder') drawMachZehnder(W, H);
@@ -668,7 +685,7 @@ if (DATA.kind === 'mach_zehnder') {
   const toggle = document.createElement('button'); toggle.type = 'button'; toggle.textContent = 'the second splitter: in (take it out)';
   toggle.addEventListener('click', () => { choice.splitter = !choice.splitter; toggle.textContent = choice.splitter ? 'the second splitter: in (take it out)' : 'the second splitter: out (put it in)'; draw(); });
   controls.append(toggle);
-  const note = document.createElement('span'); note.textContent = 'the choice may be made at any frame: the exits read the configuration the record meets at the second splitter\\'s place';
+  const note = document.createElement('span'); note.textContent = "the choice may be made at any frame: the exits read the configuration the record meets at the second splitter's place";
   controls.append(note);
 }
 
