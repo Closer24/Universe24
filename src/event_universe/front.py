@@ -17,8 +17,8 @@ if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 
-def on_board(board: Lattice, node: Node) -> tuple[int, int, int]:
-    """A Node declared at the file's coordinates on the lattice as grown, by the offset of the layers grown before the origin."""
+def on_board(board: Lattice, node: Any) -> Node:
+    """A Node declared at the file's coordinates on the lattice as grown, by the offset of the layers grown before the origin (`Lattice.offset`; ALGEBRA.md, The start, the layers grown beyond a receding face the vacuum's, and The receding face: the run the larger board's bit for bit), the engine's one file-to-board offset: every declared coordinate (a body's or a NodeDetector's Nodes, a packet's envelope, a lay's or a face's Node) is read on the board through it (`node_detector`, `take`, `emission.laid_packet`, `meeting_back`, `cone`), as `Lattice.mask` adds the offset to a whole set."""
     return (
         int(node[0]) + board.offset[0],
         int(node[1]) + board.offset[1],
@@ -27,7 +27,7 @@ def on_board(board: Lattice, node: Node) -> tuple[int, int, int]:
 
 
 def declared(board: Lattice, here: Any) -> Node:
-    """A Node of the lattice as grown at the file's coordinates, the offset taken back."""
+    """A Node of the lattice as grown at the file's coordinates, the offset taken back, `on_board` inverted: the one place the board's index returns to the file's coordinates (the books' Nodes, `credit.booked` and `credit.support_of`; the cone's Node named in a refusal, `cone.at_file`)."""
     return (
         int(here[0]) - board.offset[0],
         int(here[1]) - board.offset[1],

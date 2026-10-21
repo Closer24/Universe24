@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
+from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import norm, times
@@ -286,8 +287,8 @@ def absorption(
 
 
 def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) -> list[int]:
-    """The dark's draw between the emission and nothing over `span` board intervals at the lifetime tau, a proper time (the mathematician's hand with the advisor's second, two hands): the hazard 1 / tau per proper interval, the body's proper intervals per board interval p_0 / Gamma, so the emission's weight is span x p_0 x unit div Gamma by the division act (half up) against the rest of tau x unit, [span x unit, (tau - span) x unit] exactly in the vacuum where p_0 = Gamma, and in a well the body gives slower by p_0 / Gamma."""
-    emitted = int(division_forward(span * clock * unit, gamma, division_forward(gamma, 2, 0)[0])[0])
+    """The dark's draw between the emission and nothing over `span` board intervals at the lifetime tau, a proper time (the mathematician's hand with the advisor's second, two hands): the hazard 1 / tau per proper interval, the body's proper intervals per board interval p_0 / Gamma, so the emission's weight is span x p_0 x unit div Gamma by the division act (half up, `paces.rounded`) against the rest of tau x unit, [span x unit, (tau - span) x unit] exactly in the vacuum where p_0 = Gamma, and in a well the body gives slower by p_0 / Gamma."""
+    emitted = int(rounded(span * clock * unit, gamma))
     return [emitted, lifetime * unit - emitted]
 
 

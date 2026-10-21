@@ -9,14 +9,14 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import growth, meeting_back, share
+from event_universe import meeting_back, share
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.covector import THIRDS
 from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
-from event_universe.front import Front
+from event_universe.front import Front, declared
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.draw import CONE, Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
 from event_universe.loader.keys import Node
@@ -242,10 +242,9 @@ def count_held(board: Lattice, index: int) -> bool:
 
 
 def quanta_rounded(books: Books, index: int, inflow: int, link_unit: int, parts: int, scale: int) -> int:
-    """The whole quanta a side's window brought in, the count's rounding with nothing carried: the side's gate (ALGEBRA.md, The meeting's reading, the reader's F4 of 2026-10-20: a side draws where a whole quantum has come through its window, the count's rounding over its region and its window; a share below it is no click), the remainder left to `quanta_through`. The count reads a record of n parts from its share S over the board as n S over scale W_rec (`count_of`); a side reads one of the record's beams, its inflow I in the unit G^2 summed over the parts' lines and taken in the quantum of one part, so (n n I + scale W_rec G^2 div 2) div (scale W_rec G^2) by the division act, `scale` the written coefficients' norm standing while the window was booked (`scale_of` before the close's writes, n before any write), the same reading before and after a write (the singlet's two beams, half the record each, read 0.997 and 1.001 at the sides and round to one each; after the first side's write the second side's beam reads the same; a background at a tenth of the signal rounds to 0)."""
+    """The whole quanta a side's window brought in, the count's rounding with nothing carried: the side's gate (ALGEBRA.md, The meeting's reading, the reader's F4 of 2026-10-20: a side draws where a whole quantum has come through its window, the count's rounding over its region and its window; a share below it is no click), the remainder left to `quanta_through`. The count reads a record of n parts from its share S over the board as n S over scale W_rec (`count_of`); a side reads one of the record's beams, its inflow I in the unit G^2 summed over the parts' lines and taken in the quantum of one part, so (n n I + scale W_rec G^2 div 2) div (scale W_rec G^2) by the division act (`paces.rounded`, the engine's one rounding half up), `scale` the written coefficients' norm standing while the window was booked (`scale_of` before the close's writes, n before any write), the same reading before and after a write (the singlet's two beams, half the record each, read 0.997 and 1.001 at the sides and round to one each; after the first side's write the second side's beam reads the same; a background at a tenth of the signal rounds to 0)."""
     unit = books.units[index] * link_unit * link_unit * scale
-    half = int(division_forward(unit, 2, 0)[0])
-    return int(division_forward(inflow * parts * parts, unit, half)[0])
+    return int(paces.rounded(inflow * parts * parts, unit))
 
 
 def quanta_through(books: Books, index: int, inflow: int, link_unit: int, parts: int = 1) -> int:
@@ -259,7 +258,7 @@ def quanta_through(books: Books, index: int, inflow: int, link_unit: int, parts:
 
 
 def clocked_regions(board: Lattice) -> None:
-    """The node_detectors' own clocks, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a node_detector's proper interval per board interval at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n, added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's interval, in a well it runs slower."""
+    """The node_detectors' own clocks, one interval (the advisor's derivation, the clock composed from the paces, with the mathematician's second: the clock is the Node's, a node_detector's proper interval per board interval at a Node of content c is p_0(c) / Gamma): per family of quanta and declared region, p_0 the mean of the region's Nodes' clocks under that family's read of the content, rounded once, (SUM p_0 + n div 2) div n (`paces.rounded`), added to the carried remainder and divided once by Gamma, the whole intervals to the proper time and the remainder kept in the books; at a region in the vacuum p_0 = Gamma and the proper time is the board's interval, in a well it runs slower."""
     books, gamma = board.credit, board.world.node_clock
     if books.declaration is None:
         return
@@ -272,7 +271,7 @@ def clocked_regions(board: Lattice) -> None:
             at = node_detector.nodes
             count = int(at.sum())
             total = int(np.sum(np.broadcast_to(clock, board.shape)[at], dtype=object))
-            mean = int(division_forward(total, count, division_forward(count, 2, 0)[0])[0])
+            mean = int(paces.rounded(total, count))
             own = books.clocks.setdefault((index, node_detector.name), [0, 0])
             whole, rest = division_forward(own[1] + mean, gamma, 0)
             own[0], own[1] = own[0] + int(whole), int(rest)
@@ -337,8 +336,7 @@ def booked(
     book = board.credit.intake.setdefault((index, name), {})
     for port, through in enumerate(weighted(facing, weighed[index])):
         for at in np.argwhere(through != 0):
-            key = growth.declared(at, board.offset)
-            book.setdefault((key[0], key[1], key[2]), [0] * PORTS)[port] += int(through[tuple(at)])
+            book.setdefault(declared(board, at), [0] * PORTS)[port] += int(through[tuple(at)])
 
 
 def support_of(board: Lattice, index: int) -> tuple[Node, ...]:
@@ -346,10 +344,7 @@ def support_of(board: Lattice, index: int) -> tuple[Node, ...]:
     found = np.zeros(board.shape, dtype=bool)
     for line in board.states[index].lines:
         found |= np.asarray((line.now != 0) | (line.before != 0))
-    return tuple(
-        (int(at[0]) - board.offset[0], int(at[1]) - board.offset[1], int(at[2]) - board.offset[2])
-        for at in np.argwhere(found)
-    )
+    return tuple(declared(board, at) for at in np.argwhere(found))
 
 
 def terms_of(exchange: int, parts: int, sides: int) -> Terms:
