@@ -170,13 +170,13 @@ def oracle_interval(board: Lattice) -> None:
     if not growth.grow(board):
         return
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
+    node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
     currents, senses, stresses = (
         board_readings.currents(board),
         board_readings.sense_currents(board),
         board_readings.stresses(board),
     )
     rulers, begun, weighed = board.rulers(1), [s.lines for s in board.states], weighed_currents(board)
-    node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
     found = {index: oracle_step_records(board, index, 1) for index in range(len(board.families))}
     for index, (lines, bookings) in found.items():
         family, state = board.families[index], board.states[index]
