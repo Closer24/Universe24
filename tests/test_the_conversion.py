@@ -184,11 +184,11 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
     assert not any(c["event"] == "conversion" and c["interval"] < first for c in lines)
 
 
-def test_two_families_credited_at_one_close_meet_only_by_an_irreducible_list():
-    """The blind on examples/events/conversion/neutron_electron_chain.json (the third round's world, two families credited at one close): the neutron and the electron are both credited by the target at the close 48; their multiset's one exact list {p, e, e} is reducible, the neutron's own list beside the electron passing, so no meeting is made: the conversion line names the neutron alone into proton and electron at the senses 1 and -1, the electron's own credit follows at the same close with its hole at 40 beside the neutron's, the books n 0, p 1, e 1 with no deficit, and the erasing front the neutron's alone."""
+def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether():
+    """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the neutron's credit at 48 by the remainder's draw with its conversion alone into proton and electron at the senses 1 and -1, the electron's credit at 84 by the draw, each at its own close with no meeting (their one list {p, e, e} is reducible, the neutron's own beside the electron passing, asserted in the loader test), the books n 0, p 1, e 1 with no deficit, the erasing front the neutron's alone; deterministic per file."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_shipped(FOLDER / "neutron_electron_chain.json"), lines.append)
-    for _ in range(50):
+    for _ in range(84):
         board.step()
     found = [
         (c["interval"], c["event"], c["family"], c.get("into"), c.get("senses"))
@@ -198,13 +198,9 @@ def test_two_families_credited_at_one_close_meet_only_by_an_irreducible_list():
     assert found == [
         (48, "credit", "neutron", None, None),
         (48, "conversion", "neutron", ["proton", "electron"], [1, -1]),
-        (48, "credit", "electron", None, None),
+        (84, "credit", "electron", None, None),
     ]
     counts = {board.families[i].name: board.credit.counts[i] for i in board.order}
     assert (counts["neutron"], counts["proton"], counts["electron"]) == (0, 1, 1)
     assert not any(board.credit.deficits.values())
-    faced = {
-        (f["family"], f["node"]["at"][0]) for f in lines if f["event"] == "face" and f["interval"] == 49
-    }
-    assert faced == {("neutron", 40), ("electron", 40)}
     assert {e["family"] for e in lines if e["event"] == "erasure"} == {"neutron"}
