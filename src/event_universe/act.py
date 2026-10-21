@@ -1,4 +1,4 @@
-"""The one act of the click (ALGEBRA.md, The click writes on the lattice; the owner's word: one generic act at the Node, operated by the NodeDetector): a click is one draw among its alternatives by the reader's read of the board (`click`, `node_detector.picked`, the lower index on a tie, no draw where one alternative stands), the drawn alternative's list built where it is drawn (the place drawn inside it by the same read, the hole's Node by the inflows booked, the lay's Node by the record's share, a region's quantum to its region and boundary Node; the rows of the table, `lists.py`), the Node's act for every Item of the list (`written`: a spread record taken by the face, one value presented at one Port for two intervals so that Rule3 writes the level, or given whole quanta by the lay, `emission.emitted_quantum`; a record declared a NodeDetector laid part by part at its new count, `parted`, the piece's momentum and the source's recoil booked on its line and written nowhere, `twist.recoiled`; the erasing front begun where a spread record's count reaches 0) and the click's line after the write (`node_detector.reported`, the one click line kind of every reader, or the conversion line), a list that moves no count writing its line only where its re-lay changed a level (the null window). The Node knows no click and keeps no memory of one; the books are the readers' and stand at no Node."""
+"""The one act of the click (ALGEBRA.md, The click writes on the lattice; the owner's word: one generic act at the Node, operated by the NodeDetector): a click is one draw among its alternatives by the reader's read of the board (`click`, `node_detector.picked`, the lower index on a tie, no draw where one alternative stands), the drawn alternative's list built where it is drawn (the place drawn inside it by the same read, the hole's Node by the inflows booked, the lay's Node by the record's share, a region's quantum to its region and boundary Node; the rows of the table, `lists.py`), the Node's act for every Item of the list (`written`: a spread record taken by the face, one value presented at one Port for two intervals so that Rule3 writes the level, or given whole quanta by the lay, `emission.emitted_quantum`; a record declared a NodeDetector laid part by part at its new count, `parted`, the piece's momentum and the source's recoil booked on its line and written nowhere, `take.recoiled`; the erasing front begun where a spread record's count reaches 0) and the click's line after the write (`node_detector.reported`, the one click line kind of every reader, or the conversion line), a list that moves no count writing its line only where its re-lay changed a level (the null window). The Node knows no click and keeps no memory of one; the books are the readers' and stand at no Node."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from event_universe.loader.keys import Node
 from event_universe.node_detector import NodeBooks, picked, reported
 from event_universe.reports import BOOKED_AT_EMISSION, LOST_TO_SOURCE, LOST_TO_TAKER, NO_SIDE
 from event_universe.resonance import turned_direction
-from event_universe.twist import (
+from event_universe.take import (
     Item,
     Phase,
     books_named,
@@ -33,7 +33,7 @@ Levels = list[tuple[int, int, int, int]]  # a list's parts' levels at their Node
 
 @dataclass(frozen=True)
 class Line:
-    """The click's line after the act, the one click line kind of every reader (`node_detector.reported`): the parts realised and left, (after, before), the families exchanged, (taken from, given to), None where none, and the count moved, 1 for a click and 0 for the null window's re-lay, whose line is written only where a level moved; `into`, the families out of a record converted whole, makes it the conversion line at the Node the records out were laid at (`reports.conversion`)."""
+    """The click's line after the act, the one click line kind of every reader (`node_detector.reported`): the parts realised and left, (after, before), the families exchanged, (taken from, given to), None where none, and the count moved, 1 for a click and 0 for the null window's re-lay, whose line is written only where a level moved (the field `into` and the conversion line it made, `reports.conversion`, left with the conversion on 2026-10-20)."""
 
     parts: tuple[int, int] = (0, 0)
     exchanged: tuple[int | None, int | None] = (None, None)
@@ -69,7 +69,7 @@ def click(board: Lattice, books: NodeBooks | None, alternatives: list[Alternativ
 
 
 def levels_of(board: Lattice, items: list[Item]) -> Levels:
-    """The parts' levels at the Nodes of a list's body Items, (re_now, im_now, re_before, im_before) each (`twist.levels_at`), read before and after a write that moves no count: a null window whose re-lay changed no level writes no line."""
+    """The parts' levels at the Nodes of a list's body Items, (re_now, im_now, re_before, im_before) each (`take.levels_at`), read before and after a write that moves no count: a null window whose re-lay changed no level writes no line."""
     return [
         levels_at(board, books_named(board, item.body), item.part, here)
         for item in items

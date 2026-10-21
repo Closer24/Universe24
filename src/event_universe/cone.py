@@ -152,7 +152,7 @@ def held(
 
 
 def acts_inside(board: Lattice, interval: int, box: Box, kept: np.ndarray) -> None:
-    """The acts' logs of `interval` clipped to the box's ball (the lays, `credit.Books.lays`, re-applied or undone by `logged`; the faces, `credit.Books.faces`, presented by `twist.faces_presented`, both at the file's coordinates by the view's offset): every act stands at a Node of the ball, and an act at a Node outside it at its interval contradicts the premise (an act on a Node the record never reached cannot have touched the record, and an act of another record there would move the rest), refused by name."""
+    """The acts' logs of `interval` clipped to the box's ball (the lays, `credit.Books.lays`, re-applied or undone by `logged`; the faces, `credit.Books.faces`, presented by `take.faces_presented`, both at the file's coordinates by the view's offset): every act stands at a Node of the ball, and an act at a Node outside it at its interval contradicts the premise (an act on a Node the record never reached cannot have touched the record, and an act of another record there would move the rest), refused by name."""
     books = board.credit
     nodes = [meeting_back.node_of(board, line)[1] for line in books.lays.get(interval, [])]
     nodes += [face.at for face in books.faces.get(interval, [])]

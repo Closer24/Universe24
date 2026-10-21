@@ -38,7 +38,7 @@ def pair_rotations(m_1: float, m_2: float) -> list[float]:
 
 
 def composed_pairs_at_two_three(den: int = 6000) -> list[float]:
-    """[the relative part's num, the centre's num] of two [2, 3] records at the declared den, by the floats (the loader's `universe.composed_pair` gives the same integers by the division act, the second method)."""
+    """[the relative part's num, the centre's num] of two [2, 3] records at the declared den, by the floats (the loader's `composed_pair`, deleted 2026-10-21 with no world and no test, gave the same integers by the division act, the second method)."""
     m = inertia(2, 3)
     _, _, cos_centre, cos_relative = pair_rotations(m, m)
     return [round(den * cos_relative), round(den * cos_centre)]

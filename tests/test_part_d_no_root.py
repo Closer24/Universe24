@@ -10,7 +10,7 @@ import pytest
 from event_universe import emission, resonance
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features import click, read
-from event_universe.loader import derived, universe
+from event_universe.loader import derived
 
 PAIR, GAMMA, T, LIGHT = (4000, 6000), 6000, 32768, (6000, 6000)  # the law's own numbers, the examples' T
 
@@ -49,7 +49,7 @@ def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
 
 
 def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
-    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope`; the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay; emission (`radiated_total`; `born_unit`, `laid_packet`, `start_of` and `increments_of` read a board and are covered by the suite's emission tests and the two slits' frozen output); features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); loader/universe (`composed_pair` on two [2, 3] records at den 6,000: the relative part [5237, 6000] and the centre [2449, 6000] of the docstring); node_detector (the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at the Nodes of a four-Node screen of the two slits, the public function reading a board); resonance (`references_of`, `turned_direction` and `window_turn` on the law's pair at the scale of the width's room)."""
+    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope`; the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay; emission (`radiated_total`; `born_unit`, `laid_packet`, `start_of` and `increments_of` read a board and are covered by the suite's emission tests and the two slits' frozen output); features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); node_detector (the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at the Nodes of a four-Node screen of the two slits, the public function reading a board); resonance (`references_of`, `turned_direction` and `window_turn` on the law's pair at the scale of the width's room)."""
     # features_click
     num, den = PAIR
     gap = den * den - num * num
@@ -88,17 +88,6 @@ def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
     q_max = 15266
     room = derived.tension_room(PAIR, GAMMA, q_max, False)
     assert room == -((-(edge * edge * (math.isqrt(q_max * edge) + 1))) // GAMMA**3)
-    # loader_universe
-    assert universe.composed_pair((2, 3), (2, 3), 6000, True) == (5237, 6000)
-    assert universe.composed_pair((2, 3), (2, 3), 6000, False) == (2449, 6000)
-    scale = (6000 * 3 * 3) ** 2
-    sine = math.isqrt(scale * scale * (9 - 4)) // 3
-    cosine = scale * 2 // 3
-    along, across = sine * cosine + sine * cosine, sine * sine
-    root = math.isqrt(along * along + across * across)
-    assert universe.composed_pair((2, 3), (2, 3), 6000, True)[0] == (2 * 6000 * along + root) // (
-        2 * root
-    )
     # node_detector
     square = click.squared(1, T, LIGHT)
     amplitudes = [click.spread(square, (1, 4)) for _ in range(4)]

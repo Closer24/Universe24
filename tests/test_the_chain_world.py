@@ -5,7 +5,7 @@ import time
 
 import numpy as np
 
-from event_universe import readings, twist
+from event_universe import readings, take
 from event_universe.lattice import Lattice
 from tests.laws import BACK, EVENTS, d4_bound, drift_bound, family
 from tests.laws_read import load_shipped
@@ -18,11 +18,11 @@ RUNS: dict[str, tuple[list[dict], dict[tuple[int, int], tuple[np.ndarray, ...]]]
 
 
 def momentum_in_t(board: Lattice, index: int, at: np.ndarray | None = None) -> int:
-    """A family's lattice momentum along the chain's axis in T's unit, over the board or over the Nodes `at` names (`readings.momentum_of`, `twist.scaled`)."""
+    """A family's lattice momentum along the chain's axis in T's unit, over the board or over the Nodes `at` names (`readings.momentum_of`, `take.scaled`)."""
     weight = board.families[index].pair[0]
     lines = [line for r in range(board.families[index].record) for line in board.lines_of(index, r)]
     read = readings.momentum_of(weight, lines, board.wrap, at)
-    return twist.scaled(read, weight)[0]
+    return take.scaled(read, weight)[0]
 
 
 def difference(board: Lattice, light: int) -> int:

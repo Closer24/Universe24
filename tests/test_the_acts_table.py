@@ -240,12 +240,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "packet_form",
         "division_forward",
     ): "D",  # the half width, an index
-    (
-        "loader/universe.py",
-        "composed_pair",
-        "division_forward",
-    ): "D",  # the composed pair's quotients, once
-    ("loader/universe.py", "composed_pair", "largest_below"): "S",  # the sines and the norm
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
     ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
     ("loader/window.py", "passage", "largest_below"): "S",  # the two sines by the search
@@ -253,7 +247,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # lists.py
     ("lists.py", "hazard_weights", "division_forward"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
-    ("twist.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
+    ("take.py", "scaled", "division_forward"): "D",  # a P over num, once per axis
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     # flux.py, the step
