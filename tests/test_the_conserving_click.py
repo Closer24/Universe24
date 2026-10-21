@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import act, lists, meeting, records, reports, world_files
+from event_universe.core.paces import sine_den
 from event_universe.lattice import Lattice
 from event_universe.lists import hazard_weights
 from event_universe.take import fan_momentum
@@ -28,11 +29,11 @@ PIECE, FAN, RECOIL = (
     8012902,
     4906083,
 )  # the taker world's click: the piece's p_z, the photon's P_z, the body's P_z after
-PIECE, FAN, RECOIL = (
-    11055256,
-    8012902,
-    4906083,
-)  # the taker world's click: the piece's p_z, the photon's P_z, the body's P_z after
+T = 36000000  # the clock's unit of both worlds, the energies' scale
+GIVER_BEFORE = ((1, 0), 21018468, (0, 0, 0), 756495160000, 0)  # the giver at 22: see table_of
+GIVER_AFTER = ((1, 1), 26953355, (22025, 0, 0), 1217089960000, 6675858000)  # the giver at 23
+TAKER_BEFORE = ((1, 1), 21310641, (0, 0, 0), 903766398000, 186746982000)  # the taker at 17
+TAKER_AFTER = ((1, 0), 18008518, (0, 0, RECOIL), 980418680000, 186776658000)  # the taker at 18
 
 
 def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_bodys_path():
@@ -71,8 +72,11 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     assert (books.part, books.counts, books.labels) == (1, [0, 1], [0, WALL])
     assert board.credit.counts[electron] == 1 and board.credit.counts[photon] == 0
     region = board.mask(row.region)
-    for _ in range(FIRST):
+    for _ in range(FIRST - 1):
         board.step()
+    assert table_of(board, electron, photon) == GIVER_BEFORE  # the table's row at the close before
+    board.step()
+    assert table_of(board, electron, photon) == GIVER_AFTER  # the table's row after the click
     clicks = [c for c in lines if c["event"] == reports.CREDIT]
     assert [(c["interval"], c["label"]) for c in clicks] == [(FIRST, reports.MEASUREMENT)]
     (click,) = clicks
@@ -182,7 +186,9 @@ def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
         assert fan_momentum(board, electron) == (0, 0, 0)  # the standing record moves nowhere
     assert [c["interval"] for c in lines if c["event"] == reports.CREDIT] == []
     charge, share = wronskian_of(board, electron), board.total_share(electron)[0]
+    assert table_of(board, electron, photon) == TAKER_BEFORE  # the table's row at the close before
     board.step()
+    assert table_of(board, electron, photon) == TAKER_AFTER  # the table's row after the click
     (click,) = [c for c in lines if c["event"] == reports.CREDIT]
     assert (click["interval"], click["node_detector"], click["absorbed"], click["count"]) == (
         18,
@@ -208,3 +214,38 @@ def wronskian_of(board: Lattice, index: int) -> int:
     lines = board.lines_of(index, 0)
     planes = [lines[2 * part : 2 * part + 2] for part in range(len(lines) // 2)]
     return sum(int(np.asarray(records.wronskian(plane, True)).sum(dtype=object)) for plane in planes)
+
+
+def table_of(
+    board: Lattice, electron: int, photon: int
+) -> tuple[tuple[int, int], int, tuple[int, int, int], int, int]:
+    """One row of the conservation table (examples/events/conserve/README.md): the counts of the electron and of the photon in the books, the electron's charge (the Wronskian summed over its parts and the board), its lattice momentum read with the Link's pair, its share and the photon's over the board."""
+    return (
+        (board.credit.counts[electron], board.credit.counts[photon]),
+        wronskian_of(board, electron),
+        fan_momentum(board, electron),
+        board.total_share(electron)[0],
+        board.total_share(photon)[0],
+    )
+
+
+def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
+    """The conservation table through one click on the two shipped worlds (examples/events/conserve/README.md, the paragraph of 2026-10-21), its rows pinned above from the boards at the close before and after (`table_of`, asserted inside the two runs): the count closes exactly, the photon's up by one on the giver and down by one on the taker with the electron's 1 standing; the electron's lattice momentum moves by the written phase alone on the taker, 0 to the recoil's 4906083 along the packet's axis, and by the lay's remainder on the giver, 22025 along x of the lower part's lay over the half region beside the standing tail, 0.002 of the taker's piece and no recoil written (an emission's alternative carries no piece, the source lays at one Node); the energies in the clock's unit against the count, T sin Omega of the declared resonance (the light's quantum, `sine_den`) against T (sin e - sin g) of the two levels' pairs the frame tool read, 10260000 against 6852000 on the giver and 8700000 against 5964000 on the taker, the remainder 0.33 and 0.31 of the light's quantum named and OPEN (the levels' cosine gap a reading of the frame, the resonance the declaration's); the charge (the Wronskian) and the shares are read and not conserved by the click's lay: the giver's charge from 1.17 to 1.5 of T / 2 and its share up by 0.61 (the half region's tail: the upper part's lines outside the region standing while the lower part is re-laid over the region at one quantum), the taker's charge from 1.18 of T / 2 to T / 2 + 8518 (one quantum in the standing form after the write) and its share up by 0.085 (the lay at the free rotation in the well), the photon's share on the taker up by 0.0002 in the packet's walk (the erasure owed as a deficit of 1), on the giver from 0 the source's first lay at the drawn Node; the two findings named for research."""
+    for before, after, moved in ((GIVER_BEFORE, GIVER_AFTER, 1), (TAKER_BEFORE, TAKER_AFTER, -1)):
+        assert after[0] == (before[0][0], before[0][1] + moved)  # the count closes exactly
+    assert GIVER_BEFORE[2] == TAKER_BEFORE[2] == (0, 0, 0)  # the standing records move nowhere
+    assert TAKER_AFTER[2] == (0, 0, RECOIL) and 0 < RECOIL < PIECE  # the written phase's reading
+    assert 0 < GIVER_AFTER[2][0] < PIECE // 500 and GIVER_AFTER[2][1:] == (0, 0)  # the lay's remainder
+    light = [T * sine_den(*resonance) // 6000 for resonance in (RESONANCE, (5822, 6000))]
+    levels = [
+        T * (sine_den(upper, 6000) - sine_den(lower, 6000)) // 6000
+        for lower, upper in ((4580, 3288), (4599, 3536))
+    ]
+    assert (light, levels) == ([10260000, 8700000], [6852000, 5964000])
+    assert [round((a - b) / a, 2) for a, b in zip(light, levels, strict=True)] == [0.33, 0.31]  # OPEN
+    half = T // 2
+    assert [round(w / half, 2) for w in (GIVER_BEFORE[1], GIVER_AFTER[1])] == [1.17, 1.5]  # the tail
+    assert (round(TAKER_BEFORE[1] / half, 2), TAKER_AFTER[1]) == (1.18, half + 8518)  # one quantum
+    assert round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.61  # the tail's share beside the lay's
+    assert round(TAKER_AFTER[3] / TAKER_BEFORE[3] - 1, 3) == 0.085  # the lay at the free rotation
+    assert round(TAKER_AFTER[4] / TAKER_BEFORE[4] - 1, 4) == 0.0002 and GIVER_BEFORE[4] == 0  # the walk
