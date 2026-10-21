@@ -16,7 +16,7 @@
   --cube-size: 0.92; --cube-depth: 0.2; --dot-radius: 0.5; --dot-floor: 0.12; --dot-offset: 0.22; --glow: 1; --glow-power: 0.5; --glow-tint: 0;
   --mist-size: 1.02; --mist-opacity: 0.3; --mist-power: 0.5; --bar-length: 0.9; --bar-thickness: 0.07;
   --wall-size: 1; --wall-depth: 0.6; --ring-radius: 0.6; --ring-tube: 0.09; --flash-scale: 1.2; --plane-opacity: 0.12; --hole-size: 1.08; --front-size: 0.5;
-  --view-margin: 1; --node-least: 6; --node-most: 24; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
+  --view-margin: 1; --node-least: 6; --node-fit-least: 3; --node-most: 24; --board-least: 180; --board-most: 900; --camera-far: 4; --zoom-rate: 0.0012; --zoom-step: 0.85; --zoom-most: 8; --frames-per-second: 12; --line-width: 1.6;
   --label-size: 1.4;
   color-scheme: dark;
 }
@@ -303,7 +303,7 @@ const scene = new THREE.Scene();
 const EXTENT = Math.max(X, Y, Z);
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, EXTENT * size('--camera-far'));
 /* The frame: the declared board's two axes across the view with a margin of Links, fitted to the stage; the eye along VIEW at the board's centre, looking at it, the up axis the second of ACROSS.
-   The default camera (2026-10-20): the board's own fit where a Node then spans --node-least pixels or more; else the look's lit extent, the Nodes any family of quanta lights in any frame with the bodies' Nodes and the regions' (a region a node_detector of Nodes alone other than the declared faces' `face`, and one spanning half the board or more frames nothing), framed at a zoom between --node-least and --node-most pixels per Node, the view along the long axis following the frame's lit Nodes where the extent does not fit the stage, and the whole board one zoom step out (the buttons step between the two frames). The camera is presentation: it frames and computes no number but the box it frames. */
+   The default camera (2026-10-20, the frame's box 2026-10-21): the board's own fit where a Node then spans --node-least pixels or more; else the lit extent, the Nodes any family of quanta lights with the bodies' Nodes and the regions' (a region a node_detector of Nodes alone other than the declared faces' `face`, and one spanning half the board or more frames nothing): the frame's own lit box framed whole wherever it fits at --node-fit-least pixels per Node or more (the pixels per Node the whole number the stage allows, at most --node-most), and where it does not, a window of --node-least pixels per Node along the long axis following the frame's lit Nodes within the run's lit extent; the whole board one zoom step out (the buttons step between the two frames). The camera is presentation: it frames and computes no number but the box it frames. */
 const litNodes = fr => { const found = [], [fy, fz] = shapeOf(fr).slice(1), o = originOf(fr); for (const f of QUANTA) { const now = ((fr.families || {})[f.name] || {}).now; if (!now) continue; if (Array.isArray(now)) now.forEach((plane, x) => plane.forEach((row, y) => row.forEach((v, z) => { if (v) found.push([x + o[0], y + o[1], z + o[2]]); }))); else now.at.forEach((k, j) => { if (now.values[j]) found.push([Math.floor(k / (fy * fz)) + o[0], Math.floor(k / fz) % fy + o[1], k % fz + o[2]]); }); } return found; };
 const emptyBox = () => [0, 1, 2].map(() => [Infinity, -Infinity]);
 const grow = (box, nodes) => { for (const n of nodes) for (let a = 0; a < 3; a++) { if (box[a][0] > n[a]) box[a][0] = n[a]; if (box[a][1] < n[a]) box[a][1] = n[a]; } return box; };
@@ -326,10 +326,13 @@ function fit() {
   if (FRAMING === null && w > 1) { LIT_DEFAULT = LIT_SEEN && w / (2 * halfW) < size('--node-least'); FRAMING = LIT_DEFAULT ? 'lit' : 'board'; }
   const centre = new THREE.Vector3(...CENTRE);
   if (FRAMING === 'lit') {
-    const along = LONG === ACROSS[0] ? w : h, px = Math.min(size('--node-most'), Math.max(size('--node-least'), along / (LIT[LONG][1] - LIT[LONG][0] + 1 + 2 * margin)));  // pixels per Node
+    let box = merge(merge(emptyBox(), LIT_AT[shown] || emptyBox()), FIXED_BOX);  // the frame's lit Nodes with the bodies' and the regions'
+    if (!ACROSS.every(a => Number.isFinite(box[a][0]))) box = LIT;
+    const along = LONG === ACROSS[0] ? w : h, whole = Math.min(size('--node-most'), Math.floor(along / (box[LONG][1] - box[LONG][0] + 1 + 2 * margin)));  // the pixels per Node at which the frame's box fits whole
+    const fits = whole >= size('--node-fit-least'), px = fits ? whole : size('--node-least');
     halfW = w / (2 * px); halfH = h / (2 * px);
-    for (const a of ACROSS) centre.setComponent(a, sceneOf((LIT[a][0] + LIT[a][1]) / 2, a));
-    centre.setComponent(LONG, sceneOf(aimed(LONG === ACROSS[0] ? halfW : halfH, margin), LONG));
+    for (const a of ACROSS) centre.setComponent(a, sceneOf((box[a][0] + box[a][1]) / 2, a));
+    if (!fits) centre.setComponent(LONG, sceneOf(aimed(LONG === ACROSS[0] ? halfW : halfH, margin), LONG));
   } else if (halfW / halfH > w / h) halfH = halfW * h / w; else halfW = halfH * w / h;
   camera.left = -halfW; camera.right = halfW; camera.top = halfH; camera.bottom = -halfH; camera.updateProjectionMatrix();
   const eye = centre.clone(), up = new THREE.Vector3();
