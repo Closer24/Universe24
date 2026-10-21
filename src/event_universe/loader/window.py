@@ -92,7 +92,7 @@ def windowed(
     periodic: Wrap,
     action: int,
 ) -> tuple[BodyRow, ...]:
-    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`), and every rate's lay marked with its end (`Rate.ended`, the same property, read by C5's reach, `node_detector.sourcing`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.windowless_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every body's rates giving to it (`rate_passage`), the body's own among them; every lay with an end: the longest passage is the window (`longest`), the body's `Draw` with it, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
+    """Every body's window as the rule derives it at the end of the load, the one place the key `window` of a body's `node_detector` is decided (`draw.body_draw_of`), and every rate's lay marked with its end (`Rate.ended`, the same property, read by C5's reach, `node_detector.sourcing`): for a body with a draw and no probe (a probe's window is bounded by the probe's lays, `draw.windowless_of`), the lays of every family its transitions read, the world's packets of the family (`packet_passage`) and every other body's rates giving to it (`rate_passage`, the train's or the source in time's passage over this body), and the body's own rates giving to it as their lifetime where the lay has an end, the emission's span at the body whatever the form of its lay, the train's or the source in time's (ALGEBRA.md, The click writes on the lattice (2), the dark emitter's when: the lifetime the hazard, in the exact dark the window the when), and as no end where it has none (a source in time on a periodic board); every lay with an end: the longest is the window (`longest`), the body's `Draw` with it, and a declared key is refused by name with the body, its drives and the derived W; any lay with no end, or none: the declared key kept and its absence refused by name; a body without a draw, a record converted whole (its window its table's), a region and the world's draw untouched."""
     rates = [rate for row in bodies if row.detector is not None for rate in row.detector.rates]
     found = []
     for number, row in enumerate(bodies):
@@ -100,6 +100,7 @@ def windowed(
         if kind is None:
             found.append(row)
             continue
+        own = kind.rates  # the body's own rates, as `rates` holds them
         marked = tuple(
             replace(
                 r,
@@ -108,6 +109,9 @@ def windowed(
             for r in kind.rates
         )
         kind = replace(kind, rates=marked)
+        spans = {  # the body's own rates: the lifetime where the lay has an end, no end where it has none
+            id(r): (r.lifetime if m.ended else None) for r, m in zip(own, marked, strict=True)
+        }
         if kind.draw is None or any(t.leaves == t.enters for t in kind.transitions):
             found.append(replace(row, detector=kind))
             continue
@@ -118,10 +122,12 @@ def windowed(
             if p.family in drives
         ]
         lays += [
-            rate_passage(r, families[r.light], row.nodes, shape, periodic, action)
+            spans[id(r)]
+            if id(r) in spans
+            else rate_passage(r, families[r.light], row.nodes, shape, periodic, action)
             for r in rates
             if r.light in drives
-        ]
+        ]  # the body's own rate as its lifetime, the emission's span at the body, whatever its lay's form
         window, names = longest(lays), [families[drive].name for drive in drives]
         label = f"bodies[{number}].node_detector"
         if kind.draw.window is not None:
