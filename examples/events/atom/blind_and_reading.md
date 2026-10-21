@@ -523,6 +523,41 @@ times deeper, -4,338, -1,339, -562, -284, -150, -66 along the axis against -1,44
 and the stepping differ by the proton's coupling. The builder's open cause closes here: the heavy
 partner reading lightly is the clean world because its well is the one the level was laid in.
 
+### The start's booking on the turned worlds (2026-10-21)
+
+The engine's start on a world whose holder of the sign declares `act: rotation` books every held
+row's source after the first interval's phase act and turns the phase lines back to the angle 0
+exactly, for every such holder by the loader's flag of the act and no form's name
+(`bookings.booked_sources`; ALGEBRA.md, The lay is a standing state of the step; the cold design read
+of 2026-10-21: the engine corrected to the law's stated line, no line of the law changing). Before
+this date the booking took its trial step with the Links' phase lines at the seed angle 0 while the
+first step turned the Links once, so the two Wronskians differed and the first write moved the
+electron's own row of the sign (FURTHER_RESEARCH.md, The start's booking kick on every turned world):
+at the centre of hydrogen_1s that row read 3254 at the lay and 4043 after the first interval, of
+hydrogen_line 2825 and 3355; with the booking corrected it reads 3659 and 3658, 3092 and 3092
+(tests/test_the_start_on_a_turned_world.py, every held row within 2 units of its lay at every Node
+after the first interval). What stands as shipped, number for number: the seven lays, the standing
+files, the blind and the ladder, re-made by `build_world.py --modes` on the corrected engine and
+equal to the shipped files body by body and level by level. The well is the proton's row of the sign,
+the frozen plane's Wronskian at one Node with every neighbour at 0, which the phase act does not
+touch, and `tools/standing_lay.py` reads it off the engine's start with the electron at 0; the row
+the correction moves is the electron's own row at the start on the full world, which no file
+stores. What moves: the seven pages, re-recorded by `tools/look/record.py` at each page's stride
+(every 4th frame of the ground and the lump, every 3rd of the 1s, every 5th of the 2p, every 16th of
+the line at 72M, every frame of the two hydrogen worlds) and built by `tools/look/page.py` with the
+blind, the holder's row in them light, the sum of its rows. The shipped pages carry the kick in
+their first frames and the new ones do not: the light row at the centre at the intervals 0, 1 and 2
+of hydrogen_1s 1808, 2598 and 2368 shipped against 2213, 2213 and 2217 recorded; of hydrogen_line
+1379, 1910 and 1691 against 1646, 1647 and 1598; at the intervals 0, 3 and 6 of atom_1s -1880,
+-1808 and -1780 against -1778, -1782 and -1784; at 0, 5 and 10 of atom_2p -2889, -2884 and -2890
+against -2889, -2886 and -2893 (the 2p_x's own row at zero at the centre by its node plane, the
+reader's 95 then 94 in both engines); at 0, 16 and 32 of atom_line -2385, -2326 and -2318 against
+-2334, -2321 and -2323; at 0, 4 and 8 of atom -1356, -1356 and -1352 against -1353, -1355 and -1353 and of atom_free
+-1381, -1378 and -1365 against -1380, -1379 and -1360 (the 36M well shallow, the kick there of a few levels, the reader's 128
+then 133 against 131 then 130, and 103 then 104 against 104 then 105). The readings above were read
+from the shipped looks and stand as read, each a reading of the shipped engine by name; the
+corrected engine's readings of the same worlds are the next round's.
+
 ## The conclusion
 
 Seven lays, seven runs, nothing added to Rule 3, the declared holder and the one declared word of the
