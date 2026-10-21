@@ -29,6 +29,7 @@ from event_universe.loader.derived import (
     readers_of,
     turns,
 )
+from event_universe.loader.instrument import laid_parts
 from event_universe.loader.keys import Node
 from event_universe.loader.mode import Levels
 from event_universe.loader.packets import PacketRow
@@ -44,7 +45,7 @@ Rulers = dict[records.Sourcing, records.Rulers]
 
 
 class Lattice:
-    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form."""
+    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form; `unit`, G, the Link's unit, the run's declaration like Gamma."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         clear_memo()
@@ -55,8 +56,7 @@ class Lattice:
         self.growths: list[growth.Growth] = []
         self.ended: dict[str, object] | None = None
         self.wrap = Wrap(*world.periodic, self.mask(world.beyond) if world.beyond else None)
-        self.families, self.kind = world.families, world.kind
-        self.unit = world.link_unit  # the Link's unit G, the run's declaration like Gamma
+        self.families, self.kind, self.unit = world.families, world.kind, world.link_unit
         self.order = [index for index, family in enumerate(self.families) if family.quanta]
         self.held = [index for index, family in enumerate(self.families) if family.held]
         self.turning = [index for index in self.order if turns(self.families, index)]  # turned records
@@ -72,7 +72,7 @@ class Lattice:
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
         self.amplitude = node.seed_phases(self.families, self.states, self.shape, self.kind, world)
         for number, (record, row) in enumerate(self.laid_rows()):
-            if isinstance(row, BodyRow) and row.detector is not None:
+            if isinstance(row, BodyRow) and row.detector is not None and not row.region:
                 meeting.laid_record(self, number, record)
             elif self.families[row.family].quanta:
                 self.lay(row, record)  # a kick on a holder of the content is laid after the start
@@ -109,12 +109,12 @@ class Lattice:
         return found + [(0, packet) for packet in self.world.packets]
 
     def lay(self, row: BodyRow | PacketRow, record: int = 0) -> None:
-        """A body's or a packet's levels from the mode file added to its family's lines of the record `record` (`records.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting) and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the packet, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a packet's levels are the generator's, corrected at the lay, so the weights handed to the act are all 0, which means no correction and the guard alone, the board's refusal of a massless packet whose two sums are not 0 (the loader builds no board and refuses nothing of this); a body's levels and a kick on a holder of the content are laid as declared; a plane's second pair, its sense, on the plane's second line; the remainders stand at the half wall every line was born with (`records.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the lattice after its construction)."""
+        """A body's or a packet's levels from the mode file added to its family's lines of the record `record` (`records.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting), or, for a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21), on the part carrying its declared count alone, the level it stands in (the other parts empty, a lay in one mode having no amplitude in any other, The click writes on the lattice (j)), and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the packet, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a packet's levels are the generator's, corrected at the lay, so the weights handed to the act are all 0, which means no correction and the guard alone, the board's refusal of a massless packet whose two sums are not 0 (the loader builds no board and refuses nothing of this); a body's levels and a kick on a holder of the content are laid as declared; a plane's second pair, its sense, on the plane's second line; the remainders stand at the half wall every line was born with (`records.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the lattice after its construction)."""
         family = self.families[row.family]
         span, step = records.record_slice(family, record), PLANE if family.plane else 1
         guarded = isinstance(row, PacketRow) and family.quanta
         weights = records.zeros(self.shape, object) if guarded else None
-        for first in range(span.start, span.stop, family.width):
+        for first in (span.start + part * family.width for part in laid_parts(row, family)):
             for line, weight in zip(range(first, first + family.width, step), row.weights, strict=True):
                 pairs = [(row.now, row.before), (row.second_now, row.second_before)]
                 for number, (now, before) in enumerate(pairs[: 2 if family.plane else 1]):

@@ -1,4 +1,4 @@
-"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per packet its two level pairs over the lattice, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
+"""The generator's mode file beside the world (`<world>.mode.json`, `tools/pixel_mode.py`): the world's digest, and per body and per packet its two level pairs over the lattice, each one integer per Node in x-major order or the nonzero Nodes alone (their flat x-major indexes with their levels), within the amplitude bound A and 0 beyond the board; and per bound body, where the host's frame tool typed it (tools/frame_of.py, 2026-10-21), its declaration as an instrument body under the key `instrument` (`instrument_of`): the detector body's own keys as the world file declares them for a body laid in its parts (`nodes` with the lay's weights, the standing region; `parts`, the two levels of its transition with the count in the one it stands in; `transitions`, `rates`, `node_detector`), read by the loader into the same declaration (`loader/node_detector_declaration.node_detector_of`), a declared layer typed by the host tool into the mode file and derived by nothing in the engine (ALGEBRA.md, The click writes on the lattice (3) and (4)); every key checked, every defect refused by name (ALGEBRA.md #the-generator)."""
 
 from __future__ import annotations
 
@@ -18,7 +18,17 @@ MODE_BODY_KEYS = (
     "profile",
     "moving",
     "lay",
+    "instrument",
 )
+INSTRUMENT = "instrument"  # a bound body's declaration as an instrument body, the host's frame tool's (tools/frame_of.py; `instrument_of`)
+INSTRUMENT_KEYS = (
+    "nodes",
+    "parts",
+    "transitions",
+    "rates",
+    "node_detector",
+)  # the detector body's keys as the world file declares them (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS)
+INSTRUMENT_REQUIRED = ("nodes", "parts", "transitions", "node_detector")
 MOVING_KEYS = ("now", "before", "im_now", "im_before")
 LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
 SPARSE_KEYS = ("at", "values")  # a level's nonzero Nodes alone: their flat x-major indexes and levels
@@ -111,3 +121,10 @@ def entry_of(entries: list[object], number: int, label: str) -> object:
             f"{label} has no entry in the mode file beside the world: its levels are the generator's"
         )
     return entries[number]
+
+
+def instrument_of(entry: object, label: str) -> dict[str, object] | None:
+    """A bound body's declaration as an instrument body from its mode entry's key `instrument`, None where the host's frame tool typed none: the detector body's keys as the world file declares them for a body laid in its parts, `nodes` (the standing region with the lay's weights), `parts`, `transitions`, `node_detector` and optionally `rates`, each read by the loader's own readers (`loader/world.bodies_of`, `loader/node_detector_declaration.node_detector_of`); the levels the body stands in are the mode file's (`levels_of`), laid into the part carrying its count (`Lattice.lay`); refused by name otherwise."""
+    if not isinstance(entry, dict) or INSTRUMENT not in entry:
+        return None
+    return keyed(entry[INSTRUMENT], f"{label}.{INSTRUMENT}", INSTRUMENT_KEYS, INSTRUMENT_REQUIRED)
