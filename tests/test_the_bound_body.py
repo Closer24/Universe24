@@ -89,7 +89,9 @@ def turned_run(lines, ramp, links, steps):  # type: ignore[no-untyped-def]
     states[CHARGE].lines = [time[0], *odd]
     angles = node.turning(CHARGED, TURNING, states, 1)  # the sign's odd levels, static
     assert angles is not None
-    pairs = link_pairs(PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], RING))  # the Links' pairs
+    pairs = link_pairs(
+        PAIR, GAMMA, 0, (1,) * 6, None, link_levels(angles[1], RING, (-1, -1))
+    )  # the Links' pairs
     for t in range(steps):
         states[CHARGE].lines, states[CHARGED].lines = [time[t], *odd], lines
         kept.append(np.array([getattr(r, k) for r in lines for k in KEYS]))
