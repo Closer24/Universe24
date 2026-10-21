@@ -700,7 +700,7 @@ if (OUTPUT) for (const line of OUTPUT.lines) {
   if (line.event === 'face' && line.node && Array.isArray(line.node.at)) (FACES_AT[positionOfLine(line)] || (FACES_AT[positionOfLine(line)] = new Set())).add(line.node.at.join(','));
   if (line.event === 'erasure') (FRONTS_AT[line.interval] || (FRONTS_AT[line.interval] = [])).push(line);
   if (line.event === 'credit' && /^body \\d+$/.test(String(line.node_detector))) (RECORD_CREDITS[line.node_detector] || (RECORD_CREDITS[line.node_detector] = [])).push(line);
-  if (line.event === 'credit' && !/^body \\d+$/.test(String(line.node_detector))) REGION_CREDITS.push(line);
+  if ((line.event === 'credit' || line.event === 'conversion') && !/^body \\d+$/.test(String(line.node_detector))) REGION_CREDITS.push(line);  // the conversion line beside a region's credit, a row of the table (2026-10-21)
 }
 const DETECTOR_BODIES = LOOK.bodies.filter(b => b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
 const key = line => [line.interval, line.node_detector, line.family, line.inflow].join('|');
@@ -1318,8 +1318,8 @@ function drawRecords() {
   if (!DETECTOR_BODIES.length && !REGION_CREDITS.length) return;
   const box = byId('records'); box.innerHTML = ''; byId('records-box').hidden = false;
   const names = [], rows = [], byPosition = (a, b) => positionOfLine(a) - positionOfLine(b) || a.interval - b.interval;
-  const WORDS = ['order', 'scale', 'board_count'].filter(word => OUTPUT.lines.some(line => line.event === 'credit' && line[word] !== undefined));  // a side of a record of several parts names its order, the record's scale after its write and the count read from the board on the line
-  const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => line[word]), line.label];
+  const WORDS = ['order', 'scale', 'board_count', 'into', 'senses'].filter(word => OUTPUT.lines.some(line => (line.event === 'credit' || line.event === 'conversion') && line[word] !== undefined));  // `into` and `senses` the conversion line's two words (2026-10-21)  // a side of a record of several parts names its order, the record's scale after its write and the count read from the board on the line
+  const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => Array.isArray(line[word]) ? line[word].join(' ') : line[word]), line.label];
   for (const n of DETECTOR_BODIES) {
     const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort(byPosition), body = LOOK.bodies[n];
     const parts = []; for (const line of lines) for (const part of [line.before, line.realised]) if (part !== null && part !== undefined && !parts.includes(part)) parts.push(part);
