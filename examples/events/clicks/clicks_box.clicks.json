@@ -178,14 +178,14 @@
 "absorbed": null,
 "emitted": null,
 "momentum": [
-4378080,
-21312,
-4666
+-858621,
+20465,
+4480
 ],
 "fan": [
--136326,
--408,
--106
+-139506,
+1742,
+1680
 ],
 "lost": [
 "P lost to the region"
@@ -194,7 +194,7 @@
 "recoil": "unpaid by the region",
 "bias_bound": {
 "g": 16,
-"total": 71504185323008,
+"total": 29292479193600000,
 "sum": 16,
 "last": 1
 }
@@ -385,6 +385,49 @@
 "lost": null,
 "source": null,
 "recoil": null
+},
+{
+"event": "credit",
+"label": "NODEDETECTOR",
+"interval": 216,
+"family": "electron",
+"node_detector": "screen",
+"window": [
+205,
+216
+],
+"proper": 213,
+"windows": 18,
+"before": null,
+"realised": null,
+"kept": [
+0
+],
+"count": 1,
+"left": 0,
+"absorbed": null,
+"emitted": null,
+"momentum": [
+53254585,
+-1487075,
+1369641
+],
+"fan": [
+42834754,
+-11394404,
+11202754
+],
+"lost": [
+"P lost to the region"
+],
+"source": "the lay",
+"recoil": "unpaid by the region",
+"bias_bound": {
+"g": 500,
+"total": 132710400000000,
+"sum": 500,
+"last": 1
+}
 },
 {
 "event": "credit",
