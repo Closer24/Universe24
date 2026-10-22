@@ -67,7 +67,7 @@ LOST_TO_REGION, UNPAID_BY_REGION = (
 NO_DRAW = "no draw: every digit at the lay's origin, the emission at the window's close"  # the exact dark (the reader's re-ruling of 2026-10-20, (c)): a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close, the detector's declared when, this reading on its credit line
 BIAS_BOUND = "bias_bound"  # the click's line: the bound g / T of the read's first draw, the reader's F, 2026-10-20
 NO_SIDE = "no side: booked, not faced"  # C6: the hole's Node two-sided on every axis, its face set empty, the quantum taken in the books by the deficit path and the levels standing (`take.faced`, `act.written`)
-LARGEST_ENTRY = "the where by the largest raw entry of the shell's book: every shell Node below G^2 while the row fell"  # (5), the reader's word of 04:21: no weight, no draw, the reading named
+LARGEST_ENTRY = "the where by the largest raw entry of the shell's book: every shell Node below G^2 while the row fell"  # (5), the reader's word of 04:21: no weight, no draw, the reading named; the first of a tie (max over the range takes the first index; the reachable tie the all-zero book, the where then the shell's first Node by order)
 ORDER, SCALE, BOARD_COUNT = (
     "order",
     "scale",
