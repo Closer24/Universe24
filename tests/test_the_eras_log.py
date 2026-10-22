@@ -18,7 +18,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
     keys = {"booking": "form", "factor": "carried", "pressure": "trace"}
     universe_at_weight_one(tmp_path, 36000, WIDTH, gravity=keys)
     world = light_cube(tmp_path, "eras", 400, interval="unobservable", intervals=12)
-    out = tmp_path / "eras.eras.json"
+    out = tmp_path / "eras.eras.jsonl"
     lines = ERAS.run(world, out, 4, None)
     log = ERAS_PAGE.read_log(out)
     header, last = log[0], log[-1]
