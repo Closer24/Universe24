@@ -5,7 +5,9 @@ from __future__ import annotations
 from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
 
-Shape = tuple[int, int, int]
+Shape = tuple[
+    int, ...
+]  # the board's shape and a Node's coordinates, three integers each, as the board hands them
 
 
 def half_angle(den: int, cosine: int) -> int:
