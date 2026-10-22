@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from functools import partial
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
@@ -329,3 +329,20 @@ def coherence_ended(board: Lattice, books: NodeBooks) -> None:
     wall = count_wall(board.families[books.index], board.world.quantum_action)
     books.labels = [count * wall for count in books.counts]
     books.carried = [0 for _count in books.counts]
+
+
+def gate_count(board: Lattice, row: Any) -> int:
+    """The count the start's gate reads for a declared body (`Lattice.gate`; here beside the lists for the shape of credit.py): a bound record declared an instrument body (loader/world.BodyRow.region) the board's count of its family, its charge over T / 2 (`count_of`, the ruling of 2026-10-22), since a standing record's quantum is spread over its whole support with less than half a quantum at any Node; another body its family's quanta at its declared Nodes (`Lattice.quanta`)."""
+    if getattr(row, "region", ()):
+        return credit.count_of(board, row.family) or 0
+    return int(board.quanta(row.family)[0][board.mask(row.nodes)].sum())
+
+
+def count_checked(board: Lattice, index: int, due: bool) -> None:
+    """The count on the board of a bound record against the books' count at its own window's close (`meeting.jumped`, where `due`; the ruling of 2026-10-22: the check of 2026-10-20 reaching the bound body's record), refused by name as the sides' records are at theirs (`meeting.closed`, `count_held`)."""
+    if due and not credit.count_held(board, index):
+        raise RuntimeError(
+            f"the bound record's count on the board, {board.count(index)}, differs from the books' count "
+            f"{board.credit.counts[index]} at its close {board.interval}: the charge moved against the books' "
+            "by more than its walk since the lay"
+        )

@@ -3,16 +3,19 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Sequence
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward, form_term
-from event_universe.loader.derived import FamilyRule
+from event_universe.loader.derived import FamilyRule, quanta_records
 from event_universe.readings import ports
-from event_universe.records import Record
+from event_universe.records import Record, wronskian
+
+if TYPE_CHECKING:
+    from event_universe.lattice import Lattice
 
 
 def frozen(gamma: int, content: Any) -> Any:
@@ -85,3 +88,41 @@ def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
     origin = division_forward(wall, 2, 0)[0]
     quanta, _remainder = division_forward(np.asarray(share_now) + origin, wall, 0)
     return np.asarray(quanta, dtype=kind)
+
+
+def half_action(action: int) -> int:
+    """T div 2, the count's unit of a plane record on the board (the cold reader's ruling of 2026-10-22; ALGEBRA.md, The count on the board): one quantum of any plane family in any well carries the Wronskian T / 2, the charge's unit, the sign holder's own read, so a plane record's count is its charge over T / 2 and no reading of its share; one division act."""
+    return int(division_forward(action, 2, 0)[0])
+
+
+def charge_at(board: Lattice, index: int) -> np.ndarray:
+    """A plane family's charge density at every Node, the Wronskian re_now im_before - im_now re_before summed over its records' planes (`records.wronskian`, the sign holder's own read, no new reading), signed, in the units of the levels' product."""
+    total: Any = 0
+    for record in quanta_records(board.families, index):
+        total = total + wronskian(board.lines_of(index, record), True)
+    return np.asarray(np.broadcast_to(np.asarray(total, dtype=object), board.shape), dtype=object)
+
+
+def charge_of(board: Lattice, index: int) -> int:
+    """A plane family's charge over the board, |SUM over the Nodes of W_i| (`charge_at`): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
+    return abs(int(charge_at(board, index).sum(dtype=object)))
+
+
+def quanta_at(board: Lattice, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
+    """A family's count in quanta at every Node with the mask of its frozen Nodes (`Lattice.quanta`): a plane family's by its charge density over T div 2, |W_i| + T div 4 div T div 2 (the ruling of 2026-10-22), another family's by its share over its own unit W_rec (`quanta_of`, `credit.record_unit`, C1), at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere."""
+    found, frozen = board.share_of(index, 1, at)
+    unit = board.credit.units[index]
+    if board.families[index].plane:
+        charge = np.abs(charge_at(board, index))
+        found, unit = (
+            (charge if at is None else np.where(at, charge, 0)),
+            half_action(board.world.quantum_action),
+        )
+    return quanta_of(found, unit, board.kind), frozen
+
+
+def count_read(board: Lattice, index: int, total: int | None, unit: int) -> tuple[int | None, int]:
+    """The total and the unit the count on the board is read from (`credit.counted`): a plane record's charge over T div 2 (`charge_of`, `half_action`, the ruling of 2026-10-22), another record's share `total` over its own unit `unit` (W_rec, `credit.record_unit`)."""
+    if board.families[index].plane:
+        return charge_of(board, index), half_action(board.world.quantum_action)
+    return total, unit

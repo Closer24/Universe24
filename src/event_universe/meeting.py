@@ -371,13 +371,12 @@ def jumped(board: Lattice) -> None:
         if books.declared.draw is None:
             continue
         lit, closes = not dark(board, books, own[books.number]), books.number in ended
+        lists.count_checked(board, books.index, books.bound and closes)  # the bound record's count
         books.lit += lit
         span = books.due + (0 if lit else 1) + (books.lit if closes else 0)  # one draw, G2
         books.due, given = 0, False
         if span and closes and absorbing(board, books):
-            books.due = (
-                span  # the absorption at the window's end; the emission's draw at the next interval
-            )
+            books.due = span  # the absorption at the window's end, the emission's draw next interval
         elif span:  # at the close the beat's outflow over the window enters the hazard
             books.outflow = max(-books.beat, 0) if closes else 0
             given = emission_drawn(board, books, span)

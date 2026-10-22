@@ -13,7 +13,7 @@ import event_universe.covector as covector
 import event_universe.meeting_back as meeting_back
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import credit, emission, front, growth, meeting, node, reports, share, take
+from event_universe import credit, emission, front, growth, lists, meeting, node, reports, share, take
 from event_universe.board_readings import Currents, Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core.ports import Wrap
@@ -181,10 +181,10 @@ class Lattice:
         )
 
     def gate(self) -> None:
-        """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's share in quanta over its declared Nodes, ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
+        """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's count in quanta over its declared Nodes (a bound record's the board's whole count, its charge; `credit.gate_count`), ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
         for number, row in enumerate(self.world.bodies):
             declared = sum(row.detector.counts if row.detector is not None else row.counts)
-            read = int(self.quanta(row.family)[0][self.mask(row.nodes)].sum())
+            read = lists.gate_count(self, row)
             off = abs(declared - read)
             half = int(carried(off - 1, 2, 0)[0])  # (|c - read| - 1) div 2, the division act
             if off > 1 and half * half > declared:
@@ -211,7 +211,7 @@ class Lattice:
         }
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+        """A family of quanta's share at every Node in the current's units, a reading of the energy, rest and kinetic, in the free rotation's unit (no count: a plane record's count is its charge, `credit.count_of`, the ruling of 2026-10-22) from each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
         family, gamma = self.families[index], self.world.node_clock
         found: Any = 0
         weights = covector.weights(family)
@@ -226,9 +226,8 @@ class Lattice:
         return np.asarray(found), frozen
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
-        found, frozen = self.share_of(index, 1, at)
-        return share.quanta_of(found, self.credit.units[index], self.kind), frozen
+        """A family's count in quanta at every Node (`share.quanta_at`: a plane record's charge density over T div 2, the ruling of 2026-10-22; another record's share over W_rec, `credit.record_unit`, C1), a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        return share.quanta_at(self, index, at)
 
     def total_share(self, index: int) -> tuple[int | None, int]:
         """A family's share summed over the lattice in the current's units, a reading, None over a lattice holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""
