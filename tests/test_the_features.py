@@ -175,7 +175,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         forms[i, 0] = records.form(first, second)  # the bookings per record, (family, record)
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
-        numerators, _walls = records.write_sources(
+        numerators, _walls, _weight = records.write_sources(
             held, families, forms, {}, writes[held], rulers, GAMMA
         )
         by_hand = weights * records.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2)

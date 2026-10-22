@@ -39,6 +39,7 @@ class Row:
     off_diagonal: bool = False  # a holder of the content sourced by the shear too, the files' word `shear` beside `tensions`: three off-diagonal lines xy, yz, zx after its other axis lines, each the product of the Node's own two axis differences of its sources' records, D_a D_b over the doubled wall 2 E_s W_c, stepped by Rule3 as the tension lines are and read by no record (the held rows' own wave sector; ALGEBRA.md, The lattice's frame is read by gravity alone, and its carrier is a pair of Links: the three space pairs, 2026-10-20)
     lorentz: bool = False  # the files' key `form` of a held row under the rotation, `lorentz`: its time line and its three odd lines booked as one covector with the Lorentz form (covector.py; ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21), the odd line of the axis a the Node's +a Link's own, sourced by the Link's own flux of the record's step over the wall 2 den_s G^2 E_s T and read by that Link alone with the hop's sign (`link_read`, (-2, 0)), the time line's entry negative in every reading of the holder's record; False where the key is absent or `positive`, the rows as the engine books them without the key
     weight_gap: bool = False  # the held row's key `weight: gap` (ALGEBRA.md, The hill's weight is the write's mix, a hypothesis under its own name, 2026-10-22; loader/universe.hill_weight_of): the hill's weight the one-form K at the exponent of a pair with a gap at rest for every Node, rounded(n E_s T, Gamma), in place of the Node's own sources' mix, the default where the key is absent or `mix` (records.hill_weight, paces.motion_weight)
+    factor_carried: bool = False  # the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the write's factor a coefficient of the numerator inside the one carried division, the product count p_x p_y p_z unrounded over the wall E_s T times the factor's wall Gamma^power p_0^(3 - power) per Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, the walls per Node at node.held_write_at); False where the key is absent or `rounded`, the law as written, the factor rounded once at the read (paces.write_factor), every shipped world bit for bit
     form_clock: bool = False  # the held row's key `booking: form`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22): the count's form of every record sourcing the row booked with one proper-interval power, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), as the Wronskian is (`FamilyRule.power`); False where the key is absent or `count`, the law as written, two powers
 
 
@@ -254,6 +255,22 @@ def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> No
                     "E_h T cos omega_s = k_w Gamma; the holder's level weight, the quantum action, the holder's "
                     "write weight and the Node clock); the universe is refused"
                 )
+
+
+def shared_clock(families: tuple[FamilyRule, ...]) -> None:
+    """The loader's gate of the carried factor, the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row."""
+    for index, family in enumerate(families):
+        readers = readers_of(families, index)
+        reads = {tuple(sorted((r.family, r.weight) for r in families[other].reads)) for other in readers}
+        if family.factor_carried and len(reads) > 1:
+            raise ValueError(
+                f"{family.name!r} declares `factor: carried` and its sources read the content at differing "
+                f"weights, {[(families[o].name, families[o].declared) for o in readers]}: the carried factor's "
+                "one wall per Node is the sources' shared clock's, E_s T times the factor's wall at the Node, and "
+                "the one remainder per held line carries them where they share it (ALGEBRA.md, The write per "
+                "proper volume and per proper interval, the clause of 2026-10-22); declare `factor: rounded` or "
+                "read alike"
+            )
 
 
 def weight_of(held: int, reader: FamilyRule) -> int:

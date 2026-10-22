@@ -7,7 +7,7 @@ from event_universe import board_readings, records
 from event_universe.core import paces
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
-from tests.laws import UNIVERSE, refused
+from tests.laws import BACK, UNIVERSE, refused
 
 GAMMA, ACTION, CUBE, AMPLITUDE = 6000, 32768, 3, 435  # the rule's clock and quantum, a 3-cube torus
 TORUS = {"x": "periodic", "y": "periodic", "z": "periodic"}
@@ -93,6 +93,7 @@ def lockstep(board, gravity, matter, intervals):  # type: ignore[no-untyped-def]
         step["remainder_after"] = one_number(board.states[gravity].write_remainders[0])
         forms = {(matter, 0): records.form(kept, board.lines_of(matter, 0))}
         step["eras"] = board_readings.eras(board, gravity, forms, board.rulers(-1))
+        step["snapshot"] = BACK.snapshot(board)  # the interval's end, the run back's comparison
         course.append(step)
     return course
 

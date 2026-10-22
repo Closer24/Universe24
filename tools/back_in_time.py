@@ -52,13 +52,30 @@ def verdict(board: Lattice, intervals: int) -> dict[str, object]:
             board.step_inverse()
         except RuntimeError as refusal:  # the run back refused by name, the hill's map not injective
             board.output = kept
-            return {"verdict": "REFUSED", "interval": board.interval, "reason": str(refusal)}
+            return {
+                "verdict": "REFUSED",
+                "interval": board.interval,
+                "reason": str(refusal),
+                "matched": run - board.interval + snapshots_start(snapshots),
+                "unreturning": sorted(board.unreturning),
+            }
         found = first_difference(snapshots[board.interval], snapshot(board))
         if found is not None:
             label, at = found
             return {"verdict": "MISS", "interval": board.interval, "array": label, "node": at}
     board.output = kept
-    return {"verdict": "MATCH", "intervals": run, "interval": board.interval, "ended": ended}
+    return {
+        "verdict": "MATCH",
+        "intervals": run,
+        "interval": board.interval,
+        "ended": ended,
+        "unreturning": sorted(board.unreturning),
+    }
+
+
+def snapshots_start(snapshots: dict[int, object]) -> int:
+    """The first interval a snapshot was kept at, so that the steps matched before a refusal count from the run's top: matched = run - (interval - first)."""
+    return min(snapshots)
 
 
 def main(argv: list[str] | None = None) -> None:

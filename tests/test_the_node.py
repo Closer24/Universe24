@@ -325,7 +325,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         count = share.quanta_of(share.family_share(matter, (record,), wrap, GAMMA), wall, np.int64)
         stress = readings.stresses_of(matter.pair[0], [record], wrap)
         vacuum = {(i, 0): (GAMMA, (GAMMA, GAMMA, GAMMA)) for i in (CHARGE, MATTER)}
-        found, _walls = records.write_sources(
+        found, _walls, _weight = records.write_sources(
             GRAVITY, FAMILIES, {}, {(MATTER, 0): stress}, write, vacuum, GAMMA
         )
         written = node.held_write_at(held.lines, found, write.walls, held.write_remainders)

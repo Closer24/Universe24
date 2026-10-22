@@ -308,7 +308,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "kinetic form's invariance under a uniform shift and the attractor from rest and from a kicked start alike",
     ),
     "tests/test_the_interval.py::test_the_run_back_is_refused_by_name_under_the_key_and_the_gate_reads_refused_never_miss": (
-        20,
+        46,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T5): the run back refused by name "
         "under the key and the back-in-time gate's verdict REFUSED, never MISS",
     ),
@@ -316,6 +316,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         36,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T7): the mix's weight from the "
         "Node's own sources with a light wave beside the matter record, the eras' writes and the crossing the board reads",
+    ),
+    "tests/test_the_interval.py::test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit": (
+        60,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T8): the end's booking switch, the "
+        "carried factor's terms and wall per Node bit for bit, the rounding kept, the loader's refusals and the run back",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

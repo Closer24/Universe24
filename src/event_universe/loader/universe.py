@@ -15,7 +15,7 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
-    ("sources", "level_weight", "write_weight", "rest", "act", "form", "booking", "weight"),
+    ("sources", "level_weight", "write_weight", "rest", "act", "form", "booking", "weight", "factor"),
     ("sources", "level_weight", "write_weight", "act"),
 )
 POSITIVE, LORENTZ = (
@@ -196,14 +196,30 @@ WEIGHTS = (
 )  # the hill's weight under `interval: unobservable`: the Node's own sources' mix, or the one-form K at the gapped pair's integer
 
 
+def held_word(row: dict[str, Any], label: str, key: str, words: tuple[str, str]) -> bool:
+    """A held row's optional key of two words (`weight`, `factor`): whether the second word stands, False where the key is absent, the first word the law as written; refused by name at any other word."""
+    if "held" not in row or key not in row["held"]:
+        return False
+    word = row["held"][key]
+    if word not in words:
+        raise ValueError(f"{label}.held.{key} is one of {list(words)}, got {word!r}")
+    return bool(word == words[1])
+
+
 def hill_weight_of(row: dict[str, Any], label: str) -> bool:
     """The held row's optional key `weight`, the hill's weight on a world declaring `interval: unobservable` (ALGEBRA.md, The hill's weight is the write's mix, a hypothesis under its own name, 2026-10-22): `mix`, the Node's own sources' mix at the pairs' integers, K = (E_s T / Gamma) SUM_f s_f / SUM_f (s_f / n_f) rounded once at the read, the default where the key is absent (paces.motion_weight, records.hill_weight); or `gap`, the one-form K at the exponent of a pair with a gap at rest for every Node, K = rounded(n E_s T, Gamma), n 5 under the form's own clock (30 at T 36,000), nature's deceleration in every era and nature's H in the dust era alone, the velocity above the constraint's in the radiation era by sqrt(6 / 5 - 1) (the design's alternative, named for the owner's word where the Node's own weights wake a mode of the content, the genericity hand's measurement); on the holder of the sign the key is read and the hill never acts; refused by name at any other word; False where absent."""
-    if "held" not in row or "weight" not in row["held"]:
-        return False
-    weight = row["held"]["weight"]
-    if weight not in WEIGHTS:
-        raise ValueError(f"{label}.held.weight is one of {list(WEIGHTS)}, got {weight!r}")
-    return bool(weight == WEIGHTS[1])
+    return held_word(row, label, "weight", WEIGHTS)
+
+
+FACTORS = (
+    "rounded",
+    "carried",
+)  # a held row's write factor: rounded once at the read, the law as written, or carried inside the one division
+
+
+def factor_of(row: dict[str, Any], label: str) -> bool:
+    """The held row's optional key `factor`, the end's booking (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; the remainders hand's reading of the two roundings and the reader's line on the design): `rounded`, the law as written, the write's factor one rounding half up of the count times the three paces over the one wall before the write's carried division (paces.write_factor, kind D), under which a family's write at a Node is exactly 0 from the interval its dimmed form falls below one half of a level, the stop, the integers' end under the rounding, named and unreachable on every shipped width; or `carried`, the factor a coefficient of the numerator inside the held write's one carried division, Rule3's own manner (no coefficient of the law rounded apart; a fraction kept by a carried division and nothing else), the product count p_x p_y p_z over the wall E_s T times Gamma^power p_0^(3 - power) at the Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, node.held_write_at's walls per Node), injective (the reversibility hand's Theorem 1: the numerator and the wall from the paces of the interval's start, recovered from the post-state's before), under which no write dies and the velocity crawls and pulses where the constraint's falls below one level per interval, the coast; the row's sources sharing the clock (derived.shared_clock); refused by name at any other word; False where absent, the rounding, so that every shipped world runs bit for bit."""
+    return held_word(row, label, "factor", FACTORS)
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
@@ -267,6 +283,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         lorentz = form_of(row, label, rotation, flux, num == den)  # the Lorentz form, False undeclared
         form_clock = booking_of(row, label, wronskian)  # the form's own clock, False undeclared
         weight_gap = hill_weight_of(row, label)  # the hill's weight the one-form K, False undeclared
+        factor_carried = factor_of(row, label)  # the factor inside the one division, False undeclared
         rows.append(
             Row(
                 name,
@@ -287,10 +304,12 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 lorentz,
                 form_clock=form_clock,
                 weight_gap=weight_gap,
+                factor_carried=factor_carried,
             )
         )
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
+    derived.shared_clock(families)
     return integers, conversion.declared(
         families, declaring
     )  # the lists from the pairs under the law's conservations, refused by name
