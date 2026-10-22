@@ -52,6 +52,9 @@ PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_r
 PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", "covector.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/uniform.py")
 PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
+PHYSICAL_MODULES += (
+    "frame_run.py",
+)  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

@@ -27,14 +27,22 @@ INSTRUMENT_KEYS = (
     "transitions",
     "rates",
     "node_detector",
-)  # the detector body's keys as the world file declares them (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS)
+    "profiles",
+)  # the detector body's keys as the world file declares them (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS), and the transition's two levels' profiles (loader/instrument.profiles_of, 2026-10-22)
 INSTRUMENT_REQUIRED = ("nodes", "parts", "transitions", "node_detector")
 MOVING_KEYS = ("now", "before", "im_now", "im_before")
 LEVEL_KEYS, SENSE_KEYS = ("now", "before"), ("im_now", "im_before")
+PROFILE_KEYS, PROFILE_REQUIRED = (
+    ("part", *MOVING_KEYS),
+    ("part", *LEVEL_KEYS),
+)  # one level's profile under `profiles`: its part and its two level pairs in the `moving` form
 SPARSE_KEYS = ("at", "values")  # a level's nonzero Nodes alone: their flat x-major indexes and levels
 Levels = tuple[
     tuple[int, int], ...
 ]  # a level over the lattice as its nonzero Nodes: (flat index, level)
+Profile = tuple[
+    Levels, Levels, Levels, Levels
+]  # one level's profile under `profiles`: its two level pairs as `levels_of` reads a body's (loader/instrument.profiles_of, 2026-10-22)
 
 
 def pairs_of(given: object, label: str, size: int) -> Levels:

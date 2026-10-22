@@ -197,9 +197,9 @@ def test_the_template_fixes_of_the_pages_visual_pass_and_the_retemplate_path(tmp
     bodies = RECORD.declared(board.world, giver, board)["bodies"]
     assert (bodies[1]["radius"], len(bodies[1]["shell"])) == (3, 25) and "shell" not in bodies[0]
     row = RECORD.frame(board, None)["own_light"]["1"]
-    assert (row["light"], row["carry"]) == ([], 0) and set(row) <= {
+    assert (row["light"], row["stream"]) == ([], [0, 0, 0]) and set(row) <= {
         "light",
-        "carry",
+        "stream",
         "closed_light",
         "closed_share",
     }

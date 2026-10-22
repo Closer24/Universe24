@@ -145,8 +145,6 @@ def emission_drawn(board: Lattice, books: NodeBooks, grain: int) -> bool:
             books.deferred = (
                 rate is not None
             )  # nothing to read, or no hazard carried: the rate's at the close
-            if rate is None:
-                found[-1].items()  # the own light's row draws nothing: its carry kept, no write
             return False
         if click(board, books, found) < len(found) - 1:
             return True
