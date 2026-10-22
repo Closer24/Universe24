@@ -91,8 +91,8 @@ class NodeBooks:
     outflow: int = 0  # the instrument's hazard term beside its declared constant (`lists.hazard_weights`), 0 since 2026-10-22: the body's own record's current through its front, the beat's term of 2026-10-21, left with the light book (`light`), kept by name
     light: list[int] = field(
         default_factory=list
-    )  # the body's own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body the region detector of its own light): per body Node the window's sum of the sign holder's light's conserved current through the Node's front Ports, outward positive, in the unit G^2 as the intake is booked (`reports.booked_light`), begun again at the close; the whether at the close reads its sum (`lists.own_light_whether`) and the emission's Node is drawn by it (`meeting.own_light_click`); empty for a body whose family reads no holder of the sign
-    carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light_whether`)
+    )  # the body's own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body the region detector of its own light): per body Node the window's sum of the sign holder's light's conserved current through the Node's front Ports, outward positive, in the unit G^2 as the intake is booked (`reports.booked_light`), begun again at the close; the whether at the close reads its sum (`lists.own_light`) and the emission's Node is drawn by it (`meeting.emission_drawn`); empty for a body whose family reads no holder of the sign
+    carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:

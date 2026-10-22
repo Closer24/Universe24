@@ -13,6 +13,7 @@ from event_universe import conversion, credit, digits, flux, lists, node
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
 from event_universe.loader.keys import Node
+from event_universe.loader.node_detector_declaration import Rate
 from event_universe.node_detector import (
     NodeBooks,
     Passage,
@@ -132,24 +133,23 @@ def carries(board: Lattice, books: NodeBooks, total: int) -> bool:
     return digits.read_of(board, reads, body_label(board, books))[0] >= total
 
 
-def emission_drawn(board: Lattice, books: NodeBooks, grain: int) -> bool:
+def emission_drawn(board: Lattice, books: NodeBooks, grain: int, closes: bool = False) -> bool:
     """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the body's own read of the board; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was. The exact dark (the reader's re-ruling of 2026-10-20, the law's sentence): a body whose read finds every digit at the lay's origin at its emission's draw does not draw (`digits.at_origin` over what the body reads, `digits.reads_of`, `node_detector.read_families`), nor where its number, read or left within the interval, stands below the emission row's total (`carries`, the reader's (iii) of 2026-10-20: the remainders at the body do not carry the draw, the budget's own count the measure of nothing to read); its emission falls at its window's close, the detector's declared when (`NodeBooks.deferred`, `emission_fell`); where the body's lines carry the total the emission's hazard is read from the board. The refusals by name stay for every other draw at the origin or below its total (an absorption, a probe, a second draw of one interval)."""
-    for rate in books.declared.rates:
-        if rate.leaves == books.part:
-            if digits.at_origin(
-                board, digits.reads_of(board, read_families(books), board.mask(books.nodes))
-            ):
-                books.deferred = True  # nothing to read: no draw, the emission at the window's close
-                return False
-            alternatives = lists.emission(
-                board, books, rate, min(grain, rate.lifetime), beat=books.outflow
-            )
-            if not carries(board, books, sum(a.weight for a in alternatives)):
-                books.deferred = True  # the read below the row's total carries no hazard: no draw
-                return False
-            pick = click(board, books, alternatives)
-            if pick < len(alternatives) - 1:
-                return True
+    transition = lists.own_light_row(books) if closes else None  # (5): the own light's row at the close
+    rows: list[Rate | None] = [rate for rate in books.declared.rates if rate.leaves == books.part]
+    for rate in rows or ([None] if transition is not None else []):
+        span = grain if rate is None else min(grain, rate.lifetime)
+        found = lists.emission(board, books, rate, span, beat=books.outflow, transition=transition)
+        reads = digits.reads_of(board, read_families(books), board.mask(books.nodes))
+        if digits.at_origin(board, reads) or not carries(board, books, sum(a.weight for a in found)):
+            books.deferred = (
+                rate is not None
+            )  # nothing to read, or no hazard carried: the rate's at the close
+            if rate is None:
+                found[-1].items()  # the own light's row draws nothing: its carry kept, no write
+            return False
+        if click(board, books, found) < len(found) - 1:
+            return True
     return False
 
 
@@ -378,8 +378,9 @@ def jumped(board: Lattice) -> None:
         if span and closes and absorbing(board, books):
             books.due = span  # the absorption at the window's end, the emission's draw next interval
         elif span:
-            given = emission_drawn(board, books, span)
-        given = given or (closes and lists.own_light_click(board, books))  # (5): its own light credited
+            given = emission_drawn(
+                board, books, span, closes
+            )  # a rate's draw; (5): the own light's at the close
         if not given and closes and books.deferred:
             given = emission_fell(board, books)  # E1: the deferred emission falls at the close
         if given:
