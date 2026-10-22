@@ -1,85 +1,43 @@
-"""The guide clause of the emission (ALGEBRA.md, The click writes on the lattice (5), BUILT 2026-10-22; the reader's derivation of the box's 0.09 and his design read): a source in time at one Node lays the form S it writes, and the law's line reads S on the guide of width one, where the four folded reads fall on the Node and two Ports stay open, den cos k = 3 num - 2 den and S = (2 / 3) T sin k, one quantum in the two outgoing waves (`emission.radiated_total`). On a board whose cross-section is wider the guide is its longest axis and the two other axes are its cross-section; each transverse axis carries modes with a cosine c_m and a weight at the Node: an axis of one layer the one uniform mode, c = 1 and the weight 1 (the chain); an axis of w layers with faces, closed or open, the fill 0 beyond either, the modes sin(pi m (y + 1) / (w + 1)), m = 1 .. w, with c_m = cos(pi m / (w + 1)) and the weight 2 sin^2(pi m (y0 + 1) / (w + 1)) / (w + 1) at the Node's coordinate y0; a periodic axis of w layers the modes cos(2 pi m y / w), c_m = cos(2 pi m / w), the weight 1 / w. The guide's wave of the mode (m, n) at the resonance has den cos k_mn = 3 num - den c_m - den c_n; the mode travels where |den cos k_mn| < den and stands at the Node otherwise. A point source's share into a travelling mode is its weight at the Node over sin k_mn, so the share of the width-one S that travels is R = SUM over the travelling modes of weight_m weight_n sin k / sin k_mn, sin k the width-one guide's, and the clause lays S / R, one quantum travelling in the travelling modes (on the box of 61 x 7 x 7 at the resonance [5414, 6000] the mode (1, 1) alone travels, the weight 1 / 16 at the centre, R = 0.0864 and the factor 11.58). Integers alone, by the acts table's acts: the transverse cosines by the half-angle chain of searches, den cos(theta / 2) the largest integer whose square is at most den (den + den cos theta) div 2, from den cos(pi / 2) = 0 down to pi / (w + 1) where w + 1 is a power of two, and the multiples cos(m theta) by the angle-sum's recurrence on the integer pairs, one division act each; den sin by the search on den^2 - (den cos)^2; R as one rational, S / R by one division act whose remainder is discarded as the root of S discards its own; a width whose cosines the table's acts do not reach (w + 1 no power of two) keeps the width-one line, named here (`base_cosine` answers None and `guide_total` returns S), so the worlds laid before this clause load and run as they did; a board whose modes are reached and none of them travels at the resonance is refused by name at load (`loader/node_detector_declaration.packet_form`, a body with a declared rate and no width) and again in the clause. On the width-one guide R is 1 exactly and S stands as the line has it, bit for bit."""
+"""The guide clause of the emission (ALGEBRA.md, The click writes on the lattice (5), BUILT 2026-10-22; the reader's derivation of the box's 0.09 and his design read): a source in time at one Node lays the form S it writes, and the law's line reads S on the guide of width one, where the four folded reads fall on the Node and two Ports stay open, den cos k = 3 num - 2 den and S = (2 / 3) T sin k, one quantum in the two outgoing waves (`emission.radiated_total`). On a board whose cross-section is wider the guide is its longest axis and the two other axes are its cross-section; each transverse axis carries modes with a cosine c_m and a weight at the Node: an axis of one layer the one uniform mode, c = 1 and the weight 1 (the chain); an axis of w layers with faces, closed or open, the fill 0 beyond either, the modes sin(pi m (y + 1) / (w + 1)), m = 1 .. w, with c_m = cos(pi m / (w + 1)) and the weight 2 sin^2(pi m (y0 + 1) / (w + 1)) / (w + 1) at the Node's coordinate y0; a periodic axis of w layers the modes cos(2 pi m y / w), c_m = cos(2 pi m / w), the weight 1 / w. The guide's wave of the mode (m, n) at the resonance has den cos k_mn = 3 num - den c_m - den c_n; the mode travels where |den cos k_mn| < den and stands at the Node otherwise. A point source's share into a travelling mode is its weight at the Node over sin k_mn, so the share of the width-one S that travels is R = SUM over the travelling modes of weight_m weight_n sin k / sin k_mn, sin k the width-one guide's, and the clause lays S / R, one quantum travelling in the travelling modes (on the box of 61 x 7 x 7 at the resonance [5414, 6000] the mode (1, 1) alone travels, the weight 1 / 16 at the centre exactly, R = 0.08663 and the factor 11.543). Integers alone, by the acts table's acts: every cosine the engine's own cosine of a wave number, `features/click.wave_cosine`, the rotation act's search for den cos(pi t / h) at any t and h (the reader's line of 2026-10-22: one way for the cosines in the engine, the packet's transverse mode's and the clause's alike, no second chain; the half-angle chain of searches with the angle-sum's recurrence, the first build of this day, is withdrawn, its multiples drifting by the recurrence's roundings, den cos(4 pi / 8) at -7 for 0); den sin by the search on den^2 - (den cos)^2; R as one rational, S / R by one division act whose remainder is discarded as the root of S discards its own; every width reached; where no mode travels at the resonance, or the source stands at every travelling mode's zero, the clause has nothing to scale and S stands as the width-one line has it, the near zone's lay (`guide_total`), no refusal. On the width-one guide R is 1 exactly and S stands as the line has it, bit for bit."""
 
 from __future__ import annotations
 
 from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
+from event_universe.features.click import wave_cosine
 
 Shape = tuple[
     int, ...
 ]  # the board's shape and a Node's coordinates, three integers each, as the board hands them
 
 
-def half_angle(den: int, cosine: int) -> int:
-    """den cos(theta / 2) from den cos theta: the largest integer whose square is at most den (den + den cos theta) div 2 (one division, one search)."""
-    return largest_below(int(division_forward(den * (den + cosine), SIDES, 0)[0]))
-
-
-def chain_cosine(den: int, target: int) -> int | None:
-    """den cos(pi / target) for a target that is a power of two: 1 gives -den (cos pi), 2 gives 0 (cos(pi / 2)), each doubling one half-angle search; None where the target is no power of two (the path's cosines are then roots the table's acts do not reach, and the width-one line stands as before, named)."""
-    if target == 1:
-        return -den
-    size, cosine = SIDES, 0  # den cos(pi / 2)
-    while size < target:
-        size, cosine = size * SIDES, half_angle(den, cosine)
-    return cosine if size == target else None
-
-
-def base_cosine(den: int, layers: int) -> int | None:
-    """den cos(pi / (w + 1)) for a faced axis of w layers by the half-angle chain from den cos(pi / 2) = 0, where w + 1 is a power of two; None where it is not."""
-    return chain_cosine(den, layers + 1)
-
-
-def multiples(den: int, cosine: int, count: int) -> list[int]:
-    """den cos(m theta) for m = 0 .. count from den cos theta by the angle-sum's recurrence on the integer pairs, cos((m + 1) theta) = 2 cos theta cos(m theta) - cos((m - 1) theta), one division act each."""
-    found = [den, cosine]
-    while len(found) <= count:
-        found.append(int(division_forward(SIDES * cosine * found[-1], den, 0)[0]) - found[-2])
-    return found[: count + 1]
-
-
 def sine_of(den: int, cosine: int) -> int:
-    """den sin from den cos by the search on den^2 - (den cos)^2, 0 where the cosine stands on or outside the circle."""
+    """den sin from den cos by the search: the largest integer whose square is at most den^2 - (den cos)^2, 0 where none is."""
     square = den * den - cosine * cosine
     return largest_below(square) if square > 0 else 0
 
 
-def modes_of(den: int, layers: int, periodic: bool, at: int) -> list[tuple[int, int, int, int]] | None:
-    """A transverse axis's modes as (the mode's label, den c_m, the weight's numerator, the weight's denominator) at the Node's coordinate `at`: one layer the uniform mode (0, den, 1, 1); a faced axis of w layers the sines' modes m = 1 .. w with the weight 2 sin^2(pi m (at + 1) / (w + 1)) / (w + 1); a periodic axis of w layers the cosines' modes m = 0 .. w - 1 with the weight 1 / w; None where the width's cosines are out of the table's reach."""
+def modes_of(den: int, layers: int, periodic: bool, at: int) -> list[tuple[int, int, int, int]]:
+    """A transverse axis's modes as (the mode's label, den c_m, the weight's numerator, the weight's denominator) at the Node's coordinate `at`: one layer the uniform mode (0, den, 1, 1); a faced axis of w layers the sines' modes m = 1 .. w, den c_m = wave_cosine(m, w + 1, den) and the weight 2 sin^2(pi m (at + 1) / (w + 1)) / (w + 1) with the Node's angle den cos(pi m (at + 1) / (w + 1)) = wave_cosine(m (at + 1), w + 1, den) and its sine by the search; a periodic axis of w layers the cosines' modes m = 0 .. w - 1, den c_m = wave_cosine(2 m, w, den), the weight 1 / w; every cosine the engine's own (the reader's line of 2026-10-22)."""
     if layers == 1:
         return [(0, den, 1, 1)]
     if periodic:
-        half = 1  # cos(2 pi / w) = cos(pi / (w / 2)): the half of w found by doubling, no division
-        while SIDES * half < layers:
-            half = half * SIDES
-        base = chain_cosine(den, half) if SIDES * half == layers else None
-        if base is None:
-            return None
-        cosines = multiples(den, base, layers)
-        return [(m, cosines[m], 1, layers) for m in range(layers)]
-    base = base_cosine(den, layers)
-    if base is None:
-        return None
-    cosines = multiples(den, base, layers)
-    angle = multiples(den, base, at + 1)[at + 1]  # den cos((at + 1) pi / (w + 1)), the Node's own angle
-    at_node = multiples(den, angle, layers)  # den cos(m (at + 1) pi / (w + 1)) for m = 0 .. w
+        return [(m, wave_cosine(SIDES * m, layers, den), 1, layers) for m in range(layers)]
     found = []
     for m in range(1, layers + 1):
-        sine = sine_of(den, at_node[m])
-        found.append((m, cosines[m], SIDES * sine * sine, (layers + 1) * den * den))
+        sine = sine_of(den, wave_cosine(m * (at + 1), layers + 1, den))
+        found.append((m, wave_cosine(m, layers + 1, den), SIDES * sine * sine, (layers + 1) * den * den))
     return found
 
 
 def travelling(
     shape: Shape, periodic: tuple[bool, bool, bool], node: Shape, resonance: tuple[int, int]
-) -> tuple[list[tuple[int, int]], int, int] | None:
+) -> tuple[list[tuple[int, int]], int, int]:
     """The guide's travelling modes at the resonance and the share R of the width-one S they carry, as the rational (numerator, denominator): the guide the board's longest axis (the first of equals), the cross-section the two others; den cos k_mn = 3 num - den c_m - den c_n, travelling where |den cos k_mn| < den; R = SUM weight_m weight_n sin k / sin k_mn with sin k the width-one guide's; None where a transverse width's cosines are out of the table's reach."""
     num, den = resonance
     axis = max(range(len(shape)), key=lambda a: shape[a])
     across = [a for a in range(len(shape)) if a != axis]
     sides = [modes_of(den, shape[a], periodic[a], node[a]) for a in across]
-    if sides[0] is None or sides[1] is None:
-        return None
     guide = int(
         division_forward(PORTS * num - (PORTS - SIDES) * den, SIDES, 0)[0]
     )  # den cos k on the width-one guide
@@ -99,16 +57,11 @@ def travelling(
 def guide_total(
     total: int, shape: Shape, periodic: tuple[bool, bool, bool], node: Shape, resonance: tuple[int, int]
 ) -> int:
-    """S laid on the guide: the width-one S over R by one division act, the remainder discarded; S itself where R is 1 (the width-one guide, bit for bit) and where the cross-section's cosines are out of the table's reach (the width-one line as before, named); refused by name where the modes are reached and none travels."""
+    """S laid on the guide: the width-one S over R by one division act, the remainder discarded; S itself where R is 1 (the width-one guide, bit for bit) and where the cross-section's cosines are out of the table's reach (the width-one line as before, named); refused by name where the modes are reached and none travels. Where the clause's sum is empty, no mode travelling at the resonance, or the source stands at every travelling mode's zero (its weight 0 in each, the share's numerator 0), S stands as the width-one line has it, the near zone's lay, named (the owner's word of 2026-10-22, tests only: the conserve worlds' giver on its 5 x 5 cross-section at [5751, 6000], den cos k_11 = 6865 above den, loads and runs bit for bit as shipped, its taker clicking in the near zone); no refusal."""
     read = travelling(shape, periodic, node, resonance)
-    if read is None:
-        return total
     modes, numerator, denominator = read
     if not modes or numerator == 0:
-        raise ValueError(
-            f"no mode of the guide travels at the resonance {list(resonance)} on the board {list(shape)}: the emission "
-            "lays nothing that leaves (the guide clause, ALGEBRA.md (5))"
-        )
+        return total  # no mode travels, or the source stands at every travelling mode's zero: S stands, the near zone's lay
     if numerator == denominator:
         return total
     return int(division_forward(total * denominator, numerator, 0)[0])

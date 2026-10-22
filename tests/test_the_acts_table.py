@@ -113,9 +113,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
     # guide.py, the guide clause of the emission
-    ("guide.py", "half_angle", "division_forward"): "D",  # den (den + den cos) over two, once
-    ("guide.py", "half_angle", "largest_below"): "S",  # the half angle's cosine by the search
-    ("guide.py", "multiples", "division_forward"): "D",  # Chebyshev's recurrence, one division per step
     (
         "guide.py",
         "sine_of",

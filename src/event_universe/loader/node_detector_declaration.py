@@ -9,7 +9,6 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
-from event_universe.guide import travelling
 from event_universe.loader.derived import FamilyRule, count_wall, readers_of
 from event_universe.loader.draw import Draw, body_draw_of
 from event_universe.loader.keys import integer, keyed
@@ -250,7 +249,7 @@ def packet_form(
     periodic: tuple[bool, bool, bool],
     action: int,
 ) -> NodeDetectorDeclaration:
-    """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from every Node of the body (`nodes`, one for a body at one Node, the standing region of a bound body declared through the mode file): along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board from each of them, none refused by name; the four refusals, the fourth the guide clause's (ALGEBRA.md, The click writes on the lattice (5)): a source in time on a board where no transverse mode travels at the rate's resonance would lay nothing that leaves the Node (`guide.travelling`)."""
+    """The loader's decision on each emission's lay by the board's shape against the width, no flag (the mathematician's hand with the advisor's seconds, two hands; the owner's word): inside a guide, a board with at most one axis above one Node (a chain, one Node the whole cross-section), the source in time stands as built (`emission.emitted_quantum`) and a declared `width` is refused by name; in the open board a rate declaring `width` gives the packet along a drawn direction (`emission.laid_packet`) and a rate declaring none the source in time as built (the shipped worlds bit for bit); for the packet the band's line with the transverse mode must carry the resonance at that width (`features/click.along_cosine`, refused by name where cos k_z leaves (-1, 1)), and the directions the giver draws among are those the board holds from every Node of the body (`nodes`, one for a body at one Node, the standing region of a bound body declared through the mode file): along an axis above one Node, in either sense, where the train of L slices (`features/click.envelope` on the one-line packet's root `features/click.line_total`, from the lifetime and T) and the top-hat of `width` across on the other two axes stand within the board from each of them, none refused by name; the three refusals. The source in time's lay on a cross-section wider than one Node is the guide clause's (ALGEBRA.md, The click writes on the lattice (5), `guide.guide_total` at the lay, reading the item's drawn Node, one and the same as the body's Node for every shipped body with a rate, which stands at one Node); where no transverse mode travels at the rate's resonance the width-one line stands, the near zone's lay, and nothing is refused here for it."""
     guide = sum(1 for extent in shape if extent > 1) <= 1
     rates = []
     for index, declared in enumerate(found.rates):
@@ -265,12 +264,6 @@ def packet_form(
             rates.append(rate)
             continue
         if rate.width is None:  # no width declared: the source in time, laid by the guide clause
-            read = travelling(shape, periodic, nodes[0], rate.resonance)
-            if read is not None and not read[0]:
-                raise ValueError(
-                    f"{name}: no mode of the guide travels at the resonance {list(rate.resonance)} on the board "
-                    f"{list(shape)}: the emission would lay nothing that leaves (the guide clause, ALGEBRA.md (5))"
-                )
             rates.append(rate)
             continue
         light, (num, den) = families[rate.light], rate.resonance
