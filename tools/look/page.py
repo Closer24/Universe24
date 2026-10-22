@@ -764,7 +764,7 @@ function holeBeside(credit) {  // the hole's Nodes: the erasure's origin of the 
 const SHELLED = LOOK.bodies.filter(b => Array.isArray(b.shell) && b.shell.length);
 const SHELL_INDEX = new Map(); for (const b of SHELLED) b.shell.forEach((at, j) => SHELL_INDEX.set(at.join(','), [b.number, j]));
 const lightOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && Array.isArray(row.light) ? row.light : []; };
-const carryOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && typeof row.carry === 'number' ? row.carry : null; };
+const streamOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && Array.isArray(row.stream) && row.stream.length ? Number(row.stream[0]) : null; };  // the frame run's F at the last close, 0 before it
 const LIGHT_MOST = {}; for (const b of SHELLED) { let most = 0; for (let k = 0; k <= T; k++) for (const v of lightOf(k, b.number)) most = Math.max(most, Math.abs(v)); LIGHT_MOST[b.number] = most; }
 function laidInFrames(credit) {  // a bound body's emission whose light the output lays on no line of its own: the shell Node where the emitted light's count first stands at the click's frame against the frame before (the only new level of the light inside the ring), the frames' word
   const body = SHELLED.find(b => 'body ' + b.number === String(credit.node_detector)), family = credit.emitted, k = Math.min(positionOfLine(credit), T);
@@ -794,7 +794,7 @@ function conesAt(k) {  // the cones present at the frame, the earliest first: th
   return found;
 }
 const clickCount = (c, k) => { const radius = coneRadiusAt(c, k); if (radius === null) return null; let n = 0; for (let i = 0; i < N; i++) if (c.distance[i] <= radius && inBox(nodeOf(i), LOOK.frames[k])) n++; return n; };
-const OWN_LIGHT_WORDS = ['light', 'outflow', 'carry'];  // the words a bound body's close may carry on its credit line for its own light (the window's booked outflow, its carry), read where present
+const OWN_LIGHT_WORDS = ['light', 'outflow', 'stream'];  // the words a bound body's close may carry on its credit line for its own light (the window's booked outflow, the frame's stream), read where present
 const ownLightOf = line => OWN_LIGHT_WORDS.filter(word => line[word] !== undefined && line[word] !== null);
 const bodyLine = line => /^body \\d+$/.test(String(line.node_detector));
 const closedShare = row => row && Array.isArray(row.closed_share) && Number(row.closed_share[1]) > 0;  // a close of the body's own light stands in the row: the share's unit is set there (0 until the first own-light close, and on a body emitting at its declared rate)
@@ -1441,7 +1441,7 @@ function drawRecords() {
   const bookOf = line => {  // the frames' word on a bound body's own light at the close (2026-10-22): the close's own words of the frame's own_light row at the line's frame where the books carry them, else the running book's sum at the last frame before the close holding one (the close's own interval is booked and begun again inside the act)
     if (!bodyLine(line) || !SHELLED.some(b => 'body ' + b.number === line.node_detector)) return '';
     const number = Number(String(line.node_detector).slice(5)), k = Math.min(positionOfLine(line), T), own = LOOK.frames[k].own_light, at = own && own[String(number)];
-    const words = closedShare(at) ? Object.entries(at).filter(([key, v]) => key !== 'light' && key !== 'carry' && v !== null && (typeof v !== 'object' || Array.isArray(v))).map(([key, v]) => key + ' ' + (Array.isArray(v) ? '[' + v.map(format).join(', ') + ']' : format(v))) : [];
+    const words = closedShare(at) ? Object.entries(at).filter(([key, v]) => key !== 'light' && key !== 'stream' && v !== null && (typeof v !== 'object' || Array.isArray(v))).map(([key, v]) => key + ' ' + (Array.isArray(v) ? '[' + v.map(format).join(', ') + ']' : format(v))) : [];
     if (words.length) return words.join(', ');
     for (let j = k; j >= 0; j--) { const light = lightOf(j, number); if (light.length) return 'the book ' + format(light.reduce((a, v) => a + v, 0)) + ' at the frame of interval ' + format(INTERVAL(j)); }
     return '';
@@ -1458,12 +1458,12 @@ function drawRecords() {
     for (const line of lines) rows.push(row(line, 'body ' + n));
   }
   for (const line of REGION_CREDITS.slice().sort(byPosition)) rows.push(row(line, line.node_detector));
-  for (const b of SHELLED) {  // a bound body's own light through its light's front: the book's sum over the shell and the carry per frame
-    const sums = Float64Array.from({ length: T + 1 }, (_, k) => { const light = lightOf(k, b.number); return light.length ? light.reduce((a, v) => a + v, 0) : NaN; }), carries = Float64Array.from({ length: T + 1 }, (_, k) => { const c = carryOf(k, b.number); return c === null ? NaN : c; });
+  for (const b of SHELLED) {  // a bound body's own light through its light's front: the book's sum over the shell and the frame run's F per frame
+    const sums = Float64Array.from({ length: T + 1 }, (_, k) => { const light = lightOf(k, b.number); return light.length ? light.reduce((a, v) => a + v, 0) : NaN; }), streams = Float64Array.from({ length: T + 1 }, (_, k) => { const c = streamOf(k, b.number); return c === null ? NaN : c; });
     const closes = Float64Array.from({ length: T + 1 }, (_, k) => { const own = LOOK.frames[k].own_light, row = own && own[String(b.number)]; return row && typeof row.closed_light === 'number' ? row.closed_light : NaN; });
-    if (![...sums, ...carries, ...closes].some(v => !Number.isNaN(v))) continue;
+    if (![...sums, ...streams, ...closes].some(v => !Number.isNaN(v))) continue;
     const g = document.createElement('div'); g.className = 'graph'; box.append(g);
-    graph(g, `body ${b.number} (${esc(b.family)}): its own light through the light's front, the book's sum over the ${format(b.shell.length)} shell Nodes at r = ${format(b.radius)} Links per frame (the frames' own_light, the window's running sum outward positive in G^2, begun again at each close: a gap at the close's frame), the carry below one quantum and the window's total at the last close`, [{ name: "the book's sum over the shell", values: sums, colour: token('--shell'), dashed: false }, { name: 'the carry', values: carries, colour: token('--shell'), dashed: true }, { name: "the window's total at the last close (closed_light)", values: closes, colour: token('--flash'), dashed: true }], 'lattice reading, the books', null, [size('--arrival-width'), 1]);
+    graph(g, `body ${b.number} (${esc(b.family)}): its own light through the light's front, the book's sum over the ${format(b.shell.length)} shell Nodes at r = ${format(b.radius)} Links per frame (the frames' own_light, the window's running sum outward positive in G^2, begun again at each close: a gap at the close's frame), the frame run's F at the last close (the full beat's stream over one period, the row's weight F rho) and the window's total at the last close`, [{ name: "the book's sum over the shell", values: sums, colour: token('--shell'), dashed: false }, { name: "the frame run's F (stream)", values: streams, colour: token('--shell'), dashed: true }, { name: "the window's total at the last close (closed_light)", values: closes, colour: token('--flash'), dashed: true }], 'lattice reading, the books', null, [size('--arrival-width'), 1]);
   }
   const fronts = {};  // the erasure lines per front, its family and its origin (the click's Node), each front one line in the tone of its click
   for (const shells of Object.values(FRONTS_AT)) for (const line of shells) { const key = line.family + '|' + (line.origin || []).join(','); (fronts[key] || (fronts[key] = [])).push(line); }
