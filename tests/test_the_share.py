@@ -121,7 +121,7 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
     for (
         folder,
         name,
-    ) in worlds:  # re-pinned 2026-10-20: universes without a holder, every family with a unit
+    ) in worlds:  # re-pinned 2026-10-20: every family of quanta with a unit (the packet world's universe holds the two holders of the content for light since 2026-10-22, held rows with no unit, read over `order` and not as detectors' records)
         copied = world_beside(tmp_path / name, EVENTS / folder / f"{name}.json", lambda w: None)
         board = Lattice(load_world(copied))
         for _ in range(24):
@@ -130,7 +130,7 @@ def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
                 node_detector.node_detector_nodes(board),
                 np.ones(board.shape, dtype=bool),
             )
-            for index in range(len(board.families)):
+            for index in board.order:  # the families of quanta; a held row has no unit and no count
                 full, frozen = board.share_of(index, 1, everywhere)
                 short, frozen_short = board.share_of(index)
                 assert np.array_equal(full, short) and np.array_equal(frozen, frozen_short), name
