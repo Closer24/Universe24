@@ -14,6 +14,7 @@ from event_universe.records import Record
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
+    from event_universe.loader.keys import Node
     from event_universe.node_detector import NodeBooks
 
 MEASUREMENT, DIAGNOSTIC = (
@@ -289,6 +290,17 @@ def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.
         region = grown
 
 
+def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
+    """The Chebyshev ball of a radius about a Node as a mask of the board, the near zone of a bound body (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22; `loader/instrument.near_zone`): every Node whose distance per axis is at most the radius, the distance the shorter way round on a periodic axis; its front (`front`) is the light's front, the shell's Ports that exist."""
+    grid, found = np.indices(shape), np.ones(shape, dtype=bool)
+    for axis, (extent, at) in enumerate(zip(shape, centre, strict=True)):
+        distance = np.abs(grid[axis] - at)
+        if wrap[axis]:
+            distance = np.minimum(distance, extent - distance)
+        found &= distance <= radius
+    return found
+
+
 def front(
     nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray, declared: np.ndarray
 ) -> list[np.ndarray]:
@@ -331,8 +343,11 @@ def weighted(
     return seen
 
 
-def booked_light(board: Lattice, books: NodeBooks, facing: Sequence[np.ndarray], wrap: Wrap) -> None:
+def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) -> None:
     """A bound body's book of its own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): for each holder of the sign the body's family reads, the holder's light, its record's lines as `Lattice.record` gives them (the sum of its rows), read by `readings.currents_of` at the covector's weights (`covector.weights`, (-3, 1, 1, 1) in thirds under the Lorentz form; the plain time line's current alone where the holder declares none) through the body's front Ports with the holder's Link factors in the unit G^2 (`weighted`, the credit's booking of a drive, inward positive), booked per front Node outward positive into `NodeBooks.light`, the window's sum; nothing for a body whose family reads no holder of the sign."""
+    if books.zone is None:  # no near zone: a body with no transition into its part, or no bound body
+        return
+    facing = front(books.zone, wrap, books.zone, own)  # the light's front, the shell's Ports that exist
     for read in board.families[books.index].reads:
         holder = board.families[read.family]
         if not holder.wronskian:
@@ -341,10 +356,10 @@ def booked_light(board: Lattice, books: NodeBooks, facing: Sequence[np.ndarray],
         lines = board.record(read.family)
         current = readings.currents_of(holder.pair[0], lines, wrap, covector.weights(holder), None)
         if not books.light:
-            books.light = [0] * len(books.nodes)
+            books.light = [0] * len(books.shell)  # per shell Node, the light's front (2026-10-22)
         for through in weighted(facing, [(current, factors, None)]):
             at = np.asarray(through, dtype=object)
-            for k, node_at in enumerate(books.nodes):
+            for k, node_at in enumerate(books.shell):
                 books.light[k] -= int(
                     at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))]
                 )

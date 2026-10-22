@@ -25,6 +25,7 @@ from event_universe.node_detector import (
     face_ports,
     hole_node,
     own_clock,
+    picked,
     piece_momentum,
     share_weights,
 )
@@ -275,19 +276,19 @@ def own_light_row(books: NodeBooks) -> Transition | None:
 
 def own_light_weights(books: NodeBooks, unit: int) -> tuple[int, list[int]]:
     """A bound body's own-light row at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; the reader's one-act audit of the same day, (a)): the window's booked outflow, the light book's sum floored at 0 with the body's carry, capped at the unit, against nothing at the unit less it, in W_rec G^2 of the transition, so that the floor is the act's certain draw (one quantum at most per close) and the remainder the act's own draw by the body's read of the board; the total returned for the carry (`own_light`). No division: the cap and the floor at 0 alone."""
-    total = max(sum(books.light), 0) + books.carry
-    given = min(max(total, 0), unit)
+    given = min(max(total := max(sum(books.light), 0) + books.carry, 0), unit)
     return total, [given, unit - given]
 
 
 def own_light(
     board: Lattice, books: NodeBooks, transition: Transition, total: int, unit: int, emitted: bool
 ) -> list[Item]:
-    """The own-light row's list where its alternative is drawn (`emission` with no rate; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the exchange over the body's region, the part the body stands in to the transition's lower part, and light's record up by one whole quantum at the front Node drawn by the outflow per Node (`drawn_weights` on the light book, `drawn_node`), laid by the count at the massless pair; the carry kept in the body's book as a region's remainders are (`NodeBooks.carry`, a carried remainder and no act): the excess total - unit where the quantum goes (below 0 where it is drawn ahead of the unit, owed), the whole total where nothing goes."""
+    """The own-light row's list where its alternative is drawn (`emission` with no rate; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the exchange over the body's region, the part the body stands in to the transition's lower part (the write's region the body's whole support), and light's record up by one whole quantum at the shell Node drawn by the outflow per shell Node (`drawn_weights` on the light book, the near zone's edge the light's front, the reader's ruling of 2026-10-22), laid by the count at the massless pair; the carry kept in the body's book as a region's remainders are (`NodeBooks.carry`, a carried remainder and no act): the excess total - unit where the quantum goes (below 0 where it is drawn ahead of the unit, owed), the whole total where nothing goes."""
     books.carry = total - unit if emitted else total
     if not emitted:
         return []
-    at = drawn_node(board, books, drawn_weights(board, books.light))
+    weights = drawn_weights(board, books.light)  # the outflow per shell Node, the light's front
+    at = books.shell[picked(board, books, weights if sum(weights) > 0 else [1] * len(books.shell))]
     den = board.families[transition.drive].pair[1]
     light = Item(transition.drive, None, None, 1, (at,), (den, den))
     return [*exchange(board, books, books.part, transition.leaves), light]
@@ -325,15 +326,15 @@ def emission(
     ):  # (5): a bound body with no rate, its own light's row in the same act (the one-act audit, (a))
         assert transition is not None  # the transition into the part the body stands in
         light = board.families[transition.drive]
-        unit = born_unit(count_wall(light, board.world.quantum_action), transition.resonance)
-        unit = unit * board.unit * board.unit  # W_rec G^2 of the transition
+        unit = (
+            born_unit(count_wall(light, board.world.quantum_action), transition.resonance)
+            * board.unit**2
+        )
         total, weights = own_light_weights(books, unit)
         row = partial(own_light, board, books, transition, total, unit)
         line = Line((transition.leaves, books.part), (None, transition.drive))
-        return [
-            Alternative(weights[0], partial(row, True), line, books),
-            Alternative(weights[1], partial(row, False)),
-        ]
+        yes = Alternative(weights[0], partial(row, True), line, books)
+        return [yes, Alternative(weights[1], partial(row, False))]
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     clock, directions = own_clock(board, books), rate.directions or (None,)
     wall = count_wall(board.families[rate.light], board.world.quantum_action) * board.unit * board.unit

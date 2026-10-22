@@ -6,6 +6,7 @@ import itertools
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
+from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import connected
 from event_universe.loader.keys import Node, integer, keyed, node_of
@@ -104,7 +105,47 @@ def instrument_body(
         line["weight"] = holder.weight
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
     declaration = packet_form(declaration, label, families, tuple(region), shape, action)
-    return replace(row, detector=declaration, region=tuple(region), shares=tuple(shares))
+    standing = next((p for p, c in enumerate(declaration.counts) if c), 0)
+    into = [t for t in declaration.transitions if t.enters == standing]
+    radius, shell, missing = (
+        near_zone(into[0].resonance, row.nodes[0], shape, periodic) if into else (0, (), 0)
+    )
+    return replace(
+        row,
+        detector=declaration,
+        region=tuple(region),
+        shares=tuple(shares),
+        shell=shell,
+        radius=radius,
+        missing=missing,
+    )
+
+
+def near_zone(
+    resonance: tuple[int, int], centre: Node, shape: Node, periodic: tuple[bool, bool, bool]
+) -> tuple[int, tuple[Node, ...], int]:
+    """The light's front of a bound body, the near zone's edge (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22): a Chebyshev shell about the body's declared Node at the radius r = 1 / k Links, k from the resonance pair [num, den] by the massless holder's own dispersion, den cos k = 3 num - 2 den exactly, den sin k by the one search (`rule3.largest_below` on den^2 - den^2 cos^2 k), the radius den div (den sin k) + 1 by the division act (4 on [5889, 6000], 3 on [5879, 6000]; 1 where no wave travels at the resonance, cos k at or beyond 1), no declared radius; the shell's Nodes on the board at that distance (the shorter way round on a periodic axis) and the count of its outward Ports that leave the board, named and not refused (a body nearer a face than the radius)."""
+    num, den = resonance
+    cosine = 3 * num - 2 * den  # den cos k, the massless line cos k = 3 cos Omega - 2
+    sine = (
+        largest_below(den * den - cosine * cosine) if -den < cosine < den else 0
+    )  # den sin k, the search
+    radius = int(division_forward(den, sine, 0)[0]) + 1 if sine > 0 else 1
+    shell: list[Node] = []
+    missing = 0
+    for x, y, z in itertools.product(*(range(n) for n in shape)):
+        at: Node = (x, y, z)
+        distances = [
+            min(abs(a - c), n - abs(a - c)) if wraps else abs(a - c)
+            for a, c, n, wraps in zip(at, centre, shape, periodic, strict=True)
+        ]
+        if max(distances) != radius:
+            continue
+        shell.append(at)
+        for a, c, n, wraps, d in zip(at, centre, shape, periodic, distances, strict=True):
+            if d == radius and not wraps:
+                missing += not (0 <= a + (1 if a > c else -1) < n)  # the outward Port off the board
+    return radius, tuple(shell), missing
 
 
 def laid_parts(row: BodyRow | PacketRow, family: FamilyRule) -> list[int]:

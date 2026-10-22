@@ -74,12 +74,11 @@ class BodyRow:
     second_before: Levels
     weights: tuple[int, ...] = ()
     detector: NodeDetectorDeclaration | None = None
-    region: tuple[
-        Node, ...
-    ] = ()  # a bound body's standing region, declared an instrument body (loader/instrument.py)
-    shares: tuple[
-        int, ...
-    ] = ()  # the standing region's lay weights, the record's share at each of its Nodes
+    region: tuple[Node, ...] = ()  # a bound body's standing region (loader/instrument.py)
+    shares: tuple[int, ...] = ()  # the standing region's lay weights, the record's share per Node
+    shell: tuple[Node, ...] = ()  # a bound body's light front, the near zone's shell
+    radius: int = 0  # the shell's radius in Links, r = 1 / k from the resonance
+    missing: int = 0  # the shell's Ports that leave the board, named and not refused
 
 
 @dataclass(frozen=True)

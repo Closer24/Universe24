@@ -81,6 +81,13 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     assert laid[2].now.any() and laid[3].now.any()  # the upper part the standing lay's
     (books,) = board.credit.bodies
     assert books.bound and books.nodes == row.region and books.weights == row.shares
+    assert (
+        (row.radius, len(row.shell), row.missing) == (3, 25, 25)
+    )  # the light's front: the shell at r = 1 / k, 6000 div 2899 + 1, about [3, 2, 2] leaves the 5-cube on every side but x = 0, its 25 Ports off the board (2026-10-22)
+    box = load_shipped(FOLDER / "box_c15.json").bodies[1]
+    assert (
+        (box.radius, len(box.shell), box.missing) == (4, 386, 0)
+    )  # the box's shell at 4 Links about [8, 7, 7], 6000 div 1971 + 1, 9^3 - 7^3 Nodes, every Port on the board
     assert (books.part, books.counts, books.labels) == (1, [0, 1], [0, WALL])
     assert board.credit.counts[electron] == 1 and board.credit.counts[photon] == 0
     region = board.mask(row.region)
@@ -101,8 +108,8 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     )
     assert (books.part, books.counts, books.labels) == (0, [1, 0], [WALL, 0])
     assert (
-        (sum(books.light), books.outflow) == (-14506423296000, 0)
-    )  # the body's own light book over [1, 8]: the holder's light through the two-lobe front inward on balance, -0.307 of W_c sin Omega G^2 (47,293,429,423,872 at [5751, 6000]), so the whether of (5) would credit nothing; the instrument's rate draws here
+        (sum(books.light), books.outflow) == (0, 0)
+    )  # the giver's light front has no Port on its 5-cube (the shell at 3 leaves the board), the book 0 (2026-10-22; -14506423296000 through the support's front, the first front of the same day)
     assert board.credit.counts[photon] == 1 and board.credit.counts[electron] == 1
     (source,) = board.credit.sources
     assert (source.family, source.span, source.emitter, source.begun) == (photon, LIFETIME, 1, FIRST)

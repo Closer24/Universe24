@@ -270,6 +270,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the half width, an index
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
+    (
+        "loader/instrument.py",
+        "near_zone",
+        "division_forward",
+    ): "D",  # den div den sin k, the shell's radius
+    ("loader/instrument.py", "near_zone", "largest_below"): "S",  # den sin k by the search, the radius
     ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
