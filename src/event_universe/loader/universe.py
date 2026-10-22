@@ -15,7 +15,7 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
-    ("sources", "level_weight", "write_weight", "rest", "act", "form"),
+    ("sources", "level_weight", "write_weight", "rest", "act", "form", "booking"),
     ("sources", "level_weight", "write_weight", "act"),
 )
 POSITIVE, LORENTZ = (
@@ -168,8 +168,30 @@ def form_of(row: dict[str, Any], label: str, rotation: bool, flux: bool, massles
     return True
 
 
+BOOKINGS = (
+    "count",
+    "form",
+)  # a held row's booking of its count sources: the law's two proper-interval powers, or one, the form's own clock
+
+
+def booking_of(row: dict[str, Any], label: str, wronskian: bool) -> bool:
+    """The held row's optional key `booking`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22, the eras hand's derivation and the kinematics hand's measurement read cold by the reader): `count`, the law as written, a count source's form booked per proper volume and per proper interval twice, N^2 / h^3, "twice for a second-order line"; or `form`, the form D = A^2 sin^2 omega' carrying one N of its own as the Wronskian W = A^2 sin omega' does (A^2 sin omega' the adiabatic invariant of Rule3's area-preserving step, sin omega' = N sin omega_proper to first order in the gap), so that the count's write is booked once, N / h^3 = p_x p_y p_z / (p_0^2 Gamma), one rule for both sources, under which a massive record at a small gap dims as e^(-5 U) and the massless pair as e^(-6 U) in the board's interval, nature's dust and radiation; the one change is the power on the count source's factor, 2 to 1, chosen by `FamilyRule.power` and read by the write (records.write_sources), the start's rest (features/start) and the width's gate (loader/rooms.py), the inverse recomputing the same factor; refused by name on the holder of the sign, whose Wronskian carries its one power already, and at any other word; False where absent (the law's booking)."""
+    if "held" not in row or "booking" not in row["held"]:
+        return False
+    booking = row["held"]["booking"]
+    if booking not in BOOKINGS:
+        raise ValueError(f"{label}.held.booking is one of {list(BOOKINGS)}, got {booking!r}")
+    if booking == BOOKINGS[1] and wronskian:
+        raise ValueError(
+            f"{label}.held.booking {booking!r}: the holder of the sign books its Wronskian with one "
+            "proper-interval power already; the form's own clock is a count source's booking (ALGEBRA.md, "
+            "The form's own clock)"
+        )
+    return bool(booking == BOOKINGS[1])
+
+
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta; a real-line family optionally the senses of its plane records out, the key `senses`, the one residual declaration of The conversion, `conversion.declared`, 2026-10-21) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
+    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta; a real-line family optionally the senses of its plane records out, the key `senses`, the one residual declaration of The conversion, `conversion.declared`, 2026-10-21) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`; the booking of its count sources `booking`, `booking_of`, the form's own clock under `form`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -227,6 +249,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         )  # the row carries the shear lines
         exchange = exchange_of(row, label, parts)  # the record's sign under exchange, 0 undeclared
         lorentz = form_of(row, label, rotation, flux, num == den)  # the Lorentz form, False undeclared
+        form_clock = booking_of(row, label, wronskian)  # the form's own clock, False undeclared
         rows.append(
             Row(
                 name,
@@ -245,6 +268,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 exchange,
                 off_diagonal,
                 lorentz,
+                form_clock=form_clock,
             )
         )
     families = derived.family_rules(rows)

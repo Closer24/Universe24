@@ -279,10 +279,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
     ),
     "tests/test_the_uniform_mode.py::test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it": (
-        40,
+        50,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
         "unobservable` and the law's `uniform: carried` kept beside it, every refusal by name (the value, the sunk "
-        "face, the two keys together, the kick on the holder of the content), the torus loading under either key",
+        "face, the two keys together, the kick on the holder of the content, the held row's keys at a wrong word), "
+        "the torus loading under either key",
+    ),
+    "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
+        36,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T6): the form's own clock as one "
+        "power of the write, the numerator bit for bit at the Wronskian's power on a count, the dimming exponent "
+        "within 0.3 of 4.8 under the key and of 5.8 without it",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

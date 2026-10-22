@@ -38,6 +38,7 @@ class Row:
     exchange: int = 0  # the record's sign under the exchange of two of its parts, the files' key `exchange` on a family of several parts (antisymmetric -1, symmetric 1, 0 where none is declared): the family's declaration, read by the first side's coefficients (`meeting_back.coefficients_of`, `credit.terms_of`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19)
     off_diagonal: bool = False  # a holder of the content sourced by the shear too, the files' word `shear` beside `tensions`: three off-diagonal lines xy, yz, zx after its other axis lines, each the product of the Node's own two axis differences of its sources' records, D_a D_b over the doubled wall 2 E_s W_c, stepped by Rule3 as the tension lines are and read by no record (the held rows' own wave sector; ALGEBRA.md, The lattice's frame is read by gravity alone, and its carrier is a pair of Links: the three space pairs, 2026-10-20)
     lorentz: bool = False  # the files' key `form` of a held row under the rotation, `lorentz`: its time line and its three odd lines booked as one covector with the Lorentz form (covector.py; ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21), the odd line of the axis a the Node's +a Link's own, sourced by the Link's own flux of the record's step over the wall 2 den_s G^2 E_s T and read by that Link alone with the hop's sign (`link_read`, (-2, 0)), the time line's entry negative in every reading of the holder's record; False where the key is absent or `positive`, the rows as the engine books them without the key
+    form_clock: bool = False  # the held row's key `booking: form`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22): the count's form of every record sourcing the row booked with one proper-interval power, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), as the Wronskian is (`FamilyRule.power`); False where the key is absent or `count`, the law as written, two powers
 
 
 @dataclass(frozen=True)
@@ -98,8 +99,12 @@ class FamilyRule(Row):
 
     @property
     def power(self) -> int:
-        """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
-        return WRONSKIAN_POWER if self.wronskian else COUNT_POWER
+        """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), and on a count's form under the row's key `booking: form`, the form carrying one N of its own as the Wronskian does (The form's own clock, a hypothesis under its own name, 2026-10-22; `form_clock`) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
+        return WRONSKIAN_POWER if self.wronskian or self.form_clock else COUNT_POWER
+
+    def exponent(self, power: int | None = None) -> int:
+        """The pair's dimming exponent in the board's interval under a held row's booking power, its own where none is given (ALGEBRA.md, The band at a pace; The write per proper volume and per proper interval; The mean's velocity is the content's, 2026-10-22): a count's write dims as N^(2 + power) / h^3 times the form's own sine, whose limit at a small gap is one N for a pair with a gap at rest and two for the massless pair, so the integer is 3 + power + 1 for a pair with a gap and 3 + power + 2 for the massless pair, 5 and 6 under the form's own clock (`booking: form`, the power 1) and 6 and 7 under the law's booking (the power 2), the pairs' integers the hill's weight reads (`exponent_of`; paces.motion_weight, records.write_sources)."""
+        return exponent_of(self.pair[0] == self.pair[1], self.power if power is None else power)
 
     @property
     def axes(self) -> bool:
@@ -120,6 +125,11 @@ class FamilyRule(Row):
     def link_read(self) -> tuple[int, int]:
         """How a Link reads an odd line of this holder, two declared integers the Port consumes blindly (`plane.link_levels`): the weight of the Node owning the +a Link and the weight of its far end; (-1, -1) the two ends' sum with the sign opposite to the time line's (since 2026-10-21, the law's row (b2) read on the engine: the Link's hop carries the odd line as Peierls' p - q A under the hop's convention omega(k + theta), beside the time line's + q phi on the step, so that the strength the record is turned by is -d_a L_0 - d_t L_a, Maxwell's induction with its sign, and a co-moving reader of the source's family reads gamma_s (1 - beta_s^2) = 1 / gamma_s, 0.987, 0.958 and 0.919 at beta_s = 0.150, 0.286 and 0.395 against the law's 0.989, 0.958 and 0.919 (ALGEBRA.md, The sign holder rotates the two-part record; The rows against nature (b2)); (-2, 0) under the Lorentz form, where the odd line is the +a Link's own level, sourced by the Link's own flux, and the Link reads minus twice it from its owner alone, the same magnitude for a smooth line as the two ends' sum, the Link's own line where it varies (covector.py). History: (1, 1), the two ends' sum with the time line's own sign, the shipped read until 2026-10-21 (gravity's dragging sign, +theta along the current, The clock family on the Ports), under which the same co-moving reader read gamma_s (1 + beta_s^2), 1.031, 1.130 and 1.254 at the three beta_s, since the odd line is sourced at + v / c_s^2 of the time line (The odd line's source is the sign's own current)."""
         return (-2, 0) if self.lorentz else (-1, -1)
+
+
+def exponent_of(massless: bool, power: int) -> int:
+    """A pair's dimming exponent in the board's interval at a booking's proper-interval power (`FamilyRule.exponent`): 3 for the proper volume's three rulers, the booking's power on the clock, and the form's own sine's limit at a small gap, one for a pair with a gap at rest and two for the massless pair (ALGEBRA.md, The band at a pace)."""
+    return 3 + power + (2 if massless else 1)
 
 
 def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
