@@ -112,6 +112,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
+    # frame_run.py
+    (
+        "frame_run.py",
+        "hazard",
+        "division_forward",
+    ): "D",  # F times rho's numerator over its denominator, once
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F

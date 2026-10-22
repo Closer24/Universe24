@@ -91,8 +91,8 @@ class NodeBooks:
     outflows: list[int] = field(default_factory=list)  # the where's book since the last click
     closed_light: int = 0  # the last close's window total of the own light, G^2 (the observers')
     closed_share: tuple[int, int] = (0, 0)  # the last close's draw: the row's weight and the unit
-    beat: FrameRun | None = None  # the frame's run at the first close: F per shell Node, the densities
-    carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
+    frame_stream: FrameRun | None = None  # the frame's run at the first close: F per Node, densities
+    closed_stream: tuple[int, int, int] = (0, 0, 0)  # the last close's F in G^2 and rho's quotient
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:

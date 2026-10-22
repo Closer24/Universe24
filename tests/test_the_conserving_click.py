@@ -2,9 +2,11 @@
 
 import json
 import math
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from event_universe import act, frame_run, lists, meeting, records, reports, world_files
 from event_universe.core.paces import sine_den
@@ -420,7 +422,7 @@ def test_the_frame_run_copies_the_bodys_well_with_the_two_levels_at_one_quantum_
     assert (row.radius, len(row.shell), row.missing, len(row.region)) == (3, 218, 0, 811)
     assert transition.resonance == (5874, 6000) and row.detector.draw.window == 31
     assert row.detector.names == ("level [4707, 6000] x1", "level [3854, 6000] x1")
-    copy = frame_run.copy_world(world, 1, 1)
+    copy = frame_run.copy_world(world, 1)
     assert (copy.packets, copy.node_detectors, copy.draw) == ((), (), None) and copy.bodies[
         0
     ] == world.bodies[0]
@@ -443,9 +445,58 @@ def test_the_frame_run_copies_the_bodys_well_with_the_two_levels_at_one_quantum_
     )
     giver = Lattice(load_shipped(FOLDER / "giver_c5.json"), None)
     (books,) = giver.credit.bodies
-    assert books.beat is None and reports.own_light_row(books) is None  # the file's rate: no row, no run
+    assert books.frame_stream is None and reports.own_light_row(books) is None  # the file's rate: no row
     assert (
         len(books.shell) == 25
         and {at[0] for at in books.shell} == {0}
         and giver.world.bodies[1].missing == 25
     )
+
+
+RHO = {
+    PURE: 0.9999998,
+    BEAT: 0.5012336,
+    MIXED: 0.9001969,
+}  # read at the lay, 2026-10-22, to seven digits
+AT_A_MILLION = {PURE: 999999, BEAT: 501233, MIXED: 900196}  # the hazard at a stand-in F of 10^6 G^2
+SMALL_F = (
+    -3764112384000
+)  # the small board's F in G^2, the copy's run on the 11 x 9 x 9 well (the README)
+
+
+def test_the_hazard_is_f_times_the_upper_levels_share_floored_at_the_cavitys_zero():
+    """The own-light row's weight (ALGEBRA.md, The click writes on the lattice (5), CHANGED 2026-10-22, the reader's ruling with his correction of 04:05 and his words of 05:41 and 06:20; `frame_run.upper_share`, `frame_run.hazard`, `lists.own_light_weights`): the upper level's share rho read at the lay from the record's charge density against the two typed densities (the normal equations, the determinant cancelled; the two levels' beat odd about the symmetric well) on the three lays of the one well, the pure level 0.9999998, the equal superposition 0.5012336 and the shares (0.1, 0.9) 0.9001969 (the blind's 1 within 10^-3 and 1 / 2 and 0.9 within 10^-2; the excess the lay's rounding on the integer profiles); the weight F times rho by the one division act, 999999, 501233 and 900196 at a stand-in F of 10^6; the small board's measured F below 0 floored to 0 on all three, the cavity's own word (the walls one and two Links beyond the shell return the wave within the period: the pure level does not decay there); the share capped at the denominator and floored at 0, and 0 where no share stands. A construction's pin, nothing of the number: the free board's F is the README's measurement."""
+    for name, expected in RHO.items():
+        board = Lattice(load_shipped(FOLDER / name), None)
+        (books,) = board.credit.bodies
+        (transition,) = books.declared.transitions
+        row = board.world.bodies[books.number]
+        books.frame_stream = frame_run.FrameRun(
+            (), frame_run.densities(board.world.shape, board.kind, row)
+        )
+        numerator, denominator = frame_run.upper_share(board, books, transition)
+        assert round(numerator / denominator, 7) == expected and 0 < numerator <= denominator
+        assert frame_run.hazard(frame_run.FrameRun((SMALL_F,), ()), numerator, denominator) == 0
+        assert (
+            frame_run.hazard(frame_run.FrameRun((1000000,), ()), numerator, denominator)
+            == AT_A_MILLION[name]
+        )
+    stream = frame_run.FrameRun((10, 30), ())
+    assert (
+        frame_run.hazard(stream, 3, 2),
+        frame_run.hazard(stream, -1, 2),
+        frame_run.hazard(stream, 1, 0),
+    ) == (40, 0, 0)
+    assert frame_run.hazard(frame_run.FrameRun((10, -30), ()), 1, 1) == 0
+
+
+def test_a_bound_body_whose_own_light_row_falls_due_with_no_profiles_is_refused_by_name():
+    """The refusal at the first close (ENGINE.md, the mode row; `frame_run.measured`): a bound body whose own-light row falls due with no `profiles` under its `instrument` has no A to be weighed by, and the frame's run refuses by name, naming the body, the interval and the tool that types the two levels; the giver's declaration with its profiles stripped in memory, its run never reaching the row (its rate declared), the refusal read on the function itself."""
+    world = load_shipped(FOLDER / "giver_c5.json")
+    stripped = replace(world, bodies=(world.bodies[0], replace(world.bodies[1], profiles=())))
+    board = Lattice(stripped, None)
+    (books,) = board.credit.bodies
+    with pytest.raises(
+        RuntimeError, match="falls due at the interval 0 with no `profiles` under its `instrument`"
+    ):
+        frame_run.measured(board, books)
