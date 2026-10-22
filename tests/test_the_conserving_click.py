@@ -500,3 +500,19 @@ def test_a_bound_body_whose_own_light_row_falls_due_with_no_profiles_is_refused_
         RuntimeError, match="falls due at the interval 0 with no `profiles` under its `instrument`"
     ):
         frame_run.measured(board, books)
+
+
+def test_a_pure_level_declared_with_no_profiles_is_refused_by_name_at_load(tmp_path, monkeypatch):
+    """The loader's refusal (ENGINE.md, the mode row; `loader/instrument.instrument_body`; the reader's read of 2026-10-22, 09:04): a bound body whose count stands in a part a transition enters, with no rate out of that part, has its own-light row falling due at its window's close, so a declaration with no `profiles` is refused by name at load and not first at that close; the pure level's world with the key deleted from its mode file, the digest standing."""
+    for name in ("pure_c11.json", "pure_c11.mode.json", "universe_conserve.json"):
+        (tmp_path / name).write_text((FOLDER / name).read_text(encoding="utf-8"), encoding="utf-8")
+    path = tmp_path / "pure_c11.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+    document["universe"] = "universe_conserve.json"
+    path.write_text(json.dumps(document), encoding="utf-8")
+    mode = json.loads((tmp_path / "pure_c11.mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = world_files.input_digest(document)
+    del mode["bodies"][1]["instrument"]["profiles"]
+    (tmp_path / "pure_c11.mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    refused("falls due at its window's close, and it declares no `profiles`", load_world, path)

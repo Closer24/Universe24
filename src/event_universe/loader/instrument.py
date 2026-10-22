@@ -169,6 +169,19 @@ def instrument_body(
     profiles = profiles_of(
         instrument, label, families[row.family], declaration, row.nodes, shape, bound, beyond
     )
+    part = next((p for p, c in enumerate(declaration.counts) if c), None)  # the declared count's part
+    due = part is not None and any(t.enters == part for t in declaration.transitions)
+    if (
+        part is not None
+        and due
+        and not profiles
+        and not any(r.leaves == part for r in declaration.rates)
+    ):
+        raise ValueError(
+            f"{label}: the body stands in the part {declaration.names[part]!r} with a transition into it and no "
+            "rate out of it, so its own-light row falls due at its window's close, and it declares no `profiles`: "
+            "the two levels the frame tool types are the A the row is weighed by (run tools/frame_of.py on the world)"
+        )
     front = declaration.transitions[:1]  # the light's front of the body's transition, whichever part
     radius, shell, missing = (
         near_zone(front[0].resonance, row.nodes[0], shape, periodic) if front else (0, (), 0)
