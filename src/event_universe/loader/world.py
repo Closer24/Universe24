@@ -192,7 +192,7 @@ def bodies_of(
                 )
             count = reader_count(body, label, families, family)
             parts = node_detector_of(body, label, families, family, quanta, count)
-            parts = packet_form(parts, label, families, tuple(nodes), shape, action)
+            parts = packet_form(parts, label, families, tuple(nodes), shape, periodic, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed, kind = laid.index(entry), families[family]

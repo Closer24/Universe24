@@ -165,7 +165,7 @@ def instrument_body(
             )
         line["weight"] = holder.weight
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
-    declaration = packet_form(declaration, label, families, tuple(region), shape, action)
+    declaration = packet_form(declaration, label, families, tuple(region), shape, periodic, action)
     profiles = profiles_of(
         instrument, label, families[row.family], declaration, row.nodes, shape, bound, beyond
     )

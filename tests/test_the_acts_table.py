@@ -112,6 +112,18 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
+    # guide.py, the guide clause of the emission
+    (
+        "guide.py",
+        "sine_of",
+        "largest_below",
+    ): "S",  # the sine by the search on den squared less cos squared
+    ("guide.py", "travelling", "division_forward"): "D",  # den cos k of the guide's wave, once
+    (
+        "guide.py",
+        "guide_total",
+        "division_forward",
+    ): "D",  # the total over the travelling share, one division
     # frame_run.py
     (
         "frame_run.py",

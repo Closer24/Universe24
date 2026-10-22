@@ -84,6 +84,7 @@ def test_the_engines_module_count_is_the_trees():
         "twenty-six": 26,
         "twenty-seven": 27,
         "twenty-eight": 28,
+        "twenty-nine": 29,
     }
     text = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8")
     stated = re.search(r"The engine is ([a-z-]+) modules", text)
