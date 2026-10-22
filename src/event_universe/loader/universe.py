@@ -15,19 +15,40 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
-    (
-        "sources",
-        "level_weight",
-        "write_weight",
-        "rest",
-        "act",
-        "form",
-        "booking",
-        "factor",
-        "pressure",
-    ),
-    ("sources", "level_weight", "write_weight", "act"),
+    ("sources", "level_weight", "write_weight", "rest"),
+    ("sources", "level_weight", "write_weight"),
 )
+ONE_NODE_HELD = {
+    "act": "the holder of the sign acts by the rotation of the two-part record and every holder of the content "
+    "by the plain read into its readers' paces",
+    "form": "every held row is booked with the positive form, each line its own real line",
+    "booking": "every count source is booked once, the form's own clock",
+    "factor": "every write's factor is carried inside the one division at the wall fixed per Node",
+    "pressure": "the stress's trace enters the time line and the tension lines take the traceless parts, in the "
+    "write and in the step",
+}  # the switches of a held row fixed to one value for every world (the law of one Node, 2026-10-22)
+
+
+def one_node_held(held: object, label: str) -> None:
+    """The law of one Node (the owner's word of 2026-10-22: in nature there is one Node, whose acts are the same in every world, and no key switches what a Node does from world to world): a held row that names one of the former switches `act`, `form`, `booking`, `factor` or `pressure`, or the word `shear` among its sources, is refused by name with the one value the engine holds for every world; the universe file declares the row's content alone, its sources, its level weight, its write weight and its rest."""
+    if not isinstance(held, dict):
+        return
+    for key, value in ONE_NODE_HELD.items():
+        if key in held:
+            raise ValueError(
+                f"{label}.{key} is declared ({held[key]!r}): under the law of one Node no key switches what a "
+                f"Node does, and {value} in every world (ALGEBRA.md, The hypotheses under their own names; the "
+                "owner's word of 2026-10-22); drop the key"
+            )
+    sources = held.get("sources")
+    if isinstance(sources, list) and OFF_DIAGONAL in sources:
+        raise ValueError(
+            f"{label}.sources {sources!r} names the shear: under the law of one Node a holder of the content "
+            "carries its time line and its tension lines and no off-diagonal line in every world (the law as "
+            "written; the shear a hypothesis under its own name against a decision, ALGEBRA.md); drop the word"
+        )
+
+
 POSITIVE, LORENTZ = (
     "positive",
     "lorentz",
@@ -45,9 +66,7 @@ SOURCES = (
     (FORM, TENSIONS),
     (WRONSKIAN,),
     (FORM, TENSIONS, FLUX),
-    (FORM, TENSIONS, OFF_DIAGONAL),
-    (FORM, TENSIONS, FLUX, OFF_DIAGONAL),
-)  # the lists a held row may declare, in this order
+)  # the lists a held row may declare, in this order (the shear's two lists refused by name, one_node_held)
 PACE, ROTATION = (
     "pace",
     "rotation",
@@ -81,28 +100,14 @@ def shape_of(row: dict[str, Any], label: str) -> tuple[int, int, bool, bool, boo
             raise ValueError(
                 f"{label} is a held row and declares no dimension: its shape is its sources' count"
             )
+        one_node_held(row["held"], f"{label}.held")  # the former switches refused by name
         held = keyed(row["held"], f"{label}.held", HELD_KEYS, HELD_REQUIRED)
-        sources, act = held["sources"], held["act"]  # required: the file states the row's act
-        if isinstance(sources, list) and OFF_DIAGONAL in sources and TENSIONS not in sources:
-            raise ValueError(
-                f"{label}.held.sources {sources!r} declares the shear without the tensions: the three "
-                "off-diagonal parts xy, yz, zx stand beside the three diagonal parts xx, yy, zz of one stress, "
-                "sourced by the same records' axis differences at the same wall, and a row without the "
-                "tensions (a holder sourced by the form alone, or the holder of the sign) carries no shear"
-            )
+        sources = held["sources"]
         if not isinstance(sources, list) or tuple(sources) not in SOURCES:
             raise ValueError(
                 f"{label}.held.sources is one of {[list(s) for s in SOURCES]}, got {sources!r}"
             )
-        if act not in ACTS:
-            raise ValueError(f"{label}.held.act is one of {list(ACTS)}, got {act!r}")
-        rotation = act == ROTATION
-        if rotation and WRONSKIAN not in sources:
-            raise ValueError(
-                f"{label}.held.act {act!r}: a holder of the content, sourced by the form, acts on its readers' "
-                "paces; the rotation of the two-part record is the act of the holder of the sign, sourced by "
-                "the Wronskian (ALGEBRA.md #the-hypotheses-under-their-own-names)"
-            )
+        rotation = WRONSKIAN in sources  # the one Node: the holder of the sign acts by the rotation
         odd = 3 * (FLUX in sources)  # the three odd lines of the count's flux after the tensions
         off = 3 * (OFF_DIAGONAL in sources)  # the three shear lines xy, yz, zx, the last of the row
         return (
@@ -152,10 +157,10 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 
 def form_of(row: dict[str, Any], label: str, rotation: bool, flux: bool, massless: bool) -> bool:
-    """A held row's form, the optional key `form` of its `held` key (ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21; covector.py): `positive`, each line its own real line with a positive form, the rows as the engine books them where the key is absent, or `lorentz`, the time line with its three odd lines booked as one covector with the Lorentz form, its odd lines sourced by the Link's own flux at light's pairing and the time line's entry negative in every reading of the record; declared on the holder of the sign under the rotation, massless, and refused by name on a row without odd lines, on a holder with a gap (one massless line propagates the lattice Lorenz constraint, 3 (L_0(t) - L_0(t - 1)) + SUM_a (L_a(i) - L_a(i - a)) = 0, and a gapped line does not) and on the content's holder carrying the flux's odd lines, whose covector form is stated and not built; any other word refused by name."""
+    """Under the law of one Node every held row is booked with the positive form (the law as written), the key `form` refused by name by `one_node_held` before this function; kept as the one place the form is named. The old reading, kept by name: a held row's form, the optional key `form` of its `held` key (ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21; covector.py): `positive`, each line its own real line with a positive form, the rows as the engine books them where the key is absent, or `lorentz`, the time line with its three odd lines booked as one covector with the Lorentz form, its odd lines sourced by the Link's own flux at light's pairing and the time line's entry negative in every reading of the record; declared on the holder of the sign under the rotation, massless, and refused by name on a row without odd lines, on a holder with a gap (one massless line propagates the lattice Lorenz constraint, 3 (L_0(t) - L_0(t - 1)) + SUM_a (L_a(i) - L_a(i - a)) = 0, and a gapped line does not) and on the content's holder carrying the flux's odd lines, whose covector form is stated and not built; any other word refused by name."""
     if "held" not in row or "form" not in row["held"]:
         return False
-    form = row["held"]["form"]
+    form = row["held"]["form"]  # unreachable through the loader (one_node_held); the old gate kept
     if form not in FORMS:
         raise ValueError(f"{label}.held.form is one of {list(FORMS)}, got {form!r}")
     if form == POSITIVE:
@@ -297,11 +302,11 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         )  # the row carries the shear lines
         exchange = exchange_of(row, label, parts)  # the record's sign under exchange, 0 undeclared
         lorentz = form_of(row, label, rotation, flux, num == den)  # the Lorentz form, False undeclared
-        form_clock = booking_of(row, label, wronskian)  # the form's own clock, False undeclared
-        factor_carried = factor_of(row, label)  # the factor inside the one division, False undeclared
-        pressure_trace = pressure_of(
-            row, label, wronskian
-        )  # the stress's trace the time line's, False undeclared
+        # the one Node (2026-10-22): the form's own clock on every count source, the carried factor on
+        # every held row, the stress's trace on every holder of the content; no key of the file
+        form_clock = not wronskian
+        factor_carried = True
+        pressure_trace = not wronskian
         rows.append(
             Row(
                 name,

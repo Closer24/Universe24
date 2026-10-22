@@ -178,13 +178,13 @@ def transitions_of(
         weight, den = weight_of(row["weight"], f"{label}[{index}].weight")
         resonance = pair_of(row["resonance"], f"{label}[{index}].resonance")
         dipole, scale = (None, 1)
-        if "dipole" in row:  # the body coupling by its dipole: a one-Node body's declaration
-            if nodes != 1:
-                raise ValueError(
-                    f"{label}[{index}].dipole: the vector coupling reads the drive's central difference across one "
-                    f"Node's six Links, and this body stands on {nodes} Nodes"
-                )
-            dipole, scale = dipole_of(row["dipole"], f"{label}[{index}].dipole")
+        if "dipole" in row:  # refused under the law of one Node: the scalar coupling the one act
+            raise ValueError(
+                f"{label}[{index}].dipole is declared: under the law of one Node a transition couples by the "
+                "drive's level at the Node times its `weight` in every world (the path as it stood), and the "
+                "vector coupling, a hypothesis under its own name (ALGEBRA.md, The pixel's representation), "
+                "switches no Node's act; drop the key (the owner's word of 2026-10-22)"
+            )
         found.append(Transition(leaves, enters, drive, weight, resonance, den, dipole, scale))
     return tuple(found)
 

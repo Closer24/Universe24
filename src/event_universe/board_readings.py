@@ -152,7 +152,7 @@ def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
             form = sum(forms[(index, record)] for record in quanta_records(board.families, index))
             well = records.well(form, board.world.quantum_action)
         else:
-            deviation = state.lines[0].now - family.rest
+            deviation = state.lines[0].now - family.fill  # the volume's deviation from the rest's volume
             found = deviation * deviation
         for detector in board.node_detectors:
             if not detector.declared or detector.nodes is None:

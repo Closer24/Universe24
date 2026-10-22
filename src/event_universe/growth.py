@@ -48,7 +48,7 @@ def reached(
     layer = -1 if side > 0 else 0
     for family, state in zip(families, states, strict=True):
         arrays = [
-            level - (family.rest if number % family.width == 0 else 0)
+            level - (family.fill if number % family.width == 0 else 0)
             for number, record in enumerate(state.lines)
             for level in (record.now, record.before)
         ]
@@ -82,8 +82,8 @@ def resized(
 
     state.lines = [
         records.Record(
-            grown(record.now, family.rest if number % family.width == 0 else 0),
-            grown(record.before, family.rest if number % family.width == 0 else 0),
+            grown(record.now, family.fill if number % family.width == 0 else 0),
+            grown(record.before, family.fill if number % family.width == 0 else 0),
             grown(
                 record.remainder, origin if number % family.width == 0 else half
             ),  # born at the half wall

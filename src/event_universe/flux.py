@@ -267,7 +267,7 @@ def step_family(
                 rule,
                 wrap,
                 direction,
-                family.rest if number == 0 else 0,
+                family.fill if number == 0 else 0,
                 faced.get(number, NO_FACE),
             )
             if not (traced and 1 <= number - span.start <= AXES)

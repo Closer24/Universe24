@@ -56,6 +56,12 @@ def windowless_of(value: object, label: str) -> Draw:
 
 def draw_of(value: object, label: str, world: bool = False) -> Draw:
     """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its one key, the window from 1; on the world's draw alone the run back's reach, `reach`: `board` (the whole board stepped back to the birth and forward to the close) or `cone` (the record's light cone, the engine's reading where the key is absent); `books` and any other value refused by name; `meeting` refused by name, there being one meeting; every other key refused by name as unknown, a generator's `seed`, `multiplier` and `increment` among them (the draw is the click's read of the board), a body's `meeting` and `reach` too (`keyed` on `DRAW_KEYS`)."""
+    if isinstance(value, dict) and REACH in value:
+        raise ValueError(
+            f"{label}.{REACH} is declared ({value[REACH]!r}): under the law of one Node the click that runs back "
+            "reads the record's light cone in every world (the law's reading where the key was absent), and no "
+            "key switches the run back's reach; drop the key (the owner's word of 2026-10-22)"
+        )
     found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, DRAW_KEYS)
     reach = found.get(REACH)
     if MEETING in found:
