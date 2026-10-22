@@ -59,7 +59,7 @@ def test_the_bound_body_books_its_own_light_and_the_run_drew_no_click():
         int(v) for v in books.light
     )  # the book per shell Node, written
     assert lines == []
-    log = WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8").splitlines()
+    log = json.loads(WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8"))
     assert (
-        len([row for row in log if row.strip()]) == LINES
-    )  # the run's record: no click inside 256 intervals
+        log == [] and len(log) == LINES
+    )  # the run's record, a JSON array as the chain's log: no click inside 256 intervals
