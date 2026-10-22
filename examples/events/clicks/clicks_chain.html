@@ -333,12 +333,12 @@ function writtenBeside(index) {  // the lay lines contiguous with the credit lin
 }
 function holeBeside(credit) {  // the hole's Nodes: the erasure's origin of the taken family beginning at the interval after, else the Node faced at both intervals after, else any Node faced at the interval after; where two clicks take one family at one interval the lines go to the first
   const family = credit.absorbed || credit.family, next = Number(credit.interval) + 1, lines = OUTPUT.lines;
-  if (lines.find(line => line.event === 'credit' && line.interval === credit.interval && (line.absorbed || line.family) === family) !== credit) return { nodes: new Set(), from: 'the hole\'s lines of the interval after given to the first click of ' + family + ' at this interval' };
   const origins = new Set(lines.filter(line => line.event === 'erasure' && line.family === family && line.interval === next && line.distance === 1 && Array.isArray(line.origin)).map(line => line.origin.join(',')));
-  if (origins.size) return { nodes: origins, from: "the erasure line's origin at " + next };
   const faced = at => new Set(lines.filter(line => line.event === 'face' && line.family === family && line.interval === at && nodeAt(line) !== null).map(nodeAt));
   const first = faced(next), second = faced(next + 1), twice = [...first].filter(at => second.has(at));
-  return twice.length ? { nodes: new Set(twice), from: 'the face lines at ' + next + ' and ' + (next + 1) } : { nodes: first, from: first.size ? 'the face lines at ' + next : '' };
+  const found = origins.size ? { nodes: origins, from: "the erasure line's origin at " + next } : twice.length ? { nodes: new Set(twice), from: 'the face lines at ' + next + ' and ' + (next + 1) } : { nodes: first, from: first.size ? 'the face lines at ' + next : '' };
+  if (found.nodes.size && lines.find(line => line.event === 'credit' && line.interval === credit.interval && (line.absorbed || line.family) === family) !== credit) return { nodes: new Set(), from: "the hole's lines of the interval after given to the first click of " + family + ' at this interval' };
+  return found;
 }
 /* The light's front of a bound body (2026-10-22): the look's body row `shell`, the Nodes of the shell at r = 1 / k about the declared Node (the loader's own numbers, recorded; the page computes no radius), drawn as a ring of Nodes in the shell's tone, each ring scaled by the light booked at its Node at the frame shown (the frame's `own_light`, the window's running sum per shell Node as the books hold it after the interval, empty right after the close) against the largest booked over the run; the book's sum and the carry graphed in the records' panel. */
 const SHELLED = LOOK.bodies.filter(b => Array.isArray(b.shell) && b.shell.length);
@@ -1071,7 +1071,7 @@ function drawClicks() {
   const span = nodes => [0, 1, 2].filter(a => LOOK.shape[a] > 1).map(a => AXES[a] + ' ' + format(Math.min(...nodes.map(n => n[a]))) + ' to ' + format(Math.max(...nodes.map(n => n[a])))).join(', ');
   for (const c of CLICK_CONES) {
     const l = c.line, row = document.createElement('div'); row.className = 'row';
-    const where = (c.nodes.length ? 'at ' + (c.nodes.length === 1 ? 'the Node [' + c.nodes[0].join(', ') + ']' : nodesWord(c.nodes.length) + ' (' + span(c.nodes) + ')') + ' (' + c.from.join('; ') + ')' : 'no Node written in the output (the quantum passed in the books alone): no cone') + (c.exchange.length && c.nodes.length && c.from.every(f => !f.includes('of the record itself')) ? '; the exchange written over the record at ' + (c.exchangeNodes.length === 1 ? 'the Node [' + c.exchangeNodes[0].join(', ') + ']' : nodesWord(c.exchangeNodes.length) + ' (' + span(c.exchangeNodes) + ')') + ' (' + c.exchange.length + ' lay lines)' : '');
+    const where = (c.nodes.length ? 'at ' + (c.nodes.length === 1 ? 'the Node [' + c.nodes[0].join(', ') + ']' : nodesWord(c.nodes.length) + ' (' + span(c.nodes) + ')') + ' (' + c.from.join('; ') + ')' : "no Node written beside the line in the output (the quantum passed in the books, or the write stands at the birth as the run back's cone draws it): no cone") + (c.exchange.length && c.nodes.length && c.from.every(f => !f.includes('of the record itself')) ? '; the exchange written over the record at ' + (c.exchangeNodes.length === 1 ? 'the Node [' + c.exchangeNodes[0].join(', ') + ']' : nodesWord(c.exchangeNodes.length) + ' (' + span(c.exchangeNodes) + ')') + ' (' + c.exchange.length + ' lay lines)' : '');
     const words = [
       'count moved ' + format(l.count) + (l.left === null || l.left === undefined ? '' : ', left ' + format(l.left)),
       Array.isArray(l.window) ? 'window ' + l.window.join(' to ') + (l.proper === undefined || l.proper === null ? '' : ', proper time ' + format(l.proper)) + (l.windows ? ', the ' + ordinal(l.windows) + ' window' : '') : '',
