@@ -278,6 +278,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the engine V2 (Part G, Task 5 (d); #2122): the reversal with the books as its own test, so that each half of "
         "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
     ),
+    "tests/test_the_uniform_mode.py::test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it": (
+        40,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
+        "unobservable` and the law's `uniform: carried` kept beside it, every refusal by name (the value, the sunk "
+        "face, the two keys together, the kick on the holder of the content), the torus loading under either key",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

@@ -22,14 +22,9 @@ from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
 from event_universe.features.write import carried
 from event_universe.lay import laid
-from event_universe.loader.derived import (
-    PLANE,
-    held_write_of,
-    quanta_records,
-    readers_of,
-    turns,
-)
+from event_universe.loader.derived import PLANE, held_write_of, quanta_records, readers_of, turns
 from event_universe.loader.instrument import laid_parts
+from event_universe.loader.interval import kicks_refused
 from event_universe.loader.keys import Node
 from event_universe.loader.mode import Levels
 from event_universe.loader.packets import PacketRow
@@ -79,6 +74,7 @@ class Lattice:
         self.start()
         for record, row in self.laid_rows():
             if not self.families[row.family].quanta:
+                kicks_refused(world.unobservable, self.families, [self.families[row.family].name])
                 self.lay(row, record)  # the kick: the row's own travelling events on its rest, no count
         covector.gate(self)
         self.output = output
@@ -135,7 +131,7 @@ class Lattice:
         return found
 
     def start(self) -> None:
-        """The start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, the four lines (a) and (c)): every held family's time line at the rest of its line, with or without a gap, under the sources the laid records write, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the form of the laid record as the held write's write books it, D_i = now^2 - next x before over the record's lines with next the step of Rule3 at the paces of the held rows' rests, for a row sourced by the form, and the Wronskian of the step's booking for the holder of the sign (`records.form`, `records.wronskian` on the booking of `stepped`), each at the weight with which the record's family reads the row (the held write's reciprocity, `readers_of`, `weight_of`), over the write's wall E_s T, scaled per proper volume and per proper interval at the paces of the rest as the write scales it (`rest`, `paces.write_factor`; no tension stands at the start); the lay and the rest iterated to the fixed point where the sources return themselves (features/start, `held_rests`): the rests laid, every record stepped once at their paces and booked as the held write books it, the rests solved again from those bookings, until the levels repeat (or repeat an earlier state one unit off at most, a rounding tie; a cycle refused by name), from nothing, so the held write's first write is the start's source within Rule3's rounding; both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `records.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start its laid packet plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid packet a travelling one, so their sum is the record; the holder of the sign keeps its laid light where nothing sources it); the declared count stays the body's, read from the laid record by the gate. On a board periodic on every axis a massless row's rest needs a sink and the start refuses it by name, unless the world declares `uniform: carried` (`World.uniform`, loader/world.py `uniform_of`): then every massless row rests on the zero-mean part of its sources (features/start `rest`, the torus's own static line) and the sources' mean, the k = 0 component, is carried from the first interval by Rule3's own line at k = 0 (`step`): no act is added, the Node knows nothing of it, and a world without the key runs as before bit for bit."""
+        """The start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, the four lines (a) and (c)): every held family's time line at the rest of its line, with or without a gap, under the sources the laid records write, the massless row's rest with its vacuum content added at every Node (the row's `rest`, the same rest read beyond every face; ALGEBRA.md #what-is-open, item 22): the form of the laid record as the held write's write books it, D_i = now^2 - next x before over the record's lines with next the step of Rule3 at the paces of the held rows' rests, for a row sourced by the form, and the Wronskian of the step's booking for the holder of the sign (`records.form`, `records.wronskian` on the booking of `stepped`), each at the weight with which the record's family reads the row (the held write's reciprocity, `readers_of`, `weight_of`), over the write's wall E_s T, scaled per proper volume and per proper interval at the paces of the rest as the write scales it (`rest`, `paces.write_factor`; no tension stands at the start); the lay and the rest iterated to the fixed point where the sources return themselves (features/start, `held_rests`): the rests laid, every record stepped once at their paces and booked as the held write books it, the rests solved again from those bookings, until the levels repeat (or repeat an earlier state one unit off at most, a rounding tie; a cycle refused by name), from nothing, so the held write's first write is the start's source within Rule3's rounding; both levels, the remainder at the half wall of the rule the row steps by; every write remainder stands at half its wall from `records.empty_state`; a held row of the content with no source at 0 (or its rest) with the same remainder; every held row's record at the start its laid packet plus its sourced rest, the level now and the level before alike (the rest the static solution of the row's line at the paces and the laid packet a travelling one, so their sum is the record; the holder of the sign keeps its laid light where nothing sources it); the declared count stays the body's, read from the laid record by the gate. On a board periodic on every axis a massless row's rest needs a sink and the start refuses it by name, unless the world declares `interval: unobservable` (`World.unobservable`, loader/interval.py; ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22) or the law's `uniform: carried` (`World.uniform`, loader/world.py `uniform_of`, the carried mean as written 2026-10-21): then every massless row rests on the zero-mean part of its sources (features/start `rest`, the torus's own static line) and the sources' mean, the k = 0 component, is carried from the first interval by Rule3's own line at k = 0 (`step`), under the hypothesis's key less the row's own kinetic form at the symmetry's weight in the one write (`held_write`, records.write_sources): no act is added, the Node knows nothing of the board, and a world without either key runs as before bit for bit."""
         holders = [(i, 0) for i in self.held if not self.families[i].wronskian]
         signs = [
             (i, row)
@@ -143,7 +139,7 @@ class Lattice:
             if self.families[i].wronskian and self.sourced(i)
             for row in range(self.families[i].records)
         ]
-        rows, gamma = holders + signs, self.world.node_clock
+        rows, gamma, world = holders + signs, self.world.node_clock, self.world
 
         line_of = {row: int(records.record_slice(self.families[row[0]], row[1]).start) for row in rows}
         walls = {row: self.walls(row[0])[0] for row in rows}
@@ -155,9 +151,8 @@ class Lattice:
 
         seed = [records.zeros(self.shape, self.kind) for _ in rows]
         try:
-            fields = held_rests(
-                booked, seed, self.wrap, self.world.width, gamma, self.unit, self.world.uniform
-            )
+            free = world.uniform or world.unobservable
+            fields = held_rests(booked, seed, self.wrap, world.width, gamma, self.unit, free)
         except ValueError as refusal:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
         for row, found in zip(rows, fields, strict=True):
@@ -367,30 +362,7 @@ class Lattice:
             if self.families[index].parts > 1:
                 credit.moments_booked(self, index, found)
         booked_inflows(self, weighed, wrap, own)
-        self.densities_read(forms, union)
-
-    def densities_read(self, forms: Bookings, at: np.ndarray) -> None:
-        """A lattice reading, no measurement, labelled so (`reports.density`): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeDetectors' Nodes), one `field` line where it differs from the last interval's: for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival)."""
-        for index, (family, state) in enumerate(zip(self.families, self.states, strict=True)):
-            frozen, well = np.zeros(self.shape, dtype=bool), None
-            if family.quanta:
-                found, frozen = self.quanta(index, at)
-                form = sum(forms[(index, record)] for record in quanta_records(self.families, index))
-                well = records.well(form, self.world.quantum_action)
-            else:
-                deviation = state.lines[0].now - family.rest
-                found = deviation * deviation
-            for detector in self.node_detectors:
-                if not detector.declared or detector.nodes is None:
-                    continue
-                name, cold = detector.name, detector.nodes & frozen
-                reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
-                content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
-                if self.densities.get((index, name)) == (reading, content):
-                    continue
-                self.densities[(index, name)] = (reading, content)
-                if self.output is not None:
-                    self.output(reports.density(self.interval, family.name, name, reading, content))
+        board_readings.densities_read(self, forms, union)
 
     def booked_back(
         self,

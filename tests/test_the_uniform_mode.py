@@ -1,4 +1,4 @@
-"""The carried uniform mode (ALGEBRA.md, The closed lattice has no rest; item 6 of what is open, the closed board's double root; No write from outside Rule3 wakes either double root of the massless row; the build of 2026-10-21): on a board periodic on every axis a massless held row's rest needs a sink, and the world's key `uniform: carried` (loader/world.py `uniform_of`) admits the board by resting every massless row on the zero-mean part of its sources (features/start `rest`, `without_uniform`, `settled_free`) and leaving the k = 0 component to Rule3's own line, the double root carried at every Node by the step and the one write, no act added. (1) The declaration: refused by name at any value but `carried`, where a face is open and where a face is closed (a board with a sink has no free uniform mode), and the sink's refusal without the key names the key. (2) The uniform line bit for bit: a matter record laid uniform over a 3-cube torus at the band's rest rotation sources a uniform write, so gravity's level is one number at every Node at every interval, and over 20 intervals its second difference is the one write's increment (numerator + r) div (E_s T), the numerator the form D = now^2 - next x before scaled by the write's factor at the record's own content, computed beside from the engine's own functions, bit for bit, the remainder the write's; the tensions 0 (a uniform record has none); the record's rotation slows as the content rises, (next + before) / now read against the band's own line 1 - (den - num) p_0^2 / (den Gamma^2) at the content; the uniform reading one division with one remainder; and the inverse returns the start bit for bit. (3) The rest: a point source on a 7-cube torus at [1, 1] rests on the zero-mean part, the read-weighted mean taken out exactly to under a millionth of a line unit, the fine levels within two fine units of the pace-weighted Poisson solution solved sparse (floats, the test's oracle), the floor at 0 and the levels within one level."""
+"""The uniform mode on the board wrapped on every axis (ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22; The closed lattice has no rest; item 6 of what is open, the closed board's double root; No write from outside Rule3 wakes either double root of the massless row): on a board periodic on every axis a massless held row's rest needs a sink, and the world's key `interval: unobservable` (loader/interval.py `interval_of`), or the law's `uniform: carried` of 2026-10-21 kept admitted beside it (loader/uniform.py `uniform_of`, the carried mean with no hill, the reader's line L2 on the design), admits the board by resting every massless row on the zero-mean part of its sources (features/start `rest`, `without_uniform`, `settled_free`) and leaving the k = 0 component to Rule3's own line, the double root carried at every Node by the step and the one write, no act added. (1) The declaration: the sink's refusal without either key names the hypothesis's key as the way; `interval` refused by name at any value but `unobservable`, where a face is open and where a face is closed (a board with a sink has no free uniform mode and its rest fixes the clock's unit beyond the face), the two keys together refused by name, and a kick, a packet laid on a holder of the content, refused by name under the key (the mean's velocity the content's, nobody's declaration). (2) The uniform line bit for bit: a matter record laid uniform over a 3-cube torus at the band's rest rotation sources a uniform write, so gravity's level is one number at every Node at every interval, and over 20 intervals its second difference is the one write's increment (numerator + r) div (E_s T), the numerator the form D = now^2 - next x before scaled by the write's factor at the record's own content, computed beside from the engine's own functions, bit for bit, the remainder the write's; the tensions 0 (a uniform record has none); the record's rotation slows as the content rises, (next + before) / now read against the band's own line 1 - (den - num) p_0^2 / (den Gamma^2) at the content; the uniform reading one division with one remainder; and the inverse returns the start bit for bit. (3) The rest: a point source on a 7-cube torus at [1, 1] rests on the zero-mean part, the read-weighted mean taken out exactly to under a millionth of a line unit, the fine levels within two fine units of the pace-weighted Poisson solution solved sparse (floats, the test's oracle), the floor at 0 and the levels within one level."""
 
 import json
 import re
@@ -77,32 +77,45 @@ def laid_torus(folder, name, **changes):  # type: ignore[no-untyped-def]
     return uniform_world(folder, name, counts, **changes)
 
 
-def test_the_board_declares_its_carried_uniform_mode_and_refuses_it_by_name_where_a_face_sinks_it(
+def test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it(
     tmp_path, monkeypatch
 ):
-    """(1) The declaration (loader/world.py `uniform_of`): a massless row's rest on a torus is refused by name without the key, the refusal naming `uniform: carried` as the way; the key at a value other than `carried` is refused by name; `carried` with the x face open or the z face closed is refused by name, a board with a sink having no free uniform mode; `carried` on the torus loads, the world holding the declaration."""
+    """(1) The declaration (loader/interval.py `interval_of`, `one_key`, `kicks_refused`; loader/uniform.py `uniform_of` beside it): a massless row's rest on a torus is refused by name without either key, the refusal naming `interval: unobservable` as the way and the law's `uniform: carried` beside it; `interval` at a value other than `unobservable` is refused by name; `unobservable` with the x face open or the z face closed is refused by name, a board with a sink having no free uniform mode; the two keys on one world are refused by name together; a `packets` entry on gravity, a kick on the holder of the content, is refused by name under the key; `unobservable` on the torus loads, the world holding the declaration, and so does the law's `carried` (the old key kept admitted, the reader's line L2 on the design)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_at_weight_one(tmp_path)
     sunk = refused("needs a sink", Lattice, load_world(uniform_world(tmp_path, "sunk")))
-    assert "uniform: carried" in str(sunk) and "Rule3's own line at k = 0" in str(sunk)
-    kept = refused("is 'carried'", load_world, uniform_world(tmp_path, "kept", uniform="kept"))
-    assert "'kept'" in str(kept)
+    assert "interval: unobservable" in str(sunk) and "Rule3's own line at k = 0" in str(sunk)
+    assert "uniform: carried" in str(sunk) and "The board's interval is no observable" in str(sunk)
+    kept = refused("is 'unobservable'", load_world, uniform_world(tmp_path, "kept", interval="kept"))
+    assert "'kept'" in str(kept) and "a count no act reads" in str(kept)
     opened = {**TORUS, "x": "open"}
+    key = {"interval": "unobservable"}
     ajar = refused(
         "no free uniform mode",
         load_world,
-        uniform_world(tmp_path, "ajar", uniform="carried", boundary=opened, face_depth=1),
+        uniform_world(tmp_path, "ajar", boundary=opened, face_depth=1, **key),
     )
-    assert "x face is 'open'" in str(ajar)
+    assert "x face is 'open'" in str(ajar) and "fixes the clock's unit" in str(ajar)
     closed = {**TORUS, "z": "closed"}
     shut = refused(
-        "no free uniform mode",
-        load_world,
-        uniform_world(tmp_path, "shut", uniform="carried", boundary=closed),
+        "no free uniform mode", load_world, uniform_world(tmp_path, "shut", boundary=closed, **key)
     )
     assert "z face is 'closed'" in str(shut)
-    board = Lattice(load_world(laid_torus(tmp_path, "torus", uniform="carried")))
-    assert board.world.uniform and board.world.periodic == (True, True, True)
+    both = refused("together", load_world, uniform_world(tmp_path, "both", uniform="carried", **key))
+    assert "2026-10-21" in str(both) and "2026-10-22" in str(both) and "declare one" in str(both)
+    kick = [{"family": "gravity", "along": "x", "wave": [1, 3], "phase": [0, 1], "amplitude": 1}]
+    kicked = refused(
+        "lays a kick on 'gravity'", load_world, uniform_world(tmp_path, "kick", packets=kick, **key)
+    )
+    assert "nobody's declaration" in str(kicked) and "the clause of 2026-10-22" in str(kicked)
+    board = Lattice(load_world(laid_torus(tmp_path, "torus", **key)))
+    assert (
+        board.world.unobservable
+        and not board.world.uniform
+        and board.world.periodic == (True, True, True)
+    )
+    law = Lattice(load_world(laid_torus(tmp_path, "law", uniform="carried")))
+    assert law.world.uniform and not law.world.unobservable  # the law as written, kept and runnable
 
 
 def test_rule3_carries_the_uniform_line_bit_for_bit_on_a_torus_and_the_inverse_returns(
@@ -171,12 +184,12 @@ def test_rule3_carries_the_uniform_line_bit_for_bit_on_a_torus_and_the_inverse_r
 
 
 def test_a_massless_rest_on_a_torus_is_the_poisson_solution_of_the_zero_mean_part():
-    """(3) The rest (features/start `rest` with `carried`): a point source of 3,000 at the centre of a 7-cube torus at [1, 1], the level weight 1, Gamma 6,000: refused by name without the flag; with it the source less its read-weighted mean sums to under a millionth of one Node's line unit (`without_uniform`), the re-centred iteration's levels stand within two fine units of the exact zero-mean solution of the pace-weighted line, diag(num p_i^2) (6 I - S_6) b = the scaled source, solved sparse with one Node pinned and the mean restored (the test's floats, the oracle), the levels within one level of it, the floor at 0 at the Node farthest from the source and the centre above it; the line's residual within one act's floor at every Node but the roundings'."""
+    """(3) The rest (features/start `rest` with `free`, the flag of either key): a point source of 3,000 at the centre of a 7-cube torus at [1, 1], the level weight 1, Gamma 6,000: refused by name without the flag; with it the source less its read-weighted mean sums to under a millionth of one Node's line unit (`without_uniform`), the re-centred iteration's levels stand within two fine units of the exact zero-mean solution of the pace-weighted line, diag(num p_i^2) (6 I - S_6) b = the scaled source, solved sparse with one Node pinned and the mean restored (the test's floats, the oracle), the levels within one level of it, the floor at 0 at the Node farthest from the source and the centre above it; the line's residual within one act's floor at every Node but the roundings'."""
     counts, torus = np.zeros((7, 7, 7), dtype=np.int64), Wrap(True, True, True)
     counts[3, 3, 3] = 3000
     keys = {"own_weight": 1, "intervals": paces.COUNT_POWER}
     refused("needs a sink", rest, counts, (6000, 6000), torus, 1, MAX_WORK_INT, 3 * 6000, GAMMA, **keys)
-    found = rest(counts, (6000, 6000), torus, 1, MAX_WORK_INT, 3 * 6000, GAMMA, carried=True, **keys)
+    found = rest(counts, (6000, 6000), torus, 1, MAX_WORK_INT, 3 * 6000, GAMMA, free=True, **keys)
     clock, pace = paces.node_paces(GAMMA, found.content)
     reads = (6000 * pace.astype(object) * pace.astype(object)).ravel()
     scaled = scaled_source(counts * 3 * 6000 * found.unit * GAMMA**2, clock, pace, GAMMA, 2)

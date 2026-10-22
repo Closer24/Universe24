@@ -361,7 +361,9 @@ def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
     ]  # 216 / (36 x 3), 216 / (6 x 9)
     start = ROOT / "src" / "event_universe" / "features" / "start"
     text = "".join(path.read_text(encoding="utf-8") for path in sorted(start.glob("*.py")))
-    assert [text.count(f"intervals=paces.{k}") for k in ("COUNT_POWER", "WRONSKIAN_POWER")] == [1, 1]
+    rule = (ROOT / "src" / "event_universe" / "loader" / "derived.py").read_text(encoding="utf-8")
+    assert text.count("intervals=power") == 2 and "intervals=paces." not in text  # each row's own power
+    assert rule.count("WRONSKIAN_POWER if") == 1 and "else COUNT_POWER" in rule  # the two powers, once
     for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
         cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
         assert abs(radiated_total(action, (num, den)) - 2 * action * (1 - cos_k**2) ** 0.5 / 3) <= 1

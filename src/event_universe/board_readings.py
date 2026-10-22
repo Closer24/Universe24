@@ -1,4 +1,4 @@
-"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`; a turned record's with the Link pairs its step reads, `turned_read`, `turned_currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), and a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
+"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`; a turned record's with the Link pairs its step reads, `turned_read`, `turned_currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), the families' densities over the declared regions written as the output's field lines (`densities_read`, a lattice reading labelled so) and a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import covector, flux, node
-from event_universe.bookings import sources_of
+from event_universe import covector, flux, node, reports
+from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
@@ -140,3 +140,27 @@ def uniform_mode(board: Lattice, index: int) -> UniformMode:
         level, remainder = division_forward(total, nodes, 0)
         found += [int(level), int(remainder)]
     return UniformMode(found[0], found[1], found[2], found[3], nodes)
+
+
+def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
+    """A lattice reading, no measurement, labelled so (`reports.density`; `Lattice.report` calls it after the clicks): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeDetectors' Nodes), one `field` line where it differs from the last interval's (`Lattice.densities`, the last readings): for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`records.well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival); a reading over the declared regions and no act."""
+    for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
+        frozen, well = np.zeros(board.shape, dtype=bool), None
+        if family.quanta:
+            found, frozen = board.quanta(index, at)
+            form = sum(forms[(index, record)] for record in quanta_records(board.families, index))
+            well = records.well(form, board.world.quantum_action)
+        else:
+            deviation = state.lines[0].now - family.rest
+            found = deviation * deviation
+        for detector in board.node_detectors:
+            if not detector.declared or detector.nodes is None:
+                continue
+            name, cold = detector.name, detector.nodes & frozen
+            reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
+            content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
+            if board.densities.get((index, name)) == (reading, content):
+                continue
+            board.densities[(index, name)] = (reading, content)
+            if board.output is not None:
+                board.output(reports.density(board.interval, family.name, name, reading, content))

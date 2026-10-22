@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
-from event_universe.core.paces import sine_den
+from event_universe.core.paces import COUNT_POWER, WRONSKIAN_POWER, sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_forward, largest_below, mass, partial_rooms
 from event_universe.features.currents import PRODUCTS
@@ -95,6 +95,11 @@ class FamilyRule(Row):
     def several(self) -> bool:
         """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
         return self.parts > 1 or (self.width > 1 and not self.plane)
+
+    @property
+    def power(self) -> int:
+        """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
+        return WRONSKIAN_POWER if self.wronskian else COUNT_POWER
 
     @property
     def axes(self) -> bool:

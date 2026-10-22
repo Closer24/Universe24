@@ -32,6 +32,7 @@ from event_universe.loader.faces import (
     receding_of,
 )
 from event_universe.loader.instrument import declared_body
+from event_universe.loader.interval import INTERVAL, interval_of, kicks_refused, one_key
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.mode import Levels, Profile, entry_of, levels_of, mode_entries
@@ -49,7 +50,8 @@ from event_universe.loader.universe import universe_of
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
-WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure", UNIFORM)
+WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay", "erasure")
+WORLD_KEYS += (UNIFORM, INTERVAL)  # the law's key and the hypothesis's, one of the two on a world
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
@@ -123,7 +125,8 @@ class World:
         WholePacket, ...
     ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
     erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
-    uniform: bool = False  # the world's `uniform: carried`: on a board periodic on every axis every held row's rest is the zero-mean part and its k = 0 component is carried by Rule3's own line (features/start `rest`; ALGEBRA.md, The closed lattice has no rest, item 6 of what is open); False where absent, the sink refusal as before
+    uniform: bool = False  # the world's `uniform: carried`, the law as written (2026-10-21, kept by name and runnable): on a board periodic on every axis every held row's rest is the zero-mean part and its k = 0 component is carried by Rule3's own line fed by the one write alone (features/start `rest`; ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-21); False where absent, the sink refusal as before
+    unobservable: bool = False  # the world's `interval: unobservable` (loader/interval.py; ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22): the rest the zero-mean part as under the law's key, and the one write of every held row of the content less the row's own kinetic form at the symmetry's weight, the hill (records.write_sources); the kick refused by name; False where absent
 
 
 def kind_of(width: int) -> type:
@@ -319,6 +322,7 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
     """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
+    one_key(world)  # the law's key or the hypothesis's, never both
     erasure = integer(world["erasure"], "erasure", 1) if "erasure" in world else 1  # the front's taper
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
     shape_value = world["shape"]
@@ -333,6 +337,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
     even_box_refused(shape, periodic, families)
     carried = uniform_of(world[UNIFORM], faces) if UNIFORM in world else False
+    unobservable = interval_of(world[INTERVAL], faces) if INTERVAL in world else False
+    wraps, opened = (periodic[0], periodic[1], periodic[2]), (open_axes[0], open_axes[1], open_axes[2])
     if any(open_axes) and "face_depth" not in world:
         raise ValueError("face_depth is required on a lattice with an open face: the depth of its layer")
     depth = integer(world["face_depth"], "face_depth", 1) if "face_depth" in world else 0
@@ -341,26 +347,17 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(
-        world["bodies"],
-        mode,
-        digest,
-        families,
-        shape,
-        bound,
-        beyond,
-        action,
-        (periodic[0], periodic[1], periodic[2]),
-    )
+    bodies = bodies_of(world["bodies"], mode, digest, families, shape, bound, beyond, action, wraps)
+    kicks_refused(unobservable, families, world.get("packets", []))  # no kick under the key
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
     bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
     conversion.together(families, bodies, packets)  # the multisets a close can credit, refused by name
     intervals = integer(world["intervals"], "intervals", 0)
     wholes = wholes_of(world.get("packets", []), families, shape, beyond, intervals)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
-    layer = layer_of(shape, (open_axes[0], open_axes[1], open_axes[2]), depth, receding)
+    layer = layer_of(shape, opened, depth, receding)
     node_detectors = node_detectors_of(world["node_detectors"], shape, len(bodies), beyond, layer)
-    regions_of_the_law(node_detectors, packets, shape, (periodic[0], periodic[1], periodic[2]), families)
+    regions_of_the_law(node_detectors, packets, shape, wraps, families)
     laid = [p.family for p in packets] + [b.family for b in bodies if b.detector is None]
     laid += [w.family for w in wholes] + [f for b in bodies if b.detector for f in b.detector.gives]
     patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
@@ -374,8 +371,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)
     return World(
         shape,
-        (periodic[0], periodic[1], periodic[2]),
-        (open_axes[0], open_axes[1], open_axes[2]),
+        wraps,
+        opened,
         depth,
         beyond,
         intervals,
@@ -395,4 +392,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         wholes,
         erasure,
         carried,
+        unobservable,
     )
