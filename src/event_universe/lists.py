@@ -7,7 +7,7 @@ from functools import partial
 from operator import add
 from typing import TYPE_CHECKING, Any
 
-from event_universe import credit, meeting_back, reports
+from event_universe import credit, frame_run, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
@@ -263,26 +263,33 @@ def absorption(
     return [*found, Alternative(max(min(unabsorbed, unit) - sum(weights), 0), rest)]
 
 
-def own_light_weights(books: NodeBooks, unit: int) -> tuple[int, list[int]]:
-    """A bound body's own-light row at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; the reader's one-act audit of the same day, (a)): the window's booked outflow, the light book's sum floored at 0 with the body's carry, capped at the unit, against nothing at the unit less it, in W_rec G^2 of the transition, so that the floor is the act's certain draw (one quantum at most per close) and the remainder the act's own draw by the body's read of the board; the total returned for the carry (`own_light`). No division: the cap and the floor at 0 alone. A window whose sum is above 0 feeds the carry, and its outflows per shell Node join the where's book (`NodeBooks.outflows`, the outflows the carry came from since the last click, the reader's word of 03:43), so the where is always a reading of the board."""
+def own_light_weights(board: Lattice, books: NodeBooks, transition: Transition, unit: int) -> list[int]:
+    """A bound body's own-light row at its window's close (ALGEBRA.md, The click writes on the lattice (5), CHANGED 2026-10-22, the reader's ruling under the owner's word: the hazard of a bound body in its upper part is A times the upper level's share rho): the frame's run of the body made here, once, at its first close (`frame_run.measured`, kept as `NodeBooks.frame_stream`), the weight A rho by the one division act (`frame_run.upper_share`, `frame_run.hazard`; F floored at 0, the cavity's word on a closed board) capped at the unit, against nothing at the unit less it, in W_c sin Omega G^2 of the transition, so that the floor is the act's certain draw (one quantum at most per close) and the remainder the act's own draw by the body's read of the board; no carry between windows (the row has no memory, the law's exponential). The live book is withdrawn as the whether and kept as a reading: its window sum and the row's weight on the books for the observers (`closed_light`, `closed_share`, `closed_stream`: F, rho's numerator and denominator), and its outflows per shell Node, where the window's sum is above 0, joined to the where's book (`NodeBooks.outflows`, the reader's word of 03:43), so that the where is a reading of the board."""
+    stream = books.frame_stream = books.frame_stream or frame_run.measured(board, books)  # once
     if sum(books.light) > 0:
         books.outflows = list(map(add, books.outflows, books.light, strict=True))
-    given = min(max(total := max(sum(books.light), 0) + books.carry, 0), unit)
+    numerator, denominator = frame_run.upper_share(board, books, transition)
+    given = min(frame_run.hazard(stream, numerator, denominator), unit)
     books.closed_light, books.closed_share = sum(books.light), (given, unit)  # the observers' entries
-    return total, [given, unit - given]
+    books.closed_stream = (sum(stream.outflow), numerator, denominator)
+    return [given, unit - given]
 
 
 def own_light(
-    board: Lattice, books: NodeBooks, transition: Transition, total: int, unit: int, emitted: bool
+    board: Lattice, books: NodeBooks, transition: Transition, unit: int, emitted: bool
 ) -> list[Item]:
-    """The own-light row's list where its alternative is drawn (`emission` with no rate; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the exchange over the body's region, the part the body stands in to the transition's lower part (the write's region the body's whole support), and light's record up by one whole quantum at the shell Node drawn by the outflows the carry came from (`drawn_weights` on `NodeBooks.outflows`, the per-shell-Node book of the windows that fed the carry since the last click, begun again here; the window's own book where none stands yet; where every shell Node's book stands below G^2 while the row fell, no weight stands and no draw is made, the shell Node of the largest raw entry takes the quantum and the reading is named on the credit line, `reports.LARGEST_ENTRY`), laid by the count at the massless pair; the carry kept in the body's book as a region's remainders are (`NodeBooks.carry`, a carried remainder and no act): the excess total - unit where the quantum goes (below 0 where it is drawn ahead of the unit, owed), the whole total where nothing goes."""
-    books.carry = total - unit if emitted else total
+    """The own-light row's list where its alternative is drawn (`emission` with no rate; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the exchange over the body's region, the part the body stands in to the transition's lower part (the write's region the body's whole support), and light's record up by one whole quantum at the shell Node drawn by the where's book (`drawn_weights` on `NodeBooks.outflows`, the per-shell-Node book of the windows above 0 since the last click, begun again here; the window's own book where none stands yet), by the frame run's outflow per shell Node where the live book stands at 0 (the reader's ruling of 2026-10-22: the where's distribution), and by the largest raw entry of the book where no weight stands at all, the reading named (`reports.LARGEST_ENTRY`); laid by the count at the massless pair; nothing where the other alternative fell, no carry."""
     if not emitted:
         return []
-    weights = drawn_weights(board, book := books.outflows or books.light)
+    book = books.outflows or books.light
+    weights = drawn_weights(board, book)
+    if (
+        not sum(weights) and (stream := books.frame_stream) is not None
+    ):  # the live book at 0: the frame's
+        book, weights = list(stream.outflow), drawn_weights(board, stream.outflow)
     if sum(weights):
         at = books.shell[picked(board, books, weights)]
-    else:  # every shell Node below G^2 while the row fell: no weight stands, no draw, the reading named
+    else:  # every entry below G^2 while the row fell: no weight stands, no draw, the reading named
         at, books.lost = (
             books.shell[max(range(len(book)), key=book.__getitem__)],
             [reports.LARGEST_ENTRY],
@@ -315,17 +322,15 @@ def emission(
     transition: Transition | None = None,
 ) -> list[Alternative]:
     """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19); the emission's weight carries the record's sign under exchange on the lower part, the whole hazard to nothing where the factor is 0 (`exchange_factor`). With `deferred` (the window's close in the exact dark, `meeting.emission_drawn`) the list is the emission alone at the weight 1 along the first declared direction, laid at the body's Node of the largest share (`largest_share_node`): no digit stands to draw a direction or a Node by, and the reading `reports.NO_DRAW` goes on the line."""
-    if (
-        rate is None
-    ):  # (5): a bound body with no rate, its own light's row in the same act (the audit, (a))
+    if rate is None:  # (5): a bound body with no rate, its own-light row in the one act (the audit, (a))
         assert transition is not None  # the transition into the part the body stands in
         light = board.families[transition.drive]
         unit = (
             born_unit(count_wall(light, board.world.quantum_action), transition.resonance)
             * board.unit**2
         )
-        total, weights = own_light_weights(books, unit)
-        row = partial(own_light, board, books, transition, total, unit)
+        weights = own_light_weights(board, books, transition, unit)
+        row = partial(own_light, board, books, transition, unit)
         line = Line((transition.leaves, books.part), (None, transition.drive))
         yes = Alternative(weights[0], partial(row, True), line, books)
         return [yes, Alternative(weights[1], partial(row, False))]

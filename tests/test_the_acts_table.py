@@ -124,6 +124,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "guide_total",
         "division_forward",
     ): "D",  # the total over the travelling share, one division
+    # frame_run.py
+    (
+        "frame_run.py",
+        "hazard",
+        "division_forward",
+    ): "D",  # F times rho's numerator over its denominator, once
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F

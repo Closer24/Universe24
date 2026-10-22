@@ -167,15 +167,18 @@ def frame(
     found.update(families=families, bodies=bodies)
     own_light = {
         str(books.number): own_light_row(books) for books in board.credit.bodies if books.shell
-    }  # the bound bodies' own light per shell Node, the carry and the last close's words, as the books hold them after the interval
+    }  # the bound bodies' own light per shell Node, the frame run's F with rho and the last close's words, as the books hold them after the interval
     if own_light:
         found["own_light"] = own_light
     return {**found, "shape": list(board.shape), "offset": list(board.offset), "lines": []}
 
 
 def own_light_row(books: NodeBooks) -> dict[str, object]:
-    """A bound body's own light as its books hold it after the interval (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): `light`, the book per shell Node, the window's running sum outward positive in G^2 (empty right after the close, where the books begin again), `carry`, the remainder below one quantum carried, and where the books carry them `closed_light`, the window's total of the own light at the last close, signed, in G^2, and `closed_share`, the pair (given, unit) the draw was made at there; the engine's own numbers, read and summed nowhere."""
-    found: dict[str, object] = {"light": [int(v) for v in books.light], "carry": int(books.carry)}
+    """A bound body's own light as its books hold it after the interval (ALGEBRA.md, The click writes on the lattice (5), CHANGED 2026-10-22): `light`, the book per shell Node, the window's running sum outward in G^2; `stream`, the frame run's F over the shell with rho's numerator and denominator at the last close (the row's weight A rho, `frame_run.hazard`); `closed_light` and `closed_share`, the last close's window total and the row's weight against the unit, where a close has come."""
+    found: dict[str, object] = {
+        "light": [int(v) for v in books.light],
+        "stream": list(books.closed_stream),
+    }
     closed, share = getattr(books, "closed_light", None), getattr(books, "closed_share", None)
     if closed is not None:
         found["closed_light"] = int(closed)

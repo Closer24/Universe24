@@ -2,11 +2,13 @@
 
 import json
 import math
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
+import pytest
 
-from event_universe import act, lists, meeting, records, reports, world_files
+from event_universe import act, frame_run, lists, meeting, records, reports, world_files
 from event_universe.core.paces import sine_den
 from event_universe.lattice import Lattice
 from event_universe.lists import hazard_weights
@@ -196,6 +198,19 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
     def unknown(instrument: dict) -> None:  # type: ignore[type-arg]
         instrument["frame"] = {}
 
+    def second_profile(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["profiles"][0]["part"] = 1
+
+    def one_profile(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["profiles"] = instrument["profiles"][1:]
+
+    def other_nodes(instrument: dict) -> None:  # type: ignore[type-arg]
+        for key in ("now", "before", "im_now", "im_before"):
+            instrument["profiles"][0][key] = {"at": [0], "values": [1]}
+
+    def no_transition(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["transitions"], instrument["rates"] = [], []
+
     for change, reason in (
         (in_pieces, "one connected region of distinct Nodes"),
         (without_the_node, "holds none of the body's declared Nodes"),
@@ -203,6 +218,10 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
         (both_parts, "stands in one part at the start"),
         (own_drive, "a family of quanta other than the body's own"),
         (unknown, "unknown key 'frame'"),
+        (second_profile, "a second profile of the part"),
+        (one_profile, "lists one profile per part"),
+        (other_nodes, "stands at none of the body's declared Nodes"),
+        (no_transition, "stands on a body with no transition"),
     ):
         refused(reason, lambda c=change: load_world(tampered(c)))
     assert np.array_equal(np.zeros(1), np.zeros(1))  # the tool's doubles stand in the tool alone
@@ -353,3 +372,147 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
     assert (
         round(TAKER_AFTER[4] / TAKER_BEFORE[4] - 1, 4) == -0.0005 and GIVER_BEFORE[4] == 0
     )  # the walk (-0.0001 at 27 on the first lay, the returned packet's share falling; 0.0002 at 18, 2026-10-21)
+
+
+def dense(levels, size: int) -> list[int]:  # type: ignore[no-untyped-def]
+    """A level's nonzero Nodes as one integer per Node in x-major order."""
+    found = [0] * size
+    for at, level in levels:
+        found[at] = level
+    return found
+
+
+def test_the_frame_tool_types_the_two_levels_each_at_one_quantum_beside_the_lay():
+    """The key `profiles` of the shipped giver (the reader's ruling of 2026-10-22 on the pure level's click, cost (i): the lower level's profile beside the upper's, both typed by the frame tool from Rule3's standing line, each at one quantum's charge, the frame run's lay of the full beat and the upper share's reading, `loader/instrument.profiles_of`, `tools/frame_of.level_profile`): two profiles in the parts' order, the lower [4580, 6000] then the upper [3288, 6000]; the upper's four arrays equal to the body's own lay to the rounding (`now` and `im_now` the same integers at every Node, `before` and `im_before` within one unit at 8 and 4 of the 125 Nodes, the tool's root against the lay tool's), each profile's charge, the Wronskian re_now im_before - im_now re_before summed over the board, within 0.04 percent of T / 2 (17993018 and 18006758 against 18000000), and the two profiles' plain overlap exactly 0, the s level even and the p level odd about the proton; the shipped taker, standing in its lower part with no rate, carries its two profiles and its front at the radius 3 of its transition's pair [5822, 6000] since 2026-10-22 (a body climbing into its upper part has its front)."""
+    row = load_shipped(FOLDER / "giver_c5.json").bodies[1]
+    size = 5 * 5 * 5
+    lower, upper = row.profiles
+    laid = (row.now, row.before, row.second_now, row.second_before)
+    for level, typed, within, nodes in zip(laid, upper, (0, 1, 0, 1), (0, 8, 0, 4), strict=True):
+        moved = [a - b for a, b in zip(dense(level, size), dense(typed, size), strict=True)]
+        assert max(abs(d) for d in moved) <= within and sum(1 for d in moved if d) <= nodes
+    charges = []
+    for profile in (lower, upper):
+        now, before, im_now, im_before = (dense(level, size) for level in profile)
+        charges.append(
+            sum(a * d - c * b for a, b, c, d in zip(now, before, im_now, im_before, strict=True))
+        )
+    assert charges == [18006758, 17993018] and all(abs(c - T // 2) * 2500 <= T // 2 for c in charges)
+    assert sum(a * b for a, b in zip(dense(lower[0], size), dense(upper[0], size), strict=True)) == 0
+    taker = load_shipped(FOLDER / "taker_c5.json").bodies[1]
+    assert len(taker.profiles) == 2 and (taker.radius, taker.missing > 0) == (3, True)
+
+
+PURE, BEAT, MIXED, SUM = (
+    "pure_c11.json",
+    "beat_c11.json",
+    "mixed_c11.json",
+    "sum_c11.json",
+)  # the pure level's well
+FULL_BEAT = (
+    -3764112384000
+)  # F on that well, the full beat's outflow over its period 31 on the copy, in G^2
+
+
+def test_the_frame_run_copies_the_bodys_well_with_the_two_levels_at_one_quantum_each():
+    """The frame's run, once per bound body at the first close at which its own-light row falls due (the reader's ruling of 2026-10-22 with his correction of 04:05, cost (ii); `frame_run.copy_world`, `frame_run.beating`, `frame_run.densities`, `frame_run.full_beat`, `lists.own_light_weights`) on the pure level's well, the board of 11 x 9 x 9 with the proton at its centre [5, 4, 4] and the electron beside it at [6, 4, 4] standing in the level [3854, 6000] x1 of the well [4707, 6000] x1 (examples/events/conserve/pure_c11.json; the resonance [5874, 6000], the period 31, the shell at 3 Links with every Port on the board, 218 Nodes, the region 811 of 891 Nodes): the copy's world carries the body's row laid at the integer sum of the two typed profiles in the part carrying its count, the counts (0, 1) and no draw, the proton's row as it is, no packet, no reader and no draw of the world; the two profiles' charge densities read without a board sum to 18001373 (the lower) and 17990942 (the upper), one quantum each to the rounding (T / 2 = 18000000), their plain overlap exactly 0. The giver's books carry no frame run (it declares its rate out of its upper part, the instrument of the file keeping `hazard_weights`, so its own-light row never falls due); its shell is the face x = 0 of the 5-cube, 25 Nodes with every outward Port off the board, and the run at the lay, measured once, booked 25 zeros there in 31 s over the period 22 of its copy (the taker's 46 s over 26), which is why the run is the close's and not the lay's. Measured by the script and not run here, since a build of the 891-Node world with the frame run at the lay takes 72 s (1.2 s a step, 97 percent of it the phase act of the holder's Links): F = -3764112384000 in the unit G^2 on the pure, the equal-beat and the (0.1, 0.9) worlds alike, the copy being the well's, -0.111 of the transition's quantum 33817968529408; the world laid at the exact integer sum of the two profiles (sum_c11, the count in the upper part by the frame) books -3764112384000 in its live first window, F bit for bit, the construction (ii); the copy's outflow per interval leaves the shell for seven intervals (+0.0233 of the unit by interval 7) and the walls one and two Links beyond the shell return it from interval 8 (-0.111 at 31), the live pure world flowing steadily inward (-0.230 over the window, the lay settling), the equal beat's -0.038 and the mix's -0.177; on the box of 15, F = -4073779200000, -0.128 of its quantum, its live first window -0.0289: on these closed boards the law's run reads the walls' return and no A, the blind missed with the cause named, the measuring board the reader's."""
+    world = load_shipped(FOLDER / PURE)
+    row = world.bodies[1]
+    (transition,) = row.detector.transitions
+    assert (row.radius, len(row.shell), row.missing, len(row.region)) == (3, 218, 0, 811)
+    assert transition.resonance == (5874, 6000) and row.detector.draw.window == 31
+    assert row.detector.names == ("level [4707, 6000] x1", "level [3854, 6000] x1")
+    copy = frame_run.copy_world(world, 1)
+    assert (copy.packets, copy.node_detectors, copy.draw) == ((), (), None) and copy.bodies[
+        0
+    ] == world.bodies[0]
+    laid = copy.bodies[1]
+    assert laid.detector.counts == (0, 1) and laid.detector.draw is None and laid.region == row.region
+    levels = (laid.now, laid.before, laid.second_now, laid.second_before)
+    for k, level in enumerate(levels):
+        assert level == frame_run.summed(profile[k] for profile in row.profiles)
+    lower, upper = frame_run.densities(world.shape, world.kind, row)
+    assert (int(lower.sum()), int(upper.sum())) == (18001373, 17990942)
+    size = 11 * 9 * 9
+    assert (
+        sum(
+            a * b
+            for a, b in zip(
+                dense(row.profiles[0][0], size), dense(row.profiles[1][0], size), strict=True
+            )
+        )
+        == 0
+    )
+    giver = Lattice(load_shipped(FOLDER / "giver_c5.json"), None)
+    (books,) = giver.credit.bodies
+    assert books.frame_stream is None and reports.own_light_row(books) is None  # the file's rate: no row
+    assert (
+        len(books.shell) == 25
+        and {at[0] for at in books.shell} == {0}
+        and giver.world.bodies[1].missing == 25
+    )
+
+
+RHO = {
+    PURE: 0.9999998,
+    BEAT: 0.5012336,
+    MIXED: 0.9001969,
+}  # read at the lay, 2026-10-22, to seven digits
+AT_A_MILLION = {PURE: 999999, BEAT: 501233, MIXED: 900196}  # the hazard at a stand-in F of 10^6 G^2
+SMALL_F = (
+    -3764112384000
+)  # the small board's F in G^2, the copy's run on the 11 x 9 x 9 well (the README)
+
+
+def test_the_hazard_is_f_times_the_upper_levels_share_floored_at_the_cavitys_zero():
+    """The own-light row's weight (ALGEBRA.md, The click writes on the lattice (5), CHANGED 2026-10-22, the reader's ruling with his correction of 04:05 and his words of 05:41 and 06:20; `frame_run.upper_share`, `frame_run.hazard`, `lists.own_light_weights`): the upper level's share rho read at the lay from the record's charge density against the two typed densities (the normal equations, the determinant cancelled; the two levels' beat odd about the symmetric well) on the three lays of the one well, the pure level 0.9999998, the equal superposition 0.5012336 and the shares (0.1, 0.9) 0.9001969 (the blind's 1 within 10^-3 and 1 / 2 and 0.9 within 10^-2; the excess the lay's rounding on the integer profiles); the weight F times rho by the one division act, 999999, 501233 and 900196 at a stand-in F of 10^6; the small board's measured F below 0 floored to 0 on all three, the cavity's own word (the walls one and two Links beyond the shell return the wave within the period: the pure level does not decay there); the share capped at the denominator and floored at 0, and 0 where no share stands. A construction's pin, nothing of the number: the free board's F is the README's measurement."""
+    for name, expected in RHO.items():
+        board = Lattice(load_shipped(FOLDER / name), None)
+        (books,) = board.credit.bodies
+        (transition,) = books.declared.transitions
+        row = board.world.bodies[books.number]
+        books.frame_stream = frame_run.FrameRun(
+            (), frame_run.densities(board.world.shape, board.kind, row)
+        )
+        numerator, denominator = frame_run.upper_share(board, books, transition)
+        assert round(numerator / denominator, 7) == expected and 0 < numerator <= denominator
+        assert frame_run.hazard(frame_run.FrameRun((SMALL_F,), ()), numerator, denominator) == 0
+        assert (
+            frame_run.hazard(frame_run.FrameRun((1000000,), ()), numerator, denominator)
+            == AT_A_MILLION[name]
+        )
+    stream = frame_run.FrameRun((10, 30), ())
+    assert (
+        frame_run.hazard(stream, 3, 2),
+        frame_run.hazard(stream, -1, 2),
+        frame_run.hazard(stream, 1, 0),
+    ) == (40, 0, 0)
+    assert frame_run.hazard(frame_run.FrameRun((10, -30), ()), 1, 1) == 0
+
+
+def test_a_bound_body_whose_own_light_row_falls_due_with_no_profiles_is_refused_by_name():
+    """The refusal at the first close (ENGINE.md, the mode row; `frame_run.measured`): a bound body whose own-light row falls due with no `profiles` under its `instrument` has no A to be weighed by, and the frame's run refuses by name, naming the body, the interval and the tool that types the two levels; the giver's declaration with its profiles stripped in memory, its run never reaching the row (its rate declared), the refusal read on the function itself."""
+    world = load_shipped(FOLDER / "giver_c5.json")
+    stripped = replace(world, bodies=(world.bodies[0], replace(world.bodies[1], profiles=())))
+    board = Lattice(stripped, None)
+    (books,) = board.credit.bodies
+    with pytest.raises(
+        RuntimeError, match="falls due at the interval 0 with no `profiles` under its `instrument`"
+    ):
+        frame_run.measured(board, books)
+
+
+def test_a_pure_level_declared_with_no_profiles_is_refused_by_name_at_load(tmp_path, monkeypatch):
+    """The loader's refusal (ENGINE.md, the mode row; `loader/instrument.instrument_body`; the reader's read of 2026-10-22, 09:04): a bound body whose count stands in a part a transition enters, with no rate out of that part, has its own-light row falling due at its window's close, so a declaration with no `profiles` is refused by name at load and not first at that close; the pure level's world with the key deleted from its mode file, the digest standing."""
+    for name in ("pure_c11.json", "pure_c11.mode.json", "universe_conserve.json"):
+        (tmp_path / name).write_text((FOLDER / name).read_text(encoding="utf-8"), encoding="utf-8")
+    path = tmp_path / "pure_c11.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+    document["universe"] = "universe_conserve.json"
+    path.write_text(json.dumps(document), encoding="utf-8")
+    mode = json.loads((tmp_path / "pure_c11.mode.json").read_text(encoding="utf-8"))
+    mode["world_digest"] = world_files.input_digest(document)
+    del mode["bodies"][1]["instrument"]["profiles"]
+    (tmp_path / "pure_c11.mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    refused("falls due at its window's close, and it declares no `profiles`", load_world, path)
