@@ -280,11 +280,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
     ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
-    (
-        "lists.py",
-        "hazard_weights",
-        "division_forward",
-    ): "D",  # the beat's term over W_c G^2, once (2026-10-21)
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
     # take.py
     (
