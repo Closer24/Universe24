@@ -347,7 +347,12 @@ def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) 
     """A bound body's book of its own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): for each holder of the sign the body's family reads, the holder's light, its record's lines as `Lattice.record` gives them (the sum of its rows), read by `readings.currents_of` at the covector's weights (`covector.weights`, (-3, 1, 1, 1) in thirds under the Lorentz form; the plain time line's current alone where the holder declares none) through the body's front Ports with the holder's Link factors in the unit G^2 (`weighted`, the credit's booking of a drive, inward positive), booked per front Node outward positive into `NodeBooks.light`, the window's sum; nothing for a body whose family reads no holder of the sign."""
     if books.zone is None:  # no near zone: a body with no transition into its part, or no bound body
         return
-    facing = front(books.zone, wrap, books.zone, own)  # the light's front, the shell's Ports that exist
+    centre, radius = books.zone  # the ball at the board's shape now: the board grows at a receding face
+    x, y, z = (
+        c + o for c, o in zip(centre, board.offset, strict=True)
+    )  # the file's Node on the grown board
+    zone = ball(board.shape, (x, y, z), radius, wrap)
+    facing = front(zone, wrap, zone, own)  # the light's front, the shell's Ports that exist
     for read in board.families[books.index].reads:
         holder = board.families[read.family]
         if not holder.wronskian:

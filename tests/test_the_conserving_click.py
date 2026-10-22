@@ -123,6 +123,32 @@ def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_
     assert len(lines) == before and books.labels == [WALL, 0] and books.carried == [0, 0]
 
 
+def test_the_light_front_follows_the_board_as_it_grows_at_a_receding_face(tmp_path, monkeypatch):
+    """The near zone's ball is taken at the board's shape every interval, as the body's region mask is (`reports.booked_light`, `reports.ball`; the tube's refusal of 2026-10-22 at its first interval, the masks at the start's shape against the grown board): the giver world copied with its x faces receding, the lay at x = 0 reaching the low face, grows by two layers at the first interval, the offset moving with it, and the shell's 25 Nodes keep their places and their book its length; whether the grown layer's Nodes count as the declared board for the shell's Ports off the start's board is named and not pinned (the book read 0 over ten intervals on this copy)."""
+    for name in ("giver_c5.json", "giver_c5.mode.json"):
+        (tmp_path / name).write_text((FOLDER / name).read_text(encoding="utf-8"), encoding="utf-8")
+    (tmp_path / "u.json").write_text(
+        (FOLDER / "universe_conserve.json").read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    path, mode_path = tmp_path / "giver_c5.json", tmp_path / "giver_c5.mode.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+    document["universe"] = "u.json"
+    document["boundary"]["x"] = "open"
+    document["receding"] = {"x": {"sides": ["low", "high"], "largest": 21, "layers": 2}}
+    path.write_text(json.dumps(document), encoding="utf-8")
+    shipped = json.loads(mode_path.read_text(encoding="utf-8"))
+    shipped["world_digest"] = world_files.input_digest(document)
+    mode_path.write_text(json.dumps(shipped), encoding="utf-8")
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = Lattice(load_world(path), None)
+    (books,) = [b for b in board.credit.bodies if b.bound]
+    assert (len(books.shell), books.zone) == (25, ((3, 2, 2), 3))
+    for _ in range(3):
+        board.step()
+    assert board.shape[0] > 5 and board.offset[0] > 0  # grown at the low face, the offset with it
+    assert (len(books.shell), len(books.light)) == (25, 25)  # the shell's places and its book stand
+
+
 def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective_one_by_name(
     tmp_path, monkeypatch
 ):

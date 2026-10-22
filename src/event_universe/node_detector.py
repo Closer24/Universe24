@@ -21,7 +21,7 @@ from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
-from event_universe.reports import BODY, ball, booked_light, credit, front, weighted
+from event_universe.reports import BODY, booked_light, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of, sloped
 
 if TYPE_CHECKING:
@@ -88,7 +88,9 @@ class NodeBooks:
     bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
     light: list[int] = field(default_factory=list)  # the own light per shell Node, (5)
     shell: tuple[Node, ...] = ()  # the light's front, the near zone's shell (BodyRow.shell)
-    zone: np.ndarray | None = None  # the near zone's ball as a mask (`reports.ball`)
+    zone: tuple[Node, int] | None = (
+        None  # the near zone: the declared Node and the radius (`reports.ball`)
+    )
     carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
 
 
@@ -129,7 +131,7 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 norm=norm,
                 bound=bool(row.region),
                 shell=row.shell,
-                zone=ball(board.shape, row.nodes[0], row.radius, board.wrap) if row.shell else None,
+                zone=(row.nodes[0], row.radius) if row.shell else None,
             )
         )
     return found
