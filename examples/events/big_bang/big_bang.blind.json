@@ -43,7 +43,7 @@
   },
   "the_transition": {
    "reading": "the interval and U at which light's write summed over the board falls below the dust's and the matter's together, from the log's per-family writes",
-   "blind": {"U_x": 1.16, "interval": 203, "design_input": 1.3, "reader_recomputation_at_the_exponent_5": [1.35, 1.4], "constraint_equality_s_r_over_6_equals_s_m_over_5": {"U": 1.34, "shift_from_the_writes_crossing": "ln (6 / 5) = 0.18 in U, the reader's line from the genericity hand's read"}},
+   "blind": {"U_x": 1.16, "interval": 203, "design_input": 1.3, "reader_recomputation_at_the_exponent_5": [1.35, 1.4], "constraint_equality_s_r_over_6_equals_s_m_over_5": {"U": 1.34, "shift_from_the_writes_crossing": "ln (6 / 5) = 0.18 in U, the reader's line from the genericity hand's read"}, "correction_dated_2026-10-22": "after the reader's read of the text half, the prediction above untouched: the constraint's equality falls before the writes' crossing in the model, U 0.99 against 1.16, not 0.18 after it; the seed's well's shift an upper bound's order, a few hundredths at the crossing; the band 0.9 to 1.6 stands"},
    "band": {"U_x": [0.9, 1.6]},
    "status": "DERIVED by the model; the band ASSUMED from the two shifts the model does not carry: the one-Node lay's pumping of the matter's form (15 to 29 percent, earlier by 0.1 to 0.2) and the seed's well dimming the dust's write at the seed Node by e^(-4 u) (later by up to 0.4)",
    "fence": "lattice"
