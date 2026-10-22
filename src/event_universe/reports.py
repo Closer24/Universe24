@@ -343,28 +343,38 @@ def weighted(
     return seen
 
 
-def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) -> None:
-    """A bound body's book of its own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): for each holder of the sign the body's family reads, the holder's light, its record's lines as `Lattice.record` gives them (the sum of its rows), read by `readings.currents_of` at the covector's weights (`covector.weights`, (-3, 1, 1, 1) in thirds under the Lorentz form; the plain time line's current alone where the holder declares none) through the body's front Ports with the holder's Link factors in the unit G^2 (`weighted`, the credit's booking of a drive, inward positive), booked per front Node outward positive into `NodeBooks.light`, the window's sum; nothing for a body whose family reads no holder of the sign."""
-    if books.zone is None:  # no near zone: a body with no transition into its part, or no bound body
-        return
-    centre, radius = books.zone  # the ball at the board's shape now: the board grows at a receding face
-    x, y, z = (
-        c + o for c, o in zip(centre, board.offset, strict=True)
-    )  # the file's Node on the grown board
-    zone = ball(board.shape, (x, y, z), radius, wrap)
-    facing = front(zone, wrap, zone, own)  # the light's front, the shell's Ports that exist
-    for read in board.families[books.index].reads:
+def shell_outflow(
+    board: Lattice,
+    index: int,
+    zone: tuple[Node, int],
+    shell: Sequence[Node],
+    wrap: Wrap,
+    own: np.ndarray,
+) -> list[int]:
+    """The holder's light through a bound body's light front this interval, per shell Node, outward positive, in the unit G^2 (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; `index` the body's family): the near zone's ball at the board's shape now from the declared Node and the radius with the board's offset (`ball`; the board grows at a receding face), its front the shell's Ports that exist (`front`); for each holder of the sign the body's family reads, the holder's record lines as `Lattice.record` gives them, read by `readings.currents_of` at the covector's weights through those Ports with the holder's Link factors (`weighted`, the credit's booking of a drive, inward positive), the sign turned outward. `booked_light` sums it into the window's book; the pure level's run of the full beat reads the same number on its copy."""
+    centre, radius = zone
+    x, y, z = (c + o for c, o in zip(centre, board.offset, strict=True))
+    ball_now = ball(board.shape, (x, y, z), radius, wrap)  # the file's Node on the grown board
+    facing = front(ball_now, wrap, ball_now, own)
+    found = [0] * len(shell)
+    for read in board.families[index].reads:
         holder = board.families[read.family]
         if not holder.wronskian:
             continue
         _content, factors = board.read(read.family)
         lines = board.record(read.family)
         current = readings.currents_of(holder.pair[0], lines, wrap, covector.weights(holder), None)
-        if not books.light:
-            books.light = [0] * len(books.shell)  # per shell Node, the light's front (2026-10-22)
         for through in weighted(facing, [(current, factors, None)]):
             at = np.asarray(through, dtype=object)
-            for k, node_at in enumerate(books.shell):
-                books.light[k] -= int(
-                    at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))]
-                )
+            for k, node_at in enumerate(shell):
+                found[k] -= int(at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))])
+    return found
+
+
+def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) -> None:
+    """A bound body's book of its own light through its light front this interval (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): `shell_outflow` per shell Node summed into `NodeBooks.light`, the window's book; nothing for a body with no near zone (no transition into its part, or no bound body) or whose family reads no holder of the sign."""
+    if books.zone is None:
+        return
+    through = shell_outflow(board, books.index, books.zone, books.shell, wrap, own)
+    found = books.light or [0] * len(books.shell)
+    books.light = [a + b for a, b in zip(found, through, strict=True)]

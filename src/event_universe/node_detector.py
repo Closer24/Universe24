@@ -88,9 +88,10 @@ class NodeBooks:
     bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
     light: list[int] = field(default_factory=list)  # the own light per shell Node, (5)
     shell: tuple[Node, ...] = ()  # the light's front, the near zone's shell (BodyRow.shell)
-    zone: tuple[Node, int] | None = (
-        None  # the near zone: the declared Node and the radius (`reports.ball`)
-    )
+    zone: tuple[Node, int] | None = None  # the near zone: the declared Node and the radius
+    outflows: list[int] = field(default_factory=list)  # the where's book since the last click
+    closed_light: int = 0  # the last close's window total of the own light, G^2 (the observers')
+    closed_share: tuple[int, int] = (0, 0)  # the last close's draw: the row's weight and the unit
     carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
 
 
@@ -167,9 +168,7 @@ def piece_momentum(board: Lattice, index: int, passage: Passage) -> list[int]:
     unit = board.credit.units[index]
     if passage.share <= 0 or weight == 0:  # nothing passed, or the frozen pair, whose currents are 0
         return [0] * AXES
-    sign = (
-        -1 if weight < 0 else 1
-    )  # the wall's sign, num's, attached after the rounding on the magnitude
+    sign = -1 if weight < 0 else 1  # the wall's sign, num's, after the rounding
     wall = abs(weight) * passage.share
     return [sign * int(signed_rounded(int(value) * unit, wall)) for value in passage.momenta]
 
