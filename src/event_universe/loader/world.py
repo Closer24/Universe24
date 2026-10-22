@@ -10,7 +10,6 @@ import numpy as np
 from event_universe import conversion
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
-from event_universe.guide import travelling
 from event_universe.loader import derived, window
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import (
@@ -192,14 +191,7 @@ def bodies_of(
                 )
             count = reader_count(body, label, families, family)
             parts = node_detector_of(body, label, families, family, quanta, count)
-            parts = packet_form(parts, label, families, tuple(nodes), shape, action)
-            for rate in parts.rates:  # the guide clause at load: a source in time on a board where no mode travels is refused by name
-                read = travelling(shape, periodic, nodes[0], rate.resonance)
-                if read is not None and not read[0]:
-                    raise ValueError(
-                        f"{label}: no mode of the guide travels at the resonance {list(rate.resonance)} on the board "
-                        f"{list(shape)}: the emission would lay nothing that leaves (the guide clause, ALGEBRA.md (5))"
-                    )
+            parts = packet_form(parts, label, families, tuple(nodes), shape, periodic, action)
             found.append(BodyRow(family, tuple(nodes), tuple(counts), (), (), (), (), (), parts))
             continue
         placed, kind = laid.index(entry), families[family]

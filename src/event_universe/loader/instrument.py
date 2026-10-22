@@ -104,7 +104,7 @@ def instrument_body(
             )
         line["weight"] = holder.weight
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
-    declaration = packet_form(declaration, label, families, tuple(region), shape, action)
+    declaration = packet_form(declaration, label, families, tuple(region), shape, periodic, action)
     standing = next((p for p, c in enumerate(declaration.counts) if c), 0)
     into = [t for t in declaration.transitions if t.enters == standing]
     radius, shell, missing = (
