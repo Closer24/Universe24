@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, Wrap, arrival
 from event_universe.core.rule3 import Rule, rule_integers
-from event_universe.features import phase
+from event_universe.features import phase, volume
 from event_universe.features.held_write import held_write
 from event_universe.features.read import (
     axis_paces,
@@ -39,14 +39,18 @@ Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order
 
 
 def read_lines(
-    index: int, families: Families, states: States, direction: int, record: int = 0
+    index: int, families: Families, states: States, direction: int, gamma: int, record: int = 0
 ) -> tuple[Any, list[Any]]:
     """The lines a record's read takes at the interval's start in `direction` (ALGEBRA.md #the-paces, Every row reads the content): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), a held row of the content reading its own level among them and a holder of the sign read as the sum of every row but the record's own (`row_levels`, `derived.row_of`), and per read row carrying axis lines its weight and its three axis lines at the same level; the integer 0 and no axis lines where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
     own = row_of(families, index, record)
     levels = [
         plain(
-            row_levels(families[r.family], states[r.family].lines, 0, direction, own),
+            volume.levels_read(
+                gamma,
+                row_levels(families[r.family], states[r.family].lines, 0, direction, own),
+                families[r.family].motion_volume,
+            ),
             families[r.family].wronskian,
         )
         for r in reads
@@ -74,8 +78,8 @@ def read(
         factors: Factors = (unit * unit,) * PORTS
         content: Any = 0
     else:
-        content, axes = read_lines(index, families, states, direction, record)
-        factors = link_factors(gamma, unit, link_tensions(axes, wrap))
+        content, axes = read_lines(index, families, states, direction, gamma, record)
+        factors = link_factors(gamma, unit, link_tensions(axes, wrap, gamma))
     if cut is not None:
         factors = tuple(np.where(mask, 0, factor) for mask, factor in zip(cut, factors, strict=True))
     return content, factors
@@ -93,9 +97,9 @@ def rulers(
     """The paces a record's read gives it at every Node for the write's factor (ALGEBRA.md, The write per proper volume and per proper interval; The paces compose): the clock p_0 from its content and its pace along each axis, p_a = p_i (q_(+a) + q_(-a)) / (2 Gamma), the Node's pace p_i = p_0^2 / Gamma times the mean of its two a-Links' factors from their tensions, one reading per axis through its two Ports (`features/read`, `axis_paces`), the ruler h_a = p_0 / p_a; Gamma on the clock and on every axis where the family reads nothing (every factor 1 at the vacuum's paces); read at the level the step in `direction` starts from, the same numbers read back."""
     if not any(not families[r.family].rotation for r in families[index].reads):
         return gamma, (gamma, gamma, gamma)
-    content, axes = read_lines(index, families, states, direction, record)
+    content, axes = read_lines(index, families, states, direction, gamma, record)
     clock, pace = paces.node_paces(gamma, content)
-    return clock, axis_paces(gamma, pace, link_tensions(axes, wrap))
+    return clock, axis_paces(gamma, pace, link_tensions(axes, wrap, gamma))
 
 
 def turning(

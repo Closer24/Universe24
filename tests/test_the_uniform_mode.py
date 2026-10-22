@@ -1,6 +1,7 @@
-"""The uniform mode on the board wrapped on every axis (ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22; The closed lattice has no rest; item 6 of what is open, the closed board's double root; No write from outside Rule3 wakes either double root of the massless row): on a board periodic on every axis a massless held row's rest needs a sink, and the world's key `interval: unobservable` (loader/interval.py `interval_of`), or the law's `uniform: carried` of 2026-10-21 kept admitted beside it (loader/uniform.py `uniform_of`, the carried mean with no hill, the reader's line L2 on the design), admits the board by resting every massless row on the zero-mean part of its sources (features/start `rest`, `without_uniform`, `settled_free`) and leaving the k = 0 component to Rule3's own line, the double root carried at every Node by the step and the one write, no act added. (1) The declaration: the sink's refusal without either key names the hypothesis's key as the way; `interval` refused by name at any value but `unobservable`, where a face is open and where a face is closed (a board with a sink has no free uniform mode and its rest fixes the clock's unit beyond the face), the two keys together refused by name, and a kick, a packet laid on a holder of the content, refused by name under the key (the mean's velocity the content's, nobody's declaration). (2) The hill's write bit for bit and the attractor from rest: a matter record laid uniform over a 3-cube torus at the band's rest rotation sources a uniform write, so gravity's level is one number at every Node at every interval, and over 40 intervals its second difference is the one write's increment (k_w D' - K v^2 + r) div (E_s T), the numerator the form scaled by the write's factor at the record's own content less the row's own kinetic form at the symmetry's weight K, computed beside from the engine's own functions, bit for bit, the remainder the write's; the tensions 0 (a uniform record has none); the velocity relaxing to the constraint from rest as the test's own integration of the law's line has it, the constraint's residual from -1 toward 0; the uniform reading one division with one remainder; the run back refused by name (T5). (3) The rest: a point source on a 7-cube torus at [1, 1] rests on the zero-mean part, the read-weighted mean taken out exactly to under a millionth of a line unit, the fine levels within two fine units of the pace-weighted Poisson solution solved sparse (floats, the test's oracle), the floor at 0 and the levels within one level."""
+"""The uniform mode on the board wrapped on every axis (ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22; The closed lattice has no rest; item 6 of what is open, the closed board's double root; No write from outside Rule3 wakes either double root of the massless row): on a board periodic on every axis a massless held row's rest needs a sink, and the world's key `interval: unobservable` (loader/interval.py `interval_of`), or the law's `uniform: carried` of 2026-10-21 kept admitted beside it (loader/uniform.py `uniform_of`, the carried mean, the reader's line L2 on the design), admits the board by resting every massless row on the zero-mean part of its sources (features/start `rest`, `without_uniform`, `settled_free`) and leaving the k = 0 component to Rule3's own line, the double root carried at every Node by the step and the one write, no act added. (1) The declaration: the sink's refusal without either key names the hypothesis's key as the way; `interval` refused by name at any value but `unobservable`, where a face is open and where a face is closed (a board with a sink has no free uniform mode and its rest fixes the clock's unit beyond the face), the two keys together refused by name, a kick, a packet laid on a holder of the content, refused by name under the key (the mean's velocity the content's, nobody's declaration), and a massless row under the key without `pressure: trace` refused by name. (2) The volume form's write bit for bit and the attractor from rest (the momentum hand's derivation M12a, read cold by the reader, 2026-10-22): under the key the massless row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume), its one write ((d + 1) X c + r) div (Gamma E_s T) at a wall that never moves, the level a reading of the record; a matter record laid uniform over a 3-cube torus at the band's rest rotation sources a uniform write, so X is one number at every Node at every interval, and over 40 intervals its second difference is the one write's increment computed beside from the engine's own functions, bit for bit, under the rounded factor and under the carried factor at the wall fixed per Node, the remainder the write's; the level reading relaxes to the constraint from rest, the residual from -1 toward 0, the velocity under the volume form's bound, U within 2 percent of the test's own integration of X'' = (d + 1) X s / Gamma at the law's own interval. (2b) The law's key as written: Rule3 carries the uniform line bit for bit on the torus under `uniform: carried`, the time line the level itself, the write (w D' + r) div (E_s T), and the 20 intervals run back return the start bit for bit. (3) The rest: a point source on a 7-cube torus at [1, 1] rests on the zero-mean part, the read-weighted mean taken out exactly to under a millionth of a line unit, the fine levels within two fine units of the pace-weighted Poisson solution solved sparse (floats, the test's oracle), the floor at 0 and the levels within one level."""
 
 import math
+from fractions import Fraction
 
 import numpy as np
 from scipy.sparse import diags, kronsum
@@ -10,26 +11,29 @@ from event_universe import board_readings, world_files
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
+from event_universe.features import volume
 from event_universe.features.held_write import held_write
 from event_universe.features.start import arrivals, rest, scaled_source, without_uniform
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import refused
+from tests.laws import BACK, refused
 from tests.laws_interval import (
     ACTION,
     GAMMA,
     TORUS,
     laid_torus,
     lockstep,
+    one_number,
     uniform_world,
     universe_at_weight_one,
+    volume_universe,
 )
 
 
 def test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it(
     tmp_path, monkeypatch
 ):
-    """(1) The declaration (loader/interval.py `interval_of`, `one_key`, `kicks_refused`; loader/uniform.py `uniform_of` beside it): a massless row's rest on a torus is refused by name without either key, the refusal naming `interval: unobservable` as the way and the law's `uniform: carried` beside it; `interval` at a value other than `unobservable` is refused by name; `unobservable` with the x face open or the z face closed is refused by name, a board with a sink having no free uniform mode; the two keys on one world are refused by name together; a `packets` entry on gravity, a kick on the holder of the content, is refused by name under the key; `unobservable` on the torus loads, the world holding the declaration, and so does the law's `carried` (the old key kept admitted, the reader's line L2 on the design); a held row's `booking` at a word other than `count` or `form`, and `form` on the holder of the sign, are refused by name (loader/universe.booking_of), and its `weight` at a word other than `mix` or `gap` (loader/universe.hill_weight_of)."""
+    """(1) The declaration (loader/interval.py `interval_of`, `one_key`, `kicks_refused`, `volume_rows`; loader/uniform.py `uniform_of` beside it): a massless row's rest on a torus is refused by name without either key, the refusal naming `interval: unobservable` as the way and the law's `uniform: carried` beside it; `interval` at a value other than `unobservable` is refused by name; `unobservable` with the x face open or the z face closed is refused by name, a board with a sink having no free uniform mode; the two keys on one world are refused by name together; a `packets` entry on gravity, a kick on the holder of the content, is refused by name under the key; a held massless row under the key without `pressure: trace` is refused by name (the volume's exponent is the trace's one weight); `unobservable` on the torus loads at the volume form's integers under `factor: rounded` and under `factor: carried` alike, the world holding the declaration and gravity carrying its volume (`motion_volume`; the start's one conversion, both levels the volume of the rest 60; the wall fixed per Node kept by the lattice under the carry alone), and so does the law's `carried` (the old key kept admitted, the reader's line L2 on the design: the time line the level itself, no volume); a held row's `booking` at a word other than `count` or `form`, and `form` on the holder of the sign, are refused by name (loader/universe.booking_of)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_at_weight_one(tmp_path)
     sunk = refused("needs a sink", Lattice, load_world(uniform_world(tmp_path, "sunk")))
@@ -57,14 +61,23 @@ def test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_whe
         "lays a kick on 'gravity'", load_world, uniform_world(tmp_path, "kick", packets=kick, **key)
     )
     assert "nobody's declaration" in str(kicked) and "the clause of 2026-10-22" in str(kicked)
-    board = Lattice(load_world(laid_torus(tmp_path, "torus", **key)))
-    assert (
-        board.world.unobservable
-        and not board.world.uniform
-        and board.world.periodic == (True, True, True)
+    untraced = refused(
+        "declares no `pressure: trace`", load_world, uniform_world(tmp_path, "flat", **key)
     )
+    assert "'gravity'" in str(untraced) and "d + 1" in str(untraced) and "drop the key" in str(untraced)
+    rest_volume = int(volume.volume_of(GAMMA, np.array(60)))
+    for factor in ("rounded", "carried"):
+        volume_universe(tmp_path, factor)
+        board = Lattice(load_world(laid_torus(tmp_path, f"torus_{factor}", **key)))
+        g = [family.name for family in board.families].index("gravity")
+        assert board.world.unobservable and not board.world.uniform
+        assert board.world.periodic == (True, True, True) and board.families[g].motion_volume
+        assert board.families[g].factor_carried == (factor == "carried") == (g in board.fixed_walls)
+        line = board.states[g].lines[0]
+        assert one_number(line.now) == one_number(line.before) == rest_volume
     law = Lattice(load_world(laid_torus(tmp_path, "law", uniform="carried")))
     assert law.world.uniform and not law.world.unobservable  # the law as written, kept and runnable
+    assert not law.families[g].motion_volume and one_number(law.states[g].lines[0].now) == 60
     universe_at_weight_one(tmp_path, gravity={"booking": "clock"})
     worded = refused("held.booking is one of", load_world, uniform_world(tmp_path, "worded", **key))
     assert "'clock'" in str(worded) and "'count', 'form'" in str(worded)
@@ -73,75 +86,127 @@ def test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_whe
         "holder of the sign books its Wronskian", load_world, uniform_world(tmp_path, "sign", **key)
     )
     assert "The form's own clock" in str(signed)
-    universe_at_weight_one(tmp_path, gravity={"weight": "dust"})
-    weighed = refused("held.weight is one of", load_world, uniform_world(tmp_path, "weighed", **key))
-    assert "'dust'" in str(weighed) and "'mix', 'gap'" in str(weighed)
 
 
-def test_the_hill_at_the_symmetrys_weight_writes_bit_for_bit_and_the_velocity_relaxes_to_the_constraint(
+def test_the_volumes_write_is_bit_for_bit_at_either_factor_and_the_level_reading_relaxes_to_the_constraint(
     tmp_path, monkeypatch
 ):
-    """(2) T2, the hill's write bit for bit and the attractor from rest (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-22; The motion of gravity's row is a hill at the symmetry's weight; The mean's velocity is the content's; the reader's line L4: gravity declares `booking: form`): on the 3-cube torus under `interval: unobservable` with the uniform matter record, at T 32,768 and at T 36,000, over 40 intervals gravity's time line is one number at every Node, its write remainder one number, its three tension lines 0, and a(t + 1) - 2 a(t) + a(t - 1) is exactly (k_w D' - K v^2 + r) div (E_s T + K v), the symmetric hill (the derivation M11j: the drag -K v_in v_out implicit in a(t + 1) by the one carried division at the wall E_s T + K v_in), with D' the record's form scaled by `paces.write_factor` at the paces of the content it reads (one power, the form's own clock), K = `paces.motion_weight([D'], [5], E_s T, Gamma, 6)` (27 at T 32,768, 30 at 36,000, the symmetry's integers), v = a(t) - a(t - 1) the row's own velocity at the interval's start and the division the held write's own (features/held_write; `paces.motion_term` the one function of the hill's write, the term and the divisor), the remainder after it the engine's; the velocity in levels per interval never above the constraint's bound sqrt(2 Gamma s_0 / 5) (the test's floats, s_0 the first write), its maximum within one level of the test's own integration of the model at the law's own interval, v(t + 1) = v(t) + (s(U) - c v^2 / Gamma) / (1 + c v / Gamma) and U(t + 1) = U(t) + v(t + 1) / Gamma with c = K Gamma / (E_s T) (the symmetric map's line, Gamma U'' (1 + c U') = s - c Gamma U'^2) and s(U) the write at U from the record's own form (A^2 sin omega' kept, cos omega' = 1 - N^2 / 3) and factor (N^4), the model's interval of the maximum within two intervals of the engine's plateau, U at the intervals 10, 20 and 40 within 2 percent of the model (0.25 percent measured; the symmetry hand's 9-cube within 1.3 percent); the constraint's residual from `board_readings.eras` -1 at the start and rising toward 0 at every tenth interval, the hill's weight one number at every Node (the mix of one form); `uniform_mode` reads the level with the remainder 0 on the lockstep board; the run back refused by name (T5, tests/test_the_interval.py)."""
+    """(2) T2, the volume form's write bit for bit and the attractor from rest (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; the momentum hand's derivation M12a read cold by the reader, 2026-10-22; features/volume, records.write_sources, Lattice.fixed_walls; the reader's line L4: gravity declares `booking: form`): on the 3-cube torus under `interval: unobservable` at the volume form's integers (T 36,000, the width 92) with the uniform matter record, under `factor: rounded` and under `factor: carried` in turn, over 40 intervals gravity's time line is one number X at every Node, its write remainder one number, its three tension lines 0, X at the start the volume of the rest 60, and X(t + 1) - 2 X(t) + X(t - 1) is exactly ((d + 1) X(t) c + r) div (Gamma E_s T) under the rounding, c = k_w D' the record's form scaled by `paces.write_factor` at the paces of the level reading a(t) = `volume.level_of(X(t))` (the content matter reads; one power, the form's own clock; the uniform record's stress parts 0, so the trace's pressure term is 0 and the write the form's alone), and under the carry exactly ((d + 1) X(t) c' + r) div (Gamma W) with W = E_s T Gamma p_0(60)^2 the Node's wall at the rest's paces kept for the run and c' = rounded(k_w D p^3 W, E_s T Gamma p_0(a)^2) the carried product at the ratio of the walls, rounded once as a coefficient, the division the held write's own (features/held_write) and the remainder after it the engine's in both; the level reading a(t) is what the board reads (`board_readings.eras` with the remainder 0, `uniform_mode` a NamedTuple), rising by several levels per interval; the velocity in levels per interval never above the volume form's bound sqrt(Gamma s_0 / (d + 1)) (the test's floats, s_0 the first write c / (E_s T) in levels: Gamma U'' = s - (d + 1) Gamma U'^2 has its terminal velocity there), the level at the intervals 10, 20 and 40 within 2 percent of the test's own integration of the volume's map X(t + 1) = 2 X(t) - X(t - 1) + (d + 1) X(t) s(U(t)) / Gamma at the law's own interval, U = ln(X / Gamma) / (d + 1) and s(U) the write at U from the record's own form (A^2 sin omega' kept, cos omega' = 1 - N^2 / 3) and factor (N^4); the constraint's residual from `board_readings.eras` -1 at the start and rising toward 0 at every tenth interval (the attractor reached from rest, the chain rule's own); the writes' reading matter's alone and no seed Node; the two factors' levels within one level of each other over the 40 intervals (the ratio's one rounding on a product of forty bits)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    for action, weight in ((ACTION, 27), (36000, 30)):
-        universe_at_weight_one(tmp_path, action=action, gravity={"booking": "form"})
-        board = Lattice(load_world(laid_torus(tmp_path, f"hill_{action}", interval="unobservable")))
+    levels = {}
+    for factor in ("rounded", "carried"):
+        volume_universe(tmp_path, factor)
+        board = Lattice(load_world(laid_torus(tmp_path, f"volume_{factor}", interval="unobservable")))
         names = [family.name for family in board.families]
         g, m = names.index("gravity"), names.index("matter")
         wall, course = board.walls(g)[0], lockstep(board, g, m, 40)
-        assert wall == action  # E_s T at the level weight 1
+        fixed = one_number(board.fixed_walls[g][0]) if factor == "carried" else None
+        assert wall == 36000 and course[0]["level"] == int(volume.volume_of(GAMMA, np.array(60)))
         for step in course:
             form = step["now"] * step["now"] - step["next"] * step["before_record"]
-            clock, pace = paces.node_paces(
-                GAMMA, step["level"]
-            )  # matter reads gravity at 1, the content
-            scaled = int(paces.write_factor(np.array(form), pace, pace, pace, clock, GAMMA, 1))
-            hill = paces.motion_weight([np.array(scaled)], [5], wall, GAMMA, 6)
-            assert int(hill) == weight and step["eras"].weight_low == step["eras"].weight_high == weight
-            term, divisor = paces.motion_term(step["level"], step["before"], int(hill), wall)
-            numerator = scaled + int(term)
+            a = int(volume.level_of(GAMMA, np.array(step["level"])))
+            clock, pace = paces.node_paces(GAMMA, a)  # matter reads gravity at 1, the level reading
+            if fixed is None:
+                scaled = int(paces.write_factor(np.array(form), pace, pace, pace, clock, GAMMA, 1))
+                divisor = GAMMA * wall
+            else:
+                assert fixed == wall * GAMMA * paces.clock(GAMMA, 60) ** 2  # the rest's wall, kept
+                scaled = int(paces.rounded(form * pace**3 * fixed, wall * GAMMA * clock * clock))
+                divisor = GAMMA * fixed
+            numerator = volume.EXPONENT * step["level"] * scaled
             level, carried = held_write(
                 2 * step["level"] - step["before"], numerator, divisor, step["remainder"]
             )
             assert (step["after"], step["remainder_after"]) == (int(level), int(carried))
-            step["write"] = scaled / wall
-        first, velocity = course[0], [step["after"] - step["level"] for step in course]
-        bound = math.sqrt(2 * GAMMA * first["write"] / 5)
-        assert 0 < max(velocity) < bound and velocity[0] > 0
-        model = integrated(first["write"], first["level"] / GAMMA, weight * GAMMA / wall, 40)
-        top = max(range(len(model)), key=lambda t: model[t][1])
-        plateau = [t + 1 for t, v in enumerate(velocity) if v == max(velocity)]
-        assert abs(max(velocity) - model[top][1]) <= 1 and min(abs(top - t) for t in plateau) <= 2
+            step["write"], step["a"] = form * pace**3 / (GAMMA * clock * clock) / wall, a
+            step["a_after"] = int(volume.level_of(GAMMA, np.array(step["after"])))
+            read = step["eras"]
+            assert (read.level, read.level_remainder, read.before, read.nodes) == (
+                step["a_after"],
+                0,
+                a,
+                27,
+            )
+        first = course[0]
+        velocity = [step["a_after"] - step["a"] for step in course]
+        bound = math.sqrt(GAMMA * first["write"] / volume.EXPONENT)
+        assert 0 < max(velocity) <= bound + 1 and velocity[0] > 0 and min(velocity) > 0
+        model = integrated(first["write"], first["level"], 40)
         for t in (10, 20, 40):
-            assert abs(course[t - 1]["after"] / GAMMA / model[t][0] - 1) < 0.02, (action, t)
-        residual = [step["eras"].residual[0] / step["eras"].residual[1] - 1 for step in course]
+            assert abs(course[t - 1]["a_after"] / GAMMA / model[t] - 1) < 0.02, (factor, t)
+        residual = [step["eras"].nature[0] / step["eras"].nature[1] - 1 for step in course]
         assert -1 <= residual[0] < -0.95 and residual[-1] < 0
         assert all(b > a for a, b in zip(residual[::10], residual[10::10], strict=False))
         read, mode = course[-1]["eras"], board_readings.uniform_mode(board, g)
-        assert tuple(mode) == (course[-1]["after"], 0, course[-1]["level"], 0, 27)
-        assert (read.level, read.level_remainder, read.before, read.nodes) == (
-            mode.level,
-            0,
-            mode.before,
-            27,
-        )
+        assert tuple(mode) == (course[-1]["a_after"], 0, course[-1]["a"], 0, 27)
         assert dict(read.writes)["matter"] > 0 and read.seed == (0, 0, 0)
+        levels[factor] = [step["a_after"] for step in course]
+    assert max(abs(c - r) for c, r in zip(levels["carried"], levels["rounded"], strict=True)) <= 1
 
 
-def integrated(s0, U0, c, steps):  # type: ignore[no-untyped-def]
-    """The model at the law's own interval, the test's floats: v(t + 1) = v(t) + (s(U(t)) - c v(t)^2 / Gamma) / (1 + c v(t) / Gamma), the symmetric hill's map (the derivation M11j), and U(t + 1) = U(t) + v(t + 1) / Gamma from rest, s(U) = s0 (sin omega'(U) / sin omega'(U0)) (N(U) / N(U0))^4 the record's own form at the write's factor under the form's own clock, cos omega' = 1 - N^2 / 3 the band's rest rotation of [4000, 6000] at the pace N = (1 - 1 / Gamma)^(Gamma U); the pairs (U, v) from 0 through `steps`."""
+def integrated(s0, X0, steps):  # type: ignore[no-untyped-def]
+    """The volume's map at the law's own interval, the test's floats: X(t + 1) = 2 X(t) - X(t - 1) + (d + 1) X(t) s(U(t)) / Gamma from rest, U = ln(X / Gamma) / (d + 1), s(U) = s0 (sin omega'(U) / sin omega'(U0)) (N(U) / N(U0))^4 the record's own form at the write's factor under the form's own clock, cos omega' = 1 - N^2 / 3 the band's rest rotation of [4000, 6000] at the pace N = (1 - 1 / Gamma)^(Gamma U); the levels U from 0 through `steps`."""
 
     def sine(U):  # type: ignore[no-untyped-def]
         cosine = 1 - (1 - 1 / GAMMA) ** (2 * GAMMA * U) / 3
         return math.sqrt(1 - cosine * cosine)
 
-    U, v, course = U0, 0.0, [(U0, 0.0)]
+    def level(X):  # type: ignore[no-untyped-def]
+        return math.log(X / GAMMA) / volume.EXPONENT
+
+    before, now, U0 = X0, X0, level(X0)
+    course = [U0]
     for _ in range(steps):
+        U = level(now)
         write = s0 * sine(U) / sine(U0) * (1 - 1 / GAMMA) ** (4 * GAMMA * (U - U0))
-        v = v + (write - c * v * v / GAMMA) / (1 + c * v / GAMMA)
-        U = U + v / GAMMA
-        course.append((U, v))
+        before, now = now, 2 * now - before + volume.EXPONENT * now * write / GAMMA
+        course.append(level(now))
     return course
+
+
+def test_rule3_carries_the_uniform_line_bit_for_bit_on_a_torus_and_the_inverse_returns(
+    tmp_path, monkeypatch
+):
+    """(2b) The law's key as written (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-21 kept by name; the reader's line L1 on the engine half): on the 3-cube torus under `uniform: carried` with the uniform matter record at the rule's own integers, over 20 intervals gravity's time line is the level itself, one number at every Node (the write uniform, the Links' sum 0), its write remainder one number, its three tension lines 0, and a(t + 1) - 2 a(t) + a(t - 1) is exactly the one write's increment (w D' + r) div (E_s T) with D' the record's form scaled per proper volume and per proper interval at the paces of the content it reads (gravity's level; the law's two powers on a count), computed beside from `paces.write_factor` and features/held_write, the remainder after it the engine's too, no hill and no volume; the content rises and the record's rotation (next + before) / now at the centre falls along the band's line 2 - 2 (den - num) p_0^2 / (den Gamma^2) within the roundings; `board_readings.uniform_mode` reads the level with the remainder 0 (a NamedTuple, no string key in the engine); the 20 intervals run back return the start bit for bit (`Lattice.step_inverse`, the gate's snapshot)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_at_weight_one(tmp_path)
+    board = Lattice(load_world(laid_torus(tmp_path, "law", uniform="carried")))
+    names = [family.name for family in board.families]
+    g, m = names.index("gravity"), names.index("matter")
+    wall, start = board.walls(g)[0], BACK.snapshot(board)
+    assert wall == ACTION and not board.families[g].motion_volume  # E_s T at the level weight 1
+    course, rotations = lockstep(board, g, m, 20), []
+    for step in course:
+        form = step["now"] * step["now"] - step["next"] * step["before_record"]
+        clock, pace = paces.node_paces(GAMMA, step["level"])  # matter reads gravity at 1, the content
+        numerator = int(paces.write_factor(np.array(form), pace, pace, pace, clock, GAMMA, 2))
+        level, carried = held_write(
+            2 * step["level"] - step["before"], numerator, wall, step["remainder"]
+        )
+        assert (step["after"], step["remainder_after"]) == (int(level), int(carried))
+        assert (step["eras"].level, step["eras"].before) == (step["after"], step["level"])
+        rotations.append(
+            ((step["next"] + step["before_record"]) * 6000 * GAMMA * GAMMA, step["now"], clock)
+        )
+    assert tuple(board_readings.uniform_mode(board, g)) == (
+        course[-1]["after"],
+        0,
+        course[-1]["level"],
+        0,
+        27,
+    )
+    levels = [step["after"] for step in course]
+    assert levels[-1] - 60 > 300 and all(b >= a for a, b in zip(levels[:-1], levels[1:], strict=True))
+    seconds = [c - 2 * b + a for a, b, c in zip(levels[:-2], levels[1:-1], levels[2:], strict=True)]
+    assert min(seconds) >= 0 and max(seconds) >= 2  # the write's increments, several levels per interval
+    for pair_sum, now, clock in rotations:  # 2 cos omega = 2 - 2 (den - num) p_0^2 / (den Gamma^2)
+        line = 2 * 6000 * GAMMA * GAMMA - 2 * 2000 * clock * clock
+        assert abs(pair_sum - line * now) <= 3 * 6000 * GAMMA * GAMMA, (pair_sum, line, now)
+    first, last = rotations[0], rotations[-1]  # the record's level of either sign: signed fractions
+    assert Fraction(last[0], last[1]) > Fraction(first[0], first[1])  # cos omega rose: the beat slowed
+    for _ in range(20):
+        board.step_inverse()
+    assert BACK.first_difference(start, BACK.snapshot(board)) is None
 
 
 def test_a_massless_rest_on_a_torus_is_the_poisson_solution_of_the_zero_mean_part():

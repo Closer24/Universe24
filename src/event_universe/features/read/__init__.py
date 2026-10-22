@@ -33,8 +33,8 @@ def link_tension(reads: Sequence[tuple[int, Any, Any]]) -> Any:
     return tension
 
 
-def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap) -> tuple[Any, ...]:
-    """The tension of each of a Node's six Links in Port order (ALGEBRA.md #the-primitives, The tension; #the-interval, the dependency radius): from the read rows' axis lines at the Link's two ends, the neighbour's read through the Port the arrival is read through (`link_tension`, `arrival`; 0 beyond a face, a Node with no level), `axes` per read its weight and its three axis lines; the integer 0 on every Link where no row carries axis lines."""
+def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap, gamma: int) -> tuple[Any, ...]:
+    """The tension of each of a Node's six Links in Port order (ALGEBRA.md #the-primitives, The tension; #the-interval, the dependency radius): from the read rows' axis lines at the Link's two ends, the neighbour's read through the Port the arrival is read through (`link_tension`, `arrival`; 0 beyond a face, a Node with no level), `axes` per read its weight and its three axis lines; the integer 0 on every Link where no row carries axis lines. The guard's lower side: a tension above Gamma on any Link makes the Link's factor Gamma - t and its pace negative, beyond the law's domain (the paces' text: in the rationals a pace below 0 is never met; the tension lines' k = 0 mode on the wrapped board meets it, the smokes of 2026-10-22), and the read refuses it by name at the one place the six tensions are formed, as the write refuses a wall below 1 (features/held_write), so that no negative pace enters Rule3's factors or the write's rulers and no write goes silently negative."""
     found = []
     for axis in range(3):
         for side in (1, -1):
@@ -42,6 +42,14 @@ def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap) -> tupl
                 (weight, lines[axis], arrival(lines[axis], axis, side, wrap)) for weight, lines in axes
             ]
             found.append(link_tension(ends))
+    most = max(int(np.asarray(tension).max()) for tension in found)
+    if most > gamma:
+        raise ValueError(
+            f"a Link's tension {most} exceeds Gamma {gamma}: the Link's factor Gamma - t is below 0 and its pace below "
+            "0, the guard's lower side, beyond the law's domain (ALGEBRA.md #the-paces, The clock is the Node's, the "
+            "tension is the Link's; the tension lines' k = 0 mode run away on the wrapped board, the smokes of "
+            "2026-10-22): the run is refused by name at the read that carries it"
+        )
     return tuple(found)
 
 

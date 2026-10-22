@@ -32,7 +32,7 @@ from event_universe.loader.faces import (
     receding_of,
 )
 from event_universe.loader.instrument import declared_body
-from event_universe.loader.interval import INTERVAL, interval_of, kicks_refused, one_key
+from event_universe.loader.interval import INTERVAL, interval_of, kicks_refused, one_key, volume_rows
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.mode import Levels, Profile, entry_of, levels_of, mode_entries
@@ -349,6 +349,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["bodies"], mode, digest, families, shape, bound, beyond, action, wraps)
     kicks_refused(unobservable, families, world.get("packets", []))  # no kick under the key
+    families = volume_rows(unobservable, families)  # the massless rows of the content carry their volume
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
     bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
     conversion.together(families, bodies, packets)  # the multisets a close can credit, refused by name

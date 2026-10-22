@@ -191,51 +191,13 @@ def within_width(kind: Any, wall: Any, *factors: Any) -> bool:
 
 
 def exponent_products(exponents: Sequence[int]) -> tuple[int, list[int]]:
-    """The exponents' product P and, per exponent, the product of the others, P / n_f with no division (the hill's weight and the eras' readings form their fractions over these, `motion_weight`, board_readings.eras): (1, []) for no exponent."""
+    """The exponents' product P and, per exponent, the product of the others, P / n_f with no division (the eras' reading of the mix's exponent forms its fraction over these, board_readings.eras): (1, []) for no exponent."""
     others = [1] * len(exponents)
     for f, _exponent in enumerate(exponents):
         for g, other in enumerate(exponents):
             if g != f:
                 others[f] = others[f] * other
     return (others[0] * exponents[0] if exponents else 1), others
-
-
-def motion_weight(
-    sources: Sequence[Any], exponents: Sequence[int], wall: int, gamma: int, own: int
-) -> Any:
-    """The hill's weight at every Node (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line; The motion of gravity's row is a hill at the symmetry's weight; The hill's weight is the write's mix; The board's interval is no observable; hypotheses under their own names, 2026-10-22): K = (E_s T / Gamma) SUM_f s_f / SUM_f (s_f / n_f), `sources` the row's time line's sources at every Node, each family's form at the write's factor times its read weight (the integers records.write_sources sums), `exponents` the pairs' integers under the row's booking (`FamilyRule.exponent`: 5 for a pair with a gap at rest and 6 for the massless pair under the form's own clock, one above each under the law's booking), `wall` the write's wall E_s T; one rounding half up (`rounded`, kind D) of wall x P x SUM_f s_f over gamma x SUM_f s_f x (P / n_f), P the exponents' product and P / n_f the product of the other exponents (`exponent_products`), so that no division stands before the rounding (the same fraction as over the exponents' least common multiple, no gcd and no second carried division; the genericity hand: the weight is the write-weighted exponent n_eff in every booking): for one form rounded(n E_s T, Gamma) exactly, an integer where Gamma divides n E_s T (30 and 36 at T 36,000) and a coefficient of the interval otherwise (27 from 27.31 at T 32,768; "a pace and a factor are coefficients of the interval and no level"); where every source is 0 at a Node, and where no source is handed (the row's key `weight: gap`, the one-form K at the exponent `own` for every Node), the weight is rounded(own x wall, gamma), `own` the pair's integer the caller names (the row's own pair's where nothing sources the Node, 6 for the massless row of the content), never a division by 0; the Node reads its own sources and nothing of the board (the owner's locality decision of 2026-10-22); in the array's own kind, Python's integers beyond the width as `write_factor` has them (`within_width`)."""
-    fallback = rounded(own * wall, gamma)  # the one-form K at the pair's integer `own`
-    if not exponents:
-        return fallback
-    product, others = exponent_products(exponents)
-    total: Any = 0
-    weighed: Any = 0
-    for source, other in zip(sources, others, strict=True):
-        total, weighed = total + source, weighed + source * other
-    weighed = np.asarray(weighed)
-    empty = weighed == 0  # nothing sources the Node: the row's own pair's weight
-    kind = np.asarray(total).dtype
-    if within_width(kind, gamma * (weighed + empty), wall * product, total):
-        denominator = gamma * (weighed + empty)
-    else:  # Python's integers beyond the width, the empty Nodes' wall 1
-        total = np.asarray(total, dtype=object)
-        denominator = gamma * (np.asarray(weighed, dtype=object) + np.asarray(empty, dtype=object))
-    found = np.where(empty, fallback, rounded(wall * product * total, denominator))
-    return np.asarray(found).astype(kind)
-
-
-def motion_term(now: Any, before: Any, weight: Any, wall: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The hill's write at every Node, the one function of its form (the Boss's seam of 2026-10-22): the term the one write's numerator gains and the divisor the write divides by, from the row's own two levels as the direction finds them (forward the interval's start, v_in = now - before; backward the post-state, v_out = now - before, the same function at -1), the weight K and the write's wall W. The symmetric hill (the symmetric hill's derivation M11j, 2026-10-22, read cold by the reader; ALGEBRA.md, The motion of gravity's row is a hill at the symmetry's weight; The write per proper volume and per proper interval, the clause of 2026-10-22: the kinetic form a level's intensity and no count, its two board-interval differences its own proper-interval booking, so the proper volume divides nothing; Every row reads the content, the hypothesis's one exception): the drag the product of the incoming and the outgoing velocities, -K (a_next - a_now) (a_now - a_before), implicit in a_next by the one carried division of the write's numerator less K (now - before)^2 at the wall W + sigma K (now - before), so that the line W (v_out - v_in) + r' - r = c - K v_in v_out is invariant under the reversal exactly on the integers (the velocities map v_in -> -v_out, the remainders exchange their roles as the carried division's direction does), the drag booked at the step's centre, second-order in the interval, the outgoing velocity bounded for v_in > 0 (no overshoot, no sign flip); the term -K (now - before)^2 at the divisor W + direction x K (now - before), the product in the levels' kind, exact in Python's integers beyond the width as the factor's numerator is (`within_width`); the Node's own two levels and nothing of the board (the owner's locality decision of 2026-10-22). The one-sided form, the term -K v_in^2 at the divisor W itself (the design's; the law's text names it), is superseded by this body on the smoke's finding of 2026-10-22, the one-Node seed's level thrown into a growing swing by a drag that read the incoming velocity alone. The wall's pole: the divisor is below 1 where v_in is at or below -W / K, a contraction at |H| at or beyond 1 / c per interval, and the write refuses it by name (features/held_write); backward the pole stands at v_out = W / K."""
-    velocity = now - before
-    kind = np.asarray(velocity).dtype
-    if not within_width(kind, 0, weight, velocity, velocity):
-        velocity, weight = np.asarray(velocity, dtype=object), np.asarray(weight, dtype=object)
-    return -(weight * velocity * velocity), wall + direction * (weight * velocity)
-
-
-def motion_returns(carry: Any, divisor: Any, weight: Any, after: Any, before: Any) -> Any:
-    """Whether the forward act's carry in lies below the backward wall at every Node, W - K v_out = (W + K v_in) - K (a_next - a_before), `divisor` the forward act's wall, `after` the level after the write and `before` the level before the interval (the symmetric hill's derivation M11j, 1.3; the reversibility hand's Lemma 1 at the backward wall): where it does the interval's run back at the Node is exact, the same function at -1 returning the quotient and the carry in; where it does not the backward act folds the level before by one and the remainder by the wall, at the rate 2 c H per Node per interval (the Jacobian theorem: an act on the Node's own state with a remainder of bounded range collides about an attracting fixed point), so the forward act names the intervals whose run back fails (`Lattice.unreturning`) and the run back refuses by name there (`Lattice.motion_back`); a reading of the forward act's own numbers, no act."""
-    return carry < divisor - weight * (after - before)
 
 
 def turn_factor(angle: Any, p_0: Any, gamma: int) -> Any:

@@ -23,7 +23,6 @@ FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
         "act",
         "form",
         "booking",
-        "weight",
         "factor",
         "pressure",
     ),
@@ -201,25 +200,14 @@ def booking_of(row: dict[str, Any], label: str, wronskian: bool) -> bool:
     return bool(booking == BOOKINGS[1])
 
 
-WEIGHTS = (
-    "mix",
-    "gap",
-)  # the hill's weight under `interval: unobservable`: the Node's own sources' mix, or the one-form K at the gapped pair's integer
-
-
 def held_word(row: dict[str, Any], label: str, key: str, words: tuple[str, str]) -> bool:
-    """A held row's optional key of two words (`weight`, `factor`): whether the second word stands, False where the key is absent, the first word the law as written; refused by name at any other word."""
+    """A held row's optional key of two words (`factor`, `pressure`): whether the second word stands, False where the key is absent, the first word the law as written; refused by name at any other word."""
     if "held" not in row or key not in row["held"]:
         return False
     word = row["held"][key]
     if word not in words:
         raise ValueError(f"{label}.held.{key} is one of {list(words)}, got {word!r}")
     return bool(word == words[1])
-
-
-def hill_weight_of(row: dict[str, Any], label: str) -> bool:
-    """The held row's optional key `weight`, the hill's weight on a world declaring `interval: unobservable` (ALGEBRA.md, The hill's weight is the write's mix, a hypothesis under its own name, 2026-10-22): `mix`, the Node's own sources' mix at the pairs' integers, K = (E_s T / Gamma) SUM_f s_f / SUM_f (s_f / n_f) rounded once at the read, the default where the key is absent (paces.motion_weight, records.hill_weight); or `gap`, the one-form K at the exponent of a pair with a gap at rest for every Node, K = rounded(n E_s T, Gamma), n 5 under the form's own clock (30 at T 36,000), nature's deceleration in every era and nature's H in the dust era alone, the velocity above the constraint's in the radiation era by sqrt(6 / 5 - 1) (the design's alternative, named for the owner's word where the Node's own weights wake a mode of the content, the genericity hand's measurement); on the holder of the sign the key is read and the hill never acts; refused by name at any other word; False where absent."""
-    return held_word(row, label, "weight", WEIGHTS)
 
 
 FACTORS = (
@@ -235,7 +223,7 @@ PRESSURES = (
 
 
 def pressure_of(row: dict[str, Any], label: str, wronskian: bool) -> bool:
-    """The held row's optional key `pressure`, the stress's trace (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; the pressure hand's derivation of the pressure's write in the time line and the reader's build line on the second smoke): `tension`, the law as written, each Node's own stress parts -num h_a into the row's tension lines whole and the time line sourced by the forms alone; or `trace`, the trace over three of each source's stress parts entering the time line's write at the weight -1 in the energy's units ((p_a / Gamma)^2 / (3 den) per part, one rounding per source per Node, records.pressure_term) and the tension lines taking the traceless parts, 3 T_aa - SUM_b T_bb over three inside the factor's one rounding, so that no isotropic stress stretches the rulers (h N = 1: an isotropic ruler change without the clock's is no act of the law) and the tension lines' uniform mode on the wrapped board gets no source from a lay's mean stress, under which the hill's weight is one integer for every mix, (d + 1) E_s T / Gamma (records.hill_weight; the loader checks Gamma divides it, derived.trace_wall); refused by name on the holder of the sign, whose rows carry no tension line, and at any other word; False where absent, the law as written, every shipped world bit for bit."""
+    """The held row's optional key `pressure`, the stress's trace (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; the pressure hand's derivation of the pressure's write in the time line and the reader's build line on the second smoke): `tension`, the law as written, each Node's own stress parts -num h_a into the row's tension lines whole and the time line sourced by the forms alone; or `trace`, the trace over three of each source's stress parts entering the time line's write at the weight -1 in the energy's units ((p_a / Gamma)^2 / (3 den) per part, one rounding per source per Node, records.pressure_term) and the tension lines taking the traceless parts, 3 T_aa - SUM_b T_bb over three inside the factor's one rounding, so that no isotropic stress stretches the rulers (h N = 1: an isotropic ruler change without the clock's is no act of the law) and the tension lines' uniform mode on the wrapped board gets no source from a lay's mean stress, under which the volume's exponent is one integer for every mix, d + 1 (features/volume; the loader checks Gamma divides (d + 1) E_s T, derived.trace_wall); refused by name on the holder of the sign, whose rows carry no tension line, and at any other word; False where absent, the law as written, every shipped world bit for bit."""
     trace = held_word(row, label, "pressure", PRESSURES)
     if trace and wronskian:
         raise ValueError(
@@ -251,7 +239,7 @@ def factor_of(row: dict[str, Any], label: str) -> bool:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta; a real-line family optionally the senses of its plane records out, the key `senses`, the one residual declaration of The conversion, `conversion.declared`, 2026-10-21) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`; the booking of its count sources `booking`, `booking_of`, the form's own clock under `form`; the hill's weight `weight`, `hill_weight_of`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
+    """The universe file: its integers and its families, each row its name, its pair, its reads (`reads_of`: the holders it reads by name at their weights, required, empty where it reads none) and its dimension (a family of quanta; a real-line family optionally the senses of its plane records out, the key `senses`, the one residual declaration of The conversion, `conversion.declared`, 2026-10-21) or its sources with its level weight, its write weight, its rest and its act (a held row; a family of several parts optionally its sign under exchange, the key `exchange`, `exchange_of`, 2026-10-19; the level weight `level_weight`, the quanta of form that write one level of the row; the write weight `write_weight`, the signed multiplier of its one write per line, the sign holder's k_w; the vacuum content `rest`, the level at which the massless row holding the content rests everywhere, an integer from 0 within the width; refused by name on the holder of the sign and on a row with a gap, which has no constant rest, ALGEBRA.md #what-is-open, item 22; the act `act`, `shape_of`; the booking of its count sources `booking`, `booking_of`, the form's own clock under `form`), everything else derived by the rule from the pair and the shape, no read and no weight among it; the energy line gated on the file's integers (`derived.energy_line`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
@@ -310,7 +298,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         exchange = exchange_of(row, label, parts)  # the record's sign under exchange, 0 undeclared
         lorentz = form_of(row, label, rotation, flux, num == den)  # the Lorentz form, False undeclared
         form_clock = booking_of(row, label, wronskian)  # the form's own clock, False undeclared
-        weight_gap = hill_weight_of(row, label)  # the hill's weight the one-form K, False undeclared
         factor_carried = factor_of(row, label)  # the factor inside the one division, False undeclared
         pressure_trace = pressure_of(
             row, label, wronskian
@@ -334,7 +321,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 off_diagonal,
                 lorentz,
                 form_clock=form_clock,
-                weight_gap=weight_gap,
                 factor_carried=factor_carried,
                 pressure_trace=pressure_trace,
             )

@@ -11,9 +11,9 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import division_forward
-from event_universe.features import currents, phase
+from event_universe.features import currents, phase, volume
 from event_universe.features.write import carried
-from event_universe.loader.derived import FamilyRule, HeldWrite, exponent_of, row_sources, weight_of
+from event_universe.loader.derived import FamilyRule, HeldWrite, row_sources, weight_of
 
 Rulers = tuple[Any, tuple[Any, Any, Any]]  # a read's paces at every Node: the clock p_0, each axis's p_a
 Families = tuple[FamilyRule, ...]  # the families as the loader derived them, in the file's order
@@ -117,7 +117,7 @@ def scaled_sum(
     factors: dict[int, int] | None = None,
     parts: int = 1,
 ) -> tuple[Any, Any, list[tuple[Any, int]]]:
-    """One line's numerator from its sources' values (a booking or an axis reading per source record): SUM over them of w x the value scaled by the write's factor at the source's paces (`rulers_write_factor`; w the read weight, times the line's factor per source family where `factors` names them, the tension lines' multiples), under the held row's key `factor: carried` the unrounded product in its place, the line's divisor then the wall E_s T times the sources' shared factor's wall per Node (the loader admits the carry where the row's sources share the clock, derived.shared_clock); returns the sum, the factor's wall (1 under the rounding) and each source's weighed term with its pair's exponent under the booking (the hill's weight, `hill_weight`)."""
+    """One line's numerator from its sources' values (a booking or an axis reading per source record): SUM over them of w x the value scaled by the write's factor at the source's paces (`rulers_write_factor`; w the read weight, times the line's factor per source family where `factors` names them, the tension lines' multiples), under the held row's key `factor: carried` the unrounded product in its place, the line's divisor then the wall E_s T times the sources' shared factor's wall per Node (the loader admits the carry where the row's sources share the clock, derived.shared_clock); returns the sum, the factor's wall (1 under the rounding) and each source's weighed term with its pair's exponent under the booking (the readings' mix, board_readings.eras)."""
     total: Any = 0
     scale: Any = 1
     terms: list[tuple[Any, int]] = []
@@ -144,8 +144,9 @@ def write_sources(
     gamma: int,
     motion: tuple[Any, Any] | None = None,
     direction: int = 1,
-) -> tuple[list[Any], list[Any], Any]:
-    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, one under the row's key `booking: form` (`FamilyRule.power`; ALGEBRA.md, The form's own clock, a hypothesis under its own name, 2026-10-22: the form carrying one N of its own as the Wronskian does), and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), and for each shear line xy, yz, zx, where the row declares the shear, SUM over them of w x factor x the shear's part of each, the product of the Node's two axis differences D_a D_b (`readings.off_diagonals_of`), scaled by the count's factor, two powers, over its doubled wall 2 E_s W_c, each line's reading by its position among the record's axis readings (`axis_positions`), times its factor of the common wall (`HeldWrite`, one wall per line). Where `motion` is given, the row's own two levels as the direction finds them, forward the interval's start and backward the post-state (a held row of the content on a world declaring `interval: unobservable`, never the holder of the sign; `Lattice.held_write`), the time line's numerator gains the hill at the symmetry's weight after the row's write weight, -K (now - before)^2 undimmed, and its divisor the hill's, the wall plus direction x K (now - before), the symmetric hill (`paces.motion_term`, the one function of the hill's write returning the term and the divisor; `hill_weight`, `paces.motion_weight`: the weight from the Node's own sources' mix, the terms this function sums; under the carry both scaled by the factor's wall); the numerators returned with the walls, one divisor per line, the row's own where no hill and no carry changes them (`node.held_write_at`), and the hill's weight at every Node as the divisor took it (None without the hill; the forward act's reading of the run back, `paces.motion_returns`); under the row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, 2026-10-22) the time line's numerator is less the pressure term, the trace over three of each source's own stress parts in the energy's units at the weight -1 (`pressure_term`, one rounding per source per Node, scaled to the carried wall), and each tension line's numerator takes the traceless part of each source, 3 T_aa - SUM_b T_bb over the trace's three inside the factor's one rounding (`paces.write_factor`'s `parts`), so that no isotropic stress stretches the rulers (the clock's level does alone by h N = 1) and the tension lines' uniform mode on the closed board gets no source from a lay's mean stress (the smoke's finding of 2026-10-22: the tension lines' k = 0 mode, fed by the laid waves' mean stress and drained by nothing, froze every Link), the mean fed by the one write less the hill and the Node knowing nothing of the board (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-22; The motion of gravity's row is a hill at the symmetry's weight; Every row reads the content, the hypothesis's one exception; The write per proper volume and per proper interval, the undimmed booking; The board's interval is no observable; the owner's locality decision of 2026-10-22)."""
+    fixed: Sequence[Any] | None = None,
+) -> tuple[list[Any], list[Any], list[tuple[Any, int]]]:
+    """The numerators of a held family's one write per line at every Node, row by row (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval, the factor by the source's kind; No record reads its own write of the sign; the integer 0 where nothing sources a line): the records that source a row are `derived.row_sources` (every reader's every record for a holder of the content; for a holder of the sign the one record that owns the row, and none for the free row 0); for the row's time line SUM over them of w x the booking of each that the row's sources name scaled by the write's factor at that record's paces (`written`, `rulers` per source record), the form D for a row sourced by the form, a count source, two proper-interval powers, one under the row's key `booking: form` (`FamilyRule.power`; ALGEBRA.md, The form's own clock, a hypothesis under its own name, 2026-10-22: the form carrying one N of its own as the Wronskian does), and the Wronskian W for the holder of the sign, one time difference carrying one N of its own, one (`bookings`); for each axis line SUM over them of w x factor x the axis booking of each scaled by the count's factor, two powers (the mathematician's hand: the odd line's source J_a is one space difference, a covector's phase, its write the count's factor and its Link angle plain), its tension's part for a row of the content and its sign current, the mean of its two a-Links' Wronskian currents J_a / 2, for the holder of the sign under the rotation (`stresses`, the records' vectors), and for each shear line xy, yz, zx, where the row declares the shear, SUM over them of w x factor x the shear's part of each, the product of the Node's two axis differences D_a D_b (`readings.off_diagonals_of`), scaled by the count's factor, two powers, over its doubled wall 2 E_s W_c, each line's reading by its position among the record's axis readings (`axis_positions`), times its factor of the common wall (`HeldWrite`, one wall per line). Where `motion` is given, the row's own two levels as the direction finds them (forward the interval's start and backward the post-state; `Lattice.held_write`) and the row carries its volume (the world's key `interval: unobservable`, features/volume; the momentum hand's derivation M12a read cold by the reader), the time line's numerator is the volume's write, (d + 1) X_now c with c the row's write as formed here (the write weight times the sources' forms less the trace), and its divisor Gamma E_s T, the one fixed wall (the carried factor refused under the key by the loader): X'' = (d + 1) X s / Gamma is the chain rule between the level and the volume, Gamma U'' = s - (d + 1) Gamma U'^2 with no hill as an act; the numerators returned with the walls, one divisor per line, the row's own where no carry changes them (`node.held_write_at`), and the first row's sources' terms with their pairs' exponents (the readings' mix); under the row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, 2026-10-22) the time line's numerator is less the pressure term, the trace over three of each source's own stress parts in the energy's units at the weight -1 (`pressure_term`, one rounding per source per Node, scaled to the carried wall), and each tension line's numerator takes the traceless part of each source, 3 T_aa - SUM_b T_bb over the trace's three inside the factor's one rounding (`paces.write_factor`'s `parts`), so that no isotropic stress stretches the rulers (the clock's level does alone by h N = 1) and the tension lines' uniform mode on the closed board gets no source from a lay's mean stress (the smoke's finding of 2026-10-22: the tension lines' k = 0 mode, fed by the laid waves' mean stress and drained by nothing, froze every Link), the mean fed by the one write and the Node knowing nothing of the board (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-22; Every row reads the content, the hypothesis's one exception; The write per proper volume and per proper interval, the undimmed booking; The board's interval is no observable; the owner's locality decision of 2026-10-22). Where `fixed` is given, the row's walls per line as `Lattice.start` kept them at the rest's paces (the carried factor's one form under either key, the Boss's decision of 2026-10-22 on the text hand's model: under `factor: rounded` a family's write below half a level is 0 for ever, and under a carried factor at a wall that moves with the clock the remainder's range moves and the run back folds, so the moving wall is no form), every line's numerator carries the factor's ratio to the rest's paces, the carried numerator times the fixed wall over the interval's own wall rounded once as a coefficient (kind D, a number of order one on the carried product), and divides at the fixed wall, so the remainder's range never moves and division_back is exact (the reversibility hand's Theorem 1); without `fixed` the terms come out at the interval's own wall, the host's and the tests' reading of the sources."""
     family = families[held]
     intervals, carried = (
         family.power,
@@ -176,13 +177,26 @@ def write_sources(
             scales.append(scale)
     found = [family.write * numerator for numerator in found]  # the row's write weight k_w
     walls = [wall * scale for wall, scale in zip(write.walls, scales, strict=True)]  # one per line
-    if motion is None:
-        return found, walls, None
-    weight = hill_weight(family, [t for t, _ in terms], [n for _, n in terms], write.walls[0], gamma)
-    weight = weight * scales[0]  # the hill after the write weight, at the carried wall's scale
-    term, walls[0] = paces.motion_term(motion[0], motion[1], weight, walls[0], direction)
-    found[0] = found[0] + term
-    return found, walls, weight
+    if (
+        fixed is not None
+    ):  # the wall fixed per Node: the ratio of the walls inside the numerator, rounded once
+        ratios = zip(found, fixed, walls, strict=True)
+        found = [paces.rounded(np.asarray(n, dtype=object) * f, w) for n, f, w in ratios]
+        walls = list(fixed)
+    if (
+        motion is not None and family.motion_volume
+    ):  # the volume's write: (d + 1) X_now c over Gamma E_s T
+        now = np.asarray(motion[0] if direction == 1 else motion[1], dtype=object)
+        found[0], walls[0] = volume.EXPONENT * now * np.asarray(found[0], dtype=object), gamma * walls[0]
+    return found, walls, terms
+
+
+def walls_at(
+    held: int, families: Families, write: HeldWrite, rulers: dict[Sourcing, Rulers], gamma: int
+) -> list[Any]:
+    """Every line's wall of a held row's write at the rulers given, the write of no source (`write_sources` on bookings and stresses of 0 at every source): one integer per line under the rounded factor and under the carried factor the wall per Node, E_s T Gamma^power p_0^(3 - power) on the time line and E_s W_c Gamma^2 p_0 on each axis and shear line, the trace's three on a tension line, at the clock of the row's sources' read (the shared clock, `derived.shared_clock`); the walls `Lattice.start` keeps for the run at the rest's paces under the key `interval: unobservable` with `factor: carried`, the wall fixed per Node."""
+    nothing: dict[Sourcing, Any] = {source: (0,) * (AXES * AXES) for source in rulers}
+    return write_sources(held, families, {}, nothing, write, rulers, gamma)[1]
 
 
 def pressure_term(
@@ -208,17 +222,6 @@ def pressure_term(
         wall = AXES * AXES * family.pair[1] * gamma ** (2 + power) * clock_object ** (3 - power)
         total = total + weight_of(held, family) * paces.rounded(numerator, wall)
     return total
-
-
-def hill_weight(
-    family: FamilyRule, terms: Sequence[Any], exponents: Sequence[int], wall: int, gamma: int
-) -> Any:
-    """The hill's weight at every Node of a held row of the content from its time line's sources (`paces.motion_weight`; ALGEBRA.md, The hill's weight is the write's mix, a hypothesis under its own name, 2026-10-22): the Node's own sources' mix at the pairs' integers under the row's booking, the default, the row's own pair's exponent where nothing sources a Node (`FamilyRule.exponent`); under the row's key `weight: gap` the one-form K at the exponent of a pair with a gap at rest for every Node, no source handed (loader/universe.hill_weight_of); under the row's key `pressure: trace` one K for every mix, (d + 1) E_s T / Gamma with d the axes' three (24 at T 36,000; ALGEBRA.md, The stress's trace is the time line's: the surface (Gamma / 2) U'^2 = (1 / d) SUM s_f is invariant for every mix iff the pressure enters at -1 and c = d + 1, the pressure hand's derivation; The hill's weight is the write's mix dissolved, kept by name), the loader checking Gamma divides (d + 1) E_s T (derived.trace_wall); the write and the readings read the one weight (`write_sources`, board_readings.eras)."""
-    if family.pressure_trace:  # one K for every mix, (d + 1) E_s T / Gamma, the trace's constraint
-        return paces.motion_weight([], [], wall, gamma, AXES + 1)
-    if family.weight_gap:
-        return paces.motion_weight([], [], wall, gamma, exponent_of(False, family.power))
-    return paces.motion_weight(terms, exponents, wall, gamma, family.exponent())
 
 
 def axis_positions(family: FamilyRule) -> list[int]:
@@ -280,7 +283,7 @@ def complement(remainder: Any, wall: Any) -> Any:
     return wall - 1 - remainder
 
 
-def write_origins(walls: Sequence[int], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
+def write_origins(walls: Sequence[Any], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
     """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
     return [full(shape, division_forward(wall, 2, 0)[0], kind) for wall in walls]
 
@@ -292,8 +295,10 @@ def empty_state(
     kind: type,
     origin: Any = 0,
 ) -> NodeState:
-    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), and where it is held one write remainder per line at the origin (`walls` the write's wall per line, `write_origins`)."""
+    """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), the three tension lines of a row under `pressure: trace` born at the half of the wall 3 w they step by (flux.step_traceless, the one rounding half up there too), and where it is held one write remainder per line at the origin (`walls` the write's wall per line, `write_origins`)."""
     lines = [
         empty_record(shape, kind, origin) for _ in range(family.lines)
     ]  # every line born at the half wall
+    if family.axes and family.pressure_trace:  # the tension lines step at the wall 3 w: born at its half
+        lines[1 : 1 + AXES] = [empty_record(shape, kind, AXES * origin) for _ in range(AXES)]
     return NodeState(lines, write_origins(walls, shape, kind) if family.held else [])

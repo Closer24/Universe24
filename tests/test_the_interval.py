@@ -1,27 +1,31 @@
-"""The hypothesis's construction (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; The motion of gravity's row is a hill at the symmetry's weight; The hill's weight is the write's mix; The form's own clock; The factor carried; the hypotheses under their own names, 2026-10-22; DESIGN section 3, T3 to T8), construction alone and no world of the experiment: the form's own clock as one power of the write (T6), the hill's weight's integer and its rounding (T3), the premise as a test (T4), the run back refused by name under the key (T5), the mix's weight following the Node's own sources (T7) and the end's booking switch (T8); the declaration and the attractor stand in tests/test_the_uniform_mode.py (T1, T2 and T9), the builders in tests/laws_interval.py."""
+"""The hypothesis's construction (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; The form's own clock; The factor carried; The stress's trace is the time line's; the hypotheses under their own names, 2026-10-22; the momentum hand's derivation M12a of the volume form, read cold by the reader; DESIGN section 3, T3 to T8), construction alone and no world of the test of the law's course: the form's own clock as one power of the write (T6), the volume form's two functions, one division and one search (T3), the premise as a test, the volume's write reading its own level both ways and the velocity no datum of the seed (T4), the run back MATCH at every interval under the key at a wall that never moves (T5), the trace as the time line's with the tension lines traceless (T7), the finding of the second smoke as a test, and the carried factor at the moving wall under the law's key and at the wall fixed per Node under the hypothesis's (T8); the declaration and the attractor stand in tests/test_the_uniform_mode.py (T1, T2 and T9), the builders in tests/laws_interval.py."""
 
-import inspect
+import bisect
 import json
 import math
-from dataclasses import replace
+from dataclasses import dataclass, replace
 
 import numpy as np
-import pytest
 
-from event_universe import board_readings, records, world_files
+from event_universe import board_readings, flux, node, records, world_files
 from event_universe.core import paces
+from event_universe.core.rule3 import rule3
+from event_universe.features import volume
 from event_universe.features.held_write import held_write
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import BACK, refused
 from tests.laws_interval import (
     GAMMA,
+    WIDTH,
     laid_torus,
     light_cube,
     light_torus,
     lockstep,
+    one_number,
     uniform_world,
     universe_at_weight_one,
+    volume_universe,
 )
 
 
@@ -63,136 +67,157 @@ def test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_
     assert abs(exponents["form"] - 4.8) < 0.3 and abs(exponents["count"] - 5.8) < 0.3, exponents
 
 
-def test_the_hills_weight_is_the_pairs_integer_rounded_once_at_the_read_on_either_kind():
-    """T3, the hill's weight (paces.motion_weight; ALGEBRA.md, The hill's weight is the write's mix): one form at T 36,000 gives 30 at the exponent 5 and 36 at 6 exactly (Gamma divides n E_s T), and 24 at the trace's d + 1 = 4 (The stress's trace is the time line's, one K for every mix), at T 32,768 gives 27 (27.31 rounded half up) and 33 (32.77); two sources equal at the exponents 5 and 6 give the harmonic mix rounded, 33 at T 36,000 (32.73) at the Node where both source and the one form's 36 where the first is 0; the fallback where every source is 0 gives rounded(own E_s T, Gamma), 36 at the own exponent 6, and so does the call with no source (the one-form K of the row's key `weight: gap`); the same integers on the hardware's integers and on Python's (the array's kind kept), and no division where the sources are 0."""
-    nodes, sixes = np.array([100, 200]), (36, 36)
-    assert tuple(paces.motion_weight([nodes], [5], 36000, GAMMA, 6)) == (30, 30)
-    assert tuple(paces.motion_weight([nodes], [6], 36000, GAMMA, 6)) == sixes
-    assert tuple(paces.motion_weight([nodes], [5], 32768, GAMMA, 6)) == (27, 27)
-    assert tuple(paces.motion_weight([nodes], [6], 32768, GAMMA, 6)) == (33, 33)
-    mixed = [np.array([100, 0]), np.array([100, 100])]
-    assert tuple(paces.motion_weight(mixed, [5, 6], 36000, GAMMA, 6)) == (33, 36)
-    assert tuple(paces.motion_weight([np.array([0, 0])], [5], 36000, GAMMA, 6)) == sixes
-    assert (
-        paces.motion_weight([], [], 36000, GAMMA, 6) == 36
-        and paces.motion_weight([], [], 36000, GAMMA, 5) == 30
+@dataclass(frozen=True)
+class Row:
+    """A held row's rule as the start reads it, the one flag the volume's two start functions read."""
+
+    motion_volume: bool
+
+
+def test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_one_search_each_the_others_inverse():
+    """T3, the volume form's two functions (features/volume `volume_of`, `level_of`, `clock_zero`, `EXPONENT`, `at_start`, `started`, `levels_read`; the momentum hand's derivation M12a read cold by the reader; the acts table: the volume one division D, the reading a search S): the exponent is d + 1 = 4; the volume of the vacuum's level 0 is Gamma itself (Gamma^5 over Gamma^4); over every level from -Gamma + 1 to 7,100 the volumes X(a) = ceil(Gamma^5 / p_0(a)^4) never fall as the level rises and, from the level 0 up, rise at exactly the levels where the clock's integer pace falls (two levels sharing one clock share one volume: the clock's own staircase, p_0 falling by less than one unit per level below Gamma, and the volume's unit coarser than the level's in a hill, X(-Gamma) = 110), and the level of a volume is the staircase's inverse bit for bit, the largest level whose volume is at most X, at every X(a), at every X(a) - 1 and at a random X between (the test's bisection on the volumes' list, the oracle), so that a level whose volume rises at the next level reads back from its own volume; the arrays come back in the shape given as Python's integers; the clock's zero at Gamma 6,000 is 56,352 (the paces' text), the clock's own power above 0 at 56,351 and 0 there, and the reading of a volume beyond every pace rests at 56,351, the clock's last pace; a volume at most 0 at a Node is refused by name, and one below the deepest hill's is refused by name; `at_start` turns every row's flag off and `started` converts a record's two levels to volumes once with its remainder kept, the line itself for a row at its level; `levels_read` passes a level array through and reads a volume array."""
+    assert volume.EXPONENT == 4 and int(volume.volume_of(GAMMA, np.array(0))) == GAMMA
+    levels = np.arange(-GAMMA + 1, 7101)
+    volumes = volume.volume_of(GAMMA, levels)
+    staircase = [int(x) for x in volumes]  # the oracle's staircase reaches 100 levels past the probes
+    assert volumes.dtype == np.dtype(object) and all(
+        x <= y for x, y in zip(staircase, staircase[1:], strict=False)
     )
-    exact = [np.asarray(source, dtype=object) for source in mixed]
-    found = paces.motion_weight(exact, [5, 6], 36000, GAMMA, 6)
-    assert tuple(found) == (33, 36) and found.dtype == np.dtype(object) and type(found[0]) is int
-    assert paces.motion_weight([np.array(100), np.array(100)], [5, 6], 36000, GAMMA, 6) == 33
-    assert paces.exponent_products([5, 6]) == (30, [6, 5]) and paces.exponent_products([]) == (1, [])
-    assert paces.motion_weight([], [], 36000, GAMMA, 4) == 24  # the trace's one K, (d + 1) E_s T / Gamma
+    clocks = [paces.clock(GAMMA, int(a)) for a in levels]
+    for a, x, y, p, q in zip(levels, staircase, staircase[1:], clocks, clocks[1:], strict=False):
+        assert a < 0 or (x < y) == (q < p), (a, x, y, p, q)  # the volume rises where the clock falls
+    draw = np.random.default_rng(12)
+    probed = staircase[:-100]
+    below = [x - 1 for x in probed if x > staircase[0]]
+    probes = probed + below + [int(x) for x in draw.integers(staircase[0], probed[-1], 300)]
+    inverse = [int(levels[bisect.bisect_right(staircase, x) - 1]) for x in probes]
+    assert [int(a) for a in volume.level_of(GAMMA, np.array(probes, dtype=object))] == inverse
+    rising = [a for a, x, y in zip(levels[:-100], staircase, staircase[1:], strict=False) if x < y]
+    assert np.array_equal(volume.level_of(GAMMA, volume.volume_of(GAMMA, np.array(rising))), rising)
+    grid = draw.integers(-500, 3000, (3, 3, 3))
+    found = volume.volume_of(GAMMA, grid)
+    assert found.shape == (3, 3, 3) and type(found[0, 0, 0]) is int
+    assert np.array_equal(
+        volume.level_of(GAMMA, found),
+        [
+            [[int(levels[bisect.bisect_right(staircase, int(x)) - 1]) for x in row] for row in plane]
+            for plane in found
+        ],
+    )
+    assert volume.clock_zero(GAMMA) == 56352 and paces.clock_alone(GAMMA, 56352) == 0
+    assert paces.clock_alone(GAMMA, 56351) > 0 and int(volume.level_of(GAMMA, np.array(10**40))) == 56351
+    refused("at most 0", volume.level_of, GAMMA, np.array([GAMMA, 0]))
+    assert int(volume.volume_of(GAMMA, np.array(-GAMMA))) == 110
+    refused("lies below -6000", volume.level_of, GAMMA, np.array([109]))
+    assert volume.at_start((Row(True), Row(False))) == (Row(False), Row(False))
+    line = records.Record(grid, grid - 7, np.full((3, 3, 3), 5))
+    assert volume.started(GAMMA, Row(False), line) is line
+    converted = volume.started(GAMMA, Row(True), line)
+    assert np.array_equal(converted.now, found) and converted.remainder is line.remainder
+    assert np.array_equal(converted.before, volume.volume_of(GAMMA, grid - 7))
+    assert volume.levels_read(GAMMA, grid, False) is grid
+    assert np.array_equal(volume.levels_read(GAMMA, found, True), volume.level_of(GAMMA, found))
 
 
-def test_the_premise_is_a_test_a_uniform_shift_changes_no_act_and_the_velocity_is_no_datum_of_the_seed(
+def test_the_premise_is_a_test_the_volumes_write_reads_its_own_level_both_ways_and_the_velocity_is_no_datum_of_the_seed(
     tmp_path, monkeypatch
 ):
-    """T4, the premise as a test (ALGEBRA.md, The board's interval is no observable: a uniform level is a change of units, and so is its change from interval to interval; The mean's velocity is the content's): (a) the hill's term `paces.motion_term(now + c, before + c, K, wall)` equals `motion_term(now, before, K, wall)` bit for bit for random integer arrays and shifts, the kinetic form reading no level, and the one function returns the term with the divisor, the wall plus K (now - before) forward and less it backward, the symmetric hill's, the same under the shift; `paces.motion_weight` reads no level, its arguments the sources, the exponents, the wall, the clock and the own exponent alone (its signature); (b) the velocity no datum of the seed: the T2 board from rest and the same board with a uniform velocity of 10 levels per interval written by the test on gravity's time line before the first step (before = now - 10 at every Node, the test's own write on the state and no lay) both reach the constraint's residual within 10 percent of 0 by dU 0.5 (the derivation's e^(-5 dU) from either side) and agree in U at the end within 3 percent."""
-    draw = np.random.default_rng(24)
-    for shift in (-7, 3, 60):
-        now, before = draw.integers(-60, 60, (3, 3, 3)), draw.integers(-60, 60, (3, 3, 3))
-        weight = draw.integers(27, 37, (3, 3, 3))
-        term, divisor = paces.motion_term(now + shift, before + shift, weight, 36000)
-        plain = paces.motion_term(now, before, weight, 36000)
-        assert np.array_equal(term, plain[0]) and np.array_equal(divisor, plain[1])
-        assert np.array_equal(term, -(weight * (now - before) ** 2))
-        assert np.array_equal(divisor, 36000 + weight * (now - before))
-        back = paces.motion_term(now + shift, before + shift, weight, 36000, -1)
-        assert np.array_equal(back[0], term) and np.array_equal(back[1], 36000 - weight * (now - before))
-    assert tuple(inspect.signature(paces.motion_weight).parameters) == (
-        "sources",
-        "exponents",
-        "wall",
-        "gamma",
-        "own",
-    )
+    """T4, the premise as a test (ALGEBRA.md, The board's interval is no observable: a uniform level is a change of units, and so is its change from interval to interval; The mean's velocity is the content's; records.write_sources, node.read_lines, features/volume): (a) on the T2 torus under the key the numerators from `records.write_sources` with the row's two levels given are the sources' numerators times (d + 1) X, X the level the direction starts from (now forward, before backward: the inverse reads the post-state's before, the reversibility hand's Theorem 1), over the wall Gamma E_s T, bit for bit against the same call without the levels, the axis lines' numerators and walls untouched; (b) every read of gravity's time line is the level reading: `node.read_lines` gives matter the content `volume.level_of(X)` at every Node, so the clocks and the Links' factors read a level and never the volume (the paces compose on the level); (c) the velocity no datum of the seed: the torus from rest and the same torus with a velocity of 10 levels per interval written by the test on gravity's time line before the first step (before the volume of the level 10 below now at every Node, the test's own write on the state and no lay) merge over 100 intervals: the level reading's velocity agrees within 3 levels per interval from the fortieth interval on, the level at the end within 3 percent, the board's residual `nature` rising from -1 (from -0.99 on the kicked start) at every tenth interval on both, and the reader's constraint of the volume's Lagrangian, E = 0 as X'^2 / (2 X X'') - 1 read by the test from the record's own X and its write, within 0.1 of 0 in the mean from the sixtieth interval on both and within 0.2 at every interval (the write's integer staircase, 8 or 9 units of X per interval on this torus, jitters the reading; reached from rest as -X_0 / X, the derivation's -e^(-(d + 1) U), the source's own dimming beyond e^(-4 U) keeping it a little under)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_at_weight_one(tmp_path, gravity={"booking": "form"})
-    ends = []
-    for name, kick in (("rest", 0), ("kicked", 10)):
-        board = Lattice(load_world(laid_torus(tmp_path, name, interval="unobservable")))
-        names = [family.name for family in board.families]
-        g, m = names.index("gravity"), names.index("matter")
-        line = board.states[g].lines[0]
-        board.states[g].lines[0] = replace(
-            line, before=line.before - kick
-        )  # the test's own write, no lay
-        course = lockstep(board, g, m, 100)
-        residual = [step["eras"].residual[0] / step["eras"].residual[1] - 1 for step in course]
-        start = course[0]["level"] / GAMMA
-        within = [
-            step["after"] / GAMMA - start
-            for step, r in zip(course, residual, strict=True)
-            if abs(r) < 0.1
-        ]
-        assert within and within[0] <= 0.5, (name, within[:1], residual[::10])
-        ends.append(course[-1]["after"] / GAMMA)
-    assert abs(ends[0] / ends[1] - 1) < 0.03, ends
-
-
-def test_the_run_back_is_refused_by_name_under_the_key_and_the_gate_reads_refused_never_miss(
-    tmp_path, monkeypatch
-):
-    """T5, the run back under the key (ALGEBRA.md, The inverse, the clause of 2026-10-22; Lattice.motion_back; the symmetric hill's derivation M11j, 1.2 and 1.3; tools/back_in_time.py): on the T2 board stepped 100 intervals the forward act names the intervals whose run back fails (`Lattice.unreturning`, `paces.motion_returns`), and the names are the engine's own numbers read back: an interval is named iff at some Node the carry in r lay at or above the backward wall E_s T - K v_out, v_out = a(t + 1) - a(t) the row's velocity after the interval (the lockstep board, one number at every Node), and the names are not empty (the rate 2 c H per Node per interval at the start's velocities); the run back from the top is exact bit for bit at every interval down to the first named one, the same function at -1 (the snapshot of each interval's start recovered, levels and remainders of every family), and there `Lattice.step_inverse` raises by name, the message naming the interval, the backward wall, the Jacobian theorem and its rate, the reversibility hand's Theorem 2, the stored velocity against the decision of 2026-10-19 and the units' row as a board act refused by the owner's locality decision of 2026-10-22, no key for either, and touching nothing; `BACK.verdict` on the same world over 100 intervals reads REFUSED at that interval with the reason, the intervals named and the count matched above it, never MISS."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_at_weight_one(tmp_path, gravity={"booking": "form"})
-    path = laid_torus(tmp_path, "back", interval="unobservable")
-    board = Lattice(load_world(path))
+    volume_universe(tmp_path)
+    board = Lattice(load_world(laid_torus(tmp_path, "premise", interval="unobservable")))
     names = [family.name for family in board.families]
     g, m = names.index("gravity"), names.index("matter")
-    wall, kept = board.walls(g)[0], [BACK.snapshot(board)]
-    course = lockstep(board, g, m, 100)
-    kept += [step["snapshot"] for step in course]
-    folded = {
-        t + 1
-        for t, step in enumerate(course)
-        if step["remainder"] >= wall - step["eras"].weight_low * (step["after"] - step["level"])
-    }
-    assert folded and board.unreturning == folded and max(folded) <= 100
-    first = max(folded)
-    while board.interval > first:
-        board.step_inverse()
-        assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
-    before = BACK.snapshot(board)
-    with pytest.raises(RuntimeError, match="not injective") as refusal:
-        board.step_inverse()
-    words = (
-        f"interval {first} ",
-        "backward wall W - K v_out",
-        "Jacobian theorem",
-        "2 c H",
-        "Theorem 2",
-        "decision of 2026-10-19",
-        "locality decision of 2026-10-22",
-        "no key",
-    )
-    assert all(word in str(refusal.value) for word in words) and board.interval == first
-    assert BACK.first_difference(before, BACK.snapshot(board)) is None  # the refusal touched nothing
-    verdict = BACK.verdict(Lattice(load_world(path)), 99)
-    assert verdict["verdict"] == "REFUSED" and verdict["interval"] == first and "array" not in verdict
-    assert "not injective" in str(verdict["reason"]) and verdict["unreturning"] == sorted(folded)
-    assert verdict["matched"] == 100 - first  # every interval above the first named one ran back exact
+    kept = [replace(r, now=r.now.copy(), before=r.before.copy()) for r in board.states[m].lines]
+    stresses = board_readings.stresses(board)
+    board.step()
+    line, rulers, write = board.states[g].lines[0], board.rulers(-1), board.writes[g]
+    forms = {(m, 0): records.form(kept, board.lines_of(m, 0))}
+    plain = records.write_sources(g, board.families, forms, stresses, write, rulers, GAMMA)
+    for direction, level in ((1, line.now), (-1, line.before)):
+        motion = (line.now, line.before)
+        found = records.write_sources(
+            g, board.families, forms, stresses, write, rulers, GAMMA, motion, direction
+        )
+        expected = (
+            volume.EXPONENT * np.asarray(level, dtype=object) * np.asarray(plain[0][0], dtype=object)
+        )
+        assert np.array_equal(np.asarray(found[0][0], dtype=object), expected)
+        assert found[1][0] == GAMMA * plain[1][0] and found[1][1:] == plain[1][1:]
+        assert all(np.array_equal(a, b) for a, b in zip(found[0][1:], plain[0][1:], strict=True))
+    content, _axes = node.read_lines(m, board.families, board.states, 1, GAMMA)
+    assert np.array_equal(np.asarray(content, dtype=object), volume.level_of(GAMMA, line.now))
+    courses = {}
+    for name, kick in (("rest", 0), ("kicked", 10)):
+        board = Lattice(load_world(laid_torus(tmp_path, name, interval="unobservable")))
+        line = board.states[g].lines[0]
+        before = volume.volume_of(GAMMA, volume.level_of(GAMMA, line.now) - kick)
+        board.states[g].lines[0] = replace(line, before=before)  # the test's own write, no lay
+        course = lockstep(board, g, m, 100)
+        residual = [step["eras"].nature[0] / step["eras"].nature[1] - 1 for step in course]
+        assert -1 <= residual[0] < -0.98 + kick / 100 and residual[0] > -1 - kick  # the kick's velocity
+        assert all(b > a for a, b in zip(residual[::10], residual[10::10], strict=False)), name
+        volumes = [course[0]["level"]] + [step["after"] for step in course]
+        speed = [b - a for a, b in zip(volumes, volumes[1:], strict=False)]
+        force = [b - a for a, b in zip(speed, speed[1:], strict=False)]
+        energy = [
+            v * v / (2 * x * f) - 1 for x, v, f in zip(volumes[1:], speed[1:], force, strict=False)
+        ]
+        late = energy[60:]  # the force's integer staircase, 8 or 9 units of X, jitters each reading
+        assert abs(sum(late) / len(late)) < 0.1 and all(abs(e) < 0.2 for e in late), (name, late[::10])
+        courses[name] = [step["eras"].level for step in course]
+    rest, kicked = courses["rest"], courses["kicked"]
+    velocities = [(b - a, d - c) for a, b, c, d in zip(rest, rest[1:], kicked, kicked[1:], strict=False)]
+    assert all(abs(v - w) <= 3 for v, w in velocities[40:]) and kicked[0] > rest[0]
+    assert abs(rest[-1] / kicked[-1] - 1) < 0.03, (rest[-1], kicked[-1])
+
+
+def test_the_run_back_under_the_key_matches_at_every_interval_at_a_wall_that_never_moves(
+    tmp_path, monkeypatch
+):
+    """T5, the run back under the key (ALGEBRA.md, The inverse; the reversibility hand's Theorem 1; features/volume; Lattice.fixed_walls; tools/back_in_time.py): every numerator and wall of the volume's write is a function of the post-state at a wall that never moves (Gamma E_s T under `factor: rounded`; Gamma E_s T times the Node's factor wall at the rest's paces under `factor: carried`), and Rule3's own line on X keeps its double root, so `Lattice.step_inverse` returns every level and remainder bit for bit at every interval: the gate's verdict is MATCH over 30 intervals on the T2 torus under either factor, over 16 on the light cube (the three waves, a non-uniform board whose paces differ from Node to Node, where the symmetric hill's run back missed and the carried factor's moving wall folds) under either factor, and over 16 on the torus kicked as T4 kicks it (the velocity in the record); the verdict names the intervals, the first interval 1 and no end, and nothing unreturning (the hill's names gone from the gate). The run back MATCH 200 of 200 on the second run's world is the test by name in the eras' log of the run (docs/ENGINE.md section 10, item 17)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    for factor in ("rounded", "carried"):
+        volume_universe(tmp_path, factor)
+        torus = laid_torus(tmp_path, f"torus_{factor}", interval="unobservable")
+        cube = light_cube(tmp_path, f"cube_{factor}", 400, interval="unobservable")
+        for path, intervals in ((torus, 30), (cube, 16)):
+            verdict = BACK.verdict(Lattice(load_world(path)), intervals)
+            expected = {"verdict": "MATCH", "intervals": intervals, "interval": 1, "ended": None}
+            assert verdict == expected, (path.name, verdict)
+    board = Lattice(load_world(torus))
+    g = [family.name for family in board.families].index("gravity")
+    line = board.states[g].lines[0]
+    before = volume.volume_of(GAMMA, volume.level_of(GAMMA, line.now) - 10)
+    board.states[g].lines[0] = replace(
+        line, before=before
+    )  # the kicked torus, the velocity in the record
+    assert BACK.verdict(board, 16)["verdict"] == "MATCH"
 
 
 def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_traceless_parts(
     tmp_path, monkeypatch
 ):
-    """T7, the trace's test (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; the pressure hand's derivation and the reader's build line; loader/universe.pressure_of, records.pressure_term, records.write_sources, records.hill_weight): on the 3-cube torus at T 36,000 with the uniform matter record and one light plane wave along x at the wave [2, 3], gravity declaring `booking: form` and `pressure: trace` with the factor rounded and carried in turn, over 20 intervals (a) the three tension lines' numerators from `records.write_sources` sum to 0 at every Node exactly under the carry (the traceless parts 3 T_aa - SUM_b T_bb over the trace's three, no rounding of their own) and within the sources' two roundings under the rounding; (b) the time line's numerator is the write weight times the forms' scaled sum less the pressure term at the carried wall's scale, bit for bit (`records.scaled_sum`, `records.pressure_term`, the trace over three of each source's stress parts in the energy's units, one rounding per source per Node); (c) the hill's weight is 24 at every Node, the trace's one integer (d + 1) E_s T / Gamma, read by `board_readings.eras`; (d) the sum of the three tension lines' mean velocities over the board stays within 2 levels per interval of 0 (the isotropic part drained: the x line at two thirds of its stress, the y and z lines at minus a third each, the shear's double root the law keeps), while under the law's `pressure: tension` on the same lay it grows past 10 levels per interval by the twentieth interval (the x line's mean accelerated by the wave's stress, the finding of the smoke) with the mix's weights 30 to 36 as the law has them. The declaration: `pressure` at a word other than `tension` or `trace`, `trace` on the holder of the sign and `trace` at a quantum action Gamma does not divide four times are refused by name."""
+    """T7, the trace's test (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; the pressure hand's derivation and the reader's build line; loader/universe.pressure_of, records.pressure_term, records.write_sources): on the 3-cube torus at T 36,000 and the width 92 with the uniform matter record and one light plane wave along x at the wave [2, 3], gravity declaring `booking: form` and `pressure: trace` under the hypothesis's key with the factor rounded and under the law's key with the factor carried, over 20 intervals (a) the three tension lines' numerators from `records.write_sources` sum to 0 at every Node exactly under the carry (the traceless parts 3 T_aa - SUM_b T_bb over the trace's three, no rounding of their own) and within the sources' two roundings under the rounding; (b) the time line's numerator is the write weight times the forms' scaled sum less the pressure term at the carried wall's scale, bit for bit (`records.scaled_sum`, `records.pressure_term`, the trace over three of each source's stress parts in the energy's units, one rounding per source per Node), under the key times (d + 1) X at the wall Gamma E_s T where the row's levels are given (the volume's write); (c) under the key the row carries its volume at the trace's exponent 4 and under the law's key the level itself; (d) the sum of the three tension lines' mean velocities over the board stays within 2 levels per interval of 0 (the isotropic part drained: the x line at two thirds of its stress, the y and z lines at minus a third each, the shear's double root the law keeps), while under the law's `pressure: tension` on the same lay it grows past 10 levels per interval by the twentieth interval (the x line's mean accelerated by the wave's stress, the finding of the smoke). The declaration: `pressure` at a word other than `tension` or `trace`, `trace` on the holder of the sign and `trace` at a quantum action Gamma does not divide four times are refused by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     growth = {}
-    for pressure, factor in (("trace", "rounded"), ("trace", "carried"), ("tension", "rounded")):
+    cases = (
+        ("trace", "rounded", "interval"),
+        ("trace", "carried", "uniform"),
+        ("tension", "rounded", "uniform"),
+    )
+    for pressure, factor, law in cases:
         keys = {"booking": "form", "pressure": pressure, "factor": factor}
-        universe_at_weight_one(tmp_path, action=36000, gravity=keys)
-        board = Lattice(
-            load_world(light_torus(tmp_path, f"{pressure}_{factor}", 400, interval="unobservable"))
-        )
+        universe_at_weight_one(tmp_path, 36000, WIDTH, gravity=keys)
+        world = {law: "unobservable" if law == "interval" else "carried"}
+        board = Lattice(load_world(light_torus(tmp_path, f"{pressure}_{factor}", 400, **world)))
         names = [family.name for family in board.families]
         g, m, light = names.index("gravity"), names.index("matter"), names.index("light")
         gravity, means = board.families[g], []
         assert gravity.pressure_trace == (pressure == "trace") and gravity.factor_carried == (
             factor == "carried"
         )
+        assert gravity.motion_volume == (law == "interval") and volume.EXPONENT == 4
         for _ in range(20):
             kept = {
                 i: [replace(r, now=r.now.copy(), before=r.before.copy()) for r in board.states[i].lines]
@@ -200,13 +225,12 @@ def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_trac
             }
             stresses = board_readings.stresses(board)
             board.step()
-            rulers, forms = board.rulers(-1), {}
+            rulers, write = board.rulers(-1), board.writes[g]
             forms = {(i, 0): records.form(kept[i], board.lines_of(i, 0)) for i in (m, light)}
-            numerators, _walls, _weight = records.write_sources(
-                g, board.families, forms, stresses, board.writes[g], rulers, GAMMA, None, 1
+            numerators, walls, _terms = records.write_sources(
+                g, board.families, forms, stresses, write, rulers, GAMMA
             )
             axes = sum(np.asarray(numerators[1 + a], dtype=object) for a in range(3))
-            read = board_readings.eras(board, g, forms, rulers)
             if pressure == "trace":
                 assert int(np.abs(axes).max()) <= (0 if factor == "carried" else 2)
                 sources = {s: forms.get(s, 0) for s in records.row_sources(board.families, g, 0)}
@@ -216,13 +240,17 @@ def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_trac
                 pressed = records.pressure_term(
                     g, board.families, stresses, rulers, GAMMA, gravity.power
                 )
-                assert np.array_equal(
-                    np.asarray(numerators[0], dtype=object),
-                    np.asarray(gravity.write * (energy - pressed * scale), dtype=object),
-                )
-                assert read.weight_low == read.weight_high == 24 and int(np.asarray(pressed).sum()) > 0
-            else:
-                assert 30 <= read.weight_low <= read.weight_high <= 36
+                time = np.asarray(gravity.write * (energy - pressed * scale), dtype=object)
+                assert np.array_equal(np.asarray(numerators[0], dtype=object), time)
+                assert int(np.asarray(pressed).sum()) > 0
+                if gravity.motion_volume:
+                    line = board.states[g].lines[0]
+                    moved = records.write_sources(
+                        g, board.families, forms, stresses, write, rulers, GAMMA, (line.now, line.before)
+                    )
+                    volumes = volume.EXPONENT * np.asarray(line.now, dtype=object) * time
+                    assert np.array_equal(np.asarray(moved[0][0], dtype=object), volumes)
+                    assert moved[1][0] == GAMMA * walls[0] == GAMMA * 36000
             means.append(
                 [
                     float(np.asarray(board.states[g].lines[1 + a].now, dtype=object).sum()) / 27
@@ -261,34 +289,26 @@ def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_trac
 def test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_without_it(
     tmp_path, monkeypatch
 ):
-    """The finding of the second smoke as a test (ALGEBRA.md, The stress's trace is the time line's; The closed lattice has no rest, read for the axis lines; the reader's build line of 2026-10-22): on the 3-cube torus at T 36,000 with the uniform matter record and three light plane waves alike, one along each axis at the wave [2, 3] (`light_cube`, the experiment's isotropic lay), gravity's three tension lines are massless held lines whose k = 0 mode is Rule3's double root, so under the law's `pressure: tension` the waves' positive mean stress, a write of about one level per interval into each line's mean, accumulates as a VELOCITY of the mean that nothing drains: each tension line's mean velocity grows past 10 levels per interval by the twentieth interval, the three alike, toward the Links' freezing at Gamma (the smoke's 5,905 at the sixtieth interval of the test world); under `pressure: trace` the trace goes to the time line and the traceless parts of an isotropic lay are 0 in the mean, so each line's mean velocity stays within one level per interval of 0 over the 20 intervals and the means within 10 levels of 0 (the k > 0 ringing and the carry's drift), the three lines' means alike at every interval (the cube's symmetry: the lines are each other's images under the axes' permutation), the hill's weight 24."""
+    """The finding of the second smoke as a test (ALGEBRA.md, The stress's trace is the time line's; The closed lattice has no rest, read for the axis lines; the reader's build line of 2026-10-22): on the 3-cube torus at T 36,000 and the width 92 with the uniform matter record and three light plane waves alike, one along each axis at the wave [2, 3] (`light_cube`, the isotropic lay of the test of the law's course), gravity's three tension lines are massless held lines whose k = 0 mode is Rule3's double root, so under the law's key with `pressure: tension` the waves' positive mean stress, a write of about one level per interval into each line's mean, accumulates as a velocity of the mean that nothing drains: each tension line's mean velocity grows past 10 levels per interval by the twentieth interval, the three alike, toward the Links' freezing at Gamma (the smoke's 5,905 at the sixtieth interval of the test world); under the hypothesis's key with `pressure: trace` and the carried factor at the wall fixed per Node, the trace goes to the time line and the traceless parts of an isotropic lay are 0 in the mean, so each line's mean velocity stays within one level per interval of 0 over the 20 intervals and the means within 10 levels of 0 (the k > 0 ringing and the carry's drift), the three lines' means alike at every interval (the cube's symmetry: the lines are each other's images under the axes' permutation) and their sum at every Node within 8 levels of 0 (the step's split, flux.step_traceless, and the traceless write: the isotropic part moved by the remainders' carries alone). The guard's lower side (features/read.link_tensions; the fourth smoke of 2026-10-22, the Links' factors and the writes negative past Gamma with no refusal): the x tension line written past Gamma by the test on the board, the next step is refused by name at the read, the message naming the tension, the factor and the pace below 0 and the guard's lower side."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     courses = {}
     for pressure in ("tension", "trace"):
         keys = {"booking": "form", "pressure": pressure, "factor": "carried"}
-        universe_at_weight_one(tmp_path, action=36000, gravity=keys)
-        board = Lattice(
-            load_world(light_cube(tmp_path, f"cube_{pressure}", 400, interval="unobservable"))
-        )
+        universe_at_weight_one(tmp_path, 36000, WIDTH, gravity=keys)
+        world = {"interval": "unobservable"} if pressure == "trace" else {"uniform": "carried"}
+        board = Lattice(load_world(light_cube(tmp_path, f"cube_{pressure}", 400, **world)))
         names = [family.name for family in board.families]
-        g, m, light = names.index("gravity"), names.index("matter"), names.index("light")
-        means = []
+        g, means = names.index("gravity"), []
         for _ in range(20):
-            kept = {
-                i: [replace(r, now=r.now.copy(), before=r.before.copy()) for r in board.states[i].lines]
-                for i in (m, light)
-            }
             board.step()
-            forms = {(i, 0): records.form(kept[i], board.lines_of(i, 0)) for i in (m, light)}
-            read = board_readings.eras(board, g, forms, board.rulers(-1))
-            assert (read.weight_low, read.weight_high) == (
-                (24, 24) if pressure == "trace" else (read.weight_low, read.weight_high)
-            )
-            sums = [
-                int(np.asarray(board.states[g].lines[1 + a].now, dtype=object).sum()) for a in range(3)
-            ]
+            lines = board.states[g].lines
+            sums = [int(np.asarray(lines[1 + a].now, dtype=object).sum()) for a in range(3)]
             assert sums[0] == sums[1] == sums[2]  # the cube's symmetry: the three lines' means alike
             means.append(sums[0] / 27)
+            total = sum(np.asarray(lines[1 + a].now, dtype=object) for a in range(3))
+            assert (
+                pressure == "tension" or int(np.abs(total).max()) <= 8
+            )  # the three lines' sum per Node
         courses[pressure] = [b - a for a, b in zip(means[:-1], means[1:], strict=True)], means
     velocities, means = courses["trace"]
     assert all(abs(v) <= 1 for v in velocities) and all(abs(level) <= 10 for level in means)
@@ -298,12 +318,22 @@ def test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_
         and all(b >= a for a, b in zip(velocities[2:], velocities[3:], strict=False))
         and means[-1] > 100
     )
+    line = board.states[g].lines[
+        1
+    ]  # the x tension line driven past Gamma by the test's own write, no lay
+    board.states[g].lines[1] = replace(line, now=line.now + 2 * GAMMA)
+    beyond = refused("exceeds Gamma", board.step)
+    assert (
+        "below 0" in str(beyond)
+        and "guard's lower side" in str(beyond)
+        and "refused by name" in str(beyond)
+    )
 
 
 def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit(
     tmp_path, monkeypatch
 ):
-    """T8, the end's booking switch (DESIGN 0 (iii); ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of, loader/derived.shared_clock, paces.write_factor_terms, records.write_sources, node.held_write_at): (a) `paces.write_factor_terms` returns a product and a wall, Gamma^power p_0^(3 - power), whose quotient rounded half up is `write_factor`'s value bit for bit at every Node of a random state at both powers; (b) on the T2 torus at T 36,000 with gravity declaring `booking: form` and `factor: carried` the write's wall at every Node is E_s T Gamma p_0^2 at the record's clock, one remainder per held line stands as before and below its wall at every Node in the wall's kind (Python's integers under the carry, the axis lines' walls beyond the hardware's width), the lines keep the lattice's kind, and over 40 intervals each interval's level after the write is bit for bit the Rule3-stepped level plus (k_w w D p^3 - K v^2 Gamma p_0^2 + r) div (E_s T Gamma p_0^2 + K v Gamma p_0^2) with the engine's own remainder and K the rounding's 30 (the symmetric hill and its weight at the carried wall's scale; the lockstep board's paces p_i on every axis, the tensions 0); (c) the carried board's level stays within 6 levels of the rounded board's over the 40 intervals (the carry below one level per Node; its fraction changes meaning as the wall moves with the clock, 5 levels measured by the interval 40); (d) `factor` at a word other than `rounded` or `carried` is refused by name, and `factor: carried` on a row whose sources read the content at differing weights is refused by name with the readers; (e) under the law's key `uniform: carried` with `factor: carried` and no hill the run back MATCHES over 20 intervals (the reversibility hand's Theorem 1: the wall and the numerator from the paces of the interval's start, read from the post-state's before)."""
+    """T8, the end's booking switch (DESIGN 0 (iii); ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of, loader/derived.shared_clock, paces.write_factor_terms, records.write_sources, records.walls_at, node.held_write_at, Lattice.fixed_walls): (a) `paces.write_factor_terms` returns a product and a wall, Gamma^power p_0^(3 - power), whose quotient rounded half up is `write_factor`'s value bit for bit at every Node of a random state at both powers; (b) on the T2 torus at T 36,000 under the law's key with gravity declaring `booking: form` and `factor: carried` the write's wall at every Node is E_s T Gamma p_0^2 at the rest's clock, kept for the run (`Lattice.fixed_walls`, the carried factor's one form under either key: a wall moving with the clock folds the run back and is no form), the write remainders born at its half (`records.walls_at`, `records.write_origins`), one remainder per held line stands below its wall at every Node in the wall's kind (Python's integers under the carry, the axis lines' walls beyond the hardware's width), the lines keep the lattice's kind, and over 40 intervals each interval's level after the write is bit for bit the Rule3-stepped level plus (rounded(k_w w D p^3 W, E_s T Gamma p_0^2) + r) div W with W the fixed wall and p, p_0 the interval's own paces (the ratio of the walls inside the numerator, rounded once) and the engine's own remainder (the lockstep board's paces p_i on every axis, the tensions 0); (c) the carried board's level stays within 6 levels of the rounded board's over the 40 intervals (the carry below one level per Node); (d) `factor` at a word other than `rounded` or `carried` is refused by name, and `factor: carried` on a row whose sources read the content at differing weights is refused by name with the readers; (e) under the law's key with `factor: carried` the run back MATCHES over 20 intervals (the reversibility hand's Theorem 1: the wall fixed, the numerator from the paces of the interval's start, read from the post-state's before); (f) under the hypothesis's key the carried factor divides at the wall fixed per Node for the run (the Boss's decision of 2026-10-22 on the text hand's model): on the torus with gravity's time line set by the test to the volume of the level Gamma (U = 1) and a source of form 5 at every Node, the rounded factor's write is 0 (5 e^(-4) below one half, 0 for ever under the rounding), the fixed wall's numerator is the carried product times the rest's wall over the interval's wall rounded once, above 0, at the wall kept from the start, and the held write at that wall over 20,000 intervals with the numerator held gives the quotients' sum (n N + r_0) div W exactly, from 1 up: the fraction carried, the write alive."""
     draw = np.random.default_rng(8)
     for power in (1, 2):
         count, clock = draw.integers(-(10**7), 10**7, (3, 3, 3)), draw.integers(3000, 6001, (3, 3, 3))
@@ -318,25 +348,24 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     levels = {}
     for factor in ("carried", "rounded"):
         universe_at_weight_one(tmp_path, action=36000, gravity={"booking": "form", "factor": factor})
-        board = Lattice(load_world(laid_torus(tmp_path, f"end_{factor}", interval="unobservable")))
+        board = Lattice(load_world(laid_torus(tmp_path, f"end_{factor}", uniform="carried")))
         names = [family.name for family in board.families]
         g, m = names.index("gravity"), names.index("matter")
         wall, kind = board.walls(g)[0], board.states[g].lines[0].now.dtype
         assert board.families[g].factor_carried == (factor == "carried") and wall == 36000
+        fixed = one_number(board.fixed_walls[g][0]) if factor == "carried" else wall
+        assert fixed == wall * (GAMMA * paces.clock(GAMMA, 60) ** 2 if factor == "carried" else 1)
+        assert one_number(board.states[g].write_remainders[0]) == fixed // 2  # born at the half wall
         course = lockstep(board, g, m, 40)
         for step in course:
             form = step["now"] * step["now"] - step["next"] * step["before_record"]
             clock, pace = paces.node_paces(GAMMA, step["level"])
-            scale = GAMMA * clock * clock if factor == "carried" else 1
             booked = (
-                form * pace**3
+                int(paces.rounded(form * pace**3 * fixed, wall * GAMMA * clock * clock))
                 if factor == "carried"
                 else int(paces.write_factor(np.array(form), pace, pace, pace, clock, GAMMA, 1))
             )
-            velocity = step["level"] - step["before"]
-            numerator = booked - 30 * scale * velocity * velocity + step["remainder"]
-            divisor = wall * scale + 30 * scale * velocity
-            assert step["eras"].weight_low == step["eras"].weight_high == 30
+            numerator, divisor = booked + step["remainder"], fixed
             assert step["after"] == 2 * step["level"] - step["before"] + numerator // divisor
             assert step["remainder_after"] == numerator - divisor * (numerator // divisor) < divisor
         assert len(board.states[g].write_remainders) == len(board.states[g].lines)
@@ -361,4 +390,95 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     assert "'gravity'" in str(apart) and "light" in str(apart) and "shared clock" in str(apart)
     universe_at_weight_one(tmp_path, action=36000, gravity={"booking": "form", "factor": "carried"})
     verdict = BACK.verdict(Lattice(load_world(laid_torus(tmp_path, "law", uniform="carried"))), 20)
-    assert verdict["verdict"] == "MATCH" and verdict["intervals"] == 20 and verdict["unreturning"] == []
+    assert verdict == {"verdict": "MATCH", "intervals": 20, "interval": 1, "ended": None}
+    volume_universe(tmp_path, "carried")
+    board = Lattice(load_world(laid_torus(tmp_path, "deep", interval="unobservable")))
+    names = [family.name for family in board.families]
+    g, m = names.index("gravity"), names.index("matter")
+    deep = volume.volume_of(GAMMA, np.full(board.shape, GAMMA, dtype=object))
+    board.states[g].lines[0] = replace(board.states[g].lines[0], now=deep, before=deep)
+    rulers, write, fixed = board.rulers(1), board.writes[g], board.fixed_walls[g]
+    small = {(m, 0): np.full(board.shape, 5, dtype=object)}
+    clock, pace = paces.node_paces(GAMMA, GAMMA)
+    assert int(paces.write_factor(np.array(5), pace, pace, pace, clock, GAMMA, 1)) == 0  # dead
+    found = records.write_sources(g, board.families, small, {}, write, rulers, GAMMA, None, 1, fixed)
+    held = one_number(fixed[0])
+    numerator = int(paces.rounded(5 * pace**3 * held, 36000 * GAMMA * clock * clock))
+    assert one_number(found[0][0]) == numerator > 0 and found[1][0] is fixed[0]
+    assert held == 36000 * GAMMA * paces.clock(GAMMA, 60) ** 2
+    level, remainder, quotients = one_number(deep), held // 2, 0
+    for _ in range(20000):
+        after, remainder = held_write(
+            level, volume.EXPONENT * level * numerator, GAMMA * held, remainder
+        )
+        quotients, level = quotients + int(after) - level, int(after)
+    assert (
+        quotients
+        == (20000 * volume.EXPONENT * one_number(deep) * numerator + held // 2) // (GAMMA * held)
+        >= 1
+    )
+
+
+def test_the_tension_lines_take_the_traceless_parts_of_their_own_link_terms_in_the_step_and_their_sum_keeps_the_double_root(
+    tmp_path, monkeypatch
+):
+    """The step's split (flux.step_traceless, flux.step_family, records.empty_state, records.walls_at; ALGEBRA.md, The stress's trace is the time line's; the reader's remedy of 2026-10-22 for the second channel: Rule3's own Link terms, each end of a Link reading the difference with its own reach, feed the tension lines' k = 0 mode on a board whose paces differ from Node to Node, the first full runs' slow drift): on the light torus (one wave along x, the paces differing along x) under the key with `pressure: trace` and `factor: carried`, (a) one step of gravity's record by `flux.step_family` gives each tension line `rule3` on 3 L_a - SUM_b L_b at the wall 3 w and the mass 3 D bit for bit, L_a its own Links' sum by `flux.link_fluxes` at the rule of the read, the time line Rule3's own (`flux.step_line`), and the same record with the trace off (the family's flag replaced by the test) takes L_a at w; (b) the step back at -1 on the stepped lines returns every line and remainder bit for bit; (c) the three tension lines are born with their remainder at half the wall 3 w they divide by, the time line at w div 2, and every write remainder of the row at half the wall fixed per Node; (d) over 120 intervals the three lines' sum at every Node keeps Rule3's double root with no Link term and no stress: its velocity is the remainders' carry alone, within 3 levels per interval at every Node and every interval (the step's three remainders over 3 w and the write's three over the fixed wall, each telescoping; the write's numerators summing to 0 under the carry but for the ratio's one rounding), and the sum of the three means stays within 12 levels of 0 while the x line's own mean moves past 1,000 (the wave's stress along x drives the anisotropic k = 0 mode, the shear the law keeps open by name)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe_at_weight_one(
+        tmp_path, 36000, WIDTH, gravity={"booking": "form", "pressure": "trace", "factor": "carried"}
+    )
+    board = Lattice(load_world(light_torus(tmp_path, "split", 400, interval="unobservable")))
+    names = [family.name for family in board.families]
+    g = names.index("gravity")
+    lines, half = board.states[g].lines, board.half_wall(g)
+    assert one_number(lines[0].remainder) == half and all(
+        one_number(lines[1 + a].remainder) == 3 * half for a in range(3)
+    )
+    for line, wall in zip(board.states[g].write_remainders, board.fixed_walls[g], strict=True):
+        assert np.array_equal(np.asarray(line, dtype=object), np.asarray(wall, dtype=object) // 2)
+    content, factors = node.read(g, board.families, board.states, 1, board.wrap, GAMMA, board.unit)
+    rule = node.rule_of(board.families[g], GAMMA, content, factors, board.unit)
+    found, _booking = flux.step_family(g, board.families, board.states, rule, board.wrap, GAMMA, 1)
+    fluxes = [
+        np.asarray(flux.link_fluxes(lines[1 + a].now, rule.reaches, board.wrap, 0), dtype=object)
+        for a in range(3)
+    ]
+    total = sum(fluxes)
+    for a in range(3):
+        line = lines[1 + a]
+        stepped, carried = rule3(
+            3 * fluxes[a] - total, 3 * rule.mass, 3 * rule.wall, line.now, line.before, line.remainder, 1
+        )
+        assert np.array_equal(np.asarray(found[1 + a].now, dtype=object), stepped)
+        assert np.array_equal(np.asarray(found[1 + a].remainder, dtype=object), carried)
+        assert np.array_equal(found[1 + a].before, line.now)
+    assert np.array_equal(
+        found[0].now, flux.step_line(lines[0], rule, board.wrap, 1, board.families[g].rest).now
+    )
+    plain = list(board.families)
+    plain[g] = replace(board.families[g], pressure_trace=False)
+    law, _booking = flux.step_family(g, tuple(plain), board.states, rule, board.wrap, GAMMA, 1)
+    for a in range(3):
+        line = lines[1 + a]
+        stepped, _carried = rule3(
+            fluxes[a], rule.mass, rule.wall, line.now, line.before, line.remainder, 1
+        )
+        assert np.array_equal(np.asarray(law[1 + a].now, dtype=object), stepped)
+    states = list(board.states)
+    states[g] = replace(board.states[g], lines=found)
+    back, _booking = flux.step_family(g, board.families, states, rule, board.wrap, GAMMA, -1)
+    for was, now in zip(lines, back, strict=True):
+        assert all(
+            np.array_equal(a, b)
+            for a, b in ((was.now, now.now), (was.before, now.before), (was.remainder, now.remainder))
+        )
+    sums, speeds = [], []
+    for _ in range(120):
+        board.step()
+        lines = board.states[g].lines
+        total = sum(np.asarray(lines[1 + a].now, dtype=object) for a in range(3))
+        before = sum(np.asarray(lines[1 + a].before, dtype=object) for a in range(3))
+        speeds.append(int(np.abs(total - before).max()))
+        sums.append(float(total.sum()) / 27)
+    assert max(speeds) <= 3 and max(abs(s) for s in sums) <= 12, (max(speeds), sums[::12])
+    assert float(np.asarray(lines[1].now, dtype=object).sum()) / 27 > 1000

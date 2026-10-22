@@ -279,11 +279,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
     ),
     "tests/test_the_uniform_mode.py::test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it": (
-        50,
+        60,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
         "unobservable` and the law's `uniform: carried` kept beside it, every refusal by name (the value, the sunk "
-        "face, the two keys together, the kick on the holder of the content, the held row's keys at a wrong word), "
-        "the torus loading under either key",
+        "face, the two keys together, the kick on the holder of the content, the row without the trace, the held "
+        "row's keys at a wrong word), the torus loading under either key and either factor, the volume at the start",
+    ),
+    "tests/test_the_uniform_mode.py::test_rule3_carries_the_uniform_line_bit_for_bit_on_a_torus_and_the_inverse_returns": (
+        46,
+        "the directive's build (the reader's line L1 on the engine half, 2026-10-22): the law's `uniform: carried` "
+        "run test restored, Rule3 carrying the uniform line bit for bit with the write at the law's two powers, the "
+        "band's line and the 20 intervals run back",
     ),
     "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
         36,
@@ -291,41 +297,58 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "power of the write, the numerator bit for bit at the Wronskian's power on a count, the dimming exponent "
         "within 0.3 of 4.8 under the key and of 5.8 without it",
     ),
-    "tests/test_the_uniform_mode.py::test_the_hill_at_the_symmetrys_weight_writes_bit_for_bit_and_the_velocity_relaxes_to_the_constraint": (
-        70,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T2): the hill's write bit for bit "
-        "at two quantum actions against the engine's own functions, the velocity under the constraint's bound and "
-        "within a level of the law's line integrated at the law's own interval, U within 2 percent, the residual rising",
+    "tests/test_the_uniform_mode.py::test_the_volumes_write_is_bit_for_bit_at_either_factor_and_the_level_reading_relaxes_to_the_constraint": (
+        60,
+        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T2): the volume's write bit "
+        "for bit at the fixed wall under either factor against the engine's own functions, the level reading what the "
+        "board reads, the velocity under the volume form's bound, the level within 2 percent of the volume's map "
+        "integrated at the law's own interval, the residual rising",
     ),
-    "tests/test_the_interval.py::test_the_hills_weight_is_the_pairs_integer_rounded_once_at_the_read_on_either_kind": (
-        20,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T3): the hill's weight's integers "
-        "and its rounding, the mix, the fallback, both kinds of integers",
-    ),
-    "tests/test_the_interval.py::test_the_premise_is_a_test_a_uniform_shift_changes_no_act_and_the_velocity_is_no_datum_of_the_seed": (
-        36,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T4): the premise as a test, the "
-        "kinetic form's invariance under a uniform shift and the attractor from rest and from a kicked start alike",
-    ),
-    "tests/test_the_interval.py::test_the_run_back_is_refused_by_name_under_the_key_and_the_gate_reads_refused_never_miss": (
+    "tests/test_the_interval.py::test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_one_search_each_the_others_inverse": (
         46,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T5): the run back refused by name "
-        "under the key and the back-in-time gate's verdict REFUSED, never MISS",
+        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T3): the volume of a level one "
+        "division and the level of a volume one search, the staircase's inverse bit for bit, the clock's zero, the "
+        "refusals by name, the start's two functions",
+    ),
+    "tests/test_the_interval.py::test_the_premise_is_a_test_the_volumes_write_reads_its_own_level_both_ways_and_the_velocity_is_no_datum_of_the_seed": (
+        56,
+        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T4): the premise as a test, the "
+        "volume's write reading its own level forward and back, every read the level reading, and the attractor from "
+        "rest and from a kicked start alike with the Lagrangian's constraint read by the test",
+    ),
+    "tests/test_the_interval.py::test_the_run_back_under_the_key_matches_at_every_interval_at_a_wall_that_never_moves": (
+        26,
+        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T5): the run back MATCH at every "
+        "interval under the key at either factor on the torus, the light cube and the kicked torus",
     ),
     "tests/test_the_interval.py::test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_traceless_parts": (
-        70,
+        92,
         "the directive's build (the reader's build line of 2026-10-22 on the second smoke, T7 as the trace's test): the "
-        "traceless axis numerators, the time line's numerator less the pressure term, the one K and the declaration",
+        "traceless axis numerators, the time line's numerator less the pressure term and times the volume under the "
+        "key, the declaration",
+    ),
+    "tests/test_the_eras_log.py::test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_them": (
+        74,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
+        "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
+    ),
+    "tests/test_the_interval.py::test_the_tension_lines_take_the_traceless_parts_of_their_own_link_terms_in_the_step_and_their_sum_keeps_the_double_root": (
+        62,
+        "the directive's build (the reader's remedy of 2026-10-22 for the second channel): the tension lines' traceless "
+        "step bit for bit against Rule3 on 3 L_a - SUM_b L_b at the wall 3 w, the law's step with the trace off, the "
+        "inverse, the births at the half walls, and the three lines' sum moved by the carries alone over 120 intervals",
     ),
     "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_without_it": (
-        40,
+        50,
         "the directive's build (the reader's build line of 2026-10-22, the finding as a test): the tension lines' k = 0 "
         "mode under an isotropic lay's mean stress, flat under the trace and running away without it",
     ),
     "tests/test_the_interval.py::test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit": (
-        60,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T8): the end's booking switch, the "
-        "carried factor's terms and wall per Node bit for bit, the rounding kept, the loader's refusals and the run back",
+        90,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T8; the Boss's decision on the fixed "
+        "wall): the end's booking switch, the carried factor's terms and wall per Node bit for bit under the law's key, "
+        "the rounding kept, the loader's refusals, the run back, and under the hypothesis's key the wall fixed per Node "
+        "with the fraction carried where the rounding's write is 0",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

@@ -13,6 +13,7 @@ from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
+from event_universe.features import volume
 from event_universe.loader.derived import count_wall, quanta_records, row_sources, weight_of
 
 if TYPE_CHECKING:
@@ -135,7 +136,7 @@ def uniform_mode(board: Lattice, index: int) -> UniformMode:
     """The uniform mode of a held family's time line as the board holds it, a lattice reading and no act (ALGEBRA.md, The closed lattice has no rest; the world's `uniform: carried`): the level now and the level before summed over the Nodes in Python's integers, each divided once by the Nodes' count with its remainder kept beside (`UniformMode`: `level`, `level_remainder`, `before`, `before_remainder`, `nodes`), so that N x level + remainder is the sum exactly; the k = 0 component Rule3's own line carries at every Node (`held_write`), read here as one integer per held family, every family alike."""
     line, nodes = board.states[index].lines[0], int(np.prod(board.shape))
     found = []
-    for levels in (line.now, line.before):
+    for levels in (row_level(board, index, line.now), row_level(board, index, line.before)):
         total = int(np.asarray(levels, dtype=object).sum())
         level, remainder = division_forward(total, nodes, 0)
         found += [int(level), int(remainder)]
@@ -167,7 +168,7 @@ def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
 
 
 class Eras(NamedTuple):
-    """A held row of the content's eras as the board reads them under `interval: unobservable` (`eras`), integers alone (the host's floats from them, tools/eras.py): the time line's mean level now and before with their remainders over the Nodes' count (`uniform_mode`); per sourcing family its write into the row's time line summed over the Nodes this interval, k_w w_f D_f f_f (`writes`, by the family's name: the family whose sum is largest sources the era, the crossing of two sums the transition); the hill's weight's least, largest and sum over the Nodes (`weight_low`, `weight_high`, `weight_sum`, the Node-mean the sum over the count, the coefficient the mean's line carries where the mix differs between Nodes, the reader's line L1 on the design); the mix's exponent n_eff = SUM_f s_f / SUM_f (s_f / n_f) over the Nodes as a pair of integers (`mix`, numerator and denominator); the constraint's residual R + 1 = Gamma v^2 / (2 Phi) as a pair of integers (`residual`: E_s T V^2 P over 2 Gamma N SUM_f (P / n_f) S_f, V the Nodes' count times the mean velocity's integer part plus the remainders' difference, S_f the family's write summed, P the exponents' product; the tracker's residual 2 (n_eff - c) / (2 c - n_eff) the host's from `mix` and the Node-mean weight); and the seed Node's level against the other Nodes' (`seed`: the time line's level at the first whole packet's Node, the sum of the other Nodes' levels and their count; (0, 0, 0) where the world lays no whole packet), the clock's contrast e^(-(U_seed - U_void)) the host's; below one level per interval the hill is quantised and the velocity pulses 0 -> 1 -> 0 at the mean rate s Gamma / n, the crawl (the floor, the crawl and the pulses one phenomenon, the history hand's and the reversal hand's), read by the host from the velocity's course and named once. The least forward wall of the symmetric hill over the Nodes, E_s T + K (now - before) at the row's own two levels at the interval's start (`wall_low`, read where `eras` is handed the row's line at the start, `begun`; the wall itself otherwise): the lay's reading through the dig, the reader's refuting clause "below E_s T / 2 at any interval", the pole at the wall 0 (|H| = 1 / c per interval) refused by the write itself (features/held_write), and the alternation margin K c against 2 E_s T^2 named beside it (a first write above about 2,400 levels per interval at K 30 alternates before settling)."""
+    """A held row of the content's eras as the board reads them under `interval: unobservable` (`eras`), integers alone (the host's floats from them, tools/eras.py): the time line's mean level now and before with their remainders over the Nodes' count (`uniform_mode`, the level reading of the volume where the row carries it); per sourcing family its write into the row's time line summed over the Nodes (the rounded booking at the row's power, the read weight and the write weight, in units of the wall E_s T); the mix's exponent n_eff as a pair of integers, P SUM_f S_f over SUM_f (P / n_f) S_f (`paces.exponent_products`, no division); the trace's own residual as a pair, 3 E_s T V^2 over 2 Gamma N SUM_f S_f (`nature`: V the mean's velocity times the Nodes' count with the remainders, so the fraction less 1 is (Gamma / 2) U'^2 / (SUM_f s_f / 3) - 1, the surface the trace's weight preserves, -1 at rest, 0 on nature's constraint; ALGEBRA.md, The stress's trace is the time line's); the seed Node's level with the other Nodes' sum and count (`seed`, (0, 0, 0) where the world lays no whole packet); and the three tension lines' sums over the Nodes now and before (`tensions`, `tensions_before`, 0 where the row has no axis lines): the tension's reading, the k = 0 mode of the axis lines whose growth under a lay's mean stress froze every Link in the smokes of 2026-10-22."""
 
     level: int
     level_remainder: int
@@ -175,23 +176,27 @@ class Eras(NamedTuple):
     before_remainder: int
     nodes: int
     writes: tuple[tuple[str, int], ...]
-    weight_low: int
-    weight_high: int
-    weight_sum: int
     mix: tuple[int, int]
-    residual: tuple[int, int]
+    nature: tuple[int, int]
     seed: tuple[int, int, int]
-    wall_low: int
+    tensions: tuple[int, int, int]
+    tensions_before: tuple[int, int, int]
+    volume: tuple[int, int]
+
+
+def volume_sums(line: records.Record, carried: bool) -> tuple[int, int]:
+    """The volume's record summed over the Nodes, now and before, where the row carries its volume (features/volume; the host reads the volume form's own constraint from three of these, X'^2 over 2 X X'' less 1, tools/eras.py), (0, 0) for a row at its level."""
+    if not carried:
+        return 0, 0
+    return int(np.asarray(line.now, dtype=object).sum()), int(
+        np.asarray(line.before, dtype=object).sum()
+    )
 
 
 def eras(
-    board: Lattice,
-    index: int,
-    forms: Bookings,
-    rulers: dict[records.Sourcing, records.Rulers],
-    begun: records.Record | None = None,
+    board: Lattice, index: int, forms: Bookings, rulers: dict[records.Sourcing, records.Rulers]
 ) -> Eras:
-    """The eras of a held row of the content as the board reads them (`Eras`), a reading over the Nodes and no act (readings may sum over the board, acts may not: the owner's locality decision of 2026-10-22): from the interval's bookings and rulers (`forms` the records' forms about the step, `records.form` on the lines before and after; `rulers` the write's rulers at the interval's start, `Lattice.rulers`, the same numbers read at -1 after the step from the held rows' `before`), each sourcing family's write into the row's time line at every Node by the engine's own functions (`records.rulers_write_factor` at the row's booking power, the read weight, the row's write weight), the hill's weight at every Node by the one function the write reads (`records.hill_weight`), the mix's exponent and the constraint's residual as fractions of integers over the exponents' products (`paces.exponent_products`), and the uniform mode (`uniform_mode`)."""
+    """The eras of a held row of the content as the board reads them (`Eras`), a reading over the Nodes and no act (readings may sum over the board, acts may not: the owner's locality decision of 2026-10-22): from the interval's bookings and rulers (`forms` the records' forms about the step, `records.form` on the lines before and after; `rulers` the write's rulers at the interval's start, `Lattice.rulers`, the same numbers read at -1 after the step from the held rows' `before`), each sourcing family's write into the row's time line at every Node by the engine's own functions (`records.rulers_write_factor` at the row's booking power, the read weight, the row's write weight), the mix's exponent, the trace's residual, the seed's level and the tension lines' sums."""
     family, gamma, shape = board.families[index], board.world.node_clock, board.shape
     read, wall = uniform_mode(board, index), board.writes[index].walls[0]
     terms: list[Any] = []
@@ -206,19 +211,24 @@ def eras(
         terms.append(weighed)
         exponents.append(other.exponent(family.power))
         writes.append((other.name, int(family.write * weighed.sum())))
-    weight = np.asarray(records.hill_weight(family, terms, exponents, wall, gamma), dtype=object)
-    weight = weight + np.zeros(shape, dtype=object)
     product, others = paces.exponent_products(exponents)
     sums = [int(term.sum()) for term in terms]
     potential = sum(s * o for s, o in zip(sums, others, strict=True))  # P x SUM_f S_f / n_f
     velocity = read.nodes * (read.level - read.before) + (read.level_remainder - read.before_remainder)
-    residual = (wall * velocity * velocity * product, 2 * gamma * read.nodes * family.write * potential)
-    line, seed = board.states[index].lines[0], (0, 0, 0)
-    wall_low = wall if begun is None else int((wall + weight * (begun.now - begun.before)).min())
+    nature = (3 * wall * velocity * velocity, 2 * gamma * read.nodes * sum(write for _, write in writes))
+    lines = board.states[index].lines
+    tensions = tuple(
+        int(np.asarray(lines[1 + a].now, dtype=object).sum()) if family.axes else 0 for a in range(3)
+    )
+    before = tuple(
+        int(np.asarray(lines[1 + a].before, dtype=object).sum()) if family.axes else 0 for a in range(3)
+    )
+    seed = (0, 0, 0)
     if board.world.wholes:
         at = tuple(a + o for a, o in zip(board.world.wholes[0].at, board.offset, strict=True))
-        level = int(line.now[at])
-        seed = (level, int(np.asarray(line.now, dtype=object).sum()) - level, read.nodes - 1)
+        levels = np.asarray(row_level(board, index, lines[0].now), dtype=object)
+        level = int(levels[at])
+        seed = (level, int(levels.sum()) - level, read.nodes - 1)
     return Eras(
         read.level,
         read.level_remainder,
@@ -226,11 +236,15 @@ def eras(
         read.before_remainder,
         read.nodes,
         tuple(writes),
-        int(weight.min()),
-        int(weight.max()),
-        int(weight.sum()),
         (product * sum(sums), potential),
-        residual,
+        nature,
         seed,
-        wall_low,
+        (tensions[0], tensions[1], tensions[2]),
+        (before[0], before[1], before[2]),
+        volume_sums(lines[0], family.motion_volume),
     )
+
+
+def row_level(board: Lattice, index: int, levels: Any) -> Any:
+    """A held row's time line array as a level at every Node for the readings: the array itself, or the level reading of the volume where the row carries it (features/volume)."""
+    return volume.levels_read(board.world.node_clock, levels, board.families[index].motion_volume)
