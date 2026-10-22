@@ -10,8 +10,19 @@ from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import connected
 from event_universe.loader.keys import Node, integer, keyed, node_of
-from event_universe.loader.mode import instrument_of
-from event_universe.loader.node_detector_declaration import node_detector_of, packet_form
+from event_universe.loader.mode import (
+    MOVING_KEYS,
+    PROFILE_KEYS,
+    PROFILE_REQUIRED,
+    Profile,
+    instrument_of,
+    levels_of,
+)
+from event_universe.loader.node_detector_declaration import (
+    NodeDetectorDeclaration,
+    node_detector_of,
+    packet_form,
+)
 
 if TYPE_CHECKING:
     from event_universe.loader.packets import PacketRow
@@ -30,14 +41,63 @@ def declared_body(
     beyond: tuple[Node, ...],
     action: int,
     periodic: tuple[bool, bool, bool],
+    bound: int,
 ) -> BodyRow:
     """A laid body's row with its declaration where its mode entry `written` carries the key `instrument` (`instrument_of`, `instrument_body`), the row otherwise unchanged."""
     instrument = instrument_of(written, label)
     if instrument is None:
         return row
     return instrument_body(
-        row, instrument, f"{label}.instrument", families, quanta, shape, beyond, action, periodic
+        row, instrument, f"{label}.instrument", families, quanta, shape, beyond, action, periodic, bound
     )
+
+
+def profiles_of(
+    instrument: dict[str, object],
+    label: str,
+    family: FamilyRule,
+    declaration: NodeDetectorDeclaration,
+    nodes: tuple[Node, ...],
+    shape: Node,
+    bound: int,
+    beyond: tuple[Node, ...],
+) -> tuple[Profile, ...]:
+    """The transition's two levels' profiles under the instrument's key `profiles`, typed by the frame tool from Rule3's standing line (tools/frame_of.py, 2026-10-22; ALGEBRA.md, The click writes on the lattice (5): the frame's run of the body's full beat lays the two levels each at one quantum in the body's own well, and the upper level's share is read against them): one entry per part, {`part`, `now`, `before`, optionally `im_now` and `im_before`}, each level at one quantum's charge in the mode file's `moving` form, read as a body's levels are (`levels_of`: the nonzero Nodes, within the amplitude bound, none beyond the board), in the parts' order; refused by name: the key on a body with no transition, a profile of a part in no transition of the body, two profiles for one part or a part without one, and a profile standing at none of the body's declared Nodes (a level of another well); () where the key is absent, a bound body whose own-light row falls due with no frame run refused by name at that close (frame_run.hazard), the instrument of the file with its rate needing none."""
+    rows, names = instrument.get("profiles"), declaration.names
+    if rows is None:
+        return ()
+    if not declaration.transitions:
+        raise ValueError(
+            f"{label}.profiles stands on a body with no transition: the profiles are a transition's two levels"
+        )
+    if not isinstance(rows, list) or len(rows) != len(names):
+        raise ValueError(
+            f"{label}.profiles lists one profile per part, {len(names)} here, in the parts' order"
+        )
+    declared = {(x * shape[1] + y) * shape[2] + z for x, y, z in nodes}
+    found: dict[int, Profile] = {}
+    for index, line in enumerate(rows):
+        where = f"{label}.profiles[{index}]"
+        entry = keyed(line, where, PROFILE_KEYS, PROFILE_REQUIRED)
+        part = integer(entry["part"], f"{where}.part", 0, len(names) - 1)
+        if part in found:
+            raise ValueError(
+                f"{where} is a second profile of the part {names[part]!r}: one profile per part"
+            )
+        if not any(part in (t.leaves, t.enters) for t in declaration.transitions):
+            raise ValueError(
+                f"{where} is the profile of {names[part]!r}, a part in no transition of the body"
+            )
+        moving = {key: entry[key] for key in MOVING_KEYS if key in entry}
+        entry = {"family": family.name, "pair": list(family.pair), "moving": moving}
+        levels = levels_of(entry, where, family, shape, bound, beyond)
+        if not any(at in declared for laid in levels[:2] for at, _level in laid):
+            raise ValueError(
+                f"{where} stands at none of the body's declared Nodes {[list(n) for n in nodes]}: a level of "
+                "the body's own well stands at its Node"
+            )
+        found[part] = levels
+    return tuple(found[part] for part in range(len(names)))
 
 
 def instrument_body(
@@ -50,8 +110,9 @@ def instrument_body(
     beyond: tuple[Node, ...],
     action: int,
     periodic: tuple[bool, bool, bool],
+    bound: int,
 ) -> BodyRow:
-    """A bound body declared an instrument body by the host's frame tool (the mode entry's `instrument`): the declaration read in the form the loader reads for every detector body (`node_detector_of`: its `parts` with the count in the level it stands in, its `transitions`, its `rates`, its `node_detector`, the emissions' lay decided by the board's shape from every Node of its region, `packet_form`), its `nodes` the standing region with the lay's weights (one connected region of distinct Nodes through the six Ports holding one of the body's declared Nodes and every Node where a level of the laid part stands other than 0, the laid part's whole support, so that the exchange's write moves the whole quantum and leaves no tail of the part standing outside the region, charge the write would create; none beyond the board; refused by name otherwise, 2026-10-21, the cold reader's first finding on the half region), the body's levels the mode file's as laid (its record standing in its well, its Links uncut, the step untouched); the count the body's declared count, read by the gate at its declared Node as for every laid body."""
+    """A bound body declared an instrument body by the host's frame tool (the mode entry's `instrument`): the declaration read in the form the loader reads for every detector body (`node_detector_of`: its `parts` with the count in the level it stands in, its `transitions`, its `rates`, its `node_detector`, the emissions' lay decided by the board's shape from every Node of its region, `packet_form`), its `nodes` the standing region with the lay's weights (one connected region of distinct Nodes through the six Ports holding one of the body's declared Nodes and every Node where a level of the laid part stands other than 0, the laid part's whole support, so that the exchange's write moves the whole quantum and leaves no tail of the part standing outside the region, charge the write would create; none beyond the board; refused by name otherwise, 2026-10-21, the cold reader's first finding on the half region), the body's levels the mode file's as laid (its record standing in its well, its Links uncut, the step untouched); the count the body's declared count, read by the gate at its declared Node as for every laid body; its light front the near zone's shell of its first transition's resonance whichever part it stands in (`near_zone`; since 2026-10-22, the transition into the standing part alone before), so that a body climbing into its upper part has its front and its frame run (`profiles_of`, frame_run.py)."""
     nodes = instrument["nodes"]
     if not isinstance(nodes, list) or not nodes:
         raise ValueError(f"{label}.nodes must list the standing region's Nodes with their weights")
@@ -105,10 +166,12 @@ def instrument_body(
         line["weight"] = holder.weight
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
     declaration = packet_form(declaration, label, families, tuple(region), shape, action)
-    standing = next((p for p, c in enumerate(declaration.counts) if c), 0)
-    into = [t for t in declaration.transitions if t.enters == standing]
+    profiles = profiles_of(
+        instrument, label, families[row.family], declaration, row.nodes, shape, bound, beyond
+    )
+    front = declaration.transitions[:1]  # the light's front of the body's transition, whichever part
     radius, shell, missing = (
-        near_zone(into[0].resonance, row.nodes[0], shape, periodic) if into else (0, (), 0)
+        near_zone(front[0].resonance, row.nodes[0], shape, periodic) if front else (0, (), 0)
     )
     return replace(
         row,
@@ -118,6 +181,7 @@ def instrument_body(
         shell=shell,
         radius=radius,
         missing=missing,
+        profiles=profiles,
     )
 
 

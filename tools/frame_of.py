@@ -1,4 +1,4 @@
-"""The frame of a bound record, the host's reading of the lattice at the lay, typed into the mode file as a bound body's declaration as an instrument body, integers alone (2026-10-21, the frame out of the engine on the owner's rule: only integers and Rule3 at the step, every number chosen outside the engine at the start; the owner's word of 2026-10-21, "the builder builds it all in code"; the reader's design of the conserving click, (b): the parts, the transition and the resonance written into the mode file by this tool as a derived declaration, "declaring what the law derives until the body runs", ALGEBRA.md, The click writes on the lattice (3) and (4); The emission of a bound record is the click's act of the taker; tools/standing_lay.py lays the same standing line, this tool reads it for the body's instrument): a turned record standing in the well of the holder of the sign it reads has the modes of Rule3's own standing line, 2 cos(Omega + U_i) phi_i = SUM_j (R_ij / w) phi_j + (S_i / w) phi_i, U_i the well's angle at the Node (the count of phase acts per interval the record's turn reads there, `turns_of`, times the phase line's angle theta_0 = 1 / Gamma), read as the symmetric eigenproblem B chi = 2 cos Omega chi with B_ij = (R_ij / w) (p_j / p_i) / sqrt(cos U_i cos U_j), B_ii = S_i / w + 2 sin Omega sin U_i / cos U_i and phi_i = p_i chi_i / sqrt(cos U_i), in doubles, each level's Omega at its own fixed point, every root by the one search on the integers (`rule3.largest_below` at the phase line's amplitude), every angle a pair (cosine, sine) and never a function of an angle, the lowest six levels kept and labelled by their energy order alone (the degenerate ones one level); the record's share in each level by the least-squares fit of its gauge-flat levels on the modes (`shares_of`); the transition the record carries (`transition_of`: the upper the level of its largest share, the lower the lowest level, the next level above where the two are one), its resonance the pair [den cos(Omega_upper - Omega_lower), den] by the two levels' pairs, its unit W_rec = W_c sin(Omega_upper - Omega_lower) (in thirds under the Lorentz form, as `credit.record_unit` reads a unit) and its period, the count of turns of the transition's pair that closes the circle, the taker's window where no rate is declared; its standing region, the Nodes of its largest shares holding half its record's share, the count's own rounding as the floor, with the record's share at each as the lay's weight (`standing_region`). All of it is typed into the body's entry of the mode file beside the world under the key `instrument` (loader/mode.instrument_of reads and checks it; loader/world.instrument_body builds the declaration the engine reads for every detector body) in the form the world file declares a detector body in: `nodes` (the standing region with its weights), `parts` (the two levels of the transition by name, the count in the level the record stands in), `transitions` (the lower to the upper by the light family `--light`, at the weight `--weight`, the record's read weight of its holder where none is given, at the transition's resonance), `rates` (the upper to the lower at the lifetime `--lifetime`, the declared constant of The click writes on the lattice (5) and the lay's span, giving to the light family, as a packet `--width` Nodes across where given; none where no lifetime is given, the constant 0) and `node_detector` (the empty object where a rate is declared, the window then derived at load as the lifetime, else the transition's period, the steady beat's declared window); so that the engine's instrument-body click runs on the bound record with no new act and no body-wide re-lay: the frame's derivation is this tool's, a declared layer the Node never sees; the sources' bodies, the frozen pair and a record with no transition (every level at one rotation) get no declaration and are said so. The tool holds no number of the law: every integer is the files' and the engine's own.
+"""The frame of a bound record, the host's reading of the lattice at the lay, typed into the mode file as a bound body's declaration as an instrument body, integers alone (2026-10-21, the frame out of the engine on the owner's rule: only integers and Rule3 at the step, every number chosen outside the engine at the start; the owner's word of 2026-10-21, "the builder builds it all in code"; the reader's design of the conserving click, (b): the parts, the transition and the resonance written into the mode file by this tool as a derived declaration, "declaring what the law derives until the body runs", ALGEBRA.md, The click writes on the lattice (3) and (4); The emission of a bound record is the click's act of the taker; tools/standing_lay.py lays the same standing line, this tool reads it for the body's instrument): a turned record standing in the well of the holder of the sign it reads has the modes of Rule3's own standing line, 2 cos(Omega + U_i) phi_i = SUM_j (R_ij / w) phi_j + (S_i / w) phi_i, U_i the well's angle at the Node (the count of phase acts per interval the record's turn reads there, `turns_of`, times the phase line's angle theta_0 = 1 / Gamma), read as the symmetric eigenproblem B chi = 2 cos Omega chi with B_ij = (R_ij / w) (p_j / p_i) / sqrt(cos U_i cos U_j), B_ii = S_i / w + 2 sin Omega sin U_i / cos U_i and phi_i = p_i chi_i / sqrt(cos U_i), in doubles, each level's Omega at its own fixed point, every root by the one search on the integers (`rule3.largest_below` at the phase line's amplitude), every angle a pair (cosine, sine) and never a function of an angle, the lowest six levels kept and labelled by their energy order alone (the degenerate ones one level); the record's share in each level by the least-squares fit of its gauge-flat levels on the modes (`shares_of`); the transition the record carries (`transition_of`: the upper the level of its largest share, the lower the lowest level, the next level above where the two are one), its resonance the pair [den cos(Omega_upper - Omega_lower), den] by the two levels' pairs, its unit W_rec = W_c sin(Omega_upper - Omega_lower) (in thirds under the Lorentz form, as `credit.record_unit` reads a unit) and its period, the count of turns of the transition's pair that closes the circle, the taker's window where no rate is declared; its standing region, the Nodes of its largest shares holding half its record's share, the count's own rounding as the floor, with the record's share at each as the lay's weight (`standing_region`). All of it is typed into the body's entry of the mode file beside the world under the key `instrument` (loader/mode.instrument_of reads and checks it; loader/world.instrument_body builds the declaration the engine reads for every detector body) in the form the world file declares a detector body in: `nodes` (the standing region with its weights), `parts` (the two levels of the transition by name, the count in the level the record stands in), `transitions` (the lower to the upper by the light family `--light`, at the weight `--weight`, the record's read weight of its holder where none is given, at the transition's resonance), `rates` (the upper to the lower at the lifetime `--lifetime`, the declared constant of The click writes on the lattice (5) and the lay's span, giving to the light family, as a packet `--width` Nodes across where given; none where no lifetime is given, the constant 0), `node_detector` (the empty object where a rate is declared, the window then derived at load as the lifetime, else the transition's period, the steady beat's declared window) and `profiles` (2026-10-22, the reader's ruling on the pure level's click: the transition's two levels each at one quantum's charge in the engine's phase convention, `level_profile`, the lower's and the upper's in the parts' order, so that the engine's frame run lays the body's full beat in its own well and reads the upper level's share against them, src/event_universe/frame_run.py); the frame is read from the lay alone, the mode file's declarations left out in memory (`plain_world`), so that a body is typed for the first time; so that the engine's instrument-body click runs on the bound record with no new act and no body-wide re-lay: the frame's derivation is this tool's, a declared layer the Node never sees; the sources' bodies, the frozen pair and a record with no transition (every level at one rotation) get no declaration and are said so. The tool holds no number of the law: every integer is the files' and the engine's own.
 
 Run with PYTHONPATH set to the checkout's src, after the mode file is written (tools/standing_lay.py or tools/pixel_mode.py):
 
@@ -24,10 +24,14 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import turns
 from event_universe.loader.faces import connected
 from event_universe.loader.mode import INSTRUMENT
-from event_universe.loader.world import BodyRow
+from event_universe.loader.world import BodyRow, World, parse_world
 from event_universe.world_files import load_world
 
 LABEL = "lattice reading"
+LAY_KEYS = (
+    "nodes",
+    "parts",
+)  # the instrument's keys that are the lay's own: the standing region and the part laid, kept where the tool reads the frame (`plain_world`)
 SETTLED = PORTS  # a level's fixed point: at most six solves, the secant on the integer pair, stopped at the pair's own grain
 
 
@@ -275,14 +279,15 @@ def standing_region(
     declared: tuple[tuple[int, int, int], ...],
     part: int = 0,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """A body's standing region at the lay, the laid part's whole support by rule (2026-10-21, the cold reader's first finding: a region holding half the share left the part's tail standing outside it at the write, charge the write created against the exchange of (3), which moves the whole quantum; the loader refuses a region leaving a level of the laid part outside it, loader/instrument.py): every Node where a level of the part's lines stands other than 0 (now or before, re or im) or where the record's share stands above 0 (share.family_share at the record's own read), the body's declared Nodes among them, and the pieces joined into one region through the six Ports along the shortest Link paths between them (the loader's rule for every NodeDetector, loader/faces.connected; a level odd about a plane holds its share in two lobes with its nodal plane carrying none, so the joining Nodes stand at the weight 1, the least, where their share is 0); returned as the region's mask with the record's share at every Node, at least 1, the lay's weights the region's Nodes carry."""
+    """A body's standing region at the lay, the laid part's whole support by rule (2026-10-21, the cold reader's first finding: a region holding half the share left the part's tail standing outside it at the write, charge the write created against the exchange of (3), which moves the whole quantum; the loader refuses a region leaving a level of the laid part outside it, loader/instrument.py): every Node where a level of the part's lines stands other than 0 (now or before, re or im) or where the laid part's share stands above 0 (share.family_share at the record's own read over the part's plane alone, the record's share for a body laid in one part, and the one plane's where the tool reads the plain lay on every part alike, `plain_world`), the body's declared Nodes among them, and the pieces joined into one region through the six Ports along the shortest Link paths between them (the loader's rule for every NodeDetector, loader/faces.connected; a level odd about a plane holds its share in two lobes with its nodal plane carrying none, so the joining Nodes stand at the weight 1, the least, where their share is 0); returned as the region's mask with the part's share at every Node, at least 1, the lay's weights the region's Nodes carry."""
     family, gamma = board.families[index], board.world.node_clock
     content, factors = board.read(index, 1, record)
     lines = board.lines_of(index, record)
-    shares = share.family_share(family, lines, board.wrap, gamma, content, factors, board.unit)
+    plane = lines[part * family.width : (part + 1) * family.width]  # the laid part's lines alone
+    shares = share.family_share(family, plane, board.wrap, gamma, content, factors, board.unit)
     shape, periodic = board.shape, board.world.periodic
     region = np.asarray(shares, dtype=object) > 0
-    for line in lines[part * family.width : (part + 1) * family.width]:
+    for line in plane:
         region |= (np.asarray(line.now, dtype=object) != 0) | (
             np.asarray(line.before, dtype=object) != 0
         )
@@ -339,13 +344,43 @@ def joining_path(
     return found
 
 
+def direction(found: Level, coefficients: np.ndarray, laid: bool) -> np.ndarray:
+    """A level's profile in the direction of `coefficients` within the level: the real part of its columns' combination at the fit's coefficients, the lay's own direction and sign, where the record holds the level (`laid`, the fit's component reaching one level at its peak, `shares_of`; the gauge-flat lay is real at the lay, the combination's imaginary part the fit's rounding, dropped and named), the first column with its sign positive at its largest component where it does not (a level the record does not hold, whose fitted coefficient is the fit's rounding at an arbitrary phase; the standing lay's own convention for a level laid alone); 1 at its largest."""
+    weights = coefficients if laid else np.eye(found.profiles.shape[1])[0]
+    profile = np.real(found.profiles @ weights)
+    if not laid:
+        profile = profile * np.sign(profile[int(np.argmax(np.abs(profile)))])
+    return np.asarray(
+        profile / np.abs(profile).max()
+    )  # 1 at its largest, the root's precision at the peak
+
+
+def level_profile(
+    board: Lattice, reading: Reading, level: int, coefficients: np.ndarray, laid: bool, part: int
+) -> dict[str, Any]:
+    """One level's profile at one quantum's charge for the instrument's key `profiles` (2026-10-22, the reader's ruling: the frame's run of a bound body's full beat lays the transition's two levels each at one quantum in the body's own well, and the upper level's share is read against them): the level's direction (`direction`, the lay's own where the record holds the level, its fitted component reaching one level at its peak, the first column positive at its largest otherwise), its amplitude by the standing lay's own normalisation, A^2 SUM phi_i^2 sin(Omega + U_i) = T / 2, the charge of one quantum (tools/standing_lay.py since 2026-10-22; the root by the one search at the phase line's amplitude, `rooted`), and the four arrays in the engine's phase convention, now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega, each rounded once to the integers and written as its nonzero Nodes in x-major order with the part the level is the profile of; the laid level's profile equals the body's own lay to the rounding, the other level's stands beside it at the same count."""
+    found, den = reading.levels[level], reading.levels[level].pair[1]
+    profile = direction(found, coefficients, laid)
+    cosine, sine = reading.cosine.ravel(), reading.sine.ravel()
+    sine_up = found.sine / den * cosine + found.pair[0] / den * sine  # sin(Omega + U_i) per Node
+    square = board.world.quantum_action / (2 * float((profile * profile * sine_up).sum()))
+    amplitude = float(rooted(np.asarray([square]), board.amplitude)[0])  # A, the charge T / 2
+    arrays = {
+        "now": amplitude * profile * cosine,
+        "before": amplitude * profile * (found.pair[0] / den),
+        "im_now": -amplitude * profile * sine,
+        "im_before": amplitude * profile * (found.sine / den),
+    }
+    entry: dict[str, Any] = {"part": part}
+    for key, values in arrays.items():
+        grains = [int(v) for v in np.rint(values)]
+        entry[key] = {"at": [i for i, v in enumerate(grains) if v], "values": [v for v in grains if v]}
+    return entry
+
+
 def compiled(board: Lattice, reading: Reading, level: int, coefficients: np.ndarray) -> list[int]:
-    """A level's compiled profile at one quantum, the integers the engine lays a record in that level with: the level's profile in the direction of `coefficients` within the level (its columns' combination turned to the real axis at its largest component, the first column where none stands, the combination's imaginary part dropped and named), 1 at its largest, the amplitude by the invariant 2 A^2 sin omega_0 SUM phi^2 = T per quantum (`features/click.standing`'s rule over a spread profile, the root by the one search at the phase line's amplitude), A phi rounded to the integers at every Node in x-major order."""
-    found = reading.levels[level]
-    weights = coefficients if np.abs(coefficients).sum() > 0 else np.eye(found.profiles.shape[1])[0]
-    pivot = weights[int(np.argmax(np.abs(weights)))]
-    profile = np.real(found.profiles @ (weights / (pivot / abs(pivot))))
-    profile = profile / np.abs(profile).max()  # 1 at its largest, the root's precision at the peak
+    """A level's compiled profile at one quantum, the integers the engine lays a record in that level with: the level's profile in the direction of `coefficients` within the level (`direction`), 1 at its largest, the amplitude by the invariant 2 A^2 sin omega_0 SUM phi^2 = T per quantum (`features/click.standing`'s rule over a spread profile, the root by the one search at the phase line's amplitude), A phi rounded to the integers at every Node in x-major order."""
+    profile = direction(reading.levels[level], coefficients, bool(np.abs(coefficients).sum() > 0))
     num, den = board.families[reading.index].pair
     scale = board.amplitude
     grains = [int(round(float(value) * scale)) for value in profile]
@@ -371,11 +406,11 @@ def instrument_entry(
     declared: tuple[tuple[int, int, int], ...] = (),
     part: int = 0,
 ) -> dict[str, Any] | None:
-    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at no weight (since 2026-10-22 the loader takes the record's read weight of its holder by reciprocity and refuses a declared one, ALGEBRA.md, The click writes on the lattice (5)) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object: the window is derived at load, from the lays' passage where a rate is declared or a packet of the light family is laid and as the beat's own period where the body declares no rate (`loader/window.period_of`, 2026-10-22); None for a record with no transition."""
+    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at no weight (since 2026-10-22 the loader takes the record's read weight of its holder by reciprocity and refuses a declared one, ALGEBRA.md, The click writes on the lattice (5)) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object: the window is derived at load, from the lays' passage where a rate is declared or a packet of the light family is laid and as the beat's own period where the body declares no rate (`loader/window.period_of`, 2026-10-22); `profiles`, the two levels of the transition each at one quantum's charge in the parts' order (`level_profile`, the lower first), the laid level's in the lay's own direction and the other's in its first column, the frame run's lay of the full beat and the upper share's reading (2026-10-22); None for a record with no transition."""
     reading = reading_of(board, index, record, part)
     if reading is None:
         return None
-    fractions, _coefficients, peaks = shares_of(board, reading)
+    fractions, coefficients, peaks = shares_of(board, reading)
     region, shares = standing_region(board, index, record, declared, part)
     low, high = reading.levels[reading.lower], reading.levels[reading.upper]
     den = low.pair[1]
@@ -419,7 +454,23 @@ def instrument_entry(
         "transitions": transitions,
         "rates": rates,
         "node_detector": {},  # the window derived at load: the lays' passage, or the beat's period with no rate (5)
+        "profiles": [  # the two levels each at one quantum, the frame's run of the full beat (5), 2026-10-22
+            level_profile(board, reading, k, coefficients[k], peaks[k] >= 1, part)
+            for part, k in enumerate((reading.lower, reading.upper))
+        ],
     }
+
+
+def plain_world(path: Path, mode: dict[str, Any]) -> World:
+    """The world parsed for the frame's reading with each body's `profiles` left out of its declaration (a copy of the mode file's entries in memory, nothing written): the body laid as the live world lays it, in the part carrying its count, its transitions and its draw declared, so that the loader's checks of the key read nothing the tool is about to write and the engine's frame run of the body (`frame_run.measured`, the copy of its well stepped one period at the lay) does not run inside the tool; a body typed for the first time with the key is admitted, the loader asking `profiles` of no body at load (a bound body whose own-light row falls due with none is refused by name at that close, `frame_run.hazard`). The frame is a reading of the record in its well, the well the holder's rows but the record's own; the tool's own two-pass reading, as tools/standing_lay.py reads the well from a zero lay."""
+    document = json.loads(path.read_text(encoding="utf-8"))
+    files = world_files.world_files(document)
+    plain = json.loads(json.dumps(mode))
+    for entry in plain.get("bodies", []):
+        if isinstance(entry, dict) and isinstance(entry.get(INSTRUMENT), dict):
+            entry[INSTRUMENT].pop("profiles", None)
+    files[path.with_suffix(".mode.json").name] = plain
+    return parse_world(document, files, world_files.input_digest(document))
 
 
 def families_index(board: Lattice, name: str) -> int:
@@ -471,16 +522,15 @@ def main(argv: list[str] | None = None) -> None:
     path: Path = args.input
     if args.root is not None:
         world_files.REPOSITORY_ROOT = args.root
-    world = load_world(path)
-    board = Lattice(world, None)
     mode_path = path.with_suffix(".mode.json")
     mode = json.loads(mode_path.read_text(encoding="utf-8"))
     entries = mode["bodies"]
+    board = Lattice(plain_world(path, mode), None)  # the frame read from the lay alone, no declaration
     summary: dict[str, Any] = {"label": LABEL, "world": path.name, "bodies": {}}
     placed = 0
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or (row.detector is not None and not row.region):
-            continue  # a body laid in its parts by the engine has no mode entry; a declared bound body is typed again
+            continue  # a body laid in its parts by the engine has no mode entry
         entry, placed = entries[placed], placed + 1
         entry.pop("frame", None)  # the engine's frame of the removed taker, read by nothing
         family = board.families[row.family]
@@ -492,14 +542,7 @@ def main(argv: list[str] | None = None) -> None:
             continue
         part = next((p for p, c in enumerate(row.detector.counts) if c), 0) if row.detector else 0
         found = instrument_entry(
-            board,
-            row.family,
-            record,
-            args.light,
-            args.lifetime,
-            args.width,
-            row.nodes,
-            part,
+            board, row.family, record, args.light, args.lifetime, args.width, row.nodes, part
         )
         if found is None:
             entry.pop(INSTRUMENT, None)
@@ -511,6 +554,7 @@ def main(argv: list[str] | None = None) -> None:
                 key: found[key] for key in ("parts", "transitions", "rates", "node_detector")
             },
             "region": len(found["nodes"]),
+            "profiles": [len(level["now"]["at"]) for level in found["profiles"]],
             "readings": readings_of(board, row.family, record, part),
         }
     mode_path.write_text(json.dumps(mode) + "\n", encoding="utf-8")

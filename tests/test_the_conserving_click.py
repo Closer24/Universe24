@@ -196,6 +196,19 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
     def unknown(instrument: dict) -> None:  # type: ignore[type-arg]
         instrument["frame"] = {}
 
+    def second_profile(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["profiles"][0]["part"] = 1
+
+    def one_profile(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["profiles"] = instrument["profiles"][1:]
+
+    def other_nodes(instrument: dict) -> None:  # type: ignore[type-arg]
+        for key in ("now", "before", "im_now", "im_before"):
+            instrument["profiles"][0][key] = {"at": [0], "values": [1]}
+
+    def no_transition(instrument: dict) -> None:  # type: ignore[type-arg]
+        instrument["transitions"], instrument["rates"] = [], []
+
     for change, reason in (
         (in_pieces, "one connected region of distinct Nodes"),
         (without_the_node, "holds none of the body's declared Nodes"),
@@ -203,6 +216,10 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
         (both_parts, "stands in one part at the start"),
         (own_drive, "a family of quanta other than the body's own"),
         (unknown, "unknown key 'frame'"),
+        (second_profile, "a second profile of the part"),
+        (one_profile, "lists one profile per part"),
+        (other_nodes, "stands at none of the body's declared Nodes"),
+        (no_transition, "stands on a body with no transition"),
     ):
         refused(reason, lambda c=change: load_world(tampered(c)))
     assert np.array_equal(np.zeros(1), np.zeros(1))  # the tool's doubles stand in the tool alone
@@ -353,3 +370,32 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
     assert (
         round(TAKER_AFTER[4] / TAKER_BEFORE[4] - 1, 4) == -0.0005 and GIVER_BEFORE[4] == 0
     )  # the walk (-0.0001 at 27 on the first lay, the returned packet's share falling; 0.0002 at 18, 2026-10-21)
+
+
+def dense(levels, size: int) -> list[int]:  # type: ignore[no-untyped-def]
+    """A level's nonzero Nodes as one integer per Node in x-major order."""
+    found = [0] * size
+    for at, level in levels:
+        found[at] = level
+    return found
+
+
+def test_the_frame_tool_types_the_two_levels_each_at_one_quantum_beside_the_lay():
+    """The key `profiles` of the shipped giver (the reader's ruling of 2026-10-22 on the pure level's click, cost (i): the lower level's profile beside the upper's, both typed by the frame tool from Rule3's standing line, each at one quantum's charge, the frame run's lay of the full beat and the upper share's reading, `loader/instrument.profiles_of`, `tools/frame_of.level_profile`): two profiles in the parts' order, the lower [4580, 6000] then the upper [3288, 6000]; the upper's four arrays equal to the body's own lay to the rounding (`now` and `im_now` the same integers at every Node, `before` and `im_before` within one unit at 8 and 4 of the 125 Nodes, the tool's root against the lay tool's), each profile's charge, the Wronskian re_now im_before - im_now re_before summed over the board, within 0.04 percent of T / 2 (17993018 and 18006758 against 18000000), and the two profiles' plain overlap exactly 0, the s level even and the p level odd about the proton; the shipped taker, standing in its lower part with no rate, carries its two profiles and its front at the radius 3 of its transition's pair [5822, 6000] since 2026-10-22 (a body climbing into its upper part has its front)."""
+    row = load_shipped(FOLDER / "giver_c5.json").bodies[1]
+    size = 5 * 5 * 5
+    lower, upper = row.profiles
+    laid = (row.now, row.before, row.second_now, row.second_before)
+    for level, typed, within, nodes in zip(laid, upper, (0, 1, 0, 1), (0, 8, 0, 4), strict=True):
+        moved = [a - b for a, b in zip(dense(level, size), dense(typed, size), strict=True)]
+        assert max(abs(d) for d in moved) <= within and sum(1 for d in moved if d) <= nodes
+    charges = []
+    for profile in (lower, upper):
+        now, before, im_now, im_before = (dense(level, size) for level in profile)
+        charges.append(
+            sum(a * d - c * b for a, b, c, d in zip(now, before, im_now, im_before, strict=True))
+        )
+    assert charges == [18006758, 17993018] and all(abs(c - T // 2) * 2500 <= T // 2 for c in charges)
+    assert sum(a * b for a, b in zip(dense(lower[0], size), dense(upper[0], size), strict=True)) == 0
+    taker = load_shipped(FOLDER / "taker_c5.json").bodies[1]
+    assert len(taker.profiles) == 2 and (taker.radius, taker.missing > 0) == (3, True)
