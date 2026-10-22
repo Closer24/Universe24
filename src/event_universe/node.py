@@ -213,7 +213,7 @@ def rule_of(
 def held_write_at(
     lines: Sequence[Record],
     numerators: Sequence[Any],
-    walls: Sequence[int],
+    walls: Sequence[Any],
     remainders: Sequence[np.ndarray],
     direction: int = 1,
 ) -> tuple[list[Record], list[np.ndarray]]:

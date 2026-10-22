@@ -291,6 +291,32 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "power of the write, the numerator bit for bit at the Wronskian's power on a count, the dimming exponent "
         "within 0.3 of 4.8 under the key and of 5.8 without it",
     ),
+    "tests/test_the_uniform_mode.py::test_the_hill_at_the_symmetrys_weight_writes_bit_for_bit_and_the_velocity_relaxes_to_the_constraint": (
+        70,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T2): the hill's write bit for bit "
+        "at two quantum actions against the engine's own functions, the velocity under the constraint's bound and "
+        "within a level of the law's line integrated at the law's own interval, U within 2 percent, the residual rising",
+    ),
+    "tests/test_the_interval.py::test_the_hills_weight_is_the_pairs_integer_rounded_once_at_the_read_on_either_kind": (
+        20,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T3): the hill's weight's integers "
+        "and its rounding, the mix, the fallback, both kinds of integers",
+    ),
+    "tests/test_the_interval.py::test_the_premise_is_a_test_a_uniform_shift_changes_no_act_and_the_velocity_is_no_datum_of_the_seed": (
+        36,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T4): the premise as a test, the "
+        "kinetic form's invariance under a uniform shift and the attractor from rest and from a kicked start alike",
+    ),
+    "tests/test_the_interval.py::test_the_run_back_is_refused_by_name_under_the_key_and_the_gate_reads_refused_never_miss": (
+        20,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T5): the run back refused by name "
+        "under the key and the back-in-time gate's verdict REFUSED, never MISS",
+    ),
+    "tests/test_the_interval.py::test_the_mixs_weight_follows_the_nodes_own_sources_as_light_dims_faster_than_matter": (
+        36,
+        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T7): the mix's weight from the "
+        "Node's own sources with a light wave beside the matter record, the eras' writes and the crossing the board reads",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

@@ -197,7 +197,9 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert not any(part.any() for part in readings.sense_current_of([plane[0], plane[0]], RING))
     own, write = (CHARGED, 0), held_write_of(TURNING, CHARGE, T)  # the plane's one record owns the row 1
     sign = {own: records.wronskian(plane, True)}
-    sources = records.write_sources(CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA)
+    sources, _walls = records.write_sources(
+        CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA
+    )
     assert np.array_equal(sources[4], TURNING[CHARGE].write * sign[own]) and not sources[6].any()
     assert np.array_equal(
         sources[5], TURNING[CHARGE].write * flux[0]

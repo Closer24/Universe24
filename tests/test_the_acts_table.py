@@ -55,6 +55,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # halving the bisection's span, discarded
     ("core/paces.py", "axis_pace", "rounded"): "D",  # the axis pace, one rounding
     ("core/paces.py", "write_factor", "rounded"): "D",  # the write's factor, one rounding
+    ("core/paces.py", "motion_weight", "rounded"): "D",  # the hill's weight, one rounding
     (
         "features/phase/__init__.py",
         "rotation_unit",

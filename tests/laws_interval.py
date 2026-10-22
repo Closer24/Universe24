@@ -3,6 +3,7 @@
 import json
 import re
 
+from event_universe import board_readings, records
 from event_universe.core import paces
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
@@ -60,17 +61,21 @@ def uniform_world(folder, name, counts=1, **changes):  # type: ignore[no-untyped
     return path
 
 
-def laid_torus(folder, name, **changes):  # type: ignore[no-untyped-def]
-    """The uniform world with its counts redeclared at the share the gate reads (the count is the record's share, a reading: the first load names it), spread over the Nodes."""
+def laid_counts(folder, name, **changes):  # type: ignore[no-untyped-def]
+    """The matter record's counts at the share the gate reads (the count is the record's share, a reading: the first load names it), spread over the Nodes."""
     first = refused("share reads", Lattice, load_world(uniform_world(folder, name, 1, **changes)))
     read = int(re.search(r"share reads (\d+) quanta", str(first)).group(1))
     nodes = CUBE**3
-    counts = [read // nodes + (1 if i < read % nodes else 0) for i in range(nodes)]
-    return uniform_world(folder, name, counts, **changes)
+    return [read // nodes + (1 if i < read % nodes else 0) for i in range(nodes)]
+
+
+def laid_torus(folder, name, **changes):  # type: ignore[no-untyped-def]
+    """The uniform world with its counts redeclared at the share the gate reads (`laid_counts`)."""
+    return uniform_world(folder, name, laid_counts(folder, name, **changes), **changes)
 
 
 def lockstep(board, gravity, matter, intervals):  # type: ignore[no-untyped-def]
-    """The lockstep torus stepped `intervals` intervals, each interval's numbers read from the engine's own state and nothing computed: gravity's level now and before and its write remainder (one number at every Node each, asserted, the tension lines 0), the matter record's level now and before at the centre, then after the step the record's level next and gravity's level and write remainder after; a list of dicts in the intervals' order."""
+    """The lockstep torus stepped `intervals` intervals, each interval's numbers read from the engine's own state and nothing computed: gravity's level now and before and its write remainder (one number at every Node each, asserted, the tension lines 0), the matter record's level now and before at the centre, then after the step the record's level next, gravity's level and write remainder after, and the eras as the board reads them (`board_readings.eras` from the record's lines kept before the step and the rulers read at -1 after it, the host's way); a list of dicts in the intervals' order."""
     course = []
     for _ in range(intervals):
         lines, record = board.states[gravity].lines, board.states[matter].lines[0]
@@ -78,12 +83,46 @@ def lockstep(board, gravity, matter, intervals):  # type: ignore[no-untyped-def]
         step = {"level": one_number(lines[0].now), "before": one_number(lines[0].before)}
         step.update(remainder=one_number(board.states[gravity].write_remainders[0]))
         step.update(now=int(record.now[1, 1, 1]), before_record=int(record.before[1, 1, 1]))
+        kept = [
+            records.Record(r.now.copy(), r.before.copy(), r.remainder)
+            for r in board.states[matter].lines
+        ]
         board.step()
         step.update(next=one_number(board.states[matter].lines[0].now), after=one_number(lines[0].now))
         step["after"] = one_number(board.states[gravity].lines[0].now)
         step["remainder_after"] = one_number(board.states[gravity].write_remainders[0])
+        forms = {(matter, 0): records.form(kept, board.lines_of(matter, 0))}
+        step["eras"] = board_readings.eras(board, gravity, forms, board.rulers(-1))
         course.append(step)
     return course
+
+
+def light_torus(folder, name, amplitude, **changes):  # type: ignore[no-untyped-def]
+    """The laid torus with a massless real-line family `light` [6000, 6000] reading gravity at 1 added to the universe beside the world, and one light plane wave along x at the wave [2, 3] (k = 2 pi / 3, the one wave the 3-cube closes) laid by hand in the mode file: now A cos(2 pi x / 3), before A cos(2 pi x / 3 + omega) with cos omega = (cos k + 2) / 3 = 1 / 2 at the vacuum's paces (ALGEBRA.md, The band at a pace), the two sums over the board 0 by the full period; the matter record's counts at the share the gate reads as `laid_torus` has them."""
+    universe = json.loads((folder / "u.json").read_text(encoding="utf-8"))
+    universe["families"].append(
+        {"name": "light", "pair": [6000, 6000], "reads": {"gravity": 1}, "dimension": 1}
+    )
+    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    counts = laid_counts(folder, name, **changes)
+    top = {axis: [0, CUBE - 1] for axis in TORUS}
+    wave = {"family": "light", "along": "x", "wave": [2, 3], "phase": [0, 1], "amplitude": amplitude}
+    path = uniform_world(
+        folder,
+        name,
+        counts,
+        packets=[{**wave, "top": top, "edge": {axis: 0 for axis in TORUS}}],
+        **changes,
+    )
+    mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    levels = [amplitude, -amplitude // 2, -amplitude // 2], [amplitude // 2, -amplitude, amplitude // 2]
+    moving = {
+        k: [v[x] for x in range(CUBE) for _y in range(CUBE) for _z in range(CUBE)]
+        for k, v in zip(("now", "before"), levels, strict=True)
+    }
+    mode["packets"] = [{"family": "light", "pair": [6000, 6000], "moving": moving}]
+    path.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    return path
 
 
 def one_number(array):  # type: ignore[no-untyped-def]

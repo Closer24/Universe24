@@ -286,7 +286,7 @@ class Lattice:
         if acts:
             self.report(currents, weighed, forms, begun)
         for index in self.held:
-            self.held_write(index, forms, turns, 1, stresses, senses, rulers)
+            self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
         if acts:
             self.tick += 1
             if credit.counted_windows(self):
@@ -309,15 +309,19 @@ class Lattice:
         stresses: Stresses,
         senses: Stresses,
         rulers: Rulers,
+        begun: list[list[records.Record]] | None = None,
     ) -> None:
-        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, each scaled by the write's factor at the sourcing family's paces of the interval's start (`rulers`), and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content, the shear's parts, the products of the Node's two axis differences, for a row declaring the shear, and the sign currents for the holder of the sign under the rotation (`records.write_sources`), each line's division at its wall with its one remainder (`node.held_write_at`, the Node knowing no line's kind). On a board periodic on every axis the write's mean over the Nodes has no sink and is carried by Rule3's own line at k = 0 (ALGEBRA.md, The closed lattice has no rest; item 6 of what is open; the world's `uniform: carried`): the step's Links' sum over the torus vanishes at the vacuum's paces (every Link's difference counted once from each end) and the massless mass D is 0, so the mean level's second difference is the mean write per Node per interval, each Node's write dimmed by its own content factor as this one act applies it, the double root carrying the mean level and the mean velocity exactly in integers (a uniform level with the half wall steps to itself, a uniform velocity to itself); at the Node this write is the same division it has always been, fed by the same declared sources, and nothing here tests the board or the family (`uniform_mode` reads the mean, one division with one remainder, a lattice diagnostic)."""
+        """The one write per line of one held family, forward or back (ALGEBRA.md #the-primitives, the row "the held write"; The write per proper volume and per proper interval): the numerators from the bookings of the families that source it, the Wronskians for the holder of the sign and the forms for a row sourced by the form, each scaled by the write's factor at the sourcing family's paces of the interval's start (`rulers`), and from their axis bookings at the interval's start, the tensions' parts read from the records for a row of the content, the shear's parts, the products of the Node's two axis differences, for a row declaring the shear, and the sign currents for the holder of the sign under the rotation (`records.write_sources`), each line's division at its wall with its one remainder (`node.held_write_at`, the Node knowing no line's kind). On a board periodic on every axis the write's mean over the Nodes has no sink and is carried by Rule3's own line at k = 0 (ALGEBRA.md, The closed lattice has no rest; item 6 of what is open; the world's `uniform: carried`, the law as written, or `interval: unobservable`, the hypothesis of 2026-10-22): the step's Links' sum over the torus vanishes at the vacuum's paces (every Link's difference counted once from each end) and the massless mass D is 0, so the mean level's second difference is the mean write per Node per interval, each Node's write dimmed by its own content factor as this one act applies it, the double root carrying the mean level and the mean velocity exactly in integers (a uniform level with the half wall steps to itself, a uniform velocity to itself); under `interval: unobservable` the one write of a held row of the content is less the row's own kinetic form (now - before)^2 at every Node at the interval's start, undimmed, at the symmetry's weight K from the Node's own sources (`begun`, the lines the step started from, the same levels the paces were read from, the Node's own two levels and one Link's reach; records.write_sources `motion`, paces.motion_weight, paces.motion_term; ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-22; The motion of gravity's row is a hill at the symmetry's weight; The mean's velocity is the content's: the constraint an attractor reached from rest), the mean fed by the one write less the hill and the Node knowing nothing of the board (the owner's locality decision of 2026-10-22); at the Node this write is the same division it has always been, fed by the same declared sources, and nothing here tests the board or the family (`uniform_mode` reads the mean, one division with one remainder, a lattice diagnostic)."""
         family, state = self.families[index], self.states[index]
         bookings, axes = turns if family.wronskian else forms, senses if family.rotation else stresses
-        numerators = records.write_sources(
-            index, self.families, bookings, axes, self.writes[index], rulers, self.world.node_clock
+        hill = begun is not None and self.world.unobservable and not family.wronskian
+        motion = (begun[index][0].now, begun[index][0].before) if hill and begun is not None else None
+        gamma = self.world.node_clock
+        numerators, walls = records.write_sources(
+            index, self.families, bookings, axes, self.writes[index], rulers, gamma, motion
         )
         state.lines, state.write_remainders = node.held_write_at(
-            state.lines, numerators, self.walls(index), state.write_remainders, direction
+            state.lines, numerators, walls, state.write_remainders, direction
         )
         for line in state.lines:
             self.bounded(family.name, line)
@@ -388,8 +392,22 @@ class Lattice:
                 senses[(index, record)] = board_readings.sense_fluxes(self, (index, record), own, -1)
         books[index] = lines
 
+    def motion_back(self) -> None:
+        """The backward run under the hill (ALGEBRA.md, The inverse, the clause of 2026-10-22; The motion of gravity's row is a hill at the symmetry's weight): the hill's numerator reads the level before that the same interval's Rule3 consumes, so the interval's map is not injective wherever the row rose (the reversibility hand's Theorem 2, the collision rate c (2 v - 1) / Gamma per Node per interval, c the hill's coefficient K Gamma / (E_s T) and v the row's velocity in levels per interval), and the run back is refused by name on a world declaring `interval: unobservable`, exact between the collisions and nowhere a choice; the two forms that would run back exactly are named and not built: the velocity kept as a line of its own, a second carried integer per Node against the owner's decision of 2026-10-19, and the units' row moved by the constraint, a board act refused by the owner's locality decision of 2026-10-22 (the Node's dependency radius one Link; Rule3 at the Node alone), no key for either; the one function where an inverse of the hill would land; tools/back_in_time.py reads the refusal as the verdict REFUSED, never MISS."""
+        if self.world.unobservable:
+            raise RuntimeError(
+                "the run back under `interval: unobservable` is refused by name: the hill at the symmetry's weight "
+                "reads the row's own level before that the same interval's Rule3 consumes, so the interval's map "
+                "is not injective wherever the row rose (the reversibility hand's Theorem 2, the rate c (2 v - 1) "
+                "/ Gamma per Node per interval); the velocity kept as a line of its own would be a second carried "
+                "integer per Node, against the decision of 2026-10-19, and the units' row moved by the constraint "
+                "a board act, refused by the owner's locality decision of 2026-10-22; no key for either "
+                "(ALGEBRA.md, The inverse, the clause of 2026-10-22)"
+            )
+
     def step_inverse(self) -> None:
-        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass."""
+        """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass; refused by name first on a world declaring `interval: unobservable` (`motion_back`)."""
+        self.motion_back()
         meeting_back.logged(self, -1)
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`
