@@ -312,10 +312,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T5): the run back refused by name "
         "under the key and the back-in-time gate's verdict REFUSED, never MISS",
     ),
-    "tests/test_the_interval.py::test_the_mixs_weight_follows_the_nodes_own_sources_as_light_dims_faster_than_matter": (
-        36,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T7): the mix's weight from the "
-        "Node's own sources with a light wave beside the matter record, the eras' writes and the crossing the board reads",
+    "tests/test_the_interval.py::test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_traceless_parts": (
+        70,
+        "the directive's build (the reader's build line of 2026-10-22 on the second smoke, T7 as the trace's test): the "
+        "traceless axis numerators, the time line's numerator less the pressure term, the one K and the declaration",
+    ),
+    "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_without_it": (
+        40,
+        "the directive's build (the reader's build line of 2026-10-22, the finding as a test): the tension lines' k = 0 "
+        "mode under an isotropic lay's mean stress, flat under the trace and running away without it",
     ),
     "tests/test_the_interval.py::test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit": (
         60,

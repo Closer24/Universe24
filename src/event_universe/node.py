@@ -221,8 +221,11 @@ def held_write_at(
     found, after = [], []
     for line, numerator, wall, remainder in zip(lines, numerators, walls, remainders, strict=True):
         level, kept = held_write(line.now, numerator, wall, remainder, direction)
-        kind = line.now.dtype  # the lines and the remainders keep the lattice's kind under any wall
+        kind = line.now.dtype  # the lines keep the lattice's kind under any wall
         found.append(replace(line, now=np.asarray(level, dtype=kind)))
+        kind = np.asarray(
+            wall
+        ).dtype  # the remainder's kind its wall's, Python's integers under the carry
         after.append(np.asarray(kept, dtype=kind))
     return found, after
 

@@ -126,6 +126,30 @@ def light_torus(folder, name, amplitude, **changes):  # type: ignore[no-untyped-
     return path
 
 
+def light_cube(folder, name, amplitude, **changes):  # type: ignore[no-untyped-def]
+    """The light torus with three waves alike, one along each axis at the wave [2, 3], superposed in the mode file as the experiment's three waves are on the 5-cube (the cube's symmetry kept): an isotropic lay, whose stress's trace is the pressure and whose traceless parts' means are 0."""
+    path = light_torus(folder, name, amplitude, **changes)
+    world = json.loads(path.read_text(encoding="utf-8"))
+    world["packets"] = [dict(world["packets"][0], along=axis) for axis in TORUS]
+    path.write_text(json.dumps(world), encoding="utf-8")
+    mode = json.loads(path.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    levels = [amplitude, -amplitude // 2, -amplitude // 2], [amplitude // 2, -amplitude, amplitude // 2]
+    mode["packets"] = [
+        {
+            "family": "light",
+            "pair": [6000, 6000],
+            "moving": {
+                k: [v[(x, y, z)[axis]] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
+                for k, v in zip(("now", "before"), levels, strict=True)
+            },
+        }
+        for axis in range(3)
+    ]
+    mode["world_digest"] = input_digest(world)
+    path.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    return path
+
+
 def one_number(array):  # type: ignore[no-untyped-def]
     """An array over the lattice that is one number at every Node, the lockstep board's; asserted."""
     assert int(array.max()) == int(array.min()), array

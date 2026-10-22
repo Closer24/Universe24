@@ -15,7 +15,18 @@ INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
 FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
-    ("sources", "level_weight", "write_weight", "rest", "act", "form", "booking", "weight", "factor"),
+    (
+        "sources",
+        "level_weight",
+        "write_weight",
+        "rest",
+        "act",
+        "form",
+        "booking",
+        "weight",
+        "factor",
+        "pressure",
+    ),
     ("sources", "level_weight", "write_weight", "act"),
 )
 POSITIVE, LORENTZ = (
@@ -217,6 +228,23 @@ FACTORS = (
 )  # a held row's write factor: rounded once at the read, the law as written, or carried inside the one division
 
 
+PRESSURES = (
+    "tension",
+    "trace",
+)  # the stress's parts whole into the tension lines, the law as written, or their trace into the time line
+
+
+def pressure_of(row: dict[str, Any], label: str, wronskian: bool) -> bool:
+    """The held row's optional key `pressure`, the stress's trace (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; the pressure hand's derivation of the pressure's write in the time line and the reader's build line on the second smoke): `tension`, the law as written, each Node's own stress parts -num h_a into the row's tension lines whole and the time line sourced by the forms alone; or `trace`, the trace over three of each source's stress parts entering the time line's write at the weight -1 in the energy's units ((p_a / Gamma)^2 / (3 den) per part, one rounding per source per Node, records.pressure_term) and the tension lines taking the traceless parts, 3 T_aa - SUM_b T_bb over three inside the factor's one rounding, so that no isotropic stress stretches the rulers (h N = 1: an isotropic ruler change without the clock's is no act of the law) and the tension lines' uniform mode on the wrapped board gets no source from a lay's mean stress, under which the hill's weight is one integer for every mix, (d + 1) E_s T / Gamma (records.hill_weight; the loader checks Gamma divides it, derived.trace_wall); refused by name on the holder of the sign, whose rows carry no tension line, and at any other word; False where absent, the law as written, every shipped world bit for bit."""
+    trace = held_word(row, label, "pressure", PRESSURES)
+    if trace and wronskian:
+        raise ValueError(
+            f"{label}.held.pressure {PRESSURES[1]!r}: the holder of the sign carries no tension line and reads no "
+            "stress; the trace is a row of the content's (ALGEBRA.md, The stress's trace is the time line's)"
+        )
+    return trace
+
+
 def factor_of(row: dict[str, Any], label: str) -> bool:
     """The held row's optional key `factor`, the end's booking (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; the remainders hand's reading of the two roundings and the reader's line on the design): `rounded`, the law as written, the write's factor one rounding half up of the count times the three paces over the one wall before the write's carried division (paces.write_factor, kind D), under which a family's write at a Node is exactly 0 from the interval its dimmed form falls below one half of a level, the stop, the integers' end under the rounding, named and unreachable on every shipped width; or `carried`, the factor a coefficient of the numerator inside the held write's one carried division, Rule3's own manner (no coefficient of the law rounded apart; a fraction kept by a carried division and nothing else), the product count p_x p_y p_z over the wall E_s T times Gamma^power p_0^(3 - power) at the Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, node.held_write_at's walls per Node), injective (the reversibility hand's Theorem 1: the numerator and the wall from the paces of the interval's start, recovered from the post-state's before), under which no write dies and the velocity crawls and pulses where the constraint's falls below one level per interval, the coast; the row's sources sharing the clock (derived.shared_clock); refused by name at any other word; False where absent, the rounding, so that every shipped world runs bit for bit."""
     return held_word(row, label, "factor", FACTORS)
@@ -284,6 +312,9 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         form_clock = booking_of(row, label, wronskian)  # the form's own clock, False undeclared
         weight_gap = hill_weight_of(row, label)  # the hill's weight the one-form K, False undeclared
         factor_carried = factor_of(row, label)  # the factor inside the one division, False undeclared
+        pressure_trace = pressure_of(
+            row, label, wronskian
+        )  # the stress's trace the time line's, False undeclared
         rows.append(
             Row(
                 name,
@@ -305,11 +336,13 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 form_clock=form_clock,
                 weight_gap=weight_gap,
                 factor_carried=factor_carried,
+                pressure_trace=pressure_trace,
             )
         )
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
     derived.shared_clock(families)
+    derived.trace_wall(families, integers["node_clock"], integers["quantum_action"])
     return integers, conversion.declared(
         families, declaring
     )  # the lists from the pairs under the law's conservations, refused by name

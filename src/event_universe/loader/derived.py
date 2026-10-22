@@ -40,6 +40,7 @@ class Row:
     lorentz: bool = False  # the files' key `form` of a held row under the rotation, `lorentz`: its time line and its three odd lines booked as one covector with the Lorentz form (covector.py; ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21), the odd line of the axis a the Node's +a Link's own, sourced by the Link's own flux of the record's step over the wall 2 den_s G^2 E_s T and read by that Link alone with the hop's sign (`link_read`, (-2, 0)), the time line's entry negative in every reading of the holder's record; False where the key is absent or `positive`, the rows as the engine books them without the key
     weight_gap: bool = False  # the held row's key `weight: gap` (ALGEBRA.md, The hill's weight is the write's mix, a hypothesis under its own name, 2026-10-22; loader/universe.hill_weight_of): the hill's weight the one-form K at the exponent of a pair with a gap at rest for every Node, rounded(n E_s T, Gamma), in place of the Node's own sources' mix, the default where the key is absent or `mix` (records.hill_weight, paces.motion_weight)
     factor_carried: bool = False  # the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the write's factor a coefficient of the numerator inside the one carried division, the product count p_x p_y p_z unrounded over the wall E_s T times the factor's wall Gamma^power p_0^(3 - power) per Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, the walls per Node at node.held_write_at); False where the key is absent or `rounded`, the law as written, the factor rounded once at the read (paces.write_factor), every shipped world bit for bit
+    pressure_trace: bool = False  # the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; loader/universe.pressure_of): the trace over three of each source's own stress parts into the time line's write at the weight -1 in the energy's units and the traceless parts into the tension lines (records.pressure_term, records.write_sources), the hill's weight one integer for every mix, (d + 1) E_s T / Gamma (records.hill_weight; `trace_wall`); False where the key is absent or `tension`, the law as written, the stress parts whole into the tension lines
     form_clock: bool = False  # the held row's key `booking: form`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22): the count's form of every record sourcing the row booked with one proper-interval power, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), as the Wronskian is (`FamilyRule.power`); False where the key is absent or `count`, the law as written, two powers
 
 
@@ -270,6 +271,19 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
                 "the one remainder per held line carries them where they share it (ALGEBRA.md, The write per "
                 "proper volume and per proper interval, the clause of 2026-10-22); declare `factor: rounded` or "
                 "read alike"
+            )
+
+
+def trace_wall(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
+    """The loader's gate of the stress's trace, the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, 2026-10-22): the hill's weight under it is one integer for every mix, K = (d + 1) E_s T / Gamma with d the axes' three (24 at T 36,000 and Gamma 6,000), exact where Gamma divides (d + 1) E_s T and refused by name otherwise (the pressure hand's condition), one division of the loader on coefficients, its remainder read."""
+    for family in families:
+        weight = family.level_weight if family.pressure_trace else None
+        if weight is not None and division_forward((AXES + 1) * weight * action, gamma, 0)[1]:
+            raise ValueError(
+                f"{family.name!r} declares `pressure: trace` and Gamma {gamma} does not divide (d + 1) E_s T = "
+                f"{(AXES + 1) * weight * action}: the hill's weight K = (d + 1) E_s T / Gamma is the "
+                "one integer of the trace's constraint (ALGEBRA.md, The stress's trace is the time line's); choose "
+                "the quantum action or the level weight so that it divides"
             )
 
 

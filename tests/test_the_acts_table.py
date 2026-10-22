@@ -63,6 +63,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "paces.motion_term",
     ): "W",  # the wall read from the state, the fifth act
     (
+        "records.py",
+        "pressure_term",
+        "paces.rounded",
+    ): "D",  # the stress's trace in the energy's units, once
+    (
         "features/phase/__init__.py",
         "rotation_unit",
         "division_forward",
@@ -271,6 +276,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
+    (
+        "loader/derived.py",
+        "trace_wall",
+        "division_forward",
+    ): "D",  # Gamma divides (d + 1) E_s T, the check
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
     ("loader/draw.py", "reduced_write", "division_forward"): "D",  # the reduction, exact, no remainder
