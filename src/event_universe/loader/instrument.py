@@ -83,6 +83,25 @@ def instrument_body(
             f"{list(first)} the first: the standing region is the laid part's whole support, the exchange "
             "moving the whole quantum (ALGEBRA.md, The click writes on the lattice (3))"
         )
+    holder = next((read for read in families[row.family].reads if families[read.family].held), None)
+    rows = instrument.get("transitions", []) if isinstance(instrument, dict) else []
+    for index, line in enumerate(rows if isinstance(rows, list) else []):
+        if not isinstance(line, dict):
+            continue  # the declaration's own check of the row follows (node_detector_of)
+        if (
+            "weight" in line
+        ):  # (5), 2026-10-22: a bound body's coupling is its record's read weight, by reciprocity
+            raise ValueError(
+                f"{label}.transitions[{index}] declares the weight {line['weight']!r}: a bound body couples to its "
+                "drive at its record's read weight of its holder, by reciprocity, and declares none (ALGEBRA.md, "
+                "The click writes on the lattice (5), 2026-10-22)"
+            )
+        if holder is None:
+            raise ValueError(
+                f"{label}.transitions[{index}]: the family {families[row.family].name!r} reads no held family, so "
+                "no read weight stands for a bound body's coupling"
+            )
+        line["weight"] = holder.weight
     declaration = node_detector_of(instrument, label, families, row.family, quanta, sum(row.counts))
     declaration = packet_form(declaration, label, families, tuple(region), shape, action)
     return replace(row, detector=declaration, region=tuple(region), shares=tuple(shares))

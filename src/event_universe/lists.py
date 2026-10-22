@@ -7,9 +7,10 @@ from functools import partial
 from typing import TYPE_CHECKING, Any
 
 from event_universe import credit, meeting_back, reports
-from event_universe.act import Alternative, Line
+from event_universe.act import Alternative, Line, click
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
+from event_universe.emission import born_unit
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import norm, times
 from event_universe.loader.keys import Node
@@ -24,6 +25,7 @@ from event_universe.node_detector import (
     face_ports,
     hole_node,
     own_clock,
+    picked,
     piece_momentum,
     share_weights,
 )
@@ -262,6 +264,39 @@ def absorption(
         return []
 
     return [*found, Alternative(max(min(unabsorbed, unit) - sum(weights), 0), rest)]
+
+
+def own_light(board: Lattice, books: NodeBooks, transition: Transition, at: Node) -> list[Item]:
+    """The list of a bound body's click of its own light (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; `meeting.own_light_click`): the exchange over the body's region, the part the record stands in down to 0 and the lower part of the transition up to one quantum in the weights' proportion (`exchange`, no drive: the charge T / 2 kept exactly), and light's record, the transition's drive, +1 at the one front Node `at` drawn by the window's outflow per Node, laid by the count at the massless pair as (5) lays a whole quantum (`emission.laid_by_count`, one Node, no direction); the front and the books as every click's (`act.written`)."""
+    den = board.families[transition.drive].pair[1]
+    light = Item(transition.drive, None, None, 1, (at,), (den, den))
+    return [*exchange(board, books, books.part, transition.leaves), light]
+
+
+def own_light_whether(board: Lattice, books: NodeBooks, light: int, resonance: tuple[int, int]) -> int:
+    """The whether of a bound body's own light at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light, its outflow credited as a region credits an inflow, the one rule of (2)): the window's outflow summed over the body's front Nodes (`NodeBooks.light`, outward positive, the unit G^2), floored at 0 (the light that came back in counts nothing), with the body's carried remainder, over one quantum's unit W_rec G^2, W_rec = W_c sin Omega of the transition's resonance (`emission.born_unit` on the light family's W_c, `loader/derived.count_wall`), by the division act as `credit.quanta_through` takes it: the floor the whole quanta, one at most (the body holds one), and the remainder below one quantum drawn as `credit.whether` draws a region's, one division of the number the body reads at its Nodes (`node_detector.picked`, the body's read of the board; the index 0 one more quantum), the carry kept per body and signed as a region's (`NodeBooks.carry`: the remainder, or the remainder less the unit where the quantum was drawn ahead of its arrival); a total below 0 counts nothing and stands as the carry; returns the quanta credited, 0 or 1."""
+    unit = born_unit(count_wall(board.families[light], board.world.quantum_action), resonance)
+    unit = unit * board.unit * board.unit
+    total = max(sum(books.light), 0) + books.carry
+    through, rest = division_forward(total, unit, 0) if total >= 0 else (0, total)
+    books.carry = int(rest)
+    if 0 < rest and through < 1 and picked(board, books, [int(rest), unit - int(rest)]) == 0:
+        books.carry, through = int(rest) - unit, 1  # the quantum drawn ahead of its arrival, owed
+    return min(int(through), 1)
+
+
+def own_light_click(board: Lattice, books: NodeBooks) -> bool:
+    """A bound body's click of its own light at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22, the owner's word through the Boss: the bound body is a region detector of its own light; the reader's build sentence; `meeting.jumped`): for a body declaring no rate out of the part it stands in and a transition into that part, the window's booked outflow (`NodeBooks.light`, `reports.booked_light`) credited by the whether (`own_light_whether`), and where the quantum falls the one act (`act.click`, one alternative, the draw made) writes `own_light`'s items, the exchange over the region and light's whole quantum at the front Node drawn by the outflow per Node (`node_detector.drawn_weights` on the light book, `drawn_node`); returns whether the quantum fell; a body with a rate out of its part keeps the instrument's draw (`meeting.emission_drawn`, `hazard_weights`)."""
+    into = [t for t in books.declared.transitions if t.enters == books.part]
+    if not books.bound or not into or any(r.leaves == books.part for r in books.declared.rates):
+        return False
+    transition = into[0]
+    if not books.light or not own_light_whether(board, books, transition.drive, transition.resonance):
+        return False
+    at = drawn_node(board, books, drawn_weights(board, books.light))
+    line = Line((transition.leaves, books.part), (None, transition.drive))
+    click(board, books, [Alternative(1, partial(own_light, board, books, transition, at), line, books)])
+    return True
 
 
 def hazard_weights(

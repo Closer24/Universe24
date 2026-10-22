@@ -280,6 +280,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the beat's term over W_c G^2, once (2026-10-21)
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
+    (
+        "lists.py",
+        "own_light_whether",
+        "division_forward",
+    ): "D",  # the own light over W_rec G^2 (2026-10-22)
     # take.py
     (
         "take.py",

@@ -348,10 +348,10 @@ def jumped(board: Lattice) -> None:
                     )
         gathered(books.references, books.declared.transitions, levels, vector or None)
         draw = books.declared.draw
-        timed = (
-            draw is not None and draw.window is not None
-        )  # C2: a window opens at the first lit interval
-        gives = any(rate.leaves == books.part for rate in books.declared.rates)  # an emitter's when
+        timed = draw is not None and draw.window is not None  # C2: the window opens when lit
+        gives = books.bound or any(
+            r.leaves == books.part for r in books.declared.rates
+        )  # (5): bound, own light
         books.elapsed += (
             1 if books.elapsed or not timed or gives or not dark(board, books, own[books.number]) else 0
         )
@@ -377,9 +377,9 @@ def jumped(board: Lattice) -> None:
         books.due, given = 0, False
         if span and closes and absorbing(board, books):
             books.due = span  # the absorption at the window's end, the emission's draw next interval
-        elif span:  # at the close the beat's outflow over the window enters the hazard
-            books.outflow = max(-books.beat, 0) if closes else 0
+        elif span:
             given = emission_drawn(board, books, span)
+        given = given or (closes and lists.own_light_click(board, books))  # (5): its own light credited
         if not given and closes and books.deferred:
             given = emission_fell(board, books)  # E1: the deferred emission falls at the close
         if given:
@@ -395,4 +395,4 @@ def jumped(board: Lattice) -> None:
                 lists.coherence_ended(board, books)
     for books in closing:
         books.elapsed, books.lit, books.intake, books.passages = 0, 0, {}, {}
-        books.deferred, books.beat, books.outflow = False, 0, 0
+        books.deferred, books.outflow, books.light = False, 0, []

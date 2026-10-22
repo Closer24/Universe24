@@ -49,15 +49,17 @@ def main(argv: list[str] | None = None) -> None:
         )
         before, window_sum, closes = 0, 0, 0
         for _ in range(args.intervals):
-            beat_before = books.beat
+            beat_before = sum(books.light)
             board.step()
-            came = books.beat - beat_before if books.beat else -beat_before  # the interval's booking
+            came = (
+                sum(books.light) - beat_before if sum(books.light) else -beat_before
+            )  # the interval's booking
             if (
-                books.beat == 0 and beat_before != 0
+                sum(books.light) == 0 and beat_before != 0
             ):  # the window closed this interval: the sum begun again
                 came = 0
                 closes += 1
-            window_sum = books.beat
+            window_sum = sum(books.light)
             clicks = [
                 c for c in lines if c["event"] == reports.CREDIT and c["interval"] == board.interval
             ]
@@ -86,7 +88,7 @@ def main(argv: list[str] | None = None) -> None:
                 + "\n"
             )
             out.flush()
-            before = books.beat
+            before = sum(books.light)
         out.write(json.dumps({"closes": closes, "final_beat": before}) + "\n")
 
 

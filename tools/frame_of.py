@@ -21,7 +21,7 @@ from event_universe.core.ports import PORT_SIDES, PORTS, arrival
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.covector import THIRDS
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import turns, weight_of
+from event_universe.loader.derived import turns
 from event_universe.loader.faces import connected
 from event_universe.loader.mode import INSTRUMENT
 from event_universe.loader.world import BodyRow
@@ -366,13 +366,12 @@ def instrument_entry(
     index: int,
     record: int,
     light: str,
-    weight: int | None,
     lifetime: int | None,
     width: int | None,
     declared: tuple[tuple[int, int, int], ...] = (),
     part: int = 0,
 ) -> dict[str, Any] | None:
-    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at the weight (the record's read weight of its holder where none is given) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object where a rate is declared or a packet of the light family is laid (the window then derived at load from the lays' passage) and the transition's period as the window otherwise, the steady beat's declared window; None for a record with no transition."""
+    """The mode file's `instrument` of one bound body, the detector body's declaration in the world file's own form (loader/world.BODY_KEYS, loader/node_detector_declaration.READER_RECORD_KEYS): `nodes`, the standing region's Nodes at the file's coordinates (`standing_region`, the body's declared Nodes `declared` among them) with the record's share at each as the lay's weight; `parts`, the transition's two levels by name in energy order with the count 1 in the level the record stands in and 0 in the other (the upper where two levels carry share, the beating record the giver of (5), which emits from its upper part; the one level laid otherwise); `transitions`, the lower to the upper by the light family at no weight (since 2026-10-22 the loader takes the record's read weight of its holder by reciprocity and refuses a declared one, ALGEBRA.md, The click writes on the lattice (5)) and the resonance [den cos(Omega_upper - Omega_lower), den], the cosine of the difference by the two pairs' cosines and sines over den, one rounding; `rates`, the upper to the lower at the lifetime giving to the light family, with the packet's width where given, none where no lifetime is given; `node_detector`, the empty object: the window is derived at load, from the lays' passage where a rate is declared or a packet of the light family is laid and as the beat's own period where the body declares no rate (`loader/window.period_of`, 2026-10-22); None for a record with no transition."""
     reading = reading_of(board, index, record, part)
     if reading is None:
         return None
@@ -392,13 +391,11 @@ def instrument_entry(
         {"part": 0, "name": names[0], "count": 1 if stands == reading.lower else 0},
         {"part": 1, "name": names[1], "count": 1 if stands == reading.upper else 0},
     ]
-    coupling = weight_of(reading.holder, board.families[index]) if weight is None else weight
     transitions = [
         {
             "from": names[0],
             "to": names[1],
             "drive": light,
-            "weight": coupling,
             "resonance": [cosine, den],
         }
     ]
@@ -416,13 +413,12 @@ def instrument_entry(
     nodes = [
         {"node": [int(v) for v in at], "weight": int(shares[tuple(at)])} for at in np.argwhere(region)
     ]
-    laid = any(packet.family == families_index(board, light) for packet in board.world.packets)
     return {
         "nodes": nodes,
         "parts": parts,
         "transitions": transitions,
         "rates": rates,
-        "node_detector": {} if lifetime is not None or laid else {"window": reading.period},
+        "node_detector": {},  # the window derived at load: the lays' passage, or the beat's period with no rate (5)
     }
 
 
@@ -471,12 +467,6 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--width", type=int, default=None, help="the emitted packet's Nodes across on the open board"
     )
-    parser.add_argument(
-        "--weight",
-        type=int,
-        default=None,
-        help="the transition's coupling; the record's read weight of its holder where none is given",
-    )
     args = parser.parse_args(argv)
     path: Path = args.input
     if args.root is not None:
@@ -506,7 +496,6 @@ def main(argv: list[str] | None = None) -> None:
             row.family,
             record,
             args.light,
-            args.weight,
             args.lifetime,
             args.width,
             row.nodes,

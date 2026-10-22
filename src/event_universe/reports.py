@@ -4,12 +4,17 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import covector, readings
 from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.records import Record
+
+if TYPE_CHECKING:
+    from event_universe.lattice import Lattice
+    from event_universe.node_detector import NodeBooks
 
 MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
@@ -324,3 +329,22 @@ def weighted(
             factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
             seen[port][at] += flow * factor
     return seen
+
+
+def booked_light(board: Lattice, books: NodeBooks, facing: Sequence[np.ndarray], wrap: Wrap) -> None:
+    """A bound body's book of its own light through its front (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): for each holder of the sign the body's family reads, the holder's light, its record's lines as `Lattice.record` gives them (the sum of its rows), read by `readings.currents_of` at the covector's weights (`covector.weights`, (-3, 1, 1, 1) in thirds under the Lorentz form; the plain time line's current alone where the holder declares none) through the body's front Ports with the holder's Link factors in the unit G^2 (`weighted`, the credit's booking of a drive, inward positive), booked per front Node outward positive into `NodeBooks.light`, the window's sum; nothing for a body whose family reads no holder of the sign."""
+    for read in board.families[books.index].reads:
+        holder = board.families[read.family]
+        if not holder.wronskian:
+            continue
+        _content, factors = board.read(read.family)
+        lines = board.record(read.family)
+        current = readings.currents_of(holder.pair[0], lines, wrap, covector.weights(holder), None)
+        if not books.light:
+            books.light = [0] * len(books.nodes)
+        for through in weighted(facing, [(current, factors, None)]):
+            at = np.asarray(through, dtype=object)
+            for k, node_at in enumerate(books.nodes):
+                books.light[k] -= int(
+                    at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))]
+                )
