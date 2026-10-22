@@ -13,17 +13,19 @@ def half_angle(den: int, cosine: int) -> int:
     return largest_below(int(division_forward(den * (den + cosine), SIDES, 0)[0]))
 
 
+def chain_cosine(den: int, target: int) -> int | None:
+    """den cos(pi / target) for a target that is a power of two: 1 gives -den (cos pi), 2 gives 0 (cos(pi / 2)), each doubling one half-angle search; None where the target is no power of two (the path's cosines are then roots the table's acts do not reach, and the width-one line stands as before, named)."""
+    if target == 1:
+        return -den
+    size, cosine = SIDES, 0  # den cos(pi / 2)
+    while size < target:
+        size, cosine = size * SIDES, half_angle(den, cosine)
+    return cosine if size == target else None
+
+
 def base_cosine(den: int, layers: int) -> int | None:
-    """den cos(pi / (w + 1)) for a faced axis of w layers by the half-angle chain from den cos(pi / 2) = 0, where w + 1 is a power of two; None where it is not (the path's cosines are then roots the table's acts do not reach, and the width-one line stands as before, named)."""
-    size, steps = SIDES, 0
-    while size < layers + 1:
-        size, steps = size * SIDES, steps + 1
-    if size != layers + 1:
-        return None
-    cosine = 0  # den cos(pi / 2)
-    for _ in range(steps):
-        cosine = half_angle(den, cosine)
-    return cosine
+    """den cos(pi / (w + 1)) for a faced axis of w layers by the half-angle chain from den cos(pi / 2) = 0, where w + 1 is a power of two; None where it is not."""
+    return chain_cosine(den, layers + 1)
 
 
 def multiples(den: int, cosine: int, count: int) -> list[int]:
@@ -45,9 +47,10 @@ def modes_of(den: int, layers: int, periodic: bool, at: int) -> list[tuple[int, 
     if layers == 1:
         return [(0, den, 1, 1)]
     if periodic:
-        base = (
-            base_cosine(den, layers // SIDES - 1) if layers % SIDES == 0 else None
-        )  # cos(2 pi / w) = cos(pi / (w / 2))
+        half = 1  # cos(2 pi / w) = cos(pi / (w / 2)): the half of w found by doubling, no division
+        while SIDES * half < layers:
+            half = half * SIDES
+        base = chain_cosine(den, half) if SIDES * half == layers else None
         if base is None:
             return None
         cosines = multiples(den, base, layers)

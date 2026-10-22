@@ -37,6 +37,7 @@ PHYSICAL_MODULES += (
 )
 PHYSICAL_MODULES += (
     "emission.py",
+    "guide.py",
     "lay.py",
     "take.py",
     "readings.py",

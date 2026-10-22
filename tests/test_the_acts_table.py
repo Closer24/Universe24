@@ -121,8 +121,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "sine_of",
         "largest_below",
     ): "S",  # the sine by the search on den squared less cos squared
-    ("guide.py", "modes_of", "//"): "D",  # the periodic width's half, an index
-    ("guide.py", "modes_of", "%"): "D",  # the periodic width's parity, named
     ("guide.py", "travelling", "division_forward"): "D",  # den cos k of the guide's wave, once
     (
         "guide.py",
