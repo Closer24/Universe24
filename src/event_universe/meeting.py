@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import conversion, credit, digits, flux, lists, node
+from event_universe import conversion, credit, digits, flux, lists, node, reports
 from event_universe.act import Alternative, click
 from event_universe.core.ports import arrival
 from event_universe.loader.keys import Node
@@ -135,7 +135,7 @@ def carries(board: Lattice, books: NodeBooks, total: int) -> bool:
 def emission_drawn(board: Lattice, books: NodeBooks, grain: int) -> bool:
     """The emission's draw at the clock's grain, `grain` intervals (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock): for each rate out of the part the record stands in, one click over the emission's alternatives (`lists.emission`: one list per direction the board holds at the hazard's weight over the span, the smaller of the grain and the lifetime, and nothing at the rest), the body's own read of the board; the first emission drawn is taken, its quantum laid and its line written by the act; returns whether one was. The exact dark (the reader's re-ruling of 2026-10-20, the law's sentence): a body whose read finds every digit at the lay's origin at its emission's draw does not draw (`digits.at_origin` over what the body reads, `digits.reads_of`, `node_detector.read_families`), nor where its number, read or left within the interval, stands below the emission row's total (`carries`, the reader's (iii) of 2026-10-20: the remainders at the body do not carry the draw, the budget's own count the measure of nothing to read); its emission falls at its window's close, the detector's declared when (`NodeBooks.deferred`, `emission_fell`); where the body's lines carry the total the emission's hazard is read from the board. The refusals by name stay for every other draw at the origin or below its total (an absorption, a probe, a second draw of one interval)."""
     closes = (draw := books.declared.draw) is not None and books.elapsed == draw.window
-    transition = lists.own_light_row(books) if closes else None  # (5): the own light's row at the close
+    transition = reports.own_light_row(books) if closes else None  # (5): the own light's row
     rows: list[Any] = [rate for rate in books.declared.rates if rate.leaves == books.part]
     for rate in rows or ([None] if transition is not None else []):
         span = grain if rate is None else min(grain, rate.lifetime)

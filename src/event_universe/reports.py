@@ -15,6 +15,7 @@ from event_universe.records import Record
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
     from event_universe.loader.keys import Node
+    from event_universe.loader.node_detector_declaration import Transition
     from event_universe.node_detector import NodeBooks
 
 MEASUREMENT, DIAGNOSTIC = (
@@ -66,6 +67,7 @@ LOST_TO_REGION, UNPAID_BY_REGION = (
 NO_DRAW = "no draw: every digit at the lay's origin, the emission at the window's close"  # the exact dark (the reader's re-ruling of 2026-10-20, (c)): a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close, the detector's declared when, this reading on its credit line
 BIAS_BOUND = "bias_bound"  # the click's line: the bound g / T of the read's first draw, the reader's F, 2026-10-20
 NO_SIDE = "no side: booked, not faced"  # C6: the hole's Node two-sided on every axis, its face set empty, the quantum taken in the books by the deficit path and the levels standing (`take.faced`, `act.written`)
+LARGEST_ENTRY = "the where by the largest raw entry of the shell's book: every shell Node below G^2 while the row fell"  # (5), the reader's word of 04:21: no weight, no draw, the reading named
 ORDER, SCALE, BOARD_COUNT = (
     "order",
     "scale",
@@ -290,6 +292,14 @@ def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.
         region = grown
 
 
+def own_light_row(books: NodeBooks) -> Transition | None:
+    """The transition whose own-light row a bound body draws at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the one into the part the body stands in, for a bound body declaring no rate out of that part; None otherwise, an instrument of the file keeping `hazard_weights`."""
+    into = [t for t in books.declared.transitions if t.enters == books.part]
+    if not books.bound or not into or any(r.leaves == books.part for r in books.declared.rates):
+        return None
+    return into[0]
+
+
 def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
     """The Chebyshev ball of a radius about a Node as a mask of the board, the near zone of a bound body (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22; `loader/instrument.near_zone`): every Node whose distance per axis is at most the radius, the distance the shorter way round on a periodic axis; its front (`front`) is the light's front, the shell's Ports that exist."""
     grid, found = np.indices(shape), np.ones(shape, dtype=bool)
@@ -377,4 +387,5 @@ def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) 
         return
     through = shell_outflow(board, books.index, books.zone, books.shell, wrap, own)
     found = books.light or [0] * len(books.shell)
+    books.outflows = books.outflows or [0] * len(books.shell)  # the where's book, begun again at a click
     books.light = [a + b for a, b in zip(found, through, strict=True)]
