@@ -464,6 +464,7 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
         "faces",
         "sources",
         "units",
+        "charges",  # every charged plane family's charge at the lay, the count's origin (2026-10-22)
         "empty",
         "clocks",
         "windows",
@@ -516,17 +517,19 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
     assert held == {
         "born_a_b": {
             62: sorted(
-                credit + read + ["bodies", "lays", "reference"]
+                credit + read + ["bodies", "lays", "reference", "charges"]
             ),  # A's draw, the record born at 24
             124: sorted(
                 credit
                 + read
                 + cone
-                + ["bodies", "lays", "alike", "scale", "written"]
+                + ["bodies", "lays", "alike", "scale", "written", "charges"]
                 + ["unabsorbed", "unabsorbed_units"]
             ),  # B's draw after A's write, under the cone
         },
-        "singlet_a_b": {40: sorted(credit + read + ["reference"])},  # the record laid at the start
+        "singlet_a_b": {
+            40: sorted(credit + read + ["reference"])
+        },  # the record laid at the start; no charge: its planes carry no sense
     }
     for name, closes in held.items():
         for interval, holding in closes.items():
