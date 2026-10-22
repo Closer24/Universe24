@@ -112,6 +112,23 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
+    # guide.py, the guide clause of the emission
+    ("guide.py", "half_angle", "division_forward"): "D",  # den (den + den cos) over two, once
+    ("guide.py", "half_angle", "largest_below"): "S",  # the half angle's cosine by the search
+    ("guide.py", "multiples", "division_forward"): "D",  # Chebyshev's recurrence, one division per step
+    (
+        "guide.py",
+        "sine_of",
+        "largest_below",
+    ): "S",  # the sine by the search on den squared less cos squared
+    ("guide.py", "modes_of", "//"): "D",  # the periodic width's half, an index
+    ("guide.py", "modes_of", "%"): "D",  # the periodic width's parity, named
+    ("guide.py", "travelling", "division_forward"): "D",  # den cos k of the guide's wave, once
+    (
+        "guide.py",
+        "guide_total",
+        "division_forward",
+    ): "D",  # the total over the travelling share, one division
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F

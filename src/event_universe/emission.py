@@ -24,6 +24,7 @@ from event_universe.features.click import (
     wave_cosine,
 )
 from event_universe.front import on_board
+from event_universe.guide import guide_total
 from event_universe.lay import laid, laid_in_time, written
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
@@ -88,6 +89,9 @@ def emitted_quantum(board: Lattice, item: Item) -> tuple[int, int, int] | None:
         board.credit.empty.discard(item.family)
     family = board.families[item.family]  # the one lay act in time over the span the loader admitted
     total = radiated_total(action, item.resonance)
+    total = guide_total(
+        total, tuple(board.world.shape), board.world.periodic, tuple(item.nodes[0]), item.resonance
+    )  # the guide clause: one quantum travelling in the guide's travelling modes (ALGEBRA.md (5), BUILT)
     if not family.held:  # every part alike, each one n-th of the quantum's share (the lay across parts)
         total = int(division_forward(total, family.parts, 0)[0])
     scale = count_wall(family, action) ** SCALE_OF
