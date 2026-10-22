@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import act, lists, meeting, records, reports, world_files
+from event_universe import act, frame_run, lists, meeting, records, reports, world_files
 from event_universe.core.paces import sine_den
 from event_universe.lattice import Lattice
 from event_universe.lists import hazard_weights
@@ -399,3 +399,53 @@ def test_the_frame_tool_types_the_two_levels_each_at_one_quantum_beside_the_lay(
     assert sum(a * b for a, b in zip(dense(lower[0], size), dense(upper[0], size), strict=True)) == 0
     taker = load_shipped(FOLDER / "taker_c5.json").bodies[1]
     assert len(taker.profiles) == 2 and (taker.radius, taker.missing > 0) == (3, True)
+
+
+PURE, BEAT, MIXED, SUM = (
+    "pure_c11.json",
+    "beat_c11.json",
+    "mixed_c11.json",
+    "sum_c11.json",
+)  # the pure level's well
+FULL_BEAT = (
+    -3764112384000
+)  # F on that well, the full beat's outflow over its period 31 on the copy, in G^2
+
+
+def test_the_frame_run_copies_the_bodys_well_with_the_two_levels_at_one_quantum_each():
+    """The frame's run, once per bound body at the first close at which its own-light row falls due (the reader's ruling of 2026-10-22 with his correction of 04:05, cost (ii); `frame_run.copy_world`, `frame_run.beating`, `frame_run.densities`, `frame_run.full_beat`, `lists.own_light_weights`) on the pure level's well, the board of 11 x 9 x 9 with the proton at its centre [5, 4, 4] and the electron beside it at [6, 4, 4] standing in the level [3854, 6000] x1 of the well [4707, 6000] x1 (examples/events/conserve/pure_c11.json; the resonance [5874, 6000], the period 31, the shell at 3 Links with every Port on the board, 218 Nodes, the region 811 of 891 Nodes): the copy's world carries the body's row laid at the integer sum of the two typed profiles in the part carrying its count, the counts (0, 1) and no draw, the proton's row as it is, no packet, no reader and no draw of the world; the two profiles' charge densities read without a board sum to 18001373 (the lower) and 17990942 (the upper), one quantum each to the rounding (T / 2 = 18000000), their plain overlap exactly 0. The giver's books carry no frame run (it declares its rate out of its upper part, the instrument of the file keeping `hazard_weights`, so its own-light row never falls due); its shell is the face x = 0 of the 5-cube, 25 Nodes with every outward Port off the board, and the run at the lay, measured once, booked 25 zeros there in 31 s over the period 22 of its copy (the taker's 46 s over 26), which is why the run is the close's and not the lay's. Measured by the script and not run here, since a build of the 891-Node world with the frame run at the lay takes 72 s (1.2 s a step, 97 percent of it the phase act of the holder's Links): F = -3764112384000 in the unit G^2 on the pure, the equal-beat and the (0.1, 0.9) worlds alike, the copy being the well's, -0.111 of the transition's quantum 33817968529408; the world laid at the exact integer sum of the two profiles (sum_c11, the count in the upper part by the frame) books -3764112384000 in its live first window, F bit for bit, the construction (ii); the copy's outflow per interval leaves the shell for seven intervals (+0.0233 of the unit by interval 7) and the walls one and two Links beyond the shell return it from interval 8 (-0.111 at 31), the live pure world flowing steadily inward (-0.230 over the window, the lay settling), the equal beat's -0.038 and the mix's -0.177; on the box of 15, F = -4073779200000, -0.128 of its quantum, its live first window -0.0289: on these closed boards the law's run reads the walls' return and no A, the blind missed with the cause named, the measuring board the reader's."""
+    world = load_shipped(FOLDER / PURE)
+    row = world.bodies[1]
+    (transition,) = row.detector.transitions
+    assert (row.radius, len(row.shell), row.missing, len(row.region)) == (3, 218, 0, 811)
+    assert transition.resonance == (5874, 6000) and row.detector.draw.window == 31
+    assert row.detector.names == ("level [4707, 6000] x1", "level [3854, 6000] x1")
+    copy = frame_run.copy_world(world, 1, 1)
+    assert (copy.packets, copy.node_detectors, copy.draw) == ((), (), None) and copy.bodies[
+        0
+    ] == world.bodies[0]
+    laid = copy.bodies[1]
+    assert laid.detector.counts == (0, 1) and laid.detector.draw is None and laid.region == row.region
+    levels = (laid.now, laid.before, laid.second_now, laid.second_before)
+    for k, level in enumerate(levels):
+        assert level == frame_run.summed(profile[k] for profile in row.profiles)
+    lower, upper = frame_run.densities(world.shape, world.kind, row)
+    assert (int(lower.sum()), int(upper.sum())) == (18001373, 17990942)
+    size = 11 * 9 * 9
+    assert (
+        sum(
+            a * b
+            for a, b in zip(
+                dense(row.profiles[0][0], size), dense(row.profiles[1][0], size), strict=True
+            )
+        )
+        == 0
+    )
+    giver = Lattice(load_shipped(FOLDER / "giver_c5.json"), None)
+    (books,) = giver.credit.bodies
+    assert books.beat is None and reports.own_light_row(books) is None  # the file's rate: no row, no run
+    assert (
+        len(books.shell) == 25
+        and {at[0] for at in books.shell} == {0}
+        and giver.world.bodies[1].missing == 25
+    )

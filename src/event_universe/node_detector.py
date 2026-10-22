@@ -25,14 +25,13 @@ from event_universe.reports import BODY, booked_light, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of, sloped
 
 if TYPE_CHECKING:
+    from event_universe.frame_run import FrameRun
     from event_universe.lattice import Lattice
 
 Read = tuple[
     tuple[np.ndarray, ...], node.Factors, np.ndarray
 ]  # one record's current through each Port, the factor of each of its six Links and its share at the readers' Nodes
-Weighed = dict[
-    int, list[Read]
-]  # per family of quanta, per record, its read at the pair the step starts from
+Weighed = dict[int, list[Read]]  # per family of quanta, per record, its read at the step's start pair
 
 
 @dataclass
@@ -92,6 +91,7 @@ class NodeBooks:
     outflows: list[int] = field(default_factory=list)  # the where's book since the last click
     closed_light: int = 0  # the last close's window total of the own light, G^2 (the observers')
     closed_share: tuple[int, int] = (0, 0)  # the last close's draw: the row's weight and the unit
+    beat: FrameRun | None = None  # the frame's run at the first close: F per shell Node, the densities
     carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
 
 
