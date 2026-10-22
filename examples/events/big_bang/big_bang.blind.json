@@ -1,0 +1,101 @@
+{
+ "world": "examples/events/big_bang/big_bang.json",
+ "universe": "examples/events/big_bang/universe_big_bang.json",
+ "written": "2026-10-22 13:42 UTC, before any run; a dated prediction and no pin: no test reads this file or the run's log, and nothing here is edited after the run; the outcome by name (MET or MISSED per row) is written in README.md after the run",
+ "label": "LATTICE",
+ "fence": "lattice",
+ "verdict": "LATTICE",
+ "comment": "The test of the law's course from the one-Node seed: the 5-cube wrapped on every axis at Gamma 6000, T 36000, the width 92, under the keys interval: unobservable (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; The motion of gravity's row is a hill at the symmetry's weight), booking: form (The form's own clock) and factor: carried (The factor carried) on gravity's row, every one a hypothesis under its own name; the seed two packets of 1353 quanta (dust [0, 6000], matter [4000, 6000]) laid whole at the centre Node at the interval 1, light three plane waves at the wave [2, 5] at the amplitude 954 per wave, the one input of the mix; every row a lattice reading of the board's own course by tools/eras.py, no click; the model's numbers from the text hand's integration of dv/dt = SUM s_f(U) - c(U) v^2 / Gamma, dU/dt = v / Gamma with the engine's Node-mean rounded weights, written in blind.md with the model's approximations named.",
+ "hypotheses": [
+  "The board's interval is no observable (the paces)",
+  "The mean's velocity is the content's (a family's declaration)",
+  "The motion of gravity's row is a hill at the symmetry's weight (a family's declaration)",
+  "The hill's weight is the write's mix (a family's declaration)",
+  "The form's own clock (the paces, The write per proper volume and per proper interval)",
+  "The factor carried (the paces, The write per proper volume and per proper interval)"
+ ],
+ "inputs": {
+  "the pairs": {"gravity": [6000, 6000], "dust": [0, 6000], "matter": [4000, 6000], "light": [6000, 6000]},
+  "the integers": {"node_clock": 6000, "quantum_action": 36000, "width": 92, "link_unit": 16},
+  "the seed": {"node": [2, 2, 2], "interval": 1, "dust": 1353, "matter": 1353, "reason": "the pixel window's low edge, the smallest count of frozen form that stays at one Node (ALGEBRA.md, The bound body is one Node); the matter's count the same by name"},
+  "light": {"waves": 3, "wave": [2, 5], "amplitude_per_wave": 954, "reason": "the one input of the mix, nature's radiation-to-matter ratio at the seed: a^2 = s_m(0) T e^(U_x) / (3 sin^2 omega) per wave with s_m(0) = 8.42 the matter's mean write per Node per interval at the lay, U_x 1.3 the design's epoch, sin^2 omega 0.407 at the wave [2, 5]; the generator's reading 2029 quanta per wave"},
+  "not an input": "the hill's weight (the symmetry's, K = n E_s T / Gamma: 30 and 36 exact at T 36000), the mean's velocity (the constraint's attractor, no kick), the mean's level (a unit's zero), the eras (read from the board's own writes)"
+ },
+ "lay": {
+  "s_dust": 5.2, "s_matter": 2.89, "s_matter_total": 8.09, "s_light": 28.7, "s_total": 36.8,
+  "light_over_matter": 3.55, "n_eff": 5.75, "c_mean": 5.83, "constraint_velocity": 277,
+  "first_write_at_the_seed": {"dust": 676, "matter": 376, "with_the_rests_factor": 1011},
+  "status": "DERIVED from the forms at the lay and the write's factor at the rest 60 (the design's 8.42, 30.9 and 286 before the rest's factor e^(-0.04)); the first write before the seed's own well"
+ },
+ "blind": {
+  "the_laws_start": {
+   "reading": "the mean's velocity v (levels per interval) and the constraint's residual R = v^2 / (2 Gamma Phi) - 1 from the log at every interval over the first 60 intervals",
+   "blind": {"v_max": 139, "v_max_interval": 8, "U_at_v_max": 0.13, "R_at_10": -0.38, "R_at_20": -0.17, "R_at_30": -0.11, "R_within_0.03_of_the_tracker_by_U": 0.6, "R_through_0": "never: the tracker below the constraint under the Node-mean weight (the_trackers_residual)"},
+   "band": {"v_max_interval": [5, 20], "v_max": [125, 155]},
+   "status": "DERIVED, the attractor (the symmetry hand's 3 (a), the relative residual falling as e^(-n dU)); MEASURED by the symmetry hand on the 9-cube torus from rest under one form (the maximum 28 at 43, R 0 at 86); the model's numbers here; the maximum's value ASSUMED to 10 percent",
+   "fence": "lattice"
+  },
+  "the_radiation_era": {
+   "reading": "q_p = n_est / 2 - 2 with n_est = 2 Gamma d(1 / v) / dt over spans of 50 intervals, from the log's v",
+   "blind": {"q_p_band": [0.75, 1.0], "from_U": 0.7, "to": "the crossing", "model_q_p_over_50_to_250": 0.77},
+   "status": "DERIVED: light's running exponent 5.74 to 6 at the wave [2, 5] under The form's own clock mixed with the dust's 4.04 rising to 5 and the matter's; the band the design's",
+   "fence": "lattice"
+  },
+  "the_transition": {
+   "reading": "the interval and U at which light's write summed over the board falls below the dust's and the matter's together, from the log's per-family writes",
+   "blind": {"U_x": 1.16, "interval": 203, "design_input": 1.3, "reader_recomputation_at_the_exponent_5": [1.35, 1.4], "constraint_equality_s_r_over_6_equals_s_m_over_5": {"U": 1.34, "shift_from_the_writes_crossing": "ln (6 / 5) = 0.18 in U, the reader's line from the genericity hand's read"}},
+   "band": {"U_x": [0.9, 1.6]},
+   "status": "DERIVED by the model; the band ASSUMED from the two shifts the model does not carry: the one-Node lay's pumping of the matter's form (15 to 29 percent, earlier by 0.1 to 0.2) and the seed's well dimming the dust's write at the seed Node by e^(-4 u) (later by up to 0.4)",
+   "fence": "lattice"
+  },
+  "the_matter_era": {
+   "reading": "q_p from the slope of 1 / v over spans of 500 intervals from the crossing to the floor; n_eff from the log's writes",
+   "blind": {"q_p": [0.65, 0.69], "over_U": [1.5, 2.0], "n_eff": [5.26, 5.42], "design_row": "within 0.15 of +1 / 2 from U 1.8 on, at its edge against the model's 0.67", "ruler": {"h_at_the_crossing": 3.2, "h_at_the_floor": 7.9}},
+   "status": "DERIVED: light's share falls as e^(-dU) after the crossing (the relative exponent about 1), so nature's +1 / 2 is approached and not reached within 0.15 before the floor; the exponents the pairs' integers under The form's own clock (4.8 to 5.0 for the dust and the cooled matter, the kinematics hand's measurement)",
+   "fence": "lattice"
+  },
+  "the_trackers_residual": {
+   "reading": "R = v^2 / (2 Gamma Phi) - 1 from the log at every interval from U 0.6 to the floor, Phi = SUM_f s_f / n_f over the board per Node; the hill's weight's least and largest over the Nodes",
+   "blind": {"R": [-0.12, -0.09], "velocity_below_the_constraint_percent": [4, 6], "readers_bound_where_the_light_nodes_keep_36": {"R": -0.29, "percent": 16}, "weights": {"light_nodes": [35, 36], "seed_node": "near 30"}, "differential_hill_at_the_seed_levels_per_interval_at_the_start": 14},
+   "status": "DERIVED, the reader's line L1 on the design under the locality rule: the hill's coefficient the Node-mean of the weights above the write-weighted n_eff, the course on the tracker with the residual 2 (n_eff - c) / (2 c - n_eff), q's sequence the dominant form's whatever the weight",
+   "fence": "lattice"
+  },
+  "the_velocitys_floor": {
+   "reading": "the interval and U at which the constraint's velocity sqrt(2 Gamma Phi) falls below 1 (from the log's writes); the mean's velocity after it (the fraction of Nodes at v = 1, read to 1 / 125 by the remainders); q_p from the slope of 1 / v over spans of 1000 intervals and more; the least velocity over the run",
+   "blind": {"U_floor": 2.07, "interval": 2390, "design": {"U": 2.0, "interval": [2000, 2400]}, "q_p_on_the_crawl": [3.2, 3.3], "v_mean": {"2400": 0.48, "5000": 0.23, "10000": 0.11, "15000": 0.076}, "pulses": "0 -> 1 -> 0 at the mean rate s Gamma / n, the hill removing a level every Gamma / n intervals (about 1100 to 1200)", "least_velocity": 0},
+   "band": {"U_floor": [1.8, 2.3]},
+   "status": "DERIVED: the history hand's finding (the velocity's floor, the crawl U' = s / n, q_p 3) and the reversal hand's Theorem A (never below 0, the pulses), one phenomenon under one name; the integers' end and not nature's course, the coast the reals' mean",
+   "fence": "lattice"
+  },
+  "the_late_course": {
+   "reading": "q_p after the crossing at every span; the per-family writes to the run's end; U at 3000, 5000, 10000 and 15000; the mean level's monotony",
+   "blind": {"q_p_never_below": 0, "no_write_dies": true, "U": {"3000": 2.11, "5000": 2.21, "10000": 2.34, "15000": 2.42}, "dU_per_interval_at_the_end": 1.3e-05, "readers_recomputation_at_15000": 2.35, "the_stop_under_the_rounding": "named and not run: light's write dead near U 2.3 and the matter's near 3.5 at the seed Node, the velocity 0 exactly", "cycle": "none: no return to a state at which the level was lower (Theorem B)"},
+   "status": "DERIVED: the coast under the carried factor (the remainders hand's derivation, the reader's default), Theorem B (the reversal hand); nature's late acceleration MISSING under every booking of the remainders, no key offering it, the one derived door a board act refused by the owner's decision Only local",
+   "fence": "lattice"
+  },
+  "the_seed": {
+   "reading": "the dust's and the matter's share within one Link of the seed Node by Lattice.quanta at every sample; the time line at the seed Node against the far Node's (the well's depth) over the intervals 2 to 10",
+   "blind": {"dust_share_within_one_link_at_least": 0.9, "matter_share_within_one_link_below_0.5_by_interval": 10, "well_depth_levels": [600, 1200], "lay_pumping_percent": [15, 29]},
+   "status": "DERIVED (the frozen pair's reach 0, the free seed's band pace, the hill braking the well: the symmetry hand's 5 (4)); MEASURED by the symmetry hand (683 against 1488 at the interval 3 on the one-Node seed) and the structures hand (the lay's pumping); the seed's history the mean's alone by the history hand's theorem (the cube's 48 kept by Rule3), the structures' seed a click's draw or an asymmetric seed, neither in this world",
+   "fence": "lattice"
+  },
+  "the_rulers": {
+   "reading": "the three axis rulers h_a at the far Node from the log; the time line's spread",
+   "blind": {"rulers_equal_within_percent": 1, "h_at_the_mean": {"crossing": 3.2, "floor": 7.9, "end": 11}, "spread": "the well's depth and no more"},
+   "status": "DERIVED (The paces compose, h N = 1; the three waves one per axis)",
+   "fence": "lattice"
+  }
+ },
+ "refuting": [
+  "a refusal by the amplitude bound or the frozen clock before U 3",
+  "q_p below 0 before the floor",
+  "R not within 0.15 of the tracker's own value by U 1.0",
+  "the velocity rising after its maximum",
+  "the crossing outside U 0.9 to 1.6",
+  "the floor outside U 1.8 to 2.3",
+  "a write dying for ever under the carried factor",
+  "the mean's velocity below 0 at any interval",
+  "a return of the mean level to a lower value"
+ ],
+ "missing_by_name": "nature's late acceleration (q_0 -0.55) under every local booking, no key offering it; structure from one Node (the cube's 48 kept by Rule3, the structures' seed an input or a click's draw); the clumping scale (no Jeans length on the 5-cube); nature's factor 3000 of the matter era against the toy's 2.5; the comparison with nature's q_0, a question by name since no click reads the course"
+}
