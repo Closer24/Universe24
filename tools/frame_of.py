@@ -2,7 +2,9 @@
 
 Run with PYTHONPATH set to the checkout's src, after the mode file is written (tools/standing_lay.py or tools/pixel_mode.py):
 
-    PYTHONPATH=src python tools/frame_of.py --input <world>.json --light <family> [--lifetime N] [--width w] [--weight k] [--root <folder>]
+    PYTHONPATH=src python tools/frame_of.py --input <world>.json --light <family> [--lifetime N] [--width w] [--weight k] [--root <folder>] [--sparse]
+
+`--sparse` solves the frame's levels by the standing lay's sparse eigensolver (the top `solved` pairs of tools/standing_lay.json at its seeded start and tolerance) in place of the dense solve of every pair, for a board the dense operator does not fit (59,319 Nodes ask 26 GiB); the dense solve stays the default, the shipped mode files bit for bit.
 """
 
 from __future__ import annotations
@@ -14,6 +16,8 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import scipy.sparse as sp
+from scipy.sparse.linalg import eigsh  # type: ignore[import-untyped]
 
 from event_universe import node, share, world_files
 from event_universe.core import paces
@@ -33,6 +37,17 @@ LAY_KEYS = (
     "parts",
 )  # the instrument's keys that are the lay's own: the standing region and the part laid, kept where the tool reads the frame (`plain_world`)
 SETTLED = PORTS  # a level's fixed point: at most six solves, the secant on the integer pair, stopped at the pair's own grain
+RECIPE = json.loads(
+    Path(__file__).with_name("standing_lay.json").read_text(encoding="utf-8")
+)  # the standing lay's recipe: the sparse solver's pairs, start and tolerance, a file's keys and no number here
+SOLVED, START_SEED, TOLERANCE = (
+    int(RECIPE["solved"]),
+    int(RECIPE["start_seed"]),
+    float(RECIPE["tolerance"]),
+)
+SOLVER = {
+    "sparse": False
+}  # `--sparse`: the levels by the sparse eigensolver, for a board the dense solve does not fit
 
 
 @dataclass
@@ -99,7 +114,7 @@ def rooted(values: np.ndarray, amplitude: int) -> np.ndarray:
     return np.asarray(flat, dtype=float).reshape(values.shape)
 
 
-def operator(board: Lattice, reading: Reading, sine_omega: float) -> np.ndarray:
+def operator(board: Lattice, reading: Reading, sine_omega: float) -> Any:
     """The symmetric operator of the standing line at the angle whose sine is `sine_omega` (tools/standing_lay.py's `operator` on the engine's own rule integers of the record's read, `node.rule_of`, in doubles): B_ij = (R_ij / w) (p_j / p_i) / sqrt(cos U_i cos U_j) over each Link whose far Node stands on the board (the fill beyond a face, the wrap on a periodic axis, the reach back on the diagonal on an axis of one layer), B_ii = S_i / w + 2 sin Omega sin U_i / cos U_i, symmetrised as the mean with its transpose."""
     content, factors = board.read(reading.index, 1, reading.record)
     rule = node.rule_of(
@@ -115,7 +130,11 @@ def operator(board: Lattice, reading: Reading, sine_omega: float) -> np.ndarray:
     relative = (pace / pace.max()).ravel()
     own = np.broadcast_to(np.asarray(rule.self_coefficient, dtype=float), board.shape).ravel() / wall
     diagonal = own + 2 * sine_omega * reading.sine.ravel() / reading.cosine.ravel()
-    found = np.zeros((size, size), dtype=float)
+    rows, columns, values = (
+        [],
+        [],
+        [],
+    )  # the sparse operator; its dense form is the same matrix entry by entry
     flat_scale = scale.ravel()
     for port, (axis, side) in enumerate(PORT_SIDES):
         reach = np.broadcast_to(np.asarray(rule.reaches[port], dtype=float), board.shape).ravel() / wall
@@ -125,12 +144,16 @@ def operator(board: Lattice, reading: Reading, sine_omega: float) -> np.ndarray:
         far = arrival(index, axis, side, board.wrap, -1).ravel()
         near = np.nonzero(far >= 0)[0]
         there = far[near]
-        found[near, there] += (
+        rows.append(near)
+        columns.append(there)
+        values.append(
             reach[near] * flat_scale[near] * flat_scale[there] * relative[there] / relative[near]
         )
+    found = sp.coo_matrix(
+        (np.concatenate(values), (np.concatenate(rows), np.concatenate(columns))), shape=(size, size)
+    ).tocsr()
     found = (found + found.T) / 2
-    found[np.arange(size), np.arange(size)] += diagonal
-    return found
+    return found + sp.diags(diagonal)
 
 
 def integer_pair(cosine: float, den: int) -> tuple[tuple[int, int], int]:
@@ -147,7 +170,12 @@ def levels_of(board: Lattice, reading: Reading, kept: int) -> list[Level]:
 
     def solve(sine: int) -> tuple[np.ndarray, np.ndarray]:
         if sine not in solved:
-            found = np.linalg.eigh(operator(board, reading, sine / den))
+            matrix = operator(board, reading, sine / den)
+            if SOLVER["sparse"]:  # the top pairs by the standing lay's solver at its start and tolerance
+                start = np.random.default_rng(START_SEED).standard_normal(matrix.shape[0])
+                found = eigsh(matrix, k=SOLVED, which="LA", v0=start, tol=TOLERANCE)
+            else:
+                found = np.linalg.eigh(matrix.toarray())
             solved[sine] = (np.asarray(found[0]), np.asarray(found[1]))
         return solved[sine]
 
@@ -518,8 +546,14 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--width", type=int, default=None, help="the emitted packet's Nodes across on the open board"
     )
+    parser.add_argument(
+        "--sparse",
+        action="store_true",
+        help="the levels by the standing lay's sparse eigensolver, for a board the dense solve does not fit",
+    )
     args = parser.parse_args(argv)
     path: Path = args.input
+    SOLVER["sparse"] = bool(args.sparse)
     if args.root is not None:
         world_files.REPOSITORY_ROOT = args.root
     mode_path = path.with_suffix(".mode.json")
