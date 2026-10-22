@@ -1,0 +1,815 @@
+{
+ "world": "examples/events/big_bang/big_bang_matter.json",
+ "universe": "examples/events/big_bang/universe_big_bang.json",
+ "run": 1,
+ "written": "2026-10-22, 16:16 UTC, before the run; a dated prediction and no pin: no test reads this file or the run's log, and nothing here is edited after the run; the outcome by name (MET or MISSED per row) is written in README.md after the run; the first 200 intervals of the engine hand's fourth smoke of this world SEEN before the stamp and named in honesty_dated_line; the sha256 at the stamp in blind.sha256",
+ "seen_to_interval": 200,
+ "label": "LATTICE",
+ "fence": "lattice",
+ "verdict": "LATTICE",
+ "comment": "The test of the law's course from the one-Node seed, run 1 (the test without light): the 5-cube wrapped on every axis at Gamma 6000, T 36000, the width 92, under the world's key interval: unobservable and the held row's keys booking: form, factor: carried and pressure: trace; the seed 1353 + 1353 quanta at the centre Node at the interval 1, no light; 15000 intervals; read on the lattice and by no click.",
+ "hill_form_in_force": "the symmetric hill: -K (a_next - a_now) (a_now - a_before), one carried division of the write's numerator less K (now - before)^2 at the wall E_s T + sigma K (now - before), the same function forward and back; K = 4 E_s T / Gamma = 24 at every Node under pressure: trace",
+ "hypotheses": [
+  "The board's interval is no observable (the paces)",
+  "The mean's velocity is the content's (a family's declaration)",
+  "The motion of gravity's row is a hill at the symmetry's weight, its body The symmetric hill (a family's declaration; the hypotheses under their own names)",
+  "The stress's trace is the time line's, in two halves, The pressure's write in the time line and The traceless tension (the hypotheses under their own names; the held row's key pressure: trace)",
+  "The form's own clock (the paces, The write per proper volume and per proper interval; the key booking: form)",
+  "The factor carried (the paces, The write per proper volume and per proper interval; the key factor: carried)"
+ ],
+ "inputs": {
+  "the pairs": {
+   "gravity": [
+    6000,
+    6000
+   ],
+   "dust": [
+    0,
+    6000
+   ],
+   "matter": [
+    4000,
+    6000
+   ],
+   "light": [
+    6000,
+    6000
+   ]
+  },
+  "the integers": {
+   "node_clock": 6000,
+   "quantum_action": 36000,
+   "width": 92,
+   "link_unit": 16
+  },
+  "the seed": {
+   "node": [
+    2,
+    2,
+    2
+   ],
+   "interval": 1,
+   "dust": 1353,
+   "matter": 1353,
+   "reason": "the pixel window's low edge, the smallest count of frozen form that stays at one Node; the matter's count the same by name"
+  },
+  "light": "none",
+  "not an input": "the hill's weight (one integer for every mix, 24), the mean's velocity (the constraint's attractor, no kick), the mean's level (a unit's zero), the eras (read from the board's own writes)"
+ },
+ "lay": {
+  "sources_per_node": {
+   "dust": 10.189,
+   "matter": 10.054,
+   "light": 0.0,
+   "total": 20.24
+  },
+  "energy_writes_per_node": {
+   "dust": 10.189,
+   "matter": 10.987,
+   "light": 0.0,
+   "total": 21.18
+  },
+  "w": {
+   "dust": 0.0,
+   "matter_hot_part": 0.085,
+   "light": 0.245
+  },
+  "light_source_over_matters": null,
+  "n_eff": 5.0,
+  "natures_constraint_velocity": 291.0,
+  "tracker_velocity_at_the_lay": 284.6,
+  "first_write_at_the_seed": {
+   "dust": 1273.6,
+   "matter": 1256.8
+  }
+ },
+ "model": {
+  "line": "dv/dt = SUM_f (1 - w_f) s_f(U) - 4 v^2 / Gamma, dU/dt = v / Gamma; the sine courses under The form's own clock; w by the band formula; no pumping",
+  "seen_state_extrapolation": {
+   "U": 1.46,
+   "v": 12.7,
+   "writes_board_totals": [
+    "1.2",
+    "2.5",
+    "0"
+   ],
+   "exponents": [
+    5.0,
+    5.0,
+    6.0
+   ]
+  },
+  "from_the_seen_state": {
+   "floor": [
+    2311,
+    2.415
+   ],
+   "end": {
+    "U_15000": 2.735,
+    "h": 15.4,
+    "dU_per_interval": "1.26e-05"
+   },
+   "q_p_spans_of_500": {
+    "500+500": 0.61,
+    "1000+500": 0.562,
+    "1500+500": 0.542
+   },
+   "q_p_crawl": {
+    "3000+2000": 3.0,
+    "5000+5000": 3.0,
+    "10000+5000": 3.0
+   },
+   "U_at": {
+    "300": 1.626,
+    "400": 1.739,
+    "500": 1.825,
+    "700": 1.954,
+    "1000": 2.091,
+    "1500": 2.247,
+    "2000": 2.359,
+    "3000": 2.454,
+    "5000": 2.537,
+    "10000": 2.66,
+    "15000": 2.735
+   }
+  }
+ },
+ "rows": [
+  {
+   "reading": "1. The law's start from the matter alone.",
+   "blind": "From rest the mean's velocity rises to its maximum within the first 10 intervals and falls after it: SEEN to 200, the maximum 182 levels per interval at the interval 9 (the model's 119 at 12, the matter's pumped write above the model's), U 0.19, 0.45, 0.76, 0.94, 1.17, 1.46 at 10, 20, 40, 60, 100, 200 (the model's 0.127, 0.318, 0.586, 0.757, 0.975, 1.267); the trace's residual R_nat = 3 v^2 / (2 Gamma SUM_f s_f) - 1 from -1 toward 0 at the rate 8 - n_eff = 3 (the model's -0.7 at 10, -0.41 at 20, -0.2 at 40, -0.07 at 100, -0.04 at 200, within 0.05 from the interval 146, U 1.14), read on the run by `tools/eras.py` (the smoke logged the symmetry hand's residual on the mix's surface, about +1.3 under the weight 24 against 30, as derived and no miss). PREDICTION beyond 200: the velocity falling at every span of 100 intervals to the floor; R_nat within 0.15 of 0 at every span of 100 from U 1.6 to the floor (from the seen state at 200 the velocity 12.7 stands above the tracker of the rounded writes' totals, R_nat about +0.3 there, the small numbers' rounding). DERIVED (the attractor); the first 200 SEEN.",
+   "status": "DERIVED; the first 200 intervals SEEN",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "2. The deceleration toward the matter era's 1 / 2.",
+   "blind": "q_p from the slope of 1 / v (d(1 / v) / dt = n_eff / (2 Gamma), q_p = n_eff / 2 - 2, the estimator of `tools/eras.py`) with the dust's exponent 4.04 rising to 5 and the matter's 4.8 rising to 5 under The form's own clock, the matter's hot part w 1 / 3 relaxing as e^(-2 U): SEEN to 200 the slope gives 0.40 over the intervals 40 to 100 and 0.41 over 100 to 200 (the pumped matter's write and the frozen pair's 4.04 below 5). PREDICTION beyond 200: q_p over spans of 500 intervals from the interval 500 to the floor between 0.45 and 0.65, falling toward nature's +1 / 2 and within 0.1 of it from U 1.8 on (the model's 0.49 to 0.49; from the seen state 0.61 at 500 + 500 falling to 0.54 at 1,500 + 500, the velocity relaxing to the tracker from above); n_eff from the log's writes 4.8 to 5.0. No radiation era and no transition in this run (run 2's). DERIVED; the exponents the pairs' integers under The form's own clock, the kinematics hand's 4.8 to 5.0 measured on its lays.",
+   "status": "DERIVED; SEEN to 200",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "3. Nature's constraint, the trace's residual.",
+   "blind": "R_nat within 0.15 of 0 at every span of 100 intervals from U 1.6 to the floor (the model's -0.07 at U 1.0, -0.02 at 1.5, -0.01 at 2.0; the invariant surface, the pressure hand's derivation), the hill's weight 24 at every Node; under the mix's weight (30 here) R_nat would stand near -0.4. DERIVED (the pressure hand's section 3).",
+   "status": "DERIVED",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "4. The velocity's floor, the crawl and the pulses, one phenomenon.",
+   "blind": "Where the tracker's velocity falls below one level per interval the Node's velocity is 0 or 1 and the mean's velocity pulses 0 -> 1 -> 0 at the mean rate S Gamma / c (the write adding a level once every 1 / S intervals at a Node, the hill removing one every Gamma / c = 1,500 intervals), the crawl U' = S / c with q_p 3.0 from the slope of 1 / v over spans of 2,000 intervals and more (the model's 3 to 3; from the seen state 3; the band 2.9 to 3.1 with no light), the velocity never below 0 (the reversal hand's Theorem A): the floor at U 2.29 near the interval 2,423 in the model and at U 2.42 near 2,311 from the seen state, the band U 2.2 to 2.5 and the interval 2,100 to 2,600; the mean's velocity after it (the fraction of Nodes at v = 1, read to 1 / 125 by the remainders) 0.30 to 0.33 at 3,000, 0.20 to 0.22 at 5,000, 0.10 to 0.12 at 10,000 and 0.07 to 0.08 at 15,000. The integers' end, named on the page as the velocity's floor and not nature's course; the coast the reals' mean it approximates. DERIVED (the history hand's finding and Theorem A, read cold by the reader).",
+   "status": "DERIVED",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "5. The late course, the coast and what is missing.",
+   "blind": "No acceleration: q_p never below 0 at any span of 100 intervals after the interval 20 (SEEN to 200: 0.40 and above); no write dies under the carried factor; U at the run's end between 2.55 and 2.85 (the model 2.61; from the seen state 2.73), rising by about 1.3 x 10^-5 per interval at the end, the coast in the integers' way; the stop under the rounding the other booking's end, named and not run; never a cycle (the reversal hand's Theorem B). Nature's late acceleration MISSING from the law under every booking of the remainders, no key offering it, the one derived door a board act refused by **Only local**. DERIVED; the end's U the models'.",
+   "status": "DERIVED",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "6. The seed and the symmetry.",
+   "blind": "The dust's share within one Link of the seed Node above 0.9 of its count at every sample; the matter's share within one Link below 0.5 by the interval 10; the well at the seed Node: SEEN 2,451 against the far Node's 60 at the interval 2 (the first write 2,530 levels less the rest's dig), 2,922 against 1,199 at 10, 9,499 against 8,753 at 200 (746 levels); PREDICTION the seed above the far Node at every sample to the end by 400 to 900 levels. The one-Node lay pumps the matter's form (its write rising from 596 at 3 to 1,328 at 9 while the dust's holds, 4.9 times the dust's at 10 against the lay's equal forms), the structures hand's clause named three to five fold on this lay; the cooled lay's bound (dU per interval 0.02 for 10 percent adiabaticity, the seed's first write 120 levels, the counts about 70 + 70) a clause of the page and no remedy. The seed's history the mean's alone by the history hand's theorem (the cube's 48 kept by Rule3), no structure of nature's kind from one Node. DERIVED (the shares and the symmetry); the well SEEN to 200.",
+   "status": "DERIVED; SEEN to 200",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "7. The rulers.",
+   "blind": "The three axis rulers h_a = e^(U) Gamma / (Gamma - t_a) at the far Node equal to e^(U) within 1 percent and to each other within 1 percent at every sample to the floor (h 9.9 to 11.2) and to the end (h about 14); the time line's spread the well's depth and no more. DERIVED (The paces compose, h N = 1; The traceless tension).",
+   "status": "DERIVED",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "8. The least wall through the dig.",
+   "blind": "The least forward wall E_s T + K v_in over the Nodes: SEEN 35,688 to 38,880 over the first 200, never below E_s T; PREDICTION beyond 200: between E_s T and 1.02 E_s T at every interval to the end. Refuting clause: the least wall below E_s T / 2 at any interval (the lay's clause).",
+   "status": "DERIVED; SEEN to 200",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "9. The tension lines' mean course.",
+   "blind": "Gravity's three axis tension lines' means over the board and their velocities under The traceless tension: SEEN to 200 the means 0.0 at the intervals 1 to 3, -2.8 at 10, -6.5 at 20, -12.2 at 40, -14.4 at 60, -17.8 at 100, -19.7 at 120, -11.8 at 160 and -5.9 at 200, alike on the three axes at every interval, their velocities within 0.6 of 0 (against 36 per interval at 10 and 48 per interval from 20 on without the key, the tension past Gamma near the interval 125). PREDICTION beyond 200: the three means equal within the ringing (tens of levels) and within -100 and +100 levels at every interval to 15,000 (the seed's transient stress alone sourcing them, the first ten intervals), each line's mean velocity 0 within 1 level per interval over every span of 100. DERIVED (the reader's build line, the two channels); SEEN to 200. Refuting clauses (the reader's): a tension line's mean above 300 levels at any interval; the three means parting by more than the ringing; a line's mean velocity above 1 level per interval over any span of 100.",
+   "status": "DERIVED; SEEN to 200",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  },
+  {
+   "reading": "10. The Links' factors.",
+   "blind": "The product over the axes of (q_+ + q_-) / (2 Gamma) at the seed and the far Node: SEEN to 200, 0.998 to 1.005 at the seed and 1.000 to 1.003 at the far Node at every sample (against 0.95 at 10, 0.62 at 60, 0.17 at 100 and negative from 120 without the key). PREDICTION beyond 200: between 0.98 and 1.02 at both Nodes at every sample to the end. DERIVED; SEEN to 200. Refuting clause (the reader's): a factor below 0.95 at any sample.",
+   "status": "DERIVED; SEEN to 200",
+   "fence": "lattice",
+   "outcome": "written in README.md after the run"
+  }
+ ],
+ "bands": {
+  "v_max_interval": [
+   5,
+   12
+  ],
+  "matter_q_p_spans_of_500": [
+   0.45,
+   0.65
+  ],
+  "floor_U": [
+   2.2,
+   2.5
+  ],
+  "floor_interval": [
+   2100,
+   2600
+  ],
+  "end_U_15000": [
+   2.55,
+   2.85
+  ],
+  "crawl_q_p": [
+   2.9,
+   3.1
+  ],
+  "R_nat_from_U_1.6": [
+   -0.15,
+   0.15
+  ],
+  "tension_means_levels": [
+   -100,
+   100
+  ],
+  "links_factor": [
+   0.98,
+   1.02
+  ]
+ },
+ "honesty_dated_line": "A dated line of honesty (2026-10-22, 16:16 UTC, before the stamp): the engine hand's fourth smoke of this world under the key, 200 intervals (15:58 UTC; S/arrange/build_m10e/smoke_run1_trace/run1_trace.json in the build's record), was SEEN before this stamp, so the rows to the interval 200 are a reading and the rows beyond it the prediction; the model's lay numbers are that smoke's first writes by construction. Measured there: U 0.19 at 10, 0.45 at 20, 0.76 at 40, 0.94 at 60, 1.17 at 100 and 1.46 at 200 against the model's 0.127, 0.318, 0.586, 0.757, 0.975 and 1.267 (the model below by a third at 20 and by 15 percent at 200: the matter's form pumped at the one-Node lay, its write rising from 596 at the interval 3 to 1,328 at 9 while the dust's holds at 265 to 270, 4.9 times the dust's at 10 where the lay's forms are equal, the structures hand's clause three to five fold here against its 15 to 29 percent on its lays); the mean's velocity's maximum 182 at the interval 9 against the model's 119 at 12; the three tension lines' means within -20 and 0 levels, alike on the three axes, their velocities within 0.6 of 0; the Links' factors 0.998 to 1.005 at the seed and 1.000 to 1.003 at the far Node; every write alive (the board's totals at 200: dust 1.2, matter 2.5); the least forward wall 35,688 to 38,880, never below E_s T; the seed 2,451 at the interval 2 and 9,499 at 200, the far Node 8,753; the unreturning intervals 80 of 200. The rows beyond 200 are re-derived from the seen state at the law's exponents (the dust's 5 and the cooled matter's 5) beside the model's. The same world WITHOUT the key (the fourth smoke's first part, 15:57 UTC) ran the three tension lines past Gamma near the interval 125 by the matter record's own stress (166 at 10, 1,470 at 40, 4,353 at 100, 9,199 at 200), the Links' factors and the writes negative after it with no refusal (the engine hand's open item, the guard's lower side, built as a refusal by name at the read): the finding of the law as written on the wrapped board, named in the README and the research file; both runs under the key by the Boss's decision on it.",
+ "refuting": [
+  "a refusal by the amplitude bound or the frozen clock before U 3",
+  "q_p below 0 at any span of 100 intervals after the interval 20",
+  "q_p over spans of 500 outside 0.45 to 0.65 from the interval 500 to the floor, or not within 0.1 of 1 / 2 from U 1.8 to the floor",
+  "R_nat not within 0.15 of 0 at some span of 100 intervals from U 1.6 to the floor",
+  "the mean's velocity rising over any span of 100 intervals after its maximum",
+  "the floor outside U 2.2 to 2.5 or the interval 2,100 to 2,600",
+  "a write dying for ever under the carried factor",
+  "the mean's velocity below 0 at any interval",
+  "a return of the mean level to a lower value",
+  "the least wall E_s T + K v_in below E_s T / 2 at any interval (the lay's clause)",
+  "a tension line's mean above 300 levels at any interval; the three means parting beyond the ringing; a line's mean velocity above 1 level per interval over any span of 100",
+  "a Links' factor below 0.95 at any sample at the seed or the far Node"
+ ],
+ "missing_by_name": "The radiation era and the transition (run 2's, with light under the key); the clumping scale (no Jeans length on the 5-cube); the seed Node's own velocity above the mean's after the floor; the pairing at the seed's rim in size; nature's late acceleration, MISSING by name under every local booking, and the comparison with nature's q_0, a question by name since no click reads the course.",
+ "course": [
+  {
+   "interval": 1,
+   "U": 0.0017,
+   "velocity": 20.1
+  },
+  {
+   "interval": 2,
+   "U": 0.0067,
+   "velocity": 39.37
+  },
+  {
+   "interval": 3,
+   "U": 0.0147,
+   "velocity": 57.08
+  },
+  {
+   "interval": 4,
+   "U": 0.0256,
+   "velocity": 72.71
+  },
+  {
+   "interval": 5,
+   "U": 0.0388,
+   "velocity": 85.94
+  },
+  {
+   "interval": 6,
+   "U": 0.0541,
+   "velocity": 96.69
+  },
+  {
+   "interval": 7,
+   "U": 0.0709,
+   "velocity": 105.03
+  },
+  {
+   "interval": 8,
+   "U": 0.089,
+   "velocity": 111.18
+  },
+  {
+   "interval": 9,
+   "U": 0.1079,
+   "velocity": 115.39
+  },
+  {
+   "interval": 10,
+   "U": 0.1273,
+   "velocity": 117.98
+  },
+  {
+   "interval": 11,
+   "U": 0.1471,
+   "velocity": 119.23
+  },
+  {
+   "interval": 12,
+   "U": 0.167,
+   "velocity": 119.41
+  },
+  {
+   "interval": 13,
+   "U": 0.1869,
+   "velocity": 118.76
+  },
+  {
+   "interval": 14,
+   "U": 0.2066,
+   "velocity": 117.46
+  },
+  {
+   "interval": 15,
+   "U": 0.226,
+   "velocity": 115.69
+  },
+  {
+   "interval": 16,
+   "U": 0.2451,
+   "velocity": 113.57
+  },
+  {
+   "interval": 17,
+   "U": 0.2638,
+   "velocity": 111.21
+  },
+  {
+   "interval": 18,
+   "U": 0.2822,
+   "velocity": 108.7
+  },
+  {
+   "interval": 19,
+   "U": 0.3001,
+   "velocity": 106.09
+  },
+  {
+   "interval": 20,
+   "U": 0.3175,
+   "velocity": 103.43
+  },
+  {
+   "interval": 30,
+   "U": 0.4689,
+   "velocity": 79.25
+  },
+  {
+   "interval": 40,
+   "U": 0.5859,
+   "velocity": 62.28
+  },
+  {
+   "interval": 50,
+   "U": 0.6795,
+   "velocity": 50.73
+  },
+  {
+   "interval": 60,
+   "U": 0.7569,
+   "velocity": 42.57
+  },
+  {
+   "interval": 70,
+   "U": 0.8226,
+   "velocity": 36.58
+  },
+  {
+   "interval": 80,
+   "U": 0.8796,
+   "velocity": 32.01
+  },
+  {
+   "interval": 90,
+   "U": 0.9298,
+   "velocity": 28.42
+  },
+  {
+   "interval": 100,
+   "U": 0.9747,
+   "velocity": 25.54
+  },
+  {
+   "interval": 110,
+   "U": 1.0152,
+   "velocity": 23.18
+  },
+  {
+   "interval": 120,
+   "U": 1.0522,
+   "velocity": 21.2
+  },
+  {
+   "interval": 130,
+   "U": 1.0861,
+   "velocity": 19.54
+  },
+  {
+   "interval": 140,
+   "U": 1.1174,
+   "velocity": 18.11
+  },
+  {
+   "interval": 150,
+   "U": 1.1465,
+   "velocity": 16.87
+  },
+  {
+   "interval": 160,
+   "U": 1.1737,
+   "velocity": 15.79
+  },
+  {
+   "interval": 170,
+   "U": 1.1993,
+   "velocity": 14.84
+  },
+  {
+   "interval": 180,
+   "U": 1.2233,
+   "velocity": 14.0
+  },
+  {
+   "interval": 190,
+   "U": 1.246,
+   "velocity": 13.24
+  },
+  {
+   "interval": 200,
+   "U": 1.2674,
+   "velocity": 12.56
+  },
+  {
+   "interval": 250,
+   "U": 1.3606,
+   "velocity": 9.99
+  },
+  {
+   "interval": 300,
+   "U": 1.4364,
+   "velocity": 8.29
+  },
+  {
+   "interval": 350,
+   "U": 1.5002,
+   "velocity": 7.08
+  },
+  {
+   "interval": 400,
+   "U": 1.5552,
+   "velocity": 6.18
+  },
+  {
+   "interval": 450,
+   "U": 1.6037,
+   "velocity": 5.48
+  },
+  {
+   "interval": 500,
+   "U": 1.647,
+   "velocity": 4.92
+  },
+  {
+   "interval": 550,
+   "U": 1.6861,
+   "velocity": 4.47
+  },
+  {
+   "interval": 600,
+   "U": 1.7217,
+   "velocity": 4.09
+  },
+  {
+   "interval": 650,
+   "U": 1.7544,
+   "velocity": 3.77
+  },
+  {
+   "interval": 700,
+   "U": 1.7846,
+   "velocity": 3.5
+  },
+  {
+   "interval": 750,
+   "U": 1.8128,
+   "velocity": 3.26
+  },
+  {
+   "interval": 800,
+   "U": 1.8391,
+   "velocity": 3.05
+  },
+  {
+   "interval": 850,
+   "U": 1.8638,
+   "velocity": 2.87
+  },
+  {
+   "interval": 900,
+   "U": 1.887,
+   "velocity": 2.71
+  },
+  {
+   "interval": 950,
+   "U": 1.909,
+   "velocity": 2.57
+  },
+  {
+   "interval": 1000,
+   "U": 1.9298,
+   "velocity": 2.44
+  },
+  {
+   "interval": 1250,
+   "U": 2.0204,
+   "velocity": 1.94
+  },
+  {
+   "interval": 1500,
+   "U": 2.0942,
+   "velocity": 1.62
+  },
+  {
+   "interval": 1750,
+   "U": 2.1565,
+   "velocity": 1.39
+  },
+  {
+   "interval": 2000,
+   "U": 2.2104,
+   "velocity": 1.21
+  },
+  {
+   "interval": 2250,
+   "U": 2.2579,
+   "velocity": 1.08
+  },
+  {
+   "interval": 2500,
+   "U": 2.2926,
+   "velocity": 0.37
+  },
+  {
+   "interval": 2750,
+   "U": 2.3072,
+   "velocity": 0.34
+  },
+  {
+   "interval": 3000,
+   "U": 2.3209,
+   "velocity": 0.32
+  },
+  {
+   "interval": 3250,
+   "U": 2.3337,
+   "velocity": 0.3
+  },
+  {
+   "interval": 3500,
+   "U": 2.3458,
+   "velocity": 0.28
+  },
+  {
+   "interval": 3750,
+   "U": 2.3571,
+   "velocity": 0.26
+  },
+  {
+   "interval": 4000,
+   "U": 2.3679,
+   "velocity": 0.25
+  },
+  {
+   "interval": 4250,
+   "U": 2.3781,
+   "velocity": 0.24
+  },
+  {
+   "interval": 4500,
+   "U": 2.3878,
+   "velocity": 0.23
+  },
+  {
+   "interval": 4750,
+   "U": 2.397,
+   "velocity": 0.22
+  },
+  {
+   "interval": 5000,
+   "U": 2.4059,
+   "velocity": 0.21
+  },
+  {
+   "interval": 5250,
+   "U": 2.4144,
+   "velocity": 0.2
+  },
+  {
+   "interval": 5500,
+   "U": 2.4225,
+   "velocity": 0.19
+  },
+  {
+   "interval": 5750,
+   "U": 2.4303,
+   "velocity": 0.18
+  },
+  {
+   "interval": 6000,
+   "U": 2.4378,
+   "velocity": 0.18
+  },
+  {
+   "interval": 6250,
+   "U": 2.445,
+   "velocity": 0.17
+  },
+  {
+   "interval": 6500,
+   "U": 2.452,
+   "velocity": 0.16
+  },
+  {
+   "interval": 6750,
+   "U": 2.4588,
+   "velocity": 0.16
+  },
+  {
+   "interval": 7000,
+   "U": 2.4653,
+   "velocity": 0.15
+  },
+  {
+   "interval": 7250,
+   "U": 2.4717,
+   "velocity": 0.15
+  },
+  {
+   "interval": 7500,
+   "U": 2.4778,
+   "velocity": 0.14
+  },
+  {
+   "interval": 7750,
+   "U": 2.4837,
+   "velocity": 0.14
+  },
+  {
+   "interval": 8000,
+   "U": 2.4895,
+   "velocity": 0.14
+  },
+  {
+   "interval": 8250,
+   "U": 2.4951,
+   "velocity": 0.13
+  },
+  {
+   "interval": 8500,
+   "U": 2.5006,
+   "velocity": 0.13
+  },
+  {
+   "interval": 8750,
+   "U": 2.5059,
+   "velocity": 0.13
+  },
+  {
+   "interval": 9000,
+   "U": 2.5111,
+   "velocity": 0.12
+  },
+  {
+   "interval": 9250,
+   "U": 2.5161,
+   "velocity": 0.12
+  },
+  {
+   "interval": 9500,
+   "U": 2.5211,
+   "velocity": 0.12
+  },
+  {
+   "interval": 9750,
+   "U": 2.5259,
+   "velocity": 0.11
+  },
+  {
+   "interval": 10000,
+   "U": 2.5306,
+   "velocity": 0.11
+  },
+  {
+   "interval": 10250,
+   "U": 2.5352,
+   "velocity": 0.11
+  },
+  {
+   "interval": 10500,
+   "U": 2.5396,
+   "velocity": 0.11
+  },
+  {
+   "interval": 10750,
+   "U": 2.544,
+   "velocity": 0.1
+  },
+  {
+   "interval": 11000,
+   "U": 2.5483,
+   "velocity": 0.1
+  },
+  {
+   "interval": 11250,
+   "U": 2.5525,
+   "velocity": 0.1
+  },
+  {
+   "interval": 11500,
+   "U": 2.5566,
+   "velocity": 0.1
+  },
+  {
+   "interval": 11750,
+   "U": 2.5607,
+   "velocity": 0.1
+  },
+  {
+   "interval": 12000,
+   "U": 2.5646,
+   "velocity": 0.09
+  },
+  {
+   "interval": 12250,
+   "U": 2.5685,
+   "velocity": 0.09
+  },
+  {
+   "interval": 12500,
+   "U": 2.5723,
+   "velocity": 0.09
+  },
+  {
+   "interval": 12750,
+   "U": 2.576,
+   "velocity": 0.09
+  },
+  {
+   "interval": 13000,
+   "U": 2.5797,
+   "velocity": 0.09
+  },
+  {
+   "interval": 13250,
+   "U": 2.5833,
+   "velocity": 0.09
+  },
+  {
+   "interval": 13500,
+   "U": 2.5868,
+   "velocity": 0.08
+  },
+  {
+   "interval": 13750,
+   "U": 2.5903,
+   "velocity": 0.08
+  },
+  {
+   "interval": 14000,
+   "U": 2.5937,
+   "velocity": 0.08
+  },
+  {
+   "interval": 14250,
+   "U": 2.5971,
+   "velocity": 0.08
+  },
+  {
+   "interval": 14500,
+   "U": 2.6004,
+   "velocity": 0.08
+  },
+  {
+   "interval": 14750,
+   "U": 2.6036,
+   "velocity": 0.08
+  },
+  {
+   "interval": 15000,
+   "U": 2.6068,
+   "velocity": 0.08
+  }
+ ]
+}

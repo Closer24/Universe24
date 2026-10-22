@@ -25,7 +25,8 @@
     "rest": 60,
     "act": "pace",
     "booking": "form",
-    "factor": "carried"
+    "factor": "carried",
+    "pressure": "trace"
    }
   },
   {
