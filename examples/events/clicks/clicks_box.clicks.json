@@ -17,18 +17,18 @@
 0
 ],
 "count": 1,
-"left": 1,
+"left": 2,
 "absorbed": null,
 "emitted": null,
 "momentum": [
-6370267,
--4941,
--5218
+9883075,
+-60,
+-3926
 ],
 "fan": [
-41566570,
-4372,
--6220
+52472450,
+-12130,
+-11898
 ],
 "lost": [
 "P lost to the region"
@@ -58,18 +58,18 @@
 "realised": "e",
 "kept": null,
 "count": 1,
-"left": 0,
+"left": 1,
 "absorbed": "photon",
 "emitted": null,
 "momentum": [
--21884246,
-144,
-42635
+-21881471,
+431,
+45031
 ],
 "fan": [
-41346842,
-27032,
--2256
+52198680,
+-10126,
+1457966
 ],
 "lost": [
 "P lost to the taker",
@@ -77,10 +77,59 @@
 ],
 "source": "the lay",
 "recoil": [
-21884246,
--144,
--42635
-]
+21881471,
+-431,
+-45031
+],
+"bias_bound": {
+"g": 20,
+"total": 233280007198590967842980,
+"sum": 20,
+"last": 1
+}
+},
+{
+"event": "credit",
+"label": "NODEDETECTOR",
+"interval": 36,
+"family": "photon",
+"node_detector": "screen",
+"window": [
+25,
+36
+],
+"proper": 35,
+"windows": 3,
+"before": null,
+"realised": null,
+"kept": [
+0
+],
+"count": 1,
+"left": 0,
+"absorbed": null,
+"emitted": null,
+"momentum": [
+19608560,
+-2047,
+848504
+],
+"fan": [
+52135218,
+-1478,
+456972
+],
+"lost": [
+"P lost to the region"
+],
+"source": "the lay",
+"recoil": "unpaid by the region",
+"bias_bound": {
+"g": 256,
+"total": 71504185323008,
+"sum": 256,
+"last": 1
+}
 },
 {
 "event": "credit",
@@ -122,80 +171,6 @@
 "g": 180000000,
 "total": 132710400000000,
 "sum": 180000000,
-"last": 1
-}
-},
-{
-"event": "credit",
-"label": "NODEDETECTOR",
-"interval": 57,
-"family": "absorber",
-"node_detector": "body 0",
-"window": [
-33,
-57
-],
-"proper": 56,
-"windows": 1,
-"before": "e",
-"realised": "g",
-"kept": null,
-"count": 1,
-"left": 1,
-"absorbed": null,
-"emitted": "photon",
-"momentum": null,
-"fan": null,
-"lost": null,
-"source": null,
-"recoil": null,
-"bias_bound": {
-"g": 30,
-"total": 6998399999972336966799630,
-"sum": 30,
-"last": 1
-}
-},
-{
-"event": "credit",
-"label": "NODEDETECTOR",
-"interval": 60,
-"family": "photon",
-"node_detector": "screen",
-"window": [
-49,
-60
-],
-"proper": 59,
-"windows": 5,
-"before": null,
-"realised": null,
-"kept": [
-0
-],
-"count": 1,
-"left": 0,
-"absorbed": null,
-"emitted": null,
-"momentum": [
--858621,
-20465,
-4480
-],
-"fan": [
--139506,
-1742,
-1680
-],
-"lost": [
-"P lost to the region"
-],
-"source": "body 0",
-"recoil": "unpaid by the region",
-"bias_bound": {
-"g": 16,
-"total": 29292479193600000,
-"sum": 16,
 "last": 1
 }
 },
@@ -263,7 +238,7 @@
 },
 {
 "event": "credit",
-"label": "LATTICE",
+"label": "NODEDETECTOR",
 "interval": 64,
 "family": "absorber",
 "node_detector": "body 0",
@@ -273,30 +248,79 @@
 ],
 "proper": 63,
 "windows": 2,
-"before": "g",
+"before": "e",
 "realised": "g",
 "kept": null,
-"count": 0,
-"left": null,
+"count": 1,
+"left": 1,
 "absorbed": null,
-"emitted": null,
+"emitted": "photon",
 "momentum": null,
 "fan": null,
 "lost": null,
 "source": null,
-"recoil": null
+"recoil": null,
+"bias_bound": {
+"g": 2,
+"total": 6998399999972336966799630,
+"sum": 1,
+"last": 2
+}
+},
+{
+"event": "credit",
+"label": "NODEDETECTOR",
+"interval": 84,
+"family": "photon",
+"node_detector": "screen",
+"window": [
+73,
+84
+],
+"proper": 83,
+"windows": 7,
+"before": null,
+"realised": null,
+"kept": [
+0
+],
+"count": 1,
+"left": 0,
+"absorbed": null,
+"emitted": null,
+"momentum": [
+-28810911,
+6749,
+851
+],
+"fan": [
+-127074,
+-2476,
+-9288
+],
+"lost": [
+"P lost to the region"
+],
+"source": "body 0",
+"recoil": "unpaid by the region",
+"bias_bound": {
+"g": 4,
+"total": 71504185323008,
+"sum": 4,
+"last": 1
+}
 },
 {
 "event": "credit",
 "label": "LATTICE",
-"interval": 118,
+"interval": 125,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-87,
-118
+94,
+125
 ],
-"proper": 116,
+"proper": 123,
 "windows": 3,
 "before": "g",
 "realised": "g",
@@ -314,14 +338,14 @@
 {
 "event": "credit",
 "label": "LATTICE",
-"interval": 150,
+"interval": 157,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-119,
-150
+126,
+157
 ],
-"proper": 148,
+"proper": 155,
 "windows": 4,
 "before": "g",
 "realised": "g",
@@ -339,14 +363,14 @@
 {
 "event": "credit",
 "label": "LATTICE",
-"interval": 182,
+"interval": 189,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-151,
-182
+158,
+189
 ],
-"proper": 180,
+"proper": 187,
 "windows": 5,
 "before": "g",
 "realised": "g",
@@ -364,14 +388,14 @@
 {
 "event": "credit",
 "label": "LATTICE",
-"interval": 214,
+"interval": 221,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-183,
-214
+190,
+221
 ],
-"proper": 211,
+"proper": 218,
 "windows": 6,
 "before": "g",
 "realised": "g",
@@ -388,58 +412,15 @@
 },
 {
 "event": "credit",
-"label": "NODEDETECTOR",
-"interval": 216,
-"family": "electron",
-"node_detector": "screen",
-"window": [
-205,
-216
-],
-"proper": 213,
-"windows": 18,
-"before": null,
-"realised": null,
-"kept": [
-0
-],
-"count": 1,
-"left": 0,
-"absorbed": null,
-"emitted": null,
-"momentum": [
-53254585,
--1487075,
-1369641
-],
-"fan": [
-42834754,
--11394404,
-11202754
-],
-"lost": [
-"P lost to the region"
-],
-"source": "the lay",
-"recoil": "unpaid by the region",
-"bias_bound": {
-"g": 500,
-"total": 132710400000000,
-"sum": 500,
-"last": 1
-}
-},
-{
-"event": "credit",
 "label": "LATTICE",
-"interval": 246,
+"interval": 253,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-215,
-246
+222,
+253
 ],
-"proper": 243,
+"proper": 250,
 "windows": 7,
 "before": "g",
 "realised": "g",
@@ -457,14 +438,14 @@
 {
 "event": "credit",
 "label": "LATTICE",
-"interval": 278,
+"interval": 285,
 "family": "absorber",
 "node_detector": "body 0",
 "window": [
-247,
-278
+254,
+285
 ],
-"proper": 275,
+"proper": 282,
 "windows": 8,
 "before": "g",
 "realised": "g",
