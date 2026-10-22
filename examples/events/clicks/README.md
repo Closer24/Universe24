@@ -20,6 +20,8 @@ The four kinds against the five: (1) the conversion is here; (2) light's click a
 
 The five kinds in this folder (2026-10-22): (1) the conversion is here on the chain; (2) light's click at a declared region is here on the chain; (3) the declared detector's plain click on a massive record is here on the chain; (4) the bound body's click by itself is here on the tube beside the chain (`clicks_tube.json`, the section below: its beat's light credited at its own window's close through the near zone's edge, no rate); the one-Node absorber of the chain stands as an instrument of the file, by declaration, and the pixel's kind is not dealt with here.
 
+The screen against the bound body, measured (2026-10-22, the Manhattan hands, read cold by the reader): in the conserve universe, which has no content holder, the declared screen over a slab of the board is refused at its first close by the law's digits (light at the exact vacuum paces carries three-valued digits and a region's draw on them is refused by name) while the bound body in the same universe is admitted, its draw reading its own record's remainders in the well; and a declared region's credit depends on its depth and its backing where the body's region is its support by rule: a slab 3 Nodes deep holds at most 0.23 of a passing 7-Node packet at any close and credits nothing in four windows, where this chain's screen, 13 Nodes deep and backed by the chain's closed end, books 0.887 at its close 24 and credits, and a declared region over a bound body's whole support credits at the body's own close.
+
 
 ## The fifth kind by itself: the tube (2026-10-22)
 
