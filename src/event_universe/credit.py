@@ -82,6 +82,7 @@ class Books:
     weights: dict[tuple[int, str], list[int]] = field(default_factory=dict)
     regrown: list[NodeState] = field(default_factory=list)
     stepped: dict[int, int] = field(default_factory=dict)
+    charges: dict[int, int] = field(default_factory=dict)  # every plane family's charge at the lay
 
     @property
     def reads_sides(self) -> bool:
@@ -124,7 +125,10 @@ class Books:
         """The books at the start: every family of quanta's unit of one quantum from its own rotation (`record_unit`, held through the run; the click's plan, C1) and its count its laid share in that unit (`counted`, the books' origin read as a count; a record with no count at the origin named among `empty`, its unit set at its first lay), the emitters' book holding the file's lay for every family laid with a count, `Emitter(None, count, False)` (Part H, the hands' SHOULD: a laid light beside an emitter is drawn between the body and the lay by their counts, `take.drawn_emitter`; the lay drawn is the file's, no receiver, `THE_LAY` with `LOST_TO_LAY`), every other book empty."""
         found = board.world.draw
         units = {index: record_unit(board, index) for index in board.order}
-        counts = {index: counted(board, index, board.laid[index], units[index]) for index in board.order}
+        counts = {
+            i: counted(board, i, *share.count_read(board, i, board.laid[i], units[i]))
+            for i in board.order
+        }
         sides = [
             (r.name, ports_of(r.axis or r.basis, r.pattern, r.turn))
             for r in board.world.node_detectors
@@ -155,6 +159,7 @@ class Books:
             index: (0, support_of(board, index)) for index in board.order if counts[index] > 0
         }
         books.support = tuple(sorted({at for _t, nodes in books.births.values() for at in nodes}))
+        books.charges = {i: share.charge_of(board, i) for i in board.order if share.by_charge(board, i)}
         if books.reach == CONE:  # frame 0, the reference of every record laid at the start, kept once
             books.reference = dict.fromkeys(books.births, meeting_back.frame_of(board))
         return books
@@ -199,11 +204,11 @@ def scale_of(board: Lattice, index: int) -> int:
 
 def count_of(board: Lattice, index: int) -> int | None:
     """The record's count read from the board (ALGEBRA.md, The count on the board, the owner's word of 2026-10-20): (n S + scale W div 2) div (scale W) by the one division act (`counted`, `share.quanta_of`), n the record's parts, S its share over the board in the current's units (`Lattice.total_share`), W its unit W_rec (`Books.units`, `record_unit`) and scale the written coefficients' norm (`scale_of`, n before any write, so a record of one part reads S over W as it always did, bit for bit); None where the family holds no share to read; equal to the books' count at the lay and at every window's close before the acts (`meeting.closed`), the books' count moving at the act and the board's following at one Link per interval behind the erasing front, the difference the empty wave's share, a diagnostic."""
-    total = board.total_share(index)[0]
+    family = board.families[index]
+    total, unit = share.count_read(board, index, board.total_share(index)[0], board.credit.units[index])
     if total is None:
         return None
-    unit = board.credit.units[index] * scale_of(board, index)
-    return counted(board, index, total * board.families[index].parts, unit)
+    return counted(board, index, total * family.parts, unit * scale_of(board, index))
 
 
 def record_unit(board: Lattice, index: int) -> int:
@@ -232,12 +237,15 @@ def reduced(board: Lattice, index: int, coefficients: Sequence[Gauss]) -> list[G
 def count_held(board: Lattice, index: int) -> bool:
     """Whether the record's share on the board agrees with the books' count (ALGEBRA.md, The count on the board, the owner's word of 2026-10-20; the check at every close, `meeting.closed`): 2 |n S - c scale W| <= scale W + 2 n |S - S_lay|, the books' count c within half a quantum of the board's reading (`count_of`, the same n, W and scale) and the walk since the lay, the share's drift the books' line prints (`Lattice.laid`, S_lay the share at the start), exact integers and no division; the walk's term 0 for a record born during the run, whose birth's share is the books' count's; True where the family holds no share to read."""
     books, family = board.credit, board.families[index]
-    total, laid = board.total_share(index)[0], board.laid[index]
+    total, unit = share.count_read(board, index, board.total_share(index)[0], books.units[index])
+    laid = (
+        books.charges.get(index) if share.by_charge(board, index) else board.laid[index]
+    )  # the origin, W or S
     if total is None:
         return True
     born_later = books.births.get(index, (0,))[0] > 0
     walk = 0 if born_later or laid is None else abs(total - laid)
-    unit = books.units[index] * scale_of(board, index)
+    unit = unit * scale_of(board, index)
     return 2 * abs(family.parts * total - books.counts[index] * unit) <= unit + 2 * family.parts * walk
 
 

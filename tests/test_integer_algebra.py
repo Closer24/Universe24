@@ -51,6 +51,7 @@ PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py"
 PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
 PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", "covector.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/uniform.py")
+PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

@@ -270,11 +270,23 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the half width, an index
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
+    (
+        "loader/instrument.py",
+        "near_zone",
+        "division_forward",
+    ): "D",  # den div den sin k, the shell's radius
+    ("loader/instrument.py", "near_zone", "largest_below"): "S",  # den sin k by the search, the radius
     ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
     ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
+    # take.py
+    (
+        "take.py",
+        "recoil_phases",
+        "largest_below",
+    ): "S",  # den cos k_a from den sin k_a by search (2026-10-21)
     # node.py
     ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
     # flux.py, the step
@@ -314,6 +326,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
+    ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
     (
         "resonance.py",
         "projected",

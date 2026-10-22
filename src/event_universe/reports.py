@@ -4,12 +4,19 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import covector, readings
 from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.records import Record
+
+if TYPE_CHECKING:
+    from event_universe.lattice import Lattice
+    from event_universe.loader.keys import Node
+    from event_universe.loader.node_detector_declaration import Transition
+    from event_universe.node_detector import NodeBooks
 
 MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
@@ -45,6 +52,7 @@ SOURCE, RECOIL = (
     "source",
     "recoil",
 )  # Part G: the piece's source, the emitting body by its number in the world's order or the lay, and the recoil it owes, -p_a per axis as integers, booked and written nowhere (both hands' lines of 2026-10-10, 6091663984 and 6091670073)
+WRITTEN_AS_PHASE = "P written as the part's phase"  # the recoil as the per-Node phase (2026-10-21): the piece's P written into the entered part over a bound record of two Nodes or more standing free in its well as the phase k . (x - c) per Node (`act.parted`, `take.recoil_phases`), the light's piece gone with the hole; a body held at declared Nodes keeps `LOST_TO_TAKER`
 LOST_TO_TAKER = "P lost to the taker"  # Part F: the piece's P booked on the credit line and written into no part, the recoil of a body held at declared Nodes the declaration's (the two hands' lines of 2026-10-09); Part F2 dropped the pair's "no back-to-back region", a declared tolerance's miss: the two pieces' p stand in their two credit lines and the test judges their sum against the lays' floor
 LOST_TO_SOURCE, LOST_TO_LAY, BOOKED_AT_EMISSION = (
     "recoil lost to the source",
@@ -59,6 +67,7 @@ LOST_TO_REGION, UNPAID_BY_REGION = (
 NO_DRAW = "no draw: every digit at the lay's origin, the emission at the window's close"  # the exact dark (the reader's re-ruling of 2026-10-20, (c)): a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close, the detector's declared when, this reading on its credit line
 BIAS_BOUND = "bias_bound"  # the click's line: the bound g / T of the read's first draw, the reader's F, 2026-10-20
 NO_SIDE = "no side: booked, not faced"  # C6: the hole's Node two-sided on every axis, its face set empty, the quantum taken in the books by the deficit path and the levels standing (`take.faced`, `act.written`)
+LARGEST_ENTRY = "the where by the largest raw entry of the shell's book: every shell Node below G^2 while the row fell"  # (5), the reader's word of 04:21: no weight, no draw, the reading named; the first of a tie (max over the range takes the first index; the reachable tie the all-zero book, the where then the shell's first Node by order)
 ORDER, SCALE, BOARD_COUNT = (
     "order",
     "scale",
@@ -283,6 +292,25 @@ def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.
         region = grown
 
 
+def own_light_row(books: NodeBooks) -> Transition | None:
+    """The transition whose own-light row a bound body draws at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the one into the part the body stands in, for a bound body declaring no rate out of that part; None otherwise, an instrument of the file keeping `hazard_weights`."""
+    into = [t for t in books.declared.transitions if t.enters == books.part]
+    if not books.bound or not into or any(r.leaves == books.part for r in books.declared.rates):
+        return None
+    return into[0]
+
+
+def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
+    """The Chebyshev ball of a radius about a Node as a mask of the board, the near zone of a bound body (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22; `loader/instrument.near_zone`): every Node whose distance per axis is at most the radius, the distance the shorter way round on a periodic axis; its front (`front`) is the light's front, the shell's Ports that exist."""
+    grid, found = np.indices(shape), np.ones(shape, dtype=bool)
+    for axis, (extent, at) in enumerate(zip(shape, centre, strict=True)):
+        distance = np.abs(grid[axis] - at)
+        if wrap[axis]:
+            distance = np.minimum(distance, extent - distance)
+        found &= distance <= radius
+    return found
+
+
 def front(
     nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray, declared: np.ndarray
 ) -> list[np.ndarray]:
@@ -323,3 +351,41 @@ def weighted(
             factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
             seen[port][at] += flow * factor
     return seen
+
+
+def shell_outflow(
+    board: Lattice,
+    index: int,
+    zone: tuple[Node, int],
+    shell: Sequence[Node],
+    wrap: Wrap,
+    own: np.ndarray,
+) -> list[int]:
+    """The holder's light through a bound body's light front this interval, per shell Node, outward positive, in the unit G^2 (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; `index` the body's family): the near zone's ball at the board's shape now from the declared Node and the radius with the board's offset (`ball`; the board grows at a receding face), its front the shell's Ports that exist (`front`); for each holder of the sign the body's family reads, the holder's record lines as `Lattice.record` gives them, read by `readings.currents_of` at the covector's weights through those Ports with the holder's Link factors (`weighted`, the credit's booking of a drive, inward positive), the sign turned outward. `booked_light` sums it into the window's book; the pure level's run of the full beat reads the same number on its copy."""
+    centre, radius = zone
+    x, y, z = (c + o for c, o in zip(centre, board.offset, strict=True))
+    ball_now = ball(board.shape, (x, y, z), radius, wrap)  # the file's Node on the grown board
+    facing = front(ball_now, wrap, ball_now, own)
+    found = [0] * len(shell)
+    for read in board.families[index].reads:
+        holder = board.families[read.family]
+        if not holder.wronskian:
+            continue
+        _content, factors = board.read(read.family)
+        lines = board.record(read.family)
+        current = readings.currents_of(holder.pair[0], lines, wrap, covector.weights(holder), None)
+        for through in weighted(facing, [(current, factors, None)]):
+            at = np.asarray(through, dtype=object)
+            for k, node_at in enumerate(shell):
+                found[k] -= int(at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))])
+    return found
+
+
+def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) -> None:
+    """A bound body's book of its own light through its light front this interval (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): `shell_outflow` per shell Node summed into `NodeBooks.light`, the window's book; nothing for a body with no near zone (no transition into its part, or no bound body) or whose family reads no holder of the sign."""
+    if books.zone is None:
+        return
+    through = shell_outflow(board, books.index, books.zone, books.shell, wrap, own)
+    found = books.light or [0] * len(books.shell)
+    books.outflows = books.outflows or [0] * len(books.shell)  # the where's book, begun again at a click
+    books.light = [a + b for a, b in zip(found, through, strict=True)]

@@ -21,7 +21,7 @@ from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
-from event_universe.reports import BODY, credit, front, weighted
+from event_universe.reports import BODY, booked_light, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of, sloped
 
 if TYPE_CHECKING:
@@ -84,13 +84,19 @@ class NodeBooks:
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
     bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
     due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
-    gradient_carry: dict[Transition, int] = field(
-        default_factory=dict
-    )  # per transition declaring its dipole, the carried remainder of its projection's division act between intervals (`projected`)
+    gradient_carry: dict[Transition, int] = field(default_factory=dict)  # per dipole transition
+    bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
+    light: list[int] = field(default_factory=list)  # the own light per shell Node, (5)
+    shell: tuple[Node, ...] = ()  # the light's front, the near zone's shell (BodyRow.shell)
+    zone: tuple[Node, int] | None = None  # the near zone: the declared Node and the radius
+    outflows: list[int] = field(default_factory=list)  # the where's book since the last click
+    closed_light: int = 0  # the last close's window total of the own light, G^2 (the observers')
+    closed_share: tuple[int, int] = (0, 0)  # the last close's draw: the row's weight and the unit
+    carry: int = 0  # the whether's carry of the body's own light, the remainder below one quantum kept per body and signed as a region's (`lists.own_light`)
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
-    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node, its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
+    """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node (or, for a bound body declared an instrument body through the mode file, its standing region with the lay's weights, `BodyRow.region`, `BodyRow.shares`, 2026-10-21), its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
         if not isinstance(row, BodyRow) or row.detector is None or row.detector.draw is None:
@@ -104,16 +110,18 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         references = references_of(scale, row.detector.transitions)
         square = squared(1, board.world.quantum_action, board.families[row.family].pair)
-        total = sum(row.counts)
-        amplitudes = tuple(spread(square, (weight, total)) for weight in row.counts)
+        # a bound body declared through the mode file: its standing region with the lay's weights (2026-10-21)
+        nodes, weights = (row.region, row.shares) if row.region else (row.nodes, row.counts)
+        total = sum(weights)
+        amplitudes = tuple(spread(square, (weight, total)) for weight in weights)
         norm = max(largest_below(sum(a * a for a in amplitudes)), 1)
         found.append(
             NodeBooks(
                 number,
                 row.family,
                 record,
-                row.nodes,
-                row.counts,
+                nodes,
+                weights,
                 row.detector,
                 part,
                 parted,
@@ -122,6 +130,9 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 references,
                 amplitudes=amplitudes,
                 norm=norm,
+                bound=bool(row.region),
+                shell=row.shell,
+                zone=(row.nodes[0], row.radius) if row.shell else None,
             )
         )
     return found
@@ -157,9 +168,7 @@ def piece_momentum(board: Lattice, index: int, passage: Passage) -> list[int]:
     unit = board.credit.units[index]
     if passage.share <= 0 or weight == 0:  # nothing passed, or the frozen pair, whose currents are 0
         return [0] * AXES
-    sign = (
-        -1 if weight < 0 else 1
-    )  # the wall's sign, num's, attached after the rounding on the magnitude
+    sign = -1 if weight < 0 else 1  # the wall's sign, num's, after the rounding
     wall = abs(weight) * passage.share
     return [sign * int(signed_rounded(int(value) * unit, wall)) for value in passage.momenta]
 
@@ -378,12 +387,12 @@ def weighed_currents(board: Lattice) -> Weighed:
 
 
 def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray) -> None:
-    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own."""
+    """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own. The beat's term of 2026-10-21 (an emitter's own record's current through the same front, booked beside them into the hazard at the close) deleted 2026-10-22, dead since the light book (`booked_light`)."""
     for books in board.credit.bodies:
         drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
+        booked_light(board, books, wrap, own)  # (5): the holder's light out through the light's front
         if drives:
-            region = board.mask(books.nodes)
-            facing = front(region, wrap, region, own)
+            facing = front(region := board.mask(books.nodes), wrap, region, own)
             for drive in drives:
                 booked_inflow(board, books, drive, weighted(facing, weighed[drive]))
                 books.passages.setdefault(drive, Passage()).booked(region, weighed[drive])

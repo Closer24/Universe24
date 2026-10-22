@@ -8,6 +8,7 @@
   --cube: #1a1d24; --matter: #6ea1f0; --light: #4ade80; --field: #a3a7ae; --wall: #d7dae0; --ring: #c9c7c0;
   --flash: #ff5a1f; --blind: #b4b8c0; --focus: #5f97ea; --window: rgba(95, 151, 234, 0.2); --hole: #ffffff; --front: #c084fc;
   --forward: #4ade80; --back: #f59e0b; --bound: #9a9ea8; --cone: #f59e0b; --cone-tint: 0.62; --cone-above: 0.3;
+  --click-tones: #f472b6, #22d3ee, #a3e635, #fb923c, #c084fc, #facc15, #38bdf8, #f87171; --click-tint: 0.6; --click-fade: 0.55; --shell: #fde68a; --shell-scale: 0.6;
   --font-body: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --text: 14px; --small: 12px; --title: 20px; --gap: 12px; --pad: 14px; --radius: 6px; --gutter: 16px;
   --sky: #ffffff; --ground: #5a5a5a; --sun: 0.3;
@@ -50,6 +51,12 @@ header .verdict { font-family: var(--font-mono); color: var(--muted); }
 .cone { font: var(--small)/1.4 var(--font-mono); color: var(--muted); margin-top: 4px; }
 .cone:empty { display: none; }
 .cone b { color: var(--cone); font-weight: 600; }
+.clicks { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; margin-top: var(--gap); font-size: var(--small); }  /* the clicks' legend under the board: one row per click line of the output with the swatch of its cone's tone (2026-10-22) */
+.clicks:empty { display: none; }
+.clicks .row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; overflow-wrap: anywhere; }
+.clicks .row b { font-weight: 600; }
+.clicks .row .now { color: var(--muted); font-family: var(--font-mono); }
+.clicks .heading { color: var(--muted); }
 button, select, input[type=number] { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 10px; }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
 .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap); }
@@ -110,6 +117,7 @@ td.num { font-family: var(--font-mono); }
     </div>
     <div class="lines" id="lines"></div>
     <div class="cone" id="cone"></div>
+    <div class="clicks" id="clicks"></div>
   </section>
   <section class="panel measure" id="measure-box">
     <h2>Measurement: the node_detectors' report</h2>
@@ -192,7 +200,8 @@ const STEPPED = Array.isArray(LOOK.cone_stepped) ? LOOK.cone_stepped : null;  //
 const CONE_RADIUS = k => LOOK.frames[k].cone_radius === undefined || LOOK.frames[k].cone_radius === null ? null : Number(LOOK.frames[k].cone_radius);
 const CONED = SUPPORT.length > 0 && LOOK.frames.some((_, k) => CONE_RADIUS(k) !== null);
 const supportSpan = () => CONED ? ' (' + [0, 1, 2].filter(a => LOOK.shape[a] > 1).map(a => AXES[a] + ' ' + format(Math.min(...SUPPORT.map(n => n[a]))) + ' to ' + format(Math.max(...SUPPORT.map(n => n[a])))).join(', ') + ')' : '';  // the support's extent along the unfolded axes, from the header's Nodes
-const linkDistance = node => { let least = Infinity; for (const at of SUPPORT) { let d = 0; for (let a = 0; a < 3; a++) { let along = Math.abs(node[a] - at[a]); if (LOOK.boundary[AXES[a]] === 'periodic') along = Math.min(along, LOOK.shape[a] - along); d += along; } if (d < least) least = d; } return least; };  // the least Link distance to the support; a periodic axis never grows, so its extent is the file's
+const linkDistanceTo = (support, node) => { let least = Infinity; for (const at of support) { let d = 0; for (let a = 0; a < 3; a++) { let along = Math.abs(node[a] - at[a]); if (LOOK.boundary[AXES[a]] === 'periodic') along = Math.min(along, LOOK.shape[a] - along); d += along; } if (d < least) least = d; } return least; };  // the least Link distance to a support of Nodes, the front's metric with the wrap; a periodic axis never grows, so its extent is the file's
+const linkDistance = node => linkDistanceTo(SUPPORT, node);  // to the run back's cone's support
 const inBox = (node, fr) => { const o = originOf(fr), s = shapeOf(fr); return node.every((c, a) => c >= o[a] && c < o[a] + s[a]); };  // within the frame's own box
 const inCone = (i, k) => { const radius = CONE_RADIUS(k); return radius !== null && DISTANCE[i] <= radius && inBox(nodeOf(i), LOOK.frames[k]); };
 /* The view is fixed: the board is seen along one axis, VIEW, and never turned; a folded axis is the one seen along (the board the plane it is), a board of three axes is seen along z one layer at a time, LAYER. The eye stands on the side of the axis from which its two other axes read right and up (ACROSS), and the declared board (the file's own Nodes, from the origin) alone is in the frame. */
@@ -306,7 +315,78 @@ if (OUTPUT) for (const line of OUTPUT.lines) {
   if (line.event === 'credit' && /^body \d+$/.test(String(line.node_detector))) (RECORD_CREDITS[line.node_detector] || (RECORD_CREDITS[line.node_detector] = [])).push(line);
   if ((line.event === 'credit' || line.event === 'conversion') && !/^body \d+$/.test(String(line.node_detector))) REGION_CREDITS.push(line);  // the conversion line beside a region's credit, a row of the table (2026-10-21)
 }
-const DETECTOR_BODIES = LOOK.bodies.filter(b => b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
+const DETECTOR_BODIES = LOOK.bodies.filter(b => b.reader || b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
+/* The clicks' light cones (the owner's word of 2026-10-22, "let them show in the experiment's run all the clicks with their cone and everything"): every credit line of the output file is a click, the one act at the window's close (reports.credit, the one click line kind of every reader: a region's credit, with the conversion's records out where a conversion line stands beside it, a record's absorption, its emission at a rate or by its own light, the null window's re-lay at the count 0), and the line names no Node, so the Nodes the click wrote are read from the LATTICE lines beside it in the output: the lay lines contiguous with the credit line at its interval that are no scaling write and are of the click's families (the credited record's, the one it absorbed from or emitted to, or the conversion's records out), the conversion line between them; and the hole, the face lines at the interval after of the family whose quantum the click took (the credited record's, or the absorbed one's), the erasure line of that family beginning there at the distance 1 naming it as its origin, else the Node faced at both of the two intervals after (the hole's faces stand two intervals, a front's shell passes a Node once); a click with no written Node in the output (a beam's quantum passing in the books alone) has no cone and says so; where two clicks of one family fall at one interval the page gives their lines to the first (the law's No click names a Node keeps the Node off the line, so the inference from the lines beside it is the source, with this limit named). The cone at the frame of interval t is the Nodes within t - t_c + 1 Links of the click's Nodes in the Link metric with the wrap, the run back's cone's own geometry with one support per click (linkDistanceTo; ALGEBRA.md, The interval's dependency radius is one Link: every act one Link's reach, so the cone grows one Link per interval and the pace of light on the board, 1 / sqrt 3 Links per interval, lies inside it), from the click's frame on; each click's cone in a tone of its own from the style block's list, the cones painted from the earliest click to the latest so that the latest lies on top at the full tint and each older one fades by --click-fade. Every number is the output's; nothing is drawn between Nodes or between frames. */
+const TONES = token('--click-tones').split(',').map(tone => tone.trim()).filter(Boolean);
+const nodeAt = line => line && line.node && Array.isArray(line.node.at) ? line.node.at.join(',') : null;
+const CONVERSIONS_BESIDE = new Map();  // a region's credit line and the conversion line beside it: the same interval, region and family
+if (OUTPUT) for (const line of OUTPUT.lines) if (line.event === 'conversion') { const credit = OUTPUT.lines.find(c => c.event === 'credit' && c.interval === line.interval && c.node_detector === line.node_detector && c.family === line.family); if (credit) CONVERSIONS_BESIDE.set(credit, line); }
+function writtenBeside(index) {  // the lay lines contiguous with the credit line at `index` at its interval (the conversion line between them): the quantum laid (light's at the emission, the conversion's records out) and the exchange over the credited record's own Nodes (its parts moved, the null window's re-lay), with the Nodes each wrote
+  const credit = OUTPUT.lines[index], conversion = CONVERSIONS_BESIDE.get(credit) || null;
+  const laidOf = new Set(conversion && Array.isArray(conversion.into) ? conversion.into : [credit.emitted].filter(f => f !== null && f !== undefined));
+  const own = line => line === conversion || (line.event === 'lay' && line.interval === credit.interval && (laidOf.has(line.family) || line.family === credit.family) && !isWrite(line) && nodeAt(line) !== null);
+  const lays = [];
+  for (let k = index - 1; k >= 0 && own(OUTPUT.lines[k]); k--) if (OUTPUT.lines[k].event === 'lay') lays.unshift(OUTPUT.lines[k]);
+  for (let k = index + 1; k < OUTPUT.lines.length && own(OUTPUT.lines[k]); k++) if (OUTPUT.lines[k].event === 'lay') lays.push(OUTPUT.lines[k]);
+  const laid = lays.filter(line => laidOf.has(line.family)), exchange = lays.filter(line => !laidOf.has(line.family));
+  return { conversion, laid, exchange, laidNodes: new Set(laid.map(nodeAt)), exchangeNodes: new Set(exchange.map(nodeAt)) };
+}
+function holeBeside(credit) {  // the hole's Nodes: the erasure's origin of the taken family beginning at the interval after, else the Node faced at both intervals after, else any Node faced at the interval after; where two clicks take one family at one interval the lines go to the first
+  const family = credit.absorbed || credit.family, next = Number(credit.interval) + 1, lines = OUTPUT.lines;
+  const origins = new Set(lines.filter(line => line.event === 'erasure' && line.family === family && line.interval === next && line.distance === 1 && Array.isArray(line.origin)).map(line => line.origin.join(',')));
+  const faced = at => new Set(lines.filter(line => line.event === 'face' && line.family === family && line.interval === at && nodeAt(line) !== null).map(nodeAt));
+  const first = faced(next), second = faced(next + 1), twice = [...first].filter(at => second.has(at));
+  const found = origins.size ? { nodes: origins, from: "the erasure line's origin at " + next } : twice.length ? { nodes: new Set(twice), from: 'the face lines at ' + next + ' and ' + (next + 1) } : { nodes: first, from: first.size ? 'the face lines at ' + next : '' };
+  if (found.nodes.size && lines.find(line => line.event === 'credit' && line.interval === credit.interval && (line.absorbed || line.family) === family) !== credit) return { nodes: new Set(), from: "the hole's lines of the interval after given to the first click of " + family + ' at this interval' };
+  return found;
+}
+/* The light's front of a bound body (2026-10-22): the look's body row `shell`, the Nodes of the shell at r = 1 / k about the declared Node (the loader's own numbers, recorded; the page computes no radius), drawn as a ring of Nodes in the shell's tone, each ring scaled by the light booked at its Node at the frame shown (the frame's `own_light`, the window's running sum per shell Node as the books hold it after the interval, empty right after the close) against the largest booked over the run; the book's sum and the carry graphed in the records' panel. */
+const SHELLED = LOOK.bodies.filter(b => Array.isArray(b.shell) && b.shell.length);
+const SHELL_INDEX = new Map(); for (const b of SHELLED) b.shell.forEach((at, j) => SHELL_INDEX.set(at.join(','), [b.number, j]));
+const lightOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && Array.isArray(row.light) ? row.light : []; };
+const carryOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && typeof row.carry === 'number' ? row.carry : null; };
+const LIGHT_MOST = {}; for (const b of SHELLED) { let most = 0; for (let k = 0; k <= T; k++) for (const v of lightOf(k, b.number)) most = Math.max(most, Math.abs(v)); LIGHT_MOST[b.number] = most; }
+function laidInFrames(credit) {  // a bound body's emission whose light the output lays on no line of its own: the shell Node where the emitted light's count first stands at the click's frame against the frame before (the only new level of the light inside the ring), the frames' word
+  const body = SHELLED.find(b => 'body ' + b.number === String(credit.node_detector)), family = credit.emitted, k = Math.min(positionOfLine(credit), T);
+  if (!body || !family || !FAMILIES.some(f => f.name === family && f.quanta) || k < 1) return [];
+  const now = frameOf(k)[family].count, before = frameOf(k - 1)[family].count;
+  return body.shell.filter(at => { const i = indexOf(...at); return i >= 0 && i < N && now[i] > before[i]; });
+}
+const CLICK_CONES = [];
+if (OUTPUT) OUTPUT.lines.forEach((line, index) => {
+  if (line.event !== 'credit') return;
+  const written = writtenBeside(index), hole = holeBeside(line), from = [];  // the click's Node: where the quantum was taken (the hole) or laid; the exchange over the record's own Nodes where the click wrote nothing else (the null window's re-lay)
+  if (hole.nodes.size || hole.from) from.push(hole.from);
+  if (written.laidNodes.size) from.push(written.laid.length + (written.laid.length === 1 ? ' lay line' : ' lay lines') + ' of the quantum laid beside it');
+  const support = new Set([...hole.nodes, ...written.laidNodes]);
+  if (!support.size) { for (const at of written.exchangeNodes) support.add(at); if (support.size) from.push(written.exchange.length + (written.exchange.length === 1 ? ' lay line' : ' lay lines') + ' of the record itself beside it'); }
+  const nodes = [...support].map(at => at.split(',').map(Number));
+  if (!nodes.length) { const laid = laidInFrames(line); if (laid.length) { nodes.push(...laid); from.push('the frames: the light first standing at the shell Node at this frame'); } }
+  const tone = TONES.length ? TONES[CLICK_CONES.length % TONES.length] : token('--cone');
+  CLICK_CONES.push({ line, conversion: written.conversion, exchange: written.exchange, exchangeNodes: [...written.exchangeNodes].map(at => at.split(',').map(Number)), nodes, from, interval: Number(line.interval), position: positionOfLine(line), tone, colour: new THREE.Color(tone), distance: nodes.length ? Float64Array.from({ length: N }, (_, i) => linkDistanceTo(nodes, nodeOf(i))) : null });
+});
+CLICK_CONES.sort((a, b) => a.position - b.position || a.interval - b.interval);
+const CONE_LAYER = "the clicks' cones";
+const coneRadiusAt = (c, k) => c.distance && k >= c.position && INTERVAL(k) >= c.interval ? INTERVAL(k) - c.interval + 1 : null;  // t - t_c + 1 at the frame of interval t, from the click's frame on
+function conesAt(k) {  // the cones present at the frame, the earliest first: the latest at the full tint, each older one faded by --click-fade
+  const found = CLICK_CONES.map(c => ({ cone: c, radius: coneRadiusAt(c, k) })).filter(x => x.radius !== null), tint = size('--click-tint'), fade = size('--click-fade');
+  found.forEach((x, j) => { x.tint = tint * Math.pow(fade, found.length - 1 - j); });
+  return found;
+}
+const clickCount = (c, k) => { const radius = coneRadiusAt(c, k); if (radius === null) return null; let n = 0; for (let i = 0; i < N; i++) if (c.distance[i] <= radius && inBox(nodeOf(i), LOOK.frames[k])) n++; return n; };
+const OWN_LIGHT_WORDS = ['light', 'outflow', 'carry'];  // the words a bound body's close may carry on its credit line for its own light (the window's booked outflow, its carry), read where present
+const ownLightOf = line => OWN_LIGHT_WORDS.filter(word => line[word] !== undefined && line[word] !== null);
+const bodyLine = line => /^body \d+$/.test(String(line.node_detector));
+const closedShare = row => row && Array.isArray(row.closed_share) && Number(row.closed_share[1]) > 0;  // a close of the body's own light stands in the row: the share's unit is set there (0 until the first own-light close, and on a body emitting at its declared rate)
+const closedAt = c => { const body = SHELLED.find(b => 'body ' + b.number === String(c.line.node_detector)), own = body && LOOK.frames[Math.min(c.position, T)].own_light, row = own && own[String(body.number)]; return closedShare(row) ? row : null; };  // the frame's own_light row at the click where it carries the close's share: the draw of the body's own light was made there
+function kindOf(c) {  // the click's kind named from the line's own words (and the frames' close words for a bound body's own light)
+  const l = c.line, closed = closedAt(c);
+  if (!l.count) return 'the null window: no click, the record laid again whole (' + l.node_detector + ', ' + l.family + ', the LATTICE line)';
+  if (bodyLine(l) && l.absorbed) return 'the absorption: ' + l.node_detector + ' (' + l.family + ') took one quantum of ' + l.absorbed + ', ' + l.before + ' to ' + l.realised;
+  if (bodyLine(l) && l.emitted) return 'the emission: ' + l.node_detector + ' (' + l.family + ') gave one quantum to ' + l.emitted + ', ' + l.before + ' to ' + l.realised + (ownLightOf(l).length || closed ? ' by its own light at the close' + (closed ? " (the frames' closed_share [" + closed.closed_share.map(format).join(', ') + '] and closed_light ' + format(closed.closed_light) + ' at its frame)' : '') : '');
+  const words = "the region's credit: " + l.node_detector + ' credited ' + (l.count === 1 ? 'one quantum' : format(l.count) + ' quanta') + ' of ' + l.family;
+  return c.conversion ? words + ', converted into ' + [].concat(c.conversion.into || []).join(' + ') + (Array.isArray(c.conversion.senses) ? ' at the senses ' + c.conversion.senses.join(', ') : '') : words;
+}
 const key = line => [line.interval, line.node_detector, line.family, line.inflow].join('|');
 const SAME_LINES = OUTPUT ? CLICKS.length === LOOK_CLICKS.length && CLICKS.map(key).sort().join(';') === LOOK_CLICKS.map(key).sort().join(';') : null;
 const WALL = {};
@@ -389,6 +469,7 @@ QUANTA.forEach((f, k) => {
   layers[f.name + ' glow'] = { on: true, objects: [] };
 });
 if (CONED) layers['the cone'] = { on: true, objects: [] };  // the run back's reach, shaded on the cubes of the frames that carry a radius
+if (CLICK_CONES.some(c => c.nodes.length)) layers[CONE_LAYER] = { on: true, objects: [] };  // the clicks' light cones, shaded on the cubes from each click's frame on
 const mists = {}, bars = {};
 for (const f of HELD) {
   const mist = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: colourOf(f.name), transparent: true, opacity: size('--mist-opacity'), depthWrite: false }), N);
@@ -407,6 +488,9 @@ if (VIEW === 1) ringGeometry.rotateX(Math.PI / 2); else if (VIEW === 0) ringGeom
 const rings = new THREE.InstancedMesh(ringGeometry, new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(ringCapacity, 1));
 scene.add(rings);
 layers['node_detector rings (the declared regions and the records declared readers)'] = { on: true, objects: [rings] };
+const shells = new THREE.InstancedMesh(ringGeometry, new THREE.MeshBasicMaterial({ color: 0xffffff }), Math.max(1, SHELLED.reduce((n, b) => n + b.shell.length, 0)));
+shells.setMatrixAt(0, hidden); shells.visible = SHELLED.length > 0; scene.add(shells);
+if (SHELLED.length) layers["the light's front (a bound body's shell at r = 1 / k about its Node, each ring scaled by the light booked at its shell Node)"] = { on: true, objects: [shells] };
 /* The hole and the front, from the output file: a wire cube at each Node the lay and face lines write at the interval shown, and a small cube at each Node of the erasure lines' shells at that interval. */
 const holeCapacity = Math.max(1, ...Object.values(HOLES_AT).map(set => set.size)), frontCapacity = Math.max(1, ...Object.values(FACES_AT).map(set => set.size));
 const holes = new THREE.InstancedMesh(new THREE.BoxGeometry(...extentAlong(size('--hole-size'), size('--hole-size'))), new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true }), holeCapacity);
@@ -477,7 +561,7 @@ if (GROWS) layers['the layers the receding faces grew (' + [X, Y, Z].join(' x ')
 function themed() {
   scene.background = new THREE.Color(token('--board'));
   box.material.color.set(token('--line')); plane.material.color.set(token('--muted')); wall.material.color.set(token('--wall'));
-  holes.material.color.set(token('--hole')); fronts.material.color.set(token('--front'));
+  holes.material.color.set(token('--hole')); fronts.material.color.set(token('--front')); shells.material.color.set(token('--shell'));
   faces.children.forEach(line => line.material.color.set(token('--fg')));
   labels.children.forEach(sprite => sprite.material.color.set(token('--muted')));
   hemisphere.color.set(token('--sky')); hemisphere.groundColor.set(token('--ground'));
@@ -489,11 +573,12 @@ function themed() {
 let t = 0, playing = null, named = null;
 function draw() {
   const frame = LOOK.frames[t], fr = frameOf(t), glow = size('--glow'), glowPower = size('--glow-power'), glowTint = size('--glow-tint');
-  const base = new THREE.Color(token('--cube')), coneTone = new THREE.Color(token('--cone'));
+  const base = new THREE.Color(token('--cube')), coneTone = new THREE.Color(token('--cone')), cones = layers[CONE_LAYER] && layers[CONE_LAYER].on ? conesAt(t) : [];
   boxAt(frame);
   for (let i = 0; i < N; i++) {
     colour.copy(base);
     if (CONED && layers['the cone'].on && inCone(i, t)) colour.lerp(coneTone, size('--cone-tint'));  // the cone's Nodes in the cone's tone, the floor the record's glow stands on
+    for (const x of cones) if (x.cone.distance[i] <= x.radius) colour.lerp(x.cone.colour, x.tint);  // the clicks' cones, the latest painted last and brightest
     for (const f of QUANTA) {
       if (!layers[f.name + ' glow'].on || !MOST[f.name].now) continue;
       const a = fr[f.name];  // the glow by the form D at the Node (the wave's intensity, phase-free) against the frame's own largest, where the look holds it, else by the level against the frame's own largest; the dots carry the absolute count
@@ -553,6 +638,11 @@ function draw() {
   }
   for (; slot < rings.count; slot++) rings.setMatrixAt(slot, hidden);
   rings.instanceMatrix.needsUpdate = true; if (rings.instanceColor) rings.instanceColor.needsUpdate = true;
+  let shellSlot = 0;
+  const shellScale = size('--shell-scale'), shellMost = size('--flash-scale');
+  for (const b of SHELLED) { const light = lightOf(t, b.number), most = LIGHT_MOST[b.number]; for (const [j, at] of b.shell.entries()) { const i = indexOf(...at), v = light[j] || 0, s = shellScale + (most ? Math.abs(v) / most : 0) * (shellMost - shellScale); shells.setMatrixAt(shellSlot++, i >= 0 && i < N && inside(i) ? matrix.compose(position(i), quaternion, scale.setScalar(s)) : hidden); } }
+  for (; shellSlot < shells.count; shellSlot++) shells.setMatrixAt(shellSlot, hidden);
+  shells.instanceMatrix.needsUpdate = true;
   let hole = 0;
   for (const at of HOLES_AT[t] || []) { const [x, y, z] = at.split(',').map(Number), i = indexOf(x, y, z); if (i >= 0 && i < N && inside(i)) holes.setMatrixAt(hole++, matrix.makeTranslation(...position(i).toArray())); }
   for (; hole < holes.count; hole++) holes.setMatrixAt(hole, hidden);
@@ -572,6 +662,7 @@ function draw() {
   const clicks = frame.lines.filter(line => line.event === 'click').map(line => line.node_detector + ': ' + line.family);
   byId('lines').textContent = t === 0 ? 'The world as laid: the bodies\' declared counts, the levels of the mode file, every held row at its start.'
     : Object.entries(counts).map(([event, n]) => n + ' ' + event + (n === 1 ? '' : 's')).join(', ') + (clicks.length ? ' (' + [...new Set(clicks)].join(', ') + ')' : '') || 'no line this interval';
+  clicksNow();
   if (REACH) {
     const radius = CONE_RADIUS(t), count = coneCount(t), volume = VOLUME && VOLUME[INTERVAL(t)] !== undefined && VOLUME[INTERVAL(t)] !== null ? Number(VOLUME[INTERVAL(t)]) : null, cells = shapeOf(LOOK.frames[t]).reduce((p, e) => p * e, 1);
     const grownShape = shapeOf(LOOK.frames[T]).join(' x '), grownCells = shapeOf(LOOK.frames[T]).reduce((p, e) => p * e, 1), closing = VOLUME && VOLUME[LAST] !== undefined ? Number(VOLUME[LAST]) : null;
@@ -633,6 +724,8 @@ function hover(e) {
       lines.push(f.name + ': level ' + format(a.level[i]) + (parts.length ? '; ' + parts.join(', ') : ''));
     }
   }
+  const shellAt = SHELL_INDEX.get(nodeOf(i).join(','));
+  if (shellAt) { const v = lightOf(t, shellAt[0])[shellAt[1]]; lines.push("the light's front of body " + shellAt[0] + ': its own light booked at this shell Node ' + (v === undefined ? 'none in the window at this frame' : format(v))); }
   panel.textContent = lines.join('\n');
   panel.style.display = 'block';
   const r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
@@ -650,7 +743,8 @@ for (const [name, layer] of Object.entries(layers)) {
   label.append(input);
   if (family) { const swatch = document.createElement('i'); swatch.className = 'swatch' + (ROLES[family.name].dashed ? ' dashed' : ''); swatch.style.borderColor = colourOf(family.name); swatch.style.background = name.endsWith(' dots') ? colourOf(family.name) : 'transparent'; label.append(swatch); }
   if (name === 'the cone') { const swatch = document.createElement('i'); swatch.className = 'swatch'; swatch.style.borderColor = token('--cone'); swatch.style.background = token('--cone'); label.append(swatch); }
-  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : name === 'the cone' ? ' (the run back\'s reach: the birth\'s Nodes within the frame\'s radius of Links, the front\'s metric with the wrap)' : ''));
+  if (name === CONE_LAYER) for (const c of CLICK_CONES) { if (!c.nodes.length) continue; const swatch = document.createElement('i'); swatch.className = 'swatch'; swatch.style.borderColor = c.tone; swatch.style.background = c.tone; label.append(swatch); }
+  label.append(' ' + name + (family ? ' (' + ROLES[family.name].role + (name.endsWith(' glow') ? ', the form D against the frame\'s own largest' : name.endsWith(' dots') ? ', the count' : '') + ')' : name === 'the cone' ? ' (the run back\'s reach: the birth\'s Nodes within the frame\'s radius of Links, the front\'s metric with the wrap)' : name === CONE_LAYER ? " (every click's light cone running forward from the Nodes it wrote: within t - t_c + 1 Links at the frame of interval t, the front's metric with the wrap; the legend under the board)" : ''));
   layerBox.append(label);
 }
 
@@ -705,6 +799,7 @@ function drawGraphs() {
   const add = (title, series) => { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, title, series, reading); };
   add('The share per family over the lattice, in quanta (the books per interval, LATTICE; the counts per Node summed where the look holds no share)', QUANTA.map(f => seriesOf(f.name, f.name, TOTALS[f.name], ROLES[f.name].dashed)));
   if (CONED) { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, 'The cone\'s radius in Links over the frames: down Link by Link on the run back to the birth\'s Nodes, up on the run forward (the frames\' cone_radius; none on the run to the first close)', [{ name: 'cone_radius', values: Float64Array.from({ length: T + 1 }, (_, k) => CONE_RADIUS(k) === null ? NaN : CONE_RADIUS(k)), colour: token('--cone'), dashed: false }], 'the run back\'s reach, the frames\' word'); }
+  if (CLICK_CONES.some(c => c.nodes.length)) { const g = document.createElement('div'); g.className = 'graph'; box.append(g); graph(g, "The clicks' light cones' radius in Links over the frames: t - t_c + 1 from each click's frame on, one Link per interval (the credit lines' intervals; none before the click)", CLICK_CONES.filter(c => c.nodes.length).map(c => ({ name: 'interval ' + format(c.interval) + ', ' + c.line.node_detector + ', ' + c.line.family, values: Float64Array.from({ length: T + 1 }, (_, k) => { const r = coneRadiusAt(c, k); return r === null ? NaN : r; }), colour: c.tone, dashed: false })), "the clicks' light cones, a geometry from the output's lines"); }
   if (at === null) return;
   const over = key => f => seriesOf(f.name, f.name, Float64Array.from({ length: T + 1 }, (_, k) => (frameOf(k)[f.name][key] || [])[at] || 0), ROLES[f.name].dashed);  // frame 0 holds no form
   add('The count at the Node', QUANTA.map(over('count')));
@@ -833,8 +928,8 @@ function numbers() {
     + (REACH ? row('the run back\'s reach', REACH + (SUPPORT.length ? ', the record\'s light cone about the birth\'s ' + nodesWord(SUPPORT.length) + supportSpan() : '')) : '') + '</dl>';
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>level weight</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
     + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
-  html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th></tr></thead><tbody>'
-    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td></tr>`).join('') + '</tbody></table></div>';
+  html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th>' + (SHELLED.length ? "<th>the light's front</th>" : '') + '</tr></thead><tbody>'
+    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td>` + (SHELLED.length ? `<td class="num">${Array.isArray(b.shell) && b.shell.length ? nodesWord(b.shell.length) + ' at r = ' + format(b.radius) + ' Links' : ''}</td>` : '') + '</tr>').join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>node_detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
     + LOOK.node_detectors.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
   byId('numbers').innerHTML = html;
@@ -922,8 +1017,16 @@ function drawRecords() {
   if (!DETECTOR_BODIES.length && !REGION_CREDITS.length) return;
   const box = byId('records'); box.innerHTML = ''; byId('records-box').hidden = false;
   const names = [], rows = [], byPosition = (a, b) => positionOfLine(a) - positionOfLine(b) || a.interval - b.interval;
-  const WORDS = ['order', 'scale', 'board_count', 'into', 'senses'].filter(word => OUTPUT.lines.some(line => (line.event === 'credit' || line.event === 'conversion') && line[word] !== undefined));  // `into` and `senses` the conversion line's two words (2026-10-21)  // a side of a record of several parts names its order, the record's scale after its write and the count read from the board on the line
-  const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => Array.isArray(line[word]) ? line[word].join(' ') : line[word]), line.label];
+  const WORDS = ['order', 'scale', 'board_count', 'into', 'senses', ...OWN_LIGHT_WORDS].filter(word => OUTPUT.lines.some(line => (line.event === 'credit' || line.event === 'conversion') && line[word] !== undefined));  // `into` and `senses` the conversion line's two words (2026-10-21); the own light's words where a bound body's close writes them (2026-10-22)  // a side of a record of several parts names its order, the record's scale after its write and the count read from the board on the line
+  const bookOf = line => {  // the frames' word on a bound body's own light at the close (2026-10-22): the close's own words of the frame's own_light row at the line's frame where the books carry them, else the running book's sum at the last frame before the close holding one (the close's own interval is booked and begun again inside the act)
+    if (!bodyLine(line) || !SHELLED.some(b => 'body ' + b.number === line.node_detector)) return '';
+    const number = Number(String(line.node_detector).slice(5)), k = Math.min(positionOfLine(line), T), own = LOOK.frames[k].own_light, at = own && own[String(number)];
+    const words = closedShare(at) ? Object.entries(at).filter(([key, v]) => key !== 'light' && key !== 'carry' && v !== null && (typeof v !== 'object' || Array.isArray(v))).map(([key, v]) => key + ' ' + (Array.isArray(v) ? '[' + v.map(format).join(', ') + ']' : format(v))) : [];
+    if (words.length) return words.join(', ');
+    for (let j = k; j >= 0; j--) { const light = lightOf(j, number); if (light.length) return 'the book ' + format(light.reduce((a, v) => a + v, 0)) + ' at the frame of interval ' + format(INTERVAL(j)); }
+    return '';
+  };
+  const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => Array.isArray(line[word]) ? line[word].join(' ') : line[word]), ...(SHELLED.length ? [bookOf(line)] : []), line.label];
   for (const n of DETECTOR_BODIES) {
     const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort(byPosition), body = LOOK.bodies[n];
     const parts = []; for (const line of lines) for (const part of [line.before, line.realised]) if (part !== null && part !== undefined && !parts.includes(part)) parts.push(part);
@@ -935,17 +1038,57 @@ function drawRecords() {
     for (const line of lines) rows.push(row(line, 'body ' + n));
   }
   for (const line of REGION_CREDITS.slice().sort(byPosition)) rows.push(row(line, line.node_detector));
-  const intervals = Object.keys(FRONTS_AT).map(Number);
-  if (intervals.length) {
-    const taken = new Float64Array(T + 1), distance = new Float64Array(T + 1);
-    for (const shells of Object.values(FRONTS_AT)) for (const line of shells) { const k = positionOfLine(line); if (k <= T) { taken[k] += line.taken || 0; distance[k] = Math.max(distance[k], line.distance || 0); } }
-    const origins = [...new Set(Object.values(FRONTS_AT).flat().map(line => '[' + (line.origin || []).join(', ') + ']'))].join(' ');
-    for (const [title, name, values] of [[`The front from ${origins}: the sizes erased at its shell per interval (the erasure lines, taken)`, "taken, the sum of the levels' sizes over the shell", taken], ["The front's distance from its origin per interval (the erasure lines)", "distance in Links, the intervals since the click", distance]]) {
+  for (const b of SHELLED) {  // a bound body's own light through its light's front: the book's sum over the shell and the carry per frame
+    const sums = Float64Array.from({ length: T + 1 }, (_, k) => { const light = lightOf(k, b.number); return light.length ? light.reduce((a, v) => a + v, 0) : NaN; }), carries = Float64Array.from({ length: T + 1 }, (_, k) => { const c = carryOf(k, b.number); return c === null ? NaN : c; });
+    const closes = Float64Array.from({ length: T + 1 }, (_, k) => { const own = LOOK.frames[k].own_light, row = own && own[String(b.number)]; return row && typeof row.closed_light === 'number' ? row.closed_light : NaN; });
+    if (![...sums, ...carries, ...closes].some(v => !Number.isNaN(v))) continue;
+    const g = document.createElement('div'); g.className = 'graph'; box.append(g);
+    graph(g, `body ${b.number} (${esc(b.family)}): its own light through the light's front, the book's sum over the ${format(b.shell.length)} shell Nodes at r = ${format(b.radius)} Links per frame (the frames' own_light, the window's running sum outward positive in G^2, begun again at each close: a gap at the close's frame), the carry below one quantum and the window's total at the last close`, [{ name: "the book's sum over the shell", values: sums, colour: token('--shell'), dashed: false }, { name: 'the carry', values: carries, colour: token('--shell'), dashed: true }, { name: "the window's total at the last close (closed_light)", values: closes, colour: token('--flash'), dashed: true }], 'lattice reading, the books', null, [size('--arrival-width'), 1]);
+  }
+  const fronts = {};  // the erasure lines per front, its family and its origin (the click's Node), each front one line in the tone of its click
+  for (const shells of Object.values(FRONTS_AT)) for (const line of shells) { const key = line.family + '|' + (line.origin || []).join(','); (fronts[key] || (fronts[key] = [])).push(line); }
+  if (Object.keys(fronts).length) {
+    const series = Object.entries(fronts).map(([key, lines]) => {
+      const [family, origin] = key.split('|'), first = Math.min(...lines.map(line => Number(line.interval))), click = CLICK_CONES.find(c => c.interval + 1 === first && c.nodes.some(at => at.join(',') === origin));
+      const take = new Float64Array(T + 1).fill(NaN), distance = new Float64Array(T + 1).fill(NaN);
+      for (const line of lines) { const k = positionOfLine(line); if (k > T) continue; take[k] = (Number.isNaN(take[k]) ? 0 : take[k]) + (line.unit ? (line.take || 0) / line.unit : line.take || 0); distance[k] = Math.max(Number.isNaN(distance[k]) ? 0 : distance[k], line.distance || 0); }
+      return { name: `from [${origin.split(',').join(', ')}], ${family}, since interval ${format(first)}` + (click ? ` (the click at ${format(click.interval)})` : ''), colour: click ? click.tone : token('--front'), take, distance };
+    });
+    for (const [title, key] of [["The fronts' erasure: the record's share standing on the shell as the front reaches it, per interval and per front, in quanta (the erasure lines' take over the record's unit)", 'take'], ["The fronts' distance from their origin per interval, in Links (the erasure lines), one Link per interval", 'distance']]) {
       const g = document.createElement('div'); g.className = 'graph'; box.append(g);
-      graph(g, title, [{ name, values, colour: token('--front'), dashed: false }], "lattice reading, the front's shell", null, [size('--arrival-width'), 1]);
+      graph(g, title, series.map(s => ({ name: s.name, values: s[key], colour: s.colour, dashed: false })), "lattice reading, the fronts' shells", null, [size('--arrival-width'), 1]);
     }
   }
-  byId('credits').innerHTML = '<table><thead><tr>' + ['interval', ...(PASSES > 1 ? ['pass'] : []), 'record', 'family', 'window', 'proper time', 'before', 'realised', 'count moved', 'count left', 'taken from', 'given to', ...WORDS, 'label'].map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.sort((a, b) => a[0] - b[0]).map(cells => '<tr>' + cells.map(c => `<td class="num">${esc(c === null || c === undefined ? '' : c)}</td>`).join('') + '</tr>').join('') + '</tbody></table>';
+  byId('credits').innerHTML = (SHELLED.length ? '<p class="lines">The own light column (a bound body, the frames): the close\'s own words of the frame\'s own_light row at the line\'s frame where the books carry them, else the running book\'s sum at the last frame before the close holding one (the close\'s own interval is booked and begun again inside the act, so the exact outflow at the close is the credit line\'s word where it carries one).</p>' : '') + '<table><thead><tr>' + ['interval', ...(PASSES > 1 ? ['pass'] : []), 'record', 'family', 'window', 'proper time', 'before', 'realised', 'count moved', 'count left', 'taken from', 'given to', ...WORDS, ...(SHELLED.length ? ['own light (the frames)'] : []), 'label'].map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.sort((a, b) => a[0] - b[0]).map(cells => '<tr>' + cells.map(c => `<td class="num">${esc(c === null || c === undefined ? '' : c)}</td>`).join('') + '</tr>').join('') + '</tbody></table>';
+}
+/* The clicks' legend under the board (2026-10-22): one row per click line of the output with the swatch of its cone's tone, its kind (named from the line's own words), its interval and pass, the Nodes it wrote and the lines they are read from, the count moved and left, the window and the proper time, the credit's words (momentum, source, recoil, lost, the count on the board, the own light's words where the close writes them) and, at the frame shown, its cone's radius in Links with the Nodes inside it; every number the output's. */
+function drawClicks() {
+  const box = byId('clicks'); box.innerHTML = '';
+  if (!CLICK_CONES.length) return;
+  const heading = document.createElement('div'); heading.className = 'heading';
+  heading.innerHTML = "<b>The clicks and their light cones</b>: every credit line of the output a click (the one act at the window's close), its cone the Nodes within t - t_c + 1 Links of the Nodes it wrote at the frame of interval t, the Link metric with the wrap as the run back's cone is shaded (the dependency radius one Link per interval, the pace of light on the board 1 / sqrt 3 Links per interval inside it), a geometry from the click line's Node and interval and nothing of the engine's, the latest click's cone brightest; the Nodes read from the lay and face lines beside the line, which itself names none (the law's No click names a Node), and where two clicks of one family fall at one interval the page gives their lines to the first.";
+  box.append(heading);
+  const span = nodes => [0, 1, 2].filter(a => LOOK.shape[a] > 1).map(a => AXES[a] + ' ' + format(Math.min(...nodes.map(n => n[a]))) + ' to ' + format(Math.max(...nodes.map(n => n[a])))).join(', ');
+  for (const c of CLICK_CONES) {
+    const l = c.line, row = document.createElement('div'); row.className = 'row';
+    const where = (c.nodes.length ? 'at ' + (c.nodes.length === 1 ? 'the Node [' + c.nodes[0].join(', ') + ']' : nodesWord(c.nodes.length) + ' (' + span(c.nodes) + ')') + ' (' + c.from.join('; ') + ')' : "no Node written beside the line in the output (the quantum passed in the books, or the write stands at the birth as the run back's cone draws it): no cone") + (c.exchange.length && c.nodes.length && c.from.every(f => !f.includes('of the record itself')) ? '; the exchange written over the record at ' + (c.exchangeNodes.length === 1 ? 'the Node [' + c.exchangeNodes[0].join(', ') + ']' : nodesWord(c.exchangeNodes.length) + ' (' + span(c.exchangeNodes) + ')') + ' (' + c.exchange.length + ' lay lines)' : '');
+    const words = [
+      'count moved ' + format(l.count) + (l.left === null || l.left === undefined ? '' : ', left ' + format(l.left)),
+      Array.isArray(l.window) ? 'window ' + l.window.join(' to ') + (l.proper === undefined || l.proper === null ? '' : ', proper time ' + format(l.proper)) + (l.windows ? ', the ' + ordinal(l.windows) + ' window' : '') : '',
+      Array.isArray(l.momentum) ? 'momentum [' + l.momentum.map(format).join(', ') + ']' : '',
+      l.source ? 'source ' + l.source : '',
+      l.recoil !== null && l.recoil !== undefined ? 'recoil ' + (Array.isArray(l.recoil) ? '[' + l.recoil.map(format).join(', ') + ']' : l.recoil) : '',
+      Array.isArray(l.lost) && l.lost.length ? 'lost: ' + l.lost.join('; ') : '',
+      l.board_count !== undefined && l.board_count !== null ? 'the count on the board ' + format(l.board_count) : '',
+      ...ownLightOf(l).map(word => word + ' ' + (Array.isArray(l[word]) ? '[' + l[word].map(format).join(', ') + ']' : format(l[word]))),
+    ].filter(Boolean).join('; ');
+    row.innerHTML = `<i class="swatch" style="border-color:${c.tone};background:${c.nodes.length ? c.tone : 'transparent'}"></i> <b>interval ${format(l.interval)}</b>` + (PASSES > 1 ? ' (' + esc(passLabel(c.position)) + ')' : '') + ' ' + esc(kindOf(c)) + ' ' + esc(where) + '; ' + esc(words) + '. <span class="now"></span>';
+    c.now = row.querySelector('.now');
+    box.append(row);
+  }
+}
+function clicksNow() {  // the frame's word on each click's cone
+  for (const c of CLICK_CONES) { if (!c.now) continue; const radius = coneRadiusAt(c, t); c.now.textContent = radius === null ? (c.nodes.length ? 'no cone at this frame (before its click)' : '') : 'its cone ' + linksWord(radius) + ' at this frame, ' + nodesWord(clickCount(c, t)) + ' inside it'; }
 }
 
 /* The arrival: with an expectation across an axis, the reporters' inflow per interval (their click lines summed, the negative ones included, in quanta over the family's wall) and the quanta gathered within the window up to each interval; the blind's peak, centroid and span marked where the blind names an arrival, the blind's total where it names one; the measurement over the intervals. */
@@ -1014,7 +1157,7 @@ byId('verdict').textContent = LOOK.verdict + (LOOK.reason ? ': ' + LOOK.reason :
 const biasBound = () => { const pairs = OUTPUT ? OUTPUT.lines.filter(l => l.event === 'credit' && l.bias_bound && l.bias_bound.g && l.bias_bound.total).map(l => [Number(l.bias_bound.g), Number(l.bias_bound.total)]) : []; if (!pairs.length) return ''; const [g, T] = pairs.reduce((a, b) => a[0] * b[1] >= b[0] * a[1] ? a : b); const gcd = (x, y) => y ? gcd(y, x % y) : x, d = gcd(g, T); return `, the bias bound ${format(g / d)} / ${format(T / d)} on the click's line (the worst over the ${format(pairs.length)} credits carrying one)`; };  // the totals' bias as the credit lines carry it (ALGEBRA.md, The digits' base and a total's factors)
 byId('source').textContent = OUTPUT ? `the output file: ${OUTPUT.verdict}, ${format(OUTPUT.intervals)} intervals, ${format(CLICKS.length)} click lines, ${format(OUTPUT.lines.filter(l => l.event === 'credit').length)} credit, ${format(Object.keys(HOLES_AT).length)} hole, ${format(Object.keys(FACES_AT).length)} face and ${format(Object.keys(FRONTS_AT).length)} front intervals` + (MEASURE ? '' : biasBound()) + (SAME_LINES ? ', the look’s click lines the same' : LOOK.every > 1 && LOOK_CLICKS.every(line => CLICKS.some(other => key(other) === key(line))) ? `, the look strided to every ${ordinal(LOOK.every)} interval holding ${format(LOOK_CLICKS.length)} of them` : `, the look’s ${format(LOOK_CLICKS.length)} click lines DIFFER`) : 'no output file given: the measurement from the look’s own lines';
 if (!MEASURE && !READ && !LOOK.node_detectors.some(d => d.body === null && d.name !== 'face')) byId('measure-box').hidden = true;  // no declared region reports: nothing to bar
-function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); drawNotes(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
+function start() { themed(); fit(); numbers(); blindTable(); drawGraphs(); drawRecords(); drawClicks(); drawNotes(); if (READ) { drawReading(); drawArrival(); } else if (MEASURE) { drawNodeMeasure(); drawArrival(); } draw(); }
 start();
 })();
 </script>

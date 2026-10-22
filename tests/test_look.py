@@ -16,6 +16,7 @@ from tests.laws import (
     refused,
     slit_world,
 )
+from tests.laws_read import load_shipped
 
 PAGE = load_file("look_page", ROOT / "tools" / "look" / "page.py")
 LATTICE = RECORD.Lattice  # the engine's lattice, before a test's own subclass stands in its place
@@ -188,7 +189,20 @@ def test_the_reader_writes_the_look_and_the_page_shows_it_with_the_roles(tmp_pat
 
 
 def test_the_template_fixes_of_the_pages_visual_pass_and_the_retemplate_path(tmp_path, monkeypatch):
-    """The page tool's four faults of the visual pass of 2026-10-21 (docs/FURTHER_RESEARCH.md, The pages' camera and the dots' scale) and the path that carries a template fix to a recorded page without the engine run again. (a) The measurement chart bound by its panel and so by the viewport: the chart's svg at width 100% and max-width the lesser of --measure-width and 100%, a graph's grid column minmax(0, 1fr) so that a long caption wraps instead of widening the column (the one-quantum page's thirteen reporters' names, one unbroken token of 721 px at the phone width of 390 px), the frame's status under the track at the phone width. (b) The bars in the record's own unit: with the run's output file carrying credit lines at the reporters, the measurement holds the clicks the draw credited per reporter within the window (`credited`, the credit lines' counts, in W_rec), their sum (`clicks`, the engine's N in that unit) apportioned by the shares as `record_shares`, the totals line naming both units and the watch lines reading the bars drawn; a credit line outside the window or of a record (`body n`) counts for nothing; without credit lines every new key is None and the totals line as before. (c) The camera's scale held over the run: the lit frame's box is the union of the frames' lit boxes (LIT) and never the frame's own. (d) The dots' least size in pixels at the fit's scale (--dot-least), and the layers a receding face grew on the board's own switch, off by default, with the frame's label counting the Nodes with a count out there (the GHZ close frame: every counted Node on the grown layers, outside the declared board). (e) The re-template path: `recorded` reads a page's embedded blocks back (the look inflated, the others' JSON, None where absent), `retemplated` writes the page again from them with the current template, byte for byte the page the same template builds from the files, and the command line's --retemplate writes it in place; a page without a look is refused by name."""
+    """The page tool's four faults of the visual pass of 2026-10-21 (docs/FURTHER_RESEARCH.md, The pages' camera and the dots' scale) and the path that carries a template fix to a recorded page without the engine run again. (a) The measurement chart bound by its panel and so by the viewport: the chart's svg at width 100% and max-width the lesser of --measure-width and 100%, a graph's grid column minmax(0, 1fr) so that a long caption wraps instead of widening the column (the one-quantum page's thirteen reporters' names, one unbroken token of 721 px at the phone width of 390 px), the frame's status under the track at the phone width. (b) The bars in the record's own unit: with the run's output file carrying credit lines at the reporters, the measurement holds the clicks the draw credited per reporter within the window (`credited`, the credit lines' counts, in W_rec), their sum (`clicks`, the engine's N in that unit) apportioned by the shares as `record_shares`, the totals line naming both units and the watch lines reading the bars drawn; a credit line outside the window or of a record (`body n`) counts for nothing; without credit lines every new key is None and the totals line as before. (c) The camera's scale held over the run: the lit frame's box is the union of the frames' lit boxes (LIT) and never the frame's own. (d) The dots' least size in pixels at the fit's scale (--dot-least), and the layers a receding face grew on the board's own switch, off by default, with the frame's label counting the Nodes with a count out there (the GHZ close frame: every counted Node on the grown layers, outside the declared board). (e) The re-template path: `recorded` reads a page's embedded blocks back (the look inflated, the others' JSON, None where absent), `retemplated` writes the page again from them with the current template, byte for byte the page the same template builds from the files, and the command line's --retemplate writes it in place; a page without a look is refused by name. (f) The clicks' light cones (2026-10-22): the template holds the tones' token, the legend's div and the cones' distance from each click's Nodes; the recorder writes a bound body's light front on its row (`shell`, `radius`) and per frame its own light's book per shell Node with the carry (`own_light`), nothing on a body without a shell."""
+    giver = (
+        ROOT / "examples" / "events" / "conserve" / "giver_c5.json"
+    )  # a bound body with a light's front
+    board = LATTICE(load_shipped(giver), lambda line: None)
+    bodies = RECORD.declared(board.world, giver, board)["bodies"]
+    assert (bodies[1]["radius"], len(bodies[1]["shell"])) == (3, 25) and "shell" not in bodies[0]
+    row = RECORD.frame(board, None)["own_light"]["1"]
+    assert (row["light"], row["carry"]) == ([], 0) and set(row) <= {
+        "light",
+        "carry",
+        "closed_light",
+        "closed_share",
+    }
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = slit_world(tmp_path, TOOL, node_detectors=SCREEN)
     at = {1: ["s4"], 2: ["s0", "s4"], 3: ["s4"]}
@@ -248,6 +262,11 @@ def test_the_template_fixes_of_the_pages_visual_pass_and_the_retemplate_path(tmp
     )
     built = PAGE.page(look, BLIND, output=output)
     assert PAGE.embedded(unit) in built and '"record_shares":[0,1]' in built
+    assert (
+        "--click-tones:" in built
+        and 'id="clicks"' in built
+        and "linkDistanceTo(nodes, nodeOf(i))" in built
+    )
     data = PAGE.recorded(built)
     assert data["look"] == look and data["blind"] == BLIND and data["measurement"] == unit
     assert data["output"] == PAGE.trimmed(output) and data["gate"] is None and data["beside"] is None

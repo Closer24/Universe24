@@ -79,6 +79,23 @@ def rate_passage(
     )
 
 
+def period_of(pair: tuple[int, int]) -> int:
+    """The period of a resonance pair [den cos Omega, den] in whole intervals, the count of turns by Omega that brings the pointer back to the circle's start (the frame tool's `period_of` in integers; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: a bound body with no rate has the beat's own period for its window): the sign of sin(n Omega) is the sign of U_(n - 1)(cos Omega), Chebyshev's second kind, carried as den^(n - 1) U_(n - 1) by the recurrence u_(n + 1) = 2 den cos Omega u_n - den^2 u_(n - 1), no division; the count is the first n with the sine back at or above 0 after a negative turn, 0 where the pair turns by nothing."""
+    cosine, den = pair
+    if cosine >= den:
+        return 0
+    before, now, count, passed = (
+        1,
+        2 * cosine,
+        1,
+        False,
+    )  # u_0, u_1; sin(count Omega) carries u_(count - 1)'s sign
+    while not (passed and before >= 0):
+        before, now = now, 2 * cosine * now - den * den * before
+        count, passed = count + 1, passed or before < 0
+    return count
+
+
 def longest(passages: Iterable[int | None]) -> int | None:
     """The longest of a drive's lays' passages, the body's one window length (the law's line; the per-lay window read at the opening from the books' sources is the refinement named and not built); None where a lay has no end or none is laid: the declaration's window then."""
     found = list(passages)
@@ -130,13 +147,25 @@ def windowed(
             if r.light in drives
         ]  # the body's own rate as its lifetime, the emission's span at the body, whatever its lay's form
         window, names = longest(lays), [families[drive].name for drive in drives]
+        beating = (
+            window is None and bool(row.region) and not kind.rates
+        )  # (5): a bound body with no rate
+        if (
+            beating
+        ):  # its window the beat's own period, the turns of its resonance pair closing the circle
+            window = max(period_of(t.resonance) for t in kind.transitions)
         label = f"bodies[{number}].node_detector"
         if kind.draw.window is not None:
             if window is not None:
+                cause = (
+                    f"the body is bound with no rate: its window is the beat's own period, {window} here"
+                    if beating
+                    else f"the lays of its drives {names} on this board all have an end: the window is their "
+                    f"passage over the body, derived at load, W = {window} here"
+                )
                 raise ValueError(
-                    f"{label} declares the window {kind.draw.window}, and the lays of its drives {names} on this "
-                    f"board all have an end: the window is their passage over the body, derived at load, W = "
-                    f"{window} here; remove the key (ALGEBRA.md, The click writes on the lattice, C2)"
+                    f"{label} declares the window {kind.draw.window}, and {cause}; remove the key (ALGEBRA.md, "
+                    "The click writes on the lattice, C2 and (5))"
                 )
             found.append(replace(row, detector=kind))
             continue
