@@ -188,7 +188,7 @@
   }
  ],
  "label": "lattice reading",
- "world": "d7_tube_y.json",
+ "world": "clicks_tube.json",
  "record": "electron",
  "source": "proton",
  "holder": "charge",

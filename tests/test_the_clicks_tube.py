@@ -1,4 +1,4 @@
-"""The fifth kind by itself: a bound body's click at its own window's close, no rate, in the shipped tube beside the clicks chain, examples/events/clicks/clicks_tube.json (2026-10-22; the blind in examples/events/clicks/blind_tube.md, written before the run). The body is a region detector of its own light (the reader's build sentence of 01:05 and ruling of 02:37 on the light's front): the electron laid beating in the equal superposition of its two lowest levels in the frozen proton's well, the frame tool typing the two levels and the resonance alone, the window the beat's period, the light's front the Chebyshev shell about the body's Node at the radius den div (den sin k) + 1 with den cos k = 3 num - 2 den from the resonance pair; at each close the outflow in the quantum W_c sin Omega is credited by the floor and the remainder's draw, the quantum passing to the lower level over the body's region and light's whole quantum laid at the shell Node the outflow drew. The pinned numbers are the run's own, with their causes in the blind: the derived window, the shell's radius, the first window's booked outflow below one quantum (no click at the first close), and the run's empty click log: no click fell inside the 256 intervals, the first click's interval OPEN as the draw's (the body's own-light book per window in the blind's outcome)."""
+"""The fifth kind by itself: a bound body's click at its own window's close, no rate, in the shipped tube beside the clicks chain, examples/events/clicks/clicks_tube.json (2026-10-22; the blind in examples/events/clicks/blind.md, its section The tube, written before the run). The body is a region detector of its own light (the reader's build sentence of 01:05 and ruling of 02:37 on the light's front): the electron laid beating in the equal superposition of its two lowest levels in the frozen proton's well, the frame tool typing the two levels and the resonance alone, the window the beat's period, the light's front the Chebyshev shell about the body's Node at the radius den div (den sin k) + 1 with den cos k = 3 num - 2 den from the resonance pair; at each close the outflow in the quantum W_c sin Omega is credited by the floor and the remainder's draw, the quantum passing to the lower level over the body's region and light's whole quantum laid at the shell Node the outflow drew. The pinned numbers are the run's own, with their causes in the blind: the derived window, the shell's radius, the first window's booked outflow below one quantum (no click at the first close), and the run's empty click log: no click fell inside the 256 intervals, the first click's interval OPEN as the draw's (the body's own-light book per window in the blind's outcome)."""
 
 import json
 
@@ -18,12 +18,9 @@ CENTRE = (
     15,
     5,
 )  # the body's declared Node, the shell's centre (the electron beside the proton at (5, 15, 5))
-SHELL_NODES = 218  # the Chebyshev shell r = 3 about the proton's Node: 7^3 - 5^3
+SHELL_NODES = 218  # the Chebyshev shell r = 3 about the body's declared Node (6, 15, 5): 7^3 - 5^3
 REGION = 3209  # the write's region, the laid part's whole support
-LINES = 0  # the run's output lines: none, no click fell inside the 256 intervals (the blind's expectation about 0.2)
-FIRST_WINDOW_QUANTA = (
-    None  # the first close's booked outflow in quanta, from the run (0.0486 by the probe)
-)
+LINES = 0  # the run's output lines: none, no click fell inside the 256 intervals (the blind's 0.62 by the probe's stream missed, the book half the probe's and then dying; the reader's estimate of 05:01 about 0.2)
 
 
 def test_the_declaration_is_the_frames_and_nothing_of_the_mechanism():
