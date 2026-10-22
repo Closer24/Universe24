@@ -33,7 +33,7 @@ def modes_of(den: int, layers: int, periodic: bool, at: int) -> list[tuple[int, 
 def travelling(
     shape: Shape, periodic: tuple[bool, bool, bool], node: Shape, resonance: tuple[int, int]
 ) -> tuple[list[tuple[int, int]], int, int]:
-    """The guide's travelling modes at the resonance and the share R of the width-one S they carry, as the rational (numerator, denominator): the guide the board's longest axis (the first of equals), the cross-section the two others; den cos k_mn = 3 num - den c_m - den c_n, travelling where |den cos k_mn| < den; R = SUM weight_m weight_n sin k / sin k_mn with sin k the width-one guide's; None where a transverse width's cosines are out of the table's reach."""
+    """The guide's travelling modes at the resonance and the share R of the width-one S they carry, as the rational (numerator, denominator): the guide the board's longest axis (the first of equals), the cross-section the two others; den cos k_mn = 3 num - den c_m - den c_n, travelling where |den cos k_mn| < den; R = SUM weight_m weight_n sin k / sin k_mn with sin k the width-one guide's."""
     num, den = resonance
     axis = max(range(len(shape)), key=lambda a: shape[a])
     across = [a for a in range(len(shape)) if a != axis]
@@ -57,7 +57,7 @@ def travelling(
 def guide_total(
     total: int, shape: Shape, periodic: tuple[bool, bool, bool], node: Shape, resonance: tuple[int, int]
 ) -> int:
-    """S laid on the guide: the width-one S over R by one division act, the remainder discarded; S itself where R is 1 (the width-one guide, bit for bit) and where the cross-section's cosines are out of the table's reach (the width-one line as before, named); refused by name where the modes are reached and none travels. Where the clause's sum is empty, no mode travelling at the resonance, or the source stands at every travelling mode's zero (its weight 0 in each, the share's numerator 0), S stands as the width-one line has it, the near zone's lay, named (the owner's word of 2026-10-22, tests only: the conserve worlds' giver on its 5 x 5 cross-section at [5751, 6000], den cos k_11 = 6865 above den, loads and runs bit for bit as shipped, its taker clicking in the near zone); no refusal."""
+    """S laid on the guide: the width-one S over R by one division act, the remainder discarded; S itself where R is 1 (the width-one guide, bit for bit). Where the clause's sum is empty, no mode travelling at the resonance, or the source stands at every travelling mode's zero (its weight 0 in each, the share's numerator 0), S stands as the width-one line has it, the near zone's lay, named (the owner's word of 2026-10-22, tests only: the conserve worlds' giver on its 5 x 5 cross-section at [5751, 6000], den cos k_11 = 6865 above den, loads and runs bit for bit as shipped, its taker clicking in the near zone); no refusal."""
     read = travelling(shape, periodic, node, resonance)
     modes, numerator, denominator = read
     if not modes or numerator == 0:
