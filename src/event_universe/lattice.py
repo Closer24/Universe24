@@ -226,8 +226,9 @@ class Lattice:
         return np.asarray(found), frozen
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family's count in quanta at every Node (`share.quanta_at`: a plane record's charge density over T div 2, the ruling of 2026-10-22; another record's share over W_rec, `credit.record_unit`, C1), a reading, computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
-        return share.quanta_at(self, index, at)
+        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading at the Node in the free unit (the record's count over the board is its charge for a plane family, `credit.count_of`, the ruling of 2026-10-22; here the Node's share as the sides and the gate read it), computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        found, frozen = self.share_of(index, 1, at)
+        return share.quanta_of(found, self.credit.units[index], self.kind), frozen
 
     def total_share(self, index: int) -> tuple[int | None, int]:
         """A family's share summed over the lattice in the current's units, a reading, None over a lattice holding a frozen Node (its share is not read, no number invented), and the count of its frozen Nodes."""

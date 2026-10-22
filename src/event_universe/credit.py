@@ -159,7 +159,7 @@ class Books:
             index: (0, support_of(board, index)) for index in board.order if counts[index] > 0
         }
         books.support = tuple(sorted({at for _t, nodes in books.births.values() for at in nodes}))
-        books.charges = {i: share.charge_of(board, i) for i in board.order if board.families[i].plane}
+        books.charges = {i: share.charge_of(board, i) for i in board.order if share.by_charge(board, i)}
         if books.reach == CONE:  # frame 0, the reference of every record laid at the start, kept once
             books.reference = dict.fromkeys(books.births, meeting_back.frame_of(board))
         return books
@@ -238,7 +238,9 @@ def count_held(board: Lattice, index: int) -> bool:
     """Whether the record's share on the board agrees with the books' count (ALGEBRA.md, The count on the board, the owner's word of 2026-10-20; the check at every close, `meeting.closed`): 2 |n S - c scale W| <= scale W + 2 n |S - S_lay|, the books' count c within half a quantum of the board's reading (`count_of`, the same n, W and scale) and the walk since the lay, the share's drift the books' line prints (`Lattice.laid`, S_lay the share at the start), exact integers and no division; the walk's term 0 for a record born during the run, whose birth's share is the books' count's; True where the family holds no share to read."""
     books, family = board.credit, board.families[index]
     total, unit = share.count_read(board, index, board.total_share(index)[0], books.units[index])
-    laid = books.charges.get(index) if family.plane else board.laid[index]  # the lay's origin, W or S
+    laid = (
+        books.charges.get(index) if share.by_charge(board, index) else board.laid[index]
+    )  # the origin, W or S
     if total is None:
         return True
     born_later = books.births.get(index, (0,))[0] > 0

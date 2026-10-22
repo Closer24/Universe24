@@ -108,21 +108,18 @@ def charge_of(board: Lattice, index: int) -> int:
     return abs(int(charge_at(board, index).sum(dtype=object)))
 
 
-def quanta_at(board: Lattice, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-    """A family's count in quanta at every Node with the mask of its frozen Nodes (`Lattice.quanta`): a plane family's by its charge density over T div 2, |W_i| + T div 4 div T div 2 (the ruling of 2026-10-22), another family's by its share over its own unit W_rec (`quanta_of`, `credit.record_unit`, C1), at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere."""
-    found, frozen = board.share_of(index, 1, at)
-    unit = board.credit.units[index]
-    if board.families[index].plane:
-        charge = np.abs(charge_at(board, index))
-        found, unit = (
-            (charge if at is None else np.where(at, charge, 0)),
-            half_action(board.world.quantum_action),
-        )
-    return quanta_of(found, unit, board.kind), frozen
+def charged(family: FamilyRule) -> bool:
+    """Whether a family's count on the board is its charge (the ruling of 2026-10-22): a plane family at a pair with a rotation, num other than den, whose quantum carries the Wronskian T / 2; a massless plane pair turns not and its Wronskian is 0 by construction, so its count stays the share's, as a family of real lines' does."""
+    return family.plane and family.pair[0] != family.pair[1]
+
+
+def by_charge(board: Lattice, index: int) -> bool:
+    """Whether a family's count on the board is read as its charge: a plane family at a pair with a rotation (`charged`) whose record carries a sense, its Wronskian other than 0 over the board (`charge_of`); a plane record laid without its quadrature, its Wronskian 0 at every Node (a packet with no `sense` declared, the clicks world's electron), is neutral, two real lines, and is counted as they are, by its share."""
+    return charged(board.families[index]) and charge_of(board, index) > 0
 
 
 def count_read(board: Lattice, index: int, total: int | None, unit: int) -> tuple[int | None, int]:
-    """The total and the unit the count on the board is read from (`credit.counted`): a plane record's charge over T div 2 (`charge_of`, `half_action`, the ruling of 2026-10-22), another record's share `total` over its own unit `unit` (W_rec, `credit.record_unit`)."""
-    if board.families[index].plane:
+    """The total and the unit the count on the board is read from (`credit.counted`): a charged plane record's charge over T div 2 (`by_charge`, `charge_of`, `half_action`, the ruling of 2026-10-22), another record's share `total` over its own unit `unit` (W_rec, `credit.record_unit`)."""
+    if by_charge(board, index):
         return charge_of(board, index), half_action(board.world.quantum_action)
     return total, unit

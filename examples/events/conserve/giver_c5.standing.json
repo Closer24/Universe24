@@ -4,7 +4,7 @@
  "Omega": 0.9908353552342014,
  "omega_0": 0.8410686705679303,
  "binding_per_interval": -0.14976668466627108,
- "A": 1227.2672109065477,
+ "A": 1135.1120733553441,
  "phi_along_axis": [
   -1.438165211042778e-16,
   0.9999999999999999,
@@ -100,7 +100,7 @@
  },
  "convention": "now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
  "label": "lattice reading",
- "world": "giver_c5.json",
+ "world": "giver_c5_probe.json",
  "record": "electron",
  "source": "proton",
  "holder": "charge",
@@ -119,11 +119,11 @@
    2
   ],
   "shares": [
-   0.12478413228135234,
-   0.5529758930594967
+   0.12467824634503533,
+   0.5529883466746652
   ],
-  "Q": 24144416.0,
-  "peak_level": 1227.363026981015,
+  "Q": 20657108.0,
+  "peak_level": 1134.788967165261,
   "peak_node": [
    1,
    2,
@@ -131,7 +131,7 @@
   ],
   "size_along_axis": [
    0.0,
-   861.338493276598
+   797.2151528916144
   ],
   "node_plane_share": 0.0,
   "dipole_nodes": [
@@ -139,6 +139,6 @@
    0.0,
    0.0
   ],
-  "wronskian": 21035644.0
+  "wronskian": 17996664.0
  }
 }

@@ -325,6 +325,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
+    ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
     (
         "resonance.py",
         "projected",
