@@ -1,0 +1,1 @@
+{"shape": [5, 5, 5], "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"}, "intervals": 1500, "universe": "examples/events/cycle/universe_three_clumps.json", "bodies": [{"family": "matter", "nodes": [{"node": [2, 2, 1], "count": 1350}, {"node": [2, 2, 2], "count": 850}, {"node": [2, 2, 3], "count": 425}]}], "node_detectors": []}
