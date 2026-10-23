@@ -125,7 +125,9 @@ def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
     ratio = (exact[11, (num, den)] / exact[11, (6000, 6000)])[5:10, 5, 5]  # 0 to 4 Links
     assert np.allclose(ratio, [0.9982, 0.9949, 0.9907, 0.9869, 0.9841], 0, 1e-4), ratio
     deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
-    refused("needs a sink", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN)
+    refused(
+        "a cycle", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN
+    )  # the wrapped board's massless rest is free under the one Node (no sink needed, the former refusal "needs a sink"); the one Node of 24,576 quanta at the pair [1, 1] re-reads in a cycle of 2, refused by name
     refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA, **OWN)
     refused("a cycle", rest, deep, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, 6000, **OWN)
 
@@ -393,7 +395,9 @@ def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
     text = "".join(path.read_text(encoding="utf-8") for path in sorted(start.glob("*.py")))
     rule = (ROOT / "src" / "event_universe" / "loader" / "derived.py").read_text(encoding="utf-8")
     assert text.count("intervals=power") == 2 and "intervals=paces." not in text  # each row's own power
-    assert rule.count("WRONSKIAN_POWER if") == 1 and "else COUNT_POWER" in rule  # the two powers, once
+    assert (
+        rule.count("return WRONSKIAN_POWER") == 1 and "COUNT_POWER if" not in rule
+    )  # the one power on every booking (the one Node; the two powers before it)
     for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
         cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
         assert abs(radiated_total(action, (num, den)) - 2 * action * (1 - cos_k**2) ** 0.5 / 3) <= 1
