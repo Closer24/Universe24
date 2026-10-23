@@ -1,48 +1,13 @@
 """The swap at the top (P-M19-5 as M20 derives it; the fifth act of the interval, swap.py, always on, no key): at a Node whose time line shows a weak maximum over one interval, X0 <= X1 >= X2 and not all equal (X0 the level before at the interval's start, X1 the level now at the start, X2 the level now at the end after the step and the write), the Node ends the interval at its pre-state swapped and complemented, every line (now, before, r) -> (before, now, wall - 1 - r), the step's output discarded; by the T-image theorem (F T F = T on the engine's lines) the forward run from it is the run back of the rise, and the inverse is the same reading on the undone interval. The clauses: (1) on the gapped torus the trigger fires at exactly one interval of the first rise, at every Node at once, at the first weak maximum of X, and never before it (never at the start at rest); (2) from the fire on, the state at t* + k is the T-image of the state at t* - 1 - k bit for bit, every remainder complemented at its wall; (3) the run back through the fire is exact and the inverse fires at the same interval; (4) a massless time line [Gamma, Gamma] never fires (X' never passes 0 downward on the uniform torus)."""
 
-import json
-
 import numpy as np
 
 from event_universe import shear, world_files
-from event_universe.core import paces
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests.laws import state_of
-
-GAMMA, ACTION, CUBE = 1000, 36000, 3
-HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
-
-
-def gapped_world(folder, gap, count, amplitude):  # type: ignore[no-untyped-def]
-    """The 3-cube torus with gravity's pair [gap, Gamma] and dust [0, Gamma] laid uniform at the band's rest rotation (test_the_gapped_volume's world, the count the gate's own reading)."""
-    universe = {
-        "integers": {"node_clock": GAMMA, "quantum_action": ACTION, "width": 92, "link_unit": 16},
-        "families": [
-            {"name": "gravity", "pair": [gap, GAMMA], "reads": {"gravity": 1}, "held": HELD},
-            {"name": "dust", "pair": [0, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
-        ],
-    }
-    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    nodes = [[x, y, z] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
-    world = {"shape": [CUBE] * 3, "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"}}
-    world.update(intervals=400, universe="u.json", node_detectors=[])
-    world["bodies"] = [{"family": "dust", "nodes": [{"node": at, "count": count} for at in nodes]}]
-    clock = paces.clock(GAMMA, 0)
-    before = (2 * (GAMMA**3 - GAMMA * clock * clock) * amplitude + GAMMA**3) // (2 * GAMMA**3)
-    entry = {
-        "family": "dust",
-        "pair": [0, GAMMA],
-        "moving": {"now": [amplitude] * len(nodes), "before": [before] * len(nodes)},
-    }
-    path = folder / "swap.json"
-    path.write_text(json.dumps(world), encoding="utf-8")
-    path.with_suffix(".mode.json").write_text(
-        json.dumps({"world_digest": input_digest(world), "bodies": [entry], "packets": []}),
-        encoding="utf-8",
-    )
-    return path
+from tests.laws_gapped import CUBE, GAMMA, gapped_world
 
 
 def same(a, b):  # type: ignore[no-untyped-def]

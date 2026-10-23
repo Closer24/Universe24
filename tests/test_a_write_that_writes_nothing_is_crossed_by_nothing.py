@@ -7,7 +7,7 @@ import numpy as np
 from event_universe import lay, meeting_back, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.test_the_swap_at_the_top import GAMMA, gapped_world
+from tests.laws_gapped import GAMMA, gapped_world
 
 
 def test_a_lay_that_writes_nothing_is_logged_by_nothing_and_the_run_back_with_the_lines_crossed_is_exact(
