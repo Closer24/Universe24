@@ -12,7 +12,7 @@ from event_universe.features.click import wave_cosine
 from event_universe.lattice import Lattice
 from event_universe.loader import window
 from event_universe.loader.draw import Draw
-from event_universe.loader.world import World, parse_world
+from event_universe.loader.world import TORUS, World, parse_world
 from tests.laws import EVENTS, ROOT, refused, world_beside
 from tests.laws_content import RESONANT, ZENO_ATOM, content_world, emit_and_take_world, opened, ring_of
 from tests.laws_read import redeclared
@@ -207,7 +207,7 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
     assert "bodies[0].node_detector declares the window 96" in refusal and "['photon']" in refusal
 
     def opened(document):  # type: ignore[no-untyped-def]
-        document["boundary"]["x"], document["face_depth"] = "open", 1
+        document.setdefault("boundary", dict(TORUS))["x"], document["face_depth"] = "open", 1
 
     assert windows(declared(resonant, None, opened)) == [48, 48]  # the span tau, both bodies
     assert "W = 48" in str(refused("declares the window 96", declared, resonant, 96, opened))
@@ -219,10 +219,13 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
         finally:
             world_files.REPOSITORY_ROOT = ROOT  # the shipped files read at their paths after
 
-    assert windows(shipped(resonant)) == [8, 8]  # the ring: the bodies' own beat, [2, 3] closing in 8 (2026-10-23)
+    assert windows(shipped(resonant)) == [
+        8,
+        8,
+    ]  # the ring: the bodies' own beat, [2, 3] closing in 8 (2026-10-23)
 
     def ring(document):  # type: ignore[no-untyped-def]
-        document["boundary"]["x"] = "periodic"
+        document.setdefault("boundary", dict(TORUS))["x"] = "periodic"
         del document["face_depth"], document["receding"]
         document["packets"][1]["top"]["x"] = [0, document["shape"][0] - 1]  # photon_b fills the ring
 

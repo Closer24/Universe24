@@ -77,7 +77,11 @@ REAL_PORT_DIGESTS: dict[
         "ebae12a7ee683613",
         3337,
     ),  # former d37726d4ad3db38b, 21422c4532c84b95, 3300; the clicks left:minus@35, right:plus@35, top:plus@35
-    "ghz_y_y_x": ("3b9802f5a46e3e74", "befdc50e632d240e", 5007),
+    "ghz_y_y_x": (
+        "8584dce0162e8560",
+        "e9dfe0e14fd490da",
+        3328,
+    ),  # former 3b9802f5a46e3e74, befdc50e632d240e, 5007; this hand's run of the shipped world under the derived window 35 (2026-10-23)
 }
 REFUSED: dict[
     str, str

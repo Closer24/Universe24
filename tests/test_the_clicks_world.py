@@ -30,12 +30,13 @@ FRONTS = {
 
 
 def wronskians(lays: list[dict]) -> list[int]:  # type: ignore[type-arg]
-    """Per plane of a family's lay lines, re_now im_before - im_now re_before of the levels after the lay."""
+    """Per plane of a family's lay lines, re_now im_before - im_now re_before of the laid terms, the levels after the lay less the levels before it (2026-10-23: the lay adds to what stands at the Node, lay.written, so the quantum's Wronskian is the laid terms' alone; the former read the levels after, exact where the Node stood empty, and at the Node 20 of the one close 149 the electron packet's remnant -6 times the laid 128, 768, entered: -15616 against the quantum's -16384)."""
     lines = sorted(lays, key=lambda row: row["line"])
-    return [
-        a["after"][0] * b["after"][1] - b["after"][0] * a["after"][1]
-        for a, b in zip(lines[0::2], lines[1::2], strict=True)
+    laid = [
+        [after - before for after, before in zip(row["after"][:2], row["before"][:2], strict=True)]
+        for row in lines
     ]
+    return [a[0] * b[1] - b[0] * a[1] for a, b in zip(laid[0::2], laid[1::2], strict=True)]
 
 
 def test_four_kinds_of_clicks_fall_at_their_closes_in_one_world():
@@ -145,4 +146,6 @@ def test_four_kinds_of_clicks_fall_at_their_closes_in_one_world():
         "antineutrino": 0,
     }
     assert board.credit.bodies[0].counts == [1, 0] and board.credit.bodies[0].part == 0  # back in g
-    assert not any(board.credit.deficits.values())
+    assert (
+        {board.families[k].name: v for k, v in board.credit.deficits.items() if v} == {"electron": 1}
+    )  # the electron credited at the Node where the conversion's electron is laid in the same close 149: the quantum in the books alone (take.faced, the undepleted beam), the deficit its record (2026-10-23; the former none)
