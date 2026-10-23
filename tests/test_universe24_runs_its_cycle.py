@@ -1,0 +1,213 @@
+"""The test of the law's course for Universe24, the one universe (examples/events/universe24/, the three-dimensional torus with matter laid as clumps, light as a uniform family and one NodeDetector; ALGEBRA.md, The one Node, The swap at the top, The carried momentum, The stress is the Links'): the same world small, the 3-cube torus with one clump of matter, the light family at the uniform level 636 with the velocity 190 and the detector on two Nodes, read from the shipped universe file's declarations with the gap widened to [990, 1000] so that the course is ten times shorter in the test's seconds (the top within 40 intervals where the shipped gap tops near 300; the gap is a run parameter, the project's and not nature's). The clauses: (1) the one Node runs it: the loader accepts the shipped world and refuses a former key added to a copy (the world's `interval`, the held row's `booking`); (2) the stages in order on the small torus: the rise from the seed at rest, X'' below 0 at the clump's Node on the rise (the dust's pull), the fifth act's fires at the top (staggered, Node by Node, within ten intervals of the clump's own top), the fall, and the law's end on this small structured board, which is the crunch and not the seed at rest (X at most 0 at a Node, refused by name; the shipped 5-cube returns to X above the seed and rises again, its log the record); (3) light's velocity is the first integral: after the first interval every Node's light level has moved by exactly v, forward at a standing Node and backward at a turned one, and at every fire the turned Nodes' light velocity is reversed bit for bit (the two levels exchanged); (4) the run back through the fires is exact, 40 of 40 states, the inverse firing where the forward run fired; (5) the clicks are history kept: the run back writes no click and removes none, the forward clicks' intervals never decrease; (6) the shipped eras log's first lines are the shipped world's own, the readings of eight intervals equal to the log's bit for bit beside the elapsed seconds; (7) what the clicks change, read and not assumed: the same small world with the detector removed from the world file and nothing else changed runs the same course bit for bit at every interval, since a region NodeDetector without a draw reports its click and writes nothing the board reads (the click's write on the lattice is the draw's, ALGEBRA.md, The click's read of the board), so the two courses are equal throughout and the clicks are a reading of the course and not an act on it; and (8) without clicks the course runs back bit for bit: the detector-less board's run back of its whole course of 70 intervals is exact at every interval through every staggered fire (the bijection, nothing lost), and the tops come in their order, the clump's Node first and the board's volume after it (the staggered turn), the second bang not reached on this small board, which crunches, where the shipped 5-cube tops at 319 and again at 1,061."""
+
+import copy
+import json
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import pytest
+
+from event_universe import world_files
+from event_universe.lattice import Lattice
+from event_universe.world_files import input_digest, load_world
+from tests.laws import ROOT, board_state, load_file, same_state
+
+FOLDER = ROOT / "examples" / "events" / "universe24"
+WORLD, UNIVERSE = FOLDER / "universe24.json", FOLDER / "universe_universe24.json"
+LOG = FOLDER / "universe24.eras.jsonl"
+ERAS = load_file("eras", ROOT / "tools" / "eras.py")
+GAMMA, CUBE, LEVEL, SPEED, GAP = 1000, 3, 636, 190, 990
+CLUMP, COUNT, NOW, BEFORE = (
+    [1, 1, 1],
+    489,
+    3015,
+    2008,
+)  # the shipped lightest clump's levels, the gate's count of its share on the 3-cube at T 36,000
+DETECTOR = [
+    [0, 0, 0],
+    [0, 0, 1],
+]  # the smallest region the law admits: through one Node what enters leaves
+
+
+def small_world(folder: Path, detector: bool = True) -> Path:
+    """The shipped universe's three families with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), and the detector on two Nodes."""
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    universe["families"][0]["pair"] = [GAP, GAMMA]
+    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    nodes = [[x, y, z] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
+    world: dict[str, Any] = {
+        "shape": [CUBE] * 3,
+        "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
+        "intervals": 200,
+        "universe": "u.json",
+        "bodies": [
+            {"family": "matter", "nodes": [{"node": CLUMP, "count": COUNT}]},
+            {"family": "light", "nodes": [{"node": at, "count": 1} for at in nodes if at != CLUMP]},
+        ],
+        "node_detectors": [{"name": "detector", "positions": DETECTOR}] if detector else [],
+    }
+    at = nodes.index(CLUMP)
+    now, before = [0] * len(nodes), [0] * len(nodes)
+    now[at], before[at] = NOW, BEFORE
+    mode = {
+        "world_digest": input_digest(world),
+        "bodies": [
+            {"family": "matter", "pair": [666, GAMMA], "moving": {"now": now, "before": before}},
+            {
+                "family": "light",
+                "pair": [GAMMA, GAMMA],
+                "moving": {"now": [LEVEL] * len(nodes), "before": [LEVEL - SPEED] * len(nodes)},
+            },
+        ],
+        "packets": [],
+    }
+    path = folder / "small.json"
+    path.write_text(json.dumps(world), encoding="utf-8")
+    path.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
+    return path
+
+
+def flat(array: Any) -> list[int]:
+    return [int(x) for x in np.asarray(array, dtype=object).reshape(-1)]
+
+
+def test_the_one_node_accepts_the_shipped_universe_and_refuses_a_former_key() -> None:
+    world = json.loads(WORLD.read_text(encoding="utf-8"))
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    mode = json.loads(WORLD.with_suffix(".mode.json").read_text(encoding="utf-8"))
+    files = {world["universe"]: universe, "universe.mode.json": mode}
+    from event_universe.loader.world import parse_world
+
+    parse_world(world, files, input_digest(world))  # (1) the shipped world, accepted
+    former = copy.deepcopy(world)
+    former["interval"] = "unobservable"
+    with pytest.raises(ValueError, match="unknown key 'interval'"):
+        parse_world(former, files, input_digest(former))
+    held = copy.deepcopy(universe)
+    held["families"][0]["held"]["booking"] = "form"
+    with pytest.raises(ValueError, match="unknown key 'booking'"):
+        parse_world(world, {**files, world["universe"]: held}, input_digest(world))
+
+
+def test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    clicks: list[dict[str, object]] = []
+    board = Lattice(load_world(small_world(tmp_path)), output=clicks.append)
+    (tmp_path / "blind").mkdir()
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path / "blind")
+    blind_board = Lattice(load_world(small_world(tmp_path / "blind", detector=False)))
+    blind_board.output = lambda line: None
+    assert (
+        not blind_board.node_detectors and board.node_detectors
+    )  # (7) the same world, the detector removed
+    names = [family.name for family in board.families]
+    g, light = board.held[0], names.index("light")
+    at = np.ravel_multi_index(tuple(CLUMP), board.shape)
+    time_line = lambda: board.states[g].lines[0]  # noqa: E731
+    light_line = lambda: board.states[light].lines[0]  # noqa: E731
+    xs, states, lights = (
+        [flat(time_line().now)],
+        {0: board_state(board)},
+        {0: (flat(light_line().now), flat(light_line().before))},
+    )
+    assert (
+        xs[0] == [GAMMA] * CUBE**3 and flat(time_line().before) == [GAMMA] * CUBE**3
+    )  # the seed at rest
+    end = 70
+    alike = 0
+    for t in range(1, end + 1):
+        board.step()
+        blind_board.step()
+        alike += same_state(board_state(board), board_state(blind_board))
+        xs.append(flat(time_line().now))
+        states[t] = board_state(board)
+        lights[t] = (flat(light_line().now), flat(light_line().before))
+    assert (
+        alike == end and blind_board.swaps == board.swaps
+    )  # (7) equal throughout: the click writes nothing the board reads
+    clump = [x[at] for x in xs]
+    top = max(range(len(clump)), key=lambda t: clump[t])
+    volume_top = max(range(len(xs)), key=lambda t: sum(xs[t]))
+    assert top < volume_top, (
+        top,
+        volume_top,
+    )  # (8) the tops in their order: the clump's Node first, the board after it
+    assert 20 < top < 50 and clump[1] > GAMMA, (top, clump[:3])  # (2) the rise from the seed
+    velocity = [b - a for a, b in zip(clump, clump[1:], strict=False)]
+    assert velocity[top - 2] > 0 and velocity[top - 2] < velocity[top - 12], velocity[
+        top - 14 : top
+    ]  # X'' below 0 on the rise
+    fires = {s[0]: s[2] for s in board.swaps if s[1] == 1}
+    at_top = [t for t in fires if t > 5]
+    assert at_top and abs(min(at_top) - top) <= 10, (
+        fires,
+        top,
+    )  # the fifth act fires at the top, staggered
+    assert clump[end] < clump[top] and min(xs[end]) < min(xs[top]), (clump[end], clump[top])  # the fall
+    for t in sorted(
+        fires
+    ):  # (3) the turned Nodes' light velocity reversed bit for bit, the two levels exchanged
+        (pre_now, pre_before), (post_now, post_before) = lights[t - 1], lights[t]
+        x_pre_now, x_pre_before, x_post_now = xs[t - 1], flat(states[t - 1][g][0][0][1]), xs[t]
+        turned = [
+            i
+            for i in range(CUBE**3)
+            if x_post_now[i] == x_pre_before[i] <= x_pre_now[i]
+            and (post_now[i], post_before[i]) == (pre_before[i], pre_now[i])
+        ]
+        assert len(turned) >= fires[t], (t, len(turned), fires[t])
+    first_now, first_before = lights[1]
+    assert all(
+        (n, b) in ((LEVEL + SPEED, LEVEL), (LEVEL - SPEED, LEVEL))
+        for n, b in zip(first_now, first_before, strict=True)
+    )
+    assert (
+        first_now.count(LEVEL - SPEED) == fires[1]
+        and first_now.count(LEVEL + SPEED) == CUBE**3 - fires[1]
+    )
+    kept = [line for line in clicks if line.get("event") == "click"]
+    intervals = [int(line["interval"]) for line in kept]  # type: ignore[call-overload]
+    assert kept and intervals == sorted(intervals) and intervals[-1] <= end
+    back, during = 0, []
+    board.output = during.append
+    for k in range(40):  # (4) the run back through the fires at the top
+        board.step_inverse()
+        back += same_state(board_state(board), states[end - 1 - k])
+    assert back == 40
+    assert {s[0] for s in board.swaps if s[1] == -1} == {t for t in fires if t > end - 40}
+    assert (
+        during == [] and [line for line in clicks if line.get("event") == "click"] == kept
+    )  # (5) history kept
+    board.output = clicks.append
+    whole = 0  # (8) without clicks the whole course runs back bit for bit through every fire
+    for k in range(end):
+        blind_board.step_inverse()
+        whole += same_state(board_state(blind_board), states[end - 1 - k])
+    assert whole == end and sorted(s[0] for s in blind_board.swaps if s[1] == -1) == sorted(fires)
+    with pytest.raises(
+        ValueError, match="at most 0"
+    ):  # the law's end on this small board: the crunch, not the seed
+        for _ in range(120):
+            board.step()
+    assert 60 < board.interval < 120, board.interval
+
+
+def test_the_shipped_eras_log_opens_with_the_shipped_worlds_own_readings() -> None:
+    shipped = [json.loads(line) for line in LOG.read_text(encoding="utf-8").splitlines()[1:9]]
+    board = Lattice(load_world(WORLD))
+    board.output = lambda line: None
+    lines: list[dict[str, Any]] = []
+    for expected in shipped:
+        kept = ERAS.kept_lines(board)
+        board.step()
+        line = ERAS.interval_line(board, kept, 0.0)
+        ERAS.volume_residuals(lines[-1] if lines else None, line)
+        lines.append(line)
+        found, stamped = dict(line), dict(expected)
+        found.pop("seconds"), stamped.pop("seconds")
+        assert json.loads(json.dumps(found)) == stamped, line[
+            "interval"
+        ]  # (6) the log is the world's own
