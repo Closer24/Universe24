@@ -17,7 +17,7 @@ from event_universe.loader.derived import held_write_of
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, UNIVERSE
+from tests.laws import EVENTS
 
 WRAP = Wrap(True, True, True)
 
@@ -51,7 +51,7 @@ def test_the_board_sums_of_the_former_and_the_new_reading_are_equal_to_the_bit_o
 def test_the_reading_is_invariant_under_the_shift_and_even_under_the_inversion_and_reads_a_one_node_record_at_its_neighbours() -> (
     None
 ):
-    """A -> a + m leaves every part as it stands where the former gains m Delta_a a; the board reflected along an axis reads the reflected parts; a one-Node record's part is 0 at the Node and its level squared at the two neighbours on each axis, the former's -a^2 at the Node and 0 beside it, the same sum."""
+    """A -> a + m leaves every part unchanged where the former gains m Delta_a a; the board reflected along an axis reads the reflected parts; a one-Node record's part is 0 at the Node and its level squared at the two neighbours on each axis, the former's -a^2 at the Node and 0 beside it, the same sum."""
     draw = np.random.default_rng(31)
     shape = (5, 5, 5)
     now = draw.integers(-500, 500, shape)
@@ -81,8 +81,10 @@ def test_the_reading_is_invariant_under_the_shift_and_even_under_the_inversion_a
 def test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_back(
     tmp_path: Path,
 ) -> None:
-    """The loader: gravity's three tension lines at 2 E_s W_c = 2 x level_weight x 3 den T x the row's write wall, twice the former, the shear lines' wall where the shear is declared; a 5-cube torus with the matter record structured by hand stepped 6 intervals and run back 6, the snapshot bit for bit."""
-    document = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    """The loader: gravity's three tension lines at 2 E_s W_c = 2 x level_weight x 3 den T x the row's write wall, twice the former, the shear lines' wall where the shear is declared; a 5-cube torus of the three-clump universe (no holder of the sign) with the matter record structured by hand stepped 6 intervals and run back 6, the snapshot bit for bit through the fifth act's fires at the void's pinned rest."""
+    document = json.loads(
+        (EVENTS / "m20" / "universe_m19_lay3_g1000.json").read_text(encoding="utf-8")
+    )  # gravity, dust and matter, no holder of the sign: the reading's test is independent of the charge, and the fifth act refuses a holder under the rotation at a top by name
     (tmp_path / "u.json").write_text(json.dumps(document), encoding="utf-8")
     world = dict(
         shape=[5, 5, 5], boundary={a: "periodic" for a in "xyz"}, intervals=10, universe="u.json"
@@ -122,7 +124,7 @@ def test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_ba
 def test_the_three_clumps_edge_at_one_node_holds_the_tension_below_gamma_through_the_top_and_names_the_returns_growth() -> (
     None
 ):
-    """The structured board's clause of The stress is the Links' (the owner's question of 2026-10-23, derived at one Node and read once): the three-clump 5-cube torus at Gamma 1,000 (examples/events/m20/m19_lay3_g1000.json, gravity gapped [999, 1000], the matter clumps 1,350 / 850 / 425 quanta on z), its extreme levels the clump's top 5,374 against the void's 0 one Link away; at the clump's edge Node [2, 2, 0] the act reads the z part num x 5,374^2 = 19,233,997,416 and the x and y parts 0, the traceless write per interval at the vacuum's paces (2 / 3 and -1 / 3 of it over the doubled wall 2 E_s W_c = 216,000,000, the time line's trace apart) 59 on z and -30 on x and y, the Link [2, 2, 0]-[2, 2, 1] read at 48 after the first interval (the mean of the two ends, 59 and 37), below Gamma; the static bound at the Node: Rule3's traceless Link term relaxes a line by R / (3 w) = num p^2 / (9 den Gamma^2), 1 / 9 per Link difference per interval at the vacuum's paces, so a source S per interval at one Node stands at 9 G_5(0) S with G_5(0) = 0.2081 the 5-cube torus's lattice Green's function at the source, 110 levels at S = 59, and the Link's mean of the source Node and its neighbour 9 (G_5(0) + G_5(1)) S / 2 = 67, every bound below Gamma 1,000 and falling as e^(-U) after the lay (the write's factor e^(-5 U) against the stiffness e^(-4 U)): the tension HOLDS below Gamma through the top. Through a return it does not follow from the reading: the step conserves the shear's momentum (X / Gamma) T', so a velocity at the top is amplified by X_top / X_return at the return (738 on this lay's first return by the record, 5,359,666 over 7,264), and 738 times the one-interval write 59 passes Gamma 1,000 by a factor 43: the returns' growth is the contraction's, bounded by the gap (which sets X_top and the return's depth) and the clump's amplitude (which sets the write), not by the stress's reading. The exact condition on a lay under which the course closes at the Node's bound: a gravity row without a gap (no return, the matter era alone) closes iff 9 G_5(0) k_w num (2 / 3) a_top^2 / (2 E_s W_c) < Gamma, a_top^2 < Gamma E_s W_c / (3 G_5(0) k_w num), the clump's top level below 16,100 on this lay's integers against its 5,374 (the margin 3.0 in the level, 9 in the write); a gapped row's returns add the contraction's growth, a course quantity named in FURTHER_RESEARCH.md."""
+    """The structured board's clause of The stress is the Links' (the owner's question of 2026-10-23, derived at one Node and read once): the three-clump 5-cube torus at Gamma 1,000 (examples/events/m20/m19_lay3_g1000.json, gravity gapped [999, 1000], the matter clumps 1,350 / 850 / 425 quanta on z), its extreme levels the clump's top 5,374 against the void's 0 one Link away; at the clump's edge Node [2, 2, 0] the act reads the z part num x 5,374^2 = 19,233,997,416 and the x and y parts 0, the traceless write per interval at the vacuum's paces (2 / 3 and -1 / 3 of it over the doubled wall 2 E_s W_c = 216,000,000, the time line's trace apart) 59 on z and -30 on x and y, the Link [2, 2, 0]-[2, 2, 1] at 48 as the mean of its two ends' writes, 59 and 37, below Gamma (the engine's write read at the clump's Node, which is at no top; the void Nodes stand at the pinned rest at the first interval, where the fifth act, the swap at the top, discards the step's output and the write with it); the static bound at the Node: Rule3's traceless Link term relaxes a line by R / (3 w) = num p^2 / (9 den Gamma^2), 1 / 9 per Link difference per interval at the vacuum's paces, so a source S per interval at one Node stands at 9 G_5(0) S with G_5(0) = 0.2081 the 5-cube torus's lattice Green's function at the source, 110 levels at S = 59, and the Link's mean of the source Node and its neighbour 9 (G_5(0) + G_5(1)) S / 2 = 67, every bound below Gamma 1,000 and falling as e^(-U) after the lay (the write's factor e^(-5 U) against the stiffness e^(-4 U)): the tension HOLDS below Gamma through the top. Through a return it does not follow from the reading: the step conserves the shear's momentum (X / Gamma) T', so a velocity at the top is amplified by X_top / X_return at the return (738 on this lay's first return by the record, 5,359,666 over 7,264), and 738 times the one-interval write 59 passes Gamma 1,000 by a factor 43: the returns' growth is the contraction's, bounded by the gap (which sets X_top and the return's depth) and the clump's amplitude (which sets the write), not by the stress's reading. The exact condition on a lay under which the course closes at the Node's bound: a gravity row without a gap (no return, the matter era alone) closes iff 9 G_5(0) k_w num (2 / 3) a_top^2 / (2 E_s W_c) < Gamma, a_top^2 < Gamma E_s W_c / (3 G_5(0) k_w num), the clump's top level below 16,100 on this lay's integers against its 5,374 (the margin 3.0 in the level, 9 in the write); a gapped row's returns add the contraction's growth, a course quantity named in FURTHER_RESEARCH.md."""
     world = load_world(EVENTS / "m20" / "m19_lay3_g1000.json")
     board = Lattice(world)
     names = [family.name for family in board.families]
@@ -135,14 +137,31 @@ def test_the_three_clumps_edge_at_one_node_holds_the_tension_below_gamma_through
     assert [int(part[2, 2, 0]) for part in parts] == [0, 0, num * 5374 * 5374]
     write = held_write_of(board.families, gravity, world.quantum_action, world.link_unit)
     assert write.walls[1] == 2 * 3 * 1000 * 36000 == 216_000_000
+    wall = write.walls[1]
+    edge = [int(part[2, 2, 0]) for part in parts]
+    traceless = [
+        (3 * edge[a] - sum(edge)) * num // num for a in range(3)
+    ]  # the parts' traceless triple, 3 h_a - SUM h_b
+    by_hand = [
+        t // (3 * wall) if t >= 0 else -((-t) // (3 * wall)) - (1 if (-t) % (3 * wall) else 0)
+        for t in traceless
+    ]
+    assert by_hand == [
+        -30,
+        -30,
+        59,
+    ]  # the act's write at the edge Node per interval, the law's own letters
+    assert (
+        (59 + 37 + 1) // 2 == 48 < world.node_clock
+    )  # the Link's tension as the mean of its ends' writes (59 at the edge, 37 at the clump)
     board.step()
     lines = [np.asarray(board.states[gravity].lines[1 + a].now, dtype=object) for a in range(3)]
-    assert [int(line[2, 2, 0]) for line in lines] == [-30, -30, 59]
-    assert [int(line[2, 2, 1]) for line in lines] == [-19, -19, 37]
+    assert (
+        [int(line[2, 2, 1]) for line in lines] == [-19, -19, 37]
+    )  # the engine's write at the clump's Node, which rises at interval 1 and is at no top (the void Nodes stand at the pinned rest, a weak top, where the fifth act discards the step's output and the write with it)
     _content, axes = node.read_lines(matter, board.families, board.states, 1, world.node_clock, 0)
     tensions = link_tensions(axes, board.wrap, world.node_clock)
-    largest = max(int(np.asarray(t).max()) for t in tensions)
-    assert largest == 48 < world.node_clock
+    assert max(int(np.asarray(t).max()) for t in tensions) < world.node_clock
     source = 59
     waves = [k for k in itertools.product(range(5), repeat=3) if k != (0, 0, 0)]
     denominators = [6 - 2 * sum(math.cos(2 * math.pi * ki / 5) for ki in k) for k in waves]

@@ -515,3 +515,8 @@ def same_state(
         and all(np.array_equal(u, v) for u, v in zip(ra, rb, strict=True))
         for (la, ra), (lb, rb) in zip(a, b, strict=True)
     )
+
+
+def state_of(board):  # type: ignore[no-untyped-def]
+    """Every line's three arrays and every write remainder of a board, copied, for a run back's comparison (the swap tests): `board_state` under the swap tests' name."""
+    return board_state(board)

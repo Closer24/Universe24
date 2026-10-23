@@ -6,20 +6,10 @@ import numpy as np
 
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
+from tests.laws import state_of
 
 GAMMA, INTERVALS = 1000, 60
 WORLD = Path(__file__).resolve().parent.parent / "examples" / "events" / "cycle" / "three_clumps.json"
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
-    return [
-        (
-            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
-            [copied(r) for r in st.write_remainders],
-        )
-        for st in board.states
-    ]
 
 
 def same(a, b):  # type: ignore[no-untyped-def]
@@ -79,3 +69,32 @@ def test_the_swap_on_a_structured_board() -> None:
     assert exact == INTERVALS, exact  # clause (4): the run back exact through every staggered fire
     back = [(s[0], s[2]) for s in board.swaps if s[1] == -1]
     assert back == [(5, 8), (4, 36), (3, 76), (2, 108), (1, 122)], back
+
+
+def test_the_shipped_course_log_of_the_three_clumps_records_the_cut_at_2376_and_the_returns() -> None:
+    """The structured board's long course under the law with both acts, read from the shipped course log (examples/events/cycle/three_clumps.course.jsonl, the structured-cycle branch, 2026-10-23): 2,376 intervals run and the cut at the read of 2,376 by a Link's tension 1,087 above Gamma 1,000; the void's returns at 624, 1,183, 1,738 and 2,374 with X 7,607, 5,430, 22,139 and 7,479, never the crunch; 1,079 fires; the largest Link tension 975 at 2,375."""
+    import json
+
+    rows = [
+        json.loads(line)
+        for line in (WORLD.parent / "three_clumps.course.jsonl").read_text().splitlines()
+    ]
+    body = [row for row in rows if "t" in row]
+    summary = rows[-1]["summary"]
+    assert summary["intervals_run"] == 2376 and "tension 1087 exceeds Gamma 1000" in summary["refused"]
+    assert summary["fires_total"] == 1079 == sum(row["fires"] for row in body)
+    minima = [
+        (row["t"], row["X_min"])
+        for row in body
+        if row["t"] > 10
+        and row["X_min"] < 100_000
+        and row["X_min"] == min(r["X_min"] for r in body[max(0, row["t"] - 60) : row["t"] + 60])
+    ]
+    assert minima == [(624, 7607), (1183, 5430), (1738, 22139), (2374, 7479)]
+    assert (
+        min(row["X_min"] for row in body if row["t"] > 10) == 5430 > 0
+    )  # the seed's floor only at the start
+    largest = [
+        row.get("link_t_max", 0) for row in body
+    ]  # the last row carries the refusal in place of the read
+    assert max(largest) == 975 and largest[2375] == 975

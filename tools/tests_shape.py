@@ -104,6 +104,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "edge Node read once, the one-interval write 59 and the Link at 48, the static bound 9 G_5(0) S = 110 below Gamma, "
         "the return's growth 738 x 59 above it named",
     ),
+    "tests/test_the_swap_on_a_structured_board.py::test_the_shipped_course_log_of_the_three_clumps_records_the_cut_at_2376_and_the_returns": (
+        22,
+        "the structured board's long course under the law with both acts read from the shipped course log (the structured-cycle "
+        "branch, 2026-10-23): the cut at 2,376 by a Link's tension 1,087, the void's four returns, 1,079 fires, the largest Link tension 975",
+    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "

@@ -9,6 +9,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
+from tests.laws import state_of
 
 GAMMA, ACTION, CUBE = 1000, 36000, 3
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -42,17 +43,6 @@ def gapped_world(folder, gap, count, amplitude):  # type: ignore[no-untyped-def]
         encoding="utf-8",
     )
     return path
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
-    return [
-        (
-            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
-            [copied(r) for r in st.write_remainders],
-        )
-        for st in board.states
-    ]
 
 
 def same(a, b):  # type: ignore[no-untyped-def]
@@ -131,12 +121,14 @@ def test_a_massless_time_line_never_fires(tmp_path, monkeypatch):  # type: ignor
     assert board.swaps == [] and all(a < b for a, b in zip(xs, xs[1:], strict=False))  # (4)
 
 
-def test_the_shipped_matter_world_fires_nowhere(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """(5) The shipped big bang's matter world (Gamma 6,000, gravity [6000, 6000], the seed at one Node: a structured massless board) fires at no Node over 50 intervals, so its course is the shipped eras log's bit for bit (the act touches nothing where it does not fire)."""
+def test_the_shipped_matter_world_fires_at_the_bodys_six_neighbours_at_interval_2_and_nowhere_after(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """(5) The shipped big bang's matter world (Gamma 6,000, gravity [6000, 6000], the seed at one Node: a structured massless board) under the law with both acts, read 2026-10-23 (the structured-cycle branch): the fifth act fires at the body's six Link neighbours at interval 2 and nowhere after over 50 intervals, board.swaps == [(2, 1, 6)]. The cause: under The stress is the Links' the body's pressure is read at its six neighbours one Link out and enters their time line's write as the trace at the weight -1 before the form's write reaches them by the step at interval 3, so their volume's step output dips below the rest they stand at (6,247), a weak maximum, and the act keeps the rest; the former stress reading put the pressure at the body's own Node, where the form's write outweighs it, and the world fired nowhere (the former clause). The course stands after the fires: X at the body 6,247, 16,785, 34,986 at 1, 2, 3, every Node rising from 3 on, U 1.283 at 100, 1.530 at 200 and 1.675 at 300 (the fine mean over the Nodes) against the shipped eras log's level reading under the former stress reading, 1.283, 1.535, 1.684, no further fire and no refusal (examples/events/big_bang/big_bang_matter.course.jsonl)."""
     from tests.laws import EVENTS
 
     board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
     board.output = lambda line: None
     for _ in range(50):
         board.step()
-    assert board.swaps == []
+    assert board.swaps == [(2, 1, 6)]
