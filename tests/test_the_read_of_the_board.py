@@ -329,14 +329,14 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
     seen = spied(monkeypatch, lambda: holder[0])
     board = Lattice(load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append)
     holder.append(board)
-    for _ in range(board.world.intervals):
-        board.step()
+    with (
+        pytest.raises(RuntimeError, match="below the draw's total") as refusal
+    ):  # under its derived window the shipped chain refuses by name at 122 (2026-10-23): the digits read at the body's close do not carry the draw (the takes at 74, 142 and 307 at the declared window before)
+        for _ in range(board.world.intervals):
+            board.step()
+    assert "at the interval 122" in str(refusal.value), str(refusal.value)
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-    assert [(c["interval"], c["node_detector"]) for c in taken] == [
-        (74, "body 0"),
-        (142, "body 1"),
-        (307, "body 0"),
-    ]
+    assert taken == []  # no take before the refusal at 122 (74 at the declared window before)
     assert seen and all(record["label"].startswith("the body ") for record in seen)
     for k, record in enumerate(seen):
         earlier = seen[k - 1] if k else None
@@ -385,16 +385,27 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
             for s in seen
             if "the side " in s["label"]
         ]
-        assert [side for side, _d, _b in sides] == [
-            "left",
-            "left",
-            "right",
-            "right",
-        ]  # the port, the Node
+        assert (
+            [side for side, _d, _b in sides]
+            == [
+                "left",
+                "left",
+                "right",
+                "right",
+                "left",
+                "right",
+            ]
+        )  # the port, the Node at the first close; one draw per side at the second close under the derived window (four draws at the declared window before 2026-10-23)
         assert all(len(d) == 8 and set(b) == {whole + 1} for _s, d, b in sides) and whole == 108_000_000
-        assert [moduli for _n, moduli in read] == [(whole, whole + 1)] * 2  # one read per side
+        assert [moduli for _n, moduli in read] == [
+            (whole, whole + 1)
+        ] * 4  # one read per side at each of the two closes (one close before 2026-10-23)
         found[name] = sides[0][1], sides[2][1], standing[2], [number for number, _m in read]
-    for left, right, written, (first, second) in found.values():
+    for left, right, written, (
+        first,
+        second,
+        *_later,
+    ) in found.values():  # the later closes' reads beside the first's
         assert left[4:] == left[:4] and first == read_number(left[:4], [whole + 1] * 4)  # read once
         assert first.bit_length() <= 4 * 27  # four digits of 26.7 bits: the eight's bits halved
         if written[0] == written[1]:

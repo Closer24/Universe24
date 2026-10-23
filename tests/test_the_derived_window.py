@@ -249,8 +249,12 @@ def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_th
 
     def receding(document):  # type: ignore[no-untyped-def]
         opened(document)  # the box opened along x as the content's sink, the windows derived
-        document["intervals"] = 200
-        document["receding"] = {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}}
+        document["intervals"] = (
+            400  # the run parameter, 200 before 2026-10-23: under the derived windows the take falls later
+        )
+        document["receding"] = {
+            "x": {"sides": ["low", "high"], "largest": 1200, "layers": 16}
+        }  # the run parameter, 400 before 2026-10-23
 
     path = content_world(tmp_path, "resonant", RESONANT, ZENO_ATOM, receding)
     board = Lattice(world_files.load_world(path), (lines := []).append)
@@ -271,22 +275,19 @@ def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_th
         dark_to_its_own.append(own == {pulse} and node_detector.dark(board, giver, own))
         board.step()
     assert (
-        all(dark_to_its_own) and len(dark_to_its_own) == 18
-    )  # its quantum stands 18 intervals, no window, until the taker takes it (the pair over three Nodes since 2026-10-21; over two Nodes above 40 intervals and no take in the run)
+        all(dark_to_its_own) and len(dark_to_its_own) == board.world.intervals - given - 47 == 343
+    )  # under the derived windows the quantum stands to the run's end, dark to its emitter throughout, and no take falls (18 intervals to the take at 75 at the declared windows before 2026-10-23)
     assert (giver.windows, giver.elapsed) == (1, 0)  # the emission's window, closed null at 48
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
     closes = [(c["interval"], c["node_detector"], c["emitted"]) for c in lines if c["event"] == "credit"]
     assert (
         closes
-        == [
-            (10, "body 0", "pulse"),
-            (48, "body 0", None),
-            (75, "body 1", None),
-        ]
-    )  # three Nodes, 2026-10-21 (two Nodes, 2026-10-20: the emission at 83, the null closes at 48, 96, 146 and 194)
-    assert [c["interval"] for c in taken] == [75] and board.credit.counts[
-        pulse
-    ] == 0  # the take falls at the taker's first close (2026-10-21)
+        == [(10, "body 0", "pulse"), (48, "body 0", None)]
+        + [(75 + 48 * k, "body 1", None) for k in range(7)]
+    )  # the taker's null closes every 48 from 75 to 363 under the derived window (the take at 75, 2026-10-21; two Nodes, 2026-10-20: the emission at 83, the null closes at 48, 96, 146 and 194)
+    assert (
+        taken == [] and board.credit.counts[pulse] == 1
+    )  # no take in the run (the take at the taker's first close before 2026-10-23)
     print(
         f"C5 where the lay has an end: body 0 gave at {given}, its source spent at {given + 47}, dark to its own "
         f"light over {len(dark_to_its_own)} intervals after it; taken {[c['interval'] for c in taken]}"

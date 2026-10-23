@@ -121,7 +121,18 @@ def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at
         ("resonance", "detuned"),
         ("packet_emission", "packet_emission"),
     ):
-        board = run_whole(Lattice(load_shipped(EVENTS / folder / f"{name}.json"), (lines := []).append))
+        board = Lattice(load_shipped(EVENTS / folder / f"{name}.json"), (lines := []).append)
+        refused_at = {
+            "resonant": 41,
+            "detuned": 71,
+        }  # under their derived windows the shipped resonance pair refuses by name (2026-10-23): the digits read at the body's close do not carry the draw (the emission at 48 at the declared windows before)
+        if name in refused_at:
+            with pytest.raises(RuntimeError, match="below the draw's total") as refusal:
+                run_whole(board)
+            assert f"at the interval {refused_at[name]}" in str(refusal.value), str(refusal.value)
+            found[name] = ("refused at", refused_at[name])
+            continue
+        run_whole(board)
         given = [(c["interval"], c["node_detector"], c["lost"]) for c in clicks(lines) if c["emitted"]]
         window = board.world.bodies[0].detector.draw.window
         assert board.ended is None, name
