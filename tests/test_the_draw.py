@@ -107,8 +107,11 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
         verdicts[name] = RUN.run_input(str(tmp_path / f"{name}.json"), str(tmp_path))
     refusal = verdicts["which_way"]
     assert refusal["verdict"] == "REFUSED" and refusal["intervals"] == 0, refusal
-    assert "spent at this interval by its earlier draws" in refusal["reason"], refusal
-    assert "at the interval 66" in refusal["reason"], refusal
+    reason = json.loads((tmp_path / "which_way.output.json").read_text(encoding="utf-8"))["reason"]
+    assert "spent at this interval by its earlier draws" in reason and "at the interval 66" in reason, (
+        reason
+    )
+    refusal = {**refusal, "reason": reason}
     # the law's reading under the derived window (2026-10-23): the which-way world's screens draw at every close of the window derived from the lays' passage, and the whole-window draw spends the board's digits at the interval 66, refused by name (the two slits the same, tests/test_the_two_term_ghz.py); the former clauses read the run LAWFUL at the declared window 1 and compared its rows with the one gap's (the fringes gone, the chi-square over 7 degrees below 18.5, the maxima [2, 5, 6] and the minima [4, 7] of the two slits' gate row, the shadowed regions' leak at most 1), named in docs/FURTHER_RESEARCH.md, the windows item
     print(
         f"the which-way world under the derived window: {refusal['reason'][:120]}; the one gap's verdict {verdicts['one_gap']['verdict']}"

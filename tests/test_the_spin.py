@@ -76,8 +76,10 @@ def test_the_two_ports_of_one_detector_read_at_one_close_with_equal_shares(tmp_p
     assert at_close[(0,)] == at_close[(1,)] > 0  # the two ports at one close, the shares equal
     spin = [f.name for f in board.families].index("spin")
     sided(board, spin, at_close, [PORT[clicks[0]["realised"]]])  # the engine's weights the same
-    whole = joint_shares(lines, sides)
     after = sorted({r["interval"] for r in lines if r["event"] == "parts" and r["interval"] > 30})
+    whole = joint_shares(
+        lines, sides, close=after[-1]
+    )  # the whole run's parts lines, past the sides' close the helper defaults to
     assert after and whole[(0,)] != whole[(1,)]  # the lines after the close carry the write
 
 
