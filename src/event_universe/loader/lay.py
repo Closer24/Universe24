@@ -33,7 +33,7 @@ class Lay:
 
 
 def lay_of(value: object, label: str) -> Lay:
-    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional, and with it `confidence` [num, den], the budget's confidence multiple squared k^2 (the two together or neither); `seed`, required, one of the first pass's seeds by name, and `profile` [centre, neighbour] (the centre's parts from 1, a neighbour's from 0) required with the compact seed and refused with the one-Node seed; every other key and every other word refused by name."""
+    """The key `lay` read: `kind` one of the generator's lays by name; `stop` (from 0) and `passes` (from 1) required with the fixed-point lay and refused with the repeat, which has the start's own rule; `tolerance` [num, den] with num and den from 1 and num at most den, optional, and with it `confidence` [num, den], the budget's confidence multiple squared k^2 (the two together or neither); `start`, required, one of the first pass's starts by name, and `profile` [centre, neighbour] (the centre's parts from 1, a neighbour's from 0) required with the compact start and refused with the one-Node start; every other key and every other word refused by name."""
     lay = keyed(value, label, LAY_KEYS, LAY_REQUIRED)
     kind = lay["kind"]
     if kind not in KINDS:

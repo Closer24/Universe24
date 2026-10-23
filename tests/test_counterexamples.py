@@ -6,7 +6,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BREAKER = ROOT / "tools" / "derivations" / "counterexamples.py"
-RED_ROWS: set[str] = set()  # a finding for the hands: the rows that are BROKE or FENCE today, by key
+RED_ROWS: set[str] = (
+    set()
+)  # a finding for the hands: the rows that are BROKE or FENCE at the record's date, by key
 
 
 def breaker():

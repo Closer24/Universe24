@@ -142,7 +142,7 @@ def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> in
 
 
 def spread(square: int, share: tuple[int, int]) -> int:
-    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, (the largest x with x^2 <= A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment; the mathematician's hand)."""
+    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, (the largest x with x^2 <= A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeDetector is one declaration kind for every world; the mathematician's hand)."""
     weight, total = share
     return largest_below(int(division_forward(square * weight, total, 0)[0]))
 

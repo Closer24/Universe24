@@ -129,7 +129,7 @@ def instrument_body(
     if len(set(region)) != len(region) or not connected(tuple(region), shape, periodic):
         raise ValueError(
             f"{label}.nodes is one connected region of distinct Nodes through the six Ports, the body's standing "
-            "region (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment)"
+            "region (ALGEBRA.md, The NodeDetector is one declaration kind for every world)"
         )
     inside = {(int(x) * shape[1] + int(y)) * shape[2] + int(z) for x, y, z in region}
     levels = (row.now, row.before, row.second_now, row.second_before)

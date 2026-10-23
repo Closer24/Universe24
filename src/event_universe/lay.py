@@ -31,7 +31,7 @@ def shares_of(total: int, weights: Sequence[int]) -> list[int]:
 
 
 def division_act(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
-    """A laid level of a massless record with the uniform mode's content taken out (ALGEBRA.md, The packet lay: the massless row's double root at wave number 0 carries neither level nor velocity, so a laid packet's two levels each sum to 0 over the board): the level's sum over the board divided among the laid Nodes in proportion to the envelope's weights by the division act, floor by floor, the division's leftover one unit each at the heaviest Nodes in x-major order (`shares_of`), so that the sum is exactly 0 and the packet keeps the envelope's taper; a level whose sum is 0 as it stands, or whose weights are all 0, is returned as it is."""
+    """A laid level of a massless record with the uniform mode's content taken out (ALGEBRA.md, The packet lay: the massless row's double root at wave number 0 carries neither level nor velocity, so a laid packet's two levels each sum to 0 over the board): the level's sum over the board divided among the laid Nodes in proportion to the envelope's weights by the division act, floor by floor, the division's leftover one unit each at the heaviest Nodes in x-major order (`shares_of`), so that the sum is exactly 0 and the packet keeps the envelope's taper; a level whose sum is 0 as laid, or whose weights are all 0, is returned as it is."""
     flat, heavy = (
         np.asarray(levels, dtype=object).ravel().copy(),
         np.asarray(weights, dtype=object).ravel(),
