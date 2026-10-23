@@ -1,0 +1,88 @@
+{
+ "integers": {
+  "node_clock": 1000,
+  "quantum_action": 36000,
+  "width": 92,
+  "link_unit": 16
+ },
+ "families": [
+  {
+   "name": "gravity",
+   "pair": [
+    999,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "held": {
+    "sources": [
+     "form",
+     "tensions"
+    ],
+    "level_weight": 1,
+    "write_weight": 1
+   }
+  },
+  {
+   "name": "charge",
+   "pair": [
+    1000,
+    1000
+   ],
+   "reads": {},
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1
+   }
+  },
+  {
+   "name": "matter",
+   "pair": [
+    600,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "dimension": 1
+  },
+  {
+   "name": "light",
+   "pair": [
+    1000,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "dimension": 1
+  },
+  {
+   "name": "proton",
+   "pair": [
+    0,
+    1000
+   ],
+   "reads": {
+    "gravity": 1,
+    "charge": 1
+   },
+   "dimension": 2
+  },
+  {
+   "name": "electron",
+   "pair": [
+    800,
+    1000
+   ],
+   "reads": {
+    "gravity": 1,
+    "charge": 3
+   },
+   "dimension": 2
+  }
+ ]
+}
