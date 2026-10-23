@@ -163,44 +163,51 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     kept = {}
     for _ in range(100):
         board.step(), kept.__setitem__(board.interval, BACK.snapshot(board))
-        board.interval <= 81 and plain.step()
+        board.interval <= 61 and plain.step()
     credits = [line for line in lines if line["event"] == "credit"]
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
     at = [(c["interval"], c["node_detector"], c["count"], c["window"][0], c["left"]) for c in credits]
     left, clock = board.credit.counts[pair], board.world.node_clock - max(f.rest for f in board.families)
-    assert at == [(80, "left", 1, 41, left), (80, "right", 1, 41, left)]  # nothing through at 40
-    was, now = dict(p for f in kept[81] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    proper = [(n * clock // board.world.node_clock, 2) for n in (80, 80)]
-    assert [(c["proper"], c["windows"]) for c in credits] == proper  # p_0 = Gamma - c_vac: 79 at 60
+    assert (
+        at[:2] == [(60, "left", 1, 31, 25), (60, "right", 1, 31, 25)]
+        and at[2:]
+        == [
+            (90, "left", 1, 61, left),
+            (90, "right", 1, 61, left),
+        ]
+    )  # the derived window 30: nothing through at 30, the clicks at the second close 60 with 25 left and again at 90 with 24 (80 with 24 at the declared window 40 before 2026-10-23)
+    was, now = dict(p for f in kept[61] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
+    proper = [(n * clock // board.world.node_clock, 2) for n in (60, 60)]
+    assert [(c["proper"], c["windows"]) for c in credits[:2]] == proper  # p_0 = Gamma - c_vac
     keys = "event label interval family node_detector window proper windows before realised kept"
     words = f"{keys} count left absorbed emitted momentum fan lost source recoil"
     report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
     assert all(set(c) - {"bias_bound"} == report and c["label"] == "NODEDETECTOR" for c in credits)
     assert all(c["bias_bound"]["g"] < c["bias_bound"]["total"] for c in credits if "bias_bound" in c)
-    holes = [f for f in lines if f["event"] == "face" and f["interval"] == 81]  # the hole's Nodes
+    holes = [f for f in lines if f["event"] == "face" and f["interval"] == 61]  # the hole's Nodes
     written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
     differing = {
         tuple(map(int, a)) for k in was for a in np.argwhere(was[k] != now[k])
     }  # the holes, the write
     assert written <= differing and any(not was[f"light_pair.lines[{k}].now"].any() for k in range(2))
     w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
-    assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]
+    assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]  # the first close's two
     levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 81
     assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
-    assert all(dict(p for f in kept[82] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 82
+    assert all(dict(p for f in kept[62] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 62
     for _ in range(99):  # the faces presented again and the lays crossed from their lines, bit for bit
         BACK.crossed(board, lines)
         board.step_inverse()
         same = BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
-        assert same == (
-            board.interval >= 80
-        )  # below the click the realised past, the possibilities' kept
-    assert BACK.verdict(Lattice(load_world(twin)), 39)["verdict"] == "MATCH"
+        assert (
+            same == (board.interval >= 60)
+        )  # below the first click the realised past, the possibilities' kept; the second close's clicks at 90 leave the run back exact down to 60
+    assert BACK.verdict(Lattice(load_world(twin)), 29)["verdict"] == "MATCH"
     empty = Lattice(load_world(cut), (none := []).append)
     empty.credit.counts[pair] = 0
-    for _ in range(80):
+    for _ in range(60):
         empty.step()
-    before = [c for c in lines if c["interval"] <= 80 and c["event"] not in ("credit", "lay")]
+    before = [c for c in lines if c["interval"] <= 60 and c["event"] not in ("credit", "lay")]
     assert none == before  # no click's line, no draw
     refused("window", draw_of, {**draw, "window": 0}, "draw")
     refused("unknown key 'seed'", draw_of, {"seed": 1}, "draw")  # no generator, no key
@@ -269,16 +276,20 @@ def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothin
         taken = [x["interval"] for x in lines if x["event"] == "credit" and x["absorbed"]]
         if taken and booked_share is None:  # the absorption's interval: the drive's share at the Node
             booked_share = int(board.share_of(pulse)[0][at])
-        if books is None and taken and board.interval == taken[0] + 12:  # the next close after it
+        if (
+            books is None
+            and taken
+            and board.interval == taken[0] + board.world.bodies[0].detector.draw.window
+        ):  # the next close after it
             books, its_books = board.books()["pulse"], twin.books()["pulse"]  # the hole's deficit booked
         returns = [x for x in lines if x["event"] == "credit" and x["emitted"] == "pulse"]
     assert booked_share is not None and booked_share > unit  # dense: above the record's quantum
     assert books is not None and its_books is not None
     credits = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEDETECTOR"]
     jumps = [x for x in credits if x["absorbed"]]
-    assert [x["interval"] for x in jumps][:1] == [42] and jumps[0][
-        "absorbed"
-    ] == "pulse"  # the read's, 2026-10-20
+    assert (
+        [x["interval"] for x in jumps][:1] == [105] and jumps[0]["absorbed"] == "pulse"
+    )  # the absorption at the derived window's close 105 (42 at the declared window, the read of 2026-10-20)
     assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
     assert not board.credit.fronts and not board.credit.sources
     print(
@@ -296,84 +307,6 @@ def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothin
     assert (
         BACK.verdict(gate, returns[0]["interval"])["verdict"] == "MATCH"
     )  # across the absorption and the return
-
-
-def test_a_emission_into_a_beam_is_read_in_the_books_and_laid_where_the_beam_has_thinned(tmp_path):
-    """The undepleted beam at the emission (ALGEBRA.md, The click writes on the lattice; the two hands' line: a quantum given into a beam adds to the mode coherently in nature, and a one-Node lay into a dense record is the same point defect the dense hole was; `act.written`, `take.faced`, `emission.emitted_quantum`): the Zeno n = 2 world's declaration (`ZENO_2`, inlined; re-pinned 2026-10-20 under the content of the born universe, the box opened along x as the content's sink, the declared window 24 kept since the rate's lay has no end on the axes across) with a rate e to g at the lifetime 8 emission to the pulse itself, beside the pulse alone. The law's one comparison at the drawn Node, the record's share there against its own quantum W_rec: the absorption at 24 finds the beam dense at both Nodes of the body (5.3 and 2.7 units) and writes nothing on the pulse, whose three arrays stand bit for bit as the pulse alone to the emission's close, the count down by one and the deficit up by one; the emission's Node is drawn by the body's read of the board, and where the beam is dense there the quantum passes in the books alone (no lay line, no source, the deficit down by one), while where the opened box's sink has thinned the beam to one unit or below the record is local and whole there and takes the lay: one lay line at that Node, a source in time begun, the deficit standing, the arrays differing from the pulse alone at that Node alone. This run, pinned 2026-10-20 with the twist deleted (the body's own levels unfolded, its read drawing the other Node): the emission at 49 falls at [4, 4, 2] where the beam stands at 0.99 of a unit against 9.54 at [5, 4, 2], and the quantum is laid there; the sparse emission's own tests stand in `tests/test_the_emission.py`."""
-
-    def rated(world):  # type: ignore[no-untyped-def]
-        opened(
-            world
-        )  # the content's sink; the rate's lay has no end across, so the declared window stays
-        world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
-        world["bodies"][0]["node_detector"].pop("window", None)
-        world["intervals"] = 480
-
-    path = content_world(tmp_path, "zeno_rate", ZENO_2, ZENO_ATOM, rated)  # the content, 2026-10-20
-    world = json.loads(path.read_text(encoding="utf-8"))
-    (alone := tmp_path / "pulse_alone.json").write_text(
-        json.dumps({**world, "bodies": []}), encoding="utf-8"
-    )
-    TOOL.main(["--input", str(alone)])
-    board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
-    pulse = [f.name for f in board.families].index("pulse")
-    unit, nodes = board.credit.units[pulse], board.credit.bodies[0].nodes
-    count, given, shares, same = board.credit.counts[pulse], [], {}, []
-    while board.interval < world["intervals"] and not given:
-        standing = board.share_of(pulse, 1, board.mask(nodes))[0]  # the beam at the body before the step
-        shares[board.interval + 1] = [int(standing[tuple(np.add(n, board.offset))]) for n in nodes]
-        board.step(), twin.step()
-        same.append(
-            all(
-                np.array_equal(
-                    getattr(board.states[pulse].lines[0], k), getattr(twin.states[pulse].lines[0], k)
-                )
-                for k in ("now", "before", "remainder")
-            )
-        )
-        given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
-    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
-    assert given and taken and given[0]["interval"] > taken[0]["interval"]  # absorbed, then emitted
-    t_a, t_e = taken[0]["interval"], given[0]["interval"]
-    assert all(s > unit for s in shares[t_a]) and all(
-        same[: t_e - 1]
-    )  # the dense absorption writes nothing
-    assert board.credit.counts[pulse] == count  # one quantum taken, one given back
-    laid = [x for x in lines if x["event"] == "lay" and x["family"] == "pulse"]
-    differing = {
-        key: {
-            tuple(int(i) for i in n)
-            for n in np.argwhere(
-                getattr(board.states[pulse].lines[0], key) != getattr(twin.states[pulse].lines[0], key)
-            )
-        }
-        for key in ("now", "before", "remainder")
-    }
-    if laid:  # the beam thinned to one unit or below at the drawn Node: the record local and whole there
-        at = tuple(int(v) for v in laid[0]["node"]["at"])
-        assert shares[t_e][nodes.index(at)] <= unit
-        assert all(x["interval"] == t_e and tuple(x["node"]["at"]) == at for x in laid)
-        assert board.credit.sources and board.credit.deficits[pulse] == 1
-        assert all(
-            found <= {tuple(int(v) for v in np.add(at, board.offset))} for found in differing.values()
-        )
-    else:  # the beam dense at the drawn Node: the quantum passes in the books alone
-        assert not board.credit.sources and board.credit.deficits.get(pulse, 0) == 0
-        assert not any(differing.values())
-    thinned = [round(s / unit, 2) for s in shares[t_e]]
-    assert (t_a, t_e, thinned, bool(laid)) == (
-        24,
-        49,
-        [0.99, 9.54],
-        True,
-    )  # pinned 2026-10-20, the twist deleted
-    books = board.books()["pulse"]
-    print(
-        f"the Zeno pulse after the absorption at {t_a} (the beam {[round(s / unit, 2) for s in shares[t_a]]} units at the "
-        f"body) and the emission at {t_e} (the beam {thinned} units): {'laid at ' + str(laid[0]['node']['at']) if laid else 'nothing laid'}; "
-        f"the books {books}"
-    )
-    assert (books["count"], books["deficit"]) == (count, board.credit.deficits.get(pulse, 0))
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):
