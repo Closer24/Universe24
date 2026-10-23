@@ -1,4 +1,4 @@
-"""The meeting that runs back at N sides and with the erasing front (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there; no signalling at N sides, every side's marginal its own; (j) the erasing front after the one close, the fronts the act's as built writing to 0 at the reach, one shell per interval, inside the click's light cone from the regions' inner Nodes where the inflow enters; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves): (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
+"""The meeting that runs back at N sides and with the erasing front (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there (the chain's exact 9 / 25 or 16 / 25 and the last side's read within the walk, one level of the lay's amplitude 64; the former bound 2 / 1000 of 2026-10-20 was the course's: 2.1 / 1000 read under the derived window 30, where the declared one closed at 40); no signalling at N sides, every side's marginal its own; (j) the erasing front after the one close, the fronts the act's as built writing to 0 at the reach, one shell per interval, inside the click's light cone from the regions' inner Nodes where the inflow enters; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves): (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
 import json
 from dataclasses import replace
@@ -59,7 +59,10 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
             chain = marginal_of(joint, 2, fixed)
             deviation = abs(Fraction(last[0], sum(last)) - Fraction(chain[0], sum(chain)))
             assert Fraction(chain[0], sum(chain)) in (Fraction(9, 25), Fraction(16, 25))
-            assert deviation < Fraction(2, 1000), (last, chain)
+            assert deviation < Fraction(1, 64), (
+                last,
+                chain,
+            )  # the walk within one level at the lay's amplitude 64
             print(
                 f"the reader's case: the realised triple {realised}, the middle side {middle}, the last side "
                 f"{last} against the chain {chain}, the walk's deviation {float(deviation):.2e}"
@@ -68,23 +71,28 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
 
 
 def test_the_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(tmp_path, monkeypatch):
-    """(j) The erasing front under the one meeting (the verdict's point 13 of 2026-10-19; A3c of 2026-10-20: the fronts begin at the one close after the last side, no front from every click; the law of one Node, 2026-10-23: the front writes to 0 at the reach, one shell per interval, no key of the world): the singlet world with regions of two Nodes at the chain's ends, run through the close at 40 and on until the fronts have left the grown board; the two fronts from the regions' inner Nodes, one erasure line per interval from the close's next interval at the distance of the intervals since the close, at most two Nodes per shell on the chain, the last line at the first distance beyond the board with no Node and the front ended; the record's count and share 0 at the end and no front standing; the gate's run back through the close MATCH."""
+    """(j) The erasing front under the one meeting (the verdict's point 13 of 2026-10-19; A3c of 2026-10-20: the fronts begin at the one close after the last side, no front from every click; the law of one Node, 2026-10-23: the front writes to 0 at the reach, one shell per interval, no key of the world): the singlet world with regions of two Nodes at the chain's ends, run through the close at 40 and on until the fronts have left the grown board; the two fronts from the regions' inner Nodes, one erasure line per interval from the close's next interval at the distance of the intervals since the close, at most two Nodes per shell on the chain, the last line at the first distance beyond the board with no Node and the front ended; the record's count and share 0 at the end and no front standing; the gate's run back through the close MATCH. The close is the sides' own under the derived window (2026-10-23): the window 26 here, the first close whose window carried a whole quantum to the regions at the chain's ends the second, 52, where the declared window closed at 40 with the run."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     ends = {"left": [0, 1], "right": [31, 32]}
     path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64, regions=ends)
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(path), lines.append)
-    for _ in range(126):
-        board.step()
+    window = (
+        board.credit.declaration.window
+    )  # derived, 26 here; the declared one closed at 40 (2026-10-23)
+    while board.interval < 400 and (
+        not any(c["event"] == "credit" for c in lines) or board.credit.fronts
+    ):
+        board.step()  # through the sides' close and until the fronts have left the grown board
     spin = family(board, "spin")
     erasures = [e for e in lines if e["event"] == "erasure"]
     clicks = [c for c in lines if c["event"] == "credit"]
     assert not board.credit.fronts and board.credit.counts[spin] == 0
     assert board.total_share(spin)[0] == 0
-    close = clicks[0]["interval"]
-    assert [(c["node_detector"], c["order"], c["interval"]) for c in clicks] == [
-        ("left", 1, 40),
-        ("right", 2, 40),
+    close = clicks[0]["interval"]  # the first close whose window carried a whole quantum, 52 here
+    assert close % window == 0 and [(c["node_detector"], c["order"], c["interval"]) for c in clicks] == [
+        ("left", 1, close),
+        ("right", 2, close),
     ]
     for origin in ((1, 0, 0), (31, 0, 0)):  # the regions' inner Nodes, where the inflow enters
         shells = [e for e in erasures if tuple(e["origin"]) == origin]
@@ -95,9 +103,11 @@ def test_the_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(
         assert [e["interval"] for e in shells if e["nodes"] == 0] == [close + farthest + 1]
     assert len(erasures) == 2 * len(shells)
     gate = Lattice(load_world(path))
-    for _ in range(41):  # through the close: the click, the writes, the hole and the fronts' start
+    for _ in range(
+        close + 1
+    ):  # through the close: the click, the writes, the hole and the fronts' start
         gate.step()
-    assert GATE.verdict(gate, 40)["verdict"] == "MATCH"
+    assert GATE.verdict(gate, close)["verdict"] == "MATCH"
     print(
         f"the front after the one close: {len(erasures)} erasure lines on the run, the shells to "
         f"{max(e['interval'] for e in erasures)} on the board of {board.shape[0]}, the realised ports "
@@ -108,7 +118,7 @@ def test_the_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(
 def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_outside_by_name(
     tmp_path, monkeypatch
 ):
-    """(l) The three refusals of the cone stepped alone by name (the reader's verdict of 2026-10-20), on the singlet world laid on a chain of 120 Nodes with the regions about the centre where the chain of 33 has them (no growth in 40 intervals, the chain's ends outside the record's cone at the close): a level moved by hand at the interval 39 at 42 Links from the lay, the first step back's ring, refused at that step as the rest moved at the cone's edge (read from the board's own arrays); a level moved inside the cone at 34 Links, far from the record, refused as the cone not holding when the shrinking cone's shell reaches the past the inverse computes for a level with no past; a lay of the books' log at a Node outside the cone at its interval refused as an act outside the record's cone before the step re-presents it; the same world untouched run to its close with |G(0)| the lay's 13 Nodes within one Link."""
+    """(l) The three refusals of the cone stepped alone by name (the reader's verdict of 2026-10-20), on the singlet world laid on a chain of 120 Nodes with the regions about the centre where the chain of 33 has them (no growth in 40 intervals, the chain's ends outside the record's cone at the close): a level moved by hand at the interval 39 at 42 Links from the lay, the first step back's ring, refused at that step as the rest moved at the cone's edge (read from the board's own arrays); a level moved inside the cone at 34 Links, far from the record, refused as the cone not holding when the shrinking cone's shell reaches the past the inverse computes for a level with no past; a lay of the books' log at a Node outside the cone at its interval refused as an act outside the record's cone before the step re-presents it; the same world untouched run to its close with |G(0)| the lay's 13 Nodes within one Link; the close the derived window's (2026-10-23; the moved levels at the close less one and at the Links the close's reach gives, where the declared window closed at 40 with the level moved at 39)."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     regions = {"left": [44, 45, 46, 47], "right": [73, 74, 75, 76]}
 
@@ -123,18 +133,25 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
         now[x + board.offset[0], 0, 0] += 1
         board.states[spin].lines[0] = Record(now, line.before, line.remainder)
 
+    close = Lattice(
+        load_world(world("window"))
+    ).credit.declaration.window  # derived; the declared closed at 40
     for label, x, text in (
-        ("edge", 12, "the rest at the record's cone's edge moved at the interval 40"),
-        ("inside", 100, "the record's cone did not hold at the interval"),
-    ):
+        (
+            "edge",
+            54 - (close + 2),
+            f"the rest at the record's cone's edge moved at the interval {close}",
+        ),
+        ("inside", 66 + (close + 2) - 8, "the record's cone did not hold at the interval"),
+    ):  # the lay's Nodes 54 to 66: the edge two Links beyond the close's reach, the inside eight within it
         board = Lattice(load_world(world(label)))
-        for _ in range(39):
+        for _ in range(close - 1):
             board.step()
         moved(board, x)
         with pytest.raises(RuntimeError, match=text):
             board.step()
     board = Lattice(load_world(world("act")))
-    for _ in range(39):
+    for _ in range(close - 1):
         board.step()
     board.credit.lays[20] = [reports.lay(20, "spin", 0, [10, 0, 0], [0, 0, 0], [0, 0, 0])]
     with pytest.raises(
@@ -142,7 +159,7 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
     ):
         board.step()
     board = Lattice(load_world(world("untouched")))
-    for _ in range(40):
+    for _ in range(close):
         board.step()
     assert board.credit.cone[0] == 15
     print(
@@ -150,15 +167,15 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
     )
 
 
-def born_world(folder, monkeypatch, at=12, window=200, intervals=124):  # type: ignore[no-untyped-def]
-    """The born pair's world (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the spin world's chain with no packet, the giver family `atom` added to its universe ([1, 1299], two parts of a plane, reading no holder), one atom body at the Node 12 standing in its part e, the transition g to e by `spin` at the resonance [5414, 6000] and the rate e to g with the lifetime 24 giving its quantum to `spin`, the body's own books with its `seed` (its window the passage of its drive's lay, derived at load); the two regions of the singlet with the identity pattern; `meeting: back` with the board's reach and the world's window `window` over `intervals` intervals; the mode file by the generator; the world's path."""
+def born_world(folder, monkeypatch, at=12, intervals=124):  # type: ignore[no-untyped-def]
+    """The born pair's world (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the spin world's chain with no packet, the giver family `atom` added to its universe ([1, 1299], two parts of a plane, reading no holder), one atom body at the Node 12 standing in its part e, the transition g to e by `spin` at the resonance [5414, 6000] and the rate e to g with the lifetime 24 giving its quantum to `spin`, the body's own books with its `seed` (its window the passage of its drive's lay, derived at load); the two regions of the singlet with the identity pattern; `meeting: back` with the board's reach over `intervals` intervals, the regions' window derived (24 here, the emission's passage; the former key `window` 200, longer than the run, is refused by name since 2026-10-23); the mode file by the generator; the world's path."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], IDENTITY)}
     path = spin_world(folder, monkeypatch, sides, both=True, amplitude=64)
     universe = json.loads((folder / "u.json").read_text(encoding="utf-8"))
     universe["families"].append({"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}})
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     world = json.loads(path.read_text(encoding="utf-8"))
-    world["packets"], world["intervals"], world["draw"]["window"] = [], intervals, window
+    world["packets"], world["intervals"] = [], intervals
     world["bodies"] = [
         {
             "family": "atom",
@@ -179,16 +196,24 @@ def born_world(folder, monkeypatch, at=12, window=200, intervals=124):  # type: 
 def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_its_birth(
     tmp_path, monkeypatch
 ):
-    """(m) The lay across parts and the births' book (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the born pair's world (`born_world`, the first of eight placements whose atom emits before the interval 60), run 124 intervals under `meeting: back` with a window longer than the run (the lays logged, no click): the emission lays the quantum of `spin` on every part alike, the lay lines of the birth interval on the first line of each part at the Node 12 with the same levels, the two parts' lines equal bit for bit at the end (the symmetric lay stepped by one rule) and the `parts` lines' sums equal part by part; the births' book holds the birth's interval and the Node, `birth_of` reads it, the books count one quantum; the run back from the close stops at the birth, the board there equal bit for bit to the frame the forward run recorded right after the birth's lays, the cone's root the birth's Node, and the run forward returns the close bit for bit."""
+    """(m) The lay across parts and the births' book (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the born pair's world (`born_world`, the first of eight placements whose atom emits before the interval 60), run under `meeting: back` to the interval before the first side's close that credits, or the run's 124 intervals (the lays logged, no click read; the former declared window 200, longer than the run, refused by name under the derived window since 2026-10-23): the emission lays the quantum of `spin` on every part alike, the lay lines of the birth interval on the first line of each part at the Node 12 with the same levels, the two parts' lines equal bit for bit at the end (the symmetric lay stepped by one rule) and the `parts` lines' sums equal part by part; the births' book holds the birth's interval and the Node, `birth_of` reads it, the books count one quantum; the run back from the close stops at the birth, the board there equal bit for bit to the frame the forward run recorded right after the birth's lays, the cone's root the birth's Node, and the run forward returns the close bit for bit."""
     for at in range(12, 20):  # the atom's Node, the ensemble's knob: the first placement emitting by 60
         path = born_world(tmp_path / str(at), monkeypatch, at)
+        sides = ("left", "right")
+        probe = Lattice(load_world(path), (probed := []).append)  # the first side's close that credits
+        for _ in range(probe.world.intervals):
+            probe.step()
+            if any(line["event"] == "credit" and line["node_detector"] in sides for line in probed):
+                break
+        credited = any(line["event"] == "credit" and line["node_detector"] in sides for line in probed)
+        stop = probe.interval - 1 if credited else probe.interval  # 71 here: the sides' close at 72
         lines, frames = [], {}
         board = Lattice(load_world(path), lines.append)
         spin = family(board, "spin")
         board.observers.append(
             lambda t, d, p, b=board, frames=frames: frames.__setitem__(t, meeting_back.snapshot(b))
         )
-        for _ in range(board.world.intervals):
+        for _ in range(stop):  # the record read before any side's write: the lay as born
             board.step()
         if spin in board.credit.births and board.credit.births[spin][0] <= 60:
             break
@@ -213,7 +238,7 @@ def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_
     kept = meeting_back.run_back(board, spin)
     assert board.interval == birth and board.credit.birth == birth and board.credit.support == nodes
     assert meeting_back.first_difference(frames[birth], meeting_back.snapshot(board)) is None
-    meeting_back.run_forward(board, spin, board.world.intervals, kept)
+    meeting_back.run_forward(board, spin, stop, kept)
     print(
         f"the born pair: the atom at the Node {at} emitted at the interval {birth}, the quantum laid on the "
         f"lines {sorted(line['line'] for line in first)} alike, the run back to the birth exact"
@@ -221,7 +246,7 @@ def test_a_record_born_of_an_emission_is_laid_on_every_part_alike_and_read_from_
 
 
 def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tmp_path, monkeypatch):
-    """(n) The per-side books and the Gram read (ALGEBRA.md, The meeting's identity, the Gram theorem; the owner's word of 2026-10-20): the Gram of no side is the matrix of ones, the identity pattern's the identity, the GHZ's third pattern's the reader's matrix; the quadratic form on the moments [[5, 5], [5, 5]] at the setting (12, 5) with the identity pattern reads 845 and 845 under the identity Gram and 1445 and 245 under the ones; the antisymmetric first side's coefficients the determinant's; on the singlet world at two settings the first side's weights at its draw are the Gram read of the test's own second moments from the `parts` lines (the engine's books the same products) with the partner's Gram, and equal the marginal of the joint shares exactly (the chain rule's local form, the Gram theorem)."""
+    """(n) The per-side books and the Gram read (ALGEBRA.md, The meeting's identity, the Gram theorem; the owner's word of 2026-10-20): the Gram of no side is the matrix of ones, the identity pattern's the identity, the GHZ's third pattern's the reader's matrix; the quadratic form on the moments [[5, 5], [5, 5]] at the setting (12, 5) with the identity pattern reads 845 and 845 under the identity Gram and 1445 and 245 under the ones; the antisymmetric first side's coefficients the determinant's; on the singlet world at two settings the first side's weights at its draw are the Gram read of the test's own second moments from the `parts` lines to the sides' close (the engine's books the same products; the window derived, 30 here, where the declared one closed with the run at 40, 2026-10-23) with the partner's Gram, and equal the marginal of the joint shares exactly (the chain rule's local form, the Gram theorem)."""
     identity = tuple(tuple(pair) for pair in IDENTITY)
     assert meeting_back.gram_of([], 2) == [[1, 1], [1, 1]]
     assert meeting_back.gram_of([identity], 2) == [[1, 0], [0, 1]]
@@ -242,7 +267,8 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
         spin, joint = family(board, "spin"), joint_shares(lines, sides, 0)
         width = board.families[spin].width
         own = {name: [[0, 0], [0, 0]] for name in sides}
-        for row in (r for r in lines if r["event"] == "parts"):
+        close = min(c["interval"] for c in lines if c["event"] == "credit")  # the sides' own, 30 here
+        for row in (r for r in lines if r["event"] == "parts" and r["interval"] <= close):
             for member in range(2):
                 for k in range(2):
                     for m in range(2):

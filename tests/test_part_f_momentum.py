@@ -286,17 +286,26 @@ def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:
 
 
 def test_the_pairs_two_pieces_are_back_to_back(tmp_path, monkeypatch):
-    """Part F2, Task 3 (the pieces' p are booked as integers and the test judges, no tolerance in src): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) stepped to 99 and copied once for the window's close at 100, one world and one read of the board: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand), and p_y and p_z sum to 0; `lost` carries nothing but the region's own reading (`LOST_TO_REGION`), nothing booked under a tolerance; the realised ports printed with the pieces' sums."""
+    """Part F2, Task 3 (the pieces' p are booked as integers and the test judges, no tolerance in src): Bell's shipped world a b (two packets of the pair, back to back from the centre, one region per side) stepped to the close before the first whose window carried the pair to the regions (the derived window 30, the credits at 60, 2026-10-23; the declared window closed with the run at 100) and copied once for that close, one world and one read of the board: the two credited pieces' p_x are opposite in sign and their sum, reported, stands below the computed floor of the two lays' roundings (`rounding_floor`, read at the close on the twin whose levels still stand), and p_y and p_z sum to 0; `lost` carries nothing but the region's own reading (`LOST_TO_REGION`), nothing booked under a tolerance; the realised ports printed with the pieces' sums."""
     board = Lattice(
         load_world(world_beside(tmp_path, EVENTS / "bell" / "bell_a_b.json", lambda w: None)), [].append
     )
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
-    for _ in range(99):
+    window, credits = (
+        board.credit.declaration.window,
+        [],
+    )  # derived, 30 here; the declared one closed at 100
+    for _ in range(board.world.intervals):
+        if (
+            board.interval + 1
+        ) % window == 0:  # a close: the twin steps it, one world, one read of the board
+            twin = copy.deepcopy(board)
+            twin.output = (lines := []).append
+            twin.step()
+            credits = [line for line in lines if line["event"] == "credit"]
+            if credits:
+                break
         board.step()
-    twin = copy.deepcopy(board)  # one world, one read of the board at the close
-    twin.output = (lines := []).append
-    twin.step()
-    credits = [line for line in lines if line["event"] == "credit"]
     assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
     left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
     sums = [[a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)]]

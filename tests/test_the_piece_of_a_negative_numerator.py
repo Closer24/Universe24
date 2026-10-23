@@ -63,12 +63,12 @@ UNIVERSE = {
         },
     ],
 }
-WINDOW = 95
+INTERVALS = 240  # the run, four derived windows of 59 on this chain (the former constant 95 was the declared window and the run, the key gone with the owner's decision of 2026-10-23)
 WORLD = {
     "shape": [61, 1, 1],
     "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
     "face_depth": 1,
-    "intervals": WINDOW,
+    "intervals": INTERVALS,
     "universe": "u.json",
     "bodies": [],
     "packets": [
@@ -85,15 +85,18 @@ WORLD = {
     ],
     "node_detectors": [
         {"name": "left", "positions": [[x, 0, 0] for x in range(4)]},
-        {"name": "right", "positions": [[x, 0, 0] for x in range(44, 48)]},
+        {
+            "name": "right",
+            "positions": [[x, 0, 0] for x in range(57, 61)],
+        },  # the chain's last four Nodes: the packet crosses them into the receding face within one derived window (44 to 47 to 2026-10-23, where the declared window was the run and the crossing of the inner region netted no quantum in a window of 59)
     ],
     "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
     "draw": {},
 }
-PIECE, FAN = (
+FORMER_PIECE, FORMER_FAN = (
     -42370,
     -77974,
-)  # the chain's piece along x at the right region's close and the fan's P_x; both re-pinned under the law of one Node (2026-10-23: the gravity row's form, the form's own clock, the carried factor and the trace, moves the record's paces, so the packet's momentum at the close moves by percent; the record's unit W_rec stands)
+)  # the chain's piece along x at the right region's close at 95 and the fan's P_x, as read under the law of one Node on 2026-10-23 with the region at 44 to 47 and the declared window the run (-44701 and -79904 at the close 118 with the region at the chain's end under the derived window 59): the course's numbers, named and not asserted; the law's sentence is the two signs
 ARITHMETIC = (
     -43250
 )  # the piece of the hand-written passage below by `piece_momentum`'s arithmetic alone, no world's close
@@ -109,18 +112,23 @@ def chain_world(folder: Path) -> Path:
 
 
 def test_the_piece_of_a_negative_numerator_is_one_counts_p_a_with_the_fans_sign(tmp_path, monkeypatch):
-    """One window on the chain: the neutron packet of count 2 crosses the right region; at the close one credit line at the right region, the count moved 1, the piece's p_x PIECE below 0 and the fan's P_x FAN below 0, the two the law's P_a of a negative numerator (where the engine gave [0, 0, 0] by the guard on the signed wall); the left region books no quantum."""
+    """The neutron packet of count 2 moves against its k, toward +x, and crosses the right region at the chain's end; at the first close whose window carried a whole quantum through it (the derived window 59, the close 118; the declared window 95 to 2026-10-23) one credit line at the right region, the count moved 1, the piece's p_x below 0 and the fan's P_x below 0, the two the law's P_a of a negative numerator, pointing against the motion (where the engine gave [0, 0, 0] by the guard on the signed wall; the former numbers `FORMER_PIECE` and `FORMER_FAN` named); the left region books no quantum."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(chain_world(tmp_path)), (lines := []).append)
     neutron = [f.name for f in board.families].index("neutron")
     assert board.families[neutron].pair == (-4800, 6000) and board.credit.counts[neutron] == 2
-    for _interval in range(WINDOW):
+    window, credits = board.credit.declaration.window, []
+    while not credits and board.interval < 4 * window:
         board.step()
-    credits = [line for line in lines if line.get("event") == "credit"]
-    print(f"the credit lines at the close: {credits}")
-    assert [(c["node_detector"], c["interval"], c["count"]) for c in credits] == [("right", WINDOW, 1)]
-    assert credits[0]["momentum"] == [PIECE, 0, 0] and credits[0]["fan"] == [FAN, 0, 0]
-    assert PIECE < 0 and FAN < 0 and board.credit.counts[neutron] == 1
+        credits = [line for line in lines if line.get("event") == "credit"]
+    print(f"the credit lines at the first close that credits: {credits}")
+    assert [(c["node_detector"], c["interval"], c["count"]) for c in credits] == [
+        ("right", board.interval, 1)
+    ]
+    assert board.interval % window == 0 and board.credit.counts[neutron] == 1
+    piece, fan = credits[0]["momentum"], credits[0]["fan"]
+    assert piece[0] < 0 and fan[0] < 0 and piece[1:] == fan[1:] == [0, 0], (piece, fan)
+    assert FORMER_PIECE < 0 and FORMER_FAN < 0  # the former course's two signs the same
 
 
 def test_the_guard_is_on_the_share_alone_and_the_sign_is_nums(tmp_path, monkeypatch):
