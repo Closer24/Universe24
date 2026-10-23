@@ -57,7 +57,7 @@ def atom_world(folder, monkeypatch, axis="x", toward=1, lifetime=LIFETIME, windo
 
     centre, source = LENGTH // 2 - 1, LENGTH // 2 - 24
     parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
-    draw = {} if window is None else {"window": window}  # the draw the click's read of the board
+    draw = {} if window is None else {"window": window}  # the key, refused by name where given (2026-10-23)
     body = {"family": "atom", "nodes": [{"node": at(x), "weight": 1} for x in (centre, centre + 1)]}
     rate = {**RATE, "lifetime": lifetime}
     body.update(parts=parts, transitions=[dict(TURN)], rates=[rate], node_detector=draw)

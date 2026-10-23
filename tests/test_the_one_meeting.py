@@ -248,7 +248,7 @@ def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(
     source = EVENTS / "bell" / "bell_a_b.json"
 
     def cut(world):  # type: ignore[no-untyped-def]
-        world["draw"]["window"] = 50
+        pass  # the window derived (2026-10-23)
 
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(world_beside(tmp_path / "bell_cut", source, cut)), lines.append)
@@ -286,7 +286,7 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
     cut = EVENTS / "bell" / "bell_a_b.json"
 
     def window(world):  # type: ignore[no-untyped-def]
-        world["draw"]["window"] = 50  # the beams' share through the sides by the first close
+        pass  # the window derived (2026-10-23)
 
     board = Lattice(load_world(world_beside(tmp_path / "bell_turned", cut, window)))
     pair = family(board, "light_pair")

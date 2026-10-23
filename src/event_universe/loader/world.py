@@ -367,6 +367,9 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     counted = [body.family for body in bodies]  # a charged family's bodies each own a row of the sign
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
     draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
+    draw = window.drawn(
+        draw, node_detectors, bodies, packets, families, shape, periodic, action
+    )  # the regions' window: the longest passage of every lay with an end over the declared regions
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)

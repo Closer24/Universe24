@@ -215,14 +215,17 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
     """No generator: `seed`, `multiplier` and `increment` are unknown keys of the world's `draw` and of a body's `node_detector`, refused by name as every unknown key is; a body's `node_detector` is `{}` (its window derived or a probe's) or `{"window": n}` (`body_draw_of`, `windowless_of`, `Draw`); a window beside a probe refused; the world's `engine` key refused as unknown, the start file gone; the books keep no state and the number left of the read alone (`credit.Books.left`)."""
     label = "bodies[0].node_detector"
     generator = {"seed": 24, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
-    refused("holds the unknown key 'increment'", draw_of, {"window": 40, **generator}, "draw", True)
+    refused("holds the unknown key 'increment'", draw_of, {**generator}, "draw", True)
     refused("holds the unknown key 'seed'", body_draw_of, {"seed": 25}, label)
     refused("holds the unknown key 'multiplier'", windowless_of, {"multiplier": 5}, label)
     assert body_draw_of({}, label) == windowless_of({}, label) == Draw(None)
     assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
         {"window": 40}, "draw", True
     ) == Draw(40)
-    assert draw_of({"window": 40, "reach": "board"}, "draw", True) == Draw(40, "board")
+    assert draw_of({}, "draw", True) == Draw(
+        None
+    )  # the key read for its refusal at the end of the load alone (2026-10-23)
+    refused("unknown key 'reach'", draw_of, {"window": 40, "reach": "board"}, "draw", True)
     assert not hasattr(Draw(None), "seed")
     source = EVENTS / "bell_singlet" / "singlet_a_b.json"
 

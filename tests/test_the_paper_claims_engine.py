@@ -247,7 +247,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     def the_credit_books_the_conserved_forms_current():
         """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_detector.py."""
-        draw = {"window": 3}
+        draw = {}
         regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
         regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
         world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, intervals=4, universe="u.json")

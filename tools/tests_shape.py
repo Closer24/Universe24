@@ -47,6 +47,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "file without `boundary` periodic on every axis, a declared face kept as declared with its layer and its receding "
         "sides, the cycle world with the key and without it the same board bit for bit over 12 intervals",
     ),
+    "tests/test_the_window_is_derived.py::test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence": (
+        20,
+        "the window derived and never declared (ALGEBRA.md, The click writes on the lattice, C2 and (5); the owner's decision of "
+        "2026-10-23): the key refused by name on a body and on the world, the body's own beat on the two instruments, the regions' "
+        "passage on the clicks chain and the Bell chain, the two rules meeting on one body, and Universe24's click world cut to 30 "
+        "intervals clicking at the closes 15 and 30",
+    ),
     "tests/test_the_universe_runs_its_cycle.py::test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks": (
         80,
         "the test of the law's course for the one universe (examples/events/universe/; ALGEBRA.md, The one Node, The swap at the "

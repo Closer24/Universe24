@@ -70,9 +70,7 @@
    ]
   ]
  },
- "draw": {
-  "window": 40
- },
+ "draw": {},
  "arms": {
   "A": {
    "name": "the engine's one draw through the root over the joint credit",
