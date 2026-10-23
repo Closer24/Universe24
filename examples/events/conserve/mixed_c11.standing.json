@@ -191,7 +191,6 @@
    ]
   }
  ],
- "seed": 0,
  "label": "lattice reading",
  "world": "mixed_c11.json",
  "record": "electron",

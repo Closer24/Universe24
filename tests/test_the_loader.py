@@ -32,7 +32,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         return mode.levels_of(entry, "m", read or family, shape, 10, beyond)
 
     def laid(**keys):
-        return lay.lay_of({"kind": "repeat", "seed": "one_node", **keys}, "lay")
+        return lay.lay_of({"kind": "repeat", "start": "one_node", **keys}, "lay")
 
     def receding(boundary="open", **keys):
         return faces.receding_of({"x": {**face, **keys}}, shape, {"x": boundary})
@@ -83,9 +83,13 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ("kind is one of", lambda: laid(kind="spread")),
         ("stop is declared with the lay 'fixed_point'", lambda: laid(stop=1)),
         (r"tolerance must be \[num, den\]", lambda: laid(tolerance=[1])),
-        ("seed is one of", lambda: laid(seed="spread")),
-        (r"profile \[centre, neighbour\] is declared with the seed", lambda: laid(profile=[1, 4])),
-        (r"profile must be \[centre, neighbour\]", lambda: laid(seed="compact", profile=[1])),
+        ("start is one of", lambda: laid(start="spread")),
+        (r"profile \[centre, neighbour\] is declared with the start", lambda: laid(profile=[1, 4])),
+        (r"profile must be \[centre, neighbour\]", lambda: laid(start="compact", profile=[1])),
+        (
+            "unknown key 'seed'",
+            lambda: laid(seed="one_node"),
+        ),  # the former name of the first pass's start (2026-10-23)
         (
             "below the least T",
             lambda: lay.budget_gate(
@@ -119,7 +123,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ("wave's p is 0", lambda: sent(wave=[0, 2])),
         (r"phase must be \[r, s\]", lambda: sent(phase=[1])),
         ("lacks the key 'phase'", unphased),
-        ("lacks the key 'seed'", lambda: lay.lay_of({"kind": "repeat"}, "lay")),
+        ("lacks the key 'start'", lambda: lay.lay_of({"kind": "repeat"}, "lay")),
         ("confidence, the budget's confidence", lambda: laid(tolerance=[1, 100])),
         (r"transverse.y must be \[r, s\]", lambda: sent(transverse={"y": [1]})),
         (
@@ -172,7 +176,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     least, left = lay.least_action((2, 3), 400, 50, (1, 100), (32, 1)), 81 * 3**6 * 50**2  # e_num = 1
     right = 1024 * 2**4 * 400**2 * 100**4 * (3 * 3 - 2 * 2)  # the law's inequality, T a power of two
     assert least & (least - 1) == 0 and left * least * least >= right > left * least * least // 4
-    fixed = lay.lay_of({"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "one_node"}, "lay")
+    fixed = lay.lay_of({"kind": "fixed_point", "stop": 2, "passes": 30, "start": "one_node"}, "lay")
     assert fixed == lay.Lay("fixed_point", 2, 30, None, None, "one_node", None)
     layer = faces.layer_of(shape, (True, False, False), 1, (faces.RecedingFace(0, 1, 9, 1),))
     assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone

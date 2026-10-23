@@ -99,7 +99,6 @@
   "note": "R_ij / w per Port, S_i / w and the Node's pace p_i from the engine's own read and rule at the start; the plain rule at Gamma reads num / (3 den) on every Link and 0 at the Node"
  },
  "convention": "now = A phi cos(U / 2), im_now = -A phi sin(U / 2), before = A phi cos(Omega + U / 2), im_before = A phi sin(Omega + U / 2): the centred count (the owner's decision of 2026-10-23), the step centred at the lay carrying half the Node's angle on its Links; to that day now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
- "seed": 0,
  "label": "lattice reading",
  "world": "giver_c5.json",
  "record": "electron",

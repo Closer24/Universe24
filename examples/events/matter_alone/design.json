@@ -84,7 +84,7 @@
      1,
      32
     ],
-    "seed": "compact",
+    "start": "compact",
     "profile": [
      76,
      4
@@ -112,7 +112,7 @@
      1,
      32
     ],
-    "seed": "compact",
+    "start": "compact",
     "profile": [
      76,
      4
@@ -140,7 +140,7 @@
      1,
      32
     ],
-    "seed": "compact",
+    "start": "compact",
     "profile": [
      76,
      4

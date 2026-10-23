@@ -10,7 +10,7 @@ MODE_BODY_KEYS = (
     "family",
     "pair",
     "count",
-    "seed",
+    "scale",
     "carried",
     "period",
     "amplitude",

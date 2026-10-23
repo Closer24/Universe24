@@ -461,7 +461,6 @@ def standing(
         )
         readings["shares"] = [part / sum(parts) for part in parts]
         readings["beats"] = beats
-    readings["seed"] = seed  # the rounding seed of the lay, 0 the plain rounding
     return lay, readings
 
 
