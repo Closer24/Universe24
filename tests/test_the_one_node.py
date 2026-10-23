@@ -114,3 +114,102 @@ def test_every_act_of_the_step_reads_the_nodes_record_and_its_links_alone():  # 
 
 if __name__ == "__main__":
     pytest.main([__file__])
+
+
+RETIRED = (
+    "act",
+    "booking",
+    "factor",
+    "pressure",
+    "uniform",
+    "erasure",
+    "reach",
+    "meeting",
+    "dipole",
+    "converts",
+    "shear",
+    "lorentz",
+)  # the former act keys and their words, no module of the loader or the generator names one
+
+
+def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-untyped-def]
+    """The loader's key lists, enumerated, hold content keys alone (the owner's rule of 2026-10-23: no more keys in the code, one single Node in the whole universe): a file naming a former act key meets the loader's ordinary refusal of an unknown key, the same as any misspelling; and no module under src/event_universe/loader or the generator tools/pixel_mode.py names a retired key or its words in its code (an ast check over the string constants outside the docstrings, as tests/test_the_acts_table.py walks the divisions)."""
+    from event_universe.loader import draw, node_detector_declaration, universe
+    from event_universe.loader import world as loader_world
+
+    assert set(loader_world.WORLD_KEYS) == {
+        "shape",
+        "boundary",
+        "face_depth",
+        "faces",
+        "intervals",
+        "universe",
+        "bodies",
+        "packets",
+        "node_detectors",
+        "receding",
+        "draw",
+        "lay",
+    }
+    assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
+    assert set(universe.FAMILY_KEYS) == {
+        "name",
+        "pair",
+        "dimension",
+        "held",
+        "reads",
+        "exchange",
+        "senses",
+    }
+    assert [list(s) for s in universe.SOURCES] == [
+        ["form"],
+        ["form", "tensions"],
+        ["wronskian"],
+        ["form", "tensions", "flux"],
+    ]
+    assert draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
+    assert set(node_detector_declaration.TRANSITION_KEYS) == {
+        "from",
+        "to",
+        "drive",
+        "weight",
+        "resonance",
+    }
+    with pytest.raises(ValueError, match="unknown key"):
+        universe.universe_of(
+            {
+                "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+                "families": [
+                    {
+                        "name": "g",
+                        "pair": [6000, 6000],
+                        "reads": {"g": 1},
+                        "held": {
+                            "sources": ["form", "tensions"],
+                            "level_weight": 1,
+                            "write_weight": 1,
+                            "act": "pace",
+                        },
+                    }
+                ],
+            }
+        )
+    named = []
+    for path in sorted(SRC.joinpath("loader").glob("*.py")) + [
+        SRC.parents[1] / "tools" / "pixel_mode.py"
+    ]:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        docs = {
+            n.value.lineno
+            for n in ast.walk(tree)
+            if isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant)
+        }
+        named += [
+            (path.name, n.value, n.lineno)
+            for n in ast.walk(tree)
+            if isinstance(n, ast.Constant)
+            and isinstance(n.value, str)
+            and n.value in RETIRED
+            and n.lineno not in docs
+        ]
+    assert named == [], f"a module of the loader names a retired key: {named}"

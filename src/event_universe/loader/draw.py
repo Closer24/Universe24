@@ -29,15 +29,8 @@ DRAW_KEYS = ("window",)
 # numpy's order of a mask), the first digit the most significant, each digit the remainder's index on its
 # Node's lattice; the realisation depends on this order and the measure does not
 DIGIT_ORDER = "the lines in the record's declared order, each line's Nodes in the lattice's index order, the first digit the most significant, each digit the remainder's index on its Node's lattice, r div F, in the base w div F + 1"  # the draw with its window: the world's and a body's without a probe
-MEETING = "meeting"  # a key of the world's draw refused by name (`draw_of`): there is one meeting
-REACH = "reach"  # the back mode's key: the run back's reach, the owner's word of 2026-10-19
-BOARD, CONE = "board", "cone"  # its two words: the whole board, the record's light cone (the default)
-REACHES = (BOARD, CONE)
-WORLD_DRAW_KEYS = (
-    *DRAW_KEYS,
-    MEETING,
-    REACH,
-)  # the world's draw alone declares the meeting and its reach
+CONE = "cone"  # the one region of the click that runs back: the record's light cone, derived (credit.Books.reach, cone.box_of)
+WORLD_DRAW_KEYS = DRAW_KEYS  # the world's draw: its window and nothing else (the law of one Node)
 
 
 @dataclass(frozen=True)
@@ -56,27 +49,8 @@ def windowless_of(value: object, label: str) -> Draw:
 
 def draw_of(value: object, label: str, world: bool = False) -> Draw:
     """The world's `draw` (`world`), a record converted whole's `node_detector` and a body's that declares its window (`body_draw_of`): its one key, the window from 1; on the world's draw alone the run back's reach, `reach`: `board` (the whole board stepped back to the birth and forward to the close) or `cone` (the record's light cone, the engine's reading where the key is absent); `books` and any other value refused by name; `meeting` refused by name, there being one meeting; every other key refused by name as unknown, a generator's `seed`, `multiplier` and `increment` among them (the draw is the click's read of the board), a body's `meeting` and `reach` too (`keyed` on `DRAW_KEYS`)."""
-    if isinstance(value, dict) and REACH in value:
-        raise ValueError(
-            f"{label}.{REACH} is declared ({value[REACH]!r}): under the law of one Node the click that runs back "
-            "reads the record's light cone in every world (the law's reading where the key was absent), and no "
-            "key switches the run back's reach; drop the key (the owner's word of 2026-10-22)"
-        )
     found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, DRAW_KEYS)
-    reach = found.get(REACH)
-    if MEETING in found:
-        raise ValueError(
-            f"{label}.{MEETING} is declared: there is one meeting, the click that writes at the record's birth, "
-            "the sides reading in the order of their closes; the key is refused"
-        )
-    if reach is not None and reach not in REACHES:
-        reason = (
-            "the click that runs back writes at the birth and runs; the reaches are 'cone' and 'board'"
-            if reach == "books"
-            else f"the run back's reach is {CONE!r} or {BOARD!r}"
-        )
-        raise ValueError(f"{label}.{REACH} is {reach!r}: {reason}")
-    return Draw(integer(found["window"], f"{label}.window", 1), None if reach is None else str(reach))
+    return Draw(integer(found["window"], f"{label}.window", 1))
 
 
 def body_draw_of(value: object, label: str) -> Draw:

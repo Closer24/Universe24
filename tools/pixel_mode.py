@@ -29,10 +29,8 @@ from event_universe.features.start.rests import held_rests, settled_rows
 from event_universe.lay import corrected
 from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
-from event_universe.loader.interval import INTERVAL
 from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
-from event_universe.loader.uniform import UNIFORM
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
 from event_universe.node import read as content_read
@@ -1309,16 +1307,7 @@ def pixel_mode(
     wrap = Wrap(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
-    for key in (
-        UNIFORM,
-        INTERVAL,
-    ):  # the one Node (2026-10-22): every board's interval no observable, no key
-        if key in document:
-            raise ValueError(
-                f"{key} is declared ({document[key]!r}): under the law of one Node every world's massless rows "
-                "rest on the zero-mean part where the board has no sink and carry their volume; drop the key"
-            )
-    free = True
+    free = True  # the one Node: every massless rest the zero-mean part where the board has no sink
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
     kept = [n for n, body in enumerate(rows) if not laid_by_the_engine(body)]

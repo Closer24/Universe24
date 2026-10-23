@@ -2,38 +2,10 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
 from dataclasses import replace
-from typing import Any
 
 from event_universe.features import volume
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.uniform import UNIFORM
-
-INTERVAL, UNOBSERVABLE = "interval", "unobservable"  # the board's interval a count no act reads
-
-
-def interval_of(value: object, faces: Mapping[str, Any]) -> bool:
-    """The world's key `interval` (ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22): its one value `unobservable`, the declaration that a uniform level is a change of units at every Node alike and so is its change from interval to interval, the board's interval a count no act reads, so that the mean's velocity is no datum of the seed and the content fixes it (The mean's velocity is the content's: the constraint reached from rest; the massless row carrying its time line as the volume's level, features/volume, `volume_rows`); the massless row's rest the zero-mean part of its sources (features/start `rest`), the k = 0 component Rule3's own line; refused by name at any other value, and refused by name where a face is open or closed: a board with a sink has no free uniform mode, and the rest beyond the face fixes the clock's unit, so the key stands on a board periodic on every axis alone; the staggered mode stays refused on every even box (`loader/world.even_box_refused`)."""
-    raise ValueError(
-        f"{INTERVAL} is declared ({value!r}): under the law of one Node the board's interval is no observable "
-        "in every world, the massless row of the content carrying its time line as the volume's level on every "
-        "board, wrapped or faced (beyond a face the rest fixes the clock's unit: the fill is the rest's volume), "
-        "and no key switches it; drop the key (the owner's word of 2026-10-22)"
-    )
-
-
-def one_key(world: Mapping[str, Any]) -> None:
-    """A world declares the hypothesis's key `interval: unobservable` or the law's `uniform: carried` and never both, since the two name one board's uniform mode under two laws, the volume's line and the carried mean (ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-22 and the clause of 2026-10-21 kept by name; the reader's line L2 on the design): refused by name where both stand."""
-    for key in (UNIFORM, INTERVAL):
-        if key in world:
-            raise ValueError(
-                f"the world declares `{key}: {world[key]!r}`: under the law of one Node every board's massless "
-                "rows of the content carry their time line as the volume's level and their k = 0 mode on Rule3's "
-                "own line, in every world, and no key switches it (`uniform: {CARRIED}` the law's key of "
-                "2026-10-21 and `interval: {UNOBSERVABLE}` the hypothesis's key of 2026-10-22, both one value "
-                "for every world); drop the key (the owner's word of 2026-10-22)"
-            )
 
 
 def volume_rows(
@@ -47,7 +19,7 @@ def volume_rows(
         moved = family.held and not family.wronskian and family.pair[0] == family.pair[1]
         if moved and not family.pressure_trace:
             raise ValueError(
-                f"{family.name!r} carries the volume's level under `{INTERVAL}: {UNOBSERVABLE}` and declares no "
+                f"{family.name!r} carries the volume's level under the volume form and declares no "
                 "`pressure: trace`: the volume's exponent d + 1 is the trace's one weight for every mix (features/volume; "
                 "ALGEBRA.md, The stress's trace is the time line's); declare it or drop the key"
             )
@@ -66,7 +38,7 @@ def kicks_refused(unobservable: bool, families: tuple[FamilyRule, ...], packets:
         if name in holders:
             raise ValueError(
                 f"packets[{number}] lays a kick on {name!r}, a holder of the content, under "
-                f"`{INTERVAL}: {UNOBSERVABLE}`: the mean's velocity is the content's by the constraint's attractor "
+                "the volume form: the mean's velocity is the content's by the constraint's attractor "
                 "and nobody's declaration (ALGEBRA.md, No write from outside Rule3 wakes either double root of "
                 "the massless row, the clause of 2026-10-22; The mean's velocity is the content's)"
             )

@@ -5,7 +5,6 @@ from __future__ import annotations
 import itertools
 from dataclasses import dataclass, replace
 
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import holds_period
 from event_universe.features.click import SCALE_OF, along_cosine, below_the_band, envelope, line_total
@@ -20,7 +19,7 @@ READER_RECORD_KEYS = (
     "node_detector",
 )  # a body as a NodeDetector with a record of its own
 PART_KEYS, PART_REQUIRED = ("part", "name", "count", "capacity"), ("part", "name", "count")
-TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance", "dipole")  # a transition's keys
+TRANSITION_KEYS = ("from", "to", "drive", "weight", "resonance")  # a transition's keys
 TRANSITION_REQUIRED = (
     "from",
     "to",
@@ -62,27 +61,6 @@ def weight_of(value: object, label: str) -> tuple[int, int]:
             raise ValueError(f"{label} is an integer from 1 or a pair [num, den], got {value!r}")
         return integer(value[0], f"{label}[0]", 1), integer(value[1], f"{label}[1]", 1)
     return integer(value, label, 1), 1
-
-
-def dipole_of(value: object, label: str) -> tuple[tuple[int, int, int], int]:
-    """A transition's `dipole`: [[n_x, n_y, n_z], den], the transition's dipole vector in the Link unit as three integers over den from 1, not all 0, the frame's element SUM_i (x_i - c) phi_e(i) phi_g(i) sin(U_i + (omega_e + omega_g) / 2) / sqrt(N_e N_g) times the body's read weight of its holder (ALGEBRA.md, The pixel's representation theorem, Theorem 2); the unit: the level read per interval is SUM_a n_a (L_{c+a} - L_{c-a}) over 2 den by the carried division, a level as the scalar path's, so the window's turn is k |SUM_t a_t e^(i Omega t)| in either form; refused by name otherwise."""
-    if (
-        not isinstance(value, list)
-        or len(value) != 2
-        or not isinstance(value[0], list)
-        or len(value[0]) != 3
-    ):
-        raise ValueError(
-            f"{label} is [[n_x, n_y, n_z], den], the vector in the Link unit over den, got {value!r}"
-        )
-    vector = tuple(
-        integer(value[0][axis], f"{label}[0][{axis}]", -MAX_WORK_INT, MAX_WORK_INT) for axis in range(3)
-    )
-    if not any(vector):
-        raise ValueError(
-            f"{label} is the zero vector: a transition coupling by nothing is no transition"
-        )
-    return (vector[0], vector[1], vector[2]), integer(value[1], f"{label}[1]", 1)
 
 
 def pair_of(value: object, label: str) -> tuple[int, int]:
@@ -177,14 +155,7 @@ def transitions_of(
         drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
         weight, den = weight_of(row["weight"], f"{label}[{index}].weight")
         resonance = pair_of(row["resonance"], f"{label}[{index}].resonance")
-        dipole, scale = (None, 1)
-        if "dipole" in row:  # refused under the law of one Node: the scalar coupling the one act
-            raise ValueError(
-                f"{label}[{index}].dipole is declared: under the law of one Node a transition couples by the "
-                "drive's level at the Node times its `weight` in every world (the path as it stood), and the "
-                "vector coupling, a hypothesis under its own name (ALGEBRA.md, The pixel's representation), "
-                "switches no Node's act; drop the key (the owner's word of 2026-10-22)"
-            )
+        dipole, scale = (None, 1)  # the one coupling: the drive's level at the Node times the weight
         found.append(Transition(leaves, enters, drive, weight, resonance, den, dipole, scale))
     return tuple(found)
 

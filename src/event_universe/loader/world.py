@@ -32,7 +32,7 @@ from event_universe.loader.faces import (
     receding_of,
 )
 from event_universe.loader.instrument import declared_body
-from event_universe.loader.interval import INTERVAL, kicks_refused, one_key, volume_rows
+from event_universe.loader.interval import kicks_refused, volume_rows
 from event_universe.loader.keys import AXES, Node, document_at, integer, keyed, node_of, weights_of
 from event_universe.loader.lay import Lay, budget_gate, lay_of
 from event_universe.loader.mode import Levels, Profile, entry_of, levels_of, mode_entries
@@ -44,18 +44,12 @@ from event_universe.loader.node_detector_declaration import (
 )
 from event_universe.loader.node_detector_rows import reader_count
 from event_universe.loader.packets import PacketRow, WholePacket, packets_of, wholes_of
-from event_universe.loader.uniform import UNIFORM
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
 WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay")
-ONE_NODE_WORLD = (
-    UNIFORM,
-    INTERVAL,
-    "erasure",
-)  # the world's former switches, each refused by name under the law of one Node (2026-10-22)
 WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
@@ -325,14 +319,6 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
     """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name."""
-    if isinstance(document, dict):
-        one_key(document)  # `uniform` and `interval` refused by name: one value for every world
-        if "erasure" in document:
-            raise ValueError(
-                f"erasure is declared ({document['erasure']!r}): under the law of one Node the erasing front "
-                "writes to 0 at the reach in every world (the hard front, the law as written) and no key "
-                "tapers it; drop the key (the owner's word of 2026-10-22)"
-            )
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
     erasure = 1  # the front's taper, the one Node's
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
@@ -347,7 +333,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     periodic = tuple(faces[axis] == "periodic" for axis in AXES)
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
     even_box_refused(shape, periodic, families)
-    carried = False  # the law's key `uniform: carried` refused by name (one_key)
+    carried = False  # no mode of the uniform line: the volume form everywhere
     unobservable = True  # the one Node: every board's interval is no observable (loader/interval.py)
     wraps, opened = (periodic[0], periodic[1], periodic[2]), (open_axes[0], open_axes[1], open_axes[2])
     if any(open_axes) and "face_depth" not in world:
