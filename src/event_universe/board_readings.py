@@ -105,7 +105,11 @@ def stresses(board: Lattice) -> Stresses:
     """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`readings.stresses_of`), the count's flux along each axis beside it (`readings.axis_sources_of`, the flux holder's odd lines' source) and, where a held row of the world declares the shear (`off_diagonals`), the shear's part on each axis pair, the product of the Node's own two axis differences D_a D_b at the same Node and interval (`readings.off_diagonals_of`, the shear lines' source): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension); a world without the word runs as before bit for bit, the shear's readings not made."""
     return {
         s: readings.axis_sources_of(
-            board.families[s[0]].pair[0], board.lines_of(*s), board.wrap, board.off_diagonals
+            board.families[s[0]].pair[0],
+            board.lines_of(*s),
+            board.wrap,
+            board.off_diagonals,
+            flux.frames_of(s[0], board.families, board.states, board.wrap, s[1]),
         )
         for s in sources_of(board.families, board.order)
     }
@@ -127,7 +131,8 @@ def sense_fluxes(
     index, record = source
     holder = board.families[node.sign_holder(index, board.families)]
     if not holder.lorentz:
-        return readings.sense_current_of(lines, board.wrap)
+        frames = flux.frames_of(index, board.families, board.states, board.wrap, record)
+        return readings.sense_current_of(lines, board.wrap, frames)
     read = turned_read(board, index, record, direction)
     return covector.link_fluxes(lines, read.pairs, read.square, board.wrap)
 

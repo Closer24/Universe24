@@ -11,8 +11,16 @@ from event_universe import node, records
 from event_universe.core.ports import AXES, Wrap
 from event_universe.core.rule3 import Rule, division_forward, rule3
 from event_universe.features.click import presented
-from event_universe.loader.derived import PLANE, row_of
-from event_universe.plane import NO_FACE, Faces, link_levels, link_pairs, odd_links, phase_links
+from event_universe.loader.derived import PLANE, row_of, turns
+from event_universe.plane import (
+    NO_FACE,
+    Faces,
+    frame_signs,
+    link_levels,
+    link_pairs,
+    odd_links,
+    phase_links,
+)
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, record_slice
 
@@ -96,9 +104,13 @@ def face_differences(
 
 
 def turned_link_fluxes(
-    levels: tuple[np.ndarray, np.ndarray], reaches: tuple[Any, ...], pairs: Pairs, wrap: Wrap
+    levels: tuple[np.ndarray, np.ndarray],
+    reaches: tuple[Any, ...],
+    pairs: Pairs,
+    wrap: Wrap,
+    frames: tuple[Any, ...] | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """The complex flux line's Link sum on a turned or folded plane, z = re + i im, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] at every Node, its two real parts (ALGEBRA.md #the-line, The flux form on a turned or folded Link; `plane.link_pairs`, the pair (R^c, R^s) = p_i^2 (X^c, X^s) per Port, the plain reach R_ij = p_i^2 X_ij): the record sent on a turned Link is the neighbour's pair and the Port reads it turned by the Link's pair, R_ij m_ij the pair product, the far end reading the conjugate pair at its own pace (X^s_ji = -X^s_ij exactly, `plane.sign_pairs`, `plane.fold_pairs`); beyond a face and at a Node beyond the board the pair sent is (0, 0); on an axis of extent one the Node's own pair through both Ports, whose odd parts cancel (the two Ports carry the odd level with opposite signs, `plane.link_levels`), the self-Link's term 2 (R^c - R) z. Gathered Link by Link as `link_fluxes` gathers a plain line's."""
+    """The complex flux line's Link sum on a turned or folded plane, z = re + i im, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] at every Node, its two real parts (ALGEBRA.md #the-line, The flux form on a turned or folded Link; `plane.link_pairs`, the pair (R^c, R^s) = p_i^2 (X^c, X^s) per Port, the plain reach R_ij = p_i^2 X_ij): the record sent on a turned Link is the neighbour's pair and the Port reads it turned by the Link's pair, R_ij m_ij the pair product, the far end reading the conjugate pair at its own pace (X^s_ji = -X^s_ij exactly, `plane.sign_pairs`, `plane.fold_pairs`); beyond a face and at a Node beyond the board the pair sent is (0, 0); on an axis of extent one the Node's own pair through both Ports, whose odd parts cancel (the two Ports carry the odd level with opposite signs, `plane.link_levels`), the self-Link's term 2 (R^c - R) z. Gathered Link by Link as `link_fluxes` gathers a plain line's. `frames`, per Port the sign the Node reads its neighbour's plane with (plane.frame_signs): -1 across a Link whose two ends stand in different frames (one end time-reversed by the swap at the top, the other not), where the neighbour's value is read conjugated, im_j -> -im_j, so that the Link reads its two ends in one frame (ALGEBRA.md, The swap at the top, the frame clause); None every Port at +1."""
     evens, odds = pairs
     re_level, im_level = levels
     beyond = wrap.beyond
@@ -107,6 +119,8 @@ def turned_link_fluxes(
 
     def add(where: tuple[Any, ...], port: int, re_j: Any, im_j: Any) -> None:
         c, s, r = at(evens[port], where), at(odds[port], where), at(reaches[port], where)
+        if frames is not None:
+            im_j = at(frames[port], where) * im_j
         flux_re[where] += c * re_j - s * im_j - r * re_level[where]
         flux_im[where] += s * re_j + c * im_j - r * im_level[where]
 
@@ -235,9 +249,10 @@ def gathered_plane(
     faces: tuple[Faces, Faces],
     pairs: Pairs,
     direction: int,
+    frames: tuple[Any, ...] | None = None,
 ) -> list[np.ndarray]:
-    """The Links' sum of a turned or folded plane's one complex line, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now], its two real parts gathered Link by Link (`turned_link_fluxes`), with the faces the click act presents on each part's own arrivals (`face_differences`: a re arrival's difference enters the re part by R^c and the im part by R^s, an im arrival's the re part by -R^s and the im part by R^c)."""
-    fluxes = list(turned_link_fluxes(now, rule.reaches, pairs, wrap))
+    """The Links' sum of a turned or folded plane's one complex line, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now], its two real parts gathered Link by Link (`turned_link_fluxes`, `frames` the sign each Port reads its neighbour's im part with, the two ends read in one frame), with the faces the click act presents on each part's own arrivals (`face_differences`: a re arrival's difference enters the re part by R^c and the im part by R^s, an im arrival's the re part by -R^s and the im part by R^c, the im arrival's difference read with the Port's frame sign)."""
+    fluxes = list(turned_link_fluxes(now, rule.reaches, pairs, wrap, frames))
     for part, here in enumerate(faces):
         if not here[0]:
             continue
@@ -245,6 +260,8 @@ def gathered_plane(
             rule, wrap, now[part], other[part], remainders[part], 0, here, direction
         ):
             c, s = at(pairs[0][port], node_at), at(pairs[1][port], node_at)
+            if part == 1 and frames is not None:
+                difference = at(frames[port], node_at) * difference
             fluxes[0][node_at] += (c if part == 0 else -s) * difference
             fluxes[1][node_at] += (s if part == 0 else c) * difference
     return fluxes
@@ -258,8 +275,9 @@ def step_plane(
     direction: int,
     faces: tuple[Faces, Faces],
     pairs: Pairs | None,
+    frames: tuple[Any, ...] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """A plane's two lines by Rule3's flux line (ALGEBRA.md #the-line, The flux form on a turned or folded Link): at no turn (`pairs` None) each line a plain line (`step_line`); turned or folded, the one complex line w (z_next - 2 z_now + z_before) + (r' - r) = SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] - D_i z_now, its two real parts gathered (`gathered_plane`) and each divided by Rule3 with its own remainder (`core/rule3.rule3`); the bookings (first, second) the form and the Wronskian are read from: first the pair the step started from with the level it left behind, second the level it wrote with the pair it started from (ALGEBRA.md #the-interval)."""
+    """A plane's two lines by Rule3's flux line (ALGEBRA.md #the-line, The flux form on a turned or folded Link): at no turn (`pairs` None) each line a plain line (`step_line`); turned or folded, the one complex line w (z_next - 2 z_now + z_before) + (r' - r) = SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] - D_i z_now, its two real parts gathered (`gathered_plane`, with `frames` the sign each Port reads its neighbour's im part with, plane.frame_signs) and each divided by Rule3 with its own remainder (`core/rule3.rule3`); the bookings (first, second) the form and the Wronskian are read from: first the pair the step started from with the level it left behind, second the level it wrote with the pair it started from (ALGEBRA.md #the-interval)."""
     now = (re.now, im.now) if direction == 1 else (re.before, im.before)
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
     if pairs is None:
@@ -269,7 +287,7 @@ def step_plane(
         ]
     else:
         remainders = (re.remainder, im.remainder)
-        fluxes = gathered_plane(rule, wrap, now, other, remainders, faces, pairs, direction)
+        fluxes = gathered_plane(rule, wrap, now, other, remainders, faces, pairs, direction, frames)
         stepped = [
             rule3(fluxes[part], rule.mass, rule.wall, now[part], other[part], remainder, direction)
             for part, remainder in enumerate(remainders)
@@ -299,8 +317,9 @@ def step_family(
     record: int = 0,
     faces: Mapping[int, Faces] | None = None,
     pairs: Pairs | None = None,
+    frames: tuple[Any, ...] | None = None,
 ) -> tuple[list[Record], Booking]:
-    """Every line of one record of a family stepped in `direction` with its rule (ALGEBRA.md #the-interval): line by line in the law's flux form (`step_line`, the time line of a holder of the content reading its rest beyond every face), a plane plane by plane (`step_plane`: at no turn two plain lines, turned or folded the one complex line with the pairs `pairs`, each Link's read the pair (R^c, R^s), `plane.link_pairs`); every line with the faces the click act presents to it at this step; with the lines, the booking (first, second) the form and the Wronskian are read from."""
+    """Every line of one record of a family stepped in `direction` with its rule (ALGEBRA.md #the-interval): line by line in the law's flux form (`step_line`, the time line of a holder of the content reading its rest beyond every face), a plane plane by plane (`step_plane`: at no turn two plain lines, turned or folded the one complex line with the pairs `pairs`, each Link's read the pair (R^c, R^s), `plane.link_pairs`, and `frames` the sign each Port reads its neighbour's im part with, `frames_of`); every line with the faces the click act presents to it at this step; with the lines, the booking (first, second) the form and the Wronskian are read from."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
@@ -332,7 +351,7 @@ def step_family(
     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
         pair = own[start], own[start + 1]
         here = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
-        found, (begun, left) = step_plane(*pair, rule, wrap, direction, here, pairs)
+        found, (begun, left) = step_plane(*pair, rule, wrap, direction, here, pairs, frames)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -370,6 +389,18 @@ def pairs_of(
     return link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
 
 
+def frames_of(
+    index: int, families: records.Families, states: records.States, wrap: Wrap, record: int = 0
+) -> tuple[Any, ...] | None:
+    """The sign a turned record reads its neighbour's plane with through each of its six Ports, in Port order (plane.frame_signs on the phase row's remainder of the record's own row of its holder of the sign: +1 where the Link's two ends stand in one frame, -1 where one end is time-reversed by the swap at the top and the other not, so that the Link reads its two ends in one frame, ALGEBRA.md, The swap at the top, the frame clause); None for a record that is not turned."""
+    if not turns(families, index):
+        return None
+    row = row_of(families, index, record)
+    assert row is not None
+    frame = states[node.sign_holder(index, families)].phases[row][node.PHI].remainder
+    return frame_signs(frame, wrap)
+
+
 def step_records(
     index: int,
     families: records.Families,
@@ -391,8 +422,9 @@ def step_records(
         pairs = pairs_of(
             index, families, states, direction, wrap, gamma, content, factors, record, amplitude
         )
+        frames = frames_of(index, families, states, wrap, record)
         found, booking = step_family(
-            index, families, states, rule, wrap, gamma, direction, record, faces, pairs
+            index, families, states, rule, wrap, gamma, direction, record, faces, pairs, frames
         )
         lines, bookings = lines + found, bookings + [booking]
     return lines, bookings

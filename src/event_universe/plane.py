@@ -60,16 +60,31 @@ def link_guard(numerator: Any, wall: int, name: str, axis: int) -> None:
         )
 
 
+def frame_signs(frame: Any, wrap: Wrap) -> tuple[Any, ...]:
+    """The sign each of a Node's six Ports reads its neighbour's plane with, in Port order (ALGEBRA.md, The swap at the top, the frame clause; the bijection hand's derivation M25): `frame` the Node's phase row's remainder at the wall 2, 0 at a record in the frame it was born in and 1 at a record time-reversed an odd number of times by the swap at the top (the remainder complemented at the swap like every remainder); +1 through a Port whose two ends stand in one frame, -1 where they differ, so that the Link reads its two ends in one frame: the neighbour's plane value conjugated and its K negated across such a Link (node.phase_counts, flux.turned_link_fluxes, `phase_links`); +1 beyond a face (the fill 0 against 0, where the pair is 0 too)."""
+    own = np.asarray(frame, dtype=object)
+    found: list[Any] = []
+    for axis in range(AXES):
+        for sigma in (1, -1):
+            other = arrival(own, axis, sigma, wrap, fill=0)
+            beyond = arrival(np.ones_like(own), axis, sigma, wrap) == 0
+            found.append(np.where(beyond | (other == own), 1, -1))
+    return tuple(found)
+
+
 def phase_links(lines: list[Record], wrap: Wrap) -> Phases:
-    """The phase pair (c, s) a Node reads through each of its six Ports in Port order (features/phase, `read`; the mathematician's item (g)): through the +a Port the pair of the Node's own +a Link, the cosine and the sine line of the axis among `lines` (the six phase lines of one row of the sign, cosine and sine per axis, then the three count lines), (X cos theta, X sin theta) at theta = |SUM_t n_ij| theta_0 with the sine signed by the Link's count (features/phase `signed_read`: the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels, 2026-10-21); through the -a Port the pair of the Link (i - a, i), the neighbour's at its +a Link, read conjugated, (c, -s), so that the pair read from the two ends is exact by direction (K Hermitian, the count exact); (0, 0) beyond a face, where the arrival is 0 too."""
+    """The phase pair (c, s) a Node reads through each of its six Ports in Port order (features/phase, `read`; the mathematician's item (g)): through the +a Port the pair of the Node's own +a Link, the cosine and the sine line of the axis among `lines` (the six phase lines of one row of the sign, cosine and sine per axis, then the three count lines), (X cos theta, X sin theta) at theta = |SUM_t n_ij| theta_0 with the sine signed by the Link's count (features/phase `signed_read`: the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels, 2026-10-21); through the -a Port the pair of the Link (i - a, i), the neighbour's at its +a Link, read conjugated, (c, -s), so that the pair read from the two ends is exact by direction (K Hermitian, the count exact), and read unconjugated, (c, s), where the Link's two ends stand in different frames (`frame_signs` on the row's phase row, the last of `lines`: the count K_i - (-1)^(b_i xor b_j) K_j is the same from both ends of such a Link, the two ends reading one frame, ALGEBRA.md, The swap at the top, the frame clause); (0, 0) beyond a face, where the arrival is 0 too."""
     found: list[tuple[Any, Any]] = []
+    signs = frame_signs(lines[3 * AXES].remainder, wrap)
     for axis in range(AXES):
         c, s, n = lines[2 * axis], lines[2 * axis + 1], lines[2 * AXES + axis]
         cosine, sine = signed_read(
             ((c.now, c.before, c.remainder), (s.now, s.before, s.remainder)), n.now
         )
         found.append((cosine, sine))
-        found.append((arrival(cosine, axis, -1, wrap), -arrival(sine, axis, -1, wrap)))
+        found.append(
+            (arrival(cosine, axis, -1, wrap), -signs[2 * axis + 1] * arrival(sine, axis, -1, wrap))
+        )
     return tuple(found)
 
 

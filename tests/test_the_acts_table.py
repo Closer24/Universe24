@@ -304,6 +304,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the bound's quotients, once each
     ("loader/derived.py", "bound_under_rooms", "largest_below"): "S",  # the largest level by search
+    (
+        "loader/derived.py",
+        "alpha_of",
+        "division_forward",
+    ): "D",  # the ratio's reduction, once each, discarded
+    ("loader/derived.py", "alpha_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("loader/lay.py", "least_action", "division_forward"): "D",  # the budget's quotient, once
     (
         "loader/node_detector_declaration.py",
@@ -329,7 +335,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "largest_below",
     ): "S",  # den cos k_a from den sin k_a by search (2026-10-21)
     # node.py
-    ("node.py", "phase_carried", "phase.iterate"): "R",  # the record's phase line carried to the count the state stands at (2026-10-23)
+    (
+        "node.py",
+        "phase_carried",
+        "phase.iterate",
+    ): "R",  # the record's phase line carried to the count the state stands at (2026-10-23)
+    (
+        "node.py",
+        "phase_rows",
+        "act",
+    ): "R",  # the Node's phase row at the wall 2 with the write 2 c, division_forward or division_back by direction, its remainder the record's frame (the frame clause, 2026-10-23)
     # flux.py, the step
     (
         "flux.py",

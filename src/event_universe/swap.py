@@ -118,11 +118,19 @@ def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int)
             if not lines:
                 continue
             phi, pre = lines[node.PHI], held[2][index][row][node.PHI]
+            frame = np.asarray(
+                np.where(
+                    mask,
+                    records.complement(np.asarray(phi.remainder, dtype=object), 2),
+                    np.asarray(phi.remainder, dtype=object),
+                ),
+                dtype=phi.remainder.dtype,
+            )  # the row's remainder at the wall 2 complemented: the record's frame flipped (plane.frame_signs)
             if direction == 1:
                 image = records.Record(
                     np.asarray(np.where(mask, pre.before, phi.now), dtype=phi.now.dtype),
                     np.asarray(np.where(mask, pre.now, phi.before), dtype=phi.before.dtype),
-                    phi.remainder,
+                    frame,
                 )
             else:
                 now, before = np.asarray(pre.now, dtype=object), np.asarray(pre.before, dtype=object)
@@ -130,7 +138,7 @@ def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int)
                 image = records.Record(
                     np.asarray(np.where(mask, post, phi.now), dtype=phi.now.dtype),
                     np.asarray(np.where(mask, before, phi.before), dtype=phi.before.dtype),
-                    phi.remainder,
+                    frame,
                 )
             state.phases[row] = lines[: node.PHI] + [image]
         counts = node.phase_counts(index, board.families, board.states, -direction, board.wrap, gamma)
