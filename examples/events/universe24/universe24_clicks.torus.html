@@ -55,7 +55,7 @@ svg { width: 100%; height: auto; display: block; }
   <svg id="torus" viewBox="0 0 1000 760" role="img" aria-label="the torus"></svg>
   <div class="words" id="torus-words"></div>
 </section>
-<section class="panel" id="charts-box" hidden><h2>At the instrument's Node: the click rate, 1 / e^U and the light's quanta, interval by interval</h2><div id="charts"></div><div class="words" id="charts-words"></div></section>
+<section class="panel" id="charts-box" hidden><h2>At the instrument's Node: the click rate, 1 / e^U and the light's quanta, interval by interval</h2><div id="charts-drawn"></div><div class="words" id="charts-words"></div></section>
 <script>
 const NODES = JSON.parse(document.getElementById('nodes').textContent);
 const COURSE = JSON.parse(document.getElementById('course').textContent);
@@ -156,7 +156,7 @@ function chart(box, title, series, xs, options = {}) {
 function charts() {
   if (!CHARTS.length) return;
   document.getElementById('charts-box').hidden = false;
-  const box = document.getElementById('charts');
+  const box = document.getElementById('charts-drawn');  // its own id: 'charts' is the embedded data's script element
   const norm = a => { const m = Math.max(...a.filter(v => v !== null && isFinite(v)).map(Math.abs)) || 1; return a.map(v => v === null ? null : v / m); };
   const words = [];
   for (const c of CHARTS) {
