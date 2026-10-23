@@ -42,9 +42,13 @@ def lines_total(family: FamilyRule, lines: Sequence[Record]) -> list[Record]:
 
 
 def link_fluxes(
-    lines: Sequence[Record], pairs: Pairs, square: Any, wrap: Wrap
+    lines: Sequence[Record],
+    pairs: Pairs,
+    square: Any,
+    wrap: Wrap,
+    frames: Sequence[Any] | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """The flux of a two-part record's step through each of the Node's three +a Links in the Link unit, Phi_a(i) = Im(conj(z_i) (X^c_ij + i X^s_ij) z_(i+a)) = re_i (X^s re_j + X^c im_j) - im_i (X^c re_j - X^s im_j), every plane's added, read from the levels now at the interval's start and the Link's pair (X^c, X^s) the step reads through the +a Port (`flux.pairs_of`, which gives p_i^2 (X^c, X^s); `square` the p_i^2 of the record's read, divided out exactly), one Link's reach: the flux of the law's exact continuity identity of the record's own step, w (W_i(t) - W_i(t + 1)) = p_i^2 SUM_a (Phi_a(i) - Phi_a(i - a)) + Im(conj(z_i) (r - r')) at every Node bit for bit (multiply Rule3's step by the conjugate of the record and take the imaginary part; ALGEBRA.md, The odd line's source is the sign's own current, the identity with the Link's pair in the temporal gauge and the remainders' term as the tension's identity carries it), antisymmetric on the Link by direction since the far end reads the conjugate pair (X^c, -X^s) exactly (`plane.sign_pairs`, `features/phase.fold`); the source of the odd line a of the record's own row under the Lorentz form (`records.write_sources`, over the wall 2 den_s G^2 E_s T), where the plain current J_a / 2 of the two Links' mean was the source without it (`readings.sense_current_of`)."""
+    """The flux of a two-part record's step through each of the Node's three +a Links in the Link unit, Phi_a(i) = Im(conj(z_i) (X^c_ij + i X^s_ij) z_(i+a)) = re_i (X^s re_j + X^c im_j) - im_i (X^c re_j - X^s im_j), every plane's added, read from the levels now at the interval's start and the Link's pair (X^c, X^s) the step reads through the +a Port (`flux.pairs_of`, which gives p_i^2 (X^c, X^s); `square` the p_i^2 of the record's read, divided out exactly), one Link's reach: the flux of the law's exact continuity identity of the record's own step, w (W_i(t) - W_i(t + 1)) = p_i^2 SUM_a (Phi_a(i) - Phi_a(i - a)) + Im(conj(z_i) (r - r')) at every Node bit for bit (multiply Rule3's step by the conjugate of the record and take the imaginary part; ALGEBRA.md, The odd line's source is the sign's own current, the identity with the Link's pair in the temporal gauge and the remainders' term as the tension's identity carries it), antisymmetric on the Link by direction since the far end reads the conjugate pair (X^c, -X^s) exactly (`plane.sign_pairs`, `features/phase.fold`); the source of the odd line a of the record's own row under the Lorentz form (`records.write_sources`, over the wall 2 den_s G^2 E_s T), where the plain current J_a / 2 of the two Links' mean was the source without it (`readings.sense_current_of`); `frames`, per Port the sign the neighbour's im part is read with (plane.frame_signs, the Link's two ends in one frame, ALGEBRA.md, The swap at the top, the frame clause), None every Port at +1."""
     evens, odds = pairs
     found: list[Any] = [0, 0, 0]
     for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
@@ -53,6 +57,8 @@ def link_fluxes(
             cosine = division_forward(evens[port], square, 0)[0]  # exact: the pair times p_i^2
             sine = division_forward(odds[port], square, 0)[0]
             re_j, im_j = arrival(re_line.now, axis, 1, wrap), arrival(im_line.now, axis, 1, wrap)
+            if frames is not None:  # the neighbour's im part in the Node's frame (plane.frame_signs)
+                im_j = frames[port] * im_j
             found[axis] = (
                 found[axis]
                 + re_line.now * (sine * re_j + cosine * im_j)

@@ -58,7 +58,7 @@ def turned_read(
     direction: int = 1,
     read: tuple[Any, node.Factors] | None = None,
 ) -> readings.Turned:
-    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall) and the quantum's measure of a current W_c = 3 den T."""
+    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall), the quantum's measure of a current W_c = 3 den T and the frame signs of its six Ports (`flux.frames_of`, the Link's two ends read in one frame)."""
     gamma, action, family = board.world.node_clock, board.world.quantum_action, board.families[index]
     content, factors = board.read(index, direction, record) if read is None else read
     pairs = flux.pairs_of(
@@ -75,8 +75,9 @@ def turned_read(
     )
     assert pairs is not None  # a turned record reads its holder's pairs
     pace = paces.link_pace_of(gamma, content)
+    frames = flux.frames_of(index, board.families, board.states, board.wrap, record)
     return readings.Turned(
-        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action
+        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action, frames
     )
 
 
@@ -134,7 +135,7 @@ def sense_fluxes(
         frames = flux.frames_of(index, board.families, board.states, board.wrap, record)
         return readings.sense_current_of(lines, board.wrap, frames)
     read = turned_read(board, index, record, direction)
-    return covector.link_fluxes(lines, read.pairs, read.square, board.wrap)
+    return covector.link_fluxes(lines, read.pairs, read.square, board.wrap, read.frames)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:
