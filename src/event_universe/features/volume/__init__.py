@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import replace
 from functools import cache
 from typing import TYPE_CHECKING, Any
@@ -96,6 +97,16 @@ def level_of(gamma: int, volume: Any) -> Any:
 def at_start[Row: DataclassInstance](families: tuple[Row, ...]) -> tuple[Row, ...]:
     """The families as the start reads them, every row at its level: the volume's flag off until the start's rests are solved in the level and converted once (`started`; Lattice.start restores the loader's families after)."""
     return tuple(replace(family, motion_volume=False) for family in families)
+
+
+def resting(held: Sequence[int], families: Any, loaded: Any) -> list[tuple[int, int]]:
+    """The held rows whose rests the start solves, the holders of the content as (index, 0) (`Lattice.start`): every held row that is not the sign's holder and not the gapped row carrying its volume, which the start lays at the vacuum instead, its two levels the empty state's 0 converted once to the volume Gamma with the remainder at the half wall, the seed at rest the design's initial condition (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader; The closed lattice has no rest: the vacuum is no rest state of a gapped uniform mode, so no rest of its line is solved); `families` the start's rows with the volume's flag off (`at_start`), `loaded` the loader's with it set."""
+    return [
+        (i, 0)
+        for i in held
+        if not families[i].wronskian
+        and not (loaded[i].motion_volume and loaded[i].pair[0] != loaded[i].pair[1])
+    ]
 
 
 def started(gamma: int, family: Any, line: Any) -> Any:
