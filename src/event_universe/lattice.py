@@ -16,6 +16,7 @@ import event_universe.records as records
 from event_universe import (
     credit,
     emission,
+    flux,
     front,
     growth,
     lists,
@@ -447,7 +448,11 @@ class Lattice:
         for record in quanta_records(self.families, index):
             own = record_lines(self.families, index, record, lines)
             stresses[(index, record)] = readings.axis_sources_of(
-                family.pair[0], own, self.wrap, self.off_diagonals
+                family.pair[0],
+                own,
+                self.wrap,
+                self.off_diagonals,
+                flux.frames_of(index, self.families, self.states, self.wrap, record),
             )
             if index in self.turning:
                 senses[(index, record)] = board_readings.sense_fluxes(self, (index, record), own, -1)

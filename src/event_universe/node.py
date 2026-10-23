@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, Wrap, arrival
-from event_universe.core.rule3 import Rule, rule_integers
+from event_universe.core.rule3 import Rule, division_back, division_forward, rule_integers
 from event_universe.features import phase, volume
 from event_universe.features.held_write import held_write
 from event_universe.features.read import (
@@ -25,6 +25,7 @@ from event_universe.loader.derived import FamilyRule, row_of, turns, weight_of
 from event_universe.plane import (
     Angles,
     fold_guard,
+    frame_signs,
     link_guard,
     link_levels,
     link_wall,
@@ -166,15 +167,16 @@ def clocked_potentials(
 def phase_counts(
     index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
 ) -> dict[int, list[Any]]:
-    """The count every Link of the holder's rows stands at in the state as it stands (ALGEBRA.md, The turn per proper interval, the centred count): per row, the Node's K = 2 (Phi_now - Phi_before) - c, c the row's clocked potential at the level `direction` names (`clocked_potentials`), which is Phi_next - Phi_before of the Rule3 triple whose write is c, twice the trapezoid sum of the clocked potential to the triple's centre (at the end of an interval, c at the level before, the write the act just took: K(m + 1); at a turned Node after the swap at the top the same reading gives -K(m + 1); after the inverse of the act, c at the level now: K(m)); per axis the Link's count K_i - K_(i + a), the two ends' difference, 0 beyond a face (`arrival`), the pair at -K the conjugate of the pair at +K (features/phase `signed_read`). On a structured board a Link between a turned Node and an unturned neighbour reads -K_i - K_j, the two clocks' accumulated phases summed, the law's reading of the two ends and no letter of the image: its pair is carried by about 2 |K| acts at the fire (108,753 counts on the charged 3-cube torus of the phase hand's record at its split top at 285 against 464 before, 224 s at load 19; the carry's cost grows with the interval as K does), the counts small again once the neighbour turns; and the inverse of that interval at the unturned neighbour reads this pair where the forward step read the pair at K_i - K_j, the turn not being a function of the post-state before the lines' inverse step (`Lattice.step_inverse` steps the lines back before it recognises the turn), so the run back is exact through a top every Node takes at once and through every interval without a fire, and at the unturned neighbours of a split top it is not (the structured board's course, open by name in ALGEBRA.md, The swap at the top)."""
+    """The count every Link of the holder's rows stands at in the state as it stands (ALGEBRA.md, The turn per proper interval, the centred count): per row, the Node's K = 2 (Phi_now - Phi_before) - c, c the row's clocked potential at the level `direction` names (`clocked_potentials`), which is Phi_next - Phi_before of the Rule3 triple whose write is c, twice the trapezoid sum of the clocked potential to the triple's centre (at the end of an interval, c at the level before, the write the act just took: K(m + 1); at a turned Node after the swap at the top the same reading gives -K(m + 1); after the inverse of the act, c at the level now: K(m)); per axis the Link's count K_i - s K_(i + a), the two ends' difference read in one frame (`frame_signs`: s = +1 where the two ends' phase rows carry one remainder at the wall 2 and -1 where one end is time-reversed by the swap and the other not, the neighbour's K negated into the Node's frame), 0 beyond a face (`arrival`), the pair at -K the conjugate of the pair at +K (features/phase `signed_read`). In the frame every record was born in the swap exchanges a plane's two levels like every plain line's (conj(conj z) = z, -(-K) = K), so the pair the two ends read is one and the same whichever end turned, and the inverse of a split top is exact at the unturned neighbours (M25; the former reading of a mixed Link, -K_i - K_j, carried the pair by about 2 |K| acts at the fire and the inverse read it where the forward step read K_i - K_j)."""
     found: dict[int, list[Any]] = {}
     for row, c in clocked_potentials(index, families, states, direction, wrap, gamma).items():
         phi = states[index].phases[row][PHI]
         k = 2 * (np.asarray(phi.now, dtype=object) - np.asarray(phi.before, dtype=object)) - c
+        signs = frame_signs(phi.remainder, wrap)
         counts = []
         for axis in range(AXES):
             beyond = arrival(np.ones_like(np.asarray(c)), axis, 1, wrap) == 0
-            counts.append(np.where(beyond, 0, k - arrival(k, axis, 1, wrap)))
+            counts.append(np.where(beyond, 0, k - signs[2 * axis] * arrival(k, axis, 1, wrap)))
         found[row] = counts
     return found
 
@@ -206,18 +208,21 @@ def phase_carried(
 
 
 def phase_rows(index: int, states: States, potentials: dict[int, Any], direction: int) -> None:
-    """The Node's phase row of every row of the sign stepped by Rule3 with the write c = `potentials` (the clocked potential at the level now, the interval's start in either direction; `clocked_potentials`), mass 0, no Links, the wall 1 (the clocked potential is the law's one rounding, the row's division exact, its remainder 0): forward Phi_next = 2 Phi_now - Phi_before + c, the row then (Phi_next, Phi_now); backward Phi_prev = 2 Phi_before - Phi_now + c, the row then (Phi_before, Phi_prev), bit for bit (ALGEBRA.md #the-direction)."""
+    """The Node's phase row of every row of the sign stepped by Rule3 with the write c = `potentials` (the clocked potential at the level now, the interval's start in either direction; `clocked_potentials`), mass 0, no Links, the wall 2 with the write 2 c by the carried division (the clocked potential is the law's one rounding, so (2 c + r) div 2 = c and the remainder r stands, 0 from the start; the remainder is the record's frame, complemented at the swap at the top like every remainder, 1 at a record time-reversed an odd number of times, `frame_signs`): forward Phi_next = 2 Phi_now - Phi_before + c, the row then (Phi_next, Phi_now); backward Phi_prev = 2 Phi_before - Phi_now + c, the row then (Phi_before, Phi_prev), bit for bit (ALGEBRA.md #the-direction)."""
     for row, c in potentials.items():
         lines = list(states[index].phases[row])
         phi = lines[PHI]
         now, before = np.asarray(phi.now, dtype=object), np.asarray(phi.before, dtype=object)
+        act = division_forward if direction == 1 else division_back
+        write, kept = act(2 * c, 2, np.asarray(phi.remainder, dtype=object))
+        remainder = np.asarray(kept, dtype=phi.remainder.dtype)
         if direction == 1:
             lines[PHI] = Record(
-                np.asarray(2 * now - before + c, dtype=phi.now.dtype), phi.now, phi.remainder
+                np.asarray(2 * now - before + write, dtype=phi.now.dtype), phi.now, remainder
             )
         else:
             lines[PHI] = Record(
-                phi.before, np.asarray(2 * before - now + c, dtype=phi.before.dtype), phi.remainder
+                phi.before, np.asarray(2 * before - now + write, dtype=phi.before.dtype), remainder
             )
         states[index].phases[row] = lines
 
