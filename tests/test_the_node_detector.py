@@ -278,10 +278,13 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         tuple(first[k] for k in words) == click and first["interval"] == board.interval == 42
     )  # the reader's window derived, the drive's passage over its two Nodes (2026-10-23; the former declared 21)
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
-    assert set(first) == set(
-        credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
-    )
+    assert (
+        set(first) - {"bias_bound"}
+        == set(
+            credits_keys
+            := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
+        )
+    )  # at the derived window the reader's click is a read's first draw and carries its bound (2026-10-23)
     assert len(node_draws) == 1 and tuple(node_draws[0][2]) in region  # the hole's one drawn Node
     assert not any(
         f.family == drv for f in board.credit.faces.get(board.interval + 1, [])

@@ -67,8 +67,16 @@ REAL_PORT_DIGESTS: dict[
         "5b61d065da2b1cca",
         2153,
     ),  # former e3907b49e7107747, d6a774f9d5346e84, 2162; centred 38daaff3c4ff1649; the clicks 3: left:minus@35, right:plus@35, top:minus@35
-    "ghz_x_y_y": ("df89005705555bb6", "03f76ace05e501e9", 1593),
-    "ghz_y_x_y": ("d37726d4ad3db38b", "21422c4532c84b95", 3300),
+    "ghz_x_y_y": (
+        "0c77d3edf4217284",
+        "fff22e30e4d65c26",
+        1613,
+    ),  # former df89005705555bb6, 03f76ace05e501e9, 1593; centred fff22e30e4d65c26; the clicks left:minus@35, right:plus@35, top:plus@35
+    "ghz_y_x_y": (
+        "db9e9f42462ef52a",
+        "ebae12a7ee683613",
+        3337,
+    ),  # former d37726d4ad3db38b, 21422c4532c84b95, 3300; the clicks left:minus@35, right:plus@35, top:plus@35
     "ghz_y_y_x": ("3b9802f5a46e3e74", "befdc50e632d240e", 5007),
 }
 REFUSED: dict[
