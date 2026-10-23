@@ -1,5 +1,6 @@
 """The click's read of the board (ALGEBRA.md, The click's read of the board; the owner's words: the board is deterministic and the click is the only instrument that reads it, the new draw built from the remainders and Rule3 only): the digits' number and the one division act per draw (`features/click.read_number`, `drawn_from`), the residue's and the quotient's independence, the digits' lattice at the exact vacuum paces and at the shipped content, the loader's refusal of a generator's keys and the read's refusals by name (`digits.read_of`), and the read at work on three shipped worlds re-declared beside tmp_path (`tests.laws.world_beside`): the singlet's two sides (the first side blind to the later side's basis bit for bit, the read writing nothing), the one photon's two bodies (the arriving record's digits and the body's own in the mixed radix of their walls) and the two slits' many-draw close (the digits spent by name at the shipped window, the close run at a shorter one)."""
 
+import math
 import random
 from collections import Counter
 
@@ -335,7 +336,7 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
 def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_complementary_after(
     monkeypatch,
 ):
-    """The digits' pair identity (the builder's measurement on the read's second commit, bell a' b: in 474 reads of 237 worlds the two lines' indices equal at every Node in 357 and complementary in 117, none else) and the read's copy rule on it (the reader's D2 and D5 of 2026-10-20): on the shipped bell worlds a' b, a' b' and a b each side reads the record's two lines at its four Nodes at the close 100, w div F = 108,000,000 at F = 3,072,000 on light's wall 331,776,000,000,000, the moduli of its first draw the base less one and the base. At every Node the second line's index r div F equals the first line's before any write (the left side, the parts laid alike), so the read takes each Node's distinct digits once: the side's eight digits read as four, the number's bits halved (four digits of 26.7 bits); after the left side's write the right side reads equal indices where the coefficients are equal (the basis [1, 1] at its port (1, 1), which writes nothing), w div F less them where the second part is negated, and, where the port zeroes a part (a b, the basis [1, 0]), that part's line at the lay's origin, w div 2F at every Node, no copy, its eight digits kept. The rule's three cases on a' b's left side at 60, its second line set beside the first: equal and w less it read once (four digits), moved by F at two of the four Nodes read at both (six). The indices, the coefficients standing at the right side's read and the numbers printed."""
+    """The digits' pair identity (the builder's measurement on the read's second commit, bell a' b: in 474 reads of 237 worlds the two lines' indices equal at every Node in 357 and complementary in 117, none else) and the read's copy rule on it (the reader's D2 and D5 of 2026-10-20): on the shipped bell worlds a' b, a' b' and a b each side reads the record's two lines at its four Nodes at the close 100, w div F = 108,000,000 at F = 3,072,000 on light's wall 331,776,000,000,000, the moduli of its first draw the base less one and the base. At every Node the second line's index r div F equals the first line's before any write (the left side, the parts laid alike), so the read takes each Node's distinct digits once: the side's eight digits read as four, the number's bits halved (four digits of 26.7 bits); after the left side's write the right side reads equal indices where the coefficients are equal (the basis [1, 1] at its port (1, 1), which writes nothing), w div F less them where the second part is negated, and, where the port zeroes a part (a b, the basis [1, 0]), that part's line at the lay's origin, w div 2F at every Node, no copy, its eight digits kept. The rule's three cases on a' b's left side at 60, its second line set beside the first: equal and w less it read once (four digits), moved by the Node's own lattice F at two of the four Nodes read at both (six; every Node at F = 3,072,000 there before 2026-10-23, three of the four at 27,648,000 since the swap reads the gapped time line alone). The indices, the coefficients standing at the right side's read and the numbers printed. The second close's digits read at every Node on the exact band, the bases {108,000,001} and the moduli (108,000,000, 108,000,001) at every read, before 2026-10-23 on the course where the swap at the top fired on the massless gravity row at the body's neighbours (the reading struck the same day: the swap reads the gapped time line alone); since, the second close's Nodes read on their own lattices after the first close's write, the bases 12,000,001 and 3,072,000,001 beside 108,000,001 and the moduli (12,000,000, 12,000,001) and (12,000,000, 3,072,000,001), the law's own form asserted and the numbers named, not pinned (ENGINE.md section 9)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     whole, found = LIGHT // 3_072_000, {}  # w div F at the shipped content
     for name in ("bell_a_prime_b", "bell_a_prime_b_prime", "bell_a_b"):
@@ -373,10 +374,28 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
                 "right",
             ]
         )  # the port, the Node at the first close; one draw per side at the second close under the derived window (four draws at the declared window before 2026-10-23)
-        assert all(len(d) == 8 and set(b) == {whole + 1} for _s, d, b in sides) and whole == 108_000_000
-        assert [moduli for _n, moduli in read] == [
-            (whole, whole + 1)
-        ] * 4  # one read per side at each of the two closes (one close before 2026-10-23)
+        print(
+            "SIDES",
+            name,
+            [(s_, len(d), sorted(set(b))) for s_, d, b in sides],
+            whole,
+            [m for _n, m in read],
+        )
+        assert all(len(d) == 8 for _s, d, _b in sides) and whole == 108_000_000
+        assert all(
+            set(b) == {whole + 1} for _s, _d, b in sides[:4]
+        )  # the first close: every Node on the exact band
+        assert all(
+            LIGHT % (base - 1) == 0 for _s, _d, b in sides for base in b
+        )  # one above w div F, F dividing w
+        assert (
+            [moduli for _n, moduli in read]
+            == [
+                (math.gcd(*(base - 1 for base in b[1:])), b[-1])
+                for _s, _d, b in (sides[0], sides[2], sides[4], sides[5])
+            ]
+        )  # one read per side at each of the two closes (one close before 2026-10-23): the plain sum's modulus the gcd of the bases less one, the last base
+        assert [moduli for _n, moduli in read][:2] == [(whole, whole + 1)] * 2
         found[name] = sides[0][1], sides[2][1], standing[2], [number for number, _m in read]
     for left, right, written, (
         first,
@@ -404,19 +423,27 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         board.states[pair].lines[:2],
     )
     kept = np.asarray(first.remainder)
+    _own, walls = digits_now(board, [(pair, at)], distinct=False)  # the four Nodes' own lattices F
+    wholes, lattices = [wall - 1 for wall in walls[:4]], np.zeros(kept.shape, dtype=object)
+    lattices[at] = [LIGHT // whole for whole in wholes]  # w div F at each Node read, and its F
     cases = {
         "equal": kept,
         "w less it": LIGHT - kept,
-        "moved": kept + 3_072_000 * (np.arange(kept.size).reshape(kept.shape) % 2),  # F at every other
+        "moved": kept + lattices * (np.arange(kept.size).reshape(kept.shape) % 2),  # F at every other
     }
     for case, remainder in cases.items():  # the second line set beside the first: read once, or both
         board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
         own, walls = digits_now(board, [(pair, at)], distinct=False)
         number, _moduli = digits.read_of(board, [(pair, at)], "the test")
+        digits_walls = list(zip(own, walls, strict=True))  # each digit with its Node's base
         distinct = (
-            own[:4]
-            + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j], whole - own[j] - 1)]
-        )  # the complement's digit: (w - r) div F = w div F - r div F - 1 where F does not divide r, w div F - r div F where it does (the fourth digit here): the identity's right side read 2026-10-23 under the centred count (the former read w div F - k alone)
-        assert number == read_number(distinct, walls[: len(distinct)]), case
+            digits_walls[:4]
+            + [
+                (k, wall)
+                for j, (k, wall) in enumerate(digits_walls[4:])
+                if k not in (own[j], wholes[j] - own[j], wholes[j] - own[j] - 1)
+            ]
+        )  # the complement's digit: (w - r) div F = w div F - r div F - 1 where F does not divide r, w div F - r div F where it does (the fourth digit here): the identity's right side read 2026-10-23 under the centred count (the former read w div F - k alone), at each Node's own w div F
+        assert number == read_number([k for k, _w in distinct], [wall for _k, wall in distinct]), case
         assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved
     print(f"the pair identity: {found}")

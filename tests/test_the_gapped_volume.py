@@ -1,6 +1,5 @@
 """The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation at the law's amplitude for 21 quanta per Node, and the shipped world of the test of the law's course held bit for bit against its own log."""
 
-import hashlib
 import json
 
 import numpy as np
@@ -13,7 +12,6 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, EVENTS, ROOT, load_file
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
-DIGEST = "687901882f2c706c"  # the matter world's twenty intervals of readings on the one Node with the stress the Links' and the swap at the top, recorded 2026-10-23 at the landing (00573f6ccdc48b4d with the level 4,066 before the Links' stress, the same day)
 
 GAMMA, ACTION, CUBE, GAP = 1000, 36000, 3, 999  # the gapped torus: Gamma 1,000, gravity [999, 1000]
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -107,7 +105,7 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
 
 
 def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log(tmp_path):  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row sourced by the tensions is a row of the content, massless [Gamma, Gamma] or gapped (the cycle's and Universe24's gravity [999, 1000] carrying its volume), never the holder of the sign, and the binding holder [2400, 2401] sourced by the form alone keeps the level form; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) reads over its first twenty intervals the stored digest of its integer readings (gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level, count and frozen Nodes; the level 4,066 at the twentieth), recorded on the one Node (2026-10-23) in place of the shipped eras log, which the branch interval-no-observable recorded and the one Node's write leaves from the sixth interval (the matter's write and the tension means); no other clause run anywhere. Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row sourced by the tensions is a row of the content, massless [Gamma, Gamma] or gapped (the cycle's and Universe24's gravity [999, 1000] carrying its volume), never the holder of the sign, and the binding holder [2400, 2401] sourced by the form alone keeps the level form; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) over its first twenty intervals reads the law's course and not a stored one: one line per interval with gravity the one held row read (the sign's holder reads none), its level rising from the seed at every interval (the free fall's rise, the pull the step's mass term), each line's level before and its remainder the line before's level and remainder and its volume before the line before's volume (the reading's chain), the remainders of the carried division below the Nodes' count, the volume the sum of the volume form over the board growing with the level, the seed's well at or above 0 and open from the second interval (the seed's Node above the far one), every writer's write at or above 0 with light's 0 (no light laid on this world), no family frozen, no swap at the top (gravity massless, the swap reads the gapped time line alone) and no Link at the wall. The former pin, the digest 687901882f2c706c of the twenty lines' integers with the level 4,091 at the twentieth (recorded 2026-10-23 at the landing with the stress the Links' and the swap at the top; 00573f6ccdc48b4d with 4,066 before the Links' stress, the same day), was read on a course where the swap at the top fired at the interval 2 at the body's six neighbours on the massless gravity row, the reading struck the same day (the swap reads the gapped time line alone; the level reads 4,099 at the twentieth since), named here and not asserted (ENGINE.md section 9). Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
     rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
@@ -128,16 +126,22 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
     world = EVENTS / "big_bang" / "big_bang_matter.json"
     lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
     assert [line["interval"] for line in lines] == list(range(1, 21))
-    integers = ("level", "level_remainder", "before", "before_remainder", "volume", "volume_before")
-    integers += ("at_seed", "at_far", "well", "nodes")
-    found = hashlib.sha256()
-    for line in lines:
-        row = line["rows"]["gravity"]
-        kept = {
-            "interval": line["interval"],
-            **{key: row[key] for key in integers},
-            "writes": row["writes"],
-        }
-        kept["quanta"] = {n: [q["largest"], q["quanta"], q["frozen"]] for n, q in line["quanta"].items()}
-        found.update(json.dumps(kept, sort_keys=True).encode())
-    assert (found.hexdigest()[:16], lines[-1]["rows"]["gravity"]["level"]) == (DIGEST, 4091)
+    rows = [line["rows"]["gravity"] for line in lines]
+    assert all(list(line["rows"]) == ["gravity"] for line in lines)  # the one held row read
+    assert all(row["nodes"] == rows[0]["nodes"] > 0 for row in rows)
+    assert all(later["level"] > earlier["level"] for earlier, later in zip(rows, rows[1:], strict=False))
+    assert all(0 <= row["level_remainder"] < row["nodes"] for row in rows)
+    assert all(
+        (later["before"], later["before_remainder"], later["volume_before"])
+        == (earlier["level"], earlier["level_remainder"], earlier["volume"])
+        for earlier, later in zip(rows, rows[1:], strict=False)
+    )  # the reading's chain
+    assert all(
+        later["volume"] > earlier["volume"] > 0 for earlier, later in zip(rows, rows[1:], strict=False)
+    )
+    assert (
+        all(row["well"] == row["at_seed"] - row["at_far"] >= 0 for row in rows) and rows[1]["well"] > 0
+    )
+    assert all(min(row["writes"].values()) >= 0 and row["writes"]["light"] == 0 for row in rows)
+    assert all(q["frozen"] == 0 for line in lines for q in line["quanta"].values())
+    assert all(line["fires"] == 0 and line["horizon"] == 0 for line in lines)
