@@ -103,6 +103,9 @@ def test_the_reversal_returns_every_array_with_the_phase_pairs(tmp_path, monkeyp
     board = Lattice(load_world(coulomb_world(tmp_path)))
     gaussian_record(board, False, 300)
     ramp(board)
+    board.amplitude = node.seed_phases(
+        board, board.world
+    )  # the pairs re-read from the laid state: the Link's count is the Node's reading (the centred count, 2026-10-23), no line of its own
     start = arrays(board)
     for _ in range(40):
         board.step()
@@ -127,35 +130,50 @@ def test_the_static_field_is_bounded_by_the_walks_bound():
 
     families = universe_of(UNIVERSE)[1]
     shape, wrap = (2, 1, 1), Wrap(False, True, True, None)
-    states = [records.empty_state(f, shape, (), np.int64) for f in families]
-    states[0].phases = records.phase_lines(families[0], shape, np.int64, GAMMA, 63)
-    level = np.array([[[0]], [[-5]]], dtype=np.int64)
+    states = [
+        records.empty_state(f, shape, (), object) for f in families
+    ]  # Python's integers: the pair at X of 63 bits squared in the carry (the engine's kind beyond the width, loader/world.kind_of)
+    states[0].phases = records.phase_lines(families[0], shape, object, GAMMA, 63)
+    level = np.array([[[0]], [[-5]]], dtype=object)
     states[0].lines[0] = records.Record(level, level.copy(), states[0].lines[0].remainder)
-    amplitude = phase.amplitude(GAMMA, 63)
+    amplitude = phase.amplitude(
+        phase.unit(GAMMA), 63
+    )  # the pair's X at the line's unit 2 Gamma (the half angle, the centred count of 2026-10-23; the former unit Gamma gave 32,025,594,000 where the pair stands at 8,006,388,000)
     seed = [a.copy() for r in states[0].phases[1] for a in (r.now, r.before, r.remainder)]
     worst, acts = 0.0, 0
+    count = 0
     for _ in range(2_000):
         states[0].phases = node.phased(0, families, states, 1, wrap, GAMMA)
-        acts += 5
+        reached = int(states[0].phases[1][6].now[0, 0, 0])  # the Link's count the pair is carried to
+        acts += abs(
+            abs(reached) - abs(count)
+        )  # the acts along the orbit this interval (the centred count moves the pair by the count's change, 2026-10-23; the former left sum by 5)
+        count = reached
         c, s = int(states[0].phases[1][0].now[0, 0, 0]), int(states[0].phases[1][1].now[0, 0, 0])
         worst = max(worst, abs(math.hypot(c, s) - amplitude))
     bound = GAMMA / 2 + 1.42 * acts + 2.3 * GAMMA
     assert worst <= bound, (worst, bound)
     angle = math.atan2(s, c)
     assert (
-        abs(math.remainder(angle - acts * math.acos(phase.K0(GAMMA) / phase.D(GAMMA)), 2 * math.pi))
+        abs(
+            math.remainder(
+                angle - abs(count) * math.acos(phase.K0(phase.unit(GAMMA)) / phase.D(phase.unit(GAMMA))),
+                2 * math.pi,
+            )
+        )  # the pair at the count's half angle, the line's unit 2 Gamma
         <= bound / amplitude
     )
     after = [a for r in states[0].phases[1] for a in (r.now, r.before, r.remainder)]
     assert all(
-        np.array_equal(a[1], b[1]) for a, b in zip(seed, after, strict=True)
-    )  # the Node 1's +x Link beyond
+        np.array_equal(a[1], b[1]) for a, b in zip(seed[:27], after[:27], strict=True)
+    )  # the Node 1's +x Link beyond the face: its pair and count lines standing (the Node's phase row, the last three arrays, moves with its clocked potential)
     assert all(
         np.array_equal(a, b) for a, b in zip(seed[6:18], after[6:18], strict=True)
     )  # the y and z Links
-    assert after[18].tolist() == [[[acts]], [[0]]] and all(
-        np.array_equal(a, b) for a, b in zip(seed[21:], after[21:], strict=True)
-    )  # the x Link's count line at the acts, 0 beyond the face; the y and z count lines untouched
+    assert (
+        after[18].tolist() == [[[abs(count)]], [[0]]]
+        and all(np.array_equal(a, b) for a, b in zip(seed[21:27], after[21:27], strict=True))
+    )  # the x Link's count line at the count reached, 0 beyond the face; the y and z count lines untouched
     print(
         f"10^4 acts on one Link: worst |c + i s| - X {worst:.0f} levels (bound {bound:.0f}), angle {angle:.6f}; {time.perf_counter() - started:.1f} s"
     )

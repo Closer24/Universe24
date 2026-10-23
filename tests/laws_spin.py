@@ -179,8 +179,17 @@ def joint_shares(
         if exchange >= 0
         else [(1 if k < m else -1, (k, m)) for k in range(parts) for m in range(parts) if k != m]
     )
+    if (
+        close is None
+    ):  # the sides' own close, the interval of their credit lines (the window derived, 2026-10-23: the close before the run's end, where the declared window was the run)
+        closes = [
+            int(row["interval"])
+            for row in lines
+            if row["event"] == "credit" and row["node_detector"] in sides
+        ]
+        close = min(closes) if closes else None
     intervals: dict[int, dict[str, list[list[int]]]] = {}
-    for row in lines:  # the window's parts lines: to the sides' close where one is given (the window derived, 2026-10-23: a close before the run's end, where the declared window was the run)
+    for row in lines:  # the window's parts lines: to the sides' close
         if row["event"] == "parts" and row["node_detector"] in sides:
             if close is None or row["interval"] <= close:
                 intervals.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
