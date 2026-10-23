@@ -48,7 +48,9 @@ def booked_of(
         return forms, turns
     for record, (first, second) in enumerate(bookings):
         forms[(index, record)] = records.form(first, second)
-        turns[(index, record)] = records.wronskian(second, family.plane)
+        turns[(index, record)] = (
+            records.wronskian(first, family.plane) + records.wronskian(second, family.plane)
+        )  # the Wronskian centred on the triple: the two edges' sum over the doubled wall (derived.held_write_of)
     return forms, turns
 
 

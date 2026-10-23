@@ -1,4 +1,4 @@
-"""The swap at the top (ALGEBRA.md, The swap at the top, a hypothesis under its own name, 2026-10-23, the owner's decision; the swap hand's derivation read cold by the reader): the fifth act of the interval, the law's own time symmetry used once at a Node. At the end of every interval each Node reads three levels of its own time line (the held row carrying its volume, features/volume) and nothing else: X0 the level before and X1 the level now it started the interval with, X2 the level now it ends with after the step and the one write. Where X0 <= X1 and X2 <= X1 and not all three are equal (the weak maximum, symmetric in X0 and X2), the Node is at a top and ends the interval at the state it started from with every line's two levels exchanged and every remainder complemented at its wall (w on a plain line, 3 w (X1 + X0) on a tension line carried as the shear's momentum, the write's wall on a write remainder; records.complement), the step's output discarded; everywhere else the interval stands. By Rule3's own identity on the carried division (the inverse on a state is the forward act on the swapped and complemented state, every neighbour's level fixed) this equals the swap of the post-state followed by one more step, and the forward run from it is the run back of the rise. The inverse is the same reading on the undone interval, (Y.before, Z.before, Z.now) with Z the post-state and Y the engine's inverse of it, the same triple read backward; where it holds the pre-state is the swapped and complemented Z: a bijection and an involution, nothing declared, nothing kept. The symmetry of the trigger is what makes the conditional act a bijection (an asymmetric trigger collides at a flat approach); the swap of the post-state in place of the pre-state fires again on the mirror passage and locks the board at its top, and is not the act. A falling rest state is a weak top and stands (its remainder alternating): an empty gapped board stands at the vacuum, The closed lattice has no rest excepted for it by the owner's decision. The phase lines of a holder of the sign under the rotation have no image under the act (the count's reversal is the pair's conjugate and not a swap of the count and 0): a top on such a world is refused by name. The module holds the loop's two calls (`stepped` after the held writes forward, `inverted` after the shear's inverse backward), reading the board's own records and nothing of the board."""
+"""The swap at the top (ALGEBRA.md, The swap at the top, a hypothesis under its own name, 2026-10-23, the owner's decision; the swap hand's derivation read cold by the reader): the fifth act of the interval, the law's own time symmetry used once at a Node. At the end of every interval each Node reads three levels of its own time line (the held row carrying its volume, features/volume) and nothing else: X0 the level before and X1 the level now it started the interval with, X2 the level now it ends with after the step and the one write. Where X0 <= X1 and X2 <= X1 and not all three are equal (the weak maximum, symmetric in X0 and X2), the Node is at a top and ends the interval at the state it started from with every line's two levels exchanged and every remainder complemented at its wall (w on a plain line, 3 w (X1 + X0) on a tension line carried as the shear's momentum, the write's wall on a write remainder; records.complement), the step's output discarded; everywhere else the interval stands. By Rule3's own identity on the carried division (the inverse on a state is the forward act on the swapped and complemented state, every neighbour's level fixed) this equals the swap of the post-state followed by one more step, and the forward run from it is the run back of the rise. The inverse is the same reading on the undone interval, (Y.before, Z.before, Z.now) with Z the post-state and Y the engine's inverse of it, the same triple read backward; where it holds the pre-state is the swapped and complemented Z: a bijection and an involution, nothing declared, nothing kept. The symmetry of the trigger is what makes the conditional act a bijection (an asymmetric trigger collides at a flat approach); the swap of the post-state in place of the pre-state fires again on the mirror passage and locks the board at its top, and is not the act. A falling rest state is a weak top and stands (its remainder alternating): an empty gapped board stands at the vacuum, The closed lattice has no rest excepted for it by the owner's decision. The phase lines of a holder of the sign under the rotation take the derived image (the phase hand's derivation M23, the owner's decision of 2026-10-23): the Node's phase row swapped like every line (its remainder 0 at the wall 1), every plane record that reads the holder conjugated at the turned Node (im -> -im, its remainder complemented at its wall; the Wronskian W = re_now im_before - im_now re_before is odd under the exchange of the two levels and odd again under the conjugation, so the charge row's source stands and the charge row is swapped like every line), and every Link's pair carried to the count the swapped state stands at (node.phase_counts: the centred count K = 2 (Phi_now - Phi_before) - c reads -K at a turned Node, so the pair at a turned Node's Link is the conjugate, the pair at -K, and the run back of the planes is the conjugate record under the conjugate pairs, (M z)* = M* z*, exact); the inverse the same reading back, the phase row's post-act levels restored from the swapped row with the clocked potential at the level now (`swapped_phases`). The module holds the loop's two calls (`stepped` after the held writes forward, `inverted` after the shear's inverse backward), reading the board's own records and nothing of the board."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import records, shear
+from event_universe import node, records, shear
 from event_universe.core.rule3 import wall_of
 from event_universe.loader.derived import turns
 
@@ -14,13 +14,17 @@ if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 Kept = tuple[
-    list[list[records.Record]], list[list[np.ndarray]]
-]  # every family's lines and write remainders at one end of the interval
+    list[list[records.Record]], list[list[np.ndarray]], list[list[list[records.Record]]]
+]  # every family's lines, write remainders and phase lines at one end of the interval
 
 
 def kept(board: Lattice) -> Kept:
-    """Every family's lines and write remainders as they stand, the state one end of the interval holds (the lines are not copied: every act replaces them)."""
-    return [s.lines for s in board.states], [list(s.write_remainders) for s in board.states]
+    """Every family's lines, write remainders and phase lines as they stand, the state one end of the interval holds (the lines are not copied: every act replaces them; forward the phase lines before the phase act, `Lattice.step`)."""
+    return (
+        [s.lines for s in board.states],
+        [list(s.write_remainders) for s in board.states],
+        [[list(row) for row in s.phases] for s in board.states],
+    )
 
 
 def at_top(x0: Any, x1: Any, x2: Any) -> np.ndarray:
@@ -65,6 +69,23 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
                     ),
                 )
             )
+        if (
+            turns(board.families, index) and family.plane
+        ):  # the plane record conjugated at the turned Node
+            for number in range(1, len(found), 2):  # the im line of every plane of the record
+                im = found[number]
+                found[number] = records.Record(
+                    np.asarray(np.where(mask, -im.now, im.now), dtype=im.now.dtype),
+                    np.asarray(np.where(mask, -im.before, im.before), dtype=im.before.dtype),
+                    np.asarray(
+                        np.where(
+                            mask,
+                            records.complement(np.asarray(im.remainder, dtype=object), wall),
+                            np.asarray(im.remainder, dtype=object),
+                        ),
+                        dtype=im.remainder.dtype,
+                    ),
+                )
         state.lines = found
         if state.write_remainders:
             walls = board.write_walls[index]
@@ -81,6 +102,41 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
             ]
 
 
+def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int) -> None:
+    """The phase lines' image where `mask` holds, after `swapped` has set the lines (ALGEBRA.md, The swap at the top, the phase clause): forward the Node's phase row of every row of the sign becomes the pre-act row of `held` swapped, (before, now, remainder); backward the post-act row restored from the swapped row and the clocked potential at the level now of the restored lines, (2 before - now + c, before, remainder) (`node.clocked_potentials`); then every pair of the holder's Links carried to the count the state stands at (`node.phase_counts` at the level before forward, the end of the interval as the swapped state holds it, and at the level now backward, the post-act count K(m + 1); `node.phase_carried`), the pairs of the Links between a turned Node and an unturned neighbour included: one Link's reach."""
+    gamma = board.world.node_clock
+    for index, family in enumerate(board.families):
+        if not family.rotation:
+            continue
+        state = board.states[index]
+        potentials = (
+            node.clocked_potentials(index, board.families, board.states, 1, board.wrap, gamma)
+            if direction == -1
+            else {}
+        )
+        for row, lines in enumerate(state.phases):
+            if not lines:
+                continue
+            phi, pre = lines[node.PHI], held[2][index][row][node.PHI]
+            if direction == 1:
+                image = records.Record(
+                    np.asarray(np.where(mask, pre.before, phi.now), dtype=phi.now.dtype),
+                    np.asarray(np.where(mask, pre.now, phi.before), dtype=phi.before.dtype),
+                    phi.remainder,
+                )
+            else:
+                now, before = np.asarray(pre.now, dtype=object), np.asarray(pre.before, dtype=object)
+                post = 2 * before - now + potentials[row]
+                image = records.Record(
+                    np.asarray(np.where(mask, post, phi.now), dtype=phi.now.dtype),
+                    np.asarray(np.where(mask, before, phi.before), dtype=phi.before.dtype),
+                    phi.remainder,
+                )
+            state.phases[row] = lines[: node.PHI] + [image]
+        counts = node.phase_counts(index, board.families, board.states, -direction, board.wrap, gamma)
+        state.phases = node.phase_carried(index, board.states, counts, gamma)
+
+
 def acted(board: Lattice, held: Kept, direction: int) -> None:
     """The act of one interval in `direction`: forward (+1) `held` is the pre-state and the triple (X0, X1, X2) is (held.before, held.now, the state's now); backward (-1) `held` is the post-state Z and the state the engine's inverse Y of it, the triple (Y.before, Z.before, Z.now); where the trigger holds, the state becomes `held` swapped and complemented; the swaps logged as (interval, direction, Nodes) for the readings and no act."""
     rows = [i for i in board.held if board.families[i].motion_volume]
@@ -93,12 +149,9 @@ def acted(board: Lattice, held: Kept, direction: int) -> None:
         mask = at_top(time_now.before, time_held.before, time_held.now)
     if not mask.any():
         return
-    if any(f.rotation for f in board.families) or any(turns(board.families, i) for i in board.order):
-        raise ValueError(
-            "a Node's time line is at a top on a world with a holder of the sign under the rotation: the phase lines "
-            "have no image under the swap at the top (ALGEBRA.md, The swap at the top, what it does not cover), refused by name"
-        )
     swapped(board, held, mask)
+    if any(turns(board.families, i) for i in board.order):
+        swapped_phases(board, held, mask, direction)
     board.swaps.append((board.interval, direction, int(mask.sum())))
 
 

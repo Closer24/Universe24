@@ -91,7 +91,7 @@ class Lattice:
         ]
         # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
-        self.amplitude = node.seed_phases(self.families, self.states, self.shape, self.kind, world)
+        self.amplitude = node.seed_phases(self, world)
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.detector is not None and not row.region:
                 meeting.laid_record(self, number, record)
@@ -324,11 +324,11 @@ class Lattice:
         if not growth.grow(self):
             return
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
+        kept_state = swap.kept(self)  # the pre-state the swap keeps, its phase rows before the act
         node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         weighed = weighed_currents(self) if acts else {}
         currents, stresses = board_readings.currents(self, weighed), board_readings.stresses(self)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
-        kept_state = swap.kept(self)  # the pre-state the swap at the top keeps
         senses = board_readings.sense_currents(self)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
