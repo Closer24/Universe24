@@ -52,7 +52,7 @@ def volume_of(gamma: int, levels: Any) -> Any:
 
 @cache
 def bounds_of(gamma: int, amplitude: int) -> tuple[int, int]:
-    """The volume's two walls at the amplitude bound A, X(-A) and X(A), the volumes of the deepest and the highest level the guard admits (`Lattice.bounded`): a row carrying its volume is inside the bound where its X lies between them, the level reading being monotone in X; the lower wall at -Gamma where A passes the hill's depth, the upper at the clock's last pace where A passes it (the level reading's own top, `clock_zero`)."""
+    """The volume's two walls at the amplitude bound A, X(-A) and X(A), the volumes of the deepest and the highest level (the guard `Lattice.bounded` reads the upper alone: downward the carried line ends at the crunch, X at most 0, refused by `level_of`): a row carrying its volume is inside the bound where its X lies between them, the level reading being monotone in X; the lower wall at -Gamma where A passes the hill's depth, the upper at the clock's last pace where A passes it (the level reading's own top, `clock_zero`)."""
     low = int(volume_of(gamma, np.array([max(-amplitude, -gamma)], dtype=object)).reshape(-1)[0])
     top = min(amplitude, clock_zero(gamma) - 1)
     return low, int(volume_of(gamma, np.array([top], dtype=object)).reshape(-1)[0])

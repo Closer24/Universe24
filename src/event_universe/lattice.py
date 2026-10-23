@@ -338,13 +338,12 @@ class Lattice:
             self.bounded(family.name, line, number == 0 and family.motion_volume)
 
     def bounded(self, name: str, record: records.Record, carried: bool = False) -> None:
-        """The amplitude bound A of the world: a level beyond it refuses the run by name; a time line carrying its volume (`carried`) is read through the volume's two walls at A (features/volume `bounds_of`), its level reading beyond A where X passes them."""
+        """The amplitude bound A of the world: a level beyond it refuses the run by name; a time line carrying its volume (`carried`) is read through the volume's wall at A (features/volume `bounds_of`, X(A)), its level reading above A where X passes it; downward the carried line has no wall but the crunch, the volume at most 0 at a Node, which the volume's reading refuses by name (features/volume `level_of`; the test of the law's course, the small board's end)."""
         if carried:
-            low, high = volume.bounds_of(self.world.node_clock, self.world.amplitude_bound)
-            largest, least = int(np.max(record.now)), int(np.min(record.now))
-            if largest > high or least < low:
+            high = volume.bounds_of(self.world.node_clock, self.world.amplitude_bound)[1]
+            if (largest := int(np.max(record.now))) > high:
                 raise RuntimeError(
-                    f"the family {name!r} reached the volume {largest if largest > high else least} at interval {self.interval}, beyond the world's amplitude bound A = {self.world.amplitude_bound} read through the volume's level: the run is refused"
+                    f"the family {name!r} reached the volume {largest} at interval {self.interval}, beyond the world's amplitude bound A = {self.world.amplitude_bound} read through the volume's level: the run is refused"
                 )
             return
         if records.largest(record) > self.world.amplitude_bound:
