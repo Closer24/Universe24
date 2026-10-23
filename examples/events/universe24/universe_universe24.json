@@ -25,9 +25,23 @@
    }
   },
   {
+   "name": "charge",
+   "pair": [
+    1000,
+    1000
+   ],
+   "reads": {},
+   "held": {
+    "sources": [
+     "wronskian"
+    ],
+    "level_weight": 1
+   }
+  },
+  {
    "name": "matter",
    "pair": [
-    666,
+    600,
     1000
    ],
    "reads": {
@@ -45,6 +59,44 @@
     "gravity": 1
    },
    "dimension": 1
+  },
+  {
+   "name": "proton",
+   "pair": [
+    0,
+    1000
+   ],
+   "reads": {
+    "gravity": 1,
+    "charge": 1
+   },
+   "dimension": 2
+  },
+  {
+   "name": "electron",
+   "pair": [
+    800,
+    1000
+   ],
+   "reads": {
+    "gravity": 1,
+    "charge": 3
+   },
+   "dimension": 2
+  },
+  {
+   "name": "absorber",
+   "pair": [
+    666,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "dimension": [
+    2,
+    2
+   ]
   }
  ]
 }

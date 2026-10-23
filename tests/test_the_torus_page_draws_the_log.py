@@ -8,7 +8,7 @@ import pytest
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file
-from tests.test_universe24_runs_its_cycle import GAMMA, small_world
+from tests.laws_universe import GAMMA, small_world
 
 ERAS = load_file("eras_for_the_torus", ROOT / "tools" / "eras.py")
 TORUS = load_file("torus_page", ROOT / "tools" / "look" / "torus_page.py")

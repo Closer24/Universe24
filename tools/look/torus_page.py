@@ -1,4 +1,4 @@
-"""The torus view, a page tool beside tools/look/eras_page.py in its dark tokens (the owner's word of 2026-10-23: let every Node be shown in three dimensions and the Link's length between them, so one sees how the bang starts, reaches the top and contracts, the time's direction at the Nodes by colour, and the Nodes' content): one self-contained HTML page from the Nodes' log tools/eras.py writes with `--nodes` (`<world>.nodes.jsonl`, one JSON line per interval: X at every Node of the first held row, the Link's length e^U = (X / Gamma)^(1 / (d + 1)) at every Node, the Nodes the fifth act turned this interval, every Node's direction of time and every family's quanta per Node) with the eras log beside it (the header's shape, the volume's course), the clicks log where the run kept one (the instrument bodies' credits, the clicks written) and the world file (the bodies' Nodes and families, the markers). The page places the Nodes of any three-dimensional torus on their lattice with every Link drawn at its own length, the mean of its two Nodes' e^U, the lattice stretching toward the top and shrinking back, each Node coloured by its time's direction (forward or turned, the log's own reading), each Node's marker sized by its content (the quanta of every family at the Node, the numbers on hover), stepped through the logged intervals by a slider or played, and, for every instrument body, one chart of the click rate (the clicks written at its Node per 100 intervals in a running window, counted here from the credits), 1 / e^U at its Node (the clock p_0 / Gamma, the Link's length's inverse) and the light's quanta read at its Node, interval by interval, the ratio the one number the page forms. Plain HTML and inline JS, no library; every number the log's.
+"""The torus view, a page tool beside tools/look/eras_page.py in its dark tokens (the owner's word of 2026-10-23: let every Node be shown in three dimensions and the Link's length between them, so one sees how the bang starts, reaches the top and contracts, the time's direction at the Nodes by colour, and the Nodes' content): one self-contained HTML page from the Nodes' log tools/eras.py writes with `--nodes` (`<world>.nodes.jsonl`, one JSON line per interval: X at every Node of the first held row, the Link's length e^U = (X / Gamma)^(1 / (d + 1)) at every Node, the Nodes the fifth act turned this interval, every Node's direction of time and every family's quanta per Node) with the eras log beside it (the header's shape, the volume's course), the clicks log where the run kept one (the instrument bodies' credits, the clicks written) and the world file (the bodies' Nodes and families, the markers). The page places the Nodes of any three-dimensional torus on their lattice with every Link drawn at its own length, the mean of its two Nodes' e^U, the lattice stretching toward the top and shrinking back, each Node coloured by its time's direction (forward or turned, the log's own reading), each Node's marker sized by its content (the quanta of every family at the Node, the numbers on hover), played from the seed by itself on load (a play/pause control, the slider beside it), a stage strip under the view with the bang, the first turns, every top, the contraction, every return and the cut marked at their intervals as the tool read them from the logs, the births and the written clicks ticked on it, and, for every instrument body, one chart of the click rate (the clicks written at its Node per 100 intervals in a running window, counted here from the credits), 1 / e^U at its Node (the clock p_0 / Gamma, the Link's length's inverse) and the light's quanta read at its Node, interval by interval, the ratio the one number the page forms. Plain HTML and inline JS, no library; every number the log's.
 
 python tools/look/torus_page.py <world>.nodes.jsonl --eras <world>.eras.jsonl [--clicks <world>.clicks.jsonl] [--world <world>.json] [--notes notes.md] [--out <world>.torus.html]
 """
@@ -38,6 +38,7 @@ svg { width: 100%; height: auto; display: block; }
 .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
 .legend i.line { border-radius: 0; height: 0; border-top: 2px solid; width: 14px; }
 .prose { max-width: 90ch; }
+summary { cursor: pointer; font-weight: 600; }
 .prose p, .prose ul { margin: 0 0 var(--gap); }
 .prose h3 { font-size: var(--text); font-weight: 600; margin: var(--gap) 0 6px; }
 .prose code { font-family: var(--font-mono); font-size: var(--small); }
@@ -47,16 +48,20 @@ svg { width: 100%; height: auto; display: block; }
 <script id="bodies" type="application/json">{{BODIES}}</script>
 <script id="charts" type="application/json">{{CHARTS}}</script>
 <script id="notes" type="application/json">{{NOTES}}</script>
+<script id="stages" type="application/json">{{STAGES}}</script>
 <header><h1 id="title"></h1><span class="verdict" id="verdict"></span></header>
-<section class="panel" id="notes-box" hidden><h2 id="notes-heading">Notes</h2><div class="prose" id="notes-prose"></div></section>
+<section class="panel" id="notes-box" hidden><h2 id="notes-heading">Notes</h2><div class="prose" id="notes-lead"></div></section>
 <section class="panel">
   <h2>The torus: every Node, every Link at its own length e^U, the time's direction by colour, the content by size</h2>
   <div class="row"><button id="play">play</button><input type="range" id="at" min="0" value="0"><span class="verdict" id="where"></span></div>
   <div class="row"><label>turn <input type="range" id="yaw" min="0" max="360" value="35"></label><label>tilt <input type="range" id="pitch" min="-90" max="90" value="25"></label></div>
   <div id="legend" class="legend"></div>
   <svg id="torus" viewBox="0 0 1000 760" role="img" aria-label="the torus"></svg>
+  <svg id="strip" viewBox="0 0 1000 118" role="img" aria-label="the stages of the run"></svg>
+  <div class="words" id="strip-words"></div>
   <div class="words" id="torus-words"></div>
 </section>
+<section class="panel" id="notes-rest" hidden><details><summary>The notes in full, stage by stage</summary><div class="prose" id="notes-prose"></div></details></section>
 <section class="panel" id="charts-box" hidden><h2>At the instrument's Node: the click rate, 1 / e^U and the light's quanta, interval by interval</h2><div id="charts-drawn"></div><div class="words" id="charts-words"></div></section>
 <script>
 const NODES = JSON.parse(document.getElementById('nodes').textContent);
@@ -64,6 +69,7 @@ const COURSE = JSON.parse(document.getElementById('course').textContent);
 const BODIES = JSON.parse(document.getElementById('bodies').textContent);
 const CHARTS = JSON.parse(document.getElementById('charts').textContent);
 const NOTES = JSON.parse(document.getElementById('notes').textContent);
+const STAGES = JSON.parse(document.getElementById('stages').textContent);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const token = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const [nx, ny, nz] = COURSE.shape, N = nx * ny * nz;
@@ -97,7 +103,7 @@ function draw() {
   const t = parseInt(slider.value, 10), line = NODES[t]; if (!line) return;
   const yaw = parseFloat(document.getElementById('yaw').value), pitch = parseFloat(document.getElementById('pitch').value);
   const pos = positions(line).map(p => project(p, yaw, pitch));
-  const extent = Math.max(nx, ny, nz) * Math.max(...NODES.map(l => Math.max(...l.length))) * 1.05 || 1;  // the largest lattice of the run sets the frame, so the stretch is seen
+  const extent = (Math.max(nx, ny, nz) - 1) * Math.max(...NODES.map(l => l.length.reduce((a, b) => a + b, 0) / N)) * 1.3 || 1;  // the run's largest mean Link sets the frame, the lattice filling it at the highest top and small at the seed, so the stretch is seen
   const scale = 620 / extent, cx = 500, cy = 380;
   const mx = pos.reduce((a, p) => a + p[0], 0) / N, my = pos.reduce((a, p) => a + p[1], 0) / N;  // the lattice centred on its own mean, the frame the run's largest
   const sx = p => cx + (p[0] - mx) * scale * 0.9, sy = p => cy - (p[1] - my) * scale * 0.9;
@@ -120,23 +126,46 @@ function draw() {
     body += `<circle cx="${sx(pos[i]).toFixed(1)}" cy="${sy(pos[i]).toFixed(1)}" r="${r.toFixed(1)}" fill="${fill}" ${ring}><title>${esc(words)}</title></circle>`;
   }
   document.getElementById('torus').innerHTML = body;
+  const cursor = document.getElementById('cursor'); if (cursor) { const first = NODES[0].interval, last = NODES[NODES.length - 1].interval, x = 12 + (line.interval - first) / Math.max(1, last - first) * 976; cursor.setAttribute('x1', x.toFixed(1)); cursor.setAttribute('x2', x.toFixed(1)); }
   const row = COURSE.rows[t] || {};
   document.getElementById('where').textContent = `interval ${line.interval}: U ${row.U === undefined ? '' : row.U.toFixed(4)}, the mean Link e^U ${meanL.toFixed(3)}, ${line.turned.length} Nodes turned this interval, ${line.direction.filter(d => d < 0).length} with time turned`;
 }
 function legend() {
-  const marks = [`<span><i style="background:${FORWARD}"></i>time forward</span>`, `<span><i style="background:${TURNED}"></i>time turned (the swap at the top)</span>`, `<span><i class="line" style="border-color:${LINK}"></i>a Link, its width its length against the mean</span>`];
+  const marks = [`<span><i style="background:${FORWARD}"></i>time forward</span>`, `<span><i style="background:${TURNED}"></i>time turned (the swap at the top)</span>`, `<span><i class="line" style="border-color:${LINK}"></i>a Link drawn at its length e^U = (X / Gamma)^(1 / 4), the frame the run's largest lattice, so the stretch to the top and the shrink back are seen; its width the length against the mean</span>`];
   for (const f of [...new Set(BODIES.filter(b => b.nodes.length <= 8).map(b => b.family))]) marks.push(`<span><i style="background:transparent;border:2.5px solid ${familyColour(f)}"></i>a body of ${esc(f)}</span>`);
   document.getElementById('legend').innerHTML = marks.join('');
   const tops = COURSE.bangs.map(b => `${b.kind} at ${b.at} (U ${b.U.toFixed(3)})`).join(', ');
   document.getElementById('torus-words').innerHTML = `<b>Read from the log, drawn here</b>: every Node at its place by the cumulative Link lengths from the origin, each Link the mean of its two Nodes' e^U = (X / Gamma)^(1 / 4), the lattice stretching to the top and shrinking back; the Node's colour its direction of time as the eras tool read it (flipped at each of its turns under the fifth act); the marker's size the content, the quanta of every family at the Node (hover for the numbers); a ring the body declared there. ${tops ? 'The volume\\'s course: ' + esc(tops) + '.' : ''}`;
 }
 let playing = null;
-document.getElementById('play').addEventListener('click', () => {
-  if (playing) { clearInterval(playing); playing = null; document.getElementById('play').textContent = 'play'; return; }
+function play() {  // the run plays from the seed by itself on load, one logged interval per frame where the log is short, a few where it is long, back to the seed at the cut
   document.getElementById('play').textContent = 'pause';
-  playing = setInterval(() => { let v = parseInt(slider.value, 10) + Math.max(1, Math.round(NODES.length / 400)); if (v > NODES.length - 1) v = 0; slider.value = v; draw(); }, 60);
-});
+  playing = setInterval(() => { let v = parseInt(slider.value, 10) + Math.max(1, Math.round(NODES.length / 600)); if (v > NODES.length - 1) v = 0; slider.value = v; draw(); }, 50);
+}
+function pause() { clearInterval(playing); playing = null; document.getElementById('play').textContent = 'play'; }
+document.getElementById('play').addEventListener('click', () => playing ? pause() : play());
 for (const id of ['at', 'yaw', 'pitch']) document.getElementById(id).addEventListener('input', draw);
+document.getElementById('at').addEventListener('pointerdown', pause);
+function strip() {  // the stage strip: every mark read from the logs by the tool, none typed; the births and the clicks ticked at their intervals; the cursor the frame shown
+  if (!NODES.length) return;
+  const left = 12, right = 988, first = NODES[0].interval, last = NODES[NODES.length - 1].interval, Y = 56;
+  const px = at => left + (at - first) / Math.max(1, last - first) * (right - left);
+  let body = `<line x1="${left}" x2="${right}" y1="${Y}" y2="${Y}" stroke="${LINK}" stroke-width="2"/>`;
+  const text = (t, x, y, anchor, fill) => `<text x="${x.toFixed(1)}" y="${y}" fill="${fill}" font-size="11" font-family="${token('--font-mono')}" text-anchor="${anchor}">${esc(t)}</text>`;
+  for (const b of STAGES.births) body += `<line x1="${px(b).toFixed(1)}" x2="${px(b).toFixed(1)}" y1="${Y}" y2="${Y + 10}" stroke="${familyColour('electron')}" stroke-width="1.5"><title>a birth at ${b}</title></line>`;
+  for (const c of STAGES.clicks) body += `<line x1="${px(c).toFixed(1)}" x2="${px(c).toFixed(1)}" y1="${Y - 10}" y2="${Y}" stroke="${MARK}" stroke-width="1.2"><title>a click written at ${c}</title></line>`;
+  const rows = [[10, 20], [80, 90], [32, 42], [102, 112]];  // the words above and below the line on two levels each, so neighbouring marks keep apart
+  STAGES.marks.forEach((m, k) => { const x = px(m.at), [wy, ny] = rows[k % 4], anchor = k === 0 ? 'start' : k === STAGES.marks.length - 1 ? 'end' : 'middle'; body += `<circle cx="${x.toFixed(1)}" cy="${Y}" r="4" fill="${m.word === 'top' || m.word === 'bang' ? TURNED : FORWARD}"/>` + text(m.word, x, wy, anchor, token('--fg')) + text(m.at, x, ny, anchor, token('--muted')); });
+  const now = NODES[parseInt(slider.value, 10)].interval;
+  body += `<line id="cursor" x1="${px(now).toFixed(1)}" x2="${px(now).toFixed(1)}" y1="4" y2="114" stroke="${token('--fg')}" stroke-width="1" stroke-dasharray="3 2"/>`;
+  document.getElementById('strip').innerHTML = body;
+  document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.join(', ') || 'none'}) and ${STAGES.clicks.length} clicks written (the ticks above, at ${STAGES.clicks.join(', ') || 'none'}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
+}
+document.getElementById('strip').addEventListener('click', e => {
+  const box = e.currentTarget.getBoundingClientRect(), f = (e.clientX - box.left) / box.width * 1000, first = NODES[0].interval, last = NODES[NODES.length - 1].interval;
+  const at = Math.round(first + (f - 12) / 976 * (last - first)); let k = NODES.findIndex(l => l.interval >= at); if (k < 0) k = NODES.length - 1;
+  pause(); slider.value = Math.max(0, k); draw();
+});
 function chart(box, title, series, xs, options = {}) {
   const W = 1000, H = 300, pad = 16, left = 70;
   let low = Infinity, high = -Infinity;
@@ -183,9 +212,11 @@ function renderNotes(text) {
     if (line) html += `<p>${inline(line)}</p>`;
   }
   if (list) html += '</ul>';
-  box.innerHTML = html;
+  const lead = html.match(/^<p>.*?<\\/p>/);  // the leading paragraph above the view, the rest in full under the view
+  document.getElementById('notes-lead').innerHTML = lead ? lead[0] : '';
+  box.innerHTML = lead ? html.slice(lead[0].length) : html; document.getElementById('notes-rest').hidden = !box.innerHTML;
 }
-legend(); draw(); charts(); if (NOTES) renderNotes(NOTES);
+legend(); draw(); strip(); charts(); if (NOTES) renderNotes(NOTES); if (NODES.length > 1) play();
 </script>
 """
 
@@ -313,6 +344,45 @@ def charts_of(
     return found
 
 
+def stages_of(
+    nodes: list[dict[str, Any]], course: dict[str, Any], clicks: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """The stage strip's marks, each read from the logs and none typed: the bang (the seed, the first logged interval), the first turns (the first interval the fifth act turned a Node), every top and return of the board's volume (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
+    marks: list[dict[str, Any]] = []
+    if not nodes:
+        return {"marks": marks, "births": [], "clicks": []}
+    marks.append({"word": "bang", "at": nodes[0]["interval"]})
+    turned = next((line["interval"] for line in nodes if line.get("turned")), None)
+    if turned is not None:
+        marks.append({"word": "turns", "at": turned})
+    rows = course["rows"]
+    for bang in course["bangs"]:
+        marks.append({"word": bang["kind"], "at": bang["at"]})
+        if bang["kind"] == "top":
+            after = next(
+                (
+                    r["interval"]
+                    for r in rows
+                    if r["interval"] > bang["at"]
+                    and r["volume"] is not None
+                    and r["volume"] < bang["volume"]
+                ),
+                None,
+            )
+            if after is not None:
+                marks.append({"word": "contraction", "at": after})
+    cut = course["refused"]["interval"] if course["refused"] else nodes[-1]["interval"]
+    marks.append({"word": "cut", "at": cut})
+    marks.sort(key=lambda m: m["at"])
+    births = sorted(int(c["interval"]) for c in clicks if c.get("event") == "birth")
+    written = sorted(
+        int(c["interval"])
+        for c in clicks
+        if c.get("event") == "credit" and c.get("before") != c.get("realised")
+    )
+    return {"marks": marks, "births": births, "clicks": written}
+
+
 def page(
     nodes: list[dict[str, Any]],
     eras: list[dict[str, Any]],
@@ -336,6 +406,7 @@ def page(
         .replace("{{BODIES}}", embed(bodies_of(world)))
         .replace("{{CHARTS}}", embed(charts_of(nodes, clicks or [], world, course)))
         .replace("{{NOTES}}", embed(notes))
+        .replace("{{STAGES}}", embed(stages_of(nodes, course, clicks or [])))
     )
 
 
