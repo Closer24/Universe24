@@ -41,6 +41,18 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_swap_on_a_structured_board.py::test_the_swap_on_a_structured_board": (
+        50,
+        "the swap at the top on a structured board (ALGEBRA.md, The swap at the top): the three-clump lay run 60 intervals with "
+        "no refusal, X at or above Gamma at every Node, the fires 122, 108, 76, 36, 8 at intervals 1 to 5 each at a weak maximum "
+        "of the Node's own time line, the run back 60 of 60 exact with the inverse's fires in reverse",
+    ),
+    "tests/test_the_swap_at_the_top.py::test_the_swap_fires_once_at_the_first_weak_top_and_the_fall_is_the_rise_run_back": (
+        60,
+        "the swap at the top (ALGEBRA.md, The swap at the top, the owner's decision of 2026-10-23; swap.py): on the 3-cube gapped "
+        "torus the fire once at the first weak maximum at every Node and never at the start, 40 T-images bit for bit after it with "
+        "every remainder complemented at its wall, the run back of 80 through the fire with the inverse's one fire",
+    ),
     "tests/test_the_gapped_volume.py::test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall": (
         43,
         "the gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return "

@@ -438,3 +438,15 @@ def test_the_acts_table_lists_every_division_of_src_with_its_kind():
     counts = {kind: sum(1 for k in INVENTORY.values() if k == kind) for kind in sorted(KINDS)}
     print("the acts table by kind", counts, "sites", sum(len(lines) for lines in found.values()))
     assert counts["R"] + counts["D"] + counts["S"] == len(INVENTORY)
+
+
+def test_the_fifth_act_the_swap_at_the_top_divides_nothing_and_is_its_own_inverse():
+    """The acts table's fifth row (ALGEBRA.md, The swap at the top; swap.py): the swap at the top is a bijection and an involution on the Node's state, no division of any kind: every line's two levels exchanged and every remainder complemented at its wall by `records.complement` (wall - 1 - r, the ones' complement, whose square is the identity), so the module holds no call site of the acts table (no `//`, no division act) and its one arithmetic is the complement; the trigger reads three levels by comparisons alone."""
+    source = (ROOT / "src" / "event_universe" / "swap.py").read_text(encoding="utf-8")
+    assert "records.complement(" in source and "//" not in source.replace('"""', "")
+    assert (
+        "division_forward" not in source
+        and "division_back" not in source
+        and "carried_division" not in source
+    )
+    assert all(f"{path}" != "swap.py" for path, _function, _act in INVENTORY)
