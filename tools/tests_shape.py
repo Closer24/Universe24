@@ -109,10 +109,18 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the structured board's long course under the law with both acts read from the shipped course log (the structured-cycle "
         "branch, 2026-10-23): the cut at 2,376 by a Link's tension 1,087, the void's four returns, 1,079 fires, the largest Link tension 975",
     ),
-    "tests/test_the_swap_at_the_top.py::test_the_matter_worlds_run_back_is_exact_to_interval_1_and_the_declared_lay_at_interval_1_has_no_inverse": (
-        26,
-        "the matter world's run back under both acts (2026-10-23): exact to interval 1 through the six fires, and the one letter "
-        "that differs at interval 0 named by its cause, the declared lay at interval 1 with no inverse",
+    "tests/test_the_swap_at_the_top.py::test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay": (
+        10,
+        "the matter world's run back under both acts to interval 0 exactly through the six fires and the declared lay, the former "
+        "mismatch named by its cause (the lay's inverse, 2026-10-23)",
+    ),
+    "tests/test_the_swap_at_the_top.py::run_back_exact": (
+        16,
+        "a world stepped forward and back with every snapshot compared on the way back, the counts and the swaps read (the lay's inverse, 2026-10-23)",
+    ),
+    "tests/test_the_swap_at_the_top.py::test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires": (
+        10,
+        "the big bang world with light run back to interval 0 exactly through its whole lays at interval 1 and its fires, every fire mirrored (the lay's inverse, 2026-10-23)",
     ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,

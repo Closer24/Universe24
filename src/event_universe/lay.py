@@ -98,7 +98,7 @@ def written(
     nodes: Any | None = None,
     faced: Any | None = None,
 ) -> None:
-    """The write step of the act, the one place a level is written from outside Rule3: the changes added to the line's two levels at the Nodes `nodes` (the lay's declared Nodes; where none are named, every Node whose change is not 0) but the Nodes `faced`, which the faces write at the step; the remainder at `origin` at the written Nodes where one is given, the division's origin, and untouched otherwise; one `lay` line per written Node whose [now, before, remainder] moved, to the output and, where the world's draw declares the meeting that runs back, into the books' log of the lays per interval (`credit.Books.lays`, `Books.reads_sides`), which the run back crosses and the run forward re-applies (`meeting_back.crossed`); the start's lays, at the interval 0, are the record's birth and enter no log (the lay is not taken back)."""
+    """The write step of the act, the one place a level is written from outside Rule3, and the one act beside the click that the run back undoes from the books' log (every lay at an interval above 0 is logged, the declared packets laid whole at their interval, the source in time's increments and the clicks' lays alike, and `meeting_back.logged` crosses them back at their interval before the interval's inverse, so the held write's inverse finds the bookings of that interval's start as the forward found them; the owner's rule of 2026-10-23: every act but the click is a bijection and the run back reaches the start): the changes added to the line's two levels at the Nodes `nodes` (the lay's declared Nodes; where none are named, every Node whose change is not 0) but the Nodes `faced`, which the faces write at the step; the remainder at `origin` at the written Nodes where one is given, the division's origin, and untouched otherwise; one `lay` line per written Node whose [now, before, remainder] moved, to the output and, where the world's draw declares the meeting that runs back, into the books' log of the lays per interval (`credit.Books.lays`, `Books.reads_sides`), which the run back crosses and the run forward re-applies (`meeting_back.crossed`); the start's lays, at the interval 0, are the record's birth and enter no log (the lay is not taken back)."""
     record = board.states[index].lines[line]
     now, before = (np.asarray(c, dtype=object) for c in changes)
     at = np.asarray((now != 0) | (before != 0) if nodes is None else nodes, dtype=bool)
@@ -112,7 +112,9 @@ def written(
         record.remainder if origin is None else np.where(at, origin, record.remainder),
     )
     board.states[index].lines[line] = laid_line
-    logged = board.interval > 0 and board.credit.reads_sides  # the books' log: the run back crosses it
+    logged = (
+        board.interval > 0
+    )  # the books' log of every lay at an interval above 0, the run back crosses it (the lay's inverse, 2026-10-23)
     if board.output is not None or logged:
         name = board.families[index].name
         for here in np.argwhere(at):

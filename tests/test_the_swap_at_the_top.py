@@ -134,30 +134,37 @@ def test_the_shipped_matter_world_fires_at_the_bodys_six_neighbours_at_interval_
     assert board.swaps == [(2, 1, 6)]
 
 
-def test_the_matter_worlds_run_back_is_exact_to_interval_1_and_the_declared_lay_at_interval_1_has_no_inverse():  # type: ignore[no-untyped-def]
-    """The shipped matter world's run back under both acts, read 2026-10-23 (the structured-cycle branch; the symmetry hand's runner on 300 intervals: MATCH 299 of 300, the one MISMATCH at the last step back to interval 0): three intervals forward and two back reach the state of interval 1 bit for bit, through the six fires of interval 2 and their inverse; the third step back does not reach interval 0, and the cause by name is THE DECLARED LAY AT INTERVAL 1: the file's packets (`interval: 1`) are laid by the lay act from outside the Node after the held writes of interval 1, so at interval 0 the matter and the dust records are 0 at every Node and the first interval writes nothing (the bookings of its start empty); the inverse of interval 1 undoes the books' log's lays (the clicks') and not the declared lay, so the laid records stay on the board (the matter's now 4,934 at the body, its before stepped back to -4,610) and the held write's inverse reads their form and stress and takes off a write never added: the body's time line `before` 16,786 against the start's 6,247 (the form's write 10,539), the six neighbours' remainders complemented by the pressure's inverse, whose dip then fires the swap's inverse at the six (board.swaps gains (1, -1, 6) where the forward had no fire at 1). The same letter differs on the landing head before the swap and before the stress reading (the body's before 16,208 by the former reading's write): the lay, kin of the click, is the one act of the interval with no inverse, and the run back of a world laid at interval 1 reaches interval 1 and not the seed."""
+def run_back_exact(world, intervals):  # type: ignore[no-untyped-def]
+    """A world stepped `intervals` forward and back, the snapshot at every interval compared bit for bit on the way back, the counts and the swaps' mirror read: the steps matched, the counts' equality."""
     from event_universe.meeting_back import first_difference, snapshot
+
+    board = Lattice(load_world(world))
+    board.output = lambda line: None
+    counts, snaps = list(board.credit.counts), [snapshot(board)]
+    for _ in range(intervals):
+        board.step()
+        snaps.append(snapshot(board))
+    matched = 0
+    for k in range(intervals):
+        board.step_inverse()
+        matched += first_difference(snaps[intervals - k - 1], snapshot(board)) is None
+    return matched, list(board.credit.counts) == counts, board.swaps
+
+
+def test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay():  # type: ignore[no-untyped-def]
+    """The shipped matter world under both acts run 60 intervals forward and back, every snapshot on the way back bit for bit, interval 0 included, the counts back (the lay's inverse, 2026-10-23). The former mismatch at the last step, named: the file's packets (`interval: 1`) are laid by the lay act from outside the Node after the held writes of interval 1, so the first interval writes nothing; before the lay's inverse the run back undid the books' log's lays alone (the clicks', where the world reads sides), the laid records stayed and the held write's inverse took off a write never added (the body's time line `before` 16,786 against 6,247, the same letter on the landing head before both acts, 16,208), and the swap's inverse fired at the six neighbours on the spurious dip; now every lay at an interval above 0 is logged and crossed back at its interval before the interval's inverse, the laid packets' counts with their levels (`lay.written`, `meeting_back.logged`), so the inverse finds the bookings of the first interval's start empty as the forward found them, and the six fires of interval 2 are mirrored by their inverse alone."""
     from tests.laws import EVENTS
 
-    board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
-    board.output = lambda line: None
-    names = [family.name for family in board.families]
-    matter, gravity = names.index("matter"), names.index("gravity")
-    objects = lambda a: np.asarray(a, dtype=object)  # noqa: E731
-    assert not objects(board.states[matter].lines[0].now).any()  # interval 0: nothing laid
-    start = snapshot(board)
-    board.step()
-    assert int(objects(board.states[matter].lines[0].now)[2, 2, 2]) == 4934  # laid at interval 1
-    first = snapshot(board)
-    board.step()
-    board.step()
-    assert board.swaps == [(2, 1, 6)]
-    board.step_inverse()
-    board.step_inverse()
-    assert first_difference(first, snapshot(board)) is None  # exact to interval 1 through the fires
-    board.step_inverse()
-    assert first_difference(start, snapshot(board)) == ("gravity.lines[0].before", [2, 2, 2])
-    time = board.states[gravity].lines[0]
-    assert (int(objects(time.now)[2, 2, 2]), int(objects(time.before)[2, 2, 2])) == (6247, 16786)
-    assert int(objects(board.states[matter].lines[0].now)[2, 2, 2]) == 4934  # the lay stands: no inverse
-    assert board.swaps[-1] == (1, -1, 6)  # the swap's inverse fired by the spurious write's dip
+    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang_matter.json", 60)
+    assert matched == 60 and counts_back
+    assert swaps == [(2, 1, 6), (2, -1, 6)]
+
+
+def test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires():  # type: ignore[no-untyped-def]
+    """The shipped big bang world with light (three plane waves laid whole at interval 1 beside the matter) run 40 intervals forward and back under both acts: every snapshot on the way back bit for bit, interval 0 included, the counts back, every fire mirrored by its inverse (the lay's inverse, 2026-10-23)."""
+    from tests.laws import EVENTS
+
+    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang.json", 40)
+    assert matched == 40 and counts_back
+    forward = [s for s in swaps if s[1] == 1]
+    assert [(t, -1, n) for t, _d, n in reversed(forward)] == [s for s in swaps if s[1] == -1]
