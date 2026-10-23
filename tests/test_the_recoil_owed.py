@@ -5,7 +5,7 @@ from dataclasses import replace
 
 import numpy as np
 
-from event_universe import act, readings, take, world_files
+from event_universe import act, readings, take
 from event_universe.emission import Emitter
 from event_universe.lattice import Lattice
 from event_universe.reports import (
@@ -20,7 +20,6 @@ from event_universe.world_files import load_world
 from tests import laws
 from tests.laws import EVENTS, d4_bound, family
 from tests.laws_content import TWO_ATOMS, content_copy
-from tests.laws_read import load_shipped
 
 
 def own_p(board: Lattice, books) -> int:  # type: ignore[no-untyped-def]

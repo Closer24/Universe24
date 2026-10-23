@@ -12,7 +12,6 @@ from event_universe.resonance import turned_direction
 from event_universe.world_files import load_world
 from tests.laws import EVENTS
 from tests.laws_content import TWO_ATOMS, content_copy
-from tests.laws_read import load_shipped
 
 
 def float_turn(re: int, im: int, x: int, y: int) -> tuple[float, float]:
