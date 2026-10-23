@@ -28,7 +28,7 @@ from event_universe.node_detector import (
     sourcing,
 )
 from event_universe.records import Booking, Record
-from event_universe.resonance import gathered, hopped, projected, window_pair, window_turn
+from event_universe.resonance import gathered, hopped, window_pair, window_turn
 from event_universe.take import Item, faces_presented, fan_momentum, relaid
 
 if TYPE_CHECKING:
@@ -335,16 +335,7 @@ def jumped(board: Lattice) -> None:
             t.drive: 0 if t.drive in own[books.number] else arriving(board, books, t.drive)
             for t in books.declared.transitions
         }
-        vector = {}  # the transitions declaring their dipole: the drive's Link gradient projected on each (`resonance.projected`)
-        for t in books.declared.transitions:
-            if t.dipole is not None:
-                if t.drive in own[books.number]:
-                    vector[t] = 0
-                else:
-                    vector[t], books.gradient_carry[t] = projected(
-                        board, books, t, books.gradient_carry.get(t, 0)
-                    )
-        gathered(books.references, books.declared.transitions, levels, vector or None)
+        gathered(books.references, books.declared.transitions, levels)
         draw = books.declared.draw
         timed = draw is not None and draw.window is not None  # C2: the window opens when lit
         gives = books.bound or any(

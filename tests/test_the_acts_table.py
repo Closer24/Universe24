@@ -389,11 +389,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
     ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
-    (
-        "resonance.py",
-        "projected",
-        "division_forward",
-    ): "D",  # the gradient's half on the dipole, the carry kept
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):
