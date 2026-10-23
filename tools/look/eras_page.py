@@ -187,7 +187,6 @@ function draw() {
   const crawl = rows.findIndex(r => r.velocity < 1);
   const words = [`the eras by the largest write: ${shades().map(s => `${s.name} from ${s.from} to ${s.to}`).join('; ')}.`];
   words.push(crawl >= 0 ? `<b>The crawl</b> from the interval ${intervals[crawl]} (the velocity below one level per interval; the floor, the crawl and the pulses 0 to 1 to 0 at the mean rate s Gamma / n one phenomenon): the integers' end; the coast is the reals' mean.` : 'No crawl within the run: the velocity stayed at or above one level per interval.');
-  words.push(HEAD.keys ? `The held row's keys: ${Object.entries(HEAD.keys[ROW] || {}).map(([k, v]) => `${k}: ${v}`).join(', ')}.` : '');
   words.push('The stop, the write\\'s death under the rounded factor (`factor: rounded`), is the other booking\\'s end, named and not shown; the end is never a cycle. Nature\\'s late acceleration is <b>MISSING</b> under the Node\\'s own hill (the remainders hand\\'s and the structures hand\\'s negatives); q_p never below 0 after the crossing is the blind\\'s clause.');
   document.getElementById('eras-words').innerHTML = words.join(' ');
   graph(document.getElementById('writes'), 'the writes per family into the row\\'s time line (log)', families.map(f => ({name: f, values: rows.map(r => r.writes[f]), colour: colour(f)})), {log: true, shades: shades(), marks: marks()});

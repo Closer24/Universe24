@@ -17,11 +17,13 @@ UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen_read3.json"  # the 
 CUBE, WINDOW, WINDOWS = 5, 4, 3
 HUNDREDTH = 100  # the walk's bound: the booked inflow per window below one count's hundredth
 PLAIN_PINS = (  # the node detector test's chain, four intervals: the six Port sums over the board of
-    # `board_readings.currents` and the region's intake after the step (main 74cafb5d1's numbers)
+    # `board_readings.currents` and the region's intake after the step, as the course reads them under the
+    # one Node with the readings framed (2026-10-23; main 74cafb5d1's numbers before: 7236372000, 7229028000
+    # with the intake 2268672000, 7223886000 with 25021440000)
     ([-7246344000, 7246344000, 0, 0, 0, 0], 0),
-    ([-7236372000, 7236372000, 0, 0, 0, 0], 0),
-    ([-7229028000, 7229028000, 0, 0, 0, 0], 2268672000),
-    ([-7223886000, 7223886000, 0, 0, 0, 0], 25021440000),
+    ([-7236402000, 7236402000, 0, 0, 0, 0], 0),
+    ([-6959934000, 6959934000, 0, 0, 0, 0], 2305536000),
+    ([-6952620000, 6952620000, 0, 0, 0, 0], 24543744000),
 )
 
 
@@ -97,7 +99,9 @@ def test_a_standing_charged_record_in_its_sign_well_books_no_inflow_and_no_credi
             booked["pair"] = booked["plain"] = 0
     print(f"the ball's booked inflow per window in W_rec, (the pair's, the plain bilinear's): {closes}")
     assert len(closes) == WINDOWS
-    assert all(abs(pair) * HUNDREDTH < 1 for pair, _plain in closes)  # within the walk at every close
+    assert all(
+        abs(pair) * HUNDREDTH < 1 for pair, _plain in closes
+    )  # within the walk at every close (under the centred count with the readings framed, 2026-10-23: 0.00015, 0.0005, 0.00045; the unframed readings read 0.079, 0.022, 0.043)
     assert max(abs(old) for _pair, old in closes) > 10 * max(abs(pair) for pair, _old in closes)
     assert not [line for line in lines if line.get("event") == "credit"]  # no credit, the count 1
 
@@ -115,8 +119,12 @@ def test_a_plain_records_currents_and_booking_stand_bit_for_bit(tmp_path, monkey
     board = Lattice(load_world(world))
     light = [f.name for f in board.families].index("charge")
     assert not board.turning
-    for sums, intake in PLAIN_PINS:
+    found = []
+    for _sums, _intake in PLAIN_PINS:
         through = board_readings.currents(board)[light]
         board.step()
-        assert [int(np.asarray(c, dtype=object).sum()) for c in through] == sums
-        assert sum(map(sum, board.credit.intake.get((light, "near"), {}).values())) == intake
+        sums = [int(np.asarray(c, dtype=object).sum()) for c in through]
+        intake = sum(map(sum, board.credit.intake.get((light, "near"), {}).values()))
+        found.append((sums, intake))
+    print(f"PLAIN {found}")
+    assert found == list(PLAIN_PINS)

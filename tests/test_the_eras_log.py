@@ -1,4 +1,4 @@
-"""The eras' tools (tools/eras.py and tools/look/eras_page.py; docs/ENGINE.md section 5; DESIGN section 4 (g)): the log of a world under `interval: unobservable` as the board reads it, one JSON line per interval, and the page that draws it, both host tools holding no number of the law."""
+"""The eras' tools (tools/eras.py and tools/look/eras_page.py; docs/ENGINE.md section 5; DESIGN section 4 (g)): the log of a world as the board reads it under the one Node, one JSON line per interval, and the page that draws it, both host tools holding no number of the law."""
 
 import json
 
@@ -13,18 +13,19 @@ ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py"
 def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_them(
     tmp_path, monkeypatch
 ):
-    """The log on the 3-cube light cube under `interval: unobservable`, `booking: form`, `factor: carried` and `pressure: trace` over 12 intervals: the header names the world's integers, the held rows and their keys; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
+    """The log on the 3-cube light cube over 12 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    keys = {"booking": "form", "factor": "carried", "pressure": "trace"}
-    universe_at_weight_one(tmp_path, 36000, WIDTH, gravity=keys)
-    world = light_cube(tmp_path, "eras", 400, interval="unobservable", intervals=12)
+    universe_at_weight_one(tmp_path, 36000, WIDTH)  # no former key on the row (2026-10-23)
+    world = light_cube(tmp_path, "eras", 400, intervals=12)
     out = tmp_path / "eras.eras.jsonl"
     lines = ERAS.run(world, out, 4, None)
     log = ERAS_PAGE.read_log(out)
     header, last = log[0], log[-1]
-    assert header["held"] == ["gravity"] and header["keys"]["gravity"] == keys
+    assert (
+        header["held"] == ["gravity"] and "keys" not in header
+    )  # the held rows by name, no former key reported (2026-10-23)
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 12)
-    assert (header["width"], header["unobservable"]) == (WIDTH, True)
+    assert header["width"] == WIDTH and "unobservable" not in header  # every board's, no flag
     assert len(lines) == 12 and [line["interval"] for line in lines] == list(range(1, 13))
     assert last == lines[-1] and last["interval"] == 12 and "unreturning" not in last
     for line in lines:
@@ -79,7 +80,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
     ):
         assert f'id="{anchor}"' in html
     assert "R_nat" in html and "R_vol" in html and "U at 12" in html and "The notes" in html
-    assert "pressure: trace" in html or "keys" in html
+    assert "The held row's keys" not in html  # no former key on the page
     assert "lattice reading" in html and "0.3" in html
     refused("header naming the held rows", ERAS_PAGE.page, [{"world": "x"}], None, None, 4, "")
     refused("--span takes an integer from 2", ERAS_PAGE.page, log, None, None, 1, "")
