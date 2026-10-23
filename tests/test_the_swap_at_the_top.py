@@ -132,3 +132,39 @@ def test_the_shipped_matter_world_fires_at_the_bodys_six_neighbours_at_interval_
     for _ in range(50):
         board.step()
     assert board.swaps == [(2, 1, 6)]
+
+
+def run_back_exact(world, intervals):  # type: ignore[no-untyped-def]
+    """A world stepped `intervals` forward and back, the snapshot at every interval compared bit for bit on the way back, the counts and the swaps' mirror read: the steps matched, the counts' equality."""
+    from event_universe.meeting_back import first_difference, snapshot
+
+    board = Lattice(load_world(world))
+    board.output = lambda line: None
+    counts, snaps = list(board.credit.counts), [snapshot(board)]
+    for _ in range(intervals):
+        board.step()
+        snaps.append(snapshot(board))
+    matched = 0
+    for k in range(intervals):
+        board.step_inverse()
+        matched += first_difference(snaps[intervals - k - 1], snapshot(board)) is None
+    return matched, list(board.credit.counts) == counts, board.swaps
+
+
+def test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay():  # type: ignore[no-untyped-def]
+    """The shipped matter world under both acts run 60 intervals forward and back, every snapshot on the way back bit for bit, interval 0 included, the counts back (the lay's inverse, 2026-10-23). The former mismatch at the last step, named: the file's packets (`interval: 1`) are laid by the lay act from outside the Node after the held writes of interval 1, so the first interval writes nothing; before the lay's inverse the run back undid the books' log's lays alone (the clicks', where the world reads sides), the laid records stayed and the held write's inverse took off a write never added (the body's time line `before` 16,786 against 6,247, the same letter on the landing head before both acts, 16,208), and the swap's inverse fired at the six neighbours on the spurious dip; now every lay at an interval above 0 is logged and crossed back at its interval before the interval's inverse, the laid packets' counts with their levels (`lay.written`, `meeting_back.logged`), so the inverse finds the bookings of the first interval's start empty as the forward found them, and the six fires of interval 2 are mirrored by their inverse alone."""
+    from tests.laws import EVENTS
+
+    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang_matter.json", 60)
+    assert matched == 60 and counts_back
+    assert swaps == [(2, 1, 6), (2, -1, 6)]
+
+
+def test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires():  # type: ignore[no-untyped-def]
+    """The shipped big bang world with light (three plane waves laid whole at interval 1 beside the matter) run 40 intervals forward and back under both acts: every snapshot on the way back bit for bit, interval 0 included, the counts back, every fire mirrored by its inverse (the lay's inverse, 2026-10-23)."""
+    from tests.laws import EVENTS
+
+    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang.json", 40)
+    assert matched == 40 and counts_back
+    forward = [s for s in swaps if s[1] == 1]
+    assert [(t, -1, n) for t, _d, n in reversed(forward)] == [s for s in swaps if s[1] == -1]
