@@ -83,9 +83,9 @@ REAL_PORT_DIGESTS: dict[
         3328,
     ),  # former 3b9802f5a46e3e74, befdc50e632d240e, 5007; this hand's run of the shipped world under the derived window 35 (2026-10-23)
 }
-REFUSED: dict[
-    str, str
-] = {}  # nothing refused on the landing: the two slits draw at the window 1 and run whole
+REFUSED: dict[str, str] = {
+    "two_slits": "the digits read are spent at this interval by its earlier draws",
+}  # the two slits under the window derived (26, the lays' longest passage over the screens; the law's reading on the owner's decision of 2026-10-23): the whole-window draw spends the board's digits at the third close, 78, and the run is refused by name there, as the ninth's window 130 was refused; the declared window 1 ran whole (its digests c065a075ed83c487, 7742549762b6ec9d, 2683 lines the former reading, kept in the table below by name)
 REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
     {
         "two_slits": (
@@ -162,7 +162,7 @@ def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  #
 
 
 def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world at the draw's window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording of 2026-10-21 under the floor and the remainder's draw (`credit.whether`: 88 closes drew their remainder, 30 of them a quantum, N 546 where the half-up rounding's carry gave 500; `worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
+    """The shipped two slits world under the derived window 26 (2026-10-23): refused by name at its third close, 78, the digits spent by the earlier draws (`REFUSED`); before the derivation, at the draw's declared window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording of 2026-10-21 under the floor and the remainder's draw (`credit.whether`: 88 closes drew their remainder, 30 of them a quantum, N 546 where the half-up rounding's carry gave 500; `worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
     worlds_read(monkeypatch, "two_slits", ("two_slits",))
 
 
