@@ -324,3 +324,20 @@ def converted(board: Lattice, parents: Sequence[int], name: str, at: Node) -> li
     if table and board.output is not None:
         board.output(line(board, parents, name, table))
     return list(table)
+
+
+def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:
+    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23): the lists two quanta of a gapless family [den, den] make at one Node, where the parents' own list is empty (a massless family is no record out, `candidates`): every plane family with a gap and a Pythagorean pair at the senses 1 and -1, the conjugate pair, whose product is the identity the two gapless points' product is ((num + i s)(num - i s) = den^2), the children's senses summing to 0 and the charge kept (`kept`); The conversion's exactness and its charge convention stay as written for every other parent (the sense the charge's sign, the point the same at both senses, the neutron's chain standing on it). The lists in order of the pair's gap den^2 - num^2, the lightest first; the threshold, the two quanta's two walls against the pair's two walls, is read by the act (`act.born_pair`)."""
+    if families[parent].pair[0] != families[parent].pair[1]:
+        return []
+    found: list[Table] = []
+    for k in candidates(families):
+        family = families[k]
+        if not family.plane or gaussian(family.pair) is None:
+            continue
+        table: Table = ((k, -1), (k, 1))
+        if kept(families, ((parent, 0), (parent, 0)), table):
+            found.append(table)
+    return sorted(
+        found, key=lambda table: families[table[0][0]].pair[1] ** 2 - families[table[0][0]].pair[0] ** 2
+    )

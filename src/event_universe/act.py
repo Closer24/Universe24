@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from functools import partial
 from typing import TYPE_CHECKING
 
-from event_universe import credit, front
+from event_universe import conversion, credit, front
 from event_universe.emission import emitted_quantum
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
@@ -107,18 +107,23 @@ def written(board: Lattice, items: list[Item]) -> None:
         whole, was = faced(board, item), board.credit.counts[item.family]
         drawn = list(zip(item.nodes, item.ports or ((),) * len(item.nodes), strict=True))
         unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
+        pair = born_pair(board, item, whole) if unwritten and item.delta > 0 else []
         if item.delta > 0 and not unwritten:
             born = emitted_quantum(board, item)
             if born is not None and item.emitter is not None:
                 recoils.append((item.family, item.emitter, born))
-        else:
+        elif not pair:  # a quantum born into the pair is counted in its children, not in its own family
             board.credit.counts[item.family] += item.delta
         board.credit.account_ended(item.family)
         if item.delta > 0 and not unwritten:  # a lay that raised the count: the births' book
             credit.born(board, item.family, was)
         if item.delta < 0:  # the front from every drawn Node, faced or not (C6, the re-fix)
             holes.setdefault(item.family, []).extend(drawn)
-        if unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
+        if pair:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the conjugate pair there, the two items walking this same step after it
+            items.extend(pair)
+            if board.output is not None:
+                board.output(birth_line(board, item, pair))
+        elif unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
         unsided |= item.delta < 0 and bool(item.ports) and not all(item.ports)  # any Node without a side
     for books in touched:
@@ -194,3 +199,36 @@ def parted(board: Lattice, books: NodeBooks, item: Item, phase: list[Phase] | No
             )
             readings.append(reading)
         books.lost = readings or None
+
+
+def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:
+    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23; `conversion.birth_of`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the lightest conjugate pair of a plane family the universe declares, laid at that Node as two items of this write step at the senses -1 and 1 (the senses summing to 0, the charge kept), where the two quanta's two walls carry the pair's two walls, 2 x 3 den T at or above 2 x 3 T sqrt(den^2 - num^2); [] where the family has a gap, where the universe declares no such pair, or where the threshold is not met, the deficit then booked as before. The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
+    family = board.families[item.family]
+    if family.pair[0] != family.pair[1] or family.held:
+        return []
+    action = board.world.quantum_action
+    carried = 2 * count_wall(family, action)  # the two quanta's walls, the energy they carry together
+    nodes = (
+        tuple(node for node in item.nodes if node not in {at for at, _ports in whole}) or item.nodes[:1]
+    )
+    for table in conversion.birth_of(board.families, item.family):
+        child = board.families[table[0][0]]
+        if (
+            2 * count_wall(child, action) <= carried
+        ):  # the threshold: the levels against the pair's two walls
+            den = child.pair[1]
+            return [Item(out, None, None, 1, nodes, (den, den), sense=sense) for out, sense in table]
+    return []
+
+
+def birth_line(board: Lattice, item: Item, pair: list[Item]) -> dict[str, object]:
+    """The birth line, the reading of the sentence's act beside the credit's: the interval, the gapless family met, the children's families and senses and the Nodes, never a rate."""
+    return {
+        "event": "birth",
+        "label": "NODEDETECTOR",
+        "interval": board.interval,
+        "family": board.families[item.family].name,
+        "children": [board.families[born.family].name for born in pair],
+        "senses": [born.sense for born in pair],
+        "nodes": [list(node) for node in pair[0].nodes],
+    }
