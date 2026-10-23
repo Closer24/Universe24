@@ -150,7 +150,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                 break
         assert (
             miss is None
-        )  # under the one Node the blind run back is exact across the click and the null re-lays: the dense absorption writes nothing on the drive and a null re-lay lays the record as it stands (the latest write's remainder, gravity.write_remainders[0], missed first before 2026-10-23)
+        )  # under the one Node the blind run back is exact across the click and the null re-lays: the dense absorption writes nothing on the drive and a null re-lay lays the record as it is (the latest write's remainder, gravity.write_remainders[0], missed first before 2026-10-23)
         for _ in range(RUN):  # across the click with the lays crossed from their lines
             BACK.crossed(board, lines), board.step_inverse()
             assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None

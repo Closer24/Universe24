@@ -99,7 +99,7 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
 
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
-    """The currents the engine reads (`readings.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it stands and nothing kept beside it."""
+    """The currents the engine reads (`readings.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it is and nothing kept beside it."""
     (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
     draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = records.zeros(shape, kind_of(63))

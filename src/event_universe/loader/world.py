@@ -187,7 +187,7 @@ def bodies_of(
                 raise ValueError(
                     f"{label} declares its own record over a region in pieces: a NodeDetector's Nodes are one connected "
                     "region through the six Ports (ALGEBRA.md, The NodeDetector is one declaration kind for every "
-                    "experiment); its Nodes are {[list(n) for n in nodes]}"
+                    "world); its Nodes are {[list(n) for n in nodes]}"
                 )
             count = reader_count(body, label, families, family)
             parts = node_detector_of(body, label, families, family, quanta, count)
@@ -282,7 +282,7 @@ def regions_of_the_law(
                 f"node_detector {node_detector.name!r} is one Node: a region of a travelling wave, a NodeDetector with Nodes alone, "
                 "reads the net current through its boundary Ports, and through one Node what enters leaves, so it "
                 "stands on two Nodes or more, never one Node; a NodeDetector with a record of its own may stand on one "
-                "Node (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment)"
+                "Node (ALGEBRA.md, The NodeDetector is one declaration kind for every world)"
             )
         if not connected(nodes, shape, periodic):
             raise ValueError(

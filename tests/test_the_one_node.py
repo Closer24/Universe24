@@ -425,4 +425,8 @@ def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: i
     board.step()
     assert board.interval == 1 and board.ended is None
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
+    if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
+        assert (
+            board.swaps == []
+        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
     print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")
