@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, NamedTuple
 
 import numpy as np
@@ -9,7 +10,7 @@ import numpy as np
 import event_universe.readings as readings
 import event_universe.records as records
 from event_universe import flux, node, reports
-from event_universe.bookings import Bookings, sources_of
+from event_universe.bookings import Bookings, record_lines, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS, arrival
 from event_universe.core.rule3 import division_forward
@@ -132,6 +133,33 @@ def turned_currents(
         )
         found = [a + b for a, b in zip(found, through, strict=True)]
     return tuple(np.asarray(value) for value in found)
+
+
+def gauged(
+    board: Lattice, currents: Currents, weighed: Weighed, begun: Sequence[Sequence[records.Record]]
+) -> tuple[Currents, Weighed]:
+    """The frame's currents from the plain ones, after Rule3 wrote the interval (ALGEBRA.md, The booking is the frame's, the owner's word of 2026-10-23): for every plain record of quanta (a holder of the sign's light, the sum of its rows, among them; a turned record's flux current stands as read) its six plain currents at the pair the step started from less the step's change of the Link's level term (`readings.gauge_terms`, from the lines the step started from, `begun`, to the lines it wrote), per record for the books (`weighed`, node_detector.weighed_currents, the same tuples with the frame's currents) and summed over the family's records for the click line (`currents`, the horizon's Links reading 0 as before); the one place the frame's current is formed, a reading and no act, the inverse untouched."""
+    found: Weighed = dict(weighed)
+    for index in board.order:
+        family = board.families[index]
+        if index in board.turning or index not in weighed:
+            continue
+        total: list[Any] = [0] * PORTS
+        reads = []
+        for record, (through, factors, shares) in zip(
+            quanta_records(board.families, index), weighed[index], strict=True
+        ):
+            was = record_lines(board.families, index, record, begun[index])
+            change = readings.gauge_terms(family.pair[0], was, board.lines_of(index, record), board.wrap)
+            framed = tuple(np.asarray(t) - c for t, c in zip(through, change, strict=True))
+            reads.append((framed, factors, shares))
+            total = [t + c for t, c in zip(total, change, strict=True)]
+        found[index] = reads
+        horizon = horizon_ports(board, index)
+        if horizon is not None:
+            total = [np.where(at, 0, value) for at, value in zip(horizon, total, strict=True)]
+        currents[index] = tuple(np.asarray(c) - t for c, t in zip(currents[index], total, strict=True))
+    return currents, found
 
 
 def stresses(board: Lattice) -> Stresses:

@@ -285,7 +285,7 @@ class Lattice:
                     held.update(gained)
             state.lines = lines
         if acts:
-            self.report(currents, weighed, forms, begun)
+            self.report(*board_readings.gauged(self, currents, weighed, begun), forms, begun)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
         swap.stepped(self, kept_state)

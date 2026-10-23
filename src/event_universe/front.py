@@ -110,6 +110,6 @@ def faced(
         for line in range(lines):
             for interval in intervals:
                 board.credit.faces.setdefault(interval, []).append(
-                    Face(index, line, node_at, ports, interval)
+                    Face(index, line, node_at, ports, interval, inner=True)
                 )
     return True

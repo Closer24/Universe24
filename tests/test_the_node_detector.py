@@ -79,7 +79,7 @@ def test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall(tmp_pat
 def test_the_node_detector_books_the_conserved_forms_own_current_through_its_front(
     tmp_path, monkeypatch
 ):
-    """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands): a NodeDetector books through each front Port the conserved form's own current, num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, summed in the unit G^2 and divided once at the close by W_rec G^2, equal to the plain current where no tension stands. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's weighted share changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, while the plain inflow misses it by far more; the twin without the tension books the plain current times G^2 exactly and `quanta_through` takes the floor the plain formula takes, the remainder below one quantum beside it in the unit G^2 (the floor and the remainder's draw, 2026-10-21; the half-up rounding before)."""
+    """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands; since 2026-10-23 the frame's, ALGEBRA.md, The booking is the frame's, the owner's word of that day): a NodeDetector books through each front Port the frame's current J_ij, the plain current num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, less the step's change of the Link's level term num Q_ij (before_i - before_j)(now_i + now_j) / 2, summed in the unit G^2 and divided once at the close by W_rec G^2. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's share in the frame's form changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, on the tension's board and on its twin without alike, while the plain inflow misses it by far more on the tension's board; the twin's booked window is read by `quanta_through` as the floor over W_rec G^2 with the remainder below one quantum beside it in the unit G^2 (the floor and the remainder's draw, 2026-10-21; the half-up rounding before). To 2026-10-23 the booked number was the plain current times Q_ij, the twin's the plain current times G^2 exactly, the former reading."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     region, draw = [[13, 0, 0], [14, 0, 0]], {}
     packet = {**PACKET, "top": {"x": [8, 8], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 4, "y": 0, "z": 0}}
@@ -132,19 +132,21 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
                 )
             change = int(shares_of(b, light, read, moved)[at].sum()) - start - remainder
             print(
-                f"interval {b.interval}, Q - G^2 on the front Links {fronts}: plain {plain}, weighted {weighted} (plain x G^2 {plain * square}), booked {booked_now}, the region's share change less the remainder term {float(change):.3f}, the identity's residual {float(change - Fraction(weighted, square)):.3f}"
+                f"interval {b.interval}, Q - G^2 on the front Links {fronts}: plain {plain}, plain weighted {weighted} (plain x G^2 {plain * square}), booked {booked_now}, the region's share change less the remainder term {float(change):.3f}, the identity's residual {float(change - Fraction(booked_now, square)):.3f}"
             )
             assert (
-                booked_now == weighted and abs(change - Fraction(weighted, square)) < 2
-            )  # one unit per Node
+                abs(change - Fraction(booked_now, square)) < 2
+            )  # one unit per Node: the frame's current
             misses.append((k, abs(change - plain)))
-            totals[k][0], totals[k][1] = totals[k][0] + plain, totals[k][1] + weighted
-    assert max(m for k, m in misses if k == 0) > 2 and all(m < 2 for k, m in misses if k == 1)
-    assert totals[1][1] == totals[1][0] * square  # the twin: the plain current times G^2 exactly
+            totals[k][0], totals[k][1] = totals[k][0] + plain, totals[k][1] + booked_now
+    assert max(m for k, m in misses if k == 0) > 2
+    assert (
+        totals[1][1] != totals[1][0] * square
+    )  # the twin: the frame's current, not the plain one times G^2
     twin, unit = boards[1], boards[1].credit.units[light]
-    plain_count, plain_rest = (int(n) for n in division_forward(totals[1][0], unit, 0))
+    booked_count, booked_rest = (int(n) for n in division_forward(totals[1][1], unit * square, 0))
     through, rest, _unit = credit.quanta_through(twin.credit, light, totals[1][1], twin.unit)
-    assert (through, rest) == (plain_count, plain_rest * square) and plain_count > 0
+    assert (through, rest) == (booked_count, booked_rest) and booked_count > 0
 
 
 def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_path, monkeypatch):

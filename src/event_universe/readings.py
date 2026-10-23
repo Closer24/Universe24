@@ -106,6 +106,24 @@ def currents_of(
     return tuple(np.asarray(value) for value in found)
 
 
+def gauge_terms(
+    weight: int, begun: Sequence[Record], stepped: Sequence[Record], wrap: Wrap
+) -> tuple[np.ndarray, ...]:
+    """The step's change of the Link's level term through each of the six Ports at every Node: h_ij at the pair the step wrote (`stepped`, the lines after Rule3, now the level next and before the level now) less h_ij at the pair it started from (`begun`), every line of a plain record added (`currents.level_term`; ALGEBRA.md, The booking is the frame's). The plain currents `currents_of` read at the start less these are the frame's currents J_ij, what the books and the click line take for a plain record, so that a uniform shift of a massless level changes no booked number; in Python's integers, the products beyond the width on a drifting level."""
+    found: list[Any] = [0] * PORTS
+    present = ports(np.ones(begun[0].now.shape, dtype=object), wrap) if begun else ()
+    for sign, lines in ((-1, begun), (1, stepped)):
+        for record in lines:
+            now, before = record.now.astype(object), record.before.astype(object)
+            here = currents.Levels(now, before)
+            arrived_now, arrived_before = ports(now, wrap), ports(before, wrap)
+            for port in range(PORTS):  # a Link to a Node beyond the board carries no term, as no current
+                there = currents.Levels(arrived_now[port], arrived_before[port])
+                term = currents.level_term(weight, here, there) * present[port]
+                found[port] = found[port] + sign * term
+    return tuple(np.asarray(value) for value in found)
+
+
 def turned_currents_of(lines: Sequence[Record], wrap: Wrap, turned: Turned) -> tuple[np.ndarray, ...]:
     """The currents of a turned record at every Node through each of its six Ports in the current's units, the flux line's own with the Link's pair (ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21; The flux form on a turned or folded Link; the identity w (W(t) - W(t - 1)) = p_i^2 SUM_j Phi_ij + the remainders' term of covector.link_fluxes, here through every Port and not the three +a Links alone): per plane Phi_ij = Im(conj(z_i) (X^c_ij + i X^s_ij) z_j) = re_i (X^s re_j + X^c im_j) - im_i (X^c re_j - X^s im_j) from the levels now and the Link's pair in the Link unit X_ij = 2 num Q_ij (`Turned.pairs` over `Turned.square`, the pace squared divided out exactly), the Wronskian's flux through the Link, exact to the step's own rounding and conserved by it, where the energy form of a turned pair moves by the angle's work; the plane's sense s = sign SUM_i (re_now im_before - im_now re_before), its Wronskian's (records.wronskian, + at 0), attached so that the flux counts positive inward along the share's flow as the plain current does (F_ij = -s sin omega Phi_ij / Q_ij on a monochromatic plain pair, the plain bilinear's -2 s num sin omega Im(conj(z_i) z_j)); then the Wronskian's unit into the share's, the family's rest conversion sin omega_0 = W_rec / W_c (one quantum's Wronskian T / 2 against its share W_rec = W_c sin omega_0, `Turned.unit` over `Turned.wall`), and the Link's factor Q_ij taken off for the booking to put it back (reports.weighted), F_ij = (-s SUM over the planes of Phi_ij) W_rec over Q_ij W_c, one signed rounding per Link per interval (features/phase.signed_rounded, half up on the magnitude with the sign after, so that the two ends of a Link read opposite exactly) below one unit of the current against a quantum's W_rec; a Link the world cuts (Q_ij = 0, the pair (0, 0)) reads 0. The integers: the fluxes in the lines' own kind (loader/world.kind_of, the one place the engine's integers are chosen) where their bound, 2 x the planes x the largest level squared x the widest pair, is within the width (core/paces.within_width, as the count's rounding is held to it), Python's integers otherwise; the product with W_rec, beyond the width on every shipped turned world, in Python's integers (one cast per Port), and the one rounding over Q_ij W_c there; the same integers either way. A standing record in its sign well reads 0 to the walk through a closed front (the 1s with a 7-Node ball: within 0.004 W_rec per window, found by the builder; the plain bilinear booked -3.07 and +2.76 W_rec), and the booking is in the share's unit W_rec G^2 as the plain one (credit.quanta_through); the neighbour's im part read with the Port's frame sign (`Turned.frames`, `framed`), the Link's two ends in one frame as the step reads them (ALGEBRA.md, The swap at the top, the frame clause)."""
     evens, odds = turned.pairs
