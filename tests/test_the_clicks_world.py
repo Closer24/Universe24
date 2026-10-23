@@ -6,14 +6,21 @@ from tests.laws import EVENTS, family
 from tests.laws_read import load_shipped
 
 FOLDER = EVENTS / "clicks"
-SCREEN, BODY, CELL, TARGET, EMISSION, LIGHT = 24, 32, 48, 60, 64, 120  # the closes of the seven lines
+SCREEN, BODY, CELL, TARGET, EMISSION, LIGHT = (
+    24,
+    32,
+    24,
+    60,
+    53,
+    60,
+)  # the closes of the seven lines under The stress is the Links' (2026-10-23; the former reading's 24, 32, 48, 60, 64, 120)
 HALF_ACTION = 16384  # T div 2 at T = 32768, one quantum's Wronskian at the quarter-turn lay
 HOLES = (
-    ("electron", 20, 49),
+    ("electron", 20, 25),
     ("photon", 88, 25),
     ("photon", 62, 33),
     ("neutron", 20, 61),
-    ("photon", 88, 121),
+    ("photon", 88, 61),
 )
 FRONTS = {
     ("electron", (20, 0, 0)),
@@ -51,16 +58,19 @@ def test_four_kinds_of_clicks_fall_at_their_closes_in_one_world():
         board.step()
     measured = [c for c in lines if c["label"] == reports.MEASUREMENT and c["event"] != reports.CLICK]
     measured = [c for c in measured if c["event"] in (reports.CREDIT, reports.CONVERSION)]
-    assert [(c["interval"], c["node_detector"], c["family"], c["event"]) for c in measured] == [
-        (SCREEN, "screen", "photon", "credit"),
-        (BODY, "body 0", "absorber", "credit"),
-        (CELL, "target", "electron", "credit"),
-        (TARGET, "target", "neutron", "credit"),
-        (TARGET, "target", "neutron", "conversion"),
-        (EMISSION, "body 0", "absorber", "credit"),
-        (LIGHT, "screen", "photon", "credit"),
-    ]
-    screen, body, cell, target, converted, emitted, light = measured
+    assert (
+        [(c["interval"], c["node_detector"], c["family"], c["event"]) for c in measured]
+        == [
+            (SCREEN, "screen", "photon", "credit"),
+            (CELL, "target", "electron", "credit"),
+            (BODY, "body 0", "absorber", "credit"),
+            (EMISSION, "body 0", "absorber", "credit"),
+            (LIGHT, "screen", "photon", "credit"),
+            (TARGET, "target", "neutron", "credit"),
+            (TARGET, "target", "neutron", "conversion"),
+        ]
+    )  # the order under The stress is the Links' (2026-10-23): the body's pressure read at its neighbours moves the paces the records read around it, the electron's cell click to 24, the emission to 53 and the emitted photon's screen click to 60 (the former reading's 48, 64 and 120)
+    screen, cell, body, emitted, light, target, converted = measured
     assert (screen["count"], screen["left"], screen["window"], screen["kept"]) == (1, 1, [13, 24], [0])
     assert (cell["count"], cell["left"], cell["window"], cell["realised"]) == (
         1,
@@ -103,7 +113,13 @@ def test_four_kinds_of_clicks_fall_at_their_closes_in_one_world():
         assert [first, first + 1] == [t for t in at if t >= first][:2], (name, node, at[:4])
     fronts = {(e["family"], tuple(e["origin"])) for e in lines if e["event"] == reports.ERASURE}
     assert fronts == FRONTS  # a front at the count 0 alone: none from the screen's first credit
-    lays = [row for row in lines if row["event"] == reports.LAY and row["interval"] == TARGET]
+    lays = [
+        row
+        for row in lines
+        if row["event"] == reports.LAY
+        and row["interval"] == TARGET
+        and row["family"] in ("proton", "electron")
+    ]  # the conversion's eight lays; the emitted photon's own lays at 62 fall in the same interval under the law's reading (2026-10-23)
     assert {tuple(row["node"]["at"]) for row in lays} == {(20, 0, 0)} and len(lays) == 8
     proton_w = wronskians([row for row in lays if row["family"] == "proton"])
     electron_w = wronskians([row for row in lays if row["family"] == "electron"])
@@ -115,8 +131,8 @@ def test_four_kinds_of_clicks_fall_at_their_closes_in_one_world():
         if r["event"] == reports.LAY and r["family"] == "photon" and r["node"]["at"][0] == 62
     ]
     assert (
-        len([r for r in sourced if EMISSION <= r["interval"] < EMISSION + 24]) >= 20
-    )  # the source in time
+        len([r for r in sourced if EMISSION <= r["interval"] < EMISSION + 24]) >= 10
+    )  # the source in time: ten lays from 53, the emitted photon clicking at the screen at 60 under the law's reading (2026-10-23; the former reading's twenty before its click at 168)
     final = {board.families[i].name: counts[i] for i in board.order}
     assert final == {
         "photon": 0,

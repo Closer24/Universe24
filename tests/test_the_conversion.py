@@ -203,12 +203,21 @@ def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_th
         for c in lines
         if c["event"] in ("credit", "conversion")
     ]
-    assert found == [
-        (48, "credit", "neutron", None, None),
-        (48, "conversion", "neutron", ["proton", "electron"], [1, -1]),
-        (84, "credit", "electron", None, None),
-    ]
+    assert (
+        found
+        == [
+            (36, "credit", "electron", None, None),
+            (60, "credit", "neutron", None, None),
+            (60, "conversion", "neutron", ["proton", "electron"], [1, -1]),
+        ]
+    )  # under The stress is the Links' (2026-10-23): the packets' pressure read at their neighbours moves the paces the records read, the electron's click to 36 and the neutron's to 60 (the former reading's 48, 48 and 84)
     counts = {board.families[i].name: board.credit.counts[i] for i in board.order}
     assert (counts["neutron"], counts["proton"], counts["electron"]) == (0, 1, 1)
     assert not any(board.credit.deficits.values())
-    assert {e["family"] for e in lines if e["event"] == "erasure"} == {"neutron"}
+    assert (
+        {e["family"] for e in lines if e["event"] == "erasure"}
+        == {
+            "neutron",
+            "electron",
+        }
+    )  # the electron's whole count clicked at 36 under the law's reading (2026-10-23), its front erased as the neutron's
