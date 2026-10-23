@@ -168,13 +168,12 @@ def test_the_swap_fires_on_the_charged_torus_and_the_phase_retraces_as_the_conju
                 assert after[0][idx] == rise[0][idx] and after[2][idx] == rise[2][idx], (r, a, idx)
                 assert after[1][idx] == rise[1][idx] and after[3][idx] == rise[3][idx], (r, a, idx)
     assert both >= 10 and any(int(np.abs(p[4]).max()) > 0 for p in phases[star - 1].values()), both
-    back = 0  # (3) the run back through the fire, the whole state
-    for k in range(12):
+    back, end = 0, max(digests)  # (3) the run back through both fires, the whole state
+    for k in range(end - star + 2):
         board.step_inverse()
-        back += digest(board) == digests[star + 6 - k - 1]
-    assert back == 12 and (star, -1, 20) in [
-        tuple(s) for s in board.swaps if s[1] == -1 and s[0] == star
-    ]
+        back += digest(board) == digests[end - k - 1]
+    assert back == end - star + 2, back
+    assert [s[0] for s in board.swaps if s[1] == -1 and s[0] > 100] == tops[::-1]
 
 
 def test_a_flat_charged_world_never_fires_and_its_phase_course_stands(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
