@@ -7,11 +7,8 @@ from dataclasses import dataclass
 from functools import partial
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
-
-from event_universe import conversion, credit, digits, flux, lists, node, reports
+from event_universe import board_readings, conversion, credit, digits, flux, lists, node, reports
 from event_universe.act import Alternative, click
-from event_universe.core.ports import arrival
 from event_universe.loader.keys import Node
 from event_universe.node_detector import (
     NodeBooks,
@@ -63,26 +60,12 @@ def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], l
 
 
 def cut(board: Lattice, index: int) -> node.Factors | None:
-    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record."""
-    regions = [
-        board.mask(row.nodes)
-        for row in board.world.bodies
-        if row.family == index and row.detector is not None and not row.region
-    ]
-    if not regions:
-        return None
-    found = []
-    for axis in range(3):
-        for side in (1, -1):
-            mask = np.zeros(board.shape, dtype=bool)
-            for at in regions:
-                mask |= at ^ arrival(at, axis, side, board.wrap, False)
-            found.append(mask)
-    return tuple(found)
+    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them: the board's own reading `board_readings.cut` (moved there 2026-10-23 so that the board's readings import no act; the meeting's callers read it here as before)."""
+    return board_readings.cut(board, index)
 
 
 def laid_record(board: Lattice, number: int, record: int) -> None:
-    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books unmade, so a passing book names the declaration."""
+    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
     row = board.world.bodies[number]
     kind = row.detector
     assert kind is not None

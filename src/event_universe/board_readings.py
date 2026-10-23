@@ -8,10 +8,10 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import flux, meeting, node, reports
+from event_universe import flux, node, reports
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
-from event_universe.core.ports import PORTS
+from event_universe.core.ports import PORTS, arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
@@ -52,10 +52,29 @@ def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
     }
 
 
+def cut(board: Lattice, index: int) -> node.Factors | None:
+    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record. A reading of the world's declarations and no act, read by the meeting (`meeting.cut`), the shear and the horizon's mask alike (moved from meeting.py 2026-10-23: the board's readings import no act, so that `node_detector` imports them first without a cycle)."""
+    regions = [
+        board.mask(row.nodes)
+        for row in board.world.bodies
+        if row.family == index and row.detector is not None and not row.region
+    ]
+    if not regions:
+        return None
+    found = []
+    for axis in range(3):
+        for side in (1, -1):
+            mask = np.zeros(board.shape, dtype=bool)
+            for at in regions:
+                mask |= at ^ arrival(at, axis, side, board.wrap, False)
+            found.append(mask)
+    return tuple(found)
+
+
 def horizon_ports(board: Lattice, index: int) -> tuple[Any, ...] | None:
     """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall) and which the world does not cut (`meeting.cut`, the declared cut Links keep their readings as written); None where no Link stands at the wall."""
     factors = board.read(index)[1]
-    cuts = meeting.cut(board, index)
+    cuts = cut(board, index)
     found = []
     for port, factor in enumerate(factors):
         at = np.asarray(np.asarray(factor) == 0)
