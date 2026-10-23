@@ -329,7 +329,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "largest_below",
     ): "S",  # den cos k_a from den sin k_a by search (2026-10-21)
     # node.py
-    ("node.py", "phased", "phase.iterate"): "R",  # the record's phase line carried
+    ("node.py", "phase_carried", "phase.iterate"): "R",  # the record's phase line carried to the count the state stands at (2026-10-23)
     # flux.py, the step
     (
         "flux.py",
