@@ -63,7 +63,7 @@ def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], l
 
 
 def cut(board: Lattice, index: int) -> node.Factors | None:
-    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every experiment: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record."""
+    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record."""
     regions = [
         board.mask(row.nodes)
         for row in board.world.bodies
@@ -82,7 +82,7 @@ def cut(board: Lattice, index: int) -> node.Factors | None:
 
 
 def laid_record(board: Lattice, number: int, record: int) -> None:
-    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
+    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books unmade, so a passing book names the declaration."""
     row = board.world.bodies[number]
     kind = row.detector
     assert kind is not None
