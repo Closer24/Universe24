@@ -50,7 +50,8 @@ FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
 WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay")
-WORLD_REQUIRED = ("shape", "boundary", "intervals", "universe", "bodies", "node_detectors")
+WORLD_REQUIRED = ("shape", "intervals", "universe", "bodies", "node_detectors")
+TORUS = {"x": "periodic", "y": "periodic", "z": "periodic"}  # the board without `boundary`
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
 READER_NODE_KEYS = (
@@ -318,7 +319,7 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 
 
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
-    """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name."""
+    """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name; a document without `boundary` is the torus, periodic on every axis (the owner's word of 2026-10-23), a face declared by name where an instrument's board needs it."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
     erasure = 1  # the front's taper, the one Node's
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
@@ -327,7 +328,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         raise ValueError("shape must be [X, Y, Z]")
     extents = tuple(integer(extent, f"shape[{axis}]", 1) for axis, extent in enumerate(shape_value))
     shape = (extents[0], extents[1], extents[2])
-    faces = keyed(world["boundary"], "boundary", AXES, AXES)
+    faces = keyed(world.get("boundary", TORUS), "boundary", AXES, AXES)  # the torus by default
     if any(faces[axis] not in FACES for axis in AXES):
         raise ValueError(f"boundary gives every axis one of {list(FACES)}")
     periodic = tuple(faces[axis] == "periodic" for axis in AXES)
