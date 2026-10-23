@@ -48,7 +48,6 @@ def charged_world(folder, gap, count, amplitude, intervals=400, weight=100, divi
     }
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     shape = (CUBE,) * 3
-    laid = [(x, y, z) not in CENTRES for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
     nodes = [
         [x, y, z]
         for x in range(CUBE)
