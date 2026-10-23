@@ -332,11 +332,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
     ),
-    "tests/test_the_interval.py::test_the_tension_lines_take_the_traceless_parts_of_their_own_link_terms_in_the_step_and_their_sum_keeps_the_double_root": (
+    "tests/test_the_interval.py::test_the_tension_lines_step_as_the_shears_momentum_at_the_volumes_wall_and_run_back_exactly": (
         62,
-        "the directive's build (the reader's remedy of 2026-10-22 for the second channel): the tension lines' traceless "
-        "step bit for bit against Rule3 on 3 L_a - SUM_b L_b at the wall 3 w, the law's step with the trace off, the "
-        "inverse, the births at the half walls, and the three lines' sum moved by the carries alone over 120 intervals",
+        "the shear's momentum (the symmetry hand's derivation of 2026-10-23 from the cube's group of 48, the branch "
+        "shear-momentum): the tension lines' births at 3 w X_0, the one carried division at the volume's wall bit for "
+        "bit, the law's step where the time line stands, the bijection and the mirror on random Node-intervals, the run "
+        "back after one and after 60 intervals, and the three lines' sum pinned while the x line's drift is drained",
     ),
     "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_without_it": (
         50,

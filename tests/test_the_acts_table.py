@@ -338,6 +338,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "R",  # Rule3's flux line at every Node of a plain line, the law's step
     ("flux.py", "step_plane", "rule3"): "R",  # the same on each part of a turned or folded plane
     ("flux.py", "step_traceless", "rule3"): "R",  # the tension lines' traceless step, wall 3 w
+    (
+        "flux.py",
+        "step_momentum",
+        "division_forward",
+    ): "R",  # the shear's momentum at the volume's wall, remainder kept
     # node_detector.py
     ("node_detector.py", "books_of", "largest_below"): "S",  # the record's norm by search
     ("node_detector.py", "own_clock", "paces.rounded"): "D",  # the mean clock, rounded once
