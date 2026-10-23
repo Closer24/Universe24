@@ -33,6 +33,7 @@ from event_universe.plane import (
 from event_universe.records import Families, Record, Rulers, States, level_at, phase_lines, row_levels
 
 if TYPE_CHECKING:
+    from event_universe.lattice import Lattice
     from event_universe.loader.world import World
 
 Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order, in the unit G^2
@@ -133,10 +134,15 @@ def sign_holder(index: int, families: Families) -> int:
     return holders[0]
 
 
-def phased(
+PHI = (
+    2 * AXES + AXES
+)  # the Node's phase row among a row's phase lines, after the six pair lines and the three count lines
+
+
+def clocked_potentials(
     index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
-) -> list[list[Record]]:
-    """The phase act of one interval on a holder of the sign under the rotation (features/phase, `iterate`; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record): for every row of the sign beyond the free row, the row's reader's potential L at every Node, the holder's time level summed over every row but that row (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign), read at the interval's start (the level now, the state as the interval begins, in either direction), each end's level scaled by its own clock, the reader's p_0 at that Node over Gamma in one coefficient rounding half up (`paces.turn_factor`, kind D; Part H, MUST 3, both hands' lines of 2026-10-10 on the whole trial: the turn per proper interval, ALGEBRA.md, The turn per proper interval; in the temporal gauge the Link's phase per interval is the two ends' difference), so that on each axis the Link's count is n_ij = rounded(L(i) p_0(i), Gamma) - rounded(L(i + a) p_0(i + a), Gamma), L(i) - L(i + a) exactly at the vacuum's clock p_0 = Gamma (flat worlds bit for bit), 0 beyond a face (`arrival`), by which the Link's count line moves to N_ij + n_ij and the Link's cosine and sine lines take the acts that carry the pair from the size of the count standing to the size of the count reached along the one orbit from the seed (features/phase `orbit_moves`, `iterate`: the pair then at X e^(i |SUM_t n_ij| theta_0), read with the count's sign, the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels, 2026-10-21; the temporal gauge's Link phase; n_ji = -n_ij by construction, the pair Hermitian and the count exact), forward; at `direction` -1 the count line back to N_ij - n_ij and the same acts back, bit for bit, the inverse act exact as before, once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends. Returns the rows' phase lines after the act, the six lines then the three count lines, the state untouched."""
+) -> dict[int, Any]:
+    """The clocked potential of every row of the sign beyond the free row at every Node, c = rounded(L p_0 / Gamma) (`paces.turn_factor`, kind D; ALGEBRA.md, The turn per proper interval): L the holder's time level summed over every row but the row's own reader's (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign) and p_0 the reader's clock at that Node (`rulers`), both at the level `direction` names, 1 the level now and -1 the level before, the Node's own levels and nothing of the board; the write of the Node's phase row (`phased`)."""
     family, state = families[index], states[index]
     readers = {
         row_of(families, reader, record): (reader, record)
@@ -144,37 +150,86 @@ def phased(
         if turns(families, reader) and weight_of(index, other)
         for record in range(other.records)
     }
-    found: list[list[Record]] = []
+    found: dict[int, Any] = {}
     for row, lines in enumerate(state.phases):
-        if row == 0 or row not in readers:
-            found.append(list(lines))
+        if row == 0 or row not in readers or not lines:
             continue
         reader_index, reader_record = readers[row]
-        reader = families[reader_index]
-        potential = weight_of(index, reader) * row_levels(family, state.lines, 0, 1, row)
-        clock = rulers(reader_index, families, states, 1, wrap, gamma, reader_record)[0]
-        clocked = paces.turn_factor(
-            potential, clock, gamma
-        )  # per end, L p_0 / Gamma rounded once (kind D)
-        phased_lines: list[Record] = []
-        counts: list[Record] = []
+        potential = weight_of(index, families[reader_index]) * row_levels(
+            family, state.lines, 0, direction, row
+        )
+        clock = rulers(reader_index, families, states, direction, wrap, gamma, reader_record)[0]
+        found[row] = np.asarray(paces.turn_factor(potential, clock, gamma), dtype=object)
+    return found
+
+
+def phase_counts(
+    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+) -> dict[int, list[Any]]:
+    """The count every Link of the holder's rows stands at in the state as it stands (ALGEBRA.md, The turn per proper interval, the centred count): per row, the Node's K = 2 (Phi_now - Phi_before) - c, c the row's clocked potential at the level `direction` names (`clocked_potentials`), which is Phi_next - Phi_before of the Rule3 triple whose write is c, twice the trapezoid sum of the clocked potential to the triple's centre (at the end of an interval, c at the level before, the write the act just took: K(m + 1); at a turned Node after the swap at the top the same reading gives -K(m + 1); after the inverse of the act, c at the level now: K(m)); per axis the Link's count K_i - K_(i + a), the two ends' difference, 0 beyond a face (`arrival`), the pair at -K the conjugate of the pair at +K (features/phase `signed_read`)."""
+    found: dict[int, list[Any]] = {}
+    for row, c in clocked_potentials(index, families, states, direction, wrap, gamma).items():
+        phi = states[index].phases[row][PHI]
+        k = 2 * (np.asarray(phi.now, dtype=object) - np.asarray(phi.before, dtype=object)) - c
+        counts = []
         for axis in range(AXES):
-            neighbour = arrival(clocked, axis, 1, wrap)
-            beyond = (
-                arrival(np.ones_like(np.asarray(potential)), axis, 1, wrap) == 0
-            )  # the Link beyond a face
-            count = np.where(beyond, 0, clocked - neighbour)
+            beyond = arrival(np.ones_like(np.asarray(c)), axis, 1, wrap) == 0
+            counts.append(np.where(beyond, 0, k - arrival(k, axis, 1, wrap)))
+        found[row] = counts
+    return found
+
+
+def phase_carried(
+    index: int, states: States, counts: dict[int, list[Any]], gamma: int
+) -> list[list[Record]]:
+    """The holder's phase lines with every row's pairs carried along the one orbit from the seed from the count standing (the row's count lines, the cache the planes read, plane.phase_links) to the count `counts` names (features/phase `orbit_moves`, `iterate` at the line's unit 2 Gamma: |K'| - |K| acts, forward where the size grows, the inverse act where it shrinks, bit for bit in either direction), the count lines then at `counts`, the Node's phase row as it stands; the state untouched."""
+    found: list[list[Record]] = []
+    for row, lines in enumerate(states[index].phases):
+        if row not in counts:
+            found.append(list(lines))
+            continue
+        phased_lines: list[Record] = []
+        count_lines: list[Record] = []
+        for axis in range(AXES):
             cosine, sine, standing = lines[2 * axis], lines[2 * axis + 1], lines[2 * AXES + axis]
-            reached, moved = phase.orbit_moves(np.asarray(standing.now), count, direction)
+            reached = np.asarray(counts[row][axis])
+            moved = np.abs(reached) - np.abs(np.asarray(standing.now, dtype=object))
             pair = phase.iterate(
                 ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
                 moved,
-                gamma,
+                phase.unit(gamma),
             )
             phased_lines += [Record(*(np.asarray(a) for a in line)) for line in pair]
-            counts.append(Record(np.asarray(reached), np.asarray(0 * reached), np.asarray(0 * reached)))
-        found.append(phased_lines + counts)
+            count_lines.append(Record(reached, np.asarray(0 * reached), np.asarray(0 * reached)))
+        found.append(phased_lines + count_lines + [lines[PHI]])
     return found
+
+
+def phase_rows(index: int, states: States, potentials: dict[int, Any], direction: int) -> None:
+    """The Node's phase row of every row of the sign stepped by Rule3 with the write c = `potentials` (the clocked potential at the level now, the interval's start in either direction; `clocked_potentials`), mass 0, no Links, the wall 1 (the clocked potential is the law's one rounding, the row's division exact, its remainder 0): forward Phi_next = 2 Phi_now - Phi_before + c, the row then (Phi_next, Phi_now); backward Phi_prev = 2 Phi_before - Phi_now + c, the row then (Phi_before, Phi_prev), bit for bit (ALGEBRA.md #the-direction)."""
+    for row, c in potentials.items():
+        lines = list(states[index].phases[row])
+        phi = lines[PHI]
+        now, before = np.asarray(phi.now, dtype=object), np.asarray(phi.before, dtype=object)
+        if direction == 1:
+            lines[PHI] = Record(
+                np.asarray(2 * now - before + c, dtype=phi.now.dtype), phi.now, phi.remainder
+            )
+        else:
+            lines[PHI] = Record(
+                phi.before, np.asarray(2 * before - now + c, dtype=phi.before.dtype), phi.remainder
+            )
+        states[index].phases[row] = lines
+
+
+def phased(
+    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+) -> list[list[Record]]:
+    """The phase act of one interval on a holder of the sign under the rotation (features/phase; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record, The turn per proper interval; the centred count, the owner's decision of 2026-10-23, the phase hand's derivation M23): for every row of the sign beyond the free row the Node carries its phase row Phi, a Rule3 record whose write per interval is the row's clocked potential c = rounded(L p_0 / Gamma) at the level now, the interval's start in either direction (`clocked_potentials`, `phase_rows`: Phi_next = 2 Phi_now - Phi_before + c), and the Link's count is the two ends' difference of the Node's K = Phi_next - Phi_before = 2 (Phi_now - Phi_before) + c, twice the trapezoid sum of the clocked potential to the triple's centre, K_ij = K_i - K_(i + a) (`phase_counts`; the former reading, to 2026-10-23, the left sum N_ij moved by c_i - c_j per interval, read at the step's start), by which each axis's Link's cosine and sine lines take the acts that carry the pair along the one orbit from the seed to the size of the count reached (`phase_carried`; the pair at X e^(i |K| theta_0 / 2), read with the count's sign, the pair at -K the conjugate of the pair at +K, so that the cube's 48 map the remainders as they map the levels and the Node's time reversal, the swap at the top, is the pair's conjugate exactly, swap.py); forward, and at `direction` -1 the row stepped back and the pairs carried back to K(m), bit for bit, once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends; no count line of its own, the row's three count lines the cache of the Link's count the planes read (plane.phase_links). Returns the rows' phase lines after the act, the state's phase rows stepped."""
+    potentials = clocked_potentials(index, families, states, 1, wrap, gamma)
+    phase_rows(index, states, potentials, direction)
+    counts = phase_counts(index, families, states, direction, wrap, gamma)
+    return phase_carried(index, states, counts, gamma)
 
 
 def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
@@ -234,14 +289,21 @@ def held_write_at(
     return found, after
 
 
-def seed_phases(
-    families: Families, states: States, shape: tuple[int, int, int], kind: type, world: World
-) -> int:
-    """The phase lines of every holder of the sign under the rotation seeded at the angle 0 before the first interval (`phase_lines`), the lines' amplitude X returned (features/phase `amplitude`, the width's, never written)."""
-    bits = world.width.bit_length()
+def seed_phases(board: Lattice, world: World) -> int:
+    """The phase lines of every holder of the sign under the rotation seeded at the angle 0 before the first interval (`phase_lines`) and carried to the count the laid state stands at (`phase_counts` at the level before, the Node's phase row born at rest; `phase_carried`), the lines' amplitude X returned (features/phase `amplitude` at the line's unit 2 Gamma, the width's, never written); the board's families, states, shape, kind and wrap read and nothing else of it."""
+    bits, gamma, families, states = (
+        world.width.bit_length(),
+        world.node_clock,
+        board.families,
+        board.states,
+    )
     for index, family in enumerate(families):
-        states[index].phases = phase_lines(family, shape, kind, world.node_clock, bits)
-    return phase.amplitude(world.node_clock, bits)
+        states[index].phases = phase_lines(family, board.shape, board.kind, gamma, bits)
+    for index, family in enumerate(families):
+        if family.rotation and any(turns(families, i) for i in range(len(families))):
+            counts = phase_counts(index, families, states, -1, board.wrap, gamma)
+            states[index].phases = phase_carried(index, states, counts, gamma)
+    return phase.amplitude(phase.unit(gamma), bits)
 
 
 def phase_act(
