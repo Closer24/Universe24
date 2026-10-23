@@ -15,7 +15,17 @@ from event_universe.readings import ports
 from event_universe.records import record_slice
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, linear_exchange, linear_sum, universe_beside, weighted_linear_sum
+from tests.laws_content import ZENO_ATOM, content_copy, opened
 from tests.laws_read import load_shipped
+
+
+def loaded(folder, name, output=None):  # type: ignore[no-untyped-def]
+    """A world of WORLDS: the shipped file, and the resonant world as its content copy beside `folder` : the shipped world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the pulse's five at three values each on the universe zeno_atom.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^53.9), so the claim is read on the content copy (tests/laws_content.content_world with `opened`, the born universe's holders prepended), which carries every draw."""
+    if name == "resonance/resonant.json":
+        return Lattice(load_world(content_copy(folder, EVENTS / name, ZENO_ATOM, opened)), output)
+    world_files.REPOSITORY_ROOT = EVENTS.parents[1]
+    return Lattice(load_shipped(EVENTS / name), output)
+
 
 WORLDS = (  # re-pinned 2026-10-20 from the deleted toy atom worlds (zeno_1, zeno_pulsed_1, one_photon)
     "bell/bell_a_b.json",
@@ -84,11 +94,11 @@ def step_alone(board: Lattice):  # type: ignore[no-untyped-def]
     return found
 
 
-def test_the_flux_form_holds_at_every_node_line_family_and_interval(monkeypatch):
+def test_the_flux_form_holds_at_every_node_line_family_and_interval(tmp_path, monkeypatch):
     """At every interval of the three small worlds (bell_a_b, singlet_a_b, resonant; re-pinned 2026-10-20 from zeno_1, zeno_pulsed_1 and one_photon, deleted with the toy atom worlds; the born world and the chain lay at closes without a click line, outside the second function's premise) the step's total less w (2 now - before) + r equals the flux SUM R_ij (m_ij - now) less D now at every Node of every line, held lines, planes at no turn (no sign holder on these worlds) and the wipe's faced Nodes included, in integers: the residual is 0 everywhere."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     for name in WORLDS:
-        board, checked = Lattice(load_shipped(EVENTS / name)), 0
+        board, checked = loaded(tmp_path / name.partition("/")[0], name), 0
         for _ in range(board.world.intervals):
             for family, number, residual in step_alone(board):
                 assert not residual.any(), (
@@ -105,13 +115,13 @@ def test_the_flux_form_holds_at_every_node_line_family_and_interval(monkeypatch)
         assert checked > 0, name
 
 
-def test_the_linear_sum_of_matter_moves_by_the_mass_term_alone(monkeypatch):
+def test_the_linear_sum_of_matter_moves_by_the_mass_term_alone(tmp_path, monkeypatch):
     """On the same worlds every line of a family of quanta with num < den (the atoms, planes with no sign holder) changes its linear sum over an interval by the mass term -SUM_i D_i a_i with D_i = 2 w - S_i - SUM_j R_ij from the step's own coefficients and the faces' exchange (`linear_exchange`, 0 on these worlds: no matter line stands at a face), exactly, at every interval the run names no other act on the family (a lay, a click's write, growth, a face): the second difference of the Node's number summed over a board read at one rate pairs off Link by Link, and the mass term and the faces' exchange are left."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
     checked = 0
     for name in WORLDS:
         lines: list[dict[str, object]] = []
-        board = Lattice(load_shipped(EVENTS / name), lines.append)
+        board = loaded(tmp_path / name.partition("/")[0], name, lines.append)
         gamma, square = board.world.node_clock, board.unit * board.unit
         matter = [
             (index, 6 * family.pair[1] * gamma * gamma * square)

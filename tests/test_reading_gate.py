@@ -7,11 +7,15 @@ def test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit(t
     from event_universe.lattice import Lattice
     from event_universe.world_files import load_world
     from tests.laws import EVENTS, ROOT, load_file, world_beside
+    from tests.laws_content import ZENO_ATOM, opened, with_content
 
     gate = load_file("reading_gate", ROOT / "tools" / "reading_gate.py")
     copied = world_beside(
-        tmp_path, EVENTS / "resonance" / "resonant.json", lambda world: None
+        tmp_path, EVENTS / "resonance" / "resonant.json", opened
     )  # re-pinned 2026-10-20
+    (tmp_path / "examples" / "events" / "zeno" / "zeno_atom.json").write_text(
+        json.dumps(with_content(ZENO_ATOM)), encoding="utf-8"
+    )  # the copy's universe with the content: the shipped world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the pulse's five at three values each on the universe zeno_atom.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^53.9), so the claim is read on the content copy (tests/laws_content.content_world with `opened`, the born universe's holders prepended), which carries every draw
     folder, world, document = copied.parent, copied.name, copied.parent / "blind_and_reading.md"
     design = json.loads((EVENTS / "resonance" / "design.json").read_text(encoding="utf-8"))
     design.pop("seeds", None)

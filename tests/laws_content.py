@@ -314,6 +314,13 @@ def with_content(universe):  # type: ignore[no-untyped-def]
     return {**universe, "families": CONTENT_HOLDERS + families}
 
 
+def content_copy(folder, source, universe, edit=None):  # type: ignore[no-untyped-def]
+    """A shipped world's content copy beside `folder` (`content_world` on the shipped document, the universe with the content as u.json, the generator laying its packets): the world's path. The shipped chain and resonance worlds stand on universes without a content (two_atoms.json, zeno_atom.json, the owner's decision of 2026-10-20), where the click's read at a body carries 2^45.8 against an absorption draw's total of 2^51.5 and is refused by name; the tests of the law's sentences on those worlds read the copies (2026-10-23)."""
+    return content_world(
+        folder, source.stem, json.loads(source.read_text(encoding="utf-8")), universe, edit
+    )
+
+
 def opened(world):  # type: ignore[no-untyped-def]
     """A periodic box under the content gets its sink: the faces along x open (the axis the light travels in the toy worlds), the loader deriving the windows where the lays then have an end."""
     world.setdefault("boundary", dict(TORUS))["x"], world["face_depth"] = "open", 1
