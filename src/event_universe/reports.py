@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import covector, readings
+from event_universe import readings
 from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
 from event_universe.records import Record
 
@@ -373,7 +373,7 @@ def shell_outflow(
             continue
         _content, factors = board.read(read.family)
         lines = board.record(read.family)
-        current = readings.currents_of(holder.pair[0], lines, wrap, covector.weights(holder), None)
+        current = readings.currents_of(holder.pair[0], lines, wrap)
         for through in weighted(facing, [(current, factors, None)]):
             at = np.asarray(through, dtype=object)
             for k, node_at in enumerate(shell):

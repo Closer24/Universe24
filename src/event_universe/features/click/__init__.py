@@ -83,7 +83,6 @@ class Face:
     ports: tuple[int, ...]
     interval: int
     value: int | None = None
-    fraction: tuple[int, int] | None = None
 
 
 def face_value(total: int, read: int) -> int:
@@ -121,19 +120,7 @@ def presented(
             )
             links -= reach * level  # the set's Links with their arrivals 0
             total = flux_total(links, own, wall, level, int(other[at])) + int(carry[at])
-            target = 0  # the hole to 0, every face's target but the taper's
-            if (
-                face.fraction is not None
-            ):  # the front's taper: the fraction of Rule3's own level, toward 0
-                untouched = sum(
-                    here[p] * int(found[p][at]) for p in face.ports
-                )  # the set's arrivals untouched
-                own_level = int(division_forward(total + untouched, wall, 0)[0])
-                scaled = int(division_forward(face.fraction[0] * abs(own_level), face.fraction[1], 0)[0])
-                target = (
-                    scaled if own_level >= 0 else -scaled
-                )  # a level of size 1 goes to 0 at any fraction
-            face.value = face_value(total - wall * target, reach)
+            face.value = face_value(total, reach)  # the hole to 0, every face's target
         for port in face.ports:
             if port not in copied:
                 found[port] = np.array(found[port], copy=True)

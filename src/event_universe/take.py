@@ -201,7 +201,7 @@ def fan_momentum(board: Lattice, index: int) -> tuple[int, int, int]:
         lines = board.lines_of(index, record)
         if index in board.turning:  # the turned read, the books' own: the Link's pair in every current
             through = readings.currents_of(
-                weight, lines, board.wrap, None, board_readings.turned_read(board, index, record)
+                weight, lines, board.wrap, board_readings.turned_read(board, index, record)
             )
             read = tuple(
                 int((through[2 * axis + 1] - through[2 * axis]).sum(dtype=object))

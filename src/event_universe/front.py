@@ -73,34 +73,12 @@ def advanced_fronts(board: Lattice) -> None:
 def erased(board: Lattice, front: Front, distance: int) -> bool:
     """The erasing front's interval (the body of the loop's act as built, bit for bit): the shell at `distance` faced to 0 for the next two intervals at L = 1, the taper above 1, one erasure line while a shell holds a Node and one last line where the shell leaves the board; whether the front goes on."""
     index, origin = front.family, front.origin
-    taper = board.world.erasure
     where = on_board(board, origin)
     mask = shell(board.shape, where, distance, board.world.periodic)
     family, unit = board.families[index], board.credit.units[index]
     holds = bool(mask.any())
-    if taper == 1:
-        if holds:
-            faced(
-                board,
-                index,
-                family.record,
-                where,
-                distance,
-                [board.interval + 1, board.interval + 2],
-                None,
-            )
-    else:
-        for s in range(max(1, distance - taper), distance + 1):
-            reached = distance - s + 1  # the intervals since the reach passed the shell s
-            fraction = (taper - reached, taper) if reached < taper else None
-            holds |= faced(board, index, family.record, where, s, [board.interval + 1], fraction)
-        if (
-            2 <= distance <= taper and front.ports
-        ):  # the hole's Node kept at 0 while its first shell tapers
-            for line in range(family.record):
-                board.credit.faces.setdefault(board.interval + 1, []).append(
-                    Face(index, line, (origin[0], origin[1], origin[2]), front.ports, board.interval + 1)
-                )
+    if holds:  # the shell at the reach faced to 0 for the next two intervals
+        faced(board, index, family.record, where, distance, [board.interval + 1, board.interval + 2])
     if not holds:  # the shells beyond the declared board: the front ends, one line
         if board.output is not None:
             board.output(erasure(board.interval, family.name, list(origin), distance, 0, 0, unit))
@@ -120,7 +98,6 @@ def faced(
     at: tuple[int, int, int],
     distance: int,
     intervals: list[int],
-    fraction: tuple[int, int] | None,
 ) -> bool:
     """The faces of a record's lines at the shell at `distance` from the click's Node `at` (the board's coordinates), one per Node and line at each interval named, at the Node's inward Ports (every Port whose neighbour lies on the inner shell, `inward`, one value on the set), at the taper's fraction or the target 0 (None); whether the shell holds a Node on the board (a shell beyond it books none)."""
     mask = shell(board.shape, at, distance, board.world.periodic)
@@ -133,6 +110,6 @@ def faced(
         for line in range(lines):
             for interval in intervals:
                 board.credit.faces.setdefault(interval, []).append(
-                    Face(index, line, node_at, ports, interval, fraction=fraction)
+                    Face(index, line, node_at, ports, interval)
                 )
     return True

@@ -49,7 +49,7 @@ def test_the_first_write_returns_the_rest_on_the_turned_hydrogen_worlds(monkeypa
     board = Lattice(load_world(ATOM / f"{name}.json"))
     charge = [family.name for family in board.families].index("charge")
     holder = board.families[charge]
-    assert holder.rotation and not holder.lorentz and holder.records == 3
+    assert holder.rotation and holder.records == 3
     bits = board.world.width.bit_length()
     seeded = records.phase_lines(holder, board.shape, board.kind, board.world.node_clock, bits)
     for lines, fresh in zip(board.states[charge].phases, seeded, strict=True):

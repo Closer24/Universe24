@@ -12,7 +12,6 @@ from event_universe import board_readings, node, readings, records, share
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, SIDES, Wrap
 from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.covector import weights
 from event_universe.digits import read_of, reads_of
 from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.features.phase import signed_rounded
@@ -22,7 +21,7 @@ from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
 from event_universe.loader.world import BodyRow
 from event_universe.reports import BODY, booked_light, credit, front, weighted
-from event_universe.resonance import Reference, references_of, scale_of, sloped
+from event_universe.resonance import Reference, references_of, scale_of
 
 if TYPE_CHECKING:
     from event_universe.frame_run import FrameRun
@@ -83,7 +82,6 @@ class NodeBooks:
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
     bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
     due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
-    gradient_carry: dict[Transition, int] = field(default_factory=dict)  # per dipole transition
     bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
     light: list[int] = field(default_factory=list)  # the own light per shell Node, (5)
     shell: tuple[Node, ...] = ()  # the light's front, the near zone's shell (BodyRow.shell)
@@ -199,9 +197,6 @@ def dark(board: Lattice, books: NodeBooks, sourced: set[int]) -> bool:
                 levels = lines[0].now if side == 1 else lines[0].before
             if any(int(levels[on_board(board, at)]) for at in books.nodes):
                 return False
-        declared = any(t.dipole is not None and t.drive == drive for t in books.declared.transitions)
-        if declared and sloped(board, books, drive):  # the six neighbours read: lit where any differs
-            return False
     return True
 
 
@@ -371,17 +366,17 @@ def weighed_currents(board: Lattice) -> Weighed:
     for index in board.order:
         family, found[index] = board.families[index], []
         for record in quanta_records(board.families, index):
-            lines = board.record(index) if family.lorentz else board.lines_of(index, record)
+            lines = board.lines_of(index, record)
             content, factors = board.read(index, 1, record)
             shares = share.family_share(
-                family, lines, board.wrap, gamma, content, factors, board.unit, at, None, weights(family)
+                family, lines, board.wrap, gamma, content, factors, board.unit, at
             )
             turned = (
                 board_readings.turned_read(board, index, record, 1, (content, factors))
                 if index in board.turning
                 else None
             )
-            through = readings.currents_of(family.pair[0], lines, board.wrap, weights(family), turned)
+            through = readings.currents_of(family.pair[0], lines, board.wrap, turned)
             found[index].append((through, factors, shares))
     return found
 

@@ -12,6 +12,7 @@ from event_universe.loader.derived import FamilyRule
 from event_universe.loader.faces import SIDES, RecedingFace
 from event_universe.loader.keys import AXES
 from event_universe.reports import NodeDetector, end
+from event_universe.walls import vacuum_walls
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -157,7 +158,7 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
         if (
             index in board.fixed_walls
         ):  # the carried factor's wall per Node: the grown layer at the rest's wall
-            vacuum = board.vacuum_walls(index)
+            vacuum = vacuum_walls(board, index)
             board.fixed_walls[index] = [
                 sized(spread(wall, board.shape), axis, side, layers, direction, value)
                 for wall, value in zip(board.fixed_walls[index], vacuum, strict=True)

@@ -119,7 +119,7 @@ def test_a_massless_rest_on_a_torus_is_the_poisson_solution_of_the_zero_mean_par
     counts, torus = np.zeros((7, 7, 7), dtype=np.int64), Wrap(True, True, True)
     counts[3, 3, 3] = 3000
     keys = {"own_weight": 1, "intervals": paces.COUNT_POWER}
-    found = rest(counts, (6000, 6000), torus, 1, MAX_WORK_INT, 3 * 6000, GAMMA, free=True, **keys)
+    found = rest(counts, (6000, 6000), torus, 1, MAX_WORK_INT, 3 * 6000, GAMMA, **keys)
     clock, pace = paces.node_paces(GAMMA, found.content)
     reads = (6000 * pace.astype(object) * pace.astype(object)).ravel()
     scaled = scaled_source(counts * 3 * 6000 * found.unit * GAMMA**2, clock, pace, GAMMA, 2)

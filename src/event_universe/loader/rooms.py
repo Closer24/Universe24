@@ -60,13 +60,13 @@ def write_rooms(
     hill: int | None,
     unit: int,
 ) -> list[int]:
-    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`source_room`: the hill's, `hill_scale`, 1 in a hollow under tensions at or above 0, where `hill` is None, and the larger of it and the tension's room at the hill's own bound `hill`, `tension_room`, where it is given; the Wronskian's room on a count too where the row declares `booking: form`, the form's own clock, one proper-interval power); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays), and w x factor x lines x 2 x 2 x |num| for a shear line (one product of the Node's two axis differences, each the difference of two levels within the bound, |num| on it)."""
+    """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`source_room`: the hill's, `hill_scale`, 1 in a hollow under tensions at or above 0, where `hill` is None, and the larger of it and the tension's room at the hill's own bound `hill`, `tension_room`, where it is given; the Wronskian's room on a count too where the row declares the form's own clock, the form's own clock, one proper-interval power); for each axis part SUM over the sources of w x factor x lines x 2 |num| for a tension line (the tension's part per line of the source's record, two products of two levels, |num| on each) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays), and w x factor x lines x 2 x 2 x |num| for a shear line (one product of the Node's two axis differences, each the difference of two levels within the bound, |num| on it)."""
     family = families[index]
     sources = readers_of(families, index)
     time = sum(
         abs(weight_of(index, families[other]))
         * booking_room(families, other, family.wronskian)
-        * source_room(families, other, gamma, family.wronskian or family.form_clock, hill)
+        * source_room(families, other, gamma, True, hill)
         for other in sources
     )
     axis = sum(
@@ -77,38 +77,9 @@ def write_rooms(
         * (SIDES if family.rotation else abs(families[other].pair[0]))
         for other in sources
     )
-    if (
-        family.lorentz
-    ):  # the Link's own flux: four products under the Link's pair, |X^c| + |X^s| within X 2^(1/2) + 2
-        axis = 0
-        for other in sources:
-            x = (
-                2 * abs(families[other].pair[0]) * unit * unit
-            )  # the Link quantity X at the vacuum's factor
-            reach = (
-                largest_below(2 * x * x) + 3
-            )  # X 2^(1/2) rounded down by the search, the two roundings and one
-            axis += (
-                abs(weight_of(index, families[other]))
-                * write.factors[other]
-                * (families[other].planes or 1)
-                * PRODUCTS
-                * reach
-            )
     rooms = [time] + [axis] * (family.width - 1)
     if (
         family.flux
     ):  # an odd line: the flux through the axis's two Ports, two products each, |num| on each
         rooms[1 + AXES :] = [SIDES * axis] * AXES
-    off = sum(
-        abs(weight_of(index, families[other]))
-        * write.factors[other]
-        * families[other].record
-        * SIDES
-        * SIDES
-        * abs(families[other].pair[0])
-        for other in sources
-    )  # a shear line: one product of two axis differences, each of two levels, |num| on it
-    for line in family.off_diagonal_lines:
-        rooms[line] = off
     return [abs(family.write) * room for room in rooms * family.records]

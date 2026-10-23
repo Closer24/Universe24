@@ -41,7 +41,7 @@ def test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_
     gravity, matter = board.families[names.index("gravity")], board.families[names.index("matter")]
     assert (gravity.power, gravity.exponent(), matter.exponent(1)) == (1, 3 + 1 + 2, 3 + 1 + 1)
     assert (
-        gravity.form_clock and matter.exponent() == 3 + 1 + 1
+        not gravity.wronskian and matter.exponent() == 3 + 1 + 1
     )  # every count source booked once: a reader's own power 1
     g, m = names.index("gravity"), names.index("matter")
     wall, fixed, numerators = board.walls(g)[0], one_number(board.fixed_walls[g][0]), []
@@ -201,7 +201,7 @@ def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_trac
     names = [family.name for family in board.families]
     g, m, light = names.index("gravity"), names.index("matter"), names.index("light")
     gravity, means = board.families[g], []
-    assert gravity.pressure_trace and gravity.factor_carried and gravity.motion_volume
+    assert gravity.held and not gravity.wronskian and gravity.motion_volume
     assert volume.EXPONENT == 4
     for _ in range(20):
         kept = {
@@ -218,7 +218,7 @@ def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_trac
         axes = sum(np.asarray(numerators[1 + a], dtype=object) for a in range(3))
         assert int(np.abs(axes).max()) == 0
         sources = {s: forms.get(s, 0) for s in records.row_sources(board.families, g, 0)}
-        energy, scale, _ = records.scaled_sum(g, board.families, sources, rulers, GAMMA, 1, True)
+        energy, scale, _ = records.scaled_sum(g, board.families, sources, rulers, GAMMA, 1)
         pressed = records.pressure_term(g, board.families, stresses, rulers, GAMMA, gravity.power)
         time = np.asarray(gravity.write * (energy - pressed * scale), dtype=object)
         assert np.array_equal(np.asarray(numerators[0], dtype=object), time)
@@ -293,7 +293,7 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     names = [family.name for family in board.families]
     g, m = names.index("gravity"), names.index("matter")
     wall = board.walls(g)[0]
-    assert board.families[g].factor_carried and wall == 36000
+    assert g in board.fixed_walls and wall == 36000
     fixed = one_number(board.fixed_walls[g][0])
     assert fixed == wall * GAMMA * paces.clock(GAMMA, 60) ** 2
     assert one_number(board.states[g].write_remainders[0]) == fixed // 2  # born at the half wall

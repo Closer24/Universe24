@@ -13,12 +13,11 @@ from event_universe import meeting_back, share
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
-from event_universe.covector import THIRDS
 from event_universe.emission import Emitter, Source, packet_unit, registered
 from event_universe.features.click import Face
 from event_universe.front import Front, declared
 from event_universe.loader.derived import FamilyRule, count_wall
-from event_universe.loader.draw import CONE, Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
+from event_universe.loader.draw import Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
 from event_universe.loader.keys import Node
 from event_universe.loader.packets import axes_waves
 from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of, credit_draw
@@ -89,14 +88,6 @@ class Books:
         """Whether the world holds a record of several parts read at declared sides, the click that writes at the record's birth (ALGEBRA.md, The click is the meeting of the future with the past; the owner's word of 2026-10-20; `meeting_back`, `lists.readings`): the sides then draw each at its own place by its own read of the board (`left`, per record and side, the number left of the side's read at its first draw of the close, `node_detector.credit_draw`, emptied at the close), in the order of their closes, each on its own second moments with the Gram of the sides after it (`moments`, `patterns`, `weights`), the realised ports kept per record and side until the family's next birth (`taken`: the port, the credited Node and whether the sequence it was drawn in is settled by the count's write; a side clicks again on a settled record with the same port and writes nothing, the reader's ruling of 2026-10-20, precision one), the write's coefficients, scale and likeness per record (`written`, `scale`, `alike`), and the lays the acts wrote stand in the log per interval for the run back to cross (`lays`, the lay lines as `reports.lay` writes them, `lay.written`, `meeting_back.crossed`); every one empty on a world with no such record, which runs as built, byte for byte."""
         return self.declaration is not None and bool(self.sides)
 
-    @property
-    def reach(self) -> str | None:
-        """The run back's reach where the click runs back (ALGEBRA.md, The meeting's reading, the run back's reach; the owner's word of 2026-10-19; `loader/draw.REACHES`): the draw's declared word, `board` or `cone`, and the record's light cone, `cone`, where the draw declares none; None on a world with no record of several parts at declared sides. The books hold the births' book (`births`, per family the birth's interval and its Nodes at the file's coordinates, `support_of`, `born`), the birth and the Nodes of the record being run (`birth`, `support`, S_0 at the file's coordinates, the cone's root), and in the cone the reference per record (`reference`, every family's NodeState as the board stood at the record's birth: frame 0 for a record laid at the start, kept once at the books' start, the board at the birth for a record born during the run, kept once at the write step, `meeting_back.frame_of`, `born`; ALGEBRA.md, The births' book, the born record's reference, 2026-10-20) and the cone's volume per interval, |G(t)| the Nodes within t - t_b + 1 Links of S_0 (`cone`, written by the run back and forward, `cone.stepped_alone`), the look's header's words; and, through the reading alone, the cone stepped alone's own books (the owner's word of 2026-10-20): frame 0 regrown to the board's shape (`regrown`, resized with the growths the run back pops and the run forward finds anew, `cone.grown_at`) and the Node-steps per interval (`stepped`, the box with its ring in the cone's reach, the whole board's volume in the board's reach, the header's `cone_stepped`)."""
-        if not self.reads_sides:
-            return None
-        assert self.declaration is not None
-        return self.declaration.reach or CONE
-
     def unabsorbed_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
         """The one denominator of the bodies closing a drive's interval and the record's unabsorbed share read in it (ALGEBRA.md, The absorption, the draw (b); `lists.absorption`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the unabsorbed share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`unabsorbed_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
         if min(norms) <= 0:
@@ -160,7 +151,7 @@ class Books:
         }
         books.support = tuple(sorted({at for _t, nodes in books.births.values() for at in nodes}))
         books.charges = {i: share.charge_of(board, i) for i in board.order if share.by_charge(board, i)}
-        if books.reach == CONE:  # frame 0, the reference of every record laid at the start, kept once
+        if books.reads_sides:  # frame 0, the reference of every record laid at the start, kept once
             books.reference = dict.fromkeys(books.births, meeting_back.frame_of(board))
         return books
 
@@ -181,9 +172,7 @@ def born(board: Lattice, index: int, was: int) -> None:
             board.interval,
             support_of(board, index),
         )  # the whole lay's Nodes, a section too
-        if (
-            books.reach == CONE and family.parts > 1
-        ):  # the born record's reference, the board at its birth
+        if books.reads_sides and family.parts > 1:  # the born record's reference, the board at its birth
             books.reference[index] = meeting_back.frame_of(board)
 
 
@@ -214,9 +203,7 @@ def count_of(board: Lattice, index: int) -> int | None:
 def record_unit(board: Lattice, index: int) -> int:
     """The unit of one quantum of a record, W_rec, from the record's own rotation and not from a reading (the click's plan, C1; the count's line, Q = count x W_c sin omega for a monochromatic record; nature: E = h nu, one count of light carries the form of its own frequency): W_rec = (the largest x with x^2 <= W_c^2 (den^2 - num_r^2) div den^2) with (num_r, den) the record's rotation, W_c = 3 den T; a family with a gap at its rest rotation, W_c sin omega_0, the count's wall of the record's unit (`loader/derived.count_wall`); a massless family laid as a packet at the wave [p, q] (the family's first packet; a family laid at several waves takes the first's) at the rotation of that wave, den cos omega = (num_l (den cos k + 2 den)) div (3 den_l) by the division act, the band's line with the transverse wave numbers 0, den cos k by the rotation act's integer search, the unit then W_c sin omega through the one form of a born quantum's (`emission.packet_unit`, `features/click.wave_cosine`, `emission.born_unit`; 4242 and 5414 of 6000 at k = pi / 4; the generator reads a packet's count in the same unit, tools/pixel_mode.py); W_c, the massless wall, for a massless family laid by no packet, until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`); held through the run (a face removes one quantum's share with one count). What moves against the reading of the share over the count: a massless packet's count is its share over W_c sin omega, one count at pi / 4 the amplitude 110 on two_photons' packet, and the beams' counts by 1 / sin omega."""
     family, action = board.families[index], board.world.quantum_action
-    wall = count_wall(family, action) * (
-        THIRDS if family.lorentz else 1
-    )  # the covector's form in thirds
+    wall = count_wall(family, action)
     packets = [p for p in board.world.packets if p.family == index]
     if family.pair[0] != family.pair[1] or not packets:
         return wall

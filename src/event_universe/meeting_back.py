@@ -14,8 +14,9 @@ from event_universe.features.front import ball
 from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import CONE, Gauss, Pattern, Ports, times
+from event_universe.loader.draw import Gauss, Pattern, Ports, times
 from event_universe.records import NodeState, Record, largest
+from event_universe.walls import vacuum_walls
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -85,7 +86,7 @@ def grown(board: Lattice, states: list[NodeState], found: growth.Growth, directi
         if (
             index in board.fixed_walls
         ):  # the carried factor: a grown Node is born at the rest's wall, as the board's layer is
-            walls = tuple(board.vacuum_walls(index))
+            walls = tuple(vacuum_walls(board, index))
         growth.resized(
             state, family, axis, side, layers, origin, walls, direction, board.world.kind, half, seed
         )
@@ -325,15 +326,9 @@ def run_back(board: Lattice, index: int) -> Kept:
         observer(board.interval, 1, board.passes)
     kept, books = (cone.copied(board), list(board.growths)), board.credit
     (books.birth, books.support), to = books.births[index], birth_of(board, index)
-    if books.reach == CONE:
-        books.regrown = frame_grown(board, index)
+    books.regrown = frame_grown(board, index)
     while board.interval > to:
-        if books.reach == CONE:
-            cone.stepped_alone(board, -1)
-        else:
-            volume = int(np.prod(board.shape))
-            board.step_inverse()
-            cone.counted(board, volume)
+        cone.stepped_alone(board, -1)
     return kept
 
 
@@ -344,11 +339,7 @@ def run_forward(board: Lattice, index: int, to: int, kept: Kept) -> None:
     while board.interval < to:
         if board.interval + 1 >= first:
             booked_moments(board, index)
-        if books.reach == CONE:
-            cone.stepped_alone(board, 1)
-        else:
-            board.step(False)
-            cone.counted(board, int(np.prod(board.shape)))
+        cone.stepped_alone(board, 1)
     states, growths = kept
     shared = 0
     while shared < min(len(growths), len(board.growths)) and growths[shared] == board.growths[shared]:

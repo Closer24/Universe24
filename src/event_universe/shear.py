@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 def carried(family: Any) -> bool:
     """Whether a held row carries its tension lines as the shear's momentum: a holder of the content with its axis lines under the trace (every such row, the law of one Node)."""
-    return bool(family.axes and family.pressure_trace)
+    return bool(family.axes and not family.wronskian)
 
 
 def shear_lines(family: Any) -> list[int]:

@@ -69,17 +69,13 @@ def family_share(
     unit: int = 1,
     nodes: np.ndarray | None = None,
     as_read: Sequence[Record] | None = None,
-    weights: Sequence[int] | None = None,
 ) -> np.ndarray:
     """A family's share at every Node, its level pairs' shares summed (the form of (re, im) is the sum of the two forms), at the paces of the read, computed at the Nodes `nodes` names (`share`; None: where a level stands) and 0 elsewhere; `as_read`, the lines as the step reads them under the sign, one per line of `records` in their order (`share`), None the plain read; `weights`, one integer per line multiplying its share (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit, the time line's energy negative (covector.weights)."""
     total: Any = 0
     lines = list(records)
     reads = [None] * len(lines) if as_read is None else list(as_read)
-    scales = [1] * len(lines) if weights is None else list(weights)
-    for record, read, scale in zip(lines, reads, scales, strict=True):
-        total = total + scale * share(
-            family.pair, record, wrap, gamma, content, factors, unit, nodes, read
-        )
+    for record, read in zip(lines, reads, strict=True):
+        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes, read)
     return np.asarray(total)
 
 

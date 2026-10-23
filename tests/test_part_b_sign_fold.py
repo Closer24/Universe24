@@ -57,7 +57,10 @@ def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatc
                 )
                 scalars, parts = (lines[:1], lines[1:]) if vector else (lines, [])
                 writes = state.write_remainders[row * family.width :][: family.width]
-                walls = board.walls(CHARGE)[row * family.width :][: family.width]
+                walls = [  # the write's walls fixed per Node for the run (the carried factor), one array per line
+                    np.asarray(w, dtype=object)
+                    for w in board.fixed_walls[CHARGE][row * family.width :][: family.width]
+                ]
                 for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
                     for a in [getattr(r, k) for r in scalars for k in KEYS] + writes[:1]:
                         assert np.array_equal(imaged(a, axes, signs), a)
@@ -68,13 +71,18 @@ def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatc
                                 signs[a] * imaged(found[axes[a]], axes, signs), found[a]
                             )
                     for a in range(len(parts)):  # the odd lines' remainders, the two's-complement mirror
-                        for r, w in ((parts[a].remainder, RULE_WALL), (writes[1 + a], walls[1 + a])):
-                            source = [p.remainder for p in parts] if w == RULE_WALL else writes[1:]
+                        for r, w, source in (
+                            (parts[a].remainder, RULE_WALL, [p.remainder for p in parts]),
+                            (writes[1 + a], walls[1 + a], writes[1:]),
+                        ):
                             image = imaged(source[axes[a]], axes, signs)
-                            assert np.array_equal(image if signs[a] == 1 else (w - image) % w, r)
+                            wall = (
+                                imaged(w, axes, signs) if np.ndim(w) else w
+                            )  # the wall per Node, imaged with it
+                            assert np.array_equal(image if signs[a] == 1 else (wall - image) % wall, r)
     halves = [
-        w // 2 for w in board.walls(CHARGE)[5:8]
-    ]  # the record's row's odd lines written: a current
+        np.asarray(w, dtype=object) // 2 for w in board.fixed_walls[CHARGE][5:8]
+    ]  # the record's row's odd lines written: a current, the remainders off the half of the fixed wall
     assert any((holder.write_remainders[5 + a] != halves[a]).any() for a in range(3))
     assert laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
 

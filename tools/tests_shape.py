@@ -285,7 +285,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_uniform_mode.py::test_every_wrapped_boards_interval_is_unobservable_and_the_former_keys_are_refused_by_name": (
         60,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
-        "unobservable` and the law's `uniform: carried` kept beside it, every refusal by name (the value, the sunk "
+        "unobservable` and the level form's uniform line kept beside it, every refusal by name (the value, the sunk "
         "face, the two keys together, the kick on the holder of the content, the row without the trace, the held "
         "row's keys at a wrong word), the torus loading under either key and either factor, the volume at the start",
     ),

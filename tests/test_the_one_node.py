@@ -243,16 +243,16 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
     "meeting.py": ["stepped"],
     "lattice.py": ["stepped", "step", "step_inverse"],
 }
-LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the key that names each kind
-    ("shape", "a world"),
-    ("families", "a universe"),
-    ("world_digest", "a mode file"),
+LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the keys that name each kind
+    (("shape", "universe"), "a world"),
+    (("families", "integers"), "a universe"),
+    (("world_digest",), "a mode file"),
 )
 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
     """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
-    from event_universe.loader import faces, lay, node_detector_declaration, universe
+    from event_universe.loader import faces, lay, mode, node_detector_declaration, universe
     from event_universe.loader import world as loader_world
 
     tables = {
@@ -263,7 +263,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "lay": set(lay.LAY_KEYS),
         "faces": set(faces.FACE_KEYS),
         "transitions": set(node_detector_declaration.TRANSITION_KEYS),
-        "rates": set(node_detector_declaration.RATE_KEYS),
+        "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
         "parts": set(node_detector_declaration.PART_KEYS),
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
@@ -280,7 +280,11 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 continue
             if not isinstance(document, dict):
                 continue
-            kind = next((kind for key, kind in LOADER_FILES if key in document), None)
+            kind = next(
+                (kind for keys, kind in LOADER_FILES if all(key in document for key in keys)), None
+            )
+            if path.name.endswith(("design.json", "expectation.json")) or ".blind" in path.name:
+                continue  # the generator's design, the blind and the expectation: no file the loader reads
             if kind is None:
                 continue
             table = "world" if kind == "a world" else "universe" if kind == "a universe" else None
@@ -288,6 +292,15 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 found += [(path.name, key) for key in document if key not in tables[table]]
             for key, value in document.items():
                 rows = value if isinstance(value, list) else [value] if isinstance(value, dict) else []
+                if kind == "a mode file":  # the generator's entries: a body's or a packet's levels laid
+                    found += [
+                        (path.name, key, k)
+                        for row in rows
+                        if isinstance(row, dict)
+                        for k in row
+                        if k not in mode.MODE_BODY_KEYS
+                    ]
+                    continue
                 for row in rows:
                     if key in tables and isinstance(row, dict):
                         found += [(path.name, key, k) for k in row if k not in tables[key]]

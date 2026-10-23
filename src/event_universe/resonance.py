@@ -3,22 +3,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
-import numpy as np
-
-from event_universe import records
 from event_universe.core import paces
-from event_universe.core.ports import AXES
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.emission import advanced
 from event_universe.features import phase
-from event_universe.loader.derived import row_of
 from event_universe.loader.node_detector_declaration import Transition
 
 if TYPE_CHECKING:
-    from event_universe.lattice import Lattice
-    from event_universe.node_detector import NodeBooks
+    pass
 
 
 @dataclass
@@ -58,18 +52,11 @@ def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Refer
 
 
 def gathered(
-    references: list[Reference],
-    transitions: tuple[Transition, ...],
-    levels: dict[int, int],
-    projected: dict[Transition, int] | None = None,
+    references: list[Reference], transitions: tuple[Transition, ...], levels: dict[int, int]
 ) -> None:
     """One interval of the taker's read inside its window, a read and no write, no root and no draw: for every transition the arriving family's level a_t at the Node (`levels`, per drive family) times each reference record is added to the window's two sums, X += a_t r_t and Y' += a_t r'_t, and both records advance by the transition's resonance (`emission.advanced`); nothing reads the labels inside the window."""
     for transition, reference in zip(transitions, references, strict=True):
         level = levels[transition.drive]
-        if (
-            projected is not None and transition in projected
-        ):  # a transition declaring its dipole: the drive's Link gradient projected on it (`resonance.projected`), a level in the drive's unit as the Node's level is
-            level = projected[transition]
         reference.in_phase += level * reference.cosine[0]
         reference.quadrature += level * reference.sine[0]
         reference.cosine = advanced(*reference.cosine, reference.resonance)
@@ -151,42 +138,3 @@ def hopped(
     real, carried_real = division_forward(cosine * u - sine * v, amplitude, carried[0])
     imaginary, carried_imaginary = division_forward(sine * u + cosine * v, amplitude, carried[1])
     return int(real), int(imaginary), int(carried_real), int(carried_imaginary)
-
-
-def drive_levels(board: Lattice, books: NodeBooks, drive: int, side: int = 1) -> Any:
-    """The arriving family's level array a reader reads (as `arriving` and `dark` read it): a holder of the sign's time line summed over every row but the record's own, a family of quanta's first line's level otherwise, now (`side` 1) or before (-1)."""
-    family, lines = board.families[drive], board.states[drive].lines
-    if family.wronskian:
-        own = row_of(board.families, books.index, books.record)
-        return np.asarray(records.row_levels(family, lines, 0, side, own))
-    return lines[0].now if side == 1 else lines[0].before
-
-
-def gradient(board: Lattice, books: NodeBooks, drive: int, side: int = 1) -> tuple[int, int, int]:
-    """The drive's central difference across the one Node's six Links, per axis L_{c+a} - L_{c-a}, the half taken in `projected` by the division act: the lattice gradient's numerator at the body's one Node (ALGEBRA.md, The pixel's representation theorem, Theorem 2: a uniform level turns no Link and couples nothing, the gradient against the transition's dipole carries the first order); a neighbour beyond the lattice as grown reads 0, nothing standing there; read for a transition declaring its dipole alone."""
-    levels = drive_levels(board, books, drive, side)
-    here = np.add(books.nodes[0], board.offset)
-    found = []
-    for axis in range(AXES):
-        pair = []
-        for sense in (1, -1):
-            at = here.copy()
-            at[axis] += sense
-            inside = all(0 <= int(at[a]) < levels.shape[a] for a in range(AXES))
-            pair.append(int(levels[tuple(at)]) if inside else 0)
-        found.append(pair[0] - pair[1])
-    return found[0], found[1], found[2]
-
-
-def projected(board: Lattice, books: NodeBooks, transition: Transition, carry: int) -> tuple[int, int]:
-    """The level a transition declaring its dipole reads this interval: the drive's central differences (`gradient`) projected on the dipole, SUM_a n_a (L_{c+a} - L_{c-a}) over 2 den by the division act with the carried remainder (one carried division per transition and interval, the remainder kept in the books between intervals, `NodeBooks.gradient_carry`, so the window's sum is the exact floor of the rational sum), a level in the drive's unit as `arriving` returns one; the window's turn stays theta_W = k |SUM_t a_t e^(i Omega t)| at the declared weight, 1 where the dipole carries the coupling. Returns (level, remainder)."""
-    assert transition.dipole is not None
-    slopes = gradient(board, books, transition.drive)
-    numerator = sum(n * g for n, g in zip(transition.dipole, slopes, strict=True))
-    level, rest = division_forward(numerator, 2 * transition.dipole_scale, carry)
-    return int(level), int(rest)
-
-
-def sloped(board: Lattice, books: NodeBooks, drive: int) -> bool:
-    """Whether the drive slopes across the one Node's six Links now or before (`gradient`): a transition declaring its dipole is lit where any neighbour differs, the uniform level turning no Link."""
-    return any(any(gradient(board, books, drive, side)) for side in (1, -1))

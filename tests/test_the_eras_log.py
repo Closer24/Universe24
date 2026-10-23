@@ -23,7 +23,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
     header, last = log[0], log[-1]
     assert header["held"] == ["gravity"] and "keys" not in header
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 12)
-    assert (header["width"], header["unobservable"]) == (WIDTH, True)
+    assert header["width"] == WIDTH and "unobservable" not in header  # every board's, no flag
     assert len(lines) == 12 and [line["interval"] for line in lines] == list(range(1, 13))
     assert last == lines[-1] and last["interval"] == 12 and "unreturning" not in last
     for line in lines:

@@ -1,4 +1,4 @@
-"""The eras' log of a world under `interval: unobservable`, a host tool (docs/ENGINE.md section 5's readers; DESIGN section 2 (i); ALGEBRA.md, The board's interval is no observable, The mean's velocity is the content's, The stress's trace is the time line's): the world is loaded as tools/run_inputs.py loads it and stepped by the engine's own step, and after every interval the board's own readings are appended as one JSON line to `<world>.eras.jsonl` (`--out`), the file complete at any refusal, so that the log itself is the checkpoint and a refusal's interval is the record (the state is not saved): per held row of the content the eras as the board reads them (`board_readings.eras`: the mean level and its velocity with the remainders, each sourcing family's write summed over the Nodes, the mix's exponent, the trace's own residual, the three tension lines' means and their velocities, the seed Node's level against the other Nodes') and the uniform mode (`board_readings.uniform_mode`), per family of quanta its largest level, its quanta over the board and, where the world lays a whole packet, its share within one Link of the seed Node by the engine's own `Lattice.quanta`, its rulers and its Links' factors at the seed Node and the far Node (the well's depth beside, the time line at the two Nodes); the floats are the host's from the integers (U the fine reading (1 / (d + 1)) ln(SUM X / (N Gamma)) from the volume's sums where the row carries its volume, with `U_level` the level reading's own beside it, and the level's U otherwise; the velocity in levels per interval from U's difference, H = v / Gamma, n_eff, the residual R_nat from that velocity, R_vol from the sums over three intervals, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void))); a line every `--every` intervals on the standard output with the elapsed seconds, and at the end the spans' readings, the estimator of q on the integers' staircase (the symmetry hand's): over spans of `--span` intervals the slope of 1 / v gives n_eff = 2 Gamma d(1 / v) / dt, q_board = n_eff / 2 - 1 and q_p = q_board - 1, read where the velocity is above 0 at both ends of the span. The tool reads the board and sums over it (a reading, no act: the owner's locality decision of 2026-10-22) and computes nothing of the law; the page tools/look/eras_page.py draws the log.
+"""The eras' log of a world under the volume form, a host tool (docs/ENGINE.md section 5's readers; DESIGN section 2 (i); ALGEBRA.md, The board's interval is no observable, The mean's velocity is the content's, The stress's trace is the time line's): the world is loaded as tools/run_inputs.py loads it and stepped by the engine's own step, and after every interval the board's own readings are appended as one JSON line to `<world>.eras.jsonl` (`--out`), the file complete at any refusal, so that the log itself is the checkpoint and a refusal's interval is the record (the state is not saved): per held row of the content the eras as the board reads them (`board_readings.eras`: the mean level and its velocity with the remainders, each sourcing family's write summed over the Nodes, the mix's exponent, the trace's own residual, the three tension lines' means and their velocities, the seed Node's level against the other Nodes') and the uniform mode (`board_readings.uniform_mode`), per family of quanta its largest level, its quanta over the board and, where the world lays a whole packet, its share within one Link of the seed Node by the engine's own `Lattice.quanta`, its rulers and its Links' factors at the seed Node and the far Node (the well's depth beside, the time line at the two Nodes); the floats are the host's from the integers (U the fine reading (1 / (d + 1)) ln(SUM X / (N Gamma)) from the volume's sums where the row carries its volume, with `U_level` the level reading's own beside it, and the level's U otherwise; the velocity in levels per interval from U's difference, H = v / Gamma, n_eff, the residual R_nat from that velocity, R_vol from the sums over three intervals, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void))); a line every `--every` intervals on the standard output with the elapsed seconds, and at the end the spans' readings, the estimator of q on the integers' staircase (the symmetry hand's): over spans of `--span` intervals the slope of 1 / v gives n_eff = 2 Gamma d(1 / v) / dt, q_board = n_eff / 2 - 1 and q_p = q_board - 1, read where the velocity is above 0 at both ends of the span. The tool reads the board and sums over it (a reading, no act: the owner's locality decision of 2026-10-22) and computes nothing of the law; the page tools/look/eras_page.py draws the log.
 
 Run with PYTHONPATH set to the checkout's src, at nice 15 for a long run:
 
@@ -203,15 +203,7 @@ def spans(lines: list[dict[str, Any]], family: str, span: int, gamma: int) -> li
 def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, Any]:
     """The log's first line: the world's own numbers and the held rows' keys as the universe file declares them (the page's legend names the hypotheses under their keys)."""
     world = board.world
-    keys = {
-        family.name: {
-            "booking": "form" if family.form_clock else "count",
-            "factor": "carried" if family.factor_carried else "rounded",
-            "pressure": "trace" if family.pressure_trace else "tension",
-        }
-        for family in world.families
-        if family.held and not family.wronskian
-    }
+    held = [family.name for family in world.families if family.held and not family.wronskian]
     return {
         "world": path.name,
         "node_clock": world.node_clock,
@@ -219,9 +211,7 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
         "width": world.width.bit_length(),
         "shape": list(world.shape),
         "families": [family.name for family in world.families],
-        "held": list(keys),
-        "keys": keys,
-        "unobservable": world.unobservable,
+        "held": held,
         "amplitude_bound": world.amplitude_bound,
         "intervals": world.intervals if intervals is None else intervals,
     }

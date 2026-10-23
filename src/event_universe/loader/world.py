@@ -98,7 +98,7 @@ class NodeDetectorRow:
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the lattice's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the packets laid at the start, the node_detectors, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeDetectors' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the packets laid whole at an interval of the run (`wholes`, `loader/packets.py`, the probe of the pulsed gate), and the erasing front's taper in shells (`erasure`, 1 where the world declares none)."""
+    """The world as loaded: the lattice's shape, which axes wrap and which are open, the open faces' depth, the Nodes declared beyond the board by its inner faces, the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies, the packets laid at the start, the node_detectors, the receding faces, the lay declared with its tolerance (the budget's gate on T at load, `loader/lay.py`), the NodeDetectors' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write, the run as before the click entered the engine), and the packets laid whole at an interval of the run (`wholes`, `loader/packets.py`, the probe of the pulsed gate)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -122,9 +122,6 @@ class World:
     wholes: tuple[
         WholePacket, ...
     ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
-    erasure: int = 1  # the erasing front's taper: the shells written to 0 over this many shells from the reach, the world's `erasure` from 1, 1 where absent (the hard front as built; ALGEBRA.md, The click writes on the lattice (6); src/event_universe/front.py)
-    uniform: bool = False  # the world's `uniform: carried`, the law as written (2026-10-21, kept by name and runnable): on a board periodic on every axis every held row's rest is the zero-mean part and its k = 0 component is carried by Rule3's own line fed by the one write alone (features/start `rest`; ALGEBRA.md, The uniform mode carried by Rule3's own k = 0 line, the clause of 2026-10-21); False where absent, the sink refusal as before
-    unobservable: bool = False  # the world's `interval: unobservable` (loader/interval.py; ALGEBRA.md, The board's interval is no observable, a hypothesis under its own name, 2026-10-22): the rest the zero-mean part as under the law's key, and the one write of every held row of the content less the row's own kinetic form at the symmetry's weight, the hill (records.write_sources); the kick refused by name; False where absent
 
 
 def kind_of(width: int) -> type:
@@ -320,7 +317,6 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
     """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
-    erasure = 1  # the front's taper, the one Node's
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
     shape_value = world["shape"]
     if not isinstance(shape_value, list) or len(shape_value) != 3:
@@ -333,8 +329,6 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     periodic = tuple(faces[axis] == "periodic" for axis in AXES)
     open_axes = tuple(faces[axis] == "open" for axis in AXES)
     even_box_refused(shape, periodic, families)
-    carried = False  # no mode of the uniform line: the volume form everywhere
-    unobservable = True  # the one Node: every board's interval is no observable (loader/interval.py)
     wraps, opened = (periodic[0], periodic[1], periodic[2]), (open_axes[0], open_axes[1], open_axes[2])
     if any(open_axes) and "face_depth" not in world:
         raise ValueError("face_depth is required on a lattice with an open face: the depth of its layer")
@@ -345,10 +339,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
     bodies = bodies_of(world["bodies"], mode, digest, families, shape, bound, beyond, action, wraps)
-    kicks_refused(unobservable, families, world.get("packets", []))  # no kick under the key
-    families = volume_rows(
-        unobservable, families, gamma
-    )  # the held rows sourced by the tensions, massless or gapped, carry their volume
+    kicks_refused(families, world.get("packets", []))  # no kick on a holder of the content
+    families = volume_rows(families, gamma)  # the held rows sourced by the tensions carry their volume
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
     bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
     conversion.together(families, bodies, packets)  # the multisets a close can credit, refused by name
@@ -390,7 +382,4 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         draw,
         lay,
         wholes,
-        erasure,
-        carried,
-        unobservable,
     )
