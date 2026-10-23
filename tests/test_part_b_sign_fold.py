@@ -178,8 +178,13 @@ def test_two_charges_of_opposite_sense_run_a_hundred_intervals(tmp_path, monkeyp
 def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():
     """(d) The sign holder's odd lines over the doubled wall 2 E_s T from the unhalved sum J against the halved path, (J + 1) div 2 over E_s T, both by the carried division from the half wall: with 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval (the half unit of current the halved path rounds up and the unhalved keeps in the remainder), so that the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals and on a plane wave's own current, J_x = 2 A^2 sin k, static; the walls of turning.json's sign holder (100 T, 200 T, 200 T, 200 T) per row."""
     write = held_write_of(TURNING, CHARGE, T)
-    weight, wall = TURNING[CHARGE].write, write.walls[0]
-    assert write.walls == (wall, 2 * wall, 2 * wall, 2 * wall) * 2 and wall == 100 * T
+    weight, wall = (
+        TURNING[CHARGE].write,
+        write.walls[0] // 2,
+    )  # E_s T, the halved path's wall of this model
+    assert (
+        write.walls == (2 * wall,) * 4 * 2 and wall == 100 * T
+    )  # every line of the sign holder over the doubled wall 2 E_s T: the odd lines since the halving was dropped, the time line since the Wronskian is booked centred on the triple, the two edges' sum (the centred count, 2026-10-23; the former time line's wall E_s T)
     draw = np.random.default_rng(11)
     for sources in (draw.integers(-(10**6), 10**6, 300), 2 * draw.integers(-(10**6), 10**6, 300)):
         old, new, odds = (0, wall // 2), (0, wall), 0

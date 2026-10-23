@@ -49,6 +49,9 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
         row = board.states[gravity].lines[0]
         uniform = np.full(board.shape, content, dtype=board.kind)
         board.states[gravity].lines[0] = records.Record(uniform, uniform.copy(), row.remainder)
+        node.seed_phases(
+            board, board.world
+        )  # the pairs and the Node's phase row re-read from the state set by hand, so that the act is the first from rest (the centred count, 2026-10-23)
         rows = node.phased(charge, board.families, board.states, 1, board.wrap, gamma)
         angles = node.turning(charged, board.families, board.states, 1, 0)
         assert angles is not None
@@ -70,14 +73,18 @@ def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_
             for r in range(len(board.states[charge].phases))
             if r != 0 and rows[r] is not board.states[charge].phases[r]
         )
-        cosine, sine = (
-            board.states[charge].phases[row_index][0],
-            board.states[charge].phases[row_index][1],
-        )
+        fresh = records.phase_lines(
+            board.families[charge], board.shape, board.kind, gamma, board.world.width.bit_length()
+        )[
+            row_index
+        ]  # the seed at the angle 0: the pair after one act stands at the count's size from it (the centred count, 2026-10-23: the Link's count is the Node's reading, K after the first act from rest the clocked potentials' difference)
+        cosine, sine = fresh[0], fresh[1]
         expected = phase.iterate(
             ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
             np.abs(count),  # the pair at the count's size, read with the count's sign (2026-10-21)
-            gamma,
+            phase.unit(
+                gamma
+            ),  # the line's unit 2 Gamma, the half angle (the centred count, 2026-10-23; the former unit Gamma)
             1,
         )
         for got, want in zip(rows[row_index][:2], expected, strict=True):
