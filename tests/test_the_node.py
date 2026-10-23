@@ -305,10 +305,8 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         for _ in range(board.world.intervals - 4):
             board.step()  # to the window's end, the click
         lefts = [e["left"] for e in lines if e["event"] == "credit"]  # one write per side, one count
-        sides = len(board.credit.sides)
-        assert (
-            lefts == [left] * sides + [left - 1] * sides and board.credit.counts[laid] == left - 1
-        )  # the derived window 30: the sides' clicks at the second close 60 with 25 left each and again at 90 with 24, the count 24 at the run's end (one close with 25 at the declared window before 2026-10-23)
+        n = len(board.credit.sides)  # two closes: 25 left, then 24
+        assert lefts == [left] * n + [left - 1] * n and board.credit.counts[laid] == left - 1
 
 
 def difference(a: np.ndarray, axis: int) -> np.ndarray:

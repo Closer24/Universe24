@@ -395,12 +395,5 @@ def birth_line(
     interval: int, family: str, children: list[str], senses: list[int], nodes: tuple[Any, ...]
 ) -> dict[str, object]:
     """The birth line, the reading of the sentence's act beside the credit's (ALGEBRA.md, Matter's birth from light; act.py): the interval, the gapless family met, the children's families and senses and the Nodes, never a rate."""
-    return {
-        "event": "birth",
-        "label": "NODEDETECTOR",
-        "interval": interval,
-        "family": family,
-        "children": children,
-        "senses": senses,
-        "nodes": [list(node) for node in nodes],
-    }
+    line = {"event": "birth", "label": "NODEDETECTOR", "interval": interval, "family": family}
+    return {**line, "children": children, "senses": senses, "nodes": [list(node) for node in nodes]}

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import records, world_files
+from event_universe import node, records, world_files
 from event_universe.core import paces
 from event_universe.features import phase, volume
 from event_universe.lattice import Lattice
@@ -64,6 +64,9 @@ def test_the_back_step_is_exact_with_the_fold(tmp_path, monkeypatch):
     world = flux_world(tmp_path, (25, 1, 1), dict(x="periodic", y="periodic", z="periodic"))
     board = Lattice(load_world(world))
     packet(board, 0, (1, 4), 7, 3)
+    board.amplitude = node.seed_phases(
+        board, board.world
+    )  # the pairs re-read from the laid state (the centred count, 2026-10-23)
     begun = arrays(board)
     for _ in range(30):
         board.step()

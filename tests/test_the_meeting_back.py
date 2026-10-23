@@ -114,7 +114,7 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
 
 
 def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monkeypatch):
-    """(c) The books: the (a, b) singlet world over 60 intervals: the two credit lines at the close 40 with the orders 1 and 2, the count 1 and nothing left, the record's scale on each; the counts and the deficits at the close, the hole's faces at 41 and 42 for every line of the record at one Node per side, the two fronts begun at the close after the last side's draw and erasing the count-0 wave shell by shell to 60, the share fallen; the observers: pass 1 to the close with the boundary frame at the close before the first step back, pass 2 the run back to the birth, pass 3 the run forward to the close, pass 4 the second side's run back, pass 5 its run forward and the run on; the tick a forward clock standing at the close through the passes 2 to 5 (observers_api_D.md)."""
+    """(c) The books: the (a, b) singlet world over 60 intervals: the two credit lines at the derived window's close (30; the former declared window closed at 40) with the orders 1 and 2, the count 1 and nothing left, the record's scale on each; the counts and the deficits at the close, the hole's faces at 41 and 42 for every line of the record at one Node per side, the two fronts begun at the close after the last side's draw and erasing the count-0 wave shell by shell to 60, the share fallen; the observers: pass 1 to the close with the boundary frame at the close before the first step back, pass 2 the run back to the birth, pass 3 the run forward to the close, pass 4 the second side's run back, pass 5 its run forward and the run on; the tick a forward clock standing at the close through the passes 2 to 5 (observers_api_D.md)."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
     frames, lines, ticks = [], [], []
@@ -127,34 +127,39 @@ def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monke
     for _ in range(20):
         board.step()
     spin = family(board, "spin")
-    assert board.tick == 60 and all(k == t for k, t, p in ticks if p == 1)
-    assert all(k == 40 for k, _t, p in ticks if 1 < p < 5) and all(
-        k >= 40 for k, _t, p in ticks if p == 5
-    )
     credits = [c for c in lines if c["event"] == "credit"]
+    close = credits[0][
+        "interval"
+    ]  # the derived window's close (30 under the derived window, 2026-10-23; the former declared 40)
+    assert board.tick == 60 and all(k == t for k, t, p in ticks if p == 1)
+    assert all(k == close for k, _t, p in ticks if 1 < p < 5) and all(
+        k >= close for k, _t, p in ticks if p == 5
+    )  # the board's tick stands at the close through the run back and forward
     assert [(c["node_detector"], c["order"], c["count"], c["left"], c["interval"]) for c in credits] == [
-        ("left", 1, 1, 0, 40),
-        ("right", 2, 1, 0, 40),
+        ("left", 1, 1, 0, close),
+        ("right", 2, 1, 0, close),
     ]
     assert all(c["scale"] >= 1 for c in credits) and credits[1]["scale"] % credits[0]["scale"] == 0
     faces = [f for f in lines if f["event"] == "face"]
-    holes = [f for f in faces if f["interval"] == 41]
-    assert len(holes) == 2 * board.families[spin].lines and min(f["interval"] for f in faces) == 41
+    holes = [f for f in faces if f["interval"] == close + 1]
+    assert (
+        len(holes) == 2 * board.families[spin].lines and min(f["interval"] for f in faces) == close + 1
+    )
     nodes = {tuple(f["node"]["at"]) for f in holes}
     assert len(nodes) == 2 and {at[0] < 4 for at in nodes} == {True, False}  # one Node per side
     shells = {e["interval"] for e in lines if e["event"] == "erasure"}
-    assert shells == set(range(41, 61)) and len(board.credit.fronts) == 2
+    assert shells == set(range(close + 1, 61)) and len(board.credit.fronts) == 2
     assert board.credit.counts[spin] == 0 and board.total_share(spin)[0] < books["spin"]["share"]
     expected = [
-        (t, 1, 1) for t in range(1, 41)
-    ]  # the loop to 39 and the first run back's boundary frame
+        (t, 1, 1) for t in range(1, close + 1)
+    ]  # the loop to the close less one and the first run back's boundary frame
     for passes in (2, 4):
-        expected += [(t, -1, passes) for t in range(39, -1, -1)]
-        expected += [(t, 1, passes + 1) for t in range(1, 41)]
+        expected += [(t, -1, passes) for t in range(close - 1, -1, -1)]
+        expected += [(t, 1, passes + 1) for t in range(1, close + 1)]
         expected += [
-            (40, 1, passes + 1)
+            (close, 1, passes + 1)
         ]  # the second run back's boundary frame; the step's end at the close
-    expected += [(t, 1, 5) for t in range(41, 61)]
+    expected += [(t, 1, 5) for t in range(close + 1, 61)]
     assert frames == expected
     print(
         f"the books at the close: {books['spin']}; the credit lines {[(c['realised'], c['scale']) for c in credits]}"
@@ -192,14 +197,15 @@ def test_the_run_back_and_forward_is_exact_in_the_act_and_the_gate_crosses_the_w
     board.states[spin].lines[0] = replace(line, now=now)
     with pytest.raises(RuntimeError, match="the record's cone"):  # the moved rest, at the cone's edge
         meeting_back.run_forward(board, spin, 20, kept)
+    close = board.world.draw.window  # the derived window's close (30; the former declared 40)
     gate = Lattice(load_world(path))
     assert (
-        GATE.verdict(gate, 38)["verdict"] == "MATCH" and gate.credit.lays == {}
-    )  # to 39, before the close
+        GATE.verdict(gate, close - 2)["verdict"] == "MATCH" and gate.credit.lays == {}
+    )  # to the interval before the close, no write crossed
     gate = Lattice(load_world(path))
-    for _ in range(41):  # through the close: the two writes at the birth, the hole and the fronts
+    for _ in range(close + 1):  # through the close: the two writes at the birth, the hole and the fronts
         gate.step()
-    assert GATE.verdict(gate, 40)["verdict"] == "MATCH"
+    assert GATE.verdict(gate, close)["verdict"] == "MATCH"
     print(
         "the inverse in the act: 20 intervals back and forward exact; the gate MATCH before and after the close"
     )
@@ -241,7 +247,10 @@ def test_the_cone_is_the_one_reach_and_the_write_stands_at_the_birth(tmp_path, m
                 assert not ((np.asarray(now)[box] != was) & outside).any(), (interval, label)
 
     board.observers.append(seen)
-    for _ in range(40):
+    close = (
+        board.world.draw.window
+    )  # the derived window's close (30; the former declared 40), the run to it
+    for _ in range(close):
         board.step()
     assert volumes and volumes == {t: board.credit.cone[t] for t in volumes}
     assert meeting_back.first_difference(zero, births[2]) is None  # the lay, unwritten
@@ -255,16 +264,20 @@ def test_the_cone_is_the_one_reach_and_the_write_stands_at_the_birth(tmp_path, m
         assert c[1] == 0  # a real-port world: the integers with 0 behind them
         expected = laid if label.endswith("remainder") else laid * c[0]
         assert (written == expected).all(), (label, c)  # the write at the birth, bit for bit
-    assert len(clicks) == 2 and [c["proper"] for c in clicks] == [39, 39] and "reach" not in clicks[0]
-    assert board.tick == 40 and sorted({f[3] for f in frames}) == [1, 2, 3, 4, 5]
+    assert (
+        len(clicks) == 2
+        and [c["proper"] for c in clicks] == [close - 1] * 2
+        and "reach" not in clicks[0]
+    )
+    assert board.tick == close and sorted({f[3] for f in frames}) == [1, 2, 3, 4, 5]
     cone = board.credit.cone
-    counted = [cone[t] for t in range(41)]
+    counted = [cone[t] for t in range(close + 1)]
     assert all(x <= y for x, y in zip(counted, counted[1:], strict=False))
     assert counted[0] == len(board.credit.support) + 2  # S_0 within one Link on the chain
     radii = [(f[1], f[4]) for f in frames if f[3] == 2]
-    assert radii == [(t, t + 1) for t in range(39, -1, -1)]
-    assert [f[4] for f in frames if f[3] == 3][:40] == list(range(2, 42))
-    assert all(f[0] == 40 for f in frames if f[3] > 1)
+    assert radii == [(t, t + 1) for t in range(close - 1, -1, -1)]
+    assert [f[4] for f in frames if f[3] == 3][:close] == list(range(2, close + 2))
+    assert all(f[0] == close for f in frames if f[3] > 1)
     print(
         f"the one reach: the lines {[(c['realised'], c['scale']) for c in clicks]}; the cone's volumes {counted}"
     )
@@ -284,7 +297,9 @@ def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
     counted = {}
 
     def cone_of(interval, _direction, passes, b=born, counted=counted):  # type: ignore[no-untyped-def]
-        if passes > 1:
+        if (
+            1 < passes < 5
+        ):  # the meeting's own passes, the run back and forward (the run goes on past the close under the derived window, 2026-10-23)
             at = [tuple(n + o for n, o in zip(node, b.offset, strict=True)) for node in b.credit.support]
             counted[interval] = int(
                 ball(b.shape, at, interval - b.credit.birth + 1, b.world.periodic).sum()
@@ -296,8 +311,9 @@ def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
     assert counted and counted == {t: born.credit.cone[t] for t in counted}  # |G(t)| from the birth
     assert born.credit.birth == born.world.bodies[0].detector.draw.window == 24  # the window's close
     assert [born.credit.cone[t] for t in (24, 25, 26)] == [3, 5, 7]  # 2 r + 1 from the birth at 24
-    assert born.credit.cone[124] == int(np.prod(born.shape)) < 2 * (124 - 24) + 3  # the grown board
-    print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(24, 125)]}")
+    close = max(born.credit.cone)  # the meeting's close, the last interval the cone was counted at
+    assert born.credit.cone[close] == int(np.prod(born.shape)) < 2 * (close - 24) + 3  # the grown board
+    print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(24, close + 1)]}")
 
 
 def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path, monkeypatch):
@@ -329,7 +345,8 @@ def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path
     assert (
         sorted({f[3] for f in frames}) == [1, 2, 3, 4, 5, 6, 7] and board.tick == board.world.intervals
     )
-    assert all(f[0] == 60 for f in frames if f[3] > 1) and left > 0 and not board.credit.fronts
+    close = board.world.draw.window  # the derived window's close (the former declared 60)
+    assert all(f[0] == close for f in frames if 1 < f[3] < 5) and left > 0 and not board.credit.fronts
     print(
-        f"the GHZ under the cone: the realised triple {realised}, the volumes {[board.credit.cone[t] for t in (0, 10, 30, 60)]}"
+        f"the GHZ under the cone: the realised triple {realised}, the volumes {[board.credit.cone[t] for t in (0, close // 2, close)]}"
     )
