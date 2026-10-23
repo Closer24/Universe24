@@ -167,7 +167,9 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         ["wronskian"],
         ["form", "tensions", "flux"],
     ]
-    assert draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)  # the former key, read for its refusal by name alone (2026-10-23)
+    assert (
+        draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
+    )  # the former key, read for its refusal by name alone (2026-10-23)
     assert set(node_detector_declaration.TRANSITION_KEYS) == {
         "from",
         "to",

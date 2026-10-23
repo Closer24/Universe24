@@ -404,7 +404,7 @@ def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_b
 
 
 def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark(tmp_path):
-    """The committed one-photon world at the lay without the uniform mode (ALGEBRA.md, The click writes on the lattice (3) and (6)): one atom takes at its window's close (the taking atom's close, 63 under the content of the born universe, re-pinned 2026-10-20, the two closes 61 and 62 before it; which takes is the taking atom's read of the board) and the count falls to 0; the light's share over the lattice never rises above the lay's by more than the hole's and the front's transient (one part in seven, the known one), and once the front has swept both packets the share is 0 exactly, the board dark."""
+    """The committed one-photon world at the lay without the uniform mode (ALGEBRA.md, The click writes on the lattice (3) and (6)): one atom takes at its window's close (the taking atom's close, 60 under the derived window of 2026-10-23, 63 at the declared window re-pinned 2026-10-20; which takes is the taking atom's read of the board) and the count falls to 0; the light's share over the lattice never rises above the lay's by more than the hole's and the front's transient (one part in seven, the known one), and once the front has swept both packets the share is 0 exactly, the board dark."""
     board = Lattice(
         load_world(content_world(tmp_path, "one_photon", ONE_PHOTON, TWO_ATOMS)), (lines := []).append
     )  # the content, 2026-10-20
@@ -417,8 +417,8 @@ def test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark(t
     (taken,) = [c for c in credits if c["absorbed"]]  # one absorption, at the taking atom's close
     print(f"the photon taken at {taken['interval']} by {taken['node_detector']}, {taken['window']}")
     assert (
-        taken["interval"] == 63 and taken["interval"] == taken["window"][1]
-    )  # re-pinned 2026-10-20: 63
+        taken["interval"] == 60 and taken["interval"] == taken["window"][1]
+    )  # the derived window's close 60 (63 at the declared window, re-pinned 2026-10-20; the derived window of 2026-10-23)
     assert board.credit.counts[photon] == 0
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     after = {x["event"] for x in lines if x["interval"] > taken["interval"]}
