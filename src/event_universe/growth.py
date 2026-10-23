@@ -24,7 +24,18 @@ def padded(a: Any, axis: int, side: int, layers: int, value: int = 0) -> Any:
     """The array with `layers` layers of `value` beyond its face on `side` (+1 or -1) of `axis`, the dtype kept."""
     width = [(0, 0)] * 3
     width[axis] = (layers, 0) if side < 0 else (0, layers)
-    return np.pad(a, width, constant_values=value)
+    found = np.pad(a, width, constant_values=value)
+    if found.dtype == np.dtype(
+        object
+    ):  # Python's integers throughout: the pad's constant enters as the hardware's scalar
+        return np.vectorize(int, otypes=[object])(found)
+    return found
+
+
+def spread(wall: Any, shape: tuple[int, int, int]) -> Any:
+    """A fixed wall as an object array over the lattice: the array itself, or one integer spread over every Node (a line whose factor's wall is one number)."""
+    found = np.asarray(wall, dtype=object)
+    return found if found.shape == shape else np.full(shape, int(found.reshape(-1)[0]), dtype=object)
 
 
 def shrunk(a: Any, axis: int, side: int, layers: int) -> Any:
@@ -90,7 +101,9 @@ def resized(
         )
         for number, record in enumerate(state.lines)
     ]
-    origins = [origin_of(at) for at in records.write_origins(walls, ONE, kind)]
+    origins = [
+        origin_of(at) for at in records.write_origins(walls, ONE, object)
+    ]  # half each wall, exact
     state.write_remainders = [
         grown(a, at) for a, at in zip(state.write_remainders, origins, strict=True)
     ]
@@ -140,6 +153,16 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
     """The lattice grown by `layers` layers beyond its face on `side` of `axis` (direction +1) or the same layers taken off (-1): every NodeState (`resized`), the node_detectors' declared Nodes, the Nodes beyond the inner faces, the shape and the offset of the layers before the origin."""
     for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
         kind = board.world.kind
+        walls: tuple[int, ...] = board.walls(index)
+        if (
+            index in board.fixed_walls
+        ):  # the carried factor's wall per Node: the grown layer at the rest's wall
+            vacuum = board.vacuum_walls(index)
+            board.fixed_walls[index] = [
+                sized(spread(wall, board.shape), axis, side, layers, direction, value)
+                for wall, value in zip(board.fixed_walls[index], vacuum, strict=True)
+            ]
+            walls = tuple(vacuum)
         resized(
             state,
             family,
@@ -147,7 +170,7 @@ def resize(board: Lattice, axis: int, side: int, layers: int, direction: int) ->
             side,
             layers,
             board.origins[index],
-            board.walls(index),
+            walls,
             direction,
             kind,
             board.half_wall(index),

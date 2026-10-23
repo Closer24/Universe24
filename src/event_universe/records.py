@@ -179,16 +179,24 @@ def write_sources(
     walls = [wall * scale for wall, scale in zip(write.walls, scales, strict=True)]  # one per line
     if (
         fixed is not None
-    ):  # the wall fixed per Node: the ratio of the walls inside the numerator, rounded once
+    ):  # the wall fixed per Node: the ratio of the walls inside the numerator, rounded once, in Python's integers (the fixed wall E_s T Gamma^power p_0^(3 - power) passes 63 bits at the shipped level weights, 7 x 10^21 at E_s 10^6 and T 2^15, so the one product is exact beyond the width as the write factor's numerator is, `exact`)
         ratios = zip(found, fixed, walls, strict=True)
-        found = [paces.rounded(np.asarray(n, dtype=object) * f, w) for n, f, w in ratios]
-        walls = list(fixed)
+        found = [paces.rounded(exact(n) * exact(f), exact(w)) for n, f, w in ratios]
+        walls = [exact(f) for f in fixed]
     if (
         motion is not None and family.motion_volume
     ):  # the volume's write: (d + 1) X_now c over Gamma E_s T
         now = np.asarray(motion[0] if direction == 1 else motion[1], dtype=object)
         found[0], walls[0] = volume.EXPONENT * now * np.asarray(found[0], dtype=object), gamma * walls[0]
     return found, walls, terms
+
+
+def exact(values: Any) -> Any:
+    """An array (or a number) as Python's integers, exact at any size: the hardware's integers inside an object array overflow at 63 bits when multiplied by a wall beyond them, so every term of a carried write at the fixed wall is made Python's first (the precedent the write factor's numerator, `paces.write_factor`, booked exact beyond the width)."""
+    found = np.asarray(values)
+    if found.shape == ():
+        return int(found)
+    return np.vectorize(int, otypes=[object])(found)
 
 
 def walls_at(
@@ -213,12 +221,14 @@ def pressure_term(
         if source not in stresses:
             continue
         family, (clock, p_axes) = families[source[0]], rulers[source]
-        paces_object = [np.asarray(p, dtype=object) for p in p_axes]
+        paces_object = [
+            exact(p) for p in p_axes
+        ]  # Python's integers: the wall 9 den Gamma^(2 + power) p_0^(3 - power) passes 63 bits
         trace: Any = 0
         for axis in range(AXES):
-            trace = trace + np.asarray(stresses[source][axis], dtype=object) * paces_object[axis] ** 2
+            trace = trace + exact(stresses[source][axis]) * paces_object[axis] ** 2
         numerator = trace * paces_object[0] * paces_object[1] * paces_object[2]
-        clock_object = np.asarray(clock, dtype=object)
+        clock_object = exact(clock)
         wall = AXES * AXES * family.pair[1] * gamma ** (2 + power) * clock_object ** (3 - power)
         total = total + weight_of(held, family) * paces.rounded(numerator, wall)
     return total

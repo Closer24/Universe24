@@ -16,6 +16,7 @@ import event_universe.records as records
 from event_universe import credit, emission, front, growth, lists, meeting, node, reports, share, take
 from event_universe.board_readings import Currents, Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
+from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_forward, wall_of
 from event_universe.features import volume
@@ -179,8 +180,27 @@ class Lattice:
         rulers = self.rulers(1) if carried else {}
         for index in carried:
             born = records.walls_at(index, self.families, self.writes[index], rulers, gamma)
+            born = [
+                records.exact(wall) for wall in born
+            ]  # Python's integers, beyond 63 bits at the shipped weights
             self.states[index].write_remainders = records.write_origins(born, self.shape, object)
             self.fixed_walls[index] = born
+
+    def vacuum_walls(self, index: int) -> list[int]:
+        """A held row's fixed walls at a Node with no level, one integer per line: the walls per Node of the carried factor (`records.walls_at`) at the rulers every source reads at the rest, the clock from the content of the holders it reads at their rests (the fill beyond a face, the level the volume's reading gives the rest's volume) and the pace along every axis the Node's pace under no tension; the walls a layer grown beyond a receding face is born with (growth.resize), the same the start gives every Node standing at the rest."""
+        gamma = self.world.node_clock
+        rulers: Rulers = {}
+        for source in sources_of(self.families, self.order):
+            reads = [r for r in self.families[source[0]].reads if not self.families[r.family].rotation]
+            if not reads:
+                rulers[source] = (gamma, (gamma, gamma, gamma))
+                continue
+            content = np.full((1, 1, 1), sum(r.weight * self.families[r.family].rest for r in reads))
+            clock, pace = paces.node_paces(gamma, content)
+            axis = paces.axis_pace(pace, gamma, 0, 0)
+            rulers[source] = (clock, (axis, axis, axis))
+        walls = records.walls_at(index, self.families, self.writes[index], rulers, gamma)
+        return [int(np.asarray(wall, dtype=object).reshape(-1)[0]) for wall in walls]
 
     def sourced(self, index: int) -> bool:
         """Whether anything sources a held row at the start: a reader's laid record with a Wronskian other than 0 at a Node for the holder of the sign (a real record sources none of it, so the holder keeps its laid record, light)."""
