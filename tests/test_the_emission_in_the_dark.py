@@ -40,7 +40,7 @@ def run_whole(board):  # type: ignore[no-untyped-def]
 
 
 def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_path, monkeypatch):
-    """The lone [1, 1299] body in e on its two Nodes, no light laid, its window 12 and its rate e to g at the lifetime 48: its read finds every digit at the lay's origin at every multiple of 4 and three cycling numbers between (the exact quarter turn), so the hazard's draws at 1, 2 and 3 miss and the draw at 4 is deferred; at the window's close, 12, the emission falls without a draw, one credit line emitted `pulse` from e to g with the reading NO_DRAW, the quantum laid at the Node of the larger share; the window runs from the lay (an emitter's when); every other draw at the origin is refused by name as before (two weights asked of the fresh board), and one weight reads nothing."""
+    """The lone [1, 1299] body in e on its two Nodes, no light laid, its window derived 8 from its own beat (12 declared before the derived window of 2026-10-23) and its rate e to g at the lifetime 48: its read finds every digit at the lay's origin at every multiple of 4 and three cycling numbers between (the exact quarter turn), so the hazard's draws at 1, 2 and 3 miss and the draw at 4 is deferred; at the window's close, 12, the emission falls without a draw, one credit line emitted `pulse` from e to g with the reading NO_DRAW, the quantum laid at the Node of the larger share; the window runs from the lay (an emitter's when); every other draw at the origin is refused by name as before (two weights asked of the fresh board), and one weight reads nothing."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "u.json").write_bytes((EVENTS / "zeno" / "zeno_atom.json").read_bytes())
     body = {  # the Zeno body's declaration (the deleted zeno worlds' atom), in e with its rate out
@@ -72,8 +72,10 @@ def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_
     assert node_detector.picked(board, books, [1]) == 0 and books.left is None  # one weight, no read
     run_whole(board)
     given = [c for c in clicks(lines) if c["emitted"]]
-    assert [(c["interval"], c["emitted"], c["lost"]) for c in given] == [(12, "pulse", [NO_DRAW])]
-    assert given[0]["window"] == [1, 12] and (given[0]["before"], given[0]["realised"]) == ("e", "g")
+    assert (
+        [(c["interval"], c["emitted"], c["lost"]) for c in given] == [(8, "pulse", [NO_DRAW])]
+    )  # the window derived from the body's own beat, 8 (the declared window 12 before the derived window, 2026-10-23)
+    assert given[0]["window"] == [1, 8] and (given[0]["before"], given[0]["realised"]) == ("e", "g")
     laid = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["family"] == "pulse"}
     assert laid <= {tuple(n["node"]) for n in body["nodes"]} and board.credit.counts[pulse] == 1
     print(f"the dark body's emission {given[0]['interval']}, {given[0]['lost']}, laid at {sorted(laid)}")
@@ -129,10 +131,13 @@ def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
             Lattice(load_shipped(EVENTS / "bell_singlet" / f"{name}.json"), (lines := []).append)
         )
         atom = [(at, nodes, bits) for at, nodes, bits in reads if nodes[-1][0] == "atom" and at > 24]
-        assert [(at, nodes) for at, nodes, _b in atom] == [
-            (85, [("spin", 3), ("atom", 1)]),
-            (110, [("spin", 3), ("atom", 1)]),
-        ]
+        assert (
+            [(at, nodes) for at, nodes, _b in atom]
+            == [
+                (95, [("spin", 3), ("atom", 1)]),
+                (119, [("spin", 3), ("atom", 1)]),
+            ]
+        )  # the atom's reads at the derived windows' closes (85 and 110 at the declared windows before 2026-10-23)
         assert all(bits > 54 for _a, _n, bits in atom), atom  # above the absorption's unit, 53.9 bits
         found[f"{name} reads"] = atom
         given = [c for c in clicks(lines) if c["emitted"]]
@@ -143,7 +148,10 @@ def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
         ]
         window = board.world.bodies[0].detector.draw.window
         assert [(c["interval"], c["lost"]) for c in given] == [(window, [NO_DRAW])], name
-        assert [(at, side) for at, side, _r in sides] == [(62, "left"), (124, "right")], (name, sides)
+        assert [(at, side) for at, side, _r in sides] == [(72, "left"), (120, "right")], (
+            name,
+            sides,
+        )  # the sides' derived closes 72 and 120 (62 and 124 at the declared windows before 2026-10-23)
         assert board.ended is None, name
         found[name] = (given[0]["interval"], sides)
     print(f"the born worlds: {found}")

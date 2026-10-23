@@ -1,4 +1,4 @@
-"""The meeting that runs back at N sides and with the erasure's taper (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there; no signalling at N sides, every side's marginal its own; (j) the erasure's taper in the back mode, the fronts the act's as built, the erasure lines and the end state equal bit for bit to the root mode's at any seed on regions whose inflow enters at one Node; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves and the whole board steps as ever): (k) the shipped fifth world and the shipped GHZ world read under the cone and under the whole board with every line, the close and the lay equal and fewer Node-steps in the cone, (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
+"""The meeting that runs back at N sides and with the erasing front (the reader's verdict of 2026-10-19, points 11 and 13; ALGEBRA.md, The meeting's reading; The meeting's identity), beside tests/test_the_meeting_back.py: (i) the reader's case, a two-part record with the identity pattern on every side read at three sides at the settings (3, 4), (1, 1), (1, 0), where the middle side's weights by the chain rule from the booked joint (1 / 2, 1 / 2) differ from the re-weighted one-side share (49 / 50, 1 / 50) by the cross terms of the third side's read, so the engine draws every side after the first on the chain and the law's two-sided words are the last side's alone, tested equal there; no signalling at N sides, every side's marginal its own; (j) the erasing front after the one close, the fronts the act's as built writing to 0 at the reach, one shell per interval, inside the click's light cone from the regions' inner Nodes where the inflow enters; and the cone stepped alone (the owner's word of 2026-10-20, only the cone moves): (l) its three refusals by name. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
 import json
 from dataclasses import replace
@@ -10,17 +10,16 @@ import pytest
 from event_universe import meeting_back, reports
 from event_universe.features.front import distances
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import BOARD, CONE, ports_of
+from event_universe.loader.draw import ports_of
 from event_universe.records import Record
 from event_universe.world_files import load_world
 from tests.laws import BACK as GATE
-from tests.laws import EVENTS, TOOL, family, world_beside
+from tests.laws import TOOL, family
 from tests.laws_spin import (
     BELL,
     IDENTITY,
     PORT,
     SINGLET,
-    digest,
     joint_shares,
     marginal_of,
     spin_world,
@@ -49,9 +48,7 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
         firsts[label] = books.weights[(spin, "left")]
         assert Fraction(firsts[label][0], sum(firsts[label])) == Fraction(1, 2) and board.passes == 7
         if label == "reader":
-            joint = joint_shares(
-                lines, sides, 0, close=clicks[-1]["interval"]
-            )  # to the close (2026-10-23)
+            joint = joint_shares(lines, sides, 0)
             scales = [c["scale"] for c in clicks]  # the norm of the coefficients standing
             assert scales[:2] == [25, 25] and scales[2] in (9, 16), (
                 scales
@@ -70,125 +67,54 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
     assert firsts["reader"] == firsts["other"]  # no signalling: the first side's read its own
 
 
-def test_the_tapered_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(
-    tmp_path, monkeypatch
-):
-    """(j) The erasure's taper under the one meeting (the verdict's point 13 of 2026-10-19; A3c of 2026-10-20: the fronts begin at the one close after the last side, no front from every click): the singlet world with regions of two Nodes at the chain's ends, whose inflow enters at the inner Node alone, and `erasure` 3, run 126 intervals at two seeds; the two sides draw at the close 40 with the orders 1 and 2 and the count's write follows the last side; the two fronts begin at the close from the hole's Nodes, the regions' inner Nodes whatever the ports realised, one shell per interval at the Link distance of the intervals since the click (inside the click's light cone), two Nodes at most on the chain, the shells beyond the grown board the taper's last lines, and end at the close plus the farthest Node's distance, one and the taper, the record's count 0 and its share erased; the back-in-time gate reads MATCH over the 40 intervals after the close, across the tapered shells (the frames before the close the possibilities' run by the law, the inverse returning the realised past there)."""
+def test_the_front_runs_inside_the_clicks_light_cone_after_the_last_sides_close(tmp_path, monkeypatch):
+    """(j) The erasing front under the one meeting (the verdict's point 13 of 2026-10-19; A3c of 2026-10-20: the fronts begin at the one close after the last side, no front from every click; the law of one Node, 2026-10-23: the front writes to 0 at the reach, one shell per interval, no key of the world): the singlet world with regions of two Nodes at the chain's ends, run through the close at 40 and on until the fronts have left the grown board; the two fronts from the regions' inner Nodes, one erasure line per interval from the close's next interval at the distance of the intervals since the close, at most two Nodes per shell on the chain, the last line at the first distance beyond the board with no Node and the front ended; the record's count and share 0 at the end and no front standing; the gate's run back through the close MATCH."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     ends = {"left": [0, 1], "right": [31, 32]}
-    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64, regions=ends, erasure=3)
+    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64, regions=ends)
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(path), lines.append)
     for _ in range(126):
         board.step()
-    runs = {0: (board, lines)}
     spin = family(board, "spin")
-    for board, lines in runs.values():
-        erasures = [e for e in lines if e["event"] == "erasure"]
-        clicks = [c for c in lines if c["event"] == "credit"]
-        assert not board.credit.fronts and board.credit.counts[spin] == 0
-        assert board.total_share(spin)[0] == 0 and board.world.erasure == 3
-        close = clicks[0]["interval"]
-        assert [(c["node_detector"], c["order"], c["interval"]) for c in clicks] == [
-            ("left", 1, 40),
-            ("right", 2, 40),
-        ]
-        for origin in ((1, 0, 0), (31, 0, 0)):  # the regions' inner Nodes, where the inflow enters
-            shells = [e for e in erasures if tuple(e["origin"]) == origin]
-            at = tuple(o + f for o, f in zip(origin, board.offset, strict=True))
-            farthest = int(distances(board.shape, at, board.world.periodic).max())
-            taper = board.world.erasure
-            assert [e["interval"] for e in shells] == list(
-                range(close + 1, close + farthest + taper + 2)
-            )
-            assert all(e["distance"] == e["interval"] - close and e["nodes"] <= 2 for e in shells)
-            beyond = [e["interval"] for e in shells if e["nodes"] == 0]
-            assert beyond == list(range(close + farthest + 1, close + farthest + taper + 2))
-        assert len(erasures) == 2 * len(shells)
+    erasures = [e for e in lines if e["event"] == "erasure"]
+    clicks = [c for c in lines if c["event"] == "credit"]
+    assert not board.credit.fronts and board.credit.counts[spin] == 0
+    assert board.total_share(spin)[0] == 0
+    close = clicks[0]["interval"]
+    assert [(c["node_detector"], c["order"], c["interval"]) for c in clicks] == [
+        ("left", 1, 40),
+        ("right", 2, 40),
+    ]
+    for origin in ((1, 0, 0), (31, 0, 0)):  # the regions' inner Nodes, where the inflow enters
+        shells = [e for e in erasures if tuple(e["origin"]) == origin]
+        at = tuple(o + f for o, f in zip(origin, board.offset, strict=True))
+        farthest = int(distances(board.shape, at, board.world.periodic).max())
+        assert [e["interval"] for e in shells] == list(range(close + 1, close + farthest + 2))
+        assert all(e["distance"] == e["interval"] - close and e["nodes"] <= 2 for e in shells)
+        assert [e["interval"] for e in shells if e["nodes"] == 0] == [close + farthest + 1]
+    assert len(erasures) == 2 * len(shells)
     gate = Lattice(load_world(path))
     for _ in range(41):  # through the close: the click, the writes, the hole and the fronts' start
         gate.step()
     assert GATE.verdict(gate, 40)["verdict"] == "MATCH"
     print(
-        f"the taper after the one close: {len(erasures)} erasure lines on the run, the shells to "
+        f"the front after the one close: {len(erasures)} erasure lines on the run, the shells to "
         f"{max(e['interval'] for e in erasures)} on the board of {board.shape[0]}, the realised ports "
-        f"{[(s, [c['realised'] for c in runs[s][1] if c['event'] == 'credit']) for s in runs]}"
+        f"{[c['realised'] for c in clicks]}"
     )
-
-
-def test_the_cone_stepped_alone_returns_the_board_runs_close_at_fewer_node_steps(tmp_path, monkeypatch):
-    """(k) The cone stepped alone (the owner's word of 2026-10-20; ALGEBRA.md, The meeting's reading; The interval's dependency radius is one Link): the shipped fifth world (singlet_back_a_b, the cone by default) and the shipped GHZ world (x, y, y) with `meeting: back`, each run whole under the cone and under `reach: board` beside it; the two runs' every output line equal (the credit lines with the realised ports, the parts, the faces), the two boards equal bit for bit at the end, the books equal; the frames' sequence of tick, interval, direction and pass equal and, at every frame of both runs, the hash of every array of the board equal in order (`digest` over `meeting_back.snapshot`: the cone-alone trajectory is the board's at every step and not at the ends alone, the assertion naming the first frame that differs), and at the birth the board equal to the lay bit for bit (frame 0 inside S_0 and outside it alike, the growths all popped); the Node-steps of the reading (`credit.stepped`, in the cone the box with its ring per step, on the board its volume) counted at the same intervals, the cone's fewer at every interval and in all (the saving modest on the shipped boards, which the cone fills early); the growths of the receding faces popped on the way back and replayed on the way forward, the board's growth log and shape at the end the board run's and the record's history stack empty; no refusal."""
-    runs = {}
-    for folder, name, edit in (
-        ("bell_singlet", "singlet_a_b.json", {}),
-        ("ghz", "ghz_x_y_y.json", {}),
-    ):
-        source = EVENTS / folder / name
-        for reach in (None, BOARD):
-            edits = {**edit, **({"reach": reach} if reach else {})}
-
-            def edited(w, e=edits):  # type: ignore[no-untyped-def]
-                w["draw"].pop("meeting", None)  # the one meeting needs no key (the files move with it)
-                w["draw"].update(e)
-
-            path = world_beside(tmp_path / f"{folder}_{reach}", source, edited)
-            lines, frames, digests = [], [], []
-            board = Lattice(load_world(path), lines.append)
-            zero = meeting_back.snapshot(board)
-
-            def seen(t, d, p, b=board, frames=frames, digests=digests, zero=zero):
-                frames.append((b.tick, t, d, p))
-                digests.append(digest(b))  # the frame's state, every array
-                if p == 2 and t == 0:  # the first run back reaches the lay bit for bit, unwritten
-                    assert meeting_back.first_difference(zero, meeting_back.snapshot(b)) is None
-
-            board.observers.append(seen)
-            for _ in range(board.world.intervals):
-                board.step()
-            runs[name, reach] = (board, lines, frames, digests)
-        cone, whole = runs[name, None], runs[name, BOARD]
-        assert cone[0].credit.reach == CONE and whole[0].credit.reach == BOARD
-        assert cone[1] == whole[1] and cone[2] == whole[2] and len(cone[1]) > 100
-        first = next((f for f, a, b in zip(cone[2], cone[3], whole[3], strict=True) if a != b), None)
-        assert first is None, (
-            f"the cone-alone trajectory first differs from the board's at the frame (tick, interval, direction, pass) {first}"
-        )
-        assert (
-            meeting_back.first_difference(
-                meeting_back.snapshot(whole[0]), meeting_back.snapshot(cone[0])
-            )
-            is None
-        )
-        assert cone[0].books() == whole[0].books() and cone[0].shape == whole[0].shape
-        assert cone[0].growths == whole[0].growths and cone[0].growths
-        stepped = {reach: runs[name, reach][0].credit.stepped for reach in (None, BOARD)}
-        assert sorted(stepped[None]) == sorted(stepped[BOARD]) and len(stepped[None]) > 1
-        assert all(stepped[None][t] <= stepped[BOARD][t] for t in stepped[None])
-        assert sum(stepped[None].values()) < sum(stepped[BOARD].values())
-        print(
-            f"the cone stepped alone on {name}: Node-steps {sum(stepped[None].values())} against the board's "
-            f"{sum(stepped[BOARD].values())}, {len(cone[0].growths)} growths read anew from the box, the lines "
-            f"{[c['realised'] for c in cone[1] if c['event'] == 'credit']} in both"
-        )
 
 
 def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_outside_by_name(
     tmp_path, monkeypatch
 ):
-    """(l) The three refusals of the cone stepped alone by name (the reader's verdict of 2026-10-20), on the singlet world laid on a chain of 120 Nodes with the regions about the centre where the chain of 33 has them (no growth in 40 intervals, the chain's ends outside the record's cone at the close): a level moved by hand at the interval 39 at 42 Links from the lay, the first step back's ring, refused at that step as the rest moved at the cone's edge (read from the board's own arrays); a level moved inside the cone at 34 Links, far from the record, refused as the cone not holding when the shrinking cone's shell reaches the past the inverse computes for a level with no past; a lay of the books' log at a Node outside the cone at its interval refused as an act outside the record's cone before the step re-presents it; the same world untouched read under the cone and under the board with the two closes equal bit for bit and |G(0)| the lay's 13 Nodes within one Link."""
+    """(l) The three refusals of the cone stepped alone by name (the reader's verdict of 2026-10-20), on the singlet world laid on a chain of 120 Nodes with the regions about the centre where the chain of 33 has them (no growth in 40 intervals, the chain's ends outside the record's cone at the close): a level moved by hand at the interval 39 at 42 Links from the lay, the first step back's ring, refused at that step as the rest moved at the cone's edge (read from the board's own arrays); a level moved inside the cone at 34 Links, far from the record, refused as the cone not holding when the shrinking cone's shell reaches the past the inverse computes for a level with no past; a lay of the books' log at a Node outside the cone at its interval refused as an act outside the record's cone before the step re-presents it; the same world untouched run to its close with |G(0)| the lay's 13 Nodes within one Link."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     regions = {"left": [44, 45, 46, 47], "right": [73, 74, 75, 76]}
 
-    def world(label, reach=None):
+    def world(label):
         return spin_world(
-            tmp_path / label,
-            monkeypatch,
-            sides,
-            both=True,
-            amplitude=64,
-            length=120,
-            reach=reach,
-            regions=regions,
+            tmp_path / label, monkeypatch, sides, both=True, amplitude=64, length=120, regions=regions
         )
 
     def moved(board, x):  # a level moved by hand at the chain's Node x, a new array beside the old
@@ -215,26 +141,24 @@ def test_the_cone_stepped_alone_refuses_a_moved_rest_a_broken_cone_and_an_act_ou
         RuntimeError, match=r"an act of the interval 20 stands at the Node \[10, 0, 0\] outside"
     ):
         board.step()
-    boards = [Lattice(load_world(world(str(reach), reach))) for reach in (None, BOARD)]
-    for board in boards:
-        for _ in range(40):
-            board.step()
-    assert meeting_back.first_difference(*(meeting_back.snapshot(b) for b in boards)) is None
-    assert boards[0].credit.cone[0] == 15 and boards[0].credit.reach == CONE
+    board = Lattice(load_world(world("untouched")))
+    for _ in range(40):
+        board.step()
+    assert board.credit.cone[0] == 15
     print(
-        f"the three refusals by name; the untouched chain of 120 read alike in the two reaches, |G(0)| {boards[0].credit.cone[0]}"
+        f"the three refusals by name; the untouched chain of 120 closes, |G(0)| {board.credit.cone[0]}"
     )
 
 
 def born_world(folder, monkeypatch, at=12, window=200, intervals=124):  # type: ignore[no-untyped-def]
     """The born pair's world (the owner's word of 2026-10-20; ALGEBRA.md, The lay across parts; The births' book): the spin world's chain with no packet, the giver family `atom` added to its universe ([1, 1299], two parts of a plane, reading no holder), one atom body at the Node 12 standing in its part e, the transition g to e by `spin` at the resonance [5414, 6000] and the rate e to g with the lifetime 24 giving its quantum to `spin`, the body's own books with its `seed` (its window the passage of its drive's lay, derived at load); the two regions of the singlet with the identity pattern; `meeting: back` with the board's reach and the world's window `window` over `intervals` intervals; the mode file by the generator; the world's path."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], IDENTITY)}
-    path = spin_world(folder, monkeypatch, sides, both=True, amplitude=64, reach=BOARD)
+    path = spin_world(folder, monkeypatch, sides, both=True, amplitude=64)
     universe = json.loads((folder / "u.json").read_text(encoding="utf-8"))
     universe["families"].append({"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}})
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     world = json.loads(path.read_text(encoding="utf-8"))
-    world["packets"], world["intervals"] = [], intervals  # the window derived (2026-10-23)
+    world["packets"], world["intervals"], world["draw"]["window"] = [], intervals, window
     world["bodies"] = [
         {
             "family": "atom",
@@ -312,12 +236,7 @@ def test_the_gram_read_is_the_chain_rules_local_form_from_the_sides_own_books(tm
     for a, b in ((BELL[0], BELL[2]), (BELL[1], BELL[3])):
         sides = {"left": (a, IDENTITY), "right": (b, SINGLET)}
         path = spin_world(
-            tmp_path / f"{a[0]}_{a[1]}_{b[0]}_{b[1]}",
-            monkeypatch,
-            sides,
-            both=True,
-            amplitude=64,
-            reach=BOARD,
+            tmp_path / f"{a[0]}_{a[1]}_{b[0]}_{b[1]}", monkeypatch, sides, both=True, amplitude=64
         )
         board, lines = trial(path, 40)
         spin, joint = family(board, "spin"), joint_shares(lines, sides, 0)

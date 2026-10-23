@@ -290,10 +290,13 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
             ("left", 1, 1, 0),
             ("right", 2, 1, 0),
         ]
-        assert [s["label"] for s in seen] == [
-            f"the side {side!r} of 'spin' at the interval 40"
-            for side in ("left", "left", "right", "right")
-        ]
+        assert (
+            [s["label"] for s in seen]
+            == [
+                f"the side {side!r} of 'spin' at the interval 30"  # the derived window 30 (40 declared before 2026-10-23)
+                for side in ("left", "left", "right", "right")
+            ]
+        )
         for (port, place), distinct in zip((seen[0:2], seen[2:4]), (8, 8), strict=True):
             assert (
                 port["number"] == read_number(port["digits"], port["walls"])
