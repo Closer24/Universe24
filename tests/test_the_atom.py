@@ -24,7 +24,7 @@ from tests.laws_content import TWO_ATOMS, with_content
 AXES = "xyz"
 LENGTH, INTERVALS, LIFETIME = 64, 160, 16  # the chain, the run and the body's lifetime, below W = 33
 CHARGE = {"name": "charge", "pair": [6000, 6000], "reads": {}}  # the deuteron's holder of the sign
-CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1}
+CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1}  # alpha derived at the load
 TURN = {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
 RATE = {"from": "e", "to": "g", "lifetime": LIFETIME, "gives_to": "photon"}
 SIGNED = ("momentum", "fan", "recoil")  # a click line's vectors signed per axis
@@ -124,7 +124,9 @@ def run(
                     "count": board.credit.counts[photon],
                     "levels": [int(light[n]) for n in nodes],
                     "free": bool(rows[0].now.any() or rows[0].before.any()),
-                    "own": [int(rows[1].now[n]) for n in nodes],
+                    "own": [
+                        int(rows[board.families[charge].width].now[n]) for n in nodes
+                    ],  # the record's own row's time line, after the free row's 1 + 3 lines
                 }
             )
         RUNS[key] = (board, lines, marks)

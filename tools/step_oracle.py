@@ -181,8 +181,8 @@ def oracle_interval(board: Lattice) -> None:
     found = {index: oracle_step_records(board, index, 1) for index in range(len(board.families))}
     for index, (lines, bookings) in found.items():
         family, state = board.families[index], board.states[index]
-        for record in lines:
-            board.bounded(family.name, record)
+        for number, record in enumerate(lines):
+            board.bounded(family.name, record, number == 0 and family.motion_volume)
         if family.quanta:
             booked = booked_of(board.families, index, bookings)
             for held, gained in zip((forms, turns), booked, strict=True):

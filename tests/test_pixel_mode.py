@@ -116,7 +116,10 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
         )
         assert all(x["inflow"] != 0 for x in risen if x["event"] == "click")
         levels = [a[beyond] for s in walled.states for r in s.lines for a in (r.now, r.before)]
-        assert {int(v) for level in levels for v in level} <= {0, *(f.rest for f in walled.families)}
+        assert {int(v) for level in levels for v in level} <= {
+            0,
+            *(f.fill or f.rest for f in walled.families),
+        }
         assert walled.books()["charge"]["quanta"] > 0
     level = np.abs(walled.states[charge].lines[0].now[:, :, 0])
     passed, free = level[13:].sum(axis=0), np.abs(open_board.states[charge].lines[0].now[:12]).sum()

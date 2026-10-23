@@ -51,6 +51,14 @@ def volume_of(gamma: int, levels: Any) -> Any:
 
 
 @cache
+def bounds_of(gamma: int, amplitude: int) -> tuple[int, int]:
+    """The volume's two walls at the amplitude bound A, X(-A) and X(A), the volumes of the deepest and the highest level the guard admits (`Lattice.bounded`): a row carrying its volume is inside the bound where its X lies between them, the level reading being monotone in X; the lower wall at -Gamma where A passes the hill's depth, the upper at the clock's last pace where A passes it (the level reading's own top, `clock_zero`)."""
+    low = int(volume_of(gamma, np.array([max(-amplitude, -gamma)], dtype=object)).reshape(-1)[0])
+    top = min(amplitude, clock_zero(gamma) - 1)
+    return low, int(volume_of(gamma, np.array([top], dtype=object)).reshape(-1)[0])
+
+
+@cache
 def fill_of(gamma: int, rest: int) -> int:
     """The time line's value beyond a face under the volume form, the rest's volume X(rest) (`volume_of` at the one level): on a board with a sink the rest beyond the face fixes the clock's unit (ALGEBRA.md, The board's interval is no observable), so the Link to the fill reads the vacuum's volume at the declared rest, Gamma at the rest 0; the one Node's fill on every faced board and every grown layer (flux.step_family, growth.resized)."""
     return int(volume_of(gamma, np.array([rest], dtype=object)).reshape(-1)[0])

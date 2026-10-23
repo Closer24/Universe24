@@ -113,7 +113,10 @@ def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(tmp_path
         tmp_path, EVENTS / "two_slits" / "two_slits.json", lambda w: None
     )  # the read's shape
     board = Lattice(load_world(slits))
-    assert board.credit.bodies == [] and all(state.phases == [] for state in board.states)
+    assert board.credit.bodies == [] and all(
+        (state.phases == []) == (not family.rotation)  # the holder of the sign's phase lines, its act
+        for family, state in zip(board.families, board.states, strict=True)
+    )
     assert not any(folds(board.families, i) for i in range(len(board.families)))  # no flux holder
     digest = hashlib.sha256()
     for interval in range(21):

@@ -220,7 +220,13 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [1, 1, 2, 2, 4]  # the sign: 2 rows
+    assert sorted(len(s.lines) for s in board.states) == [
+        1,
+        1,
+        2,
+        4,
+        8,
+    ]  # the sign: 2 rows of 1 + 3 lines under the rotation
     calls, originals = [], {name: getattr(core, name) for name in STEP_CALLS}
     inside: list[bool] = []  # a step's own carried division, not a write
 

@@ -60,7 +60,9 @@ def step_alone(board: Lattice):  # type: ignore[no-untyped-def]
             for number in range(span.start, span.stop):
                 line, after = board.states[index].lines[number], stepped[number]
                 a, b, r = whole(line.now), whole(line.before), whole(line.remainder)
-                fill = (family.rest or 0) if number == 0 else 0
+                fill = (
+                    (family.fill or family.rest or 0) if number == 0 else 0
+                )  # the rest's volume where the row carries it
                 arrivals = tuple(whole(m) for m in ports(a, board.wrap, fill))
                 faced = faces.get(number, NO_FACE)
                 if faced[0]:

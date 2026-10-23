@@ -54,6 +54,9 @@ PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", 
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
 PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 PHYSICAL_MODULES += (
+    "shear.py",
+)  # the tension lines stepped as the shear's momentum at the volume's wall
+PHYSICAL_MODULES += (
     "frame_run.py",
 )  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 

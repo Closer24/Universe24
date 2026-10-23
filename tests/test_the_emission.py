@@ -1,4 +1,4 @@
-"""The emission lays no uniform mode and the front writes to 0 over L declared shells (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
+"""The emission lays no uniform mode and the front writes to 0 at its reach (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
 
 import json
 
@@ -55,10 +55,8 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
     assert sums == [0, 0] and max(abs(c["after"][0]) for c in lays) > 20  # each level's lay sums to 0
 
 
-def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark(
-    tmp_path, monkeypatch
-):
-    """The front's taper (ALGEBRA.md, The click writes on the lattice (6), the front writes to 0 over L shells, L declared; the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face.fraction`, the world's `erasure`): the one-photon world with `erasure` 8, its mode file regenerated, takes at 62 as the plain world does (body 0's close, the atom's read of the board; the amplitude 78 of one quantum in the record's own unit, C1); from then every Node at Link distance at most d - 9 from the hole, d the intervals since the click, holds the photon's record at (0, 0) exactly while the last eight shells before the reach carry falling levels (a shell within them nonzero at some interval), the erasure lines carry the shell's share `take` and the record's `unit`, the takes summing above 0 (a take's sign follows the erased level's sign: the exact lay's tail of one unit below 0 at a far shell is a take below 0, so the sum and not every take is what is asserted), the share over the board never rises above the lay's by more than one part in seven and is 0 exactly at 230, once the band of eight shells has left the grown board, the board dark; the back-in-time gate reads MATCH over 170 intervals across the tapered faces; `erasure` 0 is refused by name and the shipped world loads at 1. Re-pinned 2026-10-20 under the content, the one-photon declaration inlined on the two atoms\' universe with the born universe\'s holders: the first atom takes at 63 where it took at 62 at the exact vacuum, the front\'s eight shells read from that click."""
+def test_the_front_writes_to_zero_at_the_reach_and_the_board_ends_dark(tmp_path, monkeypatch):
+    """The erasing front under the law of one Node (ALGEBRA.md, The click writes on the lattice (6); the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face`): the deleted anticoincidence world's declaration inlined on the two atoms' universe with the content, the world's former key `erasure` an unknown key; the photon absorbed at 63 (the content, 2026-10-20); from the click the front faces one shell per interval to 0 at its reach, the Link-metric distance of the intervals since the click, so at every interval every shell two or more behind the reach stands at 0 in both levels on every line of the record while the shell at the reach, not yet written, still carries a level at more than twenty intervals; the erasure lines carry the record's unit and a take whose sum follows the levels' sign; the share never above its lay by more than an eighth and 0 at the end, the board dark; the run back MATCH over 170 intervals."""
     world = json.loads(
         json.dumps(ONE_PHOTON)
     )  # the deleted anticoincidence world's declaration, inlined
@@ -66,13 +64,12 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
         json.dumps(with_content(TWO_ATOMS)), encoding="utf-8"
     )  # the content
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    redeclared(world).update(universe="u.json", erasure=8)
-    (path := tmp_path / "tapered.json").write_text(json.dumps(world), encoding="utf-8")
+    redeclared(world).update(universe="u.json")
+    (path := tmp_path / "front.json").write_text(json.dumps(world), encoding="utf-8")
     TOOL.main(["--input", str(path)])
-    (bad := tmp_path / "bad.json").write_text(json.dumps({**world, "erasure": 0}), encoding="utf-8")
-    refused("erasure", load_world, bad)
+    (bad := tmp_path / "bad.json").write_text(json.dumps({**world, "erasure": 8}), encoding="utf-8")
+    refused("unknown key 'erasure'", load_world, bad)
     board = Lattice(load_world(path), (lines := []).append)
-    assert board.world.erasure == 8
     photon, shares = [f.name for f in board.families].index("photon"), []
     laid = board.books()["photon"]["share"]
     credits: list[dict] = []
@@ -86,23 +83,18 @@ def test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_da
         len(credits) == 1 and taken == 63 and board.credit.counts[photon] == 0
     )  # 63 under the content (2026-10-20), 62 before
     origin = next(f.at for f in board.credit.faces[taken + 1] if f.family == photon)
-    tapered = 0
-    for interval in range(
-        taken + 1, taken + 197
-    ):  # the band of eight shells leaves the grown board by about 224
+    reaching = 0
+    for interval in range(taken + 1, taken + 197):  # the front leaves the grown board by about 220
         board.step()
         shares.append(board.books()["photon"]["share"])
         at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
         distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
-        inside, taper = (
-            distance <= interval - taken - 9,
-            (distance > interval - taken - 9) & (distance <= interval - taken),
-        )
+        inside, reach = distance <= interval - taken - 2, distance == interval - taken
         for line in board.states[photon].lines[: board.families[photon].record]:
             assert not line.now[inside].any() and not line.before[inside].any()
-            tapered += int(np.abs(line.now[taper]).sum(dtype=object) > 0)
+            reaching += int(np.abs(line.now[reach]).sum(dtype=object) > 0)
     erased = [e for e in lines if e["event"] == "erasure"]
-    assert tapered > 20 and erased and all(e["unit"] == board.credit.units[photon] for e in erased)
+    assert reaching > 20 and erased and all(e["unit"] == board.credit.units[photon] for e in erased)
     assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
     assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
     assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"

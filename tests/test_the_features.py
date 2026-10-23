@@ -1,6 +1,7 @@
 """The read, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed at their weights; the axis content rounded at the read; the guard at load on squares (the checkerboard factor at -2) admits and refuses by name, and the read in the interval carries no guard. The write's folder and the held write's (ALGEBRA.md #the-primitives, a family's write is one act; the row "the held write"): (numerator + r) div wall at every Node by Rule3's carried division, the remainder kept at the Node, forward then back exact, over many intervals the written total the numerator's within one unit; a held part gains the same division each interval and loses it back; the refusals by name. The start, its own folder (ALGEBRA.md #the-generator (g), the start): a held family's rest is the division act iterated from nothing until the levels repeat, 6 den b = num S_6(b) + 3 den sigma at the fine unit from the width, the levels its nearest integers; the refusals by name."""
 
 import json
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -141,10 +142,13 @@ CORE = {"name": "core", "pair": [3, 4], "reads": {}}
 CORE["held"] = {**HELD, "level_weight": 7, "write_weight": -1}
 STUFF = {"name": "stuff", "pair": [4000, 6000], "reads": {"hollow": 2}, "dimension": 1}
 OTHER = {"name": "other", "pair": [4000, 6000], "reads": {"core": 1}, "dimension": 1}
-SIGN = {"name": "sign", "pair": [1, 1], "reads": {}, "held": {**HELD, "sources": ["wronskian"]}}
-SIGN["held"].update(level_weight=1, write_weight=1, act="rotation")
+SIGN = {
+    "name": "sign",
+    "pair": [1, 1],
+    "reads": {},
+    "held": {"sources": ["wronskian"], "level_weight": 1},
+}
 TUBE, TURN = "charged", "turning"  # the charged universes at examples/events/, the tests' alone
-WRITES = {(TUBE, "charge"): 4, (TURN, "charge"): 400}  # k_w = 4 E_h
 
 
 def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carries_its_weight():
@@ -175,13 +179,15 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         forms[i, 0] = records.form(first, second)  # the bookings per record, (family, record)
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
-        numerators, _walls, _weight = records.write_sources(
+        numerators, walls, _weight = records.write_sources(
             held, families, forms, {}, writes[held], rulers, GAMMA
         )
-        by_hand = weights * records.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2)
+        scaled, scale = records.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2, True)
+        by_hand = weights * scaled  # the carried factor: the product over the factor's wall at the Node
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
-        before, wall = states[held].lines[0], writes[held].walls[0]
-        remainder = [draw.integers(0, wall, SHAPE)]
+        assert np.array_equal(walls[0], writes[held].walls[0] * scale)
+        before, wall = states[held].lines[0], walls[0]
+        remainder = [draw.integers(0, int(np.min(wall)), SHAPE)]
         (after,), (kept,) = node.held_write_at([before], numerators, [wall], remainder)
         increment, left = np.divmod(by_hand + remainder[0], wall)
         assert np.array_equal(after.now, before.now + increment) and np.array_equal(kept, left)
@@ -199,33 +205,49 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         ((HOLLOW, {**STUFF, "reads": {"hollow": 2, "stuff": 1}}), "no held row of that name"),
         (({**SIGN, "reads": {"sign": 1}},), "never reads its own level"),
         ((SIGN, {**STUFF, "reads": {"sign": 1}}), "no plane"),
-        ((SIGN, plane), "energy line fails for 'stuff'"),
     ):
         refused(reason, universe_of, universe(*rows))
     turning = universe_of(universe(SIGN, plane, quantum_action=15_000))[1]  # T 4,000 = Gamma 6,000
-    paced = universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane))[1]
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
-    for rows, found in ((paced, [5, 5]), (turning, [-5, 5])):  # |L| into the pace; the turn by L
-        board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
-        board[0].lines[0] = records.Record(level, level, two)
-        paced_read = node.read(1, rows, board, 1, wrap, GAMMA, 1)[0]
-        turn = node.turning(1, rows, board, 1)
-        assert np.asarray(paced_read if rows is paced else turn[0]).ravel().tolist() == found
-        assert rows is paced or paced_read == 0  # the rotation: no level in the content
+    board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in turning]
+    board[0].lines[0] = records.Record(level, level, two)
+    paced_read = node.read(1, turning, board, 1, wrap, GAMMA, 1)[0]
+    turn = node.turning(1, turning, board, 1)
+    assert np.asarray(turn[0]).ravel().tolist() == [
+        -5,
+        5,
+    ]  # the turn by L, the holder of the sign's one act
+    assert paced_read == 0  # the rotation: no level in the content
     rows = (rule := json.loads(UNIVERSE.read_text(encoding="utf-8")))["families"]
-    charge = next(row for row in rows if row["name"] == "charge")["held"]
-    universe_of({**rule, "families": [*rows, CHARGED]})  # the plain read: not gated
-    charge["act"] = "rotation"
-    refused("fails for 'charged'", universe_of, {**rule, "families": [*rows, CHARGED]})
-    charge["write_weight"], rule["integers"]["quantum_action"] = 4, 36_000  # the advisor's one line
-    universe_of({**rule, "families": [*rows, CHARGED]})
+    rule["integers"]["quantum_action"] = (
+        36_000  # T at which the law's alpha E_h T num / (Gamma den) is 4
+    )
+    charge = next(
+        f for f in universe_of({**rule, "families": [*rows, CHARGED]})[1] if f.name == "charge"
+    )
+    assert (charge.write_weight, charge.write_wall) == (4, 1)  # alpha carried inside the write, no gate
     for name in ("rule", "light", "pair", "deuteron", TUBE, TURN):
-        shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))[1]
+        integers, shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
-        for f in shipped:
+        for index, f in enumerate(shipped):
             expected = sorted((i, 1) for i, sign in held if f.plane or not sign)
             assert sorted((r.family, r.weight) for r in f.reads) == expected, (name, f.name)
-            assert f.write_weight == (WRITES.get((name, f.name), 1) if f.held else None), (name, f.name)
+            if not (f.held and f.wronskian):
+                assert f.write_weight == (1 if f.held else None), (name, f.name)
+                continue
+            pairs = {  # the moving planes reading the holder of the sign: one pair, the law's alpha its ratio
+                g.pair
+                for g in shipped
+                if g.plane and g.pair[0] and any(r.family == index for r in g.reads)
+            }
+            alpha = Fraction(1)
+            if pairs:
+                (num, den), e_h = pairs.pop(), f.level_weight
+                alpha = Fraction(e_h * integers["quantum_action"] * num, integers["node_clock"] * den)
+            assert Fraction(f.write_weight, f.write_wall) == alpha, (
+                name,
+                f.name,
+            )  # E_h T num / (Gamma den)
 
 
 def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair():
@@ -240,7 +262,7 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         families = universe_of(universe(*rows, quantum_action=15_000))[1]
         assert [f.pair[0] == 0 for f in families] == zeros and all(f.plane for f in families[1:])
     moving = {**plane, "name": "slower", "pair": [3000, 6000]}
-    refused("fails for 'slower'", universe_of, universe(SIGN, plane, moving, quantum_action=15_000))
+    refused("one ratio per holder", universe_of, universe(SIGN, plane, moving, quantum_action=15_000))
     universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane, frozen))
 
 
@@ -277,7 +299,6 @@ def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit()
 
 def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions():
     """The register's room under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's 268 and the advisor's second with one precision, #1572 comments 5969128707 and 5969197876, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q = Gamma - t, so under a negative tension q exceeds Gamma, up to q_max = Gamma + W A, the sum of W_a A over the held rows with axis lines a source reads, and the write's factor in a hollow reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, beyond the hill's room (P / Gamma)^3 rounded up. At the rule's universe (Gamma 6,000, W 1, the hill's own bound A_1 = 9,266, q_max 15,266) the law's ceilings are 3 on a count and 4 on a Wronskian for matter's pair (P 6,572; the register's values 2.003 and 3.053 against the hill's room 2) and 2 and 3 for the three massless pairs (P 6,000; 1.595 and 2.544 against 1): `tension_room` returns them and exceeds `hill_scale` exactly where the register's values exceed it; the four shipped universes' bound stays 9,266, the write's total not their binding term; a universe where it is, a holder of the massless pair with axis lines at the write weight 10^6 read by one real line at 1 (Gamma 10,000, T 64, the width 63), has the hill's bound 2,147,483, isqrt((2^63 - 1 - 64) div (10^6 x 2 x 1)), and under the rooms 554,477, the tension's room 15 at q_max = 10,000 + 2,147,483, smaller by name."""
-    from fractions import Fraction
     from math import ceil, isqrt
 
     from event_universe.loader import derived, rooms
@@ -319,9 +340,11 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         10**6 * 1 * 2 * 1,
     )  # E_s T; k_w x W x two products x the hill's 1
     under_the_hill = isqrt((largest - wall) // room)
-    tension = ceil(Fraction(GAMMA**2 * (isqrt((GAMMA + under_the_hill) * GAMMA) + 1), GAMMA**3))
+    tension = ceil(
+        Fraction(GAMMA**2 * (GAMMA + under_the_hill), GAMMA**3)
+    )  # one power: the factor q_max itself
     under_the_rooms = isqrt((largest - wall) // (room * tension))
-    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 15, 554_477)
+    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 359, 113_339)
     assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
     assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
     two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]

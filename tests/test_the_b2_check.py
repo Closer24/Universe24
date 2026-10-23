@@ -12,7 +12,10 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule
 from event_universe.world_files import input_digest, load_world
 
-NUM, DEN, GAMMA, T, K_R, K_W = 4000, 6000, 6000, 36_000_000, 3, 4000
+NUM, DEN, GAMMA, T, K_R = 4000, 6000, 6000, 36_000_000, 3
+K_W = (
+    T * NUM // (GAMMA * DEN)
+)  # the law's alpha E_h T num / (Gamma den) at E_h 1, derived by the loader: 4,000
 SHAPE, N, SIGMA, G_0, INTERVALS, A = (
     (26, 31, 1),
     2,
@@ -42,11 +45,7 @@ def board_of(tmp_path: Path) -> Lattice:
                 "name": "charge",
                 "pair": [6000, 6000],
                 "reads": {},
-                "held": {
-                    "sources": ["wronskian"],
-                    "level_weight": 1,
-                    "write_weight": K_W,
-                },
+                "held": {"sources": ["wronskian"], "level_weight": 1},
             },
             {"name": "electron", "pair": [NUM, DEN], "reads": {"charge": K_R}, "dimension": 2},
         ],
@@ -125,7 +124,8 @@ def test_the_co_moving_reader_reads_coulomb_over_gamma_and_the_old_read_the_othe
     """(b2) At beta_s = 0.2855 (k = 2 pi 2 / 26 of the pair [4000, 6000], v = 0.1346, c_s^2 = 2 / 9): E within 2 percent of -k_r G_0 / Gamma (-0.00592 against -0.00600: the Link phase grows by the law's number exactly and the record's phase-gradient estimator drifts 1.3 percent on the dispersing lump); M negative, M / (-k_r G_0 / Gamma) within 1 percent of -beta_s^2 = -0.0815 (0.2 percent) and M / E within 2 percent of it (the estimator's drift again); gamma_s (E + M) / E within 0.5 percent of 1 / gamma_s = 0.9584 (0.9578); and the negative control, the holder's read set to (1, 1) in memory, the shipped read until 2026-10-21, giving gamma_s (E + M) / E = 1.1301 against gamma_s (1 + beta_s^2) = 1.1285, so the read's sign is pinned by the law's own row."""
     assert abs(BETA2 - 0.08150) < 0.0001 and abs(V - 0.1346) < 0.0001
     electric_law = -K_R * G_0 / GAMMA
-    assert board_of(tmp_path).families[0].link_read == (-1, -1)
+    holder = board_of(tmp_path).families[0]
+    assert holder.link_read == (-1, -1) and (holder.write_weight, holder.write_wall) == (K_W, 1)
     electric = force_of(board_of(tmp_path), True, False)
     magnetic = force_of(board_of(tmp_path), False, True)
     both = force_of(board_of(tmp_path), True, True)

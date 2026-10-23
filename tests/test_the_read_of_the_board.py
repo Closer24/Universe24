@@ -222,7 +222,7 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
     assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
         {"window": 40}, "draw", True
     ) == Draw(40)
-    assert draw_of({"window": 40, "reach": "board"}, "draw", True) == Draw(40, "board")
+    refused("holds the unknown key 'reach'", draw_of, {"window": 40, "reach": "board"}, "draw", True)
     assert not hasattr(Draw(None), "seed")
     source = EVENTS / "bell_singlet" / "singlet_a_b.json"
 

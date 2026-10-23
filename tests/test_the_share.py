@@ -165,15 +165,15 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "binding"), charged=True)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    charge = next(row for row in rows["families"] if row["name"] == "charge")["held"]
-    charge["act"], charge["write_weight"], rows["integers"]["quantum_action"] = "rotation", 4, 36_000
+    rows["integers"]["quantum_action"] = (
+        36_000  # T at which the law's alpha E_h T num / (Gamma den) is 4
+    )
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
     world.update(bodies=[], node_detectors=[])
-    paths = {name: tmp_path / f"{name}_ring.json" for name in ("u", "turn")}
-    for name, path in paths.items():
-        path.write_text(json.dumps({**world, "universe": f"{name}.json"}), encoding="utf-8")
+    paths = {"turn": tmp_path / "turn_ring.json"}
+    paths["turn"].write_text(json.dumps({**world, "universe": "turn.json"}), encoding="utf-8")
 
     def ring(path, level, amplitude=6000):  # the plane at random levels, the free row at the level
         board, draw = Lattice(load_world(path)), np.random.default_rng(10)
@@ -186,21 +186,10 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
         board.states[sign].lines[0] = records.Record(held, held.copy(), half)
         return board, charged
 
-    board, charged = ring(paths["u"], np.full(48, 2400), 2000)  # within the bound 6,949 at G = 16
-    assert not board.turning
-    for _ in range(3):
-        board.step()
-    (content, factors), gamma, unit = board.read(charged), board.world.node_clock, board.unit
-    pair, clock, pace = board.families[charged].pair, *paces.node_paces(gamma, content)
-    reads, self_coefficient, wall = coefficients(*pair, gamma, clock, pace, factors, unit)
-    by_hand = np.zeros(board.shape, dtype=object)
-    for line in board.lines_of(charged, 0):
-        now, before = line.now.astype(object), line.before.astype(object)
-        arrived = [a.astype(object) for a in readings.ports(line.before, board.wrap)]
-        link = sum(r * a for r, a in zip(reads, arrived, strict=True))
-        numerator = form_term(self_coefficient, wall, now, before) - now * link
-        by_hand += share.over_pace(numerator, gamma, content, unit)
-    assert np.array_equal(board.share_of(charged)[0], by_hand)
+    turned = Lattice(load_world(paths["turn"]))
+    assert turned.turning == [
+        [f.name for f in turned.families].index("charged")
+    ]  # the holder of the sign rotates
 
     def run(level, label, exact=True):
         board, charged = ring(paths["turn"], level)

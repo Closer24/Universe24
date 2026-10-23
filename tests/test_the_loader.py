@@ -13,13 +13,13 @@ from tests.laws import EVENTS, PACKET, TOOL, refused, slit_world, universe_besid
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
-    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (a held row with a dimension, its sources and act, the rotation without the Wronskian, a family without a dimension, its lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, a row without reads, the pair's form, |num| = den on a massive pair, a rest on the holder of the sign)."""
+    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (a held row with a dimension, its sources, the former key `act` an unknown key, the rotation without the Wronskian, a family without a dimension, its lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, a row without reads, the pair's form, |num| = den on a massive pair, a rest on the holder of the sign)."""
     universe_beside(tmp_path, charged=True)
     document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     families = universe.universe_of(document)[1]
     matter, charged = (next(f for f in families if f.name == name) for name in ("matter", "charged"))
     shape, zeros, beside = (4, 2, 1), [0] * 8, {"world_digest": "d", "bodies": [], "packets": []}
-    held, one = {"sources": ["form"], "level_weight": 1, "write_weight": 1, "act": "pace"}, [1, *[0] * 7]
+    held, one = {"sources": ["form"], "level_weight": 1, "write_weight": 1}, [1, *[0] * 7]
     packet = {"family": "matter", "along": "x", "wave": [1, 2], "phase": [0, 1], "amplitude": 1}
     packet.update(top={"x": [0, 0], "y": [0, 0], "z": [0, 0]}, edge={"x": 0, "y": 0, "z": 0})
     pulse = {"family": "gravity", "whole": [0, 0, 0], "count": 1, "interval": 1}  # a holder, no quanta
@@ -46,9 +46,6 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     def unphased():  # a packet without its phase: refused by name, no phase by omission
         bare = {k: v for k, v in packet.items() if k != "phase"}
         return packets.packets_of([bare], beside, "d", families, shape, 10, ())
-
-    def unacted():  # a held row without its act: refused by name, no act by omission
-        return universe.shape_of({"held": {k: v for k, v in held.items() if k != "act"}}, "r")
 
     refusals = [
         ("must be an object", lambda: keys.keyed(3, "k", ("a",), ())),
@@ -124,18 +121,13 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ("lacks the key 'phase'", unphased),
         ("lacks the key 'seed'", lambda: lay.lay_of({"kind": "repeat"}, "lay")),
         ("confidence, the budget's confidence", lambda: laid(tolerance=[1, 100])),
-        ("lacks the key 'act'", unacted),
         (r"transverse.y must be \[r, s\]", lambda: sent(transverse={"y": [1]})),
         (
             "is a held row and declares no dimension",
             lambda: universe.shape_of({"held": {}, "dimension": 1}, "r"),
         ),
         ("held.sources is one of", lambda: universe.shape_of({"held": {**held, "sources": ["x"]}}, "r")),
-        ("held.act is one of", lambda: universe.shape_of({"held": {**held, "act": "x"}}, "r")),
-        (
-            "the act of the holder of the sign",
-            lambda: universe.shape_of({"held": {**held, "act": "rotation"}}, "r"),
-        ),
+        ("unknown key 'act'", lambda: universe.shape_of({"held": {**held, "act": "pace"}}, "r")),
         ("lacks the key 'dimension'", lambda: universe.shape_of({}, "r")),
         ("lists its lines' kinds", lambda: universe.shape_of({"dimension": ["x"]}, "r")),
         (
@@ -170,7 +162,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
                     "name": "a",
                     "pair": [1, 1],
                     "reads": {},
-                    "held": {**held, "sources": ["wronskian"], "rest": 5},
+                    "held": {"sources": ["wronskian"], "level_weight": 1, "rest": 5},
                 }
             ),
         ),

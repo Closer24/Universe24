@@ -17,6 +17,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import rule_integers
+    from event_universe.features import volume
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import quanta_records
@@ -264,6 +265,10 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
                     state.lines = [records.Record(now, before, origin) for now, before in picks]
                 if family.held and not family.wronskian:  # a well, and axis lines where asked
                     well = levels.integers(0, 40, board.shape).astype(board.kind)
+                    if (
+                        family.motion_volume
+                    ):  # the row carries its volume: the well through the volume's reading
+                        well = volume.volume_of(board.world.node_clock, well)
                     state.lines[0] = records.Record(well, well.copy(), state.lines[0].remainder)
                     for k in range(1, len(state.lines)):
                         axis = levels.integers(-tension, tension + 1, board.shape).astype(board.kind)

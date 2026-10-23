@@ -325,8 +325,8 @@ class Lattice:
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]
-            for record in lines:
-                self.bounded(family.name, record)
+            for number, record in enumerate(lines):
+                self.bounded(family.name, record, number == 0 and family.motion_volume)
             if family.quanta:
                 booked = booked_of(self.families, index, bookings)
                 for held, gained in zip((forms, turns), booked, strict=True):
@@ -372,11 +372,19 @@ class Lattice:
         state.lines, state.write_remainders = shear.written(
             self, index, numerators, walls, direction, begun
         )
-        for line in state.lines:
-            self.bounded(family.name, line)
+        for number, line in enumerate(state.lines):
+            self.bounded(family.name, line, number == 0 and family.motion_volume)
 
-    def bounded(self, name: str, record: records.Record) -> None:
-        """The amplitude bound A of the world: a level beyond it refuses the run by name."""
+    def bounded(self, name: str, record: records.Record, carried: bool = False) -> None:
+        """The amplitude bound A of the world: a level beyond it refuses the run by name; a time line carrying its volume (`carried`) is read through the volume's two walls at A (features/volume `bounds_of`), its level reading beyond A where X passes them."""
+        if carried:
+            low, high = volume.bounds_of(self.world.node_clock, self.world.amplitude_bound)
+            largest, least = int(np.max(record.now)), int(np.min(record.now))
+            if largest > high or least < low:
+                raise RuntimeError(
+                    f"the family {name!r} reached the volume {largest if largest > high else least} at interval {self.interval}, beyond the world's amplitude bound A = {self.world.amplitude_bound} read through the volume's level: the run is refused"
+                )
+            return
         if records.largest(record) > self.world.amplitude_bound:
             raise RuntimeError(
                 f"the family {name!r} reached the level {records.largest(record)} at interval {self.interval}, above the world's amplitude bound A = {self.world.amplitude_bound}: the run is refused"

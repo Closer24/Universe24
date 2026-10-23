@@ -29,7 +29,7 @@ UNIVERSE = {
             "name": "charge",
             "pair": [6000, 6000],
             "reads": {"gravity": 1, "binding": 1},
-            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1},
+            "held": {"sources": ["wronskian"], "level_weight": 1},
         },
         {
             "name": "binding",
@@ -90,7 +90,10 @@ WORLD = {
     "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
     "draw": {"window": WINDOW},
 }
-PIECE, FAN = -43250, -73186  # the chain's piece along x at the right region's close and the fan's P_x
+PIECE, FAN = (
+    -42370,
+    -73186,
+)  # the chain's piece along x at the right region's close and the fan's P_x; the piece re-pinned under the law of one Node (2026-10-23: the gravity row's form, the form's own clock, the carried factor and the trace, moves the record's paces, so the packet's p_x at the close moves by 2 percent; the fan's P_x unchanged)
 
 
 def chain_world(folder: Path) -> Path:

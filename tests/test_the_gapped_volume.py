@@ -9,9 +9,10 @@ from event_universe.core import paces
 from event_universe.emission import amplitude
 from event_universe.features import volume
 from event_universe.lattice import Lattice
-from event_universe.loader import interval, world
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, EVENTS, ROOT
+from tests.laws import BACK, EVENTS, ROOT, load_file
+
+ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 
 GAMMA, ACTION, CUBE, GAP = 1000, 36000, 3, 999  # the gapped torus: Gamma 1,000, gravity [999, 1000]
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -104,8 +105,8 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
     assert verdict == {"verdict": "MATCH", "intervals": 50, "interval": 1, "ended": None}
 
 
-def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_before(monkeypatch):  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the one gapped held row shipped, the atom's binding holder [2400, 2401], has no tension lines and stays in the level form), so the rows the loader moves are the old clause's rows; and the shipped matter world of the test of the law's course (examples/events/big_bang/big_bang_matter.json) stepped 100 intervals under the loader's clause and the start's lay as they stand gives, at every interval, every family's lines bit for bit as under the old clause (the pair's two integers equal) and the old start (every holder's rest solved), whatever else the tree's step does."""
+def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log(tmp_path):  # type: ignore[no-untyped-def]
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the binding holder [2400, 2401] sourced by the form alone keeps the level form), so the clause selects the same rows on every shipped universe; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node reads, interval by interval, the integers its shipped eras log holds (big_bang_matter.eras.jsonl: gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level and count), bit for bit over the first twenty intervals through the eras tool's own run (tools/eras.py), no other clause run anywhere."""
     rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
@@ -119,31 +120,26 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_bef
         ("tensions" in f["held"]["sources"]) == (f["pair"][0] == f["pair"][1]) for f in content
     )
     assert any(f["pair"] == [2400, 2401] for f in content)
-
-    def old_rows(unobservable, families, gamma=None):  # type: ignore[no-untyped-def]
-        moved = [f.held and not f.wronskian and f.pair[0] == f.pair[1] for f in families]
-        found = interval.volume_rows(unobservable, families, gamma)
-        assert [f.motion_volume for f in found] == moved  # the same rows on every shipped universe
-        return found
-
-    def old_resting(held, families, loaded):  # type: ignore[no-untyped-def]
-        return [(i, 0) for i in held if not families[i].wronskian]
-
-    def course():  # type: ignore[no-untyped-def]
-        board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
-        found = []
-        for _ in range(100):
-            board.step()
-            found.append(
-                [
-                    [np.asarray(a, dtype=object).tolist() for a in (r.now, r.before, r.remainder)]
-                    for s in board.states
-                    for r in s.lines
-                ]
+    world = EVENTS / "big_bang" / "big_bang_matter.json"
+    shipped = [
+        json.loads(line)
+        for line in world.with_suffix(".eras.jsonl").read_text(encoding="utf-8").splitlines()[1:]
+    ]
+    lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
+    assert [line["interval"] for line in lines] == list(range(1, 21))
+    integers = ("level", "level_remainder", "before", "before_remainder", "volume", "volume_before")
+    integers += ("at_seed", "at_far", "well", "nodes")
+    for found, logged in zip(lines, shipped, strict=False):
+        assert found["interval"] == logged["interval"]
+        row, kept = found["rows"]["gravity"], logged["rows"]["gravity"]
+        assert {key: row[key] for key in integers} == {key: kept[key] for key in integers}, found[
+            "interval"
+        ]
+        assert row["writes"] == kept["writes"], found["interval"]
+        for name in found["quanta"]:
+            own, was = found["quanta"][name], logged["quanta"][name]
+            assert (own["largest"], own["quanta"], own["frozen"]) == (
+                was["largest"],
+                was["quanta"],
+                was["frozen"],
             )
-        return found
-
-    new = course()
-    monkeypatch.setattr(world, "volume_rows", old_rows)
-    monkeypatch.setattr(volume, "resting", old_resting)
-    assert course() == new

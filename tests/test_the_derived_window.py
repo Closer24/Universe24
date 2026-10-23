@@ -3,8 +3,6 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from event_universe import node_detector, world_files
 from event_universe.core.rule3 import largest_below
 from event_universe.emission import Emitter
@@ -296,5 +294,9 @@ def test_an_emitter_on_a_periodic_board_is_dark_to_its_source_alone_and_released
         ring_of(emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18))))
     )
     assert [r.ended for r in ring.bodies[0].detector.rates] == [False]  # the lay has no end on the ring
-    with pytest.raises(ValueError, match="the sum's rest needs a sink"):
-        Lattice(ring)
+    board = Lattice(
+        ring
+    )  # every board's interval unobservable: the massless rows rest free, no sink needed
+    for _ in range(48):
+        board.step()
+    assert board.ended is None and board.interval == 48

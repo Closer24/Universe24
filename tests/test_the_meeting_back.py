@@ -1,4 +1,4 @@
-"""The one meeting, the click that writes at the record's birth (the owner's words of 2026-10-19 and 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading; The meeting's identity, the Gram theorem; the design verdicts of 2026-10-20): a record of several parts read by N sides is credited by N draws in the order of the sides' closes, equal closes in the declared order, each side alone at its own place with its own state on its own region's read (the Gram read: the quadratic form of its coefficients on its own second moments with the Gram of the sides after it), its realised port's integer coefficients written into the record's parts at the record's birth inside the run back along the record's light cone, the board run forward from the rewritten birth by Rule3 at one Link per interval, the next side reading the realised term where it stands; every click writes, the last side's read coherent. The tests: (a) the sides' weights equal the chain rule from the parts lines exactly at the four Bell settings in both pattern forms, E and S the law's numbers, the credit lines with their order and the record's scale; (b) the statistics over 48 seeds, the anticorrelation exact; (c) the books, the hole, the fronts and the observers' five passes; (d) a world without a record of several parts byte for byte; (e) the refusals by name; (f) the inverse's exactness in use and the back-in-time gate; (g) the two reaches one meeting with the write at the birth seen in the frames; (h) the shipped GHZ world's three sides under the cone. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
+"""The one meeting, the click that writes at the record's birth (the owner's words of 2026-10-19 and 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading; The meeting's identity, the Gram theorem; the design verdicts of 2026-10-20): a record of several parts read by N sides is credited by N draws in the order of the sides' closes, equal closes in the declared order, each side alone at its own place with its own state on its own region's read (the Gram read: the quadratic form of its coefficients on its own second moments with the Gram of the sides after it), its realised port's integer coefficients written into the record's parts at the record's birth inside the run back along the record's light cone, the board run forward from the rewritten birth by Rule3 at one Link per interval, the next side reading the realised term where it stands; every click writes, the last side's read coherent. The tests: (a) the sides' weights equal the chain rule from the parts lines exactly at the four Bell settings in both pattern forms, E and S the law's numbers, the credit lines with their order and the record's scale; (b) the statistics over 48 seeds, the anticorrelation exact; (c) the books, the hole, the fronts and the observers' five passes; (d) a world without a record of several parts byte for byte; (e) the refusals by name; (f) the inverse's exactness in use and the back-in-time gate; (g) the one reach, the record's light cone, with the write at the birth seen in the frames; (h) the shipped GHZ world's three sides under the cone. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
 import json
 from dataclasses import replace
@@ -10,7 +10,7 @@ import pytest
 from event_universe import meeting_back, world_files
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import BOARD, CONE, body_draw_of, draw_of, ports_of, windowless_of
+from event_universe.loader.draw import Draw, body_draw_of, draw_of, ports_of, windowless_of
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK as GATE
 from tests.laws import EVENTS, family, refused, world_beside
@@ -163,26 +163,14 @@ def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monke
 
 
 def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
-    """(e) The refusals: the key `meeting` declared with any value (there is one meeting; the key is refused by name); `reach` with `books` (a click that writes runs) or any other word; `reach` on a body's node_detector; `reach` admitted alone with `cone` or `board` and None where absent (the engine reads the cone); the loader's own law of the patterns in tests/test_the_exchange_sign.py."""
+    """(e) The refusals under the law of one Node: `meeting` and `reach` are no keys of the draw (there is one meeting, and the region the click runs back is the record's light cone, derived; ALGEBRA.md, The meeting's reading), so each meets the loader's ordinary refusal of an unknown key on the world's draw, on a body's node_detector with and without a window, and in a world file through the load; the draw admitted holds its window alone; the loader's own law of the patterns in tests/test_the_exchange_sign.py."""
     draw = {"window": 40}
-    for word in ("root", "back", "elsewhere"):
-        refused("there is one meeting", draw_of, {**draw, "meeting": word}, "draw", True)
-    refused(
-        "the click that runs back writes at the birth and runs",
-        draw_of,
-        {**draw, "reach": "books"},
-        "draw",
-        True,
-    )
-    refused("is 'cone' or 'board'", draw_of, {**draw, "reach": "far"}, "draw", True)
-    refused("unknown key 'reach'", draw_of, {**draw, "reach": CONE}, "bodies[0].node_detector")
-    refused(
-        "unknown key 'meeting'", body_draw_of, {**draw, "meeting": "back"}, "bodies[0].node_detector"
-    )
-    refused("unknown key 'meeting'", windowless_of, {"meeting": "back"}, "bodies[0].node_detector")
-    for word in (BOARD, CONE):
-        assert draw_of({**draw, "reach": word}, "draw", True).reach == word
-    assert draw_of(draw, "draw", True).reach is None and draw_of(draw, "draw").reach is None
+    for key, word in (("meeting", "back"), ("meeting", "root"), ("reach", "cone"), ("reach", "board")):
+        refused(f"unknown key '{key}'", draw_of, {**draw, key: word}, "draw", True)
+        refused(f"unknown key '{key}'", draw_of, {**draw, key: word}, "bodies[0].node_detector")
+        refused(f"unknown key '{key}'", body_draw_of, {**draw, key: word}, "bodies[0].node_detector")
+        refused(f"unknown key '{key}'", windowless_of, {key: word}, "bodies[0].node_detector")
+    assert draw_of(draw, "draw", True) == draw_of(draw, "draw") == Draw(40)
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
     path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
     world = json.loads(path.read_text(encoding="utf-8"))
@@ -191,8 +179,8 @@ def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
     mode = json.loads((tmp_path / "spin.mode.json").read_text(encoding="utf-8"))
     mode["world_digest"] = input_digest(world)
     (tmp_path / "keyed.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    refused("there is one meeting", load_world, keyed)
-    assert load_world(path).draw.reach is None
+    refused("unknown key 'meeting'", load_world, keyed)
+    assert load_world(path).draw == Draw(40)
 
 
 def test_the_run_back_and_forward_is_exact_in_the_act_and_the_gate_crosses_the_write(
@@ -239,79 +227,68 @@ def test_the_run_back_and_forward_is_exact_in_the_act_and_the_gate_crosses_the_w
     )
 
 
-def test_the_two_reaches_read_one_meeting_and_the_write_stands_at_the_birth(tmp_path, monkeypatch):
-    """(g) The run back's reach (the owner's word of 2026-10-19): the (a, b) singlet world three times, the reach absent (the engine's cone), `board` and `cone`; the credit lines equal word for word in the three, the books at the close equal, the reach written on no line; the five passes; in the cone's reach the radius t + 1 at the frame's interval, the volume |G(t)| per interval the test's own count by the front's ball and never decreasing, and at every frame of the runs back and forward the arrays outside the ball equal to frame 0 over the board as laid (the locality on the engine, the write inside the cone); at the birth of pass 2 the board the lay bit for bit, at the birth of pass 4 the lay with every part's lines multiplied by the first side's realised coefficient (the write exact in the integers); the tick stands at the close through the act."""
+def test_the_cone_is_the_one_reach_and_the_write_stands_at_the_birth(tmp_path, monkeypatch):
+    """(g) The run back's one reach, the record's light cone (the owner's word of 2026-10-19 and the law of one Node of 2026-10-23: the region the click runs back is derived from the record's birth by the causal bound, one Link per interval, and no key names it): the (a, b) singlet world run once; two credit lines, the reach written on no line; the five passes; the radius t + 1 at the frame's interval, the volume |G(t)| per interval the test's own count by the front's ball and never decreasing, and at every frame of the runs back and forward the arrays outside the ball equal to frame 0 over the board as laid (the locality on the engine, the write inside the cone); at the birth of pass 2 the board the lay bit for bit, at the birth of pass 4 the lay with every part's lines multiplied by the first side's realised coefficient (the write exact in the integers); the tick stands at the close through the act."""
     sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
-    runs = {}
-    for reach in (None, BOARD, CONE):
-        path = spin_world(
-            tmp_path / str(reach), monkeypatch, sides, both=True, amplitude=64, reach=reach
-        )
-        lines, frames, volumes, births = [], [], {}, {}
-        board = Lattice(load_world(path), lines.append)
-        spin, zero = family(board, "spin"), meeting_back.snapshot(board)
-        assert board.credit.reach == (reach or CONE)
+    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
+    lines, frames, volumes, births = [], [], {}, {}
+    board = Lattice(load_world(path), lines.append)
+    spin, zero = family(board, "spin"), meeting_back.snapshot(board)
 
-        def seen(
-            interval,
-            direction,
-            passes,
-            b=board,
-            zero=zero,
-            frames=frames,
-            spin=spin,
-            volumes=volumes,
-            births=births,
-        ):
-            frames.append((b.tick, interval, direction, passes, meeting_back.radius(b)))
-            if interval == 0:
-                births[passes] = meeting_back.snapshot(b)
-            if passes == 1 or b.credit.reach != CONE:
-                return
-            at = [tuple(n + o for n, o in zip(node, b.offset, strict=True)) for node in b.credit.support]
-            inside = ball(b.shape, at, interval + 1, b.world.periodic)
-            volumes[interval] = int(inside.sum())
-            box = tuple(slice(o, o + e) for o, e in zip(b.offset, zero[0][0][1].shape, strict=True))
-            outside = ~inside[box]
-            for family_zero, state in zip(zero, b.states, strict=True):
-                arrays = [a for r in state.lines for a in (r.now, r.before, r.remainder)]
-                arrays += list(state.write_remainders)
-                for (label, was), now in zip(family_zero, arrays, strict=True):
-                    assert not ((np.asarray(now)[box] != was) & outside).any(), (interval, label)
+    def seen(
+        interval,
+        direction,
+        passes,
+        b=board,
+        zero=zero,
+        frames=frames,
+        spin=spin,
+        volumes=volumes,
+        births=births,
+    ):
+        frames.append((b.tick, interval, direction, passes, meeting_back.radius(b)))
+        if interval == 0:
+            births[passes] = meeting_back.snapshot(b)
+        if passes == 1:
+            return
+        at = [tuple(n + o for n, o in zip(node, b.offset, strict=True)) for node in b.credit.support]
+        inside = ball(b.shape, at, interval + 1, b.world.periodic)
+        volumes[interval] = int(inside.sum())
+        box = tuple(slice(o, o + e) for o, e in zip(b.offset, zero[0][0][1].shape, strict=True))
+        outside = ~inside[box]
+        for family_zero, state in zip(zero, b.states, strict=True):
+            arrays = [a for r in state.lines for a in (r.now, r.before, r.remainder)]
+            arrays += list(state.write_remainders)
+            for (label, was), now in zip(family_zero, arrays, strict=True):
+                assert not ((np.asarray(now)[box] != was) & outside).any(), (interval, label)
 
-        board.observers.append(seen)
-        for _ in range(40):
-            board.step()
-        assert volumes == {} or volumes == {t: board.credit.cone[t] for t in volumes}
-        assert meeting_back.first_difference(zero, births[2]) is None  # the lay, unwritten
-        clicks = [c for c in lines if c["event"] == "credit"]
-        first = meeting_back.coefficients_of(board.families[spin], board.credit.sides[0][1], True)
-        coefficients = first[PORT[clicks[0]["realised"]]]
-        width = board.families[spin].width
-        for number, (label, laid) in enumerate(zero[spin][: 3 * board.families[spin].lines]):
-            written = births[4][spin][number][1]
-            c = coefficients[(number // 3) // width]
-            assert c[1] == 0  # a real-port world: the integers with 0 behind them
-            expected = laid if label.endswith("remainder") else laid * c[0]
-            assert (written == expected).all(), (label, c)  # the write at the birth, bit for bit
-        runs[reach] = (board, lines, frames)
-    credits = {r: [c for c in lines if c["event"] == "credit"] for r, (_b, lines, _f) in runs.items()}
-    assert all(credits[r] == credits[None] for r in credits) and len(credits[None]) == 2
-    assert [c["proper"] for c in credits[None]] == [39, 39] and "reach" not in credits[None][0]
-    assert all(b.tick == 40 and b.books() == runs[None][0].books() for b, _l, _f in runs.values())
-    passes = {r: sorted({f[3] for f in frames}) for r, (_b, _l, frames) in runs.items()}
-    assert passes == {None: [1, 2, 3, 4, 5], BOARD: [1, 2, 3, 4, 5], CONE: [1, 2, 3, 4, 5]}
-    assert runs[BOARD][0].credit.cone == {}
-    cone = runs[CONE][0].credit.cone
-    volumes = [cone[t] for t in range(41)]
-    assert all(x <= y for x, y in zip(volumes, volumes[1:], strict=False))
-    assert volumes[0] == len(runs[CONE][0].credit.support) + 2  # S_0 within one Link on the chain
-    radii = [(f[1], f[4]) for f in runs[CONE][2] if f[3] == 2]
+    board.observers.append(seen)
+    for _ in range(40):
+        board.step()
+    assert volumes and volumes == {t: board.credit.cone[t] for t in volumes}
+    assert meeting_back.first_difference(zero, births[2]) is None  # the lay, unwritten
+    clicks = [c for c in lines if c["event"] == "credit"]
+    first = meeting_back.coefficients_of(board.families[spin], board.credit.sides[0][1], True)
+    coefficients = first[PORT[clicks[0]["realised"]]]
+    width = board.families[spin].width
+    for number, (label, laid) in enumerate(zero[spin][: 3 * board.families[spin].lines]):
+        written = births[4][spin][number][1]
+        c = coefficients[(number // 3) // width]
+        assert c[1] == 0  # a real-port world: the integers with 0 behind them
+        expected = laid if label.endswith("remainder") else laid * c[0]
+        assert (written == expected).all(), (label, c)  # the write at the birth, bit for bit
+    assert len(clicks) == 2 and [c["proper"] for c in clicks] == [39, 39] and "reach" not in clicks[0]
+    assert board.tick == 40 and sorted({f[3] for f in frames}) == [1, 2, 3, 4, 5]
+    cone = board.credit.cone
+    counted = [cone[t] for t in range(41)]
+    assert all(x <= y for x, y in zip(counted, counted[1:], strict=False))
+    assert counted[0] == len(board.credit.support) + 2  # S_0 within one Link on the chain
+    radii = [(f[1], f[4]) for f in frames if f[3] == 2]
     assert radii == [(t, t + 1) for t in range(39, -1, -1)]
-    assert [f[4] for f in runs[CONE][2] if f[3] == 3][:40] == list(range(2, 42))
-    assert all(f[0] == 40 for f in runs[CONE][2] if f[3] > 1)
+    assert [f[4] for f in frames if f[3] == 3][:40] == list(range(2, 42))
+    assert all(f[0] == 40 for f in frames if f[3] > 1)
     print(
-        f"the two reaches: the lines {[(c['realised'], c['scale']) for c in credits[None]]}; the cone's volumes {volumes}"
+        f"the one reach: the lines {[(c['realised'], c['scale']) for c in clicks]}; the cone's volumes {counted}"
     )
 
 
@@ -352,7 +329,7 @@ def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path
     lines, frames = [], []
     board = Lattice(load_world(path), lines.append)
     light, draw = family(board, "light_ghz"), board.world.draw
-    assert draw is not None and board.credit.reach == CONE and len(board.credit.sides) == 3
+    assert draw is not None and len(board.credit.sides) == 3
     board.observers.append(lambda t, d, p, b=board: frames.append((b.tick, t, d, p)))
     for _ in range(board.world.intervals):
         board.step()

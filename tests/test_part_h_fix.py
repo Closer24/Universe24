@@ -1,7 +1,6 @@
 """Part H, the fix pass before the owner reads (both hands' lines of 2026-10-10 on the whole local trial, the advisor's 6092354791 and the mathematician's 6092368671, the Boss's merged list 6092388848). MUST 1: the null window's re-lay keeps the fold: `take.relaid` with no direction named lays each Node of the region in the direction standing there, so the taker's twist and the source's fold (the lattice momentum given at a click) survive a body's null close instead of being discarded unbooked (one_photon's atom kept -32,040 only to its next close at 96 before). MUST 5: a region taker (the two slits' screens, bell's sides) takes no +p of its own, so it folds no source: the source is drawn and named, its outstanding count down by one, `recoil` reads "unpaid by the region" and `lost` "P lost to the region" (`take.unpaid`, `lists.credited_node`), the body's P unchanged (its test deleted 2026-10-20 with the twist's under the owner's rule, the reader's ruling: its sentence the write's booking at a region, its world's region read at the content 0 refused by the exact vacuum; the booking stands in the code until the twist round)."""
 
 import numpy as np
-import pytest
 
 from event_universe import emission, node, records, take, world_files
 from event_universe.core import paces
@@ -30,8 +29,12 @@ def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_pa
     path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))
     ring = load_world(ring_of(path))
     assert [r.ended for r in ring.bodies[0].detector.rates] == [False]  # the lay has no end on the ring
-    with pytest.raises(ValueError, match="the sum's rest needs a sink"):
-        Lattice(ring)
+    board = Lattice(
+        ring
+    )  # every board's interval unobservable: the massless rows rest free, no sink needed
+    for _ in range(48):
+        board.step()
+    assert board.ended is None and board.interval == 48
 
 
 def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_path, monkeypatch):

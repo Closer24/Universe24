@@ -87,13 +87,15 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
         "dimension": 1,
         "reads": {"gravity": 1, "binding": 1},
     }
-    for row in (muon, neutral):
-        added = universe_with()
-        added["families"].append(row)
-        assert table_of(added, "neutron") == [
-            ("proton", 1),
-            ("electron", -1),
-        ]  # the charge cuts the second list
+    added = universe_with()
+    added["families"].append(muon)
+    refused("one ratio per holder", universe_of, added)  # a second pair reading the sign: no second list
+    added = universe_with()
+    added["families"].append(neutral)
+    assert table_of(added, "neutron") == [
+        ("proton", 1),
+        ("electron", -1),
+    ]  # the charge cuts the second list
     added["families"].append({"name": "twin", "pair": [3600, 6000], "dimension": 2, "reads": reads})
     refused("several exact lists keep the charge and the baryon", universe_of, added)
     old = universe_with(electron={"pair": [4000, 6000]}, neutron={"senses": None})
