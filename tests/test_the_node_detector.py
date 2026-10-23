@@ -274,7 +274,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "absorbed", "emitted", "count", "node_detector")
-    assert tuple(first[k] for k in words) == click and first["interval"] == board.interval == 21
+    assert (
+        tuple(first[k] for k in words) == click and first["interval"] == board.interval == 42
+    )  # the reader's window derived, the drive's passage over its two Nodes (2026-10-23; the former declared 21)
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert set(first) == set(
         credits_keys

@@ -168,6 +168,7 @@ def joint_shares(
     sides: dict[str, tuple],  # type: ignore[type-arg]
     exchange: int = 0,
     width: int = 2,
+    close: int | None = None,
 ) -> dict[tuple[int, ...], int]:
     """The joint credit's shares per combination of the sides' ports (0 the plus port, 1 the minus) from the `parts` lines of the regions in `sides` ({name: (axis, pattern)}), the reader's own arithmetic beside the engine's sides' books (`credit.moments_booked`, the second moments per side; the joint is the test's reading alone, nothing joint in the books): per interval and member of the level pair the amplitude's terms, each the product over the sides of e^s_k(port) psi^s_k with psi^s_k the part's (re, im) sums at side s (`width` 2, a plane's two lines; 1 a real line, im 0), SUM_k over the same part at every side for a family declaring no sign or the symmetric one (`exchange` 0 or 1, the form as it stood) and SUM_{k != l} sign(l - k) over the ordered pairs of parts across two sides for the antisymmetric (`exchange` -1, the determinant of the two sides' parts), its norm squared summed over the window; one side gives the two shares of Stern and Gerlach."""
     names = list(sides)
@@ -182,9 +183,10 @@ def joint_shares(
         else [(1 if k < m else -1, (k, m)) for k in range(parts) for m in range(parts) if k != m]
     )
     intervals: dict[int, dict[str, list[list[int]]]] = {}
-    for row in lines:
+    for row in lines:  # the window's parts lines: to the sides' close where one is given (the window derived, 2026-10-23: a close before the run's end, where the declared window was the run)
         if row["event"] == "parts" and row["node_detector"] in sides:
-            intervals.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
+            if close is None or row["interval"] <= close:
+                intervals.setdefault(row["interval"], {})[row["node_detector"]] = row["levels"]
     found = {}
     for key in itertools.product(range(2), repeat=len(names)):
         total = 0

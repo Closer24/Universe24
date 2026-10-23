@@ -76,7 +76,9 @@ def test_line_1_the_four_bell_worlds_read_the_blind_through_the_sides_own_draws(
         board, lines, clicks, realised = run(tmp_path, "bell_singlet", name)
         spin = family(board, "spin")
         sides = {r.name: (r.axis, [list(p) for p in r.pattern]) for r in board.world.node_detectors}
-        shares = joint_shares(lines, sides, -1 if board.families[spin].exchange < 0 else 0)
+        shares = joint_shares(
+            lines, sides, -1 if board.families[spin].exchange < 0 else 0, close=clicks[-1]["interval"]
+        )  # the parts lines to the close at the derived window 30 (2026-10-23; the former window 40 was the run)
         total = sum(shares.values())
         sided(board, spin, shares, realised)
         assert [(c["node_detector"], c["order"], c["count"], c["left"]) for c in clicks] == [
@@ -107,7 +109,7 @@ def ghz_read(tmp_path, name: str, expected: int) -> None:  # type: ignore[no-unt
     board, lines, clicks, realised = run(tmp_path, "ghz", name)
     light = family(board, "light_ghz")
     sides = {r.name: (r.basis, [list(p) for p in r.pattern]) for r in board.world.node_detectors}
-    shares = joint_shares(lines, sides, 0, board.families[light].width)
+    shares = joint_shares(lines, sides, 0, board.families[light].width, close=clicks[-1]["interval"])
     total = sum(shares.values())
     sided(board, light, shares, realised)
     assert [(c["node_detector"], c["order"], c["count"]) for c in clicks] == [
@@ -173,10 +175,13 @@ def born_read(tmp_path, name: str) -> Fraction:  # type: ignore[no-untyped-def]
     assert (
         births == residual
     )  # the lay's one Node at the level 11 on the surviving parts, from both run backs
-    assert [(c["node_detector"], c["order"], c["interval"], c["count"]) for c in clicks] == [
-        ("left", 1, 62, 1),
-        ("right", 2, 124, 1),
-    ]
+    assert (
+        [(c["node_detector"], c["order"], c["interval"], c["count"]) for c in clicks]
+        == [
+            ("left", 1, 72, 1),
+            ("right", 2, 120, 1),
+        ]
+    )  # the closes under the window derived, 24 from the birth (2026-10-23; the former 62 and 124 under the declared 62)
     first = books.weights[(spin, "left")]
     assert first[0] == first[1] > 0  # the parts' shares alone, 1 / 2
     (_a, ports_a), (_b, ports_b) = books.sides
@@ -263,19 +268,19 @@ def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(
         board.step()
     clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
     assert [(c["interval"], c["node_detector"], c["scale"]) for c in clicks] == [
-        (50, "left", 1),
-        (50, "right", 1),
-        (100, "left", 1),
-        (100, "right", 1),
-    ]
-    assert written[100] == board.credit.written[pair] and sorted(norm(w) for w in written[100]) == [0, 1]
+        (60, "left", 1),
+        (60, "right", 1),
+        (90, "left", 1),
+        (90, "right", 1),
+    ]  # the closes at the derived window 30 (2026-10-23; the former 50 and 100 at the window cut to 50)
+    assert written[90] == board.credit.written[pair] and sorted(norm(w) for w in written[90]) == [0, 1]
     assert [c["left"] for c in clicks] == [clicks[0]["left"]] * 2 + [clicks[0]["left"] - 1] * 2
     assert [c["realised"] for c in clicks[2:]] == [
         c["realised"] for c in clicks[:2]
     ]  # the same ports, certain
     assert [c["order"] for c in clicks] == [1, 2, 1, 2]  # the second window's clicks a new sequence
     print(
-        f"the bell world cut to 50: the coefficients standing {board.credit.written[pair]}, the lines' left {[c['left'] for c in clicks]}"
+        f"the bell world at the derived window 30: the coefficients standing {board.credit.written[pair]}, the lines' left {[c['left'] for c in clicks]}"
     )
 
 
@@ -290,7 +295,9 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
 
     board = Lattice(load_world(world_beside(tmp_path / "bell_turned", cut, window)))
     pair = family(board, "light_pair")
-    for _ in range(50):
+    for _ in range(
+        60
+    ):  # the first close at the derived window 30 (2026-10-23; the former 50, the window cut to 50)
         board.step()
     port, node, settled = board.credit.taken[pair]["left"]
     board.credit.taken[pair]["left"] = (
@@ -299,7 +306,7 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
         settled,
     )  # the setting turned: the other port booked
     with pytest.raises(RuntimeError, match="carrying no overlap with the written factor"):
-        for _ in range(50):
+        for _ in range(30):  # to the next close at 90
             board.step()
 
     def turned(world):  # type: ignore[no-untyped-def]
@@ -416,7 +423,10 @@ def test_the_clicks_in_sequence_a_the_far_side_books_nothing_before_its_beam_arr
     )
     for side in ("left", "right"):  # the parts line and the book read the state the step starts from
         assert standing[side] == parts[side] == arrival[side] + 1 and clicks[side] > arrival[side]
-    assert arrival["left"] < arrival["right"] and clicks == {"left": 62, "right": 124}
+    assert arrival["left"] < arrival["right"] and clicks == {
+        "left": 72,
+        "right": 120,
+    }  # the window derived (2026-10-23; the former 62 and 124)
 
 
 def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays_leak(tmp_path):
@@ -435,18 +445,21 @@ def test_the_clicks_in_sequence_b_one_packet_removed_the_far_side_reads_the_lays
         if c["event"] == "credit" and c.get("order")
     ]
     weights = {side: books.weights.get((spin, side)) for side in ("left", "right")}
-    moments = calls[40][0]
+    moments = calls[30][0]  # the singlet's close at the derived window 30 (2026-10-23; the former 40)
     ratio = Fraction(sum(weights["right"]), sum(weights["left"])) if weights["right"] else None
     print(
         f"(b) one packet: the credit lines {clicks}; the moments at the close {moments}; the weights {weights}; the "
         f"right's weights over the left's {ratio}; the count left {books.counts[spin]}"
     )
-    assert clicks == [("left", 1, 40)] and books.counts[spin] == 1  # the leak below a quantum: no click
-    assert moments == {
-        "left": [[(185800, 0)] * 2] * 2,
-        "right": [[(3715, 0)] * 2] * 2,
-    }  # the leak 3715 / 185800, 2 %
-    assert weights["left"] == [185800, 185800] and weights["right"] is None  # the right never draws
+    assert clicks == [("left", 1, 30)] and books.counts[spin] == 1  # the leak below a quantum: no click
+    assert (
+        moments
+        == {
+            "left": [[(149318, 0)] * 2] * 2,
+            "right": [[(2991, 0)] * 2] * 2,
+        }
+    )  # the leak 2991 / 149318, 2 %, at the derived window 30 (2026-10-23; the former 3715 / 185800 at 40)
+    assert weights["left"] == [149318, 149318] and weights["right"] is None  # the right never draws
 
 
 def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
@@ -514,23 +527,26 @@ def test_the_clicks_in_sequence_d_the_books_hold_nothing_joint(tmp_path):
     ]
     read = ["bias", "births", "left", "moments", "patterns", "sides", "support", "taken", "weights"]
     cone = ["birth", "reference", "cone", "regrown", "stepped"]  # the cone's reach books these
-    assert held == {
-        "born_a_b": {
-            62: sorted(
-                credit + read + ["bodies", "lays", "reference", "charges"]
-            ),  # A's draw, the record born at 24
-            124: sorted(
-                credit
-                + read
-                + cone
-                + ["bodies", "lays", "alike", "scale", "written", "charges"]
-                + ["unabsorbed", "unabsorbed_units"]
-            ),  # B's draw after A's write, under the cone
-        },
-        "singlet_a_b": {
-            40: sorted(credit + read + ["reference"])
-        },  # the record laid at the start; no charge: its planes carry no sense
-    }
+    assert (
+        held
+        == {
+            "born_a_b": {
+                72: sorted(
+                    credit + read + ["bodies", "lays", "reference", "charges"]
+                ),  # A's draw, the record born at 24, at the derived window (2026-10-23; the former 62 and 124)
+                120: sorted(
+                    credit
+                    + read
+                    + cone
+                    + ["bodies", "lays", "alike", "scale", "written", "charges"]
+                    + ["unabsorbed", "unabsorbed_units"]
+                ),  # B's draw after A's write, under the cone
+            },
+            "singlet_a_b": {
+                30: sorted(credit + read + ["reference"])
+            },  # the record laid at the start; no charge: its planes carry no sense
+        }
+    )
     for name, closes in held.items():
         for interval, holding in closes.items():
             assert set(holding) <= always | own, (name, interval, holding)

@@ -44,8 +44,7 @@ def standing_world(folder: Path) -> Path:
             {"family": "electron", "nodes": [{"node": [c + 1, c, c], "count": 1}]},
         ],
         "node_detectors": [{"name": "ball", "positions": ball}],
-        "draw": {},
-    }
+    }  # no draw: the standing world lays no wave with an end past the ball, so no window is derivable (2026-10-23)
     path = folder / "w.json"
     path.write_text(json.dumps(world) + "\n", encoding="utf-8")
     STANDING.main(["--input", str(path), "--record", "electron", "--source", "proton", "--sense", "-1"])

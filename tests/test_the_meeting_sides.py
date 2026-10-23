@@ -49,7 +49,9 @@ def test_a_middle_side_reads_the_chain_rules_local_form_and_the_last_within_the_
         firsts[label] = books.weights[(spin, "left")]
         assert Fraction(firsts[label][0], sum(firsts[label])) == Fraction(1, 2) and board.passes == 7
         if label == "reader":
-            joint = joint_shares(lines, sides, 0)
+            joint = joint_shares(
+                lines, sides, 0, close=clicks[-1]["interval"]
+            )  # to the close (2026-10-23)
             scales = [c["scale"] for c in clicks]  # the norm of the coefficients standing
             assert scales[:2] == [25, 25] and scales[2] in (9, 16), (
                 scales
