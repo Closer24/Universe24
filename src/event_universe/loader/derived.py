@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
-from fractions import Fraction
 from math import gcd
 
 from event_universe.core.paces import COUNT_POWER, WRONSKIAN_POWER, sine_den
@@ -249,7 +248,13 @@ def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: i
         for family in families
         if family.plane and family.pair[0] != 0 and weight_of(index, family) > 0
     }
-    ratios = {Fraction(num, den) for num, den in pairs}
+    ratios = {
+        (
+            int(division_forward(num, gcd(num, den), 0)[0]),
+            int(division_forward(den, gcd(num, den), 0)[0]),
+        )
+        for num, den in pairs
+    }  # each pair reduced by the division act, integers
     if len(ratios) > 1:
         raise ValueError(
             f"{holder.name!r} is read by moving planes of different pairs {sorted(pairs)}: the law's alpha is one "
@@ -257,9 +262,10 @@ def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: i
         )
     if not ratios:
         return 1, 1
-    ratio = ratios.pop()
-    alpha = Fraction(holder.level_weight * action * ratio.numerator, gamma * ratio.denominator)
-    return alpha.numerator, alpha.denominator
+    num, den = ratios.pop()
+    above, below = holder.level_weight * action * num, gamma * den
+    common = gcd(above, below)
+    return int(division_forward(above, common, 0)[0]), int(division_forward(below, common, 0)[0])
 
 
 def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:

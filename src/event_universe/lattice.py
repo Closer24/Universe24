@@ -195,7 +195,9 @@ class Lattice:
             if not reads:
                 rulers[source] = (gamma, (gamma, gamma, gamma))
                 continue
-            content = np.full((1, 1, 1), sum(r.weight * self.families[r.family].rest for r in reads))
+            content: Any = np.full(
+                (1, 1, 1), sum(r.weight * self.families[r.family].rest for r in reads), dtype=self.kind
+            )
             clock, pace = paces.node_paces(gamma, content)
             axis = paces.axis_pace(pace, gamma, 0, 0)
             rulers[source] = (clock, (axis, axis, axis))
