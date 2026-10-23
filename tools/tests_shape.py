@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_default_board_is_a_torus.py::test_a_world_without_boundary_is_a_torus_and_a_declared_face_stands": (
+        30,
+        "the default board (ALGEBRA.md, The board is a torus; the owner's word of 2026-10-23, the default a torus): a world "
+        "file without `boundary` periodic on every axis, a declared face kept as declared with its layer and its receding "
+        "sides, the cycle world with the key and without it the same board bit for bit over 12 intervals",
+    ),
     "tests/test_the_universe_runs_its_cycle.py::test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks": (
         80,
         "the test of the law's course for the one universe (examples/events/universe/; ALGEBRA.md, The one Node, The swap at the "
