@@ -348,7 +348,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     kicks_refused(unobservable, families, world.get("packets", []))  # no kick under the key
     families = volume_rows(
         unobservable, families, gamma
-    )  # the massless rows of the content carry their volume
+    )  # the held rows sourced by the tensions, massless or gapped, carry their volume
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
     bodies = window.windowed(bodies, packets, families, shape, periodic, action)  # the derived windows
     conversion.together(families, bodies, packets)  # the multisets a close can credit, refused by name
