@@ -16,7 +16,7 @@ from event_universe.records import Record
 from event_universe.world_files import load_world
 from tests.laws import UNIVERSE, refused
 
-HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1, "act": "pace"}
+HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
 
 
 def shipped(shear: bool, level_weight: int = 1) -> dict:  # type: ignore[type-arg]

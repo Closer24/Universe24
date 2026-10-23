@@ -49,6 +49,12 @@ def volume_of(gamma: int, levels: Any) -> Any:
     return np.array([int(x) for x in volumes], dtype=object).reshape(found.shape)
 
 
+@cache
+def fill_of(gamma: int, rest: int) -> int:
+    """The time line's value beyond a face under the volume form, the rest's volume X(rest) (`volume_of` at the one level): on a board with a sink the rest beyond the face fixes the clock's unit (ALGEBRA.md, The board's interval is no observable), so the Link to the fill reads the vacuum's volume at the declared rest, Gamma at the rest 0; the one Node's fill on every faced board and every grown layer (flux.step_family, growth.resized)."""
+    return int(volume_of(gamma, np.array([rest], dtype=object)).reshape(-1)[0])
+
+
 def level_of(gamma: int, volume: Any) -> Any:
     """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found at every Node by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root: from the deepest hill -Gamma upward by doubling steps while the volume is reached (the probes within twice the level's distance from -Gamma, so the clocks' memo fills only as deep as the records stand and never to the clock's last pace for a shallow board), then halving between the last probe reached and the first not (the halving the division act on a count as `rule3.largest_below` has it), never beyond the clock's last pace; refused by name where X is at most 0 at a Node or below the deepest hill's volume; at the clock's last pace the reading rests while the record grows (the pole never reached by a finite record)."""
     volumes = np.asarray(volume, dtype=object).reshape(-1)

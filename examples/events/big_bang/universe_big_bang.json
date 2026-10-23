@@ -22,11 +22,7 @@
     ],
     "level_weight": 1,
     "write_weight": 1,
-    "rest": 60,
-    "act": "pace",
-    "booking": "form",
-    "factor": "carried",
-    "pressure": "trace"
+    "rest": 60
    }
   },
   {

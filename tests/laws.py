@@ -247,7 +247,7 @@ GRAVITY = {
     "name": "gravity",
     "pair": [6000, 6000],
     "reads": {"gravity": 1},
-    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60, "act": "pace"},
+    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
 }
 COULOMB_UNIVERSE = {
     "integers": {"node_clock": 6000, "quantum_action": 36000, "width": 63, "link_unit": 16},
@@ -256,12 +256,7 @@ COULOMB_UNIVERSE = {
             "name": "charge",
             "pair": [6000, 6000],
             "reads": {},
-            "held": {
-                "sources": ["wronskian"],
-                "level_weight": 100,
-                "write_weight": 400,
-                "act": "rotation",
-            },
+            "held": {"sources": ["wronskian"], "level_weight": 100},
         },
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],

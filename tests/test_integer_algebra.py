@@ -51,7 +51,7 @@ PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "f
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
 PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
 PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", "covector.py")
-PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/uniform.py", "loader/interval.py")
+PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
 PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 PHYSICAL_MODULES += (
     "frame_run.py",

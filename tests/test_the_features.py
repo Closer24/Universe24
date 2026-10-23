@@ -135,7 +135,7 @@ def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
     return {"integers": integers, "families": [dict(row) for row in rows]}
 
 
-HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3, "act": "pace"}
+HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3}
 HOLLOW = {"name": "hollow", "pair": [1, 1], "reads": {"hollow": 1}, "held": HELD}  # reading itself at 1
 CORE = {"name": "core", "pair": [3, 4], "reads": {}}
 CORE["held"] = {**HELD, "level_weight": 7, "write_weight": -1}
@@ -190,7 +190,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     found, own_weight = read_content(((0, 1), (1, 3)), levels, [0, 60], 1)
     assert np.array_equal(found, levels[0] + 3 * 60) and own_weight == 3
     missing = {k: v for k, v in STUFF.items() if k != "reads"}
-    unweighted = {**HOLLOW, "held": {"sources": ["form"], "level_weight": 5, "act": "pace"}}
+    unweighted = {**HOLLOW, "held": {"sources": ["form"], "level_weight": 5}}
     plane = {**STUFF, "dimension": 2, "reads": {"sign": 1}}
     for rows, reason in (
         ((HOLLOW, missing), r"families\[1\] \('stuff'\) lacks the key 'reads'"),
@@ -203,7 +203,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     ):
         refused(reason, universe_of, universe(*rows))
     turning = universe_of(universe(SIGN, plane, quantum_action=15_000))[1]  # T 4,000 = Gamma 6,000
-    paced = universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane))[1]
+    paced = universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane))[1]
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
     for rows, found in ((paced, [5, 5]), (turning, [-5, 5])):  # |L| into the pace; the turn by L
         board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in rows]
@@ -241,7 +241,7 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         assert [f.pair[0] == 0 for f in families] == zeros and all(f.plane for f in families[1:])
     moving = {**plane, "name": "slower", "pair": [3000, 6000]}
     refused("fails for 'slower'", universe_of, universe(SIGN, plane, moving, quantum_action=15_000))
-    universe_of(universe({**SIGN, "held": {**SIGN["held"], "act": "pace"}}, plane, frozen))
+    universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane, frozen))
 
 
 def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit():
@@ -308,7 +308,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         integers, families = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
         keys = ("node_clock", "quantum_action", "width", "link_unit")
         assert derived.amplitude_bound(families, *(integers[key] for key in keys)) == hill_bound, name
-    axes = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 10**6, "act": "pace"}
+    axes = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 10**6}
     well = {"name": "well", "pair": [1, 1], "reads": {"well": 1}, "held": axes}
     deep = {**well, "name": "deep", "reads": {"deep": 1}, "held": {**axes, "write_weight": 1}}
     line = {"name": "line", "pair": [1, 1], "reads": {"well": 1}, "dimension": 1}

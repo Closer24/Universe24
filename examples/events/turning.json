@@ -23,8 +23,7 @@
     ],
     "level_weight": 1000,
     "write_weight": 1,
-    "rest": 60,
-    "act": "pace"
+    "rest": 60
    }
   },
   {
@@ -41,9 +40,7 @@
     "sources": [
      "wronskian"
     ],
-    "level_weight": 100,
-    "write_weight": 400,
-    "act": "rotation"
+    "level_weight": 100
    }
   },
   {
@@ -61,8 +58,7 @@
      "form"
     ],
     "level_weight": 1,
-    "write_weight": 1,
-    "act": "pace"
+    "write_weight": 1
    }
   },
   {

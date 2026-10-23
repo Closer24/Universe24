@@ -29,10 +29,8 @@ from event_universe.features.start.rests import held_rests, settled_rows
 from event_universe.lay import corrected
 from event_universe.loader.derived import FamilyRule, held_write_of, turns, with_records
 from event_universe.loader.faces import faces_of
-from event_universe.loader.interval import INTERVAL, interval_of
 from event_universe.loader.keys import AXES, weights_of
 from event_universe.loader.lay import COMPACT, FIXED_POINT, Lay, lay_of
-from event_universe.loader.uniform import UNIFORM, uniform_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import kind_of
 from event_universe.node import read as content_read
@@ -1309,8 +1307,7 @@ def pixel_mode(
     wrap = Wrap(
         *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
     )
-    carried = uniform_of(document[UNIFORM], document["boundary"]) if UNIFORM in document else False
-    free = interval_of(document[INTERVAL], document["boundary"]) if INTERVAL in document else carried
+    free = True  # the one Node: every massless rest the zero-mean part where the board has no sink
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
     kept = [n for n, body in enumerate(rows) if not laid_by_the_engine(body)]

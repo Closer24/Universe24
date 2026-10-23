@@ -256,9 +256,8 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
         "sources": ["form"],
         "level_weight": 10**12,
         "write_weight": 1,
-        "act": "pace",
     }  # a rest of 0
-    sign = {"sources": ["wronskian"], "level_weight": 1, "write_weight": k_w, "act": "rotation"}
+    sign = {"sources": ["wronskian"], "level_weight": 1, "write_weight": k_w}
     rows = [
         {"name": "binding", "pair": [2400, 2401], "reads": {"binding": 1}, "held": content},
         {"name": "charge", "pair": [6000, 6000], "reads": {"binding": 1}, "held": sign},
@@ -325,7 +324,7 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
 
 
 HOLDER = {"name": "nuclear", "pair": [50, 51], "reads": {"gravity": 1, "binding": 1, "nuclear": 1}}
-HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300, "act": "pace"}  # E_n, W_1
+HOLDER["held"] = {"sources": ["form"], "level_weight": 1, "write_weight": 300}  # E_n, W_1
 NUCLEON = {"name": "nucleon", "pair": list(PAIR), "dimension": ["plane"] * 3, "reads": HOLDER["reads"]}
 COMPACT = {"kind": "fixed_point", "stop": 2, "passes": 30, "seed": "compact", "profile": [1, 4]}
 K2 = (32, 1)  # the budget's confidence multiple squared, the shipped lays' key

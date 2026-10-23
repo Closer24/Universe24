@@ -41,6 +41,8 @@ class Row:
     factor_carried: bool = False  # the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the write's factor a coefficient of the numerator inside the one carried division, the product count p_x p_y p_z unrounded over the wall E_s T times the factor's wall Gamma^power p_0^(3 - power) per Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, the walls per Node at node.held_write_at); False where the key is absent or `rounded`, the law as written, the factor rounded once at the read (paces.write_factor), every shipped world bit for bit
     pressure_trace: bool = False  # the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; loader/universe.pressure_of): the trace over three of each source's own stress parts into the time line's write at the weight -1 in the energy's units and the traceless parts into the tension lines (records.pressure_term, records.write_sources), the volume's exponent d + 1 one integer for every mix (features/volume; `trace_wall`); False where the key is absent or `tension`, the law as written, the stress parts whole into the tension lines
     motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the world's key `interval: unobservable` alone on every held massless row of the content that is not the sign's holder (loader/interval.volume_rows), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
+    write_wall: int = 1  # the sign holder's wall multiplier Gamma den under the law of one Node (2026-10-23): alpha carried inside the one write, the numerator times E_h T num (`write_weight` set by the loader, `alpha_of`) and every wall of the row times Gamma den (`held_write_of`), the remainder keeping the fraction; 1 on every holder of the content, whose write weight is the file's
+    fill: int = 0  # the time line's value beyond a face and on a grown layer, the Link to the fill (core/ports.arrival): the row's rest, or under the volume form the rest's volume X(rest), the rest beyond the face fixing the clock's unit (ALGEBRA.md, The board's interval is no observable; loader/interval.volume_rows, features/volume.fill_of); 0 for a row with no rest
     form_clock: bool = False  # the held row's key `booking: form`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22): the count's form of every record sourcing the row booked with one proper-interval power, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), as the Wronskian is (`FamilyRule.power`); False where the key is absent or `count`, the law as written, two powers
 
 
@@ -97,8 +99,8 @@ class FamilyRule(Row):
 
     @property
     def several(self) -> bool:
-        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
-        return self.parts > 1 or (self.width > 1 and not self.plane)
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported; a held row's record is its time line alone (`record`), its axis lines held parts and no lines of the record, so the holder of the sign under the rotation, 1 + 3 lines per row, reports no parts line (the one Node, 2026-10-23: every sign holder rotates, and the two slits' output carries the clicks it carried)."""
+        return self.parts > 1 or (self.width > 1 and not self.plane and not self.held)
 
     @property
     def power(self) -> int:
@@ -237,8 +239,37 @@ def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
     return with_records(found, [0] * len(found))
 
 
+def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: int) -> tuple[int, int]:
+    """The law's alpha of a holder of the sign carried inside its one write (the owner's law of one Node, 2026-10-23; ALGEBRA.md, The constants, the proposal "The law's alpha is the ratio of the file's E_h T num to Gamma den, carried in the sign holder's write"; the energy line E_h T num = k_w Gamma den, A body and the light it reads keep one energy, the Node's own and no gate of the loader): the pair (E_h T num, Gamma den) reduced by their greatest common divisor, the numerator's multiplier and the walls' multiplier of every line of the holder's rows, [num, den] the pair the moving plane families reading the holder share (a frozen plane, num = 0, stands outside the line as before; two moving planes of different num / den asking one holder for two alphas is refused by name: one holder, one alpha); (1, 1) where no moving plane reads the holder (light's own row on the gate worlds), the write of no source."""
+    holder = families[index]
+    assert holder.level_weight is not None
+    pairs = {
+        family.pair
+        for family in families
+        if family.plane and family.pair[0] != 0 and weight_of(index, family) > 0
+    }
+    ratios = {
+        (
+            int(division_forward(num, gcd(num, den), 0)[0]),
+            int(division_forward(den, gcd(num, den), 0)[0]),
+        )
+        for num, den in pairs
+    }  # each pair reduced by the division act, integers
+    if len(ratios) > 1:
+        raise ValueError(
+            f"{holder.name!r} is read by moving planes of different pairs {sorted(pairs)}: the law's alpha is one "
+            "ratio per holder, E_h T num / (Gamma den), and one holder carries one (ALGEBRA.md, The constants)"
+        )
+    if not ratios:
+        return 1, 1
+    num, den = ratios.pop()
+    above, below = holder.level_weight * action * num, gamma * den
+    common = gcd(above, below)
+    return int(division_forward(above, common, 0)[0]), int(division_forward(below, common, 0)[0])
+
+
 def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The loader's gate of the energy line (ALGEBRA.md, energy conservation between a body and its light; the owner's word, the advisor's hand), one function with the line written once: for every plane family (dimension 2, of any parts) whose reads name a holder under the rotation h at a weight above 0, the file's integers satisfy E_h x T x num_f = k_w,h x Gamma x den_f exactly, [num_f, den_f] the family's pair (cos omega_s = num / den), E_h the holder's level weight, k_w,h its write weight, T the quantum action and Gamma the Node clock; the family's read weight multiplies its turn and, by the held write's reciprocity, its write, and cancels in the balance (it is the family's charge in units of the unit charge), so every plane family of one universe shares num / den or the universe is refused by name with the family, the holder and the four integers; a family of real lines and light (the holder's own record) read no turn and stand outside the line, as does the plain read (the act `pace`); a frozen row, a plane family at num = 0 (cos omega_s = 0 at every wave number, R_ij = 0 on every Link: its record never moves and gives no light), stands outside the line too, the balance of a body's light against its loss having nothing to balance, so the constraint that the plane families of one universe share num / den is lifted for num = 0 by name (the two hands)."""
+    """The loader's gate of the energy line as it stood to 2026-10-23, kept by name and called by nothing: under the law of one Node the line is carried inside the sign holder's write (`alpha_of`) and no file's integers are gated. The old reading: one function with the line written once: for every plane family (dimension 2, of any parts) whose reads name a holder under the rotation h at a weight above 0, the file's integers satisfy E_h x T x num_f = k_w,h x Gamma x den_f exactly, [num_f, den_f] the family's pair (cos omega_s = num / den), E_h the holder's level weight, k_w,h its write weight, T the quantum action and Gamma the Node clock; the family's read weight multiplies its turn and, by the held write's reciprocity, its write, and cancels in the balance (it is the family's charge in units of the unit charge), so every plane family of one universe shares num / den or the universe is refused by name with the family, the holder and the four integers; a family of real lines and light (the holder's own record) read no turn and stand outside the line, as does the plain read (the act `pace`); a frozen row, a plane family at num = 0 (cos omega_s = 0 at every wave number, R_ij = 0 on every Link: its record never moves and gives no light), stands outside the line too, the balance of a body's light against its loss having nothing to balance, so the constraint that the plane families of one universe share num / den is lifted for num = 0 by name (the two hands)."""
     for family in families:
         frozen = family.pair[0] == 0  # the frozen row: its record never moves and gives no light
         for read in family.reads:
@@ -259,10 +290,19 @@ def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> No
 
 
 def shared_clock(families: tuple[FamilyRule, ...]) -> None:
-    """The loader's gate of the carried factor, the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row."""
+    """The loader's gate of the carried factor, the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row; the reads compared are the reads of holders of the content alone, since the holder of the sign acts by the rotation, a phase on the Links, and enters no pace and no clock (the law of one Node, 2026-10-22: the hydrogen universes' proton and electron read the sign holder at 1 and 3 and no content, one clock, the vacuum's)."""
     for index, family in enumerate(families):
         readers = readers_of(families, index)
-        reads = {tuple(sorted((r.family, r.weight) for r in families[other].reads)) for other in readers}
+        reads = {
+            tuple(
+                sorted(
+                    (r.family, r.weight)
+                    for r in families[other].reads
+                    if not families[r.family].wronskian
+                )
+            )
+            for other in readers
+        }  # the reads of the content alone: the holder of the sign turns its readers and enters no pace
         if family.factor_carried and len(reads) > 1:
             raise ValueError(
                 f"{family.name!r} declares `factor: carried` and its sources read the content at differing "
@@ -275,7 +315,7 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
 
 
 def trace_wall(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The loader's gate of the stress's trace, the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, 2026-10-22): the hill's weight under it is one integer for every mix, K = (d + 1) E_s T / Gamma with d the axes' three (24 at T 36,000 and Gamma 6,000), exact where Gamma divides (d + 1) E_s T and refused by name otherwise (the pressure hand's condition), one division of the loader on coefficients, its remainder read."""
+    """The hill's gate of the stress's trace, called by nothing since the law of one Node (2026-10-23) and kept by name: under the level form the hill's weight K = (d + 1) E_s T / Gamma had to be one integer (24 at T 36,000 and Gamma 6,000), the pressure hand's condition Gamma | (d + 1) E_s T; under the volume form the hill is no act (ALGEBRA.md, The carried momentum: the chain rule between the level and the volume), the exponent d + 1 stands as the integer coefficient of the one write ((d + 1) X c + r) div (Gamma E_s T), whose carried remainder keeps every fraction as Rule3 keeps every remainder, and no integer K is formed anywhere in the engine, so the divisibility is no condition of the law and every universe's integers stand as declared."""
     for family in families:
         weight = family.level_weight if family.pressure_trace else None
         if weight is not None and division_forward((AXES + 1) * weight * action, gamma, 0)[1]:
@@ -325,6 +365,9 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         row[1:] = [SIDES * multiple * unit * unit * family.level_weight * action] * AXES
     for line in family.off_diagonal_lines:  # the shear lines: the Node's two ends' halves over 2 E_s W_c
         row[line] = SIDES * family.level_weight * measure
+    row = [
+        wall * family.write_wall for wall in row
+    ]  # the sign holder's Gamma den: alpha inside the write
     walls = (
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike

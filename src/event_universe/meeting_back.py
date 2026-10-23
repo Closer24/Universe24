@@ -82,6 +82,10 @@ def grown(board: Lattice, states: list[NodeState], found: growth.Growth, directi
     seed = phase.seed(board.amplitude, board.world.node_clock)
     for index, (family, state) in enumerate(zip(board.families, states, strict=True)):
         origin, walls, half = board.origins[index], board.walls(index), board.half_wall(index)
+        if (
+            index in board.fixed_walls
+        ):  # the carried factor: a grown Node is born at the rest's wall, as the board's layer is
+            walls = tuple(board.vacuum_walls(index))
         growth.resized(
             state, family, axis, side, layers, origin, walls, direction, board.world.kind, half, seed
         )

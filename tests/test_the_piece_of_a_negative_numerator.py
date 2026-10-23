@@ -23,20 +23,19 @@ UNIVERSE = {
                 "level_weight": 1000,
                 "write_weight": 1,
                 "rest": 60,
-                "act": "pace",
             },
         },
         {
             "name": "charge",
             "pair": [6000, 6000],
             "reads": {"gravity": 1, "binding": 1},
-            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1, "act": "pace"},
+            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1},
         },
         {
             "name": "binding",
             "pair": [2400, 2401],
             "reads": {"gravity": 1, "binding": 1},
-            "held": {"sources": ["form"], "level_weight": 1, "write_weight": 1, "act": "pace"},
+            "held": {"sources": ["form"], "level_weight": 1, "write_weight": 1},
         },
         {
             "name": "neutron",
