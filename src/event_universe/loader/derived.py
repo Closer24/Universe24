@@ -98,8 +98,8 @@ class FamilyRule(Row):
 
     @property
     def several(self) -> bool:
-        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported."""
-        return self.parts > 1 or (self.width > 1 and not self.plane)
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported; a held row's record is its time line alone (`record`), its axis lines held parts and no lines of the record, so the holder of the sign under the rotation, 1 + 3 lines per row, reports no parts line (the one Node, 2026-10-23: every sign holder rotates, and the two slits' output carries the clicks it carried)."""
+        return self.parts > 1 or (self.width > 1 and not self.plane and not self.held)
 
     @property
     def power(self) -> int:
