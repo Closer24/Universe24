@@ -256,11 +256,7 @@ COULOMB_UNIVERSE = {
             "name": "charge",
             "pair": [6000, 6000],
             "reads": {},
-            "held": {
-                "sources": ["wronskian"],
-                "level_weight": 100,
-                "write_weight": 400,
-            },
+            "held": {"sources": ["wronskian"], "level_weight": 100},
         },
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],

@@ -15,19 +15,19 @@ ION_UNIVERSE = {
         {
             "name": "strong_drive",
             "pair": [6000, 6000],
-            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1},
+            "held": {"sources": ["wronskian"], "level_weight": 1},
             "reads": {},
         },
         {
             "name": "weak_drive",
             "pair": [6000, 6000],
-            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1},
+            "held": {"sources": ["wronskian"], "level_weight": 1},
             "reads": {},
         },
         {
             "name": "fluorescence",
             "pair": [6000, 6000],
-            "held": {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1},
+            "held": {"sources": ["wronskian"], "level_weight": 1},
             "reads": {},
         },
     ],

@@ -40,8 +40,7 @@
     "sources": [
      "wronskian"
     ],
-    "level_weight": 100,
-    "write_weight": 400
+    "level_weight": 100
    }
   },
   {

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any
 
 from event_universe import conversion
@@ -16,8 +17,8 @@ FAMILY_KEYS, FAMILY_REQUIRED, HELD_KEYS, HELD_REQUIRED = (
     ("name", "pair", "dimension", "held", "reads", "exchange", "senses"),
     ("name", "pair"),
     ("sources", "level_weight", "write_weight", "rest"),
-    ("sources", "level_weight", "write_weight"),
-)
+    ("sources", "level_weight"),
+)  # `write_weight` required on a holder of the content and refused by name on the holder of the sign (alpha_of)
 ONE_NODE_HELD = {
     "act": "the holder of the sign acts by the rotation of the two-part record and every holder of the content "
     "by the plain read into its readers' paces",
@@ -41,6 +42,18 @@ def one_node_held(held: object, label: str) -> None:
                 "owner's word of 2026-10-22); drop the key"
             )
     sources = held.get("sources")
+    if isinstance(sources, list) and sources == [WRONSKIAN] and "write_weight" in held:
+        raise ValueError(
+            f"{label}.write_weight is declared ({held['write_weight']!r}) on the holder of the sign: under the "
+            "law of one Node the law's alpha is the ratio of the file's E_h T num to Gamma den, carried inside the "
+            "holder's one write (the numerator times E_h T num, the wall times Gamma den, the remainder keeping the "
+            "fraction), and no file names the sign holder's write weight (ALGEBRA.md, The constants, the proposal "
+            "of 2026-10-23); drop the key"
+        )
+    if isinstance(sources, list) and sources != [WRONSKIAN] and "write_weight" not in held:
+        raise ValueError(
+            f"{label} lacks the key 'write_weight': a holder of the content declares its write weight"
+        )
     if isinstance(sources, list) and OFF_DIAGONAL in sources:
         raise ValueError(
             f"{label}.sources {sources!r} names the shear: under the law of one Node a holder of the content "
@@ -287,7 +300,11 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
         if "held" in row:
             holds = row["held"]
             weight = integer(holds["level_weight"], f"{label}.held.level_weight", 1)
-            writes = integer(holds["write_weight"], f"{label}.held.write_weight", -MAX_WORK_INT)
+            writes = (
+                1  # the holder of the sign: alpha set by the loader from the file's integers (derived.alpha_of)
+                if wronskian
+                else integer(holds["write_weight"], f"{label}.held.write_weight", -MAX_WORK_INT)
+            )
             if "rest" in holds:
                 if wronskian or num != den:
                     raise ValueError(
@@ -331,7 +348,21 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
             )
         )
     families = derived.family_rules(rows)
-    derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
+    # the law's alpha inside the sign holder's write (the owner's law of one Node, 2026-10-23): the numerator times
+    # E_h T num and the walls times Gamma den, in place of the file's write weight and the loader's energy line
+    families = tuple(
+        replace(family, write_weight=alpha[0], write_wall=alpha[1])
+        if family.held and family.wronskian
+        else family
+        for family in families
+        for alpha in [
+            derived.alpha_of(
+                families, families.index(family), integers["node_clock"], integers["quantum_action"]
+            )
+            if family.held and family.wronskian
+            else (1, 1)
+        ]
+    )
     derived.shared_clock(families)
     # the trace's wall Gamma | (d + 1) E_s T is no gate of the volume form: the hill's weight K was the level form's integer (the one Node, 2026-10-23; derived.trace_wall kept by name, called by nothing)
     return integers, conversion.declared(
