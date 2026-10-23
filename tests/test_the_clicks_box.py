@@ -47,8 +47,12 @@ def test_the_first_close_credits_the_screen_and_the_log_carries_the_lines():
         for c in lines
         if c.get("event") == "credit"
     ]
-    assert credits == [(FIRST, "photon", "screen", 1)]  # the screen's credit at 24 alone before 30 ends
-    log = json.loads(WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8"))
+    assert (
+        credits == []
+    )  # no close before 30 ends: the regions' window derived, 131, the lays' longest passage (2026-10-23; the former screen's credit at 24 under the declared window 12)
+    log = json.loads(
+        WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8")
+    )  # the shipped log as recorded under the declared window 12, the former reading kept by the owner's word of 2026-10-23 (the long worlds not re-run under the derived window 131)
     closes = [
         (row["interval"], row["family"], row["node_detector"], row.get("count"))
         for row in log

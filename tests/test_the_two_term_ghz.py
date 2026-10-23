@@ -41,14 +41,42 @@ SETTINGS = {
 
 REAL_PORT_DIGESTS: dict[
     str, tuple[str, str, int]
-] = {  # the lines' digest, the arrays' digest at the end, the lines; the lines' digests re-recorded 2026-10-20 under the twist's deletion, the credit line without twist and shortfall, the arrays' digests and the counts as at the ninth
-    "singlet_a_b": ("1b4de9a3ecd0fbe3", "29c984886c98a340", 152),
-    "singlet_a_b_prime": ("3fb0cfd3c2d4f761", "29c984886c98a340", 152),
-    "singlet_a_prime_b": ("cf3ee118d5d5a591", "355f34162a2096bc", 165),
-    "singlet_a_prime_b_prime": ("3a3fa16fd3151ccc", "de0951aaad4762b0", 165),
-    "ghz_x_x_x": ("e3907b49e7107747", "d6a774f9d5346e84", 2162),
-    "ghz_x_y_y": ("df89005705555bb6", "03f76ace05e501e9", 1593),
-    "ghz_y_x_y": ("d37726d4ad3db38b", "21422c4532c84b95", 3300),
+] = {  # the lines' digest, the arrays' digest at the end, the lines; the lines' digests re-recorded 2026-10-20 under the twist's deletion, the credit line without twist and shortfall, the arrays' digests and the counts as at the ninth; the entries marked `former` re-recorded 2026-10-23 under two acts of the law's reading on the owner's decisions of 2026-10-23, the count centred (the phase hand's run on the documents tree, the arrays' digest named `centred` where its table has the world) and the window derived and never declared (the windows hand's run on the branch windows, every click at its derived close): each names the former lines' digest, arrays' digest and count; the entries marked `former` re-recorded 2026-10-23 under two acts of the law's reading on the owner's decisions of 2026-10-23, the count centred (the phase hand's run on the documents tree, the arrays' digest named `centred` where its table has the world) and the window derived and never declared (the windows hand's run on the branch windows, every click at its derived close): each names the former lines' digest, arrays' digest and count
+    "singlet_a_b": (
+        "bfcbdf59a9085e84",
+        "2aed7082f74bdfd3",
+        421,
+    ),  # former bfcbdf59a9085e84, 2aed7082f74bdfd3, 421; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:minus@30; former 1b4de9a3ecd0fbe3, 29c984886c98a340, 152; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:minus@30
+    "singlet_a_b_prime": (
+        "4da72e5cd021809f",
+        "2aed7082f74bdfd3",
+        421,
+    ),  # former 4da72e5cd021809f, 2aed7082f74bdfd3, 421; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:plus@30; former 3fb0cfd3c2d4f761, 29c984886c98a340, 152; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:plus@30
+    "singlet_a_prime_b": (
+        "9a8e8c76a96a3f79",
+        "0daa86151311d32c",
+        456,
+    ),  # former 9a8e8c76a96a3f79, 0daa86151311d32c, 456; centred 4fa2bf3b04c65a88; the clicks 2: left:minus@30, right:plus@30; former cf3ee118d5d5a591, 355f34162a2096bc, 165; centred 4fa2bf3b04c65a88; the clicks 2: left:minus@30, right:plus@30
+    "singlet_a_prime_b_prime": (
+        "3ca88a811ea9f2b8",
+        "0444781a43c9f9bb",
+        456,
+    ),  # former 3ca88a811ea9f2b8, 0444781a43c9f9bb, 456; centred 6cd440151409074a; the clicks 2: left:minus@30, right:plus@30; former 3a3fa16fd3151ccc, de0951aaad4762b0, 165; centred 6cd440151409074a; the clicks 2: left:minus@30, right:plus@30
+    "ghz_x_x_x": (
+        "9dfa6215e84a9a46",
+        "5b61d065da2b1cca",
+        2153,
+    ),  # former e3907b49e7107747, d6a774f9d5346e84, 2162; centred 38daaff3c4ff1649; the clicks 3: left:minus@35, right:plus@35, top:minus@35
+    "ghz_x_y_y": (
+        "0c77d3edf4217284",
+        "fff22e30e4d65c26",
+        1613,
+    ),  # former df89005705555bb6, 03f76ace05e501e9, 1593; centred fff22e30e4d65c26; the clicks left:minus@35, right:plus@35, top:plus@35
+    "ghz_y_x_y": (
+        "db9e9f42462ef52a",
+        "ebae12a7ee683613",
+        3337,
+    ),  # former d37726d4ad3db38b, 21422c4532c84b95, 3300; the clicks left:minus@35, right:plus@35, top:plus@35
     "ghz_y_y_x": ("3b9802f5a46e3e74", "befdc50e632d240e", 5007),
 }
 REFUSED: dict[
@@ -61,10 +89,26 @@ REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom 
             "7742549762b6ec9d",
             2683,
         ),  # 2026-10-21, the floor and the remainder's draw: every window's remainder drawn, N 546 (the landing's 874668d0a958235f, be63d2ce99f6604a, 2696 lines, N 500, under the half-up rounding)
-        "born_a_b": ("bb97f5dcda1fb8b5", "c192784fb41509b1", 290),
-        "born_a_b_prime": ("0ea65e583fec7beb", "c192784fb41509b1", 290),
-        "born_a_prime_b": ("19285640497e35f7", "b23542a6b2c460fd", 290),
-        "born_a_prime_b_prime": ("1a001543d9083ac1", "26aa22f2998f8cd6", 290),
+        "born_a_b": (
+            "f5a43513a239cd68",
+            "0177773313ecd712",
+            385,
+        ),  # former f5a43513a239cd68, 0177773313ecd712, 385; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:plus@120; former bb97f5dcda1fb8b5, c192784fb41509b1, 290; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:plus@120
+        "born_a_b_prime": (
+            "dc672678350bfb01",
+            "0177773313ecd712",
+            385,
+        ),  # former dc672678350bfb01, 0177773313ecd712, 385; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:minus@120; former 0ea65e583fec7beb, c192784fb41509b1, 290; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:minus@120
+        "born_a_prime_b": (
+            "e94a77708718fdab",
+            "d3a04b353df0b81e",
+            383,
+        ),  # former e94a77708718fdab, d3a04b353df0b81e, 383; centred 7b9ceaae0d0a84c6; the clicks 3: body 0:g@24, left:plus@72, right:minus@120; former 19285640497e35f7, b23542a6b2c460fd, 290; centred 7b9ceaae0d0a84c6; the clicks 3: body 0:g@24, left:plus@72, right:minus@120
+        "born_a_prime_b_prime": (
+            "59b7fdaa84013cb8",
+            "d72fae91ad520fda",
+            383,
+        ),  # former 59b7fdaa84013cb8, d72fae91ad520fda, 383; centred 9cf860847a1ef469; the clicks 3: body 0:g@24, left:plus@72, right:minus@120; former 1a001543d9083ac1, 26aa22f2998f8cd6, 290; centred 9cf860847a1ef469; the clicks 3: body 0:g@24, left:plus@72, right:minus@120
     }
 )
 
@@ -313,7 +357,7 @@ def setting_read(name: str, tmp_path, monkeypatch) -> None:  # type: ignore[no-u
     sides = {
         n: ((1, 1), IDENTITY, turn) for n, turn in zip(("left", "right", "top"), turns, strict=True)
     }
-    shares = joint_shares(lines, sides, 0)
+    shares = joint_shares(lines, sides, 0, close=clicks[-1]["interval"])  # to the close (2026-10-23)
     total = sum(shares.values())
     assert total > 0 and all(share in (0, Fraction(total, 4)) for share in shares.values()), shares
     e_3 = sum(Fraction((-1) ** sum(key), 1) * share for key, share in shares.items()) / total
@@ -367,6 +411,7 @@ def test_the_two_term_plane_ghz_is_exact_at_another_amplitude(tmp_path, monkeypa
         lines,
         {n: ((1, 1), IDENTITY, t) for n, t in zip(("left", "right", "top"), turns, strict=True)},
         0,
+        close=clicks[-1]["interval"],
     )
     total = sum(shares.values())
     e_3 = sum(Fraction((-1) ** sum(key), 1) * share for key, share in shares.items()) / total

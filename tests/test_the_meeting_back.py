@@ -56,13 +56,20 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             spin = family(board, "spin")
             clicks = [c for c in lines if c["event"] == "credit"]
             realised = [PORT[c["realised"]] for c in clicks]
-            shares = joint_shares(lines, sides, sign)
+            shares = joint_shares(
+                lines, sides, sign, close=clicks[-1]["interval"]
+            )  # to the close (2026-10-23)
             total = sum(shares.values())
             sided(board, spin, shares, realised)
             assert shares[tuple(realised)] > 0, clicks  # the realised pair's share stands above 0
             if exchange:  # the sign's reading equals the crossed pattern's of the same lines
                 assert board.families[spin].exchange == -1
-                assert shares == joint_shares(lines, {"left": (a, IDENTITY), "right": (b, SINGLET)}, 0)
+                assert shares == joint_shares(
+                    lines,
+                    {"left": (a, IDENTITY), "right": (b, SINGLET)},
+                    0,
+                    close=clicks[-1]["interval"],
+                )
             books = board.credit
             first = meeting_back.coefficients_of(board.families[spin], books.sides[0][1], True)
             scale = squares(first[realised[0]])
@@ -108,9 +115,9 @@ def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write(t
             assert tuple(crossed[port]) == (plain[port][1], (-plain[port][0][0], -plain[port][0][1]))
     sides = {"left": ((3, 1), IDENTITY), "right": ((3, 1), SINGLET)}  # the crossed pattern at equal axes
     board, lines = trial(spin_world(tmp_path / "equal", monkeypatch, sides, both=True, amplitude=64), 40)
-    shares = joint_shares(lines, sides)
-    assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
     clicks = [c for c in lines if c["event"] == "credit"]
+    shares = joint_shares(lines, sides, close=clicks[-1]["interval"])  # to the close (2026-10-23)
+    assert shares[0, 0] == shares[1, 1] == 0 and shares[0, 1] == shares[1, 0] > 0, shares
     assert tuple(PORT[c["realised"]] for c in clicks) in {(0, 1), (1, 0)}, clicks
 
 
@@ -364,7 +371,7 @@ def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_world(tmp_path
     ]
     realised = [PORT[c["realised"]] for c in clicks]
     sides = {r.name: (r.basis, [list(p) for p in r.pattern]) for r in board.world.node_detectors}
-    joint = joint_shares(lines, sides, 0, board.families[light].width)
+    joint = joint_shares(lines, sides, 0, board.families[light].width, close=clicks[-1]["interval"])
     total = sum(joint.values())
     sided(board, light, joint, realised)
     signs = sum(v * (-1) ** sum(k) for k, v in joint.items())
