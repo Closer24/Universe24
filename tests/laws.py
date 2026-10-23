@@ -491,3 +491,27 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
     assert read["correlation"] == expected["blind"]["correlation"]
     assert read["marginals"] == expected["blind"]["marginals"]
     return read, expected
+
+
+def board_state(board: Lattice) -> list[tuple[list[tuple[Any, Any, Any]], list[Any]]]:
+    """Every family's lines (now, before, remainder) and write remainders copied as Python's integers, the state a run back is compared against bit for bit (the light mean's test)."""
+    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
+    return [
+        (
+            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
+            [copied(r) for r in st.write_remainders],
+        )
+        for st in board.states
+    ]
+
+
+def same_state(
+    a: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
+    b: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
+) -> bool:
+    """Two states of `board_state` equal in every line and every write remainder."""
+    return all(
+        all(np.array_equal(u, v) for x, y in zip(la, lb, strict=True) for u, v in zip(x, y, strict=True))
+        and all(np.array_equal(u, v) for u, v in zip(ra, rb, strict=True))
+        for (la, ra), (lb, rb) in zip(a, b, strict=True)
+    )
