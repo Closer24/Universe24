@@ -91,6 +91,10 @@ def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
     view = Boxed.__new__(Boxed)
     vars(view).update(vars(board))
     view.states = [sliced(state, box) for state in board.states]
+    view.fixed_walls = {  # the carried factor's wall per Node, a constant of the lattice, cut to the box with the states
+        index: [growth.spread(wall, board.shape)[box] for wall in walls]
+        for index, walls in board.fixed_walls.items()
+    }
     view.shape = extent_of(board, box)
     offset = board.offset
     view.offset = (offset[0] - box[0].start, offset[1] - box[1].start, offset[2] - box[2].start)
