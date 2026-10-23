@@ -19,14 +19,14 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, credit, emission, flux, front, growth, meeting, node
+from event_universe import board_readings, credit, emission, flux, front, growth, meeting, node, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
 from event_universe.features.click import presented
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import PLANE
-from event_universe.node_detector import weighed_currents
+from event_universe.node_detector import node_detector_nodes, weighed_currents
 from event_universe.plane import NO_FACE, Faces
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, level_at, record_slice
@@ -171,12 +171,13 @@ def oracle_step_records(
 
 
 def oracle_interval(board: Lattice) -> None:
-    """The one Node's `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own."""
+    """The one Node's `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own, in the engine's order: the fifth act (swap.kept before the phase act, swap.stepped after the held writes) and the densities' reading after it, the state at the interval's end (2026-10-23, The floor)."""
     if board.ended is not None:
         raise RuntimeError(f"the run ended at interval {board.interval}: {board.ended}")
     if not growth.grow(board):
         return
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
+    kept_state = swap.kept(board)
     node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
     weighed = weighed_currents(board)
     currents, senses, stresses = (
@@ -198,6 +199,8 @@ def oracle_interval(board: Lattice) -> None:
     board.report(currents, weighed, forms, begun)
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
+    swap.stepped(board, kept_state)
+    board_readings.densities_read(board, forms, node_detector_nodes(board))
     if credit.counted_windows(board):
         meeting.closed(board)
     meeting.jumped(board)

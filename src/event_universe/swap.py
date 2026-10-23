@@ -44,7 +44,7 @@ def floor_of(gamma: int) -> int:
 
 
 def at_floor(x0: Any, x1: Any, x2: Any, floor: int) -> np.ndarray:
-    """The floor's trigger at every Node from the time line's three levels (ALGEBRA.md, The floor): an outer level below the floor X_f, X0 < X_f or X2 < X_f, symmetric in X0 and X2 as the top's is, so that the same function read on the undone interval's triple (X2, X1, X0) fires where the forward did; no level the board holds lies below the floor (the start at Gamma, every turn keeping its two levels, every output below the floor discarded), so forward it is X2 that fires and backward Y.before, the same number."""
+    """The floor's trigger at every Node from the time line's three levels (ALGEBRA.md, The floor): an outer level below the floor X_f, X0 < X_f or X2 < X_f, symmetric in X0 and X2 as the top's is, so that the same function read on the undone interval's triple (x2, x1, x0, the outer two exchanged) fires where the forward did; no level the board holds lies below the floor (the start at Gamma, every turn keeping its two levels, every output below the floor discarded), so forward it is X2 that fires and backward Y.before, the same number."""
     x0, x2 = (np.asarray(x, dtype=object) for x in (x0, x2))
     return np.asarray((x0 < floor) | (x2 < floor), dtype=bool)
 
