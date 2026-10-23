@@ -24,8 +24,8 @@ RESONANCE, LIFETIME, REGION, FIRST = (
     (5751, 6000),
     30,
     101,
-    8,
-)  # the declaration, the whole support with its one joining Node, and the world's own click
+    5,
+)  # the declaration, the whole support with its one joining Node, and the world's own click (5 under the centred count and the lay regenerated to it, 2026-10-23; 8 to that day under the left-sum count: the click's interval is the draw's, from the state's digits)
 WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 and [4000, 6000]
 PIECE, FAN, RECOIL = (
     5940256,
@@ -33,8 +33,20 @@ PIECE, FAN, RECOIL = (
     5947440,
 )  # the taker world's click at 9: the piece's p_z, the photon's P_z, the body's P_z after at the k of the record's own covariant Link angles, the piece to the integers' roundings (5497698, 0.9255, at the amplitudes' k of 2026-10-21 on this lay; 4945189, 2600676, 4571327 at the click at 27 on the packet's return, the first lay with the top at z = 1 to 2026-10-22 03:39; 11055256, 8012902, 10192931 at the click at 18 on 2026-10-21, the coupling 51; the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling))
 T = 36000000  # the clock's unit of both worlds, the energies' scale
-GIVER_BEFORE = ((1, 0), 17987200, (0, 0, 0), 577227456000, 0)  # the giver at 7: see table_of
-GIVER_AFTER = ((1, 1), 18001216, (-14170, 0, 0), 620382634000, 6675858000)  # the giver at 8
+GIVER_BEFORE = (
+    (1, 0),
+    17998506,
+    (0, 0, 0),
+    568599176000,
+    0,
+)  # the giver at 4 (at 7 to 2026-10-23: ((1, 0), 17987200, (0, 0, 0), 577227456000, 0)): see table_of
+GIVER_AFTER = (
+    (1, 1),
+    17992736,
+    (8435, 0, 0),
+    600011504000,
+    6675858000,
+)  # the giver at 5 (at 8 to 2026-10-23: ((1, 1), 18001216, (-14170, 0, 0), 620382634000, 6675858000))
 TAKER_BEFORE = (
     (1, 1),
     17999924,
@@ -357,7 +369,10 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
         [round(r, 4) for r in derived] == [0.3305, 0.312, 0.2655]
     )  # the exchange's remainder 1 - cos((e + g) / 2) / cos((e - g) / 2), DERIVED 2026-10-22, against the measured 0.332, 0.314 and 0.267 at the frame's pairs
     half = T // 2
-    assert (round(GIVER_BEFORE[1] / half, 2), GIVER_AFTER[1]) == (1.0, half + 1216)  # one quantum
+    assert (round(GIVER_BEFORE[1] / half, 2), GIVER_AFTER[1]) == (
+        1.0,
+        half - 7264,
+    )  # one quantum (half + 1216 to 2026-10-23, the left-sum count's lay)
     assert (
         (round(TAKER_BEFORE[1] / half, 2), TAKER_AFTER[1])
         == (
@@ -365,7 +380,9 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
             half - 14034,
         )
     )  # one quantum (half - 13787 at the amplitudes' k; half - 9208 at 27 on the first lay at z = 1, half + 10122 at the click at 18 of 2026-10-21; the lay at z = 2 of 2026-10-22, the click at 9)
-    assert round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.07  # the lay's energy in the well, read
+    assert (
+        round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.06
+    )  # the lay's energy in the well, read (0.07 to 2026-10-23 under the left-sum count's lay)
     assert (
         round(TAKER_AFTER[3] / TAKER_BEFORE[3] - 1, 3) == 0.14
     )  # the lay at the free rotation (0.243 at 27 on the first lay; 0.284 at 18, 2026-10-21)
@@ -397,7 +414,12 @@ def test_the_frame_tool_types_the_two_levels_each_at_one_quantum_beside_the_lay(
         charges.append(
             sum(a * d - c * b for a, b, c, d in zip(now, before, im_now, im_before, strict=True))
         )
-    assert charges == [18006758, 17993018] and all(abs(c - T // 2) * 2500 <= T // 2 for c in charges)
+    assert charges == [
+        17993234,
+        17999700,
+    ] and all(  # [18006758, 17993018] to 2026-10-23, the left-sum count's frame
+        abs(c - T // 2) * 2500 <= T // 2 for c in charges
+    )
     assert sum(a * b for a, b in zip(dense(lower[0], size), dense(upper[0], size), strict=True)) == 0
     taker = load_shipped(FOLDER / "taker_c5.json").bodies[1]
     assert len(taker.profiles) == 2 and (taker.radius, taker.missing > 0) == (3, True)
