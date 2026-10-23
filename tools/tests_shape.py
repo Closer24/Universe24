@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_swap_at_the_top.py::test_the_swap_fires_once_at_the_first_weak_top_and_the_fall_is_the_rise_run_back": (
+        60,
+        "the swap at the top (ALGEBRA.md, The swap at the top, the owner's decision of 2026-10-23; swap.py): on the 3-cube gapped "
+        "torus the fire once at the first weak maximum at every Node and never at the start, 40 T-images bit for bit after it with "
+        "every remainder complemented at its wall, the run back of 80 through the fire with the inverse's one fire",
+    ),
     "tests/test_the_gapped_volume.py::test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall": (
         43,
         "the gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return "

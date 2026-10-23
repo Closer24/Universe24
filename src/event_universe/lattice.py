@@ -24,6 +24,7 @@ from event_universe import (
     reports,
     share,
     shear,
+    swap,
     take,
 )
 from event_universe.board_readings import Currents, Stresses
@@ -74,6 +75,12 @@ class Lattice:
         self.held = [index for index, family in enumerate(self.families) if family.held]
         self.turning = [index for index in self.order if turns(self.families, index)]
         self.fixed_walls: dict[int, list[Any]] = {}
+        self.write_walls: dict[
+            int, list[Any]
+        ] = {}  # every held line's write wall as the last held write took it, the swap's complement reads them (swap.py)
+        self.swaps: list[
+            tuple[int, int, int]
+        ] = []  # the swaps at the top, (interval, direction, Nodes), a reading
         self.off_diagonals = any(family.off_diagonal for family in self.families)
         self.writes = {
             i: held_write_of(self.families, i, world.quantum_action, world.link_unit) for i in self.held
@@ -321,6 +328,7 @@ class Lattice:
         weighed = weighed_currents(self) if acts else {}
         currents, stresses = board_readings.currents(self, weighed), board_readings.stresses(self)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
+        kept_state = swap.kept(self)  # the pre-state the swap at the top keeps
         senses = board_readings.sense_currents(self)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
@@ -336,6 +344,9 @@ class Lattice:
             self.report(currents, weighed, forms, begun)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
+        swap.stepped(
+            self, kept_state
+        )  # the swap at the top, the Node's fifth act (ALGEBRA.md, The swap at the top)
         if acts:
             self.tick += 1
             if credit.counted_windows(self):
@@ -369,6 +380,7 @@ class Lattice:
         numerators, walls, _terms = records.write_sources(
             index, self.families, bookings, axes, write, rulers, gamma, motion, direction, fixed
         )
+        self.write_walls[index] = walls
         state.lines, state.write_remainders = shear.written(
             self, index, numerators, walls, direction, begun
         )
@@ -449,6 +461,7 @@ class Lattice:
             self.rulers(-1),
             [s.lines for s in self.states],
         )  # the interval's start, their `before`
+        kept_state = swap.kept(self)  # the post-state the swap's inverse reads
         books: dict[int, list[records.Record]] = {}
         pending = list(self.held)
         while True:
@@ -467,6 +480,7 @@ class Lattice:
         for index, lines in books.items():
             self.states[index].lines = lines
         shear.inverted(self, ended)
+        swap.inverted(self, kept_state)  # the swap's inverse, the same reading on the undone interval
         node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
         self.interval, self.ended = self.interval - 1, None
         while self.growths and self.growths[-1][0] == self.interval + 1:
