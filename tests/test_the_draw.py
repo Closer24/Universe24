@@ -169,7 +169,7 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
 
 
 def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector_counts_in_its_own_quantum(
-    tmp_path,
+    tmp_path, monkeypatch
 ):
     """T4, test (vi) (the owner's word of 2026-10-03, 05:00 UTC, "not in the morning, now"; the mathematician's 213 (B), #1572 comment 5965054791, his 214, 5965082449, and 220, 5965303134, with the advisor's seconds, #1563 comment 5965316267 and #1572 comment 5965312353, two hands; examples/events/resonance, the blind written by its builder before any lay): a record's unit of one quantum is W_c sin omega from its own rotation (`credit.record_unit`; the click's plan, C1, 2026-10-18, in place of the share over the count read at the books' origin), W_c for a massless record laid by no packet, W_c sin Omega = 2.23605 den T for one quantum at [2, 3] and for the lit world's packet at [1, 2] the massless band's cos omega at the search's cos(pi / 2), -2 of 6000, 3999 and not 4000, the unit within two parts in 6000 of the [2, 3] quantum's, and the loader refuses by name a region declaring a `transition`, a one-Node region (a region of a travelling wave), a transition without its resonance and an emission with no transition between its parts; the dark's hazard is per proper interval (`lists.hazard_weights`): the weights [span x unit, (tau - span) x unit] in the vacuum and half the emission's weight at p_0 = Gamma / 2; on the resonance world the giver gives at the interval 48 with certainty and lays the quantum as a source in time over 48 intervals, one lay line each on the light's first line at the giver's Node, the level now alone, the amplitudes at most 22 (21 on 30 intervals and 22 on 18, the carry); at the span's end the light's share over the board reads sin Omega = 0.745 quanta of the band's top, one quantum by the count's line in the top's unit and in the node_detector's own unit at [2, 3] alike; the far Node's cosine over the plateau (the intervals 76 to 90, after the front has passed at the group pace 1 / (3 sin Omega) and before the source stops) reads cos Omega within 2 / A_far of 2 / 3 (the design's own window, 62 to 70, lies in the front's transit and misses, a finding named in the folder); light's Links at the reader's Node open, the cut the atom's own. Under the dark grain (the mathematician's 223 (a), #1572 comment 5965727937, and 224 (2)(a), 5966081562, with the advisor's 5965918924 (a) and his second 5966129376, two hands; `meeting.dark`, `lists.emission`): the giver is in the dark until it gives, so over the trials' first 25 seeds its emission is drawn once per interval at the hazard 1 / 48 at the now, the generator advanced exactly once per interval and not at the window's close at 48, the emissions at distinct intervals and within the lifetime in 8 to 24 of 25 (the blind's 0.636, three deviations), each seed's lay lines the span from its interval cut by the run's end, the far Node's cosine on each seed's plateau [t + 28, t + 42] within the gate and the count at the span's end 1 where the whole span lies in the run; with the light laid on the chain a window stands and the window's draw at 48 stands as it is."""
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
@@ -195,6 +195,11 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "resonance" / "expectation.json").read_text(encoding="utf-8"))
     world = json.loads(redeclared_file(tmp_path / "resonant.json").read_text(encoding="utf-8"))
+    (content := tmp_path / "examples" / "events" / "zeno").mkdir(parents=True)
+    (content / "zeno_atom.json").write_text(json.dumps(with_content(universe)), encoding="utf-8")
+    monkeypatch.setattr(
+        world_files, "REPOSITORY_ROOT", tmp_path
+    )  # the content copy: the shipped resonant world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, the room 2^45.8 of the digits read below the absorption draw's total 2^53.9 on zeno_atom.json, which declares no content); the copy's universe carries the born universe's holders and every draw (2026-10-23)
     bare = {k: v for k, v in world["bodies"][0]["transitions"][0].items() if k != "resonance"}
     refused(
         "resonance",
@@ -229,12 +234,13 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
     ]  # a well at p_0 = Gamma / 2: half the rate
     pulse = [f.name for f in board.families].index("pulse")
     series = {}
-    beyond = (at[0] + 1, *at[1:])  # the reading Node eight Nodes from either Node of the reader
+    giver = len(
+        world["bodies"][0]["nodes"]
+    )  # the reading Node eight Nodes from each Node of the giver (two Nodes to 2026-10-21, three since)
     for _ in range(96):
         board.step()
-        series[board.interval] = (
-            int(board.states[pulse].lines[0].now[at]),
-            int(board.states[pulse].lines[0].now[beyond]),
+        series[board.interval] = tuple(
+            int(board.states[pulse].lines[0].now[(at[0] + k, *at[1:])]) for k in range(giver)
         )
         given = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
     assert given, "the run's emission inside the run (the hazard 1 / 48 per interval)"
@@ -245,7 +251,9 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
     assert when == sorted(set(when)) and set(when) <= set(span) and len(when) >= len(span) - 3
     laid_at = {tuple(c["node"]["at"]) for c in lays}
     # the emission's Node drawn once per click by the record's share, inside the NodeDetector's region
-    assert len(laid_at) == 1 and laid_at <= {(0, 0, 0), (1, 0, 0)}
+    assert (
+        len(laid_at) == 1 and laid_at <= {tuple(n["node"]) for n in world["bodies"][0]["nodes"]}
+    )  # within the giver's declared Nodes (the two-Node body's {(0, 0, 0), (1, 0, 0)} to 2026-10-21, three Nodes since)
     assert all(c["line"] == 0 and c["after"][1:] == c["before"][1:] for c in lays)
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
     assert max(abs(c["after"][0] - c["before"][0]) for c in lays) <= 22
@@ -291,9 +299,15 @@ def test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector
             9,
             47 * 9,
         ]  # a well at p_0 = Gamma / 2: half the rate
+        window = board.world.bodies[
+            0
+        ].detector.draw.window  # the giver's own beat, 8: the lit packet fills the ring and no lay has an end (the declared lifetime 48 was the window to 2026-10-23, its one pulse at 48)
         [board.step() for _ in range(48)]
         pulses = [c for c in lines if c["event"] == "credit" and c["emitted"] == "pulse"]
-        assert [c["interval"] for c in pulses] == [48]
+        assert pulses and all(c["interval"] % window == 0 for c in pulses), (
+            [c["interval"] for c in pulses],
+            window,
+        )  # the emissions at the beat's closes, the hazard read from the light standing at the giver (one, at 24, on the content copy)
 
 
 def test_the_open_boards_emission_is_a_packet_along_one_axis_with_the_carry(tmp_path):

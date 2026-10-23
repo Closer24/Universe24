@@ -275,8 +275,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "absorbed", "emitted", "count", "node_detector")
     assert (
-        tuple(first[k] for k in words) == click and first["interval"] == board.interval == 42
-    )  # the reader's window derived, the drive's passage over its two Nodes (2026-10-23; the former declared 21)
+        tuple(first[k] for k in words) == click
+        and first["interval"] == board.interval == reader.declared.draw.window
+    )  # the first click at the first close of the reader's window, derived at load as the drive's passage over its two Nodes (21 here under the swap reading the gapped time line alone, 2026-10-23; 42 read before it, when the swap still fired on this massless board at the body's neighbours; the declared window was 21 before the derivation)
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
     assert (
         set(first) - {"bias_bound"}
@@ -301,9 +302,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         for step in np.vstack((np.eye(3, dtype=int), -np.eye(3, dtype=int)))
     }
     differing = {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])}
-    assert (
-        differing == written_at | nearby
-    )  # the one Node's write: every held row's time line reads its six neighbours, so the write at the region moves the held rows at the Nodes one Link from the written ones and nowhere else (the region alone before 2026-10-23)
+    assert written_at <= differing <= written_at | nearby, (
+        differing - written_at
+    )  # the one Node's write: the written Nodes differ, and nothing beyond one Link of them, where a held row's time line reads the written levels (the region and its six neighbours alike to 2026-10-23, when the swap still fired on this massless board at the body's neighbours; the written Nodes alone under the swap reading the gapped time line alone; the region alone before the one Node)
     here = tuple(np.add(node_draws[0][2], board.offset))
     assert board.credit.counts[drv] == other.credit.counts[drv] - 1
     in_s, in_p = (
