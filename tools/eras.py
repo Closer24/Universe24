@@ -293,10 +293,12 @@ def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, 
 
 
 def horizon_links(board: Lattice) -> list[list[int]]:
-    """The Links at the wall after the interval, the horizon (ALGEBRA.md, The horizon, 2026-10-23): every Link whose factor the read gives at 0 and the world does not cut (board_readings.horizon_ports on the first family of quanta, the tension being the Link's and no family's), as pairs of the two Nodes' x-major indexes through the +a Ports; a reading for the torus view, no act."""
-    if not board.order:
-        return []
-    ports = board_readings.horizon_ports(board, board.order[0])
+    """The Links at the wall after the interval, the horizon (ALGEBRA.md, The horizon, 2026-10-23): every Link whose factor the read gives at 0 and the world does not cut (board_readings.horizon_ports on the first family of quanta that reads the Links' tensions, the tension being the Link's and no family's), as pairs of the two Nodes' x-major indexes through the +a Ports; a reading for the torus view, no act."""
+    ports = None
+    for index in board.order:  # the first family of quanta whose read takes the Links' tensions (a holder reading nothing has no Link to stand at the wall)
+        ports = board_readings.horizon_ports(board, index)
+        if ports is not None:
+            break
     if ports is None:
         return []
     shape, found = board.shape, []

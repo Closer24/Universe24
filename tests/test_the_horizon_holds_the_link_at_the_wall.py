@@ -1,4 +1,4 @@
-"""The horizon (ALGEBRA.md, The horizon, the owner's word of 2026-10-23): a Link whose tension reaches the wall Gamma is read at the wall, its factor Gamma - t at 0, and the run goes on with its two ends decoupled, where the former reading refused the run by name at a tension above Gamma (features/read.link_tensions). On the gapped 3-cube torus of tests/test_the_swap_at_the_top with the dust laid uniform, no Link reaches the wall within the test's seconds, so the Link is forced to the wall by the test's state: gravity's x tension line (the shear's momentum, a held line) at the Node (1, 1, 1) set to the level Gamma + 300 now and before (pulled down by its own massless line toward its neighbours' levels) and its +x neighbour's to the same, the dust at the neighbour lifted by 100 so that a plain current stands across the Link, so that the Link (1, 1, 1)-(2, 1, 1) stands past the wall at the first reads and falls below it within the six intervals run. The clauses: (1) the forward run through the wall takes no refusal; (2) while the tension stands at or past Gamma the Link's factor is 0 at both ends and the plain current reading through it is 0, and the neighbouring Links' factors stand above 0 (the Node steps on its other Links); (3) once the tension falls below Gamma the Link re-couples, its factor above 0 again, by the same read with no act and no log; (4) the run back from the end to the forced state at interval 2 is exact at every interval through the horizon and its dissolution, the whole state's digest equal (the forced state is no step's output, so the run back stops at it) (the bijection: nothing is lost behind the wall, the read being a function of the state the inverse reads alike); (5) the former refusal is gone: the read at a tension past Gamma returns the wall and raises nothing."""
+"""The horizon (ALGEBRA.md, The horizon, the owner's word of 2026-10-23): a Link whose tension reaches the wall Gamma is read at the wall, its factor Gamma - t at 0, and the run goes on with its two ends decoupled, where the former reading refused the run by name at a tension above Gamma (features/read.link_tensions). On the universe test's small structured board (tests/laws_universe.small_world, the 3-cube torus with one clump of matter and uniform light) no Link reaches the wall within the test's seconds (the largest tension 440 before the crunch), so the Link is forced to the wall by the test's state: gravity's x tension line (the shear's momentum, a held line) at the clump's Node set to the level Gamma + 300 now and before (pulled down by its own massless line toward its neighbours' levels) and its +x neighbour's to the same, matter at the neighbour lifted by 100 so that a plain current stands across the Link, so that the Link (1, 1, 1)-(2, 1, 1) stands past the wall at the first reads and falls below it within the six intervals run. The clauses: (1) the forward run through the wall takes no refusal; (2) while the tension stands at or past Gamma the Link's factor is 0 at both ends and the plain current reading through it is 0, and the neighbouring Links' factors stand above 0 (the Node steps on its other Links); (3) once the tension falls below Gamma the Link re-couples, its factor above 0 again, by the same read with no act and no log; (4) the run back from the end to the forced state at interval 2 is exact at every interval through the horizon and its dissolution, the whole state's digest equal (the forced state is no step's output, so the run back stops at it) (the bijection: nothing is lost behind the wall, the read being a function of the state the inverse reads alike); (5) the former refusal is gone: the read at a tension past Gamma returns the wall and raises nothing."""
 
 import numpy as np
 
@@ -6,16 +6,22 @@ from event_universe import board_readings, meeting_back, readings, records, worl
 from event_universe.features.read import link_tensions
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.test_the_swap_at_the_top import GAMMA, gapped_world
+from tests.laws_universe import CLUMP, GAMMA, small_world
 
-HERE, NEXT = (1, 1, 1), (2, 1, 1)  # the Link forced to the wall, along x
+HERE, NEXT = (
+    tuple(CLUMP),
+    ((CLUMP[0] + 1) % 3, CLUMP[1], CLUMP[2]),
+)  # the Link forced to the wall, along x from the clump
 
 
 def test_a_link_at_the_wall_decouples_recouples_and_the_run_back_is_exact(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(gapped_world(tmp_path, GAMMA - 1, 21, 869)))
+    board = Lattice(load_world(small_world(tmp_path, detector=False)))
     board.output = lambda line: None
-    g, dust = board.held[0], [f.name for f in board.families].index("dust")
+    g, dust = (
+        board.held[0],
+        [f.name for f in board.families].index("matter"),
+    )  # the quanta family reading gravity
     kept = {0: meeting_back.snapshot(board)}
     for _ in range(2):
         board.step()
@@ -27,7 +33,7 @@ def test_a_link_at_the_wall_decouples_recouples_and_the_run_back_is_exact(tmp_pa
     board.states[g].lines[1] = records.Record(now, before, line.remainder)
     dust_line = board.states[dust].lines[
         0
-    ]  # the dust lifted at the far end, so that a current stands across the Link
+    ]  # matter lifted at the far end, so that a current stands across the Link
     lifted = np.asarray(dust_line.now, dtype=object).copy()
     lifted[NEXT] = lifted[NEXT] + 100
     board.states[dust].lines[0] = records.Record(
@@ -80,9 +86,7 @@ def test_a_link_at_the_wall_decouples_recouples_and_the_run_back_is_exact(tmp_pa
 
 
 def test_the_structured_boards_run_back_is_exact_through_a_forced_horizon(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The proof that nothing is lost on the universe test's small structured board (tests/test_universe24_runs_its_cycle.small_world, the 3-cube torus with one clump of matter and uniform light): stepped 20 intervals, a Link beside the clump forced to the wall (gravity's x tension line at the clump's Node and its +x neighbour at Gamma + 300), stepped 8 more through the horizon's standing and its dissolution, and run back to the forced state exact at every interval, the fires mirrored."""
-    from tests.test_universe24_runs_its_cycle import CLUMP, small_world
-
+    """The proof that nothing is lost on the universe test's small structured board (tests/laws_universe.small_world, the 3-cube torus with one clump of matter and uniform light): stepped 20 intervals, a Link beside the clump forced to the wall (gravity's x tension line at the clump's Node and its +x neighbour at Gamma + 300), stepped 8 more through the horizon's standing and its dissolution, and run back to the forced state exact at every interval, the fires mirrored."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(small_world(tmp_path, detector=False)))
     board.output = lambda line: None
