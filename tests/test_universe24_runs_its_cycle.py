@@ -81,7 +81,7 @@ def small_world(folder: Path, detector: bool = True, absorber: bool = False) -> 
                     }
                 ],
                 "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "light"}],
-                "node_detector": {"window": 12},
+                "node_detector": {},
             }
         )
     at = nodes.index(CLUMP)
@@ -253,7 +253,7 @@ def test_the_shipped_eras_log_opens_with_the_shipped_worlds_own_readings() -> No
 def test_the_click_parts_the_course_at_its_first_write_and_the_run_back_reaches_it(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """(9) The click variant on the small world: the same world with one instrument body at one Node reading the light (the clicks world's absorber, its window 12), stepped beside the world without it for 36 intervals: the two courses part BEFORE the first click, at the interval 3, since the instrument is content, one quantum of the absorber family at one Node whose form writes into the time line as every record's does, and the clicks are written on the lattice at the windows' closes 12, 24 and 36 (the credit lines and their lays); the run back from the end is exact at every state to the interval 0 THROUGH the three clicks, every lay at an interval above 0 logged in the books and crossed back (ALGEBRA.md, The click writes on the lattice, The lay's inverse: with the books the board runs back through the click, the click's irreversibility the draw's choice of the future and not the past's recovery), and the clicks are history kept, none written on the run back and none removed, their intervals never decreasing. The reading before the lay's inverse, named: on the tree before it the run back was exact down to the last click's interval and missed first at the state before it."""
+    """(9) The click variant on the small world: the same world with one instrument body at one Node reading the light (the clicks world's absorber, its window derived at load as its own beat, one period of the resonance [902, 1000] in whole intervals, 15, since the standing light has no passage end; the declared 12 the former reading), stepped beside the world without it for 36 intervals: the two courses part BEFORE the first click, at the interval 3, since the instrument is content, one quantum of the absorber family at one Node whose form writes into the time line as every record's does, and the clicks are written on the lattice at the windows' closes 15 and 30 (the credit lines and their lays); the run back from the end is exact at every state to the interval 0 THROUGH the three clicks, every lay at an interval above 0 logged in the books and crossed back (ALGEBRA.md, The click writes on the lattice, The lay's inverse: with the books the board runs back through the click, the click's irreversibility the draw's choice of the future and not the past's recovery), and the clicks are history kept, none written on the run back and none removed, their intervals never decreasing. The reading before the lay's inverse, named: on the tree before it the run back was exact down to the last click's interval and missed first at the state before it."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     plain = Lattice(load_world(small_world(tmp_path, detector=False)))
     plain.output = lambda line: None
@@ -275,11 +275,13 @@ def test_the_click_parts_the_course_at_its_first_write_and_the_run_back_reaches_
         if not alike and first is None:
             first = t
     credits = [int(line["interval"]) for line in lines if line.get("event") == "credit"]  # type: ignore[call-overload]
-    assert credits and all(c % 12 == 0 for c in credits), credits  # the clicks at the windows' closes
+    assert credits and all(c % 15 == 0 for c in credits), (
+        credits
+    )  # the clicks at the windows' closes, the derived beat 15
     assert first is not None and first < credits[0], (
         first,
         credits,
-    )  # the instrument is content: its one quantum's write parts the courses before any click (the interval 3 here), and the first click is written at 12
+    )  # the instrument is content: its one quantum's write parts the courses before any click (the interval 3 here), and the first click is written at 15
     kept = [dict(line) for line in lines if line.get("event") == "credit"]
     during: list[dict[str, object]] = []
     clicking.output = during.append
