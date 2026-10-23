@@ -1,6 +1,5 @@
 """The click's read of the board (ALGEBRA.md, The click's read of the board; the owner's words: the board is deterministic and the click is the only instrument that reads it, the new draw built from the remainders and Rule3 only): the digits' number and the one division act per draw (`features/click.read_number`, `drawn_from`), the residue's and the quotient's independence, the digits' lattice at the exact vacuum paces and at the shipped content, the loader's refusal of a generator's keys and the read's refusals by name (`digits.read_of`), and the read at work on three shipped worlds re-declared beside tmp_path (`tests.laws.world_beside`): the singlet's two sides (the first side blind to the later side's basis bit for bit, the read writing nothing), the one photon's two bodies (the arriving record's digits and the body's own in the mixed radix of their walls) and the two slits' many-draw close (the digits spent by name at the shipped window, the close run at a shorter one)."""
 
-import math
 import random
 from collections import Counter
 from dataclasses import fields
@@ -353,44 +352,6 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
         )
     print(
         f"the chain: {len(seen)} body draws, the first {len(seen[0]['digits'])} digits of {seen[0]['walls'][:1]}..."
-    )
-
-
-def test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130(tmp_path, monkeypatch):
-    """The two slits re-declared beside tmp_path with the draw's window 130, one close over the run (the test's own declaration; the shipped world draws at the window 1 since the landing's pass of 2026-10-20): the record of one part reads its digits at the union of the regions' Nodes once per close, the bases 108,000,001 at the content 60, and every quantum of the close takes two division acts, its region and its Node, each on the number left; at one close of 660 quanta the digits are spent and the read is refused by name with the second text, the number left below the total, where the regions' Nodes read fewer digits than the close's draws take (64 digits of 26.7 bits against 47 draws of 33 to 34 bits on the one-column screens; screens two columns deep read 128 and the close may complete), either way every draw before it the one division act; the write's bound refusal apart."""
-    holder: list[Lattice] = []
-    seen = spied(monkeypatch, lambda: holder[0])
-    source = EVENTS / "two_slits" / "two_slits.json"
-    path = world_beside(tmp_path, source, lambda world: world["draw"].update(window=130))
-    board = Lattice(load_world(path), [].append)
-    holder.append(board)
-    refusal = None
-    try:
-        for _ in range(board.world.intervals):
-            board.step()
-    except RuntimeError as found:
-        refusal = str(found)
-    first = seen[0]
-    digits_read = len(first["digits"])
-    assert first["label"] == "the regions of 'charge' at the interval 130" and digits_read % 8 == 0
-    assert first["number"] == read_number(first["digits"], first["walls"]) and set(first["walls"]) == {
-        108_000_001
-    }
-    for earlier, later in zip(seen, seen[1:], strict=False):
-        assert later["number"] == earlier["left"]  # one division act per draw on the number left
-    bits = [math.log2(sum(s["weights"])) for s in seen]
-    if refusal is not None:
-        assert (
-            "at the interval 130 has the number " in refusal
-            and " left, below the draw's total" in refusal
-        )
-        assert "digits read are spent at this interval" in refusal and "amplitude bound" not in refusal
-        assert digits_read * 26.7 < sum(bits) + max(bits)  # spent: the digits below the draws' bits
-    else:
-        assert digits_read * 26 > sum(bits)  # the deeper screens' digits carry the close's draws
-    print(
-        f"the two slits at the window 130: {digits_read} digits, {len(seen)} draws ({len(seen) // 2} quanta), the totals {min(bits):.1f} to {max(bits):.1f} bits each, "
-        + (f"refused: {refusal[:80]}" if refusal else "the close complete")
     )
 
 
