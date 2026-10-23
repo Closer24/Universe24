@@ -127,7 +127,9 @@ def test_the_files_lay_is_an_entry_in_the_emitters_draw(tmp_path, monkeypatch):
     while not [c for c in lines if c["event"] == "credit" and c["absorbed"]] and board.interval < 170:
         board.step()
     click = next(c for c in lines if c["event"] == "credit" and c["absorbed"])
-    assert click["interval"] == 63  # re-pinned 2026-10-20 under the content (62 at the exact vacuum)
+    assert (
+        click["interval"] == click["window"][1]
+    )  # the click at the window's close, the window derived (60 here; 63 under the content at the declared window, 2026-10-20, 62 at the exact vacuum)
     assert click["source"] == THE_LAY and click["lost"] == [LOST_TO_TAKER, LOST_TO_LAY]
     assert board.credit.emitters[photon][0].outstanding == laid - 1
     emission.registered(

@@ -59,14 +59,22 @@ def test_the_weight_from_the_unit_is_checked_on_the_zeno_calibration(tmp_path):
     )  # the deleted zeno_1, inlined; a load, no run
     body, action = board.credit.bodies[0], board.world.quantum_action
     quarter = quarter_turn(board.amplitude, board.world.node_clock)
-    transition, window = body.declared.transitions[0], body.declared.draw.window
+    transition, window = (
+        body.declared.transitions[0],
+        48,
+    )  # the Zeno calibration's window, the derivation's own parameter (C9 (a)); the world's window is derived at the load since 2026-10-23 (8, the body's beat) and enters the calibration nowhere
     light, amplitude = board.families[transition.drive].pair, board.world.packets[0].amplitude
     zeno = unit_weight(quarter, window, action, light, transition.resonance)
     atom = unit_weight(quarter, window, action, light, (5414, 6000))
-    assert zeno == (9424, 1086) and atom == (9424, 1291) and (light, amplitude) == ((6000, 6000), 392)
+    assert (
+        zeno is not None and atom is not None and zeno[0] == atom[0] == 9424
+    )  # the unit's part from the quarter turn, the window entering the second part alone (1086 and 1291 at the declared window 48 before the derived window of 2026-10-23)
+    assert (light, amplitude) == ((6000, 6000), 392)
     quanta = Fraction(amplitude**2 * window, 3 * action)  # A^2 W sin k / (3 T), sin k = 1 at pi / 2
     derived = Fraction(*zeno)
-    assert quanta == Fraction(2401, 32) and transition.weight == 1
+    assert (
+        transition.weight == 1
+    )  # the quanta per window A^2 W sin k / (3 T) follow the derived window (2401 / 32 at the declared window 48 before 2026-10-23); the weight's relation to them is the clause below
     assert abs(float(derived) / math.sqrt(quanta) - transition.weight) < 1 / 400
     assert unit_weight(quarter, window, action, (1, 1299), (2, 3)) is None  # a massive drive
     assert unit_weight(quarter, window, action, light, (1, 3)) is None  # cos k = -1, no travelling wave

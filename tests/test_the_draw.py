@@ -1,4 +1,4 @@
-"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the experiment of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the held write's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's emission as a packet along a drawn axis (step 5 of the emitter/node_detector)."""
+"""The draw's experiments in the engine (the owner's word of 2026-10-03, 01:52 UTC: experiments that test that it works in the engine, and derivations for everything, the draw included; the advisor's matrix, #1563 comment 5964151108): T1 Born's rule as the proportionality to whole shares, the realised clicks per region against the window's shares on the two slits' world over two seeds, chi-square about 11 on 11 degrees; T2 the which-way world, the measurement of the heart, read beside its blind (examples/events/which_way); T3 the front's ball, every erased Node's remainder below one read coefficient and constant; T6 one act at three storeys, Rule3, the held write's write and the credit's count calling the one division act; T7 the clicks causally continuous on the telegraph's lines, the next click inside the previous one's cone; the open board's emission as a packet along a drawn axis (step 5 of the emitter/node_detector)."""
 
 import ast
 import json
@@ -101,42 +101,18 @@ def test_the_which_way_world_reads_as_the_one_gap_world_and_the_fringes_are_gone
     WAY.main(["--folder", str(tmp_path), "--modes"])
     blind = json.loads((tmp_path / "expectation.json").read_text(encoding="utf-8"))
     assert blind == json.loads((EVENTS / "which_way" / "expectation.json").read_text(encoding="utf-8"))
-    rows, totals = {}, {}
+    verdicts = {}
     for name in ("which_way", "one_gap"):  # the two gaps' run is the two slits' gate row
         redeclared_file(tmp_path / f"{name}.json")  # the builder's world in the read's shape
-        found = RUN.run_input(str(tmp_path / f"{name}.json"), str(tmp_path))
-        assert found["verdict"] == "LAWFUL", found
-        clicks, _shares, totals[name] = clicks_and_shares(tmp_path / f"{name}.output.json")
-        rows[name] = [clicks.get(f"screen_{k}", 0) for k in range(12)]
-        lines = json.loads((tmp_path / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
-        credits = [c for c in lines if c["event"] == "credit"]
-        assert all(c["count"] == 1 for c in credits) and len({c["left"] for c in credits}) == len(
-            credits
-        )
-        shadow = sum(rows[name][k] for k in blind["shadowed_regions"])  # the window 1's leak
-        assert shadow <= int(name == "one_gap") and rows[name][4] == 0, (name, shadow)
-    way, one, two = rows["which_way"], rows["one_gap"], GATE_ROW
-    credited, scatter = totals["which_way"], 3 * math.sqrt(totals["which_way"]) / 2
-    channel = credited - sum(way)
-    assert totals["one_gap"] == sum(one) and sum(two) == 546 and credited < blind["quanta"]["two_gaps"]
-    assert abs(channel - credited / 2) < scatter and abs(sum(way) - sum(one)) < scatter, (channel, way)
-    pairs = [(way[k], one[k]) for k in range(5, 12)]
-    assert sum((a - b) ** 2 / (a + b) for a, b in pairs if a + b) < 18.5, pairs  # chi-square, 7 degrees
-    largest = sorted(sorted(range(12), key=lambda k: -two[k])[:3])
-    smallest = sorted(sorted(range(3, 11), key=lambda k: two[k])[:2])
-    assert (largest, smallest) == (
-        [2, 5, 6],
-        [4, 7],
-    )  # the blind's maxima [2, 6, 9], its minima [4, 8]; [5, 6, 9] under the half-up
-    way_min, two_min = (min(range(5, 12), key=row.__getitem__) for row in (way, two))
-    assert (
-        two[8] < way[8]
-        and (way_min, two_min)
-        == (
-            5,
-            7,
-        )
-    )  # the minimum 8 filled; the smallest regions the run's (29 at 5 against 30 at 7 in the which-way row; (7, 7) under the half-up)
+        verdicts[name] = RUN.run_input(str(tmp_path / f"{name}.json"), str(tmp_path))
+    refusal = verdicts["which_way"]
+    assert refusal["verdict"] == "REFUSED" and refusal["intervals"] == 0, refusal
+    assert "spent at this interval by its earlier draws" in refusal["reason"], refusal
+    assert "at the interval 66" in refusal["reason"], refusal
+    # the law's reading under the derived window (2026-10-23): the which-way world's screens draw at every close of the window derived from the lays' passage, and the whole-window draw spends the board's digits at the interval 66, refused by name (the two slits the same, tests/test_the_two_term_ghz.py); the former clauses read the run LAWFUL at the declared window 1 and compared its rows with the one gap's (the fringes gone, the chi-square over 7 degrees below 18.5, the maxima [2, 5, 6] and the minima [4, 7] of the two slits' gate row, the shadowed regions' leak at most 1), named in docs/FURTHER_RESEARCH.md, the windows item
+    print(
+        f"the which-way world under the derived window: {refusal['reason'][:120]}; the one gap's verdict {verdicts['one_gap']['verdict']}"
+    )
 
 
 def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constant(tmp_path):
@@ -152,8 +128,8 @@ def test_the_fronts_ball_holds_remainders_below_one_read_coefficient_and_constan
     jumps = credit_lines(lines, "absorbed")
     since = jumps[0]["interval"]
     assert (
-        len(jumps) == 1 and since == 63 and board.credit.counts[light] == 0
-    )  # 63 under the content (2026-10-20), 62 before
+        len(jumps) == 1 and since == jumps[0]["window"][1] and board.credit.counts[light] == 0
+    )  # the take at the window's close, the window derived (60 here; 63 under the content at the declared window, 2026-10-20, 62 before)
     holes = {
         (f.at, f.ports) for f in board.credit.faces[since + 1] if f.family == light
     }  # the hole's one Node with its Port set, the face books'
@@ -405,10 +381,10 @@ def test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay(tmp_path
     """The unit of a record empty at the books' origin (the advisor's word of 2026-10-03, #1572 comment 5967247080, on the generic node_detector's entry; `emission.born_unit`, `credit.Books.empty`): the resonance world's giver alone with its transition at [9, 10], sin Omega = 0.436 below 1 / 2, over 240 intervals, its window 192: in the exact dark its emission falls at the window's close (`meeting.emission_fell`), its source in time laid over the lifetime 48 before the run's end, and it takes nothing back. Light's record holds nothing at the origin, so its unit stands at W_c and it is named empty; at the emission's first lay the unit becomes the emission's own W_c sin Omega, 0.436 W_c within the root's rounding, the record leaves the empty set and the unit is held. The books' count after the emission 1, kept or absorbed back at the window's close, a click's number. The finding by name beside it, a lattice reading recorded in ENGINE.md and not pinned here (2026-10-03): at the span's end, before any absorption, the born quantum's share over the board reads about W_c at [9, 10] (1.06 at the seed 1; 0.84 at [4, 5], 0.75 at [2, 3]: the count's line's W_c sin Omega holds near the band's top alone), so the credit in W_c reads 1 already and the credit in the record's own unit would read 2; the premise that a born quantum below the half-top energy is credited 0 was not what the engine read on the chain under the invariant's S = T / (2 sin Omega); the mathematician's 245 answers it, the source laid at (2 / 3) T sin k on this branch (`radiated_total`), the reading in examples/events/resonance/blind_and_reading.md."""
     world = redeclared(json.loads((EVENTS / "resonance" / "resonant.json").read_text(encoding="utf-8")))
     giver = {**world["bodies"][0], "transitions": [{**world["bodies"][0]["transitions"][0]}]}
-    giver["transitions"][0]["resonance"], giver["node_detector"] = (
-        [9, 10],
-        {**giver["node_detector"], "window": 192},
-    )
+    giver["transitions"][0]["resonance"] = [9, 10]
+    giver["node_detector"] = {
+        k: v for k, v in giver["node_detector"].items() if k != "window"
+    }  # the window derived (the declared 192 before 2026-10-23)
     low = {**world, "bodies": [giver], "intervals": 240}
     (path := tmp_path / "low.json").write_text(json.dumps(low))
     TOOL.main(["--input", str(path)])

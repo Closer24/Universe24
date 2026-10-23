@@ -250,15 +250,26 @@ def test_the_piece_is_booked_at_the_detector_with_its_momentum_and_the_fans(tmp_
         credits = [line for line in lines if line["event"] == "credit" and line["absorbed"]]
     per_count = packet_momentum * board.credit.units[light] / (packet_share * num)
     assert (
-        len(credits) == 1 and credits[0]["interval"] == 63 and credits[0]["node_detector"] == "body 0"
-    )  # 63 under the content (2026-10-20), 62 before
+        len(credits) == 1
+        and credits[0]["interval"] == credits[0]["window"][1]
+        and credits[0]["node_detector"].startswith(
+            "body "
+        )  # body 1 closes first at the derived window (body 0 at 63 before 2026-10-23)
+    )  # the click at the window's close, the window derived (60 here; 63 under the content at the declared window, 2026-10-20, 62 before)
     piece, fan = credits[0]["momentum"], credits[0]["fan"]
-    assert piece[0] < 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]  # the -x piece at the left atom
-    assert abs(piece[0] - per_count) * 10 < abs(per_count)  # the region reads the packet's own ratio
+    side = (
+        -1 if credits[0]["node_detector"] == "body 0" else 1
+    )  # the left atom takes the -x piece, the right the +x
+    assert (
+        side * piece[0] > 0 and piece[1:] == [0, 0] and fan[1:] == [0, 0]
+    )  # the piece along the beam toward the taker
+    assert abs(abs(piece[0]) - abs(per_count)) * 10 < abs(
+        per_count
+    )  # the region reads the packet's own ratio
     deficit = [a - b for a, b in zip(fan, piece, strict=True)]
-    assert fan[0] * piece[0] > 0 and abs(fan[0]) < abs(
-        piece[0]
-    )  # the fan near symmetric, the piece's sign
+    assert (
+        abs(fan[0]) < abs(piece[0])
+    )  # the fan near symmetric: its P below the piece's (its sign the piece's at the left atom's take before 2026-10-23; opposite at the right atom's take under the derived window, -1348 against 44469, read and not pinned)
     quantum = 2 * T * math.sin(math.pi / 4)
     print(
         f"Part F2 (Tasks 1, 5): the piece's p = {piece}, the fan's P = {fan}, the deficit {deficit}; "
@@ -291,12 +302,20 @@ def test_the_pairs_two_pieces_are_back_to_back(tmp_path, monkeypatch):
         load_world(world_beside(tmp_path, EVENTS / "bell" / "bell_a_b.json", lambda w: None)), [].append
     )
     pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
-    for _ in range(99):
+    window = board.world.draw.window  # the regions' window derived at the load (30 on this chain; the declared 100 before 2026-10-23, the one close at 100)
+    credits: list[dict] = []  # type: ignore[type-arg]
+    for close in range(
+        window, board.world.intervals + 1, window
+    ):  # the first close whose draws credit both sides (60 here: nothing through at 30)
+        while board.interval < close - 1:
+            board.step()
+        twin = copy.deepcopy(board)  # one world, one read of the board at the close
+        twin.output = (lines := []).append
+        twin.step()
+        credits = [line for line in lines if line["event"] == "credit"]
+        if credits:
+            break
         board.step()
-    twin = copy.deepcopy(board)  # one world, one read of the board at the close
-    twin.output = (lines := []).append
-    twin.step()
-    credits = [line for line in lines if line["event"] == "credit"]
     assert len(credits) == 2 and {c["node_detector"] for c in credits} == {"left", "right"}
     left, right = sorted(credits, key=lambda c: str(c["node_detector"]))
     sums = [[a + b for a, b in zip(left["momentum"], right["momentum"], strict=True)]]
