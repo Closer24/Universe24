@@ -1,6 +1,4 @@
-"""The shared builders of the Universe24 tests (tests/test_universe24_runs_its_cycle.py, tests/test_the_matter_world_on_the_torus.py, tests/test_the_torus_page_draws_the_log.py): the shipped folder's paths, the small structured 3-cube torus's numbers (the gap, the lightest clump's levels, the detector's region, the instrument bodies' Nodes and resonances) and `small_world`, which writes the small universe, world and mode file beside each other, with `flat` for the arrays' integers; moved here on 2026-10-23 so that no test module imports another (tools/tests_shape.py, rule (b))."""
-
-from __future__ import annotations
+"""The one world's helpers shared by the Universe24 tests (tests/test_universe24_runs_its_cycle.py, tests/test_matter_is_born_from_light.py, tests/test_the_sign_holder_and_the_pairs_on_the_small_torus.py, tests/test_the_torus_page_draws_the_log.py): the shipped files' paths, the small structured board's constants as read on the one world, `small_world` (the shipped world cut to a small torus, with or without its detector and instrument bodies) and `flat`."""
 
 import json
 from pathlib import Path
@@ -18,10 +16,10 @@ ERAS = load_file("eras", ROOT / "tools" / "eras.py")
 GAMMA, CUBE, LEVEL, SPEED, GAP = 1000, 3, 636, 190, 990
 CLUMP, COUNT, NOW, BEFORE = (
     [1, 1, 1],
-    489,
+    429,
     3015,
-    2008,
-)  # the shipped lightest clump's levels, the gate's count of its share on the 3-cube at T 36,000
+    1809,
+)  # the shipped lightest clump's levels at the pair [600, 1000] (the before level 0.6 of the now), the gate's count of its share on the 3-cube at T 36,000
 DETECTOR = [
     [0, 0, 0],
     [0, 0, 1],
@@ -39,7 +37,7 @@ RESONANCES = (
     868,
 )  # the two instruments' resonance pairs over Gamma, their derived beats 11 and 13 (period_of)
 BEFORE_TOP, AFTER_TOP = (
-    2,
+    3,
     1,
 )  # the two instruments' clicks on the small structured board, before and after its top, as read
 
@@ -50,7 +48,7 @@ def small_world(
     """The shipped universe's three families with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), and the detector on two Nodes."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"][0]["pair"] = [GAP, GAMMA]
-    if absorber:
+    if absorber and not any(family["name"] == "absorber" for family in universe["families"]):
         universe["families"].append(
             {"name": "absorber", "pair": [666, GAMMA], "reads": {"gravity": 1}, "dimension": [2, 2]}
         )
@@ -77,7 +75,7 @@ def small_world(
     for at, resonance in zip((ABSORBER, SECOND), resonances, strict=False) if absorber else ():
         world[
             "bodies"
-        ].append(  # declared as examples/events/universe24/universe24_click.json declares it
+        ].append(  # declared as examples/events/universe24/universe24.json declares its instruments
             {
                 "family": "absorber",
                 "nodes": [{"node": at, "weight": 1}],
@@ -101,7 +99,7 @@ def small_world(
     mode = {
         "world_digest": input_digest(world),
         "bodies": [
-            {"family": "matter", "pair": [666, GAMMA], "moving": {"now": now, "before": before}},
+            {"family": "matter", "pair": [600, GAMMA], "moving": {"now": now, "before": before}},
             {
                 "family": "light",
                 "pair": [GAMMA, GAMMA],

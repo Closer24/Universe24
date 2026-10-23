@@ -12,7 +12,7 @@ from tests.laws import EVENTS, refused
 from tests.laws_read import load_shipped, redeclared
 
 CLICKS, BELL = EVENTS / "clicks" / "clicks_chain.json", EVENTS / "bell" / "bell_a_b.json"
-UNIVERSE = EVENTS / "universe24" / "universe24_click.json"
+UNIVERSE = EVENTS / "universe24" / "universe24.json"
 
 
 def parsed(path: Path, edit=None) -> World:  # type: ignore[no-untyped-def]
@@ -46,7 +46,7 @@ def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world():
             "declares the window 12",
             parsed,
             UNIVERSE,
-            lambda d: d["bodies"][2]["node_detector"].update(window=12),
+            lambda d: d["bodies"][4]["node_detector"].update(window=12),
         )
     )
 
@@ -96,10 +96,10 @@ def test_the_two_rules_meet_on_one_body():
 
 
 def test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence(tmp_path):
-    """(5) Universe24's click world cut to 30 intervals: the instrument's windows close at 15 and 30, the derived cadence, and every credit line of the body falls at a close with the window [close - 14, close]; the former file's cadence of 12 closed at 12 and 24."""
+    """(5) Universe24 cut to 30 intervals: the first instrument's (body 4, at [902, 1000]) windows close at 15 and 30, the derived cadence, and every credit line of the body falls at a close with the window [close - 14, close]; the former file's cadence of 12 closed at 12 and 24."""
     document = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     document["intervals"] = 30
-    (world := tmp_path / "universe24_click.json").write_text(json.dumps(document), encoding="utf-8")
+    (world := tmp_path / "universe24.json").write_text(json.dumps(document), encoding="utf-8")
     mode = json.loads(UNIVERSE.with_suffix(".mode.json").read_text(encoding="utf-8"))
     mode["world_digest"] = world_files.input_digest(document)
     world.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
@@ -107,7 +107,7 @@ def test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence(tm
     board = Lattice(load_shipped(world), lines.append)
     for _ in range(30):
         board.step()
-    credits = [c for c in lines if c.get("event") == "credit" and c.get("node_detector") == "body 2"]
+    credits = [c for c in lines if c.get("event") == "credit" and c.get("node_detector") == "body 4"]
     assert credits and all(
         c["interval"] % 15 == 0 and c["window"] == [c["interval"] - 14, c["interval"]] for c in credits
     )
