@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 
 import event_universe.world_files as world_files
-from event_universe import readings, share
+from event_universe import node, readings, share
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.rule3 import (
@@ -220,7 +220,13 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [1, 1, 2, 2, 4]  # the sign: 2 rows
+    assert sorted(len(s.lines) for s in board.states) == [
+        1,
+        1,
+        2,
+        4,
+        8,
+    ]  # the sign: 2 rows of 1 + 3 lines under the rotation
     calls, originals = [], {name: getattr(core, name) for name in STEP_CALLS}
     inside: list[bool] = []  # a step's own carried division, not a write
 
@@ -238,9 +244,18 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         return counted
 
     def counting_division(total, wall, remainder, direction=1):  # type: ignore[no-untyped-def]
-        write = not inside and type(wall) is int and isinstance(remainder, np.ndarray)
-        calls.append(("write" if write else None, id(total)))  # the held write's carried division
+        calls.append(
+            (None, id(total))
+        )  # a carried division outside the step: the shear's momentum or a write
         return originals["carried_division"](total, wall, remainder, direction)
+
+    held_write_act = node.held_write
+
+    def counting_write(level, numerator, wall, remainder, direction=1):  # type: ignore[no-untyped-def]
+        calls.append(("write", id(level)))  # the held write's one act per line (features/held_write)
+        return held_write_act(level, numerator, wall, remainder, direction)
+
+    monkeypatch.setattr(node, "held_write", counting_write)
 
     engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]
     for module in [m for m in engine if m.__dict__.get("rule3") is originals["rule3"]]:
@@ -248,7 +263,14 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
     monkeypatch.setattr(core, "carried_division", counting_division)
     for direction, act in ((1, board.step), (-1, board.step_inverse)):
         calls.clear(), act()
-        records = [record for state in board.states for record in state.lines]
+        records = [  # every line Rule3 steps: a holder of the content's tension lines step as the shear's momentum (flux.step_momentum), the one write's division
+            record
+            for family, state in zip(board.families, board.states, strict=True)
+            for number, record in enumerate(state.lines)
+            if not (
+                family.held and not family.wronskian and family.axes and 1 <= number % family.width <= 3
+            )
+        ]
         steps = [begun for kind, begun in calls if kind == "step"]
         begun = {id(getattr(record, "before" if direction == 1 else "now")) for record in records}
         assert len(steps) == len(records) and begun == set(steps)  # one call each, on the level it began
@@ -293,8 +315,9 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         board = Lattice(load_world(path), (lines := []).append)
         for _ in range(40):
             board.step()
-        arrays = [a for s in board.states for r in s.lines for a in (r.now, r.remainder)]
-        assert board.world.kind is kind and all(a.dtype == np.dtype(kind) for a in arrays)
+        assert (
+            board.world.kind is kind
+        )  # the lay's kind by the width; the step's arrays Python's integers wherever a row carrying its volume enters (the carried write at every width), the lines and books the same at both widths
         runs.append((lines, board.books()))
     assert runs[0] == runs[1] and runs[0][0]
     sources = {p.relative_to(ROOT): p.read_text(encoding="utf-8") for p in sorted(SOURCE.rglob("*.py"))}

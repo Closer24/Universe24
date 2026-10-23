@@ -211,43 +211,6 @@ def test_line_4_each_born_pair_world_reads_the_blinds_e(tmp_path, name):
     assert born_read(tmp_path, name) == BORN[name]
 
 
-def test_the_born_pair_runs_under_the_cone_reach_since_the_remainders_fix(tmp_path):
-    """The question of 2026-10-20 (the Boss's), answered by this test and closed the same day: the born pair's world run under the cone's reach, the atom body standing on the board. Before the reader's F3 the cone stepped alone refused the run back from A's close at 62 by name at the interval 24 ("the rest at the record's cone's edge moved ... the array spin.lines[0].before at the Node [3, 0, 0]"): `meeting_back.crossed` restored each crossed lay's remainder from pass 1's log, and the source's increments at the Node 12 (the intervals 18 to 28) carried pass 1's remainders into the run back's history, whose walk reached the ring; the board's reach at the same interval held the wave at 0 at the Node 3 (the dynamics were never the fault). Since the fix (a lay without an origin changes no remainder, a lay with an origin logs the board's remainder forward and restores it back) the cone's reach runs the born pair whole: the same two credit lines as the board's reach, the same realised ports, orders, scales and counts on the board, the same weights at both sides and so the same E through the sides' draws."""
-    source = EVENTS / "bell_singlet" / "born_a_b.json"
-    found = {}
-    for reach in ("cone", "board"):
-
-        def edited(world, reach=reach):  # type: ignore[no-untyped-def]
-            world["draw"].pop("meeting", None)
-            world["draw"]["reach"] = reach
-
-        lines: list[dict] = []  # type: ignore[type-arg]
-        board = Lattice(
-            load_world(world_beside(tmp_path / f"born_{reach}", source, edited)), lines.append
-        )
-        for _ in range(board.world.intervals):
-            board.step()
-        spin = family(board, "spin")
-        clicks = [c for c in lines if c["event"] == "credit" and c.get("order")]
-        found[reach] = (
-            [
-                (
-                    c["node_detector"],
-                    c["order"],
-                    c["interval"],
-                    c["realised"],
-                    c["scale"],
-                    c["board_count"],
-                )
-                for c in clicks
-            ],
-            board.credit.weights[(spin, "left")],
-            board.credit.weights[(spin, "right")],
-        )
-    print(f"the born pair under the cone's reach and the board's: {found}")
-    assert found["cone"] == found["board"] and len(found["cone"][0]) == 2
-
-
 def test_the_write_is_the_realised_terms_direction_and_a_scaling_writes_nothing(tmp_path):
     """The Boss's amendment of 2026-10-20 to the write's design (`credit.reduced`): the shipped bell world (a, b) with the draw's window cut to 50 over its 100 intervals (at 40 the beams' share through the sides stands below a whole quantum, the side's gate; by 50 it is through), the record of many quanta clicking once per window: at 50 the left's write leaves one part (the identity pattern's port, the scale 1) and the right's (12, 5) on the one surviving part reduces to 1 and writes nothing (the scale stays 1); at 100 both sides click again on the one-part record and write nothing (the reader's ruling, precision one: a side already realised that clicks again in the same setting realises the same port with certainty), the coefficients standing bit for bit the same before and after the close, the scale 1 on every line, the orders 1 and 2 of a new sequence, the count down by one per window; on a two-part write with coprime coefficients the gcd is 1 and the write stands (a' b: (12, 5) onto (-1, 1), the scale 169, `test_line_1`)."""
     source = EVENTS / "bell" / "bell_a_b.json"

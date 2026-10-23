@@ -11,41 +11,13 @@ from event_universe import node, records
 from event_universe.core.ports import AXES, Wrap
 from event_universe.core.rule3 import Rule, division_forward, rule3
 from event_universe.features.click import presented
-from event_universe.loader.derived import PLANE, row_of, turns
-from event_universe.plane import (
-    NO_FACE,
-    Faces,
-    frame_signs,
-    link_levels,
-    link_pairs,
-    odd_links,
-    phase_links,
-)
-from event_universe.readings import ports
+from event_universe.frames import frames_of
+from event_universe.loader.derived import PLANE, row_of
+from event_universe.plane import NO_FACE, Faces, link_levels, link_pairs, odd_links, phase_links
+from event_universe.readings import at, ports, seen, slices
 from event_universe.records import Booking, Record, record_slice
 
 Pairs = tuple[tuple[Any, ...], tuple[Any, ...]]  # a turned plane's reads per Port, (R^c_ij, R^s_ij)
-
-
-def at(value: Any, where: tuple[Any, ...]) -> Any:
-    """A coefficient at a slice or a Node of the board: the slice where it is an array over the Nodes, itself where it is one integer (a family reading nothing has one reach per Port for every Node)."""
-    return value[where] if np.ndim(value) else value
-
-
-def slices(
-    axis: int,
-) -> tuple[tuple[slice, ...], tuple[slice, ...], tuple[slice, ...], tuple[slice, ...]]:
-    """The four slices of an axis: every Node but the last (the near end of every Link toward +a), every Node but the first (the far end), the first layer and the last layer (the two faces)."""
-    lo = [slice(None)] * AXES
-    hi, first, last = list(lo), list(lo), list(lo)
-    lo[axis], hi[axis] = slice(None, -1), slice(1, None)
-    first[axis], last[axis] = slice(0, 1), slice(-1, None)
-    return tuple(lo), tuple(hi), tuple(first), tuple(last)
-
-
-def seen(level: Any, bad: Any, fill: Any) -> Any:
-    """A level as the Link's other end reads it: the fill where the Link touches a Node beyond the board (`bad`, the inner face's rule of core/ports.arrival), the level itself elsewhere."""
-    return level if bad is None else np.where(bad, fill, level)
 
 
 def link_fluxes(level: np.ndarray, reaches: tuple[Any, ...], wrap: Wrap, fill: Any) -> np.ndarray:
@@ -172,7 +144,7 @@ def step_line(
 def step_traceless(
     own: Sequence[Record], rule: Rule, wrap: Wrap, direction: int, faces: Sequence[Faces]
 ) -> list[Record]:
-    """The three tension lines of a held row under `pressure: trace` stepped together (ALGEBRA.md, The stress's trace is the time line's; the reader's remedy of 2026-10-22 for the second channel): each line's Links' sum gathered as every plain line's is (`gathered_line`, the fill 0), then Rule3's one carried division on the traceless part of its own three Link terms, 3 L_a - SUM_b L_b at the wall 3 w with the mass 3 D (`core/rule3.rule3`, the line's own 2 a_now - a_before and its mass whole, the Links' isotropic part gone), so that the isotropic part of the three lines' Link terms, which Rule3's own reaches feed on a board whose paces differ from Node to Node (each end of a Link reading the difference with its own reach: the second channel, the tension lines' k = 0 mode running away on the closed board, the first full runs of 2026-10-22), goes to no line: the three lines' sum at a Node keeps Rule3's double root with no Link term, its velocity moved by the remainders' carry alone (within 3 levels per interval for ever, the carried division's telescoping), and the inverse is the same division at -1 on the same three sums; the arithmetic in Python's integers (three Link terms where the width's room counts one) and the lines back in their own kind; the remainder born at the half wall w div 2 as every line's, a sixth of the way under the wall 3 w, the carry exact all the same."""
+    """The three tension lines of a held row under the stress's trace stepped together (ALGEBRA.md, The stress's trace is the time line's; the reader's remedy of 2026-10-22 for the second channel): each line's Links' sum gathered as every plain line's is (`gathered_line`, the fill 0), then Rule3's one carried division on the traceless part of its own three Link terms, 3 L_a - SUM_b L_b at the wall 3 w with the mass 3 D (`core/rule3.rule3`, the line's own 2 a_now - a_before and its mass whole, the Links' isotropic part gone), so that the isotropic part of the three lines' Link terms, which Rule3's own reaches feed on a board whose paces differ from Node to Node (each end of a Link reading the difference with its own reach: the second channel, the tension lines' k = 0 mode running away on the closed board, the first full runs of 2026-10-22), goes to no line: the three lines' sum at a Node keeps Rule3's double root with no Link term, its velocity moved by the remainders' carry alone (within 3 levels per interval for ever, the carried division's telescoping), and the inverse is the same division at -1 on the same three sums; the arithmetic in Python's integers (three Link terms where the width's room counts one) and the lines back in their own kind; the remainder born at the half wall w div 2 as every line's, a sixth of the way under the wall 3 w, the carry exact all the same."""
     gathered = [
         gathered_line(line, rule, wrap, 0, face, direction)
         for line, face in zip(own, faces, strict=True)
@@ -326,8 +298,8 @@ def step_family(
     faced = dict(faces or {})
     if not family.plane:
         traced = (
-            family.axes and family.pressure_trace
-        )  # the tension lines the shear's momentum, stepped by the lattice
+            family.axes and not family.wronskian
+        )  # a holder of the content's tension lines: the shear's momentum
         found = [
             step_line(
                 line,
@@ -387,18 +359,6 @@ def pairs_of(
             )
         phases = phase_links(states[node.sign_holder(index, families)].phases[row], wrap)
     return link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
-
-
-def frames_of(
-    index: int, families: records.Families, states: records.States, wrap: Wrap, record: int = 0
-) -> tuple[Any, ...] | None:
-    """The sign a turned record reads its neighbour's plane with through each of its six Ports, in Port order (plane.frame_signs on the phase row's remainder of the record's own row of its holder of the sign: +1 where the Link's two ends stand in one frame, -1 where one end is time-reversed by the swap at the top and the other not, so that the Link reads its two ends in one frame, ALGEBRA.md, The swap at the top, the frame clause); None for a record that is not turned."""
-    if not turns(families, index):
-        return None
-    row = row_of(families, index, record)
-    assert row is not None
-    frame = states[node.sign_holder(index, families)].phases[row][node.PHI].remainder
-    return frame_signs(frame, wrap)
 
 
 def step_records(

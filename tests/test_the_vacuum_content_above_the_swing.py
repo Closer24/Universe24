@@ -6,6 +6,7 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
     import numpy as np
 
     from event_universe import node
+    from event_universe.features import volume
     from event_universe.lattice import Lattice
     from event_universe.loader.derived import count_wall
     from tests.laws import EVENTS, ROOT, load_file
@@ -26,8 +27,11 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
             lowest = min(lowest, (int(np.min(content)), interval, family.name, int(np.argmin(content))))
             pi_mode = Fraction(int(np.min(self_coefficient - sum(reads))), int(wall))  # 2 cos omega(pi)
             edge = min(edge, (pi_mode, f"interval {interval}, {family.name}"))
-        for index in levels:
-            levels[index].add(int(board.states[index].lines[0].now[face]))
+        for (
+            index
+        ) in levels:  # a row's level at the face, through the volume's reading where it carries it
+            line, carried = board.states[index].lines[0].now, board.families[index].motion_volume
+            levels[index].add(int(volume.levels_read(gamma, line, carried)[face]))
     at = [int(i) for i in np.unravel_index(lowest[3], board.shape)]
     print(
         f"LATTICE matter_alone over {intervals} intervals: the least content {lowest[:3]} at the Node {at}; "
@@ -39,7 +43,18 @@ def test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content
     assert {abs(level - rest) for level in levels[gravity]} <= {0, 1}, (rest, levels)  # (c) at the face
     world, lines = load_shipped(EVENTS / "two_slits" / "two_slits.json"), []
     declared = Lattice(world, lines.append)
-    bare = Lattice(replace(world, families=tuple(replace(f, rest=0) for f in world.families), draw=None))
+    bare = (
+        Lattice(  # the rest struck: a row carrying its volume fills beyond its faces at the volume of 0
+            replace(
+                world,
+                families=tuple(
+                    replace(f, rest=0, fill=volume.fill_of(gamma, 0) if f.motion_volume else f.fill)
+                    for f in world.families
+                ),
+                draw=None,
+            )
+        )
+    )
     light, first = world.packets[0].family, None
     for interval in range(1, 41):
         declared.step(), bare.step()

@@ -12,7 +12,7 @@ from event_universe.core.rule3 import division_back, division_forward
 def held_write(
     level: Any, numerator: Any, wall: Any, remainder: Any, direction: int = 1
 ) -> tuple[Any, Any]:
-    """One part's level after its write and the remainder after it: forward the level gains (numerator + r) div wall, back it loses the increment the forward act wrote and the remainder steps back, exact; the wall from 1 at every Node (one integer, or an array per Node under a held row's key `factor: carried`, E_s T times the factor's wall at the Node's clock), refused by name otherwise."""
+    """One part's level after its write and the remainder after it: forward the level gains (numerator + r) div wall, back it loses the increment the forward act wrote and the remainder steps back, exact; the wall from 1 at every Node (one integer, or an array per Node under a held row's key the carried factor, E_s T times the factor's wall at the Node's clock), refused by name otherwise."""
     if np.asarray(wall).min() < 1:
         raise ValueError(f"the write's wall E_s T is from 1 at every Node, got {np.asarray(wall).min()}")
     act = division_forward if direction == 1 else division_back

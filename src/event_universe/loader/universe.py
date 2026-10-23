@@ -186,11 +186,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 )
         flux = "held" in row and FLUX in row["held"]["sources"]  # the row carries the odd lines
         exchange = exchange_of(row, label, parts)  # the record's sign under exchange, 0 undeclared
-        # the one Node (2026-10-22): the form's own clock on every count source, the carried factor on
-        # every held row, the stress's trace on every holder of the content; no key of the file
-        form_clock = not wronskian
-        factor_carried = True
-        pressure_trace = not wronskian
         rows.append(
             Row(
                 name,
@@ -207,9 +202,6 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
                 1,
                 flux,
                 exchange,
-                form_clock=form_clock,
-                factor_carried=factor_carried,
-                pressure_trace=pressure_trace,
             )
         )
     families = derived.family_rules(rows)

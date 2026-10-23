@@ -215,3 +215,221 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
             and n.lineno not in docs
         ]
     assert named == [], f"a module of the loader names a retired key: {named}"
+
+
+PLACES = (  # the former keys and the place each stood at: the loader's ordinary refusal of an unknown key at each
+    ("interval", "world"),
+    ("uniform", "world"),
+    ("erasure", "world"),
+    ("meeting", "draw"),
+    ("reach", "draw"),
+    ("seed", "draw"),
+    ("multiplier", "draw"),
+    ("increment", "draw"),
+    ("engine", "world"),
+    ("seed", "lay"),
+    ("act", "held"),
+    ("booking", "held"),
+    ("factor", "held"),
+    ("pressure", "held"),
+    ("form", "held"),
+    ("converts", "family"),
+    ("dipole", "transition"),
+)
+STEPS = {  # the step's one list: every function of src/event_universe whose name is a step, by module (the acts table lists every division)
+    "flux.py": [
+        "step_line",
+        "step_traceless",
+        "step_momentum",
+        "step_plane",
+        "step_family",
+        "step_records",
+    ],
+    "cone.py": ["stepped_alone"],
+    "shear.py": ["stepped"],
+    "swap.py": ["stepped"],
+    "meeting.py": ["stepped"],
+    "lattice.py": ["stepped", "step", "step_inverse"],
+}
+LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the keys that name each kind
+    (("shape", "universe"), "a world"),
+    (("families", "integers"), "a universe"),
+    (("world_digest",), "a mode file"),
+)
+
+
+def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
+    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
+    from event_universe.loader import faces, lay, mode, node_detector_declaration, universe
+    from event_universe.loader import world as loader_world
+
+    tables = {
+        "world": set(loader_world.WORLD_KEYS),
+        "bodies": set(loader_world.BODY_KEYS),
+        "node_detectors": set(loader_world.NODEDETECTOR_KEYS),
+        "draw": set(draw_keys := ("window",)),
+        "lay": set(lay.LAY_KEYS),
+        "faces": set(faces.FACE_KEYS),
+        "transitions": set(node_detector_declaration.TRANSITION_KEYS),
+        "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
+        "parts": set(node_detector_declaration.PART_KEYS),
+        "universe": set(universe.UNIVERSE_KEYS),
+        "integers": set(universe.INTEGER_KEYS),
+        "families": set(universe.FAMILY_KEYS),
+        "held": set(universe.HELD_KEYS),
+    }
+    assert draw_keys == tuple(loader_world.draw_of({"window": 1}, "draw", True).__dataclass_fields__)
+    retired, found = set(RETIRED) | {"interval", "write_weight"}, []
+    for folder in ("examples", "tests"):
+        for path in sorted((SRC.parents[1] / folder).rglob("*.json")):
+            try:
+                document = json.loads(path.read_text(encoding="utf-8"))
+            except ValueError:
+                continue
+            if not isinstance(document, dict):
+                continue
+            kind = next(
+                (kind for keys, kind in LOADER_FILES if all(key in document for key in keys)), None
+            )
+            if path.name.endswith(("design.json", "expectation.json")) or ".blind" in path.name:
+                continue  # the generator's design, the blind and the expectation: no file the loader reads
+            if kind is None:
+                continue
+            table = "world" if kind == "a world" else "universe" if kind == "a universe" else None
+            if table:
+                found += [(path.name, key) for key in document if key not in tables[table]]
+            for key, value in document.items():
+                rows = value if isinstance(value, list) else [value] if isinstance(value, dict) else []
+                if kind == "a mode file":  # the generator's entries: a body's or a packet's levels laid
+                    found += [
+                        (path.name, key, k)
+                        for row in rows
+                        if isinstance(row, dict)
+                        for k in row
+                        if k not in mode.MODE_BODY_KEYS
+                    ]
+                    continue
+                for row in rows:
+                    if key in tables and isinstance(row, dict):
+                        found += [(path.name, key, k) for k in row if k not in tables[key]]
+                    for inner in ("held", "transitions", "rates", "parts"):
+                        for entry in [row.get(inner)] if isinstance(row, dict) else []:
+                            for item in (
+                                entry
+                                if isinstance(entry, list)
+                                else [entry]
+                                if isinstance(entry, dict)
+                                else []
+                            ):
+                                found += [
+                                    (path.name, key, inner, k) for k in item if k not in tables[inner]
+                                ]
+                                if inner == "held":
+                                    found += [
+                                        (path.name, key, "held.write_weight")
+                                        for k in item
+                                        if k == "write_weight" and "wronskian" in item.get("sources", [])
+                                    ]
+            words = {key for key in document} | {
+                k for v in document.values() if isinstance(v, dict) for k in v
+            }
+            assert not words & (retired - {"interval"}), (path.name, words & retired)
+    assert found == [], found
+
+
+@pytest.mark.parametrize(("key", "place"), PLACES)
+def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
+    from event_universe.loader import draw, lay, node_detector_declaration, universe
+    from event_universe.loader import world as loader_world
+    from event_universe.loader.keys import keyed
+
+    held = {"sources": ["form"], "level_weight": 1, "write_weight": 1}
+    family = {"name": "g", "pair": [6000, 6000], "reads": {"g": 1}, "held": held}
+    integers = {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
+    with pytest.raises(ValueError, match=f"unknown key '{key}'"):
+        if place == "world":
+            world = {"shape": [3, 1, 1], "boundary": {}, "intervals": 1, "universe": "u.json", key: 1}
+            keyed(
+                {**world, "bodies": [], "node_detectors": []},
+                "the world",
+                loader_world.WORLD_KEYS,
+                loader_world.WORLD_REQUIRED,
+            )
+        elif place == "draw":
+            draw.draw_of({"window": 4, key: "cone"}, "draw", True)
+        elif place == "held":
+            universe.universe_of(
+                {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
+            )
+        elif place == "lay":
+            lay.lay_of({"kind": "repeat", "start": "one_node", key: "one_node"}, "lay")
+        elif place == "family":
+            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
+        else:
+            row = {
+                "from": "g",
+                "to": "e",
+                "drive": "photon",
+                "weight": 1,
+                "resonance": [5, 6],
+                key: [[0, 0, 1], 1],
+            }
+            node_detector_declaration.transitions_of([row], "t", ("g", "e"), {"photon": 1}, 2)
+
+
+def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
+    """The step's act list is the one list: every function of src/event_universe whose name is a step (`step*`, `stepped*`) stands in STEPS by module, so no alternative step is reachable from the engine's public surface (Lattice.step and Lattice.step_inverse, which call meeting.stepped and flux.step_records, the shear's momentum and the cone stepped alone), and the Lattice has the two public acts of an interval alone, `step` and `step_inverse`."""
+    found: dict[str, list[str]] = {}
+    for path in sorted(SRC.rglob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        names = [
+            n.name
+            for n in ast.walk(tree)
+            if isinstance(n, ast.FunctionDef) and n.name.startswith(("step", "stepped"))
+        ]
+        if names:
+            found[path.relative_to(SRC).as_posix()] = names
+    assert found == STEPS, found
+
+
+RUN_NODES = 2_500  # the boards the start settles within the suite's time at load (the 54 worlds' sweep 154 s on the house's clock at RUN_NODES 12,000 and about 580 s on a loaded machine; a 25-cube's start about 15 s, a 33-cube's about 100 s)
+
+
+def shipped_worlds() -> list[Path]:
+    """Every world file under examples/ (found by its own keys `shape` and `universe`; the generator's design, the blind and the expectation are no file the loader reads), relative to the repository root, in the files' order."""
+    found = []
+    for path in sorted((SRC.parents[1] / "examples").rglob("*.json")):
+        if path.name.endswith(("design.json", "expectation.json")) or ".blind" in path.name:
+            continue
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        if isinstance(document, dict) and all(key in document for key in ("shape", "universe")):
+            found.append(path.relative_to(SRC.parents[1]))
+    return found
+
+
+@pytest.mark.parametrize("path", shipped_worlds(), ids=lambda path: path.stem)
+def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: ignore[no-untyped-def]
+    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none) and, where the board holds at most RUN_NODES Nodes, is started and stepped one interval by the engine's own step with its books open; a larger board's start stands beyond the suite's bound on the house's clock and is run by the world's own tests, named here as loaded alone."""
+    from tests.laws_read import load_shipped
+
+    world = load_shipped(SRC.parents[1] / path)
+    nodes = int(np.prod(world.shape))
+    assert len(world.periodic) == 3 and world.families and world.intervals >= 1
+    if nodes > RUN_NODES:
+        print(
+            f"{path}: {nodes} Nodes loaded under the one Node, its start beyond the bound, run by its own tests"
+        )
+        return
+    board = Lattice(world)
+    board.step()
+    assert board.interval == 1 and board.ended is None
+    assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
+    if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
+        assert (
+            board.swaps == []
+        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
+    print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")

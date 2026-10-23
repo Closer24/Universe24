@@ -1,4 +1,4 @@
-"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`; a turned record's with the Link pairs its step reads, `turned_read`, `turned_currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), the families' densities over the declared regions written as the output's field lines (`densities_read`, a lattice reading labelled so), a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`), and a held row of the content's eras as the board reads them under `interval: unobservable` (`eras`, `Eras`: the families' writes, the hill's weight over the Nodes, the mix's exponent and the constraint's residual as integers, the seed Node's level against the other Nodes'); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
+"""The board's readings, each one loop over the lattice's records and no act (ALGEBRA.md #the-interval: the currents, the turned records' sign currents and the tensions' parts read from every record at the pair the step starts from; `Lattice.step`, `Lattice.booked_back`): every family of quanta's currents through the Ports (`currents`; a turned record's with the Link pairs its step reads, `turned_read`, `turned_currents`), every record's tension's part per axis with the count's flux and, where a held row declares the shear, the shear's part per axis pair (`stresses`), every turned record's sign current, or under its holder's Lorentz form its step's own flux through each +a Link (`sense_currents`, `sense_fluxes`), the families' densities over the declared regions written as the output's field lines (`densities_read`, a lattice reading labelled so), a held family's uniform mode, the time line's mean level now and before (`uniform_mode`, `UniformMode`), and a held row of the content's eras as the board reads them under the volume form (`eras`, `Eras`: the families' writes, the hill's weight over the Nodes, the mix's exponent and the constraint's residual as integers, the seed Node's level against the other Nodes'); readings alone, no level written, each the lattice's loop over the readings of one record (readings.py, features/currents)."""
 
 from __future__ import annotations
 
@@ -8,12 +8,13 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import covector, flux, meeting, node, reports
+from event_universe import flux, meeting, node, reports
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
+from event_universe.frames import frames_of
 from event_universe.loader.derived import count_wall, quanta_records, row_sources, weight_of
 
 if TYPE_CHECKING:
@@ -45,7 +46,6 @@ def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
             board.families[index].pair[0],
             board.record(index),
             board.wrap,
-            covector.weights(board.families[index]),
             horizon=horizon_ports(board, index),
         )
         for index in board.order
@@ -89,7 +89,7 @@ def turned_read(
     )
     assert pairs is not None  # a turned record reads its holder's pairs
     pace = paces.link_pace_of(gamma, content)
-    frames = flux.frames_of(index, board.families, board.states, board.wrap, record)
+    frames = frames_of(index, board.families, board.states, board.wrap, record)
     return readings.Turned(
         pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action, frames
     )
@@ -109,7 +109,6 @@ def turned_currents(
             board.families[index].pair[0],
             board.lines_of(index, record),
             board.wrap,
-            None,
             turned_read(board, index, record),
         )
         found = [a + b for a, b in zip(found, through, strict=True)]
@@ -123,8 +122,7 @@ def stresses(board: Lattice) -> Stresses:
             board.families[s[0]].pair[0],
             board.lines_of(*s),
             board.wrap,
-            board.off_diagonals,
-            flux.frames_of(s[0], board.families, board.states, board.wrap, s[1]),
+            frames_of(s[0], board.families, board.states, board.wrap, s[1]),
         )
         for s in sources_of(board.families, board.order)
     }
@@ -144,16 +142,12 @@ def sense_fluxes(
 ) -> Any:
     """One turned record's source of its own row's odd lines at the interval's start in `direction`: the plain sign current (`readings.sense_current_of`) where its holder books each line its own, and under the holder's Lorentz form the flux of its step through each +a Link in the Link unit (covector.link_fluxes), from the Link pairs its step reads (`flux.pairs_of` at its own read, `read`, the same integers the step takes, divided by the pace squared they carry) and the levels the step starts from, the same numbers forward and back."""
     index, record = source
-    holder = board.families[node.sign_holder(index, board.families)]
-    if not holder.lorentz:
-        frames = flux.frames_of(index, board.families, board.states, board.wrap, record)
-        return readings.sense_current_of(lines, board.wrap, frames)
-    read = turned_read(board, index, record, direction)
-    return covector.link_fluxes(lines, read.pairs, read.square, board.wrap, read.frames)
+    frames = frames_of(index, board.families, board.states, board.wrap, record)
+    return readings.sense_current_of(lines, board.wrap, frames)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:
-    """The uniform mode of a held family's time line as the board holds it, a lattice reading and no act (ALGEBRA.md, The closed lattice has no rest; the world's `uniform: carried`): the level now and the level before summed over the Nodes in Python's integers, each divided once by the Nodes' count with its remainder kept beside (`UniformMode`: `level`, `level_remainder`, `before`, `before_remainder`, `nodes`), so that N x level + remainder is the sum exactly; the k = 0 component Rule3's own line carries at every Node (`held_write`), read here as one integer per held family, every family alike."""
+    """The uniform mode of a held family's time line as the board holds it, a lattice reading and no act (ALGEBRA.md, The closed lattice has no rest; The board's interval is no observable): the level now and the level before summed over the Nodes in Python's integers, each divided once by the Nodes' count with its remainder kept beside (`UniformMode`: `level`, `level_remainder`, `before`, `before_remainder`, `nodes`), so that N x level + remainder is the sum exactly; the k = 0 component Rule3's own line carries at every Node (`held_write`), read here as one integer per held family, every family alike."""
     line, nodes = board.states[index].lines[0], int(np.prod(board.shape))
     found = []
     for levels in (row_level(board, index, line.now), row_level(board, index, line.before)):
@@ -188,7 +182,7 @@ def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
 
 
 class Eras(NamedTuple):
-    """A held row of the content's eras as the board reads them under `interval: unobservable` (`eras`), integers alone (the host's floats from them, tools/eras.py): the time line's mean level now and before with their remainders over the Nodes' count (`uniform_mode`, the level reading of the volume where the row carries it); per sourcing family its write into the row's time line summed over the Nodes (the rounded booking at the row's power, the read weight and the write weight, in units of the wall E_s T); the mix's exponent n_eff as a pair of integers, P SUM_f S_f over SUM_f (P / n_f) S_f (`paces.exponent_products`, no division); the trace's own residual as a pair, 3 E_s T V^2 over 2 Gamma N SUM_f S_f (`nature`: V the mean's velocity times the Nodes' count with the remainders, so the fraction less 1 is (Gamma / 2) U'^2 / (SUM_f s_f / 3) - 1, the surface the trace's weight preserves, -1 at rest, 0 on nature's constraint; ALGEBRA.md, The stress's trace is the time line's); the seed Node's level with the other Nodes' sum and count (`seed`, (0, 0, 0) where the world lays no whole packet); and the three tension lines' sums over the Nodes now and before (`tensions`, `tensions_before`, 0 where the row has no axis lines): the tension's reading, the k = 0 mode of the axis lines whose growth under a lay's mean stress froze every Link in the smokes of 2026-10-22."""
+    """A held row of the content's eras as the board reads them under the volume form (`eras`), integers alone (the host's floats from them, tools/eras.py): the time line's mean level now and before with their remainders over the Nodes' count (`uniform_mode`, the level reading of the volume where the row carries it); per sourcing family its write into the row's time line summed over the Nodes (the rounded booking at the row's power, the read weight and the write weight, in units of the wall E_s T); the mix's exponent n_eff as a pair of integers, P SUM_f S_f over SUM_f (P / n_f) S_f (`paces.exponent_products`, no division); the trace's own residual as a pair, 3 E_s T V^2 over 2 Gamma N SUM_f S_f (`nature`: V the mean's velocity times the Nodes' count with the remainders, so the fraction less 1 is (Gamma / 2) U'^2 / (SUM_f s_f / 3) - 1, the surface the trace's weight preserves, -1 at rest, 0 on nature's constraint; ALGEBRA.md, The stress's trace is the time line's); the seed Node's level with the other Nodes' sum and count (`seed`, (0, 0, 0) where the world lays no whole packet); and the three tension lines' sums over the Nodes now and before (`tensions`, `tensions_before`, 0 where the row has no axis lines): the tension's reading, the k = 0 mode of the axis lines whose growth under a lay's mean stress froze every Link in the smokes of 2026-10-22."""
 
     level: int
     level_remainder: int

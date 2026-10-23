@@ -84,9 +84,10 @@ def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
             """A set of Nodes declared at the file's coordinates over the box: the board's own mask cut to it (the cut Links of a body's region, `meeting.cut`)."""
             return np.asarray(board.mask(nodes)[box])
 
-        def bounded(self, name: str, record: Record) -> None:
-            """The amplitude bound read at the kept Nodes alone, the lattice's own check on them (`Lattice.bounded`; ALGEBRA.md, The meeting's reading): a face-rule level at the box's edge is no level of the board and its result is discarded."""
-            super().bounded(name, Record(record.now[kept], record.before[kept], record.remainder[kept]))
+        def bounded(self, name: str, record: Record, carried: bool = False) -> None:
+            """The amplitude bound read at the kept Nodes alone, the lattice's own check on them (`Lattice.bounded`; ALGEBRA.md, The meeting's reading): a face-rule level at the box's edge is no level of the board and its result is discarded; a time line carrying its volume read through the volume's walls (`carried`)."""
+            kept_record = Record(record.now[kept], record.before[kept], record.remainder[kept])
+            super().bounded(name, kept_record, carried)
 
     view = Boxed.__new__(Boxed)
     vars(view).update(vars(board))

@@ -50,9 +50,17 @@ PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/pace
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
 PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
-PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py", "covector.py")
+PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
 PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
+PHYSICAL_MODULES += (
+    "shear.py",
+    "walls.py",
+)  # the tension lines stepped as the shear's momentum at the volume's wall
+PHYSICAL_MODULES += (
+    "swap.py",
+    "frames.py",
+)  # the swap at the top, the fifth act; the frames of a turned record's read the step shares
 PHYSICAL_MODULES += (
     "frame_run.py",
 )  # the frame's run of a bound body's full beat at its first close (2026-10-22)

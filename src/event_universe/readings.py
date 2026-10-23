@@ -39,6 +39,27 @@ def framed(arrived: tuple[np.ndarray, ...], frames: Sequence[Any] | None) -> tup
     return tuple(sign * level for sign, level in zip(frames, arrived, strict=True))
 
 
+def at(value: Any, where: tuple[Any, ...]) -> Any:
+    """A coefficient at a slice or a Node of the board: the slice where it is an array over the Nodes, itself where it is one integer (a family reading nothing has one reach per Port for every Node)."""
+    return value[where] if np.ndim(value) else value
+
+
+def slices(
+    axis: int,
+) -> tuple[tuple[slice, ...], tuple[slice, ...], tuple[slice, ...], tuple[slice, ...]]:
+    """The four slices of an axis: every Node but the last (the near end of every Link toward +a), every Node but the first (the far end), the first layer and the last layer (the two faces)."""
+    lo = [slice(None)] * AXES
+    hi, first, last = list(lo), list(lo), list(lo)
+    lo[axis], hi[axis] = slice(None, -1), slice(1, None)
+    first[axis], last[axis] = slice(0, 1), slice(-1, None)
+    return tuple(lo), tuple(hi), tuple(first), tuple(last)
+
+
+def seen(level: Any, bad: Any, fill: Any) -> Any:
+    """A level as the Link's other end reads it: the fill where the Link touches a Node beyond the board (`bad`, the inner face's rule of core/ports.arrival), the level itself elsewhere."""
+    return level if bad is None else np.where(bad, fill, level)
+
+
 def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
     """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0, or the row's rest for the massless row holding the content: the vacuum beyond the face is the same vacuum, ALGEBRA.md #what-is-open, item 22), the Node itself on a folded axis."""
     return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
@@ -65,24 +86,21 @@ def currents_of(
     weight: int,
     lines: Sequence[Record],
     wrap: Wrap,
-    weights: Sequence[int] | None = None,
     turned: Turned | None = None,
     frames: Sequence[Any] | None = None,
     horizon: Sequence[Any] | None = None,
 ) -> tuple[np.ndarray, ...]:
     """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights); `turned`, the pairs a turned record's step reads with the unit of its booking (`Turned`, None for a plain record, whose currents are bit for bit the plain bilinear's): the record's currents are then the flux line's own with the Link's pair (`turned_currents_of`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), since the plain bilinear of a turned pair turns at the difference of the two Nodes' angles, the gauge's oscillation of zero mean, and books nothing; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`), None every Port at +1; `horizon`, per Port the mask of the Links at the wall (board_readings.horizon_ports), through which the current reads 0 as the step moves nothing across them (ALGEBRA.md, The horizon, 2026-10-23), None no such Link."""
     if turned is not None:
-        assert weights is None  # a turned record is a charged plane and no holder
         return turned_currents_of(lines, wrap, turned)
     found: list[Any] = [0] * 6
-    scales = [1] * len(lines) if weights is None else list(weights)
-    for number, (record, scale) in enumerate(zip(lines, scales, strict=True)):
+    for number, record in enumerate(lines):
         here = currents.Levels(record.now, record.before)
         signs = frames if number & 1 else None
         now, before = framed(ports(record.now, wrap), signs), framed(ports(record.before, wrap), signs)
         for port in range(6):
             there = currents.Levels(now[port], before[port])
-            found[port] = found[port] + currents.current(weight * scale, here, there)
+            found[port] = found[port] + currents.current(weight, here, there)
     if horizon is not None:  # a Link at the wall reads nothing: its current 0 (ALGEBRA.md, The horizon)
         found = [np.where(at, 0, value) for at, value in zip(horizon, found, strict=True)]
     return tuple(np.asarray(value) for value in found)
@@ -158,25 +176,16 @@ def stresses_of(
     return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
 
 
-def off_diagonals_of(
-    weight: int, lines: Sequence[Record], wrap: Wrap, frames: Sequence[Any] | None = None
-) -> currents.Vector:
-    """The shear's part at every Node on each axis pair, xy, yz, zx, from a record's levels now as they stand at the interval's start, weight x D_a now_i x D_b now_i with D_a now_i = now_(i+a) - now_(i-a), the product of the Node's own two axis differences, every line's parts added, a reading of the lines into the held rows' shear lines, one Link's reach and the same interval (features/currents `off_diagonal`; ALGEBRA.md, The tension, the off-diagonal booking G_ab met in the mean at the Link's two ends) (one body with `stresses_of`, the shear's part in the tension's place)."""
-    return stresses_of(weight, lines, wrap, currents.off_diagonal, frames)
-
-
 def axis_sources_of(
     weight: int,
     lines: Sequence[Record],
     wrap: Wrap,
-    off_diagonal: bool = False,
     frames: Sequence[Any] | None = None,
 ) -> tuple[Any, ...]:
-    """The axis sources of a record at every Node, six readings of its lines at the interval's start, nine where a held row of the world declares the shear, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports), then, with `off_diagonal`, the shear's part on each axis pair xy, yz, zx (`off_diagonals_of`, into the shear lines); a holder takes the readings its lines name, by position (`records.write_sources`); `frames`, for a turned record the Port signs its im lines read their neighbours with (`framed`, plane.frame_signs: the Link reads its two ends in one frame), None for a plain record."""
+    """The axis sources of a record at every Node, six readings of its lines at the interval's start, nine where a held row of the world declares the shear, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports), then, with `off_diagonal`, the shear's part on each axis pair xy, yz, zx (`off_diagonals_of`, into the shear lines); a holder takes the readings its lines name, by position (`records.write_sources`)."""
     through = currents_of(weight, lines, wrap, frames=frames)
     fluxes = [through[2 * axis + 1] - through[2 * axis] for axis in range(AXES)]
-    off = off_diagonals_of(weight, lines, wrap, frames) if off_diagonal else ()
-    return (*stresses_of(weight, lines, wrap, currents.stress, frames), *fluxes, *off)
+    return (*stresses_of(weight, lines, wrap, currents.stress, frames), *fluxes)
 
 
 def axis_neighbours(

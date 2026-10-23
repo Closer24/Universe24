@@ -275,7 +275,7 @@ def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, 
     found: dict[str, Any] = {
         "interval": board.interval,
         "X": now,
-        "length": [round(float((x / gamma) ** (1 / volume.EXPONENT)), 6) if x > 0 else 0.0 for x in now],
+        "length": [round(float((x / gamma) ** (1 / volume.EXPONENT)), 6) if x > 0 else 0 for x in now],
         "turned": turned,
         "direction": list(directions),
         "quanta": {},

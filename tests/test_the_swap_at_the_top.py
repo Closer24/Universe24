@@ -1,48 +1,13 @@
 """The swap at the top (P-M19-5 as M20 derives it; the fifth act of the interval, swap.py, always on, no key): at a Node whose time line shows a weak maximum over one interval, X0 <= X1 >= X2 and not all equal (X0 the level before at the interval's start, X1 the level now at the start, X2 the level now at the end after the step and the write), the Node ends the interval at its pre-state swapped and complemented, every line (now, before, r) -> (before, now, wall - 1 - r), the step's output discarded; by the T-image theorem (F T F = T on the engine's lines) the forward run from it is the run back of the rise, and the inverse is the same reading on the undone interval. The clauses: (1) on the gapped torus the trigger fires at exactly one interval of the first rise, at every Node at once, at the first weak maximum of X, and never before it (never at the start at rest); (2) from the fire on, the state at t* + k is the T-image of the state at t* - 1 - k bit for bit, every remainder complemented at its wall; (3) the run back through the fire is exact and the inverse fires at the same interval; (4) a massless time line [Gamma, Gamma] never fires (X' never passes 0 downward on the uniform torus)."""
 
-import json
-
 import numpy as np
 
 from event_universe import shear, world_files
-from event_universe.core import paces
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests.laws import state_of
-
-GAMMA, ACTION, CUBE = 1000, 36000, 3
-HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
-
-
-def gapped_world(folder, gap, count, amplitude):  # type: ignore[no-untyped-def]
-    """The 3-cube torus with gravity's pair [gap, Gamma] and dust [0, Gamma] laid uniform at the band's rest rotation (test_the_gapped_volume's world, the count the gate's own reading)."""
-    universe = {
-        "integers": {"node_clock": GAMMA, "quantum_action": ACTION, "width": 92, "link_unit": 16},
-        "families": [
-            {"name": "gravity", "pair": [gap, GAMMA], "reads": {"gravity": 1}, "held": HELD},
-            {"name": "dust", "pair": [0, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
-        ],
-    }
-    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    nodes = [[x, y, z] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
-    world = {"shape": [CUBE] * 3, "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"}}
-    world.update(intervals=400, universe="u.json", node_detectors=[])
-    world["bodies"] = [{"family": "dust", "nodes": [{"node": at, "count": count} for at in nodes]}]
-    clock = paces.clock(GAMMA, 0)
-    before = (2 * (GAMMA**3 - GAMMA * clock * clock) * amplitude + GAMMA**3) // (2 * GAMMA**3)
-    entry = {
-        "family": "dust",
-        "pair": [0, GAMMA],
-        "moving": {"now": [amplitude] * len(nodes), "before": [before] * len(nodes)},
-    }
-    path = folder / "swap.json"
-    path.write_text(json.dumps(world), encoding="utf-8")
-    path.with_suffix(".mode.json").write_text(
-        json.dumps({"world_digest": input_digest(world), "bodies": [entry], "packets": []}),
-        encoding="utf-8",
-    )
-    return path
+from tests.laws_gapped import CUBE, GAMMA, gapped_world
 
 
 def same(a, b):  # type: ignore[no-untyped-def]
@@ -124,14 +89,16 @@ def test_a_massless_time_line_never_fires(tmp_path, monkeypatch):  # type: ignor
 def test_the_shipped_matter_world_fires_at_the_bodys_six_neighbours_at_interval_2_and_nowhere_after(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """(5) The shipped big bang's matter world (Gamma 6,000, gravity [6000, 6000], the seed at one Node: a structured massless board) under the law with both acts, read 2026-10-23 (the structured-cycle branch): the fifth act fires at the body's six Link neighbours at interval 2 and nowhere after over 50 intervals, board.swaps == [(2, 1, 6)]. The cause: under The stress is the Links' the body's pressure is read at its six neighbours one Link out and enters their time line's write as the trace at the weight -1 before the form's write reaches them by the step at interval 3, so their volume's step output dips below the rest they stand at (6,247), a weak maximum, and the act keeps the rest; the former stress reading put the pressure at the body's own Node, where the form's write outweighs it, and the world fired nowhere (the former clause). The course stands after the fires: X at the body 6,247, 16,785, 34,986 at 1, 2, 3, every Node rising from 3 on, U 1.283 at 100, 1.530 at 200 and 1.675 at 300 (the fine mean over the Nodes) against the shipped eras log's level reading under the former stress reading, 1.283, 1.535, 1.684, no further fire and no refusal (examples/events/big_bang/big_bang_matter.course.jsonl)."""
+    """(5) The shipped big bang's matter world (Gamma 6,000, gravity [6000, 6000], the seed at one Node: a structured massless board) under the law with both acts, read 2026-10-23: the fifth act fires nowhere over 50 intervals, board.swaps == [], since the swap reads the gapped time line alone (the clause of 2026-10-23 on the massless row, swap.acted: the gap on the pair is the one form within the law that turns a board, a massless row's weak maximum the rounding's dip and no top). The former reading (the structured-cycle branch, the same day) fired at the body's six Link neighbours at interval 2 and nowhere after, board.swaps == [(2, 1, 6)], its cause: under The stress is the Links' the body's pressure is read at its six neighbours one Link out and enters their time line's write as the trace at the weight -1 before the form's write reaches them by the step at interval 3, so their volume's step output dips below the rest they stand at (6,247), a weak maximum, and the act keeps the rest; the former stress reading put the pressure at the body's own Node, where the form's write outweighs it, and the world fired nowhere (the former clause). The course stands after the fires: X at the body 6,247, 16,785, 34,986 at 1, 2, 3, every Node rising from 3 on, U 1.283 at 100, 1.530 at 200 and 1.675 at 300 (the fine mean over the Nodes) against the shipped eras log's level reading under the former stress reading, 1.283, 1.535, 1.684, no further fire and no refusal (examples/events/big_bang/big_bang_matter.course.jsonl)."""
     from tests.laws import EVENTS
 
     board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
     board.output = lambda line: None
     for _ in range(50):
         board.step()
-    assert board.swaps == [(2, 1, 6)]
+    assert (
+        board.swaps == []
+    )  # the massless row never turns (the clause of 2026-10-23): the former reading fired here, [(2, 1, 6)]
 
 
 def run_back_exact(world, intervals):  # type: ignore[no-untyped-def]
@@ -157,7 +124,9 @@ def test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires
 
     matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang_matter.json", 60)
     assert matched == 60 and counts_back
-    assert swaps == [(2, 1, 6), (2, -1, 6)]
+    assert (
+        swaps == []
+    )  # no fire on the massless row (the clause of 2026-10-23); the former reading's [(2, 1, 6), (2, -1, 6)]
 
 
 def test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires():  # type: ignore[no-untyped-def]

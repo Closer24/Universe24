@@ -114,7 +114,7 @@ def world(design: dict[str, Any]) -> dict[str, object]:
         "bodies": [giver],
         "packets": [],
         "node_detectors": [node_detector],
-        "draw": {"window": intervals},
+        "draw": {},  # the window derived at the load (2026-10-23)
     }
 
 

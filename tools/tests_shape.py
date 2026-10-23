@@ -80,11 +80,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "hand's derivation read cold by the reader): the loader's clause on the tensions, the gapped row laid at the vacuum's "
         "volume, the step's mass term -2 (1 - nu) (p_0 / Gamma)^2 X within one level over 50 intervals and the run back MATCH",
     ),
-    "tests/test_the_gapped_volume.py::test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_before": (
+    "tests/test_the_gapped_volume.py::test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log": (
         43,
         "the same clause changing no shipped run: every held row of the content sourced by the tensions iff at [Gamma, Gamma] in "
         "examples/ and tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world stepped 100 intervals "
-        "bit for bit as under the old clause and the old start, whatever else the tree's step does",
+        "bit for bit as its stored digest, whatever else the tree's step does",
     ),
     "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
         45,
@@ -222,7 +222,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the emission lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
         "division act, each summing to 0 over the board after the lay, the quantum standing",
     ),
-    "tests/test_the_emission.py::test_the_front_writes_to_zero_over_the_declared_shells_and_the_board_ends_dark": (
+    "tests/test_the_emission.py::test_the_front_writes_to_zero_at_the_reach_and_the_board_ends_dark": (
         38,
         "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
         "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
@@ -238,14 +238,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         12,
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
-    ),
-    "tests/test_the_bound_body.py::test_the_nucleons_fixed_point_in_its_own_nuclear_holders_well_stands_and_the_twin_without_it_spreads": (
-        104,
-        "the nucleon's dedicated test (the mathematician's 275 (b) with the advisor's second, the Boss's brief of "
-        "2026-10-03, C.15): the fixed-point lay with the compact seed in its own nuclear holder's well at the four "
-        "declared integers, the held write's first write returning the start's rest within one unit at every Node, the deviation from the exact line a LATTICE reading, the count the record's share within "
-        "the gate, the standing read over one period against the twin without the holder, the remainders at the "
-        "half wall and the back-in-time gate across two periods",
     ),
     "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
         33,
@@ -349,10 +341,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         50,
         "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
     ),
-    "tests/test_part_h_fix.py::test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close": (
-        45,
-        "the engine V2 (Part H, MUST 1; #2122): the null window's re-lay keeps each Node's own direction through the close",
-    ),
     "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
         42,
         "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
@@ -362,26 +350,13 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the engine V2 (Part G, Task 5 (d); #2122): the reversal with the books as its own test, so that each half of "
         "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
     ),
-    "tests/test_the_uniform_mode.py::test_the_board_declares_its_interval_unobservable_and_refuses_it_by_name_where_a_face_sinks_it": (
-        60,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
-        "unobservable` and the law's `uniform: carried` kept beside it, every refusal by name (the value, the sunk "
-        "face, the two keys together, the kick on the holder of the content, the row without the trace, the held "
-        "row's keys at a wrong word), the torus loading under either key and either factor, the volume at the start",
-    ),
-    "tests/test_the_uniform_mode.py::test_rule3_carries_the_uniform_line_bit_for_bit_on_a_torus_and_the_inverse_returns": (
-        46,
-        "the directive's build (the reader's line L1 on the engine half, 2026-10-22): the law's `uniform: carried` "
-        "run test restored, Rule3 carrying the uniform line bit for bit with the write at the law's two powers, the "
-        "band's line and the 20 intervals run back",
-    ),
     "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
         36,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T6): the form's own clock as one "
         "power of the write, the numerator bit for bit at the Wronskian's power on a count, the dimming exponent "
         "within 0.3 of 4.8 under the key and of 5.8 without it",
     ),
-    "tests/test_the_uniform_mode.py::test_the_volumes_write_is_bit_for_bit_at_either_factor_and_the_level_reading_relaxes_to_the_constraint": (
+    "tests/test_the_uniform_mode.py::test_the_volumes_write_is_bit_for_bit_at_the_fixed_wall_and_the_level_reading_relaxes_to_the_constraint": (
         60,
         "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T2): the volume's write bit "
         "for bit at the fixed wall under either factor against the engine's own functions, the level reading what the "
@@ -400,7 +375,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "volume's write reading its own level forward and back, every read the level reading, and the attractor from "
         "rest and from a kicked start alike with the Lagrangian's constraint read by the test",
     ),
-    "tests/test_the_interval.py::test_the_run_back_under_the_key_matches_at_every_interval_at_a_wall_that_never_moves": (
+    "tests/test_the_interval.py::test_the_run_back_matches_at_every_interval_at_a_wall_that_never_moves": (
         26,
         "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T5): the run back MATCH at every "
         "interval under the key at either factor on the torus, the light cube and the kicked torus",
@@ -423,7 +398,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "bit, the law's step where the time line stands, the bijection and the mirror on random Node-intervals, the run "
         "back after one and after 60 intervals, and the three lines' sum pinned while the x line's drift is drained",
     ),
-    "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_without_it": (
+    "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace": (
         50,
         "the directive's build (the reader's build line of 2026-10-22, the finding as a test): the tension lines' k = 0 "
         "mode under an isotropic lay's mean stress, flat under the trace and running away without it",

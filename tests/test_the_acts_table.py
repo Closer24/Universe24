@@ -148,7 +148,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the click's read over the total, once per draw
     ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
-    ("features/click/__init__.py", "presented", "division_forward"): "D",  # the presented share, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (
         "features/click/__init__.py",
@@ -282,34 +281,28 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
+    ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (
         "loader/derived.py",
-        "trace_wall",
+        "alpha_of",
         "division_forward",
-    ): "D",  # Gamma divides (d + 1) E_s T, the check
-    ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
+    ): "D",  # the pairs and the law's alpha reduced by the division act, once each
+    (
+        "loader/derived.py",
+        "alpha_of",
+        "gcd",
+    ): "D",  # Euclid's remainders on the pair's and the ratio's integers, once each
     ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
     ("loader/draw.py", "reduced_write", "division_forward"): "D",  # the reduction, exact, no remainder
     ("loader/rooms.py", "hill_scale", "division_forward"): "D",  # the hill's room, once
     ("loader/rooms.py", "tension_room", "largest_below"): "S",  # the room's factor by search
     ("loader/rooms.py", "tension_room", "division_forward"): "D",  # the room's ceiling, once
     (
-        "loader/rooms.py",
-        "write_rooms",
-        "largest_below",
-    ): "S",  # the covector's Link room, X 2^(1/2) by search
-    (
         "loader/derived.py",
         "bound_under_rooms",
         "division_forward",
     ): "D",  # the bound's quotients, once each
     ("loader/derived.py", "bound_under_rooms", "largest_below"): "S",  # the largest level by search
-    (
-        "loader/derived.py",
-        "alpha_of",
-        "division_forward",
-    ): "D",  # the ratio's reduction, once each, discarded
-    ("loader/derived.py", "alpha_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     ("loader/lay.py", "least_action", "division_forward"): "D",  # the budget's quotient, once
     (
         "loader/node_detector_declaration.py",
@@ -377,8 +370,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("resonance.py", "unit_weight", "division_forward"): "D",  # (A_1 W)^2 over sin k, and the half
     ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
     ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
-    # covector.py
-    ("covector.py", "link_fluxes", "division_forward"): "D",  # the pace squared off the pair, exact
     # readings.py
     (
         "readings.py",

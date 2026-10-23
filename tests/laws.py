@@ -341,7 +341,7 @@ def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
 
 ORACLE = load_file(
     "step_oracle", ROOT / "tools" / "step_oracle.py"
-)  # the step's oracle: the law's first form with the 2.0.0 step around it
+)  # the step's oracle: the law's first form with the one Node's interval around it
 arrivals_rule3 = (
     ORACLE.arrivals_rule3
 )  # the first form of Rule3, written in the tool and in no file of src/
@@ -477,8 +477,13 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
-        equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
+        first = min(c["interval"] for c in credits) if credits else None
+        equal = all(
+            len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR"
+            for p in parts
+            if first is None or p["interval"] <= first
+        )  # equal across the parts to the sides' first close, as laws_spin.joint_shares takes the close (2026-10-23: the window derived, 30 on the Bell worlds, closes at 60 and 90 within the run of 100, the first side's write turning one part after 60; the declared window was the run, so every parts line stood before the write)
         assert parts and equal and credits
         assert all(c["interval"] == c["window"][1] for c in credits), [
             (c["interval"], c["window"]) for c in credits

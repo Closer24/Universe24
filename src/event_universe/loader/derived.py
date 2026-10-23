@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from math import gcd
 
-from event_universe.core.paces import COUNT_POWER, WRONSKIAN_POWER, sine_den
+from event_universe.core.paces import WRONSKIAN_POWER, sine_den
 from event_universe.core.ports import AXES, PORTS, SIDES
 from event_universe.core.rule3 import coefficients, division_forward, largest_below, mass, partial_rooms
 from event_universe.features.currents import PRODUCTS
@@ -36,14 +36,9 @@ class Row:
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
     exchange: int = 0  # the record's sign under the exchange of two of its parts, the files' key `exchange` on a family of several parts (antisymmetric -1, symmetric 1, 0 where none is declared): the family's declaration, read by the first side's coefficients (`meeting_back.coefficients_of`, `credit.terms_of`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19)
-    off_diagonal: bool = False  # a holder of the content sourced by the shear too, the files' word `shear` beside `tensions`: three off-diagonal lines xy, yz, zx after its other axis lines, each the product of the Node's own two axis differences of its sources' records, D_a D_b over the doubled wall 2 E_s W_c, stepped by Rule3 as the tension lines are and read by no record (the held rows' own wave sector; ALGEBRA.md, The lattice's frame is read by gravity alone, and its carrier is a pair of Links: the three space pairs, 2026-10-20)
-    lorentz: bool = False  # the files' key `form` of a held row under the rotation, `lorentz`: its time line and its three odd lines booked as one covector with the Lorentz form (covector.py; ALGEBRA.md, The odd line's source is the sign's own current, the covector form declared on 2026-10-21), the odd line of the axis a the Node's +a Link's own, sourced by the Link's own flux of the record's step over the wall 2 den_s G^2 E_s T and read by that Link alone with the hop's sign (`link_read`, (-2, 0)), the time line's entry negative in every reading of the holder's record; False where the key is absent or `positive`, the rows as the engine books them without the key
-    factor_carried: bool = False  # the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the write's factor a coefficient of the numerator inside the one carried division, the product count p_x p_y p_z unrounded over the wall E_s T times the factor's wall Gamma^power p_0^(3 - power) per Node, the write's one remainder carrying it (paces.write_factor_terms, records.write_sources, the walls per Node at node.held_write_at); False where the key is absent or `rounded`, the law as written, the factor rounded once at the read (paces.write_factor), every shipped world bit for bit
-    pressure_trace: bool = False  # the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22; loader/universe.pressure_of): the trace over three of each source's own stress parts into the time line's write at the weight -1 in the energy's units and the traceless parts into the tension lines (records.pressure_term, records.write_sources), the volume's exponent d + 1 one integer for every mix (features/volume; `trace_wall`); False where the key is absent or `tension`, the law as written, the stress parts whole into the tension lines
-    motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the world's key `interval: unobservable` alone on the held row of the content sourced by the tensions, massless or gapped (`axes`), that is not the sign's holder (loader/interval.volume_rows; the clause of 2026-10-23), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
+    motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the volume form (every board's interval unobservable) alone on the held row of the content sourced by the tensions, massless or gapped (`axes`), that is not the sign's holder (loader/interval.volume_rows; the clause of 2026-10-23), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
     write_wall: int = 1  # the sign holder's wall multiplier Gamma den under the law of one Node (2026-10-23): alpha carried inside the one write, the numerator times E_h T num (`write_weight` set by the loader, `alpha_of`) and every wall of the row times Gamma den (`held_write_of`), the remainder keeping the fraction; 1 on every holder of the content, whose write weight is the file's
     fill: int = 0  # the time line's value beyond a face and on a grown layer, the Link to the fill (core/ports.arrival): the row's rest, or under the volume form the rest's volume X(rest), the rest beyond the face fixing the clock's unit (ALGEBRA.md, The board's interval is no observable; loader/interval.volume_rows, features/volume.fill_of); 0 for a row with no rest
-    form_clock: bool = False  # the held row's key `booking: form`, the form's own clock (ALGEBRA.md, The write per proper volume and per proper interval; The form's own clock, a hypothesis under its own name, 2026-10-22): the count's form of every record sourcing the row booked with one proper-interval power, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), as the Wronskian is (`FamilyRule.power`); False where the key is absent or `count`, the law as written, two powers
 
 
 @dataclass(frozen=True)
@@ -104,11 +99,11 @@ class FamilyRule(Row):
 
     @property
     def power(self) -> int:
-        """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), and on a count's form under the row's key `booking: form`, the form carrying one N of its own as the Wronskian does (The form's own clock, a hypothesis under its own name, 2026-10-22; `form_clock`) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
-        return WRONSKIAN_POWER if self.wronskian or self.form_clock else COUNT_POWER
+        """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), and on a count's form under the row's key the form's own clock, the form carrying one N of its own as the Wronskian does (The form's own clock, a hypothesis under its own name, 2026-10-22; `form_clock`) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
+        return WRONSKIAN_POWER  # one power on every booking: the Wronskian's one N, the form's own clock
 
     def exponent(self, power: int | None = None) -> int:
-        """The pair's dimming exponent in the board's interval under a held row's booking power, its own where none is given (ALGEBRA.md, The band at a pace; The write per proper volume and per proper interval; The mean's velocity is the content's, 2026-10-22): a count's write dims as N^(2 + power) / h^3 times the form's own sine, whose limit at a small gap is one N for a pair with a gap at rest and two for the massless pair, so the integer is 3 + power + 1 for a pair with a gap and 3 + power + 2 for the massless pair, 5 and 6 under the form's own clock (`booking: form`, the power 1) and 6 and 7 under the law's booking (the power 2), the pairs' integers the readings' mix takes (`exponent_of`; board_readings.eras)."""
+        """The pair's dimming exponent in the board's interval under a held row's booking power, its own where none is given (ALGEBRA.md, The band at a pace; The write per proper volume and per proper interval; The mean's velocity is the content's, 2026-10-22): a count's write dims as N^(2 + power) / h^3 times the form's own sine, whose limit at a small gap is one N for a pair with a gap at rest and two for the massless pair, so the integer is 3 + power + 1 for a pair with a gap and 3 + power + 2 for the massless pair, 5 and 6 under the form's own clock (the form's own clock, the power 1) and 6 and 7 under the law's booking (the power 2), the pairs' integers the readings' mix takes (`exponent_of`; board_readings.eras)."""
         return exponent_of(self.pair[0] == self.pair[1], self.power if power is None else power)
 
     @property
@@ -122,14 +117,9 @@ class FamilyRule(Row):
         return 1 if self.held else self.lines
 
     @property
-    def off_diagonal_lines(self) -> range:
-        """The positions of a held row's three shear lines within one row, xy, yz, zx in that order: the last three lines of the row where the row declares the shear (after the time line, the three tension lines and the flux's three odd lines where it carries them), none otherwise; read by no record, written by the held write and stepped by Rule3 as every line is (the files' word `shear`; `held_write_of`, `write_rooms`, `records.write_sources`)."""
-        return range(self.width - AXES, self.width) if self.off_diagonal else range(0)
-
-    @property
     def link_read(self) -> tuple[int, int]:
         """How a Link reads an odd line of this holder, two declared integers the Port consumes blindly (`plane.link_levels`): the weight of the Node owning the +a Link and the weight of its far end; (-1, -1) the two ends' sum with the sign opposite to the time line's (since 2026-10-21, the law's row (b2) read on the engine: the Link's hop carries the odd line as Peierls' p - q A under the hop's convention omega(k + theta), beside the time line's + q phi on the step, so that the strength the record is turned by is -d_a L_0 - d_t L_a, Maxwell's induction with its sign, and a co-moving reader of the source's family reads gamma_s (1 - beta_s^2) = 1 / gamma_s, 0.987, 0.958 and 0.919 at beta_s = 0.150, 0.286 and 0.395 against the law's 0.989, 0.958 and 0.919 (ALGEBRA.md, The sign holder rotates the two-part record; The rows against nature (b2)); (-2, 0) under the Lorentz form, where the odd line is the +a Link's own level, sourced by the Link's own flux, and the Link reads minus twice it from its owner alone, the same magnitude for a smooth line as the two ends' sum, the Link's own line where it varies (covector.py). History: (1, 1), the two ends' sum with the time line's own sign, the shipped read until 2026-10-21 (gravity's dragging sign, +theta along the current, The clock family on the Ports), under which the same co-moving reader read gamma_s (1 + beta_s^2), 1.031, 1.130 and 1.254 at the three beta_s, since the odd line is sourced at + v / c_s^2 of the time line (The odd line's source is the sign's own current)."""
-        return (-2, 0) if self.lorentz else (-1, -1)
+        return (-1, -1)
 
 
 def exponent_of(massless: bool, power: int) -> int:
@@ -268,29 +258,8 @@ def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: i
     return int(division_forward(above, common, 0)[0]), int(division_forward(below, common, 0)[0])
 
 
-def energy_line(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The loader's gate of the energy line as it stood to 2026-10-23, kept by name and called by nothing: under the law of one Node the line is carried inside the sign holder's write (`alpha_of`) and no file's integers are gated. The old reading: one function with the line written once: for every plane family (dimension 2, of any parts) whose reads name a holder under the rotation h at a weight above 0, the file's integers satisfy E_h x T x num_f = k_w,h x Gamma x den_f exactly, [num_f, den_f] the family's pair (cos omega_s = num / den), E_h the holder's level weight, k_w,h its write weight, T the quantum action and Gamma the Node clock; the family's read weight multiplies its turn and, by the held write's reciprocity, its write, and cancels in the balance (it is the family's charge in units of the unit charge), so every plane family of one universe shares num / den or the universe is refused by name with the family, the holder and the four integers; a family of real lines and light (the holder's own record) read no turn and stand outside the line, as does the plain read (the act `pace`); a frozen row, a plane family at num = 0 (cos omega_s = 0 at every wave number, R_ij = 0 on every Link: its record never moves and gives no light), stands outside the line too, the balance of a body's light against its loss having nothing to balance, so the constraint that the plane families of one universe share num / den is lifted for num = 0 by name (the two hands)."""
-    for family in families:
-        frozen = family.pair[0] == 0  # the frozen row: its record never moves and gives no light
-        for read in family.reads:
-            holder = families[read.family]
-            if frozen or not (family.plane and holder.rotation and read.weight > 0):
-                continue
-            num, den = family.pair
-            assert holder.level_weight is not None  # a holder under the rotation is held
-            left, right = holder.level_weight * action * num, holder.write * gamma * den
-            if left != right:
-                raise ValueError(
-                    f"the energy line fails for {family.name!r} reading {holder.name!r}: E_h x T x num = "
-                    f"{holder.level_weight} x {action} x {num} = {left} and k_w x Gamma x den = {holder.write} x "
-                    f"{gamma} x {den} = {right} (ALGEBRA.md, energy conservation between a body and its light: "
-                    "E_h T cos omega_s = k_w Gamma; the holder's level weight, the quantum action, the holder's "
-                    "write weight and the Node clock); the universe is refused"
-                )
-
-
 def shared_clock(families: tuple[FamilyRule, ...]) -> None:
-    """The loader's gate of the carried factor, the held row's key `factor: carried` (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row; the reads compared are the reads of holders of the content alone, since the holder of the sign acts by the rotation, a phase on the Links, and enters no pace and no clock (the law of one Node, 2026-10-22: the hydrogen universes' proton and electron read the sign holder at 1 and 3 and no content, one clock, the vacuum's)."""
+    """The loader's gate of the carried factor, the carried factor (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row; the reads compared are the reads of holders of the content alone, since the holder of the sign acts by the rotation, a phase on the Links, and enters no pace and no clock (the law of one Node, 2026-10-22: the hydrogen universes' proton and electron read the sign holder at 1 and 3 and no content, one clock, the vacuum's)."""
     for index, family in enumerate(families):
         readers = readers_of(families, index)
         reads = {
@@ -303,27 +272,14 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
             )
             for other in readers
         }  # the reads of the content alone: the holder of the sign turns its readers and enters no pace
-        if family.factor_carried and len(reads) > 1:
+        if len(reads) > 1:
             raise ValueError(
-                f"{family.name!r} declares `factor: carried` and its sources read the content at differing "
+                f"{family.name!r} declares the carried factor and its sources read the content at differing "
                 f"weights, {[(families[o].name, families[o].declared) for o in readers]}: the carried factor's "
                 "one wall per Node is the sources' shared clock's, E_s T times the factor's wall at the Node, and "
                 "the one remainder per held line carries them where they share it (ALGEBRA.md, The write per "
-                "proper volume and per proper interval, the clause of 2026-10-22); declare `factor: rounded` or "
+                "proper volume and per proper interval, the clause of 2026-10-22); declare a rounded factor or "
                 "read alike"
-            )
-
-
-def trace_wall(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The hill's gate of the stress's trace, called by nothing since the law of one Node (2026-10-23) and kept by name: under the level form the hill's weight K = (d + 1) E_s T / Gamma had to be one integer (24 at T 36,000 and Gamma 6,000), the pressure hand's condition Gamma | (d + 1) E_s T; under the volume form the hill is no act (ALGEBRA.md, The carried momentum: the chain rule between the level and the volume), the exponent d + 1 stands as the integer coefficient of the one write ((d + 1) X c + r) div (Gamma E_s T), whose carried remainder keeps every fraction as Rule3 keeps every remainder, and no integer K is formed anywhere in the engine, so the divisibility is no condition of the law and every universe's integers stand as declared."""
-    for family in families:
-        weight = family.level_weight if family.pressure_trace else None
-        if weight is not None and division_forward((AXES + 1) * weight * action, gamma, 0)[1]:
-            raise ValueError(
-                f"{family.name!r} declares `pressure: trace` and Gamma {gamma} does not divide (d + 1) E_s T = "
-                f"{(AXES + 1) * weight * action}: the hill's weight K = (d + 1) E_s T / Gamma is the "
-                "one integer of the trace's constraint (ALGEBRA.md, The stress's trace is the time line's); choose "
-                "the quantum action or the level weight so that it divides"
             )
 
 
@@ -363,10 +319,6 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
         row[1:] = [SIDES * family.level_weight * measure] * AXES
-    if family.lorentz:  # the Lorentz form: the Link's own flux in the Link unit over 2 den_s G^2 E_s T
-        row[1:] = [SIDES * multiple * unit * unit * family.level_weight * action] * AXES
-    for line in family.off_diagonal_lines:  # the shear lines: the Node's two ends' halves over 2 E_s W_c
-        row[line] = SIDES * family.level_weight * measure
     row = [
         wall * family.write_wall for wall in row
     ]  # the sign holder's Gamma den: alpha inside the write
@@ -374,9 +326,7 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike
     factors = {
-        other: 1
-        if family.rotation and not family.lorentz
-        else int(division_forward(multiple, families[other].pair[1], 0)[0])
+        other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
         for other in sources
     }
     return HeldWrite(tuple(walls), factors)

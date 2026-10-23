@@ -57,7 +57,10 @@ def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatc
                 )
                 scalars, parts = (lines[:1], lines[1:]) if vector else (lines, [])
                 writes = state.write_remainders[row * family.width :][: family.width]
-                walls = board.walls(CHARGE)[row * family.width :][: family.width]
+                walls = [  # the write's walls fixed per Node for the run (the carried factor), one array per line
+                    np.asarray(w, dtype=object)
+                    for w in board.fixed_walls[CHARGE][row * family.width :][: family.width]
+                ]
                 for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
                     for a in [getattr(r, k) for r in scalars for k in KEYS] + writes[:1]:
                         assert np.array_equal(imaged(a, axes, signs), a)
@@ -68,13 +71,18 @@ def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatc
                                 signs[a] * imaged(found[axes[a]], axes, signs), found[a]
                             )
                     for a in range(len(parts)):  # the odd lines' remainders, the two's-complement mirror
-                        for r, w in ((parts[a].remainder, RULE_WALL), (writes[1 + a], walls[1 + a])):
-                            source = [p.remainder for p in parts] if w == RULE_WALL else writes[1:]
+                        for r, w, source in (
+                            (parts[a].remainder, RULE_WALL, [p.remainder for p in parts]),
+                            (writes[1 + a], walls[1 + a], writes[1:]),
+                        ):
                             image = imaged(source[axes[a]], axes, signs)
-                            assert np.array_equal(image if signs[a] == 1 else (w - image) % w, r)
+                            wall = (
+                                imaged(w, axes, signs) if np.ndim(w) else w
+                            )  # the wall per Node, imaged with it
+                            assert np.array_equal(image if signs[a] == 1 else (wall - image) % wall, r)
     halves = [
-        w // 2 for w in board.walls(CHARGE)[5:8]
-    ]  # the record's row's odd lines written: a current
+        np.asarray(w, dtype=object) // 2 for w in board.fixed_walls[CHARGE][5:8]
+    ]  # the record's row's odd lines written: a current, the remainders off the half of the fixed wall
     assert any((holder.write_remainders[5 + a] != halves[a]).any() for a in range(3))
     assert laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
 
@@ -170,8 +178,13 @@ def test_two_charges_of_opposite_sense_run_a_hundred_intervals(tmp_path, monkeyp
 def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():
     """(d) The sign holder's odd lines over the doubled wall 2 E_s T from the unhalved sum J against the halved path, (J + 1) div 2 over E_s T, both by the carried division from the half wall: with 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval (the half unit of current the halved path rounds up and the unhalved keeps in the remainder), so that the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals and on a plane wave's own current, J_x = 2 A^2 sin k, static; the walls of turning.json's sign holder (100 T, 200 T, 200 T, 200 T) per row."""
     write = held_write_of(TURNING, CHARGE, T)
-    weight, wall = TURNING[CHARGE].write, write.walls[0]
-    assert write.walls == (wall, 2 * wall, 2 * wall, 2 * wall) * 2 and wall == 100 * T
+    weight, wall = (
+        TURNING[CHARGE].write,
+        write.walls[0] // 2,
+    )  # E_s T, the halved path's wall of this model
+    assert (
+        write.walls == (2 * wall,) * 4 * 2 and wall == 100 * T
+    )  # every line of the sign holder over the doubled wall 2 E_s T: the odd lines since the halving was dropped, the time line since the Wronskian is booked centred on the triple, the two edges' sum (the centred count, 2026-10-23; the former time line's wall E_s T)
     draw = np.random.default_rng(11)
     for sources in (draw.integers(-(10**6), 10**6, 300), 2 * draw.integers(-(10**6), 10**6, 300)):
         old, new, odds = (0, wall // 2), (0, wall), 0

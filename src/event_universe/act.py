@@ -18,6 +18,7 @@ from event_universe.reports import (
     LOST_TO_TAKER,
     NO_SIDE,
     WRITTEN_AS_PHASE,
+    birth_line,
 )
 from event_universe.resonance import turned_direction
 from event_universe.take import (
@@ -122,7 +123,15 @@ def written(board: Lattice, items: list[Item]) -> None:
         if pair:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the conjugate pair there, the two items walking this same step after it
             items.extend(pair)
             if board.output is not None:
-                board.output(birth_line(board, item, pair))
+                board.output(
+                    birth_line(
+                        board.interval,
+                        board.families[item.family].name,
+                        [board.families[born.family].name for born in pair],
+                        [born.sense for born in pair],
+                        pair[0].nodes,
+                    )
+                )
         elif unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
         unsided |= item.delta < 0 and bool(item.ports) and not all(item.ports)  # any Node without a side
@@ -219,16 +228,3 @@ def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...
             den = child.pair[1]
             return [Item(out, None, None, 1, nodes, (den, den), sense=sense) for out, sense in table]
     return []
-
-
-def birth_line(board: Lattice, item: Item, pair: list[Item]) -> dict[str, object]:
-    """The birth line, the reading of the sentence's act beside the credit's: the interval, the gapless family met, the children's families and senses and the Nodes, never a rate."""
-    return {
-        "event": "birth",
-        "label": "NODEDETECTOR",
-        "interval": board.interval,
-        "family": board.families[item.family].name,
-        "children": [board.families[born.family].name for born in pair],
-        "senses": [born.sense for born in pair],
-        "nodes": [list(node) for node in pair[0].nodes],
-    }

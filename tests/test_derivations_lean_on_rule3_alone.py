@@ -192,7 +192,7 @@ def test_the_inventory_loads_and_its_scriptless_marks_only_fall():
 
 
 def agrees(value: object, printed: object, digits: int) -> bool:
-    """A function's number against a printed one: a "num/den" string is an exact rational, equal as Fractions; an int is equal as it stands; a float is equal rounded to `digits` decimal places (a negative count rounds to tens and hundreds, a large one reaches 10^-29)."""
+    """A function's number against a printed one: a "num/den" string is an exact rational, equal as Fractions; an int is equal as it is; a float is equal rounded to `digits` decimal places (a negative count rounds to tens and hundreds, a large one reaches 10^-29)."""
     if isinstance(printed, str):
         return Fraction(value) == Fraction(printed)  # type: ignore[arg-type]
     if isinstance(printed, int):
@@ -201,7 +201,7 @@ def agrees(value: object, printed: object, digits: int) -> bool:
 
 
 def test_every_scripted_mark_is_its_scripts_output():
-    """(e) Every entry of the inventory with the status "scripted" names its script under tools/derivations/, its function, the printed numbers and their digits; the function's output (a scalar or a list) carries the printed numbers in order, each a "num/den" string equal as a Fraction, an int equal as it stands or a float equal to `digits` decimal places (one count for every number or one count per number), so a scripted mark of the paper is its script's and no number of the paper is forced; a "differs" entry is not compared, it carries `computed` and `reason` for the hands."""
+    """(e) Every entry of the inventory with the status "scripted" names its script under tools/derivations/, its function, the printed numbers and their digits; the function's output (a scalar or a list) carries the printed numbers in order, each a "num/den" string equal as a Fraction, an int equal as it is or a float equal to `digits` decimal places (one count for every number or one count per number), so a scripted mark of the paper is its script's and no number of the paper is forced; a "differs" entry is not compared, it carries `computed` and `reason` for the hands."""
     document = json.loads(INVENTORY.read_text(encoding="utf-8"))
     scripted = [entry for entry in document["marks"] if entry["status"] == "scripted"]
     assert scripted, "the inventory names scripted marks"

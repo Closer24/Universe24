@@ -2,7 +2,6 @@
 
 import random
 from collections import Counter
-from dataclasses import fields
 
 import numpy as np
 import pytest
@@ -10,15 +9,14 @@ import pytest
 from event_universe import digits, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
-from event_universe.credit import Books
 from event_universe.features.click import bias_bound, drawn_from, read_number
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
+from event_universe.loader.draw import DIGIT_ORDER
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, family, refused, world_beside
+from tests.laws import EVENTS, ROOT, family, world_beside
 from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
@@ -201,41 +199,20 @@ def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypat
     for _ in range(4):
         board.step()
         read = list(digits.digits_of(board, electron, at))
-        assert all((r - half) % f == 0 for r, f, _w, _p in read)  # on w div 2 + F Z, every one
+        assert all((r - half) % quantum == 0 for r, f, _w, _p in read)  # on w div 2 + T Z, every one
+        off = [(r - half) % f for r, f, _w, _p in read if (r - half) % f]
+        assert (
+            off == [quantum] * (8 if board.interval == 4 else 0)
+        )  # the 16 digits read at F = 8 T at the interval 4 under the centred count (2026-10-23): 8 of them on w div 2 + T + 8 T Z, off their own lattice by T and on the former's (every digit on w div 2 + F Z to that day)
         assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
         assert {w for _r, _f, w, _p in read} == {2 * half}
         found.update(f for _r, f, _w, _p in read)
-    assert found == Counter({quantum: 260, 2 * quantum: 4}) and sum(found.values()) == 4 * 2 * 33
+    assert (
+        found == Counter({quantum: 244, 2 * quantum: 4, 8 * quantum: 16})
+        and sum(found.values()) == 4 * 2 * 33
+    )  # under the centred count, 2026-10-23 (Counter({T: 260, 2 T: 4}) to that day: the 16 digits at 8 T at the interval 4 read T and 2 T before)
     rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
     assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
-
-
-def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_path):
-    """No generator: `seed`, `multiplier` and `increment` are unknown keys of the world's `draw` and of a body's `node_detector`, refused by name as every unknown key is; a body's `node_detector` is `{}` (its window derived or a probe's) or `{"window": n}` (`body_draw_of`, `windowless_of`, `Draw`); a window beside a probe refused; the world's `engine` key refused as unknown, the start file gone; the books keep no state and the number left of the read alone (`credit.Books.left`)."""
-    label = "bodies[0].node_detector"
-    generator = {"seed": 24, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
-    refused("holds the unknown key 'increment'", draw_of, {**generator}, "draw", True)
-    refused("holds the unknown key 'seed'", body_draw_of, {"seed": 25}, label)
-    refused("holds the unknown key 'multiplier'", windowless_of, {"multiplier": 5}, label)
-    assert body_draw_of({}, label) == windowless_of({}, label) == Draw(None)
-    assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
-        {"window": 40}, "draw", True
-    ) == Draw(40)
-    assert draw_of({}, "draw", True) == Draw(
-        None
-    )  # the key read for its refusal at the end of the load alone (2026-10-23)
-    refused("unknown key 'reach'", draw_of, {"window": 40, "reach": "board"}, "draw", True)
-    assert not hasattr(Draw(None), "seed")
-    source = EVENTS / "bell_singlet" / "singlet_a_b.json"
-
-    def engine(world):  # type: ignore[no-untyped-def]
-        world["engine"] = "examples/events/engine_start.json"
-
-    refused(
-        "the world holds the unknown key 'engine'", load_world, world_beside(tmp_path, source, engine)
-    )
-    names = {f.name for f in fields(Books)}
-    assert "left" in names and not names & {"state", "states"}
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):
@@ -436,7 +413,10 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
         own, walls = digits_now(board, [(pair, at)], distinct=False)
         number, _moduli = digits.read_of(board, [(pair, at)], "the test")
-        distinct = own[:4] + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j])]
+        distinct = (
+            own[:4]
+            + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j], whole - own[j] - 1)]
+        )  # the complement's digit: (w - r) div F = w div F - r div F - 1 where F does not divide r, w div F - r div F where it does (the fourth digit here): the identity's right side read 2026-10-23 under the centred count (the former read w div F - k alone)
         assert number == read_number(distinct, walls[: len(distinct)]), case
         assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved
     print(f"the pair identity: {found}")

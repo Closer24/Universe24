@@ -1,4 +1,4 @@
-"""The step's oracle inside the suite's bound: the engine matches the law in its implementation, not only in its results, and this test holds the step to the 2.0.0 step it replaced. tools/step_oracle.py keeps the law's first form of Rule3, SUM over the six Ports of R_ij m_ij + S a_now - w a_before + r, with the 2.0.0 step around it, in no file of src/, and runs it against the engine's step (Rule3's flux line, src/event_universe/flux.py, core/rule3.rule3): two boards from one load, every array and the output lines compared at every interval, then the engine's board back with the record to the lay. Here two worlds under the suite's thirty seconds: bell_a_b (a held well with the holders, the draw, the growth of the board, 100 intervals) and the fold's chain (the rule's universe with the charged plane and gravity carrying the flux's odd lines, a moving packet, 40 intervals; declared by no shipped world). Every example world and the time paper's run were run by the tool with these caps (all EQUAL forward and back): shelved_ion and shelved_ion_control 1,000 of 96,000 each, pixel 100 of 400, zeno_pulsed 200 of 768 each, every other world its own intervals (the paper's run all 172)."""
+"""The step's oracle inside the suite's bound: the engine matches the law in its implementation, not only in its results. tools/step_oracle.py keeps the law's first form of Rule3, SUM over the six Ports of R_ij m_ij + S a_now - w a_before + r, with the one Node's interval around it, in no file of src/, and runs it against the engine's step (Rule3's flux line, src/event_universe/flux.py, core/rule3.rule3): two boards from one load, every array and the output lines compared at every interval, then the engine's board back with the record to the lay. Here two worlds under the suite's thirty seconds: bell_a_b (a held well with the holders, the draw, the growth of the board, 100 intervals) and the fold's chain (the rule's universe with the charged plane and gravity carrying the flux's odd lines, a moving packet, 40 intervals; declared by no shipped world)."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_the_flux_step_equals_the_first_form_on_a_held_well_and_runs_back_to_the_lay(
     monkeypatch,
 ) -> None:  # type: ignore[no-untyped-def]
-    """bell_a_b, every interval forward against the 2.0.0 step (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly."""
+    """bell_a_b, every interval forward against the first form (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
     found = ORACLE.verdict(Lattice(load_shipped(EVENTS / "bell" / "bell_a_b.json")), None)
     assert found["verdict"] == "EQUAL" and found["intervals"] == found["back"] > 0, found

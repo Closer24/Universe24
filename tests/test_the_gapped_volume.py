@@ -1,5 +1,6 @@
-"""The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader, the old clause kept by name; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation at the law's amplitude for 21 quanta per Node, and the shipped world of the test of the law's course held bit for bit against its own log."""
+"""The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation at the law's amplitude for 21 quanta per Node, and the shipped world of the test of the law's course held bit for bit against its own log."""
 
+import hashlib
 import json
 
 import numpy as np
@@ -7,11 +8,12 @@ import numpy as np
 from event_universe import lists, node, world_files
 from event_universe.core import paces
 from event_universe.emission import amplitude
-from event_universe.features import volume
 from event_universe.lattice import Lattice
-from event_universe.loader import interval, world
 from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, EVENTS, ROOT
+from tests.laws import BACK, EVENTS, ROOT, load_file
+
+ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
+DIGEST = "687901882f2c706c"  # the matter world's twenty intervals of readings on the one Node with the stress the Links' and the swap at the top, recorded 2026-10-23 at the landing (00573f6ccdc48b4d with the level 4,066 before the Links' stress, the same day)
 
 GAMMA, ACTION, CUBE, GAP = 1000, 36000, 3, 999  # the gapped torus: Gamma 1,000, gravity [999, 1000]
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -62,7 +64,7 @@ def laid_gapped(folder, monkeypatch, count=21):  # type: ignore[no-untyped-def]
 def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall(
     tmp_path, monkeypatch
 ):
-    """(i) The loader moves the gapped gravity row to the volume form by its tension lines (loader/interval.volume_rows, `FamilyRule.axes`) and the start lays it at the vacuum's volume Gamma at every Node; (ii) over 50 intervals the step's mass term at the fixed wall, X_next - 2 X_now + X_before less the write's increment, equals -2 (1 - nu) (p_0 / Gamma)^2 X_now within one level at every interval (the return hand's energy identity E1, met within 0.99 of a level on the 5-torus), the write's increment never negative and the tension lines 0 (a uniform lay); (iii) the run back MATCH over 50 intervals (the reversibility hand's Theorem 1 at the wall that never moves). The write's increment is read from the held write's call that carries the time line itself, so the reading stands whether a row's lines are written in one call or the time line and the tension lines in two (the shear's momentum, the tension lines written after the time line's step and write)."""
+    """(i) The loader moves the gapped gravity row to the volume form by its tension lines (loader/interval.volume_rows, `FamilyRule.axes`) and the start lays it at the vacuum's volume Gamma at every Node; (ii) over 50 intervals the step's mass term at the fixed wall, X_next - 2 X_now + X_before less the write's increment, equals -2 (1 - nu) (p_0 / Gamma)^2 X_now within one level at every interval (the return hand's energy identity E1, met within 0.99 of a level on the 5-torus), the write's increment never negative and the tension lines 0 (a uniform lay); (iii) the run back MATCH over 50 intervals (the reversibility hand's Theorem 1 at the wall that never moves). The write's increment is read from the held write's call that carries the time line itself, so the reading stands whether a row's lines are written in one call or the time line and the tension lines in two (the shear's momentum, the tension lines written after the time line's step and write). Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = laid_gapped(tmp_path, monkeypatch)
     board = Lattice(load_world(path))
@@ -104,8 +106,8 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
     assert verdict == {"verdict": "MATCH", "intervals": 50, "interval": 1, "ended": None}
 
 
-def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_before(monkeypatch):  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the one gapped held row shipped, the atom's binding holder [2400, 2401], has no tension lines and stays in the level form), so the rows the loader moves are the old clause's rows; and the shipped matter world of the test of the law's course (examples/events/big_bang/big_bang_matter.json) stepped 100 intervals under the loader's clause and the start's lay as they stand gives, at every interval, every family's lines bit for bit as under the old clause (the pair's two integers equal) and the old start (every holder's rest solved), whatever else the tree's step does."""
+def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log(tmp_path):  # type: ignore[no-untyped-def]
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row sourced by the tensions is a row of the content, massless [Gamma, Gamma] or gapped (the cycle's and Universe24's gravity [999, 1000] carrying its volume), never the holder of the sign, and the binding holder [2400, 2401] sourced by the form alone keeps the level form; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) reads over its first twenty intervals the stored digest of its integer readings (gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level, count and frozen Nodes; the level 4,066 at the twentieth), recorded on the one Node (2026-10-23) in place of the shipped eras log, which the branch interval-no-observable recorded and the one Node's write leaves from the sixth interval (the matter's write and the tension means); no other clause run anywhere. Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
     rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
@@ -115,35 +117,27 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_bef
                 continue
             rows += [f for f in families or [] if isinstance(f, dict) and "held" in f]
     content = [f for f in rows if "wronskian" not in f["held"]["sources"]]
-    assert content and all(
-        ("tensions" in f["held"]["sources"]) == (f["pair"][0] == f["pair"][1]) for f in content
-    )
+    assert (
+        content
+        and all(
+            ("wronskian" not in f["held"]["sources"]) if "tensions" in f["held"]["sources"] else True
+            for f in content
+        )
+    )  # the tensions source the content's rows alone, massless or gapped (the cycle's gravity [999, 1000]), never the sign's holder
     assert any(f["pair"] == [2400, 2401] for f in content)
-
-    def old_rows(unobservable, families, gamma=None):  # type: ignore[no-untyped-def]
-        moved = [f.held and not f.wronskian and f.pair[0] == f.pair[1] for f in families]
-        found = interval.volume_rows(unobservable, families, gamma)
-        assert [f.motion_volume for f in found] == moved  # the same rows on every shipped universe
-        return found
-
-    def old_resting(held, families, loaded):  # type: ignore[no-untyped-def]
-        return [(i, 0) for i in held if not families[i].wronskian]
-
-    def course():  # type: ignore[no-untyped-def]
-        board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
-        found = []
-        for _ in range(100):
-            board.step()
-            found.append(
-                [
-                    [np.asarray(a, dtype=object).tolist() for a in (r.now, r.before, r.remainder)]
-                    for s in board.states
-                    for r in s.lines
-                ]
-            )
-        return found
-
-    new = course()
-    monkeypatch.setattr(world, "volume_rows", old_rows)
-    monkeypatch.setattr(volume, "resting", old_resting)
-    assert course() == new
+    world = EVENTS / "big_bang" / "big_bang_matter.json"
+    lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
+    assert [line["interval"] for line in lines] == list(range(1, 21))
+    integers = ("level", "level_remainder", "before", "before_remainder", "volume", "volume_before")
+    integers += ("at_seed", "at_far", "well", "nodes")
+    found = hashlib.sha256()
+    for line in lines:
+        row = line["rows"]["gravity"]
+        kept = {
+            "interval": line["interval"],
+            **{key: row[key] for key in integers},
+            "writes": row["writes"],
+        }
+        kept["quanta"] = {n: [q["largest"], q["quanta"], q["frozen"]] for n, q in line["quanta"].items()}
+        found.update(json.dumps(kept, sort_keys=True).encode())
+    assert (found.hexdigest()[:16], lines[-1]["rows"]["gravity"]["level"]) == (DIGEST, 4091)

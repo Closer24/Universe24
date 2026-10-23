@@ -76,6 +76,7 @@ def test_the_engines_module_count_is_the_trees():
     words = {
         "thirty": 30,
         "thirty-one": 31,
+        "thirty-two": 32,
         "nineteen": 19,
         "twenty": 20,
         "twenty-one": 21,

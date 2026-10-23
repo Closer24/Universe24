@@ -16,7 +16,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import covector, growth, meeting_back, node, records
+from event_universe import growth, meeting_back, node, records
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
@@ -27,7 +27,6 @@ LABEL = "lattice reading"
 DENSE, SPARSE = "dense", "sparse"
 SIZE_LIMIT = 16 * 1024 * 1024  # the page's limit: beyond it every array keeps its nonzero Nodes alone
 LINES = ("click", "parts")  # the lines the look keeps per frame: the clicks and the parts' reads
-CONE = "cone"  # the run back's reach whose frames carry the cone's radius and whose header the cone's support and volume
 PASS_LINES = (
     "credit",
     "lay",
@@ -145,12 +144,8 @@ def frame(
                 row["second"] = lines[1].now
             if kept is not None:
                 began = (
-                    covector.lines_total(family, kept[index])
-                    if family.lorentz
-                    else [records.rows_total(family, kept[index])]
-                    if family.wronskian
-                    else kept[index]
-                )  # the kept lines read whole as `Lattice.record` reads the family's: the covector's four lines under the Lorentz form, the sum of the rows for a holder of the sign, the record's lines else (2026-10-22: a holder under the Lorentz form refused the form's zip)
+                    [records.rows_total(family, kept[index])] if family.wronskian else kept[index]
+                )  # the kept lines read whole as `Lattice.record` reads the family's: the sum of the rows for a holder of the sign, the record's lines else
                 row["form"] = records.form(began, lines) if direction > 0 else records.form(lines, began)
             row["pace"] = node.least_pace(
                 index, board.families, board.states, world.node_clock, board.wrap, world.link_unit
@@ -236,9 +231,9 @@ class Frames:
             index: [resized(line, removed, added) for line in lines]
             for index, lines in self.kept.items()
         }
-        coned = (
-            pass_number > 1 and reach_of(board) == CONE
-        )  # the run back and forward in the cone's reach
+        coned = pass_number > 1 and bool(
+            getattr(getattr(board, "credit", None), "reads_sides", False)
+        )  # the run back and forward in the record's light cone, the one reach
         radius = (
             meeting_back.radius(board) if coned else None
         )  # G(t): the lay's Nodes within t + 1 Links
@@ -288,19 +283,13 @@ class Frames:
         return self.frames
 
 
-def reach_of(board: Lattice) -> str | None:
-    """The run back's reach of the world's draw as the credit's books hold it (`board.credit.reach`): cone or board on a world of a record of several parts read at declared sides (cone where the file declares no `reach`, the owner's word), None on a world drawing nothing."""
-    books = getattr(board, "credit", None)
-    found = getattr(books, "reach", None)
-    return str(found) if found is not None else None
-
-
 def reached(board: Lattice) -> dict[str, object]:
     """The header's words of the run back's reach after the run, the engine's own numbers (ENGINE.md section 10, item 11): `reach` on a back world, and in the cone's reach `cone_support`, the lay's Nodes S_0 at the file's coordinates (`board.credit.support`), and `cone_volume`, the cone's Nodes |G(t)| per interval from 0 to the close (`board.credit.cone`), and `cone_stepped`, the Node-steps per interval of the cone stepped alone, the box with its ring, where the books count them; nothing on a root world, whose look is as before bit for bit."""
-    reach = reach_of(board)
-    if reach is None:
+    if not getattr(getattr(board, "credit", None), "reads_sides", False):
         return {}
-    found: dict[str, object] = {"reach": reach}
+    found: dict[str, object] = {
+        "reach": "cone"
+    }  # the one region the click runs back, the record's light cone
     support = getattr(board.credit, "support", None)
     if (
         support

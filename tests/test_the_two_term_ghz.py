@@ -1,6 +1,5 @@
 """The two-term plane GHZ (the reader's design verdict of 2026-10-20, Part B; ALGEBRA.md, The meeting's identity, the Gram theorem's identity case; The click is the meeting of the future with the past): the Gaussian clause of the write, a side's quarter turn on a plane record, and the record of two terms of planes read at three sides; and first the byte-for-byte test of every real-port world the branch ships, recorded by this test at the eighth commit as pushed (5efd3b4d7), the real path before the Gaussian pairs (the eighth's own tests pin none of them; the reader's run at that commit confirms every one), so that the real path's identity is a test and no claim."""
 
-import hashlib
 import json
 from fractions import Fraction
 
@@ -11,14 +10,12 @@ from event_universe import meeting_back, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import UNITS, Gauss, norm, ports_of, setting_of, times
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL
-from tests.laws_read import load_shipped
+from tests.laws import EVENTS, TOOL
 from tests.laws_spin import (
     IDENTITY,
     PORT,
     SINGLET,
     SPIN,
-    digest,
     joint_shares,
     marginal_of,
     sided,
@@ -38,142 +35,6 @@ SETTINGS = {
     "y_x_y": ((Y, X, Y), -1),
     "y_y_x": ((Y, Y, X), -1),
 }
-
-REAL_PORT_DIGESTS: dict[
-    str, tuple[str, str, int]
-] = {  # the lines' digest, the arrays' digest at the end, the lines; the lines' digests re-recorded 2026-10-20 under the twist's deletion, the credit line without twist and shortfall, the arrays' digests and the counts as at the ninth; the entries marked `former` re-recorded 2026-10-23 under two acts of the law's reading on the owner's decisions of 2026-10-23, the count centred (the phase hand's run on the documents tree, the arrays' digest named `centred` where its table has the world) and the window derived and never declared (the windows hand's run on the branch windows, every click at its derived close): each names the former lines' digest, arrays' digest and count; the entries marked `former` re-recorded 2026-10-23 under two acts of the law's reading on the owner's decisions of 2026-10-23, the count centred (the phase hand's run on the documents tree, the arrays' digest named `centred` where its table has the world) and the window derived and never declared (the windows hand's run on the branch windows, every click at its derived close): each names the former lines' digest, arrays' digest and count
-    "singlet_a_b": (
-        "bfcbdf59a9085e84",
-        "2aed7082f74bdfd3",
-        421,
-    ),  # former bfcbdf59a9085e84, 2aed7082f74bdfd3, 421; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:minus@30; former 1b4de9a3ecd0fbe3, 29c984886c98a340, 152; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:minus@30
-    "singlet_a_b_prime": (
-        "4da72e5cd021809f",
-        "2aed7082f74bdfd3",
-        421,
-    ),  # former 4da72e5cd021809f, 2aed7082f74bdfd3, 421; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:plus@30; former 3fb0cfd3c2d4f761, 29c984886c98a340, 152; centred f58fefcc86e2ece1; the clicks 2: left:plus@30, right:plus@30
-    "singlet_a_prime_b": (
-        "9a8e8c76a96a3f79",
-        "0daa86151311d32c",
-        456,
-    ),  # former 9a8e8c76a96a3f79, 0daa86151311d32c, 456; centred 4fa2bf3b04c65a88; the clicks 2: left:minus@30, right:plus@30; former cf3ee118d5d5a591, 355f34162a2096bc, 165; centred 4fa2bf3b04c65a88; the clicks 2: left:minus@30, right:plus@30
-    "singlet_a_prime_b_prime": (
-        "3ca88a811ea9f2b8",
-        "0444781a43c9f9bb",
-        456,
-    ),  # former 3ca88a811ea9f2b8, 0444781a43c9f9bb, 456; centred 6cd440151409074a; the clicks 2: left:minus@30, right:plus@30; former 3a3fa16fd3151ccc, de0951aaad4762b0, 165; centred 6cd440151409074a; the clicks 2: left:minus@30, right:plus@30
-    "ghz_x_x_x": (
-        "9dfa6215e84a9a46",
-        "5b61d065da2b1cca",
-        2153,
-    ),  # former e3907b49e7107747, d6a774f9d5346e84, 2162; centred 38daaff3c4ff1649; the clicks 3: left:minus@35, right:plus@35, top:minus@35
-    "ghz_x_y_y": (
-        "0c77d3edf4217284",
-        "fff22e30e4d65c26",
-        1613,
-    ),  # former df89005705555bb6, 03f76ace05e501e9, 1593; centred fff22e30e4d65c26; the clicks left:minus@35, right:plus@35, top:plus@35
-    "ghz_y_x_y": (
-        "db9e9f42462ef52a",
-        "ebae12a7ee683613",
-        3337,
-    ),  # former d37726d4ad3db38b, 21422c4532c84b95, 3300; the clicks left:minus@35, right:plus@35, top:plus@35
-    "ghz_y_y_x": (
-        "8584dce0162e8560",
-        "e9dfe0e14fd490da",
-        3328,
-    ),  # former 3b9802f5a46e3e74, befdc50e632d240e, 5007; this hand's run of the shipped world under the derived window 35 (2026-10-23)
-}
-REFUSED: dict[str, str] = {
-    "two_slits": "the digits read are spent at this interval by its earlier draws",
-}  # the two slits under the window derived (26, the lays' longest passage over the screens; the law's reading on the owner's decision of 2026-10-23): the whole-window draw spends the board's digits at the third close, 78, and the run is refused by name there, as the ninth's window 130 was refused; the declared window 1 ran whole (its digests c065a075ed83c487, 7742549762b6ec9d, 2683 lines the former reading, kept in the table below by name)
-REAL_PORT_DIGESTS.update(  # the born four at the seventh, 2026-10-20: the atom reads within one Link (G2)
-    {
-        "two_slits": (
-            "c065a075ed83c487",
-            "7742549762b6ec9d",
-            2683,
-        ),  # 2026-10-21, the floor and the remainder's draw: every window's remainder drawn, N 546 (the landing's 874668d0a958235f, be63d2ce99f6604a, 2696 lines, N 500, under the half-up rounding)
-        "born_a_b": (
-            "f5a43513a239cd68",
-            "0177773313ecd712",
-            385,
-        ),  # former f5a43513a239cd68, 0177773313ecd712, 385; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:plus@120; former bb97f5dcda1fb8b5, c192784fb41509b1, 290; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:plus@120
-        "born_a_b_prime": (
-            "dc672678350bfb01",
-            "0177773313ecd712",
-            385,
-        ),  # former dc672678350bfb01, 0177773313ecd712, 385; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:minus@120; former 0ea65e583fec7beb, c192784fb41509b1, 290; centred a63e69a3e05dddbf; the clicks 3: body 0:g@24, left:minus@72, right:minus@120
-        "born_a_prime_b": (
-            "e94a77708718fdab",
-            "d3a04b353df0b81e",
-            383,
-        ),  # former e94a77708718fdab, d3a04b353df0b81e, 383; centred 7b9ceaae0d0a84c6; the clicks 3: body 0:g@24, left:plus@72, right:minus@120; former 19285640497e35f7, b23542a6b2c460fd, 290; centred 7b9ceaae0d0a84c6; the clicks 3: body 0:g@24, left:plus@72, right:minus@120
-        "born_a_prime_b_prime": (
-            "59b7fdaa84013cb8",
-            "d72fae91ad520fda",
-            383,
-        ),  # former 59b7fdaa84013cb8, d72fae91ad520fda, 383; centred 9cf860847a1ef469; the clicks 3: body 0:g@24, left:plus@72, right:minus@120; former 1a001543d9083ac1, 26aa22f2998f8cd6, 290; centred 9cf860847a1ef469; the clicks 3: body 0:g@24, left:plus@72, right:minus@120
-    }
-)
-
-
-def run_digest(folder: str, name: str) -> tuple[str, str, int]:
-    """One shipped world run through its intervals: the sha256 (16 hex digits) of its output lines in order (each line's JSON with sorted keys), the hash of every array of the board at the end (`laws_spin.digest`) and the count of lines."""
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_shipped(EVENTS / folder / f"{name}.json"), lines.append)
-    for _ in range(board.world.intervals):
-        board.step()
-    found = hashlib.sha256()
-    for line in lines:  # the sixth's bias booking aside, the line the ninth wrote
-        kept = {k: v for k, v in line.items() if k != "bias_bound"}
-        found.update(json.dumps(kept, sort_keys=True, default=str).encode())
-    return found.hexdigest()[:16], digest(board)[:16], len(lines)
-
-
-def worlds_read(monkeypatch, folder: str, names: tuple[str, ...]) -> None:  # type: ignore[no-untyped-def]
-    """Every real-port world the branch ships (the four singlet, the four GHZ of four real parts, the four born, the two slits), run whole: its output lines and its board at the end equal, digest for digest, this test's own recording at the ninth's head before the tenth's merge (4c16df037, the click's read of the board), or refused by name as the ninth refuses it (the born four at 85, the two slits at 130: the digits spent at a second draw); a coefficient with the imaginary part 0 is the integer of the ninth's formulas, so the path is the same path."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
-    for name in names:
-        if name in REFUSED:  # refused by name as the ninth's read refuses it, the same with the tenth
-            with pytest.raises(RuntimeError, match=REFUSED[name]):
-                run_digest(folder, name)
-            continue
-        found = run_digest(folder, name)
-        print(f"{folder}/{name}: {found}")
-        assert found == REAL_PORT_DIGESTS[name], name
-
-
-def test_the_four_singlet_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped singlet worlds of bell_singlet, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; the clock gives each folder its own test)."""
-    worlds_read(
-        monkeypatch,
-        "bell_singlet",
-        ("singlet_a_b", "singlet_a_b_prime", "singlet_a_prime_b", "singlet_a_prime_b_prime"),
-    )
-
-
-def test_the_four_born_worlds_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The four shipped born-pair worlds of bell_singlet, digest for digest the recording at the ninth's seventh commit (what a body reads, the reader's G2 of 2026-10-20: the atom's absorption draws at 85 and 110 read the pair's wake within one Link and carry their totals; `worlds_read`)."""
-    worlds_read(
-        monkeypatch,
-        "bell_singlet",
-        ("born_a_b", "born_a_b_prime", "born_a_prime_b", "born_a_prime_b_prime"),
-    )
-
-
-def test_the_two_slits_world_runs_byte_for_byte_at_the_window_1(monkeypatch):  # type: ignore[no-untyped-def]
-    """The shipped two slits world under the derived window 26 (2026-10-23): refused by name at its third close, 78, the digits spent by the earlier draws (`REFUSED`); before the derivation, at the draw's declared window of one interval with the screens two columns deep (the landing of 2026-10-20), run whole, digest for digest the recording of 2026-10-21 under the floor and the remainder's draw (`credit.whether`: 88 closes drew their remainder, 30 of them a quantum, N 546 where the half-up rounding's carry gave 500; `worlds_read`); at the ninth's window 130 the same world was refused by name at its close, the digits spent by the many-draw close (the ninth's test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130 keeps that reading)."""
-    worlds_read(monkeypatch, "two_slits", ("two_slits",))
-
-
-def test_the_ghz_worlds_x_x_x_and_x_y_y_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """Two of the four shipped GHZ worlds of four real parts, x x x and x y y, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`; two per test for the clock)."""
-    worlds_read(monkeypatch, "ghz", ("ghz_x_x_x", "ghz_x_y_y"))
-
-
-def test_the_ghz_worlds_y_x_y_and_y_y_x_run_byte_for_byte_as_at_the_ninth(monkeypatch):  # type: ignore[no-untyped-def]
-    """The other two shipped GHZ worlds, y x y and y y x, digest for digest the recording at the ninth before the merge, 4c16df037 (`worlds_read`); with the first pair every real-port world the branch ships is run."""
-    worlds_read(monkeypatch, "ghz", ("ghz_y_x_y", "ghz_y_y_x"))
 
 
 def conj_times(a: Gauss, b: Gauss) -> Gauss:

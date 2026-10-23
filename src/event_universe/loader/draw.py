@@ -32,7 +32,6 @@ DRAW_KEYS = (
 # numpy's order of a mask), the first digit the most significant, each digit the remainder's index on its
 # Node's lattice; the realisation depends on this order and the measure does not
 DIGIT_ORDER = "the lines in the record's declared order, each line's Nodes in the lattice's index order, the first digit the most significant, each digit the remainder's index on its Node's lattice, r div F, in the base w div F + 1"  # the draw with its window: the world's and a body's without a probe
-CONE = "cone"  # the one region of the click that runs back: the record's light cone, derived (credit.Books.reach, cone.box_of)
 WORLD_DRAW_KEYS = (
     DRAW_KEYS  # the world's draw: no key (the law of one Node; the window the regions' passage)
 )
@@ -43,7 +42,6 @@ class Draw:
     """A draw as the files declare it, the click's read of the board with its window (features/click, `digits.read_of`): the world's window, the intervals after which every node_detector's window closes and the NodeDetector draws and writes; a body's without a probe (derived from the lays' passage over the body, or from its own beat where a drive's lay has no end, `loader/window.py`; the owner's decision of 2026-10-23: the window shall not be declared); None where the window is bounded by a probe's lays at the body's Node, the world's schedule and no number of the body's (`windowless_of`; ALGEBRA.md, The pulsed gate); and the run back's reach of the world's draw alone, `cone` or `board` (`REACHES`, `meeting_back`), None where the file declares none, which the engine reads as the record's light cone (`credit.Books.reach`), written nowhere; no seed, no multiplier and no increment: the draw carries no number of the run outside the world file and Rule3."""
 
     window: int | None
-    reach: str | None = None
 
 
 def windowless_of(value: object, label: str) -> Draw:

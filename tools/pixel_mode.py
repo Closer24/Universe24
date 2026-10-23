@@ -57,7 +57,6 @@ class Board:
     width: int  # the largest integer of the universe's width, 2^width - 1
     unit: int  # the Link's unit G, the run's declaration like Gamma (ALGEBRA.md #the-paces)
     kind: type = np.int64  # the arrays' kind by the width, the loader's one choice (`kind_of`)
-    free: bool = False  # the world's `interval: unobservable` or the law's `uniform: carried`: a massless rest on a board with no sink its zero-mean part (features/start `rest`, loader/interval.py `interval_of`, loader/uniform.py `uniform_of`)
 
     @property
     def room(self) -> int:
@@ -71,9 +70,8 @@ def board_of(
     gamma: int,
     integers: dict[str, Any],
     pair: tuple[int, int],
-    free: bool = False,
 ) -> Board:
-    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width; `free` the world's `interval: unobservable` or the law's `uniform: carried`, read by the loader's own doors (`interval_of`, `uniform_of`) so that a malformed key is refused by name before any lay."""
+    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width, read by the loader's own doors so that a malformed key is refused by name before any lay."""
     width = int(integers["width"])
     return Board(
         shape,
@@ -84,7 +82,6 @@ def board_of(
         int(2**width - 1),
         int(integers["link_unit"]),
         kind_of(width),
-        free,
     )
 
 
@@ -408,7 +405,7 @@ def rests(rows: Rows, counts: np.ndarray, board: Board) -> np.ndarray:
         )
         for _position, row in rows
     ]
-    fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit, (), board.free)
+    fields = settled_rows(sourced, board.wrap, board.width, board.gamma, board.unit, ())
     return sum(
         (
             np.asarray(field.levels, dtype=board.kind) + row[3]
@@ -484,7 +481,6 @@ def start_content(
         board.width,
         board.gamma,
         board.unit,
-        board.free,
     )
     booked([field.levels for field in fields])  # the rests as found laid into the rows for the read
     content = np.asarray(
@@ -950,7 +946,7 @@ def body_entry(
         "family": body["family"],
         "pair": list(board.pair),
         "count": quanta,
-        "seed": scale,
+        "scale": scale,
         "carried": record.carried,
         "period": [record.window, 2],
         "amplitude": int(np.abs(now).max()),
@@ -1305,9 +1301,9 @@ def pixel_mode(
     for at in outside:
         beyond[at] = True
     wrap = Wrap(
-        *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
+        *(document.get("boundary", {}).get(axis, "periodic") == "periodic" for axis in AXES),
+        beyond if outside else None,
     )
-    free = True  # the one Node: every massless rest the zero-mean part where the board has no sink
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
     kept = [n for n, body in enumerate(rows) if not laid_by_the_engine(body)]
@@ -1330,11 +1326,11 @@ def pixel_mode(
             raise ValueError(
                 f"bodies[{number}] declares a Node beyond the board's inner face: nothing stands there"
             )
-        board = board_of(shape, wrap, gamma, integers, pairs[body["family"]], free)
+        board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
         rows = held_rows(universe, str(body["family"]))
         if number in pixels:  # the one-Node record's declaration, its own seed
             first = counts
-        elif lay is not None and lay.seed == COMPACT and lay.profile is not None:
+        elif lay is not None and lay.start == COMPACT and lay.profile is not None:
             first = compact_seed(quanta, centre, shape, wrap, lay.profile)
         else:  # the declared count's cube
             first = spread(counts, centre, board, rows, zero)
@@ -1363,7 +1359,7 @@ def pixel_mode(
     )
     for number, packet in enumerate(document_packets):
         family = str(packet["family"])
-        board = board_of(shape, wrap, gamma, integers, pairs[family], free)
+        board = board_of(shape, wrap, gamma, integers, pairs[family])
         slot = records[len(bodies) + number]
         rule = families[names.index(family)]
         massless = rule.quanta and rule.pair[0] == rule.pair[1]
@@ -1374,7 +1370,7 @@ def pixel_mode(
         laid_packets.append((names.index(family), slot, [laid_pair]))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
-    # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
+    # as the first laid them (a body before its lay stands at its first lay, its quanta, not its share);
     # one body's declaration is the engine's reading exactly, several bodies' within the gate's rounding
     for _round in range(2 if len(bodies) > 1 else 1):
         entries = []
@@ -1388,7 +1384,7 @@ def pixel_mode(
                     others.append(
                         (names.index(str(bodies[other]["family"])), records[other], laid_pairs)
                     )
-            board = board_of(shape, wrap, gamma, integers, pairs[body["family"]], free)
+            board = board_of(shape, wrap, gamma, integers, pairs[body["family"]])
             rows = held_rows(universe, str(body["family"]))
             sense = (senses or [])[number] if number < len(senses or []) else 0
             if sense not in (-1, 0, 1):
@@ -1477,7 +1473,7 @@ def pixel_mode(
             lays[number] = (laid, pairs_kept, centre, quanta)
             entry = body_entry(record, board, region, body, quanta, int(record.clock[1]))
             if lay is not None:  # the lay as declared, its seed by name, the fixed-point trajectory
-                entry["lay"] = {"kind": lay.kind, "seed": lay.seed}
+                entry["lay"] = {"kind": lay.kind, "start": lay.start}
                 if trajectory:
                     entry["lay"].update(stop=lay.stop, trajectory=trajectory)
             entry["nodes"] = [
@@ -1494,7 +1490,7 @@ def pixel_mode(
         body["nodes"] = entry.pop("nodes")
     packets = []
     for number, packet in enumerate(document_packets):
-        board = board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])], free)
+        board = board_of(shape, wrap, gamma, integers, pairs[str(packet["family"])])
         content = vacuum_of(universe, str(packet["family"]), board)  # the declared rests it reads
         packets.append(
             packet_entry(

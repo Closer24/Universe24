@@ -14,8 +14,9 @@ from event_universe.features.front import ball
 from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import CONE, Gauss, Pattern, Ports, times
+from event_universe.loader.draw import Gauss, Pattern, Ports, times
 from event_universe.records import NodeState, Record, largest
+from event_universe.walls import vacuum_walls
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -85,7 +86,7 @@ def grown(board: Lattice, states: list[NodeState], found: growth.Growth, directi
         if (
             index in board.fixed_walls
         ):  # the carried factor: a grown Node is born at the rest's wall, as the board's layer is
-            walls = tuple(board.vacuum_walls(index))
+            walls = tuple(vacuum_walls(board, index))
         growth.resized(
             state, family, axis, side, layers, origin, walls, direction, board.world.kind, half, seed
         )
@@ -133,10 +134,24 @@ def faces_from(board: Lattice, lines: Lines) -> None:
         board.credit.faces.setdefault(interval, []).append(found)
 
 
-def crossed(board: Lattice, lines: Lines, direction: int = -1) -> None:
+def same_lay(line: dict[str, object], kept: dict[str, object]) -> bool:
+    """Whether a lay line from a run's output names the lay the books' log holds: the same family, line and Node at the same interval (the log's line is the output's own object where both are kept, and its equal where the lines come from a file)."""
+    return all(
+        line[key] == kept[key] for key in (reports.REPORT_KEYS[2], reports.REPORT_KEYS[3], reports.LINE)
+    ) and list(line[reports.LAY_KEYS[3]][reports.AT]) == list(kept[reports.LAY_KEYS[3]][reports.AT])  # type: ignore[index]
+
+
+def crossed(board: Lattice, lines: Lines, direction: int = -1, log: bool = False) -> None:
     """The lays of the lattice's interval crossed from their `lay` lines by their changes (ALGEBRA.md, The click is the meeting of the future with the past: the backward run brings no new number along the realised orbit, the board is reversible, and the lay is not taken back; the mathematician's hand: the face's part of the inverse; the one write site of the engine beside the lay act's write step, Rule3's step and the cone's write-back of Rule3's own results into the board (`cone.written_back`, the fourth site the writers gate admits)): per line of the interval, in the lines' order forward and reversed back, the Node at the file's coordinates, the line's levels now and before changed by the lay's own change, after less before, added forward and subtracted back, and the remainder: a lay without an origin changes no remainder and the inverse recovers it; a lay with an origin sets it forward and restores the history's own backward, the board's remainder before the setting logged into the line's `before` on the way forward, so that the log holds the history it is replayed in and the next run back restores it (the reader's fix of 2026-10-20, the residual's root: the source's increments carried pass 1's remainders into the rewritten history); so a lay the click's write scaled at the birth (`realised`, the log's copies carrying the scaled levels) replays scaled, and every other lay replays as it was, the board's value equal to the line's at the line's turn by the inverse's theorem; a copy of each array written, nothing in place. The host tool reads the lines from the run's output (tools/back_in_time.py), the engine from the books' log (`logged`)."""
     event, when = reports.REPORT_KEYS[0], reports.REPORT_KEYS[2]
-    own = [line for line in lines if line[event] == reports.LAY and line[when] == board.interval]
+    held = [] if log else board.credit.lays.get(board.interval, [])
+    own = [
+        line
+        for line in lines
+        if line[event] == reports.LAY
+        and line[when] == board.interval
+        and not any(line is kept or same_lay(line, kept) for kept in held)
+    ]  # a host's line naming a lay the books' log holds is skipped: the loop crosses the log itself (`logged`, `log` True), once, so nothing is crossed twice
     for line in own if direction > 0 else reversed(own):
         index, at = node_of(board, line)
         here = on_board(board, at)
@@ -155,7 +170,7 @@ def crossed(board: Lattice, lines: Lines, direction: int = -1) -> None:
 
 def logged(board: Lattice, direction: int) -> None:
     """The lays the books' log holds at the board's interval, crossed in `direction` (`crossed`; `credit.Books.lays`, filled by `lay.written` where the world's draw runs back): the step at the Nodes alone re-applies them after its Rule3 and the inverse undoes them before its own, so the engine's run back and forward re-present every act from outside the Node from the books; nothing where the log is empty, a world with no record of several parts at declared sides, where the host tool crosses from the lines."""
-    crossed(board, board.credit.lays.get(board.interval, []), direction)
+    crossed(board, board.credit.lays.get(board.interval, []), direction, log=True)
     for whole in board.world.wholes:  # the packets laid whole at this interval: their counts with their levels (the lay's inverse, 2026-10-23)
         if whole.interval == board.interval:
             board.credit.counts[whole.family] += direction * whole.count
@@ -269,9 +284,7 @@ def realised(board: Lattice, index: int, coefficients: Sequence[Gauss]) -> None:
             family.plane or b == 0
         )  # a coefficient with an imaginary part is a plane side's (the loader's word)
         partner = before[number + 1 - 2 * position] if family.plane else line  # the plane's other line
-        sign = (
-            -1 if position == 0 else 1
-        )  # re' = a re - b im, im' = a im + b re: the plane's two lines move together
+        sign = -1 if position == 0 else 1  # re' = a re - b im, im' = a im + b re, the two lines together
         changes[number] = (
             np.asarray(line.now, dtype=object) * (a - 1)
             + np.asarray(partner.now, dtype=object) * (sign * b),
@@ -328,15 +341,9 @@ def run_back(board: Lattice, index: int) -> Kept:
         observer(board.interval, 1, board.passes)
     kept, books = (cone.copied(board), list(board.growths)), board.credit
     (books.birth, books.support), to = books.births[index], birth_of(board, index)
-    if books.reach == CONE:
-        books.regrown = frame_grown(board, index)
+    books.regrown = frame_grown(board, index)
     while board.interval > to:
-        if books.reach == CONE:
-            cone.stepped_alone(board, -1)
-        else:
-            volume = int(np.prod(board.shape))
-            board.step_inverse()
-            cone.counted(board, volume)
+        cone.stepped_alone(board, -1)
     return kept
 
 
@@ -347,11 +354,7 @@ def run_forward(board: Lattice, index: int, to: int, kept: Kept) -> None:
     while board.interval < to:
         if board.interval + 1 >= first:
             booked_moments(board, index)
-        if books.reach == CONE:
-            cone.stepped_alone(board, 1)
-        else:
-            board.step(False)
-            cone.counted(board, int(np.prod(board.shape)))
+        cone.stepped_alone(board, 1)
     states, growths = kept
     shared = 0
     while shared < min(len(growths), len(board.growths)) and growths[shared] == board.growths[shared]:

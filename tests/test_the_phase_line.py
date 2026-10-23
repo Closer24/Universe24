@@ -262,7 +262,7 @@ def chain_centroid_shift(conjugate: bool, intervals: int) -> tuple[float, float]
 
 @pytest.mark.parametrize("intervals", [2_500])
 def test_the_coulomb_harness_moves_the_centroid_by_the_hands_count(intervals: int):
-    """The advisor's second, item (2): after 2,500 intervals the record's centroid moves by about -151 Nodes (the hands: -151.20 in the rationals; today's engine -151.27) and the conjugate's by +151.20 (+151.25), the force dk / dt = -theta_0 per Link the potential's gradient (the mathematician's item 5), within 2 percent; the chain a small local stepper on core/rule3 with no engine wiring (`chain_centroid_shift`)."""
+    """The advisor's second, item (2): after 2,500 intervals the record's centroid moves by about -151 Nodes (the hands: -151.20 in the rationals; the engine's -151.27 that day) and the conjugate's by +151.20 (+151.25), the force dk / dt = -theta_0 per Link the potential's gradient (the mathematician's item 5), within 2 percent; the chain a small local stepper on core/rule3 with no engine wiring (`chain_centroid_shift`)."""
     started = time.perf_counter()
     expected = -151.20 * (intervals / 2_500) ** 2  # the shift grows as t^2 at constant acceleration
     shifts = {}

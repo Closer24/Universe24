@@ -23,7 +23,6 @@ from event_universe import node, share, world_files
 from event_universe.core import paces
 from event_universe.core.ports import PORT_SIDES, PORTS, arrival
 from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.covector import THIRDS
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import turns
 from event_universe.loader.faces import connected
@@ -269,7 +268,7 @@ def transition_unit(board: Lattice, reading: Reading) -> int:
     den = low.pair[1]
     sine = high.sine * low.pair[0] - high.pair[0] * low.sine  # den^2 sin(Omega_u - Omega_l)
     holder = board.families[reading.holder]
-    wall = 3 * holder.pair[1] * board.world.quantum_action * (THIRDS if holder.lorentz else 1)
+    wall = 3 * holder.pair[1] * board.world.quantum_action
     return int(division_forward(wall * sine, den * den, 0)[0])
 
 
