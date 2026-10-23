@@ -152,6 +152,7 @@ def interval_line(
         "interval": board.interval,
         "seconds": seconds,
         "fires": fires,
+        "horizon": len(horizon_links(board)),  # the Links at the wall (ALGEBRA.md, The horizon)
         "rows": {},
         "quanta": {},
     }
@@ -287,6 +288,30 @@ def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, 
         found["quanta"][board.families[i].name] = [
             int(q) for q in np.asarray(quanta, dtype=object).reshape(-1)
         ]
+    found["horizon"] = horizon_links(board)
+    return found
+
+
+def horizon_links(board: Lattice) -> list[list[int]]:
+    """The Links at the wall after the interval, the horizon (ALGEBRA.md, The horizon, 2026-10-23): every Link whose factor the read gives at 0 and the world does not cut (board_readings.horizon_ports on the first family of quanta that reads the Links' tensions, the tension being the Link's and no family's), as pairs of the two Nodes' x-major indexes through the +a Ports; a reading for the torus view, no act."""
+    ports = None
+    for index in board.order:  # the first family of quanta whose read takes the Links' tensions (a holder reading nothing has no Link to stand at the wall)
+        ports = board_readings.horizon_ports(board, index)
+        if ports is not None:
+            break
+    if ports is None:
+        return []
+    shape, found = board.shape, []
+    for axis in range(3):
+        for at in np.argwhere(np.asarray(ports[2 * axis], dtype=bool)):
+            far = list(at)
+            far[axis] = (far[axis] + 1) % shape[axis]
+            found.append(
+                [
+                    int(np.ravel_multi_index(tuple(at), shape)),
+                    int(np.ravel_multi_index(tuple(far), shape)),
+                ]
+            )
     return found
 
 
