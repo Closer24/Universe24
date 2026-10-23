@@ -86,6 +86,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the stress is the Links': the loader's tension lines at the doubled wall 2 E_s W_c, and a wrapped world with a "
         "structured record stepped and run back bit for bit",
     ),
+    "tests/test_the_stress_is_the_links.py::test_the_three_clumps_edge_at_one_node_holds_the_tension_below_gamma_through_the_top_and_names_the_returns_growth": (
+        34,
+        "the structured board's clause of The stress is the Links' (the owner's question of 2026-10-23): the three-clump torus's "
+        "edge Node read once, the one-interval write 59 and the Link at 48, the static bound 9 G_5(0) S = 110 below Gamma, "
+        "the return's growth 738 x 59 above it named",
+    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
