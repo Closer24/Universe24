@@ -41,6 +41,14 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_universe_runs_its_cycle.py::test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks": (
+        80,
+        "the test of the law's course for the one universe (examples/events/universe/; ALGEBRA.md, The one Node, The swap at the "
+        "top): the 3-cube torus with one clump, the uniform light and the two-Node detector at the gap [990, 1000], the rise from "
+        "the seed, X'' below 0 at the clump's Node, the fifth act's staggered fires at the top, the fall, the light velocity reversed "
+        "bit for bit at every turned Node, the run back 40 of 40 through the fires, the clicks history kept, the crunch as the "
+        "small board's end",
+    ),
     "tests/test_the_swap_on_a_structured_board.py::test_the_swap_on_a_structured_board": (
         50,
         "the swap at the top on a structured board (ALGEBRA.md, The swap at the top): the three-clump lay run 60 intervals with "
