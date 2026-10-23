@@ -6,20 +6,10 @@ import numpy as np
 
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
+from tests.laws import state_of
 
 GAMMA, INTERVALS = 1000, 60
 WORLD = Path(__file__).resolve().parent.parent / "examples" / "events" / "cycle" / "three_clumps.json"
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
-    return [
-        (
-            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
-            [copied(r) for r in st.write_remainders],
-        )
-        for st in board.states
-    ]
 
 
 def same(a, b):  # type: ignore[no-untyped-def]

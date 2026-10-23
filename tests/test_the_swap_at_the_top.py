@@ -9,6 +9,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
+from tests.laws import state_of
 
 GAMMA, ACTION, CUBE = 1000, 36000, 3
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -42,17 +43,6 @@ def gapped_world(folder, gap, count, amplitude):  # type: ignore[no-untyped-def]
         encoding="utf-8",
     )
     return path
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
-    return [
-        (
-            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
-            [copied(r) for r in st.write_remainders],
-        )
-        for st in board.states
-    ]
 
 
 def same(a, b):  # type: ignore[no-untyped-def]

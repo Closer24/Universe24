@@ -491,3 +491,15 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
     assert read["correlation"] == expected["blind"]["correlation"]
     assert read["marginals"] == expected["blind"]["marginals"]
     return read, expected
+
+
+def state_of(board):  # type: ignore[no-untyped-def]
+    """Every line's three arrays and every write remainder of a board, copied, for a run back's comparison (the swap tests)."""
+    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
+    return [
+        (
+            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
+            [copied(r) for r in st.write_remainders],
+        )
+        for st in board.states
+    ]
