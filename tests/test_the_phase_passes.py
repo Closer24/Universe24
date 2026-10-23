@@ -9,7 +9,9 @@ from event_universe.emission import increments_of, radiated_total, start_of
 from event_universe.features.click import SCALE_OF
 from event_universe.lattice import Lattice
 from event_universe.resonance import turned_direction
+from event_universe.world_files import load_world
 from tests.laws import EVENTS
+from tests.laws_content import TWO_ATOMS, content_copy
 from tests.laws_read import load_shipped
 
 
@@ -20,6 +22,7 @@ def float_turn(re: int, im: int, x: int, y: int) -> tuple[float, float]:
 
 
 def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_arrivals_phase(
+    tmp_path,
     monkeypatch,
 ):
     """`resonance.turned_direction` on exact cases, against the float rotation within one level where the size isqrt(X^2 + Y'^2) is exact (a Pythagorean arrival) or large (the engine's arrivals stand at the scale R, about 10^7), the division act's floor; then on the Zeno world (examples/events/zeno/zeno_2.json) at its first absorption, `relaid` spied: the entered part's (re, im) is the leaving part's direction turned by the (X, Y') the close held, not the bare leaving direction (Y' is not 0), the leaving part laid at 0 in its own direction, the sense passed unchanged."""
@@ -62,8 +65,9 @@ def test_the_entered_part_is_laid_in_the_leaving_parts_direction_turned_by_the_a
     monkeypatch.setattr(act, "relaid", spied)
     monkeypatch.setattr(act, "leaving_phase", read)
     board = Lattice(
-        load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append
-    )  # re-pinned 2026-10-20 from zeno_2
+        load_world(content_copy(tmp_path, EVENTS / "chain" / "chain_x_minus.json", TWO_ATOMS)),
+        (lines := []).append,
+    )  # the content copy (re-pinned 2026-10-20 from zeno_2): the shipped world's run is refused by name at the body 0 of 'atom' at the interval 122 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the photon's five at three values each on the universe two_atoms.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^51.5; the former course took at 74 by the same number read, the rest weight's booking centred on 2026-10-23 moving the residue to the cell none takes), so the claim is read on the content copy (tests/laws_content.content_world, the born universe's holders prepended), which carries every draw
     taken: list[dict] = []
     while not taken and board.interval < 400:
         board.step()

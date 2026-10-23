@@ -11,7 +11,7 @@ from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
 from tests.laws import BACK, EVENTS, TOOL, packet_world, refused, slit_world, world_beside
-from tests.laws_content import ZENO_1, ion_world, opened
+from tests.laws_content import ZENO_1, ZENO_ATOM, content_copy, ion_world, opened
 from tests.laws_read import redeclared
 
 
@@ -128,8 +128,10 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
         monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
         path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
     elif door == "the source in time":
-        source = EVENTS / "resonance" / "resonant.json"
-        path, name, intervals = world_beside(tmp_path, source, lambda w: None), "pulse", 112
+        source = (
+            EVENTS / "resonance" / "resonant.json"
+        )  # as its content copy: the shipped world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the pulse's five at three values each on the universe zeno_atom.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^53.9), so the claim is read on the content copy (tests/laws_content.content_world with `opened`, the born universe's holders prepended), which carries every draw
+        path, name, intervals = content_copy(tmp_path, source, ZENO_ATOM, opened), "pulse", 112
     else:
         path, name, intervals = packet_world(tmp_path, TOOL, intervals=196), "pulse", 196  # at 194
     board = Lattice(load_world(path), (lines := []).append)
