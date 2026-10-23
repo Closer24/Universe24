@@ -215,7 +215,9 @@ def well_angles(board: Lattice, index: int, gamma: int) -> np.ndarray:
         ),
         dtype=np.float64,
     )
-    half_act = float(np.arccos(1 - 1 / (8 * gamma * gamma)))
+    half_act = float(
+        np.arccos(1 - 1 / (2 * (2 * gamma) ** 2))
+    )  # cos(theta_0 / 2) with theta_0 / 2 = 1 / (2 Gamma): 1 - (1 / (2 Gamma))^2 / 2
     return -2 * counts * half_act
 
 
@@ -576,9 +578,9 @@ def main(argv: list[str] | None = None) -> None:
         board, index, gamma
     )  # the Node's angle per interval from the engine's own rounded count
     periodic = (
-        str(world["boundary"]["x"]) == "periodic",
-        str(world["boundary"]["y"]) == "periodic",
-        str(world["boundary"]["z"]) == "periodic",
+        str(world.get("boundary", {}).get("x", "periodic")) == "periodic",  # the torus by default
+        str(world.get("boundary", {}).get("y", "periodic")) == "periodic",
+        str(world.get("boundary", {}).get("z", "periodic")) == "periodic",
     )
     # (2) to (4) the lay
     if args.lay == "standing":

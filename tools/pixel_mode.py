@@ -1301,7 +1301,8 @@ def pixel_mode(
     for at in outside:
         beyond[at] = True
     wrap = Wrap(
-        *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
+        *(document.get("boundary", {}).get(axis, "periodic") == "periodic" for axis in AXES),
+        beyond if outside else None,
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
@@ -1369,7 +1370,7 @@ def pixel_mode(
         laid_packets.append((names.index(family), slot, [laid_pair]))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
-    # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
+    # as the first laid them (a body before its lay stands at its first lay, its quanta, not its share);
     # one body's declaration is the engine's reading exactly, several bodies' within the gate's rounding
     for _round in range(2 if len(bodies) > 1 else 1):
         entries = []
