@@ -1,63 +1,63 @@
 {
  "lay": "standing",
  "level": "2p",
- "Omega": 0.9908353552342014,
+ "Omega": 0.9908353556807173,
  "omega_0": 0.8410686705679303,
- "binding_per_interval": -0.14976668466627108,
- "A": 1135.1120733553441,
+ "binding_per_interval": -0.149766685112787,
+ "A": 1135.1120704979962,
  "phi_along_axis": [
-  -1.438165211042778e-16,
-  0.9999999999999999,
-  0.7019886653960073
+  5.896376387799579e-16,
+  0.9999999999999991,
+  0.7019886670637889
  ],
  "levels": [
   {
    "level": 0,
    "kind": "s",
-   "Omega": 0.5170756163776413,
-   "binding_per_interval": 0.323993054190289
+   "Omega": 0.5170756259139541,
+   "binding_per_interval": 0.32399304465397627
   },
   {
    "level": 1,
    "kind": "s",
-   "Omega": 0.9628430583110156,
-   "binding_per_interval": -0.12177438774308524
+   "Omega": 0.9628430594302192,
+   "binding_per_interval": -0.12177438886228886
   },
   {
    "level": 2,
    "kind": "p",
-   "Omega": 0.9908353552342014,
-   "binding_per_interval": -0.14976668466627108
+   "Omega": 0.9908353556807173,
+   "binding_per_interval": -0.149766685112787
   },
   {
    "level": 3,
    "kind": "p",
-   "Omega": 0.9908353552342022,
-   "binding_per_interval": -0.14976668466627185
+   "Omega": 0.9908353556807182,
+   "binding_per_interval": -0.1497666851127879
   },
   {
    "level": 4,
    "kind": "p",
-   "Omega": 0.9908353552342033,
-   "binding_per_interval": -0.14976668466627296
+   "Omega": 0.9908353556807188,
+   "binding_per_interval": -0.14976668511278846
   },
   {
    "level": 5,
    "kind": "d",
-   "Omega": 1.1096763168203492,
-   "binding_per_interval": -0.26860764625241884
+   "Omega": 1.109676317040671,
+   "binding_per_interval": -0.2686076464727406
   },
   {
    "level": 6,
    "kind": "d",
-   "Omega": 1.1096763168203498,
-   "binding_per_interval": -0.2686076462524195
+   "Omega": 1.1096763170406714,
+   "binding_per_interval": -0.26860764647274105
   },
   {
    "level": 7,
    "kind": "d",
-   "Omega": 1.1096763168203505,
-   "binding_per_interval": -0.2686076462524202
+   "Omega": 1.1096763170406725,
+   "binding_per_interval": -0.26860764647274216
   }
  ],
  "levels_note": "every Omega of the table is read with the named level's sin Omega in the operator's diagonal; another level at its own sin Omega moves by that term's change, the order of the binding",
@@ -98,9 +98,10 @@
   ],
   "note": "R_ij / w per Port, S_i / w and the Node's pace p_i from the engine's own read and rule at the start; the plain rule at Gamma reads num / (3 den) on every Link and 0 at the Node"
  },
- "convention": "now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
+ "convention": "now = A phi cos(U / 2), im_now = -A phi sin(U / 2), before = A phi cos(Omega + U / 2), im_before = A phi sin(Omega + U / 2): the centred count (the owner's decision of 2026-10-23), the step centred at the lay carrying half the Node's angle on its Links; to that day now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
+ "seed": 0,
  "label": "lattice reading",
- "world": "giver_c5_probe.json",
+ "world": "giver_c5.json",
  "record": "electron",
  "source": "proton",
  "holder": "charge",
@@ -112,18 +113,18 @@
   -374,
   -111
  ],
- "well_centre": 0.6865,
+ "well_centre": 0.6864999956736102,
  "profile": {
   "radii": [
    1,
    2
   ],
   "shares": [
-   0.12467824634503533,
-   0.5529883466746652
+   0.12469800470375492,
+   0.5533336011604983
   ],
-  "Q": 20657108.0,
-  "peak_level": 1134.788967165261,
+  "Q": 20660090.0,
+  "peak_level": 1134.960792274341,
   "peak_node": [
    1,
    2,
@@ -131,7 +132,7 @@
   ],
   "size_along_axis": [
    0.0,
-   797.2151528916144
+   797.3035808272781
   ],
   "node_plane_share": 0.0,
   "dipole_nodes": [
@@ -139,6 +140,6 @@
    0.0,
    0.0
   ],
-  "wronskian": 17996664.0
+  "wronskian": 17999700.0
  }
 }

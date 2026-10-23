@@ -143,7 +143,10 @@ def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_pat
         return found
 
     monkeypatch.setattr(meeting.lists, "absorption", kept)
-    open_share, standing = 7270651435653225, 32517153591467689  # re-pinned 2026-10-20 under the content
+    open_share, standing = (
+        7270651435653225,
+        32517147460413456,
+    )  # the standing share re-pinned 2026-10-23 under the centred count (32517153591467689 to that day, under the left-sum count; the open share stands); re-pinned 2026-10-20 under the content
     ends = {}
     for run in ("capacity",):  # one world, one read of the board: the second quantum taken or passed
         closes.clear()

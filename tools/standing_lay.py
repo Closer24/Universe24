@@ -3,7 +3,7 @@
 Run with PYTHONPATH set to the checkout's src:
 
     PYTHONPATH=src python tools/standing_lay.py --input <world>.json --record <family> --source <family> --sense -1 [--lay standing --level 1s | --lay standing --level 1s+2p | --lay gaussian --sigma 4]
-"""
+ The centred count (2026-10-23, the owner's decision; ALGEBRA.md, The turn per proper interval; node.phased, node.phase_counts): the engine's Link phase at the step centred at the interval m is K(m + 1) theta_0 / 2 with K(m + 1) = 2 (Phi(m + 1) - Phi(m)) - c = (2 m + 1) c for a static potential, so the standing solution's frame is z_i(m) = e^(i u_i (m + 1/2)) y_i(m), u_i the Node's angle per interval, and the lay at the interval 0 carries half the Node's angle on now and minus half on before, now = A phi e^(-i U / 2) and before = A phi e^(i (Omega + U / 2)) with U = -u in this module's sign; the standing operator and the Wronskian A^2 phi^2 sin(Omega + U) are the former's, the frame's offset alone moved from one interval to half (to that day the left sum N(m + 1) = (m + 1) c, the frame e^(i u (m + 1)), now = A phi e^(-i U) and before = A phi e^(i Omega))."""
 
 from __future__ import annotations
 
@@ -125,9 +125,11 @@ def zero_lay(shape: tuple[int, ...]) -> dict[str, np.ndarray]:
     return {key: np.zeros(shape, dtype=np.int64) for key in ("now", "before", "im_now", "im_before")}
 
 
-def mode_document(world: dict[str, Any], entries: list[dict[str, Any]]) -> dict[str, Any]:
+def mode_document(
+    world: dict[str, Any], entries: list[dict[str, Any]], packets: list[dict[str, Any]] | None = None
+) -> dict[str, Any]:
     """The mode file: the world's digest and one entry per body in the world's order."""
-    return {"world_digest": input_digest(world), "bodies": entries, "packets": []}
+    return {"world_digest": input_digest(world), "bodies": entries, "packets": list(packets or [])}
 
 
 def entries_of(
@@ -200,6 +202,21 @@ def well_of(path: Path, record: str) -> tuple[np.ndarray, int, int, int, Lattice
             continue
         h += np.asarray(lines[row * width].now, dtype=np.int64)
     return h, index, holder, weight, board
+
+
+def well_angles(board: Lattice, index: int, gamma: int) -> np.ndarray:
+    """The well's angle per interval at every Node as the engine turns it (the centred count, 2026-10-23): the record's clocked potential c = rounded(L p_0 / Gamma) at the lay (`node.turning`, `node.rulers`, `paces.turn_factor`, the same integers node.phased writes into the phase row), the Node's angle U_i = -2 c_i theta' with theta' = arccos(1 - 1 / (8 Gamma^2)) the half-angle act's angle (features/phase at the unit 2 Gamma; K advances by 2 c per interval), in this module's sign; the former reading, to that day, the float -weight h / Gamma, half a count off the engine's turn at worst."""
+    angles = node.turning(index, board.families, board.states, 1, 0)
+    assert angles is not None  # a standing lay is read for a turned record alone
+    clock = node.rulers(index, board.families, board.states, 1, board.wrap, gamma, 0)[0]
+    counts = np.asarray(
+        np.broadcast_to(
+            np.asarray(paces.turn_factor(angles[0], clock, gamma), dtype=object), board.shape
+        ),
+        dtype=np.float64,
+    )
+    half_act = float(np.arccos(1 - 1 / (8 * gamma * gamma)))
+    return -2 * counts * half_act
 
 
 def rule_arrays(board: Lattice, index: int) -> tuple[list[np.ndarray], np.ndarray, np.ndarray]:
@@ -375,10 +392,13 @@ def standing(
         cube = phi.reshape(shape)
         total = float((cube**2 * np.sin(omega + well)).sum())
         amplitude = (action * part / (2 * sum(parts) * total)) ** (1 / 2)
-        sums["now"] += amplitude * cube * np.cos(well)
-        sums["im_now"] += -amplitude * cube * np.sin(well)
-        sums["before"] += amplitude * cube * float(np.cos(omega))
-        sums["im_before"] += amplitude * cube * float(np.sin(omega))
+        half = (
+            well / 2
+        )  # the centred count: the Link's phase at the step centred at the lay is half the Node's angle
+        sums["now"] += amplitude * cube * np.cos(half)
+        sums["im_now"] += -amplitude * cube * np.sin(half)
+        sums["before"] += amplitude * cube * np.cos(omega + half)
+        sums["im_before"] += amplitude * cube * np.sin(omega + half)
         cubes.append(cube)
         laid.append(
             {
@@ -428,7 +448,7 @@ def standing(
             "paces": [float(pace.min()), float(pace.max())],
             "note": "R_ij / w per Port, S_i / w and the Node's pace p_i from the engine's own read and rule at the start; the plain rule at Gamma reads num / (3 den) on every Link and 0 at the Node",
         },
-        "convention": "now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
+        "convention": "now = A phi cos(U / 2), im_now = -A phi sin(U / 2), before = A phi cos(Omega + U / 2), im_before = A phi sin(Omega + U / 2): the centred count (the owner's decision of 2026-10-23), the step centred at the lay carrying half the Node's angle on its Links; to that day now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
     }
     if not one:
         readings["sum"] = (
@@ -539,15 +559,22 @@ def main(argv: list[str] | None = None) -> None:
     world = json.loads(path.read_text(encoding="utf-8"))
     shape = tuple(int(v) for v in world["shape"])
     mode_path = path.with_suffix(".mode.json")
+    packets = (
+        json.loads(mode_path.read_text(encoding="utf-8")).get("packets", [])
+        if mode_path.exists()
+        else []
+    )  # the packets' entries the generator wrote (tools/pixel_mode.py), carried through: the standing lay is the bodies'
     universe = universe_of_world(world)
     families = universe_of(universe)[1]
     action, gamma = int(universe["integers"]["quantum_action"]), int(universe["integers"]["node_clock"])
     # (1) the well's reading pass: the sources laid, the record at 0, the holder's rows the engine's own start writes
     entries = entries_of(world, families, args.record, args.source, args.sense, zero_lay(shape))
-    mode_path.write_text(json.dumps(mode_document(world, entries)) + "\n", encoding="utf-8")
+    mode_path.write_text(json.dumps(mode_document(world, entries, packets)) + "\n", encoding="utf-8")
     h, index, holder, weight, board = well_of(path, args.record)
     family = families[index]
-    well = -weight * h.astype(np.float64) / gamma
+    well = well_angles(
+        board, index, gamma
+    )  # the Node's angle per interval from the engine's own rounded count
     periodic = (
         str(world["boundary"]["x"]) == "periodic",
         str(world["boundary"]["y"]) == "periodic",
@@ -561,7 +588,7 @@ def main(argv: list[str] | None = None) -> None:
     else:
         lay, readings = gaussian(shape, family.pair, action, args.sigma)
     entries = entries_of(world, families, args.record, args.source, args.sense, lay)
-    mode_path.write_text(json.dumps(mode_document(world, entries)) + "\n", encoding="utf-8")
+    mode_path.write_text(json.dumps(mode_document(world, entries, packets)) + "\n", encoding="utf-8")
     load_world(path)  # the loader admits the mode file beside the world
     centre = tuple(e // 2 for e in shape)
     readings.update(
