@@ -42,15 +42,16 @@ HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_gapped_volume.py::test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall": (
-        41,
+        43,
         "the gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return "
         "hand's derivation read cold by the reader): the loader's clause on the tensions, the gapped row laid at the vacuum's "
         "volume, the step's mass term -2 (1 - nu) (p_0 / Gamma)^2 X within one level over 50 intervals and the run back MATCH",
     ),
-    "tests/test_the_gapped_volume.py::test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_log_says": (
-        27,
-        "the same clause changing no shipped run: every held row sourced by the tensions at [Gamma, Gamma] in examples/ and "
-        "tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world's eras log reproduced over 100 intervals",
+    "tests/test_the_gapped_volume.py::test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_before": (
+        43,
+        "the same clause changing no shipped run: every held row of the content sourced by the tensions iff at [Gamma, Gamma] in "
+        "examples/ and tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world stepped 100 intervals "
+        "bit for bit as under the old clause and the old start, whatever else the tree's step does",
     ),
     "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
         45,

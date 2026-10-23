@@ -1,14 +1,15 @@
-"""The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader, the old clause kept by name; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation, and the shipped world of the test of the law's course held bit for bit against its own log."""
+"""The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader, the old clause kept by name; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation at the law's amplitude for 21 quanta per Node, and the shipped world of the test of the law's course held bit for bit against its own log."""
 
 import json
-import re
 
 import numpy as np
 
-from event_universe import board_readings, node, world_files
+from event_universe import lists, node, world_files
 from event_universe.core import paces
-from event_universe.core.rule3 import division_forward, largest_below
+from event_universe.emission import amplitude
+from event_universe.features import volume
 from event_universe.lattice import Lattice
+from event_universe.loader import interval, world
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, EVENTS, ROOT
 
@@ -47,31 +48,23 @@ def gapped_world(folder, count, amplitude):  # type: ignore[no-untyped-def]
     return path
 
 
-def laid_gapped(folder, count=21):  # type: ignore[no-untyped-def]
-    """The gapped world laid uniform at `count` quanta per Node (the return hand's 21), the dust's amplitude found from the share the gate reads: the band's rest amplitude for the count as the first guess, the share read from the gate's refusal (it grows as the amplitude squared), the amplitude rescaled once and raised by one until the declared count is within the share's rounding (ALGEBRA.md #the-count-is-the-records-share)."""
-    nodes = CUBE**3
-    amplitude = largest_below(
-        int(division_forward(count * ACTION * GAMMA, 2 * paces.sine_den(0, GAMMA), 0)[0])
-    )
-    for attempt in range(12):
-        path = gapped_world(folder, count, amplitude)
-        try:
-            Lattice(load_world(path))
-            return path
-        except ValueError as refusal:
-            read = int(re.search(r"share reads (\d+) quanta", str(refusal)).group(1))
-            amplitude = (
-                round(amplitude * (count * nodes / read) ** 0.5) if attempt == 0 else amplitude + 1
-            )
-    raise AssertionError(amplitude)
+def laid_gapped(folder, monkeypatch, count=21):  # type: ignore[no-untyped-def]
+    """The gapped world laid uniform at the law's amplitude for `count` quanta per Node (`emission.amplitude`, the lay across parts; the return hand's 21), its declared count the share the repository's own gate reads of that lay (`lists.gate_count`, the count a reading of the record and no input: ALGEBRA.md #the-count-is-the-records-share), read once with the gate held and declared for the load with the gate on."""
+    size = amplitude(count, ACTION, (0, GAMMA), 1)
+    with monkeypatch.context() as held:
+        held.setattr(Lattice, "gate", lambda board: None)
+        board = Lattice(load_world(gapped_world(folder, count, size)))
+    read = lists.gate_count(board, board.world.bodies[0])
+    assert read % CUBE**3 == 0, read  # a uniform lay reads alike at every Node
+    return gapped_world(folder, read // CUBE**3, size)
 
 
 def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall(
     tmp_path, monkeypatch
 ):
-    """(i) The loader moves the gapped gravity row to the volume form by its tension lines (loader/interval.volume_rows, `FamilyRule.axes`) and the start lays it at the vacuum's volume Gamma at every Node; (ii) over 50 intervals the step's mass term at the fixed wall, X_next - 2 X_now + X_before less the write's increment, equals -2 (1 - nu) (p_0 / Gamma)^2 X_now within one level at every interval (the return hand's energy identity E1, met within 0.99 of a level on the 5-torus), the write's increment never negative and the tension lines 0 (a uniform lay); (iii) the run back MATCH over 50 intervals (the reversibility hand's Theorem 1 at the wall that never moves)."""
+    """(i) The loader moves the gapped gravity row to the volume form by its tension lines (loader/interval.volume_rows, `FamilyRule.axes`) and the start lays it at the vacuum's volume Gamma at every Node; (ii) over 50 intervals the step's mass term at the fixed wall, X_next - 2 X_now + X_before less the write's increment, equals -2 (1 - nu) (p_0 / Gamma)^2 X_now within one level at every interval (the return hand's energy identity E1, met within 0.99 of a level on the 5-torus), the write's increment never negative and the tension lines 0 (a uniform lay); (iii) the run back MATCH over 50 intervals (the reversibility hand's Theorem 1 at the wall that never moves). The write's increment is read from the held write's call that carries the time line itself, so the reading stands whether a row's lines are written in one call or the time line and the tension lines in two (the shear's momentum, the tension lines written after the time line's step and write)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = laid_gapped(tmp_path)
+    path = laid_gapped(tmp_path, monkeypatch)
     board = Lattice(load_world(path))
     g = [family.name for family in board.families].index("gravity")
     assert board.families[g].pair == (GAP, GAMMA) and board.families[g].motion_volume
@@ -84,7 +77,9 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
 
     def wrapped(lines, numerators, walls, remainders, direction=1):  # type: ignore[no-untyped-def]
         found, after = original(lines, numerators, walls, remainders, direction)
-        increment["write"] = int(found[0].now.reshape(-1)[0]) - int(lines[0].now.reshape(-1)[0])
+        for line, stepped in zip(lines, found, strict=True):
+            if line is board.states[g].lines[0]:  # the time line's own write, whichever call carries it
+                increment["write"] = int(stepped.now.reshape(-1)[0]) - int(line.now.reshape(-1)[0])
         return found, after
 
     monkeypatch.setattr(node, "held_write_at", wrapped)
@@ -109,30 +104,46 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
     assert verdict == {"verdict": "MATCH", "intervals": 50, "interval": 1, "ended": None}
 
 
-def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_log_says():  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: every held row sourced by the tensions in the universes of examples/ and tests/ has the pair [Gamma, Gamma] (the one gapped held row shipped, the atom's binding holder [2400, 2401], has no tension lines and stays in the level form), and the shipped matter world of the test of the law's course (examples/events/big_bang/big_bang_matter.json) reproduces its own eras' log bit for bit over 100 intervals, the level now and before of gravity's uniform mode with their remainders (`board_readings.uniform_mode`, the log's columns)."""
-    tensions, form_alone = [], []
+def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_before(monkeypatch):  # type: ignore[no-untyped-def]
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the one gapped held row shipped, the atom's binding holder [2400, 2401], has no tension lines and stays in the level form), so the rows the loader moves are the old clause's rows; and the shipped matter world of the test of the law's course (examples/events/big_bang/big_bang_matter.json) stepped 100 intervals under the loader's clause and the start's lay as they stand gives, at every interval, every family's lines bit for bit as under the old clause (the pair's two integers equal) and the old start (every holder's rest solved), whatever else the tree's step does."""
+    rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
             try:
                 families = json.loads(path.read_text(encoding="utf-8")).get("families")
             except ValueError, AttributeError:
                 continue
-            for family in families or []:
-                if isinstance(family, dict) and "held" in family:
-                    (tensions if "tensions" in family["held"]["sources"] else form_alone).append(family)
-    assert tensions and all(family["pair"][0] == family["pair"][1] for family in tensions)
-    assert any(family["pair"] == [2400, 2401] for family in form_alone)
-    world = EVENTS / "big_bang" / "big_bang_matter.json"
-    with (world.parent / "big_bang_matter.eras.jsonl").open(encoding="utf-8") as log:
-        next(log)
-        rows = [json.loads(next(log))["rows"]["gravity"] for _ in range(100)]
-    board = Lattice(load_world(world))
-    g = [family.name for family in board.families].index("gravity")
-    for row in rows:
-        board.step()
-        mode = board_readings.uniform_mode(board, g)
-        read = (mode.level, mode.level_remainder, mode.before, mode.before_remainder)
-        assert read == (row["level"], row["level_remainder"], row["before"], row["before_remainder"]), (
-            row["interval"]
-        )
+            rows += [f for f in families or [] if isinstance(f, dict) and "held" in f]
+    content = [f for f in rows if "wronskian" not in f["held"]["sources"]]
+    assert content and all(
+        ("tensions" in f["held"]["sources"]) == (f["pair"][0] == f["pair"][1]) for f in content
+    )
+    assert any(f["pair"] == [2400, 2401] for f in content)
+
+    def old_rows(unobservable, families, gamma=None):  # type: ignore[no-untyped-def]
+        moved = [f.held and not f.wronskian and f.pair[0] == f.pair[1] for f in families]
+        found = interval.volume_rows(unobservable, families, gamma)
+        assert [f.motion_volume for f in found] == moved  # the same rows on every shipped universe
+        return found
+
+    def old_resting(held, families, loaded):  # type: ignore[no-untyped-def]
+        return [(i, 0) for i in held if not families[i].wronskian]
+
+    def course():  # type: ignore[no-untyped-def]
+        board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
+        found = []
+        for _ in range(100):
+            board.step()
+            found.append(
+                [
+                    [np.asarray(a, dtype=object).tolist() for a in (r.now, r.before, r.remainder)]
+                    for s in board.states
+                    for r in s.lines
+                ]
+            )
+        return found
+
+    new = course()
+    monkeypatch.setattr(world, "volume_rows", old_rows)
+    monkeypatch.setattr(volume, "resting", old_resting)
+    assert course() == new
