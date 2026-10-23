@@ -333,7 +333,7 @@ def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...
     families = derived.family_rules(rows)
     derived.energy_line(families, integers["node_clock"], integers["quantum_action"])
     derived.shared_clock(families)
-    derived.trace_wall(families, integers["node_clock"], integers["quantum_action"])
+    # the trace's wall Gamma | (d + 1) E_s T is no gate of the volume form: the hill's weight K was the level form's integer (the one Node, 2026-10-23; derived.trace_wall kept by name, called by nothing)
     return integers, conversion.declared(
         families, declaring
     )  # the lists from the pairs under the law's conservations, refused by name

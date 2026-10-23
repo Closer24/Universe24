@@ -285,7 +285,7 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
 
 
 def trace_wall(families: tuple[FamilyRule, ...], gamma: int, action: int) -> None:
-    """The loader's gate of the stress's trace, the held row's key `pressure: trace` (ALGEBRA.md, The stress's trace is the time line's, 2026-10-22): the hill's weight under it is one integer for every mix, K = (d + 1) E_s T / Gamma with d the axes' three (24 at T 36,000 and Gamma 6,000), exact where Gamma divides (d + 1) E_s T and refused by name otherwise (the pressure hand's condition), one division of the loader on coefficients, its remainder read."""
+    """The hill's gate of the stress's trace, called by nothing since the law of one Node (2026-10-23) and kept by name: under the level form the hill's weight K = (d + 1) E_s T / Gamma had to be one integer (24 at T 36,000 and Gamma 6,000), the pressure hand's condition Gamma | (d + 1) E_s T; under the volume form the hill is no act (ALGEBRA.md, The carried momentum: the chain rule between the level and the volume), the exponent d + 1 stands as the integer coefficient of the one write ((d + 1) X c + r) div (Gamma E_s T), whose carried remainder keeps every fraction as Rule3 keeps every remainder, and no integer K is formed anywhere in the engine, so the divisibility is no condition of the law and every universe's integers stand as declared."""
     for family in families:
         weight = family.level_weight if family.pressure_trace else None
         if weight is not None and division_forward((AXES + 1) * weight * action, gamma, 0)[1]:
