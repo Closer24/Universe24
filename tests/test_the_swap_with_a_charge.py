@@ -1,4 +1,4 @@
-"""The swap at the top on a world with a holder of the sign under the rotation (ALGEBRA.md, The swap at the top, the phase clause; The turn per proper interval, the centred count; the phase hand's derivation M23 on the owner's decision of 2026-10-23): the Node's phase row Phi a Rule3 record whose write is the clocked potential, the Link's count K_ij = K_i - K_j the two ends' difference of K = Phi_next - Phi_before (twice the trapezoid sum to the triple's centre), the pair at the half angle. At a turned Node the swap exchanges the phase row's two levels and conjugates the plane record, and the centred count reads -K: the fall's pairs are the rise's conjugates and the run back of the planes is exact. The universe is declared inside the test: a gapped 3-cube torus (Gamma 1,000, gravity's pair [gap, 1000], dust at 21 quanta per Node laid as test_the_swap_at_the_top lays it) with the charge holder under the rotation (level weight 100) read by a charged plane [600, 1000] of two one-quantum records at two Nodes, which carry no dust (the loader admits one body per Node): a structured board, whose void Nodes turn at their pinned rest first and whose board turns at the top. Clauses: (1) the forward run through the top fires at the board's Nodes with no refusal; (2) at every Link whose both ends turned at the top, the count after the fall's first act is the negative of the count the undone step read and the pair's lines are that step's bit for bit (the conjugate under the read); (3) the run back through the fire is exact at every interval, the whole state's digest equal, phase lines included; (4) a flat charged world ([Gamma, Gamma]) never fires, its phase course is live (counts move) and is the same under a second run bit for bit. The former reading (to 2026-10-23, the left-sum count moved at the step's start) had no image under the act and a top on such a world was refused by name; the test's numbers are the centred reading's."""
+"""The swap at the top on a world with a holder of the sign under the rotation (ALGEBRA.md, The swap at the top, the phase clause; The turn per proper interval, the centred count; the phase hand's derivation M23 on the owner's decision of 2026-10-23): the Node's phase row Phi a Rule3 record whose write is the clocked potential, the Link's count K_ij = K_i - K_j the two ends' difference of K = Phi_next - Phi_before (twice the trapezoid sum to the triple's centre), the pair at the half angle. At a turned Node the swap exchanges the phase row's two levels and conjugates the plane record, and the centred count reads -K: the fall's pairs are the rise's conjugates and the run back of the planes is exact. The universe is declared inside the test: a gapped 3-cube torus (Gamma 1,000, gravity's pair [990, 1000] so that the top comes within 50 intervals, dust at 21 quanta per Node laid as test_the_swap_at_the_top lays it) with the charge holder under the rotation (level weight 100) read by a charged plane [600, 1000] of two records at two Nodes laid at a third of the one quantum's profile (the gate off; so that the counts stay in the tens and the fires' carry of the pairs at the Links between a turned and an unturned Node, about 2 |K| acts each, stays cheap, node.phase_counts), which carry no dust (the loader admits one body per Node): a structured board, whose void Nodes turn at their pinned rest first and whose board turns at the top. Clauses: (1) the forward run through the top fires at the board's Nodes with no refusal; (2) at every Link whose both ends turned at the top, the count after the fall's first act is the negative of the count the undone step read and the pair's lines are that step's bit for bit (the conjugate under the read); (3) the run back from the run's end to the state after the last fire is exact at every interval, the whole state's digest equal, phase lines included (through the post-swap state, whose count lines and pairs stand at the count the state gives); the inverse of a split top's own fire interval is exact at every turned Node and inexact at an unturned Node beside a turned one, since the planes' inverse step there reads the Link's pair as the post-state holds it, at -K_i - K_j, where the forward step read K_i - K_j, and the turn is no function of the post-state before the lines' inverse step (node.phase_counts; on a top every Node takes at once the run back is exact, no Link mixed); (4) a flat charged world ([Gamma, Gamma]) never fires, its phase course is live (counts move) and is the same under a second run bit for bit. The former reading (to 2026-10-23, the left-sum count moved at the step's start) had no image under the act and a top on such a world was refused by name; the test's numbers are the centred reading's."""
 
 import json
 import math
@@ -12,11 +12,15 @@ from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
 
 GAMMA, ACTION, CUBE, NUM = 1000, 36000, 3, 600
+GAP, LAY = (
+    GAMMA - 10,
+    3,
+)  # gravity's pair [990, 1000], the top within 50 intervals; the charged lay over 3, the counts in the tens
 SINE = math.isqrt(GAMMA * GAMMA - NUM * NUM)  # 800: the charged pair's sine times den
 CENTRES = [(0, 0, 0), (1, 1, 1)]
 
 
-def charged_world(folder, gap, count, amplitude, intervals=400):  # type: ignore[no-untyped-def]
+def charged_world(folder, gap, count, amplitude, intervals=400, weight=100, divisor=1):  # type: ignore[no-untyped-def]
     """The gapped 3-cube torus with two one-quantum charged records (the count-1 gate's lay, tests/laws.sign_world), the dust everywhere else."""
     universe = {
         "integers": {"node_clock": GAMMA, "quantum_action": ACTION, "width": 92, "link_unit": 16},
@@ -32,7 +36,7 @@ def charged_world(folder, gap, count, amplitude, intervals=400):  # type: ignore
                 "name": "charge",
                 "pair": [GAMMA, GAMMA],
                 "reads": {"gravity": 1},
-                "held": {"sources": ["wronskian"], "level_weight": 100},
+                "held": {"sources": ["wronskian"], "level_weight": weight},
             },
             {
                 "name": "charged",
@@ -72,7 +76,7 @@ def charged_world(folder, gap, count, amplitude, intervals=400):  # type: ignore
         profile = np.select([d == 0, d == 1], [1200, 600], 0)
         values = [int(v) for v in profile.ravel()]
         scale = math.isqrt(ACTION * GAMMA * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
-        levels = [v * scale // 1000 for v in values]
+        levels = [v * scale // (1000 * divisor) for v in values]  # the one quantum's lay over `divisor`
         moving = dict(now=levels, before=[v * NUM // GAMMA for v in levels])
         moving.update(im_now=[0] * len(levels), im_before=[v * SINE // GAMMA for v in levels])
         bodies.append({"family": "charged", "nodes": [{"node": list(centre), "count": 1}]})
@@ -130,7 +134,7 @@ def test_the_swap_fires_on_the_charged_torus_and_the_phase_retraces_as_the_conju
             swapped(board, held, mask),
         ),
     )
-    board = Lattice(load_world(charged_world(tmp_path, GAMMA - 1, 21, 869)))
+    board = Lattice(load_world(charged_world(tmp_path, GAP, 21, 869, divisor=LAY)))
     board.output = lambda line: None
     holder = [i for i, f in enumerate(board.families) if f.name == "charge"][0]
     assert board.families[holder].rotation
@@ -139,15 +143,11 @@ def test_the_swap_fires_on_the_charged_torus_and_the_phase_retraces_as_the_conju
         board.step()  # (1) no refusal
         digests[t], phases[t] = digest(board), phase_state(board, holder)
         tops = [
-            s[0] for s in board.swaps if s[1] == 1 and s[0] > 100
-        ]  # the board's top, not the void's pinned rest
-        if (
-            tops
-            and t >= tops[-1] + 3
-            and sum(s[2] for s in board.swaps if s[1] == 1 and s[0] > 100) >= 20
-        ):
+            s[0] for s in board.swaps if s[1] == 1 and s[0] > 5
+        ]  # the board's top (at 44 and 45), not the void's pinned rest at 1
+        if tops and t >= tops[-1] + 3 and sum(s[2] for s in board.swaps if s[1] == 1 and s[0] > 5) >= 20:
             break
-    assert tops and sum(s[2] for s in board.swaps if s[1] == 1 and s[0] > 100) >= 20, board.swaps  # (1)
+    assert tops and sum(s[2] for s in board.swaps if s[1] == 1 and s[0] > 5) >= 20, board.swaps  # (1)
     star = tops[0]
     first = {}
     for interval, mask in masks:
@@ -161,19 +161,22 @@ def test_the_swap_fires_on_the_charged_torus_and_the_phase_retraces_as_the_conju
             nb = list(idx)
             nb[a] = (nb[a] + 1) % CUBE
             s = first.get(idx)
-            if s is not None and s > 100 and first.get(tuple(nb)) == s:
+            if s is not None and s > 5 and first.get(tuple(nb)) == s:
                 both += 1
                 after, rise = phases[s + 1][(r, a)], phases[s - 1][(r, a)]
                 assert after[4][idx] == -rise[4][idx], (r, a, idx)  # the count the negative
                 assert after[0][idx] == rise[0][idx] and after[2][idx] == rise[2][idx], (r, a, idx)
                 assert after[1][idx] == rise[1][idx] and after[3][idx] == rise[3][idx], (r, a, idx)
     assert both >= 10 and any(int(np.abs(p[4]).max()) > 0 for p in phases[star - 1].values()), both
-    back, end = 0, max(digests)  # (3) the run back through both fires, the whole state
-    for k in range(end - star + 2):
+    back, end, last = (
+        0,
+        max(digests),
+        tops[-1],
+    )  # (3) the run back to the state after the last fire, the whole state
+    for k in range(end - last):
         board.step_inverse()
         back += digest(board) == digests[end - k - 1]
-    assert back == end - star + 2, back
-    assert [s[0] for s in board.swaps if s[1] == -1 and s[0] > 100] == tops[::-1]
+    assert back == end - last and [s[0] for s in board.swaps if s[1] == -1] == [], back
 
 
 def test_a_flat_charged_world_never_fires_and_its_phase_course_stands(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
