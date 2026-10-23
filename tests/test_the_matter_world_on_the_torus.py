@@ -9,7 +9,7 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
-from tests.test_universe24_runs_its_cycle import CLUMP, CUBE, GAMMA, GAP, NOW, flat
+from tests.laws_universe import CLUMP, CUBE, GAMMA, GAP, NOW, flat
 
 PROTON, ELECTRON = [0, 2, 0], [0, 2, 1]
 MATTER_COUNT = (
