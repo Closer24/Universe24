@@ -1,6 +1,8 @@
 """The eras' page, a page tool beside tools/look/page.py in its dark tokens (docs/ENGINE.md section 6; DESIGN section 4 (g)): one self-contained HTML page from the log tools/eras.py writes (`<world>.eras.jsonl`, one JSON line per interval after the header) and, where the folder holds them, the blind (`--blind <world>.blind.json`, its rows in a table and, under its optional key `course` as rows of `interval`, `U` and `velocity`, the model's course dashed beside the board's) and the notes (`--notes notes.md`, a Markdown text rendered as one prose section, the page's leading panel), and the clicks log the same run kept (`--clicks <world>.clicks.jsonl`, tools/eras.py's second file: the detector's clicks drawn as their magnitude on a log axis, the quanta at the detector's Nodes with its time line, and the fifth act's fires where the eras log carries them; history kept one way, nothing run back). The page draws, against the interval, U = level / Gamma and H = v / Gamma of the first held row of the content with the eras shaded as the board reads them (the family whose write's sum is largest at the interval sources the era, the crossing of two writes the transition); q_p from the slope of 1 / v over spans and nothing else (the estimator on the integers' staircase, d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the span picked on the page) with the blind's bands where the blind names them; the families' writes on a log axis; the constraint's residual R beside the tracker's 2 (n_eff - c) / (2 c - n_eff) at the Node-mean weight; the hill's weight's least, largest and Node-mean; the seed Node's share within one Link per family, the well's depth, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void)) (the wall observer's clock against the void's, a reading); the rulers at the far Node. The legend names what is an input (the pairs, the four integers, the seed's counts, light's amplitude) and what the board reads by itself (every curve), the hypotheses under which the course is nature's by name, the crawl once as the integers' end where the velocity falls below one level per interval (the floor, the crawl and the pulses one phenomenon), the coast as the reals' mean, the stop as the other booking's end under the rounded factor (named, not shown) and nature's late acceleration as MISSING. Every number on the page is the log's or the blind's; the page computes the floats named above and nothing of the law; the board's own frames are the look page's (`<world>.look.html` by tools/look/record.py and page.py), linked where it stands beside the page.
 
-python tools/look/eras_page.py <world>.eras.jsonl [--blind <world>.blind.json] [--notes notes.md] [--clicks <world>.clicks.jsonl] [--span 50] [--out <world>.html]
+The bangs (the owner's word of 2026-10-23): every bang is marked and numbered, the seed at the first interval bang 1 and each later bang the interval the board's volume velocity turns from falling to rising after the fifth act fired since the last bang (the return), the tops numbered beside, the horizon's spans shaded with the count of Links held at the wall (the black hole, in the owner's words), and with `--nodes <world>.nodes.jsonl` (tools/eras.py's Nodes' log, X at every Node) the least X over the board per interval drawn on a log axis against the floor X_f = volume_of(Gamma, -Gamma) by the engine's own `swap.floor_of`, so the distance to X = 0 is seen; readings of the logs, nothing computed of the law.
+
+python tools/look/eras_page.py <world>.eras.jsonl [--blind <world>.blind.json] [--notes notes.md] [--clicks <world>.clicks.jsonl] [--nodes <world>.nodes.jsonl] [--span 50] [--out <world>.html]
 """
 
 from __future__ import annotations
@@ -60,6 +62,7 @@ td.num { font-family: var(--font-mono); }
 <script id="notes" type="application/json">{{NOTES}}</script>
 <script id="clicks" type="application/json">{{CLICKS}}</script>
 <script id="span" type="application/json">{{SPAN}}</script>
+<script id="least" type="application/json">{{LEAST}}</script>
 <header>
   <h1 id="title"></h1>
   <span class="verdict">lattice reading</span>
@@ -74,6 +77,7 @@ td.num { font-family: var(--font-mono); }
     <div class="graph" id="deceleration"></div>
     <div class="words" id="eras-words"></div>
   </section>
+  <section class="panel wide"><h2>The least X over the board against the floor X_f, the distance to X = 0 (a log axis)</h2><div class="graph" id="least-x"></div><div class="words" id="least-words"></div></section>
   <section class="panel"><h2>The writes per family, summed over the Nodes (a log axis)</h2><div class="graph" id="writes"></div></section>
   <section class="panel"><h2>The constraint's residual</h2><div class="graph" id="residual"></div></section>
   <section class="panel"><h2>The mix's exponent</h2><div class="graph" id="exponent"></div></section>
@@ -92,6 +96,7 @@ const BLIND = JSON.parse(document.getElementById('blind').textContent);
 const NOTES = JSON.parse(document.getElementById('notes').textContent);
 const CLICKS = JSON.parse(document.getElementById('clicks').textContent);
 let SPAN = JSON.parse(document.getElementById('span').textContent);
+const LEAST = JSON.parse(document.getElementById('least').textContent);
 const HEAD = LOG[0], LINES = LOG.slice(1).filter(l => l.rows), REFUSED = LOG.slice(1).find(l => l.refused);
 const GAMMA = HEAD.node_clock, ROW = HEAD.held[0];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -164,13 +169,33 @@ function bangs() {  // the volume's tops and returns where the row carries its v
   }
   return found;
 }
+function returns() {  // the bangs as the owner reads them: the seed at the first interval is bang 1; each later bang the interval the volume's velocity turns from falling to rising after the fifth act fired since the last bang (the return); the fires counted from the eras log
+  if (!rows[0] || rows[0].volume === undefined) return [];
+  const found = [{at: intervals[0], volume: rows[0].volume, fires: LINES[0].fires || 0}];
+  let fired = 0;
+  for (let i = 2; i < rows.length; i++) {
+    fired += LINES[i - 1].fires || 0;
+    const fall = rows[i - 1].volume - rows[i - 2].volume, rise = rows[i].volume - rows[i - 1].volume;
+    if (fall < 0 && rise > 0 && fired > 0) { found.push({at: intervals[i - 1], volume: rows[i - 1].volume, fires: fired}); fired = 0; }
+  }
+  return found;
+}
+function horizons() {  // the horizon's spans: runs of intervals with Links held at the wall, each with its largest count (the black hole, in the owner's words; ALGEBRA.md, The horizon)
+  const found = []; let from = -1, most = 0;
+  for (let i = 0; i <= LINES.length; i++) {
+    const n = i < LINES.length ? (LINES[i].horizon || 0) : 0;
+    if (n > 0) { if (from < 0) from = i; most = Math.max(most, n); }
+    else if (from >= 0) { found.push({from: LINES[from].interval, to: LINES[i - 1].interval, most, name: `the horizon: ${most} Links at the wall (the black hole)`, colour: token('--flash')}); from = -1; most = 0; }
+  }
+  return found;
+}
 function marks() {
   const found = [];
+  returns().forEach((b, n) => found.push({at: b.at, name: `bang ${n + 1}`, colour: token('--fg')}));
   let tops = 0;
-  for (const b of bangs()) found.push({at: b.at, name: b.kind === 'top' ? (++tops === 1 ? 'the top' : tops === 2 ? 'the second top' : `top ${tops}`) : 'the return', colour: token('--fg')});
+  for (const b of bangs()) if (b.kind === 'top') found.push({at: b.at, name: `top ${++tops}`, colour: token('--fg')});
   for (let i = 1; i < rows.length; i++) if (era(i) !== era(i - 1)) found.push({at: intervals[i], name: 'the crossing', colour: token('--fg')});
-  const horizon = LINES.findIndex(l => l.horizon > 0);
-  if (horizon >= 0) found.push({at: LINES[horizon].interval, name: 'the horizon', colour: token('--flash')});
+  for (const h of horizons()) found.push({at: h.from, name: `the horizon (${h.most} Links)`, colour: token('--flash')});
   const crawl = rows.findIndex(r => r.velocity < 1);
   if (crawl >= 0) found.push({at: intervals[crawl], name: 'the crawl', colour: token('--flash')});
   if (REFUSED) found.push({at: REFUSED.interval, name: 'refused', colour: token('--flash')});
@@ -183,16 +208,23 @@ function draw() {
   const U = rows.map(r => r.U), H = rows.map(r => r.H);
   const series = [{name: 'U = level / Gamma', values: U, colour: token('--field')}, {name: 'H = v / Gamma', values: H.map(h => h * 100), colour: token('--focus')}];
   if (course) series.push({name: 'the blind\\'s U (the model, dashed)', values: course.map(c => c.U), xs: course.map(c => c.interval), colour: token('--blind'), dashed: true}, {name: 'the blind\\'s H x 100', values: course.map(c => c.velocity / GAMMA * 100), xs: course.map(c => c.interval), colour: token('--blind'), dashed: true});
-  graph(document.getElementById('course'), 'U and H x 100 against the interval, the eras shaded', series, {shades: shades(), marks: marks()});
+  graph(document.getElementById('course'), 'U and H x 100 against the interval, the eras shaded, the horizon shaded in the flash colour', series, {shades: shades().concat(horizons()), marks: marks()});
   const q = spans(SPAN), bands = (BLIND && BLIND.q_p_bands) || [];
   graph(document.getElementById('deceleration'), `q_p from the slope of 1 / v over spans of ${SPAN} intervals`, [{name: 'q_p (the board)', values: q.map(s => s.q_p), xs: q.map(s => intervals[s.t]), colour: token('--fg')}, {name: 'n_eff (the board)', values: q.map(s => s.n_eff), xs: q.map(s => intervals[s.t]), colour: token('--muted'), dashed: true}], {xs: q.map(s => intervals[s.t]), shades: shades(), marks: marks(), bands: bands.map(b => ({low: b.low, high: b.high}))});
-  const horizon = LINES.findIndex(l => l.horizon > 0);
-  if (horizon >= 0) found.push({at: LINES[horizon].interval, name: 'the horizon', colour: token('--flash')});
   const crawl = rows.findIndex(r => r.velocity < 1);
   const words = [`the eras by the largest write: ${shades().map(s => `${s.name} from ${s.from} to ${s.to}`).join('; ')}.`];
+  const bangList = returns(), topList = bangs().filter(b => b.kind === 'top');
+  words.push(`<b>The bangs</b>, ${bangList.length} over the run: ${bangList.map((b, n) => n === 0 ? `bang 1 at ${b.at} (the seed, ${b.fires} Nodes turned)` : `bang ${n + 1} at ${b.at} (the return after ${b.fires} Nodes turned by the fifth act since bang ${n})`).join('; ')}; the tops at ${topList.map(b => b.at).join(', ') || 'none'}; a bang is the interval the volume's velocity turns from falling to rising after the fifth act fired, read from the log.`);
+  const spansOfWall = horizons();
+  words.push(spansOfWall.length ? `<b>The horizon</b> (the black hole, in the owner's words): ${spansOfWall.map(h => `from ${h.from} to ${h.to}, up to ${h.most} Links held at the wall`).join('; ')}; the span shaded in the flash colour.` : 'No horizon within the run: no Link held at the wall.');
   words.push(crawl >= 0 ? `<b>The crawl</b> from the interval ${intervals[crawl]} (the velocity below one level per interval; the floor, the crawl and the pulses 0 to 1 to 0 at the mean rate s Gamma / n one phenomenon): the integers' end; the coast is the reals' mean.` : 'No crawl within the run: the velocity stayed at or above one level per interval.');
   words.push('The stop, the write\\'s death under the rounded factor (`factor: rounded`), is the other booking\\'s end, named and not shown; the end is never a cycle. Nature\\'s late acceleration is <b>MISSING</b> under the Node\\'s own hill (the remainders hand\\'s and the structures hand\\'s negatives); q_p never below 0 after the crossing is the blind\\'s clause.');
   document.getElementById('eras-words').innerHTML = words.join(' ');
+  if (LEAST && LEAST.least_x.length) {
+    graph(document.getElementById('least-x'), 'the least X over the board per interval against the floor X_f = volume_of(Gamma, -Gamma), the horizon shaded (log)', [{name: 'the least X over the board', values: LEAST.least_x, xs: LEAST.intervals, colour: token('--field')}, {name: `the floor X_f = ${LEAST.floor}`, values: LEAST.intervals.map(() => LEAST.floor), xs: LEAST.intervals, colour: token('--flash'), dashed: true}], {log: true, xs: LEAST.intervals, shades: horizons(), marks: marks()});
+    const least = Math.min(...LEAST.least_x), at = LEAST.intervals[LEAST.least_x.indexOf(least)];
+    document.getElementById('least-words').innerHTML = `<b>The least X over the board</b>, read from the Nodes log: ${format(least)} at the interval ${at}, ${(least / LEAST.floor).toFixed(1)} times the floor X_f = ${LEAST.floor} (ALGEBRA.md, The floor: a Node whose time line would fall below X_f turns as at the top); X = 0 lies below the floor and off the log axis, the distance to it the gap under the curve.`;
+  } else document.getElementById('least-x').innerHTML = '<div class="caption"><b>the least X over the board</b><span>the Nodes log not given (--nodes)</span></div>';
   graph(document.getElementById('writes'), 'the writes per family into the row\\'s time line (log)', families.map(f => ({name: f, values: rows.map(r => r.writes[f]), colour: colour(f)})), {log: true, shades: shades(), marks: marks()});
   graph(document.getElementById('residual'), 'R_nat = (Gamma / 2) U\\'^2 / (SUM s_f / 3) - 1, the trace\\'s surface, and R_vol = X\\'^2 / (2 X X\\'\\') - 1, the volume form\\'s own constraint (E = 0 of its Lagrangian, reached from rest as -X_0 / X)', [{name: 'R_nat', values: rows.map(r => r.nature_residual === undefined ? null : r.nature_residual), colour: token('--fg')}, {name: 'R_vol', values: rows.map(r => r.volume_residual === undefined ? null : r.volume_residual), colour: token('--field')}], {marks: marks()});
   graph(document.getElementById('exponent'), 'n_eff, the mix\\'s exponent from the writes (the readings\\' pair P SUM S_f over SUM (P / n_f) S_f)', [{name: 'n_eff', values: rows.map(r => r.n_eff), colour: token('--fg')}], {marks: marks()});
@@ -275,6 +307,7 @@ def page(
     span: int,
     look: str,
     clicks: list[dict[str, Any]] | None = None,
+    least: dict[str, Any] | None = None,
 ) -> str:
     """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span, the look page's link (empty where none stands) and, where the run kept one, the clicks log's lines (tools/eras.py --clicks), drawn as one panel: the quanta at the detector's Nodes, the clicks' magnitude and the fifth act's fires."""
     if not log or not isinstance(log[0], dict) or "held" not in log[0] or not log[0]["held"]:
@@ -293,6 +326,7 @@ def page(
         .replace("{{NOTES}}", embed(notes))
         .replace("{{CLICKS}}", embed(clicks))
         .replace("{{SPAN}}", embed(span))
+        .replace("{{LEAST}}", embed(least))
         .replace("{{LOOK}}", look)
     )
 
@@ -300,6 +334,18 @@ def page(
 def read_log(path: Path) -> list[dict[str, Any]]:
     """The log's lines, one JSON object per line, the header first."""
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def least_of(nodes: list[dict[str, Any]], gamma: int) -> dict[str, Any]:
+    """The least X over the board per interval, read from the Nodes' log (tools/eras.py --nodes, X at every Node), with the floor X_f = volume_of(Gamma, -Gamma) by the engine's own `swap.floor_of`, so the page draws the distance to X = 0 against the floor; nothing computed of the law."""
+    from event_universe.swap import floor_of
+
+    lines = [line for line in nodes if "X" in line]
+    return {
+        "intervals": [int(line["interval"]) for line in lines],
+        "least_x": [min(line["X"]) for line in lines],
+        "floor": floor_of(gamma),
+    }
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -327,10 +373,17 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the clicks log of the same run (<world>.clicks.jsonl), drawn as one panel",
     )
+    parser.add_argument(
+        "--nodes",
+        type=Path,
+        default=None,
+        help="the Nodes' log of the same run (<world>.nodes.jsonl), the least X over the board drawn against the floor",
+    )
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.html)")
     args = parser.parse_args(argv)
     log = read_log(args.log)
     clicks = read_log(args.clicks) if args.clicks else None
+    least = least_of(read_log(args.nodes), int(log[0]["node_clock"])) if args.nodes else None
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
     notes = args.notes.read_text(encoding="utf-8") if args.notes else None
     stem = args.log.name.removesuffix(".eras.jsonl")
@@ -342,7 +395,7 @@ def main(argv: list[str] | None = None) -> None:
         if args.log.with_name(f"{stem}.look.html").exists()
         else ""
     )
-    target.write_text(page(log, blind, notes, args.span, look, clicks), encoding="utf-8")
+    target.write_text(page(log, blind, notes, args.span, look, clicks, least), encoding="utf-8")
     print(
         json.dumps(
             {

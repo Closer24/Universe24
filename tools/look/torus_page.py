@@ -1,5 +1,7 @@
 """The torus view, a page tool beside tools/look/eras_page.py in its dark tokens (the owner's word of 2026-10-23: let every Node be shown in three dimensions and the Link's length between them, so one sees how the bang starts, reaches the top and contracts, the time's direction at the Nodes by colour, and the Nodes' content): one self-contained HTML page from the Nodes' log tools/eras.py writes with `--nodes` (`<world>.nodes.jsonl`, one JSON line per interval: X at every Node of the first held row, the Link's length e^U = (X / Gamma)^(1 / (d + 1)) at every Node, the Nodes the fifth act turned this interval, every Node's direction of time and every family's quanta per Node) with the eras log beside it (the header's shape, the volume's course), the clicks log where the run kept one (the instrument bodies' credits, the clicks written) and the world file (the bodies' Nodes and families, the markers). The page places the Nodes of any three-dimensional torus on their lattice with every Link drawn at its own length, the mean of its two Nodes' e^U, the lattice stretching toward the top and shrinking back, each Node coloured by its time's direction (forward or turned, the log's own reading), each Node's marker sized by its content (the quanta of every family at the Node, the numbers on hover), played from the seed by itself on load (a play/pause control, the slider beside it), a stage strip under the view with the bang, the first turns, every top, the contraction, every return and the cut marked at their intervals as the tool read them from the logs, the births and the written clicks ticked on it, and, for every instrument body, one chart of the click rate (the clicks written at its Node per 100 intervals in a running window, counted here from the credits), 1 / e^U at its Node (the clock p_0 / Gamma, the Link's length's inverse) and the light's quanta read at its Node, interval by interval, the ratio the one number the page forms. Plain HTML and inline JS, no library; every number the log's.
 
+The horizon (the owner's word of 2026-10-23, the black hole): every Link held at the wall is drawn as a thick line in the hole's colour between its two Nodes, the count in the caption; the stage strip numbers the bangs as tools/look/eras_page.py does (the seed bang 1, each later bang the return of the volume's velocity after the fifth act fired since the last bang) and the tops, the turned Nodes kept as drawn.
+
 python tools/look/torus_page.py <world>.nodes.jsonl --eras <world>.eras.jsonl [--clicks <world>.clicks.jsonl] [--world <world>.json] [--notes notes.md] [--out <world>.torus.html]
 """
 
@@ -76,7 +78,7 @@ const [nx, ny, nz] = COURSE.shape, N = nx * ny * nz;
 const index = (x, y, z) => (x * ny + y) * nz + z;
 const FAMILIES = NODES.length ? Object.keys(NODES[0].quanta) : [];
 const FORWARD = token('--field'), TURNED = token('--flash'), LINK = token('--muted'), MARK = token('--light');
-const HORIZON = token('--flash');  // the Links at the wall, the horizon (ALGEBRA.md, The horizon)
+const HORIZON = token('--hole');  // the Links held at the wall, the horizon, the black hole in the owner's words (ALGEBRA.md, The horizon)
 const tones = token('--click-tones').split(',').map(s => s.trim());
 const familyColour = name => tones[(FAMILIES.indexOf(name) + 1) % tones.length];
 document.getElementById('title').textContent = `${COURSE.world.replace('.json', '').replace(/_/g, ' ')}: the torus, interval by interval`;
@@ -118,8 +120,9 @@ function draw() {
       body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${LINK}" stroke-width="${w.toFixed(2)}" opacity="0.55"><title>Link length e^U ${len.toFixed(3)}</title></line>`;
     }
   }
-  for (const [i, j] of line.horizon || []) {  // a Link at the wall: the horizon, drawn broken in the flash colour over the plain Link
-    body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${HORIZON}" stroke-width="2.6" stroke-dasharray="5 4"><title>a Link at the wall: the horizon (its factor 0, its two ends decoupled)</title></line>`;
+  for (const [i, j] of line.horizon || []) {  // a Link held at the wall: the horizon, the black hole, drawn thick in the hole's colour over the plain Link, with the flash colour broken along it
+    body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${HORIZON}" stroke-width="4.2" stroke-linecap="round"><title>a Link held at the wall: the horizon, the black hole (its factor 0, its two ends decoupled)</title></line>`;
+    body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${TURNED}" stroke-width="1.4" stroke-dasharray="5 4"><title>a Link held at the wall: the horizon, the black hole (its factor 0, its two ends decoupled)</title></line>`;
   }
   const order = [...Array(N).keys()].sort((a, b) => pos[a][2] - pos[b][2]);
   for (const i of order) {
@@ -132,11 +135,11 @@ function draw() {
   document.getElementById('torus').innerHTML = body;
   const cursor = document.getElementById('cursor'); if (cursor) { const first = NODES[0].interval, last = NODES[NODES.length - 1].interval, x = 12 + (line.interval - first) / Math.max(1, last - first) * 976; cursor.setAttribute('x1', x.toFixed(1)); cursor.setAttribute('x2', x.toFixed(1)); }
   const row = COURSE.rows[t] || {};
-  document.getElementById('where').textContent = `interval ${line.interval}: U ${row.U === undefined ? '' : row.U.toFixed(4)}, the mean Link e^U ${meanL.toFixed(3)}, ${(line.horizon || []).length} Links at the wall (the horizon), ${line.turned.length} Nodes turned this interval, ${line.direction.filter(d => d < 0).length} with time turned`;
+  document.getElementById('where').textContent = `interval ${line.interval}: U ${row.U === undefined ? '' : row.U.toFixed(4)}, the mean Link e^U ${meanL.toFixed(3)}, ${(line.horizon || []).length} Links held at the wall (the horizon, the black hole), ${line.turned.length} Nodes turned this interval, ${line.direction.filter(d => d < 0).length} with time turned`;
 }
 function legend() {
   const marks = [`<span><i style="background:${FORWARD}"></i>time forward</span>`, `<span><i style="background:${TURNED}"></i>time turned (the swap at the top)</span>`, `<span><i class="line" style="border-color:${LINK}"></i>a Link drawn at its length e^U = (X / Gamma)^(1 / 4), the frame the run's largest lattice, so the stretch to the top and the shrink back are seen; its width the length against the mean</span>`];
-  if (NODES.some(l => (l.horizon || []).length)) marks.push(`<span><i class="line" style="border-color:${HORIZON};border-top-style:dashed"></i>a Link at the wall: the horizon</span>`);
+  if (NODES.some(l => (l.horizon || []).length)) marks.push(`<span><i class="line" style="border-color:${HORIZON};border-top-width:4px"></i>a Link held at the wall: the horizon, the black hole</span>`);
   for (const f of [...new Set(BODIES.filter(b => b.nodes.length <= 8).map(b => b.family))]) marks.push(`<span><i style="background:transparent;border:2.5px solid ${familyColour(f)}"></i>a body of ${esc(f)}</span>`);
   document.getElementById('legend').innerHTML = marks.join('');
   const tops = COURSE.bangs.map(b => `${b.kind} at ${b.at} (U ${b.U.toFixed(3)})`).join(', ');
@@ -257,6 +260,23 @@ def bangs_of(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return found
 
 
+def returns_of(rows: list[dict[str, Any]]) -> list[int]:
+    """The bangs' intervals as tools/look/eras_page.py numbers them: the seed, the first logged interval, bang 1; each later bang the interval the board's volume velocity turns from falling to rising after the fifth act fired since the last bang (the return), the fires the eras log's."""
+    volumes = [(r["interval"], r["volume"], r["fires"]) for r in rows if r.get("volume") is not None]
+    if not volumes:
+        return []
+    found = [volumes[0][0]]
+    fired = 0
+    for i in range(2, len(volumes)):
+        fired += volumes[i - 1][2]
+        fall = volumes[i - 1][1] - volumes[i - 2][1]
+        rise = volumes[i][1] - volumes[i - 1][1]
+        if fall < 0 < rise and fired > 0:
+            found.append(volumes[i - 1][0])
+            fired = 0
+    return found
+
+
 def course_of(eras: list[dict[str, Any]], world: dict[str, Any] | None) -> dict[str, Any]:
     """The course the page marks: the header's world, shape and Gamma, per interval the first held row's U and volume, the tops and returns, the refusal where one stands."""
     head = eras[0]
@@ -266,6 +286,7 @@ def course_of(eras: list[dict[str, Any]], world: dict[str, Any] | None) -> dict[
             "interval": line["interval"],
             "U": line["rows"][row]["U"],
             "volume": line["rows"][row].get("volume"),
+            "fires": int(line.get("fires", 0) or 0),
         }
         for line in eras[1:]
         if "rows" in line
@@ -352,21 +373,22 @@ def charts_of(
 def stages_of(
     nodes: list[dict[str, Any]], course: dict[str, Any], clicks: list[dict[str, Any]]
 ) -> dict[str, Any]:
-    """The stage strip's marks, each read from the logs and none typed: the bang (the seed, the first logged interval), the first turns (the first interval the fifth act turned a Node), every top and return of the board's volume (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
+    """The stage strip's marks, each read from the logs and none typed: the bangs numbered (`returns_of`: the seed, the first logged interval, bang 1, each return of the volume's velocity after the fifth act fired a later bang), the first turns (the first interval the fifth act turned a Node), every top of the board's volume numbered and the returns that are no bang (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
     marks: list[dict[str, Any]] = []
     if not nodes:
         return {"marks": marks, "births": [], "clicks": []}
-    marks.append({"word": "bang", "at": nodes[0]["interval"]})
+    rows = course["rows"]
+    bangs = returns_of(rows) or [nodes[0]["interval"]]
+    for n, at in enumerate(bangs, start=1):
+        marks.append({"word": f"bang {n}", "at": at})
     turned = next((line["interval"] for line in nodes if line.get("turned")), None)
     if turned is not None:
         marks.append({"word": "turns", "at": turned})
-    rows = course["rows"]
+    tops = 0
     for bang in course["bangs"]:
-        marks.append({"word": bang["kind"], "at": bang["at"]})
-    horizon = next((n["interval"] for n in nodes if n.get("horizon")), None)
-    if horizon is not None:  # the first interval a Link stands at the wall (ALGEBRA.md, The horizon)
-        marks.append({"word": "horizon", "at": horizon})
         if bang["kind"] == "top":
+            tops += 1
+            marks.append({"word": f"top {tops}", "at": bang["at"]})
             after = next(
                 (
                     r["interval"]
@@ -379,6 +401,11 @@ def stages_of(
             )
             if after is not None:
                 marks.append({"word": "contraction", "at": after})
+        elif bang["at"] not in bangs:
+            marks.append({"word": "return", "at": bang["at"]})
+    horizon = next((n["interval"] for n in nodes if n.get("horizon")), None)
+    if horizon is not None:  # the first interval a Link stands at the wall (ALGEBRA.md, The horizon)
+        marks.append({"word": "horizon (the black hole)", "at": horizon})
     cut = course["refused"]["interval"] if course["refused"] else nodes[-1]["interval"]
     marks.append({"word": "cut", "at": cut})
     marks.sort(key=lambda m: m["at"])

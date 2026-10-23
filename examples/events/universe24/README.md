@@ -14,6 +14,6 @@ The world file declares content and run parameters alone: the shape, Gamma, the 
 
 ```
 PYTHONPATH=src nice -n 10 python tools/eras.py examples/events/universe24/universe24.json --every 100 --span 50 --intervals 1500 --out examples/events/universe24/universe24.eras.jsonl --clicks examples/events/universe24/universe24.clicks.jsonl --nodes examples/events/universe24/universe24.nodes.jsonl
-PYTHONPATH=src python tools/look/eras_page.py examples/events/universe24/universe24.eras.jsonl --clicks examples/events/universe24/universe24.clicks.jsonl --notes examples/events/universe24/notes.md --out examples/events/universe24/universe24.html
+PYTHONPATH=src python tools/look/eras_page.py examples/events/universe24/universe24.eras.jsonl --clicks examples/events/universe24/universe24.clicks.jsonl --nodes examples/events/universe24/universe24.nodes.jsonl --notes examples/events/universe24/notes.md --out examples/events/universe24/universe24.html
 PYTHONPATH=src python tools/look/torus_page.py examples/events/universe24/universe24.nodes.jsonl --eras examples/events/universe24/universe24.eras.jsonl --clicks examples/events/universe24/universe24.clicks.jsonl --world examples/events/universe24/universe24.json --notes examples/events/universe24/notes.md --out examples/events/universe24/universe24.torus.html
 ```
