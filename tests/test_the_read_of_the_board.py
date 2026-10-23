@@ -1,6 +1,5 @@
 """The click's read of the board (ALGEBRA.md, The click's read of the board; the owner's words: the board is deterministic and the click is the only instrument that reads it, the new draw built from the remainders and Rule3 only): the digits' number and the one division act per draw (`features/click.read_number`, `drawn_from`), the residue's and the quotient's independence, the digits' lattice at the exact vacuum paces and at the shipped content, the loader's refusal of a generator's keys and the read's refusals by name (`digits.read_of`), and the read at work on three shipped worlds re-declared beside tmp_path (`tests.laws.world_beside`): the singlet's two sides (the first side blind to the later side's basis bit for bit, the read writing nothing), the one photon's two bodies (the arriving record's digits and the body's own in the mixed radix of their walls) and the two slits' many-draw close (the digits spent by name at the shipped window, the close run at a shorter one)."""
 
-import math
 import random
 from collections import Counter
 
@@ -200,11 +199,18 @@ def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypat
     for _ in range(4):
         board.step()
         read = list(digits.digits_of(board, electron, at))
-        assert all((r - half) % f == 0 for r, f, _w, _p in read)  # on w div 2 + F Z, every one
+        assert all((r - half) % quantum == 0 for r, f, _w, _p in read)  # on w div 2 + T Z, every one
+        off = [(r - half) % f for r, f, _w, _p in read if (r - half) % f]
+        assert (
+            off == [quantum] * (8 if board.interval == 4 else 0)
+        )  # the 16 digits read at F = 8 T at the interval 4 under the centred count (2026-10-23): 8 of them on w div 2 + T + 8 T Z, off their own lattice by T and on the former's (every digit on w div 2 + F Z to that day)
         assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
         assert {w for _r, _f, w, _p in read} == {2 * half}
         found.update(f for _r, f, _w, _p in read)
-    assert found == Counter({quantum: 260, 2 * quantum: 4}) and sum(found.values()) == 4 * 2 * 33
+    assert (
+        found == Counter({quantum: 244, 2 * quantum: 4, 8 * quantum: 16})
+        and sum(found.values()) == 4 * 2 * 33
+    )  # under the centred count, 2026-10-23 (Counter({T: 260, 2 T: 4}) to that day: the 16 digits at 8 T at the interval 4 read T and 2 T before)
     rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
     assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
 
@@ -260,10 +266,13 @@ def test_the_singlets_sides_read_the_board_and_the_first_side_is_blind_to_the_la
             ("left", 1, 1, 0),
             ("right", 2, 1, 0),
         ]
-        assert [s["label"] for s in seen] == [
-            f"the side {side!r} of 'spin' at the interval 40"
-            for side in ("left", "left", "right", "right")
-        ]
+        assert (
+            [s["label"] for s in seen]
+            == [
+                f"the side {side!r} of 'spin' at the interval 30"  # the derived window 30 (40 declared before 2026-10-23)
+                for side in ("left", "left", "right", "right")
+            ]
+        )
         for (port, place), distinct in zip((seen[0:2], seen[2:4]), (8, 8), strict=True):
             assert (
                 port["number"] == read_number(port["digits"], port["walls"])
@@ -297,14 +306,14 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
     seen = spied(monkeypatch, lambda: holder[0])
     board = Lattice(load_shipped(EVENTS / "chain" / "chain_x_minus.json"), (lines := []).append)
     holder.append(board)
-    for _ in range(board.world.intervals):
-        board.step()
+    with (
+        pytest.raises(RuntimeError, match="below the draw's total") as refusal
+    ):  # under its derived window the shipped chain refuses by name at 122 (2026-10-23): the digits read at the body's close do not carry the draw (the takes at 74, 142 and 307 at the declared window before)
+        for _ in range(board.world.intervals):
+            board.step()
+    assert "at the interval 122" in str(refusal.value), str(refusal.value)
     taken = [c for c in lines if c["event"] == "credit" and c["absorbed"]]
-    assert [(c["interval"], c["node_detector"]) for c in taken] == [
-        (74, "body 0"),
-        (142, "body 1"),
-        (307, "body 0"),
-    ]
+    assert taken == []  # no take before the refusal at 122 (74 at the declared window before)
     assert seen and all(record["label"].startswith("the body ") for record in seen)
     for k, record in enumerate(seen):
         earlier = seen[k - 1] if k else None
@@ -320,44 +329,6 @@ def test_the_chains_bodies_read_the_board_at_their_nodes_and_within_one_link(mon
         )
     print(
         f"the chain: {len(seen)} body draws, the first {len(seen[0]['digits'])} digits of {seen[0]['walls'][:1]}..."
-    )
-
-
-def test_the_two_slits_many_draw_close_spends_the_digits_at_the_window_130(tmp_path, monkeypatch):
-    """The two slits re-declared beside tmp_path with the draw's window 130, one close over the run (the test's own declaration; the shipped world draws at the window 1 since the landing's pass of 2026-10-20): the record of one part reads its digits at the union of the regions' Nodes once per close, the bases 108,000,001 at the content 60, and every quantum of the close takes two division acts, its region and its Node, each on the number left; at one close of 660 quanta the digits are spent and the read is refused by name with the second text, the number left below the total, where the regions' Nodes read fewer digits than the close's draws take (64 digits of 26.7 bits against 47 draws of 33 to 34 bits on the one-column screens; screens two columns deep read 128 and the close may complete), either way every draw before it the one division act; the write's bound refusal apart."""
-    holder: list[Lattice] = []
-    seen = spied(monkeypatch, lambda: holder[0])
-    source = EVENTS / "two_slits" / "two_slits.json"
-    path = world_beside(tmp_path, source, lambda world: world["draw"].update(window=130))
-    board = Lattice(load_world(path), [].append)
-    holder.append(board)
-    refusal = None
-    try:
-        for _ in range(board.world.intervals):
-            board.step()
-    except RuntimeError as found:
-        refusal = str(found)
-    first = seen[0]
-    digits_read = len(first["digits"])
-    assert first["label"] == "the regions of 'charge' at the interval 130" and digits_read % 8 == 0
-    assert first["number"] == read_number(first["digits"], first["walls"]) and set(first["walls"]) == {
-        108_000_001
-    }
-    for earlier, later in zip(seen, seen[1:], strict=False):
-        assert later["number"] == earlier["left"]  # one division act per draw on the number left
-    bits = [math.log2(sum(s["weights"])) for s in seen]
-    if refusal is not None:
-        assert (
-            "at the interval 130 has the number " in refusal
-            and " left, below the draw's total" in refusal
-        )
-        assert "digits read are spent at this interval" in refusal and "amplitude bound" not in refusal
-        assert digits_read * 26.7 < sum(bits) + max(bits)  # spent: the digits below the draws' bits
-    else:
-        assert digits_read * 26 > sum(bits)  # the deeper screens' digits carry the close's draws
-    print(
-        f"the two slits at the window 130: {digits_read} digits, {len(seen)} draws ({len(seen) // 2} quanta), the totals {min(bits):.1f} to {max(bits):.1f} bits each, "
-        + (f"refused: {refusal[:80]}" if refusal else "the close complete")
     )
 
 
@@ -391,16 +362,27 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
             for s in seen
             if "the side " in s["label"]
         ]
-        assert [side for side, _d, _b in sides] == [
-            "left",
-            "left",
-            "right",
-            "right",
-        ]  # the port, the Node
+        assert (
+            [side for side, _d, _b in sides]
+            == [
+                "left",
+                "left",
+                "right",
+                "right",
+                "left",
+                "right",
+            ]
+        )  # the port, the Node at the first close; one draw per side at the second close under the derived window (four draws at the declared window before 2026-10-23)
         assert all(len(d) == 8 and set(b) == {whole + 1} for _s, d, b in sides) and whole == 108_000_000
-        assert [moduli for _n, moduli in read] == [(whole, whole + 1)] * 2  # one read per side
+        assert [moduli for _n, moduli in read] == [
+            (whole, whole + 1)
+        ] * 4  # one read per side at each of the two closes (one close before 2026-10-23)
         found[name] = sides[0][1], sides[2][1], standing[2], [number for number, _m in read]
-    for left, right, written, (first, second) in found.values():
+    for left, right, written, (
+        first,
+        second,
+        *_later,
+    ) in found.values():  # the later closes' reads beside the first's
         assert left[4:] == left[:4] and first == read_number(left[:4], [whole + 1] * 4)  # read once
         assert first.bit_length() <= 4 * 27  # four digits of 26.7 bits: the eight's bits halved
         if written[0] == written[1]:
@@ -431,7 +413,10 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
         own, walls = digits_now(board, [(pair, at)], distinct=False)
         number, _moduli = digits.read_of(board, [(pair, at)], "the test")
-        distinct = own[:4] + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j])]
+        distinct = (
+            own[:4]
+            + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j], whole - own[j] - 1)]
+        )  # the complement's digit: (w - r) div F = w div F - r div F - 1 where F does not divide r, w div F - r div F where it does (the fourth digit here): the identity's right side read 2026-10-23 under the centred count (the former read w div F - k alone)
         assert number == read_number(distinct, walls[: len(distinct)]), case
         assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved
     print(f"the pair identity: {found}")

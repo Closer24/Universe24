@@ -477,9 +477,17 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
         assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
         lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
         parts = [line for line in lines if line["event"] == "parts"]
-        equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
-        assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
+        first = min(c["interval"] for c in credits) if credits else None
+        equal = all(
+            len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR"
+            for p in parts
+            if first is None or p["interval"] <= first
+        )  # equal across the parts to the sides' first close, as laws_spin.joint_shares takes the close (2026-10-23: the window derived, 30 on the Bell worlds, closes at 60 and 90 within the run of 100, the first side's write turning one part after 60; the declared window was the run, so every parts line stood before the write)
+        assert parts and equal and credits
+        assert all(c["interval"] == c["window"][1] for c in credits), [
+            (c["interval"], c["window"]) for c in credits
+        ]
         board = Lattice(load_world(folder / f"{name}.json"))
         assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
         worlds[key] = GATE.one_world(folder / f"{name}.json", lines, expected)
@@ -491,3 +499,32 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
     assert read["correlation"] == expected["blind"]["correlation"]
     assert read["marginals"] == expected["blind"]["marginals"]
     return read, expected
+
+
+def board_state(board: Lattice) -> list[tuple[list[tuple[Any, Any, Any]], list[Any]]]:
+    """Every family's lines (now, before, remainder) and write remainders copied as Python's integers, the state a run back is compared against bit for bit (the light mean's test)."""
+    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
+    return [
+        (
+            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
+            [copied(r) for r in st.write_remainders],
+        )
+        for st in board.states
+    ]
+
+
+def same_state(
+    a: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
+    b: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
+) -> bool:
+    """Two states of `board_state` equal in every line and every write remainder."""
+    return all(
+        all(np.array_equal(u, v) for x, y in zip(la, lb, strict=True) for u, v in zip(x, y, strict=True))
+        and all(np.array_equal(u, v) for u, v in zip(ra, rb, strict=True))
+        for (la, ra), (lb, rb) in zip(a, b, strict=True)
+    )
+
+
+def state_of(board):  # type: ignore[no-untyped-def]
+    """Every line's three arrays and every write remainder of a board, copied, for a run back's comparison (the swap tests): `board_state` under the swap tests' name."""
+    return board_state(board)

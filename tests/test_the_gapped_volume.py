@@ -13,7 +13,7 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, EVENTS, ROOT, load_file
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
-DIGEST = "00573f6ccdc48b4d"  # the matter world's twenty intervals of readings on the one Node, recorded 2026-10-23
+DIGEST = "687901882f2c706c"  # the matter world's twenty intervals of readings on the one Node with the stress the Links' and the swap at the top, recorded 2026-10-23 at the landing (00573f6ccdc48b4d with the level 4,066 before the Links' stress, the same day)
 
 GAMMA, ACTION, CUBE, GAP = 1000, 36000, 3, 999  # the gapped torus: Gamma 1,000, gravity [999, 1000]
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -107,7 +107,7 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
 
 
 def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log(tmp_path):  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the binding holder [2400, 2401] sourced by the form alone keeps the level form), so the clause selects the same rows on every shipped universe; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) reads over its first twenty intervals the stored digest of its integer readings (gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level, count and frozen Nodes; the level 4,066 at the twentieth), recorded on the one Node (2026-10-23) in place of the shipped eras log, which the branch interval-no-observable recorded and the one Node's write leaves from the sixth interval (the matter's write and the tension means); no other clause run anywhere. Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row sourced by the tensions is a row of the content, massless [Gamma, Gamma] or gapped (the cycle's and Universe24's gravity [999, 1000] carrying its volume), never the holder of the sign, and the binding holder [2400, 2401] sourced by the form alone keeps the level form; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) reads over its first twenty intervals the stored digest of its integer readings (gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level, count and frozen Nodes; the level 4,066 at the twentieth), recorded on the one Node (2026-10-23) in place of the shipped eras log, which the branch interval-no-observable recorded and the one Node's write leaves from the sixth interval (the matter's write and the tension means); no other clause run anywhere. Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
     rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
@@ -117,9 +117,13 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
                 continue
             rows += [f for f in families or [] if isinstance(f, dict) and "held" in f]
     content = [f for f in rows if "wronskian" not in f["held"]["sources"]]
-    assert content and all(
-        ("tensions" in f["held"]["sources"]) == (f["pair"][0] == f["pair"][1]) for f in content
-    )
+    assert (
+        content
+        and all(
+            ("wronskian" not in f["held"]["sources"]) if "tensions" in f["held"]["sources"] else True
+            for f in content
+        )
+    )  # the tensions source the content's rows alone, massless or gapped (the cycle's gravity [999, 1000]), never the sign's holder
     assert any(f["pair"] == [2400, 2401] for f in content)
     world = EVENTS / "big_bang" / "big_bang_matter.json"
     lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
@@ -136,4 +140,4 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
         }
         kept["quanta"] = {n: [q["largest"], q["quanta"], q["frozen"]] for n, q in line["quanta"].items()}
         found.update(json.dumps(kept, sort_keys=True).encode())
-    assert (found.hexdigest()[:16], lines[-1]["rows"]["gravity"]["level"]) == (DIGEST, 4066)
+    assert (found.hexdigest()[:16], lines[-1]["rows"]["gravity"]["level"]) == (DIGEST, 4091)

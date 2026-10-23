@@ -26,7 +26,7 @@ TRANSITION_REQUIRED = (
     "drive",
     "weight",
     "resonance",
-)
+)  # `dipole` (a key of 2026-10-21) is no key: refused as unknown with every misspelling since 2026-10-23, the one coupling the drive's level at the Node times the weight
 RATE_KEYS = (
     "from",
     "to",

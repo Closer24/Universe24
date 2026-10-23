@@ -81,7 +81,7 @@ def test_the_node_detector_books_the_conserved_forms_own_current_through_its_fro
 ):
     """The credit's booking (ALGEBRA.md #the-click-is-the-meeting; the owner's word of 2026-10-04, 11:54 UTC, the mathematician's derivation with the advisor's second, two hands): a NodeDetector books through each front Port the conserved form's own current, num (q_ij / Gamma)^2 (now_i before_j - before_i now_j), the Link's factor squared the one weight, summed in the unit G^2 and divided once at the close by W_rec G^2, equal to the plain current where no tension stands. A light packet crosses a declared region of two Nodes on the tests' chain whose front Links carry a tension written into the content holder's x axis line (300 behind the region, 200 and 100 across it at the start: the tension 250 on the Link entered, Q - G^2 = -21, and 50 on the Link left, -4, the line then moving under Rule3); at every step the region's weighted share changes by the booked inflow over G^2 plus Rule3's remainder term within the division act's unit per Node, the derived tolerance, two units here, while the plain inflow misses it by far more; the twin without the tension books the plain current times G^2 exactly and `quanta_through` takes the floor the plain formula takes, the remainder below one quantum beside it in the unit G^2 (the floor and the remainder's draw, 2026-10-21; the half-up rounding before)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    region, draw = [[13, 0, 0], [14, 0, 0]], {"window": 400}
+    region, draw = [[13, 0, 0], [14, 0, 0]], {}
     packet = {**PACKET, "top": {"x": [8, 8], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 4, "y": 0, "z": 0}}
     chain = dict(shape=[24, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), faces=[])
     readers = [{"name": "near", "positions": region}]
@@ -274,12 +274,17 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     )
     first, click = clicks[0], ("P", "S", "strong_drive", None, 1, "body 0")
     words = ("realised", "before", "absorbed", "emitted", "count", "node_detector")
-    assert tuple(first[k] for k in words) == click and first["interval"] == board.interval == 21
+    assert (
+        tuple(first[k] for k in words) == click and first["interval"] == board.interval == 42
+    )  # the reader's window derived, the drive's passage over its two Nodes (2026-10-23; the former declared 21)
     assert "node" not in first and first["left"] == board.credit.counts[drv]  # the click names no Node
-    assert set(first) == set(
-        credits_keys
-        := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
-    )
+    assert (
+        set(first) - {"bias_bound"}
+        == set(
+            credits_keys
+            := "event label interval family node_detector window proper windows before realised kept count left absorbed emitted momentum fan lost source recoil".split()
+        )
+    )  # at the derived window the reader's click is a read's first draw and carries its bound (2026-10-23)
     assert len(node_draws) == 1 and tuple(node_draws[0][2]) in region  # the hole's one drawn Node
     assert not any(
         f.family == drv for f in board.credit.faces.get(board.interval + 1, [])
@@ -289,10 +294,16 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     assert written == set(region)  # the LATTICE lay lines of the write name the Nodes, the click none
     was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
+    written_at = {tuple(np.add(n, board.offset)) for n in region}
+    nearby = {
+        tuple(np.add(n, step))
+        for n in written_at
+        for step in np.vstack((np.eye(3, dtype=int), -np.eye(3, dtype=int)))
+    }
     differing = {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])}
-    assert differing == {
-        tuple(np.add(n, board.offset)) for n in region
-    }  # the two boards differ there alone
+    assert (
+        differing == written_at | nearby
+    )  # the one Node's write: every held row's time line reads its six neighbours, so the write at the region moves the held rows at the Nodes one Link from the written ones and nowhere else (the region alone before 2026-10-23)
     here = tuple(np.add(node_draws[0][2], board.offset))
     assert board.credit.counts[drv] == other.credit.counts[drv] - 1
     in_s, in_p = (
@@ -391,9 +402,9 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
         ]
         level = int(b.states[ph].lines[0].now[tuple(np.add(b_at, b.offset))])
         runs.append((absorbed, b.credit.counts[ph], level))
-    assert runs[0][:2] == runs[1][:2] and [t for t, _body in runs[0][0]] == [
-        63
-    ]  # the read's one outcome, 63
+    assert (
+        runs[0][:2] == runs[1][:2] and [t for t, _body in runs[0][0]] == [60]
+    )  # the read's one outcome at the derived window's close 60 (63 at the declared window before 2026-10-23)
     assert (
         runs[0][1] == 0 and runs[0][2] == 0 != runs[1][2]
     )  # the count-0 wave erased by the front or standing
@@ -405,6 +416,11 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
                 if isinstance(f, ast.FunctionDef) and any(".lines" in ast.unparse(t) for t in targets):
                     writers.add((module.stem, f.name))
     rule3 = {("lattice", "step"), ("lattice", "step_inverse"), ("lattice", "held_write")}
+    rule3 |= {
+        ("shear", "written"),
+        ("shear", "stepped"),
+        ("swap", "swapped"),
+    }  # the one Node's own acts on the lines: the tension lines' split write and step (the shear's momentum) and the swap at the top (2026-10-23)
     lay = {("lattice", "start"), ("bookings", "booked_sources"), ("growth", "resized")}
     lay |= {("lay", "written")}  # the one lay act's write step, every door's (ALGEBRA.md, the principle)
     lay |= {("meeting_back", "crossed")}  # the lay act's lines crossed back and forward by the run back

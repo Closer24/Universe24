@@ -42,7 +42,7 @@ the engine.
   `reason` named, a finding), and the scriptless count is a
   ratchet that only falls (`SCRIPTLESS_MARKS`, at most 18); (e) every scripted
   entry's function returns its printed numbers in order, a `num/den` string as
-  an exact Fraction, an int as it stands and a float to `digits` decimal places;
+  an exact Fraction, an int as it is and a float to `digits` decimal places;
   the comparer matches the printed numbers as an in-order subsequence of the
   function's output, so a function returns its mark's numbers first and names
   every output in its docstring.

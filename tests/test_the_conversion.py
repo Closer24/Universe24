@@ -75,7 +75,7 @@ def table_of(document, name: str) -> list:  # type: ignore[no-untyped-def, type-
 
 
 def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_conservations_and_refuses_by_name():
-    """The shipped universe derives n -> p + e from the pairs, the electron's -1 the sum's from the proton's declared 1 and nothing else typed, and no other family has a list, the proton's stability by the baryon and the electron's by having no lighter charged family; a plane at [4800, 6000] or a real line at the electron's pair adds a list exact in rotation that the charge cuts, a second plane at the electron's pair a second list keeping both, refused; the old electron's universe is lawful with no key and nothing converts, and refused where the neutron declares senses for no list; the deleted key `converts`, a non-Pythagorean parent, a held row's and a plane parent's senses, a stray name, a contradiction of the sum and the missing declaration are refused by name; the flipped declaration is the anti-list; two parents' lists: the capture p + e -> n irreducible, two neutrons' and a neutron with an electron's lists reducible to the quanta's own clicks, no list for two like senses."""
+    """The shipped universe derives n -> p + e from the pairs, the electron's -1 the sum's from the proton's declared 1 and nothing else typed, and no other family has a list, the proton's stability by the baryon and the electron's by having no lighter charged family; a plane at [4800, 6000] or a real line at the electron's pair adds a list exact in rotation that the charge cuts, a second plane at the electron's pair a second list keeping both, refused; the old electron's universe is lawful with no key and nothing converts, and refused where the neutron declares senses for no list; the deleted key `converts` (refused since 2026-10-23 as every key the one-Node loader does not read, "unknown key", where the former loader named it deleted), a non-Pythagorean parent, a held row's and a plane parent's senses, a stray name (its plane reading no sign holder since 2026-10-23, so the stray is met before the one Node's alpha gate of one ratio per holder), a contradiction of the sum and the missing declaration are refused by name; the flipped declaration is the anti-list; two parents' lists: the capture p + e -> n irreducible, two neutrons' and a neutron with an electron's lists reducible to the quanta's own clicks, no list for two like senses."""
     assert table_of(UNIVERSE, "neutron") == [("proton", 1), ("electron", -1)]
     _integers, families = universe_of(UNIVERSE)
     assert all(not f.converts for f in families if f.name != "neutron")
@@ -89,7 +89,9 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
     }
     added = universe_with()
     added["families"].append(muon)
-    refused("one ratio per holder", universe_of, added)  # a second pair reading the sign: no second list
+    refused(
+        "one ratio per holder", universe_of, added
+    )  # a second pair reading the sign: no second list (the one Node's alpha, 2026-10-23)
     added = universe_with()
     added["families"].append(neutral)
     assert table_of(added, "neutron") == [
@@ -104,14 +106,16 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
         "no square: its sine is irrational", universe_of, universe_with(electron={"pair": [4000, 6000]})
     )
     refused("no list sums to it exactly", universe_of, universe_with(neutron={"pair": [-4000, 6000]}))
-    refused("'converts', deleted", universe_of, universe_with(neutron={"senses": None, "converts": {}}))
+    refused(
+        "unknown key 'converts'", universe_of, universe_with(neutron={"senses": None, "converts": {}})
+    )
     refused("a held row converts nothing", universe_of, universe_with(binding={"senses": {"proton": 1}}))
     refused(
         "a plane parent's records out", universe_of, universe_with(proton={"senses": {"electron": 1}})
     )
     refused("names 'antineutrino'", universe_of, universe_with(neutron={"senses": {"antineutrino": 1}}))
     stray = universe_with(neutron={"senses": {"proton": 1, "muon": 1}})
-    stray["families"].append(muon)
+    stray["families"].append({**muon, "reads": neutral["reads"]})  # no sign holder read: the stray first
     refused("no record out of its one list", universe_of, stray)
     refused(
         "contradicts the Wronskian's sum",
@@ -156,7 +160,9 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
     counts = {k: board.credit.counts[k] for k in (neutron, proton, electron)}
     assert counts == {neutron: 2, proton: 0, electron: 0}
     first = None
-    for _ in range(40):
+    for _ in range(
+        board.world.intervals
+    ):  # 130, past the derived window 122 (2026-10-23; the former 40 under the declared window 12)
         board.step()
         credits = [c for c in lines if c["event"] == "credit"]
         if credits and first is None:
@@ -176,6 +182,13 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
     lays = [line for line in lines if line["event"] == "lay" and line["interval"] == first]
     at = {tuple(line["node"]["at"]) for line in lays}
     assert len(at) == 1 and next(iter(at)) in {tuple(n) for n in board.world.node_detectors[0].positions}
+    assert (
+        (first, moved, len(lays)) == (122, 2, 8)
+    )  # the window derived, the law's reading on the owner's decision of 2026-10-23: both quanta credited at the one close 122 (the former 48, one at a time under the declared window 12) and converted at one Node, the first conversion's eight lines laid, the second's records in the books alone where the Node's share stands at a quantum (take.faced, the undepleted beam: ALGEBRA.md, The click writes on the lattice (b) and (d)), the books' deficits proton -1 and electron -1 their record
+    assert {board.families[k].name: v for k, v in board.credit.deficits.items() if v} == {
+        "proton": -1,
+        "electron": -1,
+    }
     of = {
         name: sorted((row for row in lays if row["family"] == name), key=lambda row: row["line"])
         for name in ("proton", "electron")
@@ -198,19 +211,28 @@ def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_th
     """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the neutron's credit at 48 by the remainder's draw with its conversion alone into proton and electron at the senses 1 and -1, the electron's credit at 84 by the draw, each at its own close with no meeting (their one list {p, e, e} is reducible, the neutron's own beside the electron passing, asserted in the loader test), the books n 0, p 1, e 1 with no deficit, the erasing front the neutron's alone; deterministic per file."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_shipped(FOLDER / "neutron_electron_chain.json"), lines.append)
-    for _ in range(84):
+    for _ in range(
+        board.world.intervals
+    ):  # 210, past the derived window 197 (2026-10-23; the former 84 under the declared window 12)
         board.step()
     found = [
         (c["interval"], c["event"], c["family"], c.get("into"), c.get("senses"))
         for c in lines
         if c["event"] in ("credit", "conversion")
     ]
-    assert found == [
-        (48, "credit", "neutron", None, None),
-        (48, "conversion", "neutron", ["proton", "electron"], [1, -1]),
-        (84, "credit", "electron", None, None),
-    ]
+    assert (
+        found
+        == [
+            (197, "credit", "neutron", None, None),
+            (197, "conversion", "neutron", ["proton", "electron"], [1, -1]),
+            (197, "credit", "electron", None, None),
+        ]
+    )  # the one close 197 under the window derived, the law's reading on the owner's decision of 2026-10-23 (the former 36 and 60 under the declared window 12 and The stress is the Links', 48 and 84 before it)
     counts = {board.families[i].name: board.credit.counts[i] for i in board.order}
     assert (counts["neutron"], counts["proton"], counts["electron"]) == (0, 1, 1)
-    assert not any(board.credit.deficits.values())
-    assert {e["family"] for e in lines if e["event"] == "erasure"} == {"neutron"}
+    assert (
+        {board.families[k].name: v for k, v in board.credit.deficits.items() if v} == {"electron": 1}
+    )  # the electron credited at the Node where the conversion's electron is laid in the same close: the quantum in the books alone (take.faced, the undepleted beam), the deficit its record (2026-10-23; the former none)
+    assert (
+        {e["family"] for e in lines if e["event"] == "erasure"} == {"neutron"}
+    )  # the neutron's front alone: the electron's credit, booked alone, faces no Node (2026-10-23; the former neutron and electron)

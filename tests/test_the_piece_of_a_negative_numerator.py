@@ -88,7 +88,7 @@ WORLD = {
         {"name": "right", "positions": [[x, 0, 0] for x in range(44, 48)]},
     ],
     "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
-    "draw": {"window": WINDOW},
+    "draw": {},
 }
 PIECE, FAN = (
     -42370,

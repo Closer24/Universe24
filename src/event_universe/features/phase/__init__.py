@@ -17,6 +17,11 @@ Line = tuple[Any, Any, Any]
 Pair = tuple[Line, Line]
 
 
+def unit(gamma: Any) -> Any:
+    """The phase line's Gamma under the centred count (ALGEBRA.md, The turn per proper interval, the owner's decision of 2026-10-23): the Link's count K_ij = K_i - K_j is twice the trapezoid sum of the clocked potential to the step's centre (node.phased), so one count is the half angle theta_0 / 2 and the line runs at the Gamma 2 Gamma, D = 2 (2 Gamma)^2 and K_0 = D - 1, the angle arccos(1 - 1 / (8 Gamma^2)) = 1 / (2 Gamma) to 6.5 x 10^-10 relative; the rest rotation's bisection (`rotation_unit`) keeps the line at Gamma, the unit of the fold's angle."""
+    return 2 * gamma
+
+
 def D(gamma: Any) -> Any:
     """The phase line's wall, D = 2 Gamma^2 (the mathematician's item (g): 72,000,000 at Gamma 6,000, 2^26.1), the unit of the doubled cosine 2 K_0 / D."""
     return 2 * gamma * gamma

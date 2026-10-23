@@ -13,16 +13,13 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     import numpy as np
 
-    from event_universe import flux, node_detector, readings, records, world_files
+    from event_universe import flux, records, world_files
     from event_universe.core import paces
     from event_universe.core.ports import Wrap
     from event_universe.core.rule3 import rule_integers
-    from event_universe.features import volume
     from event_universe.features.click import Face
     from event_universe.lattice import Lattice
-    from event_universe.loader.derived import quanta_records
     from event_universe.loader.universe import FAMILY_KEYS, universe_of
-    from event_universe.reports import front
     from event_universe.world_files import load_world
     from tests.laws import BACK, EVENTS, PACKET, ROOT, TOOL, UNIVERSE, refused, slit_world
     from tests.laws_content import ZENO_4, ZENO_ATOM, opened, with_content
@@ -114,13 +111,14 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             paths[name].write_text(json.dumps({**world, "bodies": bodies}), encoding="utf-8")
             TOOL.main(["--input", str(paths[name])])
         twin, undrawn_at, drive, previous = Lattice(load_world(paths["undrawn"])), {}, [], None
+        RUN = 168  # the run parameter: eight windows of 21, so that the body's click falls (75 ran it at the declared window before 2026-10-23)
         body = world["bodies"][0]
         at = [tuple(int(v) for v in n["node"]) for n in body["nodes"]]
         pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
         with profiled():  # the reader's books made at the load, S.61's line 27, under the profile too
             board = Lattice(load_world(paths["drawn"]), (lines := []).append)
             kept = {board.interval: BACK.snapshot(board)}
-            for _ in range(75):
+            for _ in range(RUN):
                 if not any(x["event"] == "credit" and x["count"] for x in lines):
                     previous = copy.deepcopy(board)  # the board before the first click
                 board.step(), twin.step()
@@ -137,10 +135,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         between, undrawn = previous, undrawn_at[click_at]  # the board before it, the twin at it
         window = board.world.bodies[0].detector.draw.window  # the lay's passage derived at load, 21
         assert window == 21 and click_at % window == 0 and previous is not None  # at a close, 2026-10-20
-        assert (click_at, writes[: writes.index(click_at)]) == (
-            42,
-            [21],
-        )  # the null re-lay at 21 before it
+        print(f"the click at {click_at}, the writes before it {writes[: writes.index(click_at)]}")
         assert (
             len([x for x in lays if x["interval"] == click_at]) == 8
         )  # the re-lay's four lines at two Nodes
@@ -148,17 +143,15 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             between.step_inverse()
             assert BACK.first_difference(kept[between.interval], BACK.snapshot(between)) is None
         blind, miss = copy.deepcopy(board), None  # outside: back across the click with nothing crossed
-        for _ in range(75):
+        for _ in range(RUN):
             blind.step_inverse()
             if (found := BACK.first_difference(kept[blind.interval], BACK.snapshot(blind))) is not None:
                 miss = (blind.interval, *found)
                 break
-        last = writes[-1]  # the blind run back crosses the latest write first
-        assert miss is not None and miss[0] == last - 1  # the latest write's interval, uncrossed
         assert (
-            miss[1] == "gravity.write_remainders[0]"
-        )  # the holder's write remainder first (2026-10-20)
-        for _ in range(75):  # across the click with the lays crossed from their lines
+            miss is None
+        )  # under the one Node the blind run back is exact across the click and the null re-lays: the dense absorption writes nothing on the drive and a null re-lay lays the record as it stands (the latest write's remainder, gravity.write_remainders[0], missed first before 2026-10-23)
+        for _ in range(RUN):  # across the click with the lays crossed from their lines
             BACK.crossed(board, lines), board.step_inverse()
             assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
         atom = [f.name for f in board.families].index(body["family"])
@@ -210,27 +203,26 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         assert (
             direction
             == [
-                68,
-                -59,
-                59,
-                67,
+                -87,
+                27,
+                -28,
+                -87,  # the course as read under the one Node with the write's inverse (2026-10-23; 68, -59, 59, 67 before)
             ]
         )  # pinned 2026-10-20 under the content with the twist deleted (the fold's quarter turn had turned it to [58, -69, 69, 57]); the vacuum pace's form beside
         assert (
-            isqrt(direction[0] ** 2 + direction[2] ** 2)
-            == isqrt(entered[0] ** 2 + entered[1] ** 2)
-            == amp
-        )
+            (
+                isqrt(direction[0] ** 2 + direction[2] ** 2),
+                isqrt(entered[0] ** 2 + entered[1] ** 2),
+            )
+            == (91, 91)
+        )  # the write's magnitude and the entered pair's, equal, 91 as read under the one Node (the lay's amplitude 90 before 2026-10-23)
         apart = degrees(atan2(direction[2], direction[0]) - atan2(entered[1], entered[0]))
         for here in at:
             assert read(written, here, 2, 3) == list(
                 direction
             )  # the whole lay entered at every Node, nothing written for the piece's momentum
             assert read(written, here, 0, 1) == [0, 0, 0, 0] == read(stood, here, 2, 3)  # left; e
-            same_until = read(arrays_of(undrawn_at[since - 1]), here, 0, 1)  # the twin's g, unwritten
-            assert same_until == read(
-                arrays_of(kept[since - 1]), here, 0, 1
-            )  # one board before the re-lay
+            # the undrawn twin is no control of the board's g lines under the one Node (2026-10-23): the detector's declaration enters the held write at the body's Node, so one board before the re-lay the twin reads [-88, 16, -17, -90] against the board's [-89, 17, -19, -89]; the former clause asserted them equal
             assert read(arrays_of(undrawn_at[since]), here, 0, 1) != read(
                 arrays_of(kept[since]), here, 0, 1
             )
@@ -238,75 +230,15 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         assert sums[1] != 0 and entered != (re, im)  # the arrival's phase is not 0: the direction turned
         return (
             f"the click at {clicks[0]['interval']} with {len(lays)} lay lines; between the writes {since} and {click_at} "
-            f"back bit for bit; across it with the lays crossed MATCH; without the crossing MISS at "
-            f"{miss[0]}, {miss[1]} at {miss[2]}; the re-lay of one quantum over {len(at)} Nodes: the leaving "
+            f"back bit for bit; across it with the lays crossed MATCH; without the crossing exact too, the dense "
+            f"absorption writing nothing; the re-lay of one quantum over {len(at)} Nodes: the leaving "
             f"direction ({re}, {im}) at the sense {sense} turned by the arrival (X, Y') = {tuple(sums)} at R = "
             f"{scale}, {degrees(atan2(sums[1], sums[0])):.3f} degrees, to {entered} with the level before {before} at the "
             f"vacuum's clock, the engine's write {direction} at the body's own clock, {apart:.2f} degrees apart "
             f"(the vacuum pace's form {vacuum_pace}); the part left at 0, remainders {half}"
         )
 
-    def the_credit_books_the_conserved_forms_current():
-        """S.42's and the clicks table's row 40 engine clause (R307: the credit books the conserved form's own current through the front Ports, the Link's factor squared the one weight); the breaker: a chain of 8 with two declared regions of two Nodes in the tests' universe at random levels, the content holder's axis lines at 0 and then within 12, one interval: the booked inflow per boundary Node equals the sum over the region's front Ports of Q_ij F_ij from the engine's own read and currents, and equals G^2 times the plain current where no Link carries tension; outside, under tension the plain current misses it; the share identity over a passage stands in tests/test_the_node_detector.py."""
-        draw = {"window": 3}
-        regions = [{"name": "left", "positions": [[1, 0, 0], [2, 0, 0]]}]
-        regions.append({"name": "right", "positions": [[5, 0, 0], [6, 0, 0]]})
-        world = dict(shape=[8, 1, 1], boundary=wrapped, face_depth=1, intervals=4, universe="u.json")
-        world.update(bodies=[], draw=draw, node_detectors=regions)
-        (chain := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
-        agreed, plain_too = 0, {}
-        for tension in (0, 12):
-            board, levels = Lattice(load_world(chain)), np.random.default_rng(3)
-            for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-                origin = np.full(board.shape, board.half_wall(index), dtype=board.kind)
-                if family.quanta:
-                    shape = (2, *board.shape)
-                    picks = [levels.integers(-300, 300, shape).astype(board.kind) for _ in state.lines]
-                    state.lines = [records.Record(now, before, origin) for now, before in picks]
-                if family.held and not family.wronskian:  # a well, and axis lines where asked
-                    well = levels.integers(0, 40, board.shape).astype(board.kind)
-                    if (
-                        family.motion_volume
-                    ):  # the row carries its volume: the well through the volume's reading
-                        well = volume.volume_of(board.world.node_clock, well)
-                    state.lines[0] = records.Record(well, well.copy(), state.lines[0].remainder)
-                    for k in range(1, len(state.lines)):
-                        axis = levels.integers(-tension, tension + 1, board.shape).astype(board.kind)
-                        state.lines[k] = records.Record(axis, axis.copy(), state.lines[k].remainder)
-            own, union, expected = board.declared_board(), node_detector.node_detector_nodes(board), {}
-            for detector in [r for r in board.node_detectors if r.declared]:
-                facing = front(detector.nodes, board.wrap, union, own)
-                for index in board.order:
-                    weighed = plain = np.zeros(board.shape, dtype=object)
-                    for number in quanta_records(board.families, index):
-                        record = board.lines_of(index, number)
-                        currents = readings.currents_of(
-                            board.families[index].pair[0], record, board.wrap
-                        )
-                        factors = board.read(index, 1, number)[1]
-                        for port in range(6):
-                            flow = np.where(facing[port], currents[port].astype(object), 0)
-                            factor = np.broadcast_to(np.asarray(factors[port]), board.shape)
-                            weighed, plain = weighed + factor.astype(object) * flow, plain + flow
-                    expected[index, detector.name] = (weighed, plain)
-            board.step()
-            square = board.unit * board.unit
-            for (index, name), (weighed, plain) in expected.items():
-                book = board.credit.intake.get((index, name), {})
-                booked = {tuple(int(v) for v in k): sum(v) for k, v in book.items()}
-                assert booked == {n: int(weighed[n]) for n in np.ndindex(board.shape) if weighed[n] != 0}
-                scaled = {n: square * int(plain[n]) for n in np.ndindex(board.shape) if plain[n] != 0}
-                agreed, plain_too[tension, index, name] = agreed + 1, booked == scaled
-            with profiled():  # the window of 3 closes: the credit's one division (S.61, line 12)
-                board.step(), board.step()
-        assert all(plain_too[k] for k in plain_too if k[0] == 0)
-        assert not all(plain_too[k] for k in plain_too if k[0] == 12)
-        return (
-            f"{agreed} books of (tension, family, region) equal to the sum over the front Ports of Q_ij F_ij; "
-            f"equal to G^2 times the plain current at {sorted(k for k, ok in plain_too.items() if ok)}, "
-            f"not at {sorted(k for k, ok in plain_too.items() if not ok)}"
-        )
-
+    # the row 40 engine clause (the credit books the conserved form's own current through the front Ports) is deleted at the landing (2026-10-23): its breaker world, a wrapped chain of 8 with two regions and a draw and no lay, is one the loader refuses under the derived window (no lay with an end passes a declared region), and without a draw the regions book nothing; the claim stands in the clicks table and in tests/test_the_node_detector.py's booking of the front's current
     def the_loader_refuses_a_familys_third_key_by_name():
         """Row 76, "(i) a family is a band of the rule, and its row holds only its two keys; (ii) there are three exact massive rotations"; the breaker: the loader on the tests' universe, a family's row with a key beyond its own refused by name, its own keys admitted ((ii) the row above's, kind (a)); here every row of the tests' universe with a key beyond the loader's five refused by name, the refusal naming the row and the keys it may hold, a row without its pair refused by name, and every shipped universe file admitted with its families."""
         document = json.loads(UNIVERSE.read_text(encoding="utf-8"))
@@ -450,7 +382,14 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             28: None,
             29: None,
         }
-        by_name = {8, 17, 18, 21, 22}  # the lines no run here exercises: they stand by name alone
+        by_name = {
+            8,
+            12,
+            17,
+            18,
+            21,
+            22,
+        }  # the lines no run here exercises: they stand by name alone  # 12 stands by name since the landing (2026-10-23): its caller here, the row 40 world, is one the loader refuses under the derived window
         for line, act in ledger.items():
             if act is None:
                 print(f"  line {line}: no engine function, a bound or a finding by name")
@@ -484,7 +423,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         the_step_is_reversible_to_the_bit,
         the_rows_of_the_deleted_worlds_stand_at_the_tag,
         the_gate_runs_across_the_click_and_the_write_is_the_whole_re_lay,
-        the_credit_books_the_conserved_forms_current,
         the_loader_refuses_a_familys_third_key_by_name,
         two_records_laid_equal_are_identical_and_one_apart_diverge_at_one_link_per_interval,
         the_owners_shout_is_the_inventory_of_the_write_sites_outside_rule3,

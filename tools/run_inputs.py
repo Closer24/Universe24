@@ -17,6 +17,7 @@ from event_universe.world_files import load_world
 
 LINES = (
     "click",
+    "birth",
     "density",
     "parts",
     "credit",

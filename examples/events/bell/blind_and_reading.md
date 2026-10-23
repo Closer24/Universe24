@@ -113,3 +113,5 @@ ports' alone with the parts' common factor cancelling. The cost, as the reader n
 per packet, 450 for the pair's record, at 1,328 to 13 per packet, 26 for the pair's record, at 320
 (the ratio 17.3, (1,328 / 320)^2), so the folder's two windows read a record of 26 quanta where they
 read 450. The readings' tables above stand as taken at 1,328 and are not re-run (the owner's word).
+
+The window derived (the windows hand, 2026-10-23; the law's reading on the owner's decision of 2026-10-23, ALGEBRA.md, The click writes on the lattice, C2): the four worlds declare no window since 2026-10-23; the derived window is the pair's packets' passage over a side of 4 Nodes, 30 intervals (the packet of 1 + 12 Nodes at k = pi / 4 at the group pace sin k / (3 sin omega)), against the former declared 100, the whole run; the sides now close at 30, 60 and 90 within the 100 intervals, and the clicks are re-recorded from the re-run (the clicks table of the windows hand), the former one close at 100 the reading of the declared window.

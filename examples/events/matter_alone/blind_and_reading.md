@@ -639,7 +639,7 @@ folder, not committed; the generator itself unchanged beyond the seed):
    6,000 (below the fine unit, the mode's clock 1.612 at every scale, the level at one Link 0.202
    of the centre's, kappa 1.60) and 14.5, 0.54, 4.86, 2.57 and 0.43 at 7,938, 8,000, 10,000,
    12,000 and 14,000 (above it). The refusal of pixel_direct_8000 is this: the bisection landed
-   on 7,938. A finding by name on the generator, not patched tonight (a larger fine unit changes
+   on 7,938. A finding by name on the generator, not patched in that round (a larger fine unit changes
    every lay above it, where the brief keeps the one-Node seed's lays bit for bit).
 3. **The compact configuration is not a fixed point of the lay-and-rest map at 8,000 and 11,000**
    (the scratch diagnostic `diag_compact_fixed_point.py`: the same map as `unit_fixed_point`
@@ -773,7 +773,7 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
   of each declared count): `pixel_compact.json` LAWFUL at load in 1.6 s, 8,065 quanta by the books (8,000 declared),
   `pixel_compact_14000.json` LAWFUL in 2.9 s, 14,069 quanta (14,000 declared), the gate admitting
   each declaration within its rounding at the refined rest's paces; `cloud.json` not loaded
-  tonight (its 41-cube start under the refined rest is a quarter hour at least on the shared box;
+  in that round (its 41-cube start under the refined rest is a quarter hour at least on the shared box;
   the budget's cut, not a refusal); `pixel_compact_20000.json`, `pixel_direct_8000.json`,
   `pixel_direct_14000.json` and `pixel_direct_25cube_14000.json` declared without a mode file,
   refused at load by name as before.
@@ -787,7 +787,7 @@ and `pixel_compact_14000` keep their committed lays, loaded on the fixed engine 
   having no pass limit. Both are the outer loop's, the paces re-read from the rounded levels
   until they repeat (`rest`, `returned`), where the inner solve is now exact to the fine unit:
   a self-consistent integer map whose rounding can alternate between two neighbours or walk
-  without a repeat at a steep well; no run added for them tonight.
+  without a repeat at a steep well; no run added for them in that round.
 
 ## The reading at the clean engine (main 39cc3851, 2026-10-05; bit for bit at 1fe3790a), `pixel.json` over 400 intervals
 

@@ -52,7 +52,9 @@ def references_of(scale: int, transitions: tuple[Transition, ...]) -> list[Refer
 
 
 def gathered(
-    references: list[Reference], transitions: tuple[Transition, ...], levels: dict[int, int]
+    references: list[Reference],
+    transitions: tuple[Transition, ...],
+    levels: dict[int, int],
 ) -> None:
     """One interval of the taker's read inside its window, a read and no write, no root and no draw: for every transition the arriving family's level a_t at the Node (`levels`, per drive family) times each reference record is added to the window's two sums, X += a_t r_t and Y' += a_t r'_t, and both records advance by the transition's resonance (`emission.advanced`); nothing reads the labels inside the window."""
     for transition, reference in zip(transitions, references, strict=True):

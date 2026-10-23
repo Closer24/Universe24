@@ -14,6 +14,7 @@ from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
+from event_universe.frames import frames_of
 from event_universe.loader.derived import count_wall, quanta_records, row_sources, weight_of
 
 if TYPE_CHECKING:
@@ -53,7 +54,7 @@ def turned_read(
     direction: int = 1,
     read: tuple[Any, node.Factors] | None = None,
 ) -> readings.Turned:
-    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall) and the quantum's measure of a current W_c = 3 den T."""
+    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall), the quantum's measure of a current W_c = 3 den T and the frame signs of its six Ports (`flux.frames_of`, the Link's two ends read in one frame)."""
     gamma, action, family = board.world.node_clock, board.world.quantum_action, board.families[index]
     content, factors = board.read(index, direction, record) if read is None else read
     pairs = flux.pairs_of(
@@ -70,8 +71,9 @@ def turned_read(
     )
     assert pairs is not None  # a turned record reads its holder's pairs
     pace = paces.link_pace_of(gamma, content)
+    frames = frames_of(index, board.families, board.states, board.wrap, record)
     return readings.Turned(
-        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action
+        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action, frames
     )
 
 
@@ -98,7 +100,12 @@ def turned_currents(
 def stresses(board: Lattice) -> Stresses:
     """Every record of quanta's tension's part on each axis at every Node, read from its lines as they stand, the pair the step starts from (`readings.stresses_of`), the count's flux along each axis beside it (`readings.axis_sources_of`, the flux holder's odd lines' source) and, where a held row of the world declares the shear (`off_diagonals`), the shear's part on each axis pair, the product of the Node's own two axis differences D_a D_b at the same Node and interval (`readings.off_diagonals_of`, the shear lines' source): the Node's own part h_a(i) the content's axis lines take in their one write, the Link's tension being the sum of its two ends' parts, read through the Ports at the next interval (ALGEBRA.md #the-primitives, The tension); a world without the word runs as before bit for bit, the shear's readings not made."""
     return {
-        s: readings.axis_sources_of(board.families[s[0]].pair[0], board.lines_of(*s), board.wrap)
+        s: readings.axis_sources_of(
+            board.families[s[0]].pair[0],
+            board.lines_of(*s),
+            board.wrap,
+            frames_of(s[0], board.families, board.states, board.wrap, s[1]),
+        )
         for s in sources_of(board.families, board.order)
     }
 
@@ -116,7 +123,9 @@ def sense_fluxes(
     board: Lattice, source: records.Sourcing, lines: list[records.Record], direction: int
 ) -> Any:
     """One turned record's source of its own row's odd lines at the interval's start in `direction`: the plain sign current (`readings.sense_current_of`) where its holder books each line its own, and under the holder's Lorentz form the flux of its step through each +a Link in the Link unit (covector.link_fluxes), from the Link pairs its step reads (`flux.pairs_of` at its own read, `read`, the same integers the step takes, divided by the pace squared they carry) and the levels the step starts from, the same numbers forward and back."""
-    return readings.sense_current_of(lines, board.wrap)
+    index, record = source
+    frames = frames_of(index, board.families, board.states, board.wrap, record)
+    return readings.sense_current_of(lines, board.wrap, frames)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:

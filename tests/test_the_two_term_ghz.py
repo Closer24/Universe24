@@ -195,7 +195,7 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
         "packets": packets,
         "node_detectors": detectors,
         "receding": {"x": receding, "y": receding},
-        "draw": {"window": intervals},
+        "draw": {},
     }
     (path := folder / "ghz2.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     TOOL.main(["--input", str(path)])
@@ -222,7 +222,7 @@ def setting_read(name: str, tmp_path, monkeypatch) -> None:  # type: ignore[no-u
     sides = {
         n: ((1, 1), IDENTITY, turn) for n, turn in zip(("left", "right", "top"), turns, strict=True)
     }
-    shares = joint_shares(lines, sides, 0)
+    shares = joint_shares(lines, sides, 0, close=clicks[-1]["interval"])  # to the close (2026-10-23)
     total = sum(shares.values())
     assert total > 0 and all(share in (0, Fraction(total, 4)) for share in shares.values()), shares
     e_3 = sum(Fraction((-1) ** sum(key), 1) * share for key, share in shares.items()) / total
@@ -276,6 +276,7 @@ def test_the_two_term_plane_ghz_is_exact_at_another_amplitude(tmp_path, monkeypa
         lines,
         {n: ((1, 1), IDENTITY, t) for n, t in zip(("left", "right", "top"), turns, strict=True)},
         0,
+        close=clicks[-1]["interval"],
     )
     total = sum(shares.values())
     e_3 = sum(Fraction((-1) ** sum(key), 1) * share for key, share in shares.items()) / total

@@ -41,6 +41,39 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_default_board_is_a_torus.py::test_a_world_without_boundary_is_a_torus_and_a_declared_face_stands": (
+        30,
+        "the default board (ALGEBRA.md, The board is a torus; the owner's word of 2026-10-23, the default a torus): a world "
+        "file without `boundary` periodic on every axis, a declared face kept as declared with its layer and its receding "
+        "sides, the cycle world with the key and without it the same board bit for bit over 12 intervals",
+    ),
+    "tests/test_the_window_is_derived.py::test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence": (
+        20,
+        "the window derived and never declared (ALGEBRA.md, The click writes on the lattice, C2 and (5); the owner's decision of "
+        "2026-10-23): the key refused by name on a body and on the world, the body's own beat on the two instruments, the regions' "
+        "passage on the clicks chain and the Bell chain, the two rules meeting on one body, and Universe24's click world cut to 30 "
+        "intervals clicking at the closes 15 and 30",
+    ),
+    "tests/test_the_universe_runs_its_cycle.py::test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks": (
+        80,
+        "the test of the law's course for the one universe (examples/events/universe/; ALGEBRA.md, The one Node, The swap at the "
+        "top): the 3-cube torus with one clump, the uniform light and the two-Node detector at the gap [990, 1000], the rise from "
+        "the seed, X'' below 0 at the clump's Node, the fifth act's staggered fires at the top, the fall, the light velocity reversed "
+        "bit for bit at every turned Node, the run back 40 of 40 through the fires, the clicks history kept, the crunch as the "
+        "small board's end",
+    ),
+    "tests/test_the_swap_on_a_structured_board.py::test_the_swap_on_a_structured_board": (
+        50,
+        "the swap at the top on a structured board (ALGEBRA.md, The swap at the top): the three-clump lay run 60 intervals with "
+        "no refusal, X at or above Gamma at every Node, the fires 122, 108, 76, 36, 8 at intervals 1 to 5 each at a weak maximum "
+        "of the Node's own time line, the run back 60 of 60 exact with the inverse's fires in reverse",
+    ),
+    "tests/test_the_swap_at_the_top.py::test_the_swap_fires_once_at_the_first_weak_top_and_the_fall_is_the_rise_run_back": (
+        60,
+        "the swap at the top (ALGEBRA.md, The swap at the top, the owner's decision of 2026-10-23; swap.py): on the 3-cube gapped "
+        "torus the fire once at the first weak maximum at every Node and never at the start, 40 T-images bit for bit after it with "
+        "every remainder complemented at its wall, the run back of 80 through the fire with the inverse's one fire",
+    ),
     "tests/test_the_gapped_volume.py::test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall": (
         43,
         "the gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return "
@@ -70,6 +103,45 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
         "pair read as the step reads it, the step's identity exact at every Node with its three walk terms, the turned read "
         "standing within the integer walk on the ring where the plain read drifts by percent, the plain read bit for bit where no family turns",
+    ),
+    "tests/test_the_stress_is_the_links.py::test_the_board_sums_of_the_former_and_the_new_reading_are_equal_to_the_bit_on_a_wrapped_board": (
+        16,
+        "the stress is the Links' (the builder's M21, 2026-10-23): the former reading's board sum over its wall and the new "
+        "reading's over the doubled wall equal to the bit on a wrapped board, a plane wave, a one-Node record and random levels",
+    ),
+    "tests/test_the_stress_is_the_links.py::test_the_reading_is_invariant_under_the_shift_and_even_under_the_inversion_and_reads_a_one_node_record_at_its_neighbours": (
+        26,
+        "the stress is the Links': the reading invariant under the shift of every level by one number where the former gains "
+        "m Delta_a a, even under the axis's inversion, a one-Node record's parts at its two neighbours",
+    ),
+    "tests/test_the_stress_is_the_links.py::test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_back": (
+        32,
+        "the stress is the Links': the loader's tension lines at the doubled wall 2 E_s W_c, and a wrapped world with a "
+        "structured record stepped and run back bit for bit",
+    ),
+    "tests/test_the_stress_is_the_links.py::test_the_three_clumps_edge_at_one_node_holds_the_tension_below_gamma_through_the_top_and_names_the_returns_growth": (
+        34,
+        "the structured board's clause of The stress is the Links' (the owner's question of 2026-10-23): the three-clump torus's "
+        "edge Node read once, the one-interval write 59 and the Link at 48, the static bound 9 G_5(0) S = 110 below Gamma, "
+        "the return's growth 738 x 59 above it named",
+    ),
+    "tests/test_the_swap_on_a_structured_board.py::test_the_shipped_course_log_of_the_three_clumps_records_the_cut_at_2376_and_the_returns": (
+        22,
+        "the structured board's long course under the law with both acts read from the shipped course log (the structured-cycle "
+        "branch, 2026-10-23): the cut at 2,376 by a Link's tension 1,087, the void's four returns, 1,079 fires, the largest Link tension 975",
+    ),
+    "tests/test_the_swap_at_the_top.py::test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay": (
+        10,
+        "the matter world's run back under both acts to interval 0 exactly through the six fires and the declared lay, the former "
+        "mismatch named by its cause (the lay's inverse, 2026-10-23)",
+    ),
+    "tests/test_the_swap_at_the_top.py::run_back_exact": (
+        16,
+        "a world stepped forward and back with every snapshot compared on the way back, the counts and the swaps read (the lay's inverse, 2026-10-23)",
+    ),
+    "tests/test_the_swap_at_the_top.py::test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires": (
+        10,
+        "the big bang world with light run back to interval 0 exactly through its whole lays at interval 1 and its fires, every fire mirrored (the lay's inverse, 2026-10-23)",
     ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,

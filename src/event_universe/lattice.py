@@ -17,12 +17,12 @@ from event_universe import (
     emission,
     front,
     growth,
-    lists,
     meeting,
     node,
     reports,
     share,
     shear,
+    swap,
     take,
 )
 from event_universe.board_readings import Currents, Stresses
@@ -32,7 +32,7 @@ from event_universe.core.rule3 import division_forward, wall_of
 from event_universe.features import volume
 from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
-from event_universe.features.write import carried
+from event_universe.frames import frames_of
 from event_universe.lay import laid
 from event_universe.loader.derived import PLANE, held_write_of, quanta_records, readers_of, turns
 from event_universe.loader.instrument import laid_parts
@@ -43,7 +43,7 @@ from event_universe.loader.world import BodyRow, World
 from event_universe.node_detector import Weighed, booked_inflows, node_detector_nodes, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
 from event_universe.resonance import clear_memo
-from event_universe.walls import sourced
+from event_universe.walls import count_gate, sourced
 
 Output = Callable[[dict[str, object]], None]
 Observer = Callable[[int, int, int], None]
@@ -52,7 +52,7 @@ Rulers = dict[records.Sourcing, records.Rulers]
 
 
 class Lattice:
-    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form; `unit`, G, the Link's unit, the run's declaration like Gamma."""
+    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form; `unit`, G, the Link's unit, the run's declaration like Gamma. The swap at the top (swap.py; ALGEBRA.md, The swap at the top): `write_walls` every held line's write wall as the last held write took it, read by the swap's complement, `swaps` the swaps at the top as (interval, direction, Nodes), a reading, `swap.kept` the pre-state before the act and the post-state before the inverse; every line is born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start), every held row's wall fixed per Node at the start in Python's integers, beyond 63 bits at the shipped weights; the gate's rounding half is (|c - read| - 1) div 2, the division act."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         clear_memo()
@@ -72,6 +72,8 @@ class Lattice:
         self.held = [index for index, family in enumerate(self.families) if family.held]
         self.turning = [index for index in self.order if turns(self.families, index)]
         self.fixed_walls: dict[int, list[Any]] = {}
+        self.write_walls: dict[int, list[Any]] = {}
+        self.swaps: list[tuple[int, int, int]] = []
         self.writes = {
             i: held_write_of(self.families, i, world.quantum_action, world.link_unit) for i in self.held
         }
@@ -79,9 +81,8 @@ class Lattice:
             records.empty_state(family, self.shape, self.walls(i), self.kind, self.half_wall(i))
             for i, family in enumerate(self.families)
         ]
-        # each line born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start)
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
-        self.amplitude = node.seed_phases(self.families, self.states, self.shape, self.kind, world)
+        self.amplitude = node.seed_phases(self, world)
         for number, (record, row) in enumerate(self.laid_rows()):
             if isinstance(row, BodyRow) and row.detector is not None and not row.region:
                 meeting.laid_record(self, number, record)
@@ -181,27 +182,15 @@ class Lattice:
             shear.born(self, family, lines)
         self.families = world.families
         rulers = self.rulers(1) if self.held else {}
-        for index in self.held:  # every held row's write at the carried factor: the wall fixed per Node
+        for index in self.held:
             born = records.walls_at(index, self.families, self.writes[index], rulers, gamma)
-            born = [
-                records.exact(wall) for wall in born
-            ]  # Python's integers, beyond 63 bits at the shipped weights
+            born = [records.exact(wall) for wall in born]
             self.states[index].write_remainders = records.write_origins(born, self.shape, object)
             self.fixed_walls[index] = born
 
     def gate(self) -> None:
-        """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's count in quanta over its declared Nodes (a bound record's the board's whole count, its charge; `credit.gate_count`), ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
-        for number, row in enumerate(self.world.bodies):
-            declared = sum(row.detector.counts if row.detector is not None else row.counts)
-            read = lists.gate_count(self, row)
-            off = abs(declared - read)
-            half = int(carried(off - 1, 2, 0)[0])  # (|c - read| - 1) div 2, the division act
-            if off > 1 and half * half > declared:
-                raise ValueError(
-                    f"the body {number} declares the count {declared} and its family's share reads {read} "
-                    f"quanta at its Nodes at T = {self.world.quantum_action}: a declared count is within the "
-                    "rounding of the share in quanta, ((|c - read| - 1) div 2)^2 <= c (ALGEBRA.md #the-count-is-the-records-share)"
-                )
+        """The gate on every declared body at the start, the one call the tests patch (walls.count_gate)."""
+        count_gate(self)
 
     def lines_of(self, index: int, record: int) -> list[records.Record]:
         """The lines of one record of a family of quanta as they stand (`bookings.record_lines`)."""
@@ -279,6 +268,7 @@ class Lattice:
         if not growth.grow(self):
             return
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
+        kept_state = swap.kept(self)
         node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         weighed = weighed_currents(self) if acts else {}
         currents, stresses = board_readings.currents(self, weighed), board_readings.stresses(self)
@@ -298,6 +288,7 @@ class Lattice:
             self.report(currents, weighed, forms, begun)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
+        swap.stepped(self, kept_state)
         if acts:
             self.tick += 1
             if credit.counted_windows(self):
@@ -331,6 +322,7 @@ class Lattice:
         numerators, walls, _terms = records.write_sources(
             index, self.families, bookings, axes, write, rulers, gamma, motion, direction, fixed
         )
+        self.write_walls[index] = walls
         state.lines, state.write_remainders = shear.written(
             self, index, numerators, walls, direction, begun
         )
@@ -403,7 +395,12 @@ class Lattice:
             held.update(gained)
         for record in quanta_records(self.families, index):
             own = record_lines(self.families, index, record, lines)
-            stresses[(index, record)] = readings.axis_sources_of(family.pair[0], own, self.wrap)
+            stresses[(index, record)] = readings.axis_sources_of(
+                family.pair[0],
+                own,
+                self.wrap,
+                frames_of(index, self.families, self.states, self.wrap, record),
+            )
             if index in self.turning:
                 senses[(index, record)] = board_readings.sense_fluxes(self, (index, record), own, -1)
         books[index] = lines
@@ -412,10 +409,8 @@ class Lattice:
         """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass; refused by name first on a world (every board's interval unobservable) (`motion_back`)."""
         meeting_back.logged(self, -1)
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
-        rulers, ended = (
-            self.rulers(-1),
-            [s.lines for s in self.states],
-        )  # the interval's start, their `before`
+        rulers, ended = self.rulers(-1), [s.lines for s in self.states]
+        kept_state = swap.kept(self)
         books: dict[int, list[records.Record]] = {}
         pending = list(self.held)
         while True:
@@ -434,6 +429,7 @@ class Lattice:
         for index, lines in books.items():
             self.states[index].lines = lines
         shear.inverted(self, ended)
+        swap.inverted(self, kept_state)
         node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
         self.interval, self.ended = self.interval - 1, None
         while self.growths and self.growths[-1][0] == self.interval + 1:

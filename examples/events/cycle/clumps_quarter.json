@@ -1,0 +1,1 @@
+{"shape": [5, 5, 5], "intervals": 1500, "universe": "examples/events/cycle/universe_three_clumps.json", "bodies": [{"family": "matter", "nodes": [{"node": [2, 2, 1], "count": 338}, {"node": [2, 2, 2], "count": 213}, {"node": [2, 2, 3], "count": 106}]}], "node_detectors": []}

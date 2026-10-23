@@ -167,7 +167,9 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         ["wronskian"],
         ["form", "tensions", "flux"],
     ]
-    assert draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
+    assert (
+        draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
+    )  # the former key, read for its refusal by name alone (2026-10-23)
     assert set(node_detector_declaration.TRANSITION_KEYS) == {
         "from",
         "to",
@@ -244,6 +246,7 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
     ],
     "cone.py": ["stepped_alone"],
     "shear.py": ["stepped"],
+    "swap.py": ["stepped"],
     "meeting.py": ["stepped"],
     "lattice.py": ["stepped", "step", "step_inverse"],
 }

@@ -1,0 +1,145 @@
+{
+ "lay": "standing",
+ "level": "1s",
+ "Omega": 0.6975381472410176,
+ "omega_0": 0.8410686705679303,
+ "binding_per_interval": 0.14353052332691274,
+ "A": 3425.3406757822886,
+ "phi_along_axis": [
+  1.0,
+  0.27166582099744085,
+  0.0639922585997099
+ ],
+ "levels": [
+  {
+   "level": 0,
+   "kind": "s",
+   "Omega": 0.6975381472410176,
+   "binding_per_interval": 0.14353052332691274
+  },
+  {
+   "level": 1,
+   "kind": "p",
+   "Omega": 0.9605103415817947,
+   "binding_per_interval": -0.11944167101386438
+  },
+  {
+   "level": 2,
+   "kind": "s",
+   "Omega": 0.9692339391071573,
+   "binding_per_interval": -0.12816526853922694
+  },
+  {
+   "level": 3,
+   "kind": "p",
+   "Omega": 0.9938655176039766,
+   "binding_per_interval": -0.15279684703604623
+  },
+  {
+   "level": 4,
+   "kind": "p",
+   "Omega": 0.9938655176039779,
+   "binding_per_interval": -0.15279684703604757
+  },
+  {
+   "level": 5,
+   "kind": "d",
+   "Omega": 1.0701154436584748,
+   "binding_per_interval": -0.22904677309054444
+  },
+  {
+   "level": 6,
+   "kind": "d",
+   "Omega": 1.0701154436584768,
+   "binding_per_interval": -0.22904677309054644
+  },
+  {
+   "level": 7,
+   "kind": "s",
+   "Omega": 1.076670295876572,
+   "binding_per_interval": -0.2356016253086416
+  }
+ ],
+ "levels_note": "every Omega of the table is read with the named level's sin Omega in the operator's diagonal; another level at its own sin Omega moves by that term's change, the order of the binding",
+ "rule_over_wall": {
+  "reaches": [
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ],
+   [
+    0.2222222222222222,
+    0.2222222222222222
+   ]
+  ],
+  "own_weight": [
+   0.0,
+   0.0
+  ],
+  "paces": [
+   6000.0,
+   6000.0
+  ],
+  "note": "R_ij / w per Port, S_i / w and the Node's pace p_i from the engine's own read and rule at the start; the plain rule at Gamma reads num / (3 den) on every Link and 0 at the Node"
+ },
+ "convention": "now = A phi cos(U / 2), im_now = -A phi sin(U / 2), before = A phi cos(Omega + U / 2), im_before = A phi sin(Omega + U / 2): the centred count (the owner's decision of 2026-10-23), the step centred at the lay carrying half the Node's angle on its Links; to that day now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega",
+ "seed": 0,
+ "label": "lattice reading",
+ "world": "taker_c5.json",
+ "record": "electron",
+ "source": "proton",
+ "holder": "charge",
+ "k_r": 3,
+ "node_clock": 6000,
+ "quantum_action": 36000000,
+ "well_along_axis": [
+  -1382,
+  -381,
+  -115
+ ],
+ "well_centre": 0.6909999956452507,
+ "profile": {
+  "radii": [
+   1,
+   2
+  ],
+  "shares": [
+   0.8315490110543285,
+   0.9663312434053737
+  ],
+  "Q": 20390655.0,
+  "peak_level": 3425.3947217802506,
+  "peak_node": [
+   2,
+   2,
+   3
+  ],
+  "size_along_axis": [
+   3425.3947217802506,
+   219.0821763631172
+  ],
+  "node_plane_share": 0.7986673797384145,
+  "dipole_nodes": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wronskian": 18000705.0
+ }
+}

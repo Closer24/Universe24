@@ -344,16 +344,22 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     largest, wall, room = (
         2**63 - 1,
         1 * 64,
-        10**6 * 1 * 2 * 1,
-    )  # E_s T; k_w x W x two products x the hill's 1
+        10**6 * 1 * 2 * 2 * 1,
+    )  # E_s T; k_w x W x two products x the centred difference's 2 x the hill's 1 (The stress is the Links', 2026-10-23: the tension's part the centred difference squared at the doubled wall; 10^6 x 2 before)
     under_the_hill = isqrt((largest - wall) // room)
     tension = ceil(
         Fraction(GAMMA**2 * (GAMMA + under_the_hill), GAMMA**3)
     )  # one power: the factor q_max itself
     under_the_rooms = isqrt((largest - wall) // (room * tension))
-    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 216, 146_117)
+    assert (under_the_hill, tension, under_the_rooms) == (
+        1_518_500,
+        153,
+        122_763,
+    )  # (2_147_483, 216, 146_117) before the Links' stress
     assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
-    assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
+    assert (
+        derived.amplitude_bound(families, GAMMA, 64, 63) == 173_613 < under_the_hill
+    )  # as read under the Links' stress (2026-10-23); the hand's formula gives under_the_rooms 122,763 (146,117 before), the room's re-derivation under the doubled wall open
     two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]
     assert rooms.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7  # the two rows read, summed
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
+from event_universe.loader.world import TORUS  # the board without `boundary`, the torus (2026-10-23)
 from event_universe.world_files import load_world
 from tests.laws import EMIT_RUN, EVENTS, TOOL, redeclared, world_beside
 
@@ -55,7 +56,7 @@ def ion_world(  # type: ignore[no-untyped-def]
     shape = (8, 6, 5)
     at, beside = [3, 3, 2], [4, 3, 2]
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
-    draw = {} if content else {"window": 1}
+    draw = {}  # the window derived (the owner's decision of 2026-10-23)
     nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
     record = {"family": "ion", "nodes": nodes, "parts": parts, "node_detector": draw}
     record["transitions"] = [
@@ -76,11 +77,11 @@ def ion_world(  # type: ignore[no-untyped-def]
         shape=list(shape), boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=intervals
     )
     if content:  # the faces along x the content's sink
-        world["boundary"]["x"], world["face_depth"] = "open", 1
+        world.setdefault("boundary", dict(TORUS))["x"], world["face_depth"] = "open", 1
     world.update(universe="u.json", bodies=[record] if body else [], packets=[drive])
     world["node_detectors"] = [{"name": "counter", "positions": plane}] if counter else []
     if counter:
-        world["draw"] = {"window": 18}
+        world["draw"] = {}  # the regions' window derived
     (path := folder / ("ion_like.json" if body else "beam_alone.json")).write_text(json.dumps(world))
     tool.main(["--input", str(path)])
     return path
@@ -113,7 +114,7 @@ ZENO_1 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 48},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -144,7 +145,7 @@ ZENO_2 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 24},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -175,7 +176,7 @@ ZENO_4 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 12},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -315,7 +316,7 @@ def with_content(universe):  # type: ignore[no-untyped-def]
 
 def opened(world):  # type: ignore[no-untyped-def]
     """A periodic box under the content gets its sink: the faces along x open (the axis the light travels in the toy worlds), the loader deriving the windows where the lays then have an end."""
-    world["boundary"]["x"], world["face_depth"] = "open", 1
+    world.setdefault("boundary", dict(TORUS))["x"], world["face_depth"] = "open", 1
     for body in world.get("bodies", []):
         if isinstance(body.get("node_detector"), dict):
             body["node_detector"].pop("window", None)
@@ -358,7 +359,10 @@ def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes):  # type: ignore[n
         world["bodies"][1]["nodes"] = [{"node": [x, 0, 0], "weight": 1} for x in taker_nodes]
         for body in world["bodies"]:  # the window derived at load on the opened box, the key refused
             body["node_detector"].pop("window", None)
-        world["boundary"]["x"], world["face_depth"] = "open", 1  # the faces the content's sink
+        world.setdefault("boundary", dict(TORUS))["x"], world["face_depth"] = (
+            "open",
+            1,
+        )  # the faces the content's sink
 
     path = world_beside(tmp_path, EVENTS / "resonance" / "resonant.json", edit)
     universe = json.loads((EVENTS / "zeno" / "zeno_atom.json").read_text(encoding="utf-8"))
@@ -371,9 +375,9 @@ def emit_and_take_world(tmp_path, emitter_nodes, taker_nodes):  # type: ignore[n
 def ring_of(path: Path, window: int = 48) -> Path:
     """The emit-and-take world at `path` re-declared as the periodic chain it was (x periodic, no face, the windows declared at `window`, the key required where a source in time on a ring has no end): under the content the law refuses it at the start by name, the held sums' rest needing a sink, so the ring's sentences (the null window on the body's own circulating train, C5's reach where the lay has no end) are not read under the content and stand by name with their pins as history (the reader's ruling of 2026-10-20); the ring's path."""
     world = json.loads(path.read_text(encoding="utf-8"))
-    world["boundary"]["x"] = "periodic"
+    world.setdefault("boundary", dict(TORUS))["x"] = "periodic"
     world.pop("face_depth", None)
     for body in world["bodies"]:
-        body["node_detector"]["window"] = window
+        body["node_detector"].pop("window", None)  # the window derived, the key refused (2026-10-23)
     (ring := path.with_name("ring.json")).write_text(json.dumps(world), encoding="utf-8")
     return ring

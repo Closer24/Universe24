@@ -76,13 +76,18 @@ class Reading:
     unit: int
     period: int
     acts: np.ndarray = field(default_factory=lambda: np.zeros(0, dtype=object))
+    lay_cosine: np.ndarray = field(
+        default_factory=lambda: np.zeros(0)
+    )  # cos(U / 2) per Node, the lay's frame under the centred count
+    lay_sine: np.ndarray = field(default_factory=lambda: np.zeros(0))  # sin(U / 2) per Node
     part: int = 0  # the part of the record carrying its count, whose plane the fit reads (0 for a body laid without parts)
 
 
 def act_pair(amplitude: int, gamma: int) -> complex:
-    """The phase line's one act as a complex number of modulus 1, (cos theta_0, sin theta_0) with 2 cos theta_0 = 2 - 1 / Gamma^2 (features/phase, K_0 over D), the sine by the one search at the amplitude X: no function of an angle."""
-    scale = amplitude * 2 * gamma * gamma
-    cosine = scale - amplitude  # X 2 Gamma^2 cos theta_0 = X (2 Gamma^2 - 1)
+    """The phase line's one act as a complex number of modulus 1 at the line's unit 2 Gamma under the centred count (features/phase `unit`, the owner's decision of 2026-10-23): (cos theta, sin theta) with 2 cos theta = 2 - 1 / (4 Gamma^2) (K_0 over D at D = 2 (2 Gamma)^2), the half angle theta_0 / 2 per count, the sine by the one search at the amplitude X: no function of an angle."""
+    unit = 2 * gamma
+    scale = amplitude * 2 * unit * unit
+    cosine = scale - amplitude  # X D cos theta = X (D - 1)
     sine = largest_below(scale * scale - cosine * cosine)
     return complex(cosine / scale, sine / scale)
 
@@ -99,7 +104,7 @@ def turns_of(board: Lattice, index: int, record: int) -> np.ndarray:
 
 
 def well_pair(turns: np.ndarray, act: complex) -> tuple[np.ndarray, np.ndarray]:
-    """cos U_i and sin U_i at every Node from the count of acts, the act's power by complex multiplication, U_i = -count theta_0."""
+    """cos U_i and sin U_i at every Node from a count of acts, the act's power by complex multiplication, U_i = -count theta with theta the act's half angle: at the count of turns per interval the half of the Node's angle (the levels' lay under the centred count), at twice the turns the Node's whole angle (the standing operator and the Wronskian)."""
     phasor = np.power(act, -turns.astype(int))
     return np.asarray(phasor.real, dtype=float), np.asarray(phasor.imag, dtype=float)
 
@@ -217,7 +222,7 @@ def levels_of(board: Lattice, reading: Reading, kept: int) -> list[Level]:
 
 
 def gauge_flat(board: Lattice, reading: Reading) -> tuple[np.ndarray, np.ndarray]:
-    """The record's level pair in the static frame at the lay, u = z conj(P) with P = act^acts the phasor of the acts accumulated at the Node (now) and one interval fewer (before): complex arrays over the Nodes."""
+    """The record's level pair in the static frame at the lay, u = z conj(P) with P = act^acts the phasor of the half-angle acts accumulated at the Node (now, K(1) = c at the lay) and one interval fewer (before, K(0) = -c, two turns of the half angle fewer; the centred count, 2026-10-23): complex arrays over the Nodes."""
     lines = board.lines_of(reading.index, reading.record)[2 * reading.part : 2 * reading.part + 2]
     now = np.asarray(lines[0].now, dtype=float) + complex(0, 1) * np.asarray(lines[1].now, dtype=float)
     before = np.asarray(lines[0].before, dtype=float) + complex(0, 1) * np.asarray(
@@ -225,7 +230,9 @@ def gauge_flat(board: Lattice, reading: Reading) -> tuple[np.ndarray, np.ndarray
     )
     acts = reading.acts.astype(int)
     phasor = np.power(reading.act, acts).ravel()
-    earlier = np.power(reading.act, acts - reading.turns.astype(int)).ravel()
+    earlier = (
+        np.power(reading.act, acts - 2 * reading.turns.astype(int)).ravel()
+    )  # one interval fewer: two turns of the half angle (the centred count, K(m) - K(m - 1) = 2 c)
     return now.ravel() * np.conj(phasor), before.ravel() * np.conj(earlier)
 
 
@@ -286,10 +293,13 @@ def reading_of(board: Lattice, index: int, record: int, part: int = 0) -> Readin
     holder = node.sign_holder(index, board.families)
     act = act_pair(board.amplitude, board.world.node_clock)
     turns_now = turns_of(board, index, record)
-    cosine, sine = well_pair(turns_now, act)
+    cosine, sine = well_pair(
+        2 * turns_now, act
+    )  # the Node's whole angle U, two half-angle acts per turn
     reading = Reading(
-        index, record, holder, turns_now, cosine, sine, act, [], 0, 0, 0, 0, turns_now.copy(), part
+        index, record, holder, turns_now, cosine, sine, act, [], 0, 0, 0, 0, turns_now.copy(), part=part
     )
+    reading.lay_cosine, reading.lay_sine = well_pair(turns_now, act)  # U / 2, the lay's frame
     reading.levels = levels_of(board, reading, PORTS)
     if len(reading.levels) < 2:  # a frozen record: every level at one rotation, no transition
         return None
@@ -388,16 +398,22 @@ def level_profile(
     """One level's profile at one quantum's charge for the instrument's key `profiles` (2026-10-22, the reader's ruling: the frame's run of a bound body's full beat lays the transition's two levels each at one quantum in the body's own well, and the upper level's share is read against them): the level's direction (`direction`, the lay's own where the record holds the level, its fitted component reaching one level at its peak, the first column positive at its largest otherwise), its amplitude by the standing lay's own normalisation, A^2 SUM phi_i^2 sin(Omega + U_i) = T / 2, the charge of one quantum (tools/standing_lay.py since 2026-10-22; the root by the one search at the phase line's amplitude, `rooted`), and the four arrays in the engine's phase convention, now = A phi cos U, im_now = -A phi sin U, before = A phi cos Omega, im_before = A phi sin Omega, each rounded once to the integers and written as its nonzero Nodes in x-major order with the part the level is the profile of; the laid level's profile equals the body's own lay to the rounding, the other level's stands beside it at the same count."""
     found, den = reading.levels[level], reading.levels[level].pair[1]
     profile = direction(found, coefficients, laid)
-    cosine, sine = reading.cosine.ravel(), reading.sine.ravel()
-    sine_up = found.sine / den * cosine + found.pair[0] / den * sine  # sin(Omega + U_i) per Node
+    cosine, sine = reading.cosine.ravel(), reading.sine.ravel()  # the Node's whole angle U
+    sine_up = (
+        found.sine / den * cosine + found.pair[0] / den * sine
+    )  # sin(Omega + U_i) per Node, the Wronskian's
     square = board.world.quantum_action / (2 * float((profile * profile * sine_up).sum()))
     amplitude = float(rooted(np.asarray([square]), board.amplitude)[0])  # A, the charge T / 2
+    half_c, half_s = (
+        reading.lay_cosine.ravel(),
+        reading.lay_sine.ravel(),
+    )  # U / 2, the lay's frame (centred count)
     arrays = {
-        "now": amplitude * profile * cosine,
-        "before": amplitude * profile * (found.pair[0] / den),
-        "im_now": -amplitude * profile * sine,
-        "im_before": amplitude * profile * (found.sine / den),
-    }
+        "now": amplitude * profile * half_c,
+        "before": amplitude * profile * (found.pair[0] / den * half_c - found.sine / den * half_s),
+        "im_now": -amplitude * profile * half_s,
+        "im_before": amplitude * profile * (found.sine / den * half_c + found.pair[0] / den * half_s),
+    }  # now = A phi e^(-i U / 2), before = A phi e^(i (Omega + U / 2)), tools/standing_lay.py's convention
     entry: dict[str, Any] = {"part": part}
     for key, values in arrays.items():
         grains = [int(v) for v in np.rint(values)]

@@ -274,7 +274,7 @@ def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_f
     pulse = {family.name: index for index, family in enumerate(zeno) if family.quanta}
     assert lit_families(zeno, pulse) == pulse == {"atom": 0, "pulse": 1}  # a holder no family reads
     parts = [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}]
-    draw = {"window": 4}
+    draw = {"window": 4}  # carried by the parse, refused at the end of the load (2026-10-23)
     turn, rate = {"from": "g", "to": "e", "weight": 1, "resonance": [2, 3]}, {"from": "e", "to": "g"}
 
     def declared(**entry):

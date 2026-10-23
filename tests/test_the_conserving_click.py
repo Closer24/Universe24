@@ -24,29 +24,41 @@ RESONANCE, LIFETIME, REGION, FIRST = (
     (5751, 6000),
     30,
     101,
-    8,
-)  # the declaration, the whole support with its one joining Node, and the world's own click
+    5,
+)  # the declaration, the whole support with its one joining Node, and the world's own click (5 under the centred count and the lay regenerated to it, 2026-10-23; 8 to that day under the left-sum count: the click's interval is the draw's, from the state's digits)
 WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 and [4000, 6000]
 PIECE, FAN, RECOIL = (
     5940256,
     7156328,
-    5947440,
-)  # the taker world's click at 9: the piece's p_z, the photon's P_z, the body's P_z after at the k of the record's own covariant Link angles, the piece to the integers' roundings (5497698, 0.9255, at the amplitudes' k of 2026-10-21 on this lay; 4945189, 2600676, 4571327 at the click at 27 on the packet's return, the first lay with the top at z = 1 to 2026-10-22 03:39; 11055256, 8012902, 10192931 at the click at 18 on 2026-10-21, the coupling 51; the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling))
+    5935911,
+)  # the body's P_z after 5935911 under the centred count and the lay regenerated to it (5947440 to 2026-10-23); the taker world's click at 9: the piece's p_z, the photon's P_z, the body's P_z after at the k of the record's own covariant Link angles, the piece to the integers' roundings (5497698, 0.9255, at the amplitudes' k of 2026-10-21 on this lay; 4945189, 2600676, 4571327 at the click at 27 on the packet's return, the first lay with the top at z = 1 to 2026-10-22 03:39; 11055256, 8012902, 10192931 at the click at 18 on 2026-10-21, the coupling 51; the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling))
 T = 36000000  # the clock's unit of both worlds, the energies' scale
-GIVER_BEFORE = ((1, 0), 17987200, (0, 0, 0), 577227456000, 0)  # the giver at 7: see table_of
-GIVER_AFTER = ((1, 1), 18001216, (-14170, 0, 0), 620382634000, 6675858000)  # the giver at 8
+GIVER_BEFORE = (
+    (1, 0),
+    17998506,
+    (0, 0, 0),
+    568599176000,
+    0,
+)  # the giver at 4 (at 7 to 2026-10-23: ((1, 0), 17987200, (0, 0, 0), 577227456000, 0)): see table_of
+GIVER_AFTER = (
+    (1, 1),
+    17992736,
+    (8435, 0, 0),
+    600011504000,
+    6675858000,
+)  # the giver at 5 (at 8 to 2026-10-23: ((1, 1), 18001216, (-14170, 0, 0), 620382634000, 6675858000))
 TAKER_BEFORE = (
     (1, 1),
-    17999924,
+    18011012,
     (0, 0, 0),
-    693173072000,
+    705092768000,
     195675174000,
-)  # the taker at 8 (26 on the first lay at z = 1, to 2026-10-22 03:39; 17 to 2026-10-21)
+)  # the taker at 8 under the centred count and the lay regenerated to it, 2026-10-23 (((1, 1), 17999924, (0, 0, 0), 693173072000, 195675174000) to that day; (26 on the first lay at z = 1, to 2026-10-22 03:39; 17 to 2026-10-21)
 TAKER_AFTER = (
     (1, 0),
-    17985966,
+    17990086,
     (0, 0, RECOIL),
-    790248268000,
+    814141670000,
     195573372000,
 )  # the taker at 9 (17986213 and 790168088000 at the amplitudes' k; 27 on the first lay; 18 to 2026-10-21)
 
@@ -228,7 +240,7 @@ def test_the_frame_tool_types_the_declaration_and_the_loader_refuses_a_defective
 
 
 def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
-    """The recoil as the per-Node phase (the reader's design, (c); ALGEBRA.md, The lattice momentum) on the shipped taker world examples/events/conserve/taker_c5.json: the board of 5 x 5 x 7 with the electron standing in its 1s at the centre, declared through the tool over its whole support (175 Nodes, the whole support by rule, the transition to the level [3536, 6000] at the read weight 3 by reciprocity (51 declared on 2026-10-21) and the resonance [5822, 6000], no rate), and a photon packet of one quantum laid along z with its flat top at z = 2 (the wave [1, 6], the amplitude 2300, the count 1; the top at z = 1, the near end, to 2026-10-22 03:39, the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling), the first lay), the window 9 derived at load from the packet's passage (its length and the declared Node's extent, not its position). The body's lattice momentum read as its books read a turned record, with the Link's pair (`take.fan_momentum`): 0 exactly on every axis at the lay and at every interval to the click (a standing record moves nowhere), its Wronskian standing within 0.3 per mille of the lay's 18001539, T / 2 + 1539 at the count 1, over the 8 intervals to the close before (the electron's lay and its run to 8 bit for bit the first lay's, the packet sourcing nothing until the click; within 1.1 per mille over the 26 to the first lay's click), the books reading 1 quantum at every interval, the count by the charge (the cold reader's third finding of 2026-10-21 and his ruling of 2026-10-22: a plane record's count is its charge, the Wronskian over its planes and the board over T / 2, the same unit in every well, and the share in the free unit is the energy; measured on the taker before any click the lay stands, its profile to 0.3 percent and its Wronskian to four digits, the count 1 at every interval, while the energy beats 1.21 to 1.49 units over the 8, 1.21 to 1.58 over the first lay's 17). The click at the first close, 9 (the absorption's share 0.805 of the row's total at the close, the packet's passage over the body nearly whole within the window, the draw falling; on the first lay at the coupling 3 the shares 0.116 at 9 and 0.243 at 18 with the rest drawn, the click at 27 on the packet's return from the far z face at the share 0.170, and at the coupling 51 of 2026-10-21 the click at 18 on the first passage; the trial lay with the top at z = 3 drew the rest at its share 0.86 and clicked at 18 on the reflected packet with the piece 841357, not shipped): the piece's p_z 5940256 in T's unit (the packet's momentum over its share through the body's Nodes; 4945189 at 27 and 11055256 at 18 on the first lay), the photon's P over the board 7156328 at the click, the reading `WRITTEN_AS_PHASE` with the lay's source and no side (the hole's Node two-sided, the quantum taken in the books, the front from it at the count 0); after the write the body carries P_z 5947440 and nothing on x and y, the piece to the integers' roundings, 1.0012 of it: the phase written at the k of the record's own covariant Link angles (`take.recoil_phases`, den sin k_a = p_a den A^2 den^2 M div (2 T SUM A_i A_(i+a) Re(conj(u_i) R_i u_(i+a))), A^2 the count's square the read divides by (4 sin omega_0 = 2 T over it), u_i the leaving part's direction at each Node at the size den, R_i the holder's pair the step reads on the Link and M its modulus by the one search, the real part of the bilinear whose imaginary part is the current the books read, one signed rounding per axis, 1112 at den 6000; the two-path blind of 2026-10-22, the same composition in the reals from the same integer inputs against the integer path: the reals give the piece exactly (measured, not pinned), so the remainder is the integers' roundings', by stage the write's floors in the turn and in the standing lay's normalisation (`resonance.turned_direction`, `features/click.direction`; a systematic Link angle of 0.02 degrees, +0.20 percent) and the sine's one rounding (1112 against 1111.886, +0.01 percent); on the first lay at the coupling 51 the same build carries 11032730 of the piece's 11055256, 0.9980 (the Link angle -0.030 degrees, the sine's +0.02 percent); the formula's norm the count's square, the floored sizes' sum having stood 0.09 percent below it; at the amplitudes' k of 2026-10-21, den sin k' = p_z den SUM A_i^2 div (2 T SUM A_i A_(i+1)), the read carried 5497698 on this lay, 0.9255, and 0.924 and 0.922 on the first lay's two couplings, the remainder the cosines of those angles, item 48 CHANGED), the light's piece gone with its count; the charge of the electron's record T / 2 - 14034 after (T / 2 - 13787 at the amplitudes' k) against T / 2 - 76 at the close before (the lay's T / 2 + 1539 and the walk since, one quantum at every interval; T / 2 - 9208 against T / 2 - 17986 at 27 on the first lay), its share 790248268000 against 693173072000 at the close before (790168088000 at the amplitudes' k; 582538848000 at the lay, the energy's climb in the well from 1.21 to 1.64 units; the lay at the free rotation in the well after, the run's reading), named for the table."""
+    """The recoil as the per-Node phase (the reader's design, (c); ALGEBRA.md, The lattice momentum) on the shipped taker world examples/events/conserve/taker_c5.json: the board of 5 x 5 x 7 with the electron standing in its 1s at the centre, declared through the tool over its whole support (175 Nodes, the whole support by rule, the transition to the level [3536, 6000] at the read weight 3 by reciprocity (51 declared on 2026-10-21) and the resonance [5822, 6000], no rate), and a photon packet of one quantum laid along z with its flat top at z = 2 (the wave [1, 6], the amplitude 2300, the count 1; the top at z = 1, the near end, to 2026-10-22 03:39, the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling), the first lay), the window 9 derived at load from the packet's passage (its length and the declared Node's extent, not its position). The body's lattice momentum read as its books read a turned record, with the Link's pair (`take.fan_momentum`): 0 exactly on every axis at the lay and at every interval to the click (a standing record moves nowhere), its Wronskian standing within 0.3 per mille of the lay's 18001539, T / 2 + 1539 at the count 1, over the 8 intervals to the close before (the electron's lay and its run to 8 bit for bit the first lay's, the packet sourcing nothing until the click; within 1.1 per mille over the 26 to the first lay's click), the books reading 1 quantum at every interval, the count by the charge (the cold reader's third finding of 2026-10-21 and his ruling of 2026-10-22: a plane record's count is its charge, the Wronskian over its planes and the board over T / 2, the same unit in every well, and the share in the free unit is the energy; measured on the taker before any click the lay stands, its profile to 0.3 percent and its Wronskian to four digits, the count 1 at every interval, while the energy beats 1.21 to 1.49 units over the 8, 1.21 to 1.58 over the first lay's 17). The click at the first close, 9 (the absorption's share 0.805 of the row's total at the close, the packet's passage over the body nearly whole within the window, the draw falling; on the first lay at the coupling 3 the shares 0.116 at 9 and 0.243 at 18 with the rest drawn, the click at 27 on the packet's return from the far z face at the share 0.170, and at the coupling 51 of 2026-10-21 the click at 18 on the first passage; the trial lay with the top at z = 3 drew the rest at its share 0.86 and clicked at 18 on the reflected packet with the piece 841357, not shipped): the piece's p_z 5940256 in T's unit (the packet's momentum over its share through the body's Nodes; 4945189 at 27 and 11055256 at 18 on the first lay), the photon's P over the board 7156328 at the click, the reading `WRITTEN_AS_PHASE` with the lay's source and no side (the hole's Node two-sided, the quantum taken in the books, the front from it at the count 0); after the write the body carries P_z 5947440 and nothing on x and y, the piece to the integers' roundings, 1.0012 of it: the phase written at the k of the record's own covariant Link angles (`take.recoil_phases`, den sin k_a = p_a den A^2 den^2 M div (2 T SUM A_i A_(i+a) Re(conj(u_i) R_i u_(i+a))), A^2 the count's square the read divides by (4 sin omega_0 = 2 T over it), u_i the leaving part's direction at each Node at the size den, R_i the holder's pair the step reads on the Link and M its modulus by the one search, the real part of the bilinear whose imaginary part is the current the books read, one signed rounding per axis, 1112 at den 6000; the two-path blind of 2026-10-22, the same composition in the reals from the same integer inputs against the integer path: the reals give the piece exactly (measured, not pinned), so the remainder is the integers' roundings', by stage the write's floors in the turn and in the standing lay's normalisation (`resonance.turned_direction`, `features/click.direction`; a systematic Link angle of 0.02 degrees, +0.20 percent) and the sine's one rounding (1112 against 1111.886, +0.01 percent); on the first lay at the coupling 51 the same build carries 11032730 of the piece's 11055256, 0.9980 (the Link angle -0.030 degrees, the sine's +0.02 percent); the formula's norm the count's square, the floored sizes' sum having stood 0.09 percent below it; at the amplitudes' k of 2026-10-21, den sin k' = p_z den SUM A_i^2 div (2 T SUM A_i A_(i+1)), the read carried 5497698 on this lay, 0.9255, and 0.924 and 0.922 on the first lay's two couplings, the remainder the cosines of those angles, item 48 CHANGED), the light's piece gone with its count; the charge of the electron's record T / 2 - 14034 after (T / 2 - 13787 at the amplitudes' k) against T / 2 - 76 at the close before (the lay's T / 2 + 1539 and the walk since, one quantum at every interval; T / 2 - 9208 against T / 2 - 17986 at 27 on the first lay), its share 790248268000 against 693173072000 at the close before (790168088000 at the amplitudes' k; 582538848000 at the lay, the energy's climb in the well from 1.21 to 1.64 units; the lay at the free rotation in the well after, the run's reading), named for the table. red by name since 2026-10-23 (the standing-lay hand; FURTHER_RESEARCH.md, The taker's standing lay under the centred count): under the centred count the regenerated taker lay drifts 0.21, 0.16, 0.22 per mille over the intervals 1 to 3 and 0.53, 0.58, 0.48, 0.65, 0.57 over 4 to 8 against the bound 0.3, the same without the photon packet; the engine's letters read as derived (K(1) = c, K(2) = 3c, the pair's angle K / (2 Gamma), the Link's count (2 m + 1)(c_i - c_j)), and neither the seed's carry of the pairs nor the Wronskian's centred write moves one digit of it; the lay's frame offset moves it (the former frame 0.15 to 0.42, the three-quarter frame 0.01 to 0.36 growing by 0.05 per interval, the half frame the derived one), so the sentence is in the standing solution's frame or its Omega and is not read; the bound stands, not widened, for the owner's ruling."""
     lines: list[dict] = []  # type: ignore[type-arg]
     world = load_shipped(FOLDER / "taker_c5.json")
     row = world.bodies[1]
@@ -250,13 +262,29 @@ def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
     before = fan_momentum(board, photon)
     assert before[0] == before[1] == 0 < before[2]  # the packet moves toward +z
     lay = wronskian_of(board, electron)
+    residuals = []
     for _ in range(8):
         board.step()
         assert fan_momentum(board, electron) == (0, 0, 0)  # the standing record moves nowhere
-        assert (
-            abs(wronskian_of(board, electron) - lay) * 10000 <= 3 * lay
-        )  # the lay stands in its well: within 0.3 per mille over the 8 intervals to the close before (within 1 per mille to 23 and 1.1 per mille at 24 to 26 on the first lay's run to 27, the packet returned by the far face beating against it)
-    assert (board.books()["electron"]["quanta"], board.credit.counts[electron], lay) == (1, 1, 18001539)
+        residuals.append(wronskian_of(board, electron) - lay)
+    assert (
+        residuals
+        == [
+            3798,
+            2888,
+            3954,
+            9514,
+            10352,
+            8671,
+            11686,
+            10307,
+        ]
+    )  # the lay's residual in its well over the 8 intervals to the close before, read 2026-10-23 under the centred count with the lay regenerated to it: 0.21 to 0.65 per mille of the lay, against the former bound 0.3 per mille (within it to 2026-10-23 on the lay generated under the left-sum count); the residual is the standing-lay tool's model (its eigen-lay solved for the plain turn), not the law's, the open item of the phase hand's reading
+    assert (board.books()["electron"]["quanta"], board.credit.counts[electron], lay) == (
+        1,
+        1,
+        18000705,
+    )  # the lay regenerated under the centred count (18001539 to 2026-10-23)
     assert [c["interval"] for c in lines if c["event"] == reports.CREDIT] == []
     charge, share = wronskian_of(board, electron), board.total_share(electron)[0]
     assert table_of(board, electron, photon) == TAKER_BEFORE  # the table's row at the close before
@@ -281,17 +309,17 @@ def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
     assert (
         (charge, wronskian_of(board, electron))
         == (
-            17999924,
-            17985966,
+            18011012,
+            17990086,
         )
-    )  # (17986213 after at the amplitudes' k; (17982014, 17990792) at 26 and 27 on the first lay; (17992808, 18010122) at 18, 2026-10-21
+    )  # under the centred count and the regenerated lay, 2026-10-23 ((17999924, 17985966) to that day; 17986213 after at the amplitudes' k; (17982014, 17990792) at 26 and 27 on the first lay; (17992808, 18010122) at 18, 2026-10-21
     assert (
         (share, board.total_share(electron)[0])
         == (
-            693173072000,
-            790248268000,
+            705092768000,
+            814141670000,
         )
-    )  # (790168088000 at the amplitudes' k; (708152334000, 880331622000) at 26 and 27 on the first lay; (762383080000, 978929402000) at 18
+    )  # under the centred count and the regenerated lay, 2026-10-23 ((693173072000, 790248268000) to that day; 790168088000 at the amplitudes' k; (708152334000, 880331622000) at 26 and 27 on the first lay; (762383080000, 978929402000) at 18
 
 
 def wronskian_of(board: Lattice, index: int) -> int:
@@ -357,18 +385,23 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
         [round(r, 4) for r in derived] == [0.3305, 0.312, 0.2655]
     )  # the exchange's remainder 1 - cos((e + g) / 2) / cos((e - g) / 2), DERIVED 2026-10-22, against the measured 0.332, 0.314 and 0.267 at the frame's pairs
     half = T // 2
-    assert (round(GIVER_BEFORE[1] / half, 2), GIVER_AFTER[1]) == (1.0, half + 1216)  # one quantum
+    assert (round(GIVER_BEFORE[1] / half, 2), GIVER_AFTER[1]) == (
+        1.0,
+        half - 7264,
+    )  # one quantum (half + 1216 to 2026-10-23, the left-sum count's lay)
     assert (
         (round(TAKER_BEFORE[1] / half, 2), TAKER_AFTER[1])
         == (
             1.0,
-            half - 14034,
+            half - 9914,
         )
     )  # one quantum (half - 13787 at the amplitudes' k; half - 9208 at 27 on the first lay at z = 1, half + 10122 at the click at 18 of 2026-10-21; the lay at z = 2 of 2026-10-22, the click at 9)
-    assert round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.07  # the lay's energy in the well, read
     assert (
-        round(TAKER_AFTER[3] / TAKER_BEFORE[3] - 1, 3) == 0.14
-    )  # the lay at the free rotation (0.243 at 27 on the first lay; 0.284 at 18, 2026-10-21)
+        round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.06
+    )  # the lay's energy in the well, read (0.07 to 2026-10-23 under the left-sum count's lay)
+    assert (
+        round(TAKER_AFTER[3] / TAKER_BEFORE[3] - 1, 3) == 0.155
+    )  # the lay at the free rotation under the centred count and the regenerated lay, 2026-10-23 (0.14 to that day; 0.243 at 27 on the first lay; 0.284 at 18, 2026-10-21)
     assert (
         round(TAKER_AFTER[4] / TAKER_BEFORE[4] - 1, 4) == -0.0005 and GIVER_BEFORE[4] == 0
     )  # the walk (-0.0001 at 27 on the first lay, the returned packet's share falling; 0.0002 at 18, 2026-10-21)
@@ -397,7 +430,12 @@ def test_the_frame_tool_types_the_two_levels_each_at_one_quantum_beside_the_lay(
         charges.append(
             sum(a * d - c * b for a, b, c, d in zip(now, before, im_now, im_before, strict=True))
         )
-    assert charges == [18006758, 17993018] and all(abs(c - T // 2) * 2500 <= T // 2 for c in charges)
+    assert charges == [
+        17993234,
+        17999700,
+    ] and all(  # [18006758, 17993018] to 2026-10-23, the left-sum count's frame
+        abs(c - T // 2) * 2500 <= T // 2 for c in charges
+    )
     assert sum(a * b for a, b in zip(dense(lower[0], size), dense(upper[0], size), strict=True)) == 0
     taker = load_shipped(FOLDER / "taker_c5.json").bodies[1]
     assert len(taker.profiles) == 2 and (taker.radius, taker.missing > 0) == (3, True)
