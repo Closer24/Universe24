@@ -16,10 +16,11 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import growth, meeting_back, node, records
+from event_universe import node, records
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
+from event_universe.meeting_back import radius as cone_radius
 from event_universe.node_detector import NodeBooks
 from event_universe.world_files import load_world
 
@@ -189,6 +190,10 @@ def copied(record: records.Record) -> records.Record:
 
 def resized(record: records.Record, removed: list[Growth], added: list[Growth]) -> records.Record:
     """A kept line over the lattice as the interval sized it: the layers a receding face added before this interval's acts padded on (`added`, the growths the step logged, 0 at the interval's start), and the layers the inverse took off again shrunk away (`removed`, the growths the step back unlogged), so the form is read at every Node of the frame in either direction."""
+    from event_universe import (
+        growth,  # noqa: PLC0415  # inside the function: growth imported before the lattice meets the engine's import cycle through walls, lists and the books (2026-10-23)
+    )
+
     now, before = record.now, record.before
     for _served, axis, side, layers in removed:
         now, before = (growth.shrunk(a, axis, side, layers) for a in (now, before))
@@ -234,9 +239,7 @@ class Frames:
         coned = pass_number > 1 and bool(
             getattr(getattr(board, "credit", None), "reads_sides", False)
         )  # the run back and forward in the record's light cone, the one reach
-        radius = (
-            meeting_back.radius(board) if coned else None
-        )  # G(t): the lay's Nodes within t + 1 Links
+        radius = cone_radius(board) if coned else None  # G(t): the lay's Nodes within t + 1 Links
         found = frame(board, kept, direction, pass_number, getattr(board, "tick", None), radius)
         self.kept, self.growths = self.copies(), list(board.growths)
         if self.last == (
