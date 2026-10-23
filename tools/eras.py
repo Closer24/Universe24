@@ -313,7 +313,13 @@ def run(
     kept_clicks = clicks.open("w", encoding="utf-8") if clicks is not None else None
 
     def keep(line: dict[str, object]) -> None:
-        if kept_clicks is not None and line.get("event") in ("click", "density", "credit", "lay"):
+        if kept_clicks is not None and line.get("event") in (
+            "click",
+            "density",
+            "credit",
+            "lay",
+            "birth",
+        ):
             kept_clicks.write(json.dumps(line) + "\n")
 
     board = Lattice(world, output=keep)
