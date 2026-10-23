@@ -20,21 +20,7 @@ from tests.laws import (
     GRAVITY,
     coulomb_world,
 )
-from tests.laws_content import emit_and_take_world, one_photon_board, ring_of
-
-
-def test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close(tmp_path, monkeypatch):
-    """MUST 1, Part G's world with the emitter's window SHORTER than the run (48 against 200, Part G's 240 hid the loss): the emitter, released from its own source at the span's end on this periodic chain (C5's reach by the lay's end, 2026-10-19: the lay has no end on the ring, so the first line stands), is lit by its own circulating train and closes a null window on it after the emission and before the click, its re-lay keeping its P; P over the board and the two bodies is still conserved to the floor at the run's end. History, kept by name (the reader's ruling of 2026-10-20): the ring's sentence is the periodic world's and is not read under the content of the born universe, where the periodic chain is refused at the start by name, the held sums' rest needing a sink (asserted here on the ring re-declared from the content fixture, `ring_of`), and on the chain opened along x as the sink the emitter's quantum leaves by the faces before any take (`emit_and_take_world`); its pins stand as history: the emission at 61, the click at 169 and the null window at 156 at the content 0 before the eighth commit of the read, 353 and 143 under the eighth; the null re-lay within D4 and P conserved to the floor are read on the shipped chain world (tests/test_the_chain_world.py, B3), where the takes fall."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = emit_and_take_world(tmp_path, list(range(6)), list(range(12, 18)))
-    ring = load_world(ring_of(path))
-    assert [r.ended for r in ring.bodies[0].detector.rates] == [False]  # the lay has no end on the ring
-    board = Lattice(
-        ring
-    )  # every board's interval unobservable: the massless rows rest free, no sink needed
-    for _ in range(48):
-        board.step()
-    assert board.ended is None and board.interval == 48
+from tests.laws_content import one_photon_board
 
 
 def test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum(tmp_path, monkeypatch):

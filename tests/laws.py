@@ -341,7 +341,7 @@ def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
 
 ORACLE = load_file(
     "step_oracle", ROOT / "tools" / "step_oracle.py"
-)  # the step's oracle: the law's first form with the 2.0.0 step around it
+)  # the step's oracle: the law's first form with the one Node's interval around it
 arrivals_rule3 = (
     ORACLE.arrivals_rule3
 )  # the first form of Rule3, written in the tool and in no file of src/

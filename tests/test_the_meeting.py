@@ -41,7 +41,7 @@ from tests.laws_content import (
 )
 from tests.laws_read import redeclared
 
-BELL, GHZ = (load_file(f"{n}_build", EVENTS / n / "build_world.py") for n in ("bell", "ghz"))
+BELL = load_file("bell_build", EVENTS / "bell" / "build_world.py")
 PAIR = ((1, 0), (0, 1))  # the pair's pattern: the + port reads (p, q), the - port (-q, p)
 A, A2, B, B2 = ((1, 0), (1, 1), (12, 5), (5, 12))  # the CHSH settings as the declared bases (p, q)
 ORDER, CHSH = ((A, B), (A, B2), (A2, B), (A2, B2)), (1, -1, 1, 1)  # CHSH's four worlds and S's signs
@@ -102,7 +102,7 @@ def test_the_one_meeting_reads_the_blind_at_the_sides_and_the_engine_implements_
 
 
 def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
-    """(i) Equal parts on three sides read with the GHZ patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p): the eight shares are cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, so at (x, y, y), (y, x, y) and (y, y, x) the even shares 0 and the odd 1 / 4 with E_3 = -1, at (x, x, x) the even 1 / 4 and the odd 0 with E_3 = 1, at ((12, 5), x, x) the even 36 / 169 and E_3 = 119 / 169; every single-side and every pairwise E 0 (the marginals 1 / 2); M = -4 (|M| = 4 beside local realism's 2); the three local credits give M = -1 each; the loader refuses by name a pattern of [0, 0], a pattern without a basis, a pattern of the wrong length against the records the world lays and a pattern in a world laying no record of several parts. (ii) The four worlds of examples/events/ghz/design.json (the GHZ family at the dimension [4, 1] on a square board, three beams to three regions) are built with the blind, laid and run two at a time in the next test."""
+    """(i) Equal parts on three sides read with the GHZ patterns A (p, p, q, q), B (p, q, p, q), C (p, -q, -q, -p): the eight shares are cos^2(a + b + c) / 4 at an even number of - ports and sin^2(a + b + c) / 4 at an odd, so at (x, y, y), (y, x, y) and (y, y, x) the even shares 0 and the odd 1 / 4 with E_3 = -1, at (x, x, x) the even 1 / 4 and the odd 0 with E_3 = 1, at ((12, 5), x, x) the even 36 / 169 and E_3 = 119 / 169; every single-side and every pairwise E 0 (the marginals 1 / 2); M = -4 (|M| = 4 beside local realism's 2); the three local credits give M = -1 each; the loader refuses by name a pattern of [0, 0], a pattern without a basis, a pattern of the wrong length against the records the world lays and a pattern in a world laying no record of several parts. The four shipped GHZ worlds (examples/events/ghz) are read under the one meeting in tests/test_the_one_meeting.py, one test each."""
     three = [side((3, 1), (3, 1), (3, 1), (3, 1))] * 3
     shares, found = credits(three, *MERMIN[:1], PATTERNS)
     for joint, settings in zip(shares, MERMIN[0], strict=True):
@@ -121,34 +121,6 @@ def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
-
-
-def ghz_gates_read(keys, tmp_path):  # type: ignore[no-untyped-def]
-    (read, expected), f = laws.gate_worlds(GHZ, tmp_path, keys), GATE.fraction
-    b, order, signs = expected["blind"], expected["order"], expected["combination"]["signs"]
-    local = ("by_the_parts_shares", "by_the_local_sums", "by_the_sign")  # the three local credits
-    for key, w in read.items():
-        assert w["shares"] == b["shares"][key] and w["marginals"] == b["marginals"][key]
-        assert (
-            f(w["correlation"]) == f(b["correlation"][key]) and w["mismatch"]["ratios"] == [[1, 1]] * 3
-        )
-        assert w["sub_correlations"] == b["sub_correlations"][key] and len(w["drawn"]) == 3
-        assert all(f(w[c]) == f(b[c]["correlation"][key]) for c in local)
-    assert all(v == dict.fromkeys(("a b", "a c", "b c"), [0, 1]) for v in b["sub_correlations"].values())
-    assert list(b["correlation"].values()) == [[-1, 1]] * 3 + [[1, 1]] and b["M"] == [-4, 1]
-    assert GATE.combination((f(b["correlation"][k]) for k in order), signs) == -4
-    found = [GATE.combination((f(b[c]["correlation"][k]) for k in order), signs) for c in local]
-    assert found == [-1] * 3 == [f(b[c]["M"]) for c in local]
-
-
-def test_the_ghz_gates_first_pair_x_y_y_and_y_x_y_reads_the_blind_exactly(tmp_path):
-    """(ii) The GHZ folder built from its design and its first pair of worlds run, x y y and y x y (the clock gives each pair its own test; `laws.gate_worlds`): every world LAWFUL, its parts lines equal across the parts, its credit lines at the window's close, the back-in-time gate MATCH over 4 intervals; each world's eight shares, E_3, marginals, sub-correlations and the three local credits' correlations the blind's, one triple drawn per world, its mismatch ratios [1, 1] on every side; and the blind's four E_3 (-1 at x y y, y x y, y y x and +1 at x x x) combine to M = -4 by the gate's signs, |M| = 4 beside local realism's 2, where each local credit's combine to -1 (`ghz_gates_read`)."""
-    ghz_gates_read(("x y y", "y x y"), tmp_path)
-
-
-def test_the_ghz_gates_second_pair_y_y_x_and_x_x_x_reads_the_blind_exactly(tmp_path):
-    """(ii) The second pair of the GHZ folder's worlds, y y x and x x x, run and read as the first (`ghz_gates_read`): with the first pair every world of the folder is run, none dropped."""
-    ghz_gates_read(("y y x", "x x x"), tmp_path)
 
 
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):

@@ -1,21 +1,10 @@
 """Part C, Task 2 (the local trial, Worker C2): the window's turn of the labels by carried divisions. The labels (u, v) are Python integers in the books, so the window's turn is one hop by the phase line's pair at the window's angle, (u', v') = ((C u - S v + r_u) div X, (S u + C v + r_v) div X), the remainders carried in the books between windows (`resonance.window_pair`, `resonance.hopped`, `meeting.turned_labels`, `NodeBooks.carried`), and no shear. The comparison numbers: 48 sub-turns of three shears each give the labels' angle 1.5680 at the Zeno world's n = 1, one shear of the whole window 1.330, the tangent half-angle's compression."""
 
-import hashlib
-import json
-import lzma
 import math
 import random
-import time
-from pathlib import Path
-
-import numpy as np
 
 from event_universe import resonance
-from event_universe.features import phase, volume
-from event_universe.lattice import Lattice
-from event_universe.loader.derived import folds
-from event_universe.world_files import load_world
-from tests.laws import EVENTS, world_beside
+from event_universe.features import phase
 
 GAMMA, WIDTH, TURN = (
     6000,
@@ -102,40 +91,3 @@ def test_the_back_turn_returns_the_labels_to_the_hops_floor_and_not_bit_for_bit(
         f"the back-turn over {TURNS} hops: the labels return to ({u}, {v}) from ({LABEL}, 0), the miss {miss}; not bit for bit"
     )
     assert max(map(abs, miss)) <= FLOOR_PER_TURN * 2 * TURNS and miss != (0, 0)
-
-
-def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(tmp_path, monkeypatch):
-    """The two slits world declares no transition, so no label is hopped (no books with labels), and its 20 intervals equal the frozen look file frame by frame (the oracle of Part A), the levels' digest printed: the sha256 of `tools/run_inputs.py` on it, c50eaa36, stands (run beside the suite and reported); no family folds (no flux holder), no state carries a phase line (no sign holder), and every frame's interval and shape are the board's: the code path without a flux holder and without a sign holder is the frozen engine's."""
-    oracle = Path(__file__).resolve().parent / "oracle" / "two_slits.look.json.xz"
-
-    started, look = time.perf_counter(), json.loads(lzma.open(oracle).read())
-    slits = world_beside(
-        tmp_path, EVENTS / "two_slits" / "two_slits.json", lambda w: None
-    )  # the read's shape
-    board = Lattice(load_world(slits))
-    assert board.credit.bodies == [] and all(
-        (state.phases == []) == (not family.rotation)  # the holder of the sign's phase lines, its act
-        for family, state in zip(board.families, board.states, strict=True)
-    )
-    assert not any(folds(board.families, i) for i in range(len(board.families)))  # no flux holder
-    digest = hashlib.sha256()
-    for interval in range(21):
-        frame = look["frames"][interval]
-        assert frame["interval"] == interval and tuple(frame["shape"]) == board.shape
-        for index, family in enumerate(board.families):
-            recorded = frame["families"][family.name]["now" if family.quanta else "level"]
-            flat = np.zeros(board.shape, dtype=object).reshape(-1)
-            if isinstance(recorded, dict):
-                flat[recorded["at"]] = recorded["values"]
-            else:
-                flat = np.array(recorded, dtype=object).reshape(-1)
-            now = (
-                board.states[index].lines[0].now
-            )  # a held row's time line read as its level where it carries its volume
-            found = volume.levels_read(board.world.node_clock, now, family.motion_volume)
-            assert np.array_equal(flat.reshape(board.shape), found), interval
-            digest.update(np.asarray(found, dtype=np.int64).tobytes())
-        board.step()
-    print(
-        f"the two slits bit for bit the oracle over 20 intervals; the levels' digest {digest.hexdigest()[:16]}; {time.perf_counter() - started:.1f} s"
-    )

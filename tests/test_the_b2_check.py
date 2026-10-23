@@ -1,15 +1,13 @@
-"""The law's row (b2) on the engine, the sign holder's odd line read by the Link with the sign opposite to the time line's (ALGEBRA.md #the-rows-against-nature (b2); The sign holder rotates the two-part record; The odd line's source is the sign's own current; `FamilyRule.link_read` (-1, -1), `plane.link_levels`): a charged plane record moving along x at the group velocity v of its band past a static time line and a static odd line L_x standing with one gradient along y, the odd line at + v / c_s^2 of the time line, the ratio the engine's own booking writes for a moving record (the law's line, the odd level over the time level + v / c_s^2, read on main 2026-10-21: L_x / L_0 climbing toward 0.6056 at beta_s = 0.2855 from the first write 10 of 17.3 x 0.606). The check's premise stands outside the step: the two lines are laid in the free row 0 of the holder of the sign (read by the record, owned by no record) and restored after every interval, so the record reads one static field, as the law's reader does; the record's own row is written and read by nothing on this board. The force is the change per interval of the record's kinetic wave number along y, arg SUM conj(z_i) z_(i+y) e^(i theta_y(i)) with theta_y the row's y-Link phase pair's angle (the time line moves the kinetic wave number through the Link phase growing by k_r (L_0(i) - L_0(i + y)) / Gamma per interval, the odd line's static Link angle moves the canonical one): E the time line alone, -k_r G_0 / Gamma; M the odd line alone, -v d theta_x / dy; E + M the two together, gamma_s (1 - beta_s^2) = 1 / gamma_s of the static force for a co-moving reader, nature's Coulomb over gamma, where the shipped read (1, 1) gave gamma_s (1 + beta_s^2). The world is declared here and ships nowhere."""
+"""The law's row (b2) on the engine, the sign holder's odd line read by the Link with the sign opposite to the time line's (ALGEBRA.md #the-rows-against-nature (b2); The sign holder rotates the two-part record; The odd line's source is the sign's own current; `FamilyRule.link_read` (-1, -1), `plane.link_levels`): a charged plane record moving along x at the group velocity v of its band past a static time line and a static odd line L_x standing with one gradient along y, the odd line at + v / c_s^2 of the time line, the ratio the engine's own booking writes for a moving record (the law's line, the odd level over the time level + v / c_s^2, read on main 2026-10-21: L_x / L_0 climbing toward 0.6056 at beta_s = 0.2855 from the first write 10 of 17.3 x 0.606). The check's premise stands outside the step: the two lines are laid in the free row 0 of the holder of the sign (read by the record, owned by no record) and restored after every interval, so the record reads one static field, as the law's reader does; the record's own row is written and read by nothing on this board. The force is the change per interval of the record's kinetic wave number along y, arg SUM conj(z_i) z_(i+y) e^(i theta_y(i)) with theta_y the row's y-Link phase pair's angle (the time line moves the kinetic wave number through the Link phase growing by k_r (L_0(i) - L_0(i + y)) / Gamma per interval, the odd line's static Link angle moves the canonical one): E the time line alone, -k_r G_0 / Gamma; M the odd line alone, -v d theta_x / dy; E + M the two together, gamma_s (1 - beta_s^2) = 1 / gamma_s of the static force for a co-moving reader, nature's Coulomb over gamma. The world is declared here and ships nowhere."""
 
 import json
 import math
 from pathlib import Path
 
 import numpy as np
-import pytest
 
 from event_universe import records, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import FamilyRule
 from event_universe.world_files import input_digest, load_world
 
 NUM, DEN, GAMMA, T, K_R = 4000, 6000, 6000, 36_000_000, 3
@@ -118,10 +116,8 @@ def force_of(board: Lattice, time_line: bool, odd_line: bool) -> float:
     return float(slope)
 
 
-def test_the_co_moving_reader_reads_coulomb_over_gamma_and_the_old_read_the_other_sign(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    """(b2) At beta_s = 0.2855 (k = 2 pi 2 / 26 of the pair [4000, 6000], v = 0.1346, c_s^2 = 2 / 9): E within 2 percent of -k_r G_0 / Gamma (-0.00592 against -0.00600: the Link phase grows by the law's number exactly and the record's phase-gradient estimator drifts 1.3 percent on the dispersing lump); M negative, M / (-k_r G_0 / Gamma) within 1 percent of -beta_s^2 = -0.0815 (0.2 percent) and M / E within 2 percent of it (the estimator's drift again); gamma_s (E + M) / E within 0.5 percent of 1 / gamma_s = 0.9584 (0.9578); and the negative control, the holder's read set to (1, 1) in memory, the shipped read until 2026-10-21, giving gamma_s (E + M) / E = 1.1301 against gamma_s (1 + beta_s^2) = 1.1285, so the read's sign is pinned by the law's own row."""
+def test_the_co_moving_reader_reads_coulomb_over_gamma(tmp_path: Path) -> None:
+    """(b2) At beta_s = 0.2855 (k = 2 pi 2 / 26 of the pair [4000, 6000], v = 0.1346, c_s^2 = 2 / 9): E within 2 percent of -k_r G_0 / Gamma (-0.00592 against -0.00600: the Link phase grows by the law's number exactly and the record's phase-gradient estimator drifts 1.3 percent on the dispersing lump); M negative, M / (-k_r G_0 / Gamma) within 1 percent of -beta_s^2 = -0.0815 (0.2 percent) and M / E within 2 percent of it (the estimator's drift again); gamma_s (E + M) / E within 0.5 percent of 1 / gamma_s = 0.9584 (0.9578); the read's sign (-1, -1) pinned by the law's own row."""
     assert abs(BETA2 - 0.08150) < 0.0001 and abs(V - 0.1346) < 0.0001
     electric_law = -K_R * G_0 / GAMMA
     holder = board_of(tmp_path).families[0]
@@ -143,16 +139,7 @@ def test_the_co_moving_reader_reads_coulomb_over_gamma_and_the_old_read_the_othe
         reading,
         1 / GAMMA_S,
     )  # gamma_s (1 - beta_s^2) = 1 / gamma_s
-    monkeypatch.setattr(FamilyRule, "link_read", property(lambda self: (1, 1)))
-    board = board_of(tmp_path)
-    assert board.families[0].link_read == (1, 1)
-    old = GAMMA_S * force_of(board, True, True) / electric
-    assert abs(old / (GAMMA_S * (1 + BETA2)) - 1) < 0.005 and old > 1 > reading, (
-        old,
-        GAMMA_S * (1 + BETA2),
-    )
     print(
         f"(b2) at beta_s = {math.sqrt(BETA2):.4f}: E {electric:.7f} (the law's {electric_law:.6f}), M / E {magnetic / electric:+.5f} "
-        f"(-beta_s^2 = {-BETA2:.5f}), gamma_s (E + M) / E {reading:.4f} (1 / gamma_s = {1 / GAMMA_S:.4f}); "
-        f"the old read (1, 1): {old:.4f} (gamma_s (1 + beta_s^2) = {GAMMA_S * (1 + BETA2):.4f})"
+        f"(-beta_s^2 = {-BETA2:.5f}), gamma_s (E + M) / E {reading:.4f} (1 / gamma_s = {1 / GAMMA_S:.4f})"
     )

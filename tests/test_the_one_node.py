@@ -221,6 +221,10 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("erasure", "world"),
     ("meeting", "draw"),
     ("reach", "draw"),
+    ("seed", "draw"),
+    ("multiplier", "draw"),
+    ("increment", "draw"),
+    ("engine", "world"),
     ("act", "held"),
     ("booking", "held"),
     ("factor", "held"),
@@ -331,7 +335,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
-    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform` and `erasure`, the draw's `meeting` and `reach`, a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
     from event_universe.loader import draw, node_detector_declaration, universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
@@ -381,3 +385,41 @@ def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
         if names:
             found[path.relative_to(SRC).as_posix()] = names
     assert found == STEPS, found
+
+
+RUN_NODES = 12_000  # the boards the start settles within the suite's bound on the house's clock (a 25-cube's start about 15 s, a 33-cube's about 100 s)
+
+
+def shipped_worlds() -> list[Path]:
+    """Every world file under examples/ (found by its own keys `shape` and `universe`; the generator's design, the blind and the expectation are no file the loader reads), relative to the repository root, in the files' order."""
+    found = []
+    for path in sorted((SRC.parents[1] / "examples").rglob("*.json")):
+        if path.name.endswith(("design.json", "expectation.json")) or ".blind" in path.name:
+            continue
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        if isinstance(document, dict) and all(key in document for key in ("shape", "universe")):
+            found.append(path.relative_to(SRC.parents[1]))
+    return found
+
+
+@pytest.mark.parametrize("path", shipped_worlds(), ids=lambda path: path.stem)
+def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: ignore[no-untyped-def]
+    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none) and, where the board holds at most RUN_NODES Nodes, is started and stepped one interval by the engine's own step with its books open; a larger board's start stands beyond the suite's bound on the house's clock and is run by the world's own tests, named here as loaded alone."""
+    from tests.laws_read import load_shipped
+
+    world = load_shipped(SRC.parents[1] / path)
+    nodes = int(np.prod(world.shape))
+    assert len(world.periodic) == 3 and world.families and world.intervals >= 1
+    if nodes > RUN_NODES:
+        print(
+            f"{path}: {nodes} Nodes loaded under the one Node, its start beyond the bound, run by its own tests"
+        )
+        return
+    board = Lattice(world)
+    board.step()
+    assert board.interval == 1 and board.ended is None
+    assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
+    print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")

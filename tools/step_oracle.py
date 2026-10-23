@@ -1,4 +1,4 @@
-"""The step's oracle, a host tool (the engine matches the law in its implementation, not only in its results, and this tool holds the step to the 2.0.0 step it replaced): the law's first form of Rule3, SUM over the six Ports of R_ij m_ij + S a_now - w a_before + r, kept here and in no file of src/, with the 2.0.0 step around it (the six arrivals through the Ports, the planes two lines as one under the Link's pairs, the faces presented by the engine's own `presented`, the lattice's acts around the step the engine's own), run against the engine's step, Rule3's flux line (src/event_universe/flux.py, core/rule3.rule3), on one world: two boards from one load, one stepped by the oracle, the other by `Lattice.step`; after every interval every line's now, before and remainder of every family, every held line's write remainder, every phase line, the interval, the shape and the output lines are compared, the first difference named; then the engine's board is run back with the record the gate's way (tools/back_in_time.py: the faces from the `face` lines, each interval's lays crossed), `Lattice.step_inverse` at every interval against the forward state's digest, and the lay bit for bit at the end. The verdict EQUAL with the intervals run, or DIFFERS with the first interval, array and Node. tests/test_step_oracle.py runs it on two small worlds inside the suite's bound; every example world and the time paper's run are run by this tool (the 36 cases and their caps in tests/test_step_oracle.py's docstring).
+"""The step's oracle, a host tool (the engine matches the law in its implementation, not only in its results): the law's first form of Rule3, SUM over the six Ports of R_ij m_ij + S a_now - w a_before + r, kept here and in no file of src/, with the one Node's interval around it (the six arrivals through the Ports, the planes two lines as one under the Link's pairs, the faces presented by the engine's own `presented`, the lattice's acts around the step the engine's own), run against the engine's step, Rule3's flux line (src/event_universe/flux.py, core/rule3.rule3), on one world: two boards from one load, one stepped by the oracle, the other by `Lattice.step`; after every interval every line's now, before and remainder of every family, every held line's write remainder, every phase line, the interval, the shape and the output lines are compared, the first difference named; then the engine's board is run back with the record the gate's way (tools/back_in_time.py: the faces from the `face` lines, each interval's lays crossed), `Lattice.step_inverse` at every interval against the forward state's digest, and the lay bit for bit at the end. The verdict EQUAL with the intervals run, or DIFFERS with the first interval, array and Node. tests/test_step_oracle.py runs it on two small worlds inside the suite's bound; every example world and the time paper's run are run by this tool (the 36 cases and their caps in tests/test_step_oracle.py's docstring).
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -53,7 +53,7 @@ def arrivals_rule3(reads, arrivals, self_coefficient, wall, now, other, carry, d
 def oracle_step(
     record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0, faces: Faces = NO_FACE
 ) -> Record:
-    """The 2.0.0 step on one line: the six arrivals of the level the step starts from, the faces presented, the first form."""
+    """The first form's step on one line: the six arrivals of the level the step starts from, the faces presented, the first form."""
     reads, self_coefficient, wall, _mass = rule
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
     arrived = ports(level, wrap, fill)
@@ -68,7 +68,7 @@ def oracle_step(
 
 
 def oracle_step_plane(re, im, rule, wrap, direction, faces, pairs):  # type: ignore[no-untyped-def]
-    """The 2.0.0 step on a plane's two lines as one, every Link's pair on the two arrivals, the plain reads where no pair."""
+    """The first form's step on a plane's two lines as one, every Link's pair on the two arrivals, the plain reads where no pair."""
     reads, self_coefficient, wall, _mass = rule
     now = (level_at(re, direction), level_at(im, direction))
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
@@ -112,7 +112,7 @@ def oracle_step_plane(re, im, rule, wrap, direction, faces, pairs):  # type: ign
 
 
 def oracle_step_family(index, families, states, rule, wrap, direction, record, faces, pairs):  # type: ignore[no-untyped-def]
-    """The 2.0.0 step on one record: line by line; a plane family plane by plane, the two lines as one under the Links' pairs where the record is turned or folded, two plain lines where it is not."""
+    """The first form's step on one record: line by line; a plane family plane by plane, the two lines as one under the Links' pairs where the record is turned or folded, two plain lines where it is not."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
@@ -151,7 +151,7 @@ def oracle_step_family(index, families, states, rule, wrap, direction, record, f
 def oracle_step_records(
     board: Lattice, index: int, direction: int
 ) -> tuple[list[Record], list[Booking]]:
-    """The 2.0.0 step on every record of a family, with the engine's own read, rule and pairs (`flux.pairs_of` shares them), the cuts and the faces as `meeting.stepped` takes them."""
+    """The first form's step on every record of a family, with the engine's own read, rule and pairs (`flux.pairs_of` shares them), the cuts and the faces as `meeting.stepped` takes them."""
     families, states, wrap = board.families, board.states, board.wrap
     gamma, unit, cut = board.world.node_clock, board.unit, meeting.cut(board, index)
     faces = faces_presented(board, index)
@@ -171,7 +171,7 @@ def oracle_step_records(
 
 
 def oracle_interval(board: Lattice) -> None:
-    """The 2.0.0 `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own."""
+    """The one Node's `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own."""
     if board.ended is not None:
         raise RuntimeError(f"the run ended at interval {board.interval}: {board.ended}")
     if not growth.grow(board):

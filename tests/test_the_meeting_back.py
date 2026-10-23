@@ -1,6 +1,5 @@
 """The one meeting, the click that writes at the record's birth (the owner's words of 2026-10-19 and 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading; The meeting's identity, the Gram theorem; the design verdicts of 2026-10-20): a record of several parts read by N sides is credited by N draws in the order of the sides' closes, equal closes in the declared order, each side alone at its own place with its own state on its own region's read (the Gram read: the quadratic form of its coefficients on its own second moments with the Gram of the sides after it), its realised port's integer coefficients written into the record's parts at the record's birth inside the run back along the record's light cone, the board run forward from the rewritten birth by Rule3 at one Link per interval, the next side reading the realised term where it stands; every click writes, the last side's read coherent. The tests: (a) the sides' weights equal the chain rule from the parts lines exactly at the four Bell settings in both pattern forms, E and S the law's numbers, the credit lines with their order and the record's scale; (b) the statistics over 48 seeds, the anticorrelation exact; (c) the books, the hole, the fronts and the observers' five passes; (d) a world without a record of several parts byte for byte; (e) the refusals by name; (f) the inverse's exactness in use and the back-in-time gate; (g) the one reach, the record's light cone, with the write at the birth seen in the frames; (h) the shipped GHZ world's three sides under the cone. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
-import json
 from dataclasses import replace
 from fractions import Fraction
 
@@ -10,10 +9,10 @@ import pytest
 from event_universe import meeting_back, world_files
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import Draw, body_draw_of, draw_of, ports_of, windowless_of
-from event_universe.world_files import input_digest, load_world
+from event_universe.loader.draw import ports_of
+from event_universe.world_files import load_world
 from tests.laws import BACK as GATE
-from tests.laws import EVENTS, family, refused, world_beside
+from tests.laws import EVENTS, family, world_beside
 from tests.laws import ROOT as TREE
 from tests.laws_spin import (
     BELL,
@@ -160,27 +159,6 @@ def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monke
     print(
         f"the books at the close: {books['spin']}; the credit lines {[(c['realised'], c['scale']) for c in credits]}"
     )
-
-
-def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
-    """(e) The refusals under the law of one Node: `meeting` and `reach` are no keys of the draw (there is one meeting, and the region the click runs back is the record's light cone, derived; ALGEBRA.md, The meeting's reading), so each meets the loader's ordinary refusal of an unknown key on the world's draw, on a body's node_detector with and without a window, and in a world file through the load; the draw admitted holds its window alone; the loader's own law of the patterns in tests/test_the_exchange_sign.py."""
-    draw = {"window": 40}
-    for key, word in (("meeting", "back"), ("meeting", "root"), ("reach", "cone"), ("reach", "board")):
-        refused(f"unknown key '{key}'", draw_of, {**draw, key: word}, "draw", True)
-        refused(f"unknown key '{key}'", draw_of, {**draw, key: word}, "bodies[0].node_detector")
-        refused(f"unknown key '{key}'", body_draw_of, {**draw, key: word}, "bodies[0].node_detector")
-        refused(f"unknown key '{key}'", windowless_of, {key: word}, "bodies[0].node_detector")
-    assert draw_of(draw, "draw", True) == draw_of(draw, "draw") == Draw(40)
-    sides = {"left": (BELL[0], IDENTITY), "right": (BELL[2], SINGLET)}
-    path = spin_world(tmp_path, monkeypatch, sides, both=True, amplitude=64)
-    world = json.loads(path.read_text(encoding="utf-8"))
-    world["draw"]["meeting"] = "back"
-    (keyed := tmp_path / "keyed.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = json.loads((tmp_path / "spin.mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (tmp_path / "keyed.mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    refused("unknown key 'meeting'", load_world, keyed)
-    assert load_world(path).draw == Draw(40)
 
 
 def test_the_run_back_and_forward_is_exact_in_the_act_and_the_gate_crosses_the_write(

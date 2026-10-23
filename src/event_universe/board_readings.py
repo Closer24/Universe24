@@ -120,7 +120,7 @@ def sense_fluxes(
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:
-    """The uniform mode of a held family's time line as the board holds it, a lattice reading and no act (ALGEBRA.md, The closed lattice has no rest; the world's the level form's uniform line): the level now and the level before summed over the Nodes in Python's integers, each divided once by the Nodes' count with its remainder kept beside (`UniformMode`: `level`, `level_remainder`, `before`, `before_remainder`, `nodes`), so that N x level + remainder is the sum exactly; the k = 0 component Rule3's own line carries at every Node (`held_write`), read here as one integer per held family, every family alike."""
+    """The uniform mode of a held family's time line as the board holds it, a lattice reading and no act (ALGEBRA.md, The closed lattice has no rest; The board's interval is no observable): the level now and the level before summed over the Nodes in Python's integers, each divided once by the Nodes' count with its remainder kept beside (`UniformMode`: `level`, `level_remainder`, `before`, `before_remainder`, `nodes`), so that N x level + remainder is the sum exactly; the k = 0 component Rule3's own line carries at every Node (`held_write`), read here as one integer per held family, every family alike."""
     line, nodes = board.states[index].lines[0], int(np.prod(board.shape))
     found = []
     for levels in (row_level(board, index, line.now), row_level(board, index, line.before)):

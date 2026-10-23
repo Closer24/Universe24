@@ -15,41 +15,13 @@ from event_universe.features.held_write import held_write
 from event_universe.features.start import arrivals, rest, scaled_source, without_uniform
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import refused
 from tests.laws_interval import (
     GAMMA,
     laid_torus,
     lockstep,
     one_number,
-    uniform_world,
-    universe_at_weight_one,
     volume_universe,
 )
-
-
-def test_every_wrapped_boards_interval_is_unobservable_and_the_former_keys_are_refused_by_name(
-    tmp_path, monkeypatch
-):
-    """(1) The declaration under the law of one Node (loader/interval.py `volume_rows`, `kicks_refused`; the owner's law of 2026-10-22 and his rule of 2026-10-23, no more keys in the code): a massless row's rest on a torus needs no key, the board loads and the row carries its time line as the volume's level, the vacuum's volume X(60) at rest, its write at the wall fixed per Node; the world's former keys `interval` and `uniform` and the held row's former keys `booking`, `factor` and `pressure` each meet the loader's ordinary refusal of an unknown key; a kick, a packet laid on a holder of the content, is refused by name (ALGEBRA.md, No write from outside Rule3 wakes either double root of the massless row). Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    volume_universe(tmp_path)
-    rest_volume = int(volume.volume_of(GAMMA, np.array(60)))
-    board = Lattice(load_world(laid_torus(tmp_path, "torus")))
-    g = [family.name for family in board.families].index("gravity")
-    assert board.world.periodic == (True, True, True) and board.families[g].motion_volume
-    assert g in board.fixed_walls  # the carried factor, the wall fixed per Node for the run
-    line = board.states[g].lines[0]
-    assert one_number(line.now) == one_number(line.before) == rest_volume
-    for key, word in (("interval", "unobservable"), ("uniform", "carried"), ("interval", "kept")):
-        refused(f"unknown key '{key}'", load_world, uniform_world(tmp_path, key, **{key: word}))
-    kick = [{"family": "gravity", "along": "x", "wave": [1, 3], "phase": [0, 1], "amplitude": 1}]
-    kicked = refused(
-        "lays a kick on 'gravity'", load_world, uniform_world(tmp_path, "kick", packets=kick)
-    )
-    assert "nobody's declaration" in str(kicked) and "the clause of 2026-10-22" in str(kicked)
-    for key, word in (("booking", "form"), ("factor", "carried"), ("pressure", "trace")):
-        universe_at_weight_one(tmp_path, gravity={key: word})
-        refused(f"unknown key '{key}'", load_world, uniform_world(tmp_path, key))
 
 
 def test_the_volumes_write_is_bit_for_bit_at_the_fixed_wall_and_the_level_reading_relaxes_to_the_constraint(

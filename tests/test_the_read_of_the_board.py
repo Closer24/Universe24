@@ -3,7 +3,6 @@
 import math
 import random
 from collections import Counter
-from dataclasses import fields
 
 import numpy as np
 import pytest
@@ -11,15 +10,14 @@ import pytest
 from event_universe import digits, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
-from event_universe.credit import Books
 from event_universe.features.click import bias_bound, drawn_from, read_number
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import DIGIT_ORDER, Draw, body_draw_of, draw_of, windowless_of
+from event_universe.loader.draw import DIGIT_ORDER
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, family, refused, world_beside
+from tests.laws import EVENTS, ROOT, family, world_beside
 from tests.laws_read import load_shipped
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
@@ -209,31 +207,6 @@ def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypat
     assert found == Counter({quantum: 260, 2 * quantum: 4}) and sum(found.values()) == 4 * 2 * 33
     rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
     assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
-
-
-def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_path):
-    """No generator: `seed`, `multiplier` and `increment` are unknown keys of the world's `draw` and of a body's `node_detector`, refused by name as every unknown key is; a body's `node_detector` is `{}` (its window derived or a probe's) or `{"window": n}` (`body_draw_of`, `windowless_of`, `Draw`); a window beside a probe refused; the world's `engine` key refused as unknown, the start file gone; the books keep no state and the number left of the read alone (`credit.Books.left`)."""
-    label = "bodies[0].node_detector"
-    generator = {"seed": 24, "multiplier": 6364136223846793005, "increment": 1442695040888963407}
-    refused("holds the unknown key 'increment'", draw_of, {"window": 40, **generator}, "draw", True)
-    refused("holds the unknown key 'seed'", body_draw_of, {"seed": 25}, label)
-    refused("holds the unknown key 'multiplier'", windowless_of, {"multiplier": 5}, label)
-    assert body_draw_of({}, label) == windowless_of({}, label) == Draw(None)
-    assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
-        {"window": 40}, "draw", True
-    ) == Draw(40)
-    refused("holds the unknown key 'reach'", draw_of, {"window": 40, "reach": "board"}, "draw", True)
-    assert not hasattr(Draw(None), "seed")
-    source = EVENTS / "bell_singlet" / "singlet_a_b.json"
-
-    def engine(world):  # type: ignore[no-untyped-def]
-        world["engine"] = "examples/events/engine_start.json"
-
-    refused(
-        "the world holds the unknown key 'engine'", load_world, world_beside(tmp_path, source, engine)
-    )
-    names = {f.name for f in fields(Books)}
-    assert "left" in names and not names & {"state", "states"}
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):

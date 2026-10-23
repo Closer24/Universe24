@@ -71,7 +71,7 @@ def board_of(
     integers: dict[str, Any],
     pair: tuple[int, int],
 ) -> Board:
-    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width; `free` the world's the volume form or the level form's uniform line, read by the loader's own doors (`interval_of`, `uniform_of`) so that a malformed key is refused by name before any lay."""
+    """The board of a record's pair from the world's shape and face rule and the universe's integers (Gamma, T, the width and the Link unit), the arrays' kind by the width, read by the loader's own doors so that a malformed key is refused by name before any lay."""
     width = int(integers["width"])
     return Board(
         shape,

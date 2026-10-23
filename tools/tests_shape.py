@@ -51,7 +51,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         43,
         "the same clause changing no shipped run: every held row of the content sourced by the tensions iff at [Gamma, Gamma] in "
         "examples/ and tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world stepped 100 intervals "
-        "bit for bit as under the old clause and the old start, whatever else the tree's step does",
+        "bit for bit as its stored digest, whatever else the tree's step does",
     ),
     "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
         45,
@@ -269,10 +269,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         50,
         "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
     ),
-    "tests/test_part_h_fix.py::test_the_emit_and_take_world_conserves_p_past_the_emitters_null_close": (
-        45,
-        "the engine V2 (Part H, MUST 1; #2122): the null window's re-lay keeps each Node's own direction through the close",
-    ),
     "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
         42,
         "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
@@ -281,13 +277,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         13,
         "the engine V2 (Part G, Task 5 (d); #2122): the reversal with the books as its own test, so that each half of "
         "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
-    ),
-    "tests/test_the_uniform_mode.py::test_every_wrapped_boards_interval_is_unobservable_and_the_former_keys_are_refused_by_name": (
-        60,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T1): the world's key `interval: "
-        "unobservable` and the level form's uniform line kept beside it, every refusal by name (the value, the sunk "
-        "face, the two keys together, the kick on the holder of the content, the row without the trace, the held "
-        "row's keys at a wrong word), the torus loading under either key and either factor, the volume at the start",
     ),
     "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
         36,
