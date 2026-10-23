@@ -1,6 +1,6 @@
-"""The eras' page, a page tool beside tools/look/page.py in its dark tokens (docs/ENGINE.md section 6; DESIGN section 4 (g)): one self-contained HTML page from the log tools/eras.py writes (`<world>.eras.jsonl`, one JSON line per interval after the header) and, where the folder holds them, the blind (`--blind <world>.blind.json`, its rows in a table and, under its optional key `course` as rows of `interval`, `U` and `velocity`, the model's course dashed beside the board's) and the notes (`--notes notes.md`, a Markdown text rendered as one prose section). The page draws, against the interval, U = level / Gamma and H = v / Gamma of the first held row of the content with the eras shaded as the board reads them (the family whose write's sum is largest at the interval sources the era, the crossing of two writes the transition); q_p from the slope of 1 / v over spans and nothing else (the estimator on the integers' staircase, d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the span picked on the page) with the blind's bands where the blind names them; the families' writes on a log axis; the constraint's residual R beside the tracker's 2 (n_eff - c) / (2 c - n_eff) at the Node-mean weight; the hill's weight's least, largest and Node-mean; the seed Node's share within one Link per family, the well's depth, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void)) (the wall observer's clock against the void's, a reading); the rulers at the far Node. The legend names what is an input (the pairs, the four integers, the seed's counts, light's amplitude) and what the board reads by itself (every curve), the hypotheses under which the course is nature's by name, the crawl once as the integers' end where the velocity falls below one level per interval (the floor, the crawl and the pulses one phenomenon), the coast as the reals' mean, the stop as the other booking's end under the rounded factor (named, not shown) and nature's late acceleration as MISSING. Every number on the page is the log's or the blind's; the page computes the floats named above and nothing of the law; the board's own frames are the look page's (`<world>.look.html` by tools/look/record.py and page.py), linked where it stands beside the page.
+"""The eras' page, a page tool beside tools/look/page.py in its dark tokens (docs/ENGINE.md section 6; DESIGN section 4 (g)): one self-contained HTML page from the log tools/eras.py writes (`<world>.eras.jsonl`, one JSON line per interval after the header) and, where the folder holds them, the blind (`--blind <world>.blind.json`, its rows in a table and, under its optional key `course` as rows of `interval`, `U` and `velocity`, the model's course dashed beside the board's) and the notes (`--notes notes.md`, a Markdown text rendered as one prose section), and the clicks log the same run kept (`--clicks <world>.clicks.jsonl`, tools/eras.py's second file: the detector's clicks drawn as their magnitude on a log axis, the quanta at the detector's Nodes with its time line, and the fifth act's fires where the eras log carries them; history kept one way, nothing run back). The page draws, against the interval, U = level / Gamma and H = v / Gamma of the first held row of the content with the eras shaded as the board reads them (the family whose write's sum is largest at the interval sources the era, the crossing of two writes the transition); q_p from the slope of 1 / v over spans and nothing else (the estimator on the integers' staircase, d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the span picked on the page) with the blind's bands where the blind names them; the families' writes on a log axis; the constraint's residual R beside the tracker's 2 (n_eff - c) / (2 c - n_eff) at the Node-mean weight; the hill's weight's least, largest and Node-mean; the seed Node's share within one Link per family, the well's depth, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void)) (the wall observer's clock against the void's, a reading); the rulers at the far Node. The legend names what is an input (the pairs, the four integers, the seed's counts, light's amplitude) and what the board reads by itself (every curve), the hypotheses under which the course is nature's by name, the crawl once as the integers' end where the velocity falls below one level per interval (the floor, the crawl and the pulses one phenomenon), the coast as the reals' mean, the stop as the other booking's end under the rounded factor (named, not shown) and nature's late acceleration as MISSING. Every number on the page is the log's or the blind's; the page computes the floats named above and nothing of the law; the board's own frames are the look page's (`<world>.look.html` by tools/look/record.py and page.py), linked where it stands beside the page.
 
-python tools/look/eras_page.py <world>.eras.jsonl [--blind <world>.blind.json] [--notes notes.md] [--span 50] [--out <world>.html]
+python tools/look/eras_page.py <world>.eras.jsonl [--blind <world>.blind.json] [--notes notes.md] [--clicks <world>.clicks.jsonl] [--span 50] [--out <world>.html]
 """
 
 from __future__ import annotations
@@ -58,6 +58,7 @@ td.num { font-family: var(--font-mono); }
 <script id="log" type="application/json">{{LOG}}</script>
 <script id="blind" type="application/json">{{BLIND}}</script>
 <script id="notes" type="application/json">{{NOTES}}</script>
+<script id="clicks" type="application/json">{{CLICKS}}</script>
 <script id="span" type="application/json">{{SPAN}}</script>
 <header>
   <h1 id="title"></h1>
@@ -82,12 +83,14 @@ td.num { font-family: var(--font-mono); }
   <section class="panel"><h2>The quanta over the board, per family (a log axis)</h2><div class="graph" id="quanta"></div></section>
   <section class="panel wide" id="legend-box"><h2>What is an input and what the board reads by itself</h2><div class="words" id="legend-words"></div></section>
   <section class="panel wide" id="blind-box" hidden><h2>The blind, written before the run</h2><div class="scroll" id="blind-table"></div></section>
+  <section class="panel wide" id="clicks-box" hidden><h2>The detector's clicks, history kept one way (the clicks log beside the eras log)</h2><div class="graph" id="detector-quanta"></div><div class="graph" id="detector-clicks"></div><div class="graph" id="fires"></div><div class="words" id="clicks-words"></div></section>
   <section class="panel wide" id="notes-box" hidden><h2 id="notes-heading">Notes</h2><div class="prose" id="notes"></div></section>
 </div>
 <script>
 const LOG = JSON.parse(document.getElementById('log').textContent);
 const BLIND = JSON.parse(document.getElementById('blind').textContent);
 const NOTES = JSON.parse(document.getElementById('notes').textContent);
+const CLICKS = JSON.parse(document.getElementById('clicks').textContent);
 let SPAN = JSON.parse(document.getElementById('span').textContent);
 const HEAD = LOG[0], LINES = LOG.slice(1).filter(l => l.rows), REFUSED = LOG.slice(1).find(l => l.refused);
 const GAMMA = HEAD.node_clock, ROW = HEAD.held[0];
@@ -196,6 +199,24 @@ function draw() {
     document.getElementById('blind-table').innerHTML = `<table><tr><th>reading</th><th>blind</th><th>status</th><th>fence</th><th>outcome</th></tr>${rowsOf.map(r => `<tr><td>${esc(r.reading || '')}</td><td class="num">${esc(typeof r.blind === 'object' ? JSON.stringify(r.blind) : (r.blind ?? ''))}</td><td>${esc(r.status || '')}</td><td>${esc(r.fence || '')}</td><td>${esc(r.outcome || '')}</td></tr>`).join('')}</table>`;
   }
   if (NOTES) renderNotes(NOTES);
+  if (CLICKS) drawClicks();
+}
+function drawClicks() {  // the clicks log's lines: the clicks per family (the net current into the region, its magnitude on a log axis), the detector lines (the quanta at its Nodes, the time line there) and the fires the eras log carries; nothing computed but the sums
+  document.getElementById('clicks-box').hidden = false;
+  const detectors = [...new Set(CLICKS.map(l => l.node_detector).filter(Boolean))];
+  const quantaOf = CLICKS.filter(l => l.event === 'detector');
+  const names = quantaOf.length ? Object.keys(quantaOf[0].quanta) : [];
+  const sum = a => Array.isArray(a) ? a.reduce((x, y) => x + y, 0) : null;
+  const perInterval = (lines, at) => { const m = new Map(lines.map(l => [l.interval, l])); return intervals.map(t => m.has(t) ? at(m.get(t)) : null); };
+  const quantaSeries = detectors.flatMap(d => names.map(f => ({name: `${f}'s quanta at ${d}'s Nodes`, values: perInterval(quantaOf.filter(l => l.node_detector === d), l => sum(l.quanta[f])), colour: colour(f)})));
+  graph(document.getElementById('detector-quanta'), 'the quanta at the detector\\'s Nodes per family (the record\\'s share there), with the detector\\'s own time line X / Gamma', quantaSeries.concat(detectors.map(d => ({name: `X / Gamma at ${d}, the mean of its Nodes`, values: perInterval(quantaOf.filter(l => l.node_detector === d), l => l.X ? sum(l.X) / l.X.length / GAMMA : null), colour: token('--field'), dashed: true}))), {marks: marks(), kind: 'the clicks log'});
+  const clicks = CLICKS.filter(l => l.event === 'click');
+  const clickSeries = detectors.flatMap(d => [...new Set(clicks.filter(l => l.node_detector === d).map(l => l.family))].map(f => ({name: `|click| of ${f} into ${d}`, values: perInterval(clicks.filter(l => l.node_detector === d && l.family === f), l => Math.abs(l.inflow)), colour: colour(f)})));
+  graph(document.getElementById('detector-clicks'), 'the clicks: the net current of each family into the detector through its front Ports each interval, its magnitude (log)', clickSeries, {log: true, marks: marks(), kind: 'NODEDETECTOR'});
+  const fires = LINES.map(l => l.fires === undefined ? null : l.fires);
+  if (fires.some(f => f)) graph(document.getElementById('fires'), 'the fifth act: the Nodes turned at their own top each interval (the swap at the top)', [{name: 'Nodes turned', values: fires, colour: token('--flash')}], {marks: marks()});
+  const counts = detectors.map(d => `${d}: ${clicks.filter(l => l.node_detector === d).length} clicks over ${intervals.length} intervals, the first at ${clicks.filter(l => l.node_detector === d).map(l => l.interval)[0]}`);
+  document.getElementById('clicks-words').innerHTML = `<b>History kept</b>: every click here was written as the run went and none is run back; the fires are the eras log's own reading of the fifth act. ${esc(counts.join('; '))}.`;
 }
 function renderNotes(text) {  // the notes: headings, paragraphs and lists, escaped, nothing computed
   const box = document.getElementById('notes'); box.innerHTML = ''; document.getElementById('notes-box').hidden = false;
@@ -219,9 +240,14 @@ draw();
 
 
 def page(
-    log: list[dict[str, Any]], blind: dict[str, Any] | None, notes: str | None, span: int, look: str
+    log: list[dict[str, Any]],
+    blind: dict[str, Any] | None,
+    notes: str | None,
+    span: int,
+    look: str,
+    clicks: list[dict[str, Any]] | None = None,
 ) -> str:
-    """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span and the look page's link (empty where none stands)."""
+    """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span, the look page's link (empty where none stands) and, where the run kept one, the clicks log's lines (tools/eras.py --clicks), drawn as one panel: the quanta at the detector's Nodes, the clicks' magnitude and the fifth act's fires."""
     if not log or not isinstance(log[0], dict) or "held" not in log[0] or not log[0]["held"]:
         raise ValueError(
             "the log's first line is tools/eras.py's header naming the held rows of the content"
@@ -236,6 +262,7 @@ def page(
         .replace("{{LOG}}", embed(log))
         .replace("{{BLIND}}", embed(blind))
         .replace("{{NOTES}}", embed(notes))
+        .replace("{{CLICKS}}", embed(clicks))
         .replace("{{SPAN}}", embed(span))
         .replace("{{LOOK}}", look)
     )
@@ -265,9 +292,16 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the look's file (<world>.look.json), its page linked beside",
     )
+    parser.add_argument(
+        "--clicks",
+        type=Path,
+        default=None,
+        help="the clicks log of the same run (<world>.clicks.jsonl), drawn as one panel",
+    )
     parser.add_argument("--out", type=Path, default=None, help="the page (<world>.html)")
     args = parser.parse_args(argv)
     log = read_log(args.log)
+    clicks = read_log(args.clicks) if args.clicks else None
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
     notes = args.notes.read_text(encoding="utf-8") if args.notes else None
     stem = args.log.name.removesuffix(".eras.jsonl")
@@ -279,7 +313,7 @@ def main(argv: list[str] | None = None) -> None:
         if args.log.with_name(f"{stem}.look.html").exists()
         else ""
     )
-    target.write_text(page(log, blind, notes, args.span, look), encoding="utf-8")
+    target.write_text(page(log, blind, notes, args.span, look, clicks), encoding="utf-8")
     print(
         json.dumps(
             {
