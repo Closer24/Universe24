@@ -24,7 +24,7 @@ from tests.laws_content import TWO_ATOMS, with_content
 AXES = "xyz"
 LENGTH, INTERVALS, LIFETIME = 64, 160, 16  # the chain, the run and the body's lifetime, below W = 33
 CHARGE = {"name": "charge", "pair": [6000, 6000], "reads": {}}  # the deuteron's holder of the sign
-CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1, "act": "pace"}
+CHARGE["held"] = {"sources": ["wronskian"], "level_weight": 1, "write_weight": 1}
 TURN = {"from": "g", "to": "e", "drive": "photon", "weight": 6, "resonance": [5414, 6000]}
 RATE = {"from": "e", "to": "g", "lifetime": LIFETIME, "gives_to": "photon"}
 SIGNED = ("momentum", "fan", "recoil")  # a click line's vectors signed per axis

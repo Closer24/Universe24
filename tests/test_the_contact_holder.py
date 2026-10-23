@@ -16,7 +16,6 @@ HELD = {
     "sources": ["wronskian"],
     "level_weight": 1,
     "write_weight": 96,
-    "act": "pace",
 }  # k_W 96: one quantum's Wronskian T / 2 over the wall T writes 48 levels per interval at the Node (a quarter of a level at k_W 1, stored 0 and dithered, ALGEBRA.md, The law's alpha is a coefficient of the file)
 WEAK = {"name": "weak", "pair": [0, 6000], "reads": {}, "held": HELD}  # the contact holder
 NEAR = {**WEAK, "name": "near", "pair": [6000, 6000]}  # the same row with the hop: Coulomb's rest

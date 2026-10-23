@@ -46,7 +46,6 @@ def board_of(tmp_path: Path) -> Lattice:
                     "sources": ["wronskian"],
                     "level_weight": 1,
                     "write_weight": K_W,
-                    "act": "rotation",
                 },
             },
             {"name": "electron", "pair": [NUM, DEN], "reads": {"charge": K_R}, "dimension": 2},
