@@ -119,7 +119,12 @@ def test_the_trials_coincidence_rows_are_every_record_alone_and_every_pair(tmp_p
     folder = (
         EVENTS / "resonance"
     )  # re-pinned 2026-10-20 from the anticoincidence folder: two records, no packet
+    from tests.laws_content import ZENO_ATOM, with_content
+
     path = world_beside(tmp_path, folder / "resonant.json", lambda world: None)
+    (tmp_path / "examples" / "events" / "zeno" / "zeno_atom.json").write_text(
+        json.dumps(with_content(ZENO_ATOM)), encoding="utf-8"
+    )  # the copy's universe with the content: the shipped resonant world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, the room 2^45.8 of the digits read below the absorption draw's total 2^53.9 on zeno_atom.json, which declares no content), so every trial ran refused and the rows read nothing; the copies carry every draw (2026-10-23)
     design = json.loads((folder / "design.json").read_text(encoding="utf-8"))
     design = {k: v for k, v in design.items() if k != "seeds"}
     design.update(knob="source", knob_values=[0, 1, 2], trial_intervals=48)  # three worlds
