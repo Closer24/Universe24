@@ -219,7 +219,7 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
         finally:
             world_files.REPOSITORY_ROOT = ROOT  # the shipped files read at their paths after
 
-    assert windows(shipped(resonant)) == [48, 96]
+    assert windows(shipped(resonant)) == [8, 8]  # the ring: the bodies' own beat, [2, 3] closing in 8 (2026-10-23)
 
     def ring(document):  # type: ignore[no-untyped-def]
         document["boundary"]["x"] = "periodic"
