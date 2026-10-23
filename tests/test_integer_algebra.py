@@ -307,12 +307,14 @@ def momentum(num, now, before):  # type: ignore[no-untyped-def]
 
 
 def test_the_conventions_tables_identities_hold_on_small_integers() -> None:
-    """Rows 5 to 8 of the conventions table (ALGEBRA.md, The conventions and the units) on small integers at the toy pair [2, 3]: (5) the momentum identity with the carried remainders, w [P_a(t+1) - P_a(t)] = R [G(i) - G(i-1)] - [delta_i Delta now_i - now_i Delta delta_i], delta = r - r', on a nine-Node ring, every Node of forty random states; (6) the Node's own tension on the axis wave [2, 0, -2, 0] is +4 x the weight at every Node and the Link's reading the mean of its two ends, their sum the Link's booking; (7) with the rounding the two-level form Q walks by SUM epsilon_i (next_i - before_i) and the three-level form E_3 by SUM [epsilon_i(t) next_i - epsilon_i(t+1) now_i], epsilon = (r - r') / w, exactly; (8) the weighted coefficients R_ij / p_i^2 are the same from both ends of a Link at different paces, D M symmetric."""
+    """Rows 5 to 8 of the conventions table (ALGEBRA.md, The conventions and the units) on small integers at the toy pair [2, 3]: (5) the momentum identity with the carried remainders, w [P_a(t+1) - P_a(t)] = R [G(i) - G(i-1)] - [delta_i Delta now_i - now_i Delta delta_i], delta = r - r', on a nine-Node ring, every Node of forty random states; (6) the Node's own tension on the axis wave [2, 0, -2, 0] is 0 and 16 x the weight by turns at the doubled wall (The stress is the Links', 2026-10-23), 16 x the weight on every Link as its two ends' sum, and the Link's reading of the tension lines the mean of its two ends; (7) with the rounding the two-level form Q walks by SUM epsilon_i (next_i - before_i) and the three-level form E_3 by SUM [epsilon_i(t) next_i - epsilon_i(t+1) now_i], epsilon = (r - r') / w, exactly; (8) the weighted coefficients R_ij / p_i^2 are the same from both ends of a Link at different paces, D M symmetric."""
     num, den, gamma, ring = 2, 3, 20, 9
     wave = [2, 0, -2, 0]
     for i in range(4):
         n = Neighbours(now=wave[i], ahead=wave[(i + 1) % 4], behind=wave[(i - 1) % 4])
-        assert tension(1, n) == 4 and tension(3, n) == 12
+        assert (
+            tension(1, n) == (0, 16)[i % 2] and tension(3, n) == (0, 48)[i % 2]
+        )  # 16 at the doubled wall on every Link
     assert (
         link_tension([(1, 4, 4)]) == 4
     )  # the mean of the two ends' parts, their sum 8 the Link's booking

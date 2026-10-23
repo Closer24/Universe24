@@ -232,3 +232,7 @@ seven passes, the write at the birth frames ("the parts scaled by (0, 0, 1, 1)" 
 1, 0, 1)" at the second, "nothing written" at the third), the count on the board, the cone shaded on
 the board and from above, and the gate's table with E_3 by the joint form beside the blind, every
 row MATCH.
+
+## The four worlds re-read under The stress is the Links' (2026-10-23)
+
+Under the law's reading of 2026-10-23 (ALGEBRA.md, The stress is the Links': the records' pressure read at their neighbours, so the tension lines, the Links' factors and the inflows the three readers see differ within one Link of the former reading's) the four worlds ran their 60 intervals with three clicks each at 60 as before; the realised triples, drawn on the board's digits, read left/right/top: ghz_x_x_x plus/minus/minus (the former plus/minus/minus), the triple's product +1 as the former's +1; ghz_x_y_y plus/plus/minus (the former plus/minus/plus), the triple's product -1 as the former's -1; ghz_y_x_y plus/minus/plus (the former minus/plus/plus), the triple's product -1 as the former's -1; ghz_y_y_x plus/minus/plus (the former minus/plus/plus), the triple's product -1 as the former's -1. The GHZ sign of every setting stands (the product +1 for x x x and -1 for the three others, M = -4); the one draw's realised triple moved on two worlds, as it moved at the one Node before (the former reading's triples kept by name here). The byte-for-byte digests of tests/test_the_two_term_ghz.py are the former reading's; their re-recording is named in FURTHER_RESEARCH.md where it did not land.

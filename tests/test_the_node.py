@@ -297,14 +297,23 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         expected = right - remainder * difference(now, a) + now * difference(remainder, a)
         assert np.array_equal(left, expected)
     stresses, now = readings.stresses_of(FAMILIES[MATTER].pair[0], [record], WRAP), record.now
-    by_hand_stress = [-4000 * (np.roll(now, 1, a) * np.roll(now, -1, a) - now * now) for a in range(3)]
+    by_hand_stress = [4000 * (np.roll(now, -1, a) - np.roll(now, 1, a)) ** 2 for a in range(3)]
     assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand_stress, strict=True))
-    four = np.array([2, 0, -2, 0]).reshape(4, 1, 1)  # the law's pattern: +4 per Node, +8 per Link
+    four = np.array([2, 0, -2, 0]).reshape(
+        4, 1, 1
+    )  # the law's pattern: 0, 16, 0, 16 per Node, 16 per Link
     part = readings.stresses_of(1, [records.Record(four, four, 0 * four)], WRAP)[0]
-    assert (part == 4).all() and (part + np.roll(part, -1, 0) == 8).all()
+    assert np.array_equal(part.reshape(-1), [0, 16, 0, 16]) and (part + np.roll(part, -1, 0) == 16).all()
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
     tension = readings.stresses_of(1, [records.Record(wave, wave, 0 * wave)], WRAP)
-    assert (tension[0] == 3 * 2000 * 2000 // 4).all() and not tension[1].any() and not tension[2].any()
+    assert (
+        int(tension[0].sum()) == 2 * (3 * 2000 * 2000 // 4) * wave.size
+    )  # the board sum the former's, doubled
+    assert (
+        set(np.unique(tension[0]).tolist()) == {0, 9_000_000}
+        and not tension[1].any()
+        and not tension[2].any()
+    )
     flat = [records.Record(0 * wave + 7, 0 * wave + 7, 0 * wave)]
     assert not any(t.any() for t in readings.stresses_of(1, flat, WRAP))
 

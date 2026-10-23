@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import AXES
+from event_universe.core.ports import AXES, SIDES
 from event_universe.core.rule3 import division_forward
 from event_universe.features import currents, phase, volume
 from event_universe.features.write import carried
@@ -229,7 +229,9 @@ def pressure_term(
             trace = trace + exact(stresses[source][axis]) * paces_object[axis] ** 2
         numerator = trace * paces_object[0] * paces_object[1] * paces_object[2]
         clock_object = exact(clock)
-        wall = AXES * AXES * family.pair[1] * gamma ** (2 + power) * clock_object ** (3 - power)
+        wall = (
+            SIDES * AXES * AXES * family.pair[1] * gamma ** (2 + power) * clock_object ** (3 - power)
+        )  # the stress parts at the doubled wall (The stress is the Links', 2026-10-23): 18 den Gamma^(2 + power) p_0^(3 - power)
         total = total + weight_of(held, family) * paces.rounded(numerator, wall)
     return total
 

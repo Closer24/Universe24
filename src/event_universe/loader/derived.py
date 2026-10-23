@@ -357,6 +357,8 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         multiple = int(division_forward(multiple * den, gcd(multiple, den), 0)[0])
     measure = action if family.rotation else 3 * multiple * action
     row = [family.level_weight * action] + [family.level_weight * measure] * (family.width - 1)
+    if family.axes:  # the tension lines: the centred difference squared over the doubled wall 2 E_s W_c (The stress is the Links', 2026-10-23)
+        row[1 : 1 + AXES] = [SIDES * family.level_weight * measure] * AXES
     if family.flux:  # the odd lines: the two Links' flux summed unhalved over twice the count's wall
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
