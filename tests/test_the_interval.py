@@ -323,12 +323,8 @@ def test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace_and_run_away_
         1
     ]  # the x tension line driven past Gamma by the test's own write, no lay
     board.states[g].lines[1] = replace(line, now=line.now + 2 * GAMMA)
-    beyond = refused("exceeds Gamma", board.step)
-    assert (
-        "below 0" in str(beyond)
-        and "guard's lower side" in str(beyond)
-        and "refused by name" in str(beyond)
-    )
+    board.step()  # the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Link at the wall is read at the wall, its factor 0, and the run goes on where the former reading refused it by name ("exceeds Gamma", the guard's lower side)
+    assert any(int(np.asarray(f).min()) == 0 for f in board.read(board.order[0])[1])
 
 
 def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit(

@@ -8,7 +8,7 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import covector, flux, node, reports
+from event_universe import covector, flux, meeting, node, reports
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
@@ -46,9 +46,23 @@ def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
             board.record(index),
             board.wrap,
             covector.weights(board.families[index]),
+            horizon=horizon_ports(board, index),
         )
         for index in board.order
     }
+
+
+def horizon_ports(board: Lattice, index: int) -> tuple[Any, ...] | None:
+    """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall) and which the world does not cut (`meeting.cut`, the declared cut Links keep their readings as written); None where no Link stands at the wall."""
+    factors = board.read(index)[1]
+    cuts = meeting.cut(board, index)
+    found = []
+    for port, factor in enumerate(factors):
+        at = np.asarray(np.asarray(factor) == 0)
+        if cuts is not None:
+            at = at & ~np.asarray(cuts[port], dtype=bool)
+        found.append(at)
+    return tuple(found) if any(bool(np.any(at)) for at in found) else None
 
 
 def turned_read(

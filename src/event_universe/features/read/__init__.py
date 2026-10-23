@@ -42,15 +42,9 @@ def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap, gamma: 
                 (weight, lines[axis], arrival(lines[axis], axis, side, wrap)) for weight, lines in axes
             ]
             found.append(link_tension(ends))
-    most = max(int(np.asarray(tension).max()) for tension in found)
-    if most > gamma:
-        raise ValueError(
-            f"a Link's tension {most} exceeds Gamma {gamma}: the Link's factor Gamma - t is below 0 and its pace below "
-            "0, the guard's lower side, beyond the law's domain (ALGEBRA.md #the-paces, The clock is the Node's, the "
-            "tension is the Link's; the tension lines' k = 0 mode run away on the wrapped board, the smokes of "
-            "2026-10-22): the run is refused by name at the read that carries it"
-        )
-    return tuple(found)
+    return tuple(
+        np.minimum(np.asarray(tension, dtype=object), gamma) for tension in found
+    )  # the horizon: a Link's tension at or past the wall Gamma is read at the wall, its factor Gamma - t at 0 (ALGEBRA.md, The horizon, the owner's word of 2026-10-23; the former reading refused the run by name at a tension above Gamma)
 
 
 def link_factors(gamma: int, unit: int, tensions: Sequence[Any]) -> tuple[Any, ...]:

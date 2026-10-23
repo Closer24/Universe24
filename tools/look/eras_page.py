@@ -169,6 +169,8 @@ function marks() {
   let tops = 0;
   for (const b of bangs()) found.push({at: b.at, name: b.kind === 'top' ? (++tops === 1 ? 'the top' : tops === 2 ? 'the second top' : `top ${tops}`) : 'the return', colour: token('--fg')});
   for (let i = 1; i < rows.length; i++) if (era(i) !== era(i - 1)) found.push({at: intervals[i], name: 'the crossing', colour: token('--fg')});
+  const horizon = LINES.findIndex(l => l.horizon > 0);
+  if (horizon >= 0) found.push({at: LINES[horizon].interval, name: 'the horizon', colour: token('--flash')});
   const crawl = rows.findIndex(r => r.velocity < 1);
   if (crawl >= 0) found.push({at: intervals[crawl], name: 'the crawl', colour: token('--flash')});
   if (REFUSED) found.push({at: REFUSED.interval, name: 'refused', colour: token('--flash')});
@@ -184,6 +186,8 @@ function draw() {
   graph(document.getElementById('course'), 'U and H x 100 against the interval, the eras shaded', series, {shades: shades(), marks: marks()});
   const q = spans(SPAN), bands = (BLIND && BLIND.q_p_bands) || [];
   graph(document.getElementById('deceleration'), `q_p from the slope of 1 / v over spans of ${SPAN} intervals`, [{name: 'q_p (the board)', values: q.map(s => s.q_p), xs: q.map(s => intervals[s.t]), colour: token('--fg')}, {name: 'n_eff (the board)', values: q.map(s => s.n_eff), xs: q.map(s => intervals[s.t]), colour: token('--muted'), dashed: true}], {xs: q.map(s => intervals[s.t]), shades: shades(), marks: marks(), bands: bands.map(b => ({low: b.low, high: b.high}))});
+  const horizon = LINES.findIndex(l => l.horizon > 0);
+  if (horizon >= 0) found.push({at: LINES[horizon].interval, name: 'the horizon', colour: token('--flash')});
   const crawl = rows.findIndex(r => r.velocity < 1);
   const words = [`the eras by the largest write: ${shades().map(s => `${s.name} from ${s.from} to ${s.to}`).join('; ')}.`];
   words.push(crawl >= 0 ? `<b>The crawl</b> from the interval ${intervals[crawl]} (the velocity below one level per interval; the floor, the crawl and the pulses 0 to 1 to 0 at the mean rate s Gamma / n one phenomenon): the integers' end; the coast is the reals' mean.` : 'No crawl within the run: the velocity stayed at or above one level per interval.');

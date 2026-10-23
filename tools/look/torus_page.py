@@ -76,6 +76,7 @@ const [nx, ny, nz] = COURSE.shape, N = nx * ny * nz;
 const index = (x, y, z) => (x * ny + y) * nz + z;
 const FAMILIES = NODES.length ? Object.keys(NODES[0].quanta) : [];
 const FORWARD = token('--field'), TURNED = token('--flash'), LINK = token('--muted'), MARK = token('--light');
+const HORIZON = token('--flash');  // the Links at the wall, the horizon (ALGEBRA.md, The horizon)
 const tones = token('--click-tones').split(',').map(s => s.trim());
 const familyColour = name => tones[(FAMILIES.indexOf(name) + 1) % tones.length];
 document.getElementById('title').textContent = `${COURSE.world.replace('.json', '').replace(/_/g, ' ')}: the torus, interval by interval`;
@@ -117,6 +118,9 @@ function draw() {
       body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${LINK}" stroke-width="${w.toFixed(2)}" opacity="0.55"><title>Link length e^U ${len.toFixed(3)}</title></line>`;
     }
   }
+  for (const [i, j] of line.horizon || []) {  // a Link at the wall: the horizon, drawn broken in the flash colour over the plain Link
+    body += `<line x1="${sx(pos[i]).toFixed(1)}" y1="${sy(pos[i]).toFixed(1)}" x2="${sx(pos[j]).toFixed(1)}" y2="${sy(pos[j]).toFixed(1)}" stroke="${HORIZON}" stroke-width="2.6" stroke-dasharray="5 4"><title>a Link at the wall: the horizon (its factor 0, its two ends decoupled)</title></line>`;
+  }
   const order = [...Array(N).keys()].sort((a, b) => pos[a][2] - pos[b][2]);
   for (const i of order) {
     const content = FAMILIES.reduce((s, f) => s + Math.abs(line.quanta[f][i]), 0);
@@ -128,10 +132,11 @@ function draw() {
   document.getElementById('torus').innerHTML = body;
   const cursor = document.getElementById('cursor'); if (cursor) { const first = NODES[0].interval, last = NODES[NODES.length - 1].interval, x = 12 + (line.interval - first) / Math.max(1, last - first) * 976; cursor.setAttribute('x1', x.toFixed(1)); cursor.setAttribute('x2', x.toFixed(1)); }
   const row = COURSE.rows[t] || {};
-  document.getElementById('where').textContent = `interval ${line.interval}: U ${row.U === undefined ? '' : row.U.toFixed(4)}, the mean Link e^U ${meanL.toFixed(3)}, ${line.turned.length} Nodes turned this interval, ${line.direction.filter(d => d < 0).length} with time turned`;
+  document.getElementById('where').textContent = `interval ${line.interval}: U ${row.U === undefined ? '' : row.U.toFixed(4)}, the mean Link e^U ${meanL.toFixed(3)}, ${(line.horizon || []).length} Links at the wall (the horizon), ${line.turned.length} Nodes turned this interval, ${line.direction.filter(d => d < 0).length} with time turned`;
 }
 function legend() {
   const marks = [`<span><i style="background:${FORWARD}"></i>time forward</span>`, `<span><i style="background:${TURNED}"></i>time turned (the swap at the top)</span>`, `<span><i class="line" style="border-color:${LINK}"></i>a Link drawn at its length e^U = (X / Gamma)^(1 / 4), the frame the run's largest lattice, so the stretch to the top and the shrink back are seen; its width the length against the mean</span>`];
+  if (NODES.some(l => (l.horizon || []).length)) marks.push(`<span><i class="line" style="border-color:${HORIZON};border-top-style:dashed"></i>a Link at the wall: the horizon</span>`);
   for (const f of [...new Set(BODIES.filter(b => b.nodes.length <= 8).map(b => b.family))]) marks.push(`<span><i style="background:transparent;border:2.5px solid ${familyColour(f)}"></i>a body of ${esc(f)}</span>`);
   document.getElementById('legend').innerHTML = marks.join('');
   const tops = COURSE.bangs.map(b => `${b.kind} at ${b.at} (U ${b.U.toFixed(3)})`).join(', ');
@@ -358,6 +363,9 @@ def stages_of(
     rows = course["rows"]
     for bang in course["bangs"]:
         marks.append({"word": bang["kind"], "at": bang["at"]})
+    horizon = next((n["interval"] for n in nodes if n.get("horizon")), None)
+    if horizon is not None:  # the first interval a Link stands at the wall (ALGEBRA.md, The horizon)
+        marks.append({"word": "horizon", "at": horizon})
         if bang["kind"] == "top":
             after = next(
                 (

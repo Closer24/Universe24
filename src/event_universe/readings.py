@@ -68,8 +68,9 @@ def currents_of(
     weights: Sequence[int] | None = None,
     turned: Turned | None = None,
     frames: Sequence[Any] | None = None,
+    horizon: Sequence[Any] | None = None,
 ) -> tuple[np.ndarray, ...]:
-    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights); `turned`, the pairs a turned record's step reads with the unit of its booking (`Turned`, None for a plain record, whose currents are bit for bit the plain bilinear's): the record's currents are then the flux line's own with the Link's pair (`turned_currents_of`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), since the plain bilinear of a turned pair turns at the difference of the two Nodes' angles, the gauge's oscillation of zero mean, and books nothing; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`), None every Port at +1."""
+    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights); `turned`, the pairs a turned record's step reads with the unit of its booking (`Turned`, None for a plain record, whose currents are bit for bit the plain bilinear's): the record's currents are then the flux line's own with the Link's pair (`turned_currents_of`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), since the plain bilinear of a turned pair turns at the difference of the two Nodes' angles, the gauge's oscillation of zero mean, and books nothing; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`), None every Port at +1; `horizon`, per Port the mask of the Links at the wall (board_readings.horizon_ports), through which the current reads 0 as the step moves nothing across them (ALGEBRA.md, The horizon, 2026-10-23), None no such Link."""
     if turned is not None:
         assert weights is None  # a turned record is a charged plane and no holder
         return turned_currents_of(lines, wrap, turned)
@@ -82,6 +83,8 @@ def currents_of(
         for port in range(6):
             there = currents.Levels(now[port], before[port])
             found[port] = found[port] + currents.current(weight * scale, here, there)
+    if horizon is not None:  # a Link at the wall reads nothing: its current 0 (ALGEBRA.md, The horizon)
+        found = [np.where(at, 0, value) for at, value in zip(horizon, found, strict=True)]
     return tuple(np.asarray(value) for value in found)
 
 
