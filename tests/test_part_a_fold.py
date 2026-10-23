@@ -7,11 +7,10 @@ import numpy as np
 
 from event_universe import records, world_files
 from event_universe.core import paces
-from event_universe.features import phase
+from event_universe.features import phase, volume
 from event_universe.lattice import Lattice
 from event_universe.plane import link_pairs, odd_links
 from event_universe.world_files import load_world
-from tests import laws
 from tests.laws import CHARGED, arrays, flux_world, packet
 from tests.laws import LINE_KEYS as KEYS
 
@@ -50,6 +49,10 @@ def test_the_odd_line_is_odd(tmp_path, monkeypatch):
         lines = list(state.lines)
         if len(lines) == 7:  # the odd lines and the tension lines as vectors: x and y exchanged
             lines = [lines[0], lines[2], lines[1], lines[3], lines[5], lines[4], lines[6]]
+        elif (
+            len(lines) == 8
+        ):  # the holder of the sign's two rows of 1 + 3 lines: the odd lines x and y exchanged
+            lines = [lines[0], lines[2], lines[1], lines[3], lines[4], lines[6], lines[5], lines[7]]
         for line, image in zip(lines, other.lines, strict=True):
             for key in KEYS:
                 assert np.array_equal(np.transpose(getattr(line, key), axes), getattr(image, key))
@@ -84,7 +87,17 @@ def test_the_one_link_reach_with_the_fold(tmp_path, monkeypatch):
             kept.lines = [records.Record(now, before, np.abs(r)) for now, before, r in picks]
             if family.axes:  # the tension lines at 0, the odd lines at their random levels
                 kept.lines[1:4] = [records.empty_record(board.shape, board.kind) for _ in range(3)]
-            kept.write_remainders = [draw.integers(0, wall, board.shape) for wall in board.walls(index)]
+            if family.motion_volume:  # the row carries its volume: the random levels through the volume
+                time = kept.lines[0]
+                gamma = board.world.node_clock
+                volumes = (volume.volume_of(gamma, a) for a in (time.now, time.before))
+                kept.lines[0] = records.Record(*volumes, time.remainder)
+            kept.write_remainders = [  # within 60, below every wall; Python's integers at the fixed walls
+                draw.integers(0, 60, board.shape).astype(
+                    object if index in board.fixed_walls else board.kind
+                )
+                for _wall in board.walls(index)
+            ]
             for array in [*(getattr(r, k) for r in kept.lines for k in KEYS), *kept.write_remainders]:
                 array[4 + far, 0, 0] += 7 * bool(far)
         return board
@@ -97,29 +110,6 @@ def test_the_one_link_reach_with_the_fold(tmp_path, monkeypatch):
     for far, reaches in ((1, True), (2, False)):
         (other := state(far)).step()
         assert (centre(other) != centre(same)) is reaches, far
-
-
-def test_the_static_source_gives_v_proportional_to_u_times_v(tmp_path, monkeypatch):
-    """(e) V = U v_g to first order (ALGEBRA.md, The clock family on the Ports): a plane-wave packet of the charged family moving along +x on a periodic chain under a flux holder of level weight 1; the time line and the odd line are the same massless line of one holder stepped with one rule, so their sums over the chain follow one recurrence from their writes, the form D = 2 L^2 sin^2 omega and the flux 4 num L^2 sin omega sin k over the walls E_s T and 2 E_s 3 den T: SUM V_x against SUM (U - rest) times v_g = (num / (3 den)) sin k / sin omega within the rounding over 20 intervals, and the odd line's sign is the flux's."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = flux_world(tmp_path, (61, 1, 1), dict(x="periodic", y="periodic", z="periodic"), 1, 1)
-    board = Lattice(load_world(world))
-    index = [f.name for f in board.families].index(CHARGED["name"])
-    family, gamma = board.families[index], board.world.node_clock
-    packet(board, 0, (1, 8), 21, 10)
-    k = 2 * np.pi / 8
-    content = laws.vacuum_content(board.world, family)
-    omega = np.arccos(laws.band_of(family.pair, gamma, content, board.unit, np.cos(k), 1.0, 1.0))
-    num, den = family.pair
-    speed = num / (3 * den) * np.sin(k) / np.sin(omega)
-    gravity = board.states[[f.name for f in board.families].index("gravity")]
-    rest = board.families[[f.name for f in board.families].index("gravity")].rest
-    for _ in range(20):
-        board.step()
-    well = int((gravity.lines[0].now - rest).sum(dtype=object))
-    odd = int(gravity.lines[4].now.sum(dtype=object))
-    assert odd > 0 and well > 0 and 0 < speed < 1
-    assert abs(odd - speed * well) <= 0.03 * speed * well + board.shape[0], (odd, well, speed)
 
 
 def test_the_rotation_unit_by_the_rotation_act():

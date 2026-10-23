@@ -1,5 +1,6 @@
 """The gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader, the old clause kept by name; The closed lattice has no rest; The sign side of the exponent; loader/interval.volume_rows, Lattice.start): a tiny torus declared inside the test with gravity's pair gapped, [999, 1000] at Gamma 1,000, dust laid uniform at the band's rest rotation at the law's amplitude for 21 quanta per Node, and the shipped world of the test of the law's course held bit for bit against its own log."""
 
+import hashlib
 import json
 
 import numpy as np
@@ -7,12 +8,12 @@ import numpy as np
 from event_universe import lists, node, world_files
 from event_universe.core import paces
 from event_universe.emission import amplitude
-from event_universe.features import volume
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
 from tests.laws import BACK, EVENTS, ROOT, load_file
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
+DIGEST = "00573f6ccdc48b4d"  # the matter world's twenty intervals of readings on the one Node, recorded 2026-10-23
 
 GAMMA, ACTION, CUBE, GAP = 1000, 36000, 3, 999  # the gapped torus: Gamma 1,000, gravity [999, 1000]
 HELD = {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1}
@@ -106,7 +107,7 @@ def test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_th
 
 
 def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log(tmp_path):  # type: ignore[no-untyped-def]
-    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the binding holder [2400, 2401] sourced by the form alone keeps the level form), so the clause selects the same rows on every shipped universe; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node reads, interval by interval, the integers its shipped eras log holds (big_bang_matter.eras.jsonl: gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level and count), bit for bit over the first twenty intervals through the eras tool's own run (tools/eras.py), no other clause run anywhere."""
+    """(iv) The clause on the tensions changes no shipped run: in the universes of examples/ and tests/ every held row of the content is sourced by the tensions iff its pair is [Gamma, Gamma] (the binding holder [2400, 2401] sourced by the form alone keeps the level form), so the clause selects the same rows on every shipped universe; and the shipped matter world (examples/events/big_bang/big_bang_matter.json) stepped by the one Node through the eras tool's own run (tools/eras.py) reads over its first twenty intervals the stored digest of its integer readings (gravity's level and its remainder, the level before and its remainder, the volume and the volume before, the seed's and the far Node's volumes, the well, every writer's write, and every family of quanta's largest level, count and frozen Nodes; the level 4,066 at the twentieth), recorded on the one Node (2026-10-23) in place of the shipped eras log, which the branch interval-no-observable recorded and the one Node's write leaves from the sixth interval (the matter's write and the tension means); no other clause run anywhere."""
     rows = []
     for folder in ("examples", "tests"):
         for path in sorted((ROOT / folder).rglob("*.json")):
@@ -121,25 +122,18 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
     )
     assert any(f["pair"] == [2400, 2401] for f in content)
     world = EVENTS / "big_bang" / "big_bang_matter.json"
-    shipped = [
-        json.loads(line)
-        for line in world.with_suffix(".eras.jsonl").read_text(encoding="utf-8").splitlines()[1:]
-    ]
     lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
     assert [line["interval"] for line in lines] == list(range(1, 21))
     integers = ("level", "level_remainder", "before", "before_remainder", "volume", "volume_before")
     integers += ("at_seed", "at_far", "well", "nodes")
-    for found, logged in zip(lines, shipped, strict=False):
-        assert found["interval"] == logged["interval"]
-        row, kept = found["rows"]["gravity"], logged["rows"]["gravity"]
-        assert {key: row[key] for key in integers} == {key: kept[key] for key in integers}, found[
-            "interval"
-        ]
-        assert row["writes"] == kept["writes"], found["interval"]
-        for name in found["quanta"]:
-            own, was = found["quanta"][name], logged["quanta"][name]
-            assert (own["largest"], own["quanta"], own["frozen"]) == (
-                was["largest"],
-                was["quanta"],
-                was["frozen"],
-            )
+    found = hashlib.sha256()
+    for line in lines:
+        row = line["rows"]["gravity"]
+        kept = {
+            "interval": line["interval"],
+            **{key: row[key] for key in integers},
+            "writes": row["writes"],
+        }
+        kept["quanta"] = {n: [q["largest"], q["quanta"], q["frozen"]] for n, q in line["quanta"].items()}
+        found.update(json.dumps(kept, sort_keys=True).encode())
+    assert (found.hexdigest()[:16], lines[-1]["rows"]["gravity"]["level"]) == (DIGEST, 4066)

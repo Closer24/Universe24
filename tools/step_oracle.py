@@ -118,15 +118,22 @@ def oracle_step_family(index, families, states, rule, wrap, direction, record, f
     own = state.lines[span]
     faced: Mapping[int, Faces] = dict(faces or {})
     if not family.plane:
+        traced = (
+            family.axes and not family.wronskian
+        )  # a holder of the content's tension lines: the shear's momentum, the lattice's step
         found = [
             oracle_step(
                 line,
                 rule,
                 wrap,
                 direction,
-                family.rest if number == 0 else 0,
+                (family.fill or family.rest)
+                if number == 0
+                else 0,  # the rest's volume beyond a face where the row carries it
                 faced.get(number, NO_FACE),
             )
+            if not (traced and 1 <= number - span.start <= AXES)
+            else line
             for number, line in enumerate(own, span.start)
         ]
         return found, ((own, found) if direction == 1 else (found, own))
@@ -190,7 +197,7 @@ def oracle_interval(board: Lattice) -> None:
         state.lines = lines
     board.report(currents, weighed, forms, begun)
     for index in board.held:
-        board.held_write(index, forms, turns, 1, stresses, senses, rulers)
+        board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
     if credit.counted_windows(board):
         meeting.closed(board)
     meeting.jumped(board)
@@ -223,10 +230,8 @@ def digest(board: Lattice) -> str:
     for label, value in arrays(board):
         h.update(label.encode())
         h.update(
-            repr(value.tolist()).encode()
-            if value.dtype == object
-            else np.ascontiguousarray(value).tobytes()
-        )
+            repr(np.asarray(value, dtype=object).tolist()).encode()
+        )  # the values, whatever the arrays' kind
     return h.hexdigest()
 
 

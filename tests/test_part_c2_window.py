@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import resonance
-from event_universe.features import phase
+from event_universe.features import phase, volume
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import folds
 from event_universe.world_files import load_world
@@ -129,8 +129,12 @@ def test_the_two_slits_hop_no_label_and_stand_bit_for_bit_on_the_oracle(tmp_path
                 flat[recorded["at"]] = recorded["values"]
             else:
                 flat = np.array(recorded, dtype=object).reshape(-1)
-            assert np.array_equal(flat.reshape(board.shape), board.states[index].lines[0].now), interval
-            digest.update(board.states[index].lines[0].now.tobytes())
+            now = (
+                board.states[index].lines[0].now
+            )  # a held row's time line read as its level where it carries its volume
+            found = volume.levels_read(board.world.node_clock, now, family.motion_volume)
+            assert np.array_equal(flat.reshape(board.shape), found), interval
+            digest.update(np.asarray(found, dtype=np.int64).tobytes())
         board.step()
     print(
         f"the two slits bit for bit the oracle over 20 intervals; the levels' digest {digest.hexdigest()[:16]}; {time.perf_counter() - started:.1f} s"

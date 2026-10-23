@@ -17,11 +17,14 @@ UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen_read3.json"  # the 
 CUBE, WINDOW, WINDOWS = 5, 4, 3
 HUNDREDTH = 100  # the walk's bound: the booked inflow per window below one count's hundredth
 PLAIN_PINS = (  # the node detector test's chain, four intervals: the six Port sums over the board of
-    # `board_readings.currents` and the region's intake after the step (main 74cafb5d1's numbers)
+    # `board_readings.currents` and the region's intake after the step; re-pinned under the law of one Node
+    # (2026-10-23): the lay's currents stand, and from the second interval the gravity row's one write (the
+    # form's own clock, the carried factor, the trace) moves the light's paces, so the sums move in their
+    # sixth digit and the region's intake with them
     ([-7246344000, 7246344000, 0, 0, 0, 0], 0),
-    ([-7236372000, 7236372000, 0, 0, 0, 0], 0),
-    ([-7229028000, 7229028000, 0, 0, 0, 0], 2268672000),
-    ([-7223886000, 7223886000, 0, 0, 0, 0], 25021440000),
+    ([-7236402000, 7236402000, 0, 0, 0, 0], 0),
+    ([-7227342000, 7227342000, 0, 0, 0, 0], 2305536000),
+    ([-7231734000, 7231734000, 0, 0, 0, 0], 24543744000),
 )
 
 

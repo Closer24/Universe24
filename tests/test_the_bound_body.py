@@ -202,12 +202,13 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     scales = [
         c // w for c, w in zip(carried, write.walls, strict=True)
     ]  # the factor's wall per Node over the interval's wall
-    assert (
-        np.array_equal(sources[4], TURNING[CHARGE].write * sign[own] * scales[4])
-        and not sources[6].any()
-    )
+    whole = [
+        np.asarray(a, dtype=object) for a in (sign[own], flux[0])
+    ]  # Python's integers: the carried wall passes 63 bits
+    assert np.array_equal(sources[4], TURNING[CHARGE].write * whole[0] * scales[4])
+    assert not sources[6].any()
     assert np.array_equal(
-        sources[5], TURNING[CHARGE].write * flux[0] * scales[5]
+        sources[5], TURNING[CHARGE].write * whole[1] * scales[5]
     )  # k_w x w x J_x at w = 1, unhalved, at the carried wall
     held = records.empty_state(TURNING[CHARGE], SHAPE, carried, object)
     lines, remainders = node.held_write_at(held.lines, sources, carried, held.write_remainders)
@@ -229,14 +230,14 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert turns(TURNING, CHARGED) and not turns(TURNING, MATTER)
     assert CHARGE not in [read.family for read in TURNING[MATTER].reads]
     assert held_write_of(TURNING, NAMES.index("gravity"), T).walls[1] == 1000 * 3 * PAIR[1] * T
-    rows["charge"]["held"]["act"] = "pace"
-    assert ((paced := universe_of(universe)[1][CHARGE]).lines, paced.rotation) == (2, False)
-    rows["charge"]["held"]["act"] = "sideways"
-    refused("act is one of", universe_of, universe)
-    rows["gravity"]["held"]["act"], rows["charge"]["held"]["act"] = "rotation", "pace"
-    refused("a holder of the content, sourced by the form", universe_of, universe)
+    rows["charge"]["held"]["act"] = (
+        "pace"  # the former act key: the one Node refuses it as any unknown key
+    )
+    refused("unknown key 'act'", universe_of, universe)
     for gate in (json.loads((EVENTS / f"{n}.json").read_bytes()) for n in ("light", "pair")):
-        assert all(row["held"]["act"] == "pace" for row in gate["families"] if "held" in row)  # stated
+        assert all(
+            "act" not in row["held"] for row in gate["families"] if "held" in row
+        )  # content alone
 
 
 def test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte(tmp_path):

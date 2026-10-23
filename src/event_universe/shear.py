@@ -38,7 +38,7 @@ def written(
     direction: int,
     begun: list[list[records.Record]] | None,
 ) -> tuple[list[records.Record], list[np.ndarray]]:
-    """The held write of a row carrying the shear's momentum, in the direction's order: forward the time line's write, the tension lines' step (`stepped`, reading the time line after its step and write), the tension lines' write; backward the tension lines' write back and the time line's write back, the tension lines' step back left to `inverted` after the time line's step back (node.held_write_at on each part with its own numerators, walls and remainders)."""
+    """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The held write of a row carrying the shear's momentum, in the direction's order: forward the time line's write, the tension lines' step (`stepped`, reading the time line after its step and write), the tension lines' write; backward the tension lines' write back and the time line's write back, the tension lines' step back left to `inverted` after the time line's step back (node.held_write_at on each part with its own numerators, walls and remainders)."""
     family, state = board.families[index], board.states[index]
     if not carried(family):  # a row without the shear's momentum: the one write of every line at once
         return node.held_write_at(state.lines, numerators, walls, state.write_remainders, direction)
@@ -64,7 +64,7 @@ def written(
 
 
 def stepped(board: Lattice, index: int, direction: int, begun: list[list[records.Record]]) -> None:
-    """The three tension lines of one held row stepped as the shear's momentum (flux.step_momentum): the rule of the row's own read at the interval's start (`begun`, the lines the direction starts from), the Node's own three volumes in the direction, forward (X_before, X_now, X_next) with X_next the time line after its step and its write, backward (X_next, X_now, X_before) with X_before the time line's inverse's output (the reversibility hand's Theorem 1: every numerator a function of the post-state in that order), the faces the click act presents and the Links the world cuts."""
+    """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The three tension lines of one held row stepped as the shear's momentum (flux.step_momentum): the rule of the row's own read at the interval's start (`begun`, the lines the direction starts from), the Node's own three volumes in the direction, forward (X_before, X_now, X_next) with X_next the time line after its step and its write, backward (X_next, X_now, X_before) with X_before the time line's inverse's output (the reversibility hand's Theorem 1: every numerator a function of the post-state in that order), the faces the click act presents and the Links the world cuts."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     started = [replace(s, lines=lines) for s, lines in zip(board.states, begun, strict=True)]
     faces, cuts = take.faces_presented(board, index), meeting.cut(board, index)
@@ -93,12 +93,13 @@ def inverted(board: Lattice, ended: list[list[records.Record]]) -> None:
     for index in board.held:
         if carried(board.families[index]):
             stepped(board, index, -1, ended)
-            for line in board.states[index].lines:
-                board.bounded(board.families[index].name, line)
+            family = board.families[index]
+            for number, line in enumerate(board.states[index].lines):
+                board.bounded(family.name, line, number == 0 and family.motion_volume)
 
 
 def born(board: Lattice, family: Any, lines: list[records.Record]) -> None:
-    """The tension lines' remainders born at half the volume's wall, 3 w X_0 (half of 3 w (X_0 + X_0)), Python's integers, X_0 the time line's volume at the start."""
+    """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The tension lines' remainders born at half the volume's wall, 3 w X_0 (half of 3 w (X_0 + X_0)), Python's integers, X_0 the time line's volume at the start."""
     if carried(family):
         half = (
             3 * wall_of(family.pair[1], board.world.node_clock, board.unit) * records.exact(lines[0].now)

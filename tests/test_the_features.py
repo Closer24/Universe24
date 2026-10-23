@@ -182,14 +182,19 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         numerators, walls, _weight = records.write_sources(
             held, families, forms, {}, writes[held], rulers, GAMMA
         )
-        scaled, scale = records.rulers_write_factor(forms[reader, 0], rulers[reader, 0], GAMMA, 2, True)
+        power = families[held].power  # one power on every booking: the form's own clock
+        assert power == 1
+        scaled, scale = records.rulers_write_factor(
+            forms[reader, 0], rulers[reader, 0], GAMMA, power, True
+        )
         by_hand = weights * scaled  # the carried factor: the product over the factor's wall at the Node
         assert len(numerators) == 1 and np.array_equal(numerators[0], by_hand) and (by_hand < 0).any()
         assert np.array_equal(walls[0], writes[held].walls[0] * scale)
         before, wall = states[held].lines[0], walls[0]
         remainder = [draw.integers(0, int(np.min(wall)), SHAPE)]
         (after,), (kept,) = node.held_write_at([before], numerators, [wall], remainder)
-        increment, left = np.divmod(by_hand + remainder[0], wall)
+        total = np.asarray(by_hand + remainder[0], dtype=object)  # Python's integers at the fixed wall
+        increment, left = total // wall, total % wall
         assert np.array_equal(after.now, before.now + increment) and np.array_equal(kept, left)
         (back,), (origin,) = node.held_write_at([after], numerators, [wall], [kept], -1)
         assert np.array_equal(back.now, before.now) and np.array_equal(origin, remainder[0])
@@ -344,7 +349,7 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         Fraction(GAMMA**2 * (GAMMA + under_the_hill), GAMMA**3)
     )  # one power: the factor q_max itself
     under_the_rooms = isqrt((largest - wall) // (room * tension))
-    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 359, 113_339)
+    assert (under_the_hill, tension, under_the_rooms) == (2_147_483, 216, 146_117)
     assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
     assert derived.amplitude_bound(families, GAMMA, 64, 63) == under_the_rooms < under_the_hill
     two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]

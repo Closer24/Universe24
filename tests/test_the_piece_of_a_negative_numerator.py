@@ -92,8 +92,11 @@ WORLD = {
 }
 PIECE, FAN = (
     -42370,
-    -73186,
-)  # the chain's piece along x at the right region's close and the fan's P_x; the piece re-pinned under the law of one Node (2026-10-23: the gravity row's form, the form's own clock, the carried factor and the trace, moves the record's paces, so the packet's p_x at the close moves by 2 percent; the fan's P_x unchanged)
+    -77974,
+)  # the chain's piece along x at the right region's close and the fan's P_x; both re-pinned under the law of one Node (2026-10-23: the gravity row's form, the form's own clock, the carried factor and the trace, moves the record's paces, so the packet's momentum at the close moves by percent; the record's unit W_rec stands)
+ARITHMETIC = (
+    -43250
+)  # the piece of the hand-written passage below by `piece_momentum`'s arithmetic alone, no world's close
 
 
 def chain_world(folder: Path) -> Path:
@@ -128,7 +131,7 @@ def test_the_guard_is_on_the_share_alone_and_the_sign_is_nums(tmp_path, monkeypa
     neutron, electron, proton = (names.index(n) for n in ("neutron", "electron", "proton"))
     units = board.credit.units
     passage = Passage([2118926400, 0, -2118926400], 3612117122)  # the chain's right region's sums
-    assert piece_momentum(board, neutron, passage) == [PIECE, 0, -PIECE]
+    assert piece_momentum(board, neutron, passage) == [ARITHMETIC, 0, -ARITHMETIC]
     expected = (2 * 2118926400 * units[electron] + 4000 * 3612117122) // (2 * 4000 * 3612117122)
     assert piece_momentum(board, electron, passage) == [expected, 0, -expected] and expected > 0
     assert piece_momentum(board, neutron, Passage([2118926400, 0, 0], 0)) == [0, 0, 0]

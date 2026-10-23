@@ -255,7 +255,9 @@ def test_the_interval_on_a_closed_cube_conserves_the_count_keeps_the_48_returns(
         board.step()
         laid = int(board.books()[board.families[body].name]["quanta"])
         reads = [r.family for r in board.families[body].reads]
-        assert len(states[1].lines) == 1 + bool(turn) and (CHARGE in reads) == bool(turn)
+        assert len(states[1].lines) == 4 * (1 + bool(turn)) and (CHARGE in reads) == bool(
+            turn
+        )  # the sign's rows, 1 + 3 lines each
         away = np.ones(board.shape, dtype=bool)
         away[CHAIN // 2 - 8 : CHAIN // 2 + 8], born, moved = False, 0, 0
         for _ in range(23):
