@@ -366,3 +366,5 @@ close), the right side at 124 reads plus; born_a_prime_b_prime (124 intervals, 5
 window's close), the left side at 62 reads minus, the body 0 at 85, g to g (no draw, every digit at
 the lay's origin, the emission at the window's close), the body 0 at 110, g to g (no draw, every
 digit at the lay's origin, the emission at the window's close), the right side at 124 reads plus.
+
+The window derived (the windows hand, 2026-10-23; the law's reading on the owner's decision of 2026-10-23, ALGEBRA.md, The click writes on the lattice, C2): the singlet four declare no window since 2026-10-23; derived 30 (the spin packets' passage over a side of 4 Nodes) against the former 40, the whole run; the born four derived 24 (the atom's emission at the lifetime 24, the source in time's own span) against the former 62; the clicks re-recorded from the re-runs (the clicks table of the windows hand), the former closes the reading of the declared windows.
