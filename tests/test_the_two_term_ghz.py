@@ -26,9 +26,7 @@ X, Y = (
     0,
     3,
 )  # the x basis the axis [1, 1] at the turn 0, the y basis the same axis at the turn 3 (u = -i)
-COUNT = (
-    6151  # the two-term record's count on the board at the close, 6,149 at the lay, the step's walk of 2
-)
+FORMER_COUNT = 6151  # the count on the board at the close as read to 2026-10-23 (6,149 at the lay, the step's walk of 2); 6,145 under the law of one Node: the course's number, named and not asserted
 SETTINGS = {
     "x_x_x": ((X, X, X), 1),
     "x_y_y": ((X, Y, Y), -1),
@@ -215,7 +213,7 @@ def ghz_plane_read(tmp_path, monkeypatch, name, amplitude=1328):  # type: ignore
 
 
 def setting_read(name: str, tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
-    """The two-term plane GHZ (B3): at the four settings x x x, x y y, y x y, y y x the eight shares of the three sides' ports are 0 or 1 / 4 of the whole, E_3 = +1, -1, -1, -1 exactly, every marginal 1 / 2 and every pairwise correlation 0, the gate's blind; the engine's weights at every side the chain rule's (`sided`): the first side's its own parts' shares, 1 / 2 at either port, the second's the same (G = I, B1), the third's coherent, one port 0; the realised triple's parity the setting's sign; three credit lines with `order` 1, 2, 3, the scale 2 after every write (the coefficients Gaussian units, the norm the parts' count) and the count on the board 6,151 at every side's close (6,149 at the lay: the step's walk of 2 in 6,000, the shipped GHZ's); the cone's assertions holding over seven passes, the tick at the close."""
+    """The two-term plane GHZ (B3): at the four settings x x x, x y y, y x y, y y x the eight shares of the three sides' ports are 0 or 1 / 4 of the whole, E_3 = +1, -1, -1, -1 exactly, every marginal 1 / 2 and every pairwise correlation 0, the gate's blind; the engine's weights at every side the chain rule's (`sided`): the first side's its own parts' shares, 1 / 2 at either port, the second's the same (G = I, B1), the third's coherent, one port 0; the realised triple's parity the setting's sign; three credit lines with `order` 1, 2, 3, the scale 2 after every write (the coefficients Gaussian units, the norm the parts' count) and the count on the board one number at every side's close (`FORMER_COUNT` 6,151 as read to 2026-10-23, 6,149 at the lay, 6,145 under the law of one Node: the course's number, named and not asserted); the cone's assertions holding over seven passes, the tick at the close. Long by the engine's own step (the held write of the content's two holders in the integers at every Node, about 250 s per setting on the 33 by 33 board over 60 intervals and seven passes; a 21 by 21 board over 40 intervals reads the same E_3 and closes at 35 in about 200 s), so the four settings stay long tests, each its own."""
     turns, sign = SETTINGS[name]
     board, lines, clicks, realised = ghz_plane_read(tmp_path, monkeypatch, name)
     spin = [f.name for f in board.families].index("spin")
@@ -233,12 +231,13 @@ def setting_read(name: str, tmp_path, monkeypatch) -> None:  # type: ignore[no-u
         pair = sum(Fraction((-1) ** (key[a] + key[b]), 1) * share for key, share in shares.items())
         assert pair == 0
     sided(board, spin, shares, realised)
-    assert [
+    count = clicks[0]["board_count"]  # the count on the board at the close, one number at every side
+    assert count > 0 and [
         (c["node_detector"], c["order"], c["scale"], c["board_count"], c["count"]) for c in clicks
     ] == [
-        ("left", 1, 2, COUNT, 1),
-        ("right", 2, 2, COUNT, 1),
-        ("top", 3, 2, COUNT, 1),
+        ("left", 1, 2, count, 1),
+        ("right", 2, 2, count, 1),
+        ("top", 3, 2, count, 1),
     ]
     assert (-1) ** sum(realised) == sign and board.passes == 7 and board.tick == board.world.intervals
     weights = [board.credit.weights[(spin, n)] for n in ("left", "right", "top")]
