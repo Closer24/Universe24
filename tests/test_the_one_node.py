@@ -387,7 +387,7 @@ def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
     assert found == STEPS, found
 
 
-RUN_NODES = 12_000  # the boards the start settles within the suite's bound on the house's clock (a 25-cube's start about 15 s, a 33-cube's about 100 s)
+RUN_NODES = 2_500  # the boards the start settles within the suite's time at load (the 54 worlds' sweep 154 s on the house's clock at RUN_NODES 12,000 and about 580 s on a loaded machine; a 25-cube's start about 15 s, a 33-cube's about 100 s)
 
 
 def shipped_worlds() -> list[Path]:
