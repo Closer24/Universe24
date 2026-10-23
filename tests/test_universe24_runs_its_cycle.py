@@ -35,9 +35,20 @@ ABSORBER = [
     2,
     2,
 ]  # the click variant's instrument body, the clicks world's absorber reading the light
+SECOND = [0, 2, 0]  # the second instrument of the many-clicks clause, two Links from the first
+RESONANCES = (
+    810,
+    868,
+)  # the two instruments' resonance pairs over Gamma, their derived beats 11 and 13 (period_of)
+BEFORE_TOP, AFTER_TOP = (
+    2,
+    1,
+)  # the two instruments' clicks on the small structured board, before and after its top, as read
 
 
-def small_world(folder: Path, detector: bool = True, absorber: bool = False) -> Path:
+def small_world(
+    folder: Path, detector: bool = True, absorber: bool = False, resonances: tuple[int, ...] = (902,)
+) -> Path:
     """The shipped universe's three families with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), and the detector on two Nodes."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"][0]["pair"] = [GAP, GAMMA]
@@ -59,17 +70,19 @@ def small_world(folder: Path, detector: bool = True, absorber: bool = False) -> 
                 "nodes": [
                     {"node": at, "count": 1}
                     for at in nodes
-                    if at != CLUMP and not (absorber and at == ABSORBER)
+                    if at != CLUMP and not (absorber and at in (ABSORBER, SECOND)[: len(resonances)])
                 ],
             },
         ],
         "node_detectors": [{"name": "detector", "positions": DETECTOR}] if detector else [],
     }
-    if absorber:  # declared as examples/events/universe24/universe24_click.json declares it
-        world["bodies"].append(
+    for at, resonance in zip((ABSORBER, SECOND), resonances, strict=False) if absorber else ():
+        world[
+            "bodies"
+        ].append(  # declared as examples/events/universe24/universe24_click.json declares it
             {
                 "family": "absorber",
-                "nodes": [{"node": ABSORBER, "weight": 1}],
+                "nodes": [{"node": at, "weight": 1}],
                 "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
                 "transitions": [
                     {
@@ -77,7 +90,7 @@ def small_world(folder: Path, detector: bool = True, absorber: bool = False) -> 
                         "to": "e",
                         "drive": "light",
                         "weight": [23, 2],
-                        "resonance": [902, GAMMA],
+                        "resonance": [resonance, GAMMA],
                     }
                 ],
                 "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "light"}],
@@ -301,3 +314,31 @@ def test_the_click_parts_the_course_at_its_first_write_and_the_run_back_reaches_
     assert credits == sorted(
         credits
     )  # the clicks kept in the books' history, their intervals never decreasing
+
+
+def test_two_instruments_clicks_counted_by_stage_on_the_small_world(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """(10) The many-clicks reading on the small structured board (the owner's rule: every test of the law's course on a structured board): two instrument bodies at [2, 2, 2] and [0, 2, 0] with the resonances [810, 1000] and [868, 1000], their derived beats 11 and 13 (distinct beats, the two draws on distinct intervals but their common multiples), the course stepped to the interval 70 (the clump's top near 40, the crunch past 77): the clicks written (a transition realised at a window's close) counted by stage, before the board's top and after it, read and not assumed and asserted as read; the clicks are history kept, their intervals never decreasing, and both instruments click."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    lines: list[dict[str, object]] = []
+    board = Lattice(
+        load_world(small_world(tmp_path, detector=False, absorber=True, resonances=RESONANCES)),
+        output=lines.append,
+    )
+    g = board.held[0]
+    volumes = []
+    for _ in range(70):
+        board.step()
+        volumes.append(sum(flat(board.states[g].lines[0].now)))
+    top = volumes.index(max(volumes)) + 1
+    assert 20 < top < 50, top
+    written = [
+        (int(line["interval"]), str(line["node_detector"]), str(line["realised"]))  # type: ignore[call-overload]
+        for line in lines
+        if line.get("event") == "credit" and line.get("before") != line.get("realised")
+    ]
+    assert written and [w[0] for w in written] == sorted(w[0] for w in written)  # history kept, one way
+    assert len({w[1] for w in written}) == 2, written  # both instruments click
+    before, after = [w for w in written if w[0] <= top], [w for w in written if w[0] > top]
+    assert (len(before), len(after)) == (BEFORE_TOP, AFTER_TOP), (written, top)  # the counts as read
