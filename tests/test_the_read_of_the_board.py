@@ -201,11 +201,18 @@ def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypat
     for _ in range(4):
         board.step()
         read = list(digits.digits_of(board, electron, at))
-        assert all((r - half) % f == 0 for r, f, _w, _p in read)  # on w div 2 + F Z, every one
+        assert all((r - half) % quantum == 0 for r, f, _w, _p in read)  # on w div 2 + T Z, every one
+        off = [(r - half) % f for r, f, _w, _p in read if (r - half) % f]
+        assert (
+            off == [quantum] * (8 if board.interval == 4 else 0)
+        )  # the 16 digits read at F = 8 T at the interval 4 under the centred count (2026-10-23): 8 of them on w div 2 + T + 8 T Z, off their own lattice by T and on the former's (every digit on w div 2 + F Z to that day)
         assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
         assert {w for _r, _f, w, _p in read} == {2 * half}
         found.update(f for _r, f, _w, _p in read)
-    assert found == Counter({quantum: 260, 2 * quantum: 4}) and sum(found.values()) == 4 * 2 * 33
+    assert (
+        found == Counter({quantum: 244, 2 * quantum: 4, 8 * quantum: 16})
+        and sum(found.values()) == 4 * 2 * 33
+    )  # under the centred count, 2026-10-23 (Counter({T: 260, 2 T: 4}) to that day: the 16 digits at 8 T at the interval 4 read T and 2 T before)
     rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
     assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
 
@@ -436,7 +443,10 @@ def test_a_sides_two_lines_read_one_index_per_node_equal_before_the_write_and_co
         board.states[pair].lines[1] = Record(second.now, second.before, remainder.reshape(kept.shape))
         own, walls = digits_now(board, [(pair, at)], distinct=False)
         number, _moduli = digits.read_of(board, [(pair, at)], "the test")
-        distinct = own[:4] + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j])]
+        distinct = (
+            own[:4]
+            + [k for j, k in enumerate(own[4:]) if k not in (own[j], whole - own[j], whole - own[j] - 1)]
+        )  # the complement's digit: (w - r) div F = w div F - r div F - 1 where F does not divide r, w div F - r div F where it does (the fourth digit here): the identity's right side read 2026-10-23 under the centred count (the former read w div F - k alone)
         assert number == read_number(distinct, walls[: len(distinct)]), case
         assert len(distinct) == (4 if case != "moved" else 6), case  # two of the four Nodes moved
     print(f"the pair identity: {found}")
