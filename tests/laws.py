@@ -479,7 +479,10 @@ def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
         parts = [line for line in lines if line["event"] == "parts"]
         equal = all(len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR" for p in parts)
         credits = [line for line in lines if line["event"] == "credit"]
-        assert parts and equal and credits and all(c["interval"] == c["window"][1] for c in credits)
+        assert parts and equal and credits
+        assert all(c["interval"] == c["window"][1] for c in credits), [
+            (c["interval"], c["window"]) for c in credits
+        ]
         board = Lattice(load_world(folder / f"{name}.json"))
         assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
         worlds[key] = GATE.one_world(folder / f"{name}.json", lines, expected)
