@@ -1,6 +1,6 @@
 # Universe24, the one universe on the torus: its stages read from the logs (2026-10-23)
 
-Every number below is the log's (`universe24.eras.jsonl`, `universe24.clicks.jsonl`) or the engine's own reading of the same run at the marked intervals; the board's volume in the log is the sum of X over the 125 Nodes, X at the seed 1,000 at every Node (the volume 125,000). No number of nature is typed into the world.
+The click variant of this world, one instrument body at the far Node writing its click, has its own page beside this one, `universe24_click.html`, with its notes `notes_click.md` (the clicks' spacing by stage and what the click changes). Every number below is the log's (`universe24.eras.jsonl`, `universe24.clicks.jsonl`) or the engine's own reading of the same run at the marked intervals; the board's volume in the log is the sum of X over the 125 Nodes, X at the seed 1,000 at every Node (the volume 125,000). No number of nature is typed into the world.
 
 ## 1. The bang
 

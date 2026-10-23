@@ -30,10 +30,21 @@ DETECTOR = [
 ]  # the smallest region the law admits: through one Node what enters leaves
 
 
-def small_world(folder: Path, detector: bool = True) -> Path:
+ABSORBER = [
+    2,
+    2,
+    2,
+]  # the click variant's instrument body, the clicks world's absorber reading the light
+
+
+def small_world(folder: Path, detector: bool = True, absorber: bool = False) -> Path:
     """The shipped universe's three families with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), and the detector on two Nodes."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     universe["families"][0]["pair"] = [GAP, GAMMA]
+    if absorber:
+        universe["families"].append(
+            {"name": "absorber", "pair": [666, GAMMA], "reads": {"gravity": 1}, "dimension": [2, 2]}
+        )
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     nodes = [[x, y, z] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
     world: dict[str, Any] = {
@@ -43,10 +54,36 @@ def small_world(folder: Path, detector: bool = True) -> Path:
         "universe": "u.json",
         "bodies": [
             {"family": "matter", "nodes": [{"node": CLUMP, "count": COUNT}]},
-            {"family": "light", "nodes": [{"node": at, "count": 1} for at in nodes if at != CLUMP]},
+            {
+                "family": "light",
+                "nodes": [
+                    {"node": at, "count": 1}
+                    for at in nodes
+                    if at != CLUMP and not (absorber and at == ABSORBER)
+                ],
+            },
         ],
         "node_detectors": [{"name": "detector", "positions": DETECTOR}] if detector else [],
     }
+    if absorber:  # declared as examples/events/universe24/universe24_click.json declares it
+        world["bodies"].append(
+            {
+                "family": "absorber",
+                "nodes": [{"node": ABSORBER, "weight": 1}],
+                "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
+                "transitions": [
+                    {
+                        "from": "g",
+                        "to": "e",
+                        "drive": "light",
+                        "weight": [23, 2],
+                        "resonance": [902, GAMMA],
+                    }
+                ],
+                "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "light"}],
+                "node_detector": {"window": 12},
+            }
+        )
     at = nodes.index(CLUMP)
     now, before = [0] * len(nodes), [0] * len(nodes)
     now[at], before[at] = NOW, BEFORE
@@ -211,3 +248,43 @@ def test_the_shipped_eras_log_opens_with_the_shipped_worlds_own_readings() -> No
         assert json.loads(json.dumps(found)) == stamped, line[
             "interval"
         ]  # (6) the log is the world's own
+
+
+def test_the_click_parts_the_course_at_its_first_write_and_the_run_back_reaches_it(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """(9) The click variant on the small world: the same world with one instrument body at one Node reading the light (the clicks world's absorber, its window 12), stepped beside the world without it for 36 intervals: the two courses part BEFORE the first click, at the interval 3, since the instrument is content, one quantum of the absorber family at one Node whose form writes into the time line as every record's does, and the clicks are written on the lattice at the windows' closes 12, 24 and 36 (the credit lines and their lays), each the one act from outside the Node that the inverse does not undo; the run back from the end is exact at every state down to the last click's interval and misses first at the state before it, the click's write the one act the inverse does not undo (the loop's act from outside the Node, forward only; ALGEBRA.md, The click's read of the board)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    plain = Lattice(load_world(small_world(tmp_path, detector=False)))
+    plain.output = lambda line: None
+    (tmp_path / "click").mkdir()
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path / "click")
+    lines: list[dict[str, object]] = []
+    clicking = Lattice(
+        load_world(small_world(tmp_path / "click", detector=False, absorber=True)), output=lines.append
+    )
+    end, states, first = 36, {}, None
+    for t in range(1, end + 1):
+        plain.step()
+        clicking.step()
+        states[t] = board_state(clicking)
+        plain_state = board_state(plain)
+        alike = all(
+            same_state([a], [b]) for a, b in zip(states[t][: len(plain_state)], plain_state, strict=True)
+        )  # the shared families' lines, the absorber's own left out
+        if not alike and first is None:
+            first = t
+    credits = [int(line["interval"]) for line in lines if line.get("event") == "credit"]  # type: ignore[call-overload]
+    assert credits and all(c % 12 == 0 for c in credits), credits  # the clicks at the windows' closes
+    assert first is not None and first < credits[0], (
+        first,
+        credits,
+    )  # the instrument is content: its one quantum's write parts the courses before any click (the interval 3 here), and the first click is written at 12
+    back, miss = 0, None
+    for k in range(end):
+        clicking.step_inverse()
+        if same_state(board_state(clicking), states[end - 1 - k]) if end - 1 - k >= 1 else True:
+            back += 1
+        elif miss is None:
+            miss = end - 1 - k
+    assert miss == credits[-1] - 1 and back >= end - credits[-1], (miss, back, credits)
