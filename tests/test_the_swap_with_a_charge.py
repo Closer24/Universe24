@@ -1,101 +1,12 @@
 """The swap at the top on a world with a holder of the sign under the rotation (ALGEBRA.md, The swap at the top, the phase clause; The turn per proper interval, the centred count; the phase hand's derivation M23 on the owner's decision of 2026-10-23): the Node's phase row Phi a Rule3 record whose write is the clocked potential, the Link's count K_ij = K_i - K_j the two ends' difference of K = Phi_next - Phi_before (twice the trapezoid sum to the triple's centre), the pair at the half angle. At a turned Node the swap exchanges the phase row's two levels and conjugates the plane record, and the centred count reads -K: the fall's pairs are the rise's conjugates and the run back of the planes is exact. The universe is declared inside the test: a gapped 3-cube torus (Gamma 1,000, gravity's pair [990, 1000] so that the top comes within 50 intervals, dust at 21 quanta per Node laid as test_the_swap_at_the_top lays it) with the charge holder under the rotation (level weight 100) read by a charged plane [600, 1000] of two records at two Nodes laid at a third of the one quantum's profile (the gate off; so that the counts stay in the tens and the fires' carry of the pairs at the Links between a turned and an unturned Node, about 2 |K| acts each, stays cheap, node.phase_counts), which carry no dust (the loader admits one body per Node): a structured board, whose void Nodes turn at their pinned rest first and whose board turns at the top. Clauses: (1) the forward run through the top fires at the board's Nodes with no refusal; (2) at every Link whose both ends turned at the top, the count after the fall's first act is the negative of the count the undone step read and the pair's lines are that step's bit for bit (the conjugate under the read); (3) the run back from the run's end to interval 0 is exact at every interval through the split top's two fire intervals (44 and 45) and the void's at 1, the whole state's digest equal, phase lines, pairs and frames included, the inverse firing where the forward run fired (the Link reads its two ends in one frame, the frame the phase row's remainder at the wall 2: the bijection hand's derivation M25, ALGEBRA.md, The swap at the top, the frame clause; the former reading of a mixed Link, -K_i - K_j with the neighbour's value read in its own frame, was inexact at the unturned neighbours of a split top); (4) a flat charged world ([Gamma, Gamma]) never fires, its phase course is live (counts move) and is the same under a second run bit for bit; (5) a deliberately split charged board, the dust's amplitude 869 on the layer x = 0 and 400 on the two others, tops over four intervals (34 to 37, 1, 8, 9 and 9 Nodes, the void's rest at 1 and 2), and its run back to interval 0 is exact at every interval, every fire mirrored. The former reading (to 2026-10-23, the left-sum count moved at the step's start) had no image under the act and a top on such a world was refused by name; the test's numbers are the centred reading's."""
 
-import json
-import math
-
 import numpy as np
 
 from event_universe import world_files
-from event_universe.core import paces
 from event_universe.core.ports import AXES
 from event_universe.lattice import Lattice
-from event_universe.world_files import input_digest, load_world
-
-GAMMA, ACTION, CUBE, NUM = 1000, 36000, 3, 600
-GAP, LAY = (
-    GAMMA - 10,
-    3,
-)  # gravity's pair [990, 1000], the top within 50 intervals; the charged lay over 3, the counts in the tens
-SINE = math.isqrt(GAMMA * GAMMA - NUM * NUM)  # 800: the charged pair's sine times den
-CENTRES = [(0, 0, 0), (1, 1, 1)]
-
-
-def charged_world(folder, gap, count, amplitude, intervals=400, weight=100, divisor=1, layers=None):  # type: ignore[no-untyped-def]
-    """The gapped 3-cube torus with two one-quantum charged records (the count-1 gate's lay, tests/laws.sign_world), the dust everywhere else; `layers`, the dust's amplitude per layer x in place of `amplitude` (the deliberately split board of clause (5))."""
-    universe = {
-        "integers": {"node_clock": GAMMA, "quantum_action": ACTION, "width": 92, "link_unit": 16},
-        "families": [
-            {
-                "name": "gravity",
-                "pair": [gap, GAMMA],
-                "reads": {"gravity": 1},
-                "held": {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1},
-            },
-            {"name": "dust", "pair": [0, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
-            {
-                "name": "charge",
-                "pair": [GAMMA, GAMMA],
-                "reads": {"gravity": 1},
-                "held": {"sources": ["wronskian"], "level_weight": weight},
-            },
-            {
-                "name": "charged",
-                "pair": [NUM, GAMMA],
-                "reads": {"gravity": 1, "charge": 1},
-                "dimension": 2,
-            },
-        ],
-    }
-    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    shape = (CUBE,) * 3
-    nodes = [
-        [x, y, z]
-        for x in range(CUBE)
-        for y in range(CUBE)
-        for z in range(CUBE)
-        if (x, y, z) not in CENTRES
-    ]
-    world = {"shape": [CUBE] * 3, "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"}}
-    world.update(intervals=intervals, universe="u.json", node_detectors=[])
-    bodies = [{"family": "dust", "nodes": [{"node": at, "count": count} for at in nodes]}]
-    clock = paces.clock(GAMMA, 0)
-    amplitudes = [
-        (amplitude if layers is None else layers[x]) if (x, y, z) not in CENTRES else 0
-        for x in range(CUBE)
-        for y in range(CUBE)
-        for z in range(CUBE)
-    ]
-    modes = [
-        {
-            "family": "dust",
-            "pair": [0, GAMMA],
-            "moving": {
-                "now": amplitudes,
-                "before": [
-                    (2 * (GAMMA**3 - GAMMA * clock * clock) * a + GAMMA**3) // (2 * GAMMA**3) if a else 0
-                    for a in amplitudes
-                ],
-            },
-        }
-    ]
-    for centre in CENTRES:
-        d = np.abs(np.indices(shape) - np.asarray(centre).reshape(3, 1, 1, 1)).sum(axis=0)
-        profile = np.select([d == 0, d == 1], [1200, 600], 0)
-        values = [int(v) for v in profile.ravel()]
-        scale = math.isqrt(ACTION * GAMMA * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
-        levels = [v * scale // (1000 * divisor) for v in values]  # the one quantum's lay over `divisor`
-        moving = dict(now=levels, before=[v * NUM // GAMMA for v in levels])
-        moving.update(im_now=[0] * len(levels), im_before=[v * SINE // GAMMA for v in levels])
-        bodies.append({"family": "charged", "nodes": [{"node": list(centre), "count": 1}]})
-        modes.append({"family": "charged", "pair": [NUM, GAMMA], "moving": moving})
-    world["bodies"] = bodies
-    path = folder / "charged_swap.json"
-    path.write_text(json.dumps(world), encoding="utf-8")
-    path.with_suffix(".mode.json").write_text(
-        json.dumps({"world_digest": input_digest(world), "bodies": modes, "packets": []}),
-        encoding="utf-8",
-    )
-    return path
+from event_universe.world_files import load_world
+from tests.laws_charged import CUBE, GAMMA, GAP, LAY, charged_world
 
 
 def digest(board):  # type: ignore[no-untyped-def]

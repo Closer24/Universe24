@@ -7,7 +7,7 @@ from event_universe.core.ports import AXES, arrival
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import row_of
 from event_universe.world_files import load_world
-from tests.test_the_swap_with_a_charge import GAP, LAY, charged_world
+from tests.laws_charged import GAP, LAY, charged_world
 
 
 def test_a_turned_records_current_across_a_mixed_link_is_one_number_in_one_frame(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
