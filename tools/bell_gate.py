@@ -270,6 +270,13 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
     loaded = load_world(world)
     family = next(f for f in loaded.families if f.name == expected["family"])
     window = (int(expected["window"][0]), int(expected["window"][1]))
+    closes = [
+        int(str(line["interval"]))
+        for line in lines
+        if line.get("event") == "credit" and line.get("family") == expected["family"]
+    ]
+    if closes:  # the window derived (2026-10-23): the sides' first close ends the reading, as the engine's credit lines report it, where the design's window was the run
+        window = (window[0], min(window[1], min(closes)))
     labels = list(expected["sides"])
     rows = [
         next(d for d in loaded.node_detectors if d.name == expected["sides"][label]) for label in labels
