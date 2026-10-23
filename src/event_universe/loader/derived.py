@@ -272,14 +272,15 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
             )
             for other in readers
         }  # the reads of the content alone: the holder of the sign turns its readers and enters no pace
-        if len(reads) > 1:
+        if len(reads) > 1 and not any(not families[r.family].rotation for r in family.reads):
             raise ValueError(
-                f"{family.name!r} declares the carried factor and its sources read the content at differing "
-                f"weights, {[(families[o].name, families[o].declared) for o in readers]}: the carried factor's "
-                "one wall per Node is the sources' shared clock's, E_s T times the factor's wall at the Node, and "
-                "the one remainder per held line carries them where they share it (ALGEBRA.md, The write per "
-                "proper volume and per proper interval, the clause of 2026-10-22); declare a rounded factor or "
-                "read alike"
+                f"{family.name!r} reads no content and its sources read the content at differing weights, "
+                f"{[(families[o].name, families[o].declared) for o in readers]}: a held row's write is scaled at "
+                "the row's own paces where the row reads the content (ALGEBRA.md, The one Node, the clause of "
+                "2026-10-23), and a row that reads none, a holder of the sign, writes its sources per the Node's "
+                "proper volume as the content gives it, one wall per line at its sources' shared paces (The write "
+                "per proper volume and per proper interval, the clause of 2026-10-22); let the row read the "
+                "content, or let its sources read alike"
             )
 
 

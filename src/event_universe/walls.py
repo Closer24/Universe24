@@ -24,7 +24,10 @@ def vacuum_walls(board: Lattice, index: int) -> list[int]:
     """A held row's fixed walls at a Node with no level, one integer per line: the walls per Node of the carried factor (`records.walls_at`) at the rulers every source reads at the rest, the clock from the content of the holders it reads at their rests (the fill beyond a face, the level the volume's reading gives the rest's volume) and the pace along every axis the Node's pace under no tension; the walls a layer grown beyond a receding face is born with (growth.resize), the same the start gives every Node standing at the rest."""
     gamma = board.world.node_clock
     rulers: Rulers = {}
-    for source in sources_of(board.families, board.order):
+    rows = [
+        (index, row) for row in range(board.families[index].records)
+    ]  # the row's own paces at its reads' rests (records.wall_rulers)
+    for source in [*sources_of(board.families, board.order), *rows]:
         reads = [r for r in board.families[source[0]].reads if not board.families[r.family].rotation]
         if not reads:
             rulers[source] = (gamma, (gamma, gamma, gamma))

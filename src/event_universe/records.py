@@ -101,9 +101,22 @@ def well(booking: Any, action: int) -> np.ndarray:
 def rulers_write_factor(
     count: Any, rulers: Rulers, gamma: int, intervals: int, carried: bool = False, parts: int = 1
 ) -> Any:
-    """The write's factor at a record's rulers (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the source family's paces, N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, one rounding over the one wall (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces; under `carried` the two terms unrounded, the product and the wall (the carried factor, `paces.write_factor_terms`)."""
+    """The write's factor at a record's rulers (ALGEBRA.md, The write per proper volume and per proper interval): a source's booking scaled per proper volume and per proper interval at the rulers handed in, the held row's own where the row reads the content and the source family's otherwise (`wall_rulers`, the owner's word of 2026-10-23), N^intervals p_x p_y p_z / p_0^3 with N = p_0 / Gamma, one rounding over the one wall (`paces.write_factor`), `intervals` the proper-interval powers of the held row's source, 2 on a count (the form) and 1 on the Wronskian, which carries one N of its own; the booking itself at the vacuum's paces; under `carried` the two terms unrounded, the product and the wall (the carried factor, `paces.write_factor_terms`)."""
     clock, (p_x, p_y, p_z) = rulers
     return paces.write_factor(count, p_x, p_y, p_z, clock, gamma, intervals, carried, parts)
+
+
+def reads_content(families: Families, index: int) -> bool:
+    """Whether a family reads the content, a holder of the content among its reads (ALGEBRA.md, Every row reads the content): the holders of the sign turn their readers and enter no pace, so a row whose reads are the sign's alone, or none, reads no content and has no paces of its own but the vacuum's."""
+    return any(not families[r.family].rotation for r in families[index].reads)
+
+
+def wall_rulers(
+    held: int, families: Families, rulers: dict[Sourcing, Rulers], row: int, source: Sourcing
+) -> Rulers:
+    """The paces a held row's write is scaled at for one source (ALGEBRA.md, The one Node, the clause of 2026-10-23, the wall at the held row's own paces): the row's own, keyed (held, row) among the rulers, where the row reads the content (every act of the interval sees the Node's own clock and ruler, the held rows' write among them, and the Node's clock for the row's act is the row's own read of the content), so that its sources at differing read weights share the row's one wall per line; the source's own where the row reads no content (a holder of the sign reading none, whose Wronskian source is written per the Node's proper volume as the content gives it, which the row does not read: there the sources' shared paces stay the wall and the loader's gate `shared_clock` keeps them alike)."""
+    own = rulers.get((held, row)) if reads_content(families, held) else None
+    return rulers[source] if own is None else own
 
 
 def scaled_sum(
@@ -115,14 +128,17 @@ def scaled_sum(
     intervals: int,
     factors: dict[int, int] | None = None,
     parts: int = 1,
+    row: int = 0,
 ) -> tuple[Any, Any, list[tuple[Any, int]]]:
-    """One line's numerator from its sources' values (a booking or an axis reading per source record): SUM over them of w x the value scaled by the write's factor at the source's paces (`rulers_write_factor`; w the read weight, times the line's factor per source family where `factors` names them, the tension lines' multiples), under the carried factor the unrounded product in its place, the line's divisor then the wall E_s T times the sources' shared factor's wall per Node (the loader admits the carry where the row's sources share the clock, derived.shared_clock); returns the sum, the factor's wall (1 under the rounding) and each source's weighed term with its pair's exponent under the booking (the readings' mix, board_readings.eras)."""
+    """One line's numerator from its sources' values (a booking or an axis reading per source record): SUM over them of w x the value scaled by the write's factor at the row's own paces where the row reads the content, the source's otherwise (`wall_rulers`) (`rulers_write_factor`; w the read weight, times the line's factor per source family where `factors` names them, the tension lines' multiples), under the carried factor the unrounded product in its place, the line's divisor then the wall E_s T times the row's one factor wall per Node, the row's own paces' where it reads the content and its sources' shared paces' where it reads none (`wall_rulers`; the loader refuses differing sources on a row reading none alone, derived.shared_clock); returns the sum, the factor's wall (1 under the rounding) and each source's weighed term with its pair's exponent under the booking (the readings' mix, board_readings.eras)."""
     total: Any = 0
     scale: Any = 1
     terms: list[tuple[Any, int]] = []
     for source, value in values.items():
         weight = weight_of(held, families[source[0]]) * (factors.get(source[0], 0) if factors else 1)
-        scaled, scale = rulers_write_factor(value, rulers[source], gamma, intervals, True, parts)
+        scaled, scale = rulers_write_factor(
+            value, wall_rulers(held, families, rulers, row, source), gamma, intervals, True, parts
+        )
         total = total + weight * scaled
         terms.append((weight * scaled, families[source[0]].exponent(intervals)))
     return total, scale, terms
@@ -155,9 +171,9 @@ def write_sources(
     for row in range(family.records):
         sources = row_sources(families, held, row)
         forms = {source: bookings.get(source, 0) for source in sources}
-        time, scale, weighed = scaled_sum(held, families, forms, rulers, gamma, intervals)
+        time, scale, weighed = scaled_sum(held, families, forms, rulers, gamma, intervals, row=row)
         if trace:
-            time = time - pressure_term(held, families, stresses, rulers, gamma, intervals) * scale
+            time = time - pressure_term(held, families, stresses, rulers, gamma, intervals, row) * scale
         found.append(time)
         scales.append(scale)
         terms = weighed if row == 0 else terms
@@ -166,7 +182,9 @@ def write_sources(
             parts = AXES if trace and position < AXES else 1
             if parts > 1:
                 axes = {s: AXES * axes[s] - sum(stresses[s][a] for a in range(AXES)) for s in axes}
-            total, scale, _ = scaled_sum(held, families, axes, rulers, gamma, 2, write.factors, parts)
+            total, scale, _ = scaled_sum(
+                held, families, axes, rulers, gamma, 2, write.factors, parts, row
+            )
             found.append(total)
             scales.append(scale)
     found = [family.write * numerator for numerator in found]  # the row's write weight k_w
@@ -196,7 +214,7 @@ def exact(values: Any) -> Any:
 def walls_at(
     held: int, families: Families, write: HeldWrite, rulers: dict[Sourcing, Rulers], gamma: int
 ) -> list[Any]:
-    """Every line's wall of a held row's write at the rulers given, the write of no source (`write_sources` on bookings and stresses of 0 at every source): one integer per line under the rounded factor and under the carried factor the wall per Node, E_s T Gamma^power p_0^(3 - power) on the time line and E_s W_c Gamma^2 p_0 on each axis and shear line, the trace's three on a tension line, at the clock of the row's sources' read (the shared clock, `derived.shared_clock`); the walls `Lattice.start` keeps for the run at the rest's paces under the volume form with the carried factor, the wall fixed per Node."""
+    """Every line's wall of a held row's write at the rulers given, the write of no source (`write_sources` on bookings and stresses of 0 at every source): one integer per line under the rounded factor and under the carried factor the wall per Node, E_s T Gamma^power p_0^(3 - power) on the time line and E_s W_c Gamma^2 p_0 on each axis and shear line, the trace's three on a tension line, at the row's own clock where it reads the content and at its sources' shared clock where it reads none (`wall_rulers`, `derived.shared_clock`); the walls `Lattice.start` keeps for the run at the rest's paces under the volume form with the carried factor, the wall fixed per Node."""
     nothing: dict[Sourcing, Any] = {source: (0,) * (AXES * AXES) for source in rulers}
     return write_sources(held, families, {}, nothing, write, rulers, gamma)[1]
 
@@ -208,13 +226,14 @@ def pressure_term(
     rulers: dict[Sourcing, Rulers],
     gamma: int,
     power: int,
+    row: int = 0,
 ) -> Any:
     """The pressure's write in the time line at every Node, the stress's trace (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22: the pressure hand's derivation and the reader's build line read cold; the two channels of the rulers, the clock's h = e^U by h N = 1 and the tension's Gamma / (Gamma - t_a), nature's one a(t) stretching nothing by its isotropic pressure, so the isotropic part of the tension lines' uniform mode is 0 and not braked): the trace over three of each source's own stress parts at the Node, -num h_a as the tension lines take them (readings.stresses_of, one Link's reach), each part turned into the energy's units by the record's own gradient speed squared, (p_a / Gamma)^2 / (3 den) (The band at a pace: the gradient part of 2 (1 - cos omega') is (num / (3 den)) (p_a / Gamma)^2 2 (1 - cos k), so the stress times it is the gradient energy, T_xx = T_00 for light's long wave), summed over the three axes and divided by three, then scaled per proper volume and per proper interval as the row books its count sources (p_x p_y p_z over Gamma^power p_0^(3 - power)): one rounding per source per Node over the one wall 9 den Gamma^(2 + power) p_0^(3 - power) (a coefficient rounded at the read, kind D), at the read weight, the sign -1 taken by the caller (alpha = -d lambda = -1 at lambda = 1 / d: the pressure enters against the energy's hollow, no number of the file and none of nature); every quantity read from the records as they stand at the interval's start, so the inverse recomputes the same term (the reversibility hand's Theorem 1); under the carried factor the caller scales it to the wall per Node (records.write_sources)."""
     total: Any = 0
     for source in row_sources(families, held, 0):
         if source not in stresses:
             continue
-        family, (clock, p_axes) = families[source[0]], rulers[source]
+        family, (clock, p_axes) = families[source[0]], wall_rulers(held, families, rulers, row, source)
         paces_object = [
             exact(p) for p in p_axes
         ]  # Python's integers: the wall 9 den Gamma^(2 + power) p_0^(3 - power) passes 63 bits
