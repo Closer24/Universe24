@@ -1,0 +1,50 @@
+{
+ "integers": {
+  "node_clock": 1000,
+  "quantum_action": 36000,
+  "width": 92,
+  "link_unit": 16
+ },
+ "families": [
+  {
+   "name": "gravity",
+   "pair": [
+    999,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "held": {
+    "sources": [
+     "form",
+     "tensions"
+    ],
+    "level_weight": 1,
+    "write_weight": 1
+   }
+  },
+  {
+   "name": "matter",
+   "pair": [
+    666,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "dimension": 1
+  },
+  {
+   "name": "light",
+   "pair": [
+    1000,
+    1000
+   ],
+   "reads": {
+    "gravity": 1
+   },
+   "dimension": 1
+  }
+ ]
+}
