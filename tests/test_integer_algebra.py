@@ -58,6 +58,10 @@ PHYSICAL_MODULES += (
     "walls.py",
 )  # the tension lines stepped as the shear's momentum at the volume's wall
 PHYSICAL_MODULES += (
+    "swap.py",
+    "frames.py",
+)  # the swap at the top, the fifth act; the frames of a turned record's read the step shares
+PHYSICAL_MODULES += (
     "frame_run.py",
 )  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 

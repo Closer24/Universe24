@@ -472,7 +472,7 @@ footer { margin-top: var(--gap); font-size: var(--small); color: var(--muted); }
 </head>
 <body>
 <header><h1>{{TITLE}}</h1><span class="verdict">the law's real line, no click</span></header>
-<p class="line">{{LINE}} <a href="../variants.html#{{CARD}}">The variants page's card</a>, with nature's experiment, the law's statement and the verdict.</p>
+<p class="line">{{LINE}} <a href="../variants.html#{{CARD}}">The variants page's card</a>, with nature's measurement, the law's statement and the verdict.</p>
 <div class="page">
   <section class="panel wide">
     <div class="stage"><canvas id="stage"></canvas><div class="corner">the law's real line</div></div>

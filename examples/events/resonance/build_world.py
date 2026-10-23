@@ -32,7 +32,9 @@ def record(design: dict[str, Any], which: str, resonance: list[int]) -> dict[str
     rates = (
         [{"from": "e", "to": "g", "lifetime": int(row["lifetime"]), "gives_to": light}] if upper else []
     )
-    draw = {"window": int(row["window"])}
+    draw: dict[
+        str, int
+    ] = {}  # the window derived at the load (2026-10-23); the design's row window is the gate's reading span
     return {
         "family": row["family"],
         "nodes": [

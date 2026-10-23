@@ -184,7 +184,7 @@ def phase_counts(
 def phase_carried(
     index: int, states: States, counts: dict[int, list[Any]], gamma: int
 ) -> list[list[Record]]:
-    """The holder's phase lines with every row's pairs carried along the one orbit from the seed from the count standing (the row's count lines, the cache the planes read, plane.phase_links) to the count `counts` names (features/phase `orbit_moves`, `iterate` at the line's unit 2 Gamma: |K'| - |K| acts, forward where the size grows, the inverse act where it shrinks, bit for bit in either direction), the count lines then at `counts`, the Node's phase row as it stands; the state untouched."""
+    """The holder's phase lines with every row's pairs carried along the one orbit from the seed from the count standing (the row's count lines, the cache the planes read, plane.phase_links) to the count `counts` names (features/phase `orbit_moves`, `iterate` at the line's unit 2 Gamma: |K'| - |K| acts, forward where the size grows, the inverse act where it shrinks, bit for bit in either direction), the count lines then at `counts`, the Node's phase row as it is; the state untouched."""
     found: list[list[Record]] = []
     for row, lines in enumerate(states[index].phases):
         if row not in counts:
@@ -215,15 +215,12 @@ def phase_rows(index: int, states: States, potentials: dict[int, Any], direction
         now, before = np.asarray(phi.now, dtype=object), np.asarray(phi.before, dtype=object)
         act = division_forward if direction == 1 else division_back
         write, kept = act(2 * c, 2, np.asarray(phi.remainder, dtype=object))
-        remainder = np.asarray(kept, dtype=phi.remainder.dtype)
+        kind = phi.now.dtype  # the board's kind, the loader's choice by the width
+        remainder = np.asarray(kept, dtype=kind)
         if direction == 1:
-            lines[PHI] = Record(
-                np.asarray(2 * now - before + write, dtype=phi.now.dtype), phi.now, remainder
-            )
+            lines[PHI] = Record(np.asarray(2 * now - before + write, dtype=kind), phi.now, remainder)
         else:
-            lines[PHI] = Record(
-                phi.before, np.asarray(2 * before - now + write, dtype=phi.before.dtype), remainder
-            )
+            lines[PHI] = Record(phi.before, np.asarray(2 * before - now + write, dtype=kind), remainder)
         states[index].phases[row] = lines
 
 
@@ -254,7 +251,7 @@ def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wr
 
 
 def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
-    """The least Node pace p_i = p_0^2 / Gamma of a family's records over the lattice as it stands, 0 at a frozen Node, a lattice diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
+    """The least Node pace p_i = p_0^2 / Gamma of a family's records over the lattice as it is, 0 at a frozen Node, a lattice diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
     return min(
         int(
             np.min(

@@ -192,7 +192,9 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     ).any()  # odd exactly
     assert not any(part.any() for part in readings.sense_current_of([plane[0], plane[0]], RING))
     own, write = (CHARGED, 0), held_write_of(TURNING, CHARGE, T)  # the plane's one record owns the row 1
-    sign = {own: records.wronskian(plane, True)}
+    sign = {
+        own: 2 * records.wronskian(plane, True)
+    }  # the Wronskian booked centred on the triple, the two edges' sum over the doubled wall (the centred count, 2026-10-23): on a plane wave the two edges are equal, so twice the one (the former booking took the one edge over E_s T)
     sources, walls, _weight = records.write_sources(
         CHARGE, TURNING, sign, {own: flux}, write, {own: VACUUM}, GAMMA
     )
@@ -213,8 +215,8 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     held = records.empty_state(TURNING[CHARGE], SHAPE, carried, object)
     lines, remainders = node.held_write_at(held.lines, sources, carried, held.write_remainders)
     assert (
-        write.walls == (100 * T, *(200 * T,) * 3) * 2
-    )  # E_s T on the time line, 2 E_s T on the odd lines
+        write.walls == (200 * T,) * 4 * 2
+    )  # 2 E_s T on the time line too, the Wronskian booked centred on the triple (the centred count, 2026-10-23; the former E_s T on the time line, 2 E_s T on the odd lines)
     assert not any(map(np.any, sources[:4] + sources[6:]))
     assert np.array_equal(
         lines[5].now, (sources[5] + carried[5] // 2) // carried[5]
@@ -229,7 +231,9 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     assert (TURNING[CHARGE].lines, TURNING[CHARGE].record, TURNING[CHARGE].rotation) == (8, 1, True)
     assert turns(TURNING, CHARGED) and not turns(TURNING, MATTER)
     assert CHARGE not in [read.family for read in TURNING[MATTER].reads]
-    assert held_write_of(TURNING, NAMES.index("gravity"), T).walls[1] == 1000 * 3 * PAIR[1] * T
+    assert (
+        held_write_of(TURNING, NAMES.index("gravity"), T).walls[1] == 2 * 1000 * 3 * PAIR[1] * T
+    )  # the tension line's doubled wall 2 E_s W_c (The stress is the Links', 2026-10-23; the former E_s W_c)
     rows["charge"]["held"]["act"] = (
         "pace"  # the former act key: the one Node refuses it as any unknown key
     )

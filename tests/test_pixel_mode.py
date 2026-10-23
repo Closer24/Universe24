@@ -137,7 +137,7 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
     near = [{"family": "matter", "nodes": [{"node": [x, 0, 0], "count": 10}]} for x in (12, 14)]
     refused("share a Node|does not stand", TOOL.pixel_mode, {**plain, "bodies": near})
     fixed = json.loads((world := chain_body_world(tmp_path, TOOL, 7, mode=False)).read_text())
-    fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "seed": "one_node"}
+    fixed["lay"] = {"kind": "fixed_point", "stop": 1, "passes": 30, "start": "one_node"}
     fixed["lay"].update(tolerance=[1, 4], confidence=[32, 1])
     world.write_text(json.dumps(fixed), encoding="utf-8"), TOOL.main(["--input", str(world)])
     mode_path = world.with_suffix(".mode.json")
@@ -147,7 +147,7 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
     assert len(nodes) > 1 and all(entry["count"] >= 1 for entry in nodes)
     assert (abs(laid - 7) - (abs(laid - 7) & 1)) ** 2 <= 4 * 7  # within the rounding
     entry, (a, den) = mode["bodies"][0], mode["bodies"][0]["clock"]
-    assert TOOL.agree(entry["carried"], 7) and entry["count"] == 7 and entry["seed"] >= 1
+    assert TOOL.agree(entry["carried"], 7) and entry["count"] == 7 and entry["scale"] >= 1
     assert 2 * 4000 * den < a * 6000 and a < 2 * den  # above the band's top 2 x 4000 / 6000, below 2
     profile, peak, moving = entry["profile"], entry["amplitude"], entry["moving"]
     assert max(map(abs, profile)) == abs(profile[CHAIN // 2]) == peak > 0  # the peak at the centre
@@ -164,13 +164,17 @@ def test_a_packet_is_the_wave_under_its_envelope_and_the_inner_face_reflects_it(
     held = [s for f, s in zip(board.families, board.states, strict=True) if f.held and not f.wronskian]
     deep = int(sum(s.lines[0].now for s in held).max())
     assert 0 < deep < paces.frozen_content(board.world.node_clock)  # the well below the Link's zero
-    compact = dict(fixed, lay=dict(fixed["lay"], seed="compact", profile=[76, 4], stop=8))
+    compact = dict(fixed, lay=dict(fixed["lay"], start="compact", profile=[76, 4], stop=8))
     world.write_text(json.dumps(compact), encoding="utf-8"), TOOL.main(["--input", str(world)])
     seeded = json.loads(mode_path.read_text(encoding="utf-8"))["bodies"][0]
-    assert seeded["lay"]["seed"] == "compact" and load_world(world).lay.profile == (76, 4)
+    assert seeded["lay"]["start"] == "compact" and load_world(world).lay.profile == (76, 4)
     first = TOOL.compact_seed(100, (12, 0, 0), (24, 1, 1), TOOL.Wrap(False, True, True), (76, 4))
     assert first[11:14, 0, 0].tolist() == [4, 92, 4] and first.sum() == 100  # folded Ports: the centre
-    for words, lay in (("seed is one", {"seed": "wide"}), ("profile .* seed", {"seed": "compact"})):
+    for words, lay in (
+        ("start is one", {"start": "wide"}),
+        ("profile .* start", {"start": "compact"}),
+        ("unknown key 'seed'", {"start": "one_node", "seed": "one_node"}),
+    ):
         refused(words, TOOL.lay_of, {"kind": "repeat", **lay}, "lay")
     document["lay"]["tolerance"] = [1, 1000]  # a tolerance T cannot meet: the budget's gate
     world.write_text(json.dumps(document), encoding="utf-8")

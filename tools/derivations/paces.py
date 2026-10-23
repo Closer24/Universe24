@@ -97,7 +97,7 @@ def light_band_speed(gamma: int, content: int, k: float = 1e-3) -> float:
 
 
 def clock_composes(gamma: int = 6000, content: int = 300, other: int = 200) -> list[float]:
-    """The clock composes, p_0 = Gamma (1 - 1 / Gamma)^c, each unit slowing the clock as it stands by the same fraction (line 187; The paces compose; S.34 (a)): [N = p_0 / Gamma at the content, e^(-U) with U = c / Gamma, the composition's residual P(c + l) Gamma - P(c) P(l) in the rationals, p_0(c + 1) / p_0(c) - (1 - 1 / Gamma)], the residuals 0."""
+    """The clock composes, p_0 = Gamma (1 - 1 / Gamma)^c, each unit slowing the clock as it is by the same fraction (line 187; The paces compose; S.34 (a)): [N = p_0 / Gamma at the content, e^(-U) with U = c / Gamma, the composition's residual P(c + l) Gamma - P(c) P(l) in the rationals, p_0(c + 1) / p_0(c) - (1 - 1 / Gamma)], the residuals 0."""
     clock = rule3.clock_pace
     composed = clock(gamma, content + other) * gamma - clock(gamma, content) * clock(gamma, other)
     unit = clock(gamma, content + 1) / clock(gamma, content) - Fraction(gamma - 1, gamma)

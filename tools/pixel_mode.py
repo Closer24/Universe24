@@ -946,7 +946,7 @@ def body_entry(
         "family": body["family"],
         "pair": list(board.pair),
         "count": quanta,
-        "seed": scale,
+        "scale": scale,
         "carried": record.carried,
         "period": [record.window, 2],
         "amplitude": int(np.abs(now).max()),
@@ -1301,7 +1301,8 @@ def pixel_mode(
     for at in outside:
         beyond[at] = True
     wrap = Wrap(
-        *(document["boundary"][axis] == "periodic" for axis in AXES), beyond if outside else None
+        *(document.get("boundary", {}).get(axis, "periodic") == "periodic" for axis in AXES),
+        beyond if outside else None,
     )
     gamma = int(document.get("node_clock", integers["node_clock"]))
     rows = cast(list[dict[str, Any]], document.get("bodies", []))
@@ -1329,7 +1330,7 @@ def pixel_mode(
         rows = held_rows(universe, str(body["family"]))
         if number in pixels:  # the one-Node record's declaration, its own seed
             first = counts
-        elif lay is not None and lay.seed == COMPACT and lay.profile is not None:
+        elif lay is not None and lay.start == COMPACT and lay.profile is not None:
             first = compact_seed(quanta, centre, shape, wrap, lay.profile)
         else:  # the declared count's cube
             first = spread(counts, centre, board, rows, zero)
@@ -1369,7 +1370,7 @@ def pixel_mode(
         laid_packets.append((names.index(family), slot, [laid_pair]))
     entries: list[dict[str, Any]] = []
     # two passes where there are two bodies or more: the second lays each body in the others' sources
-    # as the first laid them (a body not yet laid stands at its first lay, its quanta, not its share);
+    # as the first laid them (a body before its lay stands at its first lay, its quanta, not its share);
     # one body's declaration is the engine's reading exactly, several bodies' within the gate's rounding
     for _round in range(2 if len(bodies) > 1 else 1):
         entries = []
@@ -1472,7 +1473,7 @@ def pixel_mode(
             lays[number] = (laid, pairs_kept, centre, quanta)
             entry = body_entry(record, board, region, body, quanta, int(record.clock[1]))
             if lay is not None:  # the lay as declared, its seed by name, the fixed-point trajectory
-                entry["lay"] = {"kind": lay.kind, "seed": lay.seed}
+                entry["lay"] = {"kind": lay.kind, "start": lay.start}
                 if trajectory:
                     entry["lay"].update(stop=lay.stop, trajectory=trajectory)
             entry["nodes"] = [

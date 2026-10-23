@@ -227,6 +227,7 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("multiplier", "draw"),
     ("increment", "draw"),
     ("engine", "world"),
+    ("seed", "lay"),
     ("act", "held"),
     ("booking", "held"),
     ("factor", "held"),
@@ -338,8 +339,8 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
-    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
-    from event_universe.loader import draw, node_detector_declaration, universe
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
+    from event_universe.loader import draw, lay, node_detector_declaration, universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
@@ -361,6 +362,8 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
             universe.universe_of(
                 {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
             )
+        elif place == "lay":
+            lay.lay_of({"kind": "repeat", "start": "one_node", key: "one_node"}, "lay")
         elif place == "family":
             universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
         else:
@@ -425,4 +428,8 @@ def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: i
     board.step()
     assert board.interval == 1 and board.ended is None
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
+    if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
+        assert (
+            board.swaps == []
+        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
     print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")

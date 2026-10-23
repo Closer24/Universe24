@@ -35,6 +35,7 @@ def at_top(x0: Any, x1: Any, x2: Any) -> np.ndarray:
 
 def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
     """The act where `mask` holds (ALGEBRA.md, The swap at the top: the fifth act, the Node's own time line at its weak maximum): every line of every family and every write remainder of the state `held` swapped and complemented at its wall, the interval's output kept elsewhere."""
+    kind = board.kind  # the board's kind, the loader's choice by the width
     gamma, unit = board.world.node_clock, board.unit
     for index, family in enumerate(board.families):
         state, lines, remainders = board.states[index], held[0][index], held[1][index]
@@ -61,11 +62,11 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
             complemented = records.complement(np.asarray(line.remainder, dtype=object), own)
             found.append(
                 records.Record(
-                    np.asarray(np.where(mask, line.before, out.now), dtype=out.now.dtype),
-                    np.asarray(np.where(mask, line.now, out.before), dtype=out.before.dtype),
+                    np.asarray(np.where(mask, line.before, out.now), dtype=kind),
+                    np.asarray(np.where(mask, line.now, out.before), dtype=kind),
                     np.asarray(
                         np.where(mask, complemented, np.asarray(out.remainder, dtype=object)),
-                        dtype=out.remainder.dtype,
+                        dtype=kind,
                     ),
                 )
             )
@@ -75,15 +76,15 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
             for number in range(1, len(found), 2):  # the im line of every plane of the record
                 im = found[number]
                 found[number] = records.Record(
-                    np.asarray(np.where(mask, -im.now, im.now), dtype=im.now.dtype),
-                    np.asarray(np.where(mask, -im.before, im.before), dtype=im.before.dtype),
+                    np.asarray(np.where(mask, -im.now, im.now), dtype=kind),
+                    np.asarray(np.where(mask, -im.before, im.before), dtype=kind),
                     np.asarray(
                         np.where(
                             mask,
                             records.complement(np.asarray(im.remainder, dtype=object), wall),
                             np.asarray(im.remainder, dtype=object),
                         ),
-                        dtype=im.remainder.dtype,
+                        dtype=kind,
                     ),
                 )
         state.lines = found
@@ -96,7 +97,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
                         records.complement(np.asarray(r, dtype=object), np.asarray(w, dtype=object)),
                         np.asarray(out, dtype=object),
                     ),
-                    dtype=np.asarray(out).dtype,
+                    dtype=object,
                 )
                 for w, r, out in zip(walls, remainders, state.write_remainders, strict=True)
             ]
@@ -104,6 +105,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
 
 def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int) -> None:
     """The phase lines' image where `mask` holds, after `swapped` has set the lines (ALGEBRA.md, The swap at the top, the phase clause): forward the Node's phase row of every row of the sign becomes the pre-act row of `held` swapped, (before, now, remainder); backward the post-act row restored from the swapped row and the clocked potential at the level now of the restored lines, (2 before - now + c, before, remainder) (`node.clocked_potentials`); then every pair of the holder's Links carried to the count the state stands at (`node.phase_counts` at the level before forward, the end of the interval as the swapped state holds it, and at the level now backward, the post-act count K(m + 1); `node.phase_carried`), the pairs of the Links between a turned Node and an unturned neighbour included: one Link's reach."""
+    kind = board.kind  # the board's kind, the loader's choice by the width
     gamma = board.world.node_clock
     for index, family in enumerate(board.families):
         if not family.rotation:
@@ -118,26 +120,26 @@ def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int)
             if not lines:
                 continue
             phi, pre = lines[node.PHI], held[2][index][row][node.PHI]
-            frame = np.asarray(
+            frame: np.ndarray = np.asarray(
                 np.where(
                     mask,
                     records.complement(np.asarray(phi.remainder, dtype=object), 2),
                     np.asarray(phi.remainder, dtype=object),
                 ),
-                dtype=phi.remainder.dtype,
+                dtype=kind,
             )  # the row's remainder at the wall 2 complemented: the record's frame flipped (plane.frame_signs)
             if direction == 1:
                 image = records.Record(
-                    np.asarray(np.where(mask, pre.before, phi.now), dtype=phi.now.dtype),
-                    np.asarray(np.where(mask, pre.now, phi.before), dtype=phi.before.dtype),
+                    np.asarray(np.where(mask, pre.before, phi.now), dtype=kind),
+                    np.asarray(np.where(mask, pre.now, phi.before), dtype=kind),
                     frame,
                 )
             else:
                 now, before = np.asarray(pre.now, dtype=object), np.asarray(pre.before, dtype=object)
                 post = 2 * before - now + potentials[row]
                 image = records.Record(
-                    np.asarray(np.where(mask, post, phi.now), dtype=phi.now.dtype),
-                    np.asarray(np.where(mask, before, phi.before), dtype=phi.before.dtype),
+                    np.asarray(np.where(mask, post, phi.now), dtype=kind),
+                    np.asarray(np.where(mask, before, phi.before), dtype=kind),
                     frame,
                 )
             state.phases[row] = lines[: node.PHI] + [image]
