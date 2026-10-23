@@ -74,7 +74,7 @@ def test_every_derived_number_is_its_scripts_output():
 def test_the_engines_module_count_is_the_trees():
     """ENGINE.md's "The engine is N modules" counts the Python files of src/event_universe beside __init__.py, the folders' modules their own."""
     words = {
-        "eighteen": 18,
+        "thirty": 30,
         "nineteen": 19,
         "twenty": 20,
         "twenty-one": 21,

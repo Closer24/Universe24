@@ -9,10 +9,11 @@ import numpy as np
 
 from event_universe import board_readings, flux, node, records, world_files
 from event_universe.core import paces
-from event_universe.core.rule3 import rule3
+from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.features.held_write import held_write
 from event_universe.lattice import Lattice
+from event_universe.plane import NO_FACE
 from event_universe.world_files import load_world
 from tests.laws import BACK, refused
 from tests.laws_interval import (
@@ -419,66 +420,65 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     )
 
 
-def test_the_tension_lines_take_the_traceless_parts_of_their_own_link_terms_in_the_step_and_their_sum_keeps_the_double_root(
+def test_the_tension_lines_step_as_the_shears_momentum_at_the_volumes_wall_and_run_back_exactly(
     tmp_path, monkeypatch
 ):
-    """The step's split (flux.step_traceless, flux.step_family, records.empty_state, records.walls_at; ALGEBRA.md, The stress's trace is the time line's; the reader's remedy of 2026-10-22 for the second channel: Rule3's own Link terms, each end of a Link reading the difference with its own reach, feed the tension lines' k = 0 mode on a board whose paces differ from Node to Node, the first full runs' slow drift): on the light torus (one wave along x, the paces differing along x) under the key with `pressure: trace` and `factor: carried`, (a) one step of gravity's record by `flux.step_family` gives each tension line `rule3` on 3 L_a - SUM_b L_b at the wall 3 w and the mass 3 D bit for bit, L_a its own Links' sum by `flux.link_fluxes` at the rule of the read, the time line Rule3's own (`flux.step_line`), and the same record with the trace off (the family's flag replaced by the test) takes L_a at w; (b) the step back at -1 on the stepped lines returns every line and remainder bit for bit; (c) the three tension lines are born with their remainder at half the wall 3 w they divide by, the time line at w div 2, and every write remainder of the row at half the wall fixed per Node; (d) over 120 intervals the three lines' sum at every Node keeps Rule3's double root with no Link term and no stress: its velocity is the remainders' carry alone, within 3 levels per interval at every Node and every interval (the step's three remainders over 3 w and the write's three over the fixed wall, each telescoping; the write's numerators summing to 0 under the carry but for the ratio's one rounding), and the sum of the three means stays within 12 levels of 0 while the x line's own mean moves past 1,000 (the wave's stress along x drives the anisotropic k = 0 mode, the shear the law keeps open by name)."""
+    """The shear's momentum (flux.step_momentum, shear.stepped, shear.written, shear.born; ALGEBRA.md, The shear's momentum is carried at the volume's wall, a proposal of 2026-10-23 from the cube's group of 48, the symmetry hand's derivation read cold by the reader): on the light torus (one wave along x, the paces differing along x), (a) the three tension lines are born with their remainder at half the volume's wall, 3 w X_0, Python's integers; (b) one interval of the board gives each tension line the one carried division on the traceless part of its own Links' sum with the wall 3 w (X_now + X_next), the velocity carried in at 3 w (X_before + X_now) and the Links' term at 2 X_now, X the time line's volume before, at and after the interval (after its step and its write), the step's remainder bit for bit against the hand's arithmetic; (c) where the three volumes are one the act is the law's step `flux.step_traceless` bit for bit with the remainder 2 X times the law's; (d) the act is a bijection whose inverse is the same function at -1 with the remainders complemented at the wall they enter, on 40 random Node-intervals with the volumes growing and shrinking; (e) the board's step back returns the start bit for bit after one interval and after 60 (the time line's inverse before the tension lines'); (f) over 120 intervals the three lines' sum at every Node keeps the carries' pin (within 3 levels per interval, the means within 12 of 0) while the x line's mean, which the law as written drove past 1,000 by the wave's stress along x, stays below 1,000: the anisotropic k = 0 mode drained."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_at_weight_one(
-        tmp_path, 36000, WIDTH, gravity={"booking": "form", "pressure": "trace", "factor": "carried"}
+    universe_at_weight_one(tmp_path, 36000, WIDTH)
+    board = Lattice(load_world(light_torus(tmp_path, "split", 400)))
+    g = [family.name for family in board.families].index("gravity")
+    lines, wall3, faces = board.states[g].lines, 6 * board.half_wall(g), [NO_FACE] * 3
+    big, half = np.asarray, 3 * board.half_wall(g)
+    volume = big(lines[0].now, dtype=object)
+    assert all(
+        np.array_equal(big(lines[1 + a].remainder, dtype=object), wall3 * volume) for a in range(3)
     )
-    board = Lattice(load_world(light_torus(tmp_path, "split", 400, interval="unobservable")))
-    names = [family.name for family in board.families]
-    g = names.index("gravity")
-    lines, half = board.states[g].lines, board.half_wall(g)
-    assert one_number(lines[0].remainder) == half and all(
-        one_number(lines[1 + a].remainder) == 3 * half for a in range(3)
-    )
-    for line, wall in zip(board.states[g].write_remainders, board.fixed_walls[g], strict=True):
-        assert np.array_equal(np.asarray(line, dtype=object), np.asarray(wall, dtype=object) // 2)
+    begun, start = [list(s.lines) for s in board.states], BACK.snapshot(board)
     content, factors = node.read(g, board.families, board.states, 1, board.wrap, GAMMA, board.unit)
     rule = node.rule_of(board.families[g], GAMMA, content, factors, board.unit)
-    found, _booking = flux.step_family(g, board.families, board.states, rule, board.wrap, GAMMA, 1)
-    fluxes = [
-        np.asarray(flux.link_fluxes(lines[1 + a].now, rule.reaches, board.wrap, 0), dtype=object)
-        for a in range(3)
-    ]
-    total = sum(fluxes)
-    for a in range(3):
-        line = lines[1 + a]
-        stepped, carried = rule3(
-            3 * fluxes[a] - total, 3 * rule.mass, 3 * rule.wall, line.now, line.before, line.remainder, 1
-        )
-        assert np.array_equal(np.asarray(found[1 + a].now, dtype=object), stepped)
-        assert np.array_equal(np.asarray(found[1 + a].remainder, dtype=object), carried)
-        assert np.array_equal(found[1 + a].before, line.now)
-    assert np.array_equal(
-        found[0].now, flux.step_line(lines[0], rule, board.wrap, 1, board.families[g].rest).now
-    )
-    plain = list(board.families)
-    plain[g] = replace(board.families[g], pressure_trace=False)
-    law, _booking = flux.step_family(g, tuple(plain), board.states, rule, board.wrap, GAMMA, 1)
-    for a in range(3):
-        line = lines[1 + a]
-        stepped, _carried = rule3(
-            fluxes[a], rule.mass, rule.wall, line.now, line.before, line.remainder, 1
-        )
-        assert np.array_equal(np.asarray(law[1 + a].now, dtype=object), stepped)
-    states = list(board.states)
-    states[g] = replace(board.states[g], lines=found)
-    back, _booking = flux.step_family(g, board.families, states, rule, board.wrap, GAMMA, -1)
-    for was, now in zip(lines, back, strict=True):
-        assert all(
-            np.array_equal(a, b)
-            for a, b in ((was.now, now.now), (was.before, now.before), (was.remainder, now.remainder))
-        )
+    board.step()
+    after, own = board.states[g].lines, begun[g][1:4]
+    fluxes = [big(flux.link_fluxes(line.now, rule.reaches, board.wrap, 0), dtype=object) for line in own]
+    entered = wall3 * (volume + big(after[0].now, dtype=object))
+    born = wall3 * (volume + big(begun[g][0].before, dtype=object))
+    for a, line in enumerate(own):
+        now, before = big(line.now, dtype=object), big(line.before, dtype=object)
+        numerator = entered * now + born * (now - before) + division_forward(entered - born, 2, 0)[0]
+        numerator = numerator + 2 * volume * (3 * fluxes[a] - sum(fluxes) - 3 * rule.mass * now)
+        carried = division_forward(numerator, entered, line.remainder)[1]
+        assert np.array_equal(big(after[1 + a].remainder, dtype=object), carried)
+        assert np.array_equal(after[1 + a].before, line.now)
+    law = [replace(line, remainder=np.full(line.now.shape, half)) for line in own]
+    scaled = [replace(line, remainder=2 * volume * big(line.remainder, dtype=object)) for line in law]
+    one = flux.step_momentum(scaled, rule, board.wrap, 1, faces, (begun[g][0].now,) * 3)
+    for was, same in zip(flux.step_traceless(law, rule, board.wrap, 1, faces), one, strict=True):
+        assert np.array_equal(was.now, same.now)
+        assert np.array_equal(2 * volume * big(was.remainder, dtype=object), same.remainder)
+    draw, shape = np.random.default_rng(17), own[0].now.shape
+    for _ in range(40):
+        x = [big(draw.integers(6000, 10**6, size=shape), dtype=object) for _ in range(3)]
+        carry = division_forward(wall3 * (x[0] + x[1]), 10**9, 0)[0]
+        carry = big(draw.integers(0, 10**9, size=shape), dtype=object) * carry
+        levels = [draw.integers(-(10**5), 10**5, size=shape) for _ in range(6)]
+        trial = [records.Record(levels[2 * a], levels[2 * a + 1], carry) for a in range(3)]
+        forward = flux.step_momentum(trial, rule, board.wrap, 1, faces, (x[0], x[1], x[2]))
+        back = flux.step_momentum(forward, rule, board.wrap, -1, faces, (x[2], x[1], x[0]))
+        for was, now in zip(trial, back, strict=True):
+            assert np.array_equal(was.now, now.now) and np.array_equal(was.before, now.before)
+            assert np.array_equal(big(was.remainder, dtype=object), now.remainder)
+    board.step_inverse()
+    assert BACK.first_difference(start, BACK.snapshot(board)) is None
+    any(board.step() for _ in range(60))
+    any(board.step_inverse() for _ in range(60))
+    assert BACK.first_difference(start, BACK.snapshot(board)) is None
     sums, speeds = [], []
     for _ in range(120):
         board.step()
         lines = board.states[g].lines
-        total = sum(np.asarray(lines[1 + a].now, dtype=object) for a in range(3))
-        before = sum(np.asarray(lines[1 + a].before, dtype=object) for a in range(3))
+        total = sum(big(lines[1 + a].now, dtype=object) for a in range(3))
+        before = sum(big(lines[1 + a].before, dtype=object) for a in range(3))
         speeds.append(int(np.abs(total - before).max()))
         sums.append(float(total.sum()) / 27)
     assert max(speeds) <= 3 and max(abs(s) for s in sums) <= 12, (max(speeds), sums[::12])
-    assert float(np.asarray(lines[1].now, dtype=object).sum()) / 27 > 1000
+    assert abs(float(big(lines[1].now, dtype=object).sum()) / 27) < 1000

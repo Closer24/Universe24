@@ -9,7 +9,7 @@ import numpy as np
 
 from event_universe import node, records
 from event_universe.core.ports import AXES, Wrap
-from event_universe.core.rule3 import Rule, rule3
+from event_universe.core.rule3 import Rule, division_forward, rule3
 from event_universe.features.click import presented
 from event_universe.loader.derived import PLANE, row_of
 from event_universe.plane import NO_FACE, Faces, link_levels, link_pairs, odd_links, phase_links
@@ -180,6 +180,52 @@ def step_traceless(
     return found
 
 
+def step_momentum(
+    own: Sequence[Record],
+    rule: Rule,
+    wrap: Wrap,
+    direction: int,
+    faces: Sequence[Faces],
+    volumes: tuple[Any, Any, Any],
+) -> list[Record]:
+    """The three tension lines of a held row of the content stepped as the shear's momentum at the volume's wall (ALGEBRA.md, The shear's momentum is carried at the volume's wall, a hypothesis under its own name, 2026-10-23; the symmetry hand's derivation read cold by the reader): Rule3's line on the traceless part of the line's own three Link terms with its wall 3 w split across the interval, the wall of the pair the act enters 3 w (X_now + X_ahead) on the level stepped to and on the remainder's range, the wall the velocity carried in was born under, 3 w (X_now + X_behind), on that velocity, and the one volume of the start, 2 X_now, on the Links' term and the mass, `volumes` the Node's own time line (X_behind, X_now, X_ahead) in `direction` (forward X_before, X_now, X_next after the time line's step and write; backward X_next, X_now, X_before after the time line's inverse), so that the shear's momentum (X / Gamma) T_a' in the board's interval is what the Links' traceless terms move and the shear's velocity falls as the volume grows, nature's -3 H sigma in proper time with the weight the volume's exponent d + 1 in the board's interval and no number typed; with the half wall's move (3 w (X_ahead - X_behind)) / 2 in the numerator, so that the rest's remainder at half the wall born under stands at half the wall entered (the law's birth at the half wall carried across the wall's change: the momentum less half the wall is what the flux moves, the floor a rounding to the nearest, no bias as the wall grows), one carried division per line (`core/rule3.division_forward`, the remainder Python's integer in [0, 3 w (X_now + X_ahead))), a bijection at every Node-interval whether the volume grows or shrinks (the incoming remainder's range is the incoming level's coefficient), the inverse the same function at -1 with every remainder complemented at its own wall, the wall it was born under (the forward act on the swapped pair; `records.complement`, the mirror of The cube's symmetry), and the law's own `step_traceless` bit for bit where the time line stands (X_behind = X_now = X_ahead), the remainder 2 X times the law's."""
+    behind, now, ahead = (np.asarray(volume, dtype=object) for volume in volumes)
+    gathered = [
+        gathered_line(line, rule, wrap, 0, face, direction)
+        for line, face in zip(own, faces, strict=True)
+    ]
+    total: Any = sum(np.asarray(flux, dtype=object) for flux, _level, _other in gathered)
+    wall3, mass3 = AXES * rule.wall, AXES * rule.mass
+    entered, born = (
+        wall3 * (now + ahead),
+        wall3 * (now + behind),
+    )  # the wall entered, the wall the carry was born under
+    rest = division_forward(
+        entered - born, 2, 0
+    )[
+        0
+    ]  # the half wall's move: the rest's remainder from half the wall born under to half the wall entered (3 w even)
+    found = []
+    for line, (flux, level, other) in zip(own, gathered, strict=True):
+        kind = line.now.dtype
+        traceless = AXES * np.asarray(flux, dtype=object) - total
+        level, other = np.asarray(level, dtype=object), np.asarray(other, dtype=object)
+        numerator = (
+            entered * level + born * (level - other) + (now + now) * (traceless - mass3 * level) + rest
+        )
+        remainder = np.asarray(line.remainder, dtype=object)
+        carry = (
+            remainder if direction == 1 else born - 1 - remainder
+        )  # backward every remainder complemented at its own wall
+        stepped, carried = division_forward(numerator, entered, carry)
+        kept = carried if direction == 1 else entered - 1 - carried
+        stepped = np.asarray(stepped, dtype=kind)
+        found.append(
+            Record(stepped, line.now, kept) if direction == 1 else Record(line.before, stepped, kept)
+        )
+    return found
+
+
 def gathered_plane(
     rule: Rule,
     wrap: Wrap,
@@ -260,7 +306,9 @@ def step_family(
     own = state.lines[span]
     faced = dict(faces or {})
     if not family.plane:
-        traced = family.axes and family.pressure_trace  # the tension lines traceless in the step
+        traced = (
+            family.axes and family.pressure_trace
+        )  # the tension lines the shear's momentum, stepped by the lattice
         found = [
             step_line(
                 line,
@@ -274,10 +322,10 @@ def step_family(
             else line
             for number, line in enumerate(own, span.start)
         ]
-        if traced:
-            faces_of = [faced.get(span.start + 1 + a, NO_FACE) for a in range(AXES)]
-            found[1 : 1 + AXES] = step_traceless(own[1 : 1 + AXES], rule, wrap, direction, faces_of)
-        return found, ((own, found) if direction == 1 else (found, own))
+        return (
+            found,
+            ((own, found) if direction == 1 else (found, own)),
+        )  # the tension lines untouched here: the lattice steps them after the time line's interval (step_momentum)
     lines: list[Record] = []
     first: list[Record] = []
     second: list[Record] = []

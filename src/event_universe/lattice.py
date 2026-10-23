@@ -13,7 +13,19 @@ import event_universe.covector as covector
 import event_universe.meeting_back as meeting_back
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import credit, emission, front, growth, lists, meeting, node, reports, share, take
+from event_universe import (
+    credit,
+    emission,
+    front,
+    growth,
+    lists,
+    meeting,
+    node,
+    reports,
+    share,
+    shear,
+    take,
+)
 from event_universe.board_readings import Currents, Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
@@ -175,6 +187,7 @@ class Lattice:
                 time = lines[0]
                 lines[0] = replace(time, now=time.now + family.rest, before=time.before + family.rest)
             lines[0] = volume.started(gamma, world.families[index], lines[0])
+            shear.born(self, family, lines)
         self.families = world.families
         carried = [i for i in self.held if self.families[i].factor_carried]
         rulers = self.rulers(1) if carried else {}
@@ -356,8 +369,8 @@ class Lattice:
         numerators, walls, _terms = records.write_sources(
             index, self.families, bookings, axes, write, rulers, gamma, motion, direction, fixed
         )
-        state.lines, state.write_remainders = node.held_write_at(
-            state.lines, numerators, walls, state.write_remainders, direction
+        state.lines, state.write_remainders = shear.written(
+            self, index, numerators, walls, direction, begun
         )
         for line in state.lines:
             self.bounded(family.name, line)
@@ -432,7 +445,10 @@ class Lattice:
         """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass; refused by name first on a world declaring `interval: unobservable` (`motion_back`)."""
         meeting_back.logged(self, -1)
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
-        rulers = self.rulers(-1)  # the held rows' levels the interval started from, their `before`
+        rulers, ended = (
+            self.rulers(-1),
+            [s.lines for s in self.states],
+        )  # the interval's start, their `before`
         books: dict[int, list[records.Record]] = {}
         pending = list(self.held)
         while True:
@@ -450,6 +466,7 @@ class Lattice:
             books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():
             self.states[index].lines = lines
+        shear.inverted(self, ended)
         node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
         self.interval, self.ended = self.interval - 1, None
         while self.growths and self.growths[-1][0] == self.interval + 1:
