@@ -65,7 +65,7 @@ def cut(board: Lattice, index: int) -> node.Factors | None:
 
 
 def laid_record(board: Lattice, number: int, record: int) -> None:
-    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books not yet made, so a passing book names the declaration."""
+    """A record laid in its parts at its one Node at the start (`loader/node_detector_declaration.py`, `parts`): every part at its declared count, the one carrying the count as the standing record of the pair in the direction (1, 0) and the sense +1, the others 0 there; the books unmade, so a passing book names the declaration."""
     row = board.world.bodies[number]
     kind = row.detector
     assert kind is not None
