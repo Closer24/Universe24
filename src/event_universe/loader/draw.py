@@ -22,10 +22,10 @@ Ports = tuple[
 ]  # a side's two ports, + then -, one coefficient per part
 UNITS: tuple[Gauss, ...] = ((1, 0), (0, 1), (-1, 0), (0, -1))  # i^turn, the azimuth in quarter turns
 TURN = "turn"  # a plane side's key beside `axis`: the azimuth in quarter turns, 0 to 3
-DRAW_KEYS: tuple[
-    str, ...
-] = ()  # the draw declares no number: the window is derived (the owner's decision of 2026-10-23)
-WINDOW = "window"  # the former key, refused by name with the rule that derives it
+WINDOW = "window"  # the former key: admitted at the parse to be refused by name at the end of the load with the derived number
+DRAW_KEYS = (
+    WINDOW,
+)  # the draw declares no number: the window is derived (the owner's decision of 2026-10-23), the key read for its refusal alone
 # the digits' order of the click's read of the board, the one declared constant of the read (`digits.read_of`):
 # the lines outer in the record's declared order (part 0's lines, then part 1's; a plane's two lines in their
 # order; the records of a family in their order), the Nodes read inner in the lattice's index order (x-major,
@@ -53,19 +53,9 @@ def windowless_of(value: object, label: str) -> Draw:
 
 
 def draw_of(value: object, label: str, world: bool = False) -> Draw:
-    """The world's `draw` (`world`) and a body's `node_detector` (`body_draw_of`): an object with no key, the click's read of the board; the former key `window` refused by name with the rule that derives it (the owner's decision of 2026-10-23: the window shall not be declared; the world's the regions' passage, `loader/window.drawn`; a body's its drives' passage or its own beat, `loader/window.windowed`); `meeting` refused by name, there being one meeting; `reach` and every other key refused by name as unknown, a generator's `seed`, `multiplier` and `increment` among them (the draw is the click's read of the board); the window of the returned `Draw` None, written at the end of the load."""
-    if isinstance(value, dict) and WINDOW in value:
-        cause = (
-            "the region's passage: the longest passage over the declared regions of every lay with an end"
-            if world
-            else "the body's own beat where a lay of its drives has no end, their passage over the body where every lay has one"
-        )
-        raise ValueError(
-            f"{label} declares the window {value[WINDOW]!r}: the window is derived, {cause}, and no number of the file "
-            "(ALGEBRA.md, The click writes on the lattice, the owner's decision of 2026-10-23); remove the key"
-        )
-    keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, ())
-    return Draw(None)
+    """The world's `draw` (`world`) and a body's `node_detector` (`body_draw_of`): an object with no key, the click's read of the board; the former key `window` read into the `Draw` for its refusal alone, by name with the derived number and its cause at the end of the load (the owner's decision of 2026-10-23: the window shall not be declared; the world's the regions' passage, `loader/window.drawn`; a body's its drives' passage or its own beat, `loader/window.windowed`); `meeting` refused by name, there being one meeting; `reach` and every other key refused by name as unknown, a generator's `seed`, `multiplier` and `increment` among them (the draw is the click's read of the board); the window of the returned `Draw` None where no key stands, written at the end of the load."""
+    found = keyed(value, label, WORLD_DRAW_KEYS if world else DRAW_KEYS, ())
+    return Draw(integer(found[WINDOW], f"{label}.{WINDOW}", 1) if WINDOW in found else None)
 
 
 def body_draw_of(value: object, label: str) -> Draw:

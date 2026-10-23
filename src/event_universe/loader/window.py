@@ -122,6 +122,12 @@ def drawn(
         lays += [rate_passage(r, families[r.light], nodes, shape, periodic, action) for r in rates]
     ended = [p for p in lays if p is not None]  # the lays with an end alone: a region reads what passes
     window = max(ended) if ended else None
+    if draw.window is not None and window is not None:
+        raise ValueError(
+            f"draw declares the window {draw.window}, and the window is derived: the longest passage of every lay with "
+            f"an end over the declared regions, W = {window} here; remove the key (ALGEBRA.md, The click writes on the "
+            "lattice, the owner's decision of 2026-10-23)"
+        )
     if window is None:
         raise ValueError(
             "draw: the world declares the draw and no lay with an end passes a declared region (a source in time on "

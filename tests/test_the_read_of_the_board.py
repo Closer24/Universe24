@@ -219,9 +219,13 @@ def test_the_loader_refuses_a_generator_and_admits_the_detector_with_no_key(tmp_
     refused("holds the unknown key 'seed'", body_draw_of, {"seed": 25}, label)
     refused("holds the unknown key 'multiplier'", windowless_of, {"multiplier": 5}, label)
     assert body_draw_of({}, label) == windowless_of({}, label) == Draw(None)
-    refused("the window is derived", body_draw_of, {"window": 48}, label)  # the owner's decision of 2026-10-23
-    refused("the window is derived", draw_of, {"window": 40}, "draw", True)
-    assert draw_of({}, "draw", True) == Draw(None)
+    assert body_draw_of({"window": 48}, label) == Draw(48) and draw_of(
+        {"window": 40}, "draw", True
+    ) == Draw(40)
+    assert draw_of({}, "draw", True) == Draw(
+        None
+    )  # the key read for its refusal at the end of the load alone (2026-10-23)
+    refused("unknown key 'reach'", draw_of, {"window": 40, "reach": "board"}, "draw", True)
     assert not hasattr(Draw(None), "seed")
     source = EVENTS / "bell_singlet" / "singlet_a_b.json"
 

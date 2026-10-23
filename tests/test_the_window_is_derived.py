@@ -1,4 +1,4 @@
-"""The window is derived and never declared (the owner's decision of 2026-10-23: "derive and replace the declared ones; the window shall not be declared"; ALGEBRA.md, The click writes on the lattice, C2 and (5), the regions' one window; src/event_universe/loader/window.py, loader/draw.py): (1) the loader refuses the key `window` by name on a body's node_detector and on the world's draw; (2) a body whose drive has no end has its own beat for its window, one period of its transition's resonance pair in whole intervals by Chebyshev's recurrence (`period_of`), 15 on Universe24's instrument at [902, 1000], and the clicks world's absorber, whose drive is a laid packet with an end, keeps the passage rule's 32 beside its beat's 15; (3) the world's draw window is the longest passage of every lay with an end over the declared regions, 149 on the clicks chain (the electron over the target) and 30 on the Bell chain; (4) the two rules meet on one body: the clicks absorber on its closed chain reads the passage, and on the chain made a ring, where the packets fill no end, its beat; (5) a small world with the instrument body clicks at the derived cadence, the credits at the windows' closes."""
+"""The window is derived and never declared (the owner's decision of 2026-10-23: "derive and replace the declared ones; the window shall not be declared"; ALGEBRA.md, The click writes on the lattice, C2 and (5), the regions' one window; src/event_universe/loader/window.py, loader/draw.py): (1) the loader refuses the key `window` by name on a body's node_detector and on the world's draw at the end of the load, the derived number and its cause named (the parse carries the key for that refusal alone); (2) a body whose drive has no end has its own beat for its window, one period of its transition's resonance pair in whole intervals by Chebyshev's recurrence (`period_of`), 15 on Universe24's instrument at [902, 1000], and the clicks world's absorber, whose drive is a laid packet with an end, keeps the passage rule's 32 beside its beat's 15; (3) the world's draw window is the longest passage of every lay with an end over the declared regions, 149 on the clicks chain (the electron over the target) and 30 on the Bell chain; (4) the two rules meet on one body: the clicks absorber on its closed chain reads the passage, and on the chain made a ring, where the packets fill no end, its beat; (5) a small world with the instrument body clicks at the derived cadence, the credits at the windows' closes."""
 
 import json
 from pathlib import Path
@@ -30,8 +30,7 @@ def parsed(path: Path, edit=None) -> World:  # type: ignore[no-untyped-def]
 
 def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world():
     """(1) The key `window` refused by name with the rule that derives it: on a body's node_detector (the body's own beat or the lays' passage) and on the world's draw (the region's passage), at the parse of the key and at the parse of the shipped worlds given the key again."""
-    refused("the body's own beat", body_draw_of, {"window": 12}, "bodies[2].node_detector")
-    refused("the region's passage", draw_of, {"window": 12}, "draw", True)
+    assert body_draw_of({"window": 12}, "b").window == draw_of({"window": 12}, "draw", True).window == 12
     assert draw_of({}, "draw", True).window is None and body_draw_of({}, "b").window is None
 
     def body(document):  # type: ignore[no-untyped-def]
@@ -40,8 +39,16 @@ def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world():
     def world(document):  # type: ignore[no-untyped-def]
         document["draw"]["window"] = 12
 
-    assert "the window is derived" in str(refused("declares the window 12", parsed, CLICKS, body))
-    assert "the region's passage" in str(refused("declares the window 12", parsed, CLICKS, world))
+    assert "W = 32" in str(refused("declares the window 12", parsed, CLICKS, body))
+    assert "W = 149" in str(refused("declares the window 12", parsed, CLICKS, world))
+    assert "own beat" in str(
+        refused(
+            "declares the window 12",
+            parsed,
+            UNIVERSE,
+            lambda d: d["bodies"][2]["node_detector"].update(window=12),
+        )
+    )
 
 
 def test_the_body_window_is_its_own_beat_where_the_drive_has_no_end():
