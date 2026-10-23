@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import lists, records
+from event_universe import records
 from event_universe.bookings import sources_of
 from event_universe.core import paces
 from event_universe.features.write import carried
@@ -49,6 +49,8 @@ def sourced(board: Lattice, index: int) -> bool:
 
 def count_gate(board: Lattice) -> None:
     """The gate on every declared body at the start (ALGEBRA.md #the-count-is-the-records-share): a body's declared count is within the rounding of its family's count in quanta over its declared Nodes (a bound record's the board's whole count, its charge; `credit.gate_count`), ((|c - read| - 1) div 2)^2 <= c, refused by name beyond it; a reading of the laid record, no lay."""
+    from event_universe import lists  # at the gate alone: the lists' run back reads these walls
+
     for number, row in enumerate(board.world.bodies):
         declared = sum(row.detector.counts if row.detector is not None else row.counts)
         read = lists.gate_count(board, row)

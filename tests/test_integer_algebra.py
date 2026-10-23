@@ -2,7 +2,10 @@
 
 import ast
 import io
+import os
 import random
+import subprocess
+import sys
 import tokenize
 from fractions import Fraction
 from pathlib import Path
@@ -364,3 +367,20 @@ def test_the_conventions_tables_identities_hold_on_small_integers() -> None:
         reads_i = coefficients(num, den, gamma, clock_i, pace_i, factors=(5,) * 6, unit=2)[0]
         reads_j = coefficients(num, den, gamma, clock_j, pace_j, factors=(5,) * 6, unit=2)[0]
         assert Fraction(reads_i[0], pace_i * pace_i) == Fraction(reads_j[0], pace_j * pace_j)
+
+
+def test_every_physical_module_imports_first_on_its_own() -> None:
+    """Every module of the package imports first, before any other of the package, in one fresh interpreter with the package's modules evicted between the imports (the cycle through the top lines of walls, lists, credit and meeting_back, and the one through board_readings and meeting, closed 2026-10-23): a cycle is refused by the module and the name it meets."""
+    names = sorted("event_universe." + name[:-3].replace("/", ".") for name in PHYSICAL_MODULES)
+    program = (
+        "import importlib, sys\n"
+        "for name in sys.argv[1:]:\n"
+        "    for held in [k for k in sys.modules if k.startswith('event_universe')]:\n"
+        "        del sys.modules[held]\n"
+        "    importlib.import_module(name)\n"
+    )
+    env = {**os.environ, "PYTHONPATH": str(SRC.parent)}
+    found = subprocess.run(
+        [sys.executable, "-c", program, *names], capture_output=True, text=True, env=env, check=False
+    )
+    assert found.returncode == 0, found.stderr.strip().splitlines()[-1:]
