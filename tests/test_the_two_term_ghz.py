@@ -286,7 +286,7 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
         "packets": packets,
         "node_detectors": detectors,
         "receding": {"x": receding, "y": receding},
-        "draw": {"window": intervals},
+        "draw": {},
     }
     (path := folder / "ghz2.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     TOOL.main(["--input", str(path)])

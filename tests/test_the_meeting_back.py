@@ -164,7 +164,7 @@ def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monke
 
 def test_the_meetings_refusals_by_name(tmp_path, monkeypatch):
     """(e) The refusals: the key `meeting` declared with any value (there is one meeting; the key is refused by name); `reach` with `books` (a click that writes runs) or any other word; `reach` on a body's node_detector; `reach` admitted alone with `cone` or `board` and None where absent (the engine reads the cone); the loader's own law of the patterns in tests/test_the_exchange_sign.py."""
-    draw = {"window": 40}
+    draw = {}
     for word in ("root", "back", "elsewhere"):
         refused("there is one meeting", draw_of, {**draw, "meeting": word}, "draw", True)
     refused(

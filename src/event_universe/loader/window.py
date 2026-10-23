@@ -1,15 +1,16 @@
-"""The window derived from the record's declared passage (the atom branch, 2026-10-19, the owner's decision with the cold reader's changes; ALGEBRA.md, The click writes on the lattice, C2: the window is the lay's passage derived at load, as the unit is derived from the pair, and no reading of the board, which shows a passing record no end a detector can read without a threshold, a wake of 2 to 7 levels standing for hundreds of intervals on every Node the record crossed, the reader's finding): a body's window is the longest passage over it of the lays, with an end, of the families its transitions read, every lay of the family on the board whoever lays it, the body's own rate among them: a packet laid along an axis (L = top + 2 edge Nodes, `packet_passage`), an emitted packet (a rate with a `width`, L the slices of its train, the length `node_detector_declaration.packet_form` holds the board to) and a source in time (a rate without one, the train's own duration, the span tau, `rate_passage`); a lay with no end (a wave filling a periodic ring, a source in time on a periodic board) or no lay at all leaves the window the declaration's, the instrument's cadence, the key required, and the key on a body whose drives' lays all have an end is refused by name with the derived W (`windowed`, the one place the key is decided). One code path for every axis and either direction, the pace by |sin k| (the group of 48 of the cube): a lay of L Nodes along its axis passes a body of b Nodes there in W = ceil((L + b - 1) / v_g) intervals at the band's group pace v_g = (num / den) sin k / (3 sin omega) of the lay's whole wave, the three axes' wave numbers (a width's transverse mode among them), in the loader's integers (`passage`)."""
+"""The window derived from the record's declared passage (the atom branch, 2026-10-19, the owner's decision with the cold reader's changes; ALGEBRA.md, The click writes on the lattice, C2: the window is the lay's passage derived at load, as the unit is derived from the pair, and no reading of the board, which shows a passing record no end a detector can read without a threshold, a wake of 2 to 7 levels standing for hundreds of intervals on every Node the record crossed, the reader's finding): a body's window is the longest passage over it of the lays, with an end, of the families its transitions read, every lay of the family on the board whoever lays it, the body's own rate among them: a packet laid along an axis (L = top + 2 edge Nodes, `packet_passage`), an emitted packet (a rate with a `width`, L the slices of its train, the length `node_detector_declaration.packet_form` holds the board to) and a source in time (a rate without one, the train's own duration, the span tau, `rate_passage`); a lay with no end (a wave filling a periodic ring, a source in time on a periodic board) or no lay at all gives the body its own beat for its window, one period of its transition's resonance pair in whole intervals (`period_of`; the owner's decision of 2026-10-23: the window shall not be declared), and the key `window` is refused by name in every case with the derived number and its cause (`windowed`, the one place the key is decided); the world's draw window is derived the same way from the regions, the longest passage of every lay with an end over every declared region (`drawn`). One code path for every axis and either direction, the pace by |sin k| (the group of 48 of the cube): a lay of L Nodes along its axis passes a body of b Nodes there in W = ceil((L + b - 1) / v_g) intervals at the band's group pace v_g = (num / den) sin k / (3 sin omega) of the lay's whole wave, the three axes' wave numbers (a width's transverse mode among them), in the loader's integers (`passage`)."""
 
 from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import replace
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from event_universe.core.paces import sine_den
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import along_cosine, envelope, line_total, wave_cosine
 from event_universe.loader.derived import FamilyRule
+from event_universe.loader.draw import Draw
 from event_universe.loader.faces import extent_across
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Rate
@@ -96,8 +97,43 @@ def period_of(pair: tuple[int, int]) -> int:
     return count
 
 
+def drawn(
+    draw: Draw | None,
+    regions: Iterable[Any],
+    bodies: tuple[BodyRow, ...],
+    packets: tuple[PacketRow, ...],
+    families: tuple[FamilyRule, ...],
+    shape: Node,
+    periodic: Wrap,
+    action: int,
+) -> Draw | None:
+    """The world's draw with its window derived (the owner's decision of 2026-10-23: the window shall not be declared; ALGEBRA.md, The click writes on the lattice, the regions' one window as the per-side spans' union): a region detector has no record and no transition, and what it reads is the passage of the records through it, so its cadence is the passage of every lay with an end over its extent along the lay's axis, by the one passage rule (`passage`, the group pace of the lay's wave; the file's packets by `packet_passage`, the bodies' emissions by `rate_passage`), and the world's one window, the credit's one count of elapsed intervals shared by every region, is the longest of them over every declared region (`longest`), the union of the sides' spans; None where the world declares no draw; refused by name where the draw stands and no lay with an end reaches a region (an endless source on a periodic board alone), a region reading an endless lay having no cadence of its own."""
+    if draw is None:
+        return None
+    rates = [rate for row in bodies if row.detector is not None for rate in row.detector.rates]
+    lays: list[int | None] = []
+    for region in regions:
+        nodes = tuple(dict.fromkeys(region.positions))
+        if (
+            not nodes or not region.declared
+        ):  # the open faces' layer is the board's own region, no reader's
+            continue
+        lays += [packet_passage(p, families, nodes, shape, periodic) for p in packets]
+        lays += [rate_passage(r, families[r.light], nodes, shape, periodic, action) for r in rates]
+    ended = [p for p in lays if p is not None]  # the lays with an end alone: a region reads what passes
+    window = max(ended) if ended else None
+    if window is None:
+        raise ValueError(
+            "draw: the world declares the draw and no lay with an end passes a declared region (a source in time on "
+            "a periodic board, a wave filling a periodic ring, or no lay at all): a region's window is the passage of "
+            "what it reads, and such a world has none to derive (ALGEBRA.md, The click writes on the lattice, the "
+            "owner's decision of 2026-10-23)"
+        )
+    return replace(draw, window=window)
+
+
 def longest(passages: Iterable[int | None]) -> int | None:
-    """The longest of a drive's lays' passages, the body's one window length (the law's line; the per-lay window read at the opening from the books' sources is the refinement named and not built); None where a lay has no end or none is laid: the declaration's window then."""
+    """The longest of a drive's lays' passages, the body's one window length (the law's line; the per-lay window read at the opening from the books' sources is the refinement named and not built); None where a lay has no end or none is laid: the body's own beat then (`windowed`)."""
     found = list(passages)
     return None if not found or None in found else max(p for p in found if p is not None)
 
@@ -148,32 +184,25 @@ def windowed(
         ]  # the body's own rate as its lifetime, the emission's span at the body, whatever its lay's form
         window, names = longest(lays), [families[drive].name for drive in drives]
         beating = (
-            window is None and bool(row.region) and not kind.rates
-        )  # (5): a bound body with no rate
+            window is None
+        )  # the owner's decision of 2026-10-23: a drive with no end, the body's own beat
         if (
             beating
         ):  # its window the beat's own period, the turns of its resonance pair closing the circle
             window = max(period_of(t.resonance) for t in kind.transitions)
         label = f"bodies[{number}].node_detector"
         if kind.draw.window is not None:
-            if window is not None:
-                cause = (
-                    f"the body is bound with no rate: its window is the beat's own period, {window} here"
-                    if beating
-                    else f"the lays of its drives {names} on this board all have an end: the window is their "
-                    f"passage over the body, derived at load, W = {window} here"
-                )
-                raise ValueError(
-                    f"{label} declares the window {kind.draw.window}, and {cause}; remove the key (ALGEBRA.md, "
-                    "The click writes on the lattice, C2 and (5))"
-                )
-            found.append(replace(row, detector=kind))
-            continue
-        if window is None:
+            cause = (
+                f"a lay of its drives {names} on this board has no end or none is laid: the window is the body's own "
+                f"beat, one period of its transition's resonance, {window} here"
+                if beating
+                else f"the lays of its drives {names} on this board all have an end: the window is their "
+                f"passage over the body, derived at load, W = {window} here"
+            )
             raise ValueError(
-                f"{label} declares no window, and a lay of its drives {names} on this board has no end (a wave "
-                "filling a periodic ring, a source in time on a periodic board) or none is laid: such a body "
-                "declares its window, the instrument's cadence (ALGEBRA.md, The click writes on the lattice, C2)"
+                f"{label} declares the window {kind.draw.window}, and {cause}; the window is derived and no number "
+                "of the file (ALGEBRA.md, The click writes on the lattice, C2 and (5), the owner's decision of "
+                "2026-10-23)"
             )
         draw = replace(kind.draw, window=window)
         found.append(replace(row, detector=replace(kind, draw=draw)))

@@ -44,7 +44,7 @@ def standing_world(folder: Path) -> Path:
             {"family": "electron", "nodes": [{"node": [c + 1, c, c], "count": 1}]},
         ],
         "node_detectors": [{"name": "ball", "positions": ball}],
-        "draw": {"window": WINDOW},
+        "draw": {},
     }
     path = folder / "w.json"
     path.write_text(json.dumps(world) + "\n", encoding="utf-8")
@@ -106,7 +106,7 @@ def test_a_standing_charged_record_in_its_sign_well_books_no_inflow_and_no_credi
 def test_a_plain_records_currents_and_booking_stand_bit_for_bit(tmp_path, monkeypatch):
     """The plain path (`readings.currents_of` with no pairs, `board_readings.currents`, the intake of `credit.booked`) on the node detector test's chain, the light packet crossing the region of two Nodes: the six Port sums of the currents over the board and the region's intake after each of four intervals as main read them before the turned record's reading entered, no family turned on this world."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    region, draw = [[13, 0, 0], [14, 0, 0]], {"window": 400}
+    region, draw = [[13, 0, 0], [14, 0, 0]], {}
     packet = {**PACKET, "top": {"x": [8, 8], "y": [0, 0], "z": [0, 0]}, "edge": {"x": 4, "y": 0, "z": 0}}
     chain = dict(shape=[24, 1, 1], boundary=dict(x="open", y="periodic", z="periodic"), faces=[])
     readers = [{"name": "near", "positions": region}]

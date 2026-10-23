@@ -75,7 +75,7 @@ def spin_world(
         "packets": packets,
         "node_detectors": detectors,
         "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
-        "draw": {"window": intervals, **({"reach": reach} if reach is not None else {})},
+        "draw": {**({"reach": reach} if reach is not None else {})},  # the window derived (2026-10-23)
     }
     (path := folder / "spin.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     TOOL.main(["--input", str(path)])

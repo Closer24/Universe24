@@ -231,9 +231,14 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
     (two := tmp_path / "two_photons.json").write_text(json.dumps(document), encoding="utf-8")
     mode = {**TWO_PHOTONS_MODE, "world_digest": world_files.input_digest(document)}
     two.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    assert windows(declared(two, 48, ring)) == [48, 48]  # mixed drives: the declared key stands
-    assert passages(declared(two, 48, ring), 0) == [33, None]
-    refused("declares no window", declared, two, None, ring)
+    beats = [  # mixed drives, one lay with no end: the body's own beat (the owner's decision of 2026-10-23)
+        max(window.period_of(t.resonance) for t in b.detector.transitions)
+        for b in declared(two, None, ring).bodies
+        if b.detector is not None
+    ]
+    assert windows(declared(two, None, ring)) == beats
+    assert passages(declared(two, None, ring), 0) == [33, None]
+    refused("the body's own beat", declared, two, 48, ring)
 
 
 def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_the_lay_has_an_end(

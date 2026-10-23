@@ -232,7 +232,7 @@ def born_world(folder, monkeypatch, at=12, window=200, intervals=124):  # type: 
     universe["families"].append({"name": "atom", "pair": [1, 1299], "dimension": [2, 2], "reads": {}})
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     world = json.loads(path.read_text(encoding="utf-8"))
-    world["packets"], world["intervals"], world["draw"]["window"] = [], intervals, window
+    world["packets"], world["intervals"] = [], intervals  # the window derived (2026-10-23)
     world["bodies"] = [
         {
             "family": "atom",

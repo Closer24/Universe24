@@ -55,7 +55,7 @@ def ion_world(  # type: ignore[no-untyped-def]
     shape = (8, 6, 5)
     at, beside = [3, 3, 2], [4, 3, 2]
     parts = [{"part": k, "name": n, "count": int(k == 0)} for k, n in enumerate("SPD")]
-    draw = {} if content else {"window": 1}
+    draw = {}  # the window derived (the owner's decision of 2026-10-23)
     nodes = [{"node": at, "weight": 1}, {"node": beside, "weight": 1}]
     record = {"family": "ion", "nodes": nodes, "parts": parts, "node_detector": draw}
     record["transitions"] = [
@@ -80,7 +80,7 @@ def ion_world(  # type: ignore[no-untyped-def]
     world.update(universe="u.json", bodies=[record] if body else [], packets=[drive])
     world["node_detectors"] = [{"name": "counter", "positions": plane}] if counter else []
     if counter:
-        world["draw"] = {"window": 18}
+        world["draw"] = {}  # the regions' window derived
     (path := folder / ("ion_like.json" if body else "beam_alone.json")).write_text(json.dumps(world))
     tool.main(["--input", str(path)])
     return path
@@ -113,7 +113,7 @@ ZENO_1 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 48},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -144,7 +144,7 @@ ZENO_2 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 24},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -175,7 +175,7 @@ ZENO_4 = {
                 {"from": "e", "to": "g", "drive": "pulse", "weight": 1, "resonance": [2, 3]},
             ],
             "rates": [],
-            "node_detector": {"window": 12},
+            "node_detector": {},
         }
     ],
     "packets": [
@@ -374,6 +374,6 @@ def ring_of(path: Path, window: int = 48) -> Path:
     world["boundary"]["x"] = "periodic"
     world.pop("face_depth", None)
     for body in world["bodies"]:
-        body["node_detector"]["window"] = window
+        body["node_detector"].pop("window", None)  # the window derived, the key refused (2026-10-23)
     (ring := path.with_name("ring.json")).write_text(json.dumps(world), encoding="utf-8")
     return ring

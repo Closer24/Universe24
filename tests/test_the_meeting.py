@@ -154,7 +154,7 @@ def test_the_ghz_gates_second_pair_y_y_x_and_x_x_x_reads_the_blind_exactly(tmp_p
 def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
     """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) At the first close, 40, the beams' share through each side stands below a whole quantum, so no side clicks (the side's gate, the reader's F4 of 2026-10-20, `lists.readings`); one credit line per side at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 79 at the declared rest 60) and the index of the window closed, 2, the region, the port realised, the parts kept and the count 1, the record's count down by one, no Node (the hole's Nodes in the face lines); after the click at 80 the two boards differ at the two written Nodes (the holes, the one-Node write of the count) and along the record the write at the birth rewrote, the part the first side zeroed standing at 0 everywhere and the held rows it sources moved with it (the click writes, the owner's word of 2026-10-20; the second side's write on the one surviving part the identity), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact after the click down to it: from 100 back to 80 every array returns bit for bit (the holes crossed from the face lines); below 80 the inverse returns the realised past, which differs from the frames the forward run kept before the first close, the possibilities' run (the step back across the first click misses, as the law says); and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 80 intervals, the reports the same lines but the click's (the credit lines and the write's lay lines at the birth); the `draw` key refused by name with a window of 0 and without its seed."""
     world = redeclared(json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8")))
-    world["draw"]["window"], draw = 40, dict(world["draw"])
+    draw = dict(world["draw"])  # the window derived, 30 on this chain (2026-10-23)
     (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
     world.pop("draw")
     (twin := tmp_path / "twin.json").write_text(json.dumps(world), encoding="utf-8")
@@ -203,7 +203,7 @@ def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(
     before = [c for c in lines if c["interval"] <= 80 and c["event"] not in ("credit", "lay")]
     assert none == before  # no click's line, no draw
     refused("window", draw_of, {**draw, "window": 0}, "draw")
-    refused("unknown key 'seed'", draw_of, {"window": 1, "seed": 1}, "draw")  # no generator, no key
+    refused("unknown key 'seed'", draw_of, {"seed": 1}, "draw")  # no generator, no key
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window(tmp_path):
@@ -306,7 +306,7 @@ def test_a_emission_into_a_beam_is_read_in_the_books_and_laid_where_the_beam_has
             world
         )  # the content's sink; the rate's lay has no end across, so the declared window stays
         world["bodies"][0]["rates"] = [{"from": "e", "to": "g", "lifetime": 8, "gives_to": "pulse"}]
-        world["bodies"][0]["node_detector"]["window"] = ZENO_2["bodies"][0]["node_detector"]["window"]
+        world["bodies"][0]["node_detector"].pop("window", None)
         world["intervals"] = 480
 
     path = content_world(tmp_path, "zeno_rate", ZENO_2, ZENO_ATOM, rated)  # the content, 2026-10-20

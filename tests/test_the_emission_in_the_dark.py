@@ -49,7 +49,7 @@ def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_
         "parts": [{"part": 0, "name": "g", "count": 0}, {"part": 1, "name": "e", "count": 1}],
         "transitions": [{"from": "g", "to": "e", "drive": "pulse", "weight": 1, "resonance": [2, 3]}],
         "rates": [{"from": "e", "to": "g", "lifetime": 48, "gives_to": "pulse"}],
-        "node_detector": {"window": 12},
+        "node_detector": {},
     }
     world = {
         "shape": [8, 8, 5],
