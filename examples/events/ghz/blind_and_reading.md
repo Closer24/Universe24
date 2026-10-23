@@ -64,7 +64,7 @@ percent at the edge 8, 1.2 at the top 7, 0.5 at the edge 16; the two slits' `els
 number. The edge rule of the division act zeros the uniform component and not the dispersion across
 the band; the law's own words, the record one interval earlier, with the envelope moved back by v_g
 in the before level, bring the backward share to 6 x 10^-5 at the same envelope: the change's line
-when the owner reopens the engine, nothing of the engine or the worlds tonight. The design's other
+when the owner reopens the engine, nothing of the engine or the worlds in that round. The design's other
 road, the x beams laid apart by the packet's 13 Nodes, is a world file's change and also waits.
 
 ## The reading at the clean engine (main 1fe3790a, 2026-10-05; the engine of main 39cc3851)

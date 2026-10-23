@@ -368,7 +368,7 @@ line W_c sin Omega reads 0.745, 0.600 and 0.436, so in the record's own unit the
 so the born quantum reads 3 / (4 sin k sin Omega) quanta, 1.007, 1.364 and 2.407 at the three pairs,
 the chain's own; the fix one root at the lay and no act: one quantum is laid at SUM A_t^2 =
 (2 / 3) T sin k in place of S = T / (2 sin Omega), k the guide's wave number at Omega for massless
-light in a width-one guide, cos k = (3 num - 2 den) / den, (2 / 3) T exactly at [2, 3] where today's
+light in a width-one guide, cos k = (3 num - 2 den) / den, (2 / 3) T exactly at [2, 3] where the standing
 S = 0.671 T already was one quantum within the rounding. The unit stands as the law's (`born_unit`).
 
 The blind, before any run: the born quantum 1.00 within 0.01 quanta in the record's own unit at every
