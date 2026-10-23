@@ -26,7 +26,7 @@ TRANSITION_REQUIRED = (
     "drive",
     "weight",
     "resonance",
-)  # `dipole` where the body couples by it
+)  # `dipole` (a key of 2026-10-21) is no key: refused as unknown with every misspelling since 2026-10-23, the one coupling the drive's level at the Node times the weight
 RATE_KEYS = (
     "from",
     "to",
@@ -48,10 +48,6 @@ class Transition:
     weight: int
     resonance: tuple[int, int]
     weight_den: int = 1  # the weight's denominator where the file declares `weight` as a pair [num, den], 1 for an integer weight: the coupling k = weight / weight_den, so that a body compiled from an extended record's run may couple below the integer grain
-    dipole: tuple[int, int, int] | None = (
-        None  # the transition's dipole, a declared vector in the Link unit as three integers over `dipole_scale` (ALGEBRA.md, The pixel's representation theorem, Theorem 2: a one-Node body reads the drive's Link gradient against the transition's dipole vector, the uniform level turning no Link); None where the transition couples by the level at the Node times `weight`, the path as it stood
-    )
-    dipole_scale: int = 1
 
 
 def weight_of(value: object, label: str) -> tuple[int, int]:
@@ -155,8 +151,7 @@ def transitions_of(
         drive = family_named(row["drive"], f"{label}[{index}].drive", quanta, own)
         weight, den = weight_of(row["weight"], f"{label}[{index}].weight")
         resonance = pair_of(row["resonance"], f"{label}[{index}].resonance")
-        dipole, scale = (None, 1)  # the one coupling: the drive's level at the Node times the weight
-        found.append(Transition(leaves, enters, drive, weight, resonance, den, dipole, scale))
+        found.append(Transition(leaves, enters, drive, weight, resonance, den))
     return tuple(found)
 
 
