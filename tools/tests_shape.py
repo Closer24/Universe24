@@ -109,6 +109,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the structured board's long course under the law with both acts read from the shipped course log (the structured-cycle "
         "branch, 2026-10-23): the cut at 2,376 by a Link's tension 1,087, the void's four returns, 1,079 fires, the largest Link tension 975",
     ),
+    "tests/test_the_swap_at_the_top.py::test_the_matter_worlds_run_back_is_exact_to_interval_1_and_the_declared_lay_at_interval_1_has_no_inverse": (
+        26,
+        "the matter world's run back under both acts (2026-10-23): exact to interval 1 through the six fires, and the one letter "
+        "that differs at interval 0 named by its cause, the declared lay at interval 1 with no inverse",
+    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
