@@ -294,10 +294,16 @@ def test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays(tmp_pat
     }
     assert written == set(region)  # the LATTICE lay lines of the write name the Nodes, the click none
     was, now = (dict(p for f in BACK.snapshot(b) for p in f) for b in (other, board))
+    written_at = {tuple(np.add(n, board.offset)) for n in region}
+    nearby = {
+        tuple(np.add(n, step))
+        for n in written_at
+        for step in np.vstack((np.eye(3, dtype=int), -np.eye(3, dtype=int)))
+    }
     differing = {tuple(map(int, w)) for k in was for w in np.argwhere(was[k] != now[k])}
-    assert differing == {
-        tuple(np.add(n, board.offset)) for n in region
-    }  # the two boards differ there alone
+    assert (
+        differing == written_at | nearby
+    )  # the one Node's write: every held row's time line reads its six neighbours, so the write at the region moves the held rows at the Nodes one Link from the written ones and nowhere else (the region alone before 2026-10-23)
     here = tuple(np.add(node_draws[0][2], board.offset))
     assert board.credit.counts[drv] == other.credit.counts[drv] - 1
     in_s, in_p = (

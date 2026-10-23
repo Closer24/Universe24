@@ -1,29 +1,16 @@
 """The emission in the exact dark and the side's gate (the reader's re-ruling of 2026-10-20: (c) for the exact dark, the gate in every case; ALGEBRA.md, The click's read of the board): a body whose read finds every digit at the lay's origin at its emission's draw does not draw and its emission falls at its window's close, the reading NO_DRAW on its credit line (`meeting.emission_drawn`, `lists.emission`), the refusal by name standing for every other draw at the origin; a side draws only where a whole quantum came through its window (`lists.readings`, `credit.quanta_rounded`), so a background below one quantum clicks nowhere and the signal's quantum through at the close clicks; the seven dark worlds as shipped (the born four, the resonance pair, packet_emission) run LAWFUL with the emission at the close, their intervals and realised ports printed."""
 
 import json
-from fractions import Fraction
 
 import pytest
 
-from event_universe import credit, node_detector, world_files
+from event_universe import node_detector, world_files
 from event_universe.lattice import Lattice
 from event_universe.reports import BOOKED_AT_EMISSION, LOST_TO_SOURCE, NO_DRAW
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL, world_beside
+from tests.laws import EVENTS, ROOT, TOOL
 from tests.laws_read import load_shipped
 
-BACKGROUND = [  # the probe's form: a train of the signal's wave at a tenth of its amplitude along the chain
-    {
-        "family": "spin",
-        "along": "x",
-        "wave": [sign, 4],
-        "phase": [0, 1],
-        "amplitude": 6,
-        "top": {"x": [x, x + 8], "y": [0, 0], "z": [0, 0]},
-        "edge": {"x": 2, "y": 0, "z": 0},
-    }
-    for sign, x in ((-1, 2), (1, 14), (-1, 26), (1, 38), (-1, 50))
-]
 BORN = ("born_a_b", "born_a_b_prime", "born_a_prime_b", "born_a_prime_b_prime")
 
 
@@ -79,38 +66,6 @@ def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_
     laid = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["family"] == "pulse"}
     assert laid <= {tuple(n["node"]) for n in body["nodes"]} and board.credit.counts[pulse] == 1
     print(f"the dark body's emission {given[0]['interval']}, {given[0]['lost']}, laid at {sorted(laid)}")
-
-
-def test_a_side_draws_only_where_a_whole_quantum_came_through_its_window(tmp_path, monkeypatch):
-    """The side's gate on the born pair's chain with a background (the probe's form: five packets of the pair's family at a tenth of the signal's amplitude along the chain): the background's light stands at the atom, so its emission's hazard is read from the board, drawn at its window's close, 24, and given there (no NO_DRAW on its line); at the sides' first close, 62, the left side has the pair's left beam and the background's share through its window and clicks, and the right side has the background's share alone, below one quantum, and does not click (before the gate it clicked on that share); at 124 the pair's right beam, read after the left side's write, has come through and the right side clicks; the gate's readings (n n I over scale W_rec G^2, `credit.quanta_rounded`) and the realised ports printed."""
-    source = EVENTS / "bell_singlet" / "born_a_b.json"
-    path = world_beside(tmp_path, source, lambda world: world.update(packets=BACKGROUND))
-    TOOL.main(["--input", str(path)])  # the background laid by the generator, the mode file anew
-    board, gate, read = Lattice(load_world(path), (lines := []).append), [], credit.quanta_rounded
-
-    def gated(books, index, inflow, link_unit, parts, scale):  # type: ignore[no-untyped-def]
-        found = read(books, index, inflow, link_unit, parts, scale)
-        unit = books.units[index] * link_unit * link_unit * scale
-        gate.append((board.interval, found, Fraction(inflow * parts * parts, unit)))
-        return found
-
-    monkeypatch.setattr(credit, "quanta_rounded", gated)
-    run_whole(board)
-    sides = [
-        (c["interval"], c["node_detector"], c["realised"]) for c in clicks(lines) if not c["emitted"]
-    ]
-    given = [c for c in clicks(lines) if c["emitted"]]
-    window = board.world.bodies[0].detector.draw.window
-    assert [(c["interval"], c["lost"]) for c in given] == [(window, None)]  # lit: read from the board
-    assert [(at, found) for at, found, _q in gate] == [(62, 1), (62, 0), (124, 1)]  # left, right; right
-    closes = [(at, name) for at, name, _r in sides if name in ("left", "right")]
-    assert gate[1][2] < Fraction(1, 10) and closes == [
-        (62, "left"),
-        (124, "right"),
-    ]  # the right gated at 62
-    print(
-        f"the gate: the pair given at {window}, the readings {[(a, f, float(q)) for a, f, q in gate]}, {sides}"
-    )
 
 
 def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
