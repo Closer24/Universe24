@@ -264,20 +264,20 @@ def families_of(eras: list[dict[str, Any]]) -> tuple[list[str], list[str], str |
 
 
 def captions_for(header: dict[str, Any] | None) -> dict[str, str]:
-    """The pages' captions read from the header's integers alone (the owner's word of 2026-10-24: the names become labels of the record's pages, never input): the seed row, the massless point, captioned "light"; among the points of den's circle (the header's `points`, each row's num and s under its vector label) the least leg captioned "electron" and the heaviest prime's own point, the vector with twice the prime's exponent at the last of den's primes 1 mod 4 and 0 elsewhere, captioned "proton"; every other row its label alone; a log with no points (the record to 2026-10-24, its rows named) captions nothing."""
+    """The pages' captions read from the header's integers alone (the owner's word of 2026-10-24: the names become labels of the record's pages, never input): the seed row, the massless point, captioned "light"; among the points of den's circle (the header's `points`, each row's num and s under its vector label) the lifts of den's primes, the vectors with twice the prime's exponent at one of den's primes 1 mod 4 and 0 elsewhere, captioned by rising sine, the leg s over den, "electron", "proton" and "neutron" (the neutron's candidate point; the owner's word of 2026-10-24 on the born-amplitude hand's reading at the PeV den, where the proton's point 2 0 0 is the lightest prime's lift and the electron's point 0 0 2 the heaviest's: the former rule, the least leg electron and the heaviest prime's own point proton, was the top tier's accident, kept by name), the top point and the composite points their label alone; every other row its label alone; a log with no points (the record to 2026-10-24, its rows named) captions nothing."""
     header = header or {}
     found: dict[str, str] = {}
     if header.get("seed"):
         found[str(header["seed"])] = "light"
     points = {name: pair for name, pair in (header.get("points") or {}).items() if vector_of(name)}
     primes = header.get("primes") or []
-    if points:
-        found[min(points, key=lambda name: points[name][1])] = "electron"
-    if points and primes:
-        heaviest = tuple([0] * (len(primes) - 1) + [2 * int(primes[-1][1])])
-        for name in points:
-            if vector_of(name) == heaviest:
-                found[name] = "proton"
+    lifts = []
+    for place, (_prime, power) in enumerate(primes):
+        lift = tuple(2 * int(power) if i == place else 0 for i in range(len(primes)))
+        lifts += [name for name in points if vector_of(name) == lift]
+    kinds = ("electron", "proton", "neutron")
+    for name, kind in zip(sorted(lifts, key=lambda name: int(points[name][1])), kinds, strict=False):
+        found[name] = kind
     return found
 
 
