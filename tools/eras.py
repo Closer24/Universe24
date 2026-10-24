@@ -19,6 +19,7 @@ from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
 from event_universe.lattice import Lattice
+from event_universe.loader.charge import lightest_point
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -171,9 +172,13 @@ def spans(lines: list[dict[str, Any]], family: str, span: int, gamma: int) -> li
 
 
 def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, Any]:
-    """The log's first line: the world's own numbers and the held rows by name (the page's legend names the hypotheses under their keys)."""
+    """The log's first line: the world's own numbers, the held rows by name (the page's legend names the hypotheses under their keys) and the lightest point of the circle of the seed's den, (num, s) with s the least leg, the electron's pair as the law derives it (`loader/charge.lightest_point`, 2026-10-24; None where the circle has no point)."""
     world = board.world
     held = [family.name for family in world.families if family.held and not family.wronskian]
+    try:
+        point: list[int] | None = list(lightest_point(world.families[world.seed].pair[1]))
+    except ValueError:  # a den no prime 1 mod 4 divides: no point
+        point = None
     return {
         "world": path.name,
         "node_clock": world.node_clock,
@@ -183,6 +188,7 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
         "families": [family.name for family in world.families],
         "held": held,
         "amplitude_bound": world.amplitude_bound,
+        "lightest_point": point,
         "intervals": world.intervals if intervals is None else intervals,
     }
 

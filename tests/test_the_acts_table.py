@@ -242,6 +242,18 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "charge_factors",
         "gcd",
     ): "D",  # Euclid's remainders on the count units and the factors, once each
+    # the lightest point of the circle (2026-10-24): the loader's number theory on den, every division the act
+    ("loader/charge.py", "primes_below", "division_forward"): "D",  # trial division's remainders
+    ("loader/charge.py", "is_prime", "division_forward"): "D",  # n - 1 = d 2^s, the remainders by 2
+    ("loader/charge.py", "split", "gcd"): "D",  # Pollard's rho, Euclid on |x - y| and n
+    ("loader/charge.py", "factors", "division_forward"): "D",  # 2 divided out, the cofactor of a split
+    (
+        "loader/charge.py",
+        "two_squares",
+        "division_forward",
+    ): "D",  # (p - 1) div 4 and Euclid's remainders
+    ("loader/charge.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
+    ("loader/charge.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
     (
         "loader/rooms.py",
         "held_room",
