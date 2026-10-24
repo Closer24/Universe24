@@ -18,7 +18,7 @@ def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
             raise ValueError(
                 f"{families[other].name!r} reads the holder of the sign {holder.name!r} with the pair "
                 f"[{num}, {den}], whose sine is irrational (den^2 - num^2 = {gap}, no square): a reader of "
-                "the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair "
+                "the sign writes the Wronskian per quantum by its count unit, exact for a Pythagorean pair "
                 "alone; a reader with an irrational sine is refused, as the conversion refuses it from every "
                 "exact list (ALGEBRA.md, The conversion, 180; The constants, the owner's word of 2026-10-24; "
                 "the rounded count unit and the lcm of 236e74ed0 the former behaviour, kept by name as its defect)"

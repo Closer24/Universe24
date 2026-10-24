@@ -83,16 +83,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "paces.rounded",
     ): "D",  # the stress's trace in the energy's units, once
     ("records.py", "write_sources", "paces.rounded"): "D",  # the fixed wall's ratio, rounded once
-    (
-        "features/phase/__init__.py",
-        "rotation_unit",
-        "division_forward",
-    ): "D",  # the seed's multiple and the halving
-    (
-        "features/phase/__init__.py",
-        "rotation_unit",
-        "iterate",
-    ): "R",  # the one carried act on a pair (the bisection around it S)
+    # ("features/phase/__init__.py", "rotation_unit", "division_forward"): "D" and ("rotation_unit", "iterate"): "R", the rest rotation's bisection: struck 2026-10-24, dead code, no caller in the tree
     (
         "features/phase/__init__.py",
         "quarter_turn",

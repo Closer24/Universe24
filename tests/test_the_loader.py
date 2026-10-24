@@ -9,7 +9,7 @@ from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, load_file, refused, universe_beside, universe_copy
 
 ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
-DEN = 53_567_765  # nature's den of the one universe file, 5 x 17 x 73 x 89 x 97
+DEN = 53_567_765  # the former den of 2026-10-23, the loader's test den, 5 x 17 x 73 x 89 x 97
 TOP = 1_166_991_900_949_580_266_237  # the constants hand's three-prime den, 649,421 x 13,586,597 x 132,260,701
 PEV = 21_397_363_965_165_989_151_899_244_775_347_635_252_768_274_397  # the record's den since 2026-10-24
 
