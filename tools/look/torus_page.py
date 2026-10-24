@@ -15,7 +15,13 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from captions import captions_of  # noqa: E402  (the look's own module, beside this tool)
+from captions import (  # noqa: E402  (the look's own module, beside this tool)
+    captions_of,
+    ledger_of,
+    legend_html,
+    legend_of,
+    parse_log,
+)
 
 from event_universe.swap import floor_of  # noqa: E402
 
@@ -41,6 +47,11 @@ header { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--gap);
 .row button { font: inherit; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 3px 10px; cursor: pointer; }
 .words { font-size: var(--small); color: var(--muted); }
 .words b { color: var(--fg); font-weight: 600; }
+table { border-collapse: collapse; width: 100%; font-size: var(--small); }
+th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; font-variant-numeric: tabular-nums; }
+th { color: var(--muted); font-weight: 600; }
+td.num { font-family: var(--font-mono); }
+.scroll { overflow-x: auto; }
 svg { width: 100%; height: auto; display: block; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px var(--gap); font-size: var(--small); }
 .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
@@ -70,6 +81,7 @@ summary { cursor: pointer; font-weight: 600; }
   <details><summary>The events, in the viewer's words (every caption read from the logs; the interval first, the Nodes counted)</summary><div class="prose" id="captions-list"></div></details>
   <div class="words" id="torus-words"></div>
 </section>
+{{LEGEND}}
 <section class="panel" id="notes-rest" hidden><details><summary>The notes in full, stage by stage</summary><div class="prose" id="notes-prose"></div></details></section>
 <section class="panel" id="charts-box" hidden><h2>At the instrument's Node: the click rate, 1 / e^U and the light's quanta, interval by interval</h2><div id="charts-drawn"></div><div class="words" id="charts-words"></div></section>
 <script>
@@ -238,8 +250,8 @@ legend(); draw(); strip(); charts(); if (NOTES) renderNotes(NOTES); if (NODES.le
 
 
 def read_log(path: Path) -> list[dict[str, Any]]:
-    """The log's lines, one JSON object per line."""
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    """The log's lines, one JSON object per line; a last line cut mid-write (a log read while its run goes on) left out."""
+    return parse_log(path.read_text(encoding="utf-8"))
 
 
 def bangs_of(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -438,7 +450,7 @@ def page(
     world: dict[str, Any] | None,
     notes: str | None,
 ) -> str:
-    """The page's HTML from the Nodes' log, the eras log, the clicks log and the world file; everything the page shows embedded as data."""
+    """The page's HTML from the Nodes' log, the eras log, the clicks log and the world file; everything the page shows embedded as data, the legend of kinds and the per-bang ledger rendered as rows (captions.legend_html)."""
     if not nodes or "length" not in nodes[0] or "direction" not in nodes[0]:
         raise ValueError(
             "the Nodes' log is tools/eras.py's --nodes file, one line per interval with X, length, turned, direction and quanta"
@@ -455,6 +467,14 @@ def page(
         .replace("{{CHARTS}}", embed(charts_of(nodes, clicks or [], world, course)))
         .replace("{{NOTES}}", embed(notes))
         .replace("{{STAGES}}", embed(stages_of(nodes, course, clicks or [], eras, world)))
+        .replace(
+            "{{LEGEND}}",
+            legend_html(
+                legend_of(eras, nodes, clicks or [], floor_of(course["gamma"])),
+                ledger_of(eras, nodes, clicks or []),
+                wide=False,
+            ),
+        )
     )
 
 

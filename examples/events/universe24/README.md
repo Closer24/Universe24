@@ -12,7 +12,7 @@ The bang from the light seed: X = Gamma = 1,000 at every Node at rest, the volum
 
 ## The pages
 
-`universe24.torus.html`, the cube view played from the seed with the stage strip and the events' captions (tools/look/torus_page.py), and `universe24.html`, the eras page with the births, the clicks and the captions (tools/look/eras_page.py), both from the three logs above; the captions are the logs' own words for every event (a bang, a top, a birth, a click, a horizon), nothing declared.
+`universe24.torus.html`, the cube view played from the seed with the stage strip and the events' captions (tools/look/torus_page.py), and `universe24.html`, the eras page with the births, the clicks and the captions (tools/look/eras_page.py), both from the three logs above; the captions are the logs' own words for every event (a bang, a top, a birth, a click, a horizon), nothing declared. Both pages carry the legend of kinds and the per-bang ledger (tools/look/captions.py `legend_of`, `ledger_of`; the owner's word of 2026-10-24, 08:0x UTC): every kind of thing the law can show with its viewer's name, its clause in the law and its count in the run read from the logs alone, zeros with the cause the logs give (8 bangs, 8 tops, 0 black holes, 0 turns at the floor, 1,000 Node turns, 125 proton pairs born at 29 at 125 Nodes, 0 electron and 0 matter pairs, 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 3 quanta per Node at 2,400, light 0 from 29, bound bodies not readable from the logs), and one row per bang with the top, the births, the matter standing at the top, the light left, the horizon's Links and the Node turns, the rows showing nothing new after bang 1 (tests/test_the_pages_carry_the_legend_of_kinds.py).
 
 ## The commands
 
