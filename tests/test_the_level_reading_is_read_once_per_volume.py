@@ -1,0 +1,80 @@
+"""The volume's level reading read once per distinct volume (features/volume `level_of`, the memo `LEVELS`; the architect's round of 2026-10-24): the shipped Universe24 over 30 intervals writes the shipped eras, nodes and clicks lines bit for bit, a 9-cube of the small universe over 30 intervals holds the state the search at every Node holds, and 60 intervals of it run back exact with the clicks' history kept (the suite's bound of 30 seconds per test; 100 intervals both ways in the architect's measurement, bit for bit)."""
+
+import json
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import pytest
+
+from event_universe import world_files
+from event_universe.features import volume
+from event_universe.lattice import Lattice
+from event_universe.world_files import load_world
+from tests.laws import board_state, same_state
+from tests.laws_universe import ERAS, FOLDER, LOG, WORLD, small_world
+
+INTERVALS, CUBE, COMPARED = 60, 9, 30
+
+
+def lines_of(path: Path, limit: int | None = None) -> list[dict[str, Any]]:
+    """The log's lines without the clock (`seconds`), the lines up to the interval `limit` where one is given."""
+    found = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    for line in found:
+        line.pop("seconds", None)
+    return [line for line in found if limit is None or line.get("interval", 0) <= limit]
+
+
+def searched_at_every_node(gamma: int, volumes: Any) -> Any:
+    """The level reading as the search at every Node gives it, no memo (`volume.searched_levels` on the whole array)."""
+    flat = np.asarray(volumes, dtype=object).reshape(-1)
+    return volume.searched_levels(gamma, flat).reshape(np.asarray(volumes).shape)
+
+
+def test_the_shipped_universe_writes_the_shipped_logs_over_30_intervals(tmp_path: Path) -> None:
+    ERAS.run(WORLD, tmp_path / "e.jsonl", 10**6, COMPARED, tmp_path / "c.jsonl", tmp_path / "n.jsonl")
+    assert lines_of(tmp_path / "e.jsonl")[1:] == lines_of(LOG)[1 : COMPARED + 1]
+    assert lines_of(tmp_path / "n.jsonl") == lines_of(FOLDER / "universe24.nodes.jsonl")[:COMPARED]
+    assert lines_of(tmp_path / "c.jsonl") == lines_of(FOLDER / "universe24.clicks.jsonl", COMPARED)
+
+
+def test_the_9_cube_holds_the_state_of_the_search_at_every_node(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path = small_world(tmp_path, absorber=True, cube=CUBE)
+    searched: list[dict[str, object]] = []
+    monkeypatch.setattr(volume, "level_of", searched_at_every_node)
+    board = Lattice(load_world(path), output=searched.append)
+    states = []
+    for _ in range(COMPARED):
+        board.step()
+        states.append(board_state(board))
+    monkeypatch.undo()
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    read_once: list[dict[str, object]] = []
+    board = Lattice(load_world(path), output=read_once.append)
+    for interval in range(COMPARED):
+        board.step()
+        assert same_state(board_state(board), states[interval]), interval
+    assert read_once == searched and any(line["event"] == "click" for line in read_once)
+
+
+def test_the_9_cube_runs_back_exact_over_60_intervals(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    clicks: list[dict[str, object]] = []
+    board = Lattice(load_world(small_world(tmp_path, absorber=True, cube=CUBE)), output=clicks.append)
+    states = [board_state(board)]
+    for _ in range(INTERVALS):
+        board.step()
+        states.append(board_state(board))
+    during: list[dict[str, object]] = []
+    board.output = during.append
+    back = 0
+    for k in range(INTERVALS):
+        board.step_inverse()
+        back += same_state(board_state(board), states[INTERVALS - 1 - k])
+    assert (back, during, board.interval) == (INTERVALS, [], 0)
+    assert any(line["event"] == "click" for line in clicks)

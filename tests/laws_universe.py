@@ -43,7 +43,11 @@ BEFORE_TOP, AFTER_TOP = (
 
 
 def small_world(
-    folder: Path, detector: bool = True, absorber: bool = False, resonances: tuple[int, ...] = (902,)
+    folder: Path,
+    detector: bool = True,
+    absorber: bool = False,
+    resonances: tuple[int, ...] = (902,),
+    cube: int = CUBE,
 ) -> Path:
     """The shipped universe's three families with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), and the detector on two Nodes."""
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
@@ -53,9 +57,9 @@ def small_world(
             {"name": "absorber", "pair": [666, GAMMA], "reads": {"gravity": 1}, "dimension": [2, 2]}
         )
     (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    nodes = [[x, y, z] for x in range(CUBE) for y in range(CUBE) for z in range(CUBE)]
+    nodes = [[x, y, z] for x in range(cube) for y in range(cube) for z in range(cube)]
     world: dict[str, Any] = {
-        "shape": [CUBE] * 3,
+        "shape": [cube] * 3,
         "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
         "intervals": 200,
         "universe": "u.json",
