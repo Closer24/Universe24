@@ -132,7 +132,7 @@ sh papers/spacetime_events/build.sh
 
 ## Further research
 
-[docs/FURTHER_RESEARCH.md](docs/FURTHER_RESEARCH.md) opens with what does not match nature, by name: the covariance of the cube's 48 broken at a turned Node under the gapped holder, the conservation at the click not exact, the bound body's click as the owner's hypothesis, the Link unit G = 16 kept by name, the bang's return under the birth's selector at the PeV den, the slabs runner's speed, what the record does not show, the atom out of the board's reach, and the two shipped-engine findings kept; the open items of the one world follow it, each with where to start, and the former courses' items stand by name with the sha where their text is kept. A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+[docs/FURTHER_RESEARCH.md](docs/FURTHER_RESEARCH.md) opens with what does not match nature, by name: the covariance of the click's read under the cube's 48, holding on the massless board and breaking at a turned Node under the gapped holder, the conservation at the click not exact, the bound body's click as the owner's hypothesis, the Link unit G = 16 kept by name, the bang's return under the birth's selector at the PeV den, the slabs runner's speed, what the record does not show, the atom out of the board's reach, and the two shipped-engine findings kept; the open items of the one world follow it, each with where to start, and the former courses' items stand by name with the sha where their text is kept. A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 
