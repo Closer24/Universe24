@@ -1,4 +1,4 @@
-"""The volume form's construction under the law of one Node (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; The form's own clock; The factor carried; The stress's trace is the time line's; the hypotheses under their own names, 2026-10-22; the momentum hand's derivation M12a of the volume form, read cold by the reader; DESIGN section 3, T3 to T8), construction alone and no world of the test of the law's course: the form's own clock as one power of the write (T6), the volume form's two functions, one division and one search (T3), the premise as a test, the volume's write reading its own level both ways and the velocity no datum of the seed (T4), the run back MATCH at every interval at a wall that never moves (T5), the trace as the time line's with the tension lines traceless (T7), the finding of the second smoke as a test, and the carried factor at the wall fixed per Node (T8); the declaration and the attractor stand in tests/test_the_uniform_mode.py (T1, T2 and T9), the builders in tests/laws_interval.py."""
+"""The volume form's construction under the law of one Node (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; The form's own clock; The factor carried; The stress's trace is the time line's; the hypotheses under their own names, 2026-10-22; the momentum hand's derivation M12a of the volume form, read cold by the reader; DESIGN section 3, T3 to T8), construction alone and no world of the test of the law's course: the form's own clock as one power of the write (T6), the volume form's two functions, one division and one search (T3), the premise as a test, the volume's write reading its own level both ways and the velocity no datum of the seed (T4), the run back MATCH at every interval at a wall that never moves (T5), the trace as the time line's with the tension lines traceless (T7), the finding of the second smoke as a test, and the carried factor at the wall fixed per Node (T8); the declaration and the attractor stand in tests/test_the_uniform_mode.py (T1, T2 and T9), the volume form's two functions and the singular point."""
 
 import bisect
 from dataclasses import dataclass
@@ -10,9 +10,8 @@ from event_universe import records
 from event_universe.core import paces
 from event_universe.features import volume
 from tests.laws import refused
-from tests.laws_interval import (
-    GAMMA,
-)
+
+GAMMA = 6000  # the rule's clock
 
 
 @dataclass(frozen=True)

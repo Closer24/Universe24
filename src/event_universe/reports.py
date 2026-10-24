@@ -2,15 +2,10 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
-
-from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
-
 if TYPE_CHECKING:
-    from event_universe.loader.keys import Node
+    pass
 
 MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
@@ -215,36 +210,6 @@ def book(
 ) -> dict[str, int | None]:
     """A family's books, a lattice diagnostic: its share summed over the lattice in the current's units, the same in quanta over W_c, its count in the credit's books, its deficit, the quanta taken from the record and written nowhere (the undepleted beam, `take.faced`, the absorptions' count times one quantum: the board's share in quanta stands above the books' count by it, the three compared at every reading), the share's drift from the one the world started with (share, quanta and drift None where a Node is frozen: the share is not read there and no number is invented), the least Node pace Gamma - 2 c_i of the final state and the count of the frozen Nodes."""
     return dict(zip(BOOKS, (share, quanta, count, deficit, drift, pace, frozen), strict=True))
-
-
-def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
-    """The Chebyshev ball of a radius about a Node as a mask of the board, the near zone of a bound body (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22; `loader/instrument.near_zone`): every Node whose distance per axis is at most the radius, the distance the shorter way round on a periodic axis; its front (`front`) is the light's front, the shell's Ports that exist."""
-    grid, found = np.indices(shape), np.ones(shape, dtype=bool)
-    for axis, (extent, at) in enumerate(zip(shape, centre, strict=True)):
-        distance = np.abs(grid[axis] - at)
-        if wrap[axis]:
-            distance = np.minimum(distance, extent - distance)
-        found &= distance <= radius
-    return found
-
-
-def front(nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray) -> list[np.ndarray]:
-    """Per Port, the Nodes of the region at which that Port is a front boundary Port of the declared NodeDetectors: it leads in from a Node of the declared board outside them (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
-    return [nodes & ~arrival(reader_nodes, axis, side, wrap) for axis, side in PORT_SIDES]
-
-
-def weighted(
-    facing: Sequence[np.ndarray], pieces: Sequence[tuple[tuple[Any, ...], tuple[Any, ...], Any]]
-) -> list[np.ndarray]:
-    """Per Port and per Node of a region, the conserved form's own current through that front boundary Port (`facing`, the region's front per Port as `entering` reads it), inward positive, 0 at every other Node and Port, six arrays in Port order (their sum at a Node its inflow, the draw's weight; the Port's own the hole's set, `node_detector.arrival_ports`; the click's plan, C6 (i)): per record its current through each front Port times that Link's factor Q_ij, summed over the family's records, `pieces` per record its six currents, its six Links' factors in Port order and its share at the readers' Nodes, at the pair the step starts from (`node_detector.weighed_currents`; the share the passage's, `node_detector.Passage`), in the unit G^2 of the Link's factor and in Python's integers at the front Nodes alone; what a NodeDetector books (`credit.booked`, `node_detector.booked_inflow`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: num (q_ij / Gamma)^2 (now_i before_j - before_i now_j) through each front Port, the Link's factor squared the one weight, no rounding per Link), equal to the plain current times G^2 where no tension stands on the Link; the click line keeps the plain current, `entering`."""
-    seen = [np.zeros(facing[0].shape, dtype=object) for _port in range(PORTS)]
-    for through, factors, _shares in pieces:
-        for port in range(PORTS):
-            at = facing[port]
-            flow = np.asarray(through[port])[at].astype(object)
-            factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
-            seen[port][at] += flow * factor
-    return seen
 
 
 def birth_line(

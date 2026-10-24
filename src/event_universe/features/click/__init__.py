@@ -154,12 +154,6 @@ def squared(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> in
     return int(division_forward(count * action, 2 * laid, 0)[0])
 
 
-def spread(square: int, share: tuple[int, int]) -> int:
-    """A region's Node's amplitude from the record's A^2 and the Node's share (weight, total) of the lay, (the largest x with x^2 <= A^2 weight div total): A_n^2 = A^2 / n over n Nodes in equal counts (ALGEBRA.md, The NodeDetector is one declaration kind for every world; the mathematician's hand)."""
-    weight, total = share
-    return largest_below(int(division_forward(square * weight, total, 0)[0]))
-
-
 def amplitude(count: int, action: int, pair: tuple[int, int], laid: int = 1) -> int:
     """The amplitude A of `count` quanta standing at one Node on `laid` lines alike (one, the taker's part): A^2 = count T den^2 div (2 laid (den^2 - num^2)), the share 6 den A^2 sin^2 omega per line over W_c = 3 den T the count, by the search on the share reading (`rule3.largest_below`); for the massless pair, whose one-Node record has no rotation, A^2 = count T div (2 laid), the two levels alike (the lay by the count, `emission.laid_by_count`: every laid line of the record alike, the symmetric lay, the mathematician's hand)."""
     return largest_below(squared(count, action, pair, laid))

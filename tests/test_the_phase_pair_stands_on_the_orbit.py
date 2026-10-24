@@ -1,4 +1,4 @@
-"""Every Link's phase pair stands on the one orbit from the seed (features/phase `Orbit`, node.phase_carried; the architect's round of 2026-10-24): the pair at a count is the checkpoint at or below it, or the Link's own pair where that is nearer, carried by the rest, the same integers as the acts one by one from the seed; the folded Universe24 writes its shipped eras, nodes and clicks lines bit for bit over the record's first 12 intervals (the 5-cube record's 32 to 2026-10-24: the intervals about the meeting at 29 cost most of the run's seconds, so the span compared is the record's opening under the suite's bound of 30 seconds per test; the births at 29 are read by the tests on the bare 3-cube), and 10 intervals of it with the pairs carried act by act hold the same phase lines (30 to 2026-10-24, shortened under the suite's bound of 30 seconds per test on the run's clock of four workers; the sentence the same) (the born pairs sourcing the holder from 30)."""
+"""Every Link's phase pair stands on the one orbit from the seed (features/phase `Orbit`, node.phase_carried; the architect's round of 2026-10-24): the pair at a count is the checkpoint at or below it, or the Link's own pair where that is nearer, carried by the rest, the same integers as the acts one by one from the seed; the folded Universe24 writes its shipped eras, nodes and clicks lines bit for bit over the record's first 12 intervals (the 5-cube record's 32 to 2026-10-24: the intervals about the meeting at 29 cost most of the run's seconds, so the span compared is the record's opening under the suite's bound of 30 seconds per test; the births at 29 are read by the tests on the bare 3-cube), and 10 intervals of the bare 3-cube torus with the pairs carried act by act hold the same phase lines (30 to 2026-10-24, shortened under the suite's bound of 30 seconds per test on the run's clock of four workers; the sentence the same) (the born pairs sourcing the holder from 30)."""
 
 import json
 from pathlib import Path
@@ -7,11 +7,11 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import node
+from event_universe import node, world_files
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws_universe import ERAS, FOLDER, LOG, WORLD
+from tests.laws_universe import ERAS, FOLDER, LOG, WORLD, bare_torus
 
 INTERVALS, COMPARED, GAMMA, WIDTH = (
     12,
@@ -82,10 +82,13 @@ def phases_of(board: Lattice) -> list[list[list[int]]]:
 
 
 def test_the_pairs_on_the_orbit_are_the_pairs_carried_act_by_act(
-    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    act_by_act = Lattice(load_world(WORLD), output=lambda line: None)
-    on_orbit = Lattice(load_world(WORLD), output=lambda line: None)
+    """On the bare 3-cube torus of the one universe file (the one world's 5-cube to 2026-10-24, re-seated for the seconds): the holders' phase lines on the orbit equal the lines carried act by act over 10 intervals."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path = bare_torus(tmp_path)
+    act_by_act = Lattice(load_world(path), output=lambda line: None)
+    on_orbit = Lattice(load_world(path), output=lambda line: None)
     real = phase.orbit_of
     monkeypatch.setattr(  # the former path for act_by_act's states alone, through the loop
         node.phase,
