@@ -324,45 +324,23 @@ def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
     assert found == STEPS, found
 
 
-RUN_NODES = 2_500  # the boards the start settles within the suite's time at load (the 54 worlds' sweep 154 s on the house's clock at RUN_NODES 12,000 and about 580 s on a loaded machine; a 25-cube's start about 15 s, a 33-cube's about 100 s)
-
-
-def shipped_worlds() -> list[Path]:
-    """Every world file under examples/ (found by its own keys `shape` and `universe`; the generator's design, the blind and the expectation are no file the loader reads), relative to the repository root, in the files' order."""
-    found = []
-    for path in sorted((SRC.parents[1] / "examples").rglob("*.json")):
-        if path.name.endswith(("design.json", "expectation.json")) or ".blind" in path.name:
-            continue
-        try:
-            document = json.loads(path.read_text(encoding="utf-8"))
-        except ValueError:
-            continue
-        if "universe24" not in path.parts:
-            continue  # every other folder is a record of the law to 2026-10-23 and is not run
-        if isinstance(document, dict) and all(key in document for key in ("shape", "universe")):
-            found.append(path.relative_to(SRC.parents[1]))
-    return found
-
-
-@pytest.mark.parametrize("path", shipped_worlds(), ids=lambda path: path.stem)
-def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: ignore[no-untyped-def]
-    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none) and, where the board holds at most RUN_NODES Nodes, is started and stepped one interval by the engine's own step with its books open; a larger board's start stands beyond the suite's bound on the house's clock and is run by the world's own tests, named here as loaded alone."""
+def test_the_one_world_loads_under_the_one_node_and_runs():  # type: ignore[no-untyped-def]
+    """The shipped one world, examples/events/universe24 (125 Nodes), loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board periodic on every axis where the world declares no boundary), is laid on its board and stepped 12 intervals, every held row's wall fixed per Node, and a massless time line never fires (ALGEBRA.md, The swap at the top, the massless clause). The sweep over every shipped world under examples/ (60 worlds, their starts 142 s summed on the suite's clock) left on 2026-10-24: every world but Universe24 is cancelled (the owner's word)."""
     from tests.laws_read import load_shipped
 
-    world = load_shipped(SRC.parents[1] / path)
-    nodes = int(np.prod(world.shape))
-    assert len(world.periodic) == 3 and world.families and world.intervals >= 1
-    if nodes > RUN_NODES:
-        print(
-            f"{path}: {nodes} Nodes loaded under the one Node, its start beyond the bound, run by its own tests"
-        )
-        return
+    path = SRC.parents[1] / "examples" / "events" / "universe24" / "universe24.json"
+    world = load_shipped(path)
+    assert len(world.periodic) == 3 and all(world.periodic) and world.families and world.intervals >= 1
+    assert (
+        int(np.prod(world.shape)) == 125
+    )  # the shipped one world, the smallest structured board with a clump
     board = Lattice(world)
-    board.step()
-    assert board.interval == 1
+    for _ in range(12):
+        board.step()
+    assert board.interval == 12 and board.ended is None
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
-        assert (
-            board.swaps == []
-        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
-    print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")
+        assert board.swaps == []  # a massless time line never fires
+    print(
+        f"{path.relative_to(SRC.parents[1])} (125 Nodes) loaded under the one Node and stepped 12 intervals"
+    )

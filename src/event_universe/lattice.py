@@ -202,7 +202,7 @@ class Lattice:
         node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         stresses = board_readings.stresses(self)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
-        senses = board_readings.sense_currents(self)
+        stresses, senses = board_readings.stresses(self), board_readings.sense_currents(self)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():
             family, state = self.families[index], self.states[index]

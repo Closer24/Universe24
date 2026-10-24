@@ -103,6 +103,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the click's read over the total, once per draw
     ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
+    (
+        "features/currents/__init__.py",
+        "level_term",
+        "division_forward",
+    ): "D",  # the Link's level term's half, the floor once, discarded (The booking is the frame's, 2026-10-23)
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (

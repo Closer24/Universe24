@@ -7,7 +7,9 @@ from event_universe.lattice import Lattice
 from event_universe.loader import keys, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.world_files import load_world
-from tests.laws import refused, universe_beside
+from tests.laws import EVENTS, refused, universe_beside
+
+ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):

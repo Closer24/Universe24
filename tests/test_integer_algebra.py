@@ -51,6 +51,9 @@ PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/universe.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
 PHYSICAL_MODULES += (
+    "loader/charge.py",
+)  # the sign's readers Pythagorean and their charge factors (2026-10-24)
+PHYSICAL_MODULES += (
     "shear.py",
     "walls.py",
 )  # the tension lines stepped as the shear's momentum at the volume's wall

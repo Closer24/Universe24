@@ -26,7 +26,7 @@ RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at 
 
 
 def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floor():
-    """The share's change is the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465) and not at the pair it left, and the audit's exact witnesses, each the engine's own integers against the law's rational identity, so that an exact-equality wording cannot return (#1582; #1583 B1 to B3; #1579). (a) At equal paces (pair [1, 1], Gamma 5, the content 1, the Node at -3 / -3 with its three + neighbours at -3) the integer share goes 54 to 26: the currents -27, Rule3's remainder term -3 (next - before) (r' - r) / P^2 = -2 / 3, and the reader's own floor residual, frac(q(now, before)) - frac(q(next, now)) = -1 / 3 with q the weighted Node term before its floor, strictly between -1 and 1 per Node and level pair, the identity exact with it. (b) The vacuum witness, pair [2, 3] at Gamma 6,000 from now 1 and before 0: next 1 with r' = 216,000,000, the share 9 to 6 with no current, Rule3's term rho = (r - r') / (2 Gamma^2) = -3 (over Gamma^2 alone it would read -6), the line 6 den Gamma^2 (next + before) = 2 num Gamma^2 S_6(now) + r - r' exact. (c) The Wronskian under the integer step (#1579): at [2, 3] the parts (1, 3) from zeros step to (1, 4) and W from 0 to -1, exactly the remainder term eps_re im_now - eps_im re_now with eps = (r - r') / w, under |re_now| + |im_now| per Node and interval, the inverse exact; at [1, 2] the parts stand and W stays 0 (the divisible control): the integer W is conserved up to that term and no quadratic form of the levels and remainders is conserved exactly (the second mathematician, #1572 comment 5932042343), so every test of a conserved quantity asserts a bound, never exactness. (d) The band's edge (B2): light's checkerboard at wave number pi on every axis reads 2 cos omega = -2 exactly, a repeated root the guard admits at p = Gamma, and the line grows it linearly, (-1)^t (t + 1) with the remainder 0, so the guard excludes exponential growth and does not bound the record; the same checkerboard with before = -now has the share 0 at every Node, a null mode that is no static uniform record. (e) The conserved form's domain (B1): at Node-isotropic paces the weighted form E with the Node weights 1 / p_i^2 is conserved exactly by the unrounded line, on the audit's 2 x 1 x 1 light board at Gamma 2 with the paces 2 and 1 (M = [[4 / 3, 2 / 3], [1 / 6, 11 / 6]]) E standing at 6 while the unweighted D falls from 1 to 11 / 12, and on the 2 x 2 x 1 square with p_x(A) = 2 among paces 1 the product of M_ij / M_ji around the square is 4, so no positive Node weight symmetrises a read booked per Node per axis. The exact bands beside them: a Node at rest in the vacuum turns by 2 cos omega = 2 num / den, the three integer rotations 1, 0 and -1 closing in 6, 4 and 3 intervals with the remainder 0 at every step. The corner's reads carry the x Links' factor 4 at the pace 1 against the plain reads."""
+    """The share's change is the currents at the pair the step started from (issue #1495 finding 6; the paper writer's finding, #1538 comment 5921398465) and not at the pair it left, and the audit's exact witnesses, each the engine's own integers against the law's rational identity, so that an exact-equality wording cannot return (#1582; #1583 B1 to B3; #1579). (a) At equal paces (pair [1, 1], Gamma 5, the content 1, the Node at -3 / -3 with its three + neighbours at -3) the frame's integer share goes 13 to 12 (ALGEBRA.md, The booking is the frame's, 2026-10-23; the plain term's 54 to 26, the share to that day, read beside it as the lines' own read): the frame's current 0, the plain current -27 less the Links' level terms' change -27 (`readings.gauge_terms`), Rule3's remainder term -3 (next - before) (r' - r) / P^2 = -2 / 3, and the frame reading's own floor residual, frac(E(now, before)) - frac(E(next, now)) = -1 / 3 with E the frame's term before its floor, strictly between -1 and 1 per Node and level pair, the identity exact with it; the plain identity on the plain term with the plain current -27 and its residual -1 / 3 as before. (b) The vacuum witness, pair [2, 3] at Gamma 6,000 from now 1 and before 0: next 1 with r' = 216,000,000, the share 9 to 6 with no current, Rule3's term rho = (r - r') / (2 Gamma^2) = -3 (over Gamma^2 alone it would read -6), the line 6 den Gamma^2 (next + before) = 2 num Gamma^2 S_6(now) + r - r' exact. (c) The Wronskian under the integer step (#1579): at [2, 3] the parts (1, 3) from zeros step to (1, 4) and W from 0 to -1, exactly the remainder term eps_re im_now - eps_im re_now with eps = (r - r') / w, under |re_now| + |im_now| per Node and interval, the inverse exact; at [1, 2] the parts stand and W stays 0 (the divisible control): the integer W is conserved up to that term and no quadratic form of the levels and remainders is conserved exactly (the second mathematician, #1572 comment 5932042343), so every test of a conserved quantity asserts a bound, never exactness. (d) The band's edge (B2): light's checkerboard at wave number pi on every axis reads 2 cos omega = -2 exactly, a repeated root the guard admits at p = Gamma, and the line grows it linearly, (-1)^t (t + 1) with the remainder 0, so the guard excludes exponential growth and does not bound the record; the same checkerboard with before = -now has the share 0 at every Node, a null mode that is no static uniform record. (e) The conserved form's domain (B1): at Node-isotropic paces the weighted form E with the Node weights 1 / p_i^2 is conserved exactly by the unrounded line, on the audit's 2 x 1 x 1 light board at Gamma 2 with the paces 2 and 1 (M = [[4 / 3, 2 / 3], [1 / 6, 11 / 6]]) E standing at 6 while the unweighted D falls from 1 to 11 / 12, and on the 2 x 2 x 1 square with p_x(A) = 2 among paces 1 the product of M_ij / M_ji around the square is 4, so no positive Node weight symmetrises a read booked per Node per axis. The exact bands beside them: a Node at rest in the vacuum turns by 2 cos omega = 2 num / den, the three integer rotations 1, 0 and -1 closing in 6, 4 and 3 intervals with the remainder 0 at every step. The corner's reads carry the x Links' factor 4 at the pace 1 against the plain reads."""
     zero, ones = np.zeros((3, 3, 3), dtype=np.int64), np.ones((3, 3, 3), dtype=np.int64)
     rule = law(1, 1, 5, *paces.node_paces(5, 1))  # the clock 4, the pace 3: R 18, S 192, w 150
     now, before = zero.copy(), zero.copy()
@@ -34,15 +34,36 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
     after = flux.step_line(record := records.Record(now, before, zero), rule, RING)
     weight = 2 * paces.link_pace(5, 1) ** 2  # the share's wall 2 p_i^2 G^2 = 18 at the Node's pace 3
     shares = [int(share.share((1, 1), r, RING, 5, 1)[HERE]) for r in (record, after)]
+    plain = [int(share.share((1, 1), r, RING, 5, 1, as_read=r)[HERE]) for r in (record, after)]
     currents = sum(int(f[HERE]) for f in readings.currents_of(1, [record], RING))
+    level_terms = sum(int(g[HERE]) for g in readings.gauge_terms(1, [record], [after], RING))
+    framed = currents - level_terms  # the frame's current J: the plain less the level terms' change
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
-    unfloored = [Fraction(form_term(rule[1], rule[2], a, -3), weight) for a in (-3, nxt)]
-    residual = unfloored[0] % 1 - unfloored[1] % 1
-    assert (nxt, carried, shares, currents, residual) == (-2, 12, [54, 26], -27, Fraction(-1, 3))
+
+    def unfloored(
+        r,
+    ):  # the frame's term before its floor: the plain term doubled less the Links' products
+        now, before = int(r.now[HERE]), int(r.before[HERE])
+        at = [
+            (np.roll(r.now, -s, a)[HERE], np.roll(r.before, -s, a)[HERE])
+            for a in range(3)
+            for s in (1, -1)
+        ]
+        term = form_term(rule[1], rule[2], now, before) - now * sum(
+            rule[0][k] * b for k, (_n, b) in enumerate(at)
+        )
+        links = sum(rule[0][k] * (before - b) * (now + n) for k, (n, b) in enumerate(at))
+        return Fraction(int(2 * term - links), 2 * weight), Fraction(int(term), weight)
+
+    residual = unfloored(record)[0] % 1 - unfloored(after)[0] % 1
+    assert (nxt, carried, shares, plain, currents) == (-2, 12, [13, 12], [54, 26], -27)
+    assert (level_terms, framed, residual) == (-27, 0, Fraction(-1, 3))
     assert (
         sum(int(f[HERE]) for f in readings.currents_of(1, [after], RING)) != currents
     )  # not the pair left
-    assert shares[1] - shares[0] == currents + Fraction(-(nxt + 3) * carried, weight) + residual
+    assert shares[1] - shares[0] == framed + Fraction(-(nxt + 3) * carried, weight) + residual
+    plain_residual = unfloored(record)[1] % 1 - unfloored(after)[1] % 1
+    assert plain[1] - plain[0] == currents + Fraction(-(nxt + 3) * carried, weight) + plain_residual
     record, rule = records.Record(ones, zero, zero), law(2, 3, GAMMA, GAMMA, GAMMA)
     after = flux.step_line(record, rule, RING)
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
@@ -163,7 +184,9 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
                 c.astype(object) for c in readings.currents_of(family.pair[0], lines, board.wrap)
             )
             first, second = board.stepped(charged, 1)[1][0]
-            terms = wall * (shares(second) - shares(lines, turned)) - wall * flows
+            terms = (
+                wall * (shares(second, second) - shares(lines, lines)) - wall * flows
+            )  # the plain term, the lines as their own read: the frame's term stands beside it since 2026-10-23, its change the frame's currents ((a) above)
             for k in range(2):
                 u, v = first[k].before.astype(object), second[k].now.astype(object)
                 before, carried = lines[k].before.astype(object), lines[k].remainder.astype(object)
