@@ -86,6 +86,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "examples/ and tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world stepped 100 intervals "
         "bit for bit as its stored digest, whatever else the tree's step does",
     ),
+    "tests/test_the_conversion.py::test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether": (
+        45,
+        "the two-families chain world run its 210 intervals, past the derived window 197 (2026-10-23), the sentence needing "
+        "the whole run (the electron's credit alone at 197, the neutron unconverted through the 210; 2026-10-24); 37.8 s "
+        "alone under the universal charge, 33.6 s at the merge base",
+    ),
     "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
         45,
         "the conversion in the toy (2026-10-21): the chain world run to its first conversion at a "
