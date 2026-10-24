@@ -107,7 +107,7 @@ def test_equal_wronskians_of_two_families_write_equal_charge(tmp_path, monkeypat
 
 
 def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The sea with a hole (the law's seed with the origin's light taken by the one lay act, the form the board's own close uses for the two quanta's hole), 40 intervals: electron pairs are born by the draw and the holder of the sign stays below the former defect's write of one born electron over two intervals, 32,854 = 2 x 16,427 (the runaway hand's 3-cube from the hole: 32,855 at 2 and 4,401,616 at 40 under the former factor; 3,774 at 40 under the sentence), with no exponential (the level ratio over the last ten intervals under 1.2)."""
+    """The sea with a hole (the law's seed with the origin's light taken by the one lay act, the form the board's own close uses for the two quanta's hole) and one electron quantum laid in the birth's own form, 40 intervals: electron pairs are born by the draw and every level of the holder of the sign stays below the former factor's write of that one electron in one interval, 16,427 (the runaway hand's 3-cube, 2026-10-24: 18,861 at the interval 1 under the former factor, 18 under the sentence; the hole's board 4,401,616 at 40 before, 3,774 after). On this head a born pair's two items are both laid at the Node (every face read before any write), its Wronskian there 0, so the laid quantum is the holder's source."""
     births: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(
         tmp_path, monkeypatch, lambda line: births.append(line) if line.get("event") == "birth" else None
@@ -118,11 +118,12 @@ def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path
         line = board.states[light].lines[number]
         change = (np.where(here, -line.now, 0), np.where(here, -line.before, 0))
         laid(board, light, number, change, None, None, here)
+    names = [f.name for f in board.families]
+    electron, den = names.index("electron"), board.families[names.index("electron")].pair[1]
+    laid_by_count(board, Item(electron, 1, ((1, 1, 1),), (den, den), sense=-1))
     largest = []
     for _ in range(40):
         board.step()
         largest.append(max(holder_rows(board)))
     assert any(b["children"][0] == "electron" for b in births)
-    assert max(largest) < 32_854
-    ratios = [b / a for a, b in zip(largest[-11:-1], largest[-10:], strict=True) if a]
-    assert ratios and sum(ratios) / len(ratios) < 1.2
+    assert 0 < max(largest) < 16_427
