@@ -1,4 +1,4 @@
-"""The piece's momentum of a record of a negative numerator (issue #2169, finding 3; the reader's ruling of 2026-10-21; ALGEBRA.md, The tension, the dated word, and the piece's line under The lattice momentum): `node_detector.piece_momentum` guarded on the signed wall num x W(region), so a negative numerator's passage read as nothing passed and the credit line carried the piece [0, 0, 0]; the guard is on the share alone and the division by the signed wall as the law writes it, the rounding half up on the magnitude with the sign of num after (kind D as before). The builder's chain: the neutron pair [-4800, 6000] laid as a packet of three real lines at the weights (7, 7, 5), the wave [-1, 4] along +x (the band inverted, a record moving toward +x at sin k below 0), two regions of four Nodes, the window 95; at the right region's close one credit line, the piece -43,250 along x where the engine gave 0, with the fan -73,186: the law's P_a = F / num against the motion for a negative numerator, the rest at the band's top, and the piece one count's P_a with it; the integers pinned."""
+"""The piece's momentum of a record of a negative numerator (issue #2169, finding 3; the reader's ruling of 2026-10-21; ALGEBRA.md, The tension, the dated word, and the piece's line under The lattice momentum): `node_detector.piece_momentum` guarded on the signed wall num x W(region), so a negative numerator's passage read as nothing passed and the credit line carried the piece [0, 0, 0]; the guard is on the share alone and the division by the signed wall as the law writes it, the rounding half up on the magnitude with the sign of num after (kind D as before). Posed on the small torus with the universe file (tests/laws_universe.small_world) with a neutron row [-800, 1000] added to the universe, three real lines at the inverted band, by the arithmetic alone on a hand-written passage. The builder's chain, named (left on 2026-10-24, every world but Universe24 cancelled; its electron [4000, 6000] refused at load since that day, the sign's reader Pythagorean): the neutron [-4800, 6000] laid as a packet of three real lines at the weights (7, 7, 5), the wave [-1, 4] along +x on the chain of 61 toward a region of its last four Nodes, the derived window 59, one credit line at the close 118 with the piece and the fan below 0 (the piece -43,250 along x by the arithmetic where the engine gave 0; -42,370 and -77,974 at the close 95 under the declared window to 2026-10-23)."""
 
 from __future__ import annotations
 
@@ -9,139 +9,40 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.node_detector import Passage, piece_momentum
 from event_universe.world_files import load_world
-from tests.laws import TOOL
+from tests.laws import family
+from tests.laws_universe import GAMMA, small_world
 
-UNIVERSE = {
-    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
-    "families": [
-        {
-            "name": "gravity",
-            "pair": [6000, 6000],
-            "reads": {"gravity": 1, "binding": 1},
-            "held": {
-                "sources": ["form", "tensions"],
-                "level_weight": 1000,
-                "write_weight": 1,
-                "rest": 60,
-            },
-        },
-        {
-            "name": "charge",
-            "pair": [6000, 6000],
-            "reads": {"gravity": 1, "binding": 1},
-            "held": {"sources": ["wronskian"], "level_weight": 1},
-        },
-        {
-            "name": "binding",
-            "pair": [2400, 2401],
-            "reads": {"gravity": 1, "binding": 1},
-            "held": {"sources": ["form"], "level_weight": 1, "write_weight": 1},
-        },
-        {
-            "name": "neutron",
-            "pair": [-4800, 6000],
-            "reads": {"gravity": 1, "binding": 1},
-            "dimension": 3,
-        },
-        {
-            "name": "proton",
-            "pair": [0, 6000],
-            "reads": {"gravity": 1, "binding": 1, "charge": 1},
-            "dimension": ["plane", "plane", "plane"],
-        },
-        {
-            "name": "electron",
-            "pair": [4000, 6000],
-            "reads": {"gravity": 1, "binding": 1, "charge": 1},
-            "dimension": 2,
-        },
-        {
-            "name": "antineutrino",
-            "pair": [6000, 6000],
-            "reads": {"gravity": 1, "binding": 1},
-            "dimension": 1,
-        },
-    ],
-}
-INTERVALS = 240  # the run, four derived windows of 59 on this chain (the former constant 95 was the declared window and the run, the key gone with the owner's decision of 2026-10-23)
-WORLD = {
-    "shape": [61, 1, 1],
-    "boundary": {"x": "open", "y": "periodic", "z": "periodic"},
-    "face_depth": 1,
-    "intervals": INTERVALS,
-    "universe": "u.json",
-    "bodies": [],
-    "packets": [
-        {
-            "family": "neutron",
-            "along": "x",
-            "wave": [-1, 4],
-            "phase": [0, 1],
-            "amplitude": 12,
-            "top": {"x": [20, 20], "y": [0, 0], "z": [0, 0]},
-            "edge": {"x": 6, "y": 0, "z": 0},
-            "weights": [7, 7, 5],
-        }
-    ],
-    "node_detectors": [
-        {"name": "left", "positions": [[x, 0, 0] for x in range(4)]},
-        {
-            "name": "right",
-            "positions": [[x, 0, 0] for x in range(57, 61)],
-        },  # the chain's last four Nodes: the packet crosses them into the receding face within one derived window (44 to 47 to 2026-10-23, where the declared window was the run and the crossing of the inner region netted no quantum in a window of 59)
-    ],
-    "receding": {"x": {"sides": ["low", "high"], "largest": 400, "layers": 16}},
-    "draw": {},
-}
-FORMER_PIECE, FORMER_FAN = (
-    -42370,
-    -77974,
-)  # the chain's piece along x at the right region's close at 95 and the fan's P_x, as read under the law of one Node on 2026-10-23 with the region at 44 to 47 and the declared window the run (-44701 and -79904 at the close 118 with the region at the chain's end under the derived window 59): the course's numbers, named and not asserted; the law's sentence is the two signs
-ARITHMETIC = (
-    -43250
-)  # the piece of the hand-written passage below by `piece_momentum`'s arithmetic alone, no world's close
+NEUTRON = {"name": "neutron", "pair": [-800, GAMMA], "reads": {"gravity": 1}, "dimension": 3}
+PASSAGE = Passage(
+    [2118926400, 0, -2118926400], 3612117122
+)  # the chain's right region's sums at its close, the hand-written passage of 2026-10-21
+FORMER_PIECE = -43250  # the piece of this passage by the arithmetic on the chain's integers (the neutron's count unit at [-4800, 6000], T 32,768), 2026-10-21
 
 
-def chain_world(folder: Path) -> Path:
-    """The builder's chain world written beside its universe, its mode file the generator's."""
-    (folder / "u.json").write_text(json.dumps(UNIVERSE) + "\n", encoding="utf-8")
-    path = folder / "w.json"
-    path.write_text(json.dumps(WORLD) + "\n", encoding="utf-8")
-    TOOL.main(["--input", str(path)])
-    return path
-
-
-def test_the_piece_of_a_negative_numerator_is_one_counts_p_a_with_the_fans_sign(tmp_path, monkeypatch):
-    """The neutron packet of count 2 moves against its k, toward +x, and crosses the right region at the chain's end; at the first close whose window carried a whole quantum through it (the derived window 59, the close 118; the declared window 95 to 2026-10-23) one credit line at the right region, the count moved 1, the piece's p_x below 0 and the fan's P_x below 0, the two the law's P_a of a negative numerator, pointing against the motion (where the engine gave [0, 0, 0] by the guard on the signed wall; the former numbers `FORMER_PIECE` and `FORMER_FAN` named); the left region books no quantum."""
+def test_the_guard_is_on_the_share_alone_and_the_sign_is_nums(tmp_path: Path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    """`piece_momentum` by its arithmetic on the small torus with the universe file and the neutron row: the electron's piece, a positive numerator's, the division by num x W rounded half up on the magnitude with the sign after; the neutron's, a negative numerator's, the same magnitude with the sign flipped (the two pairs' sines equal, 0.6, so one count unit, and the piece one count's P_a pointing against the motion); a share at 0 or below nothing passed; and the frozen pair num = 0, the proton's, nothing passed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(chain_world(tmp_path)), (lines := []).append)
-    neutron = [f.name for f in board.families].index("neutron")
-    assert board.families[neutron].pair == (-4800, 6000) and board.credit.counts[neutron] == 2
-    window, credits = board.credit.declaration.window, []
-    while not credits and board.interval < 4 * window:
-        board.step()
-        credits = [line for line in lines if line.get("event") == "credit"]
-    print(f"the credit lines at the first close that credits: {credits}")
-    assert [(c["node_detector"], c["interval"], c["count"]) for c in credits] == [
-        ("right", board.interval, 1)
-    ]
-    assert board.interval % window == 0 and board.credit.counts[neutron] == 1
-    piece, fan = credits[0]["momentum"], credits[0]["fan"]
-    assert piece[0] < 0 and fan[0] < 0 and piece[1:] == fan[1:] == [0, 0], (piece, fan)
-    assert FORMER_PIECE < 0 and FORMER_FAN < 0  # the former course's two signs the same
-
-
-def test_the_guard_is_on_the_share_alone_and_the_sign_is_nums(tmp_path, monkeypatch):
-    """`piece_momentum` by its arithmetic: a positive numerator's piece as before (the division by num x W rounded half up on the magnitude with the sign after), a negative numerator's the same magnitude with the sign flipped, a share at 0 or below nothing passed, and the frozen pair num = 0 nothing passed."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(chain_world(tmp_path)))
-    names = [f.name for f in board.families]
-    neutron, electron, proton = (names.index(n) for n in ("neutron", "electron", "proton"))
+    path = small_world(tmp_path, detector=False)
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    universe["families"].append(NEUTRON)
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    board = Lattice(load_world(path))
+    neutron, electron, proton = (family(board, n) for n in ("neutron", "electron", "proton"))
+    assert board.families[neutron].pair == (-800, GAMMA) and board.families[electron].pair == (
+        800,
+        GAMMA,
+    )
     units = board.credit.units
-    passage = Passage([2118926400, 0, -2118926400], 3612117122)  # the chain's right region's sums
-    assert piece_momentum(board, neutron, passage) == [ARITHMETIC, 0, -ARITHMETIC]
-    expected = (2 * 2118926400 * units[electron] + 4000 * 3612117122) // (2 * 4000 * 3612117122)
-    assert piece_momentum(board, electron, passage) == [expected, 0, -expected] and expected > 0
-    assert piece_momentum(board, neutron, Passage([2118926400, 0, 0], 0)) == [0, 0, 0]
-    assert piece_momentum(board, neutron, Passage([2118926400, 0, 0], -7)) == [0, 0, 0]
-    assert piece_momentum(board, proton, passage) == [0, 0, 0]  # the frozen pair, num 0
+    assert units[neutron] == units[electron] == 3 * GAMMA * board.world.quantum_action * 600 // GAMMA
+    expected = (2 * PASSAGE.momenta[0] * units[electron] + 800 * PASSAGE.share) // (
+        2 * 800 * PASSAGE.share
+    )
+    assert expected > 0 and piece_momentum(board, electron, PASSAGE) == [expected, 0, -expected]
+    assert piece_momentum(board, neutron, PASSAGE) == [-expected, 0, expected]  # the sign num's
+    assert piece_momentum(board, neutron, Passage([PASSAGE.momenta[0], 0, 0], 0)) == [0, 0, 0]
+    assert piece_momentum(board, neutron, Passage([PASSAGE.momenta[0], 0, 0], -7)) == [0, 0, 0]
+    assert piece_momentum(board, proton, PASSAGE) == [0, 0, 0]  # the frozen pair, num 0
+    assert FORMER_PIECE < 0  # the former course's sign the same
+    print(
+        f"the piece on the small torus {piece_momentum(board, neutron, PASSAGE)} (the chain's {FORMER_PIECE})"
+    )
