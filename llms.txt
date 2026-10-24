@@ -23,7 +23,7 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 - [Contributing](https://closer24.github.io/Universe24/CONTRIBUTING.md): forks and pull requests, the ground rules, the checks, how to report an error or a failed reproduction
 - [The claims map](https://closer24.github.io/Universe24/docs/CLAIMS.md): every theorem, identity and quantitative claim of the proofs' inventory as one row, its place, statement, ground, kind, verdict and the function that checks it, generated from the proofs inventory
 - [Errata](https://closer24.github.io/Universe24/docs/ERRATA.md): the findings in the text and what was done about them, with the commits and the versions of record
-- [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 4.0.0 Universe24, one Node, one universe (the pushes of 2026-10-23 and 2026-10-24, PUSH 1 to 34, by sha, grouped by theme, the branches' bullets below them), 3.0.0 the click as one act, the spin and the atom, 2.1.0 the step in the law's flux form, 2.0.0 the engine V2 against 1.1.0, the paper's engine
+- [What changed](https://closer24.github.io/Universe24/CHANGELOG.md): one entry per version, 4.0.0 Universe24, one Node, one universe (the pushes of 2026-10-23 and 2026-10-24, PUSH 1 to 36, by sha, grouped by theme, the branches' bullets below them), 3.0.0 the click as one act, the spin and the atom, 2.1.0 the step in the law's flux form, 2.0.0 the engine V2 against 1.1.0, the paper's engine
 
 ## The code
 
