@@ -1,5 +1,6 @@
 """The one world's helpers shared by the Universe24 tests (tests/test_universe24_runs_its_cycle.py, tests/test_matter_is_born_from_light.py, tests/test_the_sign_holder_and_the_pairs_on_the_small_torus.py, tests/test_the_torus_page_draws_the_log.py): the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone), the declared seed's universe of 2026-10-23 kept by name (`DECLARED`, `declared_universe`: gravity [999, 1000], the sign holder, matter [600, 1000], light, the proton [0, 1000] and the electron [800, 1000] as planes, the absorber), the small structured board's constants as read on it, `small_world` (the declared seed's world cut to a small torus, with or without its detector and instrument bodies) and `flat`."""
 
+import json
 from typing import Any
 
 import numpy as np
@@ -16,6 +17,33 @@ CLUMP, COUNT, NOW, BEFORE = [1, 1, 1], 429, 3015, 1809
 # the two instruments' clicks on the small structured board, before and after its top, read from the run under the content register (2026-10-24; 3 and 1 at the merge base c942951f2, where the register was the W = 0 sign holder's write room, an artefact removed by the Boss's word)
 BEFORE_TOP, AFTER_TOP = 2, 2
 # the declared seed's universe (examples/events/universe24/universe_universe24.json to 2026-10-23, kept by name on the fold of 2026-10-24: the one world's file is nature's den since, and the small structured board's tests read this seed)
+DECLARED: dict[str, Any] = {
+    "integers": {"node_clock": GAMMA, "quantum_action": 36000, "width": 92, "link_unit": 16},
+    "families": [
+        {
+            "name": "gravity",
+            "pair": [999, GAMMA],
+            "reads": {"gravity": 1},
+            "held": {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1},
+        },
+        {
+            "name": "charge",
+            "pair": [GAMMA, GAMMA],
+            "reads": {},
+            "held": {"sources": ["wronskian"], "level_weight": 1},
+        },
+        {"name": "matter", "pair": [600, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
+        {"name": "light", "pair": [GAMMA, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
+        {"name": "proton", "pair": [0, GAMMA], "reads": {"gravity": 1, "charge": 1}, "dimension": 2},
+        {"name": "electron", "pair": [800, GAMMA], "reads": {"gravity": 1, "charge": 1}, "dimension": 2},
+        {"name": "absorber", "pair": [666, GAMMA], "reads": {"gravity": 1}, "dimension": [2, 2]},
+    ],
+}
+
+
+def declared_universe() -> dict[str, Any]:
+    """The declared seed's universe, a copy of its own (the heaviest-pair test's builder, tests/test_the_heaviest_pair_within_the_two_quanta.py)."""
+    return json.loads(json.dumps(DECLARED))
 
 
 def flat(array: Any) -> list[int]:
