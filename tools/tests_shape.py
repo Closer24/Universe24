@@ -41,6 +41,16 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_clicks_reader.py::test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_where_and_name_the_lacking_keys": (
+        26,
+        "the reader of the clicks log alone on the committed record (2026-10-24, the owner's word that every measurement goes to the clicks): "
+        "125 credits in one window, the count's floor 1, the where 5 Links on every axis, the momentum and the clock unreadable with their keys named",
+    ),
+    "tests/test_the_clicks_reader.py::test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_by_hand": (
+        42,
+        "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
+        "the dilation ratio and the Delta x Delta p product, each number computed by hand",
+    ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
         16,
         "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "

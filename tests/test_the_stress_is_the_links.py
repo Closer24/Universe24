@@ -1,7 +1,5 @@
 """The stress is the Links' (ALGEBRA.md, The stress is the Links'): the tension's part of a record on each axis at a Node is the square of the Node's centred difference, weight x (now_(i+a) - now_(i-a))^2, read at the doubled wall 2 E_s W_c. Tested on arrays: the board sums of the former reading and the new one equal to the bit on a wrapped board, for a plane wave, a one-Node record and random levels; the reading invariant under the shift of every level by one number; even under the axis's inversion; a one-Node record's parts 0 at its Node and the level squared at each of its two neighbours."""
 
-from __future__ import annotations
-
 import numpy as np
 
 from event_universe import readings

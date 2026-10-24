@@ -1,7 +1,5 @@
 """A reader of the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair alone; a reader with an irrational sine is refused by name (ALGEBRA.md, The constants; the owner's word of 2026-10-24, (ii), "closed"): posed on rows by hand, since the file carries no row (the same day's later word, declaring a family is forbidden) and every plane row the loader derives from den is a point of den's circle, Pythagorean by construction; and the one universe file with a family row written back into it is refused by name with the derivation's sentence."""
 
-from __future__ import annotations
-
 import json
 
 from event_universe import world_files
