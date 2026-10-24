@@ -16,6 +16,7 @@ from event_universe import credit, records
 from event_universe.core.rule3 import division_forward
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import charged
+from event_universe.meeting_board import body_records
 from event_universe.reports import AT, CREDIT, LAY, LAY_KEYS, NODES, READINGS, REPORT_KEYS
 
 if TYPE_CHECKING:
@@ -60,7 +61,9 @@ def arrays_of(board: Lattice) -> list[Any]:
         for row in state.phases:
             for line in row:
                 found += [line.now, line.before, line.remainder]
-    return found + [board.proper_count, board.closes]
+    return (
+        found + [board.proper_count, board.closes] + [board.standing[key] for key in body_records(board)]
+    )
 
 
 def rebuilt(board: Lattice, arrays: list[Any]) -> None:
@@ -75,6 +78,8 @@ def rebuilt(board: Lattice, arrays: list[Any]) -> None:
         state.write_remainders = [next(given) for _ in state.write_remainders]
         state.phases = [[record() for _ in row] for row in state.phases]
     board.proper_count, board.closes = next(given), next(given)
+    for key in body_records(board):  # the bodies' standing counts, the window counted by the Node
+        board.standing[key] = next(given)
 
 
 def selection(axis: int, layers: list[int]) -> tuple[Any, ...]:

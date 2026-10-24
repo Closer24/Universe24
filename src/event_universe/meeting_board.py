@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from math import gcd
 from typing import TYPE_CHECKING, NamedTuple, cast
 
 import numpy as np
 
-from event_universe import credit, node, records, swap, take
+from event_universe import credit, node, records, registry, share, swap, take
 from event_universe.act import affordable, born_items, click
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
@@ -29,6 +30,7 @@ from event_universe.reports import (
     refused_line,
 )
 from event_universe.reports import credit as credit_line
+from event_universe.take import Item
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -126,6 +128,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             table = drawn_among(tables, left) if meet else None
             if table is not None:
                 born.append((at, table))
+        bodies = bodies_closing(board, shares, frozen, {at for at, _table in born}, refusals)
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases  # the write on the state the step left
@@ -137,24 +140,51 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             refusals.append((at, *refusal))
             continue
         takes.append((at, table, found))
+    clicks: list[
+        tuple[int, int, Node, Take]
+    ] = []  # the bound bodies' clicks: the light taken by the record's unit
+    for k, r, at, unit_k in bodies:
+        found = take_of(board, index, span, at, unit_k)
+        if (
+            found.taken < found.walls
+        ):  # the full stop cannot pay the record's unit: refused by name, the light standing
+            refusals.append((at, REFUSED_STOP, found.taken, found.walls))
+            continue
+        clicks.append((k, r, at, found))
     for at, _table, _take in takes:
         board.closes[at] += 1  # the Node's own close counted, the click's view's `windows`
+    for _k, _r, at, _found in clicks:
+        board.closes[at] += 1  # the body's own close counted at its Node
+    body_readings = {(k, r, at): readings_at(board, begun, k, r, at) for k, r, at, _found in clicks}
     readings = {
         at: readings_at(board, begun, index, 0, at) for at, _table, _take in takes
     }  # the click's view read before the hole (2026-10-24): the levels at the interval's start, the point's level after the Node's own step
     lines = list(board.states[index].lines[span])
-    targets = [
-        moved(lines, at, found.levels) for at, _table, found in takes
-    ]  # every hole's lines read before any hole is written: the before kept, the now moved toward it by the take's levels
+    targets = (
+        [moved(lines, at, found.levels) for at, _table, found in takes]
+        + [moved(lines, at, found.levels) for _k, _r, at, found in clicks]
+    )  # every hole's lines read before any hole is written: the before kept, the now moved toward it by the take's levels
     items = []
     for (at, table, _found), target in zip(
-        takes, targets, strict=True
+        takes, targets[: len(takes)], strict=True
     ):  # every hole at its own Node, then the click act
         here = board.mask((at,))
         for number, line, after in zip(range(span.start, span.stop), lines, target, strict=True):
             change = (np.where(here, after.now - line.now, 0), np.where(here, 0, 0))
             laid(board, index, number, change, None, None, here)
         items.extend(born_items(board.families, table, (at,)))  # one record per child (2026-10-24)
+    for (k, r, at, _found), target in zip(
+        clicks, targets[len(takes) :], strict=True
+    ):  # the body's click: the light holed at the Node by the record's unit, the quantum into the record by the click act
+        here = board.mask((at,))
+        for number, line, after in zip(range(span.start, span.stop), lines, target, strict=True):
+            change = (np.where(here, after.now - line.now, 0), np.where(here, 0, 0))
+            laid(board, index, number, change, None, None, here)
+        sense = int(
+            np.sign(int(np.asarray(records.wronskian(board.lines_of(k, r), True), dtype=object)[at]))
+        )
+        den = board.families[k].pair[1]
+        items.append(Item(k, 1, (at,), (den, den), sense=sense, record=r))
     click(board, items)
     if (
         board.output is not None
@@ -198,6 +228,32 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     (found.taken, found.walls, found.excess, found.step),
                 ),
             ]
+        for (
+            k,
+            r,
+            at,
+            _found,
+        ) in clicks:  # the credit the record's: its identity, proper, windows, point, kind, sense, support, beat and momentum
+            readings_found, clock = body_readings[(k, r, at)]
+            closes.setdefault(at, []).append(
+                credit_line(
+                    board.interval,
+                    family.name,
+                    int(np.ravel_multi_index(at, board.shape)),
+                    [board.interval, board.interval],
+                    clock.proper,
+                    clock.windows,
+                    board.families[k].name,
+                    None,
+                    1,
+                    None,
+                    None,
+                    family.name,
+                    board.families[k].name,
+                    momentum=clock.momentum,
+                    readings=readings_found,
+                )
+            )
         for at in sorted(closes):
             for entry in closes[at]:
                 board.output(entry)
@@ -206,6 +262,81 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     )  # the family's count a reading of the board, never an act's input
     if counted is not None:
         books.counts[index] = counted
+
+
+def period_of(pair: tuple[int, int]) -> int:
+    """One period of a record's beat in whole intervals, from its rotation alone (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24, the owner's sentence of 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body, its window one period): the rotation cos omega = num / den turns the record's lines by omega per interval, and the period is the first count of intervals P at which the turn completes, read on the integers by the Chebyshev recurrence of the sine's sign, S_0 = 0, S_1 = 1, S_(t+1) = 2 num S_t - den^2 S_(t-1) (the sign of sin(t omega), the pair reduced by their gcd at every step so the integers stay small), P the first t with S_(t-1) < 0 <= S_t; the trial's ceiling of 2 pi over omega bit for bit, no transcendental function; the massless pair never turns and is no body, P = 0."""
+    num, den = pair
+    if num == den:
+        return 0
+    before, now, count = 0, 1, 1
+    while True:
+        before, now, count = now, 2 * num * now - den * den * before, count + 1
+        common = gcd(abs(before), abs(now)) or 1
+        before, now = (
+            int(division_forward(before, common, 0)[0]),
+            int(division_forward(now, common, 0)[0]),
+        )  # the pair reduced, the signs kept (the floor exact: common divides both)
+        if before < 0 <= now:
+            return count
+
+
+def body_records(board: Lattice) -> list[tuple[int, int]]:
+    """The records of the charged families standing on the board, (family, record) in order, each with its standing count over the Nodes made at first sight (`Lattice.standing`, zeros): the bodies the Nodes can be in."""
+    found = []
+    for k in board.order:
+        if share.charged(board.families[k]):
+            for r in registry.quanta_records(board.families, board.states, k):
+                board.standing.setdefault((k, r), np.zeros(board.shape, dtype=np.int64))
+                found.append((k, r))
+    return found
+
+
+def bodies_closing(
+    board: Lattice,
+    light: np.ndarray,
+    frozen: np.ndarray,
+    born: set[Node],
+    refusals: list[tuple[Node, str, int, int]],
+) -> list[tuple[int, int, Node, int]]:
+    """The bound bodies whose window closes at this close and whose click is met, read on the interval's start as every meeting is (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24 on the owner's sentence of 16:45 UTC): a record of a charged family standing at a Node at a whole quantum of its own unit (`share.family_share` of the record over its unit, the Node not frozen) through one period of its beat (`period_of`, the count kept per record at every Node, `Lattice.standing`, reset where it stops standing) is a bound body there; at the period's close the Node reads the light at it and its six Ports, the floor of the seed family's share at the Node over the record's unit, one whole quantum met, else the remainder the whether drawn by the digits' read of the Node and its six Links divided by the unit once (`read_of`, `drawn_from`); the read's refusals by name are logged lines; a Node the seed births at this close is the birth's. Returns (family, record, Node, the record's unit) per click met; the hole and the credit follow in `closed`."""
+    found: list[tuple[int, int, Node, int]] = []
+    gamma, unit = board.world.node_clock, board.unit
+    for k, r in body_records(board):
+        period = period_of(board.families[k].pair)
+        if period == 0:
+            continue
+        content, factors = board.read(k, 1, r)
+        own = share.family_share(board.families[k], board.lines_of(k, r), gamma, content, factors, unit)
+        unit_k = board.credit.units[k]
+        standing = np.where(
+            (np.asarray(own, dtype=object) >= unit_k) & ~frozen, board.standing[(k, r)] + 1, 0
+        )
+        closing = standing >= period
+        board.standing[(k, r)] = np.where(closing, 0, standing).astype(np.int64)
+        for where in zip(*np.nonzero(closing), strict=True):
+            at = (int(where[0]), int(where[1]), int(where[2]))
+            if at in born:
+                continue
+            whole, rest = division_forward(int(light[at]), unit_k, 0)
+            met = whole >= 1
+            if not met and rest > 0:
+                label = f"the body {[k, r]} at {list(at)}'s read of itself and its Links at the interval {board.interval}"
+                reads = [
+                    (index, frame_of(at, board.shape, board.world.periodic)) for index in board.order
+                ]
+                if at_origin(board, reads):
+                    refusals.append((at, REFUSED_ORIGIN, board.half_wall(k), board.half_wall(k)))
+                    continue
+                try:
+                    number = read_of(board, reads, label)
+                    met = drawn_from(number, [rest, unit_k - rest], label, True)[0] == 0
+                except Refused as named:
+                    refusals.append((at, named.cause, named.amount, named.bound))
+                    continue
+            if met:
+                found.append((k, r, at, unit_k))
+    return found
 
 
 class Take(NamedTuple):

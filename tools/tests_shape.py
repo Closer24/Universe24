@@ -302,6 +302,18 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         20,
         "a refusal by name is a logged line, never a crash (2026-10-24, the gravity-top hand's finding): the 3-cube hole seed under the gapped holder of the volume through loader/universe.volume_pair runs 20 intervals with the read's vacuum refusal logged at the origin and births elsewhere",
     ),
+    "tests/test_a_click_does_what_it_should.py::test_a_bound_bodys_click_writes_the_take_at_its_node_and_nothing_elsewhere": (
+        44,
+        "the owner's standing test extended to the bound body's click (2026-10-24, his sentence of 16:45 UTC): the lone pair's two records clicking together at their Node, the Node moved by the two takes' levels and its before kept, every other Node unchanged, the credits with the records' identities, nothing born, the run back exact",
+    ),
+    "tests/test_a_bound_body_clicks.py::test_the_lone_pairs_two_records_click_at_their_node_with_their_identities": (
+        42,
+        "the bound body's click (2026-10-24, the owner's sentence of 16:45 UTC): the lone pair's two records click together at the birth Node with their identities and the eight keys, the light falling by at least the two units, the quantum into the record booked by the beam's rule, the period of the beat 9 for the heavier point of den 1,021 and 0 for the massless pair",
+    ),
+    "tests/test_a_bound_body_clicks.py::test_the_lone_pairs_clicks_run_the_same_by_three_slabs": (
+        30,
+        "the slabs' gate through a bound body's click: the lone pair on the 3-cube by three one-layer slabs through its first clicks, every array, line and swap count equal",
+    ),
     "tests/test_a_click_does_what_it_should.py::test_one_close_at_one_node_writes_the_take_there_and_nothing_elsewhere": (
         80,
         "the owner's standing test of the click (2026-10-24, 16:4x UTC, his word: a click does what it is supposed to, to the Nodes and to the Node): one close at one Node on the chain of three and on the 3-cube, the Node changed by exactly the take, every other Node unchanged, the children at the two senses with their Wronskians summing to 0, the log's take keys and the credit's support and windows, the draw from the Node and its six neighbours alone divided by the unit once, the run back exact; it stays whatever the tests hand prunes",
