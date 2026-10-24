@@ -75,7 +75,7 @@ def drawn_from(
 
 @dataclass
 class Face:
-    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Ports presented at, a set of one to three Ports, a sided axis's one and a tied axis's two, within the wall's bound (`node_detector.face_ports`) (the hole's the Ports the quantum entered by, from the window's inflow booked per Port, `node_detector.arrival_ports`; a front shell Node's the Ports toward the inner shell, `front.faced`; the click's plan, C6: nature names no axis, so no Port order is read, the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a cut Port, its read 0, is dropped at the step and a set left without an open Port is refused by name), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, and `inner`, which side the face's target is read from (ALGEBRA.md, The booking is the frame's, the hole's clause, 2026-10-23): the target is the level the record's frame holds at the Node, the mean of the neighbours' own next levels 2 now_j - before_j by the division act, over every open Port for the hole (False: the hole takes the record's wave and leaves the uniform level, to 0 where the neighbours stand at 0) and over the face's own Ports for a front shell (True: the erased inner shell's level, 0 on a packet's background), so that a uniform shift of a massless level moves every face's target with it."""
+    """One presented value, the face: the record's family and line, the Node at the file's coordinates, the Ports presented at, a set of one to three Ports, a sided axis's one and a tied axis's two, within the wall's bound (`node_detector.face_ports`) (the hole's the Ports the quantum entered by, from the window's inflow booked per Port, `node_detector.arrival_ports`; a front shell Node's the Ports toward the inner shell, `front.faced`; the click's plan, C6: nature names no axis, so no Port order is read, the set maps to its image under the cube's symmetries and the one value presented on it is the same integer; a cut Port, its read 0, is dropped at the step and a set left without an open Port is refused by name), the interval at whose step it is presented, the value, None until the forward step computes it, the value the inverse presents again, and the frame's two flags (ALGEBRA.md, The booking is the frame's, the hole's clause, 2026-10-23): `framed`, whether the face's target is the level the record's frame holds at the Node (`target_of`: a plain massless record, one real line reading no holder of the sign, `take.faced`, `front.faced`; False for every other record, the target 0 as written, since a gapped row's mass and a turned plane's rotation read the level), and `inner`, which side the target is read from, over every open Port for the hole (False: the hole takes the record's wave and leaves the uniform level, to 0 where the neighbours stand at 0) and over the face's own Ports for a front shell (True; the front's faces are never framed, their target 0 as written, since the inner shell's Nodes stand mid-erasure at (0, the level before) and read as no frame, and the front runs at the count 0 alone), so that a uniform shift of a massless level moves every face's target with it."""
 
     family: int
     line: int
@@ -84,6 +84,7 @@ class Face:
     interval: int
     value: int | None = None
     inner: bool = False
+    framed: bool = False
 
 
 def face_value(total: int, read: int) -> int:
@@ -97,11 +98,11 @@ def target_of(
     at: tuple[int, int, int],
     reference: tuple[int, ...],
 ) -> int:
-    """A face's target, the level the record's frame holds at the Node (ALGEBRA.md, The booking is the frame's, the hole's clause, 2026-10-23): the mean over the `reference` Ports of the neighbours' own next levels, 2 now_j - before_j, the free step of a Node uniform with its neighbours, by the division act on their sum, so that after the hole's two faces the Node carries its neighbours' two levels and the record's wave alone is taken, the uniform part untouched, and a uniform shift c of every level moves the target by c exactly (the sum moves by c times the Ports' count); 0 where the level before's arrivals are not given (the written hole to 0, kept for a face presented with no frame) or the set is empty; the frame's target is the massless row's, whose free step is 2 L - a_before at any paces (`presented` takes it where the Node's mass D is 0), and a gapped record's face goes to 0 as written, its mass reading the level, which no shift leaves."""
+    """A face's target, the level the record's frame holds at the Node (ALGEBRA.md, The booking is the frame's, the hole's clause, 2026-10-23), read through the `reference` Ports from the neighbours' two levels and nothing beyond one Link: where the neighbours agree on their own next level, 2 now_j - before_j one number on every reference Port (a Node uniform with its neighbours, the level's own test: the massless row's free step is 2 L - a_before at any paces, exact in the integers on a drift), that level, so that after the hole's two faces the Node carries its neighbours' two levels, the record's wave alone taken and the uniform part untouched, and a uniform shift c of every level moves the target by c exactly; where they do not agree the frame is not readable at the Node by one Link's reach (a packet's edge: the neighbours' own next levels carry their Links' terms two Links from the Node, and the extrapolation overshoots them, the run refused at the amplitude bound where it was taken), and the target is 0, the written hole bit for bit, a write the shift is no symmetry of (named open in FURTHER_RESEARCH.md); 0 where the level before's arrivals are not given (a face presented with no frame), where the set is empty, and where the neighbours stand at 0."""
     if arrived_before is None or not reference:
         return 0
-    total = sum(2 * int(arrived[p][at]) - int(arrived_before[p][at]) for p in reference)
-    return int(division_forward(total, len(reference), 0)[0])
+    own_next = {2 * int(arrived[p][at]) - int(arrived_before[p][at]) for p in reference}
+    return own_next.pop() if len(own_next) == 1 else 0
 
 
 def presented(
@@ -136,10 +137,10 @@ def presented(
             links -= reach * level  # the set's Links with their arrivals 0
             total = flux_total(links, own, wall, level, int(other[at])) + int(carry[at])
             reference = face.ports if face.inner else tuple(p for p in range(len(here)) if here[p] != 0)
-            target = target_of(arrived, arrived_before, at, reference) if own == 0 else 0
+            target = target_of(arrived, arrived_before, at, reference) if face.framed else 0
             face.value = face_value(
                 total - wall * target, reach
-            )  # the frame's level on the massless row, 0 on a gapped one: every face's target
+            )  # the frame's level on a plain massless record, 0 on every other: every face's target
         for port in face.ports:
             if port not in copied:
                 found[port] = np.array(found[port], copy=True)

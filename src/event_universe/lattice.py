@@ -223,7 +223,7 @@ class Lattice:
         return np.asarray(found), frozen
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading at the Node in the free unit (the record's count over the board is its charge for a plane family, `credit.count_of`, the ruling of 2026-10-22; here the Node's share as the sides and the gate read it), computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
+        """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading at the Node in the free unit (the record's count over the board is its charge for a plane family, `credit.count_of`, the ruling of 2026-10-22; here the Node's share as the sides read it; a body's declared Nodes and the start's count gate read the lay's own support, `share.plain_quanta`), computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
         found, frozen = self.share_of(index, 1, at)
         return share.quanta_of(found, self.credit.units[index], self.kind), frozen
 
@@ -235,7 +235,7 @@ class Lattice:
     def body_nodes(self, number: int) -> np.ndarray:
         """A body's Nodes as a report needs them: where its family's share stands in quanta about its declared Nodes, a frozen Node among them standing, derived now and kept nowhere (`reports.standing_nodes`)."""
         row = self.world.bodies[number]
-        quanta, frozen = self.quanta(row.family)
+        quanta, frozen = share.plain_quanta(self, row.family)
         return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
 
     def books(self) -> dict[str, dict[str, int | None]]:

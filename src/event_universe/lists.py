@@ -7,7 +7,7 @@ from functools import partial
 from operator import add
 from typing import TYPE_CHECKING, Any
 
-from event_universe import credit, frame_run, meeting_back, reports
+from event_universe import credit, frame_run, meeting_back, reports, share
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
@@ -384,7 +384,9 @@ def gate_count(board: Lattice, row: Any) -> int:
     """The count the start's gate reads for a declared body (`Lattice.gate`; here beside the lists for the shape of credit.py): a bound record declared an instrument body (loader/world.BodyRow.region) the board's count of its family, its charge over T / 2 (`count_of`, the ruling of 2026-10-22), since a standing record's quantum is spread over its whole support with less than half a quantum at any Node; another body its family's quanta at its declared Nodes (`Lattice.quanta`)."""
     if isinstance(row, BodyRow) and row.region:
         return credit.count_of(board, row.family) or 0
-    return int(board.quanta(row.family)[0][board.mask(row.nodes)].sum())
+    return int(
+        share.plain_quanta(board, row.family)[0][board.mask(row.nodes)].sum()
+    )  # the lay's own support
 
 
 def count_checked(board: Lattice, index: int, due: bool) -> None:

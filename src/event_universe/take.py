@@ -16,7 +16,7 @@ from event_universe.emission import Emitter
 from event_universe.features.click import Face, rotated, spread, squared, standing
 from event_universe.features.click import direction as unit_direction
 from event_universe.features.phase import fold, signed_rounded
-from event_universe.front import on_board
+from event_universe.front import framed_record, on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import quanta_records
 from event_universe.loader.keys import Node
@@ -186,10 +186,14 @@ def faced(board: Lattice, item: Item) -> list[tuple[Node, tuple[int, ...]]]:
     named = zip(nodes, item.ports or ((),) * len(nodes), strict=True)
     sided = not item.ports  # no face set named: a lay, or a record taken whole
     whole = [(n, p) for n, p in named if int(shares[on_board(board, n)]) <= unit and (sided or p)]
+    framed = framed_record(
+        board, item.family
+    )  # the hole's target the frame's level on a plain massless record
     for (at, ports), line, interval in itertools.product(
         whole if item.delta < 0 else [], lines, intervals
     ):
-        board.credit.faces.setdefault(interval, []).append(Face(item.family, line, at, ports, interval))
+        face = Face(item.family, line, at, ports, interval, framed=framed)
+        board.credit.faces.setdefault(interval, []).append(face)
     return whole
 
 

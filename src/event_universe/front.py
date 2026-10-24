@@ -91,6 +91,17 @@ def erased(board: Lattice, front: Front, distance: int) -> bool:
     return True
 
 
+def framed_record(board: Lattice, index: int) -> bool:
+    """Whether a record's faces take the frame's target (features/click `target_of`; ALGEBRA.md, The booking is the frame's, the hole's clause): a plain massless record of quanta, its pair [den, den], one real line reading no holder of the sign under the rotation (not turned, `Lattice.turning`) and no holder's own rows (a holder of the sign's light is the sum of rows the sign's write moves every interval, no free row), whose uniform level is the gauge the hole leaves; a gapped record's mass, a turned plane's rotation and a holder's write read the level, and their faces go to 0 as written (`take.faced`, the hole); the front's shells (`faced` below) go to 0 on every record, the front running at the count 0 alone."""
+    family = board.families[index]
+    return (
+        family.pair[0] == family.pair[1]
+        and not family.plane
+        and not family.wronskian
+        and index not in board.turning
+    )
+
+
 def faced(
     board: Lattice,
     index: int,
@@ -104,7 +115,9 @@ def faced(
     if not bool(mask.any()):
         return False
     toward = inward(shell(board.shape, at, distance - 1, board.world.periodic), board)
-    for here in np.argwhere(mask):
+    for here in np.argwhere(
+        mask
+    ):  # the shells' target 0 as written: the inner shell's Nodes stand mid-erasure at (0, the level before), no frame to read there (ALGEBRA.md, The booking is the frame's, the hole's clause)
         node_at = declared(board, here)
         ports = tuple(port for port, through in enumerate(toward) if through[tuple(here)])
         for line in range(lines):
