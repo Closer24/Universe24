@@ -66,7 +66,7 @@ def logs() -> tuple[list[dict], list[dict], list[dict]]:
 
 
 def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothing_new_after_bang_1():
-    """(1) The record's legend: 8 bangs, 8 tops, 0 black holes, 0 turns at the floor, 1,000 Node turns, 125 proton pairs at 29 at 125 Nodes, 0 electron pairs with the cause (matter's row gone 2026-10-24), 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 3 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
+    """(1) The record's legend at the enlarged den (2026-10-24; the former den's numbers in the folder's notes): 8 bangs, 8 tops, 0 black holes, 0 turns at the floor, 1,000 Node turns, 125 proton pairs at 29 at 125 Nodes, 0 electron pairs with the cause (matter's row gone 2026-10-24), 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 3 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
     eras, nodes, clicks = logs()
     floor = ERAS_PAGE.least_of(nodes, eras[0]["node_clock"])["floor"]
     legend = CAPTIONS.legend_of(eras, nodes, clicks, floor)
@@ -85,13 +85,13 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
         "clicks": 125,
         "lays (the records laid)": 375,
         "standing light (the seed family: light left)": 0,
-        "standing proton": 375,
+        "standing proton": 250,
         "standing electron": 0,
-        "standing charge (a holder, beside the families of quanta: the held row writes none of it)": 2500,
+        "standing charge (a holder, beside the families of quanta: the held row writes none of it)": 1875,
         "bound bodies": None,
     }
-    assert rows["bangs"]["words"] == "at 1, 304, 612, 914, 1,222, 1,524, 1,832, 2,134"
-    assert rows["tops"]["words"].startswith("153 at the volume 1,422,000; 458 at the volume 1,467,250")
+    assert rows["bangs"]["words"] == "at 1, 308, 608, 914, 1,214, 1,520, 1,820, 2,126"
+    assert rows["tops"]["words"].startswith("155 at the volume 1,447,000; 458 at the volume 1,396,000")
     assert (
         rows["black holes"]["words"]
         == "0 in this run: the eras log's horizon 0 at every interval to 2,400"
@@ -108,7 +108,7 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
     assert rows["clicks"]["words"].startswith("125 at 29, 125 the board's own")
     assert rows["clicks"]["words"].endswith("every click counted whole, no part drawn")
     assert rows["standing proton"]["words"] == (
-        "375 quanta, 3 per Node, at 125 Nodes at 2,400, standing since 29 (carried through every top)"
+        "250 quanta, 2 per Node, at 125 Nodes at 2,400, standing since 29 (carried through every top)"
     )
     assert (
         rows["standing light (the seed family: light left)"]["words"]
@@ -119,9 +119,9 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
     ledger = CAPTIONS.ledger_of(eras, nodes, clicks)
     cycles = ledger["rows"]
     assert [(c["bang"], c["at"], c["to"], c["top"], c["volume"]) for c in cycles[:3]] == [
-        (1, 1, 303, 153, 1422000),
-        (2, 304, 611, 458, 1467250),
-        (3, 612, 913, 763, 1422000),
+        (1, 1, 307, 155, 1447000),
+        (2, 308, 607, 458, 1396000),
+        (3, 608, 913, 761, 1447000),
     ]
     assert len(cycles) == 8 and cycles[-1]["open"] and cycles[-1]["to"] == 2400
     assert cycles[0]["births"] == {"proton": 125, "electron": 0}  # matter's row left the file 2026-10-24
@@ -129,7 +129,7 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
     assert all(c["light"] == 0 and c["horizon"] == 0 and c["turns"] == 125 for c in cycles)
     assert [c["standing"]["proton"] for c in cycles[:2]] == [
         "1,000 quanta, 8 per Node, at 125 Nodes",
-        "1,125 quanta, 9 per Node, at 125 Nodes",
+        "1,000 quanta, 8 per Node, at 125 Nodes",
     ]
     assert ledger["finding"].startswith(
         "The logs show nothing new after bang 1: 7 cycles after the first with 0 births each, the first cycle's births 125 proton pairs, the light spent at 29"
@@ -172,8 +172,8 @@ def test_both_pages_carry_the_legend_and_the_ledger_as_rows():
         assert len(cycles) == 9 and cycles[1][:5] == [
             "1",
             "1",
-            "303",
-            "153 at the volume 1,422,000",
+            "307",
+            "155 at the volume 1,447,000",
             "125 proton pairs; 0 electron pairs",
         ]
         assert (
@@ -213,13 +213,13 @@ def test_a_log_cut_mid_run_is_read_to_its_last_whole_line(tmp_path: Path) -> Non
     for name in ("cut.html", "cut.torus.html"):
         parsed = tables_of((tmp_path / name).read_text())
         kinds = {row[0]: row for row in parsed.rows["kinds"][1:]}
-        assert kinds["bangs"][2:] == ["2", "at 1, 304"]
+        assert kinds["bangs"][2:] == ["2", "at 1, 308"]
         assert kinds["tops"][2] == "1" and kinds["standing proton"][3].endswith(
             "at 400, standing since 29 (carried through every top)"
         )
         cycles = parsed.rows["ledger"]
         assert len(cycles) == 3 and cycles[2][1:4] == [
-            "304",
+            "308",
             "400 (the log's last interval)",
             "none reached",
         ]

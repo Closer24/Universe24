@@ -50,11 +50,19 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
 
 
 def test_the_lightest_point_of_the_circle_is_the_electrons_pair():
-    """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The one universe): s_min(den) is the least leg among the Pythagorean points of den's circle, enumerated whole from den's primes, m_e / T = s_min / den; at the one universe's den 53,567,765 the point (53,567,757, 29,276), the electron row's pair; at den 1,000 (960, 280), at 5 (4, 3), at 65 (63, 16), at 25 (24, 7); a den no prime 1 mod 4 divides has no point and is refused by name."""
+    """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The one universe): s_min(den) is the least leg among the Pythagorean points of den's circle, enumerated whole from den's primes, m_e / T = s_min / den; at den 53,567,765 the point (53,567,757, 29,276), the one universe's electron to 2026-10-24, and at the enlarged den 1,166,991,900,949,580,266,237 = 13,586,597 x 132,260,701 x 649,421 the file's electron row, s 633,202,287,062,780,012; at den 1,000 (960, 280), at 5 (4, 3), at 65 (63, 16), at 25 (24, 7); a den no prime 1 mod 4 divides has no point and is refused by name."""
     num, s = lightest_point(DEN)
     assert (num, s) == (53_567_757, 29_276) and num * num + s * s == DEN * DEN
     rows = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))
-    assert [f["pair"] for f in rows["families"] if f["name"] == "electron"] == [[num, DEN]]
+    den = rows["families"][0]["pair"][
+        1
+    ]  # the one universe's den, enlarged as content 2026-10-24 (the three primes 1 mod 4)
+    assert [f["pair"] for f in rows["families"] if f["name"] == "electron"] == [
+        [*lightest_point(den)][:1] + [den]
+    ]
+    assert (
+        den == 13_586_597 * 132_260_701 * 649_421 and lightest_point(den)[1] == 633_202_287_062_780_012
+    )
     assert [lightest_point(d) for d in (1000, 5, 65, 25)] == [(960, 280), (4, 3), (63, 16), (24, 7)]
     refused("no prime 1 mod 4 divides it", lightest_point, 9)
 
