@@ -348,15 +348,19 @@ def digits_by_line(board, reads, source):
                 groups.append(((index, record, n), group))
             if copied:
                 continue
-            group.append((position, int(division_forward(remainder, found, 0)[0]), values + 1, remainder == half))
+            digit = int(division_forward(remainder, found, 0)[0])
+            group.append((position, digit, values + 1, remainder == half, digit * int(found)))
     return groups, origin, coarse
 
 
 def read_switch(board, reads, label):
     """The read of the board by the switch (the module's sentence): ordered (the shipped read_of, bit for bit); sorted (per
     line the Node's own digit first, then the six Ports' (digit, base) pairs sorted ascending, the mixed radix); sum (the plain
-    sum, the moduli (1, 1)); link (the Link digits sorted, the mixed radix); link_sum (the Link digits and the Node's, the digits
-    at the lay's origin left out, the plain sum, no moduli)."""
+    sum, the moduli (1, 1)); link (the Link digits sorted, the mixed radix; link_q the same number, the pick from the quotient by
+    the unit in child_aprime); link_sum (the Link digits and the Node's, the digits at the lay's origin left out, the plain sum, no
+    moduli); rem_sum_q (the plain SUM of the kept remainders projected on their lattices, each neighbour's (r_j div F_ij) x F_ij and
+    the Node's own (r_i div F_i) x F_i, the origin's and the copies left out, no moduli: the whether that sum modulo the unit, the pick
+    from the quotient by the unit)."""
     at = reads[0][1][0]
     CURRENT.update(node=list(map(int, at)), label=label)
     mode = READ["mode"]
@@ -364,29 +368,32 @@ def read_switch(board, reads, label):
         number, moduli = read_ordered(board, reads, label)
         CURRENT.update(number=int(number), moduli=[int(m) for m in moduli])
         return number, moduli
-    source = link_digits if mode in ("link", "link_sum") else digits_of
+    source = link_digits if mode in ("link", "link_sum", "link_q", "rem_sum_q") else digits_of
     groups, origin, coarse = digits_by_line(board, reads, source)
     if origin:
         raise RuntimeError(f"the read at {label} finds every digit at the lay's origin w div 2: refused ({mode} read)")
     if coarse:
         raise RuntimeError(f"the read at {label} finds every digit on the lattice of the exact vacuum paces: refused ({mode} read)")
-    digits, bases = [], []
+    digits, bases, projected = [], [], []
     for _key, group in groups:
         own = [g for g in group if g[0] == 0]
-        rest = sorted((g[1], g[2], g[3]) for g in group if g[0] != 0)
-        if mode == "link_sum":
+        rest = sorted((g[1], g[2], g[3], g[4]) for g in group if g[0] != 0)
+        if mode in ("link_sum", "rem_sum_q"):
             own = [g for g in own if not g[3]]
             rest = [g for g in rest if not g[2]]
-        for _p, d, b, _o in own:
-            digits.append(d)
-            bases.append(b)
-        for d, b, *_ in rest:
-            digits.append(d)
-            bases.append(b)
-    if mode in ("sum", "link_sum"):
+        for g in own:
+            digits.append(g[1])
+            bases.append(g[2])
+            projected.append(g[4])
+        for g in rest:
+            digits.append(g[0])
+            bases.append(g[1])
+            projected.append(g[3])
+    if mode in ("sum", "link_sum", "rem_sum_q"):
         if not digits:
             raise RuntimeError(f"the read at {label} finds no digit off the lay's origin: nothing to read ({mode} read)")
-        number, moduli = sum(digits), (None if mode == "link_sum" else (1, 1))
+        number = sum(projected) if mode == "rem_sum_q" else sum(digits)
+        moduli = (1, 1) if mode == "sum" else None
     else:
         number = read_number(digits, bases)
         summed = gcd(*(base - 1 for base in bases[1:])) if len(bases) > 1 else 1
@@ -462,7 +469,12 @@ def child_aprime(board, index, share, whole, at):
         return None
     try:
         number, moduli = read_switch(board, reads, label)
-        k, _left = drawn_from(number, [1] * len(candidates), label, moduli)
+        if READ["mode"] in ("link_q", "rem_sum_q"):  # the one division act at every close: the number divided by the unit, the quotient the pick's
+            quotient = int(division_forward(int(number), board.credit.units[index], 0)[0])
+            k, _left = drawn_from(quotient, [1] * len(candidates), label, None)
+            line.update(how_number="quotient", quotient_bits=quotient.bit_length(), quotient_residue=quotient % len(candidates))
+        else:
+            k, _left = drawn_from(number, [1] * len(candidates), label, moduli)
     except RuntimeError as refusal:
         line.update(how="refused", refused=str(refusal)[:200])
         PICKS.append(line)
@@ -772,7 +784,7 @@ def orbit_table(board, orbits, with_digits):
     first = records.record_slice(board.families[index], 0).start
     line = board.states[index].lines[first]
     shares, _frozen = board.share_of(index)
-    source = link_digits if READ["mode"] in ("link", "link_sum") else digits_of
+    source = link_digits if READ["mode"] in ("link", "link_sum", "link_q", "rem_sum_q") else digits_of
     rows = []
     for key, nodes in orbits.items():
         nows = sorted({int(line.now[n]) for n in nodes})
@@ -785,7 +797,7 @@ def orbit_table(board, orbits, with_digits):
             for n in nodes:
                 region = frame_of(n, board.shape, board.world.periodic)
                 groups, _origin, _coarse = digits_by_line(board, [(fam, region) for fam in board.order], source)
-                sums.add(int(sum(d for _k, g in groups for _p, d, _b, _o in g)))
+                sums.add(int(sum(g[1] for _k, gr in groups for g in gr)))
             row["digit_sum"] = sorted(sums)[:8]
             row["digit_sum_uniform"] = len(sums) == 1
         rows.append(row)
@@ -833,7 +845,7 @@ def main():
     ap.add_argument("--intervals", type=int, default=60)
     ap.add_argument("--seed", choices=("hole", "plus1", "faces"), default="hole")
     ap.add_argument("--faces-level", type=int, default=219)
-    ap.add_argument("--read", choices=("ordered", "sorted", "sum", "link", "link_sum"), default="ordered")
+    ap.add_argument("--read", choices=("ordered", "sorted", "sum", "link", "link_sum", "link_q", "rem_sum_q"), default="ordered")
     ap.add_argument("--select", choices=("main", "aprime"), default="main")
     ap.add_argument("--hole", choices=("zero", "mean", "before_mean", "own_before"), default="zero")
     ap.add_argument("--prefix", type=Path, required=True)
