@@ -1,4 +1,4 @@
-"""The universe file: its two keys, the four integers and the families' rows read into the loader's rows (`universe_of`), each family of quanta's shape from its row (`shape_of`), each holder's kind, lines, sources, weights and reads derived from its pair and the absence of a dimension (`holder_of`, `derived.with_reads`; the owner's word of 2026-10-24, "no declarations": a row is its name, its pair and, for a family of quanta, its dimension, nothing else), the key tables of the file and the gone keys refused by name with the derivation that replaced each (`GONE`, `gone_refused`) (ENGINE.md section 4; ALGEBRA.md #a-familys-declaration)."""
+"""The universe file: its two keys, its integers (the Node clock Gamma, the quantum's action T and, to 2026-10-24, the Link unit G and the width, the width derived since, `loader/rooms.width_of`, `GONE_INTEGERS`) and the families' rows read into the loader's rows (`universe_of`), each family of quanta's shape from its row (`shape_of`), each holder's kind, lines, sources, weights and reads derived from its pair and the absence of a dimension (`holder_of`, `derived.with_reads`; the owner's word of 2026-10-24, "no declarations": a row is its name, its pair and, for a family of quanta, its dimension, nothing else), the key tables of the file and the gone keys refused by name with the derivation that replaced each (`GONE`, `gone_refused`) (ENGINE.md section 4; ALGEBRA.md #a-familys-declaration)."""
 
 from __future__ import annotations
 
@@ -11,7 +11,15 @@ from event_universe.loader.derived import KINDS, PLANE, PLANE_LINE, FamilyRule, 
 from event_universe.loader.keys import integer, keyed
 
 UNIVERSE_KEYS = ("integers", "families")
-INTEGER_KEYS = ("node_clock", "quantum_action", "width", "link_unit")
+INTEGER_KEYS = ("node_clock", "quantum_action", "link_unit")  # the width derived, 2026-10-24
+GONE_INTEGERS = {  # the file's integers to 2026-10-24 that are the engine's and not the universe's (the owner's word of that day: only the universe's constants; the old kept by name)
+    "width": (
+        "the width is derived (2026-10-24): the least width at which the amplitude bound holds the volume's level "
+        "at the deepest content the guard admits, the Link's last pace (loader/rooms.width_of; ALGEBRA.md #the-bound, "
+        "The width is derived; the key `width`, the integers' bits, the former declaration, 92 in the one universe "
+        "file, kept by name)"
+    ),
+}
 FAMILY_KEYS, FAMILY_REQUIRED = (
     ("name", "pair", "dimension"),
     ("name", "pair"),
@@ -89,8 +97,15 @@ def pair_of(value: object, label: str) -> tuple[int, int]:
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its integers and its families, each row its name, its pair and, for a family of quanta, its dimension (`shape_of`); a row without a dimension is a holder, its kind, its lines, its sources and its weights derived from its pair (`holder_of`), and every row's reads derived from the rows (`derived.with_reads`): nothing declared beyond the name, the pair and the dimension (the owner's word of 2026-10-24, no declarations; the keys `reads` and `held` with `sources`, `level_weight`, `write_weight` and `rest` refused by name with the derivation that replaced each, `gone_refused`; the keys `senses` and `exchange` refused as unknown since 2026-10-24, the owner's word: no parameters); the sign holder's alpha, the ratio of the file's E_h T to Gamma, carried inside its one write (`derived.alpha_of`)."""
+    """The universe file: its integers (the key `width` refused by name with the derivation that replaced it, `GONE_INTEGERS`, 2026-10-24) and its families, each row its name, its pair and, for a family of quanta, its dimension (`shape_of`); a row without a dimension is a holder, its kind, its lines, its sources and its weights derived from its pair (`holder_of`), and every row's reads derived from the rows (`derived.with_reads`): nothing declared beyond the name, the pair and the dimension (the owner's word of 2026-10-24, no declarations; the keys `reads` and `held` with `sources`, `level_weight`, `write_weight` and `rest` refused by name with the derivation that replaced each, `gone_refused`; the keys `senses` and `exchange` refused as unknown since 2026-10-24, the owner's word: no parameters); the sign holder's alpha, the ratio of the file's E_h T to Gamma, carried inside its one write (`derived.alpha_of`)."""
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
+    if isinstance(universe["integers"], dict):
+        for key in GONE_INTEGERS:
+            if key in universe["integers"]:
+                raise ValueError(
+                    f"integers holds the key {key!r}, an integer of the engine and not of the universe: "
+                    f"{GONE_INTEGERS[key]}"
+                )
     raw = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
     unit = integers["link_unit"]

@@ -24,8 +24,8 @@ from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
-UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
-    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, G 16; the width derived, 122 bits, 2026-10-24, 63 declared to that day), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
+    "integers": {"node_clock": 6000, "quantum_action": 32768, "link_unit": 16},
     "families": [
         {"name": "gravity", "pair": [5994, 6000]},
         {"name": "charge", "pair": [6000, 6000]},
@@ -128,8 +128,7 @@ COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
 COULOMB_UNIVERSE = {
     "integers": {
         "node_clock": 6000,
-        "quantum_action": 36000,
-        "width": 64,  # 63 until 2026-10-24: the sign holder's levels under the universal charge pass the content bound of 63 bits by 5 percent on this chain
+        "quantum_action": 36000,  # the width derived (2026-10-24; 64 declared to that day, 63 before it: the sign holder's levels under the universal charge pass the content bound of 63 bits by 5 percent on this chain)
         "link_unit": 16,
     },
     "families": [
@@ -151,7 +150,7 @@ def flux_world(tmp_path, shape, intervals=4):  # type: ignore[no-untyped-def]
     """The tests' universe with the charged plane on a board, loaded, with gravity's row made by the test's hand the massless holder of the content carrying the flux's three odd lines (ALGEBRA.md, The clock family on the Ports, a hypothesis under its own name: no file declares it since 2026-10-24, a massless holder being the sign's and the key `sources` with `flux` gone, both kept by name; rule.json's row to that day): the row's lines 1 + 3 + 3, its flux marked, its walls the loader's for such a row. Under the gapped holder the volume moves and the swap fires, and the fold's run back and its x-y symmetry do not hold on these boards (read 2026-10-24, left open by name in FURTHER_RESEARCH.md)."""
     universe_beside(
         tmp_path, drop=("binding",), charged=True
-    )  # no second holder of the volume: at Gamma 6,000 and the width 63 the swap's complement 3 w X of a gapped row's volume passes int64 (the one world's width 92; rule.json's binding holder, sourced by the form alone, carried no volume)
+    )  # no second holder of the volume: at Gamma 6,000 and the declared width 63 the swap's complement 3 w X of a gapped row's volume passed int64 (the width derived since 2026-10-24; rule.json's binding holder, sourced by the form alone, carried no volume)
     world = dict(shape=list(shape), intervals=intervals)
     world.update(universe="u.json")
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")

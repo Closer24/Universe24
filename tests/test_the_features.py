@@ -75,8 +75,8 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
 
 
 def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
-    """A universe file of the rows given at Gamma 10,000, T 64, the width 63 and the Link unit 1, but for `integers`."""
-    integers = {"node_clock": GAMMA, "quantum_action": 64, "width": 63, "link_unit": 1, **integers}
+    """A universe file of the rows given at Gamma 10,000, T 64 and the Link unit 1, but for `integers` (the width derived, 2026-10-24)."""
+    integers = {"node_clock": GAMMA, "quantum_action": 64, "link_unit": 1, **integers}
     return {"integers": integers, "families": [dict(row) for row in rows]}
 
 
@@ -312,8 +312,13 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         assert rooms.tension_room(pair, gamma, q_max, True) == wronskian > hill
     for name, document in (("tests", universe_copy()), ("turning", TURNING_UNIVERSE)):
         integers, families = universe_of(json.loads(json.dumps(document)))
-        keys = ("node_clock", "quantum_action", "width", "link_unit")
-        assert derived.amplitude_bound(families, *(integers[key] for key in keys)) == hill_bound, name
+        keys = (
+            "node_clock",
+            "quantum_action",
+        )  # the bound at the host's 63 bits, the declared width to 2026-10-24
+        assert (
+            derived.amplitude_bound(families, *(integers[key] for key in keys), 63, 16) == hill_bound
+        ), name
     # the rows by hand (loader.derived.Row, the tests' own and no file's since 2026-10-24: a massless holder of the content at the write weight 10^6, which no file declares): well [1, 1] with its axis lines read by one real line at 1, deep the same at the write weight 1
     well = Row("well", (1, 1), 4, 1, False, False, False, 1, 10**6, 0, (("well", 1),))
     deep = Row("deep", (1, 1), 4, 1, False, False, False, 1, 1, 0, (("deep", 1),))

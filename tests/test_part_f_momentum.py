@@ -15,7 +15,7 @@ from event_universe.world_files import load_world
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "dimension": 1}
-INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": UNIT}
+INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "link_unit": UNIT}
 
 
 def chain_world(tmp_path, families, chain=CHAIN):  # type: ignore[no-untyped-def]
