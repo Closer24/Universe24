@@ -72,8 +72,7 @@ def oracle_step_plane(re, im, rule, wrap, direction, faces, pairs):  # type: ign
     now = (level_at(re, direction), level_at(im, direction))
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
     arrived = tuple(
-        tuple(arrival(level, axis, side, wrap) for axis in range(AXES) for side in (1, -1))
-        for level in now
+        tuple(arrival(level, axis, side) for axis in range(AXES) for side in (1, -1)) for level in now
     )
     if faces[0] or faces[1]:
         faced = [

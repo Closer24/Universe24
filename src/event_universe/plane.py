@@ -33,8 +33,8 @@ def link_levels(
     found: list[Any] = []
     for axis, level in enumerate(levels):
         found += [
-            own * level + far * arrival(level, axis, 1, wrap),
-            -(own * arrival(level, axis, -1, wrap) + far * level),
+            own * level + far * arrival(level, axis, 1),
+            -(own * arrival(level, axis, -1) + far * level),
         ]
     return tuple(found)
 
@@ -64,7 +64,7 @@ def frame_signs(frame: Any, wrap: Wrap) -> tuple[Any, ...]:
     found: list[Any] = []
     for axis in range(AXES):
         for sigma in (1, -1):
-            other = arrival(own, axis, sigma, wrap)
+            other = arrival(own, axis, sigma)
             found.append(np.where(other == own, 1, -1))
     return tuple(found)
 
@@ -79,9 +79,7 @@ def phase_links(lines: list[Record], wrap: Wrap) -> Phases:
             ((c.now, c.before, c.remainder), (s.now, s.before, s.remainder)), n.now
         )
         found.append((cosine, sine))
-        found.append(
-            (arrival(cosine, axis, -1, wrap), -signs[2 * axis + 1] * arrival(sine, axis, -1, wrap))
-        )
+        found.append((arrival(cosine, axis, -1), -signs[2 * axis + 1] * arrival(sine, axis, -1)))
     return tuple(found)
 
 

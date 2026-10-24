@@ -45,7 +45,7 @@ def division(numerator: Any, wall: Any, value: Any) -> np.ndarray:
 
 def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     """The six arrivals as Rule3 reads them, the two of each axis summed: the wrap on a periodic axis, 0 beyond a face, the Node itself on a folded axis (core/ports.py)."""
-    return tuple(arrival(a, axis, 1, wrap) + arrival(a, axis, -1, wrap) for axis in range(3))
+    return tuple(arrival(a, axis, 1) + arrival(a, axis, -1) for axis in range(3))
 
 
 def tent_of(counts: np.ndarray, divisor: int) -> int:

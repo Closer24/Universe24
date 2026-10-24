@@ -34,7 +34,7 @@ def started(board: Lattice, index: int, holes: list[tuple[Node, tuple[int, ...]]
 
 def inward(inner: np.ndarray, board: Lattice) -> list[np.ndarray]:
     """Per Port the Nodes whose neighbour through it lies on the inner shell (the arrival of the inner shell's mask through that Port): a shell Node's inward Ports, at most one per axis by the shells' geometry (the click's plan, C6 (iii))."""
-    return [np.asarray(arrival(inner, axis, side, board.wrap), dtype=bool) for axis, side in PORT_SIDES]
+    return [np.asarray(arrival(inner, axis, side), dtype=bool) for axis, side in PORT_SIDES]
 
 
 def advanced_fronts(board: Lattice) -> None:
