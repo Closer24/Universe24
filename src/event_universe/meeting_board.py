@@ -18,7 +18,15 @@ from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.readings import momentum_of
-from event_universe.reports import READINGS, birth_line, point_of, refused_line
+from event_universe.reports import (
+    READINGS,
+    REFUSED_LAY,
+    REFUSED_ORIGIN,
+    REFUSED_STOP,
+    birth_line,
+    point_of,
+    refused_line,
+)
 from event_universe.reports import credit as credit_line
 
 if TYPE_CHECKING:
@@ -77,7 +85,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                 if at_origin(
                     board, reads
                 ):  # every digit at the lay's origin: nothing to read, nothing born
-                    refusals.append((at, "origin", board.half_wall(index), board.half_wall(index)))
+                    refusals.append((at, REFUSED_ORIGIN, board.half_wall(index), board.half_wall(index)))
                 else:
                     try:
                         number = read_of(board, reads, label)  # one Link and one number (2026-10-24)
@@ -228,9 +236,9 @@ def refused_by(board: Lattice, at: Node, table: Table, found: Take) -> tuple[str
     for child in born_items(board.families, table, (at,)):
         if at not in take.below_quantum(board, child):
             standing = int(board.share_of(child.family, 1, board.mask((at,)))[0][at])
-            return "lay", standing, board.credit.units[child.family]
+            return REFUSED_LAY, standing, board.credit.units[child.family]
     if found.taken < found.walls:
-        return "stop", found.taken, found.walls
+        return REFUSED_STOP, found.taken, found.walls
     return None
 
 

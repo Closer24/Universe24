@@ -151,6 +151,11 @@ BORN_KEYS = (
     "records",
     "points",
 )  # the birth line's children's records and points, the click's view of the birth (2026-10-24)
+REFUSED_LAY, REFUSED_STOP, REFUSED_ORIGIN = (
+    "lay",
+    "stop",
+    "origin",
+)  # the causes of the board's own refusals by name (`refused_line`): a child's lay refused, the full stop below the walls, every digit at the lay's origin; the read's own causes "vacuum" and "unit" are `features/click.Refused`'s
 TAKE_KEYS = (
     "taken",
     "walls",
