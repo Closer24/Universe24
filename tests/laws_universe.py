@@ -1,4 +1,4 @@
-"""The one world's helpers shared by the Universe24 tests (tests/test_universe24_runs_its_cycle.py, tests/test_matter_is_born_from_light.py, tests/test_the_sign_holder_and_the_pairs_on_the_small_torus.py, tests/test_the_torus_page_draws_the_log.py, tests/test_the_node.py, tests/test_the_bound_body.py): the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone), the declared seed's universe of 2026-10-23 kept by name (`DECLARED`, `declared_universe`: gravity [999, 1000], the sign holder, matter [600, 1000], light, the proton [0, 1000] and the electron [800, 1000] as planes, the absorber), the small structured board's constants as read on it, `small_world` (the declared seed's world cut to a small torus, with or without its detector and its one instrument body; `atom_world`, the small torus with the atom's two bodies, deleted 2026-10-24 with no test on it) and `flat`."""
+"""The one world's helpers shared by the Universe24 tests: the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone; `FOLDER`, `WORLD`, `UNIVERSE`, `LOG`), the eras tool loaded (`ERAS`), the one universe's clock and the small torus's side (`GAMMA`, `CUBE`), the bare torus of the one universe file (`bare_torus`) and `flat`. The declared seed's universe and its small structured board (`DECLARED`, `small_world`) left 2026-10-24 with the tests of the cancelled worlds."""
 
 import json
 from pathlib import Path
@@ -6,120 +6,13 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.world_files import input_digest
 from tests.laws import ROOT, load_file
 
 FOLDER = ROOT / "examples" / "events" / "universe24"
 WORLD, UNIVERSE = FOLDER / "universe24.json", FOLDER / "universe_universe24.json"
 LOG = FOLDER / "universe24.eras.jsonl"
 ERAS = load_file("eras", ROOT / "tools" / "eras.py")
-GAMMA, CUBE, LEVEL, SPEED, GAP = 1000, 3, 636, 190, 990
-# the declared seed's lightest clump's levels at the pair [600, 1000] (the before level 0.6 of the now), the gate's count of its share on the 3-cube at T 36,000
-CLUMP, COUNT, NOW, BEFORE = [1, 1, 1], 429, 3015, 1809
-DETECTOR = [
-    [0, 0, 0],
-    [0, 0, 1],
-]  # the smallest region the law admits: through one Node what enters leaves
-ABSORBER = [
-    2,
-    2,
-    2,
-]  # the click variant's instrument body, the clicks world's absorber reading the light
-RESONANCE = 902  # the one instrument's resonance pair over Gamma, its derived beat 15 (period_of)
-SECOND = [0, 2, 0]  # the second instrument of the many-clicks clause, two Links from the first
-RESONANCES = (810, 868)  # the two instruments' resonance pairs over Gamma, their derived beats 11 and 13
-# the two instruments' clicks on the small structured board, before and after its top, read from the run under the content register (2026-10-24; 3 and 1 at the merge base c942951f2, where the register was the W = 0 sign holder's write room, an artefact removed by the Boss's word)
-BEFORE_TOP, AFTER_TOP = 2, 2
-# the declared seed's universe (examples/events/universe24/universe_universe24.json to 2026-10-23, kept by name on the fold of 2026-10-24: the one world's file is nature's den since, and the small structured board's tests read this seed)
-DECLARED: dict[str, Any] = {
-    "integers": {"node_clock": GAMMA, "quantum_action": 36000, "width": 92, "link_unit": 16},
-    "families": [
-        {"name": "gravity", "pair": [999, GAMMA]},
-        {"name": "charge", "pair": [GAMMA, GAMMA]},
-        {"name": "matter", "pair": [600, GAMMA], "dimension": 1},
-        {"name": "light", "pair": [GAMMA, GAMMA], "dimension": 1},
-        {"name": "proton", "pair": [0, GAMMA], "dimension": 2},
-        {"name": "electron", "pair": [800, GAMMA], "dimension": 2},
-    ],
-}  # the rows in the derived form (2026-10-24): the holders their pairs, the reads derived; the absorber [666, 1000], two planes reading no sign, is no row of the derived law (every plane reads the sign, and its sine is irrational), kept by name
-
-
-def declared_universe() -> dict[str, Any]:
-    """The declared seed's universe, a copy of its own (the heaviest-pair test's builder, tests/test_the_heaviest_pair_within_the_two_quanta.py)."""
-    return json.loads(json.dumps(DECLARED))
-
-
-def small_world(
-    folder: Path,
-    detector: bool = True,
-    absorber: bool = False,
-    cube: int = CUBE,
-) -> Path:
-    """The declared seed's universe with gravity's gap widened to [GAP, Gamma], one clump at the centre of the 3-cube torus at the shipped lightest clump's two levels, light uniform at LEVEL now and LEVEL - SPEED before on every Node (declared on the void Nodes, one quantum each at v^2 near T), the detector on two Nodes, and with `absorber` the one instrument body at ABSORBER reading the light (the two instruments' small world of the many-clicks clause left on 2026-10-24, every world but Universe24 cancelled)."""
-    universe = declared_universe()
-    universe["families"][0]["pair"] = [GAP, GAMMA]
-    if absorber and not any(family["name"] == "absorber" for family in universe["families"]):
-        universe["families"].append({"name": "absorber", "pair": [666, GAMMA], "dimension": [2, 2]})
-    (folder / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    nodes = [[x, y, z] for x in range(cube) for y in range(cube) for z in range(cube)]
-    world: dict[str, Any] = {
-        "shape": [cube] * 3,
-        "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
-        "intervals": 200,
-        "universe": "u.json",
-        "bodies": [
-            {"family": "matter", "nodes": [{"node": CLUMP, "count": COUNT}]},
-            {
-                "family": "light",
-                "nodes": [
-                    {"node": at, "count": 1}
-                    for at in nodes
-                    if at != CLUMP and not (absorber and at == ABSORBER)
-                ],
-            },
-        ],
-        "node_detectors": [{"name": "detector", "positions": DETECTOR}] if detector else [],
-    }
-    if absorber:
-        world[
-            "bodies"
-        ].append(  # declared as examples/events/universe24/universe24.json declares its instruments
-            {
-                "family": "absorber",
-                "nodes": [{"node": ABSORBER, "weight": 1}],
-                "parts": [{"part": 0, "name": "g", "count": 1}, {"part": 1, "name": "e", "count": 0}],
-                "transitions": [
-                    {
-                        "from": "g",
-                        "to": "e",
-                        "drive": "light",
-                        "weight": [23, 2],
-                        "resonance": [RESONANCE, GAMMA],
-                    }
-                ],
-                "rates": [{"from": "e", "to": "g", "lifetime": 24, "gives_to": "light"}],
-                "node_detector": {},
-            }
-        )
-    at = nodes.index(CLUMP)
-    now, before = [0] * len(nodes), [0] * len(nodes)
-    now[at], before[at] = NOW, BEFORE
-    mode = {
-        "world_digest": input_digest(world),
-        "bodies": [
-            {"family": "matter", "pair": [600, GAMMA], "moving": {"now": now, "before": before}},
-            {
-                "family": "light",
-                "pair": [GAMMA, GAMMA],
-                "moving": {"now": [LEVEL] * len(nodes), "before": [LEVEL - SPEED] * len(nodes)},
-            },
-        ],
-        "packets": [],
-    }
-    path = folder / "small.json"
-    path.write_text(json.dumps(world), encoding="utf-8")
-    path.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
-    return path
+GAMMA, CUBE = 1000, 3  # the one universe's clock and the small torus's side
 
 
 def bare_torus(folder: Path, cube: int = CUBE, intervals: int = 60) -> Path:

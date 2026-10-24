@@ -54,14 +54,12 @@ The files at `examples/events/*.json` and the universe files the folders carry. 
 
 | File | What it declares | Where it is used |
 | --- | --- | --- |
-| `rule.json` | The rule's own universe: gravity [6000, 6000] held by the form and the tensions at the level weight 1,000 with the rest 60; charge [6000, 6000] held by the Wronskian at 1; binding [2400, 2401] held by the form at 1; matter [4000, 6000] of dimension 1. | The law (The families from the rule), ENGINE.md, `tests/laws.py`, `tests/test_the_bound_body.py`, the pixel world of matter_alone, the scripts and look pages of body_motion and two_bodies. |
 | `charged.json` | T = 36,000; the four rows of `rule.json` with the charge's alpha 6 = E_h T / Gamma (4 to 2026-10-23), and charged [3600, 6000] (Pythagorean since 2026-10-24; [4000, 6000] to then) of dimension 2 reading the charge at 1. | ENGINE.md. |
 | `deuteron.json` | Charge [6000, 6000] held by the Wronskian at 1, reading nothing; nuclide [4004, 6000] of dimension [2, 2] reading the charge at 1. | ENGINE.md. |
 | `ghz.json` | Gravity and binding at the level weight 1,000,000, charge at 1, matter [4000, 6000], and light_ghz [6000, 6000] of dimension [4, 1]. | The law, `tests/test_the_meeting.py`, the four GHZ worlds. |
 | `light.json` | The light-only universe: gravity and binding at the level weight 1,000,000, charge at 1, matter [4000, 6000]. | The law, ENGINE.md, the two slits' world, the three which-way worlds, the Bell and GHZ designs. |
 | `two_slits/light_x4096.json` | The rows of `light.json` with T = 134,217,728, the shipped quantum action times 2^12 (the energy line binds no family of this file), so that one quantum lays at the shipped beam's own levels. | The one-quantum world `two_slits/one_quantum.json` (2026-10-21). |
 | `pair.json` (the file at `examples/events/pair.json`) | The rows of `light.json` and light_pair [6000, 6000] of dimension [2, 1], two real lines never summed at a Node. | The law, ENGINE.md, the four Bell worlds. |
-| `turning.json` | T = 36,000; gravity at 1,000, charge at the level weight 100 and alpha 600 = E_h T / Gamma (400 to 2026-10-23) under the act `rotation`, binding at 1, matter, and charged of dimension 2 reading the charge at 1. | ENGINE.md, `tests/laws.py`, `tests/test_the_bound_body.py`. |
 | `engine_start.json` | The engine start file every world names, an empty object (its one key `mode` left the file on 2026-10-20, the cleanliness audit). | Every world file, ENGINE.md, the tests. |
 | `neutron_conversion/nucleons.json` | Gravity at 1,000, charge at 1, binding at 1; the nucleon family in its own nuclear holder's well. | `tests/test_the_bound_body.py`, the nucleon's fixed-point test. |
 | `anticoincidence/two_atoms.json` | Atom [1, 1299] and photon [6000, 6000]. | `chain_x_minus.json`, `chain_y_minus.json`, `chain_z_minus.json`, `tests/laws_spin.py`. |
