@@ -6,12 +6,15 @@ import itertools
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, replace
 from math import gcd
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.keys import integer, keyed
+
+if TYPE_CHECKING:
+    from event_universe.loader.world import NodeDetectorRow
 
 Gauss = tuple[
     int, int
@@ -167,8 +170,8 @@ def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], 
 
 
 def settings_of_the_law(
-    rows: Sequence[Any], laid: list[int], families: tuple[FamilyRule, ...]
-) -> tuple[Any, ...]:
+    rows: Sequence[NodeDetectorRow], laid: list[int], families: tuple[FamilyRule, ...]
+) -> tuple[NodeDetectorRow, ...]:
     """A side's one setting read by the kind of the record it reads (the owner's word of 2026-10-23, nature is one, not several options; the two keys `basis` and `axis` of 2026-10-19 one key since): the `basis` of a side reading a record of real-line parts is the setting's coefficients (p, q) at the full angle (the pair's and the GHZ's polarizations), and the `basis` of a side reading a record of plane parts is the half-angle pair (c, s) of the detector's axis, the spinor read of a two-plane record (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route: the half angle is the detector's declared basis and no property of the record under the 48): per side with a pattern, the laid families of as many parts as the pattern name the kind, and the row returns with `plane` set where they are planes (`NodeDetectorRow.axis`, the half-angle pair, its `basis` then); refused by name where the laid records of that many parts are of both kinds, and where a side reading real lines declares a `turn`, the quarter turn being a plane side's azimuth. The two ports' arithmetic is one (`ports_of`): e_k(+) = alpha_k c + beta_k s, e_k(-) = beta_k c - alpha_k s."""
     found = []
     for row in rows:
