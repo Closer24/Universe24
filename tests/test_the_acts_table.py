@@ -118,6 +118,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
+    (
+        "meeting_board.py",
+        "meetings",
+        "division_forward",
+    ): "D",  # the share over the unit, floor and rest once
+    ("seed.py", "drift_of", "largest_below"): "S",  # the drift by the search on v^2 <= T
     # guide.py, the guide clause of the emission
     (
         "guide.py",
