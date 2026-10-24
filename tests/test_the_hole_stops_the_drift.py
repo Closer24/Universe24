@@ -43,16 +43,8 @@ def events(lines, kind, interval):  # type: ignore[no-untyped-def]
     return [row for row in lines if row.get("event") == kind and row["interval"] == interval]
 
 
-def apart(nodes, shape):  # type: ignore[no-untyped-def]
-    """Whether no two of the Nodes are one Link apart on the torus."""
-    frames = [digits.frame_of(tuple(at), shape, (True, True, True))[1:] for at in nodes]
-    return all(
-        tuple(b) not in frame for a, frame in zip(nodes, frames, strict=True) for b in nodes if b != a
-    )
-
-
 def test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The hole's clause on the 3-cube over 40 intervals: at every close the light's summed share after the writes is at most the share before (nothing made), and where the born Nodes stand apart the fall equals the births' taken summed, each the children's walls plus an excess at or above 0 and below the last level's step; a refused close with no birth leaves the light standing; the light above zero at every interval and several births; the course's own numbers (18 births, 72 refusals) are the course's and not asserted."""
+    """The hole's clause on the 3-cube over 40 intervals: at every close the light's summed share after the writes is at most the share before (nothing made), and at every close with takes the reading's fall is within one unit per Node read of the takes summed (the reading floors the share per Node, the take floors the exact rational fall of the frame's seven shares over the common denominator once, so the two differ by less than one unit per Node share summed: seven for one Node's frame, the distinct Nodes where frames overlap; the re-pose of 2026-10-24, 22:1x UTC, on the Boss's ruling: the former equality of the reading and the take held while only the births' takes at whole shares were reached, the bodies' takes at the origin read 1 to 6 units apart), each take the walls plus an excess at or above 0 and below the last level's step; a refused close with no birth leaves the light standing; the light above zero at every interval and several births; the course's own numbers (18 births, 72 refusals) are the course's and not asserted."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
     kept = watched(monkeypatch)
@@ -70,13 +62,20 @@ def test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube(tmp
         assert after <= before
         assert all(0 <= row["excess"] < row["step"] and row["walls"] > 0 for row in takes)
         assert all(row["taken"] == row["walls"] + row["excess"] for row in takes)
-        if takes and apart(
-            [row["nodes"][0] if "nodes" in row else row["support"] for row in takes], board.shape
-        ):
-            assert before - after == sum(row["taken"] for row in takes), (
+        if takes:
+            read = {
+                tuple(node)
+                for row in takes
+                for node in digits.frame_of(
+                    tuple(row["nodes"][0] if "nodes" in row else row["support"]),
+                    board.shape,
+                    board.world.periodic,
+                )
+            }  # the Node shares the reading summed for the takes: each take's Node and its six Ports, the distinct Nodes where frames overlap
+            assert abs((before - after) - sum(row["taken"] for row in takes)) <= len(read), (
                 interval,
                 [row.get("nodes") or row.get("support") for row in takes],
-            )
+            )  # the reading floors the share per Node, the take floors the exact fall once: below one unit per Node read
         if (
             refused and not takes
         ):  # a refused close with no birth and no body's click leaves the light standing
