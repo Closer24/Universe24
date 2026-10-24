@@ -7,8 +7,8 @@ import json
 
 import numpy as np
 
-from event_universe import conversion, records, seed, world_files
-from event_universe.act import born_items
+from event_universe import conversion, credit, records, seed, world_files
+from event_universe.act import born_items, born_table, click
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
 from event_universe.lattice import Lattice
@@ -17,7 +17,7 @@ from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws import ROOT
-from tests.laws_universe import small_universe, uniform_sea
+from tests.laws_universe import UNIVERSE, small_universe, uniform_sea
 
 
 def bare_board(tmp_path, monkeypatch, intervals, births):  # type: ignore[no-untyped-def]
@@ -60,12 +60,8 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
     )  # the heavier point, the lighter
     table = ((proton, -1), (proton, 1), (electron, -1), (electron, 1))
     items = born_items(board.families, table, ((1, 1, 1),))
-    assert [item.record for item in items] == [0, 1, 0, 1] and [item.sense for item in items] == [
-        -1,
-        1,
-        -1,
-        1,
-    ]
+    assert [item.record for item in items] == [0, 1, 0, 1]
+    assert [item.sense for item in items] == [-1, 1, -1, 1]
     for item in items:
         laid_by_count(board, item)
     for item in items:
@@ -140,3 +136,53 @@ def test_the_holes_board_runs_back_exact_through_its_births(tmp_path, monkeypatc
         laid(board, light, number, change, None, None, here)
     found = back.verdict(board, 20)
     assert found["verdict"] == "MATCH" and births, found
+
+
+def born_here(board, at, table=None):  # type: ignore[no-untyped-def]
+    """The birth's own path at one Node of a fresh board, the content 0 everywhere (`meeting_board.closed` without the meeting's read): the seed's record at the Node to the state of a Node with no level through the one lay act, the hole, then the list `table`, the heaviest pair within two light quanta where none is given, laid by the one click act (`act.born_table`, `act.born_items`, `act.click`); returns the children's family."""
+    light, here, action = board.world.seed, board.mask((at,)), board.world.quantum_action
+    span = records.record_slice(board.families[light], 0)
+    for number in range(span.start, span.stop):
+        line = board.states[light].lines[number]
+        change = (np.where(here, -line.now, 0), np.where(here, -line.before, 0))
+        laid(board, light, number, change, None, None, here)
+    wall = count_wall(board.families[light], action)
+    table = table or born_table(board.families, light, action, 2 * wall, 1)
+    click(board, born_items(board.families, table, (at,)))
+    return table[0][0]
+
+
+def test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_2(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The lay of a born child is the law's at every den (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's ruling): at den 1,021 and at the shipped den a child laid by the birth's own path at one Node of the bare 3-cube carries the share 6 den A^2 with A = isqrt(T div 2), the two light quanta's energy conserved at the birth to the rounding of T div 2 to the largest square, the Wronskian +-A^2, T div 2 to the same rounding, and the charge one per child (`credit.count_of`); in the child's own unit W_rec = 3 T s the pair reads 12 den A^2 over W_rec, E over m c^2, the Lorentz factor of a child born from light of that energy (3 at the point of sine 0.763, 2 at the heaviest point of the shipped den, 3,677 at its least leg), the same energy read in two units standing in the points' mass ratio."""
+    at, read = (1, 1, 1), {}
+    for shipped in (False, True):
+        board = bare_board(tmp_path, monkeypatch, 1, [])
+        if shipped:  # the shipped den's universe written in the small universe's place
+            (tmp_path / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+            board = Lattice(load_world(tmp_path / "bare.json"))
+        action, child = board.world.quantum_action, born_here(board, at)
+        den, light = board.families[child].pair[1], board.families[board.world.seed]
+        size, unit = amplitude(1, action, light.pair, 1), board.credit.units[child]
+        assert den == light.pair[1] and size * size <= action // 2 < (size + 1) * (size + 1)
+        share = int(board.share_of(child)[0][at])
+        assert share == 12 * den * size * size and 2 * count_wall(light, action) - share == 6 * den * (
+            action - 2 * size * size
+        )
+        assert [
+            int(np.asarray(records.wronskian(board.lines_of(child, r), True), dtype=object)[at])
+            for r in range(2)
+        ] == [-size * size, size * size]
+        assert credit.count_of(board, child) == board.credit.counts[child] == 2
+        read[den] = (int(board.quanta(child)[0][at]), unit)
+        assert (
+            read[den][0] == (share + unit // 2) // unit == (12 * den * size * size + unit // 2) // unit
+        )
+    assert read[1021][0] == 3 and read[den][0] == 2  # 2 den over s to the lay's rounding, 2.62 and 2.000
+    lightest = min(
+        (k for k, f in enumerate(board.families) if f.plane),
+        key=lambda k: count_wall(board.families[k], action),
+    )
+    born_here(board, (0, 0, 1), ((lightest, -1), (lightest, 1)))
+    quanta, unit = int(board.quanta(lightest)[0][0, 0, 1]), board.credit.units[lightest]
+    assert quanta == (12 * den * size * size + unit // 2) // unit > 1800 * read[den][0]  # E over m c^2
+    assert abs(quanta * unit - read[den][0] * read[den][1]) <= read[den][1]  # one energy, two units

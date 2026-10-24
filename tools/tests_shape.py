@@ -98,6 +98,16 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         8,
         "the helper of the three tests above: the one universe file on the bare 3-cube with the births kept",
     ),
+    "tests/test_the_birth_is_a_list_of_records.py::born_here": (
+        12,
+        "the birth's own path at one Node of a fresh board (the branch born-amplitude, 2026-10-24): the seed's record at the Node to "
+        "the state of a Node with no level through the one lay act, the hole, then the list laid by the one click act",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_2": (
+        34,
+        "the lay of a born child is the law's at every den (the owner's ruling of 2026-10-24 on the hand's measurement): 6 den A^2 = "
+        "0.99756 W_c per child, W = +-A^2, the charge one per child, the Lorentz factor in the child's own unit, at den 1,021 and the file's den",
+    ),
     "tests/test_the_charge_per_quantum.py::test_equal_wronskians_of_two_families_write_equal_charge": (
         16,
         "the charge written is the Wronskian over T div 2 for every reader (the law's sentence of 2026-10-24, the owner's word): "
