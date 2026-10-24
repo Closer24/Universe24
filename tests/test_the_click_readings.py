@@ -207,6 +207,10 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     )  # the propers in order; a bound body's two records click at one close, two credits at one proper (the born gate of 2026-10-24, 21:5x UTC)
     for line in origin:  # the origin's frame symmetric under the 48: no current, the three axes alike
         assert line[MOMENTUM] == [line[MOMENTUM][0]] * 3 and line[MOMENTUM][0][0] == 0
-    for line in credits:  # every credit reads a point: the Node re-lit; beyond the band no beat
+    for (
+        line
+    ) in credits:  # every credit of the light reads a point: the Node re-lit; beyond the band no beat
+        if line["identity"][0] != board.world.seed:
+            continue  # a bound body's credit reads its record's own (the born gate of 2026-10-24, 21:5x UTC)
         num, den = line["point"]
         assert den > 0 and np.gcd(abs(num), den) == 1 and (line["beat"] is None) == (abs(num) > den)
