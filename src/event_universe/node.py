@@ -192,7 +192,7 @@ def phase_counts(
 def phase_carried(
     index: int, states: States, counts: dict[int, list[Any]], gamma: int
 ) -> list[list[Record]]:
-    """The holder's phase lines with every row's pairs carried along the one orbit from the seed from the count standing (the row's count lines, the cache the planes read, plane.phase_links) to the count `counts` names (features/phase `orbit_moves`, `iterate` at the line's unit 2 Gamma: |K'| - |K| acts, forward where the size grows, the inverse act where it shrinks, bit for bit in either direction), the count lines then at `counts`, the Node's phase row as it is; the state untouched."""
+    """The holder's phase lines with every row's pairs carried along the one orbit from the seed from the count standing (the row's count lines, the cache the planes read, plane.phase_links) to the count `counts` names (features/phase `Orbit.pairs_at`: the pair at the count |K'| along the one orbit from the seed, the checkpoint at or below it carried by the rest, the same integers as `iterate` at the line's unit 2 Gamma over |K'| - |K| acts, forward where the size grows, the inverse act where it shrinks, bit for bit in either direction; a state the lattice did not seed carried by `iterate` itself), the count lines then at `counts`, the Node's phase row as it is; the state untouched."""
     found: list[list[Record]] = []
     for row, lines in enumerate(states[index].phases):
         if row not in counts:
@@ -200,15 +200,28 @@ def phase_carried(
             continue
         phased_lines: list[Record] = []
         count_lines: list[Record] = []
+        orbit = phase.orbit_of(states[index])
         for axis in range(AXES):
             cosine, sine, standing = lines[2 * axis], lines[2 * axis + 1], lines[2 * AXES + axis]
             reached = np.asarray(counts[row][axis])
-            moved = np.abs(reached) - np.abs(np.asarray(standing.now, dtype=object))
-            pair = phase.iterate(
-                ((cosine.now, cosine.before, cosine.remainder), (sine.now, sine.before, sine.remainder)),
-                moved,
-                phase.unit(gamma),
-            )
+            if orbit is not None:  # the pairs at |K'| along the one orbit, the same integers
+                lines_standing = (
+                    (cosine.now, cosine.before, cosine.remainder),
+                    (sine.now, sine.before, sine.remainder),
+                )
+                pair = orbit.pairs_at(
+                    np.abs(reached), np.abs(standing.now), lines_standing, cosine.now.dtype
+                )
+            else:
+                moved = np.abs(reached) - np.abs(np.asarray(standing.now, dtype=object))
+                pair = phase.iterate(
+                    (
+                        (cosine.now, cosine.before, cosine.remainder),
+                        (sine.now, sine.before, sine.remainder),
+                    ),
+                    moved,
+                    phase.unit(gamma),
+                )
             phased_lines += [Record(*(np.asarray(a) for a in line)) for line in pair]
             count_lines.append(Record(reached, np.asarray(0 * reached), np.asarray(0 * reached)))
         found.append(phased_lines + count_lines + [lines[PHI]])
@@ -309,6 +322,8 @@ def seed_phases(board: Lattice, world: World) -> int:
     )
     for index, family in enumerate(families):
         states[index].phases = phase_lines(family, board.shape, board.kind, gamma, bits)
+        if family.rotation:  # the state's pairs stand on the one orbit from this seed (phase.Orbit)
+            phase.seeded(states[index], phase.unit(gamma), phase.amplitude(phase.unit(gamma), bits))
     for index, family in enumerate(families):
         if family.rotation and any(turns(families, i) for i in range(len(families))):
             counts = phase_counts(index, families, states, -1, board.wrap, gamma)
