@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import json
+from dataclasses import replace
 
 import numpy as np
 
@@ -11,12 +11,7 @@ from event_universe.loader.universe import universe_of
 
 GAMMA, T = 1000, 36_000
 DEN = 53_567_765
-SIGN = {
-    "name": "charge",
-    "pair": [GAMMA, GAMMA],
-    "reads": {},
-    "held": {"sources": ["wronskian"], "level_weight": 1},
-}
+SIGN = {"name": "charge", "pair": [GAMMA, GAMMA]}  # the holder of the sign, the held massless row
 
 
 def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict:  # type: ignore[type-arg]
@@ -24,8 +19,8 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict
         "integers": {"node_clock": gamma, "quantum_action": T, "width": 92, "link_unit": 16},
         "families": [
             {**SIGN, "pair": [gamma, gamma]},
-            {"name": "proton", "pair": proton, "reads": {"charge": 1}, "dimension": 2},
-            {"name": "electron", "pair": electron, "reads": {"charge": 1}, "dimension": 2},
+            {"name": "proton", "pair": proton, "dimension": 2},
+            {"name": "electron", "pair": electron, "dimension": 2},
         ],
     }
 
@@ -35,39 +30,13 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
     document = {
         "integers": {"node_clock": GAMMA, "quantum_action": T, "width": 92, "link_unit": 16},
         "families": [
-            {
-                "name": "gravity",
-                "pair": [53_529_741, DEN],
-                "reads": {"gravity": 1},
-                "held": {"sources": ["form", "tensions"], "level_weight": 1, "write_weight": 1},
-            },
-            {
-                "name": "charge",
-                "pair": [DEN, DEN],
-                "reads": {},
-                "held": {"sources": ["wronskian"], "level_weight": 1},
-            },
-            {"name": "matter", "pair": [32_140_659, DEN], "reads": {"gravity": 1}, "dimension": 1},
-            {"name": "light", "pair": [DEN, DEN], "reads": {"gravity": 1}, "dimension": 1},
-            {
-                "name": "proton",
-                "pair": [4_859_756, DEN],
-                "reads": {"gravity": 1, "charge": 1},
-                "dimension": 2,
-            },
-            {
-                "name": "electron",
-                "pair": [53_567_757, DEN],
-                "reads": {"gravity": 1, "charge": 1},
-                "dimension": 2,
-            },
-            {
-                "name": "absorber",
-                "pair": [35_564_716, DEN],
-                "reads": {"gravity": 1},
-                "dimension": [2, 2],
-            },
-        ],
+            {"name": "gravity", "pair": [53_529_741, DEN]},
+            {"name": "charge", "pair": [DEN, DEN]},
+            {"name": "matter", "pair": [32_140_659, DEN], "dimension": 1},
+            {"name": "light", "pair": [DEN, DEN], "dimension": 1},
+            {"name": "proton", "pair": [4_859_756, DEN], "dimension": 2},
+            {"name": "electron", "pair": [53_567_757, DEN], "dimension": 2},
+        ],  # the rows derived (2026-10-24); the absorber [35,564,716, den] of the file to that day, two planes reading no sign, no row of the derived law
     }
     _integers, families = universe_of(document)
     sign = next(f for f in families if f.name == "charge")
@@ -87,10 +56,10 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
 
 def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_no_neutral_body():
     """The register's scale and the lay's amplitude bound are the loader's tool and no line of the law, and a record laid at W = 0 writes nothing, so a holder of the sign may not change a neutral body's register (the Boss's word, 2026-10-24; the former rule, the min over every family's rooms with the sign holder's write room among them, kept by name, 2026-10-23): the amplitude bound of a universe whose planes read the sign holder (the charge factors standing) equals the bound of the same universe with the planes reading no sign (no charge factor, the holder written by no source), so the register (`node_detector.scale_of` from `World.amplitude_bound`) is the same; the sign holder's write room is gated apart in `bound_under_rooms`, refused by name where it leaves no level inside the width (no width of this universe reaches that gate before Rule3's own totals refuse, so the refusal is asserted by its sentence in the loader and by no world here)."""
-    charged = universe([0, 6000], [3600, 6000])
-    neutral = json.loads(json.dumps(charged))
-    for family in neutral["families"][1:]:
-        family["reads"] = {}
-    bound_charged = amplitude_bound(universe_of(charged)[1], GAMMA, T, 92, 16)
-    bound_neutral = amplitude_bound(universe_of(neutral)[1], GAMMA, T, 92, 16)
+    charged = universe_of(universe([0, 6000], [3600, 6000]))[1]
+    neutral = tuple(
+        replace(family, reads=()) if family.plane else family for family in charged
+    )  # the same planes reading no sign, by hand: every plane reads the sign since 2026-10-24, so no file states them
+    bound_charged = amplitude_bound(charged, GAMMA, T, 92, 16)
+    bound_neutral = amplitude_bound(neutral, GAMMA, T, 92, 16)
     assert bound_charged == bound_neutral  # the sign holder's write room enters no other family's bound

@@ -34,7 +34,9 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
     for _ in range(BEFORE_THE_BIRTHS):
         board.step()
         assert linear_sum(wall, board.states[light].lines[0]) == first, board.interval
-    assert (board.states[light].lines[0].now > first // wall).all()  # the levels rose from the seed, L stood
+    assert (
+        board.states[light].lines[0].now > first // wall
+    ).all()  # the levels rose from the seed, L stood
     board.step()
     assert any(line["event"] == "birth" for line in lines)
     assert linear_sum(wall, board.states[light].lines[0]) != first  # the holes took the light

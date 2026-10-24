@@ -15,18 +15,13 @@ UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.js
 
 
 def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagorean_one_admitted():
-    sign = {
-        "name": "charge",
-        "pair": [1000, 1000],
-        "reads": {},
-        "held": {"sources": ["wronskian"], "level_weight": 1},
-    }
+    sign = {"name": "charge", "pair": [1000, 1000]}  # the holder of the sign, the held massless row
     universe = {
         "integers": {"node_clock": 1000, "quantum_action": 36_000, "width": 92, "link_unit": 16},
         "families": [
             sign,
-            {"name": "proton", "pair": [0, 1000], "reads": {"charge": 1}, "dimension": 2},
-            {"name": "electron", "pair": [800, 1000], "reads": {"charge": 1}, "dimension": 2},
+            {"name": "proton", "pair": [0, 1000], "dimension": 2},
+            {"name": "electron", "pair": [800, 1000], "dimension": 2},
         ],
     }
     universe_of(universe)  # [800, 1000]: the sine 600, Pythagorean, admitted
@@ -42,9 +37,11 @@ def test_the_one_universe_with_the_electron_reading_the_charge_at_3_is_refused_b
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     electron = next(f for f in universe["families"] if f["name"] == "electron")
-    electron["reads"]["charge"] = 3
+    electron["reads"] = {"gravity": 1, "charge": 3}  # the folded record's declaration to 2026-10-24
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
     world = {"universe": "u.json", "shape": [3, 3, 3], "intervals": 1}
     (path := tmp_path / "bare.json").write_text(json.dumps(world), encoding="utf-8")
-    refusal = refused(WEIGHT, load_world, path)
-    assert "'electron'" in str(refusal) and "is 3" in str(refusal)
+    refusal = refused("holds the key 'reads', a declaration no file carries", load_world, path)
+    assert (
+        "'electron'" in str(refusal) and "the reads are derived" in str(refusal)
+    )  # the key itself refused by name since the reads are derived (2026-10-24, the same day's later word); the weight's sentence, "is 3: the read weight is one for every reader", the refusal of that morning, kept by name

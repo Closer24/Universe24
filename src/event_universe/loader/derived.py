@@ -1,4 +1,4 @@
-"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension): a family's row holds its name, its pair, either its dimension (a family of quanta: any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one) or what sources it (a held row: the form, the tensions, the Wronskian) at its level weight (the quanta of form that write one level of the row), its write weight (the multiplier of its one write) and its rest, and the holders it reads with their weights, as its declaration names them; the rule derives the rest from these alone with no name and no default (the lines, who sources whom by the held write's reciprocity, the one write per held part with its walls); the amplitude bound A is derived from the integer width by the search on the share reading (`rule3.largest_below`), never written and never by a root (ALGEBRA.md #the-bound)."""
+"""The families from the rule (ALGEBRA.md #a-familys-declaration, every family has a dimension; the owner's word of 2026-10-24, no declarations): a family's row holds its name, its pair and, for a family of quanta, its dimension (any integer from 1, the lines of its record, one real line, a plane of two, or three or more real lines, each stepped as a line of dimension one); a row without a dimension is a holder, and the rule derives the rest from the pair and the dimension alone with no name and no default: what a holder holds and what sources it (a held row with a gap holds the volume, sourced by the form and the tensions; a held massless row holds the sign, sourced by the Wronskian; `loader/universe.holder_of`), the level weight 1 and the write weight 1 (the write's and the read's universality), who reads whom at the weight 1 (`with_reads`: every family of quanta and every holder of the volume reads every holder of the volume, a plane every holder of the sign too, the holder of the sign none), the lines, who sources whom by the held write's reciprocity, the one write per held part with its walls; the amplitude bound A is derived from the integer width by the search on the share reading (`rule3.largest_below`), never written and never by a root (ALGEBRA.md #the-bound). The declared reads, sources, level weights, write weights and rests of the files to 2026-10-24 (the keys `reads` and `held`) kept by name."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^
 
 @dataclass(frozen=True)
 class Row:
-    """A family's row as the loader reads it from the universe file: its name, its pair [num, den], its lines in all (a family of quanta's dimension, any integer from 1, times its parts; a held row's sources' count, one real line per source, and the three odd axis lines of a holder of the sign under the rotation), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (the dimension 2, re and im: charged matter, the one dimension with a Wronskian and a turn; every other dimension real lines, which read none of the sign), whether it is sourced by its readers' Wronskian (the holder of the sign; else by their form, and by their tensions where it has the axis lines), whether it acts on its readers by the rotation of the two-part record (the holder of the sign's declared act; else by the plain read into their paces), its level weight where it is held (the quanta of form that write one level of the row), its write weight where it is held (the signed multiplier of its one write per line, the files' key `write_weight`: the sign holder's k_w, a nuclear holder's W_1 or -W_2), its rest, and the holders its declaration names with the weight it reads each with (`declared`, the files' key `reads`, by name; empty where it reads none)."""
+    """A family's row as the loader derives it from the universe file (the owner's word of 2026-10-24, no declarations): its name, its pair [num, den], its lines in all (a family of quanta's dimension, any integer from 1, times its parts; a holder's time line with its three axis lines, the tension lines of the holder of the volume or the odd lines of the holder of the sign), its parts (the records of one event never summed at a Node, 2 for the pair family, 1 otherwise), whether its lines are planes (the dimension 2, re and im: charged matter, the one dimension with a Wronskian and a turn; every other dimension real lines, which read none of the sign), whether it is sourced by its readers' Wronskian (the holder of the sign, the held massless row; else by their form and their tensions, the holder of the volume, the held row with a gap), whether it acts on its readers by the rotation of the two-part record (the holder of the sign; else by the plain read into their paces), its level weight where it is held (1, the quanta of form that write one level of the row), its write weight where it is held (1, the signed multiplier of its one write per line; the sign holder's alpha set by the loader, `alpha_of`), its rest (0: no row rests at a level) and the holders it reads by name, each at the weight 1 (`holders`, `with_reads`; empty where it reads none). The files' keys `reads` and `held` with `sources`, `level_weight`, `write_weight` and `rest` to 2026-10-24 kept by name."""
 
     name: str
     pair: tuple[int, int]
@@ -32,7 +32,7 @@ class Row:
     level_weight: int | None
     write_weight: int | None
     rest: int
-    declared: tuple[tuple[str, int], ...]
+    holders: tuple[tuple[str, int], ...]
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
     motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the volume form (every board's interval unobservable) alone on the held row of the content sourced by the tensions, massless or gapped (`axes`), that is not the sign's holder (loader/interval.volume_rows; the clause of 2026-10-23), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
@@ -42,7 +42,7 @@ class Row:
 
 @dataclass(frozen=True)
 class Read:
-    """One read of a family as its declaration names it: the held family whose time line it reads and the weight it reads with, by the plain read into its paces or, where the holder declares the rotation, as the turn of its record; by the held write's reciprocity the weight it sources that holder with."""
+    """One read of a family as the rule derives it (`with_reads`): the held family whose time line it reads and the weight it reads with, 1, by the plain read into its paces (a holder of the volume) or as the turn of its record (a holder of the sign); by the held write's reciprocity the weight it sources that holder with."""
 
     family: int
     weight: int
@@ -50,7 +50,7 @@ class Read:
 
 @dataclass(frozen=True)
 class FamilyRule(Row):
-    """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the held write's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
+    """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads, each at the weight 1 (`with_reads`), which by the held write's reciprocity it sources at the same weight; its rest 0 (the vacuum content of the massless row holding the content, the files' key `rest` to 2026-10-24, kept by name: no row rests at a level)."""
 
     reads: tuple[Read, ...] = ()
 
@@ -132,7 +132,7 @@ def folds(families: tuple[FamilyRule, ...], index: int) -> bool:
 
 
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
-    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family, a plane (`read_of` admits no family of real lines naming one), owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
+    """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family, a plane (`with_reads` gives no family of real lines one), owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
     return families[index].quanta and any(
         families[read.family].wronskian for read in families[index].reads
     )
@@ -187,37 +187,29 @@ class HeldWrite:
     factors: dict[int, int]
 
 
-def read_of(rows: Sequence[Row], index: int, name: str, weight: int) -> Read:
-    """One declared read resolved to the held row's position (ALGEBRA.md, every family reads the holders its declaration names, at the weights it names), refused by name where the name is no held row of the universe file, where the holder of the sign names its own level (light reads none of the sign) and where a family of real lines, one or three, names a holder of the sign: a plane reads the holder of the sign, plainly into its pace or as the turn of its two lines, and writes it by its Wronskian, and a real line does not, neutral by itself (ALGEBRA.md #a-familys-declaration, Every family has a dimension; the advisor's second hand)."""
-    names = [row.name for row in rows]
-    row = rows[index]
-    if name not in names or rows[names.index(name)].level_weight is None:
-        raise ValueError(
-            f"{row.name!r} reads {name!r}, and no held row of that name stands in the universe file: a "
-            "family reads the holders its declaration names (ALGEBRA.md #a-familys-declaration)"
-        )
-    other = names.index(name)
-    if other == index and row.wronskian:
-        raise ValueError(
-            f"{row.name!r} reads its own level: the holder of the sign never reads its own level, light "
-            "reads none of the sign (ALGEBRA.md #a-familys-declaration)"
-        )
-    if rows[other].wronskian and not row.plane:
-        raise ValueError(
-            f"{row.name!r} reads {name!r}, a holder of the sign, with lines that are no plane: a plane reads the "
-            "holder of the sign, plainly or as the turn of its two lines, and a real line does not (ALGEBRA.md "
-            "#a-familys-declaration, Every family has a dimension)"
-        )
-    return Read(other, weight)
+def with_reads(rows: Sequence[Row]) -> list[Row]:
+    """Every row's reads derived from the rows (the owner's word of 2026-10-24, no declarations; ALGEBRA.md #the-paces, The reads are derived): every family of quanta and every holder of the volume reads every holder of the volume (the held rows with a gap) at the weight 1, a holder of the volume its own level among them (Every row reads the content); every plane family (the dimension 2) reads every holder of the sign (the held massless rows) at 1 too, as the turn of its two lines, and writes it by its Wronskian; a family of real lines, one or three, reads none of the sign, neutral by itself; the holder of the sign reads none, its rows a phase on its readers' Links, entering no pace and no clock (the one world's file as the owner wrote it). The declared reads (the key `reads`, a family naming the holders it reads at the weights it names, 2026-10-02 to 2026-10-24) kept by name."""
+    volume = tuple((row.name, 1) for row in rows if row.level_weight is not None and not row.wronskian)
+    sign = tuple((row.name, 1) for row in rows if row.wronskian)
+    found = []
+    for row in rows:
+        reads: tuple[tuple[str, int], ...] = ()
+        if row.level_weight is None:
+            reads = volume + (sign if row.plane else ())
+        elif not row.wronskian:
+            reads = volume
+        found.append(replace(row, holders=reads))
+    return found
 
 
 def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
-    """Every family from its row with its declared reads resolved by name (`read_of`; ALGEBRA.md #a-familys-declaration): a family reads the holders its declaration names at the weights it names, nothing derived from the pair or the dimension; then the world's records (`with_records`), one record per charged family until a world lays its bodies."""
+    """Every family from its row with its reads resolved by name to the held rows' positions (`with_reads`, each at the weight 1; ALGEBRA.md #a-familys-declaration), then the world's records (`with_records`), one record per charged family."""
+    names = [row.name for row in rows]
     found = tuple(
         FamilyRule(
-            **vars(row), reads=tuple(read_of(rows, index, name, weight) for name, weight in row.declared)
+            **vars(row), reads=tuple(Read(names.index(name), weight) for name, weight in row.holders)
         )
-        for index, row in enumerate(rows)
+        for row in rows
     )
     return with_records(found, [0] * len(found))
 
@@ -255,7 +247,7 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
         if len(reads) > 1 and not any(not families[r.family].rotation for r in family.reads):
             raise ValueError(
                 f"{family.name!r} reads no content and its sources read the content at differing weights, "
-                f"{[(families[o].name, families[o].declared) for o in readers]}: a held row's write is scaled at "
+                f"{[(families[o].name, families[o].holders) for o in readers]}: a held row's write is scaled at "
                 "the row's own paces where the row reads the content (ALGEBRA.md, The one Node, the clause of "
                 "2026-10-23), and a row that reads none, a holder of the sign, writes its sources per the Node's "
                 "proper volume as the content gives it, one wall per line at its sources' shared paces (The write "
@@ -265,7 +257,7 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
 
 
 def weight_of(held: int, reader: FamilyRule) -> int:
-    """The weight with which a family reads a held family, and so sources it: one for every reader (the owner's word of 2026-10-24, 'like nature', the read's universality beside the write's; ALGEBRA.md, The constants), 0 where it does not read it; the declared weights (ALGEBRA.md #the-primitives, a family's write: whoever reads with w sources with w, the former rule) kept by name, the loader admitting the weight 1 alone (`loader/keys.reads_of`)."""
+    """The weight with which a family reads a held family, and so sources it: one for every reader (the owner's word of 2026-10-24, 'like nature', the read's universality beside the write's; ALGEBRA.md, The constants), 0 where it does not read it; the declared weights (ALGEBRA.md #the-primitives, a family's write: whoever reads with w sources with w, the former rule) kept by name, every read derived at the weight 1 (`with_reads`)."""
     return 1 if any(read.family == held for read in reader.reads) else 0
 
 
