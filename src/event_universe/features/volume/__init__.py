@@ -70,7 +70,7 @@ LEVELS: dict[
 
 
 def level_of(gamma: int, volume: Any) -> Any:
-    """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root (`searched_levels`); the level is one function of the one volume, so the search runs once per distinct volume of the run (the memo `LEVELS`, filled on the volumes not yet read and read back at every Node that holds a read volume): the same integers Node by Node as the search at every Node gave (the architect's round of 2026-10-24: the reading re-read many times per interval, the vacuum's one volume on most Nodes of a large board), refused by name where X is at most 0 at a Node."""
+    """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root (`searched_levels`); the level is one function of the one volume, so the search runs once per distinct volume of the run (the memo `LEVELS`, filled on the volumes the memo lacks and read back at every Node that holds a read volume): the same integers Node by Node as the search at every Node gave (the architect's round of 2026-10-24: the reading re-read many times per interval, the vacuum's one volume on most Nodes of a large board), refused by name where X is at most 0 at a Node."""
     volumes = np.asarray(volume, dtype=object).reshape(-1)
     if (volumes <= 0).any():
         raise ValueError(
