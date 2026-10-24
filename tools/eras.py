@@ -21,6 +21,7 @@ from event_universe.features import volume
 from event_universe.lattice import Lattice
 from event_universe.loader import circle
 from event_universe.loader.circle import lightest_point
+from event_universe.slabs import Slabs
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -272,8 +273,9 @@ def run(
     intervals: int | None,
     clicks: Path | None = None,
     nodes: Path | None = None,
+    slabs: bool = False,
 ) -> list[dict[str, Any]]:
-    """The world stepped and logged: one JSON line per interval appended to `out` as it goes (the file begun with the world's own numbers), a refusal written as the last line with its reason and the interval; the lines returned; with `clicks`, the NodeDetectors' click and density lines and the `detector` readings appended to that file as they come, history kept."""
+    """The world stepped and logged: one JSON line per interval appended to `out` as it goes (the file begun with the world's own numbers), a refusal written as the last line with its reason and the interval; the lines returned; with `clicks`, the NodeDetectors' click and density lines and the `detector` readings appended to that file as they come, history kept; with `slabs`, the board stepped in slabs by the machine's cores, one process per slab with one-Link halos (slabs.py), the same integers and the same logs byte for byte as the single process, which steps the board otherwise (on the shipped 5-cube the single process is the faster: the tiles cost nearly the board each and the halos' Python integers are pickled, the architect's rank 9)."""
     world = load_world(path)
     kept_clicks = clicks.open("w", encoding="utf-8") if clicks is not None else None
 
@@ -288,6 +290,9 @@ def run(
             kept_clicks.write(json.dumps(line) + "\n")
 
     board = Lattice(world, output=keep)
+    stepper = Slabs(
+        board, None if slabs else 1
+    )  # the board stepped in slabs by the machine's cores where asked, one process per slab with one-Link halos (slabs.py), the same integers and the same lines as the single process, the one slab, which steps it otherwise
     kept_nodes = nodes.open("w", encoding="utf-8") if nodes is not None else None
     directions = [1] * int(np.prod(board.shape))
     lines: list[dict[str, Any]] = []
@@ -299,7 +304,7 @@ def run(
             time_line = board.states[board.held[0]].lines[0] if board.held else None
             before = (whole(time_line.now), whole(time_line.before)) if time_line is not None else None
             try:
-                board.step()
+                stepper.advanced()
             except (ValueError, RuntimeError) as refusal:
                 line = {
                     "interval": board.interval,
@@ -329,6 +334,7 @@ def run(
                         {"interval": board.interval, "seconds": round(line["seconds"], 1), "U_v": rows}
                     )
                 )
+    stepper.close()
     if kept_clicks is not None:
         kept_clicks.close()
     if kept_nodes is not None:
@@ -364,11 +370,16 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the NodeDetectors' lines of the same run kept beside the log (<world>.clicks.jsonl)",
     )
+    parser.add_argument(
+        "--slabs",
+        action="store_true",
+        help="the board stepped in slabs by the machine's cores, one process per slab (slabs.py): the same logs",
+    )
     args = parser.parse_args(argv)
     if args.every < 1:
         raise ValueError(f"--every takes an integer from 1, got {args.every}")
     out = args.out if args.out is not None else args.world.with_suffix(".eras.jsonl")
-    lines = run(args.world, out, args.every, args.intervals, args.clicks, args.nodes)
+    lines = run(args.world, out, args.every, args.intervals, args.clicks, args.nodes, args.slabs)
     gamma = load_world(args.world).node_clock
     span = args.span if args.span is not None else args.every
     for family in sorted({name for line in lines for name in line.get("rows", {})}):
