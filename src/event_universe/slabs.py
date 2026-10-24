@@ -186,7 +186,7 @@ def served(board: Lattice, axis: int, slab: range, pipe: Connection) -> None:
 
 
 class Slabs:
-    """The board stepped by slabs in processes (the module's sentence): the slabs along the longest axis, the count the fewer of the axis's layers and the machine's cores (`processes` where a caller names the count, the tests of the gate), one process per slab forked from the board as it stands; `step` is one interval of the board with every act, the same integers and the same lines as `Lattice.step`; `close` ends the processes."""
+    """The board stepped by slabs in processes (the module's sentence): the slabs along the longest axis, the count the fewer of the axis's layers and the machine's cores (`processes` where a caller names the count, the tests of the gate), one process per slab forked from the board at the call; `step` is one interval of the board with every act, the same integers and the same lines as `Lattice.step`; `close` ends the processes."""
 
     def __init__(self, board: Lattice, processes: int | None = None) -> None:
         self.board, self.axis = board, axis_of(board.shape)
