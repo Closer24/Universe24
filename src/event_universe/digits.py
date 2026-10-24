@@ -13,6 +13,7 @@ from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import Refused, read_number
 from event_universe.features.read import READS, read_again
+from event_universe.loader.derived import PLANE, FamilyRule
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -111,10 +112,17 @@ def digits_of(
             yield record, number, wall, picked(line.remainder, at), lattice
 
 
+def odd_line(family: FamilyRule, number: int) -> bool:
+    """Whether the line `number` of a record of quanta is odd under the negation of an axis (ALGEBRA.md, The click's read of the board, the fold of 2026-10-24): a plane's im line, the second of its two (loader/derived.PLANE, re then im), which a reflection conjugates (im to -im, its remainder the ones' complement w - 1 - r, as the swap's turned Node conjugates it); every other line of the quanta is a scalar, even; a holder's odd axis lines are read for no digit (the digits are the quanta's, `registry.quanta_records`). The digit of an odd line maps d to B - 2 - d under the negation (B = w div F + 1 the base, F dividing w), so it enters the read folded, min(d, B - 2 - d): the unordered pair is the invariant, the one bit of orientation the cube's 48 forbids the read to carry (the improper half included)."""
+    return (
+        bool(family.plane) and int(division_forward(number, PLANE, 0)[1]) == 1
+    )  # the im line, the second of the two
+
+
 def at_origin(board: Lattice, reads: Reads) -> bool:
     """Whether every digit the read would take stands at the lay's origin w div 2 (the digits of `digits_of` over `reads`, each family at its Nodes): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; The board reads itself: no draw where the Node's read finds every digit at the origin). A digit is its line's remainder at the Node over a lattice F, and the origin's digit is the remainder w div 2 whatever F, so the remainders alone are read here, the same records and the same Nodes as `digits_of` (every record of quanta of the family, every line of it, the frame's Nodes), and no rule, Link pair or lattice is made for a comparison that reads none of them (the economy of 2026-10-24, every answer the same)."""
     return all(
-        int(remainder) == board.half_wall(index)
+        int(remainder) in (board.half_wall(index) - 1, board.half_wall(index))
         for index, at in reads
         for record in registry.quanta_records(board.families, board.states, index)
         for line in board.lines_of(index, record)
@@ -146,22 +154,30 @@ def read_of(board: Lattice, reads: Reads, label: str) -> int:
     origin, coarse, widest = True, True, 0
     for index, at in reads:
         half, earlier = board.half_wall(index), dict[tuple[int, int], list[int]]()
-        for record, _line, wall, kept, lattice in digits_of(board, index, at):
+        for record, line, wall, kept, lattice in digits_of(board, index, at):
+            folded = odd_line(
+                board.families[index], line
+            )  # an odd line's digits enter folded (the fold of 2026-10-24)
             for place, (remainder, found) in enumerate(zip(kept, lattice, strict=True)):
                 values = int(division_forward(wall, found, 0)[0])  # w div F, the digit's count of values
-                origin = origin and remainder == half
+                origin = origin and remainder in (
+                    half - 1,
+                    half,
+                )  # the lay's origin, the ones' complement's one orbit
                 coarse, widest = (
                     coarse and values <= VACUUM_VALUES,
                     max(widest, values),
                 )  # the exact vacuum paces, refused by name
                 standing = earlier.setdefault((record, place), [])
-                copied = any(remainder in (seen, wall - seen) for seen in standing)
+                copied = any(remainder in (seen, wall - 1 - seen) for seen in standing)
                 standing.append(remainder)
-                if copied:  # an earlier line's remainder at the Node, or w less it: a copy, read once
+                if copied:  # an earlier line's remainder at the Node, or its ones' complement w - 1 - r: a copy, read once
                     continue
                 digit = int(division_forward(remainder, found, 0)[0])  # the index on the lattice
+                if folded:  # an odd line's digit at its lattice's mirror: the unordered pair {d, B - 2 - d}, min(d, B - 2 - d)
+                    digit = min(digit, values - 1 - digit)
                 taken.append((digit, values + 1))  # the base one above w div F
-    taken.sort()  # every digit of the Node and its six Links, of every line and record, in the order of their values: the one composition line (2026-10-24)
+    taken.sort()  # every digit of the Node and its six Links, of every line and record, in the order of their values: the one composition line (2026-10-24), the odd lines' digits folded before the sort
     digits, bases = [digit for digit, _base in taken], [base for _digit, base in taken]
     if origin:
         half = board.half_wall(reads[0][0]) if reads else 0

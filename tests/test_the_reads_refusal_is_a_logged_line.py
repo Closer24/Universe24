@@ -8,12 +8,13 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import universe
 from event_universe.world_files import load_world
-from tests.laws_universe import SMALL, bare_torus
+from tests.laws_universe import bare_torus
 
 
 def test_a_refused_read_at_the_board_is_a_logged_line_and_the_run_goes_on(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    gamma = SMALL["integers"]["node_clock"]
-    monkeypatch.setattr(universe, "volume_pair", lambda den: (den - den // gamma, den))
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den - den // gamma, den)
+    )  # the loader's own pair, named
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(bare_torus(tmp_path, 3, 20)), output=lines.append)
