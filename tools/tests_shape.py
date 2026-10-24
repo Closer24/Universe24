@@ -220,25 +220,33 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube": (
-        17,
-        "the board's own hole the Node's own level before, the drift stopped (the Boss's ruling of 2026-10-24 on the bound-click hand's measurement): conservation at the click on the 3-cube, nothing made at the Links, at most one hole per close, the light never spent",
+    "tests/test_the_hole_stops_the_drift.py::test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube": (
+        20,
+        "the hole's clause of 2026-10-24 (the exact take, the builder's derivation): nothing made at any close of the 3-cube, the fall the births' taken where the born Nodes stand apart, each the walls plus an excess below the last level's step, a refused close leaving the light standing",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_the_5_cube_keeps_its_light_above_zero_under_the_holes": (
-        10,
-        "the same hole on the 5-cube: the light above zero through 20 intervals where the write to (0, 0) spent it by 8, no close holing every Node, no light made",
+    "tests/test_the_hole_stops_the_drift.py::test_the_5_cube_keeps_its_light_above_zero_and_makes_nothing_under_the_takes": (
+        11,
+        "the exact take on the 5-cube: the light above zero, nothing made at any close, births at several closes, no close holing every Node",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin": (
-        17,
-        "the hole's form is the seed's: stopped_at at the seed's origin (0, 0), on the uniform sea the level before twice, the seed's kink exactly",
+    "tests/test_the_hole_stops_the_drift.py::test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands": (
+        16,
+        "the refusal by name where the full stop would take less than the children's walls, on the chain of three Nodes at den 1,021: the cause, the two numbers, nothing born, the light standing",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_every_take_is_read_before_any_hole_is_written": (
+        20,
+        "every face before any write: within every close the frame's shares are read before the first hole is written",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_nothing_is_booked_without_its_lay_and_the_first_births_charge_is_the_books": (
+        15,
+        "the Boss's default of 2026-10-24, a close whose children's lay would be refused births nothing: no deficit, the books the children laid, the first birth's charge the books, the lay refusals naming a share above the unit",
     ),
     "tests/test_the_hole_stops_the_drift.py::test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit": (
-        30,
-        "the Born side on the hole seed: the first meeting met by the draw at one whole quantum with a remainder, the weights the remainder against the unit, the credit and birth lines at that Node",
+        33,
+        "the first draw by the digits met and not refused: one whole quantum and a rest, the weights the rest against the unit less it, the credit and the birth lines at that Node",
     ),
     "tests/test_the_hole_stops_the_drift.py::test_the_run_back_is_exact_through_the_closes_that_hole": (
         14,
-        "the hole's lay logged and undone by the run back, eight intervals forward through the births and eight back bit for bit",
+        "the run back through the closes that hole, every state the forward run's bit for bit",
     ),
     "tests/test_the_board_is_the_cube_48.py::test_two_signed_permutations_generate_the_48_and_every_element_is_one": (
         6,

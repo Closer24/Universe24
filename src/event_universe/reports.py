@@ -151,6 +151,12 @@ BORN_KEYS = (
     "records",
     "points",
 )  # the birth line's children's records and points, the click's view of the birth (2026-10-24)
+TAKE_KEYS = (
+    "taken",
+    "walls",
+    "excess",
+    "step",
+)  # the birth line's take (the hole's clause of 2026-10-24, ALGEBRA.md, The board reads itself): the frame's seven shares' fall in the current's units, the children's walls summed (what the birth books), the take's remainder (the fall less the walls, below the last level's step) and the last level's step
 READINGS = (
     "point",
     "kind",
@@ -180,12 +186,23 @@ def birth_line(
     nodes: tuple[Any, ...],
     records: list[int] | None = None,
     points: list[list[int]] | None = None,
+    take: tuple[int, int, int, int] | None = None,
 ) -> dict[str, object]:
-    """The birth line, the reading of the sentence's act beside the credit's (ALGEBRA.md, Matter's birth from light; act.py): the interval, the gapless family met, the children's families and senses and the Nodes, never a rate."""
+    """The birth line, the reading of the sentence's act beside the credit's (ALGEBRA.md, Matter's birth from light; act.py): the interval, the gapless family met, the children's families and senses and the Nodes, never a rate; the board's own birth names its take (`TAKE_KEYS`: the taken, the walls booked, the excess and the last level's step, the hole's clause of 2026-10-24)."""
     line = {"event": "birth", "label": "NODEDETECTOR", "interval": interval, "family": family}
     found = {**line, "children": children, "senses": senses, "nodes": [list(node) for node in nodes]}
     if (
         records is not None
     ):  # the children's records and points, the click's view of the birth (2026-10-24)
         found.update(zip(BORN_KEYS, (records, points), strict=True))
+    if take is not None:
+        found.update(zip(TAKE_KEYS, take, strict=True))
     return found
+
+
+def refused_line(
+    interval: int, family: str, node: tuple[Any, ...], cause: str, amount: int, bound: int
+) -> dict[str, object]:
+    """The board's own close refused by name at one Node, nothing born and nothing taken, the light standing (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24): the cause "stop", the full stop's take `amount` below the children's walls `bound`; the cause "lay", a child's family's share at the Node `amount` above its unit `bound`, where the lay would be refused (take.below_quantum's own comparison), the Boss's default of 2026-10-24."""
+    line = {"event": "refused", "label": "NODEDETECTOR", "interval": interval, "family": family}
+    return {**line, "node": list(node), "cause": cause, "amount": amount, "bound": bound}

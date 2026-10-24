@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import TYPE_CHECKING, NamedTuple, cast
 
 import numpy as np
 
-from event_universe import credit, records, swap
+from event_universe import credit, records, share, swap, take
 from event_universe.act import born_items, born_table, click
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, arrival
@@ -14,9 +15,10 @@ from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import drawn_from
 from event_universe.lay import laid
+from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.readings import momentum_of
-from event_universe.reports import READINGS, birth_line, point_of
+from event_universe.reports import READINGS, birth_line, point_of, refused_line
 from event_universe.reports import credit as credit_line
 
 if TYPE_CHECKING:
@@ -79,35 +81,41 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases  # the write on the state the step left
-    for at, _table in born:
+    takes: list[tuple[Node, Table, Take]] = []
+    for at, table in born:  # every face read before any write, on the state the write acts on
+        found = take_of(board, index, span, at, walls_of(board, table))
+        refusal = refused_by(board, at, table, found)
+        if refusal is not None:  # nothing born, nothing taken, the light standing
+            if board.output is not None:
+                board.output(refused_line(board.interval, family.name, at, *refusal))
+            continue
+        takes.append((at, table, found))
+    for at, _table, _take in takes:
         board.closes[at] += 1  # the Node's own close counted, the click's view's `windows`
     readings = {
-        at: readings_at(board, begun, index, 0, at) for at, _table in born
+        at: readings_at(board, begun, index, 0, at) for at, _table, _take in takes
     }  # the click's view read before the hole (2026-10-24): the levels at the interval's start, the point's level after the Node's own step
-    frames = [
-        [stopped_at(board, index, number, at) for number in range(span.start, span.stop)]
-        for at, _table in born
-    ]  # every hole's target read before any hole is written: the Node's own level before, the drift stopped
+    lines = list(board.states[index].lines[span])
+    targets = [
+        moved(lines, at, found.levels) for at, _table, found in takes
+    ]  # every hole's lines read before any hole is written: the before kept, the now moved toward it by the take's levels
     items = []
-    for (at, table), targets in zip(
-        born, frames, strict=True
+    for (at, table, _found), target in zip(
+        takes, targets, strict=True
     ):  # every hole at its own Node, then the click act
-        here = board.mask(
-            (at,)
-        )  # the hole: the seed's record at this Node to its own level before, the drift stopped, its quanta paying
-        for number, (now_u, before_u) in zip(range(span.start, span.stop), targets, strict=True):
-            line = board.states[index].lines[number]
-            change = (np.where(here, now_u - line.now, 0), np.where(here, before_u - line.before, 0))
+        here = board.mask((at,))
+        for number, line, after in zip(range(span.start, span.stop), lines, target, strict=True):
+            change = (np.where(here, after.now - line.now, 0), np.where(here, 0, 0))
             laid(board, index, number, change, None, None, here)
         items.extend(born_items(board.families, table, (at,)))  # one record per child (2026-10-24)
     click(board, items)
-    for at, table in born:
+    for at, table, found in takes:
         if board.output is not None:
             names = [board.families[out].name for out, _sense in table]
             seed = board.families[index].name
             place = int(np.ravel_multi_index(at, board.shape))
             window = [board.interval, board.interval]
-            found, clock = readings[at]
+            readings_found, clock = readings[at]
             board.output(
                 credit_line(
                     board.interval,
@@ -124,7 +132,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     seed,
                     names[0],
                     momentum=clock.momentum,
-                    readings=found,
+                    readings=readings_found,
                 )
             )
             children = born_items(board.families, table, (at,))
@@ -137,6 +145,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     (at,),
                     [child.record for child in children],
                     [list(board.families[child.family].pair) for child in children],
+                    (found.taken, found.walls, found.excess, found.step),
                 )
             )
     counted = credit.count_of(
@@ -144,6 +153,70 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     )  # the family's count a reading of the board, never an act's input
     if counted is not None:
         books.counts[index] = counted
+
+
+class Take(NamedTuple):
+    """The exact take at a born Node (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24): the levels the Node's now is moved toward its before, the frame's seven shares' fall in the current's units (the taken), the children's walls summed (what the birth books), the take's remainder (the taken less the walls, below the last level's step where the hole is written; negative where the full stop cannot pay and the close is refused) and the last level's step (the fall's increment at the last level moved, 0 at a refused close)."""
+
+    levels: int
+    taken: int
+    walls: int
+    excess: int
+    step: int
+
+
+def walls_of(board: Lattice, table: Table) -> int:
+    """What the birth books: the children's walls summed, SUM over the children of count_wall(child), 2 x 3 T sqrt(den^2 - num^2) for the pair of a point (`loader/derived.count_wall`, the record's unit W_rec; `act.list_walls` orders the lists by it), the amount the hole takes (the hole's clause of 2026-10-24)."""
+    return sum(count_wall(board.families[out], board.world.quantum_action) for out, _sense in table)
+
+
+def moved(lines: list[records.Record], at: Node, levels: int) -> list[records.Record]:
+    """Every line of the seed's record with its now at the Node moved `levels` levels toward its before, the before kept, and no other Node touched (the hole's clause of 2026-10-24: the Node's before is kept and its now is moved toward its before, one level at a time); a line at its before already stands."""
+    found = []
+    for line in lines:
+        now, before = int(line.now[at]), int(line.before[at])
+        toward = 0 if now == before else (1 if before > now else -1)
+        after = line.now.copy()
+        after[at] = now + toward * min(levels, abs(now - before))
+        found.append(replace(line, now=after))
+    return found
+
+
+def frame_shares(board: Lattice, index: int, lines: list[records.Record], at: Node) -> int:
+    """The shares of the Node and its six neighbours summed, read by the share's own form (`share.family_share`, the conserved form's term at each Node over the Node's pace, the Links' products shared half and half) on the lines given, at the paces of the seed record's read on the state the write acts on, in the current's units."""
+    family, gamma = board.families[index], board.world.node_clock
+    content, factors = board.read(index, 1, 0)
+    nodes = board.mask(tuple(frame_of(at, board.shape, board.world.periodic)))
+    found = share.family_share(family, lines, gamma, content, factors, board.unit, nodes)
+    return int(np.asarray(found, dtype=object).sum())
+
+
+def take_of(board: Lattice, index: int, span: slice, at: Node, walls: int) -> Take:
+    """The exact take, the hole as the write that takes what the birth books and nothing else (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24, the builder's derivation on #2187): at the born Node the seed record's before is kept and its now is moved toward its before, one level at a time (`moved`), until the shares of the Node and its six neighbours, read by the share's own form on the state the write acts on (`frame_shares`), have fallen by the children's walls summed (`walls`); the first such level is the take's, the fall the taken, the fall less the walls the excess, below the last level's step, and the last level's step named with it; where the full stop (the now at the before) would take less than the walls, the Take carries the full stop's fall below the walls and the caller refuses the close by name (`refused_by`), nothing born and the light standing. The comparisons run level by level on the engine's own share function and no algebraic form is assumed (the builder's integer root of the quadratic, the same level, kept by name); the arrays are read and never written here, the hole written by the caller through the one lay act. Kept by name with their numbers, the forms before this one: the write to (0, 0), which against the sea's drifted level made light at the six Links, 7.68 quanta at the first close of the 3-cube, and spent the sea to exactly zero; the Node's own level before twice (`stopped_at`, the sentence of 2026-10-24 15:0x), which took 1.6 to 2.7 W_c for two booked at 1.526, the Links' part of the share following the level; the exact take's excess 0.0002 to 0.04 W_c per birth on the builder's three boards."""
+    lines = list(board.states[index].lines[span])
+    base = frame_shares(board, index, lines, at)
+    distance = max(abs(int(line.now[at]) - int(line.before[at])) for line in lines)
+    full = base - frame_shares(board, index, moved(lines, at, distance), at)
+    if full < walls:
+        return Take(distance, full, walls, full - walls, 0)
+    previous = 0
+    for levels in range(1, distance):
+        taken = base - frame_shares(board, index, moved(lines, at, levels), at)
+        if taken >= walls:
+            return Take(levels, taken, walls, taken - walls, taken - previous)
+        previous = taken
+    return Take(distance, full, walls, full - walls, full - previous)
+
+
+def refused_by(board: Lattice, at: Node, table: Table, found: Take) -> tuple[str, int, int] | None:
+    """The close's refusal by name at a born Node, or None where the hole is written (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24): the cause "lay" where a child's lay would be refused, the child family's share at the Node already above its unit by `take.below_quantum`'s own comparison on the state the write acts on (the Boss's default of 2026-10-24: a close whose children's lay would be refused births nothing and takes nothing, so that the books equal the board's charge by construction), with the share and the unit; the cause "stop" where the full stop would take less than the children's walls, with the take and the walls."""
+    for child in born_items(board.families, table, (at,)):
+        if at not in take.below_quantum(board, child):
+            standing = int(board.share_of(child.family, 1, board.mask((at,)))[0][at])
+            return "lay", standing, board.credit.units[child.family]
+    if found.taken < found.walls:
+        return "stop", found.taken, found.walls
+    return None
 
 
 def stopped_at(board: Lattice, index: int, number: int, at: Node) -> tuple[int, int]:
