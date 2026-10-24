@@ -61,14 +61,14 @@ def factors(n: int) -> dict[int, int]:
     found: dict[int, int] = {}
     while n > 1 and division_forward(n, 2, 0)[1] == 0:
         found[2], n = found.get(2, 0) + 1, int(division_forward(n, 2, 0)[0])
-    pending = [n] if n > 1 else []
-    while pending:
-        m = pending.pop()
+    stack = [n] if n > 1 else []
+    while stack:
+        m = stack.pop()
         if is_prime(m):
             found[m] = found.get(m, 0) + 1
         else:
             piece = split(m)
-            pending += [piece, int(division_forward(m, piece, 0)[0])]
+            stack += [piece, int(division_forward(m, piece, 0)[0])]
     return found
 
 
