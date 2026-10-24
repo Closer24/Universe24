@@ -244,7 +244,10 @@ def taken_at(board: Lattice, index: int, span: slice, at: Node, levels: int) -> 
     squares = squares * squares
     frame = frame_of(at, board.shape, board.world.periodic)
     ports = ports_of(frame, board.shape, board.world.periodic)
-    walls = [int(squares[k]) * 4 * unit * unit + int(int(squares[k]) == 0) for k in frame]
+    walls = []
+    for k in frame:  # W_k = 4 p_k^2 G^2, the frame's term's wall (share.over_pace with the halves 2), 1 at a frozen Node
+        twice = int(squares[k]) + int(squares[k])
+        walls.append((twice + twice) * unit * unit + int(twice == 0))
     common, cofactors = 1, []
     for wall in walls:
         common *= wall
