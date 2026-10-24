@@ -220,7 +220,7 @@ class Lattice:
         swap.stepped(self, kept_state)
         if acts:
             self.tick += 1
-            meeting_board.closed(self)
+            meeting_board.closed(self, kept_state)
             front.advanced_fronts(self)
         else:
             meeting_back.logged(self, 1)
