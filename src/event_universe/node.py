@@ -342,7 +342,8 @@ def seed_phases(board: Lattice, world: World) -> int:
         board.states,
     )
     for index, family in enumerate(families):
-        states[index].phases = phase_lines(family, board.shape, board.kind, gamma, bits)
+        rows = registry.records_of(family, states[index].lines)
+        states[index].phases = phase_lines(family, board.shape, board.kind, gamma, bits, rows)
         if family.rotation:  # the state's pairs stand on the one orbit from this seed (phase.Orbit)
             phase.seeded(states[index], phase.unit(gamma), phase.amplitude(phase.unit(gamma), bits))
     for index, family in enumerate(families):

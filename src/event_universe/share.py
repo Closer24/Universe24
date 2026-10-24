@@ -13,7 +13,7 @@ from event_universe.core.rule3 import coefficients, division_forward, form_term
 from event_universe.features.read import READS, read_again
 from event_universe.loader.derived import FamilyRule
 from event_universe.readings import ports
-from event_universe.records import Record, wronskian
+from event_universe.records import Record, wronskian, zeros
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -115,6 +115,10 @@ def board_share(
         lines = board.lines_of(index, record)
         found = found + family_share(family, lines, gamma, content, factors, board.unit, at)
         cold |= np.broadcast_to(frozen(gamma, content), board.shape)
+    if not isinstance(
+        found, np.ndarray
+    ):  # no record standing (a point before its first birth, 2026-10-24): 0 at every Node
+        found = zeros(board.shape, board.kind)
     if at is None:
         READS[key] = (taken, (np.asarray(found), [cold]))
     return np.asarray(found), cold
