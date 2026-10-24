@@ -12,10 +12,10 @@ from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
 from tests.laws_universe import ERAS, bare_torus
 
-INTERVALS, FIRST_TURN = (
+INTERVALS, TURN_BOUND = (
     32,
-    208,
-)  # the bare 3-cube torus: the births at 30 and the first turned Node at 208 since the close reads the interval's start (29 and 157 on main with the write remainder born at the half of its own wall, 154 before that; 20 and 34 on the small universe, laid with bodies, to 2026-10-24)
+    400,
+)  # the bare 3-cube torus: the births at 30 (29 on main with the write remainder born at the half of its own wall) and the first turned Node sought within TURN_BOUND intervals (328 under N records of the write step, 2026-10-24; 208 on 4568f64af, 157 and 154 before), no course number pinned
 
 
 class Unkept(dict[Any, Any]):
@@ -75,22 +75,26 @@ def test_the_nodes_line_is_the_reading_node_by_node(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(bare_torus(tmp_path, intervals=FIRST_TURN)), output=lambda line: None)
-    for _ in range(FIRST_TURN - 1):
+    board = Lattice(load_world(bare_torus(tmp_path, intervals=TURN_BOUND)), output=lambda line: None)
+    turned: list[int] = []
+    while (
+        not turned and board.interval < TURN_BOUND
+    ):  # to the first turned Node, wherever the course puts it
+        time_line = board.states[board.held[0]].lines[0]
+        before = tuple(
+            [int(x) for x in level.reshape(-1)] for level in (time_line.now, time_line.before)
+        )
         board.step()
-    time_line = board.states[board.held[0]].lines[0]
-    before = tuple([int(x) for x in level.reshape(-1)] for level in (time_line.now, time_line.before))
-    board.step()
-    gamma, nodes = board.world.node_clock, len(before[0])
+        now = [int(x) for x in board.states[board.held[0]].lines[0].now.reshape(-1)]
+        before_now = [int(x) for x in board.states[board.held[0]].lines[0].before.reshape(-1)]
+        turned = [
+            i
+            for i in range(len(now))
+            if before_now[i] == before[0][i] and now[i] == before[1][i] and before[1][i] <= before[0][i]
+            if now[i] != before_now[i]
+        ]
+    gamma, nodes = board.world.node_clock, len(now)
     found = ERAS.node_lines(board, before, [1] * nodes)
-    now = [int(x) for x in board.states[board.held[0]].lines[0].now.reshape(-1)]
-    before_now = [int(x) for x in board.states[board.held[0]].lines[0].before.reshape(-1)]
-    turned = [
-        i
-        for i in range(nodes)
-        if before_now[i] == before[0][i] and now[i] == before[1][i] and before[1][i] <= before[0][i]
-        if now[i] != before_now[i]
-    ]
     assert found["X"] == now and found["turned"] == turned and turned
     assert found["length"] == [round(float((x / gamma) ** (1 / 4)), 6) if x > 0 else 0 for x in now]
     assert found["direction"] == [-1 if i in turned else 1 for i in range(nodes)]

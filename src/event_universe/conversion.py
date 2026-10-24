@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from functools import cache
 from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import largest_below
@@ -54,6 +55,7 @@ def kept(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bo
     return baryons(families, table) == baryons(families, parents)
 
 
+MEETING = 2  # the quanta that meet at one Node, the click's own (ALGEBRA.md, Matter's birth from light: two quanta of a gapless family meeting at one Node)
 BEYOND = 2  # the search's bound, named and no law (the conversion's own to the sweep of 2026-10-24): a meeting of q quanta births a list of at most q + BEYOND children
 
 
@@ -75,8 +77,9 @@ def times(a: Gauss, b: Gauss) -> Gauss:
     return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
 
 
+@cache
 def lists_of(families: tuple[FamilyRule, ...], quanta: int) -> list[Table]:
-    """The exact lists `quanta` whole quanta of a massless family make at one Node (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born): every multiset of at most quanta + BEYOND children of the plane families with a Pythagorean pair, each child at a sense, that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`, the senses summing to the parents' 0 and the baryons to 0), the irreducible ones alone (`meeting_reducible`: a list that is the union of two parts' own lists over a partition of the quanta into two meetings is the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone, a meeting being two quanta), each list its (family, sense) rows in the families' order, the lightest first by the sum of its children's walls (`derived.count_wall`); the bound BEYOND is the search's and no law."""
+    """The exact lists `quanta` whole quanta of a massless family make at one Node (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born): every multiset of at most quanta + BEYOND children of the plane families with a Pythagorean pair, each child at a sense, that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`, the senses summing to the parents' 0 and the baryons to 0), the irreducible ones alone (`meeting_reducible`: a list that is the union of two parts' own lists over a partition of the quanta into two meetings is the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone, a meeting being two quanta), each list its (family, sense) rows in the families' order, the lightest first by the sum of its children's walls (`derived.count_wall`); the bound BEYOND is the search's and no law; a function of the families alone, made once per universe (`cache`: the board's close asks it at every meeting Node)."""
     from itertools import combinations_with_replacement, product
 
     outs_at = [
@@ -107,7 +110,7 @@ def walls_of(families: tuple[FamilyRule, ...], table: Table) -> int:
 
 def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Table) -> bool:
     """Whether a list of a meeting of `quanta` massless quanta is the union of two lists each a meeting's own: over every split of the quanta into two parts of at least two each, a split of the table into two sub-multisets each kept and exact for its part (the identity, so for any part), the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone (two quanta meet, L188), so a list of two quanta is never reducible."""
-    if quanta < 4:
+    if quanta < MEETING + MEETING:  # no split into two meetings
         return False
     for take in range(1, 2 ** len(table) - 1):
         one = tuple(row for at, row in enumerate(table) if take >> at & 1)
