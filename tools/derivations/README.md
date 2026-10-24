@@ -168,6 +168,7 @@ replaces it.
 | `two_slits.py` | 2 | the near-field minima, the opaque NodeDetector's envelope |
 | `tension.py` | 1 | the stress of dust |
 | `zeno.py` | 1 | nature's n = 1 against the body's own period |
+| `cube48_switches.py` | the cube 48 on the board | the builder's independent check of the click's read and the hole (2026-10-24): the reads as switches (the ordered Port read, the sorted, the one-Link link_q, the all-sorted, the plain sums), the holes ((0, 0), the means, (b_i, b_i), the exact take with its per-close take against the booked), the selectors (the former clause, the lifts' draw), the invariance under the 48 per interval, the commutation test, the mirror run, the two tiles with one-Link halos, W per record; a test-local script, nothing of the engine |
 | (computed, no module) | 9 | the back-in-time gate, the two branches' solution, the two slits' run, the Bell efficiency, the atom's readings: readers named |
 
 The existing modules `units.py`, `wells.py`, `two_body.py` and
