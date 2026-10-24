@@ -2,22 +2,20 @@
 
 from __future__ import annotations
 
-from dataclasses import replace
-from math import gcd
 from typing import TYPE_CHECKING, NamedTuple, cast
 
 import numpy as np
 
-from event_universe import credit, node, records, registry, share, swap, take
+from event_universe import credit, records, swap, take
 from event_universe.act import affordable, born_items, click
-from event_universe.core import paces
+from event_universe.bound_body import bodies_closing
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, arrival
 from event_universe.core.rule3 import division_forward
-from event_universe.digits import at_origin, frame_of, opposite, ports_of, read_of
+from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import Refused, drawn_from
+from event_universe.hole import Take, moved, take_of, walls_of
 from event_universe.lay import laid
-from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.readings import momentum_of
 from event_universe.reports import (
@@ -25,6 +23,7 @@ from event_universe.reports import (
     REFUSED_LAY,
     REFUSED_ORIGIN,
     REFUSED_STOP,
+    TAKE_KEYS,
     birth_line,
     point_of,
     refused_line,
@@ -142,27 +141,36 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
         takes.append((at, table, found))
     clicks: list[
         tuple[int, int, Node, Take]
-    ] = []  # the bound bodies' clicks: the light taken by the record's unit
+    ] = []  # the bound bodies' clicks: the light taken by the records' units, one take per Node
+    at_node: dict[Node, list[tuple[int, int, int]]] = {}
     for k, r, at, unit_k in bodies:
-        found = take_of(board, index, span, at, unit_k)
+        at_node.setdefault(at, []).append((k, r, unit_k))
+    for at, standing in sorted(at_node.items()):  # every face read before any write
+        found = take_of(board, index, span, at, sum(unit_k for _k, _r, unit_k in standing))
         if (
             found.taken < found.walls
-        ):  # the full stop cannot pay the record's unit: refused by name, the light standing
+        ):  # the full stop cannot pay the records' units summed: refused by name, the light standing
             refusals.append((at, REFUSED_STOP, found.taken, found.walls))
             continue
-        clicks.append((k, r, at, found))
+        clicks.extend((k, r, at, found) for k, r, _unit_k in standing)
     for at, _table, _take in takes:
         board.closes[at] += 1  # the Node's own close counted, the click's view's `windows`
-    for _k, _r, at, _found in clicks:
-        board.closes[at] += 1  # the body's own close counted at its Node
-    body_readings = {(k, r, at): readings_at(board, begun, k, r, at) for k, r, at, _found in clicks}
+    clicks.sort(
+        key=lambda found: (found[2], found[0], found[1])
+    )  # the emission order: the Node, then the record
+    body_readings = {}
+    for k, r, at, _found in clicks:
+        board.closes[at] += (
+            1  # the body's own close counted at its Node, each record's credit reading the count as it stands
+        )
+        body_readings[(k, r, at)] = readings_at(board, begun, k, r, at)
     readings = {
         at: readings_at(board, begun, index, 0, at) for at, _table, _take in takes
     }  # the click's view read before the hole (2026-10-24): the levels at the interval's start, the point's level after the Node's own step
     lines = list(board.states[index].lines[span])
     targets = (
         [moved(lines, at, found.levels) for at, _table, found in takes]
-        + [moved(lines, at, found.levels) for _k, _r, at, found in clicks]
+        + [moved(lines, at, found.levels) for at, found in holes_of(clicks)]
     )  # every hole's lines read before any hole is written: the before kept, the now moved toward it by the take's levels
     items = []
     for (at, table, _found), target in zip(
@@ -173,13 +181,14 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             change = (np.where(here, after.now - line.now, 0), np.where(here, 0, 0))
             laid(board, index, number, change, None, None, here)
         items.extend(born_items(board.families, table, (at,)))  # one record per child (2026-10-24)
-    for (k, r, at, _found), target in zip(
-        clicks, targets[len(takes) :], strict=True
-    ):  # the body's click: the light holed at the Node by the record's unit, the quantum into the record by the click act
+    for (at, _found), target in zip(
+        holes_of(clicks), targets[len(takes) :], strict=True
+    ):  # the bodies' click: the light holed once at the Node by the records' units summed
         here = board.mask((at,))
         for number, line, after in zip(range(span.start, span.stop), lines, target, strict=True):
             change = (np.where(here, after.now - line.now, 0), np.where(here, 0, 0))
             laid(board, index, number, change, None, None, here)
+    for k, r, at, _found in clicks:  # the quantum into each record by the click act
         sense = int(
             np.sign(int(np.asarray(records.wronskian(board.lines_of(k, r), True), dtype=object)[at]))
         )
@@ -232,7 +241,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             k,
             r,
             at,
-            _found,
+            found,
         ) in clicks:  # the credit the record's: its identity, proper, windows, point, kind, sense, support, beat and momentum
             readings_found, clock = body_readings[(k, r, at)]
             closes.setdefault(at, []).append(
@@ -251,7 +260,16 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     family.name,
                     board.families[k].name,
                     momentum=clock.momentum,
-                    readings=readings_found,
+                    readings={
+                        **readings_found,
+                        **dict(
+                            zip(
+                                TAKE_KEYS,
+                                (found.taken, found.walls, found.excess, found.step),
+                                strict=True,
+                            )
+                        ),
+                    },  # the body's take named on its credit as the birth's is on its line
                 )
             )
         for at in sorted(closes):
@@ -264,172 +282,12 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
         books.counts[index] = counted
 
 
-def period_of(pair: tuple[int, int]) -> int:
-    """One period of a record's beat in whole intervals, from its rotation alone (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24, the owner's sentence of 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body, its window one period): the rotation cos omega = num / den turns the record's lines by omega per interval, and the period is the first count of intervals P at which the turn completes, read on the integers by the Chebyshev recurrence of the sine's sign, S_0 = 0, S_1 = 1, S_(t+1) = 2 num S_t - den^2 S_(t-1) (the sign of sin(t omega), the pair reduced by their gcd at every step so the integers stay small), P the first t with S_(t-1) < 0 <= S_t; the trial's ceiling of 2 pi over omega bit for bit, no transcendental function; the massless pair never turns and is no body, P = 0."""
-    num, den = pair
-    if num == den:
-        return 0
-    before, now, count = 0, 1, 1
-    while True:
-        before, now, count = now, 2 * num * now - den * den * before, count + 1
-        common = gcd(abs(before), abs(now)) or 1
-        before, now = (
-            int(division_forward(before, common, 0)[0]),
-            int(division_forward(now, common, 0)[0]),
-        )  # the pair reduced, the signs kept (the floor exact: common divides both)
-        if before < 0 <= now:
-            return count
-
-
-def body_records(board: Lattice) -> list[tuple[int, int]]:
-    """The records of the charged families standing on the board, (family, record) in order, each with its standing count over the Nodes made at first sight (`Lattice.standing`, zeros): the bodies the Nodes can be in."""
-    found = []
-    for k in board.order:
-        if share.charged(board.families[k]):
-            for r in registry.quanta_records(board.families, board.states, k):
-                board.standing.setdefault((k, r), np.zeros(board.shape, dtype=np.int64))
-                found.append((k, r))
-    return found
-
-
-def bodies_closing(
-    board: Lattice,
-    light: np.ndarray,
-    frozen: np.ndarray,
-    born: set[Node],
-    refusals: list[tuple[Node, str, int, int]],
-) -> list[tuple[int, int, Node, int]]:
-    """The bound bodies whose window closes at this close and whose click is met, read on the interval's start as every meeting is (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24 on the owner's sentence of 16:45 UTC): a record of a charged family standing at a Node at a whole quantum of its own unit (`share.family_share` of the record over its unit, the Node not frozen) through one period of its beat (`period_of`, the count kept per record at every Node, `Lattice.standing`, reset where it stops standing) is a bound body there; at the period's close the Node reads the light at it and its six Ports, the floor of the seed family's share at the Node over the record's unit, one whole quantum met, else the remainder the whether drawn by the digits' read of the Node and its six Links divided by the unit once (`read_of`, `drawn_from`); the read's refusals by name are logged lines; a Node the seed births at this close is the birth's. Returns (family, record, Node, the record's unit) per click met; the hole and the credit follow in `closed`."""
-    found: list[tuple[int, int, Node, int]] = []
-    gamma, unit = board.world.node_clock, board.unit
-    for k, r in body_records(board):
-        period = period_of(board.families[k].pair)
-        if period == 0:
-            continue
-        content, factors = board.read(k, 1, r)
-        own = share.family_share(board.families[k], board.lines_of(k, r), gamma, content, factors, unit)
-        unit_k = board.credit.units[k]
-        standing = np.where(
-            (np.asarray(own, dtype=object) >= unit_k) & ~frozen, board.standing[(k, r)] + 1, 0
-        )
-        closing = standing >= period
-        board.standing[(k, r)] = np.where(closing, 0, standing).astype(np.int64)
-        for where in zip(*np.nonzero(closing), strict=True):
-            at = (int(where[0]), int(where[1]), int(where[2]))
-            if at in born:
-                continue
-            whole, rest = division_forward(int(light[at]), unit_k, 0)
-            met = whole >= 1
-            if not met and rest > 0:
-                label = f"the body {[k, r]} at {list(at)}'s read of itself and its Links at the interval {board.interval}"
-                reads = [
-                    (index, frame_of(at, board.shape, board.world.periodic)) for index in board.order
-                ]
-                if at_origin(board, reads):
-                    refusals.append((at, REFUSED_ORIGIN, board.half_wall(k), board.half_wall(k)))
-                    continue
-                try:
-                    number = read_of(board, reads, label)
-                    met = drawn_from(number, [rest, unit_k - rest], label, True)[0] == 0
-                except Refused as named:
-                    refusals.append((at, named.cause, named.amount, named.bound))
-                    continue
-            if met:
-                found.append((k, r, at, unit_k))
-    return found
-
-
-class Take(NamedTuple):
-    """The exact take at a born Node (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24): the levels the Node's now is moved toward its before, the frame's seven shares' fall in the current's units (the taken), the children's walls summed (what the birth books), the take's remainder (the taken less the walls, below the last level's step where the hole is written; negative where the full stop cannot pay and the close is refused) and the last level's step (the fall's increment at the last level moved, 0 at a refused close)."""
-
-    levels: int
-    taken: int
-    walls: int
-    excess: int
-    step: int
-
-
-def walls_of(board: Lattice, table: Table) -> int:
-    """What the birth books: the children's walls summed, SUM over the children of count_wall(child), 2 x 3 T sqrt(den^2 - num^2) for the pair of a point (`loader/derived.count_wall`, the record's unit W_rec; `act.list_walls` orders the lists by it), the amount the hole takes (the hole's clause of 2026-10-24)."""
-    return sum(count_wall(board.families[out], board.world.quantum_action) for out, _sense in table)
-
-
-def moved(lines: list[records.Record], at: Node, levels: int) -> list[records.Record]:
-    """Every line of the seed's record with its now at the Node moved `levels` levels toward its before, the before kept, and no other Node touched (the hole's clause of 2026-10-24: the Node's before is kept and its now is moved toward its before, one level at a time); a line at its before already stands."""
-    found = []
-    for line in lines:
-        now, before = int(line.now[at]), int(line.before[at])
-        toward = 0 if now == before else (1 if before > now else -1)
-        after = line.now.copy()
-        after[at] = now + toward * min(levels, abs(now - before))
-        found.append(replace(line, now=after))
-    return found
-
-
-def taken_at(board: Lattice, index: int, span: slice, at: Node, levels: int) -> tuple[int, int]:
-    """The fall of the frame's seven shares when the seed record's now at the Node moves `levels` levels toward its before (`moved`), read exactly on the Node's own term and its six Links' terms over their walls, no neighbour's floor (ALGEBRA.md, The board reads itself, the hole's clause, the one-Link form ruled 2026-10-24, 17:1x UTC): the share's own form at a Node k is N_k div W_k with W_k = 4 p_k^2 G^2 (`share.share`, the frame's term, `share.over_pace`; 1 at a frozen Node) and N_k = 2 (w (n_k^2 + b_k^2) - S_k n_k b_k) - 2 n_k SUM_j R_kj b_j - SUM_j R_kj (b_k - b_j)(n_k + n_j); when the Node's now moves, only its own term and its six Links' products move, in its numerator and in each neighbour's, so the frame's exact fall is the Node's change over W_i plus each Link's change over its two ends' walls, summed over the record's lines as one rational with the common denominator D = W_i PROD_j W_j, returned as (numerator, D): nothing of a neighbour's other Links enters, so the fall is one Link's reading and bit-equal in every slab. Kept by name with its finding: the per-Node floors' form of this afternoon (the seven shares each floored, `share.family_share` on the moved lines), which carried the neighbours' two-Link remainders N_j mod W_j into the fall and parted the slabs runner's lines by a unit or two in the logged taken, excess and step (the 5-cube by two slabs: 142669080 against 142669081 at the interval 5), the arrays equal."""
-    family, gamma, unit = board.families[index], board.world.node_clock, board.unit
-    content, factors = board.read(index, 1, 0)
-    rule = node.rule_of(family, gamma, content, factors, unit)
-    squares = np.asarray(paces.link_pace_of(gamma, content), dtype=object)
-    squares = squares * squares
-    frame = frame_of(at, board.shape, board.world.periodic)
-    ports = ports_of(frame, board.shape, board.world.periodic)
-    walls = []
-    for k in frame:  # W_k = 4 p_k^2 G^2, the frame's term's wall (share.over_pace with the halves 2), 1 at a frozen Node
-        twice = int(squares[k]) + int(squares[k])
-        walls.append((twice + twice) * unit * unit + int(twice == 0))
-    common, cofactors = 1, []
-    for wall in walls:
-        common *= wall
-    for number, _wall in enumerate(walls):  # D over W_k as the product of the other walls, no division
-        cofactor = 1
-        for other, wall in enumerate(walls):
-            cofactor *= 1 if other == number else wall
-        cofactors.append(cofactor)
-    wall_w, own = int(rule.wall), int(np.asarray(rule.self_coefficient, dtype=object)[at])
-    numerator = 0
-    for line in board.states[index].lines[span]:
-        now, before = int(line.now[at]), int(line.before[at])
-        toward = 0 if now == before else (1 if before > now else -1)
-        after = now + toward * min(levels, abs(now - before))
-        shift = after - now
-        reach_sum = 0
-        node_change = 2 * (wall_w * (after * after - now * now) - own * before * shift)
-        for there, port in zip(frame[1:], ports, strict=True):
-            reach_out = int(np.asarray(rule.reaches[port], dtype=object)[at])
-            reach_back = int(np.asarray(rule.reaches[opposite(port)], dtype=object)[there])
-            b_j = int(line.before[there])
-            reach_sum += reach_out * b_j
-            node_change -= reach_out * (before - b_j) * shift
-            link_change = (
-                -reach_back * (b_j - before) * shift
-            )  # the neighbour's numerator, its one term that moves
-            numerator -= link_change * cofactors[1 + ports.index(port)]
-        node_change -= 2 * shift * reach_sum
-        numerator -= node_change * cofactors[0]
-    return numerator, common
-
-
-def take_of(board: Lattice, index: int, span: slice, at: Node, walls: int) -> Take:
-    """The exact take, the hole as the write that takes what the birth books and nothing else (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24, the builder's derivation on #2187; the one-Link form ruled 17:1x UTC): at the born Node the seed record's before is kept and its now is moved toward its before, one level at a time (`moved`), until the frame's seven shares, read exactly on the Node's own term and its six Links' terms over their walls (`taken_at`), have fallen by the children's walls summed (`walls`); the first such level is the take's, the fall in the current's units (the exact numerator over the common denominator, one division act, kind D) the taken, the fall less the walls the excess, below the last level's step, and the last level's step named with it; where the full stop (the now at the before) would take less than the walls, the Take carries the full stop's fall below the walls and the caller refuses the close by name (`refused_by`), nothing born and the light standing. The comparisons run level by level and the level search stands as it was; the arrays are read and never written here, the hole written by the caller through the one lay act. Kept by name with their numbers, the forms before this one: the write to (0, 0), which against the sea's drifted level made light at the six Links, 7.68 quanta at the first close of the 3-cube, and spent the sea to exactly zero; the Node's own level before twice (`stopped_at`, the sentence of 2026-10-24 15:0x), which took 1.6 to 2.7 W_c for two booked at 1.526, the Links' part of the share following the level; the exact take's excess 0.0002 to 0.04 W_c per birth on the builder's three boards."""
-    lines = list(board.states[index].lines[span])
-    distance = max(abs(int(line.now[at]) - int(line.before[at])) for line in lines)
-
-    def fallen(levels: int) -> int:
-        numerator, common = taken_at(board, index, span, at, levels)
-        return int(division_forward(numerator, common, 0)[0])  # the fall in the current's units, once
-
-    full = fallen(distance)
-    if full < walls:
-        return Take(distance, full, walls, full - walls, 0)
-    previous = 0
-    for levels in range(1, distance):
-        taken = fallen(levels)
-        if taken >= walls:
-            return Take(levels, taken, walls, taken - walls, taken - previous)
-        previous = taken
-    return Take(distance, full, walls, full - walls, full - previous)
+def holes_of(clicks: list[tuple[int, int, Node, Take]]) -> list[tuple[Node, Take]]:
+    """The bodies' holes, one per Node in the x-major order: a Node's clicks share its one take, their units summed, so its hole is written once."""
+    found: dict[Node, Take] = {}
+    for _k, _r, at, taken in clicks:
+        found.setdefault(at, taken)
+    return sorted(found.items())
 
 
 def refused_by(board: Lattice, at: Node, table: Table, found: Take) -> tuple[str, int, int] | None:

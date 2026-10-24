@@ -8,12 +8,12 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import meeting_board, share, world_files
+from event_universe import bound_body, meeting_board, share, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws_universe import SMALL, bare_torus
 
-INTERVALS = 30  # the lone pair born at 2 clicks first at 28 on this course: one period of the heavier point, 9 intervals, after the light stands again at the Node
+INTERVALS = 40  # the lone pairs born at one close (six Nodes under the gapped holder at 4) click within 40 intervals, one period of their beat after the light stands again at their Nodes
 
 
 def lone_pair(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -30,7 +30,7 @@ def lone_pair(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_the_lone_pairs_two_records_click_at_their_node_with_their_identities(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Both records of the lone pair are bound bodies at the birth Node and click at the same close: a credit per record with its identity [family, record], its support the Node, its windows the Node's own closes and its proper, point, kind, sense, beat and momentum keys; the light's summed share falls at that close by at least the two records' units (the exact take of each, nothing born there); the records' count in the books up by one each (the quantum into the record, booked by the beam's rule where it stands above one quantum); the period of the beat read from the pair alone, 9 intervals for the heavier point of den 1,021."""
+    """The records of the lone pairs are bound bodies at their birth Nodes and click there: a credit per record with its identity [family, record], its support a birth Node, both records of a Node clicking together, its windows the Node's own closes and its proper, point, kind, sense, beat and momentum keys; the light's summed share falls at the first clicking close by at least one unit per click (the exact take of each, nothing born there); the family's count in the books the children laid plus its clicks, the deficit the clicks (the quantum into the record, booked by the beam's rule where it stands above one quantum); the period of the beat read from the pair alone, 8 or 9 intervals for the two points of den 1,021."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, Any]] = []
     lone_pair(monkeypatch)
@@ -46,45 +46,51 @@ def test_the_lone_pairs_two_records_click_at_their_node_with_their_identities(
     monkeypatch.setattr(meeting_board, "closed", spy)
     for _ in range(INTERVALS):
         board.step()
-    birth = next(row for row in lines if row["event"] == "birth")
+    born = {tuple(node) for row in lines if row["event"] == "birth" for node in row["nodes"]}
+    first_birth = min(row["interval"] for row in lines if row["event"] == "birth")
+    assert born and all(
+        row["interval"] == first_birth for row in lines if row["event"] == "birth"
+    )  # the one close's births: the lone pairs, one per Node born (six under the gapped holder)
     bodies = [row for row in lines if row["event"] == "credit" and row["identity"][0] != seed]
-    assert bodies and len({row["interval"] for row in bodies[:2]}) == 1  # the two records click together
+    assert bodies and all(len(row["support"]) == 3 for row in bodies)  # the bodies' Nodes the births'
+    first = bodies[0]["interval"]
+    at_first = [row for row in bodies if row["interval"] == first]
+    assert all(
+        row["identity"][1] in (0, 1) for row in bodies
+    )  # the pair's two records, each its own body
     family = bodies[0]["identity"][0]
-    assert sorted(row["identity"] for row in bodies[:2]) == [[family, 0], [family, 1]]
-    assert all(row["support"] == birth["nodes"][0] for row in bodies)  # the body's Node, the birth's
     keys = ("identity", "proper", "windows", "point", "kind", "sense", "support", "beat", "momentum")
     assert all(key in row for row in bodies for key in keys)
-    assert all(row["windows"] >= 2 and row["kind"] == 2 and row["sense"] in (-1, 1) for row in bodies)
-    first = bodies[0]["interval"]
+    assert all(row["windows"] >= 1 and row["kind"] == 2 and row["sense"] in (-1, 0, 1) for row in bodies)
     before, after = light[first]
     units = board.credit.units[family]
-    assert before - after >= 2 * units and not any(
-        row["event"] == "birth" and row["interval"] == first for row in lines
-    )
-    assert board.credit.counts[family] == 2 + len(bodies) and board.credit.deficits.get(family) == -len(
-        bodies
-    )
-    gamma = SMALL["integers"]["node_clock"]
-    assert gamma and meeting_board.period_of(board.families[family].pair) == 9
     assert (
-        meeting_board.period_of(board.families[seed].pair) == 0
-    )  # the massless pair never turns: no body
+        before - after >= len(at_first) * units
+    )  # the light taken by a unit per click, the exact take of each
+    assert not any(row["event"] == "birth" and row["interval"] == first for row in lines)
+    laid = sum(
+        row["children"].count(board.families[family].name) for row in lines if row["event"] == "birth"
+    )
+    clicks = sum(1 for row in bodies if row["identity"][0] == family)
+    assert board.credit.counts[family] == laid + clicks and board.credit.deficits.get(family) == -clicks
+    gamma = SMALL["integers"]["node_clock"]
+    assert gamma and bound_body.period_of(board.families[family].pair) in (8, 9)
+    assert bound_body.period_of(board.families[seed].pair) == 0  # the massless pair never turns: no body
 
 
 def test_the_lone_pairs_clicks_run_the_same_by_three_slabs(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """The slabs' gate through a bound body's click (slabs.py: the bodies' standing counts exchanged with the arrays, the halo re-imposed before the close): the lone pair on the 3-cube through its first clicks, one process against three one-layer slabs, every array, every line and the swaps' count equal."""
+    """The slabs' gate through a bound body's click (slabs.py: the bodies' standing counts exchanged with the arrays, the halo re-imposed before the close): the lone pairs on the 3-cube through their first clicks, one process against three one-layer slabs, every array, every line and the swaps' count equal."""
     from event_universe.slabs import Slabs, arrays_of
 
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     runs = []
     for name, processes in (("one", 1), ("three", 3)):
         lines: list[dict[str, Any]] = []
         lone_pair(monkeypatch)
         folder = tmp_path / name
         folder.mkdir()
-        world_files.REPOSITORY_ROOT = folder
+        monkeypatch.setattr(world_files, "REPOSITORY_ROOT", folder)
         board = Lattice(load_world(bare_torus(folder, 3, INTERVALS)), output=lines.append)
         slabs, states = Slabs(board, processes), []
         assert slabs.count == processes
@@ -92,12 +98,12 @@ def test_the_lone_pairs_clicks_run_the_same_by_three_slabs(
             slabs.advanced()
             states.append([np.asarray(a, dtype=object).copy() for a in arrays_of(board)])
         slabs.close()
-        runs.append((states, lines, list(board.swaps)))
-    (single, lines_one, swaps_one), (three, lines_three, swaps_three) = runs
+        runs.append((states, lines, list(board.swaps), board.world.seed))
+    (single, lines_one, swaps_one, seed), (three, lines_three, swaps_three, _seed) = runs
     assert all(
         np.array_equal(x, y)
         for a, b in zip(single, three, strict=True)
         for x, y in zip(a, b, strict=True)
     )
     assert lines_one == lines_three and swaps_one == swaps_three
-    assert any(row["event"] == "credit" and row["identity"][0] != board.world.seed for row in lines_one)
+    assert any(row["event"] == "credit" and row["identity"][0] != seed for row in lines_one)

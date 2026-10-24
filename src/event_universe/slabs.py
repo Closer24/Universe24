@@ -13,10 +13,10 @@ from typing import TYPE_CHECKING, Any, cast
 import numpy as np
 
 from event_universe import credit, records
+from event_universe.bound_body import body_records
 from event_universe.core.rule3 import division_forward
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import charged
-from event_universe.meeting_board import body_records
 from event_universe.reports import AT, CREDIT, LAY, LAY_KEYS, NODES, READINGS, REPORT_KEYS
 
 if TYPE_CHECKING:
