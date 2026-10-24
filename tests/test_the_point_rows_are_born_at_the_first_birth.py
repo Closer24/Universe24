@@ -4,6 +4,7 @@ import numpy as np
 
 from event_universe import meeting_board, registry, seed, world_files
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.loader.derived import charged
 from event_universe.world_files import load_world
 from tests.laws_universe import bare_torus, uniform_sea
@@ -14,6 +15,9 @@ def test_the_lean_board_equals_the_board_with_every_point_standing_through_the_b
 ):  # type: ignore[no-untyped-def]
     """SMALL (den 1,021) on the 3-cube: the lean board, no point record and the free row alone before the first birth, two records and three rows after it, against its twin with every point's records born at the start (the configuration to 2026-10-24, `born_point` for every charged family before the first interval), equal bit for bit on every label they share (the holders' lines and write remainders, the light, every born point's records and its rows' lines, write remainders and phase rows) and on every output line: under the uniform sea over 30 intervals through its births at 24 (every Node two whole quanta, no whether drawn); under the hole seed until the first draw whose outcome the twin's empty digits turn (the parting after the first birth at 2, named in the test's output and not asserted equal), the twin's unborn records and rows at no level throughout; the step back through the first birth returns the lean board's counts (`unborn_point`)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name: the course's numbers were read on it (the holder gapped by the clock's level turns the hole's Node from the interval 1)
     path = bare_torus(tmp_path, 3, 40)
     drawn: list[int] = []
     read_of = meeting_board.read_of
@@ -89,6 +93,9 @@ def test_the_lean_board_equals_the_board_with_every_point_standing_through_the_b
     )  # the lift point 2's two records and its two rows (the selector births the lift, 2026-10-24; the swap point -2, the first charged family, under the former clause)
     monkeypatch.undo()  # the hole seed, the law's own
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     monkeypatch.setattr(meeting_board, "read_of", spied)
     lean, full, outputs = twins()
     parting = None

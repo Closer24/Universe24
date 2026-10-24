@@ -6,6 +6,7 @@ import numpy as np
 
 from event_universe import credit, digits, meeting_board, share, world_files
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
 from tests.laws_universe import bare_torus
@@ -14,6 +15,9 @@ from tests.laws_universe import bare_torus
 def hole_seed(tmp_path, monkeypatch, cube, intervals, lines):  # type: ignore[no-untyped-def]
     """The bare torus of `cube` Nodes a side under the engine's own hole seed, every output line kept."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     return Lattice(load_world(bare_torus(tmp_path, cube, intervals)), output=lines.append)
 
 

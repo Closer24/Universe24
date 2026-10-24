@@ -13,6 +13,7 @@ from event_universe import records, registry, seed, world_files
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.world_files import load_world
 from tests.laws_universe import sea_plus_one, small_universe
 
@@ -86,6 +87,7 @@ def carried(board: Lattice, m: Matrix) -> list[Any]:
         return out
 
     def complemented(remainder: Any, wall: Any) -> np.ndarray:
+        """A negated line's remainder: the ones' complement of the whole integer, ~x = -x - 1 (the level -n - 1, the remainder w - 1 - r; floor division's exact symmetry, the swap's own involution), composed with the lay's gauge, one level and one unit, since a lay at an even wall is not its own ~x image (the origin w div 2 and its image w div 2 - 1 one orbit): (-n, (w - r) mod w), the mirror of a lay the lay (ALGEBRA.md, the mirror clause of 2026-10-24; the Boss's ruling (ii)). The gauge is constant where no act moves a line off its lay's orbit; the swap's bare ~x at a turned Node does, and there the carried run and the run part by two units on the turned odd lines, the divergence named under the gapped holder."""
         r = np.asarray(remainder, dtype=object)
         return np.where(r == 0, 0, np.asarray(wall, dtype=object) - r)
 
@@ -177,6 +179,9 @@ def same(a: list[Any], b: list[Any]) -> bool:
 def board_of(tmp_path, monkeypatch, side, intervals, seeder):  # type: ignore[no-untyped-def]
     """The tests' small universe on the bare cube of `side`, seeded by the engine's own hole seed or by `seeder` in its place."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     small_universe(tmp_path)
     (tmp_path / "w.json").write_text(
         json.dumps({"universe": "u.json", "shape": [side] * 3, "intervals": intervals})

@@ -9,6 +9,7 @@ import pytest
 
 from event_universe import digits, meeting_board, records, share, world_files
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
 from tests.laws_universe import small_universe
@@ -35,6 +36,9 @@ def seed_lines(board):  # type: ignore[no-untyped-def]
 @pytest.mark.parametrize("shape", [[1, 1, 3], [3, 3, 3]])
 def test_one_close_at_one_node_writes_the_take_there_and_nothing_elsewhere(tmp_path, monkeypatch, shape):  # type: ignore[no-untyped-def]
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name: under the volume holder gapped by the clock's one level the hole's six neighbours turn at 2 and birth together at 4 on the 3-cube (one close, six Nodes alike under the 48), the one-Node premise of this sentence the massless course's
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_world(world_of(tmp_path, shape, 12)), output=lines.append)
     unit = board.credit.units[board.world.seed]

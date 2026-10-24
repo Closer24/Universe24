@@ -122,7 +122,11 @@ def test_dens_circle_is_read_from_its_integers_alone():
         one["integers"]["den"] == PEV
     )  # the PeV tier since 2026-10-24, the den chosen after the clicks
     shipped, planes = universe.universe_of(one)
-    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
+    assert (
+        len(planes) == 3 + 3**3 - 1
+        and planes[0].pair == (PEV - PEV // 1000, PEV)
+        and shipped["den"] == PEV
+    )
     least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
     assert (least.name, least.pair) == (
         "point 0 0 2",
@@ -158,22 +162,18 @@ def test_dens_circle_is_read_from_its_integers_alone():
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
-    """The rows at load from den (loader/universe.rows_of): the volume holder and the sign holder by their roles, both at the massless point (den, den), the gap gone for good (the gapped holder the former record's form, by name); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 26 planes at the three-prime den and no family row."""
+    """The rows at load from den and Gamma (loader/universe.rows_of): the volume holder whose rest is the clock's one level, (den - den div Gamma, den), and the sign holder at the massless point (den, den), each by its role (the massless holder and the gapped holder of the file's gap, by name); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 26 planes at the three-prime den and no family row."""
     integers, families = universe.universe_of(universe_copy())
     names = [family.name for family in families]
     assert names[:3] == [universe.VOLUME, universe.SIGN, universe.MASSLESS] and len(names) == 3 + 6
     volume, sign, massless = families[:3]
-    assert (massless.pair, massless.lines, massless.plane, massless.held) == (
-        (6000, 6000),
-        1,
-        False,
-        False,
-    )
+    assert (massless.pair, massless.lines) == ((6000, 6000), 1) and not (massless.plane or massless.held)
     assert sign.held and sign.wronskian and sign.rotation and sign.pair == (6000, 6000)
     assert (
         (sign.width, sign.records) == (4, 1 + 2 + 5)
     )  # the time line and three odd lines per row; two rows for the lift point 6 (its pair's two children), one for each of the five other points, never children since the selector (2026-10-24, 13:xx UTC; 1 + 2 x 6 before it), and the free row
-    assert volume.held and not volume.wronskian and not volume.rotation and volume.pair == (6000, 6000)
+    assert volume.held and not volume.wronskian and not volume.rotation
+    assert volume.pair == (5999, 6000)  # the clock's one level at den and Gamma 6,000: 1 / Gamma
     for plane in families[3:]:
         assert (
             plane.plane
@@ -196,7 +196,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 ):
     """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose volume holder is its first massless row, a box periodic on three even axes is refused by name with the family and the shape, an odd extent admitted; the torus's former face keys refused as unknown (2026-10-24)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_beside(tmp_path, den=1021)  # the two-point den: six loads under the width's derivation
+    universe_beside(tmp_path, den=1021, node_clock=1000)  # the two-point den above its clock: six loads
     world = dict(intervals=1, universe="u.json")
 
     def written(name, **changes):
@@ -207,8 +207,8 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 
     refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
     assert (
-        f"'{universe.VOLUME}'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
-    )  # the first massless row, the volume holder
+        f"'{universe.SIGN}'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
+    )  # the first massless row, the sign holder (the volume holder gapped by the clock's level)
     assert Lattice(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
     for key in (
         "boundary",
