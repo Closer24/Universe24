@@ -251,4 +251,7 @@ def test_two_instruments_clicks_counted_by_stage_on_the_small_world(
     assert written and [w[0] for w in written] == sorted(w[0] for w in written)  # history kept, one way
     assert len({w[1] for w in written}) == 2, written  # both instruments click
     before, after = [w for w in written if w[0] <= top], [w for w in written if w[0] > top]
-    assert (len(before), len(after)) == (BEFORE_TOP, AFTER_TOP), (written, top)  # the counts as read
+    assert (len(before), len(after)) == (BEFORE_TOP, AFTER_TOP), (
+        written,
+        top,
+    )  # the literal (2, 2) is the record: the counts read from the run under the content register (the Boss's word, 2026-10-24: the register the content rooms' alone; at the merge base 3 and 1, the sign holder's W = 0 write room then the register's artefact)

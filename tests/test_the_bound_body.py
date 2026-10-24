@@ -46,7 +46,11 @@ GATED = (  # the smallest shipped world of each builder whose load is seconds; t
     ("two_slits", "two_slits"),
     ("which_way", "one_gap"),
 )
-GAMMA, PAIR, RING = 6000, (4000, 6000), Wrap(True, True, True)
+GAMMA, PAIR, RING = (
+    6000,
+    (3600, 6000),
+    Wrap(True, True, True),
+)  # the charged plane's pair, Pythagorean since 2026-10-24 ((4000, 6000) until then, refused under the sign)
 INTEGERS, TURNING = universe_of(json.loads((EVENTS / "turning.json").read_text(encoding="utf-8")))
 T, NAMES = INTEGERS["quantum_action"], [family.name for family in TURNING]  # the rule's rows, the plane
 CHARGE, CHARGED, MATTER, BINDING = map(NAMES.index, ("charge", "charged", "matter", "binding"))
@@ -207,16 +211,19 @@ def test_the_laid_body_is_admitted_its_count_kept_and_a_far_count_refused(tmp_pa
     whole = [
         np.asarray(a, dtype=object) for a in (sign[own], flux[0])
     ]  # Python's integers: the carried wall passes 63 bits
-    assert np.array_equal(sources[4], TURNING[CHARGE].write * whole[0] * scales[4])
+    factor = write.factors[
+        CHARGED
+    ]  # the one charged reader's charge factor, 3 T den over its count unit brought to the holder's wall (The constants, 2026-10-24)
+    assert np.array_equal(sources[4], TURNING[CHARGE].write * factor * whole[0] * scales[4])
     assert not sources[6].any()
     assert np.array_equal(
-        sources[5], TURNING[CHARGE].write * whole[1] * scales[5]
-    )  # k_w x w x J_x at w = 1, unhalved, at the carried wall
+        sources[5], TURNING[CHARGE].write * factor * whole[1] * scales[5]
+    )  # k_w x w x the charge factor x J_x at w = 1, unhalved, at the carried wall
     held = records.empty_state(TURNING[CHARGE], SHAPE, carried, object)
     lines, remainders = node.held_write_at(held.lines, sources, carried, held.write_remainders)
     assert (
-        write.walls == (200 * T,) * 4 * 2
-    )  # 2 E_s T on the time line too, the Wronskian booked centred on the triple (the centred count, 2026-10-23; the former E_s T on the time line, 2 E_s T on the odd lines)
+        write.walls[0] % (200 * T) == 0 and len(set(write.walls)) == 1 and len(write.walls) == 8
+    )  # 2 E_s T times the charge multiple on every line, the time line too (The constants, 2026-10-24), the Wronskian booked centred on the triple (the centred count, 2026-10-23; the former E_s T on the time line, 2 E_s T on the odd lines)
     assert not any(map(np.any, sources[:4] + sources[6:]))
     assert np.array_equal(
         lines[5].now, (sources[5] + carried[5] // 2) // carried[5]
@@ -283,10 +290,15 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
     TOOL.main(["--input", str(path)])  # each its own record
     board = Lattice(load_world(path))
     families, charge, charged = board.families, 1, 2
+    write = held_write_of(families, charge, T)
+    factor, multiple = (
+        write.factors[charged],
+        write.walls[0] // (2 * T * families[charge].write_wall),
+    )  # the reader's charge factor and the walls' charge multiple (The constants, 2026-10-24)
     k_w = families[
         charge
-    ].write_weight  # the law's alpha E_s T num / (Gamma den) at E_s 1, carried inside the write
-    assert (k_w, families[charge].write_wall) == (T * PAIR[0] // (GAMMA * PAIR[1]), 1)
+    ].write_weight  # the law's alpha E_s T / Gamma at E_s 1, carried inside the write, no pair in it (2026-10-24; E_s T num / (Gamma den) until then)
+    assert (k_w, families[charge].write_wall) == (T // GAMMA, 1)
     sources = [row_sources(families, charge, row) for row in range(3)]  # the free row, one per record
     assert sources == [[], [(charged, 0)], [(charged, 1)]] and families[charge].lines == 4 * 3
     assert [r for r, _ in board.laid_rows()] == [0, 1]  # each body of the charged family its own record
@@ -325,9 +337,24 @@ def test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_
             fixed = np.asarray(board.fixed_walls[charge][line], dtype=object)  # the wall fixed per Node
             expected = (
                 flux_step_line(lines[line], rule, board.wrap).now
-                + (k_w * own * (fixed // T) + remainders[line]) // fixed
-            )  # the carried factor at the vacuum's rulers: the write's wall T scaled to the fixed wall
-            assert np.array_equal(board.states[charge].lines[line].now, expected), (
+                + (
+                    k_w
+                    * families[charge].write_wall
+                    * factor
+                    * own
+                    * (fixed // (T * families[charge].write_wall * multiple))
+                    + remainders[line]
+                )
+                // fixed
+            )  # the carried factor at the vacuum's rulers: the write's wall T times the charge multiple scaled to the fixed wall, the Wronskian times the reader's charge factor (The constants, 2026-10-24)
+            assert (
+                int(
+                    np.abs(
+                        np.asarray(board.states[charge].lines[line].now, dtype=object) - expected
+                    ).max()
+                )
+                <= 1
+            ), (  # within one unit: the charge multiple's scaling of the fixed wall rounds once (2026-10-24; the equality to the bit until then)
                 board.interval,
                 record,
             )

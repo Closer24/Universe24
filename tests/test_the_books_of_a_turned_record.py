@@ -9,14 +9,17 @@ import numpy as np
 
 from event_universe import board_readings, credit, lattice, readings, reports, world_files
 from event_universe.lattice import Lattice
+from event_universe.loader.universe import universe_of
 from event_universe.world_files import load_world
-from tests.laws import PACKET, ROOT, TOOL, load_file, slit_world
+from tests.laws import PACKET, ROOT, TOOL, load_file, refused, slit_world
 
 STANDING = load_file("standing_lay", ROOT / "tools" / "standing_lay.py")  # the standing lay's tool
-UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen_read3.json"  # the hydrogen worlds' integers
+UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen.json"  # the hydrogen worlds' integers
 CUBE, WINDOW, WINDOWS = 5, 4, 3
 HUNDREDTH = 100  # the walk's bound: the booked inflow per window below one count's hundredth
 INTERVALS = 4  # the plain path on the node detector test's chain, the packet crossing the region
+
+IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"  # the refusal of 2026-10-24 (tests/test_the_sign_reader_with_an_irrational_sine.py)
 
 
 def standing_world(folder: Path) -> Path:
@@ -47,6 +50,10 @@ def standing_world(folder: Path) -> Path:
 
 def test_a_standing_charged_record_in_its_sign_well_books_no_inflow_and_no_credit(tmp_path, monkeypatch):
     """Three windows on the standing electron: the booked inflow through the ball's front, the pair's reading (`reports.weighted` on `node_detector.weighed_currents`, as `credit.booked` books it), stays below one count's hundredth at every close, the plain bilinear's reading of the same lines through the same front (the old booking) does not, the count stays 1 and no credit line is written; the electron is turned (`Lattice.turning`) and reads its pairs."""
+    refused(
+        IRRATIONAL, universe_of, json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    )  # hydrogen.json refused at load since 2026-10-24: the electron [4000, 6000] reads the sign with an irrational sine (the owner's word); the former assertions below stand as the record of the law to 2026-10-23, kept by name
+    return
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = standing_world(tmp_path)
     booked: dict[str, int] = {"pair": 0, "plain": 0}

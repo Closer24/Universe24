@@ -1,7 +1,8 @@
 {
- "record": -150.83101199305926,
+ "record": -126.49426031879969,
  "seconds": 7.319796622000467,
- "amplitude_bound": 5961,
- "conjugate": 150.90188020658414,
- "intervals": 2500
+ "amplitude_bound": 13899,
+ "conjugate": 126.49426031879972,
+ "intervals": 2500,
+ "note": "unchanged by the corrected lay of 2026-10-24 (tests/laws.py SINE 4800): the Coulomb run's record is laid by hand (test_part_c_phase_line.gaussian_record replaces both lines, omega from the pair) and coulomb_world lays W = 0, so the sine enters nothing the oracle reads; -126.49426031879969 and 126.49426031879972 with SINE 4800 and 4472 alike, to the digit; under the universal charge (alpha E_s T / Gamma times the reader's charge factor 5 / 4 at the tests' Pythagorean [3600, 6000], the Coulomb universe's width 64); the former record -150.83101199305926 and conjugate 150.90188020658414 at [4000, 6000] under alpha E_s T num / (Gamma den) and the width 63 (the amplitude bound 5961), kept by name"
 }

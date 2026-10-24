@@ -37,9 +37,9 @@ RESONANCES = (
     868,
 )  # the two instruments' resonance pairs over Gamma, their derived beats 11 and 13 (period_of)
 BEFORE_TOP, AFTER_TOP = (
-    3,
-    1,
-)  # the two instruments' clicks on the small structured board, before and after its top, as read
+    2,
+    2,
+)  # the two instruments' clicks on the small structured board, before and after its top, read from the run under the content register (2026-10-24; 3 and 1 at the merge base c942951f2, where the register was the W = 0 sign holder's write room, an artefact removed by the Boss's word)
 
 
 def small_world(

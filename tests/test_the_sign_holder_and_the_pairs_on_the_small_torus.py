@@ -33,7 +33,7 @@ UNIVERSE = {
         {"name": "matter", "pair": [600, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
         {"name": "light", "pair": [GAMMA, GAMMA], "reads": {"gravity": 1}, "dimension": 1},
         {"name": "proton", "pair": [0, GAMMA], "reads": {"gravity": 1, "charge": 1}, "dimension": 2},
-        {"name": "electron", "pair": [800, GAMMA], "reads": {"gravity": 1, "charge": 3}, "dimension": 2},
+        {"name": "electron", "pair": [800, GAMMA], "reads": {"gravity": 1, "charge": 1}, "dimension": 2},
     ],
 }
 

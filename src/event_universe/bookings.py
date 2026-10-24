@@ -12,7 +12,7 @@ from event_universe import node, records
 from event_universe.core.ports import Wrap
 from event_universe.features.start import Sourced
 from event_universe.flux import step_records as stepped_records
-from event_universe.loader.derived import quanta_records, row_sources, weight_of
+from event_universe.loader.derived import held_write_of, quanta_records, row_sources, weight_of
 
 Bookings = dict[records.Sourcing, Any]  # per record of quanta its form or its Wronskian
 Row = tuple[int, int]  # a held family's index and one row of it, the rows the start rests
@@ -61,6 +61,7 @@ def booked_sources(
     holders: Sequence[Row],
     walls: dict[Row, int],
     packets: dict[Row, records.Record],
+    action: int,
     levels: Sequence[np.ndarray],
     wrap: Wrap,
     gamma: int,
@@ -90,11 +91,17 @@ def booked_sources(
         node.phase_act(phased, families, states, -1, wrap, gamma)
     found: list[Sourced] = []
     content = [held for held, _row in holders]
+    factors = {  # the sign holders' charge factors, the Wronskian per quantum (The constants, 2026-10-24; loader/charge.py)
+        index: held_write_of(families, index, action, unit).factors
+        for index, family in enumerate(families)
+        if family.held and family.wronskian
+    }
     for index, row in rows:
         family, source = families[index], np.zeros_like(states[index].lines[0].now)
         bookings = turns if family.wronskian else forms
         for reader, record in row_sources(families, index, row):
-            source = source + weight_of(index, families[reader]) * bookings[(reader, record)]
+            factor = factors[index].get(reader, 1) if index in factors else 1
+            source = source + weight_of(index, families[reader]) * factor * bookings[(reader, record)]
         reads = tuple((content.index(r.family), r.weight) for r in family.reads if r.family in content)
         found.append(
             (family.write * source, family.pair, walls[(index, row)], family.rest, reads, family.power)

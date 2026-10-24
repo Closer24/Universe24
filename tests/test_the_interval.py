@@ -308,15 +308,12 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
         {"name": "light", "pair": [6000, 6000], "reads": {"gravity": 2}, "dimension": 1}
     )
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-    apart = load_world(uniform_world(tmp_path, "apart"))  # loads since 2026-10-23, the weights apart
-    weights = {
-        r.weight for f in apart.families for r in f.reads if apart.families[r.family].name == "gravity"
-    }
-    assert len(weights) > 1
-    # a held row that reads the content takes its sources at differing read weights (the owner's word of
-    # 2026-10-23, the wall at the held row's own paces; tests/test_the_held_write_at_the_rows_own_paces.py);
-    # to that day the loader refused them by name, "differing weights", the carried factor's one wall per
-    # Node the sources' shared clock's; the refusal stands for a holder of the sign reading no content alone
+    apart = refused(
+        "the read weight is one for every reader", load_world, uniform_world(tmp_path, "apart")
+    )
+    assert (
+        "light" in str(apart) and "gravity" in str(apart)
+    )  # the loader refuses the weight 2 itself (2026-10-24); the shared clock's refusal of differing weights ("differing weights", "shared clock") stood until then, kept by name in derived.shared_clock
     volume_universe(tmp_path)
     verdict = BACK.verdict(Lattice(load_world(laid_torus(tmp_path, "law"))), 20)
     assert verdict == {"verdict": "MATCH", "intervals": 20, "interval": 1, "ended": None}

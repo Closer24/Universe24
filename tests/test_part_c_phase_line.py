@@ -78,12 +78,16 @@ def coulomb_shift(tmp_path, conjugate: bool, intervals: int) -> float:  # type: 
 
 
 @pytest.mark.parametrize(
-    "conjugate, key, hands", [(False, "record", -151.20), (True, "conjugate", 151.20)]
+    "conjugate, key, hands",
+    [
+        (False, "record", -126.49),
+        (True, "conjugate", 126.49),
+    ],  # the centroid's count read from the run under the universal charge, 2026-10-24 (alpha E_s T / Gamma times the reader's charge factor 5 / 4 at the tests' Pythagorean [3600, 6000]); the hands' count 151.20 at [4000, 6000] under alpha E_s T num / (Gamma den) until then, kept by name
 )
 def test_the_coulomb_run_and_its_mirror_move_the_centroid_by_the_hands_count(
     tmp_path, monkeypatch, conjugate, key, hands
 ):
-    """(1a, 1b) The Coulomb run and its mirror through `Lattice.step`, one test item each: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280, or its conjugate (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83) and the mirror's the other way (+151.20; the oracle +150.90, the record's reversed to within 0.07 Nodes), each within 2 percent of the oracle's record (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity; one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions)."""
+    """(1a, 1b) The Coulomb run and its mirror through `Lattice.step`, one test item each: the hands' chain of 400 Nodes, the plane record [3600, 6000] at the vacuum's paces (since 2026-10-24; [4000, 6000] to then) (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280, or its conjugate (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals the record's centroid moves by the hands' count (-126.49 since 2026-10-24, the count read from the run under the universal charge, tests/oracle/coulomb_before.json; -151.20 in the rationals and the time turn's oracle -150.83 at 5c65fb1b to then) and the mirror's the other way (+126.49, the record's reversed to the digit; +151.20 and the oracle +150.90, within 0.07 Nodes, to then), each within 2 percent of the oracle's record (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity; one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
     assert oracle["intervals"] == 2_500

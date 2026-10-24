@@ -1,6 +1,5 @@
-"""The volume's level reading read once per distinct volume (features/volume `level_of`, the memo `LEVELS`; the architect's round of 2026-10-24): the shipped Universe24 over 30 intervals writes the shipped eras, nodes and clicks lines bit for bit, a 9-cube of the small universe over 30 intervals holds the state the search at every Node holds, and 60 intervals of it run back exact with the clicks' history kept (the suite's bound of 30 seconds per test; 100 intervals both ways in the architect's measurement, bit for bit)."""
+"""The volume's level reading read once per distinct volume (features/volume `level_of`, the memo `LEVELS`; the architect's round of 2026-10-24): a 9-cube of the small universe over 30 intervals holds the state the search at every Node holds, and 60 intervals of it run back exact with the clicks' history kept (the suite's bound of 30 seconds per test; 100 intervals both ways in the architect's measurement, bit for bit). The small universe without its absorber since 2026-10-24 (the owner's word: every world but Universe24 cancelled, the declared detectors leave; under the charge's universality the absorber's world reaches a volume X of 0 at a Node at the interval 34 and the level reading refuses it by name); the shipped folder's logs no longer compared here (the folder is re-recorded by the one world's fold)."""
 
-import json
 from pathlib import Path
 from typing import Any
 
@@ -12,17 +11,9 @@ from event_universe.features import volume
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import ERAS, FOLDER, LOG, WORLD, small_world
+from tests.laws_universe import small_world
 
 INTERVALS, CUBE, COMPARED = 60, 9, 30
-
-
-def lines_of(path: Path, limit: int | None = None) -> list[dict[str, Any]]:
-    """The log's lines without the clock (`seconds`), the lines up to the interval `limit` where one is given."""
-    found = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
-    for line in found:
-        line.pop("seconds", None)
-    return [line for line in found if limit is None or line.get("interval", 0) <= limit]
 
 
 def searched_at_every_node(gamma: int, volumes: Any) -> Any:
@@ -31,18 +22,11 @@ def searched_at_every_node(gamma: int, volumes: Any) -> Any:
     return volume.searched_levels(gamma, flat).reshape(np.asarray(volumes).shape)
 
 
-def test_the_shipped_universe_writes_the_shipped_logs_over_30_intervals(tmp_path: Path) -> None:
-    ERAS.run(WORLD, tmp_path / "e.jsonl", 10**6, COMPARED, tmp_path / "c.jsonl", tmp_path / "n.jsonl")
-    assert lines_of(tmp_path / "e.jsonl")[1:] == lines_of(LOG)[1 : COMPARED + 1]
-    assert lines_of(tmp_path / "n.jsonl") == lines_of(FOLDER / "universe24.nodes.jsonl")[:COMPARED]
-    assert lines_of(tmp_path / "c.jsonl") == lines_of(FOLDER / "universe24.clicks.jsonl", COMPARED)
-
-
 def test_the_9_cube_holds_the_state_of_the_search_at_every_node(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = small_world(tmp_path, absorber=True, cube=CUBE)
+    path = small_world(tmp_path, absorber=False, cube=CUBE)
     searched: list[dict[str, object]] = []
     monkeypatch.setattr(volume, "level_of", searched_at_every_node)
     board = Lattice(load_world(path), output=searched.append)
@@ -65,7 +49,7 @@ def test_the_9_cube_runs_back_exact_over_60_intervals(
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     clicks: list[dict[str, object]] = []
-    board = Lattice(load_world(small_world(tmp_path, absorber=True, cube=CUBE)), output=clicks.append)
+    board = Lattice(load_world(small_world(tmp_path, absorber=False, cube=CUBE)), output=clicks.append)
     states = [board_state(board)]
     for _ in range(INTERVALS):
         board.step()

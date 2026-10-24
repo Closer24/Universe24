@@ -33,7 +33,11 @@ CHAIN, QUANTA = (
     6,
 )  # the shortest chain (x open) holding the body apart from the end node_detectors; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
-CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+CHARGED = {
+    "name": "charged",
+    "pair": [3600, 6000],
+    "dimension": 2,
+}  # a Pythagorean plane under the sign (2026-10-24: the sign's reader is Pythagorean; matter's [4000, 6000] until then)
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 TOP = [0, 6000]
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
@@ -238,10 +242,13 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
 # world edited beside tmp_path, the emit-and-take world and the fold's floor
 TURNING_FILE = EVENTS / "turning.json"
 TURNING_INTEGERS, TURNING = universe_of(json.loads(TURNING_FILE.read_text(encoding="utf-8")))
-TURNING_T, TURNING_PAIR = TURNING_INTEGERS["quantum_action"], (4000, 6000)
+TURNING_T, TURNING_PAIR = (
+    TURNING_INTEGERS["quantum_action"],
+    (3600, 6000),
+)  # the tests' charged plane, Pythagorean since 2026-10-24 ((4000, 6000) until then, refused under the sign)
 CHARGE = [family.name for family in TURNING].index("charge")
 RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
-SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
+SINE = 4800  # isqrt(6000^2 - 3600^2): the charged pair's sin omega_0 times den (4472 for [4000, 6000] to 2026-10-24)
 COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
 GRAVITY = {
     "name": "gravity",
@@ -250,7 +257,12 @@ GRAVITY = {
     "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
 }
 COULOMB_UNIVERSE = {
-    "integers": {"node_clock": 6000, "quantum_action": 36000, "width": 63, "link_unit": 16},
+    "integers": {
+        "node_clock": 6000,
+        "quantum_action": 36000,
+        "width": 64,  # 63 until 2026-10-24: the sign holder's levels under the universal charge pass the content bound of 63 bits by 5 percent on this chain
+        "link_unit": 16,
+    },
     "families": [
         {
             "name": "charge",
@@ -260,7 +272,7 @@ COULOMB_UNIVERSE = {
         },
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],
-}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
+}
 
 
 def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
@@ -290,7 +302,7 @@ def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.n
 def coulomb_world(
     tmp_path, shape=(COULOMB_CHAIN, 1, 1), boundary=None, intervals=3000, centre=(COULOMB_AT, 0, 0)
 ):  # type: ignore[no-untyped-def]
-    """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
+    """The Coulomb world: the sign holder alone with a plane record [3600, 6000] reading it (Pythagorean since 2026-10-24; [4000, 6000] to then) (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
     (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
     profile = np.zeros(shape, dtype=np.int64)
     profile[centre] = 1

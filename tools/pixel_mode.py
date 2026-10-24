@@ -426,11 +426,12 @@ def start_content(
     board: Board, families: tuple[FamilyRule, ...], index: int, slot: int, pairs: Pairs, others: Laid
 ) -> tuple[np.ndarray, Angles]:
     """The content a body's record reads at the engine's own start, by the engine's own act and no copy of it (`Lattice.start`; `booked_sources` and `held_rests` are the one act, so the generator and the engine compute one fixed point and agree by construction): the body's level pairs laid on its record's lines and the other bodies' and the packets' on theirs (`others`, each its family and its record, `record_slice`; the symmetric lay over a record's parts, the plane's second pair on its second line), every held row at the rest the lay and the rest return together from nothing, the holders of the content and every row of the holders of the sign a laid plane sources (the form of every record and its Wronskian as the held write books them, the Wronskian into the record's own row, over the write's wall E_s T, the fine form and no whole quanta), and the record's read of those rests (every holder of the content, and for a plane every row of the holders of the sign but its own, plainly), the content the engine steps its record in (ALGEBRA.md, No record reads its own write of the sign); beside it the angles the record is turned by where a holder declares the rotation (`node.turning`: the time angle's numerators from every sign row but the record's own at the record's own clock, and the odd lines), None where no holder turns it."""
-    walls = {
-        number: held_write_of(families, number, board.action, board.unit).walls
+    writes = {
+        number: held_write_of(families, number, board.action, board.unit)
         for number, f in enumerate(families)
         if f.held
     }
+    walls = {number: write.walls for number, write in writes.items()}
     states = [
         empty_state(f, board.shape, walls.get(number, ()), board.kind)
         for number, f in enumerate(families)
@@ -467,6 +468,7 @@ def start_content(
             holders,
             time_walls,
             packets,
+            board.action,
             levels,
             board.wrap,
             board.gamma,

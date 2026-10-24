@@ -71,7 +71,7 @@ enter; the seed 34).
 
 The hydrogen worlds at the electron's read 3 (2026-10-20, the owner's order through the builder, the
 atom's own line; the builder's clone 985c818 with his patch the reference, his numbers beside by
-name): the universe hydrogen_read3.json, hydrogen.json with one number changed, the electron reading
+name): the universe hydrogen_read3.json (kept since 2026-10-24 as the record worlds' universe, refused at load by the read's universality, the read weight one for every reader by the owner's word, and by the sign's reader being Pythagorean), hydrogen.json with one number changed, the electron reading
 the holder of the sign at the weight 3 (the proton keeps 1); the cube of 11 open on its three axes
 at T = 36,000,000, the proton at [5, 5, 5] as the one-Node pixel record (4,242 and -4,242) and the
 electron declared at [6, 5, 5]; 400 intervals. The well the engine's start writes under the proton
@@ -618,3 +618,7 @@ The shells' worlds atom_shells and atom_shells_symmetric deleted 2026-10-20 at t
 body in the exact vacuum, its digits one bit per line per interval against its draws' totals of 54
 bits, its draws before the ninth the generator's; the law's line standing (the exclusion from the
 family's sign on the singlet, ALGEBRA.md, What a body reads).
+
+## Refused at load since 2026-10-24 (the owner's word)
+
+The seven worlds of this folder stand as files and as the records of the law as it stood to 2026-10-23. Since 2026-10-24 the sign's reader is Pythagorean (ALGEBRA.md, The constants: a reader of the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair alone; a reader with an irrational sine is refused, as the conversion refuses it from every exact list), and the electron [4000, 6000] has an irrational sine (20,000,000 is no square), so every world here is refused at load by name; the owner's word: no re-lay of the record worlds, every effort on Universe24. The former runs' numbers above, their pages and their logs stand as the record; tests/test_the_sign_reader_with_an_irrational_sine.py asserts the refusal on each world by name.

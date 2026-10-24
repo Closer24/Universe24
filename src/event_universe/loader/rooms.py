@@ -65,6 +65,9 @@ def write_rooms(
     sources = readers_of(families, index)
     time = sum(
         abs(weight_of(index, families[other]))
+        * (
+            write.factors[other] if family.wronskian else 1
+        )  # the sign holder's charge factor on its time line (The constants, 2026-10-24)
         * booking_room(families, other, family.wronskian)
         * source_room(families, other, gamma, True, hill)
         for other in sources
@@ -87,3 +90,32 @@ def write_rooms(
     ):  # an odd line: the flux through the axis's two Ports, two products each, |num| on each
         rooms[1 + AXES :] = [SIDES * axis] * AXES
     return [abs(family.write) * room for room in rooms * family.records]
+
+
+def held_room(
+    family: FamilyRule,
+    write: HeldWrite,
+    rooms: list[int],
+    found: int,
+    largest: int,
+    gamma: int,
+    action: int,
+    width: int,
+) -> int:
+    """The bound a held family's one write leaves inside the width, folded into the board's bound `found` for a holder of the content and gated apart for the holder of the sign (the Boss's word of 2026-10-24: the register's scale and the lay's amplitude bound are the loader's tool and no line of the law, and a record laid at W = 0 writes nothing, so a sign holder's write room never lowers the bound for the others; refused by name where it leaves no level inside the width; the former rule, the min over every family's rooms with the sign holder's among them, kept by name, 2026-10-23): per line (largest - wall) div room, the least over the lines, 0 where a wall passes the width."""
+    own = largest
+    for wall, room in zip(write.walls, rooms, strict=True):
+        if wall > largest:
+            own = 0
+        elif room:
+            own = min(own, largest_below(int(division_forward(largest - wall, room, 0)[0])))
+    if not family.wronskian:
+        return min(found, own)
+    if own < 1:
+        raise ValueError(
+            f"the holder of the sign {family.name!r} at the Node clock Gamma = {gamma} and T = {action}: "
+            f"its one write's room, the walls {list(write.walls)[:2]} and the numerators' rooms "
+            f"{[int(room) for room in rooms][:2]} per level, leaves no level inside the width of "
+            f"{width} bits (ALGEBRA.md #the-bound; the room gated apart from the register's bound)"
+        )
+    return found
