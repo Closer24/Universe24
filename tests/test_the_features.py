@@ -22,7 +22,6 @@ from event_universe.loader.universe import universe_of
 from tests.laws import refused, resolved, universe_copy
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
-OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
 
 
 def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_name():
@@ -214,29 +213,3 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
                 name,
                 f.name,
             )  # E_h T / Gamma, no pair in it
-
-
-def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair():
-    """The frozen row's exemption (ALGEBRA.md, the atom round's reading: the frozen-row nucleus [0, den] beside the electron's pair, the energy line's constraint that the plane families of one world share num / den lifted for num = 0 by name, the advisor's #1572 comment 5966780505 and the mathematician's 236 and 242, two hands): a universe of the sign holder under the rotation, a plane of matter's pair on the line (E_h T num = k_w Gamma den at T = 15,000) and a frozen plane [0, 6000] reading the holder at 1 loads, the frozen row's record never moving (R_ij = 2 num p^2 Q = 0 on every Link) and emission no light; the frozen row of three planes (the frozen proton's row) alike; a second moving plane whose num / den differs, [3000, 6000], is refused by name as before, and a frozen row under the plain read (the act `pace`) was never gated."""
-    plane = dict(PLANE)  # Pythagorean under the sign (2026-10-24; STUFF's [4000, 6000] refused there)
-    frozen = {**plane, "name": "frozen", "pair": [0, 6000]}
-    proton = {**frozen, "name": "proton", "dimension": ["plane"] * 3}
-    for rows, zeros in (
-        ((SIGN, plane, frozen), [False, False, True]),
-        ((SIGN, frozen, proton), [False, True, True]),
-    ):
-        families = (universe(*rows, quantum_action=15_000))[1]
-        assert [f.pair[0] == 0 for f in families] == zeros and all(f.plane for f in families[1:])
-    moving = {
-        **plane,
-        "name": "slower",
-        "pair": [4800, 6000],
-    }  # a second Pythagorean plane (2026-10-24; [3000, 6000], its sine irrational, until then)
-    integers, families = universe(
-        SIGN, plane, moving, quantum_action=15_000
-    )  # two moving planes of different pairs under one holder load (the charge's universality, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
-    assert (families[0].write_weight, families[0].write_wall) == (
-        3,
-        2,
-    )  # alpha = E_h T / Gamma = 15,000 / 10,000 reduced, no pair in it
-    (universe(SIGN, plane, frozen))

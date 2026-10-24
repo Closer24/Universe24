@@ -1,4 +1,4 @@
-"""The one world's helpers shared by the Universe24 tests: the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone; `FOLDER`, `WORLD`, `UNIVERSE`, `LOG`), the eras tool loaded (`ERAS`), the one universe's clock and the small torus's side (`GAMMA`, `CUBE`), the tests' small universe and the bare torus of it (`SMALL`, `small_universe`, `bare_torus`), the former uniform sea laid by name (`uniform_sea`) and `flat`. The declared seed's universe and its small structured board (`DECLARED`, `small_world`) left 2026-10-24 with the tests of the cancelled worlds."""
+"""The one world's helpers shared by the Universe24 tests: the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone; `FOLDER`, `WORLD`, `UNIVERSE`), the one universe's clock and the small torus's side (`GAMMA`, `CUBE`), the tests' small universe and the bare torus of it (`SMALL`, `small_universe`, `bare_torus`), the former uniform sea laid by name (`uniform_sea`), the seed hand's sea plus one (`sea_plus_one`) and `flat`. The declared seed's universe and its small structured board (`DECLARED`, `small_world`) left 2026-10-24 with the tests of the cancelled worlds, the eras tool loaded here (`ERAS`) and the log's path (`LOG`) with the tests' audit of the same day."""
 
 import json
 from pathlib import Path
@@ -7,12 +7,10 @@ from typing import Any
 import numpy as np
 
 from event_universe.lattice import Lattice
-from tests.laws import ROOT, load_file
+from tests.laws import ROOT
 
 FOLDER = ROOT / "examples" / "events" / "universe24"
 WORLD, UNIVERSE = FOLDER / "universe24.json", FOLDER / "universe_universe24.json"
-LOG = FOLDER / "universe24.eras.jsonl"
-ERAS = load_file("eras", ROOT / "tools" / "eras.py")
 GAMMA, CUBE = 1000, 3  # the one universe's clock and the small torus's side
 SMALL = {  # the tests' small universe for the runs (2026-10-24, the family-less file): the one universe's clock, unit, width and Link unit at the den 1,021, a prime 1 mod 4 (30^2 + 11^2), whose circle has two points; the bare 3-cube bangs from the light seed and births its pairs at the first meeting; the shipped file's 26 points run at the record's pace and are the record's business
     "integers": {
