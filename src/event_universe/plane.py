@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from typing import Any
 
 import numpy as np
@@ -171,6 +172,7 @@ def fold_guard(pair: tuple[int, int], gamma: int, links: tuple[Any, ...], name: 
             )
 
 
+@cache
 def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
     """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X 2^(1/2) at the angle pi / 4, which the sweep over n passes at the tangent half-angle 2^(1/2) - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes 2^(1/2)); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
     levels = np.arange(
