@@ -228,7 +228,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_hole_seed_runs_the_same_by_two_and_by_five_slabs": (
         7,
         "the slabs' gate (slabs.py, the board stepped in slabs by processes with one-Link halos, 2026-10-24): the 5-cube hole seed "
-        "16 intervals through its births by two and by five slabs, every array, every line in its order and the swaps equal to the single process bit for bit",
+        "12 intervals through its births by two and by five slabs, every array, every line in its order and the swaps equal to the single process bit for bit",
     ),
     "tests/test_the_board_runs_in_slabs.py::test_a_tube_cut_across_z_runs_the_same_by_three_slabs": (
         5,

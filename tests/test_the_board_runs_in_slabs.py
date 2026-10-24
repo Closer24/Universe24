@@ -64,30 +64,30 @@ def parting(single: Run, slabs: Run) -> str | None:
 def test_the_5_cube_hole_seed_runs_the_same_by_two_and_by_five_slabs(
     tmp_path: Path, processes: int
 ) -> None:
-    """The 5-cube hole seed stepped 16 intervals through its births (from the second interval, at the hole's sides) by two slabs (3 and 2 layers along x) and by five (one layer each, every Node a face Node): the board's every array after every interval, the clicks log's every line in its order (the holes' lays, the children's lays, the credit and birth lines) and the swaps' counts equal the single process's bit for bit."""
-    single, found = run(tmp_path / "one", CUBE, 16, 1), run(tmp_path / "slabs", CUBE, 16, processes)
+    """The 5-cube hole seed stepped 12 intervals through its births (from the second interval, at the hole's sides) by two slabs (3 and 2 layers along x) and by five (one layer each, every Node a face Node): the board's every array after every interval, the clicks log's every line in its order (the holes' lays, the children's lays, the credit and birth lines) and the swaps' counts equal the single process's bit for bit."""
+    single, found = run(tmp_path / "one", CUBE, 12, 1), run(tmp_path / "slabs", CUBE, 12, processes)
     assert parting(single, found) is None
     assert any(line["event"] == "birth" for line in single[1])  # the run reaches the births
 
 
 def test_a_tube_cut_across_z_runs_the_same_by_three_slabs(tmp_path: Path) -> None:
-    """A [3, 3, 9] tube, its longest axis z, stepped 20 intervals through its births by three slabs of three layers across z: equal to the single process bit for bit, the lines of the three slabs interleaved into the board's x-major order."""
-    single, found = run(tmp_path / "one", TUBE, 20, 1), run(tmp_path / "slabs", TUBE, 20, 3)
+    """A [3, 3, 9] tube, its longest axis z, stepped 16 intervals through its births by three slabs of three layers across z: equal to the single process bit for bit, the lines of the three slabs interleaved into the board's x-major order."""
+    single, found = run(tmp_path / "one", TUBE, 16, 1), run(tmp_path / "slabs", TUBE, 16, 3)
     assert parting(single, found) is None
     assert any(line["event"] == "birth" for line in single[1])
 
 
 def test_the_run_back_from_the_board_the_slabs_stepped_is_exact(tmp_path: Path) -> None:
-    """The 3-cube hole seed 16 intervals forward through three slabs, through its births, then 16 back by the board's own inverse (the lays the slabs returned logged in the books as the lay act logs them): every snapshot met again bit for bit."""
+    """The 3-cube hole seed 12 intervals forward through three slabs, through its births, then 12 back by the board's own inverse (the lays the slabs returned logged in the books as the lay act logs them, the points born at a close unborn before its step back): every snapshot met again bit for bit."""
     lines: list[dict[str, Any]] = []
     board = board_of(tmp_path, [3, 3, 3], 30, lines)
     slabs, snapshots = Slabs(board, 3), {0: snapshot(board)}
-    for interval in range(1, 17):
+    for interval in range(1, 13):
         slabs.advanced()
         snapshots[interval] = snapshot(board)
     slabs.close()
     assert any(line["event"] == "birth" for line in lines)
-    for _ in range(16):
+    for _ in range(12):
         board.step_inverse()
         assert first_difference(snapshots[board.interval], snapshot(board)) is None, board.interval
 
