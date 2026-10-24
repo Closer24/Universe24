@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from math import gcd
 from typing import TYPE_CHECKING
 
@@ -18,8 +19,9 @@ if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 
+@cache
 def period_of(pair: tuple[int, int]) -> int:
-    """One period of a record's beat in whole intervals, from its rotation alone (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24, the owner's sentence of 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body, its window one period): the rotation cos omega = num / den turns the record's lines by omega per interval, and the period is the first count of intervals P at which the turn completes, read on the integers by the Chebyshev recurrence of the sine's sign, S_0 = 0, S_1 = 1, S_(t+1) = 2 num S_t - den^2 S_(t-1) (the sign of sin(t omega), the pair reduced by their gcd at every step so the integers stay small), P the first t with S_(t-1) < 0 <= S_t; the trial's ceiling of 2 pi over omega bit for bit, no transcendental function; the massless pair never turns and is no body, P = 0."""
+    """One period of a record's beat in whole intervals, from its rotation alone (ALGEBRA.md, The board reads itself, the bound body's clause of 2026-10-24, the owner's sentence of 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body, its window one period): the rotation cos omega = num / den turns the record's lines by omega per interval, and the period is the first count of intervals P at which the turn completes, read on the integers by the Chebyshev recurrence of the sine's sign, S_0 = 0, S_1 = 1, S_(t+1) = 2 num S_t - den^2 S_(t-1) (the sign of sin(t omega), the pair reduced by their gcd at every step so the integers stay small), P the first t with S_(t-1) < 0 <= S_t, computed once per pair (`functools.cache`: a number of the pair alone, asked at every close for every record); the trial's ceiling of 2 pi over omega bit for bit, no transcendental function; the massless pair never turns and is no body, P = 0."""
     num, den = pair
     if num == den:
         return 0
