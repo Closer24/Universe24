@@ -14,7 +14,7 @@ at a toy den, run interval by interval with
       heaviest whose walls fit, the shipped child_of) or aprime (the primes' lifts that fit, drawn at equal weights by the read);
       the hole: zero (main's, the met Node's seed lines to (0, 0)), mean (the frame's uniform part by Rule3's division at the wall,
       the ruling of 13:33, which fails: it keeps the drift), before_mean ((b_u, b_u), b_u the six Ports' before over PORTS by the
-      division act, the remainder kept as it stands), own_before ((b_i, b_i), the Node's own before twice);
+      division act, the remainder kept whole), own_before ((b_i, b_i), the Node's own before twice);
   (d) the mirror lay: W per record at every born Node right after the lay;
   (e) the mirror run: the whole run from the image of the start under one element, compared interval by interval;
   (f) the two-tiles test: the torus cut in two x-tiles with one-Link halos, each a lattice of its own, each stepped from its own
@@ -616,7 +616,7 @@ def hole_changes(board, index, number, at_nodes):
     (every face before any write): zero: the line to (0, 0) at the Node (main's); mean: the six Ports' mean of now and of before by
     Rule3's division act at the wall, (w div 6) SUM_j m_j divided at w with the line's remainder as the carry, the remainder kept
     (the ruling of 13:33; it keeps the drift and fails); before_mean: (b_u, b_u), b_u = SUM_j before_j div PORTS by the division
-    act, the remainder as it stands; own_before: (b_i, b_i), the Node's own level before twice, the remainder as it stands."""
+    act, the remainder kept whole; own_before: (b_i, b_i), the Node's own level before twice, the remainder kept whole."""
     line = board.states[index].lines[number]
     found = {}
     mode = HOLE["mode"]
