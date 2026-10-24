@@ -1,4 +1,4 @@
-"""A reading of a turned record across a Link whose two ends stand in different frames takes the two ends in one frame, as the step does (ALGEBRA.md, The swap at the top, the frame clause; readings.turned_currents_of through `Turned.frames`, board_readings.turned_read): on the deliberately split charged board of tests/test_the_swap_with_a_charge (the dust's amplitude 869 on the layer x = 0 and 400 on the others, the tops over 34 to 37), stepped through the first three fire intervals (34, 35 and 36: 1, 8 and 9 Nodes) so that Links between a turned and an unturned Node stand, (1) the Wronskian's flux through every Link is one number read from both ends in the frame every record was born in: (-1)^b_i F_i(+a) = -(-1)^b_j F_j(-a) exactly at every Link, mixed Links among them, with b the phase row's remainder at the wall 2; (2) at least one mixed Link carries a flux other than 0, so the clause is read and not vacuous; (3) the same reading with the frames left out (the former reading, the neighbour's value as its own frame holds it) breaks (1) at a mixed Link."""
+"""A reading of a turned record across a Link whose two ends stand in different frames takes the two ends in one frame, as the step does (ALGEBRA.md, The swap at the top, the frame clause; readings.turned_currents_of through `Turned.frames`, board_readings.turned_read): on the deliberately split charged board of tests/test_the_swap_with_a_charge (the dust's amplitude 869 on the layer x = 0 and 400 on the others, the tops over 34 to 37), stepped through the first three fire intervals (34, 35 and 36: 1, 8 and 9 Nodes) so that Links between a turned and an unturned Node stand, (1) the Wronskian's flux through every Link is one number read from both ends in the frame every record was born in: (-1)^b_i F_i(+a) = -(-1)^b_j F_j(-a) exactly at every Link, mixed Links among them, with b the phase row's remainder at the wall 2; (2) at least one mixed Link carries a flux other than 0, so the clause is read and not vacuous; (3) the same reading with the frames left out (the former reading, the neighbour's value as its own frame holds it) breaks (1) at a mixed Link. Since 2026-10-24 (the charge the Wronskian per quantum, alpha E_h T / Gamma, the read weight one) the framed read cancels to the bit where the Link's two ends stand in one frame and, at a mixed Link, to a residue of the phase act's rounding (39, 65 and 75 levels against currents of 1,006 to 30,860 on this board), below the unframed read's residue at every such Link; the exact cancellation at the mixed Links to 2026-10-24 kept by name, the residue's derivation owed by name."""
 
 import numpy as np
 
@@ -33,14 +33,25 @@ def test_a_turned_records_current_across_a_mixed_link_is_one_number_in_one_frame
         for axis in range(AXES):
             far_sign = arrival(sign, axis, 1, board.wrap)
             differ = far_sign != sign  # the Link's two ends in different frames
+            residues = {}
             for read, kept in ((framed, True), (former, False)):
                 own = sign * np.asarray(read[2 * axis], dtype=object)
                 far = far_sign * arrival(
                     np.asarray(read[2 * axis + 1], dtype=object), axis, 1, board.wrap
                 )
+                residues[kept] = np.abs(own + far)
                 if kept:
-                    assert np.all(own + far == 0), (record, axis)  # (1) one number from both ends
+                    agree = ~np.asarray(differ)
+                    assert np.all((own + far)[agree] == 0), (
+                        record,
+                        axis,
+                    )  # (1) one number from both ends where the frames agree
                     mixed += int(np.count_nonzero(np.asarray(differ) & (own != 0)))  # (2)
                 else:
                     broken += int(np.count_nonzero(np.asarray(differ) & (own + far != 0)))  # (3)
+            at = np.asarray(differ) & (residues[True] != 0)
+            assert np.all(residues[True][at] < residues[False][at]), (
+                record,
+                axis,
+            )  # (1b) at a mixed Link the framed read's residue, the phase act's rounding under the universal charge (39, 65 and 75 levels on this board against currents of 1,006 to 30,860, 0 to 2026-10-24), stands below the unframed read's
     assert mixed > 0 and broken > 0, (mixed, broken)

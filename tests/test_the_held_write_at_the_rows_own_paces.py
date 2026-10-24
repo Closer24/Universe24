@@ -1,4 +1,4 @@
-"""The held write at the row's own paces (ALGEBRA.md, The one Node, the clause of 2026-10-23; `records.wall_rulers`, `Lattice.rulers`, `loader/derived.shared_clock`): every act of the interval sees the Node's own clock and ruler, the held rows' write among them (The same clock and the same ruler for every act), and a held row reads the content as every family does (Every row reads the content), so the write's factor of every source of a row that reads the content is scaled at the row's own paces, one wall per line, and readers at differing read weights share the row's wall and not a reader's clock; where the readers read as the row does, the number is the former's bit for bit (every shipped world). A row that reads no content, a holder of the sign reading none, keeps its sources' shared paces as the wall and the loader's gate keeps them alike by name. The sentences asserted on the 3-cube torus of tests/laws_universe.small_world with gravity gapped: (1) matter reading gravity at the weight 2 beside light at 1 loads where it was refused by name, steps, every held line's remainder in [0, wall) at every Node (the one remainder per held line, exact), and runs back to the start bit for bit; (2) the same world with the sign holder `charge` reading no content and its readers, the proton and the electron, at differing weights of gravity is refused at load by name, the sentence not holding there."""
+"""The held write at the row's own paces, to 2026-10-24 (the read weight one for every reader, the owner's word: a reader at another weight can be declared no more, so the two tests below assert the loader's refusal and keep their former bodies by name; ALGEBRA.md, The one Node, the clause of 2026-10-23; `records.wall_rulers`, `Lattice.rulers`, `loader/derived.shared_clock`): every act of the interval sees the Node's own clock and ruler, the held rows' write among them (The same clock and the same ruler for every act), and a held row reads the content as every family does (Every row reads the content), so the write's factor of every source of a row that reads the content is scaled at the row's own paces, one wall per line, and readers at differing read weights share the row's wall and not a reader's clock; where the readers read as the row does, the number is the former's bit for bit (every shipped world). A row that reads no content, a holder of the sign reading none, keeps its sources' shared paces as the wall and the loader's gate keeps them alike by name. The sentences asserted on the 3-cube torus of tests/laws_universe.small_world with gravity gapped: (1) matter reading gravity at the weight 2 beside light at 1 loads where it was refused by name, steps, every held line's remainder in [0, wall) at every Node (the one remainder per held line, exact), and runs back to the start bit for bit; (2) the same world with the sign holder `charge` reading no content and its readers, the proton and the electron, at differing weights of gravity is refused at load by name, the sentence not holding there."""
 
 import hashlib
 import json
@@ -37,6 +37,11 @@ def weighed(tmp_path, monkeypatch, matter: int, electron: int):  # type: ignore[
 def test_a_reader_at_another_weight_shares_the_rows_wall_and_the_run_back_is_exact(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
+    with pytest.raises(ValueError, match="the read weight is one for every reader"):
+        weighed(
+            tmp_path, monkeypatch, 2, 1
+        )  # matter at the read 2: refused at load since 2026-10-24 (the owner's word); the former body below, the row's wall shared and the run back exact, kept by name
+    return
     board = Lattice(weighed(tmp_path, monkeypatch, 2, 1), None)
     g = board.held[0]
     assert board.families[g].pair[0] < board.families[g].pair[1]  # a gapped row
@@ -63,6 +68,6 @@ def test_a_reader_at_another_weight_shares_the_rows_wall_and_the_run_back_is_exa
 
 def test_a_row_reading_no_content_keeps_the_gate_where_its_sources_differ(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     with pytest.raises(
-        ValueError, match="'charge' reads no content and its sources read the content at differing"
-    ):
+        ValueError, match="the read weight is one for every reader"
+    ):  # the electron at the read 2: the read weight's refusal since 2026-10-24 (the owner's word); shared_clock's "'charge' reads no content and its sources read the content at differing weights" was the refusal to then, kept by name in derived.shared_clock
         weighed(tmp_path, monkeypatch, 1, 2)

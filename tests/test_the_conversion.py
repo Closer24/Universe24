@@ -103,11 +103,13 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
     ]  # the charge cuts the second list
     added["families"].append({"name": "twin", "pair": [3600, 6000], "dimension": 2, "reads": reads})
     refused("several exact lists keep the charge and the baryon", universe_of, added)
-    old = universe_with(electron={"pair": [4000, 6000]}, neutron={"senses": None})
+    old = universe_with(
+        electron={"pair": [4800, 6000]}, neutron={"senses": None}
+    )  # a Pythagorean electron with no list (2026-10-24; [4000, 6000], now refused under the sign, to then)
     assert all(not f.converts for f in universe_of(old)[1])  # no exact split: nothing converts
     refused(
-        "no square: its sine is irrational", universe_of, universe_with(electron={"pair": [4000, 6000]})
-    )
+        "no square", universe_of, universe_with(electron={"pair": [4000, 6000]})
+    )  # the sign reader's refusal since 2026-10-24 ("whose sine is irrational (den^2 - num^2 = 20000000, no square)"), the conversion's "no square: its sine is irrational" to then, both by name
     refused("no list sums to it exactly", universe_of, universe_with(neutron={"pair": [-4000, 6000]}))
     refused(
         "unknown key 'converts'", universe_of, universe_with(neutron={"senses": None, "converts": {}})
@@ -211,7 +213,7 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
 
 
 def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether():
-    """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the neutron's credit at 48 by the remainder's draw with its conversion alone into proton and electron at the senses 1 and -1, the electron's credit at 84 by the draw, each at its own close with no meeting (their one list {p, e, e} is reducible, the neutron's own beside the electron passing, asserted in the loader test), the books n 0, p 1, e 1 with no deficit, the erasing front the neutron's alone; deterministic per file."""
+    """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the electron's credit alone at the close 197 under the charge's universality and the read 1 (2026-10-24), the neutron unconverted through the 210 intervals, the books n 1, p 0, e 0 with no deficit, the erasing front the electron's; the former courses kept by name in the assertions' comments (197 to 2026-10-23; 48 and 84 before); deterministic per file."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_shipped(FOLDER / "neutron_electron_chain.json"), lines.append)
     for _ in range(
