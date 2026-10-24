@@ -46,6 +46,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
+    (
+        "meeting_board.py",
+        "closed",
+        "division_forward",
+    ): "D",  # the number read by the unit, once: the quotient the pick's (the selector, 2026-10-24)
+    (
+        "meeting_board.py",
+        "drawn_among",
+        "division_forward",
+    ): "D",  # the quotient's residue modulo the candidates' count, once
     ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
