@@ -41,8 +41,10 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     with pytest.raises(ValueError, match="unknown key 'interval'"):
         parse_world(former, files, input_digest(former))
     held = copy.deepcopy(universe)
-    held["families"][0]["held"]["booking"] = "form"
-    with pytest.raises(ValueError, match="unknown key 'booking'"):
+    held["families"][0]["held"] = {
+        "booking": "form"
+    }  # the gone declaration, refused by name before any key of it
+    with pytest.raises(ValueError, match="holds the key 'held', a declaration no file carries"):
         parse_world(world, {**files, world["universe"]: held}, input_digest(world))
 
 

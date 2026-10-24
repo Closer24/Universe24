@@ -48,13 +48,12 @@ def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
 
 
 def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
-    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread` and `amplitude`; the declared emitters' sites left 2026-10-24) on the law's pair, T the examples' own; features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at four Nodes."""
+    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared` and `amplitude`) on the law's pair, T the examples' own; features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output)."""
     # features_click
     num, den = PAIR
     gap = den * den - num * num
     square = click.squared(1, T, PAIR)
     assert square == math.isqrt((T * den) ** 2 // (4 * gap)) == 21981
-    assert click.spread(square, (3, 7)) == math.isqrt(square * 3 // 7)
     assert click.amplitude(1, T, PAIR) == math.isqrt(square)
     assert click.squared(1, T, LIGHT) == T // 2 and click.amplitude(1, T, LIGHT) == math.isqrt(T // 2)
     # features_read
@@ -69,8 +68,3 @@ def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
     q_max = 15266
     room = rooms.tension_room(PAIR, GAMMA, q_max, False)
     assert room == -((-(edge * edge * (math.isqrt(q_max * edge) + 1))) // GAMMA**3)
-    # the lay's amplitudes spread over four Nodes
-    square = click.squared(1, T, LIGHT)
-    amplitudes = [click.spread(square, (1, 4)) for _ in range(4)]
-    assert max(largest_below(sum(a * a for a in amplitudes)), 1) == math.isqrt(4 * amplitudes[0] ** 2)
-    assert amplitudes[0] == math.isqrt(square // 4)

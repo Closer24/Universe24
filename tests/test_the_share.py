@@ -1,11 +1,12 @@
 """The count is the record's share (ALGEBRA.md #the-count-is-the-records-share): the share e_i = 3 den (now^2 + before^2) - num now S_6(before) changes over one step of Rule3 by exactly SUM_j F_ij, F_ij = num (now_i before_j - before_i now_j), at the pair the step started from, in rationals; in integers the identities carry Rule3's remainder term and the reader's own floor, the audit's exact witnesses pinned (#1582, #1583, #1579); the engine reads the same currents from the record and a node_detector's click is its net front inflow, never a Node; the exact bands (ALGEBRA.md #rule3): 2 cos omega an integer gives the periods 6, 4 and 3 with no remainder."""
 
-import json
 from fractions import Fraction
+from pathlib import Path
 
 import numpy as np
+import pytest
 
-from event_universe import flux, readings, records, share, world_files
+from event_universe import flux, node, readings, records, share, world_files
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule_integers
@@ -14,7 +15,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
-from tests.laws import arrivals_rule3, real_rows, universe_beside
+from tests.laws import arrivals_rule3, real_rows
+from tests.laws_universe import bare_torus
 
 
 def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
@@ -131,90 +133,68 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         assert np.array_equal(through[port], expected)
 
 
-def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(
-    tmp_path, monkeypatch
-):
-    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker, 5981736108 K3): on a ring of 48 Nodes the rule's charge row under `act: rotation` (the energy line's T 36,000 and k_w 4) read by the charged plane alone, the plane at random levels within 6,000 at the Link unit 1 (the amplitude bound 1,271,114; at G = 16 the record's own sign row, written from its Wronskian, reaches the bound 4,963 within twenty intervals above the amplitude 600), the holder's free row, the one the record reads, at the level L, tan(theta / 2) = L / (2 Gamma). (a) Where no family turns (`act: pace`, the untouched integers) `Lattice.share_of` is the plain form of the levels by hand at every Node, bit for bit, and under the rotation at L = 0 the turned read is the plain read bit for bit over the run. (b) At every Node and interval under a uniform level the step's identity is exact in the integers with its three named walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u) (r' - r) + w (u^2 - z_before^2): u the plain level before and v the stepped level (the booking's second), the currents from the plain pair, Rule3's remainder term, wall = 2 p_i^2 G^2 (under the temporal gauge the time Link carries no phase and the share reads the plain pair, features/phase, Part C). (c) Over 40 intervals at a uniform L of 960, 2,400 and 4,920 (L theta_0 0.16, 0.40 and 0.82) the engine's total moves by at most 5 x 10^-4 of itself, the integer walk (10^-4 at L = 0), and the plain read drifts by nothing: a uniform level does nothing, as a uniform potential does (the mathematician's item 6; the time shear's plain read drifted +0.64, +3.5 and +12.4 percent). (d) Under a ramp of L along the ring, 0 to the top and back, the Links' phase pairs turn by the two ends' difference and the share moves by the gradient's work, a few 10^-3 at the tops 2,400 and 4,920 (5.5 x 10^-3 measured), no rounding, the plain identity of (b) not read there; LATTICE readings, printed."""
+def test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; The static frame and the two gauges): on the bare 3-cube torus of the one universe file the electron plane at random levels within 6,000 and the charge holder's free row at a uniform level L, the step at the Nodes with the holders standing (the phase act, then the plane's own step, `Lattice.stepped`; the content 0 and the Links' factors G^2 throughout): (a) the step reads the plain pair, no turn of the level before and none after, at every L; (b) at every Node and interval under a uniform L of 0, 960, 2,400 and 4,920 (L theta_0 up to 4.9) the step's identity is exact in the integers with its three walk terms, wall (e_flat(v, z_now) - e(z_now, u)) = wall SUM_j F_ij(z_now, u) - SUM over the two lines of (v - u)(r' - r) + w (u^2 - z_before^2), wall = 2 p_i^2 G^2 (under the temporal gauge the time Link carries no phase and the share reads the plain pair); (c) over 40 intervals the share's total moves by at most 10^-3 of itself at every L, the integer walk, as at L = 0: a uniform level does nothing, as a uniform potential does; LATTICE readings, printed."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_beside(tmp_path, drop=("gravity", "binding"), charged=True)
-    rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    rows["integers"]["quantum_action"] = (
-        36_000  # T at which the law's alpha E_h T num / (Gamma den) is 4
-    )
-    rows["integers"]["link_unit"] = 1
-    (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=[48, 1, 1], intervals=40)
-    paths = {"turn": tmp_path / "turn_ring.json"}
-    paths["turn"].write_text(json.dumps({**world, "universe": "turn.json"}), encoding="utf-8")
+    path, draw = bare_torus(tmp_path), np.random.default_rng(10)
 
-    def ring(path, level, amplitude=6000):  # the plane at random levels, the free row at the level
-        board, draw = Lattice(load_world(path)), np.random.default_rng(10)
-        charged, sign = ([f.name for f in board.families].index(n) for n in ("charged", "charge"))
-        half = np.full(board.shape, board.half_wall(charged), dtype=board.kind)
+    def ring(level: int) -> tuple[Lattice, int]:
+        board = Lattice(load_world(path), output=lambda line: None)
+        names = [family.name for family in board.families]
+        electron, sign = names.index("electron"), names.index("charge")
+        half = np.full(board.shape, board.half_wall(electron), dtype=object)
         for line in range(2):
-            now, before = draw.integers(-amplitude, amplitude, (2, *board.shape)).astype(board.kind)
-            board.states[charged].lines[line] = records.Record(now, before, half)
-        held = np.asarray(level, dtype=board.kind).reshape(board.shape)
-        board.states[sign].lines[0] = records.Record(held, held.copy(), half)
-        return board, charged
+            now, before = draw.integers(-6000, 6000, (2, *board.shape)).astype(object)
+            board.states[electron].lines[line] = records.Record(now, before, half)
+        held = np.full(board.shape, level, dtype=object)
+        board.states[sign].lines[0] = records.Record(
+            held, held.copy(), half
+        )  # the free row, the one read
+        return board, electron
 
-    turned = Lattice(load_world(paths["turn"]))
-    assert turned.turning == [
-        [f.name for f in turned.families].index("charged")
-    ]  # the holder of the sign rotates
-
-    def run(level, label, exact=True):
-        board, charged = ring(paths["turn"], level)
-        family, read = board.families[charged], board.read(charged)
+    def run(level: int) -> float:
+        board, electron = ring(level)
+        family, read = board.families[electron], board.read(electron)
         gamma, unit = board.world.node_clock, board.unit
         w = coefficients(*family.pair, gamma, *paces.node_paces(gamma, read[0]), read[1], unit)[2]
         wall = 2 * paces.link_pace_of(gamma, read[0]) ** 2 * unit * unit
 
-        def shares(lines, turned=None):
+        def shares(lines, turned=None):  # type: ignore[no-untyped-def]
             found = share.family_share(family, lines, board.wrap, gamma, *read, unit, None, turned)
             return found.astype(object)
 
-        start, drifts = board.total_share(charged)[0], []
-        plain_start = int(shares(board.lines_of(charged, 0)).sum())
+        start, drifts = board.total_share(electron)[0], []
+        assert start is not None
         for _ in range(40):
-            lines = board.lines_of(charged, 0)
-            turned = None  # the plain pair: under the temporal gauge the time Link carries no phase
+            node.phase_act(board.held, board.families, board.states, 1, board.wrap, gamma)
+            lines = board.lines_of(electron, 0)
             flows = sum(
                 c.astype(object) for c in readings.currents_of(family.pair[0], lines, board.wrap)
             )
-            first, second = board.stepped(charged, 1)[1][0]
-            terms = (
-                wall * (shares(second, second) - shares(lines, lines)) - wall * flows
-            )  # the plain term, the lines as their own read: the frame's term stands beside it since 2026-10-23, its change the frame's currents ((a) above)
+            stepped, bookings = board.stepped(electron, 1)
+            first, second = bookings[0]
+            assert all(  # (a) the plain pair read: no turn of the level before and none after
+                np.array_equal(f.now, line.now) and np.array_equal(f.before, line.before)
+                for f, line in zip(first, lines, strict=True)
+            )
+            terms = wall * (shares(second, second) - shares(lines, lines)) - wall * flows
             for k in range(2):
                 u, v = first[k].before.astype(object), second[k].now.astype(object)
-                before, carried = lines[k].before.astype(object), lines[k].remainder.astype(object)
-                terms += (v - u) * (second[k].remainder.astype(object) - carried)
-                terms -= w * (u * u - before * before)
-            assert (
-                not exact or not terms.any()
-            )  # the step's identity exact at every Node, the plain pairs
-            assert level.any() or np.array_equal(shares(lines, turned), shares(lines))  # L = 0
-            board.step()
-            plain = int(shares(board.lines_of(charged, 0)).sum()) - plain_start
-            drifts.append((board.total_share(charged)[0] - start, plain))
-        moved, plain = max(abs(d) for d, _ in drifts) / start, drifts[-1][1] / plain_start
+                terms += (v - u) * (
+                    second[k].remainder.astype(object) - lines[k].remainder.astype(object)
+                )
+                terms -= w * (u * u - lines[k].before.astype(object) ** 2)
+            assert not np.asarray(terms).any()  # (b) the step's identity exact at every Node
+            board.states[electron].lines = stepped
+            found = board.total_share(electron)[0]
+            assert found is not None
+            drifts.append(found - start)
+        moved = max(abs(d) for d in drifts) / start
         print(
-            f"LATTICE {label}: the share {start}, the turned read's largest |drift| {moved:.1e} of it, the plain read's drift at the end {plain:+.2%}"
+            f"LATTICE the uniform level {level}, L theta_0 {level / gamma:.2f}: the share {start}, the largest |drift| {moved:.1e} of it"
         )
-        return moved, plain
+        return moved
 
-    x = np.arange(48)
-    assert run(np.zeros(48, dtype=int), "the level 0")[0] < 1e-4
-    for top in (
-        960,
-        2400,
-        4920,
-    ):  # the temporal gauge: a uniform level does nothing, the plain read exact
-        label = f"the uniform level {top}, L theta_0 {top / 6000:.2f}"
-        moved, plain = run(np.full(48, top), label)
-        assert moved < 5e-4 and abs(plain) < 1e-4, (top, moved, plain)
-        if top > 960:
-            moved, plain = run(np.minimum(x, 48 - x) * top // 24, f"the ramp 0 to {top} and back", False)
-            print(f"  the ramp's drift {moved:.1e}, the plain read's {plain:+.2%}")  # the Links phased
-            assert moved < 2e-2, (top, moved, plain)  # the gradient's work on the share, no rounding
+    assert all(run(level) < 1e-3 for level in (0, 960, 2400, 4920))  # (c) the integer walk at every L

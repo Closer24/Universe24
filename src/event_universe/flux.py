@@ -116,30 +116,6 @@ def step_line(
     return Record(record.before, np.asarray(found), np.asarray(remainder))
 
 
-def step_traceless(
-    own: Sequence[Record], rule: Rule, wrap: Wrap, direction: int, faces: Sequence[Faces]
-) -> list[Record]:
-    """The three tension lines of a held row under the stress's trace stepped together (ALGEBRA.md, The stress's trace is the time line's; the reader's remedy of 2026-10-22 for the second channel): each line's Links' sum gathered as every plain line's is (`gathered_line`, the fill 0), then Rule3's one carried division on the traceless part of its own three Link terms, 3 L_a - SUM_b L_b at the wall 3 w with the mass 3 D (`core/rule3.rule3`, the line's own 2 a_now - a_before and its mass whole, the Links' isotropic part gone), so that the isotropic part of the three lines' Link terms, which Rule3's own reaches feed on a board whose paces differ from Node to Node (each end of a Link reading the difference with its own reach: the second channel, the tension lines' k = 0 mode running away on the closed board, the first full runs of 2026-10-22), goes to no line: the three lines' sum at a Node keeps Rule3's double root with no Link term, its velocity moved by the remainders' carry alone (within 3 levels per interval for ever, the carried division's telescoping), and the inverse is the same division at -1 on the same three sums; the arithmetic in Python's integers (three Link terms where the width's room counts one) and the lines back in their own kind; the remainder born at the half wall w div 2 as every line's, a sixth of the way under the wall 3 w, the carry exact all the same."""
-    gathered = [
-        gathered_line(line, rule, wrap, face, direction) for line, face in zip(own, faces, strict=True)
-    ]
-    total: Any = sum(np.asarray(flux, dtype=object) for flux, _level, _other in gathered)
-    found = []
-    for line, (flux, level, other) in zip(own, gathered, strict=True):
-        kind = line.now.dtype
-        traceless = AXES * np.asarray(flux, dtype=object) - total
-        stepped, remainder = rule3(
-            traceless, AXES * rule.mass, AXES * rule.wall, level, other, line.remainder, direction
-        )
-        stepped, remainder = np.asarray(stepped, dtype=kind), np.asarray(remainder, dtype=kind)
-        found.append(
-            Record(stepped, line.now, remainder)
-            if direction == 1
-            else Record(line.before, stepped, remainder)
-        )
-    return found
-
-
 def step_momentum(
     own: Sequence[Record],
     rule: Rule,

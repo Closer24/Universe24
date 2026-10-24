@@ -1,4 +1,4 @@
-"""The one Node (the owner's law of 2026-10-22 and his final check of 2026-10-23: every Node acts alone, on its neighbours, receiving nothing from an external file): once a world is loaded, the engine's step reads nothing outside the Nodes' own records and their six Links, no file, no key of the universe or the world, no board-wide number; the board part of the law stands in tests/test_the_acts_table.py (every division of src with its kind) and in ALGEBRA.md, Only local (the owner's locality decision of 2026-10-22). Two tests: the step with the file system and the loader's readers made unreachable and the board's readings made to raise, bit for bit the ordinary step; and the static check over src/event_universe that no module outside the loader reads a file and that the step's line (core/rule3.py, flux.py, the write's division) takes no reduction over the board."""
+"""The one Node (the owner's law of 2026-10-22 and his final check of 2026-10-23: every Node acts alone, on its neighbours, receiving nothing from an external file): once a world is loaded, the engine's step reads nothing outside the Nodes' own records and their six Links, no file, no key of the universe or the world, no board-wide number; the board part of the law stands in tests/test_the_acts_table.py (every division of src with its kind) and in ALGEBRA.md, Only local (the owner's locality decision of 2026-10-22). Two tests: the step with the file system and the loader's readers made unreachable and the board's readings made to raise, bit for bit the ordinary step; and the static check over src/event_universe that no module outside the loader reads a file and that the step's line (core/rule3.py, flux.py) takes no reduction over the board."""
 
 import ast
 import builtins
@@ -31,7 +31,6 @@ REDUCTIONS = ("sum", "mean", "max", "min", "any", "all", "dot")  # a board-wide 
 LINE = (
     "core/rule3.py",
     "flux.py",
-    "features/write/__init__.py",
 )  # the step's line, every act one Node's
 
 
@@ -99,7 +98,7 @@ def calls(tree: ast.AST) -> list[tuple[str, int, bool]]:
 
 
 def test_every_act_of_the_step_reads_the_nodes_record_and_its_links_alone():  # type: ignore[no-untyped-def]
-    """The static check: no module of src/event_universe outside loader/ and world_files.py calls a reader of a file (`open`, `json.load`, `json.loads`, `read_text`, `read_bytes`), so every number the step takes was read at the load; and the step's line, core/rule3.py (the division act), flux.py (the Links' sum gathered Link by Link, each Link's one difference) and the write's division, calls no reduction over an array (an array's `sum`, `mean`, `max`, `min`, `any`, `all`, `dot` or numpy's; Python's own `sum` over the six Links' reaches of one Node and over the three lines' Link terms at one Node is a Node's own arithmetic): every act's inputs at a Node are the Node's record and its Ports' reads (tests/test_the_acts_table.py lists every division of src with its kind; ALGEBRA.md, Only local)."""
+    """The static check: no module of src/event_universe outside loader/ and world_files.py calls a reader of a file (`open`, `json.load`, `json.loads`, `read_text`, `read_bytes`), so every number the step takes was read at the load; and the step's line, core/rule3.py (the division act), flux.py (the Links' sum gathered Link by Link, each Link's one difference), calls no reduction over an array (an array's `sum`, `mean`, `max`, `min`, `any`, `all`, `dot` or numpy's; Python's own `sum` over the six Links' reaches of one Node and over the three lines' Link terms at one Node is a Node's own arithmetic): every act's inputs at a Node are the Node's record and its Ports' reads (tests/test_the_acts_table.py lists every division of src with its kind; ALGEBRA.md, Only local)."""
     readers, reductions = [], []
     for path in sorted(SRC.rglob("*.py")):
         relative = path.relative_to(SRC).as_posix()
@@ -137,36 +136,22 @@ RETIRED = (
 
 
 def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-untyped-def]
-    """The loader's key lists, enumerated, hold content keys alone (the owner's rule of 2026-10-23: no more keys in the code, one single Node in the whole universe): a file naming a former act key meets the loader's ordinary refusal of an unknown key, the same as any misspelling; and no module under src/event_universe/loader or the generator tools/pixel_mode.py names a retired key or its words in its code (an ast check over the string constants outside the docstrings, as tests/test_the_acts_table.py walks the divisions)."""
+    """The loader's key lists, enumerated, hold content keys alone (the owner's rule of 2026-10-23: no more keys in the code, one single Node in the whole universe; his word of 2026-10-24: no declarations, a row its name, its pair and its dimension, the keys `held` and `reads` gone from the tables and refused by name, `GONE`): a file naming a former act key meets the loader's ordinary refusal of an unknown key, the same as any misspelling; and no module under src/event_universe/loader or the generator tools/pixel_mode.py names a retired key or its words in its code (an ast check over the string constants outside the docstrings, as tests/test_the_acts_table.py walks the divisions)."""
     from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
     assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
-    assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
-    assert set(universe.FAMILY_KEYS) == {"name", "pair", "dimension", "held", "reads"}
-    assert [list(s) for s in universe.SOURCES] == [
-        ["form"],
-        ["form", "tensions"],
-        ["wronskian"],
-        ["form", "tensions", "flux"],
-    ]
+    assert set(universe.FAMILY_KEYS) == {
+        "name",
+        "pair",
+        "dimension",
+    }  # `held` and `reads` gone 2026-10-24
+    assert set(universe.GONE) == {"reads", "held"}
     with pytest.raises(ValueError, match="unknown key"):
         universe.universe_of(
             {
                 "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
-                "families": [
-                    {
-                        "name": "g",
-                        "pair": [6000, 6000],
-                        "reads": {"g": 1},
-                        "held": {
-                            "sources": ["form", "tensions"],
-                            "level_weight": 1,
-                            "write_weight": 1,
-                            "act": "pace",
-                        },
-                    }
-                ],
+                "families": [{"name": "g", "pair": [5999, 6000], "act": "pace"}],
             }
         )
     named = []
@@ -193,17 +178,16 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("uniform", "world"),
     ("erasure", "world"),
     ("engine", "world"),
-    ("act", "held"),
-    ("booking", "held"),
-    ("factor", "held"),
-    ("pressure", "held"),
-    ("form", "held"),
+    ("act", "family"),
+    ("booking", "family"),
+    ("factor", "family"),
+    ("pressure", "family"),
+    ("form", "family"),
     ("converts", "family"),
 )
 STEPS = {  # the step's one list: every function of src/event_universe whose name is a step, by module (the acts table lists every division)
     "flux.py": [
         "step_line",
-        "step_traceless",
         "step_momentum",
         "step_plane",
         "step_family",
@@ -222,7 +206,7 @@ LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the 
 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
-    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, the universe's, its families' and their held rows'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
+    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, the universe's and its families'), and no former key and no gone declaration (`held`, `reads`) stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
     from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
@@ -231,9 +215,8 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
         "families": set(universe.FAMILY_KEYS),
-        "held": set(universe.HELD_KEYS),
     }
-    retired, found = set(RETIRED) | {"interval", "write_weight"}, []
+    retired, found = set(RETIRED) | {"interval", *universe.GONE}, []
     for folder in (
         "examples/events/universe24",
         "tests",
@@ -262,24 +245,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 for row in rows:
                     if key in tables and isinstance(row, dict):
                         found += [(path.name, key, k) for k in row if k not in tables[key]]
-                    for inner in ("held",):
-                        for entry in [row.get(inner)] if isinstance(row, dict) else []:
-                            for item in (
-                                entry
-                                if isinstance(entry, list)
-                                else [entry]
-                                if isinstance(entry, dict)
-                                else []
-                            ):
-                                found += [
-                                    (path.name, key, inner, k) for k in item if k not in tables[inner]
-                                ]
-                                if inner == "held":
-                                    found += [
-                                        (path.name, key, "held.write_weight")
-                                        for k in item
-                                        if k == "write_weight" and "wronskian" in item.get("sources", [])
-                                    ]
             words = {key for key in document} | {
                 k for v in document.values() if isinstance(v, dict) for k in v
             }
@@ -289,22 +254,17 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
-    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`."""
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a row's `act`, `booking`, `factor`, `pressure` and `form` (a held row's to 2026-10-24, when the key `held` itself went), a family's `converts`."""
     from event_universe.loader import universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
-    held = {"sources": ["form"], "level_weight": 1, "write_weight": 1}
-    family = {"name": "g", "pair": [6000, 6000], "reads": {"g": 1}, "held": held}
+    family = {"name": "g", "pair": [5999, 6000]}  # a holder of the volume, derived from its pair
     integers = {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
             keyed(world, "the world", loader_world.WORLD_KEYS, loader_world.WORLD_REQUIRED)
-        elif place == "held":
-            universe.universe_of(
-                {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
-            )
         else:
             universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
 

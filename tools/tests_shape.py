@@ -41,7 +41,7 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it": (
+    "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it": (
         88,
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
         "pair read as the step reads it, the step's identity exact at every Node with its three walk terms, the turned read "
@@ -56,11 +56,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         26,
         "the stress is the Links': the reading invariant under the shift of every level by one number where the former gains "
         "m Delta_a a, even under the axis's inversion, a one-Node record's parts at its two neighbours",
-    ),
-    "tests/test_the_stress_is_the_links.py::test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_back": (
-        32,
-        "the stress is the Links': the loader's tension lines at the doubled wall 2 E_s W_c, and a wrapped world with a "
-        "structured record stepped and run back bit for bit",
     ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
@@ -91,12 +86,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
         "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
     ),
-    "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
-        48,
-        "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
-        "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
-        "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
-    ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
         172,
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
@@ -111,9 +100,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
     ),
-    "tests/test_part_b_sign_fold.py::test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn": (
+    "tests/test_the_sign_holders_link_turn.py::test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn": (
         50,
-        "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
+        "the Wronskian conserved on the bare torus under the sign's Link phase in the fold form, the electron reading the charge holder",
     ),
     "tests/test_the_interval.py::test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_one_search_each_the_others_inverse": (
         46,

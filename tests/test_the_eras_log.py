@@ -4,9 +4,9 @@ import json
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file, refused
-from tests.laws_interval import GAMMA, universe_at_weight_one
+from tests.laws_universe import GAMMA, UNIVERSE
 
-WIDTH = 63  # the hardware's integers: the bare 3-cube's eight intervals stay within them (12 before the suite's bound of 2026-10-24)
+WIDTH = 92  # the one universe file's width
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -15,16 +15,11 @@ ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py"
 def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_them(
     tmp_path, monkeypatch
 ):
-    """The log on the 3-cube light cube over 8 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
+    """The log on the bare 3-cube torus of the one universe file over 8 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_at_weight_one(
-        tmp_path, 36000, WIDTH
-    )  # no former key on the row (2026-10-23); the hardware's width
-    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    universe["families"].append(
-        {"name": "light", "pair": [GAMMA, GAMMA], "reads": {"gravity": 1}, "dimension": 1}
-    )  # the seed's family: light at one quantum on every Node of the bare 3-cube torus (2026-10-24)
-    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "u.json").write_text(
+        UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8"
+    )  # the one universe file
     world = tmp_path / "eras.json"
     world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": 8, "universe": "u.json"}), "utf-8")
     out = tmp_path / "eras.eras.jsonl"
@@ -44,7 +39,10 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         assert (
             abs(row["U"] - row["U_level"]) < 0.01 and row["nodes"] == 27
         )  # the fine U beside the level's
-        assert set(row["writes"]) == {"matter", "light", "charge"} and row["writes"]["light"] > 0
+        assert (
+            set(row["writes"]) == {"matter", "light", "proton", "electron"}
+            and row["writes"]["light"] > 0
+        )  # every family of quanta sources the holder it reads, the sign holder none (the reads derived, 2026-10-24; the charge among gravity's sources under rule.json's declared reads to that day)
         assert 5 <= row["n_eff"] <= 6  # the mix of matter's 5 and light's 6
         assert len(row["tension_means"]) == 3 and len(set(row["tension_means"])) == 1
         assert all(abs(v) <= 1 for v in row["tension_velocities"])

@@ -1,13 +1,11 @@
-"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; the law's sentence on the owner's word of 2026-10-24, 05:2x UTC: the pair born at a gapless meeting is the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; `act.born_table`, `act.born_pair`, `meeting_board.child_of`): the chooser on nature's den, exact in the integers, and on the matter universe of the tests; the former clause, the lightest conjugate pair within the threshold 2 x 3 den T (two quanta at the top of the band, the law's sentence from 2026-10-23 to 2026-10-24), named beside each reading. The board's births under the sentence: tests/test_universe24_runs_its_cycle.py (11), the bare 3-cube at nature's den birthing proton pairs at its first meeting; the act's: tests/test_matter_is_born_from_light.py, the electron pair where only it fits."""
+"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_pair, meeting_board.child_of): the chooser on the one universe file, exact in the integers; the board's births stand in tests/test_universe24_runs_its_cycle.py."""
 
 import json
 
-from event_universe import conversion
 from event_universe.act import born_table
 from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import universe_of
 from tests.laws import ROOT
-from tests.laws_universe import GAMMA, GAP, declared_universe
 
 UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
 SHARE_AT_29 = (
@@ -51,24 +49,3 @@ def test_the_heaviest_pair_within_the_two_quanta_on_natures_den() -> None:
     assert (
         heaviest(2 * (SHARE_AT_29 - 2 * wall_c + wall_c), 2) == electron_pair
     )  # one quantum and the rest at 28
-
-
-def test_the_heaviest_pair_within_the_two_quanta_on_the_matter_universe() -> None:
-    """On the matter universe of the tests (T 36,000, den 1,000; the proton [0, 1000] at the top, 6,000 T a pair, the electron [800, 1000], 3,600 T a pair): two quanta at the top birth the proton pair; the standing uniform light's share at a Node in the vacuum, 108,300,000 (1.0028 W_c), with the absorber's emitted quantum at [902, 1000], 46,627,491 (0.4317 W_c), 4,303 T together, births the electron pair (tests/test_matter_is_born_from_light.py at the interval 45), the proton's 6,000 T not within it; the former clause gave the electron pair at both."""
-    universe = declared_universe()
-    universe["families"][0]["pair"] = [GAP, GAMMA]
-    families, names, action = families_of(universe)
-    light, proton, electron = names.index("light"), names.index("proton"), names.index("electron")
-    wall_c = count_wall(families[light], action)
-    assert wall_c == 108_000_000 and 2 * count_wall(families[proton], action) == 2 * wall_c
-    assert 2 * count_wall(families[electron], action) == 3_600 * action
-    assert born_table(families, light, action, 2 * wall_c, 1) == ((proton, -1), (proton, 1))
-    standing, arriving = (
-        108_300_000,
-        46_627_491,
-    )  # the share at the Node and the emitted quantum's W_c sin Omega
-    assert born_table(families, light, action, standing + arriving, 1) == ((electron, -1), (electron, 1))
-    assert born_table(families, light, action, 3_600 * action - 1, 1) is None  # below the electron pair
-    assert (
-        len(conversion.birth_of(families, light)) == 2
-    )  # the two tables, the electron's then the proton's
