@@ -156,12 +156,16 @@ def sine_of(pair: tuple[int, int]) -> float:
 
 
 def action_of(credit: Line) -> int | None:
-    """T from the click's own keys where no --action is given: the `beat` is 3 T sin omega of the `point`, so T = beat x den div (3 x leg), exact where den divides 3 T leg; None where the point or the beat is lacking or the point has no leg (a massless record at its rest)."""
+    """T from the click's own keys where no --action is given: the `beat` is the record's own unit at the point, 3 T times den sin omega (the integer sine, the leg of the pair), so T = beat div (3 x leg), exact where the pair is Pythagorean; None where the point or the beat is lacking, the leg is no integer or 0 (a massless record at its rest), or the quotient is 0."""
     pair, beat = pair_of(credit.get("point")), credit.get("beat")
     if pair is None or beat is None or abs(pair[0]) > pair[1]:
         return None
-    leg = leg_below(pair[1] * pair[1] - pair[0] * pair[0])
-    return int(beat) * pair[1] // (3 * leg) if leg else None
+    square = pair[1] * pair[1] - pair[0] * pair[0]
+    leg = leg_below(square)
+    if leg == 0 or leg * leg != square:
+        return None
+    action = int(beat) // (3 * leg)
+    return action if action > 0 else None
 
 
 def mass_of(credit: Line, birth: Line | None = None) -> dict[str, Any]:
