@@ -72,11 +72,8 @@ Python 3.14 or later is required (`pyproject.toml`, `requires-python = ">=3.14"`
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment: Python 3.14 and the package
 PYTHONPATH=src python tools/run_inputs.py --out runs/two_slits examples/events/two_slits/two_slits.json   # the run, headless: one line per world with its verdict and intervals, the output file into --out
 PYTHONPATH=src python tools/click_counts.py --world examples/events/two_slits/two_slits.json --output runs/two_slits/two_slits.output.json --expectation examples/events/two_slits/expectation.json   # the reading: the clicks per region beside the blind's row
-PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --intervals 130 --out runs/two_slits/two_slits.look.json   # the look: every family's arrays per interval, a lattice reading labelled so
-PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --blind examples/events/two_slits/expectation.json --out runs/two_slits/two_slits.look.html   # the page: the board frame by frame, the NodeDetectors' bars beside the dashed blind curve
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 PYTHONPATH=src nice -n 15 python tools/eras.py examples/events/big_bang/big_bang.json --every 100 --out examples/events/big_bang/big_bang.eras.jsonl   # the test of the law's course from the one-Node seed: the run and its log, one JSON line per interval, a lattice reading
-PYTHONPATH=src python tools/look/record.py examples/events/big_bang/big_bang.json --every 50 --out runs/big_bang/big_bang.look.json   # its look: every 50th interval, 300 frames of 125 Nodes, written to runs/, the run folder outside the tree
 PYTHONPATH=src python tools/look/eras_page.py examples/events/big_bang/big_bang.eras.jsonl --blind examples/events/big_bang/big_bang.blind.json --look runs/big_bang/big_bang.look.json --notes examples/events/big_bang/notes.md --out examples/events/big_bang/big_bang.html   # its page: the eras as the board reads them, the blind's curves dashed
 ```
 
@@ -224,8 +221,6 @@ The repository also holds an implementation for building worlds, the engine: on 
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment: Python 3.14 and the package
 PYTHONPATH=src python tools/run_inputs.py --out runs/two_slits examples/events/two_slits/two_slits.json   # the run, headless: one line per world with its verdict and intervals, the output file into --out
 PYTHONPATH=src python tools/click_counts.py --world examples/events/two_slits/two_slits.json --output runs/two_slits/two_slits.output.json --expectation examples/events/two_slits/expectation.json   # the reading: the clicks per region beside the blind's row
-PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json --intervals 130 --out runs/two_slits/two_slits.look.json   # the look: every family's arrays per interval, a lattice reading labelled so
-PYTHONPATH=src python tools/look/page.py runs/two_slits/two_slits.look.json --blind examples/events/two_slits/expectation.json --out runs/two_slits/two_slits.look.html   # the page: the board frame by frame, the NodeDetectors' bars beside the dashed blind curve
 PYTHONPATH=src python tools/back_in_time.py --intervals 40 examples/events/two_slits/two_slits.json   # the back-in-time gate: the world run forward and back, MATCH or the first difference by name
 ```
 

@@ -1,6 +1,6 @@
-"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_list, meeting_board.child_of): the chooser at the top tier's den as a literal, the sentence the law's at every den (the PeV den's own numbers stand in tests/test_the_loader.py::test_dens_circle_is_read_from_its_integers_alone, the one test that factors it, 2026-10-24), exact in the integers, over every point of den's circle since the file carries no row (2026-10-24; the fit vacuous at two whole quanta, so the two quanta at the top birth the point nearest the top, the builder's finding of #2187; the selection sentence the builder's sense runs decide): W_c = 3 den T, each point's walls 2 x 3 T s, the heaviest whose walls fit."""
+"""Matter's birth from light, the former clause by name, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, the law from 2026-10-24, 05:2x UTC, to the selector's build of 13:xx UTC, kept for act.born_list), and the selector's affordable lists (act.affordable, meeting_board.child_of): the chooser at the top tier's den as a literal, exact in the integers, over the lifts of den's primes alone since the selector (over every point of the circle before it, where the fit vacuous at two whole quanta birthed the point nearest the top): W_c = 3 den T, each lift's walls 2 x 3 T s, the heaviest whose walls fit, and every one whose walls fit."""
 
-from event_universe.act import born_table
+from event_universe.act import affordable, born_table
 from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import MASSLESS, universe_of
 
@@ -12,7 +12,7 @@ LEGS = (
 
 
 def test_the_heaviest_pair_within_the_two_quanta_at_the_top_tiers_den() -> None:
-    """At the top tier's den (T 36,000): W_c = 3 den T; the least leg's point "point 0 2 0" and the proton's "point 0 0 2" (the lightest prime's lift) carry the walls 3 T s; the chooser `born_table` births the point nearest the top at two quanta of light, the proton's point at its two walls exactly and the next lighter one unit below, the lightest at its walls exactly and nothing below them, and the proton at three quanta of its walls; at the sea's meeting, two whole quanta of light at the Node (`meeting_board.child_of`), every point fits and the top is born; no course number of a record (the former pin of the meeting's share struck 2026-10-24)."""
+    """At the top tier's den (T 36,000): W_c = 3 den T; the least leg's point "point 0 2 0" (the electron's lift), the proton's "point 0 0 2" (the lightest prime's lift) and the neutron's "point 2 0 0" (the heaviest lift, 1.99532 W_c) carry the walls 3 T s; under the former clause two quanta at the top birth the heaviest LIFT, the neutron's, and not the point nearest the top (a swap at rung 2, no candidate since the selector, 2026-10-24, 13:xx UTC), at a lift's walls exactly that lift, one unit below the proton's walls the electron's (the next lighter lift; the next lighter point, composed, before the selector), below the lightest lift's walls nothing; at the sea's meeting of two whole quanta the neutron's lift (the top before), at one quantum and the rest 1.019 W_c the electron's alone; the affordable lists there the three lifts and the one lift, lightest first, the pick the Node's draw from the quotient (meeting_board.drawn_among)."""
     integers, families = universe_of(
         {"integers": {"den": TOP, "node_clock": 1000, "quantum_action": 36_000}}
     )
@@ -22,18 +22,27 @@ def test_the_heaviest_pair_within_the_two_quanta_at_the_top_tiers_den() -> None:
     planes = sorted(
         (k for k, f in enumerate(families) if f.plane), key=lambda k: count_wall(families[k], action)
     )
-    electron, proton = planes[0], names.index("point 0 0 2")
+    electron, proton, neutron = planes[0], names.index("point 0 0 2"), names.index("point 2 0 0")
     wall_c, wall_p, wall_e = (count_wall(families[k], action) for k in (light, proton, electron))
     assert (wall_c, wall_p, wall_e) == (3 * den * action, 3 * action * LEGS[0], 3 * action * LEGS[1])
     assert names[electron] == "point 0 2 0" and len(planes) == 3**3 - 1
     pair = lambda k: ((k, -1), (k, 1))  # noqa: E731
     heaviest = lambda energy, over=1: born_table(families, light, action, energy, over)  # noqa: E731
-    top = planes[-1]
-    assert heaviest(2 * wall_c) == pair(top) and top != proton  # two quanta: the point nearest the top
-    assert heaviest(2 * wall_p) == pair(proton)  # at the proton's walls exactly, that point
-    below = planes[planes.index(proton) - 1]
-    assert heaviest(2 * wall_p - 1) == pair(below) and count_wall(families[below], action) < wall_p
+    assert heaviest(2 * wall_c) == pair(neutron) != pair(planes[-1])  # two quanta: the heaviest lift
+    assert heaviest(2 * wall_p) == pair(proton)  # at the proton's walls exactly, that lift
+    assert (
+        heaviest(2 * wall_p - 1) == pair(electron) and count_wall(families[electron], action) < wall_p
+    )  # one unit below: the next lighter lift
     assert heaviest(2 * wall_e) == pair(electron)  # at the lightest point's walls exactly
     assert heaviest(2 * wall_e - 1) is None  # below the lightest pair's walls nothing is born
     assert heaviest(2 * (3 * wall_p), 3) == pair(proton)  # three quanta at the proton's walls
-    assert heaviest(2 * (2 * wall_c), 2) == pair(top)  # the sea's meeting: two whole quanta, the top
+    assert heaviest(2 * (2 * wall_c), 2) == pair(neutron)  # the sea's meeting, two whole quanta
+    assert heaviest(2 * (wall_c + wall_c // 1_000), 2) == pair(
+        electron
+    )  # one quantum and a rest below the proton's rung: the electron's lift alone
+    assert affordable(families, light, action, 2 * (2 * wall_c), 2) == (
+        pair(electron),
+        pair(proton),
+        pair(neutron),
+    )  # the selector's candidates at two quanta, lightest first
+    assert affordable(families, light, action, 2 * (wall_c + wall_c // 1_000), 2) == (pair(electron),)

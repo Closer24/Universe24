@@ -18,7 +18,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, flux, node, registry, swap
+from event_universe import board_readings, flux, meeting_board, node, registry, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, arrival
 from event_universe.core.rule3 import Rule
@@ -158,6 +158,10 @@ def oracle_interval(board: Lattice) -> None:
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
     swap.stepped(board, kept_state)
+    board.tick += 1
+    meeting_board.closed(
+        board, kept_state
+    )  # the board's own close, the engine's act as the engine takes it (2026-10-24: the law's twin logs the close's lines, the refusals by name among them, the same way)
 
 
 def arrays(board: Lattice) -> list[tuple[str, np.ndarray]]:

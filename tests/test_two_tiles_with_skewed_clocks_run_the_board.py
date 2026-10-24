@@ -7,26 +7,19 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import records, world_files
+from event_universe import records, seed, world_files
+from event_universe.emission import emitted_lines
 from event_universe.lattice import Lattice
+from event_universe.lay import laid
 from event_universe.loader.circle import vector_of
+from event_universe.slabs import arrays_of, imposed, layers_of, rebuilt, tile_layers
 from event_universe.world_files import load_world
 from tests.laws_universe import bare_torus, small_universe
 
-INTERVALS, SIDE, BIRTH = (
-    26,
-    3,
-    24,
-)  # the births at 30 since the close reads the interval's start (the branch digit-order; 29 when it read the state after the step)  # through the births at 29 and one past (28 before them on the 5-cube to 2026-10-24; 32 shortened under the suite's bound)
-TILES = (
-    {"x": [0, 1]},
-    {"x": [2]},
-)  # the two slabs' interiors along x; the halos one layer each side
-
-
-def layers_of(interior: list[int]) -> list[int]:
-    """A tile's layers along x on the torus: the halo before, the interior, the halo after."""
-    return [(interior[0] - 1) % SIDE, *interior, (interior[-1] + 1) % SIDE]
+# the births at 30 since the close reads the interval's start (the branch digit-order; 29 when it read the state after the step); through the births at 29 and one past (28 before them on the 5-cube to 2026-10-24; 32 shortened under the suite's bound)
+INTERVALS, SIDE, BIRTH = 26, 3, 24
+# the two slabs' interiors along x; the halos one layer each side
+TILES = (range(0, 2), range(2, 3))
 
 
 def tile_world(folder: Path, layers: int) -> Path:
@@ -38,88 +31,34 @@ def tile_world(folder: Path, layers: int) -> Path:
     return path
 
 
-def taken(array: Any, layers: list[int]) -> np.ndarray:
-    """The torus's layers along x gathered into a tile's array, a copy."""
-    return np.asarray(array)[layers]
-
-
-def imposed(tile: Lattice, whole: list[Any], layers: list[int]) -> None:
-    """The tile's whole state (lines, write remainders, phase lines) set from the board's arrays over its layers, every record a new one."""
-    for state, (lines, remainders, phases) in zip(tile.states, whole, strict=True):
-        state.lines = [records.Record(*(taken(a, layers) for a in line)) for line in lines]
-        state.write_remainders = [taken(r, layers) for r in remainders]
-        state.phases = [
-            [records.Record(*(taken(a, layers) for a in line)) for line in row] for row in phases
-        ]
-
-
-def arrays_of(board: Lattice) -> list[Any]:
-    """Every family's lines, write remainders and phase lines as arrays."""
-    return [
-        (
-            [(line.now, line.before, line.remainder) for line in state.lines],
-            list(state.write_remainders),
-            [[(line.now, line.before, line.remainder) for line in row] for row in state.phases],
-        )
-        for state in board.states
+def tiles_of(folder: Path, whole: list[Any]) -> tuple[list[Lattice], list[list[int]]]:
+    """The two tiles, each a lattice over its layers (the halo before, the interior, the halo after) with every array over the Nodes imposed from the board's arrays `whole` over those layers, and the layers."""
+    layers = [tile_layers(interior, SIDE) for interior in TILES]
+    tiles = [
+        Lattice(load_world(tile_world(folder, len(rows))), output=lambda line: None) for rows in layers
     ]
+    for tile, rows in zip(tiles, layers, strict=True):
+        rebuilt(tile, layers_of(whole, 0, rows))
+    return tiles, layers
 
 
-def merged(tiles: list[Lattice], interiors: list[list[int]], shape: tuple[int, ...]) -> list[Any]:
-    """The board's arrays from the tiles' interiors (each tile's layers 1 onward up to its last halo), the halos left out."""
-    found = []
-    for index in range(len(tiles[0].states)):
-        parts = [arrays_of(tile)[index] for tile in tiles]
-
-        def put(part: int, *path: int, parts: list[Any] = parts) -> np.ndarray:
-            pieces = []
-            for tile_part, interior in zip(parts, interiors, strict=True):
-                a = tile_part[part]
-                for step in path:
-                    a = a[step]
-                pieces.append((interior, np.asarray(a)[1 : 1 + len(interior)]))
-            whole = np.zeros(shape, dtype=pieces[0][1].dtype)
-            for interior, piece in pieces:
-                whole[interior] = piece
-            return whole
-
-        lines = [tuple(put(0, k, j) for j in range(3)) for k in range(len(parts[0][0]))]
-        remainders = [put(1, k) for k in range(len(parts[0][1]))]
-        phases = [
-            [tuple(put(2, r, k, j) for j in range(3)) for k in range(len(parts[0][2][r]))]
-            for r in range(len(parts[0][2]))
-        ]
-        found.append((lines, remainders, phases))
-    return found
+def exchanged(tiles: list[Lattice], layers: list[list[int]], whole: list[Any]) -> list[Any]:
+    """The halos exchanged: the board's arrays from the tiles' interiors (each tile's layers 1 onward up to its last halo, the halos left out), every tile re-imposed from the two interiors; the board's arrays returned."""
+    for tile, interior in zip(tiles, TILES, strict=True):
+        own = layers_of(arrays_of(tile), 0, list(range(1, len(interior) + 1)))
+        whole = imposed(whole, 0, list(interior), own)
+    for tile, rows in zip(tiles, layers, strict=True):
+        rebuilt(tile, layers_of(whole, 0, rows))
+    return whole
 
 
-def differences(whole: list[Any], board: Lattice) -> list[tuple[Any, ...]]:
-    """Every array of the tiles' merged state that differs from the board's, named by family, line and part."""
-    found: list[tuple[Any, ...]] = []
-    for family, ((lines, remainders, phases), state) in zip(
-        board.families, zip(whole, board.states, strict=True), strict=True
-    ):
-        kept_lines = [(line.now, line.before, line.remainder) for line in state.lines]
-        kept_phases = [[(line.now, line.before, line.remainder) for line in row] for row in state.phases]
-        for k, (line, kept) in enumerate(zip(lines, kept_lines, strict=True)):
-            found += [
-                (family.name, "line", k, part)
-                for part in range(3)
-                if not np.array_equal(line[part], kept[part])
-            ]
-        found += [
-            (family.name, "write remainder", k)
-            for k, (a, b) in enumerate(zip(remainders, state.write_remainders, strict=True))
-            if not np.array_equal(a, b)
-        ]
-        for r, (row, kept_row) in enumerate(zip(phases, kept_phases, strict=True)):
-            for k, (line, kept) in enumerate(zip(row, kept_row, strict=True)):
-                found += [
-                    (family.name, "phase row", r, "line", k, part)
-                    for part in range(3)
-                    if not np.array_equal(line[part], kept[part])
-                ]
-    return found
+def differences(whole: list[Any], board: Lattice) -> list[int]:
+    """Every array of the tiles' merged state that differs from the board's, by its index in `slabs.arrays_of`'s order (every line's three arrays, the write remainders, the phase lines, the time count, the closes)."""
+    return [
+        k
+        for k, (a, b) in enumerate(zip(whole, arrays_of(board), strict=True))
+        if not np.array_equal(a, b)
+    ]
 
 
 def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_births(
@@ -129,37 +68,59 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, object]] = []
     board = Lattice(load_world(bare_torus(tmp_path, SIDE, INTERVALS)), output=lines.append)
-    interiors = [tile["x"] for tile in TILES]
-    layers = [layers_of(interior) for interior in interiors]
-    tiles = [
-        Lattice(load_world(tile_world(tmp_path, len(rows))), output=lambda line: None) for rows in layers
-    ]
-    whole = arrays_of(board)
-    for tile, rows in zip(tiles, layers, strict=True):
-        imposed(tile, whole, rows)
+    tiles, layers = tiles_of(tmp_path, arrays_of(board))
     skew = 0
     for interval in range(1, INTERVALS + 1):
         board.step()
-        first, second = (
-            tiles if interval % 2 else tiles[::-1]
-        )  # either order: each from its halos at the tick before
+        # either order: each from its halos at the tick before
+        first, second = tiles if interval % 2 else tiles[::-1]
         first.step()
         skew = max(skew, first.interval - second.interval)
         second.step()
-        whole = merged(
-            tiles, interiors, board.shape
-        )  # the halos exchanged: each tile re-imposed from the two interiors
-        for tile, rows in zip(tiles, layers, strict=True):
-            imposed(tile, whole, rows)
-        assert differences(whole, board) == [], interval
+        assert differences(exchanged(tiles, layers, arrays_of(board)), board) == [], interval
     born = [line for line in lines if line["event"] == "birth"]
-    assert (
-        born and born[0]["interval"] <= BIRTH
-    )  # the hole seed's first birth by the draw at the hole's side (2026-10-24; every Node alike at 24 under the uniform sea to that day)
-    assert all(
-        vector_of(c) is not None for line in born for c in line["children"]
-    )  # the points the fit picks, named by their vectors
-    assert all(
-        sum(line["senses"]) == 0 for line in born
-    )  # one record per child, the senses summing to 0 (2026-10-24)
+    # the hole seed's first birth by the draw at the hole's side (2026-10-24; every Node alike at 24 under the uniform sea to that day)
+    assert born and born[0]["interval"] <= BIRTH
+    # the points the fit picks, named by their vectors
+    assert all(vector_of(c) is not None for line in born for c in line["children"])
+    # one record per child, the senses summing to 0 (2026-10-24)
+    assert all(sum(line["senses"]) == 0 for line in born)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
+
+
+def sea_plus_one_or_hole(hole: bool) -> Any:
+    """The seed hand's S1 (the sea plus one quantum at the origin) or S2 (the sea with the origin empty), a test's seed laid as the law's own is."""
+
+    def laid_seed(board: Lattice, index: int) -> None:
+        family, drift = board.families[index], seed.drift_of(board.world.quantum_action)
+        first, zeros = records.record_slice(family, 0).start, records.zeros(board.shape, board.kind)
+        sea = records.full(board.shape, drift, board.kind)
+        if hole:
+            sea[0, 0, 0] = 0
+        for line in emitted_lines(family):
+            laid(board, index, first + line, (sea, zeros), None, None)
+        if not hole:
+            mask = board.mask(((0, 0, 0),))
+            for line in emitted_lines(family):
+                laid(board, index, first + line, (np.where(mask, drift, 0), zeros), None, None, mask)
+
+    return laid_seed
+
+
+@pytest.mark.parametrize("hole", [False, True])
+def test_two_tiles_hold_a_structured_seed_through_its_drawn_whethers(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, hole: bool
+) -> None:
+    """S1 and S2 through the one-Link tiles with skewed clocks over 20 intervals, through the drawn whethers and the births at the lit Nodes: equal bit for bit (the close reads the interval's start and every face before any write; the seed hand's finding of 2026-10-24 parted them at the first drawn whether)."""
+    monkeypatch.setattr(seed, "uniform_seed", sea_plus_one_or_hole(hole))
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    lines: list[dict[str, Any]] = []
+    board = Lattice(load_world(tile_world(tmp_path, SIDE)), output=lines.append)
+    tiles, layers = tiles_of(tmp_path, arrays_of(board))
+    for interval in range(1, 21):
+        board.step()
+        first, second = tiles if interval % 2 else tiles[::-1]
+        first.step()
+        second.step()
+        assert differences(exchanged(tiles, layers, arrays_of(board)), board) == [], interval
+    assert any(line["event"] == "birth" for line in lines)

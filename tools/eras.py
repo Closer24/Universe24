@@ -1,4 +1,4 @@
-"""The eras' log of a world under the volume form, a host tool (docs/ENGINE.md section 5's readers; DESIGN section 2 (i); ALGEBRA.md, The board's interval is no observable, The mean's velocity is the content's, The stress's trace is the time line's): the world is loaded as tools/run_inputs.py loads it and stepped by the engine's own step, and after every interval the board's own readings are appended as one JSON line to `<world>.eras.jsonl` (`--out`), the file complete at any refusal, so that the log itself is the checkpoint and a refusal's interval is the record (the state is not saved): per held row of the content the eras as the board reads them (`board_readings.eras`: the mean level and its velocity with the remainders, each sourcing family's write summed over the Nodes, the mix's exponent, the trace's own residual, the three tension lines' means and their velocities, the seed Node's level against the other Nodes') and the uniform mode (`board_readings.uniform_mode`), per family of quanta its largest level, its quanta over the board and, where the world lays a whole packet, its share within one Link of the seed Node by the engine's own `Lattice.quanta`, its rulers and its Links' factors at the seed Node and the far Node (the well's depth beside, the time line at the two Nodes); the floats are the host's from the integers (U the fine reading (1 / (d + 1)) ln(SUM X / (N Gamma)) from the volume's sums where the row carries its volume, with `U_level` the level reading's own beside it, and the level's U otherwise; the velocity in levels per interval from U's difference, H = v / Gamma, n_eff, the residual R_nat from that velocity, R_vol from the sums over three intervals, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void))); a line every `--every` intervals on the standard output with the elapsed seconds, and at the end the spans' readings, the estimator of q on the integers' staircase (the symmetry hand's): over spans of `--span` intervals the slope of 1 / v gives n_eff = 2 Gamma d(1 / v) / dt, q_board = n_eff / 2 - 1 and q_p = q_board - 1, read where the velocity is above 0 at both ends of the span. With `--clicks <world>.clicks.jsonl` the NodeDetectors' lines of the same run are kept beside the eras log (the clicks, `reports.click`, the net current of a family into a declared region through its front Ports, the density readings, `reports.density`, and where an instrument body draws, its credit lines, the click written on the lattice, with the lay lines of that write), and after every interval one `detector` line per NodeDetector with the time line's level X at its Nodes and every family of quanta's share and quanta at its Nodes (the engine's own `Lattice.share_of` and `Lattice.quanta`, readings and no act): what the detector sees of what reaches it, history kept and never run back (ALGEBRA.md, The one Node: the click is the one act that makes a cycle new). With `--nodes <world>.nodes.jsonl` the Nodes' own readings are kept per interval for the torus view (tools/look/torus_page.py): X at every Node, the Link's length e^U from it, the Nodes the fifth act turned this interval and every Node's direction of time, and every family's quanta per Node (`node_lines`). The tool reads the board and sums over it (a reading, no act: the owner's locality decision of 2026-10-22) and computes nothing of the law; the page tools/look/eras_page.py draws the log.
+"""The eras' log of a world under the volume form, a host tool (docs/ENGINE.md section 5's readers; DESIGN section 2 (i); ALGEBRA.md, The board's interval is no observable, The mean's velocity is the content's, The stress's trace is the time line's): the world is loaded as tools/run_inputs.py loads it and stepped by the engine's own step, and after every interval the board's own readings are appended as one JSON line to `<world>.eras.jsonl` (`--out`), the file complete at any refusal, so that the log itself is the checkpoint and a refusal's interval is the record (the state is not saved): per held row of the content the eras as the board reads them (`board_readings.eras`: the mean level and its velocity with the remainders, each sourcing family's write summed over the Nodes, the mix's exponent, the trace's own residual, the three tension lines' means and their velocities, the seed Node's level against the other Nodes') and the uniform mode (`board_readings.uniform_mode`), per family of quanta its largest level, its quanta over the board and, where the world lays a whole packet, its share within one Link of the seed Node by the engine's own `Lattice.quanta`, its rulers and its Links' factors at the seed Node and the far Node (the well's depth beside, the time line at the two Nodes); the floats are the host's from the integers (U the fine reading (1 / (d + 1)) ln(SUM X / (N Gamma)) from the volume's sums where the row carries its volume, with `U_level` the level reading's own beside it, and the level's U otherwise; the velocity in levels per interval from U's difference, H = v / Gamma, n_eff, the residual R_nat from that velocity, R_vol from the sums over three intervals, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void))); a line every `--every` intervals on the standard output with the elapsed seconds, and at the end the spans' readings, the estimator of q on the integers' staircase (the symmetry hand's): over spans of `--span` intervals the slope of 1 / v gives n_eff = 2 Gamma d(1 / v) / dt, q_board = n_eff / 2 - 1 and q_p = q_board - 1, read where the velocity is above 0 at both ends of the span. With `--clicks <world>.clicks.jsonl` the NodeDetectors' lines of the same run are kept beside the eras log (the clicks, `reports.click`, the net current of a family into a declared region through its front Ports, the density readings, `reports.density`, and where an instrument body draws, its credit lines, the click written on the lattice, with the lay lines of that write), and after every interval one `detector` line per NodeDetector with the time line's level X at its Nodes and every family of quanta's share and quanta at its Nodes (the engine's own `Lattice.share_of` and `Lattice.quanta`, readings and no act): what the detector sees of what reaches it, history kept and never run back (ALGEBRA.md, The one Node: the click is the one act that makes a cycle new). With `--nodes <world>.nodes.jsonl` the Nodes' own readings are kept per interval for the torus view (tools/look/torus_page.py): X at every Node, the Link's length e^U from it, the Nodes the fifth act turned this interval and every Node's direction of time, and every family's quanta per Node (`node_lines`). The tool reads the board and sums over it (a reading, no act: the owner's locality decision of 2026-10-22) and computes nothing of the law; the page tools/look/eras_page.py draws the log. `at_node`, one integer of a reading at a Node, struck 2026-10-24, dead code: the owner's word, the code lean: no caller in the tree and no run reached it.
 
 Run with PYTHONPATH set to the checkout's src, at nice 15 for a long run:
 
@@ -21,6 +21,7 @@ from event_universe.features import volume
 from event_universe.lattice import Lattice
 from event_universe.loader import circle
 from event_universe.loader.circle import lightest_point
+from event_universe.slabs import Slabs
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -34,11 +35,6 @@ def kept_lines(board: Lattice) -> dict[records.Sourcing, list[records.Record]]:
         ]
         for source in sources_of(board.families, board.states, board.order)
     }
-
-
-def at_node(array: Any, where: Node, shape: tuple[int, int, int]) -> int:
-    """One integer of a reading at a Node, a scalar reading spread over the board first."""
-    return int((np.asarray(array, dtype=object) + np.zeros(shape, dtype=object))[where])
 
 
 def row_line(board: Lattice, index: int, read: board_readings.Eras) -> dict[str, Any]:
@@ -272,8 +268,9 @@ def run(
     intervals: int | None,
     clicks: Path | None = None,
     nodes: Path | None = None,
+    slabs: bool = False,
 ) -> list[dict[str, Any]]:
-    """The world stepped and logged: one JSON line per interval appended to `out` as it goes (the file begun with the world's own numbers), a refusal written as the last line with its reason and the interval; the lines returned; with `clicks`, the NodeDetectors' click and density lines and the `detector` readings appended to that file as they come, history kept."""
+    """The world stepped and logged: one JSON line per interval appended to `out` as it goes (the file begun with the world's own numbers), a refusal written as the last line with its reason and the interval; the lines returned; with `clicks`, the NodeDetectors' click and density lines and the `detector` readings appended to that file as they come, history kept; with `slabs`, the board stepped in slabs by the machine's cores, one process per slab with one-Link halos (slabs.py), the same integers and the same logs byte for byte as the single process, which steps the board otherwise (on the shipped 5-cube the single process is the faster: the tiles cost nearly the board each and the halos' Python integers are pickled, the architect's rank 9)."""
     world = load_world(path)
     kept_clicks = clicks.open("w", encoding="utf-8") if clicks is not None else None
 
@@ -288,6 +285,9 @@ def run(
             kept_clicks.write(json.dumps(line) + "\n")
 
     board = Lattice(world, output=keep)
+    stepper = Slabs(
+        board, None if slabs else 1
+    )  # the board stepped in slabs by the machine's cores where asked, one process per slab with one-Link halos (slabs.py), the same integers and the same lines as the single process, the one slab, which steps it otherwise
     kept_nodes = nodes.open("w", encoding="utf-8") if nodes is not None else None
     directions = [1] * int(np.prod(board.shape))
     lines: list[dict[str, Any]] = []
@@ -299,7 +299,7 @@ def run(
             time_line = board.states[board.held[0]].lines[0] if board.held else None
             before = (whole(time_line.now), whole(time_line.before)) if time_line is not None else None
             try:
-                board.step()
+                stepper.advanced()
             except (ValueError, RuntimeError) as refusal:
                 line = {
                     "interval": board.interval,
@@ -329,6 +329,7 @@ def run(
                         {"interval": board.interval, "seconds": round(line["seconds"], 1), "U_v": rows}
                     )
                 )
+    stepper.close()
     if kept_clicks is not None:
         kept_clicks.close()
     if kept_nodes is not None:
@@ -364,11 +365,16 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the NodeDetectors' lines of the same run kept beside the log (<world>.clicks.jsonl)",
     )
+    parser.add_argument(
+        "--slabs",
+        action="store_true",
+        help="the board stepped in slabs by the machine's cores, one process per slab (slabs.py): the same logs",
+    )
     args = parser.parse_args(argv)
     if args.every < 1:
         raise ValueError(f"--every takes an integer from 1, got {args.every}")
     out = args.out if args.out is not None else args.world.with_suffix(".eras.jsonl")
-    lines = run(args.world, out, args.every, args.intervals, args.clicks, args.nodes)
+    lines = run(args.world, out, args.every, args.intervals, args.clicks, args.nodes, args.slabs)
     gamma = load_world(args.world).node_clock
     span = args.span if args.span is not None else args.every
     for family in sorted({name for line in lines for name in line.get("rows", {})}):

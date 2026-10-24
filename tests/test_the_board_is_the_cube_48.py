@@ -187,6 +187,14 @@ def board_of(tmp_path, monkeypatch, side, intervals, seeder):  # type: ignore[no
     return Lattice(load_world(tmp_path / "w.json"), output=lines.append), lines
 
 
+def test_two_signed_permutations_generate_the_48_and_every_element_is_one() -> None:
+    """The closure of the two found generators is the 48 signed permutation matrices of the three axes, each orthogonal with the determinant 1 or -1, 24 of each."""
+    group = cube_48()
+    assert len(group) == 48 and len({m.tobytes() for m in group}) == 48
+    assert all(np.array_equal(m @ m.T, np.eye(AXES, dtype=int)) for m in group)
+    assert sorted(int(round(np.linalg.det(m))) for m in group) == [-1] * 24 + [1] * 24
+
+
 @pytest.mark.parametrize(
     ("side", "seeder", "intervals"), [(3, None, 20), (3, sea_plus_one((0, 0, 0)), 8), (5, None, 6)]
 )
@@ -206,7 +214,9 @@ def test_a_seed_invariant_under_the_48_runs_invariant_under_the_48(
             if line.get("event") == "birth" and line["interval"] == board.interval
         ]
         assert broken == [], (board.interval, len(broken), births)
-    assert any(line.get("event") == "birth" for line in lines)
+    assert any(
+        line.get("event") in ("birth", "refused") for line in lines
+    )  # a close reached: born, or refused by the take
 
 
 @pytest.mark.parametrize(
@@ -233,4 +243,6 @@ def test_a_seed_transformed_before_the_run_gives_the_transformed_run(tmp_path, m
         ]
         equal = same(carried(board, m), plain(other))
         assert equal, (board.interval, births)
-    assert any(line.get("event") == "birth" for line in lines)
+    assert any(
+        line.get("event") in ("birth", "refused") for line in lines
+    )  # a close reached: born, or refused by the take

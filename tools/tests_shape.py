@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_point_rows_are_born_at_the_first_birth.py::test_the_lean_board_equals_the_board_with_every_point_standing_through_the_births": (
+        70,
+        "the point rows born at the first birth (2026-10-24, the field view (c)): the lean board against its twin with every point standing from the start, "
+        "equal bit for bit on every shared label and every output line over 24 intervals of the hole seed through its births, the step back through the first birth",
+    ),
     "tests/test_the_clicks_reader.py::test_a_log_with_the_click_views_keys_gives_velocity_verdict_dilation_rest_and_product_by_hand": (
         89,
         "the same reader on a log with the click's view's keys, the momentum the frame's running cosine with the Link current's sign (2026-10-24): "
@@ -82,6 +87,16 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_click_readings.py::bare_board": (
         7,
         "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
+        16,
+        "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "
+        "selects among the conjugate pairs, birth_of gives those, exact, kept, lightest first; lists_of the general enumeration with the test's bound",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_a_list_of_four_children_lays_four_records_through_the_same_path": (
+        20,
+        "the same sentence's path for N: a four-child list handed to born_items lays two records of each family at the list's senses, "
+        "each record's Wronskian its child's sense, the holder's four reader rows written after one interval",
     ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense": (
         30,
@@ -134,17 +149,70 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube": (
-        17,
-        "the board's own hole the Node's own level before, the drift stopped (the Boss's ruling of 2026-10-24 on the bound-click hand's measurement): conservation at the click on the 3-cube, nothing made at the Links, at most one hole per close, the light never spent",
+    "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_under_the_gapped_holder_runs_the_same_by_five_one_layer_slabs": (
+        9,
+        "the slabs' gate under the gapped holder (2026-10-24, the gravity-top hand's finding, the re-imposed halo): the 5-cube hole seed with the volume's pair gapped through loader/universe.volume_pair, 12 intervals, one process against five one-layer slabs, every array, line and swap count equal",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin": (
-        17,
-        "the hole's form is the seed's: stopped_at at the seed's origin (0, 0), on the uniform sea the level before twice, the seed's kink exactly",
+    "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_hole_seed_runs_the_same_by_two_and_by_five_slabs": (
+        7,
+        "the slabs' gate (slabs.py, the board stepped in slabs by processes with one-Link halos, 2026-10-24): the 5-cube hole seed "
+        "12 intervals through its births by two and by five slabs, every array, every line in its order and the swaps equal to the single process bit for bit",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_a_tube_cut_across_z_runs_the_same_by_three_slabs": (
+        5,
+        "the slabs' gate on a [3, 3, 9] tube by three slabs across z: the three slabs' lines interleaved into the board's x-major order",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_run_back_from_the_board_the_slabs_stepped_is_exact": (
+        13,
+        "the slabs' gate on the run back: the 3-cube through three slabs and back by the board's own inverse, every snapshot met again",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_slabs_count_is_the_machines_and_the_boards_and_no_files": (
+        12,
+        "the slabs' count the machine's cores and the board's longest axis, no key of any file: slabs_of by hand, the world file's three keys",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::board_of": (
+        8,
+        "the helper of the slabs' gate: the small universe on a bare torus with every output line kept",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::run": (
+        12,
+        "the helper of the slabs' gate: a run by so many slabs with every array after every interval, the lines and the swaps",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::parting": (
+        12,
+        "the helper of the slabs' gate: the first parting from the single process named by interval and arrays, by line or by the swaps",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube": (
+        20,
+        "the hole's clause of 2026-10-24 (the exact take, the builder's derivation): nothing made at any close of the 3-cube, the fall the births' taken where the born Nodes stand apart, each the walls plus an excess below the last level's step, a refused close leaving the light standing",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_the_5_cube_keeps_its_light_above_zero_and_makes_nothing_under_the_takes": (
+        11,
+        "the exact take on the 5-cube: the light above zero, nothing made at any close, births at several closes, no close holing every Node",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands": (
+        16,
+        "the refusal by name where the full stop would take less than the children's walls, on the chain of three Nodes at den 1,021: the cause, the two numbers, nothing born, the light standing",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_every_take_is_read_before_any_hole_is_written": (
+        20,
+        "every face before any write: within every close the frame's shares are read before the first hole is written",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_nothing_is_booked_without_its_lay_and_the_first_births_charge_is_the_books": (
+        15,
+        "the Boss's default of 2026-10-24, a close whose children's lay would be refused births nothing: no deficit, the books the children laid, the first birth's charge the books, the lay refusals naming a share above the unit",
     ),
     "tests/test_the_hole_stops_the_drift.py::test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit": (
-        30,
-        "the Born side on the hole seed: the first meeting met by the draw at one whole quantum with a remainder, the weights the remainder against the unit, the credit and birth lines at that Node",
+        33,
+        "the first draw by the digits met and not refused: one whole quantum and a rest, the weights the rest against the unit less it, the credit and the birth lines at that Node",
+    ),
+    "tests/test_the_hole_stops_the_drift.py::test_the_run_back_is_exact_through_the_closes_that_hole": (
+        14,
+        "the run back through the closes that hole, every state the forward run's bit for bit",
+    ),
+    "tests/test_the_board_is_the_cube_48.py::test_two_signed_permutations_generate_the_48_and_every_element_is_one": (
+        6,
+        "the Boss's covariance test of 2026-10-24 (the board is the cube's 48): the 48 generated from two signed permutations by the closure, no table",
     ),
     "tests/test_the_board_is_the_cube_48.py::test_a_seed_invariant_under_the_48_runs_invariant_under_the_48": (
         17,
@@ -154,9 +222,55 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         20,
         "the covariance test (b): the sea plus one at (1, 0, 0) carried by a rotation and by a reflection before the run gives the carried run, bit for bit; fails by name on the ordered read at 4",
     ),
+    "tests/test_the_reads_refusal_is_a_logged_line.py::test_a_refused_read_at_the_board_is_a_logged_line_and_the_run_goes_on": (
+        20,
+        "a refusal by name is a logged line, never a crash (2026-10-24, the gravity-top hand's finding): the 3-cube hole seed under the gapped holder of the volume through loader/universe.volume_pair runs 20 intervals with the read's vacuum refusal logged at the origin and births elsewhere",
+    ),
+    "tests/test_a_click_does_what_it_should.py::test_one_close_at_one_node_writes_the_take_there_and_nothing_elsewhere": (
+        80,
+        "the owner's standing test of the click (2026-10-24, 16:4x UTC, his word: a click does what it is supposed to, to the Nodes and to the Node): one close at one Node on the chain of three and on the 3-cube, the Node changed by exactly the take, every other Node unchanged, the children at the two senses with their Wronskians summing to 0, the log's take keys and the credit's support and windows, the draw from the Node and its six neighbours alone divided by the unit once, the run back exact; it stays whatever the tests hand prunes",
+    ),
     "tests/test_the_click_reads_one_link.py::test_the_link_lattice_is_the_neighbours_own_coarsened_and_no_port_order_enters_the_number": (
         34,
         "the one-Link read's unit test (2026-10-24, the builder's sentence): at the first draw of the hole-seed 3-cube each Link lattice F_ij a multiple of the neighbour's own F_j with the coarse index the floor of the fine one over the ratio, the frame's neighbours reversed and rolled reading the same number, a Node beyond no Port refused by name",
+    ),
+    "tests/test_the_readers_tables.py::test_the_density_the_ledger_and_the_births_read_the_epochs_the_erasure_and_the_senses_by_hand": (
+        148,
+        "the reader's seven tables (2026-10-24, the owner's word that all the epochs, the second bang, the attraction, relativity and the Links' lengthening show in the clicks; the architect's list): on a log of a few lines by hand with the eras lines beside it by hand, "
+        "the clicks per interval and the epochs bang, rise, top, fall, return with the eras log's bounds and the density's own runs, the first rise alone, the ledger's two cycles with the holder's quantum erased across the return and the tracks that cross it, the births per cycle per point per sense, the senses summing to 0, the lists equal to the legend's counts",
+    ),
+    "tests/test_the_readers_tables.py::test_the_tracks_the_distance_the_dilation_and_the_spacing_read_the_bodies_and_light_by_hand": (
+        97,
+        "the same tables on the bodies and light: the tracks per identity with the where per close, the distance A to B falling from 2 to 1 Links at the slope -1 / 8 Links per interval and B to C standing at 1 Link across the torus's edge by name, "
+        "the dilation at every where against the nodes log's pace within one interval at seven wheres and off by three at one, light's spacing against e^U longer where e^U is smaller on both sides of the return",
+    ),
+    "tests/test_the_readers_tables.py::test_the_back_in_time_window_runs_forward_to_k_with_no_snapshot_then_the_window_forward_and_back": (
+        14,
+        "the window of tools/back_in_time.py (--from K, 2026-10-24): the bare 3-cube forward to 4 with no snapshot, then 4 forward and 4 back, MATCH at the window's first interval with the report's `from`, the plain run's report as before",
+    ),
+    "tests/test_the_readers_tables.py::test_the_seven_tables_read_the_committed_record_through_the_command_line": (
+        25,
+        "the smoke check: the reader's command line with the eras and nodes logs beside the committed record, 26 epochs over 7 cycles, the ledger's 7 rows with nothing erased, 125 proton lists, the tracks and the clock tables unreadable with their keys named",
+    ),
+    "tests/test_the_readers_tables.py::hand_log": (
+        39,
+        "the helper of the tables' tests: the hand log written to a file, light's credits at eight closes over four Nodes, the body A moving one Link toward the bound body B, the body C bound a Link from B across the torus's edge, three births and two lays",
+    ),
+    "tests/test_the_readers_tables.py::era": (
+        19,
+        "the helper: one eras line by hand, the volume rising to 180 at 8, falling to 110 at 15 and rising again, one fire at the top, the quanta per family stepping at the births, the holder's one quantum spent at the return",
+    ),
+    "tests/test_the_readers_tables.py::birth": (
+        11,
+        "the helper: one birth line by hand with its children's records and points",
+    ),
+    "tests/test_the_readers_tables.py::credit": (
+        7,
+        "the helper: one credit line by hand with the click's view's eight keys, the board's own for light and `body n` for a body",
+    ),
+    "tests/test_the_readers_tables.py::node_line": (
+        6,
+        "the helper: one nodes line by hand, the Link's length 1 everywhere but at three Nodes",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")
