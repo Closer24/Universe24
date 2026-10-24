@@ -145,14 +145,12 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         "den",
         "node_clock",
         "quantum_action",
-        "width",
-        "link_unit",
-    }  # no family row: `families` with `name`, `pair` and `dimension` gone 2026-10-24, `held` and `reads` before them
+    }  # no family row; the width derived and the Link unit the engine's (2026-10-24, `GONE_INTEGERS`): `families` with `name`, `pair` and `dimension` gone 2026-10-24, `held` and `reads` before them
     assert set(universe.GONE) == {"families"}
     with pytest.raises(ValueError, match="holds the key 'families', a declaration no file carries"):
         universe.universe_of(
             {
-                "integers": {"den": 6000, "node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+                "integers": {"den": 6000, "node_clock": 6000, "quantum_action": 32768},
                 "families": [{"name": "g", "pair": [5999, 6000], "act": "pace"}],
             }
         )
@@ -260,7 +258,7 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
-    integers = {"den": 6000, "node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
+    integers = {"den": 6000, "node_clock": 6000, "quantum_action": 32768}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}

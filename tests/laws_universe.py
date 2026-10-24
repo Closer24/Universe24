@@ -18,9 +18,7 @@ SMALL = {  # the tests' small universe for the runs (2026-10-24, the family-less
         "den": 1021,
         "node_clock": GAMMA,
         "quantum_action": 36000,
-        "width": 92,
-        "link_unit": 16,
-    }
+    }  # the width derived and G the engine's, 2026-10-24
 }
 
 

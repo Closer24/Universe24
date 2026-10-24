@@ -21,9 +21,7 @@ UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,76
         "den": 6000,
         "node_clock": 6000,
         "quantum_action": 32768,
-        "width": 63,
-        "link_unit": 16,
-    },
+    },  # the width derived and G the engine's, 2026-10-24
 }
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 

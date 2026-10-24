@@ -229,6 +229,23 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "held_room",
         "division_forward",
     ): "D",  # (largest - wall) div room, once per line
+    (
+        "loader/rooms.py",
+        "width_of",
+        "division_forward",
+    ): "D",  # halving the width's search, discarded (the width derived, 2026-10-24)
+    # the lightest point of the circle (2026-10-24): the loader's number theory on den, every division the act
+    ("loader/circle.py", "primes_below", "division_forward"): "D",  # trial division's remainders
+    ("loader/circle.py", "is_prime", "division_forward"): "D",  # n - 1 = d 2^s, the remainders by 2
+    ("loader/circle.py", "split", "gcd"): "D",  # Pollard's rho, Euclid on |x - y| and n
+    ("loader/circle.py", "factors", "division_forward"): "D",  # 2 divided out, the cofactor of a split
+    (
+        "loader/circle.py",
+        "two_squares",
+        "division_forward",
+    ): "D",  # (p - 1) div 4 and Euclid's remainders
+    ("loader/circle.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
+    ("loader/circle.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (

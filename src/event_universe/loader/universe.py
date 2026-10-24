@@ -1,4 +1,4 @@
-"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma, the quantum's action T, and the width and the Link unit until the constants hand strikes them (`INTEGER_KEYS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign and the holder of the volume, both at the massless point (den, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a plane row named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`; every point a plane until the kind sentence lands, the engine's stand-in and no sentence of the law), then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
+"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma and the quantum's action T (`INTEGER_KEYS`; the width derived, `loader/rooms.width_of`, and the Link unit the engine's, `core/ports.LINK_UNIT`, the two keys refused by name, `GONE_INTEGERS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign and the holder of the volume, both at the massless point (den, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a plane row named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`; every point a plane until the kind sentence lands, the engine's stand-in and no sentence of the law), then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
 
 from __future__ import annotations
 
@@ -12,7 +12,22 @@ from event_universe.loader.derived import PLANE, FamilyRule, Row
 from event_universe.loader.keys import integer, keyed
 
 UNIVERSE_KEYS = ("integers",)
-INTEGER_KEYS = ("den", "node_clock", "quantum_action", "width", "link_unit")  # den, Gamma, T; the width and the Link unit until the constants hand strikes them
+INTEGER_KEYS = ("den", "node_clock", "quantum_action")  # den, Gamma, T: the universe's three integers
+GONE_INTEGERS = {  # the file's integers to 2026-10-24 that are the engine's and not the universe's (the owner's word of that day: only the universe's constants; the old kept by name)
+    "width": (
+        "the width is derived (2026-10-24): the least width at which the amplitude bound holds the volume's level "
+        "at the deepest content the guard admits, the Link's last pace (loader/rooms.width_of; ALGEBRA.md #the-bound, "
+        "The width is derived; the key `width`, the integers' bits, the former declaration, 92 in the one universe "
+        "file, kept by name)"
+    ),
+    "link_unit": (
+        "the Link unit G is the engine's (2026-10-24): the unit in which each Link's factor is one integer, 2^4 = 16, "
+        "a module constant beside the six Ports (core/ports.LINK_UNIT; ALGEBRA.md, The engine's derivation ledger, "
+        "row 1, the tension resolved to Gamma / (2 G^2)), which no reading of the run carries but the clicks' "
+        "remainder integer 3 den Gamma^2 G^2; the key `link_unit`, a power of two declared 16 in every file, the "
+        "former declaration, kept by name"
+    ),
+}
 MASSLESS, SIGN, VOLUME = "massless", "sign", "volume"  # the three rows every den carries, named by what they are
 GONE = {  # the file's gone keys and the derivation that replaced each (the owner's word of 2026-10-24; the old kept by name)
     "families": (
@@ -87,15 +102,16 @@ def resolved(integers: dict[str, int], rows: list[Row]) -> tuple[FamilyRule, ...
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its one object of integers (`INTEGER_KEYS`, every key required, den from 1, the Link unit a power of two) and the families derived from den (`rows_of`, `resolved`); the key `families` refused by name with the derivation that replaced it (`gone_refused`), every other key refused as unknown."""
+    """The universe file: its one object of integers (`INTEGER_KEYS`, every key required, den from 1; the keys `width` and `link_unit` refused by name with the derivation that replaced each, `GONE_INTEGERS`, 2026-10-24) and the families derived from den (`rows_of`, `resolved`); the key `families` refused by name with the derivation that replaced it (`gone_refused`), every other key refused as unknown."""
     gone_refused(document, "the universe file")
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
+    if isinstance(universe["integers"], dict):
+        for key in GONE_INTEGERS:
+            if key in universe["integers"]:
+                raise ValueError(
+                    f"integers holds the key {key!r}, an integer of the engine and not of the universe: "
+                    f"{GONE_INTEGERS[key]}"
+                )
     raw: dict[str, Any] = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
     integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
-    unit = integers["link_unit"]
-    if unit & (unit - 1):
-        raise ValueError(
-            f"integers.link_unit must be a power of two, the Link's unit G in which each Link's factor is one "
-            f"integer (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's), got {unit}"
-        )
     return integers, resolved(integers, rows_of(integers))

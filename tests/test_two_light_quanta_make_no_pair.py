@@ -16,8 +16,8 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     light = names.index(MASSLESS)
     born = conversion.birth_of(families, light)
     planes = sorted((k for k, f in enumerate(families) if f.plane), key=lambda k: families[k].pair[1] ** 2 - families[k].pair[0] ** 2)
-    assert born == [((k, -1), (k, 1)) for k in planes] and len(born) == 3**5 - 1  # every point, the lightest first
-    assert names[born[0][0][0]] == "point 2 -2 -2 2 -2" and all(vector_of(names[k]) for k in planes)  # the least leg first
+    assert born == [((k, -1), (k, 1)) for k in planes] and len(born) == 3**3 - 1  # every point, the lightest first
+    assert names[born[0][0][0]] == "point 0 2 0" and all(vector_of(names[k]) for k in planes)  # the least leg first
     assert conversion.candidates(families) == planes  # the massless point and the holders no record out
     gapped = resolved(
         {"name": "charge", "pair": [6000, 6000]},

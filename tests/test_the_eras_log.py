@@ -3,11 +3,11 @@
 import json
 
 from event_universe import world_files
+from event_universe.world_files import load_world
 from tests.laws import ROOT, load_file, refused
 from event_universe.loader.universe import MASSLESS, VOLUME
 from tests.laws_universe import GAMMA, small_universe
 
-WIDTH = 92  # the one universe file's width
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -29,7 +29,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         header["held"] == [VOLUME] and "keys" not in header and header["seed"] == MASSLESS
     )  # the held rows by name, no former key reported (2026-10-23)
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 8)
-    assert header["width"] == WIDTH and "unobservable" not in header  # every board's, no flag
+    assert header["width"] == load_world(world).width.bit_length() and "unobservable" not in header  # the derived width (2026-10-24), no flag
     assert header["den"] == 1021 and header["primes"] == [[1021, 1]] and set(header["points"]) == {"point -2", "point 2"}
     assert header["points"]["point 2"] == [779, 660]  # the least leg under its label, the page's captions read from it
     assert len(lines) == 8 and [line["interval"] for line in lines] == list(range(1, 9))

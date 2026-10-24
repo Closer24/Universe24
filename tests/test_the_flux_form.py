@@ -9,7 +9,7 @@ import pytest
 
 from event_universe import flux, node, records, world_files
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
+from event_universe.core.ports import LINK_UNIT, Wrap
 from event_universe.lattice import Lattice
 from event_universe.loader.universe import universe_of
 from event_universe.readings import ports
@@ -49,7 +49,7 @@ def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content() 
     light = next(family for family in families if family.name == MASSLESS)
     gamma, unit, wrap, shape = (
         integers["node_clock"],
-        integers["link_unit"],
+        LINK_UNIT,
         Wrap(True, True, True),
         (CUBE,) * 3,
     )

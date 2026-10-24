@@ -10,13 +10,15 @@ import numpy as np
 from event_universe import records, world_files
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
+from event_universe.core.ports import LINK_UNIT
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.share import charge_at
 from event_universe.take import Item
 from event_universe.world_files import load_world
-from tests.laws import ROOT, resolved
+from event_universe.loader.circle import circle_points, lightest_point
+from tests.laws import EVENTS, ROOT, refused, resolved
 from tests.laws_universe import SMALL, small_universe
 
 GAMMA, T = 1000, 36_000
@@ -33,8 +35,6 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> tupl
         {"name": "electron", "pair": electron, "dimension": 2},
         node_clock=gamma,
         quantum_action=T,
-        width=92,
-        link_unit=16,
     )
 
 
@@ -49,8 +49,6 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
         {"name": "electron", "pair": [53_567_757, DEN], "dimension": 2},
         node_clock=GAMMA,
         quantum_action=T,
-        width=92,
-        link_unit=16,
     )  # the one world's six rows of the file to 2026-10-24, by hand (the file carries no row since; the rows derived from den stand in the loader's test)
     sign = next(f for f in families if f.name == "charge")
     assert (sign.write_weight, sign.write_wall) == (36, 1)
@@ -71,8 +69,8 @@ def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_n
     neutral = tuple(
         replace(family, reads=()) if family.plane else family for family in charged
     )  # the same planes reading no sign, by hand: every plane reads the sign since 2026-10-24, so no file states them
-    bound_charged = amplitude_bound(charged, GAMMA, T, 92, 16)
-    bound_neutral = amplitude_bound(neutral, GAMMA, T, 92, 16)
+    bound_charged = amplitude_bound(charged, GAMMA, T, 92, LINK_UNIT)
+    bound_neutral = amplitude_bound(neutral, GAMMA, T, 92, LINK_UNIT)
     assert bound_charged == bound_neutral  # the sign holder's write room enters no other family's bound
 
 
@@ -138,3 +136,15 @@ def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path
         largest.append(max(holder_rows(board)))
     assert births and all(b["children"][0] in points_of(board) for b in births)  # pairs of the den's points born
     assert 0 < max(largest) < 16_427
+
+
+def test_the_lightest_point_of_the_circle_is_the_electrons_pair():
+    """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The lightest point is the electron): s_min(den) by `lightest_point`, the least leg among `circle_points`, at the former den and at the one universe's enlarged den, whose file holds den alone (the same day's later word: no family row), the point the pages caption electron."""
+    num, s = lightest_point(DEN)
+    assert (num, s) == (53_567_757, 29_276) and num * num + s * s == DEN * DEN
+    den = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))["integers"]["den"]
+    assert den == 13_586_597 * 132_260_701 * 649_421 and lightest_point(den)[1] == 633_202_287_062_780_012
+    for d in (DEN, den, 1000, 65):
+        assert lightest_point(d) == min(((n, s) for _v, n, s in circle_points(d)), key=lambda p: p[1])
+    assert [lightest_point(d) for d in (1000, 5, 65, 25)] == [(960, 280), (4, 3), (63, 16), (24, 7)]
+    refused("no prime 1 mod 4 divides it", lightest_point, 9)

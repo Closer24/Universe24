@@ -16,7 +16,7 @@ from tests.laws_universe import CUBE, GAMMA, UNIVERSE, WORLD, flat, small_univer
 
 
 def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
-    """(1) The one world's file is the universe, the shape and the run's length alone and parses with no mode file, its seed the massless point on one real line (the row named by what it is, the page's caption light), the rows the volume holder, the sign holder, the massless point and the 242 points of nature's den, every point a plane named by its vector; the former keys `bodies` and `interval` of the world and `families` of the universe refused by name."""
+    """(1) The one world's file is the universe, the shape and the run's length alone and parses with no mode file, its seed the massless point on one real line (the row named by what it is, the page's caption light), the rows the volume holder, the sign holder, the massless point and the 26 points of the enlarged den, every point a plane named by its vector; the former keys `bodies` and `interval` of the world and `families` of the universe refused by name."""
     world = json.loads(WORLD.read_text(encoding="utf-8"))
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     files = {world["universe"]: universe}
@@ -29,7 +29,7 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     parsed = parse_world(world, files, input_digest(world))  # (1) the bare world, accepted
     names = [family.name for family in parsed.families]
     assert names[:3] == [VOLUME, SIGN, MASSLESS] and names[parsed.seed] == MASSLESS
-    assert len(names) == 3 + 3**5 - 1 and all(vector_of(name) is not None for name in names[3:])
+    assert len(names) == 3 + 3**3 - 1 and all(vector_of(name) is not None for name in names[3:])  # the three-prime den's 26 points
     assert all(family.plane for family in parsed.families[3:])  # every point a plane until the kind sentence
     emptied = {**world, "bodies": []}  # the declared bodies, a key refused since 2026-10-24
     with pytest.raises(ValueError, match="unknown key 'bodies'"):

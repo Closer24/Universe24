@@ -14,7 +14,7 @@ TOP = 1_166_991_900_949_580_266_237  # the constants hand's three-prime den, 649
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name():
-    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form, a repository path with no file), the gone key `families` with the derivation's sentence, an unknown key among the integers, a lacking integer, the gap no key of the file, and the Link unit not a power of two."""
+    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form, a repository path with no file), the gone key `families` with the derivation's sentence, an unknown key among the integers, a lacking integer, the gap no key of the file, and the width and the Link unit the engine's, refused by name."""
     document, shape = universe_copy(), (4, 2, 1)
     integers = document["integers"]
     refusals = [
@@ -39,8 +39,12 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name():
             lambda: universe.universe_of({"integers": {**integers, "volume_gap": 6}}),
         ),  # the gapped volume holder by name, no integer of the file
         (
-            "link_unit must be a power of two",
-            lambda: universe.universe_of({"integers": {**integers, "link_unit": 3}}),
+            "the key 'link_unit', an integer of the engine and not of the universe",
+            lambda: universe.universe_of({"integers": {**integers, "link_unit": 16}}),
+        ),
+        (
+            "the key 'width', an integer of the engine and not of the universe",
+            lambda: universe.universe_of({"integers": {**integers, "width": 92}}),
         ),
     ]
     for match, call in refusals:
@@ -86,7 +90,7 @@ def test_dens_circle_is_read_from_its_integers_alone():
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
-    """The rows at load from den (loader/universe.rows_of): the volume holder and the sign holder by their roles, both at the massless point (den, den), the volume's pair from `volume_pair` alone (the gapped alternative by name, no key of the file); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 242 planes and no family row."""
+    """The rows at load from den (loader/universe.rows_of): the volume holder and the sign holder by their roles, both at the massless point (den, den), the volume's pair from `volume_pair` alone (the gapped alternative by name, no key of the file); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 26 planes at the three-prime den and no family row."""
     integers, families = universe.universe_of(universe_copy())
     names = [family.name for family in families]
     assert names[:3] == [universe.VOLUME, universe.SIGN, universe.MASSLESS] and len(names) == 3 + 6
@@ -103,12 +107,13 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
     assert [read.family for read in massless.reads] == [0] and sign.reads == ()
     assert (sign.write_weight, sign.write_wall) == (2048, 375)  # alpha = T / Gamma reduced by 16, inside the write
     one = json.loads(ONE_UNIVERSE.read_text(encoding="utf-8"))
-    assert set(one) == {"integers"} and one["integers"]["den"] == DEN and "volume_gap" not in one["integers"]
+    assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
+    assert one["integers"]["den"] == TOP  # the enlarged den as content, the three primes 1 mod 4 (2026-10-24)
     shipped, planes = universe.universe_of(one)
-    assert len(planes) == 3 + 3**5 - 1 and planes[0].pair == (DEN, DEN) and shipped["den"] == DEN
+    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (TOP, TOP) and shipped["den"] == TOP
     least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
-    assert (least.name, least.pair) == ("point 2 -2 -2 2 -2", (53_567_757, DEN))  # the former electron
-    assert next(f.name for f in planes if f.pair == (4_859_756, DEN)) == "point -2 0 0 0 2"  # the former proton
+    assert (least.name, least.pair) == ("point 0 2 0", (1_166_991_729_163_826_857_995, TOP))  # the former electron
+    assert next(f.name for f in planes if f.pair == (100_503_613_922_092_705_013, TOP)) == "point 0 0 2"  # the former proton, the heaviest prime's point
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
@@ -135,3 +140,20 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
         "receding",
     ):  # the torus is the one board (2026-10-24)
         refused(f"unknown key '{key}'", load_world, written(key, shape=[4, 4, 3], **{key: {}}))
+
+
+def test_a_file_integer_of_310_bits_loads_and_a_big_dens_turned_room_is_exact():
+    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by 2^512 and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier), and plane.turned_room's arrivals at that den are exact in Python's integers, the room beyond 2^63, read against the pairs by hand."""
+    from event_universe.core.ports import LINK_UNIT
+    from event_universe.plane import link_wall, sign_pairs, turned_room
+
+    big = 2**310 - 1
+    assert keys.integer(big, "n", 1) == big
+    refused("integer from 1 through", keys.integer, 2**513, "n", 1)
+    pair, gamma, square = (1_166_991_729_163_826_857_995, TOP), 1000, LINK_UNIT * LINK_UNIT
+    by_hand = max(
+        abs(int(even[0])) + abs(int(odd[0]))
+        for n in range(link_wall(gamma) + 1)
+        for even, odd in [sign_pairs(pair, gamma, (square,), (n,))]
+    )
+    assert turned_room(pair, gamma, LINK_UNIT) == by_hand + 1 > 2**63

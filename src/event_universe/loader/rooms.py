@@ -1,12 +1,16 @@
-"""The rooms of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level (ALGEBRA.md #the-bound; The write per proper volume and per proper interval; The guard): one source's booking's room (`booking_room`), the write's factor's room at a source's hill's edge (`hill_scale`) and under a negative tension (`factor_bound`, `tension_room`, `source_room`), and the row's rooms line by line (`write_rooms`), read by the amplitude bound of loader/derived.py (`bound_under_rooms`), which this module reads for the families and the walls."""
+"""The rooms of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level (ALGEBRA.md #the-bound; The write per proper volume and per proper interval; The guard): one source's booking's room (`booking_room`), the write's factor's room at a source's hill's edge (`hill_scale`) and under a negative tension (`factor_bound`, `tension_room`, `source_room`), and the row's rooms line by line (`write_rooms`), read by the amplitude bound of loader/derived.py (`bound_under_rooms`), which this module reads for the families and the walls; and the width itself derived from the universe's integers and the families (`width_of`, 2026-10-24: the file's key `width` to that day)."""
 
 from __future__ import annotations
 
+from functools import cache
+
+from event_universe.core.paces import clock_alone, frozen_content
 from event_universe.core.ports import AXES, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
-from event_universe.loader.derived import FamilyRule, HeldWrite, readers_of, weight_of
+from event_universe.features.volume import EXPONENT
+from event_universe.loader.derived import FamilyRule, HeldWrite, amplitude_bound, readers_of, weight_of
 
 
 def booking_room(families: tuple[FamilyRule, ...], index: int, wronskian: bool) -> int:
@@ -119,3 +123,32 @@ def held_room(
             f"{width} bits (ALGEBRA.md #the-bound; the room gated apart from the register's bound)"
         )
     return found
+
+
+@cache
+def width_of(families: tuple[FamilyRule, ...], gamma: int, action: int, unit: int) -> int:
+    """The width derived from the universe's integers and the families (the owner's word of 2026-10-24, only the universe's constants; the file's key `width` to that day, refused by name since, `loader/universe.GONE_INTEGERS`): the law bounds no level of a record of quanta (the uniform massless mode has no share and grows under the write, ALGEBRA.md, The closed lattice has no rest), and it bounds the volume's level by its own guard, the content below the Link's zero at every Node (The guard, the lower side; `features/read.paces_guard`, `paces.frozen_content`), so the width is the least at which the amplitude bound A (`derived.amplitude_bound`, the largest level every total of Rule3, of the currents and of every held write leaves inside the width, 0 where none does) holds the volume's level at the deepest content the guard admits, X(c) = Gamma (Gamma / p_0(c))^(d + 1) at c = frozen_content - 1, the Link's last pace (features/volume `volume_of`'s one division on the clock by its own power, `paces.clock_alone`, the memo kept to the run's contents), the largest level a row carrying its volume takes; found as `rule3.largest_below` finds a root, the upper end by doubling the bits until the bound holds the level and the least bit by halving the span (the bound grows with the width), one division act per halving; kept per universe like the loader's constants (the memo, cleared by nothing: the same rows and integers give the same width); a width within the host's signed bits runs in the hardware's integers, a wider one in Python's (`loader/world.kind_of`); 94 bits at the one universe (A 3,925,115,532 over the volume 3,573,457,785 at Gamma 1,000; the file's 92 and A 1,962,557,766 to 2026-10-24, the record's eras, nodes and clicks lines equal but the header's two numbers, the scan of 2026-10-24: the width idle wherever the world loads), 122 at the tests' universe at Gamma 6,000 (the host's 63 to that day); the least width at which the totals leave a level at all is 59 at the one universe, A = 1, which no run holds, so the level the law names and not the bit is the sentence."""
+    pace = (
+        clock_alone(gamma, frozen_content(gamma) - 1) ** EXPONENT
+    )  # the clock by its own power, the memo kept to the run's contents
+    top = int(
+        division_forward(gamma ** (EXPONENT + 1) + pace - 1, pace, 0)[0]
+    )  # X = ceil(Gamma^(d + 2) / p_0^(d + 1)), features/volume.volume_of's one division
+
+    def holds(width: int) -> bool:
+        try:
+            return amplitude_bound(families, gamma, action, width, unit) >= top
+        except ValueError:  # no level inside the width
+            return False
+
+    high = 1
+    while not holds(high):
+        high += high
+    low = 0  # the width 0 holds nothing
+    while high - low > 1:
+        middle = int(division_forward(low + high, 2, 0)[0])
+        if holds(middle):
+            high = middle
+        else:
+            low = middle
+    return high

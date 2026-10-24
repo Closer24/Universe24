@@ -14,8 +14,8 @@ from tests.laws_universe import ERAS, bare_torus
 
 INTERVALS, FIRST_TURN = (
     32,
-    208,
-)  # the bare 3-cube torus: the births at 30 and the first turned Node at 208 since the close reads the interval's start (29 and 157 on main with the write remainder born at the half of its own wall, 154 before that; 20 and 34 on the small universe, laid with bodies, to 2026-10-24)
+    205,
+)  # the bare 3-cube torus at the enlarged den (2026-10-24): the births at 30 and the first turned Node at 205 (208 at den 53,567,765 since the close reads the interval's start (29 and 157 on main with the write remainder born at the half of its own wall, 154 before that; 20 and 34 on the small universe, laid with bodies, to 2026-10-24)
 
 
 class Unkept(dict[Any, Any]):
@@ -95,4 +95,6 @@ def test_the_nodes_line_is_the_reading_node_by_node(
     assert found["length"] == [round(float((x / gamma) ** (1 / 4)), 6) if x > 0 else 0 for x in now]
     assert found["direction"] == [-1 if i in turned else 1 for i in range(nodes)]
     assert all(type(q) is int for name in found["quanta"] for q in found["quanta"][name])
-    assert found["quanta"]["matter"] == [int(q) for q in board.quanta(2)[0].reshape(-1)]
+    assert found["quanta"]["light"] == [
+        int(q) for q in board.quanta(2)[0].reshape(-1)
+    ]  # the third row, light since matter left (2026-10-24)
