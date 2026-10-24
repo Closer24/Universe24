@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.emission import advanced
-from event_universe.features import phase, volume
+from event_universe.features import phase, read, volume
 from event_universe.loader.node_detector_declaration import Transition
 
 if TYPE_CHECKING:
@@ -114,9 +114,10 @@ PAIRS: dict[
 
 
 def clear_memo() -> None:
-    """The memos cleared at a run's start (`Lattice.__init__`): the paces computed once per content value within the run (`paces.clear_memo`), the volume's level reading once per volume (`features/volume.LEVELS`) and the phase pairs at the windows' angles, both computed again within the run and kept between no two runs."""
+    """The memos cleared at a run's start (`Lattice.__init__`): the paces computed once per content value within the run (`paces.clear_memo`), the volume's level reading once per volume (`features/volume.LEVELS`), the records' read once per interval (`features/read.READS`) and the phase pairs at the windows' angles, both computed again within the run and kept between no two runs."""
     paces.clear_memo()
     volume.LEVELS.clear()
+    read.READS.clear()
     PAIRS.clear()
 
 

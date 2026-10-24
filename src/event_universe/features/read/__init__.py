@@ -11,6 +11,18 @@ from event_universe.core import paces
 from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import division_forward, largest_below, link_factor
 
+READS: dict[
+    tuple[Any, ...], tuple[tuple[Any, ...], tuple[Any, list[Any]]]
+] = {}  # the read's memo: per (the reading's name, the board's states, the family, the record, the direction) the records the read took, held so that the same records read again give the read already made (node.read_lines), cleared at a run's start with the paces' (resonance.clear_memo)
+
+
+def read_again(key: tuple[Any, ...], taken: tuple[Any, ...]) -> tuple[Any, list[Any]] | None:
+    """The read made before on the very records `taken` (every record the same object: a record is never written in place, every act replaces it, so the same objects hold the same integers), None where any record is another."""
+    kept = READS.get(key)
+    if kept is None or len(kept[0]) != len(taken):
+        return None
+    return kept[1] if all(a is b for a, b in zip(kept[0], taken, strict=True)) else None
+
 
 def plain(level: Any, sign: bool) -> Any:
     """A holder's level as the plain read takes it into a pace: a holder of the content's as it is, of either sign (a level below 0 a hill, the clock above the vacuum's), and a holder of the sign's as its size |L|, a hollow whatever the reader's sense, so that charge conjugation, the sense flipped and the level with it, leaves the physics (ALGEBRA.md row (f), The sign holder rotates the two-part record: a plane reads the holder of the sign plainly into its pace, a hollow whatever its sense, under the act pace; the advisor's hand); under the rotation the turn takes the signed level and this read is not made."""
