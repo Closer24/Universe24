@@ -7,6 +7,7 @@ import pytest
 
 from event_universe import node, records, world_files
 from event_universe.lattice import Lattice
+from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws_universe import CUBE, bare_torus
 
@@ -17,7 +18,7 @@ def test_the_phase_act_reaches_one_link(tmp_path: Path, monkeypatch: pytest.Monk
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path, CUBE)
     boards = [Lattice(load_world(path)), Lattice(load_world(path))]
-    charge = [family.name for family in boards[0].families].index("charge")
+    charge = [family.name for family in boards[0].families].index(SIGN)
     gamma = boards[0].world.node_clock
     free = boards[1].states[charge].lines[0]
     level = np.asarray(free.now, dtype=object).copy()

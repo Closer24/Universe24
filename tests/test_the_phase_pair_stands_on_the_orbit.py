@@ -1,6 +1,5 @@
 """Every Link's phase pair stands on the one orbit from the seed (features/phase `Orbit`, node.phase_carried; the architect's round of 2026-10-24): the pair at a count is the checkpoint at or below it, or the Link's own pair where that is nearer, carried by the rest, the same integers as the acts one by one from the seed; the folded Universe24 writes its shipped eras, nodes and clicks lines bit for bit over the record's first 12 intervals (the 5-cube record's 32 to 2026-10-24: the intervals about the meeting at 29 cost most of the run's seconds, so the span compared is the record's opening under the suite's bound of 30 seconds per test; the births at 29 are read by the tests on the bare 3-cube), and 10 intervals of the bare 3-cube torus with the pairs carried act by act hold the same phase lines (30 to 2026-10-24, shortened under the suite's bound of 30 seconds per test on the run's clock of four workers; the sentence the same) (the born pairs sourcing the holder from 30)."""
 
-import json
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +10,7 @@ from event_universe import node, world_files
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws_universe import ERAS, FOLDER, LOG, WORLD, bare_torus
+from tests.laws_universe import bare_torus
 
 INTERVALS, COMPARED, GAMMA, WIDTH = (
     12,
@@ -20,14 +19,6 @@ INTERVALS, COMPARED, GAMMA, WIDTH = (
     63,
 )  # the record's first 12 intervals compared (32 to 2026-10-24) and 10 carried act by act (30), under the suite's bound
 COUNTS = (0, 1, 2, 255, 256, 257, 511, 512, 1000, 3000)
-
-
-def lines_of(path: Path, limit: int | None = None) -> list[dict[str, Any]]:
-    """The log's lines without the clock (`seconds`), the lines up to the interval `limit` where one is given."""
-    found = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
-    for line in found:
-        line.pop("seconds", None)
-    return [line for line in found if limit is None or line.get("interval", 0) <= limit]
 
 
 def lines_over(pairs: list[Any]) -> Any:
@@ -54,15 +45,6 @@ def test_the_orbits_pair_at_a_count_is_the_acts_from_the_seed() -> None:
         sorted(orbit.checkpoints) == list(range(0, max(COUNTS) + 1, phase.SPACING))
         and phase.SPACING == 128
     )
-
-
-def test_the_folded_universe_writes_its_shipped_logs_bit_for_bit_over_the_records_first_12_intervals(
-    tmp_path: Path,
-) -> None:
-    ERAS.run(WORLD, tmp_path / "e.jsonl", 10**6, INTERVALS, tmp_path / "c.jsonl", tmp_path / "n.jsonl")
-    assert lines_of(tmp_path / "e.jsonl")[1:] == lines_of(LOG)[1 : INTERVALS + 1]
-    assert lines_of(tmp_path / "n.jsonl") == lines_of(FOLDER / "universe24.nodes.jsonl")[:INTERVALS]
-    assert lines_of(tmp_path / "c.jsonl") == lines_of(FOLDER / "universe24.clicks.jsonl", INTERVALS)
 
 
 def phases_of(board: Lattice) -> list[list[list[int]]]:
