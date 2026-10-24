@@ -66,7 +66,7 @@ def fill_of(gamma: int, rest: int) -> int:
 
 LEVELS: dict[
     int, dict[int, int]
-] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), cleared at a run's start with the paces' (resonance.clear_memo)
+] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), cleared at a run's start with the paces' (Lattice.__init__)
 
 
 def level_of(gamma: int, volume: Any) -> Any:

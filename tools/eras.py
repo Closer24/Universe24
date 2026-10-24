@@ -187,26 +187,30 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
     }
 
 
+def whole(values: Any) -> list[int]:
+    """An array's integers as Python's in x-major order, the log's list of one number per Node (the engine's arrays hold Python's integers at the object kind and the host's at int64, both whole)."""
+    found = np.asarray(values, dtype=object).reshape(-1).tolist()
+    return found if all(type(x) is int for x in found) else [int(x) for x in found]
+
+
 def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, Any]:
     """The Nodes' own readings after the interval, one line per interval for the torus view (tools/look/torus_page.py): the first held row's level X at every Node in x-major order, the Link's length at every Node e^U = (X / Gamma)^(1 / (d + 1)) from that level (the volume form's reading, `volume.EXPONENT`), the Nodes turned by the fifth act this interval (the Node's level before after the interval equal to its level now before it and its level now equal to its level before: the swap at the top's own footprint, a reading of the two time lines kept across the step) and every Node's direction of time, +1 forward and -1 turned, flipped at each of its turns since the start (`directions`, carried by the caller), and every family of quanta's quanta at every Node."""
     index = board.held[0]
     line = board.states[index].lines[0]
-    now = [int(x) for x in np.asarray(line.now, dtype=object).reshape(-1)]
-    before_now, before_before = before
-    turned = [
-        i
-        for i, (n, b) in enumerate(
-            zip(now, [int(x) for x in np.asarray(line.before, dtype=object).reshape(-1)], strict=True)
-        )
-        if b == before_now[i] and n == before_before[i] and before_before[i] <= before_now[i] and n != b
-    ]
+    now, now_before = (np.asarray(level, dtype=object).reshape(-1) for level in (line.now, line.before))
+    before_now, before_before = (np.asarray(level, dtype=object) for level in before)
+    turning = (now_before == before_now) & (now == before_before) & (before_before <= before_now)
+    turned = np.flatnonzero(turning & (now != now_before)).tolist()
     for i in turned:
         directions[i] = -directions[i]
     gamma = board.world.node_clock
+    lengths = {
+        x: round(float((x / gamma) ** (1 / volume.EXPONENT)), 6) if x > 0 else 0 for x in set(whole(now))
+    }  # the Link's length once per distinct level, the same float at every Node holding it
     found: dict[str, Any] = {
         "interval": board.interval,
-        "X": now,
-        "length": [round(float((x / gamma) ** (1 / volume.EXPONENT)), 6) if x > 0 else 0 for x in now],
+        "X": whole(now),
+        "length": [lengths[x] for x in whole(now)],
         "turned": turned,
         "direction": list(directions),
         "quanta": {},
@@ -216,9 +220,7 @@ def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, 
             quanta = board.quanta(i)[0]
         except ValueError:
             continue
-        found["quanta"][board.families[i].name] = [
-            int(q) for q in np.asarray(quanta, dtype=object).reshape(-1)
-        ]
+        found["quanta"][board.families[i].name] = whole(quanta)
     found["horizon"] = horizon_links(board)
     return found
 
@@ -278,14 +280,7 @@ def run(
         for _ in range(world.intervals if intervals is None else intervals):
             kept = kept_lines(board)
             time_line = board.states[board.held[0]].lines[0] if board.held else None
-            before = (
-                (
-                    [int(x) for x in np.asarray(time_line.now, dtype=object).reshape(-1)],
-                    [int(x) for x in np.asarray(time_line.before, dtype=object).reshape(-1)],
-                )
-                if time_line is not None
-                else None
-            )
+            before = (whole(time_line.now), whole(time_line.before)) if time_line is not None else None
             try:
                 board.step()
             except (ValueError, RuntimeError) as refusal:

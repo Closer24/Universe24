@@ -10,6 +10,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward, form_term
+from event_universe.features.read import READS, read_again
 from event_universe.loader.derived import FamilyRule, quanta_records
 from event_universe.readings import ports
 from event_universe.records import Record, wronskian
@@ -93,6 +94,27 @@ def family_share(
     for record, read in zip(lines, reads, strict=True):
         total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes, read)
     return np.asarray(total)
+
+
+def board_share(
+    board: Lattice, index: int, direction: int = 1, at: Any = None
+) -> tuple[np.ndarray, np.ndarray]:
+    """A family of quanta's share at every Node of a board and its frozen Nodes (`Lattice.share_of`): each record's share at the paces of its own read in `direction` (`family_share` on the records' lines, `board.read`), summed over the records, and the frozen mask, a Node frozen where any record's read freezes it; computed at the Nodes `at` names, or over the whole board where `at` is None, and then read once per interval on the records as they stand and given again to every reader of the same records (features/read READS under the key `share`, the very record objects held, a record never written in place; the architect's second round of 2026-10-24): the same integers, read once."""
+    family, gamma = board.families[index], board.world.node_clock
+    key = ("share", index, direction, gamma)
+    taken = (board.families, board.states, *(line for state in board.states for line in state.lines))
+    if at is None and (kept := read_again(key, taken)) is not None:
+        return kept[0], kept[1][0]
+    found: Any = 0
+    cold = np.zeros(board.shape, dtype=bool)
+    for record in quanta_records(board.families, index):
+        content, factors = board.read(index, direction, record)
+        lines = board.lines_of(index, record)
+        found = found + family_share(family, lines, board.wrap, gamma, content, factors, board.unit, at)
+        cold |= np.broadcast_to(frozen(gamma, content), board.shape)
+    if at is None:
+        READS[key] = (taken, (np.asarray(found), [cold]))
+    return np.asarray(found), cold
 
 
 def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:

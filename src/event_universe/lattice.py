@@ -29,7 +29,7 @@ from event_universe.bookings import Bookings, booked_of, booked_sources, record_
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_forward, wall_of
-from event_universe.features import phase, volume
+from event_universe.features import phase, read, volume
 from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
 from event_universe.frames import frames_of
@@ -52,6 +52,7 @@ class Lattice:
         paces.clear_memo()  # the memos cleared at a run's start: the paces per (Gamma, content), the volume's levels per Gamma, the orbits' table
         volume.LEVELS.clear()
         phase.ORBITS.clear()  # SEEDED keeps a living lattice's states on their orbit
+        read.READS.clear()  # the records' reads, made once per interval and given again
         self.world, self.interval, self.passes, self.heading, self.tick = world, 0, 1, 1, 0
         self.output: Output | None = None
         self.observers = list[Observer]()
@@ -158,18 +159,8 @@ class Lattice:
         return node.rulers_of(self, sources_of(self.families, self.order), direction)
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
-        """A family of quanta's share at every Node in the current's units, a reading of the energy, rest and kinetic, in the free rotation's unit (no count: a plane record's count is its charge, `credit.count_of`, the ruling of 2026-10-22) from each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
-        family, gamma = self.families[index], self.world.node_clock
-        found: Any = 0
-        frozen = np.zeros(self.shape, dtype=bool)
-        for record in quanta_records(self.families, index):
-            content, factors = self.read(index, direction, record)
-            lines = self.lines_of(index, record)
-            found = found + share.family_share(
-                family, lines, self.wrap, gamma, content, factors, self.unit, at
-            )
-            frozen |= np.broadcast_to(share.frozen(gamma, content), self.shape)
-        return np.asarray(found), frozen
+        """A family of quanta's share at every Node in the current's units, a reading of the energy, rest and kinetic, in the free rotation's unit (no count: a plane record's count is its charge, `credit.count_of`, the ruling of 2026-10-22) from each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records, the share over the whole board read once per interval on the same records and given again to the readers (features/read READS; the architect's second round of 2026-10-24) (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
+        return share.board_share(self, index, direction, at)
 
     def quanta(self, index: int, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
         """A family's share in quanta at every Node, (share + W_rec div 2) div W_rec in the record's own unit (`credit.record_unit`, C1), a reading at the Node in the free unit (the record's count over the board is its charge for a plane family, `credit.count_of`, the ruling of 2026-10-22; here the Node's share as the sides read it; a body's declared Nodes and the start's count gate read the lay's own support, `share.plain_quanta`), computed at the Nodes the mask `at` names (None: where a level stands, `share_of`) and 0 elsewhere, with the mask of its frozen Nodes, where it is not read."""
