@@ -145,11 +145,11 @@ def in_the_boards_frame(
         line[LAY_KEYS[3]] = {**written, AT: at}
         return (0 if family == seed else 1, int(np.ravel_multi_index(at, shape))), line
     if event == CREDIT:
-        place = np.unravel_index(int(str(line[REPORT_KEYS[4]])), tile)
+        place = np.unravel_index(int(str(line[REPORT_KEYS[-1]])), tile)
         at = moved([int(c) for c in place])
         if at is None:
             return None
-        line[REPORT_KEYS[4]], line[READINGS[3]] = int(np.ravel_multi_index(at, shape)), at
+        line[REPORT_KEYS[-1]], line[READINGS[3]] = int(np.ravel_multi_index(at, shape)), at
         return (2, int(np.ravel_multi_index(at, shape))), line
     nodes = [moved(node) for node in cast(list[list[int]], line["nodes"])]
     if nodes[0] is None:
