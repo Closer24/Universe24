@@ -2,6 +2,8 @@
 
 Every world the repository ships, one row each, from the files alone: the world file, the universe it runs (the world's own `universe` key), the board (`shape` and `boundary`), what one sees in one sentence (the folder's `design.json` and `expectation.json`, the blind's one claim), the run's `intervals`, and the status. The status words are the decisions' (docs/HIGHLIGHTS.md): "approved run" (the two slits), "gate" (Bell and GHZ; Zeno and the pulsed Zeno until 2026-10-20, their worlds deleted at the ninth), "cancelled" (the shelved ion's two worlds until 2026-10-20, deleted at the ninth), "lattice reading, no blind" (a world with no NodeDetector, no click and no blind row, read on the lattice through its look page) and "world" for the rest. A world stays in the repository only if it is in the paper or on a test. Every number in a blind is the design's, written before the first run; the readings beside the blinds stand in each folder's `blind_and_reading.md`.
 
+The folders and files below, Universe24's folder apart, are records of the law to 2026-10-23 and are not run (the owner's word of 2026-10-24: every world but Universe24 is cancelled; the files stay frozen as they were written, their tests and gates deleted with the sweep of that day); Universe24 (`events/universe24/`) is the one world the engine runs.
+
 ## The worlds under examples/events
 
 | Folder | World file | Universe | Board | What one sees | Intervals | Status |

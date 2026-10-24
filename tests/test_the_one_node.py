@@ -143,15 +143,7 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
 
     assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
-    assert set(universe.FAMILY_KEYS) == {
-        "name",
-        "pair",
-        "dimension",
-        "held",
-        "reads",
-        "exchange",
-        "senses",
-    }
+    assert set(universe.FAMILY_KEYS) == {"name", "pair", "dimension", "held", "reads"}
     assert [list(s) for s in universe.SOURCES] == [
         ["form"],
         ["form", "tensions"],

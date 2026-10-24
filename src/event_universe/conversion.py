@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import replace
-from itertools import combinations_with_replacement, product
+from collections.abc import Sequence
 from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import largest_below
@@ -14,17 +12,12 @@ if TYPE_CHECKING:
     pass
 
 BARYON_LINES = 3  # the baryon's shape in the law's families: a record of three lines, real or planes
-BEYOND = (
-    2  # the search's bound, named and no law: a list of N parents has at most N + BEYOND records out
-)
 Pair = tuple[int, int]
 Gauss = tuple[int, int]  # a Gaussian integer a + i b
 Table = tuple[tuple[int, int], ...]  # the records out, each its family by position and its sense
 Parents = tuple[
     tuple[int, int], ...
 ]  # the records in, each its family and its sense as read, 0 for real lines
-
-MET = 3  # the search's bound on the quanta met at one close, named and no law: the world's multisets of two to MET laid quanta derived at load
 
 
 def times(a: Gauss, b: Gauss) -> Gauss:
@@ -92,150 +85,6 @@ def kept(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bo
     if senses != sum(sense for _parent, sense in parents):
         return False
     return baryons(families, table) == baryons(families, parents)
-
-
-def fits(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bool:
-    """Whether a list is some parents' own: their null list, the parents' families themselves (the group's identity, the no-conversion outcome), or a list exact for their rotations (`exact`) keeping both conservations for them (`kept`)."""
-    if sorted(k for k, _sense in table) == sorted(k for k, _sense in parents):
-        return True
-    return exact(
-        [families[k].pair for k, _sense in parents], [families[k].pair for k, _sense in table]
-    ) and kept(families, parents, table)
-
-
-def reducible(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bool:
-    """Whether a list of several parents is a disjoint union of two lists over a partition of the parents into two non-empty sub-multisets, each part's own (`fits`): such a list is the quanta's separate clicks, one converting by its own list while the other passes or each converting alone, and no meeting; a meeting's list is irreducible (the reader's rule of 2026-10-21 on the spectator lists: two neutrons credited at one close have {n, p, e} = {n} + {p, e} and {p, p, e, e} = {p, e} + {p, e}, both reducible, so each converts by its own list as a lone quantum does)."""
-    count = len(parents)
-    for split in range(1, 2**count - 1):
-        if not split & 1:
-            continue  # every partition once, the first parent in the first part
-        first = tuple(parent for at, parent in enumerate(parents) if split >> at & 1)
-        second = tuple(parent for at, parent in enumerate(parents) if not split >> at & 1)
-        for take in range(2 ** len(table)):
-            one = tuple(row for at, row in enumerate(table) if take >> at & 1)
-            other = tuple(row for at, row in enumerate(table) if not take >> at & 1)
-            if fits(families, first, one) and fits(families, second, other):
-                return True
-    return False
-
-
-def listed(
-    families: tuple[FamilyRule, ...], parents: Parents, declared: Mapping[int, int]
-) -> list[Table]:
-    """Every list of at most N + BEYOND whole quanta of the candidate families, other than the parents' own multiset (the null list, the group's identity: the no-conversion outcome and never a second list), whose rotations sum exactly to the parents' (`exact`) and that keeps the two conservations (`kept`), each as its (family, sense) rows in the families' order: a plane record out at the sense its family is declared (`declared`, the real-line parents' key `senses`) and at either sense where none is, the assignments the sum keeps collected as distinct lists; a record of real lines at 0; of several parents the irreducible lists alone (`reducible`), a list that is the quanta's separate clicks being no meeting."""
-    found: list[Table] = []
-    own = sorted(k for k, _sense in parents)
-    before = [families[k].pair for k in own]
-    for size in range(1, len(parents) + BEYOND + 1):
-        for outs in combinations_with_replacement(candidates(families), size):
-            if list(outs) == own or not exact(before, [families[k].pair for k in outs]):
-                continue
-            free = [at for at, out in enumerate(outs) if families[out].plane and out not in declared]
-            for choice in product((1, -1), repeat=len(free)):
-                senses = [declared.get(out, 0) if families[out].plane else 0 for out in outs]
-                for at, sense in zip(free, choice, strict=True):
-                    senses[at] = sense
-                table = tuple(sorted(zip(outs, senses, strict=True)))
-                if table not in found and kept(families, parents, table):
-                    found.append(table)
-    return [table for table in found if not reducible(families, parents, table)]
-
-
-def names(families: tuple[FamilyRule, ...], rows: Sequence[tuple[int, int]]) -> list[str]:
-    """The families of the rows by name, a list's or the parents', for a refusal's sentence."""
-    return [families[k].name for k, _sense in rows]
-
-
-def senses_of(value: object, label: str, families: tuple[FamilyRule, ...]) -> dict[int, int]:
-    """The row's key `senses` (the one residual declaration of The conversion): per plane family of quanta with a gap, by name, the sense 1 or -1 its records out of this parent's list are laid at; refused by name on a name that is no such family and on a sense other than 1 or -1."""
-    if not isinstance(value, dict):
-        raise ValueError(f"{label} maps each plane family out to its sense, 1 or -1")
-    found = {}
-    for name, sense in value.items():
-        index = next((k for k in candidates(families) if families[k].name == name), None)
-        if index is None or not families[index].plane:
-            raise ValueError(
-                f"{label} names {name!r}: a sense is declared for a plane family of quanta with a gap, a record out"
-            )
-        if sense not in (1, -1):
-            raise ValueError(f"{label}.{name} is 1 or -1, got {sense!r}")
-        found[index] = int(sense)
-    return found
-
-
-def declared(
-    families: tuple[FamilyRule, ...], declaring: Mapping[int, object]
-) -> tuple[FamilyRule, ...]:
-    """The families' lists derived at load from the pairs and the law's conservations with no key (`listed` with each family of quanta with a gap and a Pythagorean pair as the one parent at rest, a plane at the sense 1 and real lines at 0): a family with no list converts nothing, its stability derived; one list is the family's (`FamilyRule.converts`, its declared senses beside it); refused by name: the key `senses` (`senses_of`) on a held row, on a massless family, on a parent that is not Pythagorean (`irrational`), on a parent with no list (the candidates with an irrational sine named), on a plane parent (its records out take its own sense as read at the click, which turns the list), naming a family that is no record out of the list, or contradicting the Wronskian's sum; several lists of different families keeping both conservations (the law has no share among them); and one list whose plane senses the sum leaves free, a real-line parent lacking the key (one plane record out named, the rest the sum's) or a plane parent (several lists)."""
-    found = list(families)
-    for index, family in enumerate(families):
-        row = f"families[{index}] ({family.name!r})"
-        label = f"{row}.senses"
-        value = declaring.get(index)
-        senses = {} if value is None else senses_of(value, label, families)
-        gapped = not family.held and family.pair[0] != family.pair[1]
-        if family.held and value is not None:
-            raise ValueError(f"{label}: a held row converts nothing; the key is a family of quanta's")
-        if not gapped and value is not None:
-            raise ValueError(f"{label}: a massless family has no gap and converts nothing")
-        if gaussian(family.pair) is None and value is not None:
-            raise ValueError(f"{label}: {irrational(family.pair)}, and no list sums to it exactly")
-        if not gapped or gaussian(family.pair) is None:
-            continue
-        if family.plane and value is not None:
-            raise ValueError(
-                f"{label}: a plane parent's records out take its own sense as read at the click, which turns "
-                "its list; the senses are a real-line parent's declaration"
-            )
-        parents: Parents = ((index, 1 if family.plane else 0),)
-        under_the_law = listed(families, parents, {})
-        if not under_the_law:
-            if value is not None:
-                missing = [
-                    f"{families[k].name!r} {irrational(families[k].pair)}"
-                    for k in candidates(families)
-                    if gaussian(families[k].pair) is None
-                ]
-                raise ValueError(
-                    f"{label} is declared and no list of at most {1 + BEYOND} whole quanta of the other families "
-                    f"sums to the pair {list(family.pair)} exactly keeping the charge and the baryon; the candidates "
-                    f"with an irrational sine: {missing}"
-                )
-            continue
-        lists = sorted({tuple(out for out, _sense in table) for table in under_the_law})
-        if len(lists) > 1:
-            raise ValueError(
-                f"{row}: several exact lists keep the charge and the baryon: "
-                f"{[names(families, [(k, 0) for k in one]) for one in lists]}; the law has no share among them"
-            )
-        stray = sorted(families[k].name for k in senses if k not in lists[0])
-        if stray:
-            raise ValueError(
-                f"{label} names {stray}, no record out of its one list {names(families, under_the_law[0])}"
-            )
-        tables = listed(families, parents, senses)
-        if not tables:
-            kept_senses = [
-                {families[k].name: s for k, s in table if families[k].plane} for table in under_the_law
-            ]
-            raise ValueError(
-                f"{label} contradicts the Wronskian's sum {parents[0][1]} of its list "
-                f"{names(families, under_the_law[0])}: the senses the sum keeps are {kept_senses}"
-            )
-        if len(tables) > 1:
-            planes = sorted({families[out].name for out, _sense in tables[0] if families[out].plane})
-            if family.plane:
-                raise ValueError(
-                    f"{row}: the senses of its plane records out {planes} are left free by its own sense: "
-                    "several lists, and the law has no share among them"
-                )
-            raise ValueError(
-                f"{label} is required: the plane records out {planes} of its one list {names(families, tables[0])} "
-                "keep the Wronskian's sum 0 at (+, -) and at (-, +) alike, so which is the particle is not in the "
-                "pairs; the key names one plane record out's sense, 1 or -1, and the rest are the sum's"
-            )
-        found[index] = replace(family, converts=tables[0], senses=tuple(sorted(senses.items())))
-    return tuple(found)
 
 
 def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:
