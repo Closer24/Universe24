@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, NamedTuple
 import numpy as np
 
 from event_universe import credit, records, swap
-from event_universe.act import born_items, born_table, click
+from event_universe.act import affordable, born_items, click
 from event_universe.core.paces import sine_den
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
@@ -24,9 +24,28 @@ if TYPE_CHECKING:
 Table = tuple[tuple[int, int], ...]
 
 
-def child_of(board: Lattice, index: int, share: int, whole: int) -> Table | None:
-    """The list two quanta of the seed family make at one Node: the heaviest exact list whose summed walls fit within the two quanta's own energy (N children, one record each, 2026-10-24), two `whole`-ths of the share `share` read at the Node (`act.born_table`, the law's sentence of 2026-10-24; None where no pair's walls fit there)."""
-    return born_table(board.families, index, board.world.quantum_action, 2 * share, max(whole, 2))
+def child_of(board: Lattice, index: int, share: int, whole: int) -> tuple[Table, ...]:
+    """The lists two quanta of the seed family can afford at one Node (the birth's selector, 2026-10-24, 13:xx UTC): the lifts' conjugate pairs whose summed walls fit within the two quanta's own energy, two `whole`-ths of the share `share` read at the Node (`act.affordable`, lightest first; the former clause, the heaviest of them, `act.born_table`, kept by name); empty where no lift's walls fit there, the Node then no meeting."""
+    return affordable(board.families, index, board.world.quantum_action, 2 * share, max(whole, 2))
+
+
+def drawn_among(
+    board: Lattice, at: Node, tables: tuple[Table, ...], left: int | None, label: str
+) -> Table | None:
+    """The pick among the affordable lists at a meeting Node, the birth's selector (ALGEBRA.md, Matter's birth from light, the lifts' draw within the energy, 2026-10-24, 13:xx UTC; The board reads itself; The click's read of the board): one list is a certain draw and reads nothing (one alternative needs no reader, `features/click.drawn_from`'s own clause); several are drawn at equal weights, 1 each, the law having no share among exact lists and no weight of nature's, by the Node's read of itself and its Links (`digits.read_of` in the Node's own frame on the interval's start, `frame_of`, over every family of quanta), or, where the whether was drawn at this Node, by the close's next draw on the number the whether left (`left`, the quotient of the whether's division, no moduli: a region's close draws its whether first and the rest on what is left); None, nothing born at that Node this interval and its light standing, where the read finds every digit at the lay's origin (`at_origin`: the Node does not draw, the floor alone) and where `drawn_from` refuses by name (the total the product of its gcds with the read's bases less one and with its last base, g = T, or the number below the total), the refusal named and not forced. The former clause, the heaviest of the lists with no draw (`act.born_table`, 2026-10-24, 05:2x UTC to 13:xx UTC), kept by name."""
+    if len(tables) == 1:
+        return tables[0]
+    number, moduli = left, None
+    if number is None:
+        reads = [(family, frame_of(at, board.shape, board.world.periodic)) for family in board.order]
+        if at_origin(board, reads):
+            return None
+        number, moduli = read_of(board, reads, label)
+    try:
+        drawn = drawn_from(number, [1] * len(tables), label, moduli)[0]
+    except RuntimeError:  # the draw refused by name: nothing born here this interval
+        return None
+    return tables[drawn]
 
 
 def meetings(
@@ -58,20 +77,24 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
         shares, frozen = board.share_of(index)
         born: list[tuple[Node, Table]] = []
         for at, whole, rest in meetings(board, index, shares, frozen):
-            table = child_of(board, index, int(shares[at]), whole)
-            if table is None:  # no list's walls within the two quanta's energy there: nothing born
+            tables = child_of(board, index, int(shares[at]), whole)
+            if not tables:  # no lift's walls within the two quanta's energy there: no meeting
                 continue
-            meet = whole >= 2
+            meet, left = whole >= 2, None
+            label = (
+                f"the Node {list(at)}'s read of itself and its Links at the interval {board.interval}"
+            )
             if (
                 not meet and rest > 0
             ):  # one whole quantum and a share above it: the second is the whether
-                label = f"the Node {list(at)}'s read of itself and its Links at the interval {board.interval}"
                 region = frame_of(at, board.shape, board.world.periodic)  # the Node, then its six Ports
                 reads = [(family, region) for family in board.order]
                 if not at_origin(board, reads):
                     number, moduli = read_of(board, reads, label)
-                    meet = drawn_from(number, [rest, unit - rest], label, moduli)[0] == 0
-            if meet:
+                    drawn, left = drawn_from(number, [rest, unit - rest], label, moduli)
+                    meet = drawn == 0  # the quotient `left` the number for the pick's draw
+            table = drawn_among(board, at, tables, left, label) if meet else None
+            if table is not None:
                 born.append((at, table))
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):

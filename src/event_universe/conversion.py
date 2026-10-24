@@ -7,6 +7,7 @@ from functools import cache
 from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import largest_below
+from event_universe.loader.circle import lift_points
 from event_universe.loader.derived import FamilyRule
 
 if TYPE_CHECKING:
@@ -122,14 +123,15 @@ def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Tabl
 
 
 def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:
-    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; the heaviest within the two quanta's own energy on his word of 2026-10-24): the lists two quanta of the gapless family `parent` make at one Node, as the law selects them (ALGEBRA.md, Matter's birth from light: the conjugate pair of a plane family with a gap and a Pythagorean pair, one family at the senses -1 and 1), each list the pair ((k, -1), (k, 1)) that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`), the lightest first by its summed walls (`walls_of`, the gap's order); [] for a parent with a gap, whose quanta convert and are not born from (The conversion). A list of any length lays its children one record each through the same path (`act.born_items`); which longer lists the law selects is open (`lists_of`, the general enumeration)."""
+    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; the birth's selector on the owner's method of 2026-10-24, 12:5x UTC, the lifts' draw within the energy): the lists two quanta of the gapless family `parent` make at one Node, as the law selects them (ALGEBRA.md, Matter's birth from light; No family is declared: each charged family is the lift of its prime's point, a point nature shows at no click is no family): the conjugate pair ((k, -1), (k, 1)) of every plane row standing at a LIFT of den's primes (`loader/circle.lift_points`, the point pi_k^(2 e_k) x the other primes, one per prime 1 mod 4; three at a den of three primes, the electron's, the proton's and the neutron's by mass), each completing the parents' identity (`conjugate_exact`) and keeping the two conservations (`kept`), the lightest first by its summed walls (`walls_of`, the gap's order); the swaps, the composed points and the top (den, 0) are no bodies and never candidates, though their rows stand and their walls fit; [] for a parent with a gap, whose quanta convert and are not born from (The conversion). The former list, every plane row of the circle (26 at the three-prime den, the law from 2026-10-24, 05:2x UTC, to the selector's build of 13:xx UTC), kept by name: over it the heaviest fitting pair was the point nearest the top, no body. A list of any length lays its children one record each through the same path (`act.born_items`); the general enumeration `lists_of` stands as a function."""
     if families[parent].pair[0] != families[parent].pair[1]:
         return []
+    lifts = {num for _vector, num, _sine in lift_points(families[parent].pair[1])}
     parents: Parents = ((parent, 0), (parent, 0))
     found = [
         table
         for k in candidates(families)
-        if families[k].plane and gaussian(families[k].pair) is not None
+        if families[k].plane and families[k].pair[0] in lifts and gaussian(families[k].pair) is not None
         for table in (((k, -1), (k, 1)),)
         if kept(families, parents, table) and conjugate_exact(families, table)
     ]

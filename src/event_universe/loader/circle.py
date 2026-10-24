@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from math import gcd
 
 from event_universe.core.ports import PORTS, SIDES
@@ -179,6 +180,18 @@ def circle_points(den: int) -> list[Point]:
         assert num * num + sine * sine == den * den, f"{vector}: no point of den {den}"
         found.append((vector, num, sine))
     return found
+
+
+@cache
+def lift_points(den: int) -> tuple[Point, ...]:
+    """The lifts of den's primes, the bodies' points (ALGEBRA.md, Matter's birth from light, the birth's selector, 2026-10-24, 13:xx UTC; No family is declared: each charged family is the lift of its prime's point): among the circle's points (`circle_points`) the ones whose exponent vector carries one prime alone at its whole power, v_k = 2 e_k and every other entry 0, the point pi_k^(2 e_k) x PROD over j != k of h_j^(e_j) x scale turned into the quadrant, at twice the prime's angle where e_k = 1, its leg s = 2 a b x den / h_k for pi_k = a + i b with a > b; one lift per prime 1 mod 4 (three at the dens of three primes, the least leg the electron's, then the proton's and the neutron's by mass; one at den 1,021, (779, 660); one at den 6,000, the prime 5's whole power (2112, 5616)), in the vectors' order; the vector -v is the lift's swap, a point near the top where the lift is near the axis, a vector with two or more nonzero entries a composed word of the lifts and the zero vector the top (den, 0): the swaps, the composed points and the top are no bodies and never candidates (the composed points' and the top's derivations of 2026-10-24); a function of den alone, made once per den (`cache`)."""
+    primes, _scale = angled(den)
+    return tuple(
+        point
+        for point in circle_points(den)
+        if sum(1 for step in point[0] if step) == 1
+        and all(step in (0, 2 * power) for step, (_prime, power) in zip(point[0], primes, strict=True))
+    )
 
 
 def label_of(vector: tuple[int, ...]) -> str:

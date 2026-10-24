@@ -67,11 +67,20 @@ def written(board: Lattice, items: list[Item]) -> None:
             front.started(board, family, absorbed)
 
 
+def affordable(
+    families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
+) -> tuple[conversion.Table, ...]:
+    """The lists a meeting of two quanta of the gapless family `parent` can afford at one Node (ALGEBRA.md, Matter's birth from light, the birth's selector, 2026-10-24, 13:xx UTC; The board reads itself): among `conversion.birth_of`'s lists, the lifts' conjugate pairs lightest first, every one whose children's walls summed, SUM over the children of count_wall(child) (`list_walls`; the pair's two walls, 2 x 3 T sqrt(den^2 - num^2), `loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`: twice the share over the whole quanta standing, two at the least), the comparison cross-multiplied, exact in the integers with no division and no rounding; empty where none fits, the Node then no meeting. The pick among them is the Node's own draw (`meeting_board.drawn_among`), not this function's."""
+    return tuple(
+        table for walls, table in list_walls(families, parent, action) if walls * over <= energy
+    )
+
+
 def born_table(
     families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
 ) -> conversion.Table | None:
-    """The list the meeting of two quanta of a gapless family births at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light, the owner's word, 05:2x UTC: the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; the former clause, the lightest within the threshold 2 x 3 den T, kept by name): among `conversion.birth_of`'s lists, the lightest first, the heaviest whose children's walls summed, SUM over the children of count_wall(child) (`list_walls`; the pair's two walls, 2 x 3 T sqrt(den^2 - num^2), `loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`, `born_list`), the comparison cross-multiplied, exact in the integers with no division and no rounding; None where no list fits, nothing then born. The list's children are laid one record each (`born_items`), so a longer list, once the law selects one, lays its N records through this same path."""
-    fitting = [table for walls, table in list_walls(families, parent, action) if walls * over <= energy]
+    """The former clause, kept by name and dated (the law from the owner's word of 2026-10-24, 05:2x UTC, to the selector's build of the same day, 13:xx UTC; ALGEBRA.md, Matter's birth from light: "the heaviest conjugate pair whose two walls fit within the two meeting quanta's own energy"; before it, to 2026-10-23, the lightest within the threshold 2 x 3 den T): the heaviest of the affordable lists (`affordable`), None where none fits. A sentence that births a thing, which the owner's word forbids (ALGEBRA.md, No family is declared, (b)): the board's own close draws among the affordable lists instead (`meeting_board.drawn_among`); this clause stands for the write step's birth at an emission into standing light (`born_list`), the path of the declared worlds, which no bare world reaches."""
+    fitting = affordable(families, parent, action, energy, over)
     return fitting[-1] if fitting else None
 
 
