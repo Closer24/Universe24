@@ -10,7 +10,6 @@ import pytest
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
-from event_universe.loader import universe
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.slabs import Slabs, arrays_of, axis_of, slabs_of
 from event_universe.world_files import load_world
@@ -21,12 +20,6 @@ CUBE, TUBE = (
     [5, 5, 5],
     [3, 3, 9],
 )  # the hole seed's boards: the 5-cube, and a tube whose longest axis is z
-
-
-@pytest.fixture(autouse=True)
-def massless_holder(monkeypatch: pytest.MonkeyPatch) -> None:
-    """The massless holder by name for this module (the finding of 2026-10-24 under the volume holder gapped by the clock's one level, ALGEBRA.md, the mirror clause): the 5-cube hole seed by five one-layer slabs parts from the one process at the interval 10 in a born row's lines at (0, 1, 1), (0, 1, 4), (0, 4, 1) and (0, 4, 4), laid fresh at the half wall in the one process and stepped in the slabs' run, the swaps the same; by two slabs it holds, and under the massless holder it holds by both; the turned halo Node's state within the interval the first suspect, the runner's to root."""
-    monkeypatch.setattr(universe, "volume_pair", lambda den, gamma: (den, den))
 
 
 def board_of(folder: Path, shape: list[int], intervals: int, lines: list[dict[str, Any]]) -> Lattice:
