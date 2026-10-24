@@ -13,19 +13,24 @@ from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
+from event_universe.loader.circle import lift_points
 from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws import ROOT
-from tests.laws_universe import small_universe, uniform_sea
+from tests.laws_universe import SMALL, small_universe, uniform_sea
 
 TOP_UNIVERSE = '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'  # the top tier's den, 649,421 x 13,586,597 x 132,260,701, three primes 1 mod 4 and 26 points, factored in a blink
 
 
-def bare_board(tmp_path, monkeypatch, intervals, births):  # type: ignore[no-untyped-def]
-    """The tests' small universe on the bare 3-cube torus (den 1,021, its two points; 2026-10-24, the family-less file), the births kept."""
+def bare_board(tmp_path, monkeypatch, intervals, births, den=None):  # type: ignore[no-untyped-def]
+    """The tests' small universe on the bare 3-cube torus (den 1,021, its two points, one the lift; 2026-10-24, the family-less file), the births kept; `den` another den in its place (1,105 = 5 x 13 x 17, three lifts)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     small_universe(tmp_path)
+    if den is not None:
+        (tmp_path / "u.json").write_text(
+            json.dumps({"integers": {**SMALL["integers"], "den": den}}), "utf-8"
+        )
     world = {"universe": "u.json", "shape": [3, 3, 3], "intervals": intervals}
     (tmp_path / "bare.json").write_text(json.dumps(world), encoding="utf-8")
     keep = lambda line: births.append(line) if line.get("event") == "birth" else None  # noqa: E731
@@ -35,31 +40,33 @@ def bare_board(tmp_path, monkeypatch, intervals, births):  # type: ignore[no-unt
 def test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The law as written selects among the conjugate pairs, one plane family at the senses -1 and 1 (L188): `birth_of` gives exactly those, each exact (the children's points at their senses multiply to the identity) and kept (the senses' sum 0), lightest first by their summed walls; the general enumeration `lists_of` is a function with the caller's bound and enters no birth: at the bound 4 on this file every multiset of conjugate pairs of at most four children, five lists, the pairs among them (the selection among them open, ALGEBRA.md, Matter's birth from light)."""
+    """The law as written selects among the conjugate pairs of the lifts, one plane family at the senses -1 and 1 (L188; the selector, 2026-10-24, 13:xx UTC): `birth_of` gives exactly those, each exact (the children's points at their senses multiply to the identity) and kept (the senses' sum 0), lightest first by their summed walls, at den 1,021 the one lift point 2 (779, 660) and not its swap point -2 (the former list, every plane, kept by name); the general enumeration `lists_of` is a function with the caller's bound and enters no birth: at the bound 4 on this file every multiset of conjugate pairs of at most four children over every plane, five lists, the lift's pair among them."""
     board = bare_board(tmp_path, monkeypatch, 1, [])
     families, light = board.families, board.world.seed
     planes = [k for k, f in enumerate(families) if f.plane and conversion.gaussian(f.pair)]
     pairs = conversion.birth_of(families, light)
-    assert sorted(pairs) == sorted(((k, -1), (k, 1)) for k in planes)
-    assert all(conversion.conjugate_exact(families, table) for table in pairs)
-    walls = [sum(count_wall(families[out], 1) for out, _sense in table) for table in pairs]
-    assert walls == sorted(walls)
+    lifts = {num for _vector, num, _sine in lift_points(families[light].pair[1])}
+    assert (
+        pairs == [((k, -1), (k, 1)) for k in planes if families[k].pair[0] in lifts] and len(pairs) == 1
+    )
+    assert all(conversion.conjugate_exact(families, table) for table in pairs) and len(planes) == 2
     general = conversion.lists_of(families, 2, 4)
-    assert len(general) >= len(pairs) and all(table in general for table in pairs)
+    assert len(general) >= len(planes) and all(table in general for table in pairs)
     assert all(
         conversion.conjugate_exact(families, table) and sum(s for _o, s in table) == 0
         for table in general
     )
-    assert max(len(table) for table in general) == 4 and conversion.lists_of(families, 2, 2) == pairs
+    assert max(len(table) for table in general) == 4 and len(conversion.lists_of(families, 2, 2)) == 2
 
 
 def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """A list of any length lays its children one record each (`act.born_items`, `emission.laid_by_count`): a four-child list, the proton pair with the electron pair, handed to the path at one Node lays two records of each family, each born record's Wronskian its child's sense, and after one interval the holder of the sign's four reader rows are written."""
-    board = bare_board(tmp_path, monkeypatch, 2, [])
+    """A list of any length lays its children one record each (`act.born_items`, `emission.laid_by_count`): a four-child list, the proton pair with the electron pair, handed to the path at one Node lays two records of each family, each born record's Wronskian its child's sense, and after one interval the holder of the sign's four reader rows are written and no other (at den 1,105, three lifts with two records each, the 23 other points one, since the selector of 2026-10-24, 13:xx UTC; den 1,021 has one lift)."""
+    board = bare_board(tmp_path, monkeypatch, 2, [], 1105)
     names = [f.name for f in board.families]
-    proton, electron = sorted(
-        (k for k, f in enumerate(board.families) if f.plane), key=lambda k: board.families[k].pair[0]
-    )  # the heavier point, the lighter
+    _neutron, proton, electron = sorted(
+        (k for k, f in enumerate(board.families) if f.records == 2),
+        key=lambda k: board.families[k].pair[0],
+    )  # the lifts, the heavier first: (425, 1020), (663, 884), (975, 520)
     table = ((proton, -1), (proton, 1), (electron, -1), (electron, 1))
     items = born_items(board.families, table, ((1, 1, 1),))
     assert [item.record for item in items] == [0, 1, 0, 1]
@@ -78,7 +85,7 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
         int(np.abs(np.asarray(board.states[charge].lines[r * width].now, dtype=object)).max())
         for r in range(registry.records_of(board.families[charge], board.states[charge].lines))
     ]
-    assert rows[0] == 0 and all(rows[1:])
+    assert rows[0] == 0 and sum(1 for row in rows[1:] if row) == len(items)  # the four reader rows
 
 
 def test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
@@ -181,7 +188,7 @@ def test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_
         )
     assert (
         read[1021][0] == 3 and read[den][0] == 2
-    )  # 2 den over s to the lay's rounding, 2.62 and 2.000 at the top tier
+    )  # 2 den over s to the lay's rounding: 2.62 at den 1,021 (the lift (779, 660)) and 2.000 at the top tier (the neutron's lift under the selector, s_n = 0.99766 den; the point nearest the top before it)
     lightest = min(
         (k for k, f in enumerate(board.families) if f.plane),
         key=lambda k: count_wall(board.families[k], action),

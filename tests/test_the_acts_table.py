@@ -46,6 +46,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
+    (
+        "meeting_board.py",
+        "closed",
+        "division_forward",
+    ): "D",  # the number read by the unit, once: the quotient the pick's (the selector, 2026-10-24)
+    (
+        "meeting_board.py",
+        "drawn_among",
+        "division_forward",
+    ): "D",  # the quotient's residue modulo the candidates' count, once
     ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
@@ -323,6 +333,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
     ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
+    (
+        "slabs.py",
+        "slabs_of",
+        "division_forward",
+    ): "D",  # the axis's layers among the slabs, once, no law's number
+    ("slabs.py", "wrapped", "division_forward"): "D",  # a layer's index on the torus, the halo's layer
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):

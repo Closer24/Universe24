@@ -84,7 +84,9 @@ def test_the_lean_board_equals_the_board_with_every_point_standing_through_the_b
         lean.step()
         full.step()
         equal(lean, full, outputs, lean.interval)
-    assert not drawn and sorted(lean.born_at) == [24] and counts(lean) == ([2, 0], 3)
+    assert (
+        not drawn and sorted(lean.born_at) == [24] and counts(lean) == ([0, 2], 3)
+    )  # the lift point 2's two records and its two rows (the selector births the lift, 2026-10-24; the swap point -2, the first charged family, under the former clause)
     monkeypatch.undo()  # the hole seed, the law's own
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     monkeypatch.setattr(meeting_board, "read_of", spied)

@@ -181,6 +181,7 @@ def acted(board: Lattice, held: Kept, direction: int) -> None:
     mask = (
         at_top(*triple) | at_floor(triple[0], triple[2], floor)
     )  # the top's trigger on the triple and the floor's on its two outer levels (ALGEBRA.md, The swap at the top; The floor)
+    board.turned = mask  # the act's own reading of the Nodes it turns, read per slab by the slabs' runner (slabs.py)
     if not mask.any():
         return
     swapped(board, held, mask)
