@@ -101,6 +101,7 @@ def angled(den: int) -> tuple[list[tuple[int, int]], int]:
 def circle_points(den: int) -> list[Point]:
     """Every point of den's circle in the open quadrant with its exponent vector over den's primes 1 mod 4 (the module's sentence), in the vectors' order; none where den has no prime 1 mod 4."""
     primes, scale = angled(den)
+    gaussians = {prime: split(prime) for prime, _power in primes}  # each prime split once
     vectors: list[tuple[int, ...]] = [()]
     for _prime, power in primes:
         vectors = [v + (step,) for v in vectors for step in range(-2 * power, 2 * power + 1, 2)]
@@ -110,7 +111,7 @@ def circle_points(den: int) -> list[Point]:
             continue  # the axis, the massless point (den, 0)
         point: Gauss = (scale, 0)
         for (prime, power), step in zip(primes, vector, strict=True):
-            gauss = split(prime)
+            gauss = gaussians[prime]
             lift = int(division_forward(step + 2 * power, 2, 0)[0])
             for _ in range(lift):
                 point = times(point, gauss)

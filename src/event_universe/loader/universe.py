@@ -1,4 +1,4 @@
-"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma, the quantum's action T, the width and the Link unit (the two the constants hand strikes on its branch), and the volume holder's gap, the one content integer the law does not fix (`INTEGER_KEYS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign at (den, den) and the holder of the volume at (den - gap, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a plane row named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`; every point a plane until the kind sentence lands, the engine's stand-in and no sentence of the law), then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
+"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma, the quantum's action T, and the width and the Link unit until the constants hand strikes them (`INTEGER_KEYS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign and the holder of the volume, both at the massless point (den, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a plane row named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`; every point a plane until the kind sentence lands, the engine's stand-in and no sentence of the law), then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
 
 from __future__ import annotations
 
@@ -12,15 +12,14 @@ from event_universe.loader.derived import PLANE, FamilyRule, Row
 from event_universe.loader.keys import integer, keyed
 
 UNIVERSE_KEYS = ("integers",)
-INTEGER_KEYS = ("den", "node_clock", "quantum_action", "width", "link_unit", "volume_gap")
-INTEGERS_REQUIRED = INTEGER_KEYS[:-1]  # the volume's gap optional: absent, the volume holder stands at the massless point
+INTEGER_KEYS = ("den", "node_clock", "quantum_action", "width", "link_unit")  # den, Gamma, T; the width and the Link unit until the constants hand strikes them
 MASSLESS, SIGN, VOLUME = "massless", "sign", "volume"  # the three rows every den carries, named by what they are
 GONE = {  # the file's gone keys and the derivation that replaced each (the owner's word of 2026-10-24; the old kept by name)
     "families": (
         "the families are no rows of the file (2026-10-24, the owner's word: declaring a family is forbidden, they "
-        "must emerge by themselves at the click): the file holds den with the clock, the unit and the volume's "
-        "gap, and the loader derives at load the massless point (den, den) on one real line, the holder of the "
-        "sign, the holder of the volume at (den - volume_gap, den) and every Pythagorean point of den's circle as "
+        "must emerge by themselves at the click): the file holds den with the clock and the unit, and the loader "
+        "derives at load the massless point (den, den) on one real line, the holder of the sign and the holder "
+        "of the volume, both at (den, den), and every Pythagorean point of den's circle as "
         "a plane row named by its exponent vector over den's primes (ALGEBRA.md #a-familys-declaration, The "
         "circle of den; the keys `families` with `name`, `pair` and `dimension` the former declaration, kept by "
         "name)"
@@ -49,16 +48,16 @@ def volume_holder(name: str, pair: tuple[int, int]) -> Row:
     return Row(name, pair, 1 + AXES, 1, False, False, False, 1, 1, 0, ())
 
 
-def volume_pair(den: int, gap: int) -> tuple[int, int]:
-    """The volume holder's pair, (den - gap, den), the one place it is fixed: the file's `volume_gap` for now, the one content integer the law does not fix (ALGEBRA.md, The circle of den, 2026-10-24: to be read from the clicks), and the massless point (den, den) at the gap 0 or with no gap in the file."""
-    return den - gap, den
+def volume_pair(den: int) -> tuple[int, int]:
+    """The volume holder's pair, the one place it is fixed: the massless point (den, den), derived from den beside the sign holder's (the gravity hand's trial of 2026-10-24: the volume row laid at Gamma with no rest solve, one bang and the expansion for ever); the gapped alternative, (den - gap, den) with a gap the law does not fix (the one world's former row at the gap 38,024, the cycle of bangs), stands by name for the owner's word and would return here and nowhere else (ALGEBRA.md, The circle of den)."""
+    return den, den
 
 
 def rows_of(integers: dict[str, int]) -> list[Row]:
-    """The rows derived from den and the volume's gap (the module's sentence): the holder of the volume and the holder of the sign, each by its role, then the massless point on one real line (`sign_holder`, `volume_holder`, `volume_pair`), and den's circle, every point of the open quadrant a plane row named by its vector (`circle_points`, `label_of`)."""
-    den, gap = integers["den"], integers.get("volume_gap", 0)
+    """The rows derived from den (the module's sentence): the holder of the volume and the holder of the sign, each by its role, then the massless point on one real line (`sign_holder`, `volume_holder`, `volume_pair`), and den's circle, every point of the open quadrant a plane row named by its vector (`circle_points`, `label_of`)."""
+    den = integers["den"]
     rows = [  # the holders first, the volume's before the sign's, as the one world's file stood (its first held row the volume's)
-        volume_holder(VOLUME, volume_pair(den, gap)),
+        volume_holder(VOLUME, volume_pair(den)),
         sign_holder(SIGN, (den, den)),
         Row(MASSLESS, (den, den), 1, 1, False, False, False, None, None, 0, ()),
     ]
@@ -88,12 +87,11 @@ def resolved(integers: dict[str, int], rows: list[Row]) -> tuple[FamilyRule, ...
 
 
 def universe_of(document: object) -> tuple[dict[str, int], tuple[FamilyRule, ...]]:
-    """The universe file: its one object of integers (`INTEGER_KEYS`, every key but the volume's gap required, den from 1, the gap from 0 through den, the Link unit a power of two) and the families derived from den (`rows_of`, `resolved`); the key `families` refused by name with the derivation that replaced it (`gone_refused`), every other key refused as unknown."""
+    """The universe file: its one object of integers (`INTEGER_KEYS`, every key required, den from 1, the Link unit a power of two) and the families derived from den (`rows_of`, `resolved`); the key `families` refused by name with the derivation that replaced it (`gone_refused`), every other key refused as unknown."""
     gone_refused(document, "the universe file")
     universe = keyed(document, "the universe file", UNIVERSE_KEYS, UNIVERSE_KEYS)
-    raw: dict[str, Any] = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGERS_REQUIRED)
-    integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items() if key != "volume_gap"}
-    integers["volume_gap"] = integer(raw.get("volume_gap", 0), "integers.volume_gap", 0, integers["den"])
+    raw: dict[str, Any] = keyed(universe["integers"], "integers", INTEGER_KEYS, INTEGER_KEYS)
+    integers = {key: integer(value, f"integers.{key}", 1) for key, value in raw.items()}
     unit = integers["link_unit"]
     if unit & (unit - 1):
         raise ValueError(

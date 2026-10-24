@@ -11,17 +11,19 @@ from event_universe.core.rule3 import coefficients, mass, rule3
 from event_universe.loader.derived import HeldWrite, family_rules, held_write_of
 from event_universe.loader.universe import universe_of
 from tests.laws import real_rows
-from tests.laws_universe import UNIVERSE
+from event_universe.loader.universe import SIGN, VOLUME
+from tests.laws_universe import SMALL
 
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 ROWS = ("held", (4, 4), 4, 7), ("gapped", (3, 4), 1, 7), ("quanta", (5, 7), 1, None)
 BOX = (slice(1, -1),) * 3  # the inner Nodes of an array padded by one Node on every side
 HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
 WRITE = held_write_of((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))  # the tests' universe
+INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 UNIT = INTEGERS["link_unit"]  # the Link's unit G of the tests' universe
 NAMES = [family.name for family in FAMILIES]
-MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
+GRAVITY, CHARGE = NAMES.index(VOLUME), NAMES.index(SIGN)
+MATTER = next(i for i, f in enumerate(FAMILIES) if f.plane)  # a point of den's circle, a gapped pair for the rule's identities
 GAMMA, T = INTEGERS["node_clock"], INTEGERS["quantum_action"]
 WALLS = [held_write_of(FAMILIES, i, T).walls if f.held else () for i, f in enumerate(FAMILIES)]
 

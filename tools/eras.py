@@ -18,6 +18,7 @@ import numpy as np
 from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
+from event_universe.loader import circle
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
@@ -171,16 +172,22 @@ def spans(lines: list[dict[str, Any]], family: str, span: int, gamma: int) -> li
 
 
 def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, Any]:
-    """The log's first line: the world's own numbers and the held rows by name (the page's legend names the hypotheses under their keys)."""
+    """The log's first line: the world's own numbers, den with its primes and the points of its circle (each plane row's num and s under its label, the page's captions read from them, tools/look/captions.captions_for; 2026-10-24, the family-less file), the seed row's name, every row's name and the held rows of the content by name (the page's legend names the hypotheses under their keys)."""
     world = board.world
     held = [family.name for family in world.families if family.held and not family.wronskian]
+    seed = world.families[world.seed].name if world.seed is not None else None
+    den = world.families[world.seed if world.seed is not None else 0].pair[1]
     return {
         "world": path.name,
         "node_clock": world.node_clock,
         "quantum_action": world.quantum_action,
         "width": world.width.bit_length(),
         "shape": list(world.shape),
+        "den": den,
+        "primes": [list(prime) for prime in circle.factored(den)],
+        "seed": seed,
         "families": [family.name for family in world.families],
+        "points": {circle.label_of(vector): [num, sine] for vector, num, sine in circle.circle_points(den)},
         "held": held,
         "amplitude_bound": world.amplitude_bound,
         "intervals": world.intervals if intervals is None else intervals,

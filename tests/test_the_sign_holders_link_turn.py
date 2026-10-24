@@ -12,11 +12,13 @@ from event_universe.core.ports import PORT_SIDES, Wrap
 from event_universe.core.rule3 import rule_integers
 from event_universe.loader.derived import held_write_of
 from event_universe.loader.universe import universe_of
-from tests.laws_universe import CUBE, GAMMA, UNIVERSE
+from event_universe.loader.universe import SIGN
+from tests.laws_universe import CUBE, GAMMA, SMALL
 
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
+INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 NAMES = [family.name for family in FAMILIES]
-CHARGE, ELECTRON = NAMES.index("charge"), NAMES.index("electron")
+CHARGE = NAMES.index(SIGN)
+ELECTRON = min((i for i, f in enumerate(FAMILIES) if f.plane), key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2)  # the least leg, the lighter point
 PAIR, UNIT, T = FAMILIES[ELECTRON].pair, INTEGERS["link_unit"], INTEGERS["quantum_action"]
 SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
 

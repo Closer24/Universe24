@@ -147,7 +147,6 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         "quantum_action",
         "width",
         "link_unit",
-        "volume_gap",
     }  # no family row: `families` with `name`, `pair` and `dimension` gone 2026-10-24, `held` and `reads` before them
     assert set(universe.GONE) == {"families"}
     with pytest.raises(ValueError, match="holds the key 'families', a declaration no file carries"):

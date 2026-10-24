@@ -8,7 +8,7 @@ import pytest
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file
-from tests.laws_universe import GAMMA, UNIVERSE
+from tests.laws_universe import GAMMA, small_universe
 
 ERAS = load_file("eras_for_the_torus", ROOT / "tools" / "eras.py")
 TORUS = load_file("torus_page", ROOT / "tools" / "look" / "torus_page.py")
@@ -25,7 +25,7 @@ def test_the_torus_page_holds_every_nodes_length_direction_and_content_from_the_
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    (tmp_path / "u.json").write_bytes(UNIVERSE.read_bytes())  # the one world's universe on a bare 3-cube
+    small_universe(tmp_path)  # the tests' small universe on a bare 3-cube
     world = tmp_path / "small.json"
     world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": INTERVALS, "universe": "u.json"}))
     eras, clicks, nodes = (tmp_path / f"small.{kind}.jsonl" for kind in ("eras", "clicks", "nodes"))

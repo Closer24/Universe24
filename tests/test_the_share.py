@@ -16,6 +16,7 @@ from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
 from tests.laws import arrivals_rule3, real_rows
+from event_universe.loader.universe import SIGN
 from tests.laws_universe import bare_torus
 
 
@@ -143,7 +144,7 @@ def test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it(
     def ring(level: int) -> tuple[Lattice, int]:
         board = Lattice(load_world(path), output=lambda line: None)
         names = [family.name for family in board.families]
-        electron, sign = names.index("electron"), names.index("charge")
+        electron, sign = min((i for i, f in enumerate(board.families) if f.plane), key=lambda i: board.families[i].pair[1] ** 2 - board.families[i].pair[0] ** 2), names.index(SIGN)
         half = np.full(board.shape, board.half_wall(electron), dtype=object)
         for line in range(2):
             now, before = draw.integers(-6000, 6000, (2, *board.shape)).astype(object)

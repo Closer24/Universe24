@@ -15,6 +15,7 @@ from event_universe.loader.universe import universe_of
 from event_universe.readings import ports
 from event_universe.world_files import load_world
 from tests.laws import linear_sum, weighted_linear_sum
+from event_universe.loader.universe import MASSLESS
 from tests.laws_universe import CUBE, UNIVERSE, bare_torus
 
 BEFORE_THE_BIRTHS = 29  # the births at 30 on the bare 3-cube since the close reads the interval's start (29 when it read the state after the step)
@@ -45,7 +46,7 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
 def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content() -> None:
     """The light family on a 3-cube torus of random levels within 10^6 at the content 0 on two layers and 600 on the third, laid by hand and never stepped: the rule `node.rule_of` at that content, 100 intervals of the engine's own `flux.step_line`, L'' = SUM weight_i [w (now - before) + r] the same whole number after every interval, weight_i = scale div p_i^2 with scale the least common multiple of the two distinct p_i^2, while L moves by exactly the pairing term SUM over the Links of (R_ij - R_ji)(a_j - a_i), the step's own Links' sum."""
     integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
-    light = next(family for family in families if family.name == "light")
+    light = next(family for family in families if family.name == MASSLESS)
     gamma, unit, wrap, shape = (
         integers["node_clock"],
         integers["link_unit"],

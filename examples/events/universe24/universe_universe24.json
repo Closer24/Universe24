@@ -4,7 +4,6 @@
   "node_clock": 1000,
   "quantum_action": 36000,
   "width": 92,
-  "link_unit": 16,
-  "volume_gap": 38024
+  "link_unit": 16
  }
 }

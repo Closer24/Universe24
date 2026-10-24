@@ -9,10 +9,11 @@ import numpy as np
 from event_universe import flux, node, readings, records
 from event_universe.core.ports import PORT_SIDES, Wrap
 from event_universe.loader.universe import universe_of
-from tests.laws_universe import CUBE, UNIVERSE
+from event_universe.loader.universe import MASSLESS
+from tests.laws_universe import CUBE, SMALL
 
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
-LIGHT = [family.name for family in FAMILIES].index("light")
+INTEGERS, FAMILIES = universe_of(SMALL)
+LIGHT = [family.name for family in FAMILIES].index(MASSLESS)
 GAMMA, UNIT = INTEGERS["node_clock"], INTEGERS["link_unit"]
 SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
 INTERVALS, AMPLITUDE = 50, 5000

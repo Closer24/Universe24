@@ -13,14 +13,13 @@ WORLD, UNIVERSE = FOLDER / "universe24.json", FOLDER / "universe_universe24.json
 LOG = FOLDER / "universe24.eras.jsonl"
 ERAS = load_file("eras", ROOT / "tools" / "eras.py")
 GAMMA, CUBE = 1000, 3  # the one universe's clock and the small torus's side
-SMALL = {  # the tests' small universe for the runs (2026-10-24, the family-less file): the one universe's clock, unit, width and Link unit at the den 1,021, a prime 1 mod 4 (30^2 + 11^2), whose circle has two points, and the volume's gap 1; the bare 3-cube bangs from the light seed and births its pairs at the first meeting, at 34; the shipped file's 242 points run at the record's pace and are the record's business
+SMALL = {  # the tests' small universe for the runs (2026-10-24, the family-less file): the one universe's clock, unit, width and Link unit at the den 1,021, a prime 1 mod 4 (30^2 + 11^2), whose circle has two points; the bare 3-cube bangs from the light seed and births its pairs at the first meeting; the shipped file's 242 points run at the record's pace and are the record's business
     "integers": {
         "den": 1021,
         "node_clock": GAMMA,
         "quantum_action": 36000,
         "width": 92,
         "link_unit": 16,
-        "volume_gap": 1,
     }
 }
 

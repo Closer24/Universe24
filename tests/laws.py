@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: the tests' universe, one object of integers (`UNIVERSE`, `universe_copy`, `universe_beside`), rows built by hand (`real_rows`), a module loaded by its path (`load_file`; the step's oracle `ORACLE` and its first form `arrivals_rule3`, tools/step_oracle.py), the refusal by name (`refused`), the flux form's linear sums (`linear_sum`, `weighted_linear_sum`) and a board's state for the run back (`board_state`, `same_state`). The builders of laid worlds (the packet, the flux world, the Coulomb chain, the turning universe) left 2026-10-24 with the tests of the cancelled worlds: the suite is the law's sentences at one Node on the bare torus with the one universe file."""
+"""The helpers of the law's tests: the tests' universe, one object of integers (`UNIVERSE`, `universe_copy`, `universe_beside`), rows by hand in the former row form and their resolution (`rows_from`, `resolved`), rows built by hand (`real_rows`), a module loaded by its path (`load_file`; the step's oracle `ORACLE` and its first form `arrivals_rule3`, tools/step_oracle.py), the refusal by name (`refused`), the flux form's linear sums (`linear_sum`, `weighted_linear_sum`) and a board's state for the run back (`board_state`, `same_state`). The builders of laid worlds (the packet, the flux world, the Coulomb chain, the turning universe) left 2026-10-24 with the tests of the cancelled worlds: the suite is the law's sentences at one Node on the bare torus with the one universe file."""
 
 import importlib.util
 import json
@@ -10,19 +10,19 @@ import numpy as np
 import pytest
 
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import Row
+from event_universe.loader import universe as loader_universe
+from event_universe.loader.derived import PLANE, FamilyRule, Row
 from event_universe.records import Record
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
-UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), one object of integers and no family row (the owner's word of 2026-10-24, declaring a family is forbidden): den 6,000 = 2^4 x 3 x 5^3, whose circle has the six points of the prime 5's angle, the volume's gap 6 (the declared seed's gap 999 over 1000 at the rule's den, the former row gravity [5994, 6000]); the rows derived at load, the massless point, the sign holder, the volume holder and the six planes (loader/universe.rows_of); the former rows binding [2400, 2401], a second holder of the volume, and matter [4000, 6000], one real line, and the rule's own universe examples/events/rule.json kept by name as the record of the law to that day
+UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), one object of integers and no family row (the owner's word of 2026-10-24, declaring a family is forbidden): den 6,000 = 2^4 x 3 x 5^3, whose circle has the six points of the prime 5's angle, the rows derived at load, the volume holder and the sign holder at the massless point, the massless point on one real line and the six planes (the former row gravity [5994, 6000], the volume's gap, by name) (loader/universe.rows_of); the former rows binding [2400, 2401], a second holder of the volume, and matter [4000, 6000], one real line, and the rule's own universe examples/events/rule.json kept by name as the record of the law to that day
     "integers": {
         "den": 6000,
         "node_clock": 6000,
         "quantum_action": 32768,
         "width": 63,
         "link_unit": 16,
-        "volume_gap": 6,
     },
 }
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
@@ -37,6 +37,30 @@ def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
     """Rows of real lines built by hand (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the loader derives its rows from the pair and the dimension alone since 2026-10-24; these rows, a massless holder of the content among them, are the tests' own, no file's)."""
     held = tuple((name, 1) for name, _pair, _lines, weight in rows if weight is not None)
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
+
+
+def rows_from(*entries: dict[str, Any]) -> list[Row]:
+    """Rows by hand in the former file's row form, each {name, pair, dimension?} (the loader reads no row since 2026-10-24, the owner's word; the tests pose the law's sentences on rows of their own): a row with a dimension a family of quanta, an integer its lines (2 the plane), a list of its lines' kinds or [parts, dimension] as the files wrote them; a row without one a holder by its pair, massless the sign's and gapped the volume's (loader/universe.sign_holder, volume_holder)."""
+    found = []
+    for entry in entries:
+        name, pair = entry["name"], (entry["pair"][0], entry["pair"][1])
+        if "dimension" not in entry:
+            holder = loader_universe.sign_holder if pair[0] == pair[1] else loader_universe.volume_holder
+            found.append(holder(name, pair))
+            continue
+        shape = entry["dimension"]
+        parts, lines, plane = 1, shape, shape == PLANE
+        if isinstance(shape, list) and shape and isinstance(shape[0], str):
+            plane, lines = shape[0] == "plane", len(shape) * (PLANE if shape[0] == "plane" else 1)
+        elif isinstance(shape, list):
+            parts, lines, plane = shape[0], shape[0] * shape[1], shape[1] == PLANE
+        found.append(Row(name, pair, lines, parts, plane, False, False, None, None, 0, ()))
+    return found
+
+
+def resolved(*entries: dict[str, Any], **integers: int) -> tuple[FamilyRule, ...]:
+    """The families the loader resolves from rows by hand (`rows_from`, loader/universe.resolved) at the tests' integers, an integer replaced where `integers` names it."""
+    return loader_universe.resolved({**UNIVERSE["integers"], **integers}, rows_from(*entries))
 
 
 def load_file(name: str, path: Path):
