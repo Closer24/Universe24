@@ -1,21 +1,28 @@
 """The cube 48 on the board (cube48, 2026-10-24; a test-local script in the worktree cube48_wt at origin/main, no key of any
-file, nothing of the engine changed): the law's seed (the hole at the origin) or the plus-one seed on a bare torus at a toy den,
-run interval by interval with
+file, nothing of the engine changed): the law's seed (the hole at the origin), the plus-one seed or the faces seed on a bare torus
+at a toy den, run interval by interval with
   (a) the invariance test: the state compared with its image under every element of the 48 (the signed permutations of the axes
       about the origin), the levels, the remainders, the write remainders and the phase lines apart, per interval; the first
       interval and orbit that is not uniform; and the commutation test: at an interval the state is copied, transformed by a
       generator of the 48 (or by the conjugation C), both stepped once, and the stepped image compared with the image of the
       stepped: the first act that does not commute, by the line and the Node;
   (b) the orbit quotient: per interval and orbit the seed's levels, the share q, the digits' sum;
-  (c) the read as a switch: ordered (the shipped Port order), sorted (the six Ports' digits sorted by value, the covariant read),
-      sum (the digits' plain sum); the selector: main (the heaviest whose walls fit, the shipped child_of) or aprime (the primes'
-      lifts that fit, drawn at equal weights by the read); the hole: zero (main's, the met Node's seed lines to (0, 0)) or mean
-      (the ruling of 2026-10-24, 13:33 UTC: the met Node written to the frame's uniform part, the six Ports' mean of now and of before by
-      the carried division with the line's remainder as the carry, 6 now_i = SUM_j now_j, every face read before any write);
+  (c) the read as a switch: ordered (the shipped Port order), sorted (the six Ports' digits sorted by value), sum (the digits'
+      plain sum), link (a digit per Link: the neighbour's remainder on the LINK'S lattice F_ij = gcd(w, R_ji, R^c_ji, R^s_ji),
+      the Node's own on its own lattice, the sorted multiset in the mixed radix), link_sum (the Link digits and the Node's, the
+      digits at the lay's origin left out, the plain sum, the draw the sum modulo the total, no moduli); the selector: main (the
+      heaviest whose walls fit, the shipped child_of) or aprime (the primes' lifts that fit, drawn at equal weights by the read);
+      the hole: zero (main's, the met Node's seed lines to (0, 0)), mean (the frame's uniform part by Rule3's division at the wall,
+      the ruling of 13:33, which fails: it keeps the drift), before_mean ((b_u, b_u), b_u the six Ports' before over PORTS by the
+      division act, the remainder kept as it stands), own_before ((b_i, b_i), the Node's own before twice);
   (d) the mirror lay: W per record at every born Node right after the lay;
-  (e) the mirror run: the whole run from the image of the start under one element, compared interval by interval.
-Usage: cube48.py --den D --cube L --intervals N --seed {hole,plus1} --read {ordered,sorted,sum} --select {main,aprime}
-       --hole {zero,mean} --prefix PATH [--commute N] [--commute-every K] [--mirror ELEMENT] [--no-all48] [--digits-table]"""
+  (e) the mirror run: the whole run from the image of the start under one element, compared interval by interval;
+  (f) the two-tiles test: the torus cut in two x-tiles with one-Link halos, each a lattice of its own, each stepped from its own
+      state and its halos at the tick before, the halos exchanged after, the interiors compared with the board bit for bit
+      (tests/test_two_tiles_with_skewed_clocks_run_the_board.py's form): the first interval and array at which they part.
+Usage: cube48.py --den D --cube L --intervals N --seed {hole,plus1,faces} --read {ordered,sorted,sum,link,link_sum}
+       --select {main,aprime} --hole {zero,mean,before_mean,own_before} --prefix PATH [--commute N] [--commute-every K]
+       [--mirror ELEMENT] [--tiles] [--no-all48] [--digits-table]"""
 
 from __future__ import annotations
 
@@ -31,11 +38,11 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import conversion, credit, meeting_board, records
+from event_universe import conversion, credit, flux, meeting_board, records
 from event_universe.act import born_items, click
 from event_universe.core.ports import AXES, PORTS
 from event_universe.core.rule3 import division_forward, largest_below, wall_of
-from event_universe.digits import at_origin, digits_of, frame_of
+from event_universe.digits import at_origin, digits_of, frame_of, lattice_of, picked, ruled
 from event_universe.digits import read_of as read_ordered
 from event_universe.emission import emitted_lines
 from event_universe.features import phase
@@ -43,7 +50,7 @@ from event_universe.features.click import drawn_from, read_number
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
 from event_universe.loader.circle import angled
-from event_universe.loader.derived import count_wall
+from event_universe.loader.derived import count_wall, quanta_records
 from event_universe.meeting_board import child_of, meetings, readings_at
 from event_universe.readings import ports
 from event_universe.reports import birth_line
@@ -65,16 +72,6 @@ def elements():
 def name_of(element):
     perm, signs = element
     return "".join(AXIS_NAMES[p] for p in perm) + "," + "".join("+" if s > 0 else "-" for s in signs)
-
-
-def is_rotation(element):
-    perm, signs = element
-    parity = 1
-    for i in range(3):
-        for j in range(i + 1, 3):
-            if perm[i] > perm[j]:
-                parity = -parity
-    return parity * signs[0] * signs[1] * signs[2] > 0
 
 
 GENERATORS = [
@@ -302,14 +299,41 @@ CURRENT = {}
 DRAWS = []
 
 
-def digits_by_line(board, reads):
-    """The frame's digits grouped per (family, record, line): [(place, digit, base)], the copies dropped as read_of drops them
-    (the reader's D2: a remainder equal to an earlier line's at the same Node of the record, or w less it); the flags at origin
-    and coarse (every digit on the vacuum lattice, three values or fewer)."""
+def link_digits(board, index, at):
+    """One family's digits at the frame `at` with ONE-LINK lattices (DERIVATION.md section 7): the Node's own digit on its own
+    lattice F_i (digits.lattice_of at the Node: w, D_i, its six reaches and pairs, every one one Link from it); each Port's digit
+    the neighbour's remainder on the LINK'S lattice F_ij = gcd(w, R_ji, R^c_ji, R^s_ji), the neighbour's reach and pairs across
+    this Link read from the neighbour's end (the opposite Port), a multiple of the neighbour's own F_j, so the Link digit is the
+    coarse index, the floor of the fine one over the two lattices' ratio; otherwise as digits.digits_of (every record of quanta,
+    every line, the remainder with its lattice, the wall and the place)."""
+    family, gamma, unit = board.families[index], board.world.node_clock, board.unit
+    wall = wall_of(family.pair[1], gamma, unit)
+    node = at[0]
+    for record in quanta_records(board.families, index):
+        content, factors = board.read(index, 1, record)
+        rule = ruled(board, index, record, content, factors)
+        pairs = flux.pairs_of(index, board.families, board.states, 1, board.wrap, gamma, content, factors, record, board.amplitude)
+        lattice = [lattice_of(rule, [node], pairs)[0]]
+        for place in range(1, len(at)):
+            opposite = (place - 1) ^ 1  # the Port of the neighbour that looks back at the Node
+            j = at[place]
+            terms = [picked(rule.reaches[opposite], [j])[0]]
+            if pairs is not None:
+                terms += [picked(pairs[0][opposite], [j])[0], picked(pairs[1][opposite], [j])[0]]
+            lattice.append(gcd(int(rule.wall), *(int(t) for t in terms)))
+        for line in board.lines_of(index, record):
+            kept = picked(line.remainder, at)
+            for place, (remainder, found) in enumerate(zip(kept, lattice, strict=True)):
+                yield remainder, found, int(wall), (record, place)
+
+
+def digits_by_line(board, reads, source):
+    """The frame's digits grouped per (family, record, line): [(place, digit, base, at_origin)], the copies dropped as read_of
+    drops them (the reader's D2); the flags every digit at the origin and every digit coarse (on the vacuum lattice)."""
     groups, origin, coarse = [], True, True
     for index, at in reads:
         half, earlier, line_counter, group = board.half_wall(index), {}, {}, None
-        for remainder, found, wall, place in digits_of(board, index, at):
+        for remainder, found, wall, place in source(board, index, at):
             values = int(division_forward(wall, found, 0)[0])
             origin = origin and remainder == half
             coarse = coarse and values <= AXES
@@ -324,48 +348,60 @@ def digits_by_line(board, reads):
                 groups.append(((index, record, n), group))
             if copied:
                 continue
-            group.append((position, int(division_forward(remainder, found, 0)[0]), values + 1))
+            group.append((position, int(division_forward(remainder, found, 0)[0]), values + 1, remainder == half))
     return groups, origin, coarse
 
 
 def read_switch(board, reads, label):
-    """The read of the board by the switch: ordered (the shipped read_of, bit for bit), sorted (per line the Node's own digit
-    first, then the six Ports' (digit, base) pairs sorted ascending), sum (the digits' plain sum, the moduli (1, 1))."""
+    """The read of the board by the switch (the module's sentence): ordered (the shipped read_of, bit for bit); sorted (per
+    line the Node's own digit first, then the six Ports' (digit, base) pairs sorted ascending, the mixed radix); sum (the plain
+    sum, the moduli (1, 1)); link (the Link digits sorted, the mixed radix); link_sum (the Link digits and the Node's, the digits
+    at the lay's origin left out, the plain sum, no moduli)."""
     at = reads[0][1][0]
     CURRENT.update(node=list(map(int, at)), label=label)
-    if READ["mode"] == "ordered":
+    mode = READ["mode"]
+    if mode == "ordered":
         number, moduli = read_ordered(board, reads, label)
         CURRENT.update(number=int(number), moduli=[int(m) for m in moduli])
         return number, moduli
-    groups, origin, coarse = digits_by_line(board, reads)
+    source = link_digits if mode in ("link", "link_sum") else digits_of
+    groups, origin, coarse = digits_by_line(board, reads, source)
     if origin:
-        raise RuntimeError(f"the read at {label} finds every digit at the lay's origin w div 2: refused (the sorted read)")
+        raise RuntimeError(f"the read at {label} finds every digit at the lay's origin w div 2: refused ({mode} read)")
     if coarse:
-        raise RuntimeError(f"the read at {label} finds every digit on the lattice of the exact vacuum paces: refused (the sorted read)")
+        raise RuntimeError(f"the read at {label} finds every digit on the lattice of the exact vacuum paces: refused ({mode} read)")
     digits, bases = [], []
     for _key, group in groups:
-        for _p, d, b in (g for g in group if g[0] == 0):
+        own = [g for g in group if g[0] == 0]
+        rest = sorted((g[1], g[2], g[3]) for g in group if g[0] != 0)
+        if mode == "link_sum":
+            own = [g for g in own if not g[3]]
+            rest = [g for g in rest if not g[2]]
+        for _p, d, b, _o in own:
             digits.append(d)
             bases.append(b)
-        for d, b in sorted((g[1], g[2]) for g in group if g[0] != 0):
+        for d, b, *_ in rest:
             digits.append(d)
             bases.append(b)
-    if READ["mode"] == "sum":
-        number, moduli = sum(digits), (1, 1)
+    if mode in ("sum", "link_sum"):
+        if not digits:
+            raise RuntimeError(f"the read at {label} finds no digit off the lay's origin: nothing to read ({mode} read)")
+        number, moduli = sum(digits), (None if mode == "link_sum" else (1, 1))
     else:
         number = read_number(digits, bases)
         summed = gcd(*(base - 1 for base in bases[1:])) if len(bases) > 1 else 1
         moduli = (summed, bases[-1])
-    CURRENT.update(number=int(number), moduli=[int(m) for m in moduli], digits=len(digits))
+    CURRENT.update(number=int(number), moduli=None if moduli is None else [int(m) for m in moduli], digits=len(digits))
     return number, moduli
 
 
 def drawn_logged(number, weights, label, moduli=None):
     """drawn_from with its log: the whether (the two weights rest and unit less rest) or a pick."""
     total = sum(int(w) for w in weights)
-    line = {"event": "draw", "interval": CURRENT.get("interval"), "node": CURRENT.get("node"), "read": READ["mode"], "board": CURRENT.get("board", "main"),
-            "weights": [str(w) for w in weights], "total": str(total), "number_bits": int(number).bit_length(),
-            "residue": str(int(number) % total) if total else None, "moduli": [str(m) for m in moduli] if moduli else None,
+    line = {"event": "draw", "interval": CURRENT.get("interval"), "node": CURRENT.get("node"), "read": READ["mode"],
+            "board": CURRENT.get("board", "main"), "weights": [str(w) for w in weights], "total": str(total),
+            "number_bits": int(number).bit_length(), "residue": str(int(number) % total) if total else None,
+            "moduli": [str(m) for m in moduli] if moduli else None, "digits": CURRENT.get("digits"),
             "kind": "whether" if len(weights) == 2 and total != 2 else "pick"}
     try:
         found = drawn_from(number, weights, label, moduli)
@@ -407,8 +443,8 @@ def child_aprime(board, index, share, whole, at):
     over, energy, action = max(whole, 2), 2 * share, board.world.quantum_action
     candidates = [t for t in conversion.birth_of(board.families, index)
                   if t[0][0] in SELECT["lifts"] and 2 * count_wall(board.families[t[0][0]], action) * over <= energy]
-    line = {"event": "pick", "interval": board.interval, "node": list(at), "share": str(share), "whole": whole, "board": CURRENT.get("board", "main"),
-            "q": share / board.credit.units[index], "candidates": [board.families[t[0][0]].name for t in candidates]}
+    line = {"event": "pick", "interval": board.interval, "node": list(at), "board": CURRENT.get("board", "main"), "share": str(share),
+            "whole": whole, "q": share / board.credit.units[index], "candidates": [board.families[t[0][0]].name for t in candidates]}
     if not candidates:
         line.update(how="none")
         PICKS.append(line)
@@ -450,24 +486,34 @@ HOLE = {"mode": "zero"}
 
 
 def hole_changes(board, index, number, at_nodes):
-    """Per born Node the change the hole writes on the seed's line `number`, read on the state the step left before ANY write:
-    zero: the line to (0, 0) at the Node (main's); mean: the level to the six Ports' mean of now and of before by Rule3's own
-    division act at the wall, (w div 6) SUM_j m_j divided at w with the line's own remainder as the carry (now first, before on
-    the remainder it leaves), the remainder kept: 6 now_i = SUM_j now_j, the uniform part of the frame."""
+    """Per born Node the change the hole writes on the seed's line `number`, read on the state the step left before ANY write
+    (every face before any write): zero: the line to (0, 0) at the Node (main's); mean: the six Ports' mean of now and of before by
+    Rule3's division act at the wall, (w div 6) SUM_j m_j divided at w with the line's remainder as the carry, the remainder kept
+    (the ruling of 13:33; it keeps the drift and fails); before_mean: (b_u, b_u), b_u = SUM_j before_j div PORTS by the division
+    act, the remainder as it stands; own_before: (b_i, b_i), the Node's own level before twice, the remainder as it stands."""
     line = board.states[index].lines[number]
     found = {}
-    if HOLE["mode"] == "zero":
+    mode = HOLE["mode"]
+    if mode == "zero":
         for at in at_nodes:
             found[at] = (-int(line.now[at]), -int(line.before[at]), None)
         return found
+    if mode == "own_before":
+        for at in at_nodes:
+            b = int(line.before[at])
+            found[at] = (b - int(line.now[at]), 0, None)
+        return found
     now_sum = sum(np.asarray(a, dtype=object) for a in ports(line.now, board.wrap))
     before_sum = sum(np.asarray(a, dtype=object) for a in ports(line.before, board.wrap))
+    if mode == "before_mean":
+        for at in at_nodes:
+            b_u = int(division_forward(int(before_sum[at]), PORTS, 0)[0])
+            found[at] = (b_u - int(line.now[at]), b_u - int(line.before[at]), None)
+        return found
     wall = wall_of(board.families[index].pair[1], board.world.node_clock, board.unit)
-    sixth = int(division_forward(wall, PORTS, 0)[0])  # w div 6, exact: w = 6 den Gamma^2 G^2
+    sixth = int(division_forward(wall, PORTS, 0)[0])
     for at in at_nodes:
         r = int(line.remainder[at])
-        # Rule3's own division act at the wall: the total (w div 6) SUM_j m_j is w times the six Ports' mean, divided at w
-        # with the line's remainder as the carry, the remainder kept (now first, before on the remainder now leaves)
         q_now, r1 = division_forward(sixth * int(now_sum[at]), wall, r)
         q_before, r2 = division_forward(sixth * int(before_sum[at]), wall, int(r1))
         found[at] = (int(q_now) - int(line.now[at]), int(q_before) - int(line.before[at]), int(r2))
@@ -500,8 +546,16 @@ def closed_switch(board, begun):
                 region = frame_of(at, board.shape, board.world.periodic)
                 reads = [(fam, region) for fam in board.order]
                 if not at_origin(board, reads):
-                    number, moduli = read_switch(board, reads, label)
-                    meet = drawn_logged(number, [rest, unit - rest], label, moduli)[0] == 0
+                    try:
+                        number, moduli = read_switch(board, reads, label)
+                        meet = drawn_logged(number, [rest, unit - rest], label, moduli)[0] == 0
+                    except RuntimeError as refusal:
+                        if READ["mode"] == "ordered":
+                            raise
+                        DRAWS.append({"event": "draw", "interval": CURRENT.get("interval"), "node": list(at), "read": READ["mode"],
+                                      "board": CURRENT.get("board", "main"), "kind": "whether", "refused": str(refusal)[:200],
+                                      "weights": [str(rest), str(unit - rest)], "total": str(unit)})
+                        meet = False
             if meet:
                 born.append((at, table))
     finally:
@@ -542,12 +596,12 @@ def closed_switch(board, begun):
 # ----------------------------------------------------------------------------------------------------------------------
 # the world and the seeds
 # ----------------------------------------------------------------------------------------------------------------------
-def build_world(folder, den, cube, intervals, gamma, action):
+def build_world(folder, den, shape, intervals, gamma, action, name):
     folder.mkdir(parents=True, exist_ok=True)
     universe = folder / f"u_{den}.json"
     universe.write_text(json.dumps({"integers": {"den": den, "node_clock": gamma, "quantum_action": action}}), encoding="utf-8")
-    world = folder / f"bare_{den}_{cube}.json"
-    world.write_text(json.dumps({"universe": str(universe), "shape": [cube] * 3, "intervals": intervals}), encoding="utf-8")
+    world = folder / f"{name}.json"
+    world.write_text(json.dumps({"universe": str(universe), "shape": list(shape), "intervals": intervals}), encoding="utf-8")
     return world
 
 
@@ -587,6 +641,113 @@ def plus_one(board):
 
 
 # ----------------------------------------------------------------------------------------------------------------------
+# the two-tiles test (tests/test_two_tiles_with_skewed_clocks_run_the_board.py's form)
+# ----------------------------------------------------------------------------------------------------------------------
+def layers_of(interior, side):
+    return [(interior[0] - 1) % side, *interior, (interior[-1] + 1) % side]
+
+
+def taken(array, layers):
+    return np.asarray(array)[layers]
+
+
+def imposed(tile, whole, layers):
+    for state, (lines, remainders, phases) in zip(tile.states, whole, strict=True):
+        state.lines = [records.Record(*(taken(a, layers) for a in line)) for line in lines]
+        state.write_remainders = [taken(r, layers) for r in remainders]
+        state.phases = [[records.Record(*(taken(a, layers) for a in line)) for line in row] for row in phases]
+
+
+def arrays_of(board):
+    return [([(line.now, line.before, line.remainder) for line in state.lines], list(state.write_remainders),
+             [[(line.now, line.before, line.remainder) for line in row] for row in state.phases]) for state in board.states]
+
+
+def merged(tiles, interiors, shape):
+    found = []
+    for index in range(len(tiles[0].states)):
+        parts = [arrays_of(tile)[index] for tile in tiles]
+
+        def put(part, *path, parts=parts):
+            pieces = []
+            for tile_part, interior in zip(parts, interiors, strict=True):
+                a = tile_part[part]
+                for step in path:
+                    a = a[step]
+                pieces.append((interior, np.asarray(a)[1 : 1 + len(interior)]))
+            whole = np.zeros(shape, dtype=pieces[0][1].dtype)
+            for interior, piece in pieces:
+                whole[interior] = piece
+            return whole
+
+        lines = [tuple(put(0, k, j) for j in range(3)) for k in range(len(parts[0][0]))]
+        remainders = [put(1, k) for k in range(len(parts[0][1]))]
+        phases = [[tuple(put(2, r, k, j) for j in range(3)) for k in range(len(parts[0][2][r]))] for r in range(len(parts[0][2]))]
+        found.append((lines, remainders, phases))
+    return found
+
+
+def tile_differences(whole, board, limit=6):
+    """Every array of the tiles' merged state that differs from the board's, named by family, line and part, with the Nodes."""
+    found = []
+    parts = ("now", "before", "remainder")
+    for family, ((lines, remainders, phases), state) in zip(board.families, zip(whole, board.states, strict=True), strict=True):
+        for k, (line, kept) in enumerate(zip(lines, state.lines, strict=True)):
+            for part, (u, v) in enumerate(zip(line, (kept.now, kept.before, kept.remainder), strict=True)):
+                differ = np.asarray(np.asarray(u, dtype=object) != np.asarray(v, dtype=object))
+                if differ.any():
+                    found.append({"family": family.name, "line": k, "part": parts[part], "nodes": int(differ.sum()),
+                                  "where": [list(map(int, n)) for n in np.argwhere(differ)[:limit]]})
+        for k, (a, b) in enumerate(zip(remainders, state.write_remainders, strict=True)):
+            differ = np.asarray(np.asarray(a, dtype=object) != np.asarray(b, dtype=object))
+            if differ.any():
+                found.append({"family": family.name, "write_remainder": k, "nodes": int(differ.sum()),
+                              "where": [list(map(int, n)) for n in np.argwhere(differ)[:limit]]})
+        for r, (row, kept_row) in enumerate(zip(phases, state.phases, strict=True)):
+            for k, (line, kept) in enumerate(zip(row, kept_row, strict=True)):
+                for part, (u, v) in enumerate(zip(line, (kept.now, kept.before, kept.remainder), strict=True)):
+                    differ = np.asarray(np.asarray(u, dtype=object) != np.asarray(v, dtype=object))
+                    if differ.any():
+                        found.append({"family": family.name, "phase_row": r, "line": k, "part": parts[part], "nodes": int(differ.sum()),
+                                      "where": [list(map(int, n)) for n in np.argwhere(differ)[:limit]]})
+    return found
+
+
+class Tiles:
+    """The two x-tiles with one-Link halos beside the board: each a Lattice over its layers, imposed from the board at the start;
+    `tick` steps them in alternating order from their own state and their halos at the tick before, exchanges the halos and
+    compares the merged interiors with the board."""
+
+    def __init__(self, board, folder, den, gamma, action, intervals):
+        side = board.shape[0]
+        half = side // 2 + 1
+        self.interiors = [list(range(0, half)), list(range(half, side))]
+        self.layers = [layers_of(interior, side) for interior in self.interiors]
+        self.tiles = []
+        for rows in self.layers:
+            path = build_world(folder, den, (len(rows), side, side), intervals, gamma, action, f"tile_{den}_{side}_{len(rows)}")
+            self.tiles.append(Lattice(load_world(path), output=None))
+        whole = arrays_of(board)
+        for tile, rows in zip(self.tiles, self.layers, strict=True):
+            imposed(tile, whole, rows)
+        self.parted = None
+
+    def tick(self, board, interval):
+        first, second = (self.tiles if interval % 2 else self.tiles[::-1])
+        CURRENT["board"] = "tile_a"
+        first.step()
+        CURRENT["board"] = "tile_b"
+        second.step()
+        whole = merged(self.tiles, self.interiors, board.shape)
+        for tile, rows in zip(self.tiles, self.layers, strict=True):
+            imposed(tile, whole, rows)
+        found = tile_differences(whole, board)
+        if found and self.parted is None:
+            self.parted = interval
+        return found
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 # the readings per interval
 # ----------------------------------------------------------------------------------------------------------------------
 def invariance(board, all48):
@@ -605,12 +766,13 @@ def invariance(board, all48):
 
 def orbit_table(board, orbits, with_digits):
     """Per orbit: the seed's levels (now, before) distinct values, the share q distinct values, the digits' sum distinct values
-    (the digits as the next close would read them, on the state the step left)."""
+    (the digits as the next close would read them by the switch's lattices, on the state the step left)."""
     index = board.world.seed
     unit = board.credit.units[index]
     first = records.record_slice(board.families[index], 0).start
     line = board.states[index].lines[first]
     shares, _frozen = board.share_of(index)
+    source = link_digits if READ["mode"] in ("link", "link_sum") else digits_of
     rows = []
     for key, nodes in orbits.items():
         nows = sorted({int(line.now[n]) for n in nodes})
@@ -622,8 +784,8 @@ def orbit_table(board, orbits, with_digits):
             sums = set()
             for n in nodes:
                 region = frame_of(n, board.shape, board.world.periodic)
-                groups, _origin, _coarse = digits_by_line(board, [(fam, region) for fam in board.order])
-                sums.add(int(sum(d for _k, g in groups for _p, d, _b in g)))
+                groups, _origin, _coarse = digits_by_line(board, [(fam, region) for fam in board.order], source)
+                sums.add(int(sum(d for _k, g in groups for _p, d, _b, _o in g)))
             row["digit_sum"] = sorted(sums)[:8]
             row["digit_sum_uniform"] = len(sums) == 1
         rows.append(row)
@@ -651,13 +813,13 @@ def commutation(board, element, conjugate=False):
     original.output = None
     original.observers = []
     saved = len(DRAWS), len(PICKS)
+    CURRENT["board"] = "commute"
     original.step()
     image.step()
     del DRAWS[saved[0]:]
     del PICKS[saved[1]:]
     expected = transformed(original, element, conjugate)
     found = differences(expected, image)
-    born_expected = sorted(tuple(map(int, n)) for n in np.argwhere(expected.closes > board.closes.sum() * 0))
     return found, summarised(found), int((image.closes != expected.closes).sum())
 
 
@@ -670,14 +832,15 @@ def main():
     ap.add_argument("--cube", type=int, default=3)
     ap.add_argument("--intervals", type=int, default=60)
     ap.add_argument("--seed", choices=("hole", "plus1", "faces"), default="hole")
-    ap.add_argument("--faces-level", type=int, default=219, help="the faces seed's level now at the six face Nodes (the sea's 189)")
-    ap.add_argument("--read", choices=("ordered", "sorted", "sum"), default="ordered")
+    ap.add_argument("--faces-level", type=int, default=219)
+    ap.add_argument("--read", choices=("ordered", "sorted", "sum", "link", "link_sum"), default="ordered")
     ap.add_argument("--select", choices=("main", "aprime"), default="main")
-    ap.add_argument("--hole", choices=("zero", "mean"), default="zero")
+    ap.add_argument("--hole", choices=("zero", "mean", "before_mean", "own_before"), default="zero")
     ap.add_argument("--prefix", type=Path, required=True)
     ap.add_argument("--commute", type=int, default=0, help="the commutation test from the states of the intervals below this")
     ap.add_argument("--commute-every", type=int, default=1)
     ap.add_argument("--mirror", type=str, default=None, help="an element's name, e.g. 'xyz,-++': the run from the image of the start")
+    ap.add_argument("--tiles", action="store_true", help="the two-tiles test beside the board")
     ap.add_argument("--no-all48", action="store_true")
     ap.add_argument("--digits-table", action="store_true")
     ap.add_argument("--seconds", type=float, default=3000.0)
@@ -688,7 +851,8 @@ def main():
     READ["mode"], SELECT["mode"], HOLE["mode"] = args.read, args.select, args.hole
     meeting_board.closed = closed_switch  # the switch: main's close line by line with the read, the selector and the hole
 
-    world_path = build_world(args.prefix.parent / "worlds", args.den, args.cube, args.intervals, args.gamma, args.action)
+    folder = args.prefix.parent / "worlds"
+    world_path = build_world(folder, args.den, (args.cube,) * 3, args.intervals, args.gamma, args.action, f"bare_{args.den}_{args.cube}")
     world = load_world(world_path)
     lines = []
     out_lines = open(str(args.prefix) + ".births.jsonl", "w")
@@ -696,6 +860,7 @@ def main():
     draws_out = open(str(args.prefix) + ".draws.jsonl", "w")
     commute_out = open(str(args.prefix) + ".commute.jsonl", "w") if args.commute else None
     mirror_out = open(str(args.prefix) + ".mirror.jsonl", "w") if args.mirror else None
+    tiles_out = open(str(args.prefix) + ".tiles.jsonl", "w") if args.tiles else None
 
     def keep(line):
         if line.get("event") in ("birth", "credit", "lay", "click"):
@@ -710,10 +875,10 @@ def main():
                  "lift": (i in SELECT["lifts"]) if f.plane else None} for i, f in enumerate(board.families)]
     unit = board.credit.units[world.seed]
     head = {"event": "head", "den": args.den, "cube": args.cube, "intervals": args.intervals, "seed": args.seed, "read": args.read,
-            "select": args.select, "hole": args.hole, "gamma": args.gamma, "action": args.action, "drift": drift_of(args.action),
-            "W_c": str(unit), "wall_seed": str(wall_of(args.den, args.gamma, board.unit)), "kind": str(board.kind),
-            "width": world.width.bit_length(), "families": families, "amplitude_A": largest_below(args.action // 2),
-            "load_seconds": round(time.time() - t0, 2)}
+            "select": args.select, "hole": args.hole, "tiles": args.tiles, "gamma": args.gamma, "action": args.action,
+            "drift": drift_of(args.action), "W_c": str(unit), "wall_seed": str(wall_of(args.den, args.gamma, board.unit)),
+            "kind": str(board.kind), "width": world.width.bit_length(), "families": families,
+            "amplitude_A": largest_below(args.action // 2), "load_seconds": round(time.time() - t0, 2)}
     if args.seed == "plus1":
         head["plus_one_level"] = plus_one(board)
     if args.seed == "faces":
@@ -731,6 +896,7 @@ def main():
         found = differences(board, mirror)
         mirror_out.write(json.dumps({"event": "mirror_start", "element": args.mirror, "start_differs": summarised(found),
                                      "first": found[:8]}) + "\n")
+    tiles = Tiles(board, folder, args.den, args.gamma, args.action, args.intervals) if args.tiles else None
 
     inv_counts, inv_fail = (invariance(board, all48) if not args.no_all48 else (None, None))
     sym_out.write(json.dumps({"event": "interval", "interval": 0, "invariant": inv_counts, "failing": inv_fail,
@@ -759,6 +925,17 @@ def main():
             out_lines.write(json.dumps(b) + "\n")
         if born_nodes:
             out_lines.write(json.dumps({"event": "W_after_lay", "interval": board.interval, "W": wronskians_at(board, born_nodes)}) + "\n")
+        if tiles is not None:
+            found = tiles.tick(board, board.interval)
+            tiles_out.write(json.dumps({"event": "tiles", "interval": board.interval, "differs": len(found),
+                                        "nodes": sum(d["nodes"] for d in found), "first": found[:6]}) + "\n")
+            tiles_out.flush()
+        if mirror is not None:
+            CURRENT["board"] = "mirror"
+            mirror.step()
+            found = differences(transformed(board, mirror_element), mirror)
+            mirror_out.write(json.dumps({"event": "mirror", "interval": board.interval, "differs": summarised(found), "first": found[:6]}) + "\n")
+            mirror_out.flush()
         for d in DRAWS:
             draws_out.write(json.dumps(d) + "\n")
         DRAWS.clear()
@@ -774,27 +951,25 @@ def main():
             first_split = (board.interval, split)
         row = {"event": "interval", "interval": board.interval, "seconds": round(time.time() - t0, 2), "invariant": inv_counts,
                "failing": inv_fail, "orbits": table, "births": len(births), "born": [list(n) for n in born_nodes],
-               "children": sorted({c for b in births for c in b["children"]}), "light_count": board.credit.counts.get(world.seed)}
-        if mirror is not None:
-            CURRENT["board"] = "mirror"
-            mirror.step()
-            found = differences(transformed(board, mirror_element), mirror)
-            mirror_out.write(json.dumps({"event": "mirror", "interval": board.interval, "differs": summarised(found), "first": found[:6]}) + "\n")
-            mirror_out.flush()
+               "children": sorted({c for b in births for c in b["children"]}), "light_count": board.credit.counts.get(world.seed),
+               "tiles_parted": None if tiles is None else tiles.parted}
         sym_out.write(json.dumps(row) + "\n")
         for f in (sym_out, out_lines, draws_out):
             f.flush()
         if board.interval % 10 == 0 or births:
             print(json.dumps({"interval": board.interval, "s": round(time.time() - t0, 1), "invariant": inv_counts, "births": len(births),
-                              "born": [list(n) for n in born_nodes], "children": row["children"], "split": split}))
+                              "born": [list(n) for n in born_nodes], "children": row["children"], "split": split,
+                              "light": row["light_count"], "tiles_parted": row["tiles_parted"]}))
             sys.stdout.flush()
     summary = {"event": "end", "reached": reached, "seconds": round(time.time() - t0, 1), "first_split_orbit": first_split,
-               "first_level_asymmetry_interval": first_level_split, "births_total": sum(1 for l in lines if l["event"] == "birth"),
+               "first_level_asymmetry_interval": first_level_split, "tiles_parted": None if tiles is None else tiles.parted,
+               "births_total": sum(1 for l in lines if l["event"] == "birth"),
                "births_by_child": dict(sorted(Counter(c for l in lines if l["event"] == "birth" for c in l["children"]).items())),
-               "births_by_interval": dict(sorted(Counter(l["interval"] for l in lines if l["event"] == "birth").items()))}
+               "births_by_interval": dict(sorted(Counter(l["interval"] for l in lines if l["event"] == "birth").items())),
+               "light_count_end": board.credit.counts.get(world.seed)}
     print(json.dumps(summary))
     sym_out.write(json.dumps(summary) + "\n")
-    for f in (out_lines, sym_out, draws_out, commute_out, mirror_out):
+    for f in (out_lines, sym_out, draws_out, commute_out, mirror_out, tiles_out):
         if f:
             f.close()
 
