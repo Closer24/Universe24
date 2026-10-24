@@ -11,6 +11,9 @@ from event_universe.world_files import load_world
 from tests.laws import ROOT, refused
 
 IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"
+REFUSED = (
+    "the read weight is one for every reader|" + IRRATIONAL
+)  # the record worlds on hydrogen_read3.json (the electron's read 3) meet the read weight's sentence first, the others the sine's
 EVENTS = ROOT / "examples" / "events"
 REFUSED_WORLDS = (
     "atom/atom.json",
@@ -65,5 +68,5 @@ def test_the_shipped_worlds_with_the_electron_at_4000_over_6000_are_refused_at_l
         4000,
         6000,
     ]  # the pair kept: the world stands as the record of the law to 2026-10-23
-    refusal = refused(IRRATIONAL, load_world, path)
-    assert "'electron'" in str(refusal) and "[4000, 6000]" in str(refusal)
+    refusal = refused(REFUSED, load_world, path)
+    assert "'electron'" in str(refusal) and ("[4000, 6000]" in str(refusal) or "is 3" in str(refusal))
