@@ -245,9 +245,14 @@ def taken_at(board: Lattice, index: int, span: slice, at: Node, levels: int) -> 
     frame = frame_of(at, board.shape, board.world.periodic)
     ports = ports_of(frame, board.shape, board.world.periodic)
     walls = [int(squares[k]) * 4 * unit * unit + int(int(squares[k]) == 0) for k in frame]
-    common = 1
+    common, cofactors = 1, []
     for wall in walls:
         common *= wall
+    for number, _wall in enumerate(walls):  # D over W_k as the product of the other walls, no division
+        cofactor = 1
+        for other, wall in enumerate(walls):
+            cofactor *= 1 if other == number else wall
+        cofactors.append(cofactor)
     wall_w, own = int(rule.wall), int(np.asarray(rule.self_coefficient, dtype=object)[at])
     numerator = 0
     for line in board.states[index].lines[span]:
@@ -266,9 +271,9 @@ def taken_at(board: Lattice, index: int, span: slice, at: Node, levels: int) -> 
             link_change = (
                 -reach_back * (b_j - before) * shift
             )  # the neighbour's numerator, its one term that moves
-            numerator -= link_change * (common // walls[1 + ports.index(port)])
+            numerator -= link_change * cofactors[1 + ports.index(port)]
         node_change -= 2 * shift * reach_sum
-        numerator -= node_change * (common // walls[0])
+        numerator -= node_change * cofactors[0]
     return numerator, common
 
 

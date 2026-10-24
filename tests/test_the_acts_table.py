@@ -48,7 +48,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
     (
         "meeting_board.py",
-        "fallen",
+        "take_of.fallen",
         "division_forward",
     ): "D",  # the take's fall in the current's units, the exact numerator over the common denominator, once per level compared (2026-10-24, the one-Link form)
     (
