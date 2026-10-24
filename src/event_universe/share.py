@@ -137,7 +137,7 @@ def half_action(action: int) -> int:
 
 
 def charge_of(board: Lattice, index: int) -> int:
-    """A plane family's charge over the board, SUM over its records of |SUM over the Nodes of W_i| (`records.wronskian` per record; every record one quantum of its own sense, ALGEBRA.md, No record reads its own write of the sign; the born pair's two records of opposite sense each counted, the clause of 2026-10-24 under Matter's birth from light, where the family's one total read the pair as 0): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
+    """A plane family's charge over the board, SUM over its records of |SUM over the Nodes of W_i| (`records.wronskian` per record; every record one quantum of its own sense, ALGEBRA.md, No record reads its own write of the sign; the born pair's two records of opposite sense each counted, the clause of 2026-10-24 under Matter's birth from light, where the family's one total read the pair as 0): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing charged plane record of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
     return sum(
         abs(int(np.asarray(wronskian(board.lines_of(index, record), True), dtype=object).sum()))
         for record in registry.quanta_records(board.families, board.states, index)
@@ -150,7 +150,7 @@ def charged(family: FamilyRule) -> bool:
 
 
 def by_charge(board: Lattice, index: int) -> bool:
-    """Whether a family's count on the board is read as its charge: a plane family at a pair with a rotation (`charged`) whose record carries a sense, its Wronskian other than 0 over the board (`charge_of`); a plane record laid without its quadrature, its Wronskian 0 at every Node (a packet with no `sense` declared, the clicks world's electron), is neutral, two real lines, and is counted as they are, by its share."""
+    """Whether a family's count on the board is read as its charge: a plane family at a pair with a rotation (`charged`) whose record carries a sense, its Wronskian other than 0 over the board (`charge_of`); a plane record laid without its quadrature, its Wronskian 0 at every Node (a packet with no `sense` declared, the clicks world's charged plane record), is neutral, two real lines, and is counted as they are, by its share."""
     return charged(board.families[index]) and charge_of(board, index) > 0
 
 
