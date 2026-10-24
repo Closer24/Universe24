@@ -1,0 +1,8394 @@
+{
+ "log": "examples/events/universe24/universe24.clicks.jsonl",
+ "lines": {
+  "credits": 68,
+  "births": 54,
+  "lays": 277,
+  "others": 0
+ },
+ "shape": [
+  5,
+  5,
+  5
+ ],
+ "bodies": [
+  {
+   "identity": [
+    2,
+    0
+   ],
+   "credits": 54,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     617,
+     622
+    ],
+    "mass": 0.12540192926045016,
+    "rest": {
+     "rest": [
+      4319,
+      4297
+     ],
+     "value": 1.0051198510588784,
+     "paces": "approximate: the Node's clock 16 against the board's interval 17, the paces change the reaches near matter, the paces' correction lacking; the rest's value stands as read either way"
+    },
+    "beat": 8500498,
+    "kind": 1,
+    "sense": 0
+   },
+   "position": {
+    "where": [
+     3,
+     3,
+     3
+    ],
+    "when": 17,
+    "window": [
+     17,
+     17
+    ],
+    "proper": 16,
+    "windows": 1
+   },
+   "velocity": "a record credited at several Nodes in one close: the credited record and no one body",
+   "momentum": {
+    "momentum": [
+     [
+      -1,
+      4297,
+      4354
+     ],
+     [
+      -1,
+      4297,
+      4354
+     ],
+     [
+      -1,
+      4297,
+      4354
+     ]
+    ],
+    "p": [
+     -0.16123105190629305,
+     -0.16123105190629305,
+     -0.16123105190629305
+    ]
+   },
+   "energy": {
+    "quanta": 1,
+    "rest": 0.12540192926045016,
+    "with_momentum": 0.20440973817179606
+   },
+   "bound_or_free": {
+    "beats": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "beat": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     null,
+     null,
+     3635287,
+     null,
+     null,
+     3635287,
+     78273107,
+     8500498,
+     8500498,
+     8500498,
+     8500498,
+     8500498,
+     8500498,
+     8500498,
+     8500498
+    ],
+    "verdict": "a record credited at several Nodes in one close: the credited record and no one body",
+    "support": null,
+    "closes": [
+     12,
+     13,
+     14,
+     17
+    ],
+    "distinct_wheres": 47
+   },
+   "counts": {
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "17": 1
+   }
+  },
+  {
+   "identity": [
+    18,
+    0
+   ],
+   "credits": 1,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": "the lines read different points: [[717, 700], [406, 411]]",
+    "mass": "the lines read different points: [[717, 700], [406, 411]]",
+    "rest": "unreadable: point lacking",
+    "beat": "unreadable: beat lacking",
+    "kind": 2,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 29,
+    "window": [
+     29,
+     29
+    ],
+    "proper": 24,
+    "windows": 3
+   },
+   "velocity": "unreadable: one credit",
+   "momentum": {
+    "momentum": [
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ],
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ],
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ]
+    ],
+    "p": [
+     "the lines read different cosines: [0, [401, 350], [382, 411]]",
+     "the lines read different cosines: [0, [401, 350], [382, 411]]",
+     "the lines read different cosines: [0, [401, 350], [382, 411]]"
+    ]
+   },
+   "energy": {
+    "quanta": 1,
+    "rest": "unreadable: point lacking",
+    "with_momentum": "unreadable: point lacking"
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: one credit",
+    "support": null,
+    "beats": [],
+    "beat": null
+   },
+   "counts": {
+    "29": 1
+   }
+  },
+  {
+   "identity": [
+    18,
+    1
+   ],
+   "credits": 1,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": "the lines read different points: [[717, 700], [406, 411]]",
+    "mass": "the lines read different points: [[717, 700], [406, 411]]",
+    "rest": "unreadable: point lacking",
+    "beat": "unreadable: beat lacking",
+    "kind": 2,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 29,
+    "window": [
+     29,
+     29
+    ],
+    "proper": 24,
+    "windows": 4
+   },
+   "velocity": "unreadable: one credit",
+   "momentum": {
+    "momentum": [
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ],
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ],
+     [
+      0,
+      [
+       401,
+       350
+      ],
+      [
+       382,
+       411
+      ]
+     ]
+    ],
+    "p": [
+     "the lines read different cosines: [0, [401, 350], [382, 411]]",
+     "the lines read different cosines: [0, [401, 350], [382, 411]]",
+     "the lines read different cosines: [0, [401, 350], [382, 411]]"
+    ]
+   },
+   "energy": {
+    "quanta": 1,
+    "rest": "unreadable: point lacking",
+    "with_momentum": "unreadable: point lacking"
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: one credit",
+    "support": null,
+    "beats": [],
+    "beat": null
+   },
+   "counts": {
+    "29": 1
+   }
+  },
+  {
+   "identity": [
+    24,
+    0
+   ],
+   "credits": 6,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": "the lines read different points: [[94, 93], [285, 284]]",
+    "mass": "the lines read different points: [[94, 93], [285, 284]]",
+    "rest": "unreadable: point lacking",
+    "beat": "unreadable: beat lacking",
+    "kind": 2,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 32,
+    "window": [
+     32,
+     32
+    ],
+    "proper": 26,
+    "windows": 3
+   },
+   "velocity": "a record credited at several Nodes in one close: the credited record and no one body",
+   "momentum": {
+    "momentum": [
+     [
+      1,
+      [
+       257,
+       186
+      ],
+      [
+       -7,
+       142
+      ]
+     ],
+     [
+      0,
+      [
+       1,
+       1
+      ],
+      [
+       143,
+       142
+      ]
+     ],
+     [
+      0,
+      [
+       1,
+       1
+      ],
+      [
+       143,
+       142
+      ]
+     ]
+    ],
+    "p": [
+     "the lines read different cosines: [1, [257, 186], [-7, 142]]",
+     "the lines read different cosines: [0, [1, 1], [143, 142]]",
+     "the lines read different cosines: [0, [1, 1], [143, 142]]"
+    ]
+   },
+   "energy": {
+    "quanta": 1,
+    "rest": "unreadable: point lacking",
+    "with_momentum": "unreadable: point lacking"
+   },
+   "bound_or_free": {
+    "beats": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "beat": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "verdict": "a record credited at several Nodes in one close: the credited record and no one body",
+    "support": null,
+    "closes": [
+     32
+    ],
+    "distinct_wheres": 6
+   },
+   "counts": {
+    "32": 1
+   }
+  },
+  {
+   "identity": [
+    24,
+    1
+   ],
+   "credits": 6,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": "the lines read different points: [[94, 93], [285, 284]]",
+    "mass": "the lines read different points: [[94, 93], [285, 284]]",
+    "rest": "unreadable: point lacking",
+    "beat": "unreadable: beat lacking",
+    "kind": 2,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 32,
+    "window": [
+     32,
+     32
+    ],
+    "proper": 26,
+    "windows": 4
+   },
+   "velocity": "a record credited at several Nodes in one close: the credited record and no one body",
+   "momentum": {
+    "momentum": [
+     [
+      1,
+      [
+       257,
+       186
+      ],
+      [
+       -7,
+       142
+      ]
+     ],
+     [
+      0,
+      [
+       1,
+       1
+      ],
+      [
+       143,
+       142
+      ]
+     ],
+     [
+      0,
+      [
+       1,
+       1
+      ],
+      [
+       143,
+       142
+      ]
+     ]
+    ],
+    "p": [
+     "the lines read different cosines: [1, [257, 186], [-7, 142]]",
+     "the lines read different cosines: [0, [1, 1], [143, 142]]",
+     "the lines read different cosines: [0, [1, 1], [143, 142]]"
+    ]
+   },
+   "energy": {
+    "quanta": 1,
+    "rest": "unreadable: point lacking",
+    "with_momentum": "unreadable: point lacking"
+   },
+   "bound_or_free": {
+    "beats": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "beat": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "verdict": "a record credited at several Nodes in one close: the credited record and no one body",
+    "support": null,
+    "closes": [
+     32
+    ],
+    "distinct_wheres": 6
+   },
+   "counts": {
+    "32": 1
+   }
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 12,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 2 0 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 2 0 0",
+    "point": [
+     21397363965161185649061722838116504985189627435,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.700602987262072e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.700602987262072e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     2,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     2,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     2,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     2,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     3,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     3,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     3,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     3,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     1,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     1,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     2,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     2,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     2,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     2,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     3,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     3,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     3,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     3,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     1
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     2
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     3
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     4,
+     4,
+     4
+    ],
+    "when": 13,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 14,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 2 0",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 2 0",
+    "point": [
+     21397363965161172397401408461543944901743724995,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 6.709839263563073e-07,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "when": 14,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 6.709839263563073e-07
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     2,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     2,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     2,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     2,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     3,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     3,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     2,
+     3,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     2,
+     3,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     2,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     2,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     2,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     2,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     3,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     3,
+     2
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 0
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": -1
+   },
+   "position": {
+    "where": [
+     3,
+     3,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  },
+  {
+   "identity": {
+    "family": "point 0 0 2",
+    "record": 1
+   },
+   "credits": 0,
+   "mass": {
+    "label": "point 0 0 2",
+    "point": [
+     21397363965165989150474488818982086595722885795,
+     21397363965165989151899244775347635252768274397
+    ],
+    "mass": 3.6492624760981886e-10,
+    "sense": 1
+   },
+   "position": {
+    "where": [
+     3,
+     3,
+     3
+    ],
+    "when": 17,
+    "born": true
+   },
+   "velocity": "unreadable: born once, no credit of its own",
+   "momentum": "unreadable: momentum lacking",
+   "energy": {
+    "quanta": 1,
+    "rest": 3.6492624760981886e-10
+   },
+   "bound_or_free": {
+    "verdict": "unreadable: born once, no credit of its own",
+    "support": null,
+    "beats": []
+   },
+   "counts": {}
+  }
+ ],
+ "uncertainty": [
+  {
+   "family": "massless",
+   "window": [
+    12,
+    12
+   ],
+   "intervals": 1,
+   "credits": 6,
+   "count_min": 1,
+   "count_sum": 6,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 6,
+   "where_spread": [
+    4,
+    4,
+    4
+   ],
+   "momentum_spread": [
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle"
+   ],
+   "product": [
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle"
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  },
+  {
+   "family": "massless",
+   "window": [
+    13,
+    13
+   ],
+   "intervals": 1,
+   "credits": 39,
+   "count_min": 1,
+   "count_sum": 39,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 39,
+   "where_spread": [
+    5,
+    5,
+    5
+   ],
+   "momentum_spread": [
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle"
+   ],
+   "product": [
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle",
+    "no running wave along the axis: the pair lies outside the circle"
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  },
+  {
+   "family": "massless",
+   "window": [
+    14,
+    14
+   ],
+   "intervals": 1,
+   "credits": 1,
+   "count_min": 1,
+   "count_sum": 1,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 1,
+   "where_spread": [
+    1,
+    1,
+    1
+   ],
+   "momentum_spread": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "product": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  },
+  {
+   "family": "massless",
+   "window": [
+    17,
+    17
+   ],
+   "intervals": 1,
+   "credits": 8,
+   "count_min": 1,
+   "count_sum": 8,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 8,
+   "where_spread": [
+    2,
+    2,
+    2
+   ],
+   "momentum_spread": [
+    0.3224621038125861,
+    0.3224621038125861,
+    0.3224621038125861
+   ],
+   "product": [
+    0.6449242076251722,
+    0.6449242076251722,
+    0.6449242076251722
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  },
+  {
+   "family": "massless",
+   "window": [
+    29,
+    29
+   ],
+   "intervals": 1,
+   "credits": 2,
+   "count_min": 1,
+   "count_sum": 2,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 1,
+   "where_spread": [
+    1,
+    1,
+    1
+   ],
+   "momentum_spread": [
+    "the lines read different cosines: [0, [401, 350], [382, 411]]",
+    "the lines read different cosines: [0, [401, 350], [382, 411]]",
+    "the lines read different cosines: [0, [401, 350], [382, 411]]"
+   ],
+   "product": [
+    "the lines read different cosines: [0, [401, 350], [382, 411]]",
+    "the lines read different cosines: [0, [401, 350], [382, 411]]",
+    "the lines read different cosines: [0, [401, 350], [382, 411]]"
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  },
+  {
+   "family": "massless",
+   "window": [
+    32,
+    32
+   ],
+   "intervals": 1,
+   "credits": 12,
+   "count_min": 1,
+   "count_sum": 12,
+   "energy_time": {
+    "quanta": 1,
+    "intervals": 1,
+    "rotation_resolved": "2 pi / 1",
+    "product": "2 pi T",
+    "floor": "T / 2"
+   },
+   "distinct_wheres": 6,
+   "where_spread": [
+    4,
+    4,
+    4
+   ],
+   "momentum_spread": [
+    "the lines read different cosines: [0, [1, 1], [143, 142]]",
+    "the lines read different cosines: [0, [1, 1], [143, 142]]",
+    "the lines read different cosines: [-1, [257, 186], [-7, 142]]"
+   ],
+   "product": [
+    "the lines read different cosines: [0, [1, 1], [143, 142]]",
+    "the lines read different cosines: [0, [1, 1], [143, 142]]",
+    "the lines read different cosines: [-1, [257, 186], [-7, 142]]"
+   ],
+   "floor": "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit",
+   "violations": []
+  }
+ ],
+ "gr": {
+  "dilation": {
+   "rows": [
+    {
+     "where": [
+      0,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      14
+     ],
+     "proper": [
+      12,
+      13
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      0,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       18,
+       0
+      ]
+     ],
+     "closes": [
+      14,
+      29
+     ],
+     "proper": [
+      13,
+      24
+     ],
+     "proper_intervals": 11,
+     "intervals": 15,
+     "ratio": 0.7333333333333333
+    },
+    {
+     "where": [
+      0,
+      0,
+      2
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      0,
+      0,
+      2
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    },
+    {
+     "where": [
+      0,
+      0,
+      3
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      0,
+      0,
+      3
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    },
+    {
+     "where": [
+      0,
+      2,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      0,
+      2,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    },
+    {
+     "where": [
+      0,
+      3,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      0,
+      3,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    },
+    {
+     "where": [
+      2,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      2,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    },
+    {
+     "where": [
+      3,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       0
+      ]
+     ],
+     "closes": [
+      12,
+      13
+     ],
+     "proper": [
+      11,
+      12
+     ],
+     "proper_intervals": 1,
+     "intervals": 1,
+     "ratio": 1.0
+    },
+    {
+     "where": [
+      3,
+      0,
+      0
+     ],
+     "identities": [
+      [
+       2,
+       0
+      ],
+      [
+       24,
+       0
+      ]
+     ],
+     "closes": [
+      13,
+      32
+     ],
+     "proper": [
+      12,
+      26
+     ],
+     "proper_intervals": 14,
+     "intervals": 19,
+     "ratio": 0.7368421052631579
+    }
+   ],
+   "note": ""
+  },
+  "light_spacing": {
+   "rows": [
+    {
+     "where": [
+      0,
+      0,
+      0
+     ],
+     "closes": [
+      13,
+      14,
+      29,
+      29
+     ],
+     "spacings": [
+      1,
+      15,
+      0
+     ]
+    },
+    {
+     "where": [
+      0,
+      0,
+      2
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    },
+    {
+     "where": [
+      0,
+      0,
+      3
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    },
+    {
+     "where": [
+      0,
+      2,
+      0
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    },
+    {
+     "where": [
+      0,
+      3,
+      0
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    },
+    {
+     "where": [
+      2,
+      0,
+      0
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    },
+    {
+     "where": [
+      3,
+      0,
+      0
+     ],
+     "closes": [
+      12,
+      13,
+      32,
+      32
+     ],
+     "spacings": [
+      1,
+      19,
+      0
+     ]
+    }
+   ],
+   "note": ""
+  },
+  "silent": {
+   "rows": [
+    {
+     "where": [
+      0,
+      0,
+      0
+     ],
+     "credits": 4,
+     "last_close": 29
+    },
+    {
+     "where": [
+      1,
+      1,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      1,
+      2
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      1,
+      3
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      1,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      2,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      2,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      3,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      3,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      4,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      4,
+      2
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      4,
+      3
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      1,
+      4,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      2,
+      1,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      2,
+      1,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      2,
+      2,
+      2
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      2,
+      2,
+      3
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      2,
+      3,
+      2
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      2,
+      3,
+      3
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      2,
+      4,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      2,
+      4,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      3,
+      1,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      3,
+      1,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      3,
+      2,
+      2
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      3,
+      2,
+      3
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      3,
+      3,
+      2
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      3,
+      3,
+      3
+     ],
+     "credits": 1,
+     "last_close": 17
+    },
+    {
+     "where": [
+      3,
+      4,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      3,
+      4,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      1,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      1,
+      2
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      1,
+      3
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      1,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      2,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      2,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      3,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      3,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      4,
+      1
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      4,
+      2
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      4,
+      3
+     ],
+     "credits": 1,
+     "last_close": 13
+    },
+    {
+     "where": [
+      4,
+      4,
+      4
+     ],
+     "credits": 1,
+     "last_close": 13
+    }
+   ],
+   "note": "",
+   "last_close": 32
+  },
+  "tracks": {
+   "rows": [
+    {
+     "identity": [
+      2,
+      0
+     ],
+     "credits": 54,
+     "note": "a record credited at several Nodes in one close: the credited record and no one body"
+    }
+   ],
+   "note": ""
+  }
+ },
+ "density": {
+  "per_interval": [
+   {
+    "interval": 12,
+    "credits": 6,
+    "births": 6,
+    "lays": 30
+   },
+   {
+    "interval": 13,
+    "credits": 39,
+    "births": 39,
+    "lays": 195
+   },
+   {
+    "interval": 14,
+    "credits": 1,
+    "births": 1,
+    "lays": 5
+   },
+   {
+    "interval": 17,
+    "credits": 8,
+    "births": 8,
+    "lays": 40
+   },
+   {
+    "interval": 29,
+    "credits": 2,
+    "births": 0,
+    "lays": 1
+   },
+   {
+    "interval": 32,
+    "credits": 12,
+    "births": 0,
+    "lays": 6
+   }
+  ],
+  "densest": {
+   "interval": 13,
+   "credits": 39
+  },
+  "birth_spans": [
+   {
+    "from": 12,
+    "to": 14,
+    "most": 39
+   },
+   {
+    "from": 17,
+    "to": 17,
+    "most": 8
+   }
+  ],
+  "epochs": [
+   {
+    "name": "bang",
+    "cycle": 1,
+    "from": 1,
+    "to": 1,
+    "intervals": 1,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 1 interval"
+   },
+   {
+    "name": "rise",
+    "cycle": 1,
+    "from": 2,
+    "to": 435,
+    "intervals": 434,
+    "credits": 68,
+    "births": 54,
+    "lays": 277,
+    "credits_per_interval": 0.15668202764976957,
+    "words": "68 credits, 54 births, 277 lays over 434 intervals; the densest clicks of the run at 13"
+   },
+   {
+    "name": "top",
+    "cycle": 1,
+    "from": 436,
+    "to": 436,
+    "intervals": 1,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 1 interval",
+    "volume": 181675669
+   },
+   {
+    "name": "fall",
+    "cycle": 1,
+    "from": 437,
+    "to": 572,
+    "intervals": 136,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 136 intervals"
+   },
+   {
+    "name": "return",
+    "cycle": 2,
+    "from": 573,
+    "to": 573,
+    "intervals": 1,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 1 interval"
+   },
+   {
+    "name": "rise",
+    "cycle": 2,
+    "from": 574,
+    "to": 1531,
+    "intervals": 958,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 958 intervals"
+   },
+   {
+    "name": "top",
+    "cycle": 2,
+    "from": 1532,
+    "to": 1532,
+    "intervals": 1,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 1 interval",
+    "volume": 936345820
+   },
+   {
+    "name": "fall",
+    "cycle": 2,
+    "from": 1533,
+    "to": 1618,
+    "intervals": 86,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 86 intervals"
+   },
+   {
+    "name": "return",
+    "cycle": 3,
+    "from": 1619,
+    "to": 1619,
+    "intervals": 1,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 1 interval"
+   },
+   {
+    "name": "rise",
+    "cycle": 3,
+    "from": 1620,
+    "to": 2400,
+    "intervals": 781,
+    "credits": 0,
+    "births": 0,
+    "lays": 0,
+    "credits_per_interval": 0.0,
+    "words": "quiet: no line of the clicks log over 781 intervals"
+   }
+  ],
+  "bounds": "the eras log's tops and returns"
+ },
+ "tracks": {
+  "rows": [
+   {
+    "identity": [
+     2,
+     0
+    ],
+    "credits": 54,
+    "closes": [
+     12,
+     13,
+     14,
+     17
+    ],
+    "one_body": false,
+    "series": [
+     {
+      "close": 12,
+      "where": [
+       0,
+       0,
+       2
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 12,
+      "where": [
+       0,
+       0,
+       3
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 12,
+      "where": [
+       0,
+       2,
+       0
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 12,
+      "where": [
+       0,
+       3,
+       0
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 12,
+      "where": [
+       2,
+       0,
+       0
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 12,
+      "where": [
+       3,
+       0,
+       0
+      ],
+      "proper": 11,
+      "point": [
+       1691,
+       1343
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       0,
+       0,
+       0
+      ],
+      "proper": 12,
+      "point": [
+       24,
+       17
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       0,
+       0,
+       2
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       0,
+       0,
+       3
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       0,
+       2,
+       0
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       0,
+       3,
+       0
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       1,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       1,
+       2
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       1,
+       3
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       1,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       2,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       2,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       3,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       3,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       4,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       4,
+       2
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       4,
+       3
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       1,
+       4,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       2,
+       0,
+       0
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       2,
+       1,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       2,
+       1,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       2,
+       4,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       2,
+       4,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       3,
+       0,
+       0
+      ],
+      "proper": 12,
+      "point": [
+       846,
+       845
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       3,
+       1,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       3,
+       1,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       3,
+       4,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       3,
+       4,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       1,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       1,
+       2
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       1,
+       3
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       1,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       2,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       2,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       3,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       3,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       4,
+       1
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       4,
+       2
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       4,
+       3
+      ],
+      "proper": 12,
+      "point": [
+       853,
+       848
+      ],
+      "sense": 0
+     },
+     {
+      "close": 13,
+      "where": [
+       4,
+       4,
+       4
+      ],
+      "proper": 12,
+      "point": [
+       46,
+       57
+      ],
+      "sense": 0
+     },
+     {
+      "close": 14,
+      "where": [
+       0,
+       0,
+       0
+      ],
+      "proper": 13,
+      "point": [
+       935,
+       1183
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       2,
+       2,
+       2
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       2,
+       2,
+       3
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       2,
+       3,
+       2
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       2,
+       3,
+       3
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       3,
+       2,
+       2
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       3,
+       2,
+       3
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       3,
+       3,
+       2
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     },
+     {
+      "close": 17,
+      "where": [
+       3,
+       3,
+       3
+      ],
+      "proper": 16,
+      "point": [
+       617,
+       622
+      ],
+      "sense": 0
+     }
+    ],
+    "note": "a record credited at several Nodes in one close: the credited record and no one body"
+   },
+   {
+    "identity": [
+     18,
+     0
+    ],
+    "credits": 1,
+    "closes": [
+     29
+    ],
+    "one_body": true,
+    "series": [
+     {
+      "close": 29,
+      "where": [
+       0,
+       0,
+       0
+      ],
+      "proper": 24,
+      "point": [
+       [
+        717,
+        700
+       ],
+       [
+        406,
+        411
+       ]
+      ],
+      "sense": 1
+     }
+    ],
+    "note": ""
+   },
+   {
+    "identity": [
+     18,
+     1
+    ],
+    "credits": 1,
+    "closes": [
+     29
+    ],
+    "one_body": true,
+    "series": [
+     {
+      "close": 29,
+      "where": [
+       0,
+       0,
+       0
+      ],
+      "proper": 24,
+      "point": [
+       [
+        717,
+        700
+       ],
+       [
+        406,
+        411
+       ]
+      ],
+      "sense": -1
+     }
+    ],
+    "note": ""
+   },
+   {
+    "identity": [
+     24,
+     0
+    ],
+    "credits": 6,
+    "closes": [
+     32
+    ],
+    "one_body": false,
+    "series": [
+     {
+      "close": 32,
+      "where": [
+       0,
+       0,
+       2
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       0,
+       3
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       2,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       3,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     },
+     {
+      "close": 32,
+      "where": [
+       2,
+       0,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     },
+     {
+      "close": 32,
+      "where": [
+       3,
+       0,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": -1
+     }
+    ],
+    "note": "a record credited at several Nodes in one close: the credited record and no one body"
+   },
+   {
+    "identity": [
+     24,
+     1
+    ],
+    "credits": 6,
+    "closes": [
+     32
+    ],
+    "one_body": false,
+    "series": [
+     {
+      "close": 32,
+      "where": [
+       0,
+       0,
+       2
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       0,
+       3
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       2,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     },
+     {
+      "close": 32,
+      "where": [
+       0,
+       3,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     },
+     {
+      "close": 32,
+      "where": [
+       2,
+       0,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     },
+     {
+      "close": 32,
+      "where": [
+       3,
+       0,
+       0
+      ],
+      "proper": 26,
+      "point": [
+       [
+        94,
+        93
+       ],
+       [
+        285,
+        284
+       ]
+      ],
+      "sense": 1
+     }
+    ],
+    "note": "a record credited at several Nodes in one close: the credited record and no one body"
+   }
+  ],
+  "note": ""
+ },
+ "distance": {
+  "identities": [],
+  "rows": [],
+  "slope": null,
+  "fall": null,
+  "note": "fewer than two bodies' tracks",
+  "light_fall": "no identity of light: no credit of the board's own click carries one"
+ },
+ "ledger": {
+  "rows": [
+   {
+    "cycle": 1,
+    "bang": 1,
+    "to": 572,
+    "top": 436,
+    "volume": 181675669,
+    "return": 573,
+    "open": false,
+    "births": {
+     "point 2 0 0": {
+      "-1": 7,
+      "1": 7
+     },
+     "point 0 0 2": {
+      "-1": 14,
+      "1": 14
+     },
+     "point 0 2 0": {
+      "-1": 33,
+      "1": 33
+     }
+    },
+    "points": {
+     "point 2 0 0": [
+      21397363965161185649061722838116504985189627435,
+      21397363965165989151899244775347635252768274397
+     ],
+     "point 0 0 2": [
+      21397363965165989150474488818982086595722885795,
+      21397363965165989151899244775347635252768274397
+     ],
+     "point 0 2 0": [
+      21397363965161172397401408461543944901743724995,
+      21397363965165989151899244775347635252768274397
+     ]
+    },
+    "counts": {
+     "at_top": {
+      "sign": 0,
+      "massless": 296066,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 868485947283884,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 1581764917491,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 659673057411,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     },
+     "before_return": {
+      "sign": 0,
+      "massless": 355799,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 1096514386687193,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 1424266837570,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 725420991507,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     },
+     "at_return": {
+      "sign": 0,
+      "massless": 361569,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 1103064182740530,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 1436307069357,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 731550979213,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     }
+    },
+    "erased": [],
+    "tracks_across": [],
+    "credits": 68,
+    "lays": 277,
+    "turns": 729,
+    "horizon": 0,
+    "standing": {
+     "sign": 0,
+     "massless": 355799,
+     "point -2 -2 -2": 0,
+     "point -2 -2 0": 0,
+     "point -2 -2 2": 0,
+     "point -2 0 -2": 0,
+     "point -2 0 0": 0,
+     "point -2 0 2": 0,
+     "point -2 2 -2": 0,
+     "point -2 2 0": 0,
+     "point -2 2 2": 0,
+     "point 0 -2 -2": 0,
+     "point 0 -2 0": 0,
+     "point 0 -2 2": 0,
+     "point 0 0 -2": 0,
+     "point 0 0 2": 1096514386687193,
+     "point 0 2 -2": 0,
+     "point 0 2 0": 1424266837570,
+     "point 0 2 2": 0,
+     "point 2 -2 -2": 0,
+     "point 2 -2 0": 0,
+     "point 2 -2 2": 0,
+     "point 2 0 -2": 0,
+     "point 2 0 0": 725420991507,
+     "point 2 0 2": 0,
+     "point 2 2 -2": 0,
+     "point 2 2 0": 0,
+     "point 2 2 2": 0
+    }
+   },
+   {
+    "cycle": 2,
+    "bang": 573,
+    "to": 1618,
+    "top": 1532,
+    "volume": 936345820,
+    "return": 1619,
+    "open": false,
+    "births": {},
+    "points": {},
+    "counts": {
+     "at_top": {
+      "sign": 2,
+      "massless": 3297443,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 3691417527785171,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 5555830660552,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 2170180595843,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     },
+     "before_return": {
+      "sign": 0,
+      "massless": 2639919,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 3161379533050885,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 4982643575132,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 1778555740380,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     },
+     "at_return": {
+      "sign": 0,
+      "massless": 2632465,
+      "point -2 -2 -2": 0,
+      "point -2 -2 0": 0,
+      "point -2 -2 2": 0,
+      "point -2 0 -2": 0,
+      "point -2 0 0": 0,
+      "point -2 0 2": 0,
+      "point -2 2 -2": 0,
+      "point -2 2 0": 0,
+      "point -2 2 2": 0,
+      "point 0 -2 -2": 0,
+      "point 0 -2 0": 0,
+      "point 0 -2 2": 0,
+      "point 0 0 -2": 0,
+      "point 0 0 2": 3172594519135558,
+      "point 0 2 -2": 0,
+      "point 0 2 0": 5004703684119,
+      "point 0 2 2": 0,
+      "point 2 -2 -2": 0,
+      "point 2 -2 0": 0,
+      "point 2 -2 2": 0,
+      "point 2 0 -2": 0,
+      "point 2 0 0": 1784816020517,
+      "point 2 0 2": 0,
+      "point 2 2 -2": 0,
+      "point 2 2 0": 0,
+      "point 2 2 2": 0
+     }
+    },
+    "erased": [],
+    "tracks_across": [],
+    "credits": 0,
+    "lays": 0,
+    "turns": 558,
+    "horizon": 33,
+    "standing": {
+     "sign": 0,
+     "massless": 2639919,
+     "point -2 -2 -2": 0,
+     "point -2 -2 0": 0,
+     "point -2 -2 2": 0,
+     "point -2 0 -2": 0,
+     "point -2 0 0": 0,
+     "point -2 0 2": 0,
+     "point -2 2 -2": 0,
+     "point -2 2 0": 0,
+     "point -2 2 2": 0,
+     "point 0 -2 -2": 0,
+     "point 0 -2 0": 0,
+     "point 0 -2 2": 0,
+     "point 0 0 -2": 0,
+     "point 0 0 2": 3161379533050885,
+     "point 0 2 -2": 0,
+     "point 0 2 0": 4982643575132,
+     "point 0 2 2": 0,
+     "point 2 -2 -2": 0,
+     "point 2 -2 0": 0,
+     "point 2 -2 2": 0,
+     "point 2 0 -2": 0,
+     "point 2 0 0": 1778555740380,
+     "point 2 0 2": 0,
+     "point 2 2 -2": 0,
+     "point 2 2 0": 0,
+     "point 2 2 2": 0
+    }
+   },
+   {
+    "cycle": 3,
+    "bang": 1619,
+    "to": 2400,
+    "top": null,
+    "volume": null,
+    "return": null,
+    "open": true,
+    "births": {},
+    "points": {},
+    "counts": {
+     "at_top": null,
+     "before_return": null,
+     "at_return": null
+    },
+    "erased": [],
+    "tracks_across": [],
+    "credits": 0,
+    "lays": 0,
+    "turns": 237,
+    "horizon": 12,
+    "standing": {
+     "sign": 0,
+     "massless": 14972953,
+     "point -2 -2 -2": 0,
+     "point -2 -2 0": 0,
+     "point -2 -2 2": 0,
+     "point -2 0 -2": 0,
+     "point -2 0 0": 0,
+     "point -2 0 2": 0,
+     "point -2 2 -2": 0,
+     "point -2 2 0": 0,
+     "point -2 2 2": 0,
+     "point 0 -2 -2": 0,
+     "point 0 -2 0": 0,
+     "point 0 -2 2": 0,
+     "point 0 0 -2": 0,
+     "point 0 0 2": 7359084966161523,
+     "point 0 2 -2": 0,
+     "point 0 2 0": 9589221756445,
+     "point 0 2 2": 0,
+     "point 2 -2 -2": 0,
+     "point 2 -2 0": 0,
+     "point 2 -2 2": 0,
+     "point 2 0 -2": 0,
+     "point 2 0 0": 3710416169726,
+     "point 2 0 2": 0,
+     "point 2 2 -2": 0,
+     "point 2 2 0": 0,
+     "point 2 2 2": 0
+    }
+   }
+  ],
+  "finding": "Nothing erased across the 2 returns: every family's count above 0 before a return stands at it; 0 tracks cross a return."
+ },
+ "dilation_vs_clock": {
+  "rows": [
+   {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     14
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.163247,
+     1.28576
+    ],
+    "pace": [
+     0.859662651182423,
+     0.7777501244400199
+    ],
+    "clock_intervals": 0.7777501244400199,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.2222498755599801,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      18,
+      0
+     ]
+    ],
+    "closes": [
+     14,
+     29
+    ],
+    "proper_intervals": 11,
+    "intervals": 15,
+    "ratio": 0.7333333333333333,
+    "length": [
+     1.28576,
+     1.690347
+    ],
+    "pace": [
+     0.7777501244400199,
+     0.5915945069266842
+    ],
+    "clock_intervals": 10.424215385306093,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.575784614693907,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      0
+     ]
+    ],
+    "closes": [
+     12,
+     13
+    ],
+    "proper_intervals": 1,
+    "intervals": 1,
+    "ratio": 1.0,
+    "length": [
+     1.073696,
+     1.072279
+    ],
+    "pace": [
+     0.931362322296069,
+     0.9325931031009653
+    ],
+    "clock_intervals": 0.9325931031009653,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.06740689689903467,
+    "within_one_interval": true
+   },
+   {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "identities": [
+     [
+      2,
+      0
+     ],
+     [
+      24,
+      0
+     ]
+    ],
+    "closes": [
+     13,
+     32
+    ],
+    "proper_intervals": 14,
+    "intervals": 19,
+    "ratio": 0.7368421052631579,
+    "length": [
+     1.072279,
+     1.804884
+    ],
+    "pace": [
+     0.9325931031009653,
+     0.5540522271791428
+    ],
+    "clock_intervals": 13.057219524754498,
+    "clock": "the pace e^-U summed over the intervals after the first close",
+    "difference": 0.9427804752455025,
+    "within_one_interval": true
+   }
+  ],
+  "note": "",
+  "verdict": "the dilation per Node read from the clicks matches the content's clock within one interval at every where judged (14)"
+ },
+ "spacing_vs_length": {
+  "rows": [
+   {
+    "where": [
+     0,
+     0,
+     0
+    ],
+    "spans": [
+     {
+      "closes": [
+       13,
+       14
+      ],
+      "spacing": 1,
+      "length": [
+       1.163247,
+       1.28576
+      ],
+      "mean_length": 1.2245035
+     },
+     {
+      "closes": [
+       14,
+       29
+      ],
+      "spacing": 15,
+      "length": [
+       1.28576,
+       1.690347
+      ],
+      "mean_length": 1.4880535
+     },
+     {
+      "closes": [
+       29,
+       29
+      ],
+      "spacing": 0,
+      "length": [
+       1.690347,
+       1.690347
+      ],
+      "mean_length": 1.690347
+     }
+    ]
+   },
+   {
+    "where": [
+     0,
+     0,
+     2
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   },
+   {
+    "where": [
+     0,
+     0,
+     3
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   },
+   {
+    "where": [
+     0,
+     2,
+     0
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   },
+   {
+    "where": [
+     0,
+     3,
+     0
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   },
+   {
+    "where": [
+     2,
+     0,
+     0
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   },
+   {
+    "where": [
+     3,
+     0,
+     0
+    ],
+    "spans": [
+     {
+      "closes": [
+       12,
+       13
+      ],
+      "spacing": 1,
+      "length": [
+       1.073696,
+       1.072279
+      ],
+      "mean_length": 1.0729875
+     },
+     {
+      "closes": [
+       13,
+       32
+      ],
+      "spacing": 19,
+      "length": [
+       1.072279,
+       1.804884
+      ],
+      "mean_length": 1.4385815
+     },
+     {
+      "closes": [
+       32,
+       32
+      ],
+      "spacing": 0,
+      "length": [
+       1.804884,
+       1.804884
+      ],
+      "mean_length": 1.804884
+     }
+    ]
+   }
+  ],
+  "relation": {
+   "spans": 21,
+   "slope": -1.3138422219485242,
+   "sign": -1,
+   "words": "the spacing longer where e^U is smaller"
+  },
+  "sides": [
+   {
+    "return": 573,
+    "before": {
+     "spans": 21,
+     "slope": -1.3138422219485242,
+     "sign": -1,
+     "words": "the spacing longer where e^U is smaller"
+    },
+    "after": {
+     "spans": 0,
+     "slope": null,
+     "sign": null,
+     "words": "no relation read: fewer than two spans at different lengths"
+    },
+    "across": 0,
+    "same_sign": false
+   },
+   {
+    "return": 1619,
+    "before": {
+     "spans": 21,
+     "slope": -1.3138422219485242,
+     "sign": -1,
+     "words": "the spacing longer where e^U is smaller"
+    },
+    "after": {
+     "spans": 0,
+     "slope": null,
+     "sign": null,
+     "words": "no relation read: fewer than two spans at different lengths"
+    },
+    "across": 0,
+    "same_sign": false
+   }
+  ],
+  "note": ""
+ },
+ "births": {
+  "rows": [
+   {
+    "cycle": 1,
+    "point": "point 0 0 2",
+    "shown": "point 0 0 2 (electron)",
+    "caption": "electron",
+    "senses": {
+     "-1": 14,
+     "1": 14
+    },
+    "records": 28,
+    "lists": 14
+   },
+   {
+    "cycle": 1,
+    "point": "point 0 2 0",
+    "shown": "point 0 2 0 (neutron)",
+    "caption": "neutron",
+    "senses": {
+     "-1": 33,
+     "1": 33
+    },
+    "records": 66,
+    "lists": 33
+   },
+   {
+    "cycle": 1,
+    "point": "point 2 0 0",
+    "shown": "point 2 0 0 (proton)",
+    "caption": "proton",
+    "senses": {
+     "-1": 7,
+     "1": 7
+    },
+    "records": 14,
+    "lists": 7
+   }
+  ],
+  "cycles": [
+   {
+    "cycle": 1,
+    "bang": 1,
+    "to": 572,
+    "lists": 54,
+    "records": 108,
+    "sense_sum": 0,
+    "charge_kept": true
+   },
+   {
+    "cycle": 2,
+    "bang": 573,
+    "to": 1618,
+    "lists": 0,
+    "records": 0,
+    "sense_sum": 0,
+    "charge_kept": true
+   },
+   {
+    "cycle": 3,
+    "bang": 1619,
+    "to": 2400,
+    "lists": 0,
+    "records": 0,
+    "sense_sum": 0,
+    "charge_kept": true
+   }
+  ],
+  "total": {
+   "point 0 0 2": {
+    "shown": "point 0 0 2 (electron)",
+    "lists": 14,
+    "records": 28
+   },
+   "point 0 2 0": {
+    "shown": "point 0 2 0 (neutron)",
+    "lists": 33,
+    "records": 66
+   },
+   "point 2 0 0": {
+    "shown": "point 2 0 0 (proton)",
+    "lists": 7,
+    "records": 14
+   }
+  },
+  "note": ""
+ },
+ "conservation": {
+  "closes": [
+   {
+    "interval": 12,
+    "births": 6,
+    "taken": 215529041979199894415131014592934001405798559028370,
+    "booked": 18581431221226444379314908247654797580946112000,
+    "excess": 215510460547978667970751699684686346608217612916370,
+    "refused": {}
+   },
+   {
+    "interval": 13,
+    "births": 39,
+    "taken": 2076317525277253923024057017830772402769057160339252,
+    "booked": 102344594695257831098800284217380787951212576000,
+    "excess": 2076215180682558665192958217546555021981105947763252,
+    "refused": {}
+   },
+   {
+    "interval": 14,
+    "births": 1,
+    "taken": 144774015076063174643829307012509064759882146423037,
+    "booked": 3101174053996760566089772202914680808486848000,
+    "excess": 144770913902009177883263217240306150079073659575037,
+    "refused": {}
+   },
+   {
+    "interval": 17,
+    "births": 8,
+    "taken": 463177255447173523054264323664792109654983437556104,
+    "booked": 13493018431669672055674243780269977078784000,
+    "excess": 463177241954155091384592267990548329385006358772104,
+    "refused": {}
+   }
+  ],
+  "run": {
+   "births": 54,
+   "taken": 2899797837779690515137281663101007578589721303346763,
+   "booked": 124040692988912705716260638911730536317724320000,
+   "excess": 2899673797086701602431565402462095848053403579026763,
+   "refused": {}
+  }
+ }
+}
