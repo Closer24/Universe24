@@ -13,11 +13,10 @@ ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one uni
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
-    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (a held row with a dimension, its sources, the former key `act` an unknown key, the rotation without the Wronskian, a family without a dimension, its lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, a row without reads, the pair's form, |num| = den on a massive pair, a rest on the holder of the sign)."""
+    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (the gone keys `reads` and `held`, each refused by name with the derivation that replaced it, 2026-10-24; the former key `act` an unknown key, a row's lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, the pair's form, |num| = den on a massive pair)."""
     universe_beside(tmp_path, charged=True)
     document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     shape = (4, 2, 1)
-    held = {"sources": ["form"], "level_weight": 1, "write_weight": 1}
 
     def rows(*entries):
         return universe.universe_of({**document, "families": list(entries)})
@@ -29,15 +28,15 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ("integer from 1 through 3", lambda: keys.integer(4, "n", 1, 3)),
         (r"must be a Node \[x, y, z\]", lambda: keys.node_of([1, 2], "node", shape)),
         ("no file stands at that repository path", lambda: keys.document_at({}, "u.json", "u")),
-        ("each holder's name to the weight", lambda: keys.reads_of([], "reads")),
-        ("read at the weight 0 is no read", lambda: keys.reads_of({"gravity": 0}, "reads")),
         (
-            "is a held row and declares no dimension",
-            lambda: universe.shape_of({"held": {}, "dimension": 1}, "r"),
+            r"\('a'\) holds the key 'reads', a declaration no file carries: the reads are derived",
+            lambda: rows({"name": "a", "pair": [2, 3], "dimension": 1, "reads": {"gravity": 1}}),
         ),
-        ("held.sources is one of", lambda: universe.shape_of({"held": {**held, "sources": ["x"]}}, "r")),
-        ("unknown key 'act'", lambda: universe.shape_of({"held": {**held, "act": "pace"}}, "r")),
-        ("lacks the key 'dimension'", lambda: universe.shape_of({}, "r")),
+        (
+            r"\('a'\) holds the key 'held', a declaration no file carries: a holder is derived",
+            lambda: rows({"name": "a", "pair": [2, 3], "held": {"sources": ["form"]}}),
+        ),
+        ("unknown key 'act'", lambda: rows({"name": "a", "pair": [2, 3], "act": "pace"})),
         ("lists its lines' kinds", lambda: universe.shape_of({"dimension": ["x"]}, "r")),
         (
             "mixes real lines and planes",
@@ -55,25 +54,13 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ),
         ("families must be a list", lambda: universe.universe_of({**document, "families": {}})),
         ("name must be a name of its own", lambda: rows(*document["families"], document["families"][0])),
-        ("lacks the key 'reads'", lambda: rows({"name": "a", "pair": [2, 3], "dimension": 1})),
         (
             r"pair must be \[num, den\]",
-            lambda: rows({"name": "a", "pair": [2], "dimension": 1, "reads": {}}),
+            lambda: rows({"name": "a", "pair": [2], "dimension": 1}),
         ),
         (
             "a massive pair has den above",
-            lambda: rows({"name": "a", "pair": [-3, 3], "dimension": 1, "reads": {}}),
-        ),
-        (
-            "only the massless row of the content rests",
-            lambda: rows(
-                {
-                    "name": "a",
-                    "pair": [1, 1],
-                    "reads": {},
-                    "held": {"sources": ["wronskian"], "level_weight": 1, "rest": 5},
-                }
-            ),
+            lambda: rows({"name": "a", "pair": [-3, 3], "dimension": 1}),
         ),
     ]
     for match, call in refusals:
@@ -83,7 +70,7 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
     tmp_path, monkeypatch
 ):
-    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose gravity and charge rows are massless (the first named), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the packet naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
+    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose charge row is massless (the first named; gravity gapped since 2026-10-24), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the packet naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(intervals=1, universe="u.json")
@@ -96,7 +83,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 
     refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
     print(refusal)
-    assert "'gravity'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
+    assert "'charge'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
     assert Lattice(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
     for key in (
         "boundary",

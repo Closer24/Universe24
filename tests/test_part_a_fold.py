@@ -10,7 +10,6 @@ from event_universe.core import paces
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.plane import link_pairs, odd_links
-from event_universe.world_files import load_world
 from tests.laws import CHARGED, arrays, flux_world, packet
 from tests.laws import LINE_KEYS as KEYS
 
@@ -18,10 +17,10 @@ from tests.laws import LINE_KEYS as KEYS
 def test_the_odd_line_is_odd(tmp_path, monkeypatch):
     """(b) On a periodic cube of 7^3 with a packet moving along +x: after eight intervals the x odd line is written and nonzero, V_ji = -V_ij on every Link (the +a Port's read at i equals minus the -a Port's read at i + a) and X^s_ji = -X^s_ij exactly, the Link quantity read the same size from both ends with the opposite sign; the vector test: the same packet laid along +y gives the same state transposed bit for bit, every line of every family, the odd lines as a vector (the three axes alike, the step knowing no axis and no name)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = flux_world(tmp_path, (7, 7, 7))
+    world = flux_world(tmp_path, (7, 7, 7))  # the world loaded, gravity's flux lines by the test's hand
     boards = []
     for axis in (0, 1):
-        board = Lattice(load_world(world))
+        board = Lattice(world)
         packet(board, axis, (1, 4), 3, 2)
         for _ in range(8):
             board.step()
@@ -62,7 +61,7 @@ def test_the_back_step_is_exact_with_the_fold(tmp_path, monkeypatch):
     """(c) A chain of 25 with a flux holder and a moving packet: 30 intervals forward and 30 back by `step_inverse`, every line's two levels and remainder and every write remainder bit for bit, the fold's pair recomputed from the held rows' levels at each interval's start."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     world = flux_world(tmp_path, (25, 1, 1))
-    board = Lattice(load_world(world))
+    board = Lattice(world)
     packet(board, 0, (1, 4), 7, 3)
     board.amplitude = node.seed_phases(
         board, board.world

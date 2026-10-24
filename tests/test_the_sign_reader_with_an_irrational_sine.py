@@ -35,18 +35,13 @@ REFUSED_WORLDS = (
 
 
 def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagorean_one_admitted():
-    sign = {
-        "name": "charge",
-        "pair": [1000, 1000],
-        "reads": {},
-        "held": {"sources": ["wronskian"], "level_weight": 1},
-    }
+    sign = {"name": "charge", "pair": [1000, 1000]}  # the holder of the sign, the held massless row
     universe = {
         "integers": {"node_clock": 1000, "quantum_action": 36_000, "width": 92, "link_unit": 16},
         "families": [
             sign,
-            {"name": "proton", "pair": [0, 1000], "reads": {"charge": 1}, "dimension": 2},
-            {"name": "electron", "pair": [800, 1000], "reads": {"charge": 1}, "dimension": 2},
+            {"name": "proton", "pair": [0, 1000], "dimension": 2},
+            {"name": "electron", "pair": [800, 1000], "dimension": 2},
         ],
     }
     universe_of(universe)  # [800, 1000]: the sine 600, Pythagorean, admitted

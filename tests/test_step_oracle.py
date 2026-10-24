@@ -4,22 +4,19 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 import event_universe.world_files as world_files
 from event_universe.lattice import Lattice
-from event_universe.world_files import load_world
 from tests.laws import ORACLE, flux_world, packet
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_the_flux_step_equals_the_first_form_under_the_fold(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
-    """The fold of a flux holder on the chain of 25 with a moving packet, 40 intervals forward and back; the odd line written along the packet's way, so the fold was read."""
+    """The fold of a flux holder on the chain of 25 with a moving packet, 16 intervals forward and back, the engine's step and the first form equal at every interval and the run back to the lay; the odd line written along the packet's way, so the fold was read. The intervals: at 17 the seed's light meets itself at the Node 8 and the board births a pair there (the light's level 0 where the first form, which knows no click, keeps 3258), so the comparison stops at 16 (2026-10-24, the holders derived: the tests' universe without the binding holder and without gravity's rest 60). On the former tests' universe the sign holder's levels under the universal charge passed the content bound of this chain at the interval 35 (the level 6267 against A = 6178) and the run of 40 was refused by the law's own sentence, the refusal the assertion of the morning of 2026-10-24, kept by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(flux_world(tmp_path, (25, 1, 1), 40)))
+    board = Lattice(flux_world(tmp_path, (25, 1, 1), 16))
     packet(board, 0, (1, 4), 7, 3)
-    with pytest.raises(RuntimeError, match="above the world's amplitude bound"):
-        ORACLE.verdict(
-            board, 40
-        )  # since 2026-10-24 the sign holder's levels under the universal charge (the Wronskian per quantum, alpha E_s T / Gamma) pass the content bound of this chain at the interval 35 (the level 6267 against A = 6178), the run refused by the law's own sentence; the former assertion, kept by name as the record of the law to 2026-10-23: found == {**found, "verdict": "EQUAL", "intervals": 40, "back": 40} and gravity's odd line 4 written along the packet's way; no re-lay (the owner's word)
+    found = ORACLE.verdict(board, 16)
+    assert found == {**found, "verdict": "EQUAL", "intervals": 16, "back": 16}, found
+    gravity = board.states[[f.name for f in board.families].index("gravity")]
+    assert gravity.lines[4].now.any()  # the x odd line written along the packet's way

@@ -14,7 +14,6 @@ from event_universe.loader.derived import held_write_of
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.records import Record
 from event_universe.world_files import load_world
-from tests.laws import EVENTS
 
 WRAP = Wrap(True, True, True)
 
@@ -79,14 +78,15 @@ def test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_ba
     tmp_path: Path,
 ) -> None:
     """The loader: gravity's three tension lines at 2 E_s W_c = 2 x level_weight x 3 den T x the row's write wall, twice the former, the shear lines' wall where the shear is declared; a 5-cube torus of the three-clump universe (no holder of the sign) with the matter record structured by hand stepped 6 intervals and run back 6, the snapshot bit for bit through the fifth act's fires at the void's pinned rest."""
-    document = json.loads(
-        (EVENTS / "m20" / "universe_m19_lay3_g1000.json").read_text(encoding="utf-8")
-    )  # gravity, dust and matter, no holder of the sign: the reading's test is independent of the charge, and the fifth act refuses a holder under the rotation at a top by name
-    document[
-        "families"
-    ].append(  # the seed family, laid at one quantum on every Node and reading nothing, 2026-10-24
-        {"name": "light", "pair": [1000, 1000], "dimension": 1, "reads": {}}
-    )
+    document = {  # the three-clump universe, examples/events/m20/universe_m19_lay3_g1000.json in the derived form (2026-10-24): gravity, dust and matter, no holder of the sign, so the reading's test is independent of the charge, and the fifth act refuses a holder under the rotation at a top by name; light the seed family, laid at one quantum on every Node
+        "integers": {"node_clock": 1000, "quantum_action": 36000, "width": 92, "link_unit": 16},
+        "families": [
+            {"name": "gravity", "pair": [999, 1000]},
+            {"name": "dust", "pair": [0, 1000], "dimension": 1},
+            {"name": "matter", "pair": [666, 1000], "dimension": 1},
+            {"name": "light", "pair": [1000, 1000], "dimension": 1},
+        ],
+    }
     (tmp_path / "u.json").write_text(json.dumps(document), encoding="utf-8")
     world = dict(shape=[5, 5, 5], intervals=10, universe="u.json")
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")

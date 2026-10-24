@@ -4,6 +4,7 @@ import importlib.util
 import json
 import sys
 from collections.abc import Sequence
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -19,10 +20,19 @@ from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
+from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
-UNIVERSE = EVENTS / "rule.json"  # the rule's own universe: Gamma 6000, T = 32768, the law's rows
+UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
+    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+    "families": [
+        {"name": "gravity", "pair": [5994, 6000]},
+        {"name": "charge", "pair": [6000, 6000]},
+        {"name": "binding", "pair": [2400, 2401]},
+        {"name": "matter", "pair": [4000, 6000], "dimension": 1},
+    ],
+}
 CHAIN, QUANTA = (
     24,
     6,
@@ -32,20 +42,23 @@ CHARGED = {
     "name": "charged",
     "pair": [3600, 6000],
     "dimension": 2,
-}  # a Pythagorean plane under the sign (2026-10-24: the sign's reader is Pythagorean; matter's [4000, 6000] until then)
+}  # a Pythagorean plane under the sign (2026-10-24: the sign's reader is Pythagorean; matter's [4000, 6000] until then); its reads derived, every holder, the sign's among them
 LIGHT_ROW = {
     "name": "light",
     "pair": [6000, 6000],
     "dimension": 1,
-    "reads": {},
 }  # the one massless family of quanta, the seed every world is laid with (ALGEBRA.md, The uniform seed is a lay)
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 TOP = [0, 6000]
-CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
+
+
+def universe_copy() -> dict[str, Any]:
+    """The tests' universe, a copy of its own (`UNIVERSE`)."""
+    return json.loads(json.dumps(UNIVERSE))
 
 
 def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
-    """Rows of real lines as the loader reads them (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the tests' declaration)."""
+    """Rows of real lines built by hand (loader.derived.Row), each (name, pair, lines, level weight): one part, no plane, sourced by the form where it is held at the write weight 1, acting on the pace, and every row reading every held row among them at the weight 1 (the loader derives its rows from the pair and the dimension alone since 2026-10-24; these rows, a massless holder of the content among them, are the tests' own, no file's)."""
     held = tuple((name, 1) for name, _pair, _lines, weight in rows if weight is not None)
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
@@ -59,7 +72,7 @@ def load_file(name: str, path: Path):
 
 
 def vacuum_content(world: World, family: FamilyRule) -> int:
-    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22), 60 on the shipped universes with a gravity row."""
+    """The content a record of `family` reads where nothing is laid: the rests of the holders it reads, each at its read weight, 0 since no row rests at a level (2026-10-24; the declared rest 60 of the shipped universes with a gravity row to that day, kept by name)."""
     return sum(world.families[read.family].rest * read.weight for read in family.reads)
 
 
@@ -82,15 +95,14 @@ BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
-    """The tests' universe copied beside a world as u.json (the families `drop` names left out, of every family's reads too, a family's pair replaced where `pairs` names it, the charged matter row, matter's pair as a plane, added where `charged`)."""
-    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    """The tests' universe written beside a world as u.json (the families `drop` names left out, the reads derived from the rows that stand, a family's pair replaced where `pairs` names it, the charged row, a Pythagorean plane, added where `charged`)."""
+    universe = universe_copy()
     universe["families"] = [family for family in universe["families"] if family["name"] not in drop]
     universe["families"] += [json.loads(json.dumps(CHARGED))] if charged else []
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
-        family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
     if not any(  # the seed family where the universe holds no massless family of quanta, 2026-10-24
-        "held" not in f and f["pair"][0] == f["pair"][1] for f in universe["families"]
+        "dimension" in f and f["pair"][0] == f["pair"][1] for f in universe["families"]
     ):
         universe["families"] += [json.loads(json.dumps(LIGHT_ROW))]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
@@ -99,8 +111,12 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
 # the builders the parts' tests share (tests/test_part_*.py; the shape of tests/: a helper imported by two files
 # lives here): the turning universe's charged record by hand, the Coulomb chain, the one photon's board, a shipped
 # world edited beside tmp_path, the emit-and-take world and the fold's floor
-TURNING_FILE = EVENTS / "turning.json"
-TURNING_INTEGERS, TURNING = universe_of(json.loads(TURNING_FILE.read_text(encoding="utf-8")))
+TURNING_UNIVERSE = {  # the turning universe, examples/events/turning.json to 2026-10-24 (its sign holder at the level weight 100, every read declared) in the derived form: the tests' rows at T 36,000 with the charged plane
+    **UNIVERSE,
+    "integers": {**UNIVERSE["integers"], "quantum_action": 36000},
+    "families": [*UNIVERSE["families"], CHARGED],
+}
+TURNING_INTEGERS, TURNING = universe_of(json.loads(json.dumps(TURNING_UNIVERSE)))
 TURNING_T, TURNING_PAIR = (
     TURNING_INTEGERS["quantum_action"],
     (3600, 6000),
@@ -117,21 +133,10 @@ COULOMB_UNIVERSE = {
         "link_unit": 16,
     },
     "families": [
-        {
-            "name": "charge",
-            "pair": [6000, 6000],
-            "reads": {},
-            "held": {"sources": ["wronskian"], "level_weight": 100},
-        },
-        {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
+        {"name": "charge", "pair": [6000, 6000]},
+        {"name": "charged", "pair": list(TURNING_PAIR), "dimension": 2},
     ],
-}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
-GRAVITY = {
-    "name": "gravity",
-    "pair": [6000, 6000],
-    "reads": {"gravity": 1},
-    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
-}
+}  # the sign holder and one plane reading it; alpha = E_h T / Gamma = 6 (600 at the declared level weight 100 to 2026-10-24, kept by name)
 
 
 ORACLE = load_file(
@@ -142,17 +147,20 @@ arrivals_rule3 = (
 )  # the first form of Rule3, written in the tool and in no file of src/
 
 
-def flux_world(tmp_path, shape, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
-    """The rule's universe with the charged plane and gravity carrying the flux's odd lines, on a board."""
-    universe_beside(tmp_path, charged=True)
-    rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    gravity = next(row for row in rows["families"] if row["name"] == "gravity")["held"]
-    gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
-    (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
+def flux_world(tmp_path, shape, intervals=4):  # type: ignore[no-untyped-def]
+    """The tests' universe with the charged plane on a board, loaded, with gravity's row made by the test's hand the massless holder of the content carrying the flux's three odd lines (ALGEBRA.md, The clock family on the Ports, a hypothesis under its own name: no file declares it since 2026-10-24, a massless holder being the sign's and the key `sources` with `flux` gone, both kept by name; rule.json's row to that day): the row's lines 1 + 3 + 3, its flux marked, its walls the loader's for such a row. Under the gapped holder the volume moves and the swap fires, and the fold's run back and its x-y symmetry do not hold on these boards (read 2026-10-24, left open by name in FURTHER_RESEARCH.md)."""
+    universe_beside(
+        tmp_path, drop=("binding",), charged=True
+    )  # no second holder of the volume: at Gamma 6,000 and the width 63 the swap's complement 3 w X of a gapped row's volume passes int64 (the one world's width 92; rule.json's binding holder, sourced by the form alone, carried no volume)
     world = dict(shape=list(shape), intervals=intervals)
     world.update(universe="u.json")
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
-    return path
+    loaded = load_world(path)
+    families = tuple(
+        replace(f, pair=(6000, 6000), lines=f.lines + 3, flux=True) if f.name == "gravity" else f
+        for f in loaded.families
+    )
+    return replace(loaded, families=families)
 
 
 def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int) -> None:

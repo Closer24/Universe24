@@ -14,7 +14,7 @@ from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
-LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "reads": {}, "dimension": 1}
+LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "dimension": 1}
 INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": UNIT}
 
 

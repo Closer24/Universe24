@@ -1,6 +1,5 @@
 """The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand; the interval on a closed cube of one body, every level Rule3's, the count the record's share, the 48 symmetries kept in every part, the back-in-time gate MATCH over twelve intervals; on the chain light is born by the write: a breathing body of a plane writes a wave into the sign holder's own record, its share's total stays within the rounding, a static body's write stands still within the rounding, and the click at the end node_detector is the measurement; the whole run of the chain goes back in time, MATCH over 400 intervals with the rotating body and with the real one; the tension is Rule3's own conservation of the current; a receding face grows the lattice before the front, the run the larger chain's bit for bit, ending at the largest size and returning. The static body of the chain is one charged body of the sense +1 at the chain's centre Node with the taker on it: the two-body world, a like-sense body laid beside a neutral body's tail under the plain read, finds no fixed point in the generator (a 20-unit cycle of period 7 at the body's own edge), the rotating construction's open defect, the integer wander of the record-to-content map with the body's own charge level as a second source of its well; not a tie, and not widened."""
 
-import json
 import math
 
 import numpy as np
@@ -12,15 +11,15 @@ from event_universe.core.rule3 import coefficients, link_factor, mass, rule3
 from event_universe.features.start import rest
 from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write_of
 from event_universe.loader.universe import universe_of
-from tests.laws import UNIVERSE, real_rows
+from tests.laws import real_rows, universe_copy
 
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 ROWS = ("held", (4, 4), 4, 7), ("gapped", (3, 4), 1, 7), ("quanta", (5, 7), 1, None)
 BOX = (slice(1, -1),) * 3  # the inner Nodes of an array padded by one Node on every side
 HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
 WRITE = held_write_of((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
-UNIVERSE_ROWS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))  # the tests' universe
+UNIVERSE_ROWS = universe_copy()["families"]
+INTEGERS, FAMILIES = universe_of(universe_copy())  # the tests' universe
 UNIT = INTEGERS["link_unit"]  # the Link's unit G of the tests' universe
 NAMES = [family.name for family in FAMILIES]
 MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
@@ -161,8 +160,20 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         written = node.held_write_at(held.lines, found, carried, held.write_remainders)
         (held.lines, held.write_remainders), xx = written, written[0][1].now
         assert not (moving and int(stress[0].min()) < 0) and bool((stress[0] != 0).any())
-        assert np.array_equal(held.write_remainders[1], carried[1] // 2 + found[1])
-        assert not (stress[1].any() or stress[2].any() or held.lines[2].now.any() or xx.any())
+        for line in (
+            1,
+            2,
+            3,
+        ):  # the one write per tension line: the numerator over the wall, the remainder kept
+            total = np.asarray(carried[line] // 2 + found[line], dtype=object)  # Python's integers
+            assert np.array_equal(held.write_remainders[line], total % carried[line])
+            assert np.array_equal(held.lines[line].now, total // carried[line])
+        traceless = [np.asarray(found[line], dtype=object) for line in (1, 2, 3)]
+        assert (
+            np.array_equal(2 * traceless[1], -traceless[0])
+            and np.array_equal(traceless[1], traceless[2])
+        )  # the x stress s booked traceless, 2 s on the x line and -s on y and z (the stress's trace the time line's); at gravity's level weight 1 the lines gain levels here, where at rule.json's 1,000 to 2026-10-24 every numerator stayed within its wall and xx was 0
+        assert not (stress[1].any() or stress[2].any())
         states = [
             records.empty_state(f, shape, w, np.int64) for f, w in zip(FAMILIES, WALLS, strict=True)
         ]
@@ -178,8 +189,12 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
             count, count, records.zeros(shape, np.int64)
         )  # the binding holder's level
         states[NAMES.index("binding")].lines[0] = contact
+        content, _factors = node.read(MATTER, FAMILIES, states, 1, wrap, GAMMA, UNIT)
+        assert np.array_equal(content, stepped + count)  # every reader reads the rows as they stand
         light, _factors = node.read(CHARGE, FAMILIES, states, 1, wrap, GAMMA, UNIT)
-        assert np.array_equal(light, stepped + count)  # every reader reads the rows as they stand
+        assert (
+            light == 0
+        )  # the holder of the sign reads none (the reads derived, 2026-10-24; stepped + count under rule.json's declared reads to that day)
     num, den = (binding := FAMILIES[NAMES.index("binding")]).pair
     reach = round(1 / (kappa := math.acosh(3 * den / num - 2)))
     assert binding.level_weight is not None and reach == 20
@@ -209,7 +224,10 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
     for interval in range(200):
         own = node.rule_of(binding, GAMMA, state.lines[0].now)  # the row reads its own level
         increment, state.lines[0] = (
-            [scaled(state.lines[0].now)],
+            [
+                scaled(state.lines[0].now),
+                *([0] * (len(state.lines) - 1)),
+            ],  # the time line's write; the three tension lines unsourced here (the binding holder carries its axis lines since 2026-10-24)
             flux.step_line(state.lines[0], own, wrap),
         )
         kept = state.write_remainders
