@@ -57,6 +57,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         26,
         "the click's view on the sea with a hole: every credit's proper the floor of its Node's clock summed to its interval, its windows the Node's closes, two propers differing where the clocks differ",
     ),
+    "tests/test_the_click_readings.py::test_the_momentums_unit_is_the_region_formulas_at_the_one_node_and_a_second_credit_reads_no_point": (
+        36,
+        "the click's view, the clicks reader's two findings named (2026-10-24): the momentum's unit the region formula's at the one Node, 2 T for the plane wave at k = 2 pi / 3, "
+        "the hole's 0 and its neighbours' one axis each above T with opposite signs; a second credit's point and beat None, its windows 2",
+    ),
     "tests/test_the_click_readings.py::clock_of": (
         6,
         "the helper: the Node's composed clock at every Node from the seed's read, the time count's term summed by the tests apart from the engine",

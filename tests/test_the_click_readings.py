@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import json
+import math
 
 import numpy as np
 
-from event_universe import meeting_board, readings, seed, swap, world_files
+from event_universe import meeting_board, node, readings, records, seed, swap, world_files
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.lattice import Lattice
@@ -137,3 +138,55 @@ def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volum
         assert line[PROPER] == floors[line["interval"]][at] and line[WINDOWS] == closes[at]
         assert line[RECOIL] == [-p for p in line[MOMENTUM]] and len(line[FAN]) == 3
     assert len({line[PROPER] for line in credits}) > 1
+
+
+def test_the_momentums_unit_is_the_region_formulas_at_the_one_node_and_a_second_credit_reads_no_point(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """The key's unit, named (the clicks reader's finding of 2026-10-24): for a plane wave of the massless record at k = 2 pi / 3 on the 3-cube the formula P_a x W_rec div (num x W) reads 2 T exactly (2 T sin k / sin omega, sin k = sin omega there); on the hole seed's first three closes the hole's own credit reads 0 (its inflow symmetric), its six neighbours one axis each, the two sides of the hole opposite in sign and equal in size to the unit, the size above T (the ratio of one Node's two Link currents to its share, no plane wave's quantum), the fan 0 over the torus; a Node's second credit reads no point and no beat (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
+    lines: list[dict] = []  # type: ignore[type-arg]
+    board = bare_board(tmp_path, monkeypatch, lines)
+    light, T = board.world.seed, board.world.quantum_action
+    num, unit, gamma = board.families[light].pair[0], board.credit.units[light], board.world.node_clock
+    rule = node.rule_of(board.families[light], gamma, 0, None, board.unit)
+    read, self_coefficient, wall = (
+        int(np.asarray(v).reshape(-1)[0]) for v in (rule[0][0], rule[1], rule[2])
+    )
+    k = 2 * math.pi / 3
+    omega, x = (
+        math.acos((self_coefficient + 2 * read * math.cos(k) + 4 * read) / (2 * wall)),
+        np.indices(board.shape)[0],
+    )
+    wave = records.Record(
+        np.rint(1000 * np.cos(k * x)).astype(object),
+        np.rint(1000 * np.cos(k * x + omega)).astype(object),
+        np.zeros(board.shape, dtype=object),
+    )
+    board.states[light].lines[0] = wave
+    along = readings.momentum_of(num, [wave], board.wrap)
+    share = int(np.asarray(board.share_of(light)[0], dtype=object).sum())
+    assert along[0] * unit // (num * share) == 2 * T and along[1:] == (
+        0,
+        0,
+    )  # the two-Link sum per quantum over sin omega, 2 T here
+    board = bare_board(tmp_path, monkeypatch, lines)  # the hole seed afresh
+    while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 3:
+        board.step()
+    credits = [line for line in lines if line.get("event") == "credit"]
+    closes = sorted({line["interval"] for line in credits})[:3]
+    first = [line for line in credits if line["interval"] == closes[0]]
+    assert len(first) == 1 and first[0][MOMENTUM] == [0, 0, 0] and first[0]["support"] == [0, 0, 0]
+    sides = [line for line in credits if line["interval"] == closes[1] and line[WINDOWS] == 1]
+    assert len(sides) == 6 and all(line[FAN] == [0, 0, 0] for line in sides)
+    sizes = {abs(p) for line in sides for p in line[MOMENTUM] if p}
+    assert (
+        len(sizes) <= 2 and max(sizes) - min(sizes) <= 1 and min(sizes) > T
+    )  # one axis each, the unit's size, above T
+    assert all(sum(1 for p in line[MOMENTUM] if p) == 1 for line in sides)
+    assert (
+        sum(np.sign(p) for line in sides for p in line[MOMENTUM] if p) == 0
+    )  # opposite across the hole
+    for line in credits:
+        if line["interval"] in closes:
+            again = line[WINDOWS] > 1
+            assert (line["point"] is None) == again and (line["beat"] is None) == again
