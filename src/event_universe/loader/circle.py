@@ -119,7 +119,7 @@ def lightest_point(den: int) -> tuple[int, int]:
     if not found:
         raise ValueError(
             f"the circle of den {den} has no point with both legs above 0 (no prime 1 mod 4 divides it): the "
-            "lightest point, the electron's pair, is not derived (ALGEBRA.md, The one universe)"
+            "lightest point, the least leg of den's circle, is not derived (ALGEBRA.md, The one universe)"
         )
     s, num = found[0]
     return num, s

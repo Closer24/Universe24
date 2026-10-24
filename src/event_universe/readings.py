@@ -41,7 +41,7 @@ def slices(
 
 def ports(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
     """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port of the torus, the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side, wrap) for axis in range(3) for side in (1, -1))
+    return tuple(arrival(a, axis, side) for axis in range(3) for side in (1, -1))
 
 
 def sense_current_of(

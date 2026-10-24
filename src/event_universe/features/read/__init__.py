@@ -50,9 +50,7 @@ def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap, gamma: 
     found = []
     for axis in range(3):
         for side in (1, -1):
-            ends = [
-                (weight, lines[axis], arrival(lines[axis], axis, side, wrap)) for weight, lines in axes
-            ]
+            ends = [(weight, lines[axis], arrival(lines[axis], axis, side)) for weight, lines in axes]
             found.append(link_tension(ends))
     return tuple(
         np.minimum(np.asarray(tension, dtype=object), gamma) for tension in found

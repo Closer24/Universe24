@@ -9,7 +9,6 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES, Wrap, arrival
-from event_universe.features.click import Face
 from event_universe.features.phase import fold, rotation_unit, signed_read, signed_rounded
 from event_universe.features.read import content_of
 from event_universe.loader.derived import FamilyRule
@@ -21,8 +20,6 @@ Angles = tuple[
 Phases = tuple[
     tuple[Any, Any], ...
 ]  # the phase pair (c, s) read through each of the six Ports, in Port order
-Faces = list[Face]  # the faces presented to a line at this step
-NO_FACE: Faces = []
 
 
 def link_levels(
@@ -33,8 +30,8 @@ def link_levels(
     found: list[Any] = []
     for axis, level in enumerate(levels):
         found += [
-            own * level + far * arrival(level, axis, 1, wrap),
-            -(own * arrival(level, axis, -1, wrap) + far * level),
+            own * level + far * arrival(level, axis, 1),
+            -(own * arrival(level, axis, -1) + far * level),
         ]
     return tuple(found)
 
@@ -64,7 +61,7 @@ def frame_signs(frame: Any, wrap: Wrap) -> tuple[Any, ...]:
     found: list[Any] = []
     for axis in range(AXES):
         for sigma in (1, -1):
-            other = arrival(own, axis, sigma, wrap)
+            other = arrival(own, axis, sigma)
             found.append(np.where(other == own, 1, -1))
     return tuple(found)
 
@@ -79,9 +76,7 @@ def phase_links(lines: list[Record], wrap: Wrap) -> Phases:
             ((c.now, c.before, c.remainder), (s.now, s.before, s.remainder)), n.now
         )
         found.append((cosine, sine))
-        found.append(
-            (arrival(cosine, axis, -1, wrap), -signs[2 * axis + 1] * arrival(sine, axis, -1, wrap))
-        )
+        found.append((arrival(cosine, axis, -1), -signs[2 * axis + 1] * arrival(sine, axis, -1)))
     return tuple(found)
 
 

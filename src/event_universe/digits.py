@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, cast
 import numpy as np
 
 from event_universe import flux, node
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
 from event_universe.features.read import READS, read_again
@@ -24,6 +25,7 @@ Frame = Sequence[
 Reads = Sequence[
     tuple[int, Frame]
 ]  # what a reader reads: each family at the Nodes of its frame, in the frame's order
+VACUUM_VALUES = AXES  # the exact vacuum paces' count of values per digit, the axes' count (ALGEBRA.md, The click's read of the board: at the vacuum paces the six Ports' reaches and the mass sum to SIDES w, the massless point's mass 0, so each reach is w div AXES, the digit lattice F = gcd(w, 0, w div AXES) = w div AXES and the digit has AXES values, three; the clause of 2026-10-24, a digit lattice at or above w div 3, three values or fewer, is the exact vacuum paces' and the read is refused there), the law's own count from the Ports' names and no number of the engine
 
 
 def frame_of(at: Node, shape: tuple[int, int, int], periodic: Sequence[bool]) -> list[Node]:
@@ -98,20 +100,21 @@ def lattice_of(rule: Rule, at: Frame, pairs: flux.Pairs | None = None) -> list[i
 
 
 def read_of(board: Lattice, reads: Reads, label: str) -> tuple[int, tuple[int, int]]:
-    """The click's read of the board, one integer (ALGEBRA.md, The click's read of the board): the remainders of the records of every family in `reads` in that order, each at the Nodes its mask names (a region detector the record it reads at its region; a body detector the arriving records, its transitions' drives, first and its own record after, at its Nodes and within one Link where each stands, `reads_of`), each family's in its frame's order (`digits_of`, `frame_of`, the remainder with its Node's lattice F and the family's wall), each read as its index on the lattice, r div F (one division act per digit), as one number in the mixed radix of the bases w div F + 1 (`features/click.read_number`; the base one above the digit's count of values, so that a total T of the wall's primes never divides it and every digit enters the residue); a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits (the reader's D2 of 2026-10-20: a record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once; a record whose lines differ keeps every digit), one comparison per later line and no act; returned with the number's two moduli for its first draw, the gcd of the bases less one after the first digit's (the residue modulo a factor of it the digits' plain sum) and the last digit's base (modulo a factor of it the last digit alone; `features/click.drawn_from`, the reader's D4); read at the draw's moment, the close before that click's write, and never written, so the run back and the inverse stand as they are. Refused by name, `label` naming the detector and the interval: every remainder at the lay's origin w div 2 (the records untouched at the Nodes read, or an exactly periodic standing record returned to its origin: nothing to read), and every digit on the lattice of the exact vacuum paces, at most three values each (3 F at or above w: light's remainders at p_0 = p_i = Gamma with no tension; a record read for its digits reads a content, the shipped universes' 60)."""
+    """The click's read of the board, one integer (ALGEBRA.md, The click's read of the board): the remainders of the records of every family in `reads` in that order, each at the Nodes its mask names (a region detector the record it reads at its region; a body detector the arriving records, its transitions' drives, first and its own record after, at its Nodes and within one Link where each stands, `reads_of`), each family's in its frame's order (`digits_of`, `frame_of`, the remainder with its Node's lattice F and the family's wall), each read as its index on the lattice, r div F (one division act per digit), as one number in the mixed radix of the bases w div F + 1 (`features/click.read_number`; the base one above the digit's count of values, so that a total T of the wall's primes never divides it and every digit enters the residue); a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters neither the number nor its bits (the reader's D2 of 2026-10-20: a record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; the read takes each Node's distinct digits once; a record whose lines differ keeps every digit), one comparison per later line and no act; returned with the number's two moduli for its first draw, the gcd of the bases less one after the first digit's (the residue modulo a factor of it the digits' plain sum) and the last digit's base (modulo a factor of it the last digit alone; `features/click.drawn_from`, the reader's D4); read at the draw's moment, the close before that click's write, and never written, so the run back and the inverse stand as they are. Refused by name, `label` naming the detector and the interval: every remainder at the lay's origin w div 2 (the records untouched at the Nodes read, or an exactly periodic standing record returned to its origin: nothing to read), and every digit on the lattice of the exact vacuum paces, three values or fewer each (w div F at or below `VACUUM_VALUES`, the lattice F at or above w div 3: the massless point's remainders at p_0 = p_i = Gamma with no tension; a record read for its digits reads a content, the shipped universes' 60)."""
     digits, bases, origin, coarse = [], [], True, True
     for index, at in reads:
         half, earlier = board.half_wall(index), dict[tuple[int, int], list[int]]()
         for remainder, found, wall, place in digits_of(board, index, at):
+            values = int(division_forward(wall, found, 0)[0])  # w div F, the digit's count of values
             origin = origin and remainder == half
-            coarse = coarse and 3 * found >= wall
+            coarse = coarse and values <= VACUUM_VALUES  # the exact vacuum paces, refused by name
             standing = earlier.setdefault(place, [])
             copied = any(remainder in (kept, wall - kept) for kept in standing)
             standing.append(remainder)
             if copied:  # an earlier line's remainder at the Node, or w less it: a copy, read once
                 continue
             digits.append(division_forward(remainder, found, 0)[0])  # the index on the lattice
-            bases.append(division_forward(wall, found, 0)[0] + 1)  # one above w div F
+            bases.append(values + 1)  # one above w div F
     if origin:
         raise RuntimeError(
             f"the click's read of the board at {label} finds every digit at the lay's origin w div 2: the "
@@ -120,9 +123,10 @@ def read_of(board: Lattice, reads: Reads, label: str) -> tuple[int, tuple[int, i
     if coarse:
         raise RuntimeError(
             f"the click's read of the board at {label} finds every digit on the lattice of the exact vacuum "
-            "paces, at most three values each (gcd(w, D_i, R_ij) at or above w div 3: light's remainders at "
-            "p_0 = p_i = Gamma with no tension); the number cannot spread over the weights' total, so the read "
-            "is refused: a record read for its digits reads a content, the paces off the exact band"
+            "paces, three values or fewer each (the lattice F = gcd(w, D_i, R_ij) at or above w div 3: the massless "
+            "point's remainders at p_0 = p_i = Gamma with no tension; ALGEBRA.md, The click's read of the board); "
+            "the number cannot spread over the weights' total, so the read is refused: a record read for its "
+            "digits reads a content, the paces off the exact band"
         )
     summed = gcd(*(base - 1 for base in bases[1:])) if len(bases) > 1 else 1  # the plain sum's modulus
     return read_number(digits, bases), (summed, bases[-1])
