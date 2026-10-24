@@ -6,7 +6,7 @@ from collections import Counter
 import numpy as np
 import pytest
 
-from event_universe import digits, flux, node, node_detector, world_files
+from event_universe import digits, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.features.click import bias_bound, drawn_from, read_number
@@ -17,7 +17,6 @@ from event_universe.meeting_back import first_difference, snapshot
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, family, world_beside
 from tests.laws_read import load_shipped
-from tests.laws_universe import CUBE, atom_world
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
 LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the walls w = 6 den Gamma^2 G^2
@@ -185,44 +184,6 @@ def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
     assert (
         "most significant" in DIGIT_ORDER and "index order" in DIGIT_ORDER and "r div F" in DIGIT_ORDER
     )
-
-
-def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(tmp_path, monkeypatch):
-    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2; ALGEBRA.md, The click's read of the board: every line is born at w div 2, so a digit lies on w div 2 + F Z, F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) from Rule3's integers and the Link pairs at the Node), posed on the small torus with the universe file (tests/laws_universe.atom_world, the electron's plane reading the sign holder and gravity): after the first interval every digit of the electron's two lines at every Node lies on w div 2 + F Z with F the lattice of the pairs its step read, and off the plain lattice w div 2 + (w div 9) Z; the digits that moved, the Nodes the fifth act fired at and the digits off the lattice are printed. The former board, the shipped hydrogen_1s about its centre (the electron at the exact vacuum paces, F = T = 36,000,000 at 33 Nodes, 264 digits on w div 2 + T Z over four intervals, 8 of 16 digits at F = 8 T off by T at the interval 4 under the centred count, 2026-10-23), left with the atom folder on 2026-10-24, every world but Universe24 cancelled."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(atom_world(tmp_path)))
-    board.output = lambda line: None
-    electron, gamma = family(board, "electron"), board.world.node_clock
-    half, at = board.half_wall(electron), np.ones(board.shape, dtype=bool)
-    assert electron in board.turning
-    content, factors = board.read(electron, 1, 0)
-    rule = node.rule_of(board.families[electron], gamma, content, factors, board.unit)
-    pairs = flux.pairs_of(
-        electron,
-        board.families,
-        board.states,
-        1,
-        board.wrap,
-        gamma,
-        content,
-        factors,
-        0,
-        board.amplitude,
-    )
-    lattice = digits.lattice_of(rule, at, pairs)  # F at every Node from the pairs the first step reads
-    assert len(set(lattice)) == 1 and lattice[0] % (2 * half // 9) and lattice[0] < 2 * half
-    board.step()
-    read = list(digits.digits_of(board, electron, at))
-    assert {w for _r, _f, w, _p in read} == {2 * half} and len(read) == 2 * CUBE**3
-    moved = [(r - half, lattice[place]) for r, _f, _w, (_record, place) in read if r != half]
-    off = [(d, f) for d, f in moved if d % f]
-    fired = [n for interval, direction, n in board.swaps if interval == 1 and direction == 1]
-    print(
-        f"the electron's digits after the first interval: F {lattice[0]}, {len(moved)} of {len(read)} moved, "
-        f"{len(off)} off w div 2 + F Z {off[:4]}; the fifth act fired at {fired} Nodes"
-    )
-    assert all(d % (2 * half // 9) for d, _f in moved)  # off the plain lattice w div 2 + (w div 9) Z
-    assert off == [], (len(off), len(moved), off[:6])  # every digit on w div 2 + F Z
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):

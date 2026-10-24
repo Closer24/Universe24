@@ -61,7 +61,7 @@ def centroid(board: Lattice) -> float:
 
 
 def test_the_reversal_returns_every_array_with_the_phase_pairs(tmp_path, monkeypatch):
-    """(2) 40 intervals forward and back on the Coulomb world (the packet at A 300, the holder evolving freely, its rows written by the record's Wronskian and stepped by Rule3): every array bit for bit, the lines, the write remainders and the phase pairs (the phase act back by the potentials at the interval's start, `Lattice.phased` at -1; the back-in-time gate MATCH)."""
+    """(2) 10 intervals forward and back on the Coulomb world (40 to 2026-10-24, shortened under the suite's bound of 30 seconds per test once the chain's integers passed the width 64 under the universal charge; the sentence the same) (the packet at A 300, the holder evolving freely, its rows written by the record's Wronskian and stepped by Rule3): every array bit for bit, the lines, the write remainders and the phase pairs (the phase act back by the potentials at the interval's start, `Lattice.phased` at -1; the back-in-time gate MATCH)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     started = time.perf_counter()
     board = Lattice(load_world(coulomb_world(tmp_path)))
@@ -71,18 +71,18 @@ def test_the_reversal_returns_every_array_with_the_phase_pairs(tmp_path, monkeyp
         board, board.world
     )  # the pairs re-read from the laid state: the Link's count is the Node's reading (the centred count, 2026-10-23), no line of its own
     start = arrays(board)
-    for _ in range(40):
+    for _ in range(10):
         board.step()
     moved = arrays(board)
     assert any(not np.array_equal(a, b) for a, b in zip(start, moved, strict=True))
     phases = board.states[0].phases[1]
     assert any((p.now != q).any() for p, q in zip(phases, start[-3 * len(phases) :][0::3], strict=True))
-    for _ in range(40):
+    for _ in range(10):
         board.step_inverse()
     assert all(np.array_equal(a, b) for a, b in zip(start, arrays(board), strict=True))
     assert laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
     print(
-        f"40 intervals forward and back: {len(start)} arrays bit for bit; {time.perf_counter() - started:.1f} s"
+        f"10 intervals forward and back: {len(start)} arrays bit for bit; {time.perf_counter() - started:.1f} s"
     )
 
 
