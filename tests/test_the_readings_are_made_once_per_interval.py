@@ -44,7 +44,7 @@ def stepped(path: Path, intervals: int) -> tuple[list[Any], list[dict[str, objec
 def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births among them (the hole seed's, one per close at the origin under the hole the Node's own level before, the drift stopped, 2026-10-24), the memo bounded (one entry per key: its entries stand over the second half of the run, the digits' keys added at the first draw by the digits)."""
+    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births among them (the hole seed's, one per close at the origin under the hole the Node's own level before, the drift stopped, 2026-10-24), the memo bounded (one entry per key: its entries stand over the second half of the run, the digits' keys added at the first draw by the digits) the hits and the makes both above 0 (the former "hits above makes" read the course and not the memo: under the selector the toy's close reads at one Node per close, and the lean board reads no empty record, 2026-10-24)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path)
     for holder in (node, share):
@@ -68,7 +68,7 @@ def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
         assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
         assert hits["again"] > 0 < hits["made"], (
             holder.__name__
-        )  # the hits near the makes on the lean board (495 against 518), the former layout's empty records read again at every act gone (2026-10-24)
+        )  # the hits near the makes on the lean board (495 against 518), the former layout's empty records read again at every act gone (2026-10-24); under the selector the close reads at one Node per close, so "hits above makes" read the course and not the memo
         # the memo bounded: one entry per key, the states compared by identity; it gains the digits' keys at the
         # first draw by the digits (the records' rules read at the Node's frame) and stands from there
         assert (
