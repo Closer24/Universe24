@@ -11,13 +11,14 @@ from event_universe import records, seed, world_files
 from event_universe.emission import emitted_lines
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
+from event_universe.loader.circle import vector_of
 from event_universe.world_files import load_world
-from tests.laws_universe import UNIVERSE, bare_torus
+from tests.laws_universe import bare_torus, small_universe
 
 INTERVALS, SIDE, BIRTH = (
-    32,
+    26,
     3,
-    30,
+    24,
 )  # the births at 30 since the close reads the interval's start (the branch digit-order; 29 when it read the state after the step)  # through the births at 29 and one past (28 before them on the 5-cube to 2026-10-24; 32 shortened under the suite's bound)
 TILES = (
     {"x": [0, 1]},
@@ -32,7 +33,7 @@ def layers_of(interior: list[int]) -> list[int]:
 
 def tile_world(folder: Path, layers: int) -> Path:
     """The tile's world: the one universe over the tile's layers along x and the board's other two sides."""
-    (folder / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+    small_universe(folder)
     world = {"universe": "u.json", "shape": [layers, SIDE, SIDE], "intervals": INTERVALS}
     path = folder / f"tile_{layers}.json"
     path.write_text(json.dumps(world), encoding="utf-8")
@@ -154,13 +155,15 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
             imposed(tile, whole, rows)
         assert differences(whole, board) == [], interval
     born = [line for line in lines if line["event"] == "birth"]
-    assert len(born) == SIDE**3 and all(line["interval"] == BIRTH for line in born)  # every Node alike
+    assert (
+        born and born[0]["interval"] <= BIRTH
+    )  # the hole seed's first birth by the draw at the hole's side (2026-10-24; every Node alike at 24 under the uniform sea to that day)
     assert all(
-        line["children"] == born[0]["children"]
-        and sum(line["senses"]) == 0
-        and "proton" in line["children"]
-        for line in born
-    )  # one list at every Node, the proton pair among its children, the senses summing to 0 (N children one record each, 2026-10-24)
+        vector_of(c) is not None for line in born for c in line["children"]
+    )  # the points the fit picks, named by their vectors
+    assert all(
+        sum(line["senses"]) == 0 for line in born
+    )  # one record per child, the senses summing to 0 (2026-10-24)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
 
 

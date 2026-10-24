@@ -261,6 +261,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # (p - 1) div 4 and Euclid's remainders
     ("loader/circle.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
     ("loader/circle.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
+    (
+        "loader/circle.py",
+        "angled",
+        "division_forward",
+    ): "D",  # a prime's class modulo 4, den over its angled primes
+    (
+        "loader/circle.py",
+        "circle_points",
+        "division_forward",
+    ): "D",  # a vector's lift, (step + 2 e) over 2
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (

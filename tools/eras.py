@@ -19,6 +19,7 @@ from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
 from event_universe.lattice import Lattice
+from event_universe.loader import circle
 from event_universe.loader.circle import lightest_point
 from event_universe.world_files import load_world
 
@@ -172,11 +173,13 @@ def spans(lines: list[dict[str, Any]], family: str, span: int, gamma: int) -> li
 
 
 def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, Any]:
-    """The log's first line: the world's own numbers, the held rows by name (the page's legend names the hypotheses under their keys) and the lightest point of the circle of the seed's den, (num, s) with s the least leg, the electron's pair as the law derives it (`loader/circle.lightest_point`, 2026-10-24; None where the circle has no point)."""
+    """The log's first line: the world's own numbers, den with its primes and the points of its circle (each plane row's num and s under its label, the page's captions read from them, tools/look/captions.captions_for; 2026-10-24, the family-less file), the seed row's name, the lightest point of the circle, (num, s) with s the least leg, the electron's pair as the law derives it (`loader/circle.lightest_point`; None where the circle has no point), every row's name and the held rows of the content by name (the page's legend names the hypotheses under their keys)."""
     world = board.world
     held = [family.name for family in world.families if family.held and not family.wronskian]
+    seed = world.families[world.seed].name if world.seed is not None else None
+    den = world.families[world.seed if world.seed is not None else 0].pair[1]
     try:
-        point: list[int] | None = list(lightest_point(world.families[world.seed].pair[1]))
+        point: list[int] | None = list(lightest_point(den))
     except ValueError:  # a den no prime 1 mod 4 divides: no point
         point = None
     return {
@@ -185,7 +188,13 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
         "quantum_action": world.quantum_action,
         "width": world.width.bit_length(),
         "shape": list(world.shape),
+        "den": den,
+        "primes": [[prime, power] for prime, power in sorted(circle.factors(den).items())],
+        "seed": seed,
         "families": [family.name for family in world.families],
+        "points": {
+            circle.label_of(vector): [num, sine] for vector, num, sine in circle.circle_points(den)
+        },
         "held": held,
         "amplitude_bound": world.amplitude_bound,
         "lightest_point": point,

@@ -7,17 +7,17 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe import flux, node, records, world_files
+from event_universe import flux, node, records, seed, world_files
 from event_universe.core import paces
 from event_universe.core.ports import LINK_UNIT, Wrap
 from event_universe.lattice import Lattice
-from event_universe.loader.universe import universe_of
+from event_universe.loader.universe import MASSLESS, universe_of
 from event_universe.readings import ports
 from event_universe.world_files import load_world
 from tests.laws import linear_sum, weighted_linear_sum
-from tests.laws_universe import CUBE, UNIVERSE, bare_torus
+from tests.laws_universe import CUBE, UNIVERSE, bare_torus, uniform_sea
 
-BEFORE_THE_BIRTHS = 29  # the births at 30 on the bare 3-cube since the close reads the interval's start (29 when it read the state after the step)
+BEFORE_THE_BIRTHS = 23  # the births at 24 on the bare 3-cube of the tests' small universe with the massless volume holder (2026-10-24; 30 at the one universe's gapped holder since the close reads the interval's start, 29 when it read the state after the step)
 
 
 def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
@@ -25,6 +25,9 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
 ) -> None:
     """The seed's light on the bare 3-cube torus: L is the same whole number after every one of the 29 intervals before the births, while the held row's write moves the paces (one content over the board at every interval, so the Link terms pair off) and the levels rise from the seed; at 29 the births' holes take the light and L falls."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        seed, "uniform_seed", uniform_sea
+    )  # the uniform sea, the law's seed to 2026-10-24, by name: the sentence is the uniform content's
     lines: list[dict[str, object]] = []
     board = Lattice(load_world(bare_torus(tmp_path)), output=lines.append)
     light = board.world.seed
@@ -35,8 +38,8 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
         board.step()
         assert linear_sum(wall, board.states[light].lines[0]) == first, board.interval
     assert (
-        board.states[light].lines[0].now > first // wall
-    ).all()  # the levels rose from the seed, L stood
+        board.states[light].lines[0].now > seed.drift_of(board.world.quantum_action)
+    ).all()  # the levels rose from the seed's drift, L stood
     board.step()
     assert any(line["event"] == "birth" for line in lines)
     assert linear_sum(wall, board.states[light].lines[0]) != first  # the holes took the light
@@ -45,7 +48,7 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
 def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content() -> None:
     """The light family on a 3-cube torus of random levels within 10^6 at the content 0 on two layers and 600 on the third, laid by hand and never stepped: the rule `node.rule_of` at that content, 100 intervals of the engine's own `flux.step_line`, L'' = SUM weight_i [w (now - before) + r] the same whole number after every interval, weight_i = scale div p_i^2 with scale the least common multiple of the two distinct p_i^2, while L moves by exactly the pairing term SUM over the Links of (R_ij - R_ji)(a_j - a_i), the step's own Links' sum."""
     integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
-    light = next(family for family in families if family.name == "light")
+    light = next(family for family in families if family.name == MASSLESS)
     gamma, unit, wrap, shape = (
         integers["node_clock"],
         LINK_UNIT,

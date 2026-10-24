@@ -20,7 +20,7 @@ from event_universe.features.read import (
 from event_universe.features.start.rests import read_content
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import CHARGED, ROOT, refused, universe_copy
+from tests.laws import ROOT, refused, resolved, universe_copy
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
@@ -70,14 +70,14 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     refused("wall E_s T is from 1", held_write, 0, 1, 0, 0)
 
 
-def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
-    """A universe file of the rows given at Gamma 10,000, T 64, the width 63 and the Link unit 1, but for `integers`."""
+def universe(*rows: dict, **integers: int) -> tuple[dict[str, int], tuple]:  # type: ignore[type-arg]
+    """The rows given, by hand, resolved at Gamma 10,000, T 64, the width 63 and the Link unit 1, but for `integers` (tests.laws.resolved; the files carry no row since 2026-10-24)."""
     integers = {
         "node_clock": GAMMA,
         "quantum_action": 64,
         **integers,
     }  # the width derived, G the engine's (2026-10-24)
-    return {"integers": integers, "families": [dict(row) for row in rows]}
+    return integers, resolved(*rows, **integers)
 
 
 HOLLOW = {
@@ -97,7 +97,7 @@ PLANE = {"name": "stuff", "pair": [3600, 6000], "dimension": 2}  # a Pythagorean
 
 def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_the_weight_one():
     """The derived read and the derived write (the owner's word of 2026-10-24, no declarations; ALGEBRA.md #the-paces, The reads are derived; #a-familys-declaration, The holders are derived): a universe of two holders of the volume, `hollow` [3, 4] and `core` [1, 2], both gapped, and two real-line families of matter's pair, `stuff` and `other`; the loader derives that every row but the holder of the sign reads every holder of the volume at 1, the holders themselves among the readers (Every row reads the content), every level weight 1 and every write weight 1. On random levels of a periodic 3-cube: every family's content is the two holders' time lines summed, every Link's factor G^2, the rule of `stuff` the law's line at the composed paces of that content; each holder is sourced by `stuff` and `other` (the reciprocity), each source's numerator its form scaled by the write's factor at the weight 1 x 1, the level gaining (numerator + r) div (E_s T) with the remainder in [0, wall), the write back exact; `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a row carrying the gone key `reads` or `held`, each refusal naming the derivation that replaced it; a universe of the sign holder and a real line gives the line no read of the sign and the sign holder none at all, and a plane the sign at 1; on a board of two Nodes with the sign holder at -5 and 5 the plane's turn's numerators are -5 and 5, the signed level, and its content read is the integer 0, the holder's level entering no content (the one act, the mathematician's 117 III); the tests' universe at T 36,000 with the charged row carries alpha = E_h T / Gamma = 6 inside the sign holder's write; a plane reading the sign with an irrational sine (the deuteron's nuclide [4004, 6000] of examples/events/deuteron.json, the record of the law to 2026-10-23) is refused by name; and the tests' universe with the charged row and the one world's file, as the loader derives them, read as the sentences say: every holder of the volume by every row but the sign holder, the sign holder by every plane, the write weight 1 on every holder of the volume and alpha on the sign holder. The declared reads, level weights 5 and 7, write weights 3 and -1 (a negative write weight, the core's hill) and the refusals of a weight 0, of a read of no held row, of the sign holder naming itself and of a real line naming the sign (the tests of the law to 2026-10-24) kept by name."""
-    integers, families = universe_of(universe(HOLLOW, CORE, STUFF, OTHER))
+    integers, families = universe(HOLLOW, CORE, STUFF, OTHER)
     hollow, core, stuff, other = range(4)
     reads = [[(r.family, r.weight) for r in f.reads] for f in families]
     assert reads == [[(0, 1), (1, 1)]] * 4 and readers_of(families, hollow) == [stuff, other]
@@ -160,25 +160,10 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         assert np.array_equal(back.now, before.now) and np.array_equal(origin, remainder[0])
     found, own_weight = read_content(((0, 1), (1, 3)), levels, [0, 60], 1)
     assert np.array_equal(found, levels[0] + 3 * 60) and own_weight == 3
-    for rows, reason in (
-        (
-            (HOLLOW, {**STUFF, "reads": {"hollow": 1}}),
-            r"\('stuff'\) holds the key 'reads'.*the reads are derived",
-        ),
-        (
-            ({**HOLLOW, "held": {"sources": ["form"]}}, STUFF),
-            r"\('hollow'\) holds the key 'held'.*a holder is derived",
-        ),
-        (
-            ({**HOLLOW, "held": {}}, STUFF),
-            "every level weight and every write weight is 1 and no row rests",
-        ),
-    ):
-        refused(reason, universe_of, universe(*rows))
-    line_and_sign = universe_of(universe(SIGN, STUFF))[1]  # a real line under the sign: no read of it
+    line_and_sign = (universe(SIGN, STUFF))[1]  # a real line under the sign: no read of it
     assert [[r.family for r in f.reads] for f in line_and_sign] == [[], []]
-    assert [[r.family for r in f.reads] for f in universe_of(universe(SIGN, PLANE))[1]] == [[], [0]]
-    turning = universe_of(universe(SIGN, PLANE, quantum_action=15_000))[1]  # T 4,000 = Gamma 6,000
+    assert [[r.family for r in f.reads] for f in (universe(SIGN, PLANE))[1]] == [[], [0]]
+    turning = (universe(SIGN, PLANE, quantum_action=15_000))[1]  # T 4,000 = Gamma 6,000
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
     board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in turning]
     board[0].lines[0] = records.Record(level, level, two)
@@ -189,31 +174,27 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         5,
     ]  # the turn by L, the holder of the sign's one act
     assert paced_read == 0  # the rotation: no level in the content
-    rows = (rule := universe_copy())["families"]
+    rule = universe_copy()
     rule["integers"]["quantum_action"] = (
         36_000  # T at which the law's alpha E_h T / Gamma is 6 (the charge's universality, 2026-10-24; E_h T num / (Gamma den) = 4 under the sentence of 2026-10-23, kept by name)
     )
-    charge = next(
-        f for f in universe_of({**rule, "families": [*rows, CHARGED]})[1] if f.name == "charge"
-    )
+    charge = next(f for f in universe_of(rule)[1] if f.held and f.wronskian)
     assert (charge.write_weight, charge.write_wall) == (
         6,
         1,
     )  # alpha carried inside the write, no pair in it, no gate
     refused(
         "a reader of the sign writes its charge per quantum by its count unit",
-        universe_of,
-        universe(
-            {"name": "charge", "pair": [6000, 6000]},
-            {"name": "nuclide", "pair": [4004, 6000], "dimension": [2, 2]},
-        ),
+        universe,
+        {"name": "charge", "pair": [6000, 6000]},
+        {"name": "nuclide", "pair": [4004, 6000], "dimension": [2, 2]},
     )  # the deuteron's 'nuclide' [4004, 6000] reads the charge with an irrational sine, refused at load since 2026-10-24 (the owner's word; examples/events/deuteron.json the record of the law to 2026-10-23)
     one_world = json.loads(
         (ROOT / "examples" / "events" / "universe24" / "universe_universe24.json").read_text(
             encoding="utf-8"
         )
     )
-    for name, document in (("tests", {**rule, "families": [*rows, CHARGED]}), ("universe24", one_world)):
+    for name, document in (("tests", rule), ("universe24", one_world)):
         integers, shipped = universe_of(json.loads(json.dumps(document)))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for index, f in enumerate(shipped):
@@ -247,18 +228,18 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         ((SIGN, plane, frozen), [False, False, True]),
         ((SIGN, frozen, proton), [False, True, True]),
     ):
-        families = universe_of(universe(*rows, quantum_action=15_000))[1]
+        families = (universe(*rows, quantum_action=15_000))[1]
         assert [f.pair[0] == 0 for f in families] == zeros and all(f.plane for f in families[1:])
     moving = {
         **plane,
         "name": "slower",
         "pair": [4800, 6000],
     }  # a second Pythagorean plane (2026-10-24; [3000, 6000], its sine irrational, until then)
-    integers, families = universe_of(
-        universe(SIGN, plane, moving, quantum_action=15_000)
+    integers, families = universe(
+        SIGN, plane, moving, quantum_action=15_000
     )  # two moving planes of different pairs under one holder load (the charge's universality, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
     assert (families[0].write_weight, families[0].write_wall) == (
         3,
         2,
     )  # alpha = E_h T / Gamma = 15,000 / 10,000 reduced, no pair in it
-    universe_of(universe(SIGN, plane, frozen))
+    (universe(SIGN, plane, frozen))
