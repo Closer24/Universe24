@@ -6,14 +6,11 @@ from collections import Counter
 import numpy as np
 import pytest
 
-from event_universe import digits, node, node_detector
+from event_universe import digits
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.features.click import bias_bound, drawn_from, read_number
-from event_universe.features.front import ball
-from event_universe.lattice import Lattice
 from event_universe.loader.draw import DIGIT_ORDER
-from tests.laws import family
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
 LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the walls w = 6 den Gamma^2 G^2
@@ -22,71 +19,6 @@ LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the wall
 def placed(residue: int, weights: list[int]) -> int:
     """The residue placed on the cumulative weights, the first index whose cumulative weight exceeds it."""
     return next(i for i in range(len(weights)) if residue < sum(weights[: i + 1]))
-
-
-def body_reads(board: Lattice, families: list[int], at: np.ndarray) -> list[tuple[int, np.ndarray]]:
-    """What a body reads by the test's own arithmetic (the reader's G2): each family at the body's Nodes `at` and at the Nodes within one Link of them (the ball of radius 1, `features/front.ball`) where a line of its record holds a remainder other than w // 2."""
-    centres = [tuple(int(k) for k in where) for where in np.argwhere(at)]
-    near = ball(board.shape, centres, 1, board.world.periodic)
-    found = []
-    for index in families:
-        off = np.zeros(board.shape, dtype=bool)
-        for line in board.lines_of(index, 0):
-            off |= np.asarray(line.remainder) != board.half_wall(index)
-        found.append((index, at | (near & off)))
-    return found
-
-
-def digits_now(
-    board: Lattice, reads: list[tuple[int, np.ndarray]], distinct: bool = True
-) -> tuple[list[int], list[int]]:
-    """The digits and their bases by the test's own arithmetic of the declared order: the families in their order, each at its own Nodes (`reads`, a side's region or a body's `body_reads`), every line of each family's record in the declared order, each line's remainder at the Nodes in the lattice's index order (`np.argwhere`), the digit the remainder's index on the Node's lattice, r // F (`digits.lattice_of` on the rule's integers there), its base w // F + 1; with `distinct` a remainder equal to an earlier line's at the same Node, or w less it, is a copy and left out (the reader's D2), without it every line's digit."""
-    found, bases = [], []
-    for index, at in reads:
-        family, gamma = board.families[index], board.world.node_clock
-        wall = wall_of(family.pair[1], gamma, board.unit)
-        lattice = digits.lattice_of(
-            node.rule_of(family, gamma, *board.read(index, 1, 0), board.unit), at
-        )
-        earlier: dict[int, list[int]] = {}  # per Node, the earlier lines' remainders
-        for line in board.lines_of(index, 0):
-            for k, (where, step) in enumerate(zip(np.argwhere(at), lattice, strict=True)):
-                remainder, seen = int(line.remainder[tuple(where)]), earlier.setdefault(k, [])
-                copied = distinct and any(remainder in (e, wall - e) for e in seen)
-                seen.append(remainder)
-                if not copied:
-                    found.append(remainder // step)
-                    bases.append(wall // step + 1)
-    return found, bases
-
-
-def spied(monkeypatch, board_of, distinct=True):  # type: ignore[no-untyped-def]
-    """Every draw of the run recorded as the engine makes it (`node_detector.drawn_from` spied): the label, the number read or left, the weights, the pick, the number left after, and the test's own digits of the records the label names at the Nodes it names, read from the board at that moment (each Node's distinct digits, or with `distinct` False every line's)."""
-    seen: list[dict] = []  # type: ignore[type-arg]
-    real = node_detector.drawn_from
-
-    def spy(number, weights, label, *moduli):  # type: ignore[no-untyped-def]
-        board = board_of()
-        words = label.split("'")
-        if label.startswith("the side "):
-            name = words[1]
-            reads = [
-                (family(board, words[3]), next(d.nodes for d in board.node_detectors if d.name == name))
-            ]
-        elif label.startswith("the regions "):
-            reads = [(family(board, words[1]), node_detector.node_detector_nodes(board))]
-        else:
-            books = board.credit.bodies[int(label.split()[2])]
-            drives = list(dict.fromkeys(t.drive for t in books.declared.transitions))
-            reads = body_reads(board, [*drives, books.index], board.mask(books.nodes))
-        own, walls = digits_now(board, reads, distinct)
-        pick, left = real(number, weights, label, *moduli)
-        drawn = dict(label=label, number=number, weights=list(weights), pick=pick, left=left)
-        seen.append(dict(drawn, digits=own, walls=walls))
-        return pick, left
-
-    monkeypatch.setattr(node_detector, "drawn_from", spy)
-    return seen
 
 
 def test_the_read_is_the_digits_number_and_each_draw_one_division_act():

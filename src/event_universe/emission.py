@@ -291,7 +291,7 @@ def laid_increment(board: Lattice, source: Source) -> None:
     level = int(source.increments[source.laid])
     origin = None  # the remainder as it is: the source adds to its record at its one Node
     family = board.families[source.family]
-    carried = board.credit.written.get(source.family, [1] * family.parts)  # the click's write, if any
+    carried = [1] * family.parts  # no write on the parts: the sides' write left 2026-10-24
     for part, line in enumerate(emitted_lines(family)[:: family.width]):  # each part's first line, alike
         scaled = level * carried[part]
         written(board, source.family, line, (np.where(at, scaled, 0), np.where(at, 0, 0)), origin)

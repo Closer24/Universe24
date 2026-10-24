@@ -19,14 +19,14 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, credit, emission, flux, front, meeting, node, swap
+from event_universe import board_readings, emission, flux, front, meeting, node, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
 from event_universe.features.click import presented
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import PLANE
-from event_universe.node_detector import node_detector_nodes, weighed_currents
+from event_universe.node_detector import weighed_currents
 from event_universe.plane import NO_FACE, Faces
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, level_at, record_slice
@@ -193,9 +193,6 @@ def oracle_interval(board: Lattice) -> None:
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
     swap.stepped(board, kept_state)
-    board_readings.densities_read(board, forms, node_detector_nodes(board))
-    if credit.counted_windows(board):
-        meeting.closed(board)
     meeting.jumped(board)
     emission.sourced(board)
     front.advanced_fronts(board)
@@ -250,21 +247,6 @@ LINE_LABEL = re.compile(
 )  # a record line's levels
 
 
-def written_lay(board: Lattice, label: str, laid: np.ndarray) -> np.ndarray:
-    """The lay's array as the click's write at the birth left it (ALGEBRA.md, The click is the meeting of the future with the past: the lay is not taken back, the written birth stands): a record line's two levels times the cumulative coefficient written on its part (`credit.Books.written`, `meeting_back.parts_of`), the remainders, the write remainders, the phase lines and every unwritten family the lay's own."""
-    found = LINE_LABEL.match(label)
-    if found is None:
-        return laid
-    index = [family.name for family in board.families].index(found["family"])
-    written = board.credit.written.get(index)
-    if written is None:
-        return laid
-    part = credit.parts_of(board.families[index], len(board.states[index].lines))[int(found["line"])]
-    re, im = written[part]  # the pair written on the part: the oracle's arithmetic is the real ports'
-    assert im == 0, "the oracle reads real-port worlds; a turned side's write is the two-term test's"
-    return np.asarray(laid * re)
-
-
 def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
     """The oracle against the engine on a loaded board: two boards from the one load, `intervals` forward (fewer where the run ends or the world has fewer) compared at every interval, then the engine's board back with the record to the lay. Where a click wrote at the record's birth (the one meeting, 2026-10-20: the sides' draws run the record back to its birth and write the realised port's coefficients there), the frames the forward run recorded before the last click's close are the possibilities' run and the inverse from after the click returns the realised past (ALGEBRA.md, The click is the meeting of the future with the past), so the step back is held to the recorded frames at and after the last such click's close alone (a one-part record's click writes no birth and its world keeps the full comparison), and the lay is held recovered up to the write: each record line's two levels times the cumulative coefficient written on its part (`written_lay`), the remainders and every other array the lay's own; a world without a click is held at every frame and the lay itself, as before."""
     oracle, engine = board, copy.deepcopy(board)
@@ -304,7 +286,7 @@ def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
                 "what": "the step back misses the forward state",
             }
     for (label, was), (_label, now) in zip(lay, arrays(engine), strict=True):
-        if was.shape != now.shape or not np.array_equal(written_lay(engine, label, was), now):
+        if was.shape != now.shape or not np.array_equal(was, now):
             return {
                 "verdict": "DIFFERS",
                 "interval": engine.interval,

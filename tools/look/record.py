@@ -20,7 +20,6 @@ from event_universe import node, records
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.world import AXES, World
-from event_universe.meeting_back import radius as cone_radius
 from event_universe.world_files import load_world
 
 LABEL = "lattice reading"
@@ -94,14 +93,6 @@ def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
             }
             for number, row in enumerate(world.bodies)
         ],
-        "node_detectors": [
-            {
-                "name": node_detector.name,
-                "nodes": nodes_of(node_detector.nodes) if node_detector.nodes is not None else [],
-                "body": node_detector.body,
-            }
-            for node_detector in board.node_detectors
-        ],
     }
 
 
@@ -138,7 +129,7 @@ def frame(
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}
         families[family.name] = row
-    bodies = [nodes_of(board.body_nodes(number)) for number in range(len(world.bodies))]
+    bodies = [[list(at) for at in row.nodes] for row in world.bodies]
     found: dict[str, object] = {"interval": board.interval, "direction": direction, "pass": pass_number}
     if tick is not None:
         found["tick"] = tick
@@ -181,11 +172,7 @@ class Frames:
         self.tagged += [(pass_number, line) for line in self.lines[self.since :]]
         self.since = len(self.lines)
         kept = self.kept
-        coned = pass_number > 1 and bool(
-            getattr(getattr(board, "credit", None), "reads_sides", False)
-        )  # the run back and forward in the record's light cone, the one reach
-        radius = cone_radius(board) if coned else None  # G(t): the lay's Nodes within t + 1 Links
-        found = frame(board, kept, direction, pass_number, getattr(board, "tick", None), radius)
+        found = frame(board, kept, direction, pass_number, getattr(board, "tick", None))
         self.kept = self.copies()
         if self.last == (
             pass_number,
@@ -229,27 +216,6 @@ class Frames:
                 del found["direction"], found["pass"]
                 found.pop("tick", None)
         return self.frames
-
-
-def reached(board: Lattice) -> dict[str, object]:
-    """The header's words of the run back's reach after the run, the engine's own numbers (ENGINE.md section 10, item 11): `reach` on a back world, and in the cone's reach `cone_support`, the lay's Nodes S_0 at the file's coordinates (`board.credit.support`), and `cone_volume`, the cone's Nodes |G(t)| per interval from 0 to the close (`board.credit.cone`), and `cone_stepped`, the Node-steps per interval of the cone stepped alone, the box with its ring, where the books count them; nothing on a root world, whose look is as before bit for bit."""
-    if not getattr(getattr(board, "credit", None), "reads_sides", False):
-        return {}
-    found: dict[str, object] = {
-        "reach": "cone"
-    }  # the one region the click runs back, the record's light cone
-    support = getattr(board.credit, "support", None)
-    if (
-        support
-    ):  # the birth's Nodes at the file's coordinates, in both reaches (the engine's, 2026-10-20)
-        found["cone_support"] = [[int(c) for c in at] for at in support]
-    cone = {int(t): int(v) for t, v in dict(getattr(board.credit, "cone", {})).items()}
-    if cone:  # |G(t)| per interval, filled by the runs in the cone's reach
-        found["cone_volume"] = [cone.get(t, 0) for t in range(max(cone) + 1)]
-    stepped = {int(t): int(v) for t, v in dict(getattr(board.credit, "stepped", {})).items()}
-    if stepped:  # the Node-steps per interval of the readings' steps: the box with its ring in the cone's reach, the whole board in the board's
-        found["cone_stepped"] = [stepped.get(t, 0) for t in range(max(stepped) + 1)]
-    return found
 
 
 def passes_of(frames: list[dict[str, object]]) -> list[int]:
@@ -306,7 +272,6 @@ def record(
         document.update(verdict="REFUSED", reason=str(refusal))
     if output is not None:
         output_written(output, path, document, lines, board)
-    document.update(reached(board))
     frames = reader.closed()
     document.update(
         intervals=board.interval,

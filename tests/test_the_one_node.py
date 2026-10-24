@@ -146,8 +146,6 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         "intervals",
         "universe",
         "bodies",
-        "node_detectors",
-        "draw",
     }
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
     assert set(universe.FAMILY_KEYS) == {
@@ -165,8 +163,8 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         ["wronskian"],
         ["form", "tensions", "flux"],
     ]
-    assert (
-        draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
+    assert draw.DRAW_KEYS == (
+        "window",
     )  # the former key, read for its refusal by name alone (2026-10-23)
     assert set(node_detector_declaration.TRANSITION_KEYS) == {
         "from",
@@ -217,11 +215,6 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("interval", "world"),
     ("uniform", "world"),
     ("erasure", "world"),
-    ("meeting", "draw"),
-    ("reach", "draw"),
-    ("seed", "draw"),
-    ("multiplier", "draw"),
-    ("increment", "draw"),
     ("engine", "world"),
     ("act", "held"),
     ("booking", "held"),
@@ -240,7 +233,6 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
         "step_family",
         "step_records",
     ],
-    "cone.py": ["stepped_alone"],
     "shear.py": ["stepped"],
     "swap.py": ["stepped"],
     "meeting.py": ["stepped"],
@@ -261,8 +253,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
     tables = {
         "world": set(loader_world.WORLD_KEYS),
         "bodies": set(loader_world.BODY_KEYS),
-        "node_detectors": set(loader_world.NODEDETECTOR_KEYS),
-        "draw": set(draw_keys := ("window",)),
         "transitions": set(node_detector_declaration.TRANSITION_KEYS),
         "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
         "parts": set(node_detector_declaration.PART_KEYS),
@@ -271,7 +261,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "families": set(universe.FAMILY_KEYS),
         "held": set(universe.HELD_KEYS),
     }
-    assert draw_keys == tuple(loader_world.draw_of({"window": 1}, "draw", True).__dataclass_fields__)
     retired, found = set(RETIRED) | {"interval", "write_weight"}, []
     for folder in (
         "examples/events/universe24",
@@ -329,7 +318,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
     """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
-    from event_universe.loader import draw, node_detector_declaration, universe
+    from event_universe.loader import node_detector_declaration, universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
@@ -340,13 +329,11 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
             keyed(
-                {**world, "bodies": [], "node_detectors": []},
+                {**world, "bodies": []},
                 "the world",
                 loader_world.WORLD_KEYS,
                 loader_world.WORLD_REQUIRED,
             )
-        elif place == "draw":
-            draw.draw_of({"window": 4, key: "cone"}, "draw", True)
         elif place == "held":
             universe.universe_of(
                 {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}

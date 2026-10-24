@@ -92,18 +92,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("conversion.py", "sine_of", "largest_below"): "S",  # the pair's integer sine by the search
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
     ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
-    ("credit.py", "quanta_rounded", "paces.rounded"): "D",  # the side's gate, the count's rounding
-    (
-        "credit.py",
-        "quanta_through",
-        "division_forward",
-    ): "R",  # the inflow over the unit, its remainder carried
-    ("credit.py", "clocked_regions", "paces.rounded"): "D",  # the region's mean clock, rounded once
-    (
-        "credit.py",
-        "clocked_regions",
-        "division_forward",
-    ): "R",  # the region's clock remainder kept in books
     # emission.py
     (
         "emission.py",
@@ -297,8 +285,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "alpha_of",
         "gcd",
     ): "D",  # Euclid's remainders on the pair's and the ratio's integers, once each
-    ("loader/draw.py", "reduced_write", "gcd"): "D",  # the write's coefficients over their gcd, once
-    ("loader/draw.py", "reduced_write", "division_forward"): "D",  # the reduction, exact, no remainder
     ("loader/rooms.py", "hill_scale", "division_forward"): "D",  # the hill's room, once
     ("loader/rooms.py", "tension_room", "largest_below"): "S",  # the room's factor by search
     ("loader/rooms.py", "tension_room", "division_forward"): "D",  # the room's ceiling, once
@@ -378,12 +364,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):
 R_OUTSIDE_THE_STEP = frozenset(
     {
-        (
-            "credit.py",
-            "clocked_regions",
-            "division_forward",
-        ),  # a region's clock, its remainder in the books
-        ("credit.py", "quanta_through", "division_forward"),  # the credit's remainder carried per record
         ("features/click/__init__.py", "rotated", "rule3"),  # the lay's recurrence with its carry
         ("features/held_write/__init__.py", "held_write", "act"),  # the held write's remainder
         ("features/write/__init__.py", "carried", "division_forward"),  # the write's remainder forward

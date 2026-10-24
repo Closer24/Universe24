@@ -4,13 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import replace
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from event_universe.core.paces import sine_den
 from event_universe.core.rule3 import division_forward
 from event_universe.features.click import along_cosine, envelope, line_total, wave_cosine
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import Draw
 from event_universe.loader.keys import Node, extent_across
 from event_universe.loader.node_detector_declaration import Rate
 
@@ -78,45 +77,6 @@ def period_of(pair: tuple[int, int]) -> int:
         before, now = now, 2 * cosine * now - den * den * before
         count, passed = count + 1, passed or before < 0
     return count
-
-
-def drawn(
-    draw: Draw | None,
-    regions: Iterable[Any],
-    bodies: tuple[BodyRow, ...],
-    families: tuple[FamilyRule, ...],
-    shape: Node,
-    periodic: Wrap,
-    action: int,
-) -> Draw | None:
-    """The world's draw with its window derived (the owner's decision of 2026-10-23: the window shall not be declared; ALGEBRA.md, The click writes on the lattice, the regions' one window as the per-side spans' union): a region detector has no record and no transition, and what it reads is the passage of the records through it, so its cadence is the passage of every lay with an end over its extent along the lay's axis, by the one passage rule (`passage`, the group pace of the lay's wave; the file's packets by `packet_passage`, the bodies' emissions by `rate_passage`), and the world's one window, the credit's one count of elapsed intervals shared by every region, is the longest of them over every declared region (`longest`), the union of the sides' spans; None where the world declares no draw; refused by name where the draw stands and no lay with an end reaches a region (an endless source on a periodic board alone), a region reading an endless lay having no cadence of its own."""
-    if draw is None:
-        return None
-    rates = [rate for row in bodies if row.detector is not None for rate in row.detector.rates]
-    lays: list[int | None] = []
-    for region in regions:
-        nodes = tuple(dict.fromkeys(region.positions))
-        if (
-            not nodes or not region.declared
-        ):  # the open faces' layer is the board's own region, no reader's
-            continue
-        lays += [rate_passage(r, families[r.light], nodes, shape, periodic, action) for r in rates]
-    ended = [p for p in lays if p is not None]  # the lays with an end alone: a region reads what passes
-    window = max(ended) if ended else None
-    if draw.window is not None and window is not None:
-        raise ValueError(
-            f"draw declares the window {draw.window}, and the window is derived: the longest passage of every lay with "
-            f"an end over the declared regions, W = {window} here; remove the key (ALGEBRA.md, The click writes on the "
-            "lattice, the owner's decision of 2026-10-23)"
-        )
-    if window is None:
-        raise ValueError(
-            "draw: the world declares the draw and no lay with an end passes a declared region (a source in time on "
-            "a periodic board, a wave filling a periodic ring, or no lay at all): a region's window is the passage of "
-            "what it reads, and such a world has none to derive (ALGEBRA.md, The click writes on the lattice, the "
-            "owner's decision of 2026-10-23)"
-        )
-    return replace(draw, window=window)
 
 
 def longest(passages: Iterable[int | None]) -> int | None:

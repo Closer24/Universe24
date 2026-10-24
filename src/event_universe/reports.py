@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
 from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
-from event_universe.records import Record
 
 if TYPE_CHECKING:
     from event_universe.loader.keys import Node
@@ -131,45 +129,6 @@ BOOKS = (
 )  # a family's books, a diagnostic
 
 
-@dataclass(frozen=True)
-class NodeDetector:
-    """A node_detector: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared NodeDetector (the faces' layer and a body's node_detector are not: each reads its own boundary and takes no field line); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
-
-    name: str
-    nodes: np.ndarray | None
-    body: int | None
-    declared: bool
-
-
-def click(interval: int, family: str, node_detector: str, inflow: int) -> dict[str, object]:
-    """The click line, the measurement: the node_detector's report of one interval, the net current into its region through the NodeDetector's front boundary Ports in the current's units (undivided; N over W_c is the host's reading), with the region's name and the family and never a Node, labelled NODEDETECTOR."""
-    return dict(
-        zip(
-            (*REPORT_KEYS, INFLOW),
-            (CLICK, MEASUREMENT, interval, family, node_detector, inflow),
-            strict=True,
-        )
-    )
-
-
-def density(
-    interval: int, family: str, node_detector: str, reading: int | None, well: int | None = None
-) -> dict[str, object]:
-    """The density line, a lattice reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
-    line = dict(zip(REPORT_KEYS, (DENSITY, DIAGNOSTIC, interval, family, node_detector), strict=True))
-    line[READING] = reading
-    if well is not None:
-        line[WELL] = well
-    return line
-
-
-def parts(interval: int, family: str, node_detector: str, levels: list[list[int]]) -> dict[str, object]:
-    """The parts line, the NodeDetector's read of a record of several parts (ALGEBRA.md #the-click-is-the-meeting, the pair's form): per part the signed sums of its two levels over the region at the interval's start, [now, before], labelled NODEDETECTOR with the region's name and never a Node; the sides' books take their second moments from them (`credit.moments_booked`) and the reader its shares (`tools/bell_gate.py`), and nothing is handed over."""
-    line = dict(zip(REPORT_KEYS, (PARTS, MEASUREMENT, interval, family, node_detector), strict=True))
-    line[LEVELS] = levels
-    return line
-
-
 def credit(
     interval: int,
     family: str,
@@ -245,14 +204,6 @@ def erasure(
     return line
 
 
-def level_sums(nodes: np.ndarray, lines: Sequence[Record]) -> list[list[int]]:
-    """Per line of a record, the signed sums of its two levels over a region's Nodes, [now, before], in Python's integers: the parts' read of the parts line, a reading of the lines that writes nothing."""
-    return [
-        [int(line.now[nodes].sum(dtype=object)), int(line.before[nodes].sum(dtype=object))]
-        for line in lines
-    ]
-
-
 def book(
     share: int | None,
     quanta: int | None,
@@ -264,22 +215,6 @@ def book(
 ) -> dict[str, int | None]:
     """A family's books, a lattice diagnostic: its share summed over the lattice in the current's units, the same in quanta over W_c, its count in the credit's books, its deficit, the quanta taken from the record and written nowhere (the undepleted beam, `take.faced`, the absorptions' count times one quantum: the board's share in quanta stands above the books' count by it, the three compared at every reading), the share's drift from the one the world started with (share, quanta and drift None where a Node is frozen: the share is not read there and no number is invented), the least Node pace Gamma - 2 c_i of the final state and the count of the frozen Nodes."""
     return dict(zip(BOOKS, (share, quanta, count, deficit, drift, pace, frozen), strict=True))
-
-
-def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.ndarray:
-    """A body's Nodes as a report needs them (ALGEBRA.md #what-a-body-is (c)): the Nodes where its family's share stands in quanta (`present`), connected through the Links to its declared Nodes; the declared Nodes themselves where it stands on none of them; derived and kept nowhere."""
-    region = declared & present
-    if not bool(region.any()):
-        return declared
-    while True:
-        grown = region.copy()
-        for axis in range(3):
-            for side in (1, -1):
-                grown |= arrival(region, axis, side, wrap)
-        grown &= present
-        if np.array_equal(grown, region):
-            return np.asarray(region, dtype=bool)
-        region = grown
 
 
 def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
@@ -296,22 +231,6 @@ def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.nd
 def front(nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray) -> list[np.ndarray]:
     """Per Port, the Nodes of the region at which that Port is a front boundary Port of the declared NodeDetectors: it leads in from a Node of the declared board outside them (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
     return [nodes & ~arrival(reader_nodes, axis, side, wrap) for axis, side in PORT_SIDES]
-
-
-def region_of(node_detector: NodeDetector, body_nodes: Callable[[int], np.ndarray]) -> np.ndarray:
-    """A node_detector's Nodes as a report needs them: its declared Nodes, or the Nodes of the body it names derived now (`body_nodes`, the lattice's reading by the share, `standing`)."""
-    if node_detector.body is not None:
-        return body_nodes(node_detector.body)
-    assert node_detector.nodes is not None  # a node_detector declares its Nodes or names a body
-    return node_detector.nodes
-
-
-def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
-    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per node_detector and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the node_detector's report per boundary Node, the shares of the NodeDetector's draw of the one Node it writes (features/click)."""
-    seen: Any = 0
-    for port in range(PORTS):
-        seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
-    return np.asarray(seen)
 
 
 def weighted(

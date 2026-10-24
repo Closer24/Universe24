@@ -7,14 +7,12 @@ from dataclasses import replace
 from itertools import combinations_with_replacement, product
 from typing import TYPE_CHECKING, Any
 
-from event_universe import reports
 from event_universe.core.rule3 import largest_below
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import Gauss, times
-from event_universe.loader.keys import Node
 
 if TYPE_CHECKING:
-    from event_universe.lattice import Lattice
+    pass
 
 BARYON_LINES = 3  # the baryon's shape in the law's families: a record of three lines, real or planes
 BEYOND = (
@@ -262,66 +260,6 @@ def together(families: tuple[FamilyRule, ...], bodies: Sequence[Any]) -> None:
                         f"the senses {senses}, have several irreducible lists keeping the charge and the baryon: "
                         f"{[names(families, table) for table in tables]}; the law has no share among them"
                     )
-
-
-def sense_at(board: Lattice, index: int, at: Node) -> int:
-    """The arriving record's sense at the drawn Node, the sign of its first plane's Wronskian there, 1 or -1, 0 for a record of real lines or where the levels stand at 0: the anti-record is the same plane family at the opposite sense, and it converts by the same list with every sense turned."""
-    family, state = board.families[index], board.states[index]
-    if not family.plane:
-        return 0
-    where = (
-        int(at[0]),
-        int(at[1]),
-        int(at[2]),
-    )
-    re, im = state.lines[0], state.lines[1]
-    wronskian = int(re.now[where]) * int(im.before[where]) - int(im.now[where]) * int(re.before[where])
-    return 0 if wronskian == 0 else (1 if wronskian > 0 else -1)
-
-
-def line(board: Lattice, parents: Sequence[int], name: str, table: Table) -> dict[str, Any]:
-    """The conversion line beside the credit's, labelled NODEDETECTOR: the interval, the records converted (one family's name, several joined with +, each one's count the credit line's), the region by name, the window drawn over, `into`, the families of the records out in the list's order, each up by one whole quantum laid at the credited Node, and their senses as laid; no Node, the lay lines carrying it."""
-    families = reports.MET.join(board.families[k].name for k in parents)
-    found = dict(
-        zip(
-            reports.REPORT_KEYS,
-            (reports.CONVERSION, reports.MEASUREMENT, board.interval, families, name),
-            strict=True,
-        )
-    )
-    found[reports.CREDIT_KEYS[0]] = board.credit.window_of(board.interval)
-    found[reports.INTO] = [board.families[out].name for out, _sense in table]
-    found[reports.SENSES] = [sense for _out, sense in table]
-    return found
-
-
-def rows_at(board: Lattice, parents: Sequence[int], name: str, at: Node) -> Table:
-    """The one list of the quanta credited at one Node: the parents' senses read there (`sense_at`; 1 for a plane whose Wronskian stands at 0 there, 0 for real lines), `listed` for the parents' rotations under the two conservations with the real-line parents' declared senses (one parent the conversion, the list the loader derived turned by the parent's sense; several the collision, the irreducible list), refused by name where several stand (the law has no share among them), () where none does, the plain credit standing; the identity asserted in the integers before any write."""
-    families = board.families
-    read: Parents = tuple(
-        (k, (sense_at(board, k, at) or 1) if families[k].plane else 0) for k in parents
-    )
-    senses = {out: sense for k in parents for out, sense in families[k].senses}
-    tables = listed(families, read, senses)
-    if not tables:
-        return ()
-    if len(tables) > 1:
-        raise RuntimeError(
-            f"the quanta of {[families[k].name for k in parents]} credited at {name!r} at the interval "
-            f"{board.interval} have several exact lists keeping the charge and the baryon: "
-            f"{[names(families, table) for table in tables]}; the law has no share among them"
-        )
-    table = tables[0]
-    assert exact([families[k].pair for k in parents], [families[out].pair for out, _sense in table])
-    return table
-
-
-def converted(board: Lattice, parents: Sequence[int], name: str, at: Node) -> list[tuple[int, int]]:
-    """The records out of the quanta credited at one Node, the rows the conversion adds to the credit's list (`meeting.alone`, `meeting.met`): the one list at the Node (`rows_at`) with the conversion line written beside the credit's where it stands; the list lays each record out as one whole quantum at the credited Node by the count at its family's massless pair (`emission.laid_by_count`)."""
-    table = rows_at(board, parents, name, at)
-    if table and board.output is not None:
-        board.output(line(board, parents, name, table))
-    return list(table)
 
 
 def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:

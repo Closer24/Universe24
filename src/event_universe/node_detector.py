@@ -227,25 +227,6 @@ def picked(board: Lattice, books: NodeBooks, weights: list[int]) -> int:
     return pick
 
 
-def credit_draw(board: Lattice, index: int, weights: list[int], side: str | None = None) -> int:
-    """The region NodeDetectors' draw of a place, the click's read of the board at the regions' Nodes (`digits.read_of`, `features/click.drawn_from`; ALGEBRA.md, The click's read of the board): a side of a record of several parts (`side`, the region's name) reads the record's digits at its own region at its first draw of the close, before its write, into the number left (`credit.Books.left`, per record and side, emptied at the close, `meeting.closed`), and a record of one part reads its digits at the union of the declared regions' Nodes (`node_detector_nodes`) at the first draw of the close; every later draw of the close is one division act on the number left, the side's port by its own second moments (`lists.readings`), the region by the window's shares, the boundary Node by the inflows per Node and the piece's source by the emitters' counts (`lists.region`, `lists.credited_node`), the remainder the pick and the quotient the number left; one weight consumes nothing."""
-    books, family = board.credit, board.families[index]
-    label = f"{'the regions' if side is None else f'the side {side!r}'} of {family.name!r} at the interval {board.interval}"
-    if (index, side) not in books.left:  # the close's first draw reads the board, its moduli with it
-        at = (
-            node_detector_nodes(board)
-            if side is None
-            else next(d.nodes for d in board.node_detectors if d.name == side)
-        )
-        assert at is not None  # a side is a declared region with its Nodes
-        number, moduli = read_of(board, [(index, at)], label)
-        books.bias[(index, side)] = bias_bound(sum(weights), moduli)  # booked on the side's line
-    else:
-        number, moduli = books.left[(index, side)], None
-    pick, books.left[(index, side)] = drawn_from(number, weights, label, moduli)
-    return pick
-
-
 def drawn_node(board: Lattice, books: NodeBooks, weights: list[int]) -> Node:
     """The one Node of the region a write is laid at, drawn by `weights` over the NodeDetector's Nodes by the body's read of the board (`picked`; ALGEBRA.md, The NodeDetector is one declaration kind for every world: the write of a click is at one Node of the region, the absorption's by the inflow booked, `hole_node`, the emission's and the conversion's by the record's share at the body's Nodes as the board holds it at the close, `share_weights`, the share at a Node a lattice reading and no measurement); the file's lay weights enter no draw and stand alone where every weight is 0."""
     found = weights if sum(weights) > 0 else list(books.weights)
@@ -335,18 +316,9 @@ def reported(
     board.output(line)
 
 
-def node_detector_nodes(board: Lattice) -> np.ndarray:
-    """The declared NodeDetectors' Nodes: the union of the declared regions (every node_detector with its own positions, the faces' layer and the bodies' node_detectors aside, `NodeDetector.declared`), the Nodes the credit's bookings read (`Lattice.report`)."""
-    found = np.zeros(board.shape, dtype=bool)
-    for node_detector in board.node_detectors:
-        if node_detector.declared and node_detector.nodes is not None:
-            found |= node_detector.nodes
-    return found
-
-
 def weighed_currents(board: Lattice) -> Weighed:
     """Every record of quanta's read for the bookings at the pair the step starts from, once per interval: its current through each Port at every Node (`readings.currents_of`, as `Lattice.currents` reads it, per record; a turned record's the flux line's own with the Link pairs its step reads, `board_readings.turned_read`, read after the interval's phase act, ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21) with the factor Q_ij of each of its six Links in the unit G^2 (`Lattice.read`, the record's read with the world's cuts), by which the credit books the conserved form's own current through a region's front Ports (`reports.weighted`, `credit.booked`, `booked_inflows`), and its share at the readers' Nodes, the declared regions' (`node_detector_nodes`) and the bodies' own, at the same read (`share.family_share` with the read's content and factors, as `Lattice.share_of` reads it), the passage's share (`Passage.booked`, the click's plan, C4)."""
-    at, gamma = node_detector_nodes(board), board.world.node_clock
+    at, gamma = np.zeros(board.shape, dtype=bool), board.world.node_clock
     for books in board.credit.bodies:
         at = at | board.mask(books.nodes)
     found: Weighed = {}

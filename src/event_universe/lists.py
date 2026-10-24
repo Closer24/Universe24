@@ -6,28 +6,24 @@ from dataclasses import replace
 from functools import partial
 from typing import TYPE_CHECKING, Any
 
-from event_universe import credit, meeting_back, reports
+from event_universe import reports
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import count_wall
-from event_universe.loader.draw import norm, times
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Rate, Transition
 from event_universe.node_detector import (
     NodeBooks,
     Passage,
-    credit_draw,
     drawn_node,
-    drawn_weights,
-    face_ports,
     hole_node,
     own_clock,
     piece_momentum,
     share_weights,
 )
 from event_universe.resonance import arrival_of
-from event_universe.take import Item, fan_momentum, levels_at, unpaid
+from event_universe.take import Item, fan_momentum, levels_at
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -85,151 +81,6 @@ def exchange(
     )
     left = replace(entering, part=leaves, delta=-1, arrival=None, momentum=None, drive=None)
     return [entering, left] if taken is None else [taken, entering, left]
-
-
-def credited_node(
-    board: Lattice,
-    index: int,
-    name: str,
-    book: credit.Intake,
-    realised: str | None,
-    kept: list[int],
-    quantum: int,
-    piece: list[int],
-    fan: list[int],
-    order: int | None = None,
-    scale: int | None = None,
-    board_count: int | None = None,
-    at: Node | None = None,
-) -> list[tuple[Node, tuple[int, ...]]]:
-    """The Node of one credited quantum at a region, the Ports it entered by and its credit line: among the region's boundary Nodes the one the quantum entered through, drawn by the window's inflows per Node, the Ports' sums, floored at 0 and over G^2 once by the division act (the booked current in the unit G^2, the plain inflows bit for bit where no tension stood, `node_detector.drawn_weights`; none where nothing entered: no Node, no write), with the Ports of its face set from the same book (`node_detector.arrival_ports`, the click's plan, C6 (i)); the piece's source drawn among the record's emitters by their outstanding quanta through the credit's read of the board (Part G; one emitter, no draw), named, a region taker having no part of its own (Part H, MUST 5: `recoil` the one word `UNPAID_BY_REGION` and `lost` the reading `LOST_TO_REGION`, `take.unpaid`; the region's +p OPEN by name); one credit line, its result the window, the region's own proper time at the close and the index of the window closed (`credit.clocked_regions`, the region's two clocks beside the board's interval, a diagnostic), the region, the port realised and the parts kept, the count moved 1 and the record's count left after this, the window's `quantum`-th, the piece's p_a per axis in T's unit, the record's passage through the region over the window (`node_detector.piece_momentum`, `credit.Books.passages`, C4) and the record's P_a over the board at the close (`fan_momentum`), and no Node (the owner's words: the node_detector gives no result for one Node, and the experiment reads the clicks' file alone); the write itself the act's (`act.written`, the face at that Node); returns the Node with its Ports, none where nothing entered. For a side of a record of several parts (`order`, the side's order among the sides' draws, 1 the first side to N the last, `scale`, the record's scale after the side's write, and `board_count`, the record's count read from the board at the close; `readings`) the Node and the piece's source are drawn on the side's own read, the number left of its port's draw (`credit_draw` with the side), and the line carries the three (`reports.ORDER`, `reports.SCALE`, `reports.BOARD_COUNT`). With `at`, the Node of a meeting of several families' quanta, drawn once for them all by the product of their inflows per Node (`meeting`): no draw of its own, the line and the face set at that Node."""
-    nodes, side = list(book), name if order is not None else None
-    if at is None:
-        weights = drawn_weights(board, (sum(book[node]) for node in nodes))
-        if sum(weights) <= 0:
-            return []
-        at = nodes[credit_draw(board, index, weights, side)]
-    ports = face_ports(board, index, at, book[at])  # the face set, empty on the booked path
-    books = board.credit
-    left, window = books.counts[index] - quantum, books.window_of(board.interval)
-    source, recoil, reading = unpaid(board, index, partial(credit_draw, board, index, side=side))
-    if board.output is not None:
-        family, proper = board.families[index].name, books.clocks.get((index, name), [0, 0])[0]
-        board.output(
-            reports.credit(
-                board.interval,
-                family,
-                name,
-                window,
-                proper,
-                books.windows,
-                realised,
-                kept,
-                1,
-                left,
-                None,
-                None,
-                None,
-                piece,
-                fan,
-                [reading, *([reports.NO_SIDE] if not ports else [])],
-                source,
-                recoil,
-                order,
-                scale,
-                board_count,
-                books.bias.get((index, side)),
-            )
-        )
-    return [(at, ports)]
-
-
-def readings(board: Lattice, index: int) -> list[Item]:
-    """The click of a record of several parts, the sides' sequence with the write at the birth (ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading: the sides draw in the order of their closes, equal closes in the declared order, each alone at its own place with its own read of the board on its own region's moments, the quadratic form of its coefficients on its own second moments with the Gram of the sides after it; The meeting's identity, the Gram theorem; the owner's words of 2026-10-20, the click writes and nothing is in the books but the draw at the click): at a window's close every side whose own moments stand and whose port is unrealised for this record (`credit.Books.taken`) draws in the declared order (`credit_draw` with the side's own read of the board at its region, `meeting_back.side_weights`, the weights kept in the books as a diagnostic, `credit.Books.weights`); its credit line carries its order, the record's scale after its write and the record's count read from the board at the close (`credited_node`, `Lattice.count`); the record runs back along its cone to its birth (`meeting_back.run_back`), the realised port's integer coefficients are written there (`meeting_back.realised`, the one lay act) and the record runs forward again to the close, the sides' books taken again from the rewritten record on the way (`meeting_back.run_forward`), so the next side reads the realised term where it stands; every click writes, the last side's read coherent (no side after it); a side whose beam has not reached it draws at a later close; when every side has drawn, one Item at -1 over the drawn Nodes with their face sets, the count's write and the front the act's as built (`act.written`, `front.started`), and the sequence settled (`credit.Books.taken`: the realised port per side stands until the family's next birth; the reader's ruling of 2026-10-20, precision one: a side already realised that clicks again at a later close in the same setting realises the same port with certainty and writes nothing, its credit line carrying the order of the new sequence, and a side whose realised port carries no overlap with the written factor, a changed setting, is refused by name); N runs for N sides, no number at a Node but Rule3's. The side's gate (the reader's F4 of 2026-10-20): a side draws where a whole quantum has come through its window, the count's rounding over its region and its window (`credit.quanta_rounded` on the side's booked inflow, `Books.intake`, each front Port's sum over the window floored at 0, what came in through the region's front, so a side the beam passes through reads the beam that entered it, at the scale the window was booked under); a share below it is no click, the side standing as its beam arriving after this close."""
-    books, family = board.credit, board.families[index]
-    close, fan = board.interval, list(fan_momentum(board, index))
-    taken = books.taken.setdefault(index, {})
-    standing = credit.scale_of(board, index)  # the window's scale, before the close's writes
-    for name, ports in books.sides:
-        moments, earlier = books.moments.get(index, {}).get(name), taken.get(name)
-        if moments is None or not credit.standing(moments) or (earlier is not None and not earlier[2]):
-            continue  # its beam arriving after this close, or realised in the sequence standing: no second click
-        came = books.intake.get((index, name), {}).values()  # per Node, per front Port, over the window
-        inflow = sum(max(through, 0) for ports_in in came for through in ports_in)
-        if credit.quanta_rounded(books, index, inflow, board.unit, family.parts, standing) < 1:
-            continue  # the side's gate: a share below one whole quantum through its window is no click
-        unrealised = [
-            books.patterns[other] for other, _p in books.sides if other != name and other not in taken
-        ]
-        first = not taken if earlier is None else next(iter(taken)) == name
-        coefficients = meeting_back.coefficients_of(family, ports, first)
-        weights = meeting_back.side_weights(
-            moments, coefficients, meeting_back.gram_of(unrealised, family.parts)
-        )
-        books.weights[(index, name)] = weights
-        if earlier is None:
-            if sum(weights) <= 0:
-                continue
-            port = credit_draw(board, index, weights, name)
-        elif weights[port := earlier[0]] <= 0:
-            raise RuntimeError(
-                f"the side {name!r} clicks again on the record of {family.name!r} with its realised port "
-                f"{reports.PORT_NAMES[port]!r} carrying no overlap with the written factor (the weight 0): a later "
-                "click of a side in a changed setting needs the overlaps with the written factor, which the parts "
-                "carry no more; one setting per side on a record (the reader's ruling of 2026-10-20)"
-            )
-        kept = [k for k, coefficient in enumerate(ports[port]) if coefficient != (0, 0)]
-        piece = piece_momentum(board, index, books.passages.get((index, name), Passage()))
-        written = books.written.get(index, [(1, 0)] * family.parts)  # the scale after the side's write
-        reduced = (
-            credit.reduced(board, index, coefficients[port])
-            if earlier is None
-            else [(1, 0)] * family.parts
-        )
-        scale = sum(norm(times(w, c)) for w, c in zip(written, reduced, strict=True))
-        order = 1 + sum(
-            1 for entry in taken.values() if not entry[2]
-        )  # the sides clicked in this sequence
-        found = credited_node(
-            board,
-            index,
-            name,
-            books.intake.get((index, name), {}),
-            reports.PORT_NAMES[port],
-            kept,
-            1,
-            piece,
-            fan,
-            order,
-            scale,
-            board.count(index),
-        )
-        taken[name] = (port, found[0] if found else None, False)
-        if earlier is None:  # the side's first click on the record: the write at the birth
-            left = meeting_back.run_back(board, index)  # the close as the run back left it
-            meeting_back.realised(board, index, coefficients[port])
-            meeting_back.run_forward(board, index, close, left)
-    if len(taken) < len(books.sides) or any(entry[2] for entry in taken.values()):
-        return []
-    drawn = [entry[1] for entry in taken.values() if entry[1] is not None]
-    for name, entry in taken.items():
-        taken[name] = (entry[0], entry[1], True)  # settled: a new sequence the next window
-    return [Item(index, None, None, -1, tuple(n for n, _p in drawn), ports=tuple(p for _n, p in drawn))]
-
-
-def sides(board: Lattice, index: int) -> Alternative | None:
-    """A record of several parts at the close: the sides' sequence with the write at the birth (`readings`), one alternative and no draw of its own, where a side whose own moments stand and whose port is unrealised, or realised in a sequence the count's write settled, is ready and the record's count stands; None otherwise."""
-    books = board.credit
-    taken = books.taken.get(index, {})
-    moments = books.moments.get(index, {})
-    ready = [
-        name
-        for name, _p in books.sides
-        if (name not in taken or taken[name][2]) and credit.standing(moments.get(name, []))
-    ]
-    if not ready or books.counts[index] <= 0:
-        return None
-    return Alternative(1, partial(readings, board, index))
 
 
 def absorption(

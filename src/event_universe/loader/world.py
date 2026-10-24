@@ -12,16 +12,6 @@ from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived, window
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import (
-    Draw,
-    Pattern,
-    draw_of,
-    pattern_of,
-    patterns_of_the_law,
-    ports_of,
-    setting_of,
-    settings_of_the_law,
-)
 from event_universe.loader.interval import volume_rows
 from event_universe.loader.keys import Node, connected, document_at, integer, keyed, node_of
 from event_universe.loader.node_detector_declaration import (
@@ -34,7 +24,7 @@ from event_universe.loader.node_detector_rows import reader_count
 from event_universe.loader.seed import seed_of
 from event_universe.loader.universe import universe_of
 
-WORLD_KEYS: tuple[str, ...] = ("shape", "intervals", "universe", "bodies", "node_detectors", "draw")
+WORLD_KEYS: tuple[str, ...] = ("shape", "intervals", "universe", "bodies")
 WORLD_REQUIRED = ("shape", "intervals", "universe")  # bodies and node_detectors optional, 2026-10-24
 TORUS = (
     True,
@@ -47,8 +37,6 @@ READER_NODE_KEYS = (
     "node",
     "weight",
 )  # a reader's Node: the lay's weight, the record's count declared once
-NODEDETECTOR_KEYS = ("name", "positions", "block", "basis", "axis", "pattern", "turn")  # a reader's keys
-TRANSITION = "transition"  # a region's own quantum, declared by no region: its unit its record's share
 
 
 @dataclass(frozen=True)
@@ -59,20 +47,6 @@ class BodyRow:
     nodes: tuple[Node, ...]
     counts: tuple[int, ...]
     detector: NodeDetectorDeclaration
-
-
-@dataclass(frozen=True)
-class NodeDetectorRow:
-    """A node_detector: its name and its Nodes (`positions`), one region whose click is its report of the net current into it through its front boundary Ports each interval, or the body whose Nodes report each interval (`block`); `declared` where it is a region of the declared NodeDetector, and not for a body's node_detector nor for the open faces' layer, the board's own region named `face` (`FACE_NAME`), which the loader adds last where an open face does not recede; `basis`, the reader's declared setting (p, q), the coefficients of its credit, and `pattern`, one integer pair per part of the record it reads, how each part reads the setting at the + port and the - port (the pair's (p, q) and (-q, p), ALGEBRA.md #the-click-is-the-meeting; `loader/draw.py`), read by the reader and by the sides' draws in the run, each empty where none is declared; no quantum of its own, a region counting in its record's own unit (`credit.record_unit`; the key `transition` refused by name). A side of a record of several parts declares its setting as `basis` (real-line parts, the setting's coefficients at the full angle) or as `axis` (plane parts, the half-angle pair of the detector's axis; the spin branch, 2026-10-19), one of the two, with its `pattern`; the ports' arithmetic is one (`loader/draw.ports_of`)."""
-
-    name: str
-    positions: tuple[Node, ...]
-    body: int | None
-    declared: bool
-    basis: tuple[int, ...]
-    pattern: Pattern
-    axis: tuple[int, ...] = ()  # a plane record's setting, the half-angle pair (the spin branch)
-    turn: int = 0  # a plane side's azimuth in quarter turns, i^turn on the second component
 
 
 @dataclass(frozen=True)
@@ -90,8 +64,6 @@ class World:
     amplitude_bound: int
     families: tuple[FamilyRule, ...]
     bodies: tuple[BodyRow, ...]
-    node_detectors: tuple[NodeDetectorRow, ...]
-    draw: Draw | None
     seed: int | None = None  # the seed family of a world that declares nothing (`loader/seed.seed_of`)
 
 
@@ -148,79 +120,6 @@ def bodies_of(
     return tuple(found)
 
 
-def node_detectors_of(value: object, shape: Node, bodies: int) -> tuple[NodeDetectorRow, ...]:
-    """The node_detectors: each a name of its own (not the faces' `face`) with its Nodes (none beyond the board), one region of the declared NodeDetector, optionally with its `basis`, the reader's setting (p, q), a list of integers not all 0, and its `pattern`, one integer pair per part of the record it reads (the NodeDetector's declaration and the sides' draws', `loader/draw.py`; a pattern without a basis, and two ports not orthogonal, are refused by name), or the body it names by its number (no basis); a region declares no quantum of its own, its unit of one quantum being its record's own share per quantum read from the credit's books (`credit.record_unit`; the advisor's line with the mathematician's second, two hands), so the key `transition` is refused by name; after them the open faces' layer where there is one (`layer`), the board's own region under the name `face`, no part of the declared NodeDetector."""
-    if not isinstance(value, list):
-        raise ValueError("node_detectors must be a list")
-    found: list[NodeDetectorRow] = []
-    for index, entry in enumerate(value):
-        label = f"node_detectors[{index}]"
-        if isinstance(entry, dict) and TRANSITION in entry:
-            raise ValueError(
-                f"{label} holds the key {TRANSITION!r}: a region declares no quantum of its own, its unit of one "
-                "quantum being its record's own share per quantum, read from the credit's books and not declared"
-            )
-        row = keyed(entry, label, NODEDETECTOR_KEYS, ("name",))
-        name = row["name"]
-        if not isinstance(name, str) or name in [d.name for d in found]:
-            raise ValueError(f"{label}.name must be a name of its own")
-        if ("positions" in row) == ("block" in row):
-            raise ValueError(f"{label} declares its `positions` or the `block` it reads, one of the two")
-        basis, axis, turn = setting_of(row, label)  # one of the two, refused by name together
-        setting = axis or basis
-        if "pattern" in row and not setting:
-            raise ValueError(
-                f"{label}.pattern reads the setting `basis` or `axis` declares, and none is declared"
-            )
-        pattern = pattern_of(row["pattern"], f"{label}.pattern", setting) if "pattern" in row else ()
-        if pattern:
-            ports_of(
-                setting, pattern, turn
-            )  # the two ports orthogonal with equal norms, refused by name otherwise
-        if "block" in row:
-            if setting:
-                raise ValueError(
-                    f"{label}: a basis or an axis is declared on a region, not on a body's node_detector"
-                )
-            body = integer(row["block"], f"{label}.block", 0, bodies - 1)
-            found.append(NodeDetectorRow(name, (), body, False, (), ()))
-            continue
-        positions = row["positions"]
-        if not isinstance(positions, list) or not positions:
-            raise ValueError(f"{label}.positions must list its Nodes")
-        nodes = tuple(
-            node_of(node, f"{label}.positions[{i}]", shape) for i, node in enumerate(positions)
-        )
-        found.append(NodeDetectorRow(name, nodes, None, True, basis, pattern, axis, turn))
-    return tuple(found)
-
-
-def regions_of_the_law(node_detectors: tuple[NodeDetectorRow, ...], shape: Node) -> None:
-    """The size rule of a node_detector's region (ALGEBRA.md #the-count-is-the-records-share, No click names a Node; the owner's words, the uncertainty principle upheld): a declared region, a NodeDetector with Nodes alone, is one connected region of Nodes, never one Node (it reads the net current through its boundary Ports, and through one Node what enters leaves, the net current over a passing wave about 0, so one Node counts no quantum; a NodeDetector with a record of its own may stand on one Node, `bodies_of`, the relation seen from its two ends), and, the finest structure the amplitudes of a family can carry being half its wavelength, at least half the wavelength of every packet of its family across the beam, q / p Nodes for the wave [p, q], on every axis of more than one Node other than the axis the packet travels along: one Node, a Node named twice (the refusal naming the reader and the Node, as `bodies_of` refuses a body naming one Node twice; the size rule reads the distinct Nodes), a region in pieces and a region whose extent on such an axis, from its least to its greatest coordinate on an open or closed axis and through the wrap on a periodic axis, the smallest arc of the ring that covers its coordinates (`loader/faces.extent_across`), is under q / p (extent x |p| < q) are refused by name (the advisor's breaker over the engine at 7756546d, #1793: a region naming one Node twice was admitted as two Nodes, and a region two Nodes wide through the wrap was read as five); a node_detector reading a body declares no region and the open faces' layer is the board's own; the depth along the beam is not gated."""
-    for node_detector in node_detectors:
-        if not node_detector.declared:
-            continue
-        nodes = tuple(dict.fromkeys(node_detector.positions))  # the distinct Nodes, in the order named
-        if len(nodes) < len(node_detector.positions):
-            twice = [list(node) for node in nodes if node_detector.positions.count(node) > 1]
-            raise ValueError(
-                f"node_detector {node_detector.name!r} names the Node {twice} twice: a region's Nodes are distinct, "
-                "each named once, as a body's Nodes are"
-            )
-        if len(nodes) < 2:
-            raise ValueError(
-                f"node_detector {node_detector.name!r} is one Node: a region of a travelling wave, a NodeDetector with Nodes alone, "
-                "reads the net current through its boundary Ports, and through one Node what enters leaves, so it "
-                "stands on two Nodes or more, never one Node; a NodeDetector with a record of its own may stand on one "
-                "Node (ALGEBRA.md, The NodeDetector is one declaration kind for every world)"
-            )
-        if not connected(nodes, shape, TORUS):
-            raise ValueError(
-                f"node_detector {node_detector.name!r} is not one connected region: its Nodes fall into pieces with "
-                "no Link between them"
-            )
-
-
 def even_box_refused(shape: Node, families: tuple[FamilyRule, ...]) -> None:
     """The board against the massless row's second double root (ALGEBRA.md, the two hands' line; the mathematician's reading of the shelved ion's refusal, branch `front-two-modes`): the massless band cos omega_k = (1 / 3) SUM_a cos k_a has two double roots, the uniform mode at k = 0 and the staggered mode (-1)^(x + y + z + t) at k = (pi, pi, pi), omega = pi, each of zero form and zero share; on a board periodic on all three axes with every extent even the staggered mode is an exact mode of a massless family (num = den), and Rule3's own rounding walks it as t^(3/2) / (3 N^(1/2)) with no bound, so such a board is refused by name with the family and the shape, the way out one odd extent or an open axis, where the mode is a bounded response; a gapped family has no double root there and is admitted; the extents' parity by the division act, no number of the law."""
     if not any(division_forward(extent, 2, 0)[1] for extent in shape):
@@ -250,18 +149,9 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     bodies = window.windowed(bodies, families, shape, TORUS, action)  # the derived windows
     conversion.together(families, bodies)  # the multisets a close can credit, refused by name
     intervals = integer(world["intervals"], "intervals", 0)
-    node_detectors = node_detectors_of(world.get("node_detectors", []), shape, len(bodies))
-    regions_of_the_law(node_detectors, shape)
-    laid = [f for b in bodies for f in b.detector.gives]
-    patterns_of_the_law([(d.name, d.pattern) for d in node_detectors], laid, families)
-    settings_of_the_law([(d.name, d.axis, d.basis, d.pattern) for d in node_detectors], laid, families)
     counted = [body.family for body in bodies]  # a charged family's bodies each own a row of the sign
     families = derived.with_records(families, [counted.count(index) for index in range(len(families))])
-    draw = draw_of(world["draw"], "draw", True) if "draw" in world else None
-    draw = window.drawn(
-        draw, node_detectors, bodies, families, shape, TORUS, action
-    )  # the regions' window: the longest passage of every lay with an end over the declared regions
-    declared = any(key in world for key in ("bodies", "node_detectors"))  # named, even empty
+    declared = "bodies" in world  # named, even empty
     seed = seed_of(families, declared)  # the uniform seed of a world that declares nothing
     return World(
         shape,
@@ -275,7 +165,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         bound,
         families,
         bodies,
-        node_detectors,
-        draw,
         seed,
     )

@@ -46,7 +46,6 @@ PHYSICAL_MODULES += (
     "readings.py",
     "flux.py",
     "meeting_back.py",
-    "cone.py",
     "conversion.py",
 )
 PHYSICAL_MODULES += ("core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")

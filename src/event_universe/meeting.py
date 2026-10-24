@@ -2,30 +2,23 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from event_universe import board_readings, conversion, credit, digits, flux, lists, node
-from event_universe.act import Alternative, click
-from event_universe.loader.keys import Node
+from event_universe import board_readings, digits, flux, lists, node
+from event_universe.act import click
 from event_universe.node_detector import (
     NodeBooks,
-    Passage,
     arriving,
     body_label,
     clock_advanced,
-    credit_draw,
     dark,
-    drawn_weights,
     own_clock,
-    piece_momentum,
     read_families,
     sourcing,
 )
 from event_universe.records import Booking, Record
 from event_universe.resonance import gathered, hopped, window_pair, window_turn
-from event_universe.take import Item, faces_presented, fan_momentum, relaid
+from event_universe.take import faces_presented, relaid
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -153,147 +146,6 @@ def absorbing(board: Lattice, books: NodeBooks) -> bool:
     return any(
         t.leaves == books.part and board.credit.counts[t.drive] > 0 for t in books.declared.transitions
     )
-
-
-@dataclass(frozen=True)
-class Credit:
-    """One family of one part's credit at a close before any draw (`credited`): the regions' names in the declared order, the record's passages and the window's books per region, the shares among the regions and the window's whole quanta through them (the remainder moved), the count's cap read where the list is built."""
-
-    index: int
-    names: list[str]
-    passages: dict[str, Passage]
-    intake: dict[str, credit.Intake]
-    shares: list[int]
-    through: int
-
-
-def credited(board: Lattice, index: int) -> Credit | None:
-    """The region NodeDetectors' credit of one family of one part at the window's close, before any draw (ALGEBRA.md #the-click-is-the-meeting; L759): the regions' window inflows floored at 0, in the unit G^2 of the booking, give N = the floor of their sum with the carried remainder over W_rec G^2 whole quanta in the record's own unit, the remainder below one quantum drawn as the click's whether (`credit.whether`, `credit.record_unit`; the remainder of C7 moves here, before the one act draws, main's order kept, family by family in the board's order), the shares among the regions the inflows over G^2 once by the division act, the plain inflows bit for bit where no tension stood (`node_detector.drawn_weights`); None where nothing entered."""
-    books, names = board.credit, [d.name for d in board.node_detectors if d.declared]
-    passages = {name: books.passages.get((index, name), Passage()) for name in names}
-    intake = {name: books.intake.get((index, name), {}) for name in names}
-    inflows = [max(sum(sum(through) for through in intake[name].values()), 0) for name in names]
-    shares = drawn_weights(board, inflows)
-    if sum(shares) <= 0:
-        return None
-    through = credit.whether(board, index, sum(inflows), board.unit, board.families[index].parts)
-    return Credit(index, names, passages, intake, shares, through)
-
-
-def alone(board: Lattice, found: Credit, taken: dict[int, int]) -> Alternative:
-    """A family's quanta credited alone at the close, the credit's row: one alternative, no draw of its own, its list built from the window's books: each quantum from the first the meeting did not take (`taken`, read where the list is built, after the meeting's click), at most the count left, drawn to a region by the shares and to one Node of it with its line, one Item each (`credited_node`), the window's Items one list, so that the record's count goes down by one per quantum and its erasing front begins from every Node written where the count reaches 0, the records out of a converting family's quantum after its Item, each one whole quantum at +1 laid at that Node by the count at its family's massless pair (`conversion.converted`, the one list at the Node with the conversion line written, the conversion N = 1; `emission.laid_by_count`); nothing where the count stands at 0, uncreditable whatever its levels still show (the empty wave, a diagnostic, until the front reaches it)."""
-    index = found.index
-
-    def quanta() -> list[Item]:
-        fan, items = list(fan_momentum(board, index)), []
-        for quantum in range(taken.get(index, 0), min(found.through, board.credit.counts[index])):
-            name = found.names[credit_draw(board, index, found.shares)]
-            piece = piece_momentum(board, index, found.passages[name])
-            drawn = lists.credited_node(
-                board, index, name, found.intake[name], None, [0], quantum + 1, piece, fan
-            )
-            nodes = tuple(n for n, _p in drawn)
-            items.append(Item(index, None, None, -1, nodes, ports=tuple(p for _n, p in drawn)))
-            for out, sense in conversion.converted(board, (index,), name, nodes[0]) if nodes else []:
-                den = board.families[out].pair[1]
-                items.append(Item(out, None, None, 1, nodes, (den, den), sense=sense))
-        return items
-
-    return Alternative(1, quanta)
-
-
-def met(board: Lattice, credits: Sequence[Credit], taken: dict[int, int]) -> Alternative | None:
-    """The several families credited in one window met at one Node (ALGEBRA.md, The click writes on the lattice (3), the collision as the conversion with several parents, the owner's word of 2026-10-21): one quantum of each family whose whole quanta through reach one, as many meetings as the smallest count among them, each at one Node drawn among the regions' boundary Nodes by the product of the families' window inflows per Node (0 where any is 0, the law's "its share the two records' product"), one division act of the first family's number read as every later draw of the close is; at the drawn Node the parents' one irreducible list (`conversion.rows_at`; the irreducible list alone, the quanta's separate clicks being no meeting), every parent's Item at -1 there with its credit line (`credited_node` at that Node), the products' Items at +1 (the lay by the count, `emission.laid_by_count`) and the conversion line naming the parents; where no list stands at the Node the quanta of that meeting and the ones after it stand alone (`alone`, `taken` the quanta met per family); None where fewer than two families are credited or where the product is 0 at every Node, no meeting and the plain credits standing at their own Nodes."""
-    books = board.credit
-    meeting = [c for c in credits if min(c.through, books.counts[c.index]) >= 1]
-    if len(meeting) < 2:
-        return None
-    weights: dict[tuple[str, Node], int] = {}
-    for name in meeting[0].names:
-        for at in meeting[0].intake[name]:
-            weight = 1
-            for found in meeting:
-                book = found.intake[name]
-                weight *= drawn_weights(board, [sum(book[at])])[0] if at in book else 0
-            if weight > 0:
-                weights[(name, at)] = weight
-    if not weights:
-        return None
-    keys, parents = list(weights), tuple(found.index for found in meeting)
-    count = min(min(c.through, books.counts[c.index]) for c in meeting)
-
-    def items() -> list[Item]:
-        found: list[Item] = []
-        for quantum in range(count):
-            name, at = keys[credit_draw(board, parents[0], [weights[key] for key in keys])]
-            table = conversion.rows_at(board, parents, name, at)
-            if not table:
-                break  # no list at the Node: these quanta and the ones after them stand alone
-            for one in meeting:
-                taken[one.index] = quantum + 1
-                piece = piece_momentum(board, one.index, one.passages[name])
-                drawn = lists.credited_node(
-                    board,
-                    one.index,
-                    name,
-                    one.intake[name],
-                    None,
-                    [0],
-                    quantum + 1,
-                    piece,
-                    list(fan_momentum(board, one.index)),
-                    at=at,
-                )
-                found.append(Item(one.index, None, None, -1, (at,), ports=(drawn[0][1],)))
-            if board.output is not None:
-                board.output(conversion.line(board, parents, name, table))
-            found += [
-                Item(out, None, None, 1, (at,), (board.families[out].pair[1],) * 2, sense=sense)
-                for out, sense in table
-            ]
-        return found
-
-    return Alternative(1, items)
-
-
-def regions(board: Lattice) -> list[Alternative]:
-    """The region NodeDetectors' lists at a window's close, one per click in the order they are written: per family in the board's order its credit (`credited`, the remainders moving in that order as before) or, for a record of several parts, its sides' sequence (`lists.sides`); the families credited together met first (`meeting`), then every family's quanta alone (`alone`), each list through the one act (`meeting.closed`, `act.click`)."""
-    credits: list[Credit | Alternative] = []
-    for index in board.order:
-        found = lists.sides(board, index) if board.families[index].parts > 1 else credited(board, index)
-        if found is not None:
-            credits.append(found)
-    taken: dict[int, int] = {}
-    found = met(board, [c for c in credits if isinstance(c, Credit)], taken)
-    return [
-        *([found] if found is not None else []),
-        *(c if isinstance(c, Alternative) else alone(board, c, taken) for c in credits),
-    ]
-
-
-def closed(board: Lattice) -> None:
-    """The region NodeDetectors' clicks at the credit's window's close (`credit.counted_windows`; ALGEBRA.md #the-click-is-the-meeting): first the count on the board of every record the sides read at this close against the books' count, refused by name where the board's share lies more than half a quantum and the walk since the lay from the books' count while no front of the record stands (ALGEBRA.md, The count on the board, 2026-10-20; `credit.count_held`, `Lattice.count`), then the close's lists through the one act (`regions`: per family of quanta its credit from the window's books in the board's order, the families credited together met first at one Node drawn by the product of their inflows per Node with the one irreducible list of their rotations' product, `met`, then each family's quanta alone, `alone`, one alternative each and no draw of its own, the places drawn inside it by the credit's read of the board; for a record of several parts the sides' draws in the order of their closes with the run back, the write at the birth and the run forward between them, `lists.readings`, `meeting_back`), then the window's books emptied, the inflows, the sides' moments, the passages and the numbers the reads left, and the births of the records whose count reached 0 (the write's books, the coefficients, the scale, the realised ports and the reference, stand until the next birth, so the count on the board reads the erased wave over its scale, `credit.born`), the count beginning again."""
-    books = board.credit
-    for index, moments in books.moments.items():  # the records the sides read at this close
-        standing = books.counts.get(index, 0) > 0 and not any(f.family == index for f in books.fronts)
-        if standing and any(credit.standing(m) for m in moments.values()):
-            if not credit.count_held(board, index):
-                raise RuntimeError(
-                    f"the record's count on the board, {board.count(index)}, differs from the books' count "
-                    f"{books.counts[index]} at the close {board.interval}: the board's share moved against the "
-                    "books' by more than the walk; the books' line names the deficit"
-                )
-    for found in regions(board):  # the families met first, then each one's quanta alone
-        click(board, None, [found])
-    books.intake.clear()
-    books.moments.clear()
-    for index in [index for index in books.births if books.counts.get(index, 0) <= 0]:
-        books.births.pop(
-            index
-        )  # a record gone: its next quantum a new birth (`credit.born` resets the write's books)
-    books.passages.clear()
-    books.left.clear()
-    books.bias.clear()
 
 
 def jumped(board: Lattice) -> None:

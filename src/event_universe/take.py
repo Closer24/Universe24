@@ -25,10 +25,8 @@ from event_universe.reports import (
     BODY,
     BOOKED_AT_EMISSION,
     LOST_TO_LAY,
-    LOST_TO_REGION,
     LOST_TO_SOURCE,
     THE_LAY,
-    UNPAID_BY_REGION,
     face,
 )
 
@@ -170,13 +168,6 @@ def drawn_emitter(board: Lattice, family: int, pick: Callable[[list[int]], int])
     emitter = standing[pick([e.outstanding for e in standing]) if len(standing) > 1 else 0]
     emitter.outstanding -= 1
     return emitter
-
-
-def unpaid(board: Lattice, family: int, pick: Callable[[list[int]], int]) -> tuple[str, str, str]:
-    """A region taker's reading of the piece's source (Part H, MUST 5, both hands' lines of 2026-10-10 on the whole trial): a declared region (the two slits' screens, bell's sides) has no part of its own, so the piece's P is lost to the region; the source is drawn and named (`drawn_emitter`, its outstanding count down by one as at a body's click) and no recoil is booked to it: returns the source's name (`body n` or the lay), the recoil's one word `UNPAID_BY_REGION` and the reading `LOST_TO_REGION` for `lost`. OPEN by name: the region's +p (a region's record of the taken piece's momentum, which no declared screen carries)."""
-    emitter = drawn_emitter(board, family, pick)
-    name = THE_LAY if emitter is None or emitter.body is None else f"{BODY} {emitter.body}"
-    return name, UNPAID_BY_REGION, LOST_TO_REGION
 
 
 def faces_presented(board: Lattice, index: int) -> dict[int, Faces]:

@@ -87,7 +87,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(intervals=1, universe="u.json")
-    world.update(bodies=[], node_detectors=[])
+    world.update(bodies=[])
 
     def written(name, **changes):
         (path := tmp_path / f"{name}.json").write_text(

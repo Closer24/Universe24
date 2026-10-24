@@ -187,37 +187,6 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
     }
 
 
-def detector_lines(board: Lattice) -> list[dict[str, Any]]:
-    """One `detector` line per NodeDetector after the interval: the time line's level X of the first held row at its Nodes (in the file's order of its positions) and, per family of quanta, the record's share and its quanta at those Nodes (`Lattice.share_of`, `Lattice.quanta`; None where a reading refuses by name), the readings a one-way clock at the detector keeps beside its clicks."""
-    found: list[dict[str, Any]] = []
-    time_line = board.states[board.held[0]].lines[0].now if board.held else None
-    for detector in board.node_detectors:
-        if detector.nodes is None:
-            continue
-        where = tuple(np.argwhere(detector.nodes).T)
-        line: dict[str, Any] = {
-            "event": "detector",
-            "interval": board.interval,
-            "node_detector": detector.name,
-            "share": {},
-            "quanta": {},
-        }
-        if time_line is not None:
-            line["X"] = [int(x) for x in np.asarray(time_line, dtype=object)[where]]
-        for index in board.order:
-            name = board.families[index].name
-            try:
-                share = board.share_of(index)[0]
-                quanta = board.quanta(index)[0]
-            except ValueError:  # a reading refuses by name and the run's next step refuses the run
-                line["share"][name] = line["quanta"][name] = None
-                continue
-            line["share"][name] = [int(x) for x in np.asarray(share, dtype=object)[where]]
-            line["quanta"][name] = [int(x) for x in np.asarray(quanta, dtype=object)[where]]
-        found.append(line)
-    return found
-
-
 def node_lines(board: Lattice, before: Any, directions: list[int]) -> dict[str, Any]:
     """The Nodes' own readings after the interval, one line per interval for the torus view (tools/look/torus_page.py): the first held row's level X at every Node in x-major order, the Link's length at every Node e^U = (X / Gamma)^(1 / (d + 1)) from that level (the volume form's reading, `volume.EXPONENT`), the Nodes turned by the fifth act this interval (the Node's level before after the interval equal to its level now before it and its level now equal to its level before: the swap at the top's own footprint, a reading of the two time lines kept across the step) and every Node's direction of time, +1 forward and -1 turned, flipped at each of its turns since the start (`directions`, carried by the caller), and every family of quanta's quanta at every Node."""
     index = board.held[0]
@@ -334,8 +303,6 @@ def run(
             log.write(json.dumps(line) + "\n")
             log.flush()
             if kept_clicks is not None:
-                for seen in detector_lines(board):
-                    kept_clicks.write(json.dumps(seen) + "\n")
                 kept_clicks.flush()
             if kept_nodes is not None and before is not None:
                 kept_nodes.write(json.dumps(node_lines(board, before, directions)) + "\n")

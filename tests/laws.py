@@ -221,7 +221,7 @@ def flux_world(tmp_path, shape, intervals=4, level_weight=1):  # type: ignore[no
     gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=list(shape), intervals=intervals)
-    world.update(universe="u.json", bodies=[], node_detectors=[])
+    world.update(universe="u.json", bodies=[])
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 

@@ -8,7 +8,7 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import flux, node, reports
+from event_universe import flux, node
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.ports import PORTS, arrival
@@ -170,30 +170,6 @@ def uniform_mode(board: Lattice, index: int) -> UniformMode:
         level, remainder = division_forward(total, nodes, 0)
         found += [int(level), int(remainder)]
     return UniformMode(found[0], found[1], found[2], found[3], nodes)
-
-
-def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
-    """A lattice reading, no measurement, labelled so (`reports.density`; `Lattice.step` reads it after the held writes and the fifth act, the state at the interval's end, where `Lattice.report` read it before the writes and the act until 2026-10-23: the floor's turn discards an output below the floor, which no reading reads): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeDetectors' Nodes), one `field` line where it differs from the last interval's (`Lattice.densities`, the last readings): for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`records.well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival); a reading over the declared regions and no act."""
-    for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        frozen, well = np.zeros(board.shape, dtype=bool), None
-        if family.quanta:
-            found, frozen = board.quanta(index, at)
-            form = sum(forms[(index, record)] for record in quanta_records(board.families, index))
-            well = records.well(form, board.world.quantum_action)
-        else:
-            deviation = state.lines[0].now - family.fill  # the volume's deviation from the rest's volume
-            found = deviation * deviation
-        for detector in board.node_detectors:
-            if not detector.declared or detector.nodes is None:
-                continue
-            name, cold = detector.name, detector.nodes & frozen
-            reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
-            content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
-            if board.densities.get((index, name)) == (reading, content):
-                continue
-            board.densities[(index, name)] = (reading, content)
-            if board.output is not None:
-                board.output(reports.density(board.interval, family.name, name, reading, content))
 
 
 class Eras(NamedTuple):

@@ -19,7 +19,6 @@ from event_universe import (
     meeting,
     meeting_board,
     node,
-    reports,
     seed,
     share,
     shear,
@@ -37,8 +36,8 @@ from event_universe.frames import frames_of
 from event_universe.loader.derived import held_write_of, quanta_records, readers_of, turns
 from event_universe.loader.keys import Node
 from event_universe.loader.world import BodyRow, World
-from event_universe.node_detector import Weighed, booked_inflows, node_detector_nodes, weighed_currents
-from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
+from event_universe.node_detector import Weighed, booked_inflows, weighed_currents
+from event_universe.reports import book
 from event_universe.resonance import clear_memo
 from event_universe.walls import count_gate, sourced
 
@@ -83,8 +82,6 @@ class Lattice:
         self.densities: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last readings
         for index in self.order:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
-        rows = ((r, self.mask(r.positions) if r.body is None else None) for r in world.node_detectors)
-        self.node_detectors = [NodeDetector(r.name, at, r.body, r.declared) for r, at in rows]
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.credit = credit.Books.of(self)
         self.gate()
@@ -211,12 +208,6 @@ class Lattice:
         found, frozen = self.share_of(index)
         return (None if frozen.any() else int(found.sum(dtype=object))), int(frozen.sum())
 
-    def body_nodes(self, number: int) -> np.ndarray:
-        """A body's Nodes as a report needs them: where its family's share stands in quanta about its declared Nodes, a frozen Node among them standing, derived now and kept nowhere (`reports.standing_nodes`)."""
-        row = self.world.bodies[number]
-        quanta, frozen = self.quanta(row.family)
-        return standing_nodes(self.mask(row.nodes), (quanta != 0) | frozen, self.wrap)
-
     def books(self) -> dict[str, dict[str, int | None]]:
         """The books per family of quanta, a lattice diagnostic (`reports.book`): its share summed over the lattice in the current's units and in quanta over its own unit W_rec and the written coefficients' norm (`count`, the record's count read from the board, `credit.count_of`, bound as the lattice's method: ALGEBRA.md, The count on the board, 2026-10-20; `credit.record_unit`, C1), its count in the credit's books and its deficit, the quanta taken from it and written nowhere (the undepleted beam, `take.faced`, `credit.Books.deficits`: the board's share in quanta stands above the books' count by the deficit, the three read side by side), the share's drift from the one it started with (Rule3's own rounding over the run, 0 on an exact record), share, quanta and drift None while a Node is frozen, the least Link pace of the final state and the frozen Nodes' count."""
         found: dict[str, dict[str, int | None]] = {}
@@ -265,10 +256,7 @@ class Lattice:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
         swap.stepped(self, kept_state)
         if acts:
-            board_readings.densities_read(self, forms, node_detector_nodes(self))
             self.tick += 1
-            if credit.counted_windows(self):
-                meeting.closed(self)
             meeting.jumped(self)
             meeting_board.closed(self)
             emission.sourced(self)
@@ -325,27 +313,7 @@ class Lattice:
     ) -> None:
         """The node_detectors' reports, the clicks (ALGEBRA.md #the-count-is-the-records-share; the owner's words, no click names a Node, the reader a declared NodeDetector): per family of quanta and reader (a reader's declared Nodes, the Nodes of the body it names derived now, the open faces' layer), one `click` line where it is not 0: the net plain current into the region through the NodeDetector's front boundary Ports at its Nodes this interval, in the current's units (the front: the Ports leading in from the declared board outside the declared NodeDetector, `declared_board`; not the Ports between two declared regions and not those toward a receding face's grown layers; the region's Nodes and its front read once per reader and interval, `reports.region_of`, `reports.front`, for every family), the density that entered from the declared board, the host's reading; never a Node (`reports.click`, the line labelled the measurement). The credit's book of a declared region, and a reader record's own (`node_detector.booked_inflows`), takes through the same front Ports the conserved form's own current, each record's current times its Link's factor Q_ij in the unit G^2 (`node_detector.weighed_currents`, `reports.weighted`, `credit.booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking: the Link's factor squared the one weight, the plain current times G^2 where no tension stands). For a family of several parts (the pair family) or of several real lines (a record of dimension 3; `FamilyRule.several`), per declared region one `parts` line where a sum is not 0: the signed sums of each line's two levels over the region at the interval's start (`begun`, the lines the step started from), the NodeDetector's read the sides' books take for a record of several parts (`credit.moments_booked`) (ALGEBRA.md #the-click-is-the-meeting; `reports.level_sums`, `reports.parts`), and for a record of several real lines each line's share of the record, read as the squares of its sums over the sum of the squares; first the faces the click act presented at this interval's step, one `face` line each (`take.faces_reported`)."""
         take.faces_reported(self)
-        union, wrap = node_detector_nodes(self), self.wrap
-        where = [(d, reports.region_of(d, self.body_nodes)) for d in self.node_detectors]
-        fronts = [(d, at, reports.front(at, wrap, union if d.declared else at)) for d, at in where]
-        sums: dict[int, dict[str, list[list[int]]]] = {}
-        for index, through in currents.items():
-            family = self.families[index]
-            for detector, nodes, facing in fronts:
-                came = entering(facing, through)
-                seen = int(came.sum(dtype=object))
-                if seen != 0 and self.output is not None:
-                    self.output(click(self.interval, family.name, detector.name, seen))
-                if detector.declared:
-                    credit.booked(self, index, detector.name, nodes, facing, weighed)
-                if family.several and detector.declared:
-                    levels = level_sums(nodes, begun[index])
-                    if any(any(level) for level in levels) and self.output is not None:
-                        self.output(parts(self.interval, family.name, detector.name, levels))
-                    sums.setdefault(index, {})[detector.name] = levels
-        for index, found in sums.items():  # the sides' own books of a record of several parts
-            if self.families[index].parts > 1:
-                credit.moments_booked(self, index, found)
+        wrap = self.wrap
         booked_inflows(self, weighed, wrap)
 
     def booked_back(
