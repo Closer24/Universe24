@@ -60,9 +60,14 @@ def bodies_closing(
         period = period_of(board.families[k].pair)
         if period == 0:
             continue
+        unit_k = board.credit.units[k]
+        if (
+            int(np.asarray(board.share_of(k)[0], dtype=object).max()) < unit_k
+        ):  # the family's share, read once per interval and given again: no record of it stands at a whole quantum anywhere, nothing to read
+            board.standing[(k, r)] = np.zeros(board.shape, dtype=np.int64)
+            continue
         content, factors = board.read(k, 1, r)
         own = share.family_share(board.families[k], board.lines_of(k, r), gamma, content, factors, unit)
-        unit_k = board.credit.units[k]
         standing = np.where(
             (np.asarray(own, dtype=object) >= unit_k) & ~frozen, board.standing[(k, r)] + 1, 0
         )
