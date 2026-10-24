@@ -10,9 +10,12 @@ from event_universe.features import read
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import ERAS, WORLD, small_world
+from tests.laws_universe import ERAS, bare_torus
 
-INTERVALS, FIRST_TURN = 20, 34  # the small universe's first turned Node is at the interval 34
+INTERVALS, FIRST_TURN = (
+    32,
+    154,
+)  # the bare 3-cube torus: the births at 29, the first turned Node at 154 (20 and 34 on the small universe, laid with bodies, to 2026-10-24)
 
 
 class Unkept(dict[Any, Any]):
@@ -22,10 +25,10 @@ class Unkept(dict[Any, Any]):
         pass
 
 
-def stepped(intervals: int) -> tuple[list[Any], list[dict[str, object]]]:
+def stepped(path: Path, intervals: int) -> tuple[list[Any], list[dict[str, object]]]:
     """The board stepped with the readings the eras tool makes after every interval (every family's share and quanta over the board) kept among the lines."""
     lines: list[dict[str, object]] = []
-    board = Lattice(load_world(WORLD), output=lines.append)
+    board = Lattice(load_world(path), output=lines.append)
     states = []
     for _ in range(intervals):
         board.step()
@@ -43,11 +46,14 @@ def stepped(intervals: int) -> tuple[list[Any], list[dict[str, object]]]:
 
 @pytest.mark.parametrize("holder", [node, share])
 def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
-    monkeypatch: pytest.MonkeyPatch, holder: Any
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, holder: Any
 ) -> None:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path = bare_torus(tmp_path)
     monkeypatch.setattr(holder, "READS", Unkept())  # the names as the module holds them
-    made, made_lines = stepped(INTERVALS)
+    made, made_lines = stepped(path, INTERVALS)
     monkeypatch.undo()
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     hits = {"again": 0, "made": 0}
     again = read.read_again
 
@@ -57,12 +63,12 @@ def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
         return found
 
     monkeypatch.setattr(holder, "read_again", counted)
-    kept, kept_lines = stepped(INTERVALS)
+    kept, kept_lines = stepped(path, INTERVALS)
     assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
     assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
     assert hits["again"] > hits["made"] > 0
-    board = Lattice(load_world(WORLD), output=lambda line: None)
-    for _ in range(INTERVALS):
+    board = Lattice(load_world(path), output=lambda line: None)
+    for _ in range(INTERVALS // 2):  # the memo bounded before the meeting, under the suite's bound
         board.step()
         board.quanta(board.order[0])
         if board.interval == INTERVALS // 4:
@@ -76,7 +82,7 @@ def test_the_nodes_line_is_the_reading_node_by_node(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(small_world(tmp_path)), output=lambda line: None)
+    board = Lattice(load_world(bare_torus(tmp_path, intervals=FIRST_TURN)), output=lambda line: None)
     for _ in range(FIRST_TURN - 1):
         board.step()
     time_line = board.states[board.held[0]].lines[0]

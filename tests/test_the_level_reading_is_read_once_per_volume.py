@@ -1,4 +1,4 @@
-"""The volume's level reading read once per distinct volume (features/volume `level_of`, the memo `LEVELS`; the architect's round of 2026-10-24): a 9-cube of the small universe over 15 intervals holds the state the search at every Node holds, and 30 intervals of it run back exact with the clicks' history kept (the suite's bound of 30 seconds per test with room for a shared clock, 30 and 60 intervals to 2026-10-24; 100 intervals both ways in the architect's measurement, bit for bit). The small universe without its absorber since 2026-10-24 (the owner's word: every world but Universe24 cancelled, the declared detectors leave; under the charge's universality the absorber's world reaches a volume X of 0 at a Node at the interval 34 and the level reading refuses it by name); the shipped folder's logs no longer compared here (the folder is re-recorded by the one world's fold)."""
+"""The volume's level reading read once per distinct volume (features/volume `level_of`, the memo `LEVELS`; the architect's round of 2026-10-24): the bare 3-cube torus with the one universe file over 32 intervals holds the state the search at every Node holds, and 32 intervals of it run back exact with the clicks' history kept (the births at 29, the board's own click lines). To 2026-10-24 the test ran a 9-cube of the small universe, a world laid with bodies, cancelled with every world but Universe24; the sentence the same."""
 
 from pathlib import Path
 from typing import Any
@@ -11,9 +11,9 @@ from event_universe.features import volume
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import small_world
+from tests.laws_universe import bare_torus
 
-INTERVALS, CUBE, COMPARED = 30, 9, 15
+INTERVALS, CUBE, COMPARED = 32, 3, 32  # 30, 9, 15 on the small universe to 2026-10-24
 
 
 def searched_at_every_node(gamma: int, volumes: Any) -> Any:
@@ -22,11 +22,11 @@ def searched_at_every_node(gamma: int, volumes: Any) -> Any:
     return volume.searched_levels(gamma, flat).reshape(np.asarray(volumes).shape)
 
 
-def test_the_9_cube_holds_the_state_of_the_search_at_every_node(
+def test_the_bare_torus_holds_the_state_of_the_search_at_every_node(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = small_world(tmp_path, absorber=False, cube=CUBE)
+    path = bare_torus(tmp_path, CUBE)
     searched: list[dict[str, object]] = []
     monkeypatch.setattr(volume, "level_of", searched_at_every_node)
     board = Lattice(load_world(path), output=searched.append)
@@ -41,15 +41,15 @@ def test_the_9_cube_holds_the_state_of_the_search_at_every_node(
     for interval in range(COMPARED):
         board.step()
         assert same_state(board_state(board), states[interval]), interval
-    assert read_once == searched and any(line["event"] == "click" for line in read_once)
+    assert read_once == searched and any(line["event"] == "credit" for line in read_once)
 
 
-def test_the_9_cube_runs_back_exact_over_30_intervals(
+def test_the_bare_torus_runs_back_exact_over_32_intervals(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     clicks: list[dict[str, object]] = []
-    board = Lattice(load_world(small_world(tmp_path, absorber=False, cube=CUBE)), output=clicks.append)
+    board = Lattice(load_world(bare_torus(tmp_path, CUBE)), output=clicks.append)
     states = [board_state(board)]
     for _ in range(INTERVALS):
         board.step()
@@ -61,4 +61,4 @@ def test_the_9_cube_runs_back_exact_over_30_intervals(
         board.step_inverse()
         back += same_state(board_state(board), states[INTERVALS - 1 - k])
     assert (back, during, board.interval) == (INTERVALS, [], 0)
-    assert any(line["event"] == "click" for line in clicks)
+    assert any(line["event"] == "credit" for line in clicks)  # the births at 29, the board's own clicks
