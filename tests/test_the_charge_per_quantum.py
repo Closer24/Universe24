@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import count_wall, held_write_of
+from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import input_digest, load_world
 
@@ -177,3 +177,14 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
         electron
     ] * count_wall(families[electron], T)
     assert np.gcd(write.factors[proton], write.factors[electron]) >= 1
+
+
+def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_no_neutral_body():
+    """The register's scale and the lay's amplitude bound are the loader's tool and no line of the law, and a record laid at W = 0 writes nothing, so a holder of the sign may not change a neutral body's register (the Boss's word, 2026-10-24; the former rule, the min over every family's rooms with the sign holder's write room among them, kept by name, 2026-10-23): the amplitude bound of a universe whose planes read the sign holder (the charge factors standing) equals the bound of the same universe with the planes reading no sign (no charge factor, the holder written by no source), so the register (`node_detector.scale_of` from `World.amplitude_bound`) is the same; the sign holder's write room is gated apart in `bound_under_rooms`, refused by name where it leaves no level inside the width (no width of this universe reaches that gate before Rule3's own totals refuse, so the refusal is asserted by its sentence in the loader and by no world here)."""
+    charged = universe([0, 6000], [3600, 6000])
+    neutral = json.loads(json.dumps(charged))
+    for family in neutral["families"][1:]:
+        family["reads"] = {}
+    bound_charged = amplitude_bound(universe_of(charged)[1], GAMMA, T, 92, 16)
+    bound_neutral = amplitude_bound(universe_of(neutral)[1], GAMMA, T, 92, 16)
+    assert bound_charged == bound_neutral  # the sign holder's write room enters no other family's bound

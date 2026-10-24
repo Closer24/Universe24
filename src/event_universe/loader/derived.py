@@ -396,12 +396,28 @@ def bound_under_rooms(
 
             write = held_write_of(families, index, action, unit)
             rooms = write_rooms(families, index, write, gamma, hill, unit)
+            # the register's scale and the lay's amplitude bound are the loader's tool and no line of the law, and a
+            # record laid at W = 0 writes nothing, so a holder of the sign's write room never lowers the bound for
+            # the others: it is gated apart, refused by name where it does not fit the width (the Boss's word,
+            # 2026-10-24; the former rule, the min over every family's rooms, the sign holder's among them, kept by
+            # name, 2026-10-23)
+            own = largest
             for wall, room in zip(write.walls, rooms, strict=True):
                 if wall > largest:
-                    found = 0
+                    own = 0
                 elif room:
                     fits = int(division_forward(largest - wall, room, 0)[0])
-                    found = min(found, largest_below(fits))
+                    own = min(own, largest_below(fits))
+            if family.wronskian:
+                if own < 1:
+                    raise ValueError(
+                        f"the holder of the sign {family.name!r} at the Node clock Gamma = {gamma} and T = {action}: "
+                        f"its one write's room, the walls {list(write.walls)[:2]} and the numerators' rooms "
+                        f"{[int(room) for room in rooms][:2]} per level, leaves no level inside the width of "
+                        f"{width} bits (ALGEBRA.md #the-bound; the room gated apart from the register's bound)"
+                    )
+            else:
+                found = min(found, own)
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "
