@@ -233,9 +233,10 @@ def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...
         tuple(node for node in item.nodes if node not in {at for at, _ports in whole}) or item.nodes[:1]
     )
     at = front.on_board(board, nodes[0])
-    share = int(
-        board.share_of(item.family, 1, board.mask(nodes[:1]))[0][at]
-    )  # the standing light's energy
+    shares, frozen = board.share_of(item.family, 1, board.mask(nodes[:1]))
+    if bool(frozen[at]):
+        return []  # a frozen Node births nothing: its share is not read there
+    share = int(shares[at])  # the standing light's energy
     standing = max(
         int(division_forward(share, board.credit.units[item.family], 0)[0]), 1
     )  # the whole quanta standing there
@@ -246,16 +247,3 @@ def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...
         return []
     den = board.families[table[0][0]].pair[1]
     return [Item(out, None, None, 1, nodes, (den, den), sense=sense) for out, sense in table]
-    action = board.world.quantum_action
-    carried = 2 * count_wall(family, action)  # the two quanta's walls, the energy they carry together
-    nodes = (
-        tuple(node for node in item.nodes if node not in {at for at, _ports in whole}) or item.nodes[:1]
-    )
-    for table in conversion.birth_of(board.families, item.family):
-        child = board.families[table[0][0]]
-        if (
-            2 * count_wall(child, action) <= carried
-        ):  # the threshold: the levels against the pair's two walls
-            den = child.pair[1]
-            return [Item(out, None, None, 1, nodes, (den, den), sense=sense) for out, sense in table]
-    return []
