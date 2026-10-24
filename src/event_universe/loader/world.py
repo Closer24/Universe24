@@ -44,13 +44,14 @@ from event_universe.loader.node_detector_declaration import (
 )
 from event_universe.loader.node_detector_rows import reader_count
 from event_universe.loader.packets import PacketRow, WholePacket, packets_of, wholes_of
+from event_universe.loader.seed import seed_of
 from event_universe.loader.universe import universe_of
 
 FACES = ("open", "periodic", "closed")
 FACE_NAME = "face"  # the one node_detector of the open faces' layer
 WORLD_KEYS: tuple[str, ...] = ("shape", "boundary", "face_depth", "faces", "intervals", "universe")
 WORLD_KEYS += ("bodies", "packets", "node_detectors", "receding", "draw", "lay")
-WORLD_REQUIRED = ("shape", "intervals", "universe", "bodies", "node_detectors")
+WORLD_REQUIRED = ("shape", "intervals", "universe")  # bodies and node_detectors optional, 2026-10-24
 TORUS = {"x": "periodic", "y": "periodic", "z": "periodic"}  # the board without `boundary`
 BODY_KEYS = ("family", "nodes", "weights", "count", *READER_RECORD_KEYS)
 BODY_REQUIRED = ("family", "nodes")
@@ -129,6 +130,7 @@ class World:
     wholes: tuple[
         WholePacket, ...
     ] = ()  # the packets laid whole at an interval of the run (`loader/packets.py`)
+    seed: int | None = None  # the seed family of a world that declares nothing (`loader/seed.seed_of`)
 
 
 def kind_of(width: int) -> type:
@@ -326,7 +328,7 @@ def even_box_refused(shape: Node, periodic: tuple[bool, ...], families: tuple[Fa
 
 
 def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
-    """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name; a document without `boundary` is the torus, periodic on every axis (the owner's word of 2026-10-23), a face declared by name where an instrument's board needs it."""
+    """The world from its document, the files it names (the universe and the mode file beside it, read by the host) and its digest; every defect refused by name; a document without `boundary` is the torus, periodic on every axis (the owner's word of 2026-10-23), a face declared by name where an instrument's board needs it; a document naming none of `bodies`, `packets` and `node_detectors` declares nothing (the owner's word of 2026-10-24, the fold: a world of the universe, the board's shape and the run's length alone), its seed the universe's one massless family of quanta laid by the engine at one quantum on every Node and its reader the board itself (`loader/seed.seed_of`); a document naming them empty declares an empty board and runs as before (the former requirement of the two keys kept by name)."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
     integers, families = universe_of(document_at(files, world["universe"], "universe"))
     shape_value = world["shape"]
@@ -349,7 +351,9 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     width = integers["width"]
     bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
     mode = next((doc for doc in files.values() if isinstance(doc, dict) and "world_digest" in doc), None)
-    bodies = bodies_of(world["bodies"], mode, digest, families, shape, bound, beyond, action, wraps)
+    bodies = bodies_of(
+        world.get("bodies", []), mode, digest, families, shape, bound, beyond, action, wraps
+    )
     kicks_refused(families, world.get("packets", []))  # no kick on a holder of the content
     families = volume_rows(families, gamma)  # the held rows sourced by the tensions carry their volume
     packets = packets_of(world.get("packets", []), mode, digest, families, shape, bound, beyond)
@@ -359,7 +363,9 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     wholes = wholes_of(world.get("packets", []), families, shape, beyond, intervals)
     receding = receding_of(world["receding"], shape, faces) if "receding" in world else ()
     layer = layer_of(shape, opened, depth, receding)
-    node_detectors = node_detectors_of(world["node_detectors"], shape, len(bodies), beyond, layer)
+    node_detectors = node_detectors_of(
+        world.get("node_detectors", []), shape, len(bodies), beyond, layer
+    )
     regions_of_the_law(node_detectors, packets, shape, wraps, families)
     laid = [p.family for p in packets] + [b.family for b in bodies if b.detector is None]
     laid += [w.family for w in wholes] + [f for b in bodies if b.detector for f in b.detector.gives]
@@ -375,6 +381,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     lay = lay_of(world["lay"], "lay") if "lay" in world else None
     pairs = [families[b.family].pair for b in bodies]
     budget_gate(lay, pairs, [max(b.counts) for b in bodies], intervals, action)
+    declared = any(key in world for key in ("bodies", "packets", "node_detectors"))  # named, even empty
+    seed = seed_of(families, declared)  # the uniform seed of a world that declares nothing
     return World(
         shape,
         wraps,
@@ -396,4 +404,5 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         draw,
         lay,
         wholes,
+        seed,
     )

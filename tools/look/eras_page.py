@@ -10,8 +10,12 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from captions import captions_of  # noqa: E402  (the look's own module, beside this tool)
 
 PAGE = Path(__file__).with_name("page.py")
 TOKENS = re.search(r":root \{.*?\n\}\n", PAGE.read_text(encoding="utf-8"), re.S)
@@ -63,6 +67,7 @@ td.num { font-family: var(--font-mono); }
 <script id="clicks" type="application/json">{{CLICKS}}</script>
 <script id="span" type="application/json">{{SPAN}}</script>
 <script id="least" type="application/json">{{LEAST}}</script>
+<script id="captions" type="application/json">{{CAPTIONS}}</script>
 <header>
   <h1 id="title"></h1>
   <span class="verdict">lattice reading</span>
@@ -71,6 +76,7 @@ td.num { font-family: var(--font-mono); }
 </header>
 <div class="page">
   <section class="panel wide" id="notes-box" hidden><h2 id="notes-heading">Notes</h2><div class="prose" id="notes-prose"></div></section>
+  <section class="panel wide" id="captions-box" hidden><h2>The events, in the viewer's words (every caption read from the logs; the interval first)</h2><div class="prose scroll" id="captions-list"></div></section>
   <section class="panel wide">
     <div class="picker"><label>the estimator's span <input type="number" id="span-input" min="2" step="1"></label><span class="words">intervals: d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the second difference over short spans failing on the integers' staircase</span></div>
     <div class="graph" id="course"></div>
@@ -97,6 +103,7 @@ const NOTES = JSON.parse(document.getElementById('notes').textContent);
 const CLICKS = JSON.parse(document.getElementById('clicks').textContent);
 let SPAN = JSON.parse(document.getElementById('span').textContent);
 const LEAST = JSON.parse(document.getElementById('least').textContent);
+const CAPTIONS = JSON.parse(document.getElementById('captions').textContent) || [];
 const HEAD = LOG[0], LINES = LOG.slice(1).filter(l => l.rows), REFUSED = LOG.slice(1).find(l => l.refused);
 const GAMMA = HEAD.node_clock, ROW = HEAD.held[0];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -250,6 +257,7 @@ function draw() {
     document.getElementById('blind-table').innerHTML = `<table><tr><th>reading</th><th>blind</th><th>status</th><th>fence</th><th>outcome</th></tr>${rowsOf.map(r => `<tr><td>${esc(r.reading || '')}</td><td class="num">${esc(typeof r.blind === 'object' ? JSON.stringify(r.blind) : (r.blind ?? ''))}</td><td>${esc(r.status || '')}</td><td>${esc(r.fence || '')}</td><td>${esc(r.outcome || '')}</td></tr>`).join('')}</table>`;
   }
   if (NOTES) renderNotes(NOTES);
+  if (CAPTIONS.length) { document.getElementById('captions-box').hidden = false; document.getElementById('captions-list').innerHTML = `<ol>${CAPTIONS.map(c => `<li><b>${c.at}</b>: ${esc(c.words)}</li>`).join('')}</ol>`; }
   if (CLICKS) drawClicks();
 }
 function drawClicks() {  // the clicks log's lines: the clicks per family (the net current into the region, its magnitude on a log axis), the detector lines (the quanta at its Nodes, the time line there) and the fires the eras log carries; nothing computed but the sums
@@ -308,6 +316,7 @@ def page(
     look: str,
     clicks: list[dict[str, Any]] | None = None,
     least: dict[str, Any] | None = None,
+    captions: list[dict[str, Any]] | None = None,
 ) -> str:
     """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span, the look page's link (empty where none stands) and, where the run kept one, the clicks log's lines (tools/eras.py --clicks), drawn as one panel: the quanta at the detector's Nodes, the clicks' magnitude and the fifth act's fires."""
     if not log or not isinstance(log[0], dict) or "held" not in log[0] or not log[0]["held"]:
@@ -327,6 +336,7 @@ def page(
         .replace("{{CLICKS}}", embed(clicks))
         .replace("{{SPAN}}", embed(span))
         .replace("{{LEAST}}", embed(least))
+        .replace("{{CAPTIONS}}", embed(captions or []))
         .replace("{{LOOK}}", look)
     )
 
@@ -384,6 +394,8 @@ def main(argv: list[str] | None = None) -> None:
     log = read_log(args.log)
     clicks = read_log(args.clicks) if args.clicks else None
     least = least_of(read_log(args.nodes), int(log[0]["node_clock"])) if args.nodes else None
+    nodes = read_log(args.nodes) if args.nodes else []
+    captions = captions_of(log, nodes, clicks or [], None, least["floor"] if least else None)
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
     notes = args.notes.read_text(encoding="utf-8") if args.notes else None
     stem = args.log.name.removesuffix(".eras.jsonl")
@@ -395,7 +407,9 @@ def main(argv: list[str] | None = None) -> None:
         if args.log.with_name(f"{stem}.look.html").exists()
         else ""
     )
-    target.write_text(page(log, blind, notes, args.span, look, clicks, least), encoding="utf-8")
+    target.write_text(
+        page(log, blind, notes, args.span, look, clicks, least, captions), encoding="utf-8"
+    )
     print(
         json.dumps(
             {

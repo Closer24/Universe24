@@ -80,6 +80,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "turn_factor", "rounded"): "D",  # the turn per interval, once
     # core/ports.py
     ("core/ports.py", "shifted", "%"): "D",  # the periodic index wrap, named exception
+    # act.py, the born pair
+    (
+        "act.py",
+        "born_pair",
+        "division_forward",
+    ): "D",  # the whole quanta standing at the Node, the floor once
     # credit.py
     ("conversion.py", "sine_of", "largest_below"): "S",  # the pair's integer sine by the search
     ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
@@ -118,6 +124,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
     ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
     ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
+    (
+        "meeting_board.py",
+        "meetings",
+        "division_forward",
+    ): "D",  # the share over the unit, floor and rest once
+    ("seed.py", "drift_of", "largest_below"): "S",  # the drift by the search on v^2 <= T
     # guide.py, the guide clause of the emission
     (
         "guide.py",

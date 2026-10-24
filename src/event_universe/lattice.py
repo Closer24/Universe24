@@ -18,8 +18,10 @@ from event_universe import (
     front,
     growth,
     meeting,
+    meeting_board,
     node,
     reports,
+    seed,
     share,
     shear,
     swap,
@@ -52,27 +54,22 @@ Rulers = dict[records.Sourcing, records.Rulers]
 
 
 class Lattice:
-    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form; `unit`, G, the Link's unit, the run's declaration like Gamma. The swap at the top (swap.py; ALGEBRA.md, The swap at the top): `write_walls` every held line's write wall as the last held write took it, read by the swap's complement, `swaps` the swaps at the top as (interval, direction, Nodes), a reading, `swap.kept` the pre-state before the act and the post-state before the inverse; every line is born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start), every held row's wall fixed per Node at the start in Python's integers, beyond 63 bits at the shipped weights; the gate's rounding half is (|c - read| - 1) div 2, the division act."""
+    """One world on the lattice, stepped interval by interval; `output` receives the lines (`reports.py`: `click`, `parts` and `credit` the node_detectors', `field`, `erasure`, `lay` and `face` the lattice's diagnostics); `observers`, empty at the start, the callables a host registers (the look's reader, tools/look/record.py) and the lattice calls after every `step` and every `step_inverse` with (the interval, the direction, +1 or -1, and the pass, `passes`, from 1 and one more at every change of direction: 1 the forward run, 2 the run back of the meeting that runs back, 3 the forward run again), the last direction kept as `heading`; a world that declares nothing is laid before the start by `seed.uniform_seed` and read by its own board after the readers' acts, `meeting_board.closed` (ALGEBRA.md, The uniform seed is a lay, The board reads itself, 2026-10-24); a reading of the board at the call and no act; `tick`, the board's own clock, the count of the loop's forward steps with their acts (the owner's word of 2026-10-19: the board advances by its tick alone), advanced in `step` with its acts and never by the step at the Nodes alone nor by `step_inverse`, so that through the click's act the tick stands at the close while `interval`, the state's time the frames read, runs back to the birth and forward again; the Nodes' own clocks, the paces, run as ever (`credit.clocked_regions`), honoured by the exact inverse; `off_diagonals`, whether a held row of the world declares the shear (the shear's readings made then alone); `covector.gate` after the lay, the lattice Lorenz constraint on every holder under the Lorentz form; `unit`, G, the Link's unit, the run's declaration like Gamma. The swap at the top (swap.py; ALGEBRA.md, The swap at the top): `write_walls` every held line's write wall as the last held write took it, read by the swap's complement, `swaps` the swaps at the top as (interval, direction, Nodes), a reading, `swap.kept` the pre-state before the act and the post-state before the inverse; every line is born at the half wall, the lay's origin and the start's alike (ALGEBRA.md, The start), every held row's wall fixed per Node at the start in Python's integers, beyond 63 bits at the shipped weights; the gate's rounding half is (|c - read| - 1) div 2, the division act."""
 
     def __init__(self, world: World, output: Output | None = None) -> None:
         clear_memo()
         self.world, self.interval, self.passes, self.heading, self.tick = world, 0, 1, 1, 0
         self.output: Output | None = None
-        self.observers: list[Observer] = []
+        self.observers, self.growths = list[Observer](), list[growth.Growth]()
         self.shape, self.offset = world.shape, (0, 0, 0)
-        self.growths: list[growth.Growth] = []
         self.ended: dict[str, object] | None = None
         self.wrap = Wrap(*world.periodic, self.mask(world.beyond) if world.beyond else None)
-        self.families, self.kind, self.unit = (
-            volume.at_start(world.families),
-            world.kind,
-            world.link_unit,
-        )
+        self.families = volume.at_start(world.families)
+        self.kind, self.unit = world.kind, world.link_unit
         self.order = [index for index, family in enumerate(self.families) if family.quanta]
         self.held = [index for index, family in enumerate(self.families) if family.held]
         self.turning = [index for index in self.order if turns(self.families, index)]
-        self.fixed_walls: dict[int, list[Any]] = {}
-        self.write_walls: dict[int, list[Any]] = {}
+        self.fixed_walls, self.write_walls = dict[int, list[Any]](), dict[int, list[Any]]()
         self.swaps: list[tuple[int, int, int]] = []
         self.writes = {
             i: held_write_of(self.families, i, world.quantum_action, world.link_unit) for i in self.held
@@ -88,6 +85,8 @@ class Lattice:
                 meeting.laid_record(self, number, record)
             elif self.families[row.family].quanta:
                 self.lay(row, record)  # a kick on a holder of the content is laid after the start
+        if world.seed is not None:
+            seed.uniform_seed(self, world.seed)
         self.start()
         self.output = output
         self.densities: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last readings
@@ -291,6 +290,7 @@ class Lattice:
             if credit.counted_windows(self):
                 meeting.closed(self)
             meeting.jumped(self)
+            meeting_board.closed(self)
             emission.sourced(self)
             front.advanced_fronts(self)
         else:

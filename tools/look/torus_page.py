@@ -10,8 +10,14 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from captions import captions_of  # noqa: E402  (the look's own module, beside this tool)
+
+from event_universe.swap import floor_of  # noqa: E402
 
 PAGE = Path(__file__).with_name("page.py")
 TOKENS = re.search(r":root \{.*?\n\}\n", PAGE.read_text(encoding="utf-8"), re.S)
@@ -61,6 +67,7 @@ summary { cursor: pointer; font-weight: 600; }
   <svg id="torus" viewBox="0 0 1000 760" role="img" aria-label="the torus"></svg>
   <svg id="strip" viewBox="0 0 1000 118" role="img" aria-label="the stages of the run"></svg>
   <div class="words" id="strip-words"></div>
+  <details><summary>The events, in the viewer's words (every caption read from the logs; the interval first, the Nodes counted)</summary><div class="prose" id="captions-list"></div></details>
   <div class="words" id="torus-words"></div>
 </section>
 <section class="panel" id="notes-rest" hidden><details><summary>The notes in full, stage by stage</summary><div class="prose" id="notes-prose"></div></details></section>
@@ -167,6 +174,7 @@ function strip() {  // the stage strip: every mark read from the logs by the too
   const now = NODES[parseInt(slider.value, 10)].interval;
   body += `<line id="cursor" x1="${px(now).toFixed(1)}" x2="${px(now).toFixed(1)}" y1="4" y2="114" stroke="${token('--fg')}" stroke-width="1" stroke-dasharray="3 2"/>`;
   document.getElementById('strip').innerHTML = body;
+  if ((STAGES.captions || []).length) document.getElementById('captions-list').innerHTML = `<ol>${STAGES.captions.map(c => `<li><b>${c.at}</b>: ${esc(c.words)}${c.nodes.length ? ` <span class="verdict">(${c.nodes.length} Node${c.nodes.length > 1 ? 's' : ''})</span>` : ''}</li>`).join('')}</ol>`;
   document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.join(', ') || 'none'}) and ${STAGES.clicks.length} clicks written (the ticks above, at ${STAGES.clicks.join(', ') || 'none'}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
 }
 document.getElementById('strip').addEventListener('click', e => {
@@ -371,12 +379,16 @@ def charts_of(
 
 
 def stages_of(
-    nodes: list[dict[str, Any]], course: dict[str, Any], clicks: list[dict[str, Any]]
+    nodes: list[dict[str, Any]],
+    course: dict[str, Any],
+    clicks: list[dict[str, Any]],
+    eras: list[dict[str, Any]] | None = None,
+    world: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The stage strip's marks, each read from the logs and none typed: the bangs numbered (`returns_of`: the seed, the first logged interval, bang 1, each return of the volume's velocity after the fifth act fired a later bang), the first turns (the first interval the fifth act turned a Node), every top of the board's volume numbered and the returns that are no bang (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
     marks: list[dict[str, Any]] = []
     if not nodes:
-        return {"marks": marks, "births": [], "clicks": []}
+        return {"marks": marks, "births": [], "clicks": [], "captions": []}
     rows = course["rows"]
     bangs = returns_of(rows) or [nodes[0]["interval"]]
     for n, at in enumerate(bangs, start=1):
@@ -415,7 +427,8 @@ def stages_of(
         for c in clicks
         if c.get("event") == "credit" and c.get("before") != c.get("realised")
     )
-    return {"marks": marks, "births": births, "clicks": written}
+    captions = captions_of(eras or [], nodes, clicks, world, floor_of(course["gamma"])) if eras else []
+    return {"marks": marks, "births": births, "clicks": written, "captions": captions}
 
 
 def page(
@@ -441,7 +454,7 @@ def page(
         .replace("{{BODIES}}", embed(bodies_of(world)))
         .replace("{{CHARTS}}", embed(charts_of(nodes, clicks or [], world, course)))
         .replace("{{NOTES}}", embed(notes))
-        .replace("{{STAGES}}", embed(stages_of(nodes, course, clicks or [])))
+        .replace("{{STAGES}}", embed(stages_of(nodes, course, clicks or [], eras, world)))
     )
 
 

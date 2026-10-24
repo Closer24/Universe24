@@ -1,4 +1,4 @@
-"""Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; `conversion.birth_of`, `act.born_pair`), on the small structured board of the universe test with the matter universe's families (gravity gapped [990, 1000], the holder of the sign, matter [600, 1000] as one clump, light uniform, the proton [0, 1000] and the electron [800, 1000] as planes, and the clicks world's absorber at [2, 2, 2] reading the light at its own beat 15): at the absorber's emission back into the light (e to g at the interval 45, the window's third close) the emitted light quantum arrives at a Node where the uniform light's quantum already stands, is not written there, and in place of the books' deficit the two quanta make the lightest conjugate pair the universe declares, the electron at the senses -1 and 1 (3,600 T against the two light quanta's 6,000 T), laid at that Node as two items of the same write step: the clauses (1) one birth line at 45, the family light, the children electron and electron at the senses -1 and 1 summing to 0, at [2, 2, 2]; (2) the electron's record stands on the board after it (its quanta at the Node and over the board at least one) where none stood before, the books' count of the electron 2 and of the light 26 as read (the births counted in the children and not in the light); (3) the run back of the whole course is exact through the birth, 70 of 70 states (the lay logged at its interval and undone, The lay's inverse); (4) the books' deficits as read and not assumed: the light's 1 from the take at the absorber's Node at 15 (the undepleted beam, standing as before the sentence) and the electron's -1, the conjugate pair's share at one Node reading one quantum against the books' two, named for the reading of the pair's share; the rest 0."""
+"""Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; `conversion.birth_of`, `act.born_pair`), on the small structured board of the universe test with the matter universe's families (gravity gapped [990, 1000], the holder of the sign, matter [600, 1000] as one clump, light uniform, the proton [0, 1000] and the electron [800, 1000] as planes, and the clicks world's absorber at [2, 2, 2] reading the light at its own beat 15): at the absorber's emission back into the light (e to g at the interval 45, the window's third close) the emitted light quantum arrives at a Node where the uniform light's quantum already stands, is not written there, and in place of the books' deficit the two quanta make the heaviest conjugate pair the universe declares whose two walls fit within their own energy (the law's sentence of 2026-10-24: the standing light's share at the Node, 3,008 T in the vacuum, with the emitted quantum's own W_c sin Omega at [902, 1000], 1,295 T, 4,303 T together), the electron at the senses -1 and 1 (its pair's 3,600 T within it, the proton pair's 6,000 T not; the former clause, the lightest within the top's 6,000 T, gave the same pair here, 2026-10-23 to 2026-10-24), laid at that Node as two items of the same write step: the clauses (1) one birth line at 45, the family light, the children electron and electron at the senses -1 and 1 summing to 0, at [2, 2, 2]; (2) the electron's record stands on the board after it (its quanta at the Node and over the board at least one) where none stood before, the books' count of the electron 2 and of the light 26 as read (the births counted in the children and not in the light); (3) the run back of the whole course is exact through the birth, 70 of 70 states (the lay logged at its interval and undone, The lay's inverse); (4) the books' deficits as read and not assumed: the light's 1 from the take at the absorber's Node at 15 (the undepleted beam, standing as before the sentence) and the electron's -1, the conjugate pair's share at one Node reading one quantum against the books' two, named for the reading of the pair's share; the rest 0."""
 
 import json
 from pathlib import Path
@@ -9,17 +9,16 @@ import pytest
 from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
-from tests.laws import ROOT, board_state, same_state
-from tests.laws_universe import CLUMP, CUBE, GAMMA, GAP, NOW, flat
+from tests.laws import board_state, same_state
+from tests.laws_universe import CLUMP, CUBE, GAMMA, GAP, NOW, declared_universe, flat
 
-MATTER = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
 ABSORBER = [2, 2, 2]
 MATTER_COUNT = 429  # the gate's count of the clump's share at [600, 1000] on the 3-cube at T 36,000
 END = 70
 
 
 def birth_board(folder: Path) -> Path:
-    universe = json.loads(MATTER.read_text(encoding="utf-8"))
+    universe = declared_universe()  # the declared seed's universe of 2026-10-23, kept by name
     universe["families"][0]["pair"] = [GAP, GAMMA]
     if not any(family["name"] == "absorber" for family in universe["families"]):
         universe["families"].append(
