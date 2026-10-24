@@ -8,8 +8,9 @@ from functools import partial
 from typing import TYPE_CHECKING
 
 from event_universe import conversion, credit, front
-from event_universe.emission import emitted_quantum
-from event_universe.loader.derived import count_wall
+from event_universe.core.rule3 import division_forward
+from event_universe.emission import born_unit, emitted_quantum
+from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.keys import Node
 from event_universe.node_detector import NodeBooks, picked, reported
 from event_universe.reports import (
@@ -210,11 +211,41 @@ def parted(board: Lattice, books: NodeBooks, item: Item, phase: list[Phase] | No
         books.lost = readings or None
 
 
+def born_table(
+    families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
+) -> conversion.Table | None:
+    """The pair two quanta of a gapless family make at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light, the owner's word, 05:2x UTC: the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; the former clause, the lightest within the threshold 2 x 3 den T, two quanta at the top of the band, from 2026-10-23 to 2026-10-24, kept by name): among `conversion.birth_of`'s tables, the lightest first, the heaviest whose two walls, 2 x count_wall(child) = 2 x 3 T sqrt(den^2 - num^2) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over`, the fraction the caller reads at the Node (the board's two n-ths of the Node's share where n whole quanta stand, `meeting_board.child_of`; the act's standing n-th with the arriving quantum's own unit, `born_pair`), the comparison cross-multiplied, 2 x count_wall(child) x over <= energy, exact in the integers with no division and no rounding; None where no pair fits, nothing then born."""
+    fitting = [
+        table
+        for table in conversion.birth_of(families, parent)
+        if 2 * count_wall(families[table[0][0]], action) * over <= energy
+    ]
+    return fitting[-1] if fitting else None
+
+
 def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:
-    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23; `conversion.birth_of`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the lightest conjugate pair of a plane family the universe declares, laid at that Node as two items of this write step at the senses -1 and 1 (the senses summing to 0, the charge kept), where the two quanta's two walls carry the pair's two walls, 2 x 3 den T at or above 2 x 3 T sqrt(den^2 - num^2); [] where the family has a gap, where the universe declares no such pair, or where the threshold is not met, the deficit then booked as before. The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
+    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23, the heaviest within the two quanta's own energy on his word of 2026-10-24; `conversion.birth_of`, `born_table`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the heaviest conjugate pair of a plane family the universe declares whose two walls fit within their own energy, laid at that Node as two items of this write step at the senses -1 and 1 (the senses summing to 0, the charge kept); the energy read at the Node by the law's own acts: the standing light's share there (`Lattice.share_of`, the count is the record's share, the Node's two levels and its six Links, the read `take.faced` took), n W_c sin omega(k) for the n whole quanta standing at the wave number k, n the floor of the share over the record's unit (one division act, the floor `meeting_board.meetings` takes), the standing quantum's n-th of it, and the arriving quantum's own W_c sin Omega at its resonance (`emission.born_unit`, the act that gives a record its unit at its first lay; W_c for a lay by the count, a one-Node lay carrying no wave number), the two together (share + n x arriving) / n; [] where the family has a gap, where the universe declares no such pair, or where no pair's walls fit, the deficit then booked as before (the former clause's lightest pair within 2 x 3 den T was born at every meeting whatever the light's frequency, the threshold a tautology). The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
     family = board.families[item.family]
     if family.pair[0] != family.pair[1] or family.held:
         return []
+    action = board.world.quantum_action
+    nodes = (
+        tuple(node for node in item.nodes if node not in {at for at, _ports in whole}) or item.nodes[:1]
+    )
+    at = front.on_board(board, nodes[0])
+    share = int(
+        board.share_of(item.family, 1, board.mask(nodes[:1]))[0][at]
+    )  # the standing light's energy
+    standing = max(
+        int(division_forward(share, board.credit.units[item.family], 0)[0]), 1
+    )  # the whole quanta standing there
+    wall = count_wall(family, action)
+    arriving = born_unit(wall, item.resonance) if item.resonance is not None else wall  # W_c sin Omega
+    table = born_table(board.families, item.family, action, share + standing * arriving, standing)
+    if table is None:
+        return []
+    den = board.families[table[0][0]].pair[1]
+    return [Item(out, None, None, 1, nodes, (den, den), sense=sense) for out, sense in table]
     action = board.world.quantum_action
     carried = 2 * count_wall(family, action)  # the two quanta's walls, the energy they carry together
     nodes = (
