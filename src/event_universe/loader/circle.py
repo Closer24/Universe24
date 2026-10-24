@@ -44,21 +44,27 @@ def is_prime(n: int) -> bool:
 
 
 def split(n: int) -> int:
-    """A proper factor of the composite n by Pollard's rho (Floyd's cycle on x -> x^2 + c modulo n, the squares by Python's modular power and the common divisor by Euclid's act, `gcd`), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself."""
+    """A proper factor of the composite n by Pollard's rho with Brent's cycle (the squares x -> x^2 + c modulo n by Python's modular power, the hare's run doubling each round and the common divisor of x - y and n by Euclid's act, `gcd`, at every step of the run), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself; no count of this function's own (one divisor per round over the round's product needs the product reduced by the division act at every step and measured slower, 31 s against 22 s on the PeV den's 155 bits; a batch of six steps 17 s, set aside for its constant); the same factors as Floyd's cycle with three modular powers and one divisor per step, the loader's split to 2026-10-24, kept by name (52 s on the PeV den)."""
     c = 1
     while True:
-        x, y, d = 2, 2, 1
-        while d == 1:
-            x = pow(x, 2, n) + c
-            y = pow(pow(y, 2, n) + c, 2, n) + c
-            d = gcd(abs(x - y), n)
-        if d != n:
-            return d
+        y, r, g = 2, 1, 1
+        while g == 1:
+            x = y
+            for _ in range(r):
+                y = pow(y, 2, n) + c
+            k = 0
+            while k < r and g == 1:
+                y = pow(y, 2, n) + c
+                g, k = gcd(x - y, n), k + 1
+            r += r
+        if g != n:
+            return g
         c += 1
 
 
+@cache
 def factors(n: int) -> dict[int, int]:
-    """The prime factors of n with their exponents (`is_prime`, `split`), 2 divided out first by the division act."""
+    """The prime factors of n with their exponents (`is_prime`, `split`), 2 divided out first by the division act; a pure function of n, memoized within the process (the loader's one derivation of the circle from den, asked by `circle_points`, `lightest_point` and the eras log's header; the pattern of `plane.turned_room`, 2026-10-24: the PeV den's factoring once per process, never a file, never a key)."""
     found: dict[int, int] = {}
     while n > 1 and division_forward(n, 2, 0)[1] == 0:
         found[2], n = found.get(2, 0) + 1, int(division_forward(n, 2, 0)[0])
@@ -113,7 +119,7 @@ def lightest_point(den: int) -> tuple[int, int]:
     if not found:
         raise ValueError(
             f"the circle of den {den} has no point with both legs above 0 (no prime 1 mod 4 divides it): the "
-            "lightest point, the electron's pair, is not derived (ALGEBRA.md, The one universe)"
+            "lightest point, the least leg of den's circle, is not derived (ALGEBRA.md, The one universe)"
         )
     s, num = found[0]
     return num, s

@@ -11,7 +11,7 @@ Node = tuple[int, int, int]
 AXES = ("x", "y", "z")
 FILE_INTEGER = (
     ports.SIDES ** (ports.SIDES ** (ports.AXES * ports.AXES))
-)  # the bound of a file's integer, 2^512 (2026-10-24, the den enlarged as content: nature's den of 70 bits at the top tier and 154 at the PeV tier passed the host's 63-bit bound, which refused them; the work path's own int64 check stands where it is, loader/world.kind_of); a bound of the file's reading and no number of the law
+)  # the bound of a file's integer, 2^512 (2026-10-24: a file integer above the host's 63-bit work bound was refused by name to that day; the work path's own int64 check stands where it is, loader/world.kind_of); a bound of the file's reading and no number of the law
 
 
 def keyed(

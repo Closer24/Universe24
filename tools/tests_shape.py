@@ -46,33 +46,39 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the reader of the clicks log alone on the committed record (2026-10-24, the owner's word that every measurement goes to the clicks): "
         "125 credits in one window, the count's floor 1, the where 5 Links on every axis, the momentum and the clock unreadable with their keys named",
     ),
-    "tests/test_the_clicks_reader.py::test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_by_hand": (
-        53,
-        "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
-        "the dilation ratio and the Delta x Delta p product, each number computed by hand",
+    "tests/test_the_clicks_reader.py::test_a_log_with_the_click_views_keys_gives_velocity_verdict_dilation_rest_and_product_by_hand": (
+        89,
+        "the same reader on a log with the click's view's keys, the momentum the frame's running cosine with the Link current's sign (2026-10-24): "
+        "the velocity in Links per board and per proper interval, the bound and the free verdicts, p in T's unit, the rest point from the four pairs "
+        "(1 for the massless record, None at a one-Node lay), the dilation ratio and the Delta x Delta p product in Links x T against the floor T / 2, each number computed by hand",
     ),
     "tests/test_the_click_readings.py::test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels": (
         7,
         "the click's view (2026-10-24, the owner's frame, the builder's six readings): the point the reduced pair of the cosine read from three levels",
     ),
     "tests/test_the_click_readings.py::test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start": (
-        30,
+        41,
         "the click's view: the six readings at a Node equal to the board's own levels at the interval's start and the level the step left",
     ),
     "tests/test_the_click_readings.py::test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_birth_its_childrens_records_and_points": (
-        32,
+        36,
         "the click's view on the uniform cube's first meeting: every credit's six keys as the board reads them, every birth's children's records and points",
     ),
     "tests/test_the_click_readings.py::test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volume_differs": (
-        26,
+        27,
         "the click's view on the sea with a hole: every credit's proper the floor of its Node's clock summed to its interval, its windows the Node's closes, two propers differing where the clocks differ",
     ),
+    "tests/test_the_click_readings.py::test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point": (
+        49,
+        "the click's view, the momentum as the frame's running cosine with the Link current's sign at the interval's start (2026-10-24, the blind measured, the Boss's ruling): the plane wave at k = 2 pi / 3 reads [1, -1, 2] on x, "
+        "the hole's [0, 5, 6], its neighbours' [0, 1, 2] toward it and [0, 25, 26] across, the edges' and the corners' at the closes 4 and 5; a second credit's point, beat and momentum None, its windows 2",
+    ),
     "tests/test_the_click_readings.py::clock_of": (
-        6,
+        7,
         "the helper: the Node's composed clock at every Node from the seed's read, the time count's term summed by the tests apart from the engine",
     ),
     "tests/test_the_click_readings.py::bare_board": (
-        8,
+        7,
         "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
     ),
     "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
@@ -107,6 +113,21 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_birth_is_a_list_of_records.py::bare_board": (
         8,
         "the helper of the three tests above: the one universe file on the bare 3-cube with the births kept",
+    ),
+    "tests/test_the_pages_carry_the_legend_of_kinds.py::test_the_captions_name_the_three_prime_lifts_by_rising_sine_at_every_den": (
+        26,
+        "the pages' captions a look and no law (the owner's word of 2026-10-24, the branch born-amplitude): den's three prime lifts by "
+        "rising sine the electron, the proton and the neutron's candidate, at den 1,021, the top tier and the PeV den; the former rule kept by name",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::born_here": (
+        12,
+        "the birth's own path at one Node of a fresh board (the branch born-amplitude, 2026-10-24): the seed's record at the Node to "
+        "the state of a Node with no level through the one lay act, the hole, then the list laid by the one click act",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_2": (
+        34,
+        "the lay of a born child is the law's at every den (the owner's ruling of 2026-10-24 on the hand's measurement): 6 den A^2 = "
+        "0.99756 W_c per child, W = +-A^2, the charge one per child, the Lorentz factor in the child's own unit, at den 1,021 and the file's den",
     ),
     "tests/test_the_charge_per_quantum.py::test_equal_wronskians_of_two_families_write_equal_charge": (
         16,

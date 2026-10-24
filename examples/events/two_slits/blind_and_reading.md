@@ -174,7 +174,7 @@ The screens run whole under the click's read of the board with the totals' bias 
 
 ## The one-quantum world, 2026-10-21 (one_quantum.json, the eighteenth of the derivation's forty)
 
-The owner's word of 2026-10-21 (every slit experiment on the site with a description and an
+The owner's word of 2026-10-21 (every slit trial on the site with a description and an
 animation): one of the forty one-quantum worlds of the variants' derivation
 (papers/one_rule/variants/README.md, section A, verdict WORKS; its a_one_quantum.py --ensemble 40
 writes the forty at run time under a scratch folder and ships none) stands in this folder as

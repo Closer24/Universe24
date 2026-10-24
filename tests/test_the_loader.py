@@ -11,6 +11,7 @@ from tests.laws import EVENTS, refused, universe_beside, universe_copy
 ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
 DEN = 53_567_765  # nature's den of the one universe file, 5 x 17 x 73 x 89 x 97
 TOP = 1_166_991_900_949_580_266_237  # the constants hand's three-prime den, 649,421 x 13,586,597 x 132,260,701
+PEV = 21_397_363_965_165_989_151_899_244_775_347_635_252_768_274_397  # the record's den since 2026-10-24
 
 
 def test_the_loader_refuses_every_wrong_key_of_the_files_by_name():
@@ -104,6 +105,15 @@ def test_dens_circle_is_read_from_its_integers_alone():
     assert len(top) == 3**3 - 1 and circle.factors(TOP) == {649_421: 1, 13_586_597: 1, 132_260_701: 1}
     assert top[(1_166_991_729_163_826_857_995, 633_202_287_062_780_012)] == (0, 2, 0)  # the least leg
     assert top[(100_503_613_922_092_705_013, 1_162_656_062_845_119_254_100)] == (0, 0, 2)
+    assert (
+        circle.factors(1021) == {1021: 1}
+        and circle.factors(PEV)
+        == {
+            8_909_066_857_637: 1,
+            79_961_009_336_473: 1,
+            30_036_532_038_439_967_297: 1,
+        }
+    )  # Brent's cycle (2026-10-24): the same factors as Floyd's split found on SMALL, the top tier and the PeV den
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
@@ -141,18 +151,19 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
     one = json.loads(ONE_UNIVERSE.read_text(encoding="utf-8"))
     assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
     assert (
-        one["integers"]["den"] == TOP
-    )  # the enlarged den as content, the three primes 1 mod 4 (2026-10-24)
+        one["integers"]["den"] == PEV
+    )  # the PeV tier since 2026-10-24, the den chosen after the clicks
     shipped, planes = universe.universe_of(one)
-    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (TOP, TOP) and shipped["den"] == TOP
+    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
     least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
     assert (least.name, least.pair) == (
-        "point 0 2 0",
-        (1_166_991_729_163_826_857_995, TOP),
-    )  # the former electron
-    assert (
-        next(f.name for f in planes if f.pair == (100_503_613_922_092_705_013, TOP)) == "point 0 0 2"
-    )  # the former proton, the heaviest prime's point
+        "point 0 0 2",
+        (21_397_363_965_165_989_150_474_488_818_982_086_595_722_885_795, PEV),
+    )  # the electron, the least leg, the heaviest prime's lift at this den (point 0 2 0 at the top tier)
+    assert next(f for f in planes if f.name == "point 2 0 0").pair == (
+        21_397_363_965_161_185_649_061_722_838_116_504_985_189_627_435,
+        PEV,
+    )  # the proton, the lightest prime's lift, s_p / s_e = 1836.15265582 (point 0 0 2 at the top tier)
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(

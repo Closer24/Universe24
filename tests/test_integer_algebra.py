@@ -34,7 +34,6 @@ PHYSICAL_MODULES += (
     "bookings.py",
     "meeting.py",
     "act.py",
-    "front.py",
     "plane.py",
 )
 PHYSICAL_MODULES += (

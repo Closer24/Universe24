@@ -1,6 +1,6 @@
-"""The reader of the clicks log alone, a host tool that computes nothing from a Node's level (ALGEBRA.md, The click writes on the lattice; The click's read of the board; No click names a Node; The uncertainty relation is the detector's three declarations; The uncertainty principle is the record's and the click's; The board is deterministic, but it cannot be read through clicks, because of the uncertainty principle; The click's unit: the whole of a click is the detector's own transition; What a click reads of a quantum; The lattice momentum; The paces compose; The horizon; the builder's rule of method of 2026-10-24, #2187 comment 6382837913: the clicks log is the record, the eras and nodes lines are looks). From the credit, birth and lay lines of `<world>.clicks.jsonl` and nothing else it reads what the credits say of the bodies: the mass (`point`, the reduced pair [num, den] the click read, T sin omega in T's unit), the position (`support`, the shell Node of a body's click, or the board's own click's Node by its x-major index `node_detector`, and the window's close), the velocity (two credits of one `identity`, the Links between them on the torus over the intervals between their closes, and over the taker's own `proper` intervals), the momentum (`momentum`, `fan`, `recoil`), the energy (`count` whole quanta, each T sin omega of the point), bound or free (the credits of one identity at one Node, the `beat` between their closes), and beside the bodies the uncertainty table per family and window (the count's floor, the where's spread on the torus, the momentum's spread and their product in the click's units) and the GR table (the dilation of a taker's `proper` against the board's intervals, light's click spacing per Node, the Nodes silent while others click, a free body's track against the straight line). Every cell the log cannot fill names the key it lacks.
+"""The reader of the clicks log alone, a host tool that computes nothing from a Node's level (ALGEBRA.md, The click writes on the lattice; The click's read of the board; No click names a Node; The uncertainty relation is the detector's three declarations; The uncertainty principle is the record's and the click's; The board is deterministic, but it cannot be read through clicks, because of the uncertainty principle; The click's unit: the whole of a click is the detector's own transition; What a click reads of a quantum; The lattice momentum; The paces compose; The horizon; the builder's rule of method of 2026-10-24, #2187 comment 6382837913: the clicks log is the record, the eras and nodes lines are looks). From the credit, birth and lay lines of `<world>.clicks.jsonl` and nothing else it reads what the credits say of the bodies: the mass (`point`, the reduced pair [num, den] the click read, T sin omega in T's unit, and the rest, the record's own point with no label from the click's four pairs, 3 cos omega / SUM_a cos k_a, 2026-10-24), the position (`support`, the shell Node of a body's click, or the board's own click's Node by its x-major index `node_detector`, and the window's close), the velocity (two credits of one `identity`, the Links between them on the torus over the intervals between their closes, and over the taker's own `proper` intervals), the momentum (`momentum`, per axis [sign_a, num_a, den_a], the frame's running cosine along the axis, 2 cos k_a = (a_{+a} + a_{-a}) / a_i, with the Link current's sign, as the click's view writes it since 2026-10-24: p_a = sign_a x T sin k_a per Link in T's unit, the leg of the pair over its den, and the word where the pair lies outside the circle, no running wave along the axis; the former `fan` and `recoil` struck from the line the same day), the energy (`count` whole quanta, each T sin omega of the point, and with the momentum the band's form from the pairs directly), bound or free (the credits of one identity at one Node, the `beat` between their closes), and beside the bodies the uncertainty table per family and window (the count's floor, the where's spread on the torus in Links, the momentum's spread in T's unit and their product in Links x T against the law's floor T / 2) and the GR table (the dilation of a taker's `proper` against the board's intervals, light's click spacing per Node, the Nodes silent while others click, a free body's track against the straight line). Every cell the log cannot fill names the key it lacks.
 
-Usage: `PYTHONPATH=src python tools/clicks_read.py <world>.clicks.jsonl [--shape X Y Z] [--action T] [--out <file>.json]`
+Usage: `PYTHONPATH=src python tools/clicks_read.py <world>.clicks.jsonl [--shape X Y Z] [--out <file>.json]`
 """
 
 from __future__ import annotations
@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import defaultdict
+from fractions import Fraction
 from pathlib import Path
 from typing import Any, NamedTuple
 
@@ -19,6 +20,11 @@ AXES = (0, 1, 2)
 ONE_WINDOW = "one window: nothing to compare"
 TWO_CLOCKS = "the two credits' proper are two Nodes' clocks: no one taker's own interval"
 NO_ONE_BODY = "a record credited at several Nodes in one close: the credited record and no one body"
+NO_WAVE = "no running wave along the axis: the pair lies outside the circle"
+ONE_NODE_LAY = "a one-Node lay: SUM_a cos k_a = 0, nothing beside the Node to read; a body is counted from its many clicks"
+VACUUM_PACES = "exact where the Node's pace equals the board's: the Node's clock at the board's interval, the vacuum's paces; the rest's value stands as read either way"
+FLOOR = "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit"
+HALF = Fraction(1, 2)  # the law's floor of Delta x Delta p in Links x T
 
 
 class Lines(NamedTuple):
@@ -155,21 +161,8 @@ def sine_of(pair: tuple[int, int]) -> float:
     return leg_below(den * den - num * num) / den
 
 
-def action_of(credit: Line) -> int | None:
-    """T from the click's own keys where no --action is given: the `beat` is the record's own unit at the point, 3 T times den sin omega (the integer sine, the leg of the pair), so T = beat div (3 x leg), exact where the pair is Pythagorean; None where the point or the beat is lacking, the leg is no integer or 0 (a massless record at its rest), or the quotient is 0."""
-    pair, beat = pair_of(credit.get("point")), credit.get("beat")
-    if pair is None or beat is None or abs(pair[0]) > pair[1]:
-        return None
-    square = pair[1] * pair[1] - pair[0] * pair[0]
-    leg = leg_below(square)
-    if leg == 0 or leg * leg != square:
-        return None
-    action = int(beat) // (3 * leg)
-    return action if action > 0 else None
-
-
 def mass_of(credit: Line, birth: Line | None = None) -> dict[str, Any]:
-    """The mass: `point`, the reduced pair the click read from the three levels, as T sin omega in T's unit (a point at rest; for the credited massless record the quantum's frequency), with the `beat` (3 T sin omega, the click's own unit), the `kind` (1 or 2, the record's width) and the `sense` (-1, 0, 1, the Wronskian's sign); the family's label (`realised`, `emitted` or the birth's `children`) names the family and no number; the birth's `points` and `records` are the children's."""
+    """The mass: `point`, the reduced pair the click read from the three levels, as T sin omega in T's unit (a point at rest; for the credited massless record the quantum's frequency), with the `rest`, the record's own point from the click's four pairs with no label (`rest_of`, 2026-10-24), the `beat` (3 T sin omega, the click's own unit), the `kind` (1 or 2, the record's width) and the `sense` (-1, 0, 1, the Wronskian's sign); the family's label (`realised`, `emitted` or the birth's `children`) names the family and no number; the birth's `points` and `records` are the children's."""
     point = credit.get("point")
     pair = pair_of(point)
     children = (birth or {}).get("children") or []
@@ -186,6 +179,7 @@ def mass_of(credit: Line, birth: Line | None = None) -> dict[str, Any]:
     else:
         found["point"] = list(pair)
         found["mass"] = sine_of(pair)
+    found["rest"] = rest_of(credit)
     for key in ("beat", "kind", "sense"):
         found[key] = credit[key] if credit.get(key) is not None else lacking(key)
     if birth is not None and birth.get("senses") is not None:
@@ -261,16 +255,63 @@ def velocity_of(first: Line, last: Line, shape: Shape | None) -> dict[str, Any] 
     return found
 
 
+def cosine_of(reading: Any) -> tuple[int, tuple[int, int]] | None:
+    """One axis of `momentum` as the click's view writes it (2026-10-24), [sign_a, num_a, den_a]: the Link current's sign along the axis with the frame's running cosine, 2 cos k_a = (a_{+a} + a_{-a}) / a_i, as the reduced pair, (sign, (num, den)); None where the axis holds no reading or the record's lines read different cosines there (the lines' pairs in order after the sign)."""
+    if reading is None or len(reading) != 3 or not all(isinstance(v, int) for v in reading):
+        return None
+    return (int(reading[0]), (int(reading[1]), int(reading[2])))
+
+
+def p_of(reading: Any) -> float | str:
+    """p_a in T's unit from one axis of `momentum`: sign_a x leg_below(den_a^2 - num_a^2) / den_a, T sin k_a per Link with the Link current's sign (ALGEBRA.md, The lattice momentum, Part F; exact at a Pythagorean pair, the leg's floor otherwise); the word where the pair lies outside the circle (|num_a| > den_a: no running wave along the axis), or the lines' different cosines named."""
+    cosine = cosine_of(reading)
+    if cosine is None:
+        return lacking("momentum") if reading is None else f"the lines read different cosines: {reading}"
+    sign, (num, den) = cosine
+    if abs(num) > den:
+        return NO_WAVE
+    return sign * leg_below(den * den - num * num) / den
+
+
+def rest_of(credit: Line) -> dict[str, Any] | str:
+    """The mass from the click with no label (2026-10-24): at the plain paces Rule3's line at a mode is 3 den cos omega(k) = num SUM_a cos k_a, so the record's own rest point is num / den = 3 cos omega / SUM_a cos k_a = 3 (after + before) / SUM_j now_j, an exact rational of the click's four pairs, the temporal `point` and the three spatial pairs of `momentum`: the reduced pair [num, den] with its value (1 for the massless record at every click whatever k); None named where SUM_a cos k_a = 0 (`ONE_NODE_LAY`: a born body's mass is read at its later clicks); the paces: exact at the vacuum's paces (`VACUUM_PACES`, the Node's clock `proper` at the board's interval), and approximate near matter, where the paces change the reaches, named where `proper` shows the Node's clock off the board's interval (the dilation rows of the GR table), the paces' correction lacking."""
+    pair, momentum = pair_of(credit.get("point")), credit.get("momentum")
+    if pair is None or momentum is None:
+        return lacking(
+            *[key for key, value in (("point", pair), ("momentum", momentum)) if value is None]
+        )
+    cosines = [cosine for cosine in map(cosine_of, momentum) if cosine is not None]
+    if len(cosines) < len(momentum):
+        return f"the lines read different cosines: {momentum}"
+    total = sum((Fraction(num, den) for _sign, (num, den) in cosines), Fraction(0))
+    if total == 0:
+        return {"rest": None, "note": ONE_NODE_LAY}
+    rest = 3 * Fraction(pair[0], pair[1]) / total
+    found: dict[str, Any] = {"rest": [rest.numerator, rest.denominator], "value": float(rest)}
+    proper, window = credit.get("proper"), credit.get("window")
+    if proper is None or not window:
+        found["paces"] = lacking("proper", "window")
+    elif int(proper) == int(window[1]):
+        found["paces"] = VACUUM_PACES
+    else:
+        found["paces"] = (
+            f"approximate: the Node's clock {proper} against the board's interval {window[1]}, "
+            "the paces change the reaches near matter, the paces' correction lacking; "
+            "the rest's value stands as read either way"
+        )
+    return found
+
+
 def momentum_of(credit: Line) -> dict[str, Any]:
-    """The four-flux kept: `momentum` (p_a per axis in T's unit per Link), `fan` (the record's P_a over the board) and `recoil` (-p_a owed by the source), each named lacking where the log has none."""
-    return {
-        key: credit[key] if credit.get(key) is not None else lacking(key)
-        for key in ("momentum", "fan", "recoil")
-    }
+    """The momentum kept: `momentum` as the click wrote it, per axis [sign_a, num_a, den_a] (the frame's running cosine with the Link current's sign, 2026-10-24), and `p`, p_a per axis in T's unit (`p_of`); both named lacking where the log has none (the key None at a level now 0, or absent on a log before the click's view); the former `fan` and `recoil`, struck from the line on 2026-10-24, read from no log."""
+    momentum = credit.get("momentum")
+    if momentum is None:
+        return {"momentum": lacking("momentum"), "p": lacking("momentum")}
+    return {"momentum": momentum, "p": [p_of(reading) for reading in momentum]}
 
 
-def energy_of(credit: Line, point: Any = None, action: int | None = None) -> dict[str, Any]:
-    """The energy: `count` whole quanta; at rest the count times T sin omega of the point, in T's unit; with the momentum the band's form, cos omega(k) = cos omega_0 - (1 / 3) SUM_a (1 - cos k_a) with sin k_a = p_a / T, T given (`--action`) or read from the beat and the point (`action_of`)."""
+def energy_of(credit: Line, point: Any = None) -> dict[str, Any]:
+    """The energy: `count` whole quanta; at rest the count times T sin omega of the point, in T's unit; with the momentum the band's form from the click's pairs directly, cos omega(k) = cos omega_0 - (1 / 3) SUM_a (1 - cos k_a) with cos k_a = num_a / den_a, an exact rational, the count times its sine in T's unit (the leg's floor over the den; no T needed); the word where an axis reads no running wave or the lines read different cosines."""
     count = credit.get("count")
     pair = pair_of(credit.get("point") if point is None else point)
     found: dict[str, Any] = {"quanta": count if count is not None else lacking("count")}
@@ -280,20 +321,20 @@ def energy_of(credit: Line, point: Any = None, action: int | None = None) -> dic
         return found
     found["rest"] = count * sine_of(pair)
     momentum = credit.get("momentum")
-    action = action_of(credit) if action is None else action
+    cosines = [cosine for cosine in map(cosine_of, momentum or ()) if cosine is not None]
     if momentum is None:
         found["with_momentum"] = lacking("momentum")
-    elif action is None:
-        found["with_momentum"] = "the band's form needs T: pass --action"
-    elif any(abs(int(p)) > action for p in momentum):
-        found["with_momentum"] = "a momentum above T: no band reading"
+    elif len(cosines) < len(momentum):
+        found["with_momentum"] = f"the lines read different cosines: {momentum}"
+    elif any(abs(num) > den for _sign, (num, den) in cosines):
+        found["with_momentum"] = NO_WAVE
     else:
-        legs = [leg_below(action * action - int(p) * int(p)) for p in momentum]  # T cos k_a per axis
-        num, den = pair
-        scale = 3 * den * action  # cos omega(k) = (3 num T - den SUM_a (T - T cos k_a)) / (3 den T)
-        cosine = 3 * num * action - den * sum(action - leg for leg in legs)
-        found["with_momentum"] = count * leg_below(scale * scale - cosine * cosine) / scale
-        found["action"] = action
+        lost = sum((1 - Fraction(num, den) for _sign, (num, den) in cosines), Fraction(0)) / 3
+        cosine = Fraction(pair[0], pair[1]) - lost
+        if abs(cosine) > 1:
+            found["with_momentum"] = f"cos omega(k) = {cosine} outside the circle: no band reading"
+        else:
+            found["with_momentum"] = count * sine_of((cosine.numerator, cosine.denominator))
     return found
 
 
@@ -355,9 +396,7 @@ def partners(rows: list[dict[str, Any]]) -> None:
             }
 
 
-def bodies_table(
-    lines: Lines, shape: Shape | None = None, action: int | None = None
-) -> list[dict[str, Any]]:
+def bodies_table(lines: Lines, shape: Shape | None = None) -> list[dict[str, Any]]:
     """One row per identity (per credit where the log has no identity): mass, position, velocity, momentum, energy, bound or free; every cell the log cannot fill names its key."""
     shape = shape_of(lines, shape)
     clock_written = any(c.get("proper") not in (None, 0) for c in lines.credits)
@@ -378,7 +417,7 @@ def bodies_table(
                 "position": position_of(last, shape, lines.births, clock_written),
                 "velocity": velocity,
                 "momentum": momentum_of(last),
-                "energy": energy_of(last, None, action),
+                "energy": energy_of(last),
                 "bound_or_free": bound_or_free(track, shape, lines.births),
                 "counts": {int(c["window"][1]): c.get("count") for c in track},
             }
@@ -394,7 +433,7 @@ def bodies_table(
                 "position": position_of(credit, shape, lines.births, clock_written),
                 "velocity": lacking("identity"),
                 "momentum": momentum_of(credit),
-                "energy": energy_of(credit, None, action),
+                "energy": energy_of(credit),
                 "bound_or_free": bound_or_free([credit], shape, lines.births),
                 "counts": {int(credit["window"][1]): credit.get("count")}
                 if credit.get("window")
@@ -458,22 +497,32 @@ def extent_of(coordinates: set[int], extent: int) -> int:
 
 
 def violations_of(row: dict[str, Any], counts: list[int], length: int) -> list[str]:
-    """The checks of the uncertainty table: a count below one whole quantum or a window below one interval; over two or more credits with their momentum written, a where of one Link at a momentum spread below one unit."""
+    """The checks of the uncertainty table: a count below one whole quantum or a window below one interval; over two or more credits with their momentum written, a product Delta x Delta p per axis (the where's spread in Links times the momentum's spread in T's unit, Links x T) below the law's floor T / 2 (`FLOOR`), named with its number; an axis whose spread is a word (no running wave, the lines' different cosines) is not judged."""
     found: list[str] = []
     if counts and min(counts) < 1:
         found.append("a count below one whole quantum")
     if length < 1:
         found.append("a window below one interval")
-    spread, momentum = row["where_spread"], row["momentum_spread"]
-    if row["credits"] > 1 and isinstance(spread, list) and isinstance(momentum, list):
+    product = row["product"]
+    if row["credits"] > 1 and isinstance(product, list):
         for axis in AXES:
-            if spread[axis] <= 1 and momentum[axis] < 1:
-                found.append(f"axis {axis}: a where of one Link at a momentum spread below one unit")
+            if isinstance(product[axis], float) and product[axis] < HALF:
+                found.append(
+                    f"axis {axis}: Delta x Delta p = {product[axis]} Links x T, below the law's floor T / 2"
+                )
     return found
 
 
+def spread_of(values: list[Any]) -> float | str:
+    """max - min over the credits of one axis's p_a in T's unit; the first word where a credit's axis reads one (no running wave along the axis, or the lines' different cosines)."""
+    words = [value for value in values if isinstance(value, str)]
+    if words:
+        return words[0]
+    return float(max(values) - min(values))
+
+
 def uncertainty_table(lines: Lines, shape: Shape | None = None) -> list[dict[str, Any]]:
-    """Per family and window: the credits, the count's floor and sum, the window's length N, Delta E Delta t in the click's units (whole quanta over N intervals, the window resolving 2 pi / N in rotation and 2 pi T in Delta E Delta t, against the law's T / 2), the where's spread per axis on the torus, the momentum's spread per axis, their product, and the violation check."""
+    """Per family and window: the credits, the count's floor and sum, the window's length N, Delta E Delta t in the click's units (whole quanta over N intervals, the window resolving 2 pi / N in rotation and 2 pi T in Delta E Delta t, against the law's T / 2), the where's spread per axis on the torus in Links, the momentum's spread per axis in T's unit (max - min of p_a over the credits, `p_of`), their product per axis in Links x T, the law's floor T / 2 named (`FLOOR`), and the violation check (`violations_of`)."""
     shape = shape_of(lines, shape)
     groups: dict[tuple[str, int, int], list[Line]] = defaultdict(list)
     for credit in lines.credits:
@@ -512,15 +561,18 @@ def uncertainty_table(lines: Lines, shape: Shape | None = None) -> list[dict[str
         if len(momenta) < len(credits):
             row["momentum_spread"] = row["product"] = lacking("momentum")
         else:
-            row["momentum_spread"] = [
-                max(m[axis] for m in momenta) - min(m[axis] for m in momenta) for axis in AXES
-            ]
+            found = [[p_of(reading) for reading in m] for m in momenta]  # p_a per credit in T's unit
+            row["momentum_spread"] = [spread_of([p[axis] for p in found]) for axis in AXES]
             spread = row["where_spread"]
             row["product"] = (
-                [x * p for x, p in zip(spread, row["momentum_spread"], strict=True)]
+                [
+                    x * p if isinstance(p, float) else p
+                    for x, p in zip(spread, row["momentum_spread"], strict=True)
+                ]
                 if isinstance(spread, list)
                 else spread
             )
+        row["floor"] = FLOOR
         row["violations"] = violations_of(row, counts, length)
         rows.append(row)
     return rows
@@ -638,12 +690,6 @@ def main(argv: list[str] | None = None) -> None:
         default=None,
         help="the torus's extent per axis, where the lines name too few Nodes to give it",
     )
-    parser.add_argument(
-        "--action",
-        type=int,
-        default=None,
-        help="T, the quantum's action, for the band's form of the energy",
-    )
     parser.add_argument("--out", type=Path, default=None, help="write the tables as JSON here")
     parser.add_argument(
         "--light",
@@ -664,7 +710,7 @@ def main(argv: list[str] | None = None) -> None:
             "others": len(lines.others),
         },
         "shape": list(shape) if shape else lacking("shape"),
-        "bodies": bodies_table(lines, shape, args.action),
+        "bodies": bodies_table(lines, shape),
         "uncertainty": uncertainty_table(lines, shape),
         "gr": gr_table(lines, shape, light),
     }

@@ -220,7 +220,7 @@ def phase_counts(
         signs = frame_signs(phi.remainder, wrap)
         counts = []
         for axis in range(AXES):
-            counts.append(k - signs[2 * axis] * arrival(k, axis, 1, wrap))
+            counts.append(k - signs[2 * axis] * arrival(k, axis, 1))
         found[row] = counts
     return found
 

@@ -194,7 +194,7 @@ def write_sources(
             if parts > 1:
                 axes = {s: AXES * axes[s] - sum(stresses[s][a] for a in range(AXES)) for s in axes}
             total, scale, _ = scaled_sum(
-                held, families, axes, rulers, gamma, 2, write.factors, parts, row
+                held, families, axes, rulers, gamma, paces.COUNT_POWER, write.factors, parts, row
             )
             found.append(total)
             scales.append(scale)

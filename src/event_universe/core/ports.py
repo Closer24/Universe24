@@ -29,6 +29,6 @@ def shifted(a: Any, axis: int, sigma: int) -> Any:
     return a.take([(index + sigma) % extent for index in range(extent)], axis=axis)
 
 
-def arrival(a: Any, axis: int, sigma: int, wrap: Wrap) -> Any:
-    """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), on the torus `wrap` names; the dtype the array's."""
+def arrival(a: Any, axis: int, sigma: int) -> Any:
+    """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), on the torus; the dtype the array's."""
     return shifted(a, axis, sigma)

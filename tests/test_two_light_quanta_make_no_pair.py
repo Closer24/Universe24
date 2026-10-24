@@ -19,13 +19,15 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     planes = sorted((k for k, f in enumerate(families) if f.plane), key=gap)
     lifts = {num for _vector, num, _sine in lift_points(families[light].pair[1])}
     assert born == [((k, -1), (k, 1)) for k in planes if families[k].pair[0] in lifts] and len(born) == 3
-    assert [names[k] for (k, _sense), _other in born] == [
-        "point 0 2 0",
-        "point 0 0 2",
-        "point 2 0 0",
-    ] and all(
-        vector_of(names[k]) for k in planes
-    )  # the lifts alone, the least leg first (the selector, 2026-10-24); 26 lists before it
+    assert (
+        [names[k] for (k, _sense), _other in born]
+        == [
+            "point 0 0 2",
+            "point 2 0 0",
+            "point 0 2 0",
+        ]
+        and all(vector_of(names[k]) for k in planes)
+    )  # the lifts alone, the least leg first (the selector, 2026-10-24; point 0 2 0, 0 0 2, 2 0 0 at the top tier); 26 lists before it
     assert sorted(conversion.candidates(families)) == sorted(
         planes
     )  # the massless point and the holders no record out

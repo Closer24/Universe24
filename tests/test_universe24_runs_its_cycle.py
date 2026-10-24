@@ -17,7 +17,7 @@ from tests.laws_universe import CUBE, GAMMA, UNIVERSE, WORLD, flat, small_univer
 
 
 def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
-    """(1) The one world's file is the universe, the shape and the run's length alone and parses with no mode file, its seed the massless point on one real line (the row named by what it is, the page's caption light), the rows the volume holder, the sign holder, the massless point and the 26 points of the enlarged den, every point a row of two lines named by its vector; the former keys `bodies` and `interval` of the world and `families` of the universe refused by name."""
+    """(1) The one world's file is the universe, the shape and the run's length alone and parses with no mode file, its seed the massless point on one real line (the row named by what it is, the page's caption light), the rows the volume holder, the sign holder, the massless point and the 26 points of the file's den (the PeV tier since 2026-10-24, 26 at the top tier too), every point a row of two lines named by its vector; the former keys `bodies` and `interval` of the world and `families` of the universe refused by name."""
     world = json.loads(WORLD.read_text(encoding="utf-8"))
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
     files = {world["universe"]: universe}

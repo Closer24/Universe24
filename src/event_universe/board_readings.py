@@ -18,10 +18,6 @@ from event_universe.loader.derived import row_sources, weight_of
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
-Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
-Horizons = dict[
-    int, tuple[Any, ...] | None
-]  # per family of quanta its Links at the wall per Port, or None
 Stresses = dict[
     records.Sourcing, tuple[Any, ...]
 ]  # per record of quanta its tension, its flux per axis, its shear per axis pair where declared

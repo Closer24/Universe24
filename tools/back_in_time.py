@@ -12,13 +12,12 @@ import json
 from pathlib import Path
 
 from event_universe.lattice import Lattice
-from event_universe.meeting_back import arrays_of, crossed, faces_from, first_difference, snapshot
+from event_universe.meeting_back import arrays_of, crossed, first_difference, snapshot
 from event_universe.world_files import load_world
 
 __all__ = [
     "arrays_of",
     "crossed",
-    "faces_from",
     "first_difference",
     "main",
     "snapshot",
@@ -42,7 +41,6 @@ def verdict(board: Lattice, intervals: int) -> dict[str, object]:
         board.step()
         run += 1
         snapshots[board.interval] = snapshot(board)
-    faces_from(board, lines)
     for _ in range(run):
         crossed(board, lines)
         try:
