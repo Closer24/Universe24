@@ -210,8 +210,16 @@ def write_sources(
         motion is not None and family.motion_volume
     ):  # the volume's write: (d + 1) X_now c over Gamma E_s T
         now = np.asarray(motion[0] if direction == 1 else motion[1], dtype=object)
-        found[0], walls[0] = volume.EXPONENT * now * np.asarray(found[0], dtype=object), gamma * walls[0]
+        found[0] = volume.EXPONENT * now * np.asarray(found[0], dtype=object)
+        walls = divided_walls(family, walls, gamma)
     return found, walls, terms
+
+
+def divided_walls(family: FamilyRule, walls: Sequence[Any], gamma: int) -> list[Any]:
+    """The walls a held row's write divides at, one per line, from the row's walls as `walls_at` and `Lattice.start` keep them (the fixed wall E_s T Gamma^power p_0^(3 - power) on the time line): the same walls for a row carrying its level, and for a row carrying its volume the time line's at Gamma times its fixed wall, the volume's divisor Gamma E_s T (`write_sources` under `motion`; the chain rule between the level and the volume), the other lines' unchanged. The one place that names the wall, read by the write and by the write remainders' origin alike (ALGEBRA.md, The write per proper volume and per proper interval: every write remainder is born at the half wall, w div 2, of its own wall; the builder's finding of 2026-10-24, #2187: the volume row's origin was born at the half of the fixed wall, 1 / (2 Gamma) of the wall its write divides at, so the first write of Universe24 read 2 where the half wall gives 3)."""
+    if not family.motion_volume:
+        return list(walls)
+    return [gamma * walls[0], *walls[1:]]
 
 
 def exact(values: Any) -> Any:
@@ -319,7 +327,7 @@ def complement(remainder: Any, wall: Any) -> Any:
 
 
 def write_origins(walls: Sequence[Any], shape: tuple[int, int, int], kind: type) -> list[np.ndarray]:
-    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start)."""
+    """A held family's write remainders at a Node with no level, one per held line at half its wall, the division's origin (ALGEBRA.md #the-primitives, a family's write is one act; the start's origin, features/start): `walls` are the walls the write divides at (`divided_walls`), the volume's time line's Gamma E_s T and not its fixed wall alone (the finding of 2026-10-24)."""
     return [full(shape, division_forward(wall, 2, 0)[0], kind) for wall in walls]
 
 

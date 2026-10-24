@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe import node, world_files
+from event_universe import node, records, world_files
 from event_universe.features.held_write import held_write
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
@@ -39,11 +39,16 @@ def test_the_held_write_is_one_carried_division_forward_and_back() -> None:
 def test_the_one_write_per_line_on_the_bare_torus_is_the_act_by_hand(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """The held row of the volume on the bare 3-cube torus as loaded: its lines and its write remainders at the division's origin, half the wall fixed per Node at the start (`Lattice.fixed_walls`, the carried factor's wall at the rest's paces), written once by `node.held_write_at` on random numerators at those walls: every line gains (numerator + r) div wall at every Node with the remainder kept, the lines' kind kept, and the act back returns the loaded state bit for bit."""
+    """The held row of the volume on the bare 3-cube torus as loaded: its lines and its write remainders at the division's origin, half the wall each line's write divides at (`records.divided_walls` on `Lattice.fixed_walls`, the carried factor's wall at the rest's paces: the volume's time line at Gamma times its fixed wall, the volume's divisor Gamma E_s T, every other line at its fixed wall; to 2026-10-24 the time line's remainder was born at half the fixed wall, 1 / (2 Gamma) of its own wall, the builder's finding of #2187), written once by `node.held_write_at` on random numerators at those walls: every line gains (numerator + r) div wall at every Node with the remainder kept, the lines' kind kept, and the act back returns the loaded state bit for bit."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     board = Lattice(load_world(bare_torus(tmp_path, CUBE)))
     held = board.held[0]
-    walls = [np.asarray(wall, dtype=object) for wall in board.fixed_walls[held]]
+    fixed = board.fixed_walls[held]
+    divided = records.divided_walls(board.families[held], fixed, board.world.node_clock)
+    assert np.array_equal(
+        np.asarray(divided[0], dtype=object), board.world.node_clock * np.asarray(fixed[0], dtype=object)
+    ) and all(d is f for d, f in zip(divided[1:], fixed[1:], strict=True))
+    walls = [np.asarray(wall, dtype=object) for wall in divided]
     state = board.states[held]
     assert len(walls) == len(state.lines) == len(state.write_remainders)
     assert all(
