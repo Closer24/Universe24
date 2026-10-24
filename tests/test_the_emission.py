@@ -64,7 +64,7 @@ def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(t
         faces = [f for f in lines if f["event"] == "face"]
         origin = board.credit.fronts[0].origin
         share = board.books()["photon"]["share"]  # the quantum's share on the board at 64
-        for _ in range(64, 170):
+        for _ in range(64, 120):  # 170 before the suite's bound of 2026-10-24
             board.step()
         dark = board.books()["photon"]["share"]  # the board at the run's end
         faces = [

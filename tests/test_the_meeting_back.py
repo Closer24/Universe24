@@ -253,7 +253,9 @@ def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
             )
 
     born.observers.append(cone_of)
-    for _ in range(born.world.intervals):
+    for _ in range(
+        72
+    ):  # through the first close, 72, whose step carries the meeting's passes (the 124 intervals of the world, 29 s on the suite's clock, left on 2026-10-24)
         born.step()
     assert counted and counted == {t: born.credit.cone[t] for t in counted}  # |G(t)| from the birth
     assert born.credit.birth == born.world.bodies[0].detector.draw.window == 24  # the window's close

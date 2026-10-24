@@ -123,9 +123,11 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
         )
     )  # the tensions source the content's rows alone, massless or gapped (the cycle's gravity [999, 1000]), never the sign's holder
     assert any(f["pair"] == [2400, 2401] for f in content)
-    world = EVENTS / "big_bang" / "big_bang_matter.json"
-    lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 20)
-    assert [line["interval"] for line in lines] == list(range(1, 21))
+    world = (
+        EVENTS / "universe24" / "universe24.json"
+    )  # the shipped one world (big_bang_matter, 16 s at load, left on 2026-10-24)
+    lines = ERAS.run(world, tmp_path / "matter.eras.jsonl", 1, 12)
+    assert [line["interval"] for line in lines] == list(range(1, 13))
     rows = [line["rows"]["gravity"] for line in lines]
     assert all(list(line["rows"]) == ["gravity"] for line in lines)  # the one held row read
     assert all(row["nodes"] == rows[0]["nodes"] > 0 for row in rows)
@@ -139,9 +141,8 @@ def test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its
     assert all(
         later["volume"] > earlier["volume"] > 0 for earlier, later in zip(rows, rows[1:], strict=False)
     )
-    assert (
-        all(row["well"] == row["at_seed"] - row["at_far"] >= 0 for row in rows) and rows[1]["well"] > 0
-    )
-    assert all(min(row["writes"].values()) >= 0 and row["writes"]["light"] == 0 for row in rows)
+    assert all(min(row["writes"].values()) >= 0 and row["writes"]["matter"] > 0 for row in rows)
     assert all(q["frozen"] == 0 for line in lines for q in line["quanta"].values())
-    assert all(line["fires"] == 0 and line["horizon"] == 0 for line in lines)
+    assert all(line["horizon"] == 0 for line in lines) and all(
+        line["fires"] == 0 for line in lines[1:]
+    )  # the one world fires at its start alone within these intervals

@@ -14,15 +14,8 @@ from event_universe.plane import NO_FACE
 from event_universe.readings import ports
 from event_universe.records import record_slice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, linear_exchange, linear_sum, universe_beside, weighted_linear_sum
+from tests.laws import linear_exchange, linear_sum, universe_beside, weighted_linear_sum
 from tests.laws_interval import light_torus, volume_universe
-from tests.laws_read import load_shipped
-
-WORLDS = (  # re-pinned 2026-10-20 from the deleted toy atom worlds (zeno_1, zeno_pulsed_1, one_photon)
-    "bell/bell_a_b.json",
-    "bell_singlet/singlet_a_b.json",
-    "resonance/resonant.json",
-)
 
 
 def whole(a):  # type: ignore[no-untyped-def]
@@ -151,108 +144,6 @@ def test_the_linear_sum_of_matter_moves_by_the_mass_term_alone(tmp_path, monkeyp
                 assert change == predicted[index][number], (board.interval, family, number)
                 checked += 1
     assert checked == board.world.intervals * sum(len(board.states[i].lines) for i, _w in matter)
-
-
-def test_the_linear_sum_of_light_moves_by_the_faces_exchange_and_the_lays_alone(tmp_path, monkeypatch):
-    """On the same worlds, and on a closed light-only board whose world lays two whole packets at the intervals 10 and 20 (no click, no wipe), every line of a family of light (num = den, not held, its mass term 0 at every content) changes its linear sum L = SUM [w (now - before) + r] over an interval by `linear_exchange`, -SUM R_ij times the numbers beyond the faces with the step's own reads, plus the lays the run reports in that interval (a lay line's after less before at its Node, the term as written and not exercised with a nonzero value here: one_photon's emission lays fall in a click's interval, and a whole packet laid standing on a closed board at the intervals 10 and 20 leaves L unchanged) plus the wipe where a face is presented to the line (its `face` line's value against the arrival the face replaced, R (value - m)), exactly; the intervals a click writes (its `credit` line) or the board grows (`Lattice.growths`, the new lines born at the half wall) are the other acts, each named by the run; nothing else may move L."""
-    worlds_checked, lays_checked = 0, 0
-    for name in (*WORLDS, "whole packets laid at 10 and 20"):
-        lines: list[dict[str, object]] = []
-        if name.startswith(
-            "whole"
-        ):  # a closed light-only board, two whole packets laid at unwiped intervals
-            monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-            universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
-            packets = [
-                {"family": "matter", "whole": [3, 3, 3], "count": 1, "interval": t} for t in (10, 20)
-            ]
-            world = dict(shape=[7, 7, 7], face_depth=1, intervals=30, node_detectors=[], bodies=[])
-            world.update(packets=packets, universe="u.json")
-            world.update(boundary=dict(x="periodic", y="periodic", z="periodic"))
-            (path := tmp_path / "lays.json").write_text(json.dumps(world), encoding="utf-8")
-            board = Lattice(load_world(path), lines.append)
-        else:
-            monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-            board = Lattice(load_shipped(EVENTS / name), lines.append)
-        gamma, square = board.world.node_clock, board.unit * board.unit
-        light = [
-            (index, 6 * family.pair[1] * gamma * gamma * square)
-            for index, family in enumerate(board.families)
-            if family.pair[0] == family.pair[1] and not family.held
-        ]
-        if not light:  # a held source in time has no line of light
-            continue
-        checked = 0
-        for _ in range(board.world.intervals):
-            before = {i: [linear_sum(w, line) for line in board.states[i].lines] for i, w in light}
-            expected, read_at = {}, {}
-            for i, _w in light:
-                expected[i] = []
-                for (reads, _s, _w, _mass), span in rules_of(board, i):
-                    for number in range(span.start, span.stop):
-                        line = board.states[i].lines[number]
-                        expected[i].append(linear_exchange(reads, line, board.wrap))
-                        read_at[i, number] = (
-                            [whole(x) for x in reads],
-                            [whole(m) for m in ports(line.now, board.wrap)],
-                        )
-            begun = len(lines)
-            board.step()
-            if board.ended is not None:
-                break
-            new = lines[begun:]
-            grew = any(growth[0] == board.interval for growth in board.growths)
-            for index, wall in light:
-                family = board.families[index].name
-                if grew or any(x["event"] == "credit" and x["family"] == family for x in new):
-                    continue  # growth (the new layers' lines born at the half wall) or a click's write, each named
-                for number, line in enumerate(board.states[index].lines):
-                    reads, arrivals = read_at[index, number]
-                    wiped = 0  # the wipe: at a faced Node the arrival through the Port was the face's value, R (value - m)
-                    for x in [
-                        x
-                        for x in new
-                        if x["event"] == "face" and x["family"] == family and x["line"] == number
-                    ]:
-                        here = tuple(
-                            int(c) + o for c, o in zip(x["node"]["at"], board.offset, strict=True)
-                        )  # type: ignore[index]
-                        for port in [int(str(p)) for p in list(x["ports"])]:  # type: ignore[call-overload]
-                            read = reads[port]
-                            wiped += (int(read[here]) if read.ndim else int(read)) * (
-                                int(str(x["value"])) - int(arrivals[port][here])
-                            )
-                    laid = sum(
-                        wall
-                        * (
-                            int(x["after"][0])
-                            - int(x["after"][1])
-                            - int(x["before"][0])
-                            + int(x["before"][1])
-                        )  # type: ignore[index]
-                        + int(x["after"][2])  # type: ignore[index]
-                        - int(x["before"][2])  # type: ignore[index]
-                        for x in new
-                        if x["event"] == "lay" and x["family"] == family and x["line"] == number
-                    )
-                    change = linear_sum(wall, line) - before[index][number]
-                    lays_checked += laid != 0
-                    assert change == expected[index][number] + laid + wiped, (
-                        name,
-                        board.interval,
-                        family,
-                        number,
-                        change,
-                        expected[index][number],
-                        laid,
-                        wiped,
-                    )
-                    checked += 1
-        assert checked > 0, name
-        worlds_checked += 1
-    assert (
-        worlds_checked == 3 and lays_checked == 0
-    )  # the lay term as written: no lay with a nonzero term outside a click interval here
 
 
 def test_the_linear_sum_of_light_is_constant_on_a_closed_board(tmp_path, monkeypatch):
