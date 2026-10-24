@@ -130,6 +130,26 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("features/phase/__init__.py", "signed_rounded", "rounded"): "D",  # a signed rounding, once
     (
         "features/phase/__init__.py",
+        "Orbit.carried_to",
+        "act",
+    ): "R",  # the orbit's step from the seed, remainders carried
+    (
+        "features/phase/__init__.py",
+        "Orbit.carried_to",
+        "division_forward",
+    ): "D",  # the checkpoint's place by the spacing, an index
+    (
+        "features/phase/__init__.py",
+        "Orbit.pairs_at",
+        "division_forward",
+    ): "D",  # the checkpoint below a count, an index
+    (
+        "features/phase/__init__.py",
+        "Orbit.pairs_at",
+        "iterate",
+    ): "R",  # the Links carried by the rest, remainders carried
+    (
+        "features/phase/__init__.py",
         "amplitude",
         "division_forward",
     ): "D",  # the width's amplitude, a bound

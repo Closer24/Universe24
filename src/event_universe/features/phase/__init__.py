@@ -151,14 +151,16 @@ class Orbit:
 
 ORBITS: dict[
     tuple[int, int], Orbit
-] = {}  # the orbits by (Gamma, amplitude), cleared at a run's start (resonance.clear_memo)
+] = {}  # the orbits by (Gamma, amplitude), cleared at a run's start (Lattice.__init__)
 SEEDED: dict[
     int, tuple[Any, Orbit]
-] = {}  # per seeded NodeState (by id, with a weak reference that tells a reused id apart) the orbit its Links' pairs stand on (node.seed_phases)
+] = {}  # per seeded NodeState (by id, with a weak reference that tells a reused id apart) the orbit its Links' pairs stand on (node.seed_phases), a dead state's entry dropped at the next seeding, a living lattice's kept across another lattice's making
 
 
 def seeded(state: Any, gamma: int, amplitude: int) -> None:
     """A holder's NodeState seeded at the angle 0 registered with the orbit its pairs stand on, the orbit made once per (Gamma, amplitude)."""
+    for key in [k for k, (ref, _orbit) in SEEDED.items() if ref() is None]:
+        del SEEDED[key]
     orbit = ORBITS.setdefault((gamma, amplitude), Orbit(gamma, amplitude))
     SEEDED[id(state)] = (weakref.ref(state), orbit)
 

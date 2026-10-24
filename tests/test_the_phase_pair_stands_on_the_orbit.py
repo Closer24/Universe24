@@ -77,12 +77,16 @@ def phases_of(board: Lattice) -> list[list[list[int]]]:
 def test_the_pairs_on_the_orbit_are_the_pairs_carried_act_by_act(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    on_orbit = Lattice(load_world(WORLD), output=lambda line: None)
-    monkeypatch.setattr(
-        node.phase, "orbit_of", lambda state: None
-    )  # the former path: iterate from the pair
     act_by_act = Lattice(load_world(WORLD), output=lambda line: None)
-    monkeypatch.undo()
+    on_orbit = Lattice(load_world(WORLD), output=lambda line: None)
+    real = phase.orbit_of
+    monkeypatch.setattr(  # the former path for act_by_act's states alone, through the loop
+        node.phase,
+        "orbit_of",
+        lambda state: None if any(state is s for s in act_by_act.states) else real(state),
+    )
+    rotating = [s for s, f in zip(on_orbit.states, on_orbit.families, strict=True) if f.rotation]
+    assert rotating and all(real(s) is not None for s in rotating)  # on_orbit's holders on the orbit
     for _ in range(COMPARED):
         on_orbit.step()
         act_by_act.step()
