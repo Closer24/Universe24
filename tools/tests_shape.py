@@ -100,9 +100,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
     ),
-    "tests/test_part_b_sign_fold.py::test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn": (
+    "tests/test_the_sign_holders_link_turn.py::test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn": (
         50,
-        "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
+        "the Wronskian conserved on the bare torus under the sign's Link phase in the fold form, the electron reading the charge holder",
     ),
     "tests/test_the_interval.py::test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_one_search_each_the_others_inverse": (
         46,
