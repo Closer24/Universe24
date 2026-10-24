@@ -96,6 +96,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
     ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
+    (
+        "digits.py",
+        "frame_of",
+        "division_forward",
+    ): "D",  # the torus's wrap of a frame Node's coordinate, an index
     # features/click
     (
         "features/click/__init__.py",
@@ -214,16 +219,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "pythagorean_readers",
         "largest_below",
     ): "D",  # the integer sine of a sign reader's pair, the search on the share reading, once (the sign's reader is Pythagorean, 2026-10-24)
-    (
-        "loader/charge.py",
-        "charge_factors",
-        "division_forward",
-    ): "D",  # the readers' count units to one wall and the factors reduced, exact, no remainder (The constants, 2026-10-24)
-    (
-        "loader/charge.py",
-        "charge_factors",
-        "gcd",
-    ): "D",  # Euclid's remainders on the count units and the factors, once each
     (
         "loader/rooms.py",
         "held_room",

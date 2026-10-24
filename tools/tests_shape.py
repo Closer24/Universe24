@@ -41,6 +41,16 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_charge_per_quantum.py::test_equal_wronskians_of_two_families_write_equal_charge": (
+        16,
+        "the charge written is the Wronskian over T div 2 for every reader (the law's sentence of 2026-10-24, the owner's word): "
+        "one quantum of the proton and one of the electron in the birth's own form write the same level into the holder of the sign",
+    ),
+    "tests/test_the_charge_per_quantum.py::test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded": (
+        22,
+        "the same sentence on the sea with a hole over 40 intervals: electron pairs born by the draw and the holder of the sign "
+        "below the former factor's one-electron write of two intervals, no exponential (the runaway hand's finding of 2026-10-24)",
+    ),
     "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it": (
         88,
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
