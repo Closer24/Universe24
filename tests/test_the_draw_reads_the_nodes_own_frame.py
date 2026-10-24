@@ -7,31 +7,12 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import digits, meeting_board, records, seed, world_files
-from event_universe.emission import emitted_lines
+from event_universe import digits, meeting_board, seed, world_files
 from event_universe.lattice import Lattice
-from event_universe.lay import laid
 from event_universe.world_files import load_world
-from tests.laws_universe import small_universe
+from tests.laws_universe import sea_plus_one, small_universe
 
 SIDE, INTERVALS = 3, 8
-
-
-def sea_plus_one(at: tuple[int, int, int]) -> Any:
-    """The seed hand's S1: the law's uniform sea of light and one more quantum of it at the Node `at` (a test's seed, laid through the lay act as the law's own is)."""
-
-    def laid_seed(board: Lattice, index: int) -> None:
-        family, drift = board.families[index], seed.drift_of(board.world.quantum_action)
-        first, zeros = records.record_slice(family, 0).start, records.zeros(board.shape, board.kind)
-        mask = board.mask((at,))
-        for level, nodes in (
-            (records.full(board.shape, drift, board.kind), None),
-            (np.where(mask, drift, 0), mask),
-        ):
-            for line in emitted_lines(family):
-                laid(board, index, first + line, (level, zeros), None, None, nodes)
-
-    return laid_seed
 
 
 def arrays_of(board: Lattice) -> list[np.ndarray]:
