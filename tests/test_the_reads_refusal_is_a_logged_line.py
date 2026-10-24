@@ -29,5 +29,5 @@ def test_a_refused_read_at_the_board_is_a_logged_line_and_the_run_goes_on(tmp_pa
         for row in lines
         if row.get("event") == "refused" and row["cause"] in ("vacuum", "origin", "unit")
     ]
-    assert refused and all(row["node"] == [0, 0, 0] for row in refused if row["cause"] == "vacuum")
+    assert refused and all(row["nodes"] == [[0, 0, 0]] for row in refused if row["cause"] == "vacuum")
     assert any(row.get("event") == "birth" and row["nodes"][0] != [0, 0, 0] for row in lines)
