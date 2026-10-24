@@ -337,7 +337,7 @@ def test_the_one_world_loads_under_the_one_node_and_runs():  # type: ignore[no-u
     board = Lattice(world)
     for _ in range(12):
         board.step()
-    assert board.interval == 12 and board.ended is None
+    assert board.interval == 12  # the run has no end but its length since the torus (2026-10-24)
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
         assert board.swaps == []  # a massless time line never fires

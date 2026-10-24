@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, Wrap, arrival
+from event_universe.core.ports import AXES, PORTS, Wrap, arrival
 from event_universe.features import currents
 from event_universe.records import Record
 
@@ -130,3 +130,21 @@ def axis_neighbours(
     arrived = framed(ports(now, wrap), frames)
     found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
     return found[0], found[1], found[2]
+
+
+def gauge_terms(
+    weight: int, begun: Sequence[Record], stepped: Sequence[Record], wrap: Wrap
+) -> tuple[np.ndarray, ...]:
+    """The step's change of the Link's level term through each of the six Ports at every Node: h_ij at the pair the step wrote (`stepped`, the lines after Rule3, now the level next and before the level now) less h_ij at the pair it started from (`begun`), every line of a plain record added (`currents.level_term`; ALGEBRA.md, The booking is the frame's). The plain currents `currents_of` read at the start less these are the frame's currents J_ij, what the books and the click line take for a plain record, so that a uniform shift of a massless level changes no booked number; in Python's integers, the products beyond the width on a drifting level."""
+    found: list[Any] = [0] * PORTS
+    present = ports(np.ones(begun[0].now.shape, dtype=object), wrap) if begun else ()
+    for sign, lines in ((-1, begun), (1, stepped)):
+        for record in lines:
+            now, before = record.now.astype(object), record.before.astype(object)
+            here = currents.Levels(now, before)
+            arrived_now, arrived_before = ports(now, wrap), ports(before, wrap)
+            for port in range(PORTS):  # a Link to a Node beyond the board carries no term, as no current
+                there = currents.Levels(arrived_now[port], arrived_before[port])
+                term = currents.level_term(weight, here, there) * present[port]
+                found[port] = found[port] + sign * term
+    return tuple(np.asarray(value) for value in found)
