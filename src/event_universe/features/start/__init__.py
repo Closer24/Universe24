@@ -120,9 +120,7 @@ def settled(
         after = act(fine)
         if np.array_equal(after, fine):
             return fine, iterations
-        key = hash(
-            tuple(after.ravel().tolist()) if after.dtype == object else after.tobytes()
-        )  # by value: an object array's bytes are its elements' addresses
+        key = hash(state_key([after]))  # by value: an object array's bytes are its elements' addresses
         if key in seen:  # a cycle, or a hash's collision: collect it within the states seen
             highest, state, length = after, act(after), 1
             while not np.array_equal(state, after) and length < len(seen):
@@ -252,17 +250,30 @@ def refined(
         miss = 1 + int(division(1, scale, bound))
 
 
+StateKey = tuple[Any, ...]  # a state of the start by its values, one entry per level array (`state_key`)
+
+
+def state_key(levels: Sequence[np.ndarray]) -> StateKey:
+    """The key of a state of the start by its levels' values, one entry per array: the array's bytes for the lattice's integers (int64, bit for bit the former key) and the tuple of its elements for an array of kind object (Python's integers past the width, the volume form's numbers under the gravity row), whose tobytes() is its elements' identities and not their values, so that two states equal element for element give one key (the builder's finding of 2026-10-23 on the start that never settled under gravity: `returned` keyed by tobytes saw neither the fixed point's tie nor a cycle, while `settled` already keyed object arrays by their values; the one key for both since)."""
+    return tuple(
+        tuple(np.asarray(level).ravel().tolist())
+        if np.asarray(level).dtype == object
+        else np.asarray(level).tobytes()
+        for level in levels
+    )
+
+
 def returned(
     found: Sequence[np.ndarray],
     own: Sequence[np.ndarray],
-    seen: dict[bytes, int],
+    seen: dict[StateKey, int],
     name: str,
     acts: int = 1,
 ) -> bool:
     """The one rule of a repeat for every iteration of the start, the levels re-read against the state they were read at: True at the fixed point (the levels repeat the state) and at a rounding tie (an earlier state returns, one unit off at most per division act composed in the map, `acts`, at every Node of every row: the rest's own division alone in `rest`, the rest's and the booking's of the form over its wall in `held_rests`, so two units there, the rule generalised to the composed map and no criterion of its own); an earlier state returning further off, a cycle of two states or more, is no rest and is refused by name with the passes made, the cycle's length and the two levels at the Node (about a deep enough source the self-read's swing is not damped); a new state is recorded in `seen` by its pass and False returned."""
     if all(np.array_equal(a, b) for a, b in zip(found, own, strict=True)):
         return True
-    if (key := b"".join(level.tobytes() for level in found)) in seen:
+    if (key := state_key(found)) in seen:
         offs = [np.abs(a - b) for a, b in zip(found, own, strict=True)]
         row = max(range(len(offs)), key=lambda number: int(offs[number].max()))
         node = np.unravel_index(int(offs[row].argmax()), offs[row].shape)
@@ -315,7 +326,7 @@ def rest(
     correction: Correction | None = None  # the pass before's refinement, the seed of the next
     if seed is not None:
         fine, own = division(unit, seed.unit, seed.fine), seed.content.copy()
-    seen: dict[bytes, int] = {}  # every state the paces were read from, by its outer pass
+    seen: dict[StateKey, int] = {}  # every state the paces were read from, by its outer pass
     while True:  # the outer pass: the paces from the row's own level as last rounded
         content = others + own_weight * own
         clock, pace = paces.node_paces(gamma, content)
