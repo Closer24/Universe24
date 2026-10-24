@@ -13,13 +13,12 @@ from event_universe import meeting_back, share
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
-from event_universe.emission import Emitter, Source, packet_unit, registered
+from event_universe.emission import Emitter, Source, registered
 from event_universe.features.click import Face
 from event_universe.front import Front, declared
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.draw import Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
 from event_universe.loader.keys import Node
-from event_universe.loader.packets import axes_waves
 from event_universe.node_detector import NodeBooks, Passage, Weighed, books_of, credit_draw
 from event_universe.records import NodeState
 from event_universe.reports import weighted
@@ -202,18 +201,7 @@ def count_of(board: Lattice, index: int) -> int | None:
 
 def record_unit(board: Lattice, index: int) -> int:
     """The unit of one quantum of a record, W_rec, from the record's own rotation and not from a reading (the click's plan, C1; the count's line, Q = count x W_c sin omega for a monochromatic record; nature: E = h nu, one count of light carries the form of its own frequency): W_rec = (the largest x with x^2 <= W_c^2 (den^2 - num_r^2) div den^2) with (num_r, den) the record's rotation, W_c = 3 den T; a family with a gap at its rest rotation, W_c sin omega_0, the count's wall of the record's unit (`loader/derived.count_wall`); a massless family laid as a packet at the wave [p, q] (the family's first packet; a family laid at several waves takes the first's) at the rotation of that wave, den cos omega = (num_l (den cos k + 2 den)) div (3 den_l) by the division act, the band's line with the transverse wave numbers 0, den cos k by the rotation act's integer search, the unit then W_c sin omega through the one form of a born quantum's (`emission.packet_unit`, `features/click.wave_cosine`, `emission.born_unit`; 4242 and 5414 of 6000 at k = pi / 4; the generator reads a packet's count in the same unit, tools/pixel_mode.py); W_c, the massless wall, for a massless family laid by no packet, until a record empty at the origin is first laid, when its unit becomes the lay's own, W_c sin Omega for a quantum given at Omega (`emission.emitted_quantum`); held through the run (a face removes one quantum's share with one count). What moves against the reading of the share over the count: a massless packet's count is its share over W_c sin omega, one count at pi / 4 the amplitude 110 on two_photons' packet, and the beams' counts by 1 / sin omega."""
-    family, action = board.families[index], board.world.quantum_action
-    wall = count_wall(family, action)
-    packets = [p for p in board.world.packets if p.family == index]
-    if family.pair[0] != family.pair[1] or not packets:
-        return wall
-    units = {packet_unit(wall, family.pair, axes_waves(p)) for p in packets}
-    if len(units) > 1:  # one record, one unit: packets at waves of different units are refused by name
-        raise ValueError(
-            f"{family.name}: its packets are laid at waves of different units {sorted(units)}; a family's "
-            "record has one unit (C1), and its packets one wave's cosine"
-        )
-    return units.pop()
+    return count_wall(board.families[index], board.world.quantum_action)
 
 
 def reduced(board: Lattice, index: int, coefficients: Sequence[Gauss]) -> list[Gauss]:

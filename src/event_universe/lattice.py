@@ -35,12 +35,8 @@ from event_universe.features import volume
 from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
 from event_universe.frames import frames_of
-from event_universe.lay import laid
-from event_universe.loader.derived import PLANE, held_write_of, quanta_records, readers_of, turns
-from event_universe.loader.instrument import laid_parts
+from event_universe.loader.derived import held_write_of, quanta_records, readers_of, turns
 from event_universe.loader.keys import Node
-from event_universe.loader.mode import Levels
-from event_universe.loader.packets import PacketRow
 from event_universe.loader.world import BodyRow, World
 from event_universe.node_detector import Weighed, booked_inflows, node_detector_nodes, weighed_currents
 from event_universe.reports import NodeDetector, book, click, entering, level_sums, parts, standing_nodes
@@ -80,11 +76,8 @@ class Lattice:
         ]
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
         self.amplitude = node.seed_phases(self, world)
-        for number, (record, row) in enumerate(self.laid_rows()):
-            if isinstance(row, BodyRow) and row.detector is not None and not row.region:
-                meeting.laid_record(self, number, record)
-            elif self.families[row.family].quanta:
-                self.lay(row, record)  # a kick on a holder of the content is laid after the start
+        for number, (record, _row) in enumerate(self.laid_rows()):
+            meeting.laid_record(self, number, record)
         if world.seed is not None:
             seed.uniform_seed(self, world.seed)
         self.start()
@@ -107,33 +100,13 @@ class Lattice:
         """The walls of a family's one write per line, none for a family that holds nothing."""
         return self.writes[index].walls if index in self.writes else ()
 
-    def laid_rows(self) -> list[tuple[int, BodyRow | PacketRow]]:
-        """The records the file lays with their record numbers: the bodies, each the next record of its family (a charged family's bodies each own one row of the sign, `derived.row_of`; every other family's bodies add into its one record), then the packets, each on its family's first record (a packet is no standing record)."""
-        found: list[tuple[int, BodyRow | PacketRow]] = []
+    def laid_rows(self) -> list[tuple[int, BodyRow]]:
+        """The records the file lays with their record numbers: the bodies, each the next record of its family (a charged family's bodies each own one row of the sign, `derived.row_of`; every other family's bodies add into its one record)."""
+        found: list[tuple[int, BodyRow]] = []
         for n, body in enumerate(self.world.bodies):
             record = [b.family for b in self.world.bodies[:n]].count(body.family)
             found.append((min(record, self.families[body.family].records - 1), body))
-        return found + [(0, packet) for packet in self.world.packets]
-
-    def lay(self, row: BodyRow | PacketRow, record: int = 0) -> None:
-        """A body's or a packet's levels from the mode file added to its family's lines of the record `record` (`records.record_slice`), one event laid on every part of the record alike (the pair family's two parts laid equal, ALGEBRA.md #the-click-is-the-meeting), or, for a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21), on the part carrying its declared count alone, the level it stands in (the other parts empty, a lay in one mode having no amplitude in any other, The click writes on the lattice (j)), and on every real line of a part at the line's declared weight (`weights`, the world file's key on the body or the packet, `keys.weights_of`: the pair times the weight, 1 on every line without the key, so a record of three real lines is laid at (a, b, c) over its three lines and a family of dimension 1 as ever): its real pair to each real line, and to each plane's first line with its second pair, the sense, to the plane's second line (every plane of a record of three planes alike; the loader admits a second pair on no family of real lines), the generator's lay (tools/pixel_mode.py, `one_pass`, `pixel_record`) the same. The loader's door of the one lay act (`lay.laid`; ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode): a packet's levels are the generator's, corrected at the lay, so the weights handed to the act are all 0, which means no correction and the guard alone, the board's refusal of a massless packet whose two sums are not 0 (the loader builds no board and refuses nothing of this); a body's levels and a kick on a holder of the content are laid as declared; a plane's second pair, its sense, on the plane's second line; the remainders stand at the half wall every line was born with (`records.empty_state`), the origin None; the lay is the initial state and no event of the run, so it reports no lay line (the output is handed to the lattice after its construction)."""
-        family = self.families[row.family]
-        span, step = records.record_slice(family, record), PLANE if family.plane else 1
-        guarded = isinstance(row, PacketRow) and family.quanta
-        weights = records.zeros(self.shape, object) if guarded else None
-        for first in (span.start + part * family.width for part in laid_parts(row, family)):
-            for line, weight in zip(range(first, first + family.width, step), row.weights, strict=True):
-                pairs = [(row.now, row.before), (row.second_now, row.second_before)]
-                for number, (now, before) in enumerate(pairs[: 2 if family.plane else 1]):
-                    change = (weight * self.board_array(now), weight * self.board_array(before))
-                    laid(self, row.family, line + number, change, weights, None)
-
-    def board_array(self, values: Levels) -> np.ndarray:
-        """The levels the mode file lays as an array over the lattice: the nonzero Nodes' flat x-major indexes with their levels, 0 elsewhere."""
-        found = records.zeros(self.shape, self.kind).reshape(-1)
-        for at, value in values:
-            found[at] += value
-        return found.reshape(self.shape)
+        return found
 
     def mask(self, nodes: tuple[Node, ...]) -> np.ndarray:
         """The mask of a set of Nodes declared at the file's coordinates, on the lattice as grown."""

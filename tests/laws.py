@@ -2,7 +2,6 @@
 
 import importlib.util
 import json
-import math
 import sys
 from collections.abc import Sequence
 from fractions import Fraction
@@ -12,7 +11,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import board_readings, credit, growth, node, readings, share, world_files
+from event_universe import board_readings, credit, growth, node, readings, share
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
@@ -22,8 +21,6 @@ from event_universe.loader.keys import Node
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
-from event_universe.world_files import input_digest, load_world
-from tests.laws_read import redeclared, redeclared_file
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -73,19 +70,7 @@ def refused(match: str, call, *args, **keys):
     return refusal.value
 
 
-def design_beside(folder: Path, stem: str, **keys: object) -> Path:
-    """The folder's design file with the generator's keys for one world (`worlds[stem]`: `quanta`, `senses`, `pixels`, the inputs the generator reads from the design file beside the world and never from the command line; the owner's decision C2, #1793 comment 5982379080), the other worlds' entries kept."""
-    path = folder / "design.json"
-    design = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"worlds": {}}
-    design["worlds"][stem] = {**design["worlds"].get(stem, {}), **keys}
-    path.write_text(json.dumps(design), encoding="utf-8")
-    return path
-
-
-TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
-TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
-GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")  # the Bell and GHZ gates' reader
-RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
+BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back-in-time gate
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
@@ -97,62 +82,6 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
         family["pair"] = pairs.get(family["name"], family["pair"])
         family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-
-
-def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_detector `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design file's `pixels` and `senses` beside the chain, `design_beside`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
-    at = at or (chain // 2,)  # the chain's centre where no Node is named
-    families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
-    universe_beside(folder, charged=CHARGED["name"] in families)
-    charged = [f == CHARGED["name"] for f in families]  # one quantum per charged record, the law's count
-    nodes = [[dict(node=[x, 0, 0], count=1 if c else quanta)] for x, c in zip(at, charged, strict=True)]
-    bodies = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
-    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
-    ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
-    node_detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
-    world = dict(
-        shape=[chain, 1, 1], node_detectors=node_detectors, bodies=bodies, intervals=400, face_depth=1
-    )
-    world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json")
-    (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
-    pixels = [n for n, c in enumerate(charged) if c]  # the charged body a one-Node record
-    design_beside(folder, path.stem, senses=list(senses), pixels=pixels)  # the design's keys beside
-    if mode:  # the charged body laid by the design's `pixels` in its sense, matter at its fixed point
-        tool.main(["--input", str(path)])
-    return path
-
-
-SLIT = dict(
-    shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, intervals=24
-)
-SLIT.update(universe="u.json", bodies=[], node_detectors=[])
-SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
-PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
-PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
-
-
-def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
-    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`; in the exact dark the giver gives at that close, `meeting.emission_fell`), the giver's detector declared with no key (its draw the click's read of the board), no world draw, its mode file written by the generator."""
-    world = json.loads((EVENTS / "packet_emission" / "packet_emission.json").read_text(encoding="utf-8"))
-    giver = world["bodies"][0]
-    rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
-    nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
-    small = {**world, "shape": [160, 5, 5], "intervals": intervals, "node_detectors": []}
-    reader = {k: v for k, v in giver["node_detector"].items() if k != "window"}  # the window derived
-    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_detector": reader}]
-    del small["draw"]
-    redeclared(small)  # the read's shape: no engine start file, no generator
-    (path := folder / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
-    tool.main(["--input", str(path)])
-    return path
-
-
-def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
-    universe_beside(folder)
-    path = folder / f"{name}.json"
-    path.write_text(json.dumps({**SLIT, "packets": [PACKET], **changes}), encoding="utf-8")
-    tool.main(["--input", str(path)])
-    return path
 
 
 def credit_lines(lines: list[dict[str, object]], key: str) -> list[dict[str, object]]:
@@ -243,12 +172,6 @@ CHARGE = [family.name for family in TURNING].index("charge")
 RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
 SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
 COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
-GRAVITY = {
-    "name": "gravity",
-    "pair": [6000, 6000],
-    "reads": {"gravity": 1},
-    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
-}
 COULOMB_UNIVERSE = {
     "integers": {"node_clock": 6000, "quantum_action": 36000, "width": 63, "link_unit": 16},
     "families": [
@@ -261,72 +184,16 @@ COULOMB_UNIVERSE = {
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],
 }  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
-
-
-def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
-    """A world on turning.json's universe with one charged record by hand at the count 1 (the count-1 gate: the profile scaled to one quantum, 2 SUM L^2 sin omega_0 = T, as test_the_node lays it): the level now (L, 0) over `profile` and the level before the band's rest rotation in the sense +1, (L cos omega_0, L sin omega_0)."""
-    (tmp_path / "u.json").write_bytes(TURNING_FILE.read_bytes())
-    values = [int(v) for v in np.asarray(profile).ravel()]
-    scale = math.isqrt(
-        TURNING_T * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values))
-    )  # one quantum
-    levels = [v * scale // 1000 for v in values]  # 2 SUM L^2 sin omega_0 = T, the law's one quantum
-    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
-    moving.update(im_now=[0] * len(levels), im_before=[v * SINE // TURNING_PAIR[1] for v in levels])
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
+GRAVITY = {
+    "name": "gravity",
+    "pair": [6000, 6000],
+    "reads": {"gravity": 1},
+    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
+}
 
 
 def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.ndarray:
     return np.transpose(a, axes)[tuple(slice(None, None, s) for s in signs)]
-
-
-def coulomb_world(
-    tmp_path, shape=(COULOMB_CHAIN, 1, 1), boundary=None, intervals=3000, centre=(COULOMB_AT, 0, 0)
-):  # type: ignore[no-untyped-def]
-    """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
-    (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
-    profile = np.zeros(shape, dtype=np.int64)
-    profile[centre] = 1
-    values = [int(v) for v in profile.ravel()]
-    scale = math.isqrt(36000 * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
-    levels = [v * scale // 1000 for v in values]
-    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
-    moving.update(
-        im_now=[0] * len(levels), im_before=[0] * len(levels)
-    )  # W = 0: nothing sources the holder at the start (the massless fixed point on 400 Nodes is slow), the record laid by hand after
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    boundary = boundary or dict(x="open", y="periodic", z="periodic")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / "coulomb.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
-
-
-def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
-    """A shipped world copied under tmp_path at its repository paths with its universe and its mode file at the edited world's digest, the document in the read's shape first (`redeclared`) and `edit` applied after; the repository root moved there."""
-    world = redeclared(json.loads(source.read_text(encoding="utf-8")))
-    edit(world)
-    folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
-    target = tmp_path / world["universe"]
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_bytes((EVENTS.parents[1] / world["universe"]).read_bytes())
-    mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
-    world_files.REPOSITORY_ROOT = tmp_path
-    return folder / source.name
 
 
 def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
@@ -463,42 +330,6 @@ def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
     now, before = line.now.astype(object), line.before.astype(object)
     scaled = np.broadcast_to(np.asarray(weights, dtype=object), now.shape)
     return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())
-
-
-def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
-    """A gate's folder built from its design beside tmp_path and its worlds run, every one LAWFUL with its parts lines equal across the parts, its credit lines at the window's close and the back-in-time gate MATCH over 4 intervals; `keys` the settings run (every world without): with them each world's own reading (`bell_gate.one_world`) by its setting, without them the folder's reading against the blind (`bell_gate.reading`: the combination, the correlations and the marginals the blind's); with the expectation."""
-    build.main(["--design", str(build.HERE / "design.json"), "--folder", str(folder)])
-    expected = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
-    worlds = {}
-    for key in keys or expected["runs"]:
-        name = expected["runs"][key]
-        redeclared_file(folder / f"{name}.json")  # the builder's world in the read's shape
-        TOOL.main(["--input", str(folder / f"{name}.json")])
-        assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
-        lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
-        parts = [line for line in lines if line["event"] == "parts"]
-        credits = [line for line in lines if line["event"] == "credit"]
-        first = min(c["interval"] for c in credits) if credits else None
-        equal = all(
-            len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR"
-            for p in parts
-            if first is None or p["interval"] <= first
-        )  # equal across the parts to the sides' first close, as laws_spin.joint_shares takes the close (2026-10-23: the window derived, 30 on the Bell worlds, closes at 60 and 90 within the run of 100, the first side's write turning one part after 60; the declared window was the run, so every parts line stood before the write)
-        assert parts and equal and credits
-        assert all(c["interval"] == c["window"][1] for c in credits), [
-            (c["interval"], c["window"]) for c in credits
-        ]
-        board = Lattice(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
-        worlds[key] = GATE.one_world(folder / f"{name}.json", lines, expected)
-    if keys:
-        return worlds, expected
-    outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
-    read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
-    assert read[name] == expected["blind"][name]
-    assert read["correlation"] == expected["blind"]["correlation"]
-    assert read["marginals"] == expected["blind"]["marginals"]
-    return read, expected
 
 
 def board_state(board: Lattice) -> list[tuple[list[tuple[Any, Any, Any]], list[Any]]]:

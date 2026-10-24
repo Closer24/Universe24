@@ -44,6 +44,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # halving the candidates' span, discarded
     # core/paces.py
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
+    ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
+    ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
     ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
@@ -142,12 +144,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "guide_total",
         "division_forward",
     ): "D",  # the total over the travelling share, one division
-    # frame_run.py
-    (
-        "frame_run.py",
-        "hazard",
-        "division_forward",
-    ): "D",  # F times rho's numerator over its denominator, once
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
@@ -315,30 +311,18 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the bound's quotients, once each
     ("loader/derived.py", "bound_under_rooms", "largest_below"): "S",  # the largest level by search
-    ("loader/lay.py", "least_action", "division_forward"): "D",  # the budget's quotient, once
     (
         "loader/node_detector_declaration.py",
         "packet_form",
         "division_forward",
     ): "D",  # the half width, an index
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
-    (
-        "loader/instrument.py",
-        "near_zone",
-        "division_forward",
-    ): "D",  # den div den sin k, the shell's radius
-    ("loader/instrument.py", "near_zone", "largest_below"): "S",  # den sin k by the search, the radius
     ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
     ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
     # lists.py
     ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
     ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
     # take.py
-    (
-        "take.py",
-        "recoil_phases",
-        "largest_below",
-    ): "S",  # den cos k_a from den sin k_a by search (2026-10-21)
     # node.py
     (
         "node.py",

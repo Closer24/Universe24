@@ -1,4 +1,4 @@
-"""The world's files for the loader (a host module): this module reads the world file, the universe file it names by its repository path and the generator's mode file beside it, and hands the loader the documents with the world's digest; the loader reads no file."""
+"""The world's files for the loader (a host module): this module reads the world file and the universe file it names by its repository path, and hands the loader the documents with the world's digest; the loader reads no file (the generator's mode file beside the world, read to 2026-10-24, is no input: the generator goes, the owner's word)."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
 def input_digest(document: dict[str, object]) -> str:
-    """The file's digest: SHA-256 of the canonical JSON (the keys sorted, no spaces, ASCII) of the document, the mode file's `world_digest` of the world it stands beside."""
+    """The file's digest: SHA-256 of the canonical JSON (the keys sorted, no spaces, ASCII) of the document."""
     canonical = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
     return hashlib.sha256(canonical.encode("ascii")).hexdigest()
 
@@ -29,11 +29,8 @@ def world_files(document: object) -> dict[str, object]:
 
 
 def load_world(path: Path) -> World:
-    """A world file read and parsed, with the generator's mode file beside it (`<world>.mode.json`)."""
+    """A world file read and parsed with the universe file it names."""
     document = json.loads(path.read_text(encoding="utf-8"))
     files = world_files(document)
-    beside = path.with_suffix(".mode.json")
-    if beside.is_file():
-        files[beside.name] = json.loads(beside.read_text(encoding="utf-8"))
     digest = input_digest(document) if isinstance(document, dict) else ""
     return parse_world(document, files, digest)

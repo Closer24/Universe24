@@ -5,8 +5,8 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import flux, node_detector, readings, records, share, world_files
-from event_universe.core import paces, ports
+from event_universe import flux, readings, records, share, world_files
+from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule_integers
 from event_universe.features.read import edge_squared, paces_guard
@@ -14,7 +14,7 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, arrivals_rule3, real_rows, universe_beside, world_beside
+from tests.laws import arrivals_rule3, real_rows, universe_beside
 
 
 def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
@@ -109,53 +109,6 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         rolled = [(r, *(np.roll(a, -side, axis) for a in (r.now, r.before))) for r in (real, second)]
         expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
         assert np.array_equal(through[port], expected)
-
-
-def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the pulsed Zeno box, the shelved ion and the anticoincidence world over 24 intervals, every family (the worlds in the read's shape, tests/laws.py `world_beside`). (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
-    worlds = (
-        ("resonance", "resonant"),
-        ("resonance", "detuned"),
-        ("packet_emission", "packet_emission"),
-    )
-    for (
-        folder,
-        name,
-    ) in worlds:  # re-pinned 2026-10-20: every family of quanta with a unit (the packet world's universe holds the two holders of the content for light since 2026-10-22, held rows with no unit, read over `order` and not as detectors' records)
-        copied = world_beside(tmp_path / name, EVENTS / folder / f"{name}.json", lambda w: None)
-        board = Lattice(load_world(copied))
-        for _ in range(24):
-            board.step()  # the board may grow beyond a receding face: the masks at its shape now
-            union, everywhere = (
-                node_detector.node_detector_nodes(board),
-                np.ones(board.shape, dtype=bool),
-            )
-            for index in board.order:  # the families of quanta; a held row has no unit and no count
-                full, frozen = board.share_of(index, 1, everywhere)
-                short, frozen_short = board.share_of(index)
-                assert np.array_equal(full, short) and np.array_equal(frozen, frozen_short), name
-                whole, at_union = board.quanta(index)[0], board.quanta(index, union)[0]
-                assert np.array_equal(np.where(union, whole, 0), at_union), name
-    kind, wall = kind_of(63), 6000**3  # Gamma^2 p_0 at the vacuum's clock, the write's wall
-    counts = np.array([1, 2_000_000, 21_000_000, 22_000_000, 2**31], dtype=kind)
-    reference = paces.rounded(np.asarray(counts, dtype=object) * 5999 * 5999 * 5999, wall)
-    assert paces.within_width(kind, wall, counts[:2], 5999, 5999, 5999)  # the hardware's branch
-    assert not paces.within_width(kind, wall, counts, 5999, 5999, 5999)  # Python's beyond the width
-    found = paces.write_factor(counts, 5999, 5999, 5999, 6000, 6000, 2)
-    assert found.dtype == kind and np.array_equal(found, np.asarray(reference).astype(kind))
-    spread = np.full(counts.shape, 5999, dtype=kind)
-    assert np.array_equal(paces.write_factor(counts, spread, spread, 5999, 6000, 6000, 2), found)
-    a = np.random.default_rng(3).integers(-9, 9, size=(3, 4, 5)).astype(kind)
-    for axis in range(3):
-        for sigma in (-1, 1):
-            rolled = np.roll(a, -sigma, axis=axis)  # out[i] = a[i + sigma]
-            assert np.array_equal(ports.shifted(a, axis, sigma, True, 7), rolled)
-            beyond = [slice(None)] * 3
-            beyond[axis] = slice(-1, None) if sigma == 1 else slice(None, 1)
-            rolled[tuple(beyond)] = 7
-            assert np.array_equal(ports.shifted(a, axis, sigma, False, 7), rolled)
-    folded = ports.shifted(a[:1], 0, 1, False, 7)  # a folded axis returns the array
-    assert folded is a[:1] or np.array_equal(folded, a[:1])
 
 
 def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(

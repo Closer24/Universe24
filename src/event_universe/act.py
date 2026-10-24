@@ -18,7 +18,6 @@ from event_universe.reports import (
     LOST_TO_SOURCE,
     LOST_TO_TAKER,
     NO_SIDE,
-    WRITTEN_AS_PHASE,
     birth_line,
 )
 from event_universe.resonance import turned_direction
@@ -28,7 +27,6 @@ from event_universe.take import (
     books_named,
     faced,
     levels_at,
-    recoil_phases,
     recoiled,
     relaid,
     scaled,
@@ -168,12 +166,6 @@ def leaving_phase(board: Lattice, item: Item) -> list[Phase]:
     ]
 
 
-def compose(first: tuple[int, int], second: tuple[int, int]) -> tuple[int, int]:
-    """Two phase pairs composed, the angles added: (x X - y Y, x Y + y X), the product of the two as Gaussian integers, the rotation act's pair as `resonance.turned_direction` turns a direction by one; the size the product of the sizes, which the turn divides out."""
-    (x, y), (re, im) = first, second
-    return x * re - y * im, x * im + y * re
-
-
 def parted(board: Lattice, books: NodeBooks, item: Item, phase: list[Phase] | None) -> None:
     """One part of a record declared a NodeDetector at one Node laid at its new count (`relaid`): in the sense of the part the quantum leaves where the list names one, the entered part's direction at each Node the leaving part's own at that Node turned by the arriving record's phase, atan2(Y', X) of the two sums the close held (the click's plan, C3: per Node, so the body's P after an absorption and an emission is gain_in - gain_out, the two kicks of laser cooling) (`Item.arrival`, `resonance.turned_direction`; ALGEBRA.md, The two-mode line, row 16: the phase passes with the quantum, the product's phase phi_part = phi_left + phi_L), unturned where no arrival stands (the emission's items) and for the part the quantum leaves; in its own direction and sense otherwise (a part laid again at its count, the null window: Part H, MUST 1, each Node of the region in the direction standing there, so a phase gradient across the region survives every re-lay, `relaid`); the recoil as the per-Node phase (2026-10-21, the reader's design of the conserving click, (c); ALGEBRA.md, The lattice momentum; The click writes on the lattice (3)): where the item carries the piece's momentum and the count enters a bound record of two Nodes or more standing free in its well (`NodeBooks.bound`), the entered part's direction at each Node is turned further by k . (x - c), k per axis from the piece and the leaving part's own levels with the holder's Link pairs (den sin k_a = p_a den A^2 den^2 M div (2 T SUM A_i A_(i+a) Re(conj(u_i) R_i u_(i+a))), A^2 the count's square, u_i the leaving part's directions at den, R_i the holder's pairs the step reads, the cosines of the record's own covariant Link angles in the envelope, den cos k_a by the one search; 2026-10-22, the piece to the integers' roundings, 1.0012 of it on the shipped taker), the Node's pair by the rotation act's recurrence and the three axes' pairs composed with the arrival's as Gaussian integers (`take.recoil_phases`, `compose`, `features/click.rotated`), the angle taken in the part's own sense (the conjugate pair for a record of negative Wronskian, whose motion runs against its phase's gradient; ALGEBRA.md, The lattice momentum: a plane wave cos(k x - omega t) has P_a of the sign of +k), so that the re-laid part carries the piece's P_a whole over the body's Nodes to the lay's rounding, with the sign of the piece's (a plane wave's envelope carries 2 T sin k_a per quantum, the body's own the envelope's fraction of it with the cosines of its own covariant Link angles, SUM over the Links of A_i A_(i+a) cos phi_i against SUM over the Nodes of A_i^2, so k is taken at the fraction's inverse; the cold reader's second finding of 2026-10-21 and the Boss's order of 2026-10-22), the light's piece gone with the hole, the reading `WRITTEN_AS_PHASE`, with `LOST_TO_TAKER` beside it where the piece exceeds what sin 1 carries, the excess lost; Part F stands for a body held at declared Nodes: where the body stands at one Node, or is held by its cut Links (a body laid in its parts by the engine's own act), the piece's P is booked lost to the taker and written nowhere, the held body's recoil the declaration's (ALGEBRA.md, The click's algebra beyond the law; FURTHER_RESEARCH.md, The recoil on the body); Part G (both hands' lines of 2026-10-10): the piece's source is drawn among the light's emitters by the quanta each still holds, through the taker's own read of the board as its Node is drawn (one emitter, no draw), and the recoil it owes is booked (`recoiled`), the books taking the source's name, its recoil and its reading in `lost` after the taker's."""
     assert item.part is not None and item.nodes == books.nodes
@@ -182,27 +174,14 @@ def parted(board: Lattice, books: NodeBooks, item: Item, phase: list[Phase] | No
     arrival = (
         item.arrival if item.delta > 0 else None
     )  # the entering part turned; the leaving, the null's own
-    recoil, excess = recoil_phases(
-        board,
-        books,
-        item.momentum if item.delta > 0 else None,
-        books.counts[item.part],
-        [d for d, _s in own],
-    )  # k . (x - c) per Node at the k the leaving part's own Link angles ask, the excess past sin 1 lost
-    turns = [
-        arrival if r is None else compose(arrival or (1, 0), r if s > 0 else (r[0], -r[1]))
-        for r, (_d, s) in zip(recoil, own, strict=True)
-    ]  # the recoil's angle in the part's own sense: a record of the opposite sense moves against its gradient
     phases = [
-        (d if t is None else turned_direction(*d, *t), s) for (d, s), t in zip(own, turns, strict=True)
-    ]
+        (d if arrival is None else turned_direction(*d, *arrival), s) for d, s in own
+    ]  # the entering part turned by the arrival; the leaving, the null's own
     relaid(board, books, item.part, books.counts[item.part], phases)
     if item.momentum is not None and item.delta > 0:
-        written_phase = any(r is not None for r in recoil)  # the recoil written as the part's phase
-        written = [WRITTEN_AS_PHASE, *([LOST_TO_TAKER] if excess else [])]  # the excess past sin 1 lost
         readings = (
-            (written if written_phase else [LOST_TO_TAKER]) if any(item.momentum) else []
-        )  # the piece's P written as the entered part's phase gradient, or booked and not written at one Node
+            [LOST_TO_TAKER] if any(item.momentum) else []
+        )  # the piece's P booked and written at no Node: the held body's recoil is the declaration's
         if item.drive is not None:
             books.source, books.recoil, reading = recoiled(
                 board, item.drive, item.momentum, partial(picked, board, books)

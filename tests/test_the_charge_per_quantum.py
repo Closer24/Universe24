@@ -3,15 +3,11 @@
 from __future__ import annotations
 
 import json
-from fractions import Fraction
-from pathlib import Path
 
 import numpy as np
 
-from event_universe.lattice import Lattice
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.loader.universe import universe_of
-from event_universe.world_files import input_digest, load_world
 
 GAMMA, T = 1000, 36_000
 DEN = 53_567_765
@@ -32,101 +28,6 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict
             {"name": "electron", "pair": electron, "reads": {"charge": 1}, "dimension": 2},
         ],
     }
-
-
-def laid(folder: Path, proton: list[int], electron: list[int], senses: tuple[int, int]) -> Lattice:
-    """A 5-cube torus with the proton at the centre and the electron beside it, one quantum each, both at the quarter turn at their senses, the levels the engine's own count reading one quantum."""
-    (folder / "u.json").write_text(json.dumps(universe(proton, electron)))
-    nodes = [[x, y, z] for x in range(5) for y in range(5) for z in range(5)]
-    at = {"proton": nodes.index([2, 2, 2]), "electron": nodes.index([2, 2, 1])}
-    world = {
-        "shape": [5, 5, 5],
-        "boundary": {"x": "periodic", "y": "periodic", "z": "periodic"},
-        "intervals": 10,
-        "universe": str(folder / "u.json"),
-        "bodies": [{"family": name, "nodes": [{"node": nodes[at[name]], "count": 1}]} for name in at],
-        "node_detectors": [],
-    }
-    levels = {"proton": 189, "electron": 189}
-    pairs = {"proton": proton, "electron": electron}
-    path = folder / "w.json"
-    for _round in range(8):
-        mode = {"world_digest": input_digest(world), "packets": [], "bodies": []}
-        for name, level in levels.items():
-            now, im_before = [0] * 125, [0] * 125
-            now[at[name]], im_before[at[name]] = level, senses[0 if name == "proton" else 1] * level
-            mode["bodies"].append(
-                {
-                    "family": name,
-                    "pair": pairs[name],
-                    "moving": {
-                        "now": now,
-                        "before": [0] * 125,
-                        "im_now": [0] * 125,
-                        "im_before": im_before,
-                    },
-                }
-            )
-        path.write_text(json.dumps(world))
-        path.with_suffix(".mode.json").write_text(json.dumps(mode))
-        gate, Lattice.gate = Lattice.gate, lambda board: None
-        try:
-            board = Lattice(load_world(path))
-        finally:
-            Lattice.gate = gate
-        board.output = lambda line: None
-        done = True
-        for row in board.world.bodies:
-            read = int(board.quanta(row.family)[0][board.mask(row.nodes)].sum())
-            name = board.families[row.family].name
-            if read != 1:
-                levels[name] = max(1, int(round(levels[name] * ((1.5 / max(read, 1)) ** 0.5))))
-                done = False
-        if done:
-            return Lattice(load_world(path))
-    raise AssertionError(f"the one-quantum levels did not settle: {levels}")
-
-
-def wronskian_at(board: Lattice, name: str, node: tuple[int, int, int]) -> int:
-    index = next(k for k, f in enumerate(board.families) if f.name == name)
-    re, im = board.states[index].lines[0], board.states[index].lines[1]
-    return int(re.now[node]) * int(im.before[node]) - int(im.now[node]) * int(re.before[node])
-
-
-def test_one_alpha_per_holder_and_the_charge_per_quantum_equal_across_two_pairs(tmp_path):  # type: ignore[no-untyped-def]
-    proton, electron = [0, 6000], [3600, 6000]  # the hydrogen worlds' pairs, the sines 1 and 4 / 5
-    _integers, families = universe_of(universe(proton, electron))
-    sign = families[0]
-    assert (sign.write_weight, sign.write_wall) == (
-        36,
-        1,
-    )  # alpha = E_h T / Gamma = 36,000 / 1,000, no pair in it
-    write = held_write_of(families, 0, T)
-    units = {k: count_wall(families[k], T) for k in (1, 2)}
-    assert units == {
-        1: 3 * T * 6000,
-        2: 3 * T * 6000 * 4 // 5,
-    }  # W_c sin omega_0 = 3 T den sin omega_0: the sines 1 and 4 / 5
-    # the identity: factor x count unit is one number for every reader, so a quantum's Wronskian over its unit writes alike
-    assert (
-        write.factors[1] * units[1] == write.factors[2] * units[2]
-    )  # one den here, so the units' ratio alone
-    assert (write.factors[1], write.factors[2]) == (4, 5) and write.walls[
-        0
-    ] == 2 * T * 4  # one over the sines, 1 and 5 / 4, brought to the integers 4 and 5: the walls times 4
-    # measured: one quantum of each at the quarter turn, the write's source per quantum equal within the lay's rounding of A
-    board = laid(tmp_path, proton, electron, (-1, 1))
-    w_p, w_e = wronskian_at(board, "proton", (2, 2, 2)), wronskian_at(board, "electron", (2, 2, 1))
-    assert w_p < 0 < w_e  # opposite senses, the charge's sign
-    per_quantum = Fraction(-w_p * write.factors[1]), Fraction(w_e * write.factors[2])
-    assert abs(per_quantum[0] - per_quantum[1]) <= per_quantum[0] / 10, (
-        w_p,
-        w_e,
-    )  # the integers' rounding of A at one quantum
-    assert abs(Fraction(-w_p, units[1]) - Fraction(w_e, units[2])) <= Fraction(-w_p, units[1]) / 10
-    for _ in range(3):
-        board.step()  # the write runs with the factors, no refusal
-    assert board.interval == 3
 
 
 def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # type: ignore[no-untyped-def]

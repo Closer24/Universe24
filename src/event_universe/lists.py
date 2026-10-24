@@ -4,19 +4,16 @@ from __future__ import annotations
 
 from dataclasses import replace
 from functools import partial
-from operator import add
 from typing import TYPE_CHECKING, Any
 
-from event_universe import credit, frame_run, meeting_back, reports
+from event_universe import credit, meeting_back, reports
 from event_universe.act import Alternative, Line
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward
-from event_universe.emission import born_unit
 from event_universe.loader.derived import count_wall
 from event_universe.loader.draw import norm, times
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Rate, Transition
-from event_universe.loader.world import BodyRow
 from event_universe.node_detector import (
     NodeBooks,
     Passage,
@@ -26,7 +23,6 @@ from event_universe.node_detector import (
     face_ports,
     hole_node,
     own_clock,
-    picked,
     piece_momentum,
     share_weights,
 )
@@ -263,43 +259,6 @@ def absorption(
     return [*found, Alternative(max(min(unabsorbed, unit) - sum(weights), 0), rest)]
 
 
-def own_light_weights(board: Lattice, books: NodeBooks, transition: Transition, unit: int) -> list[int]:
-    """A bound body's own-light row at its window's close (ALGEBRA.md, The click writes on the lattice (5), CHANGED 2026-10-22, the reader's ruling under the owner's word: the hazard of a bound body in its upper part is A times the upper level's share rho): the frame's run of the body made here, once, at its first close (`frame_run.measured`, kept as `NodeBooks.frame_stream`), the weight A rho by the one division act (`frame_run.upper_share`, `frame_run.hazard`; F floored at 0, the cavity's word on a closed board) capped at the unit, against nothing at the unit less it, in W_c sin Omega G^2 of the transition, so that the floor is the act's certain draw (one quantum at most per close) and the remainder the act's own draw by the body's read of the board; no carry between windows (the row has no memory, the law's exponential). The live book is withdrawn as the whether and kept as a reading: its window sum and the row's weight on the books for the observers (`closed_light`, `closed_share`, `closed_stream`: F, rho's numerator and denominator), and its outflows per shell Node, where the window's sum is above 0, joined to the where's book (`NodeBooks.outflows`, the reader's word of 03:43), so that the where is a reading of the board."""
-    stream = books.frame_stream = books.frame_stream or frame_run.measured(board, books)  # once
-    if sum(books.light) > 0:
-        books.outflows = list(map(add, books.outflows, books.light, strict=True))
-    numerator, denominator = frame_run.upper_share(board, books, transition)
-    given = min(frame_run.hazard(stream, numerator, denominator), unit)
-    books.closed_light, books.closed_share = sum(books.light), (given, unit)  # the observers' entries
-    books.closed_stream = (sum(stream.outflow), numerator, denominator)
-    return [given, unit - given]
-
-
-def own_light(
-    board: Lattice, books: NodeBooks, transition: Transition, unit: int, emitted: bool
-) -> list[Item]:
-    """The own-light row's list where its alternative is drawn (`emission` with no rate; ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the exchange over the body's region, the part the body stands in to the transition's lower part (the write's region the body's whole support), and light's record up by one whole quantum at the shell Node drawn by the where's book (`drawn_weights` on `NodeBooks.outflows`, the per-shell-Node book of the windows above 0 since the last click, begun again here; the window's own book where none stands yet), by the frame run's outflow per shell Node where the live book stands at 0 (the reader's ruling of 2026-10-22: the where's distribution), and by the largest raw entry of the book where no weight stands at all, the reading named (`reports.LARGEST_ENTRY`); laid by the count at the massless pair; nothing where the other alternative fell, no carry."""
-    if not emitted:
-        return []
-    book = books.outflows or books.light
-    weights = drawn_weights(board, book)
-    if (
-        not sum(weights) and (stream := books.frame_stream) is not None
-    ):  # the live book at 0: the frame's
-        book, weights = list(stream.outflow), drawn_weights(board, stream.outflow)
-    if sum(weights):
-        at = books.shell[picked(board, books, weights)]
-    else:  # every entry below G^2 while the row fell: no weight stands, no draw, the reading named
-        at, books.lost = (
-            books.shell[max(range(len(book)), key=book.__getitem__)],
-            [reports.LARGEST_ENTRY],
-        )
-    books.outflows = []  # the where's book begun again at the click
-    den = board.families[transition.drive].pair[1]
-    light = Item(transition.drive, None, None, 1, (at,), (den, den))
-    return [*exchange(board, books, books.part, transition.leaves), light]
-
-
 def hazard_weights(span: int, lifetime: int, clock: int, gamma: int, unit: int) -> list[int]:
     """The dark's draw between the emission and nothing over `span` board intervals at the lifetime tau, a proper time (the mathematician's hand with the advisor's second, two hands): the hazard 1 / tau per proper interval, the body's proper intervals per board interval p_0 / Gamma, so the emission's weight is span x p_0 x unit div Gamma by the division act (half up, `paces.rounded`) against the rest of tau x unit, [span x unit, (tau - span) x unit] exactly in the vacuum where p_0 = Gamma, and in a well the body gives slower by p_0 / Gamma."""
     emitted = int(rounded(span * clock * unit, gamma))
@@ -316,24 +275,11 @@ def largest_share_node(board: Lattice, books: NodeBooks) -> Node:
 def emission(
     board: Lattice,
     books: NodeBooks,
-    rate: Rate | None,
+    rate: Rate,
     span: int,
     deferred: bool = False,
-    transition: Transition | None = None,
 ) -> list[Alternative]:
     """The emission's row, one draw per rate out of the part the record stands in (ALGEBRA.md, The click writes on the lattice (j), the fifth act, and the emission's clock; the advisor's clause 5; the mathematician's hand with the advisor's seconds, two hands): one alternative per direction the board holds for the lay (`Rate.directions`, the open board's packet; one, the source in time, inside a guide) at the emission's weight, span x p_0 x unit div Gamma, and nothing at the rest of tau x unit (`hazard_weights`; `span` the smaller of the clock's grain and the lifetime, the grain the window's lit intervals at its close or the one interval in the dark, `meeting.jumped`; p_0 the body's own clock, `node_detector.own_clock`), the lifetime's hazard 1 / tau per proper interval (the beat's current of a one-part record at one Node being 0, so the hazard alone is the rate); the list: the part at N - 1 and the lower at N + 1 at its Node (`exchange`), light's record at +1 at the one Node of the body's region drawn by the record's share at the body's Nodes as the board holds it at the close (`share_weights`, `drawn_node`; the file's lay weights enter no draw), laid as a source in time over the lifetime at the transition's declared resonance from the phase phi_e - phi_g, the two parts' (re, im) at the Node read before the lay (`levels_at`, `Item.levels`, `emission.start_of`), or as a packet along the direction where the rate declares a `width` on the open board (`emission.laid_packet`, an assumption by name); its line the part after and before and the light given to; the emission into a full lower part stands at the weight 0 and nothing at the whole hazard, lifetime x unit, so the list's total stands above 0 where the window's lit intervals reach the lifetime (the exclusion, `full`; the cold reader's E1, 2026-10-19); the emission's weight carries the record's sign under exchange on the lower part, the whole hazard to nothing where the factor is 0 (`exchange_factor`). With `deferred` (the window's close in the exact dark, `meeting.emission_drawn`) the list is the emission alone at the weight 1 along the first declared direction, laid at the body's Node of the largest share (`largest_share_node`): no digit stands to draw a direction or a Node by, and the reading `reports.NO_DRAW` goes on the line."""
-    if rate is None:  # (5): a bound body with no rate, its own-light row in the one act (the audit, (a))
-        assert transition is not None  # the transition into the part the body stands in
-        light = board.families[transition.drive]
-        unit = (
-            born_unit(count_wall(light, board.world.quantum_action), transition.resonance)
-            * board.unit**2
-        )
-        weights = own_light_weights(board, books, transition, unit)
-        row = partial(own_light, board, books, transition, unit)
-        line = Line((transition.leaves, books.part), (None, transition.drive))
-        yes = Alternative(weights[0], partial(row, True), line, books)
-        return [yes, Alternative(weights[1], partial(row, False))]
     unit = count_wall(board.families[books.index], board.world.quantum_action) ** 2
     clock, directions = own_clock(board, books), rate.directions or (None,)
     given, rest = hazard_weights(span, rate.lifetime, clock, board.world.node_clock, unit)
@@ -368,30 +314,9 @@ def emission(
 def null_window(board: Lattice, books: NodeBooks) -> list[Alternative]:
     """The window with no click (the owner's words, "Yes, both of them" and "I approve the four things"; the mathematician's hand; the advisor's clause 8): one alternative and no draw, the record's own reading of itself written at its one Node, the part it stands in at the change 0 (`part_at`): the record laid again in the complement of its outcome set, the part it stands in, at its whole count, in that part's own direction and sense at every Node of the region (the levels of what stands there within the lay's rounding, each Node's own direction kept so that a phase gradient across the region survives, Part H, MUST 1; the remainder at the lay's origin), the parts' counts unchanged, and the labels' coherence ended; its line at the count 0, written where the re-lay changed a level at any Node of the region (Part H: every Node read, the re-lay standing per Node), one click line labelled LATTICE with the `lay` lines beside it for the host's tool (a null window that changes nothing writes none; `act.click`). A bound record declared an instrument body through the mode file (`NodeBooks.bound`, 2026-10-21) is re-laid by no act ("no body-wide re-lay in the realised mode is an act of the law", The click writes on the lattice (6)): its null window's list is empty, no level moves and no line is written, and its labels' coherence ends in the books alone (`meeting.coherence_ended`)."""
     line = Line((books.part, books.part), (None, None), 0)
-    if books.bound:  # a bound record standing in its well: no re-lay of a spread body, (6); its coherence ended in the books
-        return [Alternative(1, nothing, line, books)]
     return [Alternative(1, partial(part_at, books, books.part, 0), line, books)]
-
-
-def coherence_ended(board: Lattice, books: NodeBooks) -> None:
-    """The labels' coherence ended at a bound body's null window without a lay (the reader's design of 2026-10-21, (b); ALGEBRA.md, The click writes on the lattice (4) and (6): the null window re-lays a record laid by the engine's own act in its part, and a bound record standing in its well, laid from the mode file, is re-laid by no act, "no body-wide re-lay in the realised mode is an act of the law"): the labels at their counts in the count's unit and the hop's remainders at 0, as the write step leaves a touched body's (`act.written`), so that every window's share is that window's turn alone, the Rabi share and never a count-up; the record's levels untouched."""
-    wall = count_wall(board.families[books.index], board.world.quantum_action)
-    books.labels = [count * wall for count in books.counts]
-    books.carried = [0 for _count in books.counts]
 
 
 def gate_count(board: Lattice, row: Any) -> int:
     """The count the start's gate reads for a declared body (`Lattice.gate`; here beside the lists for the shape of credit.py): a bound record declared an instrument body (loader/world.BodyRow.region) the board's count of its family, its charge over T / 2 (`count_of`, the ruling of 2026-10-22), since a standing record's quantum is spread over its whole support with less than half a quantum at any Node; another body its family's quanta at its declared Nodes (`Lattice.quanta`)."""
-    if isinstance(row, BodyRow) and row.region:
-        return credit.count_of(board, row.family) or 0
     return int(board.quanta(row.family)[0][board.mask(row.nodes)].sum())
-
-
-def count_checked(board: Lattice, index: int, due: bool) -> None:
-    """The count on the board of a bound record against the books' count at its own window's close (`meeting.jumped`, where `due`; the ruling of 2026-10-22: the check of 2026-10-20 reaching the bound body's record), refused by name as the sides' records are at theirs (`meeting.closed`, `count_held`)."""
-    if due and not credit.count_held(board, index):
-        raise RuntimeError(
-            f"the bound record's count on the board, {board.count(index)}, differs from the books' count "
-            f"{board.credit.counts[index]} at its close {board.interval}: the charge moved against the books' "
-            "by more than its walk since the lay"
-        )

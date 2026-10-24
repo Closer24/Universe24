@@ -1,29 +1,19 @@
 """Part C, the phase line (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; features/phase; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): the temporal gauge, under which the time Link carries no phase and every Link of a plane reading the sign holder carries a pair of Rule3 lines at the fixed angle theta_0 = 1 / Gamma, iterated |n_ij| acts per interval in the sense of n_ij = L(i) - L(j), the holder's time level's difference across the Link, read by the Port as the hop's two integers inside the sign's fold. The Coulomb run on the engine itself against the oracle recorded from the time turn (5c65fb1b, tests/oracle/coulomb_before.json), the record's run and its mirror's each its own test, the reversal bit for bit with the phase pairs, the static field bounded by the walk's bound, the 48 returns with the phase pairs as a vector per axis, the one-Link reach, and the two slits without a sign holder bit-identical to the frozen oracle. Every test under 30 seconds; each prints its numbers with its time."""
 
-import json
 import math
 import time
-from itertools import permutations, product
-from pathlib import Path
 
 import numpy as np
-import pytest
 
-from event_universe import node, records, world_files
+from event_universe import node, records
 from event_universe.features import phase
 from event_universe.lattice import Lattice
-from event_universe.world_files import load_world
-from tests import laws
 from tests.laws import COULOMB_AT as AT
 from tests.laws import COULOMB_CHAIN as CHAIN
 from tests.laws import COULOMB_UNIVERSE as UNIVERSE
-from tests.laws import LINE_KEYS as KEYS
-from tests.laws import arrays, coulomb_world
 
 GAMMA, PAIR, T = 6000, (4000, 6000), 36000
 SIGMA, AMPLITUDE = 30, 3000
-
-ORACLE = Path(__file__).resolve().parent / "oracle" / "coulomb_before.json"
 
 
 def gaussian_record(board: Lattice, conjugate: bool, amplitude: int = AMPLITUDE) -> None:
@@ -63,63 +53,6 @@ def centroid(board: Lattice) -> float:
     re, im = board.states[1].lines[:2]
     weights = sum(np.asarray(a, dtype=float) ** 2 for a in (re.now, im.now, re.before, im.before))
     return float((np.arange(CHAIN) * weights.ravel()).sum() / weights.sum())
-
-
-def coulomb_shift(tmp_path, conjugate: bool, intervals: int) -> float:  # type: ignore[no-untyped-def]
-    """The centroid's shift after `intervals` on the Coulomb world through `Lattice.step`, the ramp reset after every interval."""
-    board = Lattice(load_world(coulomb_world(tmp_path)))
-    gaussian_record(board, conjugate)
-    kept = ramp(board)
-    before = centroid(board)
-    for _ in range(intervals):
-        board.step()
-        held_static(board, kept)
-    return centroid(board) - before
-
-
-@pytest.mark.parametrize(
-    "conjugate, key, hands", [(False, "record", -151.20), (True, "conjugate", 151.20)]
-)
-def test_the_coulomb_run_and_its_mirror_move_the_centroid_by_the_hands_count(
-    tmp_path, monkeypatch, conjugate, key, hands
-):
-    """(1a, 1b) The Coulomb run and its mirror through `Lattice.step`, one test item each: the hands' chain of 400 Nodes, the plane record [4000, 6000] at the vacuum's paces (the sign holder alone, no holder of the content), the holder's time level rising one unit per Link along +x held static, a Gaussian packet A 3,000, sigma 30 at rest about the Node 280, or its conjugate (im to -im) at rest about the mirror Node 119, the same room before the chain's end; after 2,500 intervals the record's centroid moves by the hands' count (-151.20 in the rationals; the oracle recorded from the time turn at 5c65fb1b on this same world, tests/oracle/coulomb_before.json: -150.83) and the mirror's the other way (+151.20; the oracle +150.90, the record's reversed to within 0.07 Nodes), each within 2 percent of the oracle's record (the force dk / dt = -Delta L theta_0 per Link, the potential's gradient, the mathematician's item 5; the same count under the phase line, the gauge identity; one potential's gradient pushes the record one way and its conjugate the other, the engine's convention, ALGEBRA.md row 9 of the conventions)."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started, oracle = time.perf_counter(), json.loads(ORACLE.read_text(encoding="utf-8"))
-    assert oracle["intervals"] == 2_500
-    shift = coulomb_shift(tmp_path, conjugate, oracle["intervals"])
-    tolerance = 0.02 * abs(oracle["record"])
-    assert abs(shift - oracle[key]) <= tolerance, (shift, oracle[key], tolerance)
-    assert abs(shift - hands) <= tolerance, shift
-    print(
-        f"2,500 intervals: the {key}'s centroid shift {shift:+.2f} Nodes (the time turn's oracle {oracle[key]:+.2f}, the hands {hands:+.2f}); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_reversal_returns_every_array_with_the_phase_pairs(tmp_path, monkeypatch):
-    """(2) 40 intervals forward and back on the Coulomb world (the packet at A 300, the holder evolving freely, its rows written by the record's Wronskian and stepped by Rule3): every array bit for bit, the lines, the write remainders and the phase pairs (the phase act back by the potentials at the interval's start, `Lattice.phased` at -1; the back-in-time gate MATCH)."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started = time.perf_counter()
-    board = Lattice(load_world(coulomb_world(tmp_path)))
-    gaussian_record(board, False, 300)
-    ramp(board)
-    board.amplitude = node.seed_phases(
-        board, board.world
-    )  # the pairs re-read from the laid state: the Link's count is the Node's reading (the centred count, 2026-10-23), no line of its own
-    start = arrays(board)
-    for _ in range(40):
-        board.step()
-    moved = arrays(board)
-    assert any(not np.array_equal(a, b) for a, b in zip(start, moved, strict=True))
-    phases = board.states[0].phases[1]
-    assert any((p.now != q).any() for p, q in zip(phases, start[-3 * len(phases) :][0::3], strict=True))
-    for _ in range(40):
-        board.step_inverse()
-    assert all(np.array_equal(a, b) for a, b in zip(start, arrays(board), strict=True))
-    assert laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
-    print(
-        f"40 intervals forward and back: {len(start)} arrays bit for bit; {time.perf_counter() - started:.1f} s"
-    )
 
 
 def test_the_static_field_is_bounded_by_the_walks_bound():
@@ -176,47 +109,6 @@ def test_the_static_field_is_bounded_by_the_walks_bound():
     )  # the x Link's count line at the count reached, 0 beyond the face; the y and z count lines untouched
     print(
         f"10^4 acts on one Link: worst |c + i s| - X {worst:.0f} levels (bound {bound:.0f}), angle {angle:.6f}; {time.perf_counter() - started:.1f} s"
-    )
-
-
-def test_the_48_returns_on_a_closed_cube_with_the_phase_lines(tmp_path, monkeypatch):
-    """(4) Part B's cube (tests/test_part_b_sign_fold.py): a charged record by hand on a closed cube of 7^3 in turning.json's universe, the free row's odd lines a radial vector field; over four intervals every scalar line keeps the 48 and the odd lines keep them as a vector, and the phase lines beside them: the cosine lines scalars under the 48 and the sine lines too, the pair (c, s) going to (c, -s) under a reflection of its axis exactly, since the potential the record reads (the free row's time level, 0 everywhere; its own row read by no phase of its own) gives n = 0 on every Link and every pair stands at its seed, s = 0; the back-in-time gate over twelve intervals MATCH with the phase pairs."""
-    from tests.laws import CHARGE, RULE_WALL, imaged, sign_world
-
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    started = time.perf_counter()
-    shape, centre = (7, 7, 7), (3, 3, 3)
-    d = np.abs(np.indices(shape) - 3).sum(axis=0)
-    profile = np.select([d == 0, d == 1, d == 2], [1200, 600, 200], 0)
-    closed = dict(x="closed", y="closed", z="closed")
-    board = Lattice(load_world(sign_world(tmp_path, "cube", shape, closed, 8, centre, profile)))
-    holder, kind = board.states[CHARGE], board.kind
-    for axis in range(3):
-        level = (40 * (np.indices(shape)[axis] - 3)).astype(kind)
-        holder.lines[1 + axis] = records.Record(level, level.copy(), holder.lines[1 + axis].remainder)
-    assert len(holder.phases) == board.families[CHARGE].records and holder.phases[0] == []
-    seeds = [[a.copy() for r in rows for a in (r.now, r.before, r.remainder)] for rows in holder.phases]
-    for _ in range(4):
-        board.step()
-        for rows in holder.phases[1:]:
-            for a in [getattr(r, k) for r in rows for k in KEYS]:
-                for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
-                    assert np.array_equal(imaged(a, axes, signs), a)
-            for axis in range(3):  # (c, s) to (c, -s) under the axis's reflection: s = 0 at the seed
-                assert not rows[2 * axis + 1].now.any()
-        for state, family in zip(board.states, board.families, strict=True):
-            lines = state.lines[: family.width] if family.rotation else state.lines
-            for a in [getattr(r, k) for r in lines[:1] for k in KEYS]:
-                for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
-                    assert np.array_equal(imaged(a, axes, signs), a)
-    assert all(
-        np.array_equal(a, b)
-        for rows, kept in zip(holder.phases, seeds, strict=True)
-        for a, b in zip([x for r in rows for x in (r.now, r.before, r.remainder)], kept, strict=True)
-    )
-    assert RULE_WALL > 0 and laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
-    print(
-        f"the cube's 48 with the phase lines, four intervals, the gate MATCH over twelve; {time.perf_counter() - started:.1f} s"
     )
 
 

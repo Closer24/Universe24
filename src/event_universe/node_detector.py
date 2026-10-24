@@ -19,12 +19,10 @@ from event_universe.front import on_board
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
-from event_universe.loader.world import BodyRow
-from event_universe.reports import BODY, booked_light, credit, front, weighted
+from event_universe.reports import BODY, credit, front, weighted
 from event_universe.resonance import Reference, references_of, scale_of
 
 if TYPE_CHECKING:
-    from event_universe.frame_run import FrameRun
     from event_universe.lattice import Lattice
 
 Read = tuple[
@@ -82,22 +80,13 @@ class NodeBooks:
     deferred: bool = False  # an emission's draw of the window found nothing to read, (iii)
     bias: list[int] | None = None  # the interval's first draw's bias bound, its line's (`bias_bound`)
     due: int = 0  # the emission's span carried to the next interval: one draw per body per interval (G2)
-    bound: bool = False  # a bound record declared an instrument body through the mode file (loader/world.BodyRow.region, 2026-10-21): its Nodes its standing region, its levels the mode file's, its null window ending the labels' coherence and laying nothing (`meeting.coherence_ended`)
-    light: list[int] = field(default_factory=list)  # the own light per shell Node, (5)
-    shell: tuple[Node, ...] = ()  # the light's front, the near zone's shell (BodyRow.shell)
-    zone: tuple[Node, int] | None = None  # the near zone: the declared Node and the radius
-    outflows: list[int] = field(default_factory=list)  # the where's book since the last click
-    closed_light: int = 0  # the last close's window total of the own light, G^2 (the observers')
-    closed_share: tuple[int, int] = (0, 0)  # the last close's draw: the row's weight and the unit
-    frame_stream: FrameRun | None = None  # the frame's run at the first close: F per Node, densities
-    closed_stream: tuple[int, int, int] = (0, 0, 0)  # the last close's F in G^2 and rho's quotient
 
 
 def books_of(board: Lattice) -> list[NodeBooks]:
     """The books of every record declared a NodeDetector at a Node, in the world's order: its number among `bodies`, its family and record, its one Node (or, for a bound body declared an instrument body through the mode file, its standing region with the lay's weights, `BodyRow.region`, `BodyRow.shares`, 2026-10-21), its declaration, the part carrying the count, the counts per part, the labels at their counts in the count's units and the window begun; the scale of its reference records from the declared window, or from the run's intervals where its window is bounded by a probe's lays (no window longer than the run; one interval the least)."""
     found = []
     for number, (record, row) in enumerate(board.laid_rows()):
-        if not isinstance(row, BodyRow) or row.detector is None or row.detector.draw is None:
+        if row.detector.draw is None:
             continue
         parted = list(row.detector.counts)
         wall = count_wall(board.families[row.family], board.world.quantum_action)
@@ -108,8 +97,7 @@ def books_of(board: Lattice) -> list[NodeBooks]:
         scale = scale_of(board.world.width, board.world.amplitude_bound, longest)
         references = references_of(scale, row.detector.transitions)
         square = squared(1, board.world.quantum_action, board.families[row.family].pair)
-        # a bound body declared through the mode file: its standing region with the lay's weights (2026-10-21)
-        nodes, weights = (row.region, row.shares) if row.region else (row.nodes, row.counts)
+        nodes, weights = row.nodes, row.counts
         total = sum(weights)
         amplitudes = tuple(spread(square, (weight, total)) for weight in weights)
         norm = max(largest_below(sum(a * a for a in amplitudes)), 1)
@@ -128,9 +116,6 @@ def books_of(board: Lattice) -> list[NodeBooks]:
                 references,
                 amplitudes=amplitudes,
                 norm=norm,
-                bound=bool(row.region),
-                shell=row.shell,
-                zone=(row.nodes[0], row.radius) if row.shell else None,
             )
         )
     return found
@@ -385,7 +370,6 @@ def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray
     """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own. The beat's term of 2026-10-21 (an emitter's own record's current through the same front, booked beside them into the hazard at the close) deleted 2026-10-22, dead since the light book (`booked_light`)."""
     for books in board.credit.bodies:
         drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
-        booked_light(board, books, wrap, own)  # (5): the holder's light out through the light's front
         if drives:
             facing = front(region := board.mask(books.nodes), wrap, region, own)
             for drive in drives:

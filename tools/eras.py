@@ -15,12 +15,10 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, node, records
+from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
-from event_universe.features.read import link_tensions
 from event_universe.lattice import Lattice
-from event_universe.reports import ball
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -34,15 +32,6 @@ def kept_lines(board: Lattice) -> dict[records.Sourcing, list[records.Record]]:
         ]
         for source in sources_of(board.families, board.order)
     }
-
-
-def seed_nodes(board: Lattice) -> tuple[Node, Node] | None:
-    """The seed Node, the first whole packet's at the file's coordinates, and the far Node, half the board away on every axis through the wrap; None where the world lays no whole packet."""
-    if not board.world.wholes:
-        return None
-    at = tuple(a + o for a, o in zip(board.world.wholes[0].at, board.offset, strict=True))
-    far = tuple(int((a + extent // 2) % extent) for a, extent in zip(at, board.shape, strict=True))
-    return (at[0], at[1], at[2]), (far[0], far[1], far[2])
 
 
 def at_node(array: Any, where: Node, shape: tuple[int, int, int]) -> int:
@@ -98,9 +87,9 @@ def row_line(board: Lattice, index: int, read: board_readings.Eras) -> dict[str,
     return line
 
 
-def quanta_line(board: Lattice, index: int, seed: tuple[Node, Node] | None) -> dict[str, Any]:
+def quanta_line(board: Lattice, index: int) -> dict[str, Any]:
     """One family of quanta's readings this interval: its largest level (against the amplitude bound), its quanta over the board (the engine's own `Lattice.quanta`, None over a board holding a frozen Node) and, where a seed Node stands, its share within one Link of the seed over its share on the board, its rulers at the far Node (the clock and the three axis paces of its read, the page's h_a = p_0 / p_a) and its Links' factors (q_+ + q_-) / (2 Gamma) per axis at the seed Node and the far Node (the tension's reach into the write's paces, the second smoke's finding); where the read refuses by name (a Link's tension beyond Gamma after this interval's write, features/read.link_tensions), the reading carries the refusal's words under `refused_reading` and the next step refuses the run by name, so that the log is complete at the refusal."""
-    lines, gamma, shape = board.record(index), board.world.node_clock, board.shape
+    lines = board.record(index)
     found: dict[str, Any] = {
         "largest": max(int(np.abs(np.asarray(line.now, dtype=object)).max()) for line in lines)
     }
@@ -111,28 +100,6 @@ def quanta_line(board: Lattice, index: int, seed: tuple[Node, Node] | None) -> d
         return found
     total = int(quanta.sum(dtype=object))
     found.update(quanta=total, frozen=int(frozen.sum()))
-    if seed is not None:
-        near = ball(board.shape, seed[0], 1, board.wrap)
-        within = int(quanta[near].sum(dtype=object))
-        found.update(within_one_link=within)
-        found["share_within_one_link"] = within / total if total else None
-        clock, paces = node.rulers(index, board.families, board.states, -1, board.wrap, gamma, 0)
-        found["rulers_far"] = [
-            at_node(clock, seed[1], shape),
-            [at_node(p, seed[1], shape) for p in paces],
-        ]
-        _content, axes = node.read_lines(index, board.families, board.states, -1, gamma, 0)
-        tensions = link_tensions(axes, board.wrap, gamma)
-        for name, where in (("links_seed", seed[0]), ("links_far", seed[1])):
-            found[name] = [
-                (
-                    2 * gamma
-                    - at_node(tensions[2 * a], where, shape)
-                    - at_node(tensions[2 * a + 1], where, shape)
-                )
-                / (2 * gamma)
-                for a in range(3)
-            ]
     return found
 
 
@@ -146,7 +113,6 @@ def interval_line(
     rulers = board.rulers(
         -1
     )  # the write's rulers at the interval's start, read from the held rows' before
-    seed = seed_nodes(board)
     fires = sum(nodes for at, direction, nodes in board.swaps if at == board.interval and direction == 1)
     line: dict[str, Any] = {
         "interval": board.interval,
@@ -162,12 +128,8 @@ def interval_line(
             continue
         read = board_readings.eras(board, index, forms, rulers)
         line["rows"][family.name] = row_line(board, index, read)
-        if seed is not None:
-            time_line = board.states[index].lines[0].now
-            at, far = at_node(time_line, seed[0], board.shape), at_node(time_line, seed[1], board.shape)
-            line["rows"][family.name].update(at_seed=at, at_far=far, well=at - far)
     for index in board.order:
-        line["quanta"][board.families[index].name] = quanta_line(board, index, seed)
+        line["quanta"][board.families[index].name] = quanta_line(board, index)
     return line
 
 

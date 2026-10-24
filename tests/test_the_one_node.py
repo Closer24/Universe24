@@ -15,9 +15,10 @@ from event_universe.loader import universe as loader_universe
 from event_universe.loader import world as loader_world
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "event_universe"
-WORLD = Path(
-    "examples/events/bell/bell_a_b.json"
-)  # a shipped world with a holder of the content, a sign holder, receding faces and a click
+UNIVERSE = Path(
+    "examples/events/universe24/universe_universe24.json"
+)  # the one world's universe: a holder of the content, a sign holder, the seed of light and the click at every Node
+CUBE = 3  # the bare 3-cube torus of the one world's universe: the births and their clicks at the interval 29
 INTERVALS = 30
 READERS = (
     "open",
@@ -57,9 +58,12 @@ def frozen(board: Lattice) -> list[tuple[str, ...]]:
     return found
 
 
-def test_the_step_reads_nothing_outside_the_nodes_after_the_load(monkeypatch):  # type: ignore[no-untyped-def]
-    """A shipped world loaded once; the ordinary step and the step with every reader of a file, the loader's two readers and the board's readings made to raise agree bit for bit over thirty intervals, the output lines included (the clicks' acts from outside the Node, the owner's decision of 2026-10-20, read the board as the law says and the lattice's own arrays, no file)."""
-    world = world_files.load_world(WORLD)
+def test_the_step_reads_nothing_outside_the_nodes_after_the_load(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The one world's universe on the bare 3-cube torus, loaded once; the ordinary step and the step with every reader of a file, the loader's two readers and the board's readings made to raise agree bit for bit over thirty intervals, the output lines included (the clicks' acts from outside the Node, the owner's decision of 2026-10-20, read the board as the law says and the lattice's own arrays, no file)."""
+    (tmp_path / "u.json").write_bytes((SRC.parents[1] / UNIVERSE).read_bytes())
+    bare = {"shape": [CUBE] * 3, "intervals": INTERVALS, "universe": str(tmp_path / "u.json")}
+    (tmp_path / "bare.json").write_text(json.dumps(bare), encoding="utf-8")
+    world = world_files.load_world(tmp_path / "bare.json")
     plain, lines = [], []
     board = Lattice(world, plain.append)
     for _ in range(INTERVALS):
@@ -145,11 +149,9 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         "intervals",
         "universe",
         "bodies",
-        "packets",
         "node_detectors",
         "receding",
         "draw",
-        "lay",
     }
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
     assert set(universe.FAMILY_KEYS) == {
@@ -197,9 +199,7 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
             }
         )
     named = []
-    for path in sorted(SRC.joinpath("loader").glob("*.py")) + [
-        SRC.parents[1] / "tools" / "pixel_mode.py"
-    ]:
+    for path in sorted(SRC.joinpath("loader").glob("*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         docs = {
             n.value.lineno
@@ -227,7 +227,6 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("multiplier", "draw"),
     ("increment", "draw"),
     ("engine", "world"),
-    ("seed", "lay"),
     ("act", "held"),
     ("booking", "held"),
     ("factor", "held"),
@@ -260,7 +259,7 @@ LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
     """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
-    from event_universe.loader import faces, lay, mode, node_detector_declaration, universe
+    from event_universe.loader import faces, node_detector_declaration, universe
     from event_universe.loader import world as loader_world
 
     tables = {
@@ -268,7 +267,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "bodies": set(loader_world.BODY_KEYS),
         "node_detectors": set(loader_world.NODEDETECTOR_KEYS),
         "draw": set(draw_keys := ("window",)),
-        "lay": set(lay.LAY_KEYS),
         "faces": set(faces.FACE_KEYS),
         "transitions": set(node_detector_declaration.TRANSITION_KEYS),
         "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
@@ -280,7 +278,10 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
     }
     assert draw_keys == tuple(loader_world.draw_of({"window": 1}, "draw", True).__dataclass_fields__)
     retired, found = set(RETIRED) | {"interval", "write_weight"}, []
-    for folder in ("examples", "tests"):
+    for folder in (
+        "examples/events/universe24",
+        "tests",
+    ):  # the records' folders are not read (2026-10-24)
         for path in sorted((SRC.parents[1] / folder).rglob("*.json")):
             try:
                 document = json.loads(path.read_text(encoding="utf-8"))
@@ -300,14 +301,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 found += [(path.name, key) for key in document if key not in tables[table]]
             for key, value in document.items():
                 rows = value if isinstance(value, list) else [value] if isinstance(value, dict) else []
-                if kind == "a mode file":  # the generator's entries: a body's or a packet's levels laid
-                    found += [
-                        (path.name, key, k)
-                        for row in rows
-                        if isinstance(row, dict)
-                        for k in row
-                        if k not in mode.MODE_BODY_KEYS
-                    ]
+                if kind == "a mode file":  # the generator's output, no input since 2026-10-24
                     continue
                 for row in rows:
                     if key in tables and isinstance(row, dict):
@@ -340,7 +334,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
     """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
-    from event_universe.loader import draw, lay, node_detector_declaration, universe
+    from event_universe.loader import draw, node_detector_declaration, universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
@@ -362,8 +356,6 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
             universe.universe_of(
                 {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
             )
-        elif place == "lay":
-            lay.lay_of({"kind": "repeat", "start": "one_node", key: "one_node"}, "lay")
         elif place == "family":
             universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
         else:
@@ -406,6 +398,8 @@ def shipped_worlds() -> list[Path]:
             document = json.loads(path.read_text(encoding="utf-8"))
         except ValueError:
             continue
+        if "universe24" not in path.parts:
+            continue  # every other folder is a record of the law to 2026-10-23 and is not run
         if isinstance(document, dict) and all(key in document for key in ("shape", "universe")):
             found.append(path.relative_to(SRC.parents[1]))
     return found

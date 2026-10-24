@@ -54,11 +54,7 @@ def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
 
 def cut(board: Lattice, index: int) -> node.Factors | None:
     """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record. A reading of the world's declarations and no act, read by the meeting (`meeting.cut`), the shear and the horizon's mask alike (moved from meeting.py 2026-10-23: the board's readings import no act, so that `node_detector` imports them first without a cycle)."""
-    regions = [
-        board.mask(row.nodes)
-        for row in board.world.bodies
-        if row.family == index and row.detector is not None and not row.region
-    ]
+    regions = [board.mask(row.nodes) for row in board.world.bodies if row.family == index]
     if not regions:
         return None
     found = []
@@ -257,11 +253,6 @@ def eras(
         int(np.asarray(lines[1 + a].before, dtype=object).sum()) if family.axes else 0 for a in range(3)
     )
     seed = (0, 0, 0)
-    if board.world.wholes:
-        at = tuple(a + o for a, o in zip(board.world.wholes[0].at, board.offset, strict=True))
-        levels = np.asarray(row_level(board, index, lines[0].now), dtype=object)
-        level = int(levels[at])
-        seed = (level, int(levels.sum()) - level, read.nodes - 1)
     return Eras(
         read.level,
         read.level_remainder,

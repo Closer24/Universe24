@@ -50,12 +50,11 @@ PHYSICAL_MODULES += (
     "conversion.py",
 )
 PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
-PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
-PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
+PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "faces"))
+PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py")
 PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
 PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
-PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 PHYSICAL_MODULES += (
     "shear.py",
     "walls.py",
@@ -69,9 +68,7 @@ PHYSICAL_MODULES += (
     "meeting_board.py",
     "loader/seed.py",
 )  # the fold: the uniform seed, the board's own read
-PHYSICAL_MODULES += (
-    "frame_run.py",
-)  # the frame's run of a bound body's full beat at its first close (2026-10-22)
+PHYSICAL_MODULES += ()  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}

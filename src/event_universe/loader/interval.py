@@ -16,19 +16,3 @@ def volume_rows(families: tuple[FamilyRule, ...], gamma: int | None = None) -> t
         fill = volume.fill_of(gamma, family.rest) if moved and gamma is not None else family.rest
         found.append(replace(family, motion_volume=True, fill=fill) if moved else family)
     return tuple(found)
-
-
-def kicks_refused(families: tuple[FamilyRule, ...], packets: object) -> None:
-    """The kick, a packet laid on a holder of the content's rest (ALGEBRA.md, No write from outside Rule3 wakes either double root of the massless row, the clause of 2026-10-22): refused by name on every board, the mean's velocity being the content's by the constraint's attractor and nobody's declaration (The mean's velocity is the content's)."""
-    if not isinstance(packets, list):
-        return
-    holders = {family.name for family in families if not family.quanta}
-    for number, entry in enumerate(packets):
-        name = entry.get("family") if isinstance(entry, dict) else entry
-        if name in holders:
-            raise ValueError(
-                f"packets[{number}] lays a kick on {name!r}, a holder of the content, under "
-                "the volume form: the mean's velocity is the content's by the constraint's attractor "
-                "and nobody's declaration (ALGEBRA.md, No write from outside Rule3 wakes either double root of "
-                "the massless row, the clause of 2026-10-22; The mean's velocity is the content's)"
-            )

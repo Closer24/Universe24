@@ -14,7 +14,6 @@ from event_universe.loader.draw import Draw
 from event_universe.loader.faces import extent_across
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import Rate
-from event_universe.loader.packets import PacketRow, axes_waves
 
 if TYPE_CHECKING:
     from event_universe.loader.world import BodyRow
@@ -42,21 +41,6 @@ def passage(
         return None
     extent = extent_across([node[axis] for node in nodes], shape[axis], periodic[axis])
     return int(division_forward(3 * den * (length + extent - 1) * sine, pace, pace - 1)[0])
-
-
-def packet_passage(
-    packet: PacketRow,
-    families: tuple[FamilyRule, ...],
-    nodes: tuple[Node, ...],
-    shape: Node,
-    periodic: Wrap,
-) -> int | None:
-    """A laid packet's passage over the body (`passage`): L = top + 2 edge Nodes along its axis, its wave on the three axes the packet's `wave` and `transverse` pairs (`packets.axes_waves`)."""
-    family, axis = families[packet.family], packet.along
-    first, last = packet.top[axis]
-    length = last - first + 1 + 2 * packet.edge[axis]
-    cosines = [wave_cosine(turns, halves, family.pair[1]) for turns, halves in axes_waves(packet)]
-    return passage(length, axis, cosines, family.pair, nodes, shape, periodic)
 
 
 def rate_passage(
@@ -101,7 +85,6 @@ def drawn(
     draw: Draw | None,
     regions: Iterable[Any],
     bodies: tuple[BodyRow, ...],
-    packets: tuple[PacketRow, ...],
     families: tuple[FamilyRule, ...],
     shape: Node,
     periodic: Wrap,
@@ -118,7 +101,6 @@ def drawn(
             not nodes or not region.declared
         ):  # the open faces' layer is the board's own region, no reader's
             continue
-        lays += [packet_passage(p, families, nodes, shape, periodic) for p in packets]
         lays += [rate_passage(r, families[r.light], nodes, shape, periodic, action) for r in rates]
     ended = [p for p in lays if p is not None]  # the lays with an end alone: a region reads what passes
     window = max(ended) if ended else None
@@ -146,7 +128,6 @@ def longest(passages: Iterable[int | None]) -> int | None:
 
 def windowed(
     bodies: tuple[BodyRow, ...],
-    packets: tuple[PacketRow, ...],
     families: tuple[FamilyRule, ...],
     shape: Node,
     periodic: Wrap,
@@ -177,11 +158,6 @@ def windowed(
             continue
         drives = sorted({transition.drive for transition in kind.transitions})
         lays = [
-            packet_passage(p, families, row.nodes, shape, periodic)
-            for p in packets
-            if p.family in drives
-        ]
-        lays += [
             spans[id(r)]
             if id(r) in spans
             else rate_passage(r, families[r.light], row.nodes, shape, periodic, action)

@@ -11,11 +11,9 @@ import numpy as np
 
 from event_universe import board_readings, readings, records
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import largest_below
 from event_universe.emission import Emitter
-from event_universe.features.click import Face, rotated, spread, squared, standing
-from event_universe.features.click import direction as unit_direction
-from event_universe.features.phase import fold, signed_rounded
+from event_universe.features.click import Face, standing
+from event_universe.features.phase import signed_rounded
 from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import quanta_records
@@ -62,72 +60,6 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
         line = board.states[books.index].lines[first + number]
         changes = (np.where(at, nows - line.now, 0), np.where(at, befores - line.before, 0))
         laid(board, books.index, first + number, changes, None, origin, at)
-
-
-def recoil_phases(
-    board: Lattice,
-    books: NodeBooks,
-    momentum: tuple[int, int, int] | None,
-    count: int,
-    directions: Sequence[tuple[int, int]],
-) -> tuple[list[tuple[int, int] | None], bool]:
-    """The recoil's phase per Node of the body, k . (x - c) as a pair (den cos, den sin) at every Node in the books' order (2026-10-21, the reader's design of the conserving click, (c); ALGEBRA.md, The lattice momentum: a plane wave's P_a is the sign of +k, one quantum at the wave number k carrying 2 T sin k_a per axis): k the wave number per axis the entered part must carry so that its lay carries the piece's momentum `momentum`, p_a in T's unit (`node_detector.piece_momentum`). The entered part is laid at each Node with the lay's own amplitude, A_i = spread(squared(count), weight_i / total) as `relaid` lays it (`features/click.standing`), in the leaving part's own direction there turned by k . (x - c), so its Link products carry the leaving part's own covariant Link angles phi_i beside the written k (the angle of conj(z_i) R_i z_(i+a) with R_i the holder's pair the step reads on the Link, `board_readings.turned_read`; a standing record's phi_i are odd about its centre, cancelling in its momentum and not in the recoil's: measured 2026-10-22 on the taker world of examples/events/conserve, up to 28.7 degrees on the central Links, their cosines' weighted mean 0.9214), and the turned read of the re-laid part carries P_a = 2 T sin k_a SUM over the Links of A_i A_(i+a) cos phi_i over SUM over the Nodes of A_i^2 (the odd part SUM A_i A_(i+a) sin phi_i the standing record's momentum, 0; measured linear in sin k, 0.722 to 1.444 of the piece from sin k 0.25 to 0.50 with the slope 2.887): so den sin k_a = p_a den A^2 den^2 M div (2 T SUM A_i A_(i+a) Re(conj(u_i) R_i u_(i+a))), A^2 the count's square the read divides by (4 sin omega_0 = 2 T over it; the floored sizes' sum SUM A_i^2 stood 0.09 percent below it), u_i the leaving part's direction at the Node at the size den (`features/click.direction` on `directions`, `act.leaving_phase`) and M the pair's modulus by the one search (the moduli differing in the eighth digit from Link to Link, below den's grain, the first Link's taken: exact on the conserve worlds, where every Link carries the vacuum's pair; where a holder's Links differ beyond den's grain the formula's M is a mean the code does not take, the first Link's standing for it, named 2026-10-22), the real part of the same bilinear whose imaginary part is the current the books read, one signed rounding per axis (the cold reader's second finding of 2026-10-21, the body carrying 0.44 of the piece at k from p_a alone and 0.922 at k from the amplitudes' products without the cosines; the reader's derivation and the Boss's order of 2026-10-22; the two-path blind of that day: the same composition in the reals from the same integer inputs gives the piece exactly (measured, not pinned), the integer path 1.0012 of it on the shipped taker and 0.9980 on the first lay at the coupling 51, the remainder the write's own floors in `resonance.turned_direction` and in `features/click.direction` of the standing lay, a systematic Link angle of 0.02 to 0.03 degrees, and this rounding, 0.01 percent), capped at den where |p_a| exceeds what sin 1 carries, the excess past sin 1 lost (the second value True, the reading `LOST_TO_TAKER` beside `WRITTEN_AS_PHASE`; where the Links' cosine sum along a is not above 0 the axis carries nothing and the piece's p_a there is the excess), and den cos k_a by the one search on den^2 - (den sin k_a)^2 (the pair at the body's family's den; the cosine the positive root, the piece carrying sin k alone); at each Node the three axes' pairs at the angles (x_a - c_a) k_a by the rotation act's recurrence (`features/click.rotated`, Rule3 with no Links, the sine's sign the offset's) composed as Gaussian integers with one signed rounding per product (`features/phase.fold`), c the body's declared Node, so that the entered part re-laid in these directions carries the piece's P_a over the body's Nodes to the lay's rounding; None at every Node where no momentum stands, where it is 0 on every axis, where the body stands at one Node, or where the body is held at declared Nodes by its cut Links (every body laid in its parts by the engine's own act, `meeting.cut`, `meeting.laid_record`; the recoil of a body held at declared Nodes the declaration's, ALGEBRA.md, The click's algebra beyond the law, item 48), the reading `LOST_TO_TAKER` then: the phase is written on a bound record standing free in its well (`NodeBooks.bound`), whose Links stand open so that the gradient moves it as a plane wave's does."""
-    if momentum is None or not any(momentum) or len(books.nodes) < 2 or not books.bound:
-        return [None for _node in books.nodes], False
-    family, action = board.families[books.index], board.world.quantum_action
-    den, total, shape = family.pair[1], sum(books.weights), board.shape
-    square = squared(count, action, family.pair)
-    evens, odds = board_readings.turned_read(board, books.index, books.record).pairs
-    sizes = {
-        tuple(int(v) for v in here): spread(square, (weight, total))
-        for here, weight in zip(books.nodes, books.weights, strict=True)
-    }  # the lay's own amplitudes
-    units = {
-        tuple(int(v) for v in here): unit_direction(int(d[0]), int(d[1]), den)
-        for here, d in zip(books.nodes, directions, strict=True)
-    }  # the leaving part's direction at each Node at the size den
-    norm, sines, excess = square, [], False  # the count's square, the norm the read divides by
-    # (4 sin omega_0 = 2 T over it); the floored sizes' sum stood 0.09 percent below it (2026-10-22)
-    for axis, p in enumerate(momentum):
-        even = np.asarray(
-            np.broadcast_to(np.asarray(evens[2 * axis], dtype=object), shape), dtype=object
-        )
-        odd = np.asarray(np.broadcast_to(np.asarray(odds[2 * axis], dtype=object), shape), dtype=object)
-        links, modulus = (
-            0,
-            0,
-        )  # SUM over the Links along the axis of A_i A_(i+a) Re(conj(u_i) R_i u_(i+a))
-        for here, size in sizes.items():
-            ahead = list(here)
-            ahead[axis] += 1
-            if ahead[axis] == shape[axis]:
-                ahead[axis] = 0 if board.world.periodic[axis] else -1
-            there = tuple(ahead)
-            if there not in sizes:
-                continue
-            ev, od = int(even[here]), int(odd[here])
-            (re, im), (re_j, im_j) = units[here], units[there]
-            links += size * sizes[there] * (re * (ev * re_j - od * im_j) + im * (od * re_j + ev * im_j))
-            modulus = modulus or largest_below(ev * ev + od * od)
-        scale = den * den * modulus
-        sine = int(signed_rounded(p * den * norm * scale, 2 * action * links)) if links > 0 else p * den
-        if abs(sine) > den:
-            sine, excess = (den if sine > 0 else -den), True
-        sines.append(sine)
-    cosines = [largest_below(den * den - s * s) for s in sines]
-    centre = board.world.bodies[books.number].nodes[0]
-    found: list[tuple[int, int] | None] = []
-    for here in books.nodes:
-        pair = (den, 0)
-        for axis in range(len(here)):
-            offset = int(here[axis]) - int(centre[axis])
-            steps = abs(offset)
-            cosine = rotated(den, cosines[axis], 2 * cosines[axis], den, steps + 1)[steps]
-            sine = rotated(0, sines[axis], 2 * cosines[axis], den, steps + 1)[steps]
-            turned = fold(pair[0], pair[1], cosine, -sine if offset < 0 else sine, den)
-            pair = (int(turned[0]), int(turned[1]))
-        found.append(pair)
-    return found, excess
 
 
 def levels_at(

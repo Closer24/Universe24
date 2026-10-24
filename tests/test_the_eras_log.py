@@ -4,7 +4,9 @@ import json
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file, refused
-from tests.laws_interval import GAMMA, WIDTH, light_cube, universe_at_weight_one
+from tests.laws_interval import GAMMA, universe_at_weight_one
+
+WIDTH = 63  # the hardware's integers: the bare 3-cube's twelve intervals stay within them
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -15,8 +17,16 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
 ):
     """The log on the 3-cube light cube over 12 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe_at_weight_one(tmp_path, 36000, WIDTH)  # no former key on the row (2026-10-23)
-    world = light_cube(tmp_path, "eras", 400, intervals=12)
+    universe_at_weight_one(
+        tmp_path, 36000, WIDTH
+    )  # no former key on the row (2026-10-23); the hardware's width
+    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
+    universe["families"].append(
+        {"name": "light", "pair": [GAMMA, GAMMA], "reads": {"gravity": 1}, "dimension": 1}
+    )  # the seed's family: light at one quantum on every Node of the bare 3-cube torus (2026-10-24)
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    world = tmp_path / "eras.json"
+    world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": 12, "universe": "u.json"}), "utf-8")
     out = tmp_path / "eras.eras.jsonl"
     lines = ERAS.run(world, out, 4, None)
     log = ERAS_PAGE.read_log(out)
@@ -43,7 +53,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         assert row["volume"] > row["volume_before"] > 0  # the volume's sums, the record's own
         assert (row["volume_residual"] is None) == (line["interval"] == 1)
         assert row["volume_residual"] is None or -1.2 <= row["volume_residual"] <= 1
-        for name in ("matter", "light"):
+        for name in ("light",):  # the seed's family alone carries a record (2026-10-24)
             quanta = line["quanta"][name]
             assert quanta["largest"] > 0 and quanta["quanta"] >= 0 and quanta["frozen"] == 0
             assert "share_within_one_link" not in quanta

@@ -171,9 +171,6 @@ def crossed(board: Lattice, lines: Lines, direction: int = -1, log: bool = False
 def logged(board: Lattice, direction: int) -> None:
     """The lays the books' log holds at the board's interval, crossed in `direction` (`crossed`; `credit.Books.lays`, filled by `lay.written` where the world's draw runs back): the step at the Nodes alone re-applies them after its Rule3 and the inverse undoes them before its own, so the engine's run back and forward re-present every act from outside the Node from the books; nothing where the log is empty, a world with no record of several parts at declared sides, where the host tool crosses from the lines."""
     crossed(board, board.credit.lays.get(board.interval, []), direction, log=True)
-    for whole in board.world.wholes:  # the packets laid whole at this interval: their counts with their levels (the lay's inverse, 2026-10-23)
-        if whole.interval == board.interval:
-            board.credit.counts[whole.family] += direction * whole.count
 
 
 def gram_of(patterns: Sequence[Pattern], parts: int) -> list[list[int]]:

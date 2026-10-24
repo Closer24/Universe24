@@ -61,23 +61,6 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
     return files[path]
 
 
-def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int, ...]:
-    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a packet, `Lattice.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
-    if value is None:
-        return (1,) * lines
-    if plane:
-        raise ValueError(
-            f"{label} weights the lines of a plane: a plane's second line is its sense (the second level pair), "
-            "and no weight is laid on it; the key is a record of real lines' (ALGEBRA.md #a-familys-declaration)"
-        )
-    if not isinstance(value, list) or len(value) != lines:
-        raise ValueError(f"{label} must list one integer weight per line of the record, {lines} here")
-    found = tuple(integer(weight, f"{label}[{at}]", -MAX_WORK_INT) for at, weight in enumerate(value))
-    if not any(found):
-        raise ValueError(f"{label} weights every line of the record at 0: nothing is laid")
-    return found
-
-
 def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
     """A family's declared reads (the universe file's key `reads`, `label` the row's): an object naming each holder it reads with the integer weight it reads with (and, by the held write's reciprocity, sources it with), a weight of 0 refused by name (a holder read at 0 is left out), an empty object where it reads none; the names resolved against the held rows once every row is read (`derived.read_of`)."""
     if not isinstance(value, dict):

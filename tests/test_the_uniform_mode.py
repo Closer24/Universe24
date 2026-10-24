@@ -6,64 +6,14 @@ import numpy as np
 from scipy.sparse import diags, kronsum
 from scipy.sparse.linalg import spsolve
 
-from event_universe import board_readings, world_files
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.features import volume
-from event_universe.features.held_write import held_write
 from event_universe.features.start import arrivals, rest, scaled_source, without_uniform
-from event_universe.lattice import Lattice
-from event_universe.world_files import load_world
 from tests.laws_interval import (
     GAMMA,
-    laid_torus,
-    lockstep,
-    one_number,
-    volume_universe,
 )
-
-
-def test_the_volumes_write_is_bit_for_bit_at_the_fixed_wall_and_the_level_reading_relaxes_to_the_constraint(
-    tmp_path, monkeypatch
-):
-    """(2) T2, the volume form's write bit for bit and the attractor from rest (ALGEBRA.md, The board's interval is no observable; The mean's velocity is the content's; the momentum hand's derivation M12a read cold by the reader, 2026-10-22; features/volume, records.write_sources, Lattice.held_write): on the 3-cube torus at T 36,000 with the uniform matter record, forty intervals in lockstep, the engine's own numbers at every interval: the volume's write (d + 1) X_now c with c the record's form scaled to the wall fixed per Node (the rest's wall, Gamma E_s T times the rest's paces' Gamma p_0^2) over Gamma times the fixed wall by `held_write`, the carried remainder bit for bit; the level reading a = level_of(X) rising from 60 at a velocity within the bound sqrt(Gamma s / (d + 1)) + 1 per interval and never falling; the integrated map in floats within 2 percent of the level at 10, 20 and 40; the nature residual from -1 toward 0 and rising; the board's uniform mode reading the same numbers (board_readings.uniform_mode). Uniform by nature: this test's claim is the k = 0 line's, the one write's arithmetic on a level uniform over the board, so its board is uniform (the owner's rule of 2026-10-23: the tests of the law's course run on a structured board; the uniform board stands here as the null case of that one line)."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    volume_universe(tmp_path)
-    board = Lattice(load_world(laid_torus(tmp_path, "volume")))
-    names = [family.name for family in board.families]
-    g, m = names.index("gravity"), names.index("matter")
-    wall, course = board.walls(g)[0], lockstep(board, g, m, 40)
-    fixed = one_number(board.fixed_walls[g][0])
-    assert wall == 36000 and course[0]["level"] == int(volume.volume_of(GAMMA, np.array(60)))
-    assert fixed == wall * GAMMA * paces.clock(GAMMA, 60) ** 2  # the rest's wall, kept for the run
-    for step in course:
-        form = step["now"] * step["now"] - step["next"] * step["before_record"]
-        a = int(volume.level_of(GAMMA, np.array(step["level"])))
-        clock, pace = paces.node_paces(GAMMA, a)  # matter reads gravity at 1, the level reading
-        scaled = int(paces.rounded(form * pace**3 * fixed, wall * GAMMA * clock * clock))
-        numerator = volume.EXPONENT * step["level"] * scaled
-        level, carried = held_write(
-            2 * step["level"] - step["before"], numerator, GAMMA * fixed, step["remainder"]
-        )
-        assert (step["after"], step["remainder_after"]) == (int(level), int(carried))
-        step["write"], step["a"] = form * pace**3 / (GAMMA * clock * clock) / wall, a
-        step["a_after"] = int(volume.level_of(GAMMA, np.array(step["after"])))
-        read = step["eras"]
-        assert (read.level, read.level_remainder, read.before, read.nodes) == (step["a_after"], 0, a, 27)
-    first = course[0]
-    velocity = [step["a_after"] - step["a"] for step in course]
-    bound = math.sqrt(GAMMA * first["write"] / volume.EXPONENT)
-    assert 0 < max(velocity) <= bound + 1 and velocity[0] > 0 and min(velocity) > 0
-    model = integrated(first["write"], first["level"], 40)
-    for t in (10, 20, 40):
-        assert abs(course[t - 1]["a_after"] / GAMMA / model[t] - 1) < 0.02, t
-    residual = [step["eras"].nature[0] / step["eras"].nature[1] - 1 for step in course]
-    assert -1 <= residual[0] < -0.95 and residual[-1] < 0
-    assert all(b > a for a, b in zip(residual[::10], residual[10::10], strict=False))
-    read, mode = course[-1]["eras"], board_readings.uniform_mode(board, g)
-    assert tuple(mode) == (course[-1]["a_after"], 0, course[-1]["a"], 0, 27)
-    assert dict(read.writes)["matter"] > 0 and read.seed == (0, 0, 0)
 
 
 def integrated(s0, X0, steps):  # type: ignore[no-untyped-def]

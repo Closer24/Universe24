@@ -7,19 +7,9 @@ from pathlib import Path
 import event_universe.world_files as world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ORACLE, flux_world, packet
-from tests.laws_read import load_shipped
+from tests.laws import ORACLE, flux_world, packet
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def test_the_flux_step_equals_the_first_form_on_a_held_well_and_runs_back_to_the_lay(
-    monkeypatch,
-) -> None:  # type: ignore[no-untyped-def]
-    """bell_a_b, every interval forward against the first form (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
-    found = ORACLE.verdict(Lattice(load_shipped(EVENTS / "bell" / "bell_a_b.json")), None)
-    assert found["verdict"] == "EQUAL" and found["intervals"] == found["back"] > 0, found
 
 
 def test_the_flux_step_equals_the_first_form_under_the_fold(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]

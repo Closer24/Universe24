@@ -235,12 +235,10 @@ def declared(
     return tuple(found)
 
 
-def together(families: tuple[FamilyRule, ...], bodies: Sequence[Any], packets: Sequence[Any]) -> None:
+def together(families: tuple[FamilyRule, ...], bodies: Sequence[Any]) -> None:
     """The lists of every multiset the world can credit at one close, derived at load (The conversion, the reader's sentence of 2026-10-21; `loader/world.parse_world`): the gapped Pythagorean families of quanta laid, each up to its laid count, a body's counts over its parts and a packet's count as the generator read it (`loader/world.BodyRow`, `loader/packets.PacketRow`), two to MET quanta at a time, every plane parent at either sense and the real-line parents' declared senses; refused by name where several irreducible lists keep both conservations for one multiset, the law having no share among them (`listed`)."""
     counts: dict[int, int] = {}
-    for family, count in [(b.family, sum(b.counts)) for b in bodies] + [
-        (p.family, p.count) for p in packets
-    ]:
+    for family, count in [(b.family, sum(b.counts)) for b in bodies]:
         counts[family] = counts.get(family, 0) + int(count)
     laid = [
         k
