@@ -44,7 +44,7 @@ def stepped(path: Path, intervals: int) -> tuple[list[Any], list[dict[str, objec
 def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births among them (the hole seed's, one per close at the origin under the hole the frame's level with no drift, 2026-10-24), the memo bounded (one entry per key: its entries stand over the second half of the run, the digits' keys added at the first draw by the digits)."""
+    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births among them (the hole seed's, one per close at the origin under the hole the Node's own level before, the drift stopped, 2026-10-24), the memo bounded (one entry per key: its entries stand over the second half of the run, the digits' keys added at the first draw by the digits)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path)
     for holder in (node, share):

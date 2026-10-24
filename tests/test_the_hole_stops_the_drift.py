@@ -1,4 +1,4 @@
-"""The board's own hole is the frame's level with no drift (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24 on the Boss's ruling over the bound-click hand's measurement; `meeting_board.frame_at`): the seed's record at a meeting Node is written to the level its frame held before the interval's drift with no drift of its own, the six Ports' level before over PORTS by the division act, so that the Node's own quanta pay, nothing is made at the Links on a uniform frame, and a hole on the uniform sea is the seed's own origin; on the tests' small universe (den 1,021) and the bare torus under the engine's own hole seed."""
+"""The board's own hole is the Node's own level before, twice: the quantum is the drift, the write stops it (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24 on the Boss's ruling over the bound-click hand's measurement; `meeting_board.stopped_at`): the seed's record at a meeting Node keeps the level it had before the interval's drift and drifts no more, the write reading nothing but the Node's own two levels, so that the Node's own quanta pay, nothing is made at the Links, and a hole on the uniform sea is the seed's own origin; on the tests' small universe (den 1,021) and the bare torus under the engine's own hole seed."""
 
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def births_at(lines, interval):  # type: ignore[no-untyped-def]
 def test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """Conservation at the click and no cascade on the 3-cube (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24: the Node's own quanta paying, the owner's point that the entanglement of clicks is the conservation of energy at a click): at every close the light's summed share after the hole's write is at most its share before (nothing made at the Links), at a close with a birth it falls by at least one whole quantum of light per pair born, and the holed Node holds less than one quantum of light after its hole; at most one hole per close, the light's summed share above zero at every interval and several births over the run (the former write to (0, 0) made 7.68 quanta at the first close, holed 1, 7, 18 and 20 Nodes at the closes 2 to 5 and spent the sea to exactly zero)."""
+    """Conservation at the click and no cascade on the 3-cube (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24: the Node's own quanta paying, the owner's point that the entanglement of clicks is the conservation of energy at a click): at every close the light's summed share after the hole's write is at most its share before (nothing made at the Links), at a close with a birth it falls by at least one whole quantum of light per pair born, and the holed Node holds less than one quantum of light after its hole; at most one hole per close, the light's summed share above zero at every interval and several births over the run (the former write to (0, 0) made 7.68 quanta at the first close, holed 1, 7, 18 and 20 Nodes at the closes 2 to 5 and spent the sea to exactly zero; the frame's mean of the level before, measured between, took 2.09 at the first close and made light between adjacent holes on the 5-cube)."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
     unit, kept, born = board.credit.units[board.world.seed], watched(monkeypatch), {}
@@ -64,7 +64,7 @@ def test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_
 
 
 def test_the_5_cube_keeps_its_light_above_zero_under_the_holes(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The 5-cube under the same hole for 20 intervals: the light's summed share above zero at every interval where the former write spent it to exactly zero by the end of 8, births at several closes and no close holing every Node. Measured and named, not asserted (ALGEBRA.md, the dated sentence): where adjacent Nodes meet in one close each hole is written to its own frame, and the Link between two holes carries the square of their levels' difference, light made at the write (10 to 172 quanta at the closes 5 to 10 of the 60-interval run, 405 births in 60 intervals), the one-Node write paying exactly on a uniform frame alone."""
+    """The 5-cube under the same hole for 20 intervals: the light's summed share above zero at every interval where the former write spent it to exactly zero by the end of 8, births at several closes and no close holing every Node; the write makes no light at any close, where the frame's mean of the level before made 10 to 172 quanta per close at the closes 5 to 10 between adjacent holes each written to its own frame (the 60-interval runs, 131 births against 405, named in ALGEBRA.md's dated sentence)."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 5, 20, lines)
     nodes = int(np.prod(board.shape))
@@ -76,14 +76,14 @@ def test_the_5_cube_keeps_its_light_above_zero_under_the_holes(tmp_path, monkeyp
 
 
 def test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The seed is untouched and the hole is its form (ALGEBRA.md, The uniform seed is a lay; The board reads itself, the dated sentence): the seed lays (v, 0) at every Node but the origin, (0, 0), and `frame_at` on the seed's own state at the origin returns (0, 0), the seed's hole; on the uniform sea by name (every Node at the drift, no hole) stepped three intervals, the sea drifts by v at every Node and `frame_at` at any Node returns the sea's level before twice, so a hole written there is the seed's kink exactly: the Node at the level its frame held before this interval's drift with no drift of its own, one quantum absent (the six Ports' mean of both levels, the first form measured, returns the Node's own levels on a uniform frame and so writes nothing there, kept by name)."""
+    """The seed is untouched and the hole is its form (ALGEBRA.md, The uniform seed is a lay; The board reads itself, the dated sentence): the seed lays (v, 0) at every Node but the origin, (0, 0), and `stopped_at` on the seed's own state at the origin returns (0, 0), the seed's hole; on the uniform sea by name (every Node at the drift, no hole) stepped three intervals, the sea drifts by v at every Node and `stopped_at` at any Node returns the Node's level before twice, so a hole written there is the seed's kink exactly: the Node at the level it had before this interval's drift, the drift stopped, one quantum absent (the six Ports' mean of both levels, the first form measured, returns the Node's own levels on a uniform frame and so writes nothing there, kept by name)."""
     board = hole_seed(tmp_path, monkeypatch, 3, 4, [])
     light = board.world.seed
     first = records.record_slice(board.families[light], 0).start
     line, drift = board.states[light].lines[first], seed.drift_of(board.world.quantum_action)
     assert (int(line.now[seed.ORIGIN]), int(line.before[seed.ORIGIN])) == (0, 0)
     assert (int(line.now[1, 2, 0]), int(line.before[1, 2, 0])) == (drift, 0)
-    assert meeting_board.frame_at(board, light, first, seed.ORIGIN) == (0, 0)
+    assert meeting_board.stopped_at(board, light, first, seed.ORIGIN) == (0, 0)
     monkeypatch.setattr(seed, "uniform_seed", uniform_sea)
     sea = hole_seed(tmp_path, monkeypatch, 3, 4, [])
     for _ in range(3):
@@ -91,7 +91,7 @@ def test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin(tmp_path, monkeypatch
     line, at = sea.states[light].lines[first], (1, 2, 0)
     level = int(line.before[at])
     assert int(line.now[at]) - level == drift
-    assert meeting_board.frame_at(sea, light, first, at) == (level, level)
+    assert meeting_board.stopped_at(sea, light, first, at) == (level, level)
 
 
 def test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit(
