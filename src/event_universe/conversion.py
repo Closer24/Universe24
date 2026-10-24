@@ -55,10 +55,6 @@ def kept(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bo
     return baryons(families, table) == baryons(families, parents)
 
 
-MEETING = 2  # the quanta that meet at one Node, the click's own (ALGEBRA.md, Matter's birth from light: two quanta of a gapless family meeting at one Node)
-BEYOND = 2  # the search's bound, named and no law (the conversion's own to the sweep of 2026-10-24): a meeting of q quanta births a list of at most q + BEYOND children
-
-
 def conjugate_exact(families: tuple[FamilyRule, ...], table: Table) -> bool:
     """Whether a list of children completes the identity of massless parents (ALGEBRA.md, Matter's birth from light: their points (den, 0) multiply to the identity, and the children at their senses complete it, (num + i s)(num - i s) = den^2): the product over the children of (num_k + i sense_k s_k), each the family's point at the child's sense, equal to (the product of their dens, 0), exact in the Gaussian integers; the birth's own exactness, the conjugate point at the sense -1 (the conversion's exactness reads the same point at both senses, L188)."""
     point: Gauss = (1, 0)
@@ -78,8 +74,8 @@ def times(a: Gauss, b: Gauss) -> Gauss:
 
 
 @cache
-def lists_of(families: tuple[FamilyRule, ...], quanta: int) -> list[Table]:
-    """The exact lists `quanta` whole quanta of a massless family make at one Node (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born): every multiset of at most quanta + BEYOND children of the plane families with a Pythagorean pair, each child at a sense, that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`, the senses summing to the parents' 0 and the baryons to 0), the irreducible ones alone (`meeting_reducible`: a list that is the union of two parts' own lists over a partition of the quanta into two meetings is the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone, a meeting being two quanta), each list its (family, sense) rows in the families' order, the lightest first by the sum of its children's walls (`derived.count_wall`); the bound BEYOND is the search's and no law; a function of the families alone, made once per universe (`cache`: the board's close asks it at every meeting Node)."""
+def lists_of(families: tuple[FamilyRule, ...], quanta: int, bound: int) -> list[Table]:
+    """The general enumeration of the exact lists `quanta` whole quanta of a massless family could make at one Node, a function and no birth (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born; the selection among them open, the law as written selecting the pair, `birth_of`): every multiset of at most `bound` children of the plane families with a Pythagorean pair, each child at a sense, that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`, the senses summing to the parents' 0 and the baryons to 0), the irreducible ones alone (`meeting_reducible`: a list that is the union of two parts' own lists over a split of the quanta into two meetings is the quanta's separate clicks and no meeting of all), each list its (family, sense) rows in the families' order, the lightest first by the sum of its children's walls (`walls_of`); `bound` the caller's (a test's or a tool's), no number of the engine's; a function of its arguments alone (`cache`)."""
     from itertools import combinations_with_replacement, product
 
     outs_at = [
@@ -87,7 +83,7 @@ def lists_of(families: tuple[FamilyRule, ...], quanta: int) -> list[Table]:
     ]
     parents: Parents = tuple((0, 0) for _ in range(quanta))
     found: set[Table] = set()
-    for size in range(1, quanta + BEYOND + 1):
+    for size in range(1, bound + 1):
         for outs in combinations_with_replacement(outs_at, size):
             for senses in product((-1, 1), repeat=size):
                 table: Table = tuple(sorted(zip(outs, senses, strict=True)))
@@ -110,7 +106,7 @@ def walls_of(families: tuple[FamilyRule, ...], table: Table) -> int:
 
 def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Table) -> bool:
     """Whether a list of a meeting of `quanta` massless quanta is the union of two lists each a meeting's own: over every split of the quanta into two parts of at least two each, a split of the table into two sub-multisets each kept and exact for its part (the identity, so for any part), the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone (two quanta meet, L188), so a list of two quanta is never reducible."""
-    if quanta < MEETING + MEETING:  # no split into two meetings
+    if quanta < 2 + 2:  # two quanta meet (L188): no split of fewer than four into two meetings
         return False
     for take in range(1, 2 ** len(table) - 1):
         one = tuple(row for at, row in enumerate(table) if take >> at & 1)
@@ -123,8 +119,16 @@ def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Tabl
     return False
 
 
-def birth_of(families: tuple[FamilyRule, ...], parent: int, quanta: int = 2) -> list[Table]:
-    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; N children on his word of 2026-10-24, several can be born): the exact lists `quanta` whole quanta of the gapless family `parent` make at one Node (`lists_of`), the lightest first by their summed walls; [] for a parent with a gap, whose quanta convert and are not born from (The conversion). To 2026-10-24 the one list per plane family, its conjugate pair ((k, -1), (k, 1)), the two kept by name as the lists at the bound 0."""
+def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:
+    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; the heaviest within the two quanta's own energy on his word of 2026-10-24): the lists two quanta of the gapless family `parent` make at one Node, as the law selects them (ALGEBRA.md, Matter's birth from light: the conjugate pair of a plane family with a gap and a Pythagorean pair, one family at the senses -1 and 1), each list the pair ((k, -1), (k, 1)) that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`), the lightest first by its summed walls (`walls_of`, the gap's order); [] for a parent with a gap, whose quanta convert and are not born from (The conversion). A list of any length lays its children one record each through the same path (`act.born_items`); which longer lists the law selects is open (`lists_of`, the general enumeration)."""
     if families[parent].pair[0] != families[parent].pair[1]:
         return []
-    return lists_of(families, quanta)
+    parents: Parents = ((parent, 0), (parent, 0))
+    found = [
+        table
+        for k in candidates(families)
+        if families[k].plane and gaussian(families[k].pair) is not None
+        for table in (((k, -1), (k, 1)),)
+        if kept(families, parents, table) and conjugate_exact(families, table)
+    ]
+    return sorted(found, key=lambda table: walls_of(families, table))

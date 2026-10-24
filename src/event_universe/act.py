@@ -70,22 +70,9 @@ def written(board: Lattice, items: list[Item]) -> None:
 def born_table(
     families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
 ) -> conversion.Table | None:
-    """The list the meeting of two quanta of a gapless family births at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light: the heaviest list whose summed walls fit within the two meeting quanta's own energy as read from the Node's own levels; the pair's two walls to the owner's word of that day, several can be born, N children one record each): among `conversion.birth_of`'s exact lists, the lightest first, the heaviest whose children's walls summed, SUM over the children of count_wall(child) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`, `born_list`), the comparison cross-multiplied, exact in the integers with no division and no rounding; None where no list fits, nothing then born; two distinct lists at one heaviest sum refused by name (The conversion's rule, several exact lists)."""
-    fitting = [
-        (walls, table) for walls, table in list_walls(families, parent, action) if walls * over <= energy
-    ]
-    if not fitting:
-        return None
-    heaviest = max(walls for walls, _table in fitting)
-    tables = [table for walls, table in fitting if walls == heaviest]
-    if len(tables) > 1:
-        raise RuntimeError(
-            f"two quanta of {families[parent].name!r} meeting with the energy {energy} / {over} have "
-            f"{len(tables)} exact lists at the heaviest walls {heaviest}: "
-            f"{[[families[out].name for out, _sense in table] for table in tables]}; the law has no "
-            "share among them (The conversion, several exact lists refused by name; Matter's birth from light)"
-        )
-    return tables[0]
+    """The list the meeting of two quanta of a gapless family births at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light, the owner's word, 05:2x UTC: the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; the former clause, the lightest within the threshold 2 x 3 den T, kept by name): among `conversion.birth_of`'s lists, the lightest first, the heaviest whose children's walls summed, SUM over the children of count_wall(child) (`list_walls`; the pair's two walls, 2 x 3 T sqrt(den^2 - num^2), `loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`, `born_list`), the comparison cross-multiplied, exact in the integers with no division and no rounding; None where no list fits, nothing then born. The list's children are laid one record each (`born_items`), so a longer list, once the law selects one, lays its N records through this same path."""
+    fitting = [table for walls, table in list_walls(families, parent, action) if walls * over <= energy]
+    return fitting[-1] if fitting else None
 
 
 @cache

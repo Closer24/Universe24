@@ -41,10 +41,15 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_exact_kept_and_ordered_by_their_walls": (
-        14,
-        "Matter's birth from light, N children one record each (2026-10-24, the owner's word, several can be born): the exact "
-        "lists two light quanta make, each exact and kept, at most 2 + BEYOND children, lightest first by their summed walls",
+    "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
+        16,
+        "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "
+        "selects among the conjugate pairs, birth_of gives those, exact, kept, lightest first; lists_of the general enumeration with the test's bound",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_a_list_of_four_children_lays_four_records_through_the_same_path": (
+        20,
+        "the same sentence's path for N: a four-child list handed to born_items lays two records of each family at the list's senses, "
+        "each record's Wronskian its child's sense, the holder's four reader rows written after one interval",
     ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense": (
         30,
