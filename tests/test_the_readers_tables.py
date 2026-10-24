@@ -391,13 +391,13 @@ def test_the_back_in_time_window_runs_forward_to_k_with_no_snapshot_then_the_win
 
 
 def test_the_seven_tables_read_the_committed_record_through_the_command_line(tmp_path):  # type: ignore[no-untyped-def]
-    """The smoke check: the CLI with the eras and nodes logs beside the committed record writes the thirteen tables; 26 epochs over 7 cycles (the clicks at 30 in the first rise), the ledger's 7 rows with nothing erased, 125 proton lists in the births, the tracks and the clock tables unreadable with their keys named."""
+    """The smoke check: the CLI with the eras and nodes logs beside the committed record (main b7c648829, 2026-10-24) writes the thirteen tables; 10 epochs over 3 cycles with every line of the clicks log in the first rise (the densest clicks at 13, 39 credits), the ledger's 3 rows with nothing erased across the 2 returns, 7 proton, 14 electron and 33 neutron lists in the births, five tracks (light's and the two born pairs' four records, no identity with two closes), no distance (fewer than two bodies' tracks), 14 dilation rows within one interval of the content's clock, 21 spacing spans at 7 Nodes with the sign -1 and no span after a return."""
     out = tmp_path / "readings_clicks.json"
     logs = [str(RECORD / f"universe24.{kind}.jsonl") for kind in ("clicks", "eras", "nodes")]
     READER.main([logs[0], "--eras", logs[1], "--nodes", logs[2], "--out", str(out)])
     tables = json.loads(out.read_text("utf-8"))
-    assert tables["shape"] == [5, 5, 5] and len(tables["density"]["epochs"]) == 26
-    assert tables["density"]["densest"] == {"interval": 30, "credits": 125}
+    assert tables["shape"] == [5, 5, 5] and len(tables["density"]["epochs"]) == 10
+    assert tables["density"]["densest"] == {"interval": 13, "credits": 39}
     assert [e["name"] for e in tables["density"]["epochs"]][:6] == [
         "bang",
         "rise",
@@ -406,12 +406,28 @@ def test_the_seven_tables_read_the_committed_record_through_the_command_line(tmp
         "return",
         "rise",
     ]
-    assert len(tables["ledger"]["rows"]) == 7 and tables["ledger"]["finding"].startswith(
-        "Nothing erased across the 6 returns"
+    assert len(tables["ledger"]["rows"]) == 3 and tables["ledger"]["finding"].startswith(
+        "Nothing erased across the 2 returns"
     )
-    assert tables["births"]["total"] == {"proton": {"shown": "proton", "lists": 125, "records": 250}}
-    assert (
-        tables["tracks"]["note"] == READER.lacking("identity")
-        and tables["dilation_vs_clock"]["rows"] == []
+    assert tables["births"]["total"] == {
+        "point 0 0 2": {"shown": "point 0 0 2 (electron)", "lists": 14, "records": 28},
+        "point 0 2 0": {"shown": "point 0 2 0 (neutron)", "lists": 33, "records": 66},
+        "point 2 0 0": {"shown": "point 2 0 0 (proton)", "lists": 7, "records": 14},
+    }
+    assert [r["identity"] for r in tables["tracks"]["rows"]] == [
+        [2, 0],
+        [18, 0],
+        [18, 1],
+        [24, 0],
+        [24, 1],
+    ]
+    assert tables["distance"]["note"] == "fewer than two bodies' tracks"
+    dilation = tables["dilation_vs_clock"]
+    assert len(dilation["rows"]) == 14 and dilation["verdict"].endswith("at every where judged (14)")
+    spacing = tables["spacing_vs_length"]
+    assert (spacing["relation"]["spans"], spacing["relation"]["sign"], len(spacing["rows"])) == (
+        21,
+        -1,
+        7,
     )
-    assert tables["spacing_vs_length"]["note"] == "one credit per where: no spacing"
+    assert [side["after"]["spans"] for side in spacing["sides"]] == [0, 0]
