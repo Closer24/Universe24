@@ -178,7 +178,7 @@ def parts(interval: int, family: str, node_detector: str, levels: list[list[int]
 def credit(
     interval: int,
     family: str,
-    node_detector: str,
+    node_detector: object,  # the reader's name, or the Node's x-major index for the board's own report
     window: list[int],
     proper: int,
     windows: int,
