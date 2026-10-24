@@ -11,8 +11,8 @@ from event_universe import records, seed, world_files
 from event_universe.emission import emitted_lines
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
-from event_universe.world_files import load_world
 from event_universe.loader.circle import vector_of
+from event_universe.world_files import load_world
 from tests.laws_universe import bare_torus, small_universe
 
 INTERVALS, SIDE, BIRTH = (

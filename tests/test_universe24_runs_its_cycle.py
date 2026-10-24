@@ -29,8 +29,12 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     parsed = parse_world(world, files, input_digest(world))  # (1) the bare world, accepted
     names = [family.name for family in parsed.families]
     assert names[:3] == [VOLUME, SIGN, MASSLESS] and names[parsed.seed] == MASSLESS
-    assert len(names) == 3 + 3**3 - 1 and all(vector_of(name) is not None for name in names[3:])  # the three-prime den's 26 points
-    assert all(family.plane for family in parsed.families[3:])  # every point a plane until the kind sentence
+    assert len(names) == 3 + 3**3 - 1 and all(
+        vector_of(name) is not None for name in names[3:]
+    )  # the three-prime den's 26 points
+    assert all(
+        family.plane for family in parsed.families[3:]
+    )  # every point a plane until the kind sentence
     emptied = {**world, "bodies": []}  # the declared bodies, a key refused since 2026-10-24
     with pytest.raises(ValueError, match="unknown key 'bodies'"):
         parse_world(emptied, files, input_digest(emptied))

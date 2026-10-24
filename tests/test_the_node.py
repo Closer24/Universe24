@@ -1,7 +1,5 @@
 """The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand on arrays, the share and the well as readings, the complement remainders of a mirrored line, the held write's walls at the doubled wall; and the tension as Rule3's own conservation of the current on a periodic cube at the one universe file's matter pair (examples/events/universe24), the stress reading the Links' (the owner's rule of 2026-10-24: the law's sentences at one Node, generic, no world but the bare torus)."""
 
-import json
-
 import numpy as np
 
 from event_universe import flux, node, readings, records, share
@@ -9,9 +7,8 @@ from event_universe.core import paces
 from event_universe.core.ports import LINK_UNIT, Wrap
 from event_universe.core.rule3 import coefficients, mass, rule3
 from event_universe.loader.derived import HeldWrite, family_rules, held_write_of
-from event_universe.loader.universe import universe_of
+from event_universe.loader.universe import SIGN, VOLUME, universe_of
 from tests.laws import real_rows
-from event_universe.loader.universe import SIGN, VOLUME
 from tests.laws_universe import SMALL
 
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
@@ -23,7 +20,9 @@ INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 
 UNIT = LINK_UNIT  # the Link's unit G, the engine's (2026-10-24; the universe's key to that day)
 NAMES = [family.name for family in FAMILIES]
 GRAVITY, CHARGE = NAMES.index(VOLUME), NAMES.index(SIGN)
-MATTER = next(i for i, f in enumerate(FAMILIES) if f.plane)  # a point of den's circle, a gapped pair for the rule's identities
+MATTER = next(
+    i for i, f in enumerate(FAMILIES) if f.plane
+)  # a point of den's circle, a gapped pair for the rule's identities
 GAMMA, T = INTEGERS["node_clock"], INTEGERS["quantum_action"]
 WALLS = [held_write_of(FAMILIES, i, T).walls if f.held else () for i, f in enumerate(FAMILIES)]
 

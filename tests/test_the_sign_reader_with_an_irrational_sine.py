@@ -16,13 +16,22 @@ UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.js
 
 def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagorean_one_admitted():
     sign = {"name": "charge", "pair": [1000, 1000]}  # the holder of the sign, the held massless row
-    proton, electron = {"name": "proton", "pair": [0, 1000], "dimension": 2}, {"name": "electron", "pair": [800, 1000], "dimension": 2}
-    resolved(sign, proton, electron, node_clock=1000, quantum_action=36_000)  # [800, 1000]: the sine 600, Pythagorean, admitted
+    proton, electron = (
+        {"name": "proton", "pair": [0, 1000], "dimension": 2},
+        {"name": "electron", "pair": [800, 1000], "dimension": 2},
+    )
+    resolved(
+        sign, proton, electron, node_clock=1000, quantum_action=36_000
+    )  # [800, 1000]: the sine 600, Pythagorean, admitted
     electron["pair"] = [666, 1000]  # 1,000,000 - 443,556 = 556,444, no square
-    refusal = refused(IRRATIONAL, resolved, sign, proton, electron, node_clock=1000, quantum_action=36_000)
+    refusal = refused(
+        IRRATIONAL, resolved, sign, proton, electron, node_clock=1000, quantum_action=36_000
+    )
     assert "'electron'" in str(refusal) and "556444" in str(refusal) and "2026-10-24" in str(refusal)
     _integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
-    assert all(sine_of(f.pair) is not None for f in families if f.plane)  # every derived plane Pythagorean
+    assert all(
+        sine_of(f.pair) is not None for f in families if f.plane
+    )  # every derived plane Pythagorean
 
 
 def test_the_one_universe_with_a_family_row_written_back_is_refused_by_name(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]

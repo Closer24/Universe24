@@ -1,6 +1,5 @@
 """The lattice momentum (ALGEBRA.md, The lattice momentum, a theorem of Rule3; readings.momentum_of, features/currents `momentum_terms`): P_a = SUM_i (F_(i,i-a) - F_(i,i+a)) in the current's own unit, F_ij = num (now_i before_j - before_i now_j), conserved exactly by the rational step at uniform paces on a periodic board and to the floors on the integers, every step's move below the hands' bound 2 num SUM_i |now_(i+a) - now_(i-a)|, a walk of mean 0; a wave along +x has P_x above 0 and P_y = P_z = 0. On a 3-cube torus of the one universe file's light family stepped by the engine's own `flux.step_line`."""
 
-import json
 import math
 from fractions import Fraction
 
@@ -8,8 +7,7 @@ import numpy as np
 
 from event_universe import flux, node, readings, records
 from event_universe.core.ports import LINK_UNIT, PORT_SIDES, Wrap
-from event_universe.loader.universe import universe_of
-from event_universe.loader.universe import MASSLESS
+from event_universe.loader.universe import MASSLESS, universe_of
 from tests.laws_universe import CUBE, SMALL
 
 INTEGERS, FAMILIES = universe_of(SMALL)

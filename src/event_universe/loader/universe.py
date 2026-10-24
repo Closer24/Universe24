@@ -1,4 +1,4 @@
-"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma and the quantum's action T (`INTEGER_KEYS`; the width derived, `loader/rooms.width_of`, and the Link unit the engine's, `core/ports.LINK_UNIT`, the two keys refused by name, `GONE_INTEGERS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign and the holder of the volume, both at the massless point (den, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a plane row named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`; every point a plane until the kind sentence lands, the engine's stand-in and no sentence of the law), then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
+"""The universe file: one object of integers and no family row (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md #a-familys-declaration, The circle of den): den, the Node clock Gamma and the quantum's action T (`INTEGER_KEYS`; the width derived, `loader/rooms.width_of`, and the Link unit the engine's, `core/ports.LINK_UNIT`, the two keys refused by name, `GONE_INTEGERS`); the rows the engine's internals carry derived at load from den (`rows_of`): the massless point (den, den) on one real line, the seed every world is laid with (`MASSLESS`), the holder of the sign and the holder of the volume, both at the massless point (den, den), each built by its role (`sign_holder`, `volume_holder`, `volume_pair`, the one place the volume's pair is fixed; the owner's word of 2026-10-24, "no declarations"), and every Pythagorean point of den's circle in the open quadrant as a row of two lines named by its exponent vector over den's primes (`loader/circle.circle_points`, `label_of`): the room from the pair alone, one line for the massless point and two for a point with a gap, the kind read from the lines at the Node (the builder's hypothesis of 2026-10-24, The kind is read from the lines: one line a real line, two in quadrature a plane with the charge the Wronskian per quantum and the sense its sign, `records.wronskian`, `share.by_charge`), no `dimension` anywhere, then the reads, the records and the sign holder's alpha derived as before (`resolved`; `derived.with_reads`, `derived.alpha_of`); the gone key `families` refused by name with the derivation that replaced it (`GONE`, `gone_refused`) (ENGINE.md section 4)."""
 
 from __future__ import annotations
 
@@ -28,16 +28,24 @@ GONE_INTEGERS = {  # the file's integers to 2026-10-24 that are the engine's and
         "former declaration, kept by name"
     ),
 }
-MASSLESS, SIGN, VOLUME = "massless", "sign", "volume"  # the three rows every den carries, named by what they are
+MASSLESS, SIGN, VOLUME = (
+    "massless",
+    "sign",
+    "volume",
+)  # the three rows every den carries, named by what they are
 GONE = {  # the file's gone keys and the derivation that replaced each (the owner's word of 2026-10-24; the old kept by name)
     "families": (
         "the families are no rows of the file (2026-10-24, the owner's word: declaring a family is forbidden, they "
         "must emerge by themselves at the click): the file holds den with the clock and the unit, and the loader "
         "derives at load the massless point (den, den) on one real line, the holder of the sign and the holder "
         "of the volume, both at (den, den), and every Pythagorean point of den's circle as "
-        "a plane row named by its exponent vector over den's primes (ALGEBRA.md #a-familys-declaration, The "
-        "circle of den; the keys `families` with `name`, `pair` and `dimension` the former declaration, kept by "
-        "name)"
+        "a row of two lines named by its exponent vector over den's primes; the kind is read from the lines "
+        "(the builder's hypothesis under its own name, 2026-10-24: a record of one line is a real line, "
+        "neutral; of two lines in quadrature a plane, its charge the Wronskian per quantum and its sense the "
+        "sign; a born child's kind follows from its list's charge), so the room is the pair's alone, one line "
+        "for the massless point and two for a point with a gap, and `dimension` is refused with the rest of the "
+        "row (ALGEBRA.md #a-familys-declaration, The circle of den, The kind is read from the lines; the keys "
+        "`families` with `name`, `pair` and `dimension` the former declaration, kept by name)"
     ),
 }
 
@@ -69,7 +77,7 @@ def volume_pair(den: int) -> tuple[int, int]:
 
 
 def rows_of(integers: dict[str, int]) -> list[Row]:
-    """The rows derived from den (the module's sentence): the holder of the volume and the holder of the sign, each by its role, then the massless point on one real line (`sign_holder`, `volume_holder`, `volume_pair`), and den's circle, every point of the open quadrant a plane row named by its vector (`circle_points`, `label_of`)."""
+    """The rows derived from den (the module's sentence): the holder of the volume and the holder of the sign, each by its role, then the massless point on one real line (`sign_holder`, `volume_holder`, `volume_pair`), and den's circle, every point of the open quadrant a row of two lines (the room of a pair with a gap, the kind read from the lines) named by its vector (`circle_points`, `label_of`)."""
     den = integers["den"]
     rows = [  # the holders first, the volume's before the sign's, as the one world's file stood (its first held row the volume's)
         volume_holder(VOLUME, volume_pair(den)),

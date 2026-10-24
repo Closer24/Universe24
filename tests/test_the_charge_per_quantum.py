@@ -8,22 +8,25 @@ from dataclasses import replace
 import numpy as np
 
 from event_universe import records, world_files
+from event_universe.core.ports import LINK_UNIT
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
-from event_universe.core.ports import LINK_UNIT
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
+from event_universe.loader.circle import circle_points, lightest_point
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.share import charge_at
 from event_universe.take import Item
 from event_universe.world_files import load_world
-from event_universe.loader.circle import circle_points, lightest_point
-from tests.laws import EVENTS, ROOT, refused, resolved
+from tests.laws import EVENTS, refused, resolved
 from tests.laws_universe import SMALL, small_universe
 
 GAMMA, T = 1000, 36_000
 DEN = 53_567_765
-SIGN = {"name": "charge", "pair": [GAMMA, GAMMA]}  # the holder of the sign, the held massless row, by hand
+SIGN = {
+    "name": "charge",
+    "pair": [GAMMA, GAMMA],
+}  # the holder of the sign, the held massless row, by hand
 SIGN_ROW = "sign"  # the loader's own name for it (loader/universe.SIGN)
 
 
@@ -134,7 +137,9 @@ def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path
     for _ in range(40):
         board.step()
         largest.append(max(holder_rows(board)))
-    assert births and all(b["children"][0] in points_of(board) for b in births)  # pairs of the den's points born
+    assert births and all(
+        b["children"][0] in points_of(board) for b in births
+    )  # pairs of the den's points born
     assert 0 < max(largest) < 16_427
 
 
@@ -142,8 +147,12 @@ def test_the_lightest_point_of_the_circle_is_the_electrons_pair():
     """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The lightest point is the electron): s_min(den) by `lightest_point`, the least leg among `circle_points`, at the former den and at the one universe's enlarged den, whose file holds den alone (the same day's later word: no family row), the point the pages caption electron."""
     num, s = lightest_point(DEN)
     assert (num, s) == (53_567_757, 29_276) and num * num + s * s == DEN * DEN
-    den = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))["integers"]["den"]
-    assert den == 13_586_597 * 132_260_701 * 649_421 and lightest_point(den)[1] == 633_202_287_062_780_012
+    den = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))[
+        "integers"
+    ]["den"]
+    assert (
+        den == 13_586_597 * 132_260_701 * 649_421 and lightest_point(den)[1] == 633_202_287_062_780_012
+    )
     for d in (DEN, den, 1000, 65):
         assert lightest_point(d) == min(((n, s) for _v, n, s in circle_points(d)), key=lambda p: p[1])
     assert [lightest_point(d) for d in (1000, 5, 65, 25)] == [(960, 280), (4, 3), (63, 16), (24, 7)]

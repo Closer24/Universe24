@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from fractions import Fraction
 
 import numpy as np
@@ -11,14 +10,16 @@ from event_universe import flux, node, plane, records
 from event_universe.core.ports import LINK_UNIT, PORT_SIDES, Wrap
 from event_universe.core.rule3 import rule_integers
 from event_universe.loader.derived import held_write_of
-from event_universe.loader.universe import universe_of
-from event_universe.loader.universe import SIGN
+from event_universe.loader.universe import SIGN, universe_of
 from tests.laws_universe import CUBE, GAMMA, SMALL
 
 INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 NAMES = [family.name for family in FAMILIES]
 CHARGE = NAMES.index(SIGN)
-ELECTRON = min((i for i, f in enumerate(FAMILIES) if f.plane), key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2)  # the least leg, the lighter point
+ELECTRON = min(
+    (i for i, f in enumerate(FAMILIES) if f.plane),
+    key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2,
+)  # the least leg, the lighter point
 PAIR, UNIT, T = FAMILIES[ELECTRON].pair, LINK_UNIT, INTEGERS["quantum_action"]
 SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
 

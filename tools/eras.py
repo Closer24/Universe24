@@ -18,9 +18,9 @@ import numpy as np
 from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
+from event_universe.lattice import Lattice
 from event_universe.loader import circle
 from event_universe.loader.circle import lightest_point
-from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -189,10 +189,12 @@ def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, An
         "width": world.width.bit_length(),
         "shape": list(world.shape),
         "den": den,
-        "primes": [list(prime) for prime in circle.factored(den)],
+        "primes": [[prime, power] for prime, power in sorted(circle.factors(den).items())],
         "seed": seed,
         "families": [family.name for family in world.families],
-        "points": {circle.label_of(vector): [num, sine] for vector, num, sine in circle.circle_points(den)},
+        "points": {
+            circle.label_of(vector): [num, sine] for vector, num, sine in circle.circle_points(den)
+        },
         "held": held,
         "amplitude_bound": world.amplitude_bound,
         "lightest_point": point,

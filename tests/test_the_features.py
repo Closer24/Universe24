@@ -72,7 +72,11 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
 
 def universe(*rows: dict, **integers: int) -> tuple[dict[str, int], tuple]:  # type: ignore[type-arg]
     """The rows given, by hand, resolved at Gamma 10,000, T 64, the width 63 and the Link unit 1, but for `integers` (tests.laws.resolved; the files carry no row since 2026-10-24)."""
-    integers = {"node_clock": GAMMA, "quantum_action": 64, **integers}  # the width derived, G the engine's (2026-10-24)
+    integers = {
+        "node_clock": GAMMA,
+        "quantum_action": 64,
+        **integers,
+    }  # the width derived, G the engine's (2026-10-24)
     return integers, resolved(*rows, **integers)
 
 
@@ -93,7 +97,7 @@ PLANE = {"name": "stuff", "pair": [3600, 6000], "dimension": 2}  # a Pythagorean
 
 def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_the_weight_one():
     """The derived read and the derived write (the owner's word of 2026-10-24, no declarations; ALGEBRA.md #the-paces, The reads are derived; #a-familys-declaration, The holders are derived): a universe of two holders of the volume, `hollow` [3, 4] and `core` [1, 2], both gapped, and two real-line families of matter's pair, `stuff` and `other`; the loader derives that every row but the holder of the sign reads every holder of the volume at 1, the holders themselves among the readers (Every row reads the content), every level weight 1 and every write weight 1. On random levels of a periodic 3-cube: every family's content is the two holders' time lines summed, every Link's factor G^2, the rule of `stuff` the law's line at the composed paces of that content; each holder is sourced by `stuff` and `other` (the reciprocity), each source's numerator its form scaled by the write's factor at the weight 1 x 1, the level gaining (numerator + r) div (E_s T) with the remainder in [0, wall), the write back exact; `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a row carrying the gone key `reads` or `held`, each refusal naming the derivation that replaced it; a universe of the sign holder and a real line gives the line no read of the sign and the sign holder none at all, and a plane the sign at 1; on a board of two Nodes with the sign holder at -5 and 5 the plane's turn's numerators are -5 and 5, the signed level, and its content read is the integer 0, the holder's level entering no content (the one act, the mathematician's 117 III); the tests' universe at T 36,000 with the charged row carries alpha = E_h T / Gamma = 6 inside the sign holder's write; a plane reading the sign with an irrational sine (the deuteron's nuclide [4004, 6000] of examples/events/deuteron.json, the record of the law to 2026-10-23) is refused by name; and the tests' universe with the charged row and the one world's file, as the loader derives them, read as the sentences say: every holder of the volume by every row but the sign holder, the sign holder by every plane, the write weight 1 on every holder of the volume and alpha on the sign holder. The declared reads, level weights 5 and 7, write weights 3 and -1 (a negative write weight, the core's hill) and the refusals of a weight 0, of a read of no held row, of the sign holder naming itself and of a real line naming the sign (the tests of the law to 2026-10-24) kept by name."""
-    integers, families = (universe(HOLLOW, CORE, STUFF, OTHER))
+    integers, families = universe(HOLLOW, CORE, STUFF, OTHER)
     hollow, core, stuff, other = range(4)
     reads = [[(r.family, r.weight) for r in f.reads] for f in families]
     assert reads == [[(0, 1), (1, 1)]] * 4 and readers_of(families, hollow) == [stuff, other]
@@ -231,7 +235,9 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         "name": "slower",
         "pair": [4800, 6000],
     }  # a second Pythagorean plane (2026-10-24; [3000, 6000], its sine irrational, until then)
-    integers, families = universe(SIGN, plane, moving, quantum_action=15_000)  # two moving planes of different pairs under one holder load (the charge's universality, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
+    integers, families = universe(
+        SIGN, plane, moving, quantum_action=15_000
+    )  # two moving planes of different pairs under one holder load (the charge's universality, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
     assert (families[0].write_weight, families[0].write_wall) == (
         3,
         2,

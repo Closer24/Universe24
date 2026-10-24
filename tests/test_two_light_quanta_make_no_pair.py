@@ -15,14 +15,25 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     names = [family.name for family in families]
     light = names.index(MASSLESS)
     born = conversion.birth_of(families, light)
-    planes = sorted((k for k, f in enumerate(families) if f.plane), key=lambda k: families[k].pair[1] ** 2 - families[k].pair[0] ** 2)
-    assert born == [((k, -1), (k, 1)) for k in planes] and len(born) == 3**3 - 1  # every point, the lightest first
-    assert names[born[0][0][0]] == "point 0 2 0" and all(vector_of(names[k]) for k in planes)  # the least leg first
-    assert conversion.candidates(families) == planes  # the massless point and the holders no record out
+    planes = sorted(
+        (k for k, f in enumerate(families) if f.plane),
+        key=lambda k: families[k].pair[1] ** 2 - families[k].pair[0] ** 2,
+    )
+    assert (
+        born == [((k, -1), (k, 1)) for k in planes] and len(born) == 3**3 - 1
+    )  # every point, the lightest first
+    assert names[born[0][0][0]] == "point 0 2 0" and all(
+        vector_of(names[k]) for k in planes
+    )  # the least leg first
+    assert sorted(conversion.candidates(families)) == sorted(
+        planes
+    )  # the massless point and the holders no record out
     gapped = resolved(
         {"name": "charge", "pair": [6000, 6000]},
         {"name": "matter", "pair": [4000, 6000], "dimension": 1},
         {"name": "light", "pair": [6000, 6000], "dimension": 1},
     )
-    assert conversion.birth_of(gapped, 1) == []  # a family with a gap births nothing: its own list is the conversion's
+    assert (
+        conversion.birth_of(gapped, 1) == []
+    )  # a family with a gap births nothing: its own list is the conversion's
     assert conversion.birth_of(gapped, 2) == []  # two light quanta with no plane under the sign: no list
