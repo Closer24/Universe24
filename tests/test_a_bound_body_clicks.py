@@ -74,8 +74,15 @@ def test_the_lone_pairs_two_records_click_at_their_node_with_their_identities(
     clicks = sum(1 for row in bodies if row["identity"][0] == family)
     assert board.credit.counts[family] == laid + clicks and board.credit.deficits.get(family) == -clicks
     gamma = SMALL["integers"]["node_clock"]
-    assert gamma and bound_body.period_of(board.families[family].pair) in (8, 9)
-    assert bound_body.period_of(board.families[seed].pair) == 0  # the massless pair never turns: no body
+    assert (
+        gamma
+        and all(
+            int(board.beats[tuple(row["identity"])][tuple(row["support"])]) in (8, 9) for row in at_first
+        )
+    )  # the beat's period read at the Node from the record's own line, the count between two upward zero crossings
+    assert all(
+        k != seed for k, _ in bound_body.body_records(board)
+    )  # the massless pair never turns: no body
 
 
 def test_the_lone_pairs_clicks_run_the_same_by_three_slabs(

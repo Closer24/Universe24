@@ -100,7 +100,9 @@ class Lattice:
         )  # the count of every Node's own closes, the board's own clicks there, read by the click's view as `windows`
         self.standing: dict[
             tuple[int, int], np.ndarray
-        ] = {}  # per record of a charged family the intervals it has stood at a whole quantum of its own unit at every Node, the bound body's window counted by the Node (meeting_board.bodies_closing, 2026-10-24)
+        ] = {}  # per record of a charged family the intervals it has stood at a whole quantum of its own unit at every Node, the bound body's window counted by the Node (bound_body.bodies_closing, 2026-10-24); `crossed` and `beats` beside it per record, the intervals since the last upward zero crossing of the record's own line at every Node (0 before the first) and the beat's period read there, the count between the last two upward crossings, 0 until two have been seen (bound_body.beats_of)
+        self.crossed: dict[tuple[int, int], np.ndarray] = {}
+        self.beats: dict[tuple[int, int], np.ndarray] = {}
         self.turned = np.zeros(
             self.shape, dtype=bool
         )  # the Nodes the fifth act turned this interval (swap.acted), a reading beside `swaps`, read per slab by the slabs' runner (slabs.py)

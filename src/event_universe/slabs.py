@@ -52,7 +52,7 @@ def wrapped(layer: int, extent: int) -> int:
 
 
 def arrays_of(board: Lattice) -> list[Any]:
-    """Every array over the Nodes a lattice's state holds, in one fixed order (`rebuilt` reads the same): per family every line's two levels and remainder, the write remainders and every phase line's three arrays, then the time count and the closes."""
+    """Every array over the Nodes a lattice's state holds, in one fixed order (`rebuilt` reads the same): per family every line's two levels and remainder, the write remainders and every phase line's three arrays, then the time count, the closes and per record of a charged family its standing count, its intervals since the last upward crossing and its beat."""
     found: list[Any] = []
     for state in board.states:
         for line in state.lines:
@@ -62,7 +62,13 @@ def arrays_of(board: Lattice) -> list[Any]:
             for line in row:
                 found += [line.now, line.before, line.remainder]
     return (
-        found + [board.proper_count, board.closes] + [board.standing[key] for key in body_records(board)]
+        found
+        + [board.proper_count, board.closes]
+        + [
+            kept[key]
+            for key in body_records(board)
+            for kept in (board.standing, board.crossed, board.beats)
+        ]
     )
 
 
@@ -78,8 +84,10 @@ def rebuilt(board: Lattice, arrays: list[Any]) -> None:
         state.write_remainders = [next(given) for _ in state.write_remainders]
         state.phases = [[record() for _ in row] for row in state.phases]
     board.proper_count, board.closes = next(given), next(given)
-    for key in body_records(board):  # the bodies' standing counts, the window counted by the Node
-        board.standing[key] = next(given)
+    for key in body_records(
+        board
+    ):  # per record of a charged family the standing count, the intervals since the last upward crossing and the beat: the window counted and the period read by the Node
+        board.standing[key], board.crossed[key], board.beats[key] = next(given), next(given), next(given)
 
 
 def selection(axis: int, layers: list[int]) -> tuple[Any, ...]:

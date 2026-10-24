@@ -46,12 +46,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
-    ("bound_body.py", "period_of", "gcd"): "D",  # the recurrence's pair reduced, Euclid once per step
-    (
-        "bound_body.py",
-        "period_of",
-        "division_forward",
-    ): "D",  # the beat's period: the sine recurrence's pair reduced by its gcd, exact
     (
         "bound_body.py",
         "bodies_closing",
