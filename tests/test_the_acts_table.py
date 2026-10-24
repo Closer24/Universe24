@@ -47,7 +47,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
     (
-        "meeting_board.py",
+        "bound_body.py",
+        "bodies_closing",
+        "division_forward",
+    ): "D",  # the light at the body's Node over the record's unit, once per window's close
+    (
+        "hole.py",
         "take_of.fallen",
         "division_forward",
     ): "D",  # the take's fall in the current's units, the exact numerator over the common denominator, once per level compared (2026-10-24, the one-Link form)

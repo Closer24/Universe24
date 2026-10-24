@@ -148,6 +148,10 @@ def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volum
         at = tuple(int(a) for a in np.unravel_index(int(line["node_detector"]), board.shape))
         closes[at] = closes.get(at, 0) + 1
         assert line[PROPER] == floors[line["interval"]][at] and line[WINDOWS] == closes[at]
+        if (
+            line["identity"][0] != board.world.seed
+        ):  # a bound body's credit: its record's lines read in order where they differ
+            continue
         momentum = line[MOMENTUM]
         assert (momentum is None) == (line["point"] is None)
         assert momentum is None or all(

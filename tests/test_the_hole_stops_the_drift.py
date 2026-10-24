@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from event_universe import credit, digits, meeting_board, share, world_files
+from event_universe import credit, digits, hole, meeting_board, share, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import universe
 from event_universe.world_files import load_world
@@ -61,12 +61,25 @@ def test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube(tmp
         assert light_of(board) > 0
     for interval, (before, after) in kept.items():
         births, refused = events(lines, "birth", interval), events(lines, "refused", interval)
+        bodies = [
+            row for row in events(lines, "credit", interval) if row["identity"][0] != board.world.seed
+        ]
+        takes = births + list(
+            {tuple(row["support"]): row for row in bodies}.values()
+        )  # the births' takes and the bound bodies', one take per Node for its records' units summed
         assert after <= before
-        assert all(0 <= row["excess"] < row["step"] and row["walls"] > 0 for row in births)
-        assert all(row["taken"] == row["walls"] + row["excess"] for row in births)
-        if births and apart([row["nodes"][0] for row in births], board.shape):
-            assert before - after == sum(row["taken"] for row in births)
-        if refused and not births:
+        assert all(0 <= row["excess"] < row["step"] and row["walls"] > 0 for row in takes)
+        assert all(row["taken"] == row["walls"] + row["excess"] for row in takes)
+        if takes and apart(
+            [row["nodes"][0] if "nodes" in row else row["support"] for row in takes], board.shape
+        ):
+            assert before - after == sum(row["taken"] for row in takes), (
+                interval,
+                [row.get("nodes") or row.get("support") for row in takes],
+            )
+        if (
+            refused and not takes
+        ):  # a refused close with no birth and no body's click leaves the light standing
             assert after == before and all(
                 row["amount"] < row["bound"] for row in refused if row["cause"] == "stop"
             )
@@ -103,9 +116,9 @@ def test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands(tmp_pa
 def test_every_take_is_read_before_any_hole_is_written(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """Every face before any write (the hole's clause): within every close of the 3-cube every read of the frame's shares precedes the first hole written, so the takes of a close are read on the one state the write acts on and the order of the Nodes enters no number."""
     board, order = hole_seed(tmp_path, monkeypatch, 3, 16, []), []
-    real_read, real_laid = meeting_board.taken_at, meeting_board.laid
+    real_read, real_laid = hole.taken_at, meeting_board.laid
     monkeypatch.setattr(
-        meeting_board,
+        hole,
         "taken_at",
         lambda *a: (order.append((board.interval, "read")), real_read(*a))[1],
     )
@@ -125,7 +138,7 @@ def test_every_take_is_read_before_any_hole_is_written(tmp_path, monkeypatch):  
 def test_nothing_is_booked_without_its_lay_and_the_first_births_charge_is_the_books(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The Boss's default of 2026-10-24: a close whose children's lay would be refused births nothing and takes nothing, so no quantum is booked without its lay: on the 3-cube over 40 intervals every charged family's deficit stays 0 and its books count the children its birth lines name, the refusals of the cause "lay" name a share above the unit, and at a family's first birth the charge read from the board (`credit.count_of`, over T div 2) equals the books. Measured and named, not asserted: a lay onto a Node where the family's earlier wave stands below one unit superposes with it and the Wronskian's cross terms move the charge off the count (the eight corners at the close 16: the charge 24 against the books' 20), the architect's open sentence (FURTHER_RESEARCH.md)."""
+    """The Boss's default of 2026-10-24: a close whose children's lay would be refused births nothing and takes nothing, so no quantum is booked without its lay but a bound body's own click, whose quantum enters its record in the books where the record stands above one quantum (the beam's rule): on the 3-cube over 40 intervals every charged family's deficit is the count of its bodies' clicks and its books count the children its birth lines name plus those clicks, the refusals of the cause "lay" name a share above the unit, and at a family's first birth the charge read from the board (`credit.count_of`, over T div 2) equals the books. Measured and named, not asserted: a lay onto a Node where the family's earlier wave stands below one unit superposes with it and the Wronskian's cross terms move the charge off the count (the eight corners at the close 16: the charge 24 against the books' 20), the architect's open sentence (FURTHER_RESEARCH.md)."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
     charged, first = [k for k in board.order if share.charged(board.families[k])], {}
@@ -134,9 +147,10 @@ def test_nothing_is_booked_without_its_lay_and_the_first_births_charge_is_the_bo
         for k in charged:
             name, births = board.families[k].name, [row for row in lines if row.get("event") == "birth"]
             laid = sum(row["children"].count(name) for row in births)
-            assert board.credit.deficits.get(k, 0) == 0 and board.credit.counts[k] == laid, (
-                board.interval
-            )
+            clicks = sum(1 for row in lines if row.get("event") == "credit" and row["identity"][0] == k)
+            assert (
+                board.credit.deficits.get(k, 0) == -clicks and board.credit.counts[k] == laid + clicks
+            ), board.interval
             if laid and k not in first:
                 first[k] = credit.count_of(board, k) == laid
     lays = [row for row in lines if row.get("event") == "refused" and row["cause"] == "lay"]

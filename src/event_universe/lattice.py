@@ -98,6 +98,9 @@ class Lattice:
         self.closes = np.zeros(
             self.shape, dtype=np.int64
         )  # the count of every Node's own closes, the board's own clicks there, read by the click's view as `windows`
+        self.standing: dict[tuple[int, int], np.ndarray] = {}  # a body's standing count (bound_body.py)
+        self.crossed: dict[tuple[int, int], np.ndarray] = {}  # intervals since the upward crossing
+        self.beats: dict[tuple[int, int], np.ndarray] = {}  # the beat's period read at the Node
         self.turned = np.zeros(
             self.shape, dtype=bool
         )  # the Nodes the fifth act turned this interval (swap.acted), a reading beside `swaps`, read per slab by the slabs' runner (slabs.py)
