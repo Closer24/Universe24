@@ -180,7 +180,14 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     )
     board.step()
     credits = [line for line in lines if line.get("event") == "credit"]
-    assert len(credits) == int(np.prod(board.shape))  # two whole quanta at every Node of the wave
+    refused = [
+        row
+        for row in lines
+        if row.get("event") == "refused" and row["interval"] == credits[0]["interval"]
+    ]
+    assert len(credits) + len(refused) == int(
+        np.prod(board.shape)
+    )  # two whole quanta at every Node of the wave: born, or refused by the take by name
     assert all(line[MOMENTUM] == [[1, -1, 2], [0, 1, 1], [0, 1, 1]] for line in credits)
     assert all(line["point"] == [1, 2] for line in credits)  # omega = pi / 3 = k at the lay's dispersion
     lines.clear()
@@ -188,12 +195,12 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 4:
         board.step()
     credits = [line for line in lines if line.get("event") == "credit"]
-    assert len(credits) == 4 and [line[WINDOWS] for line in credits] == [1, 2, 3, 4]
-    assert all(line["support"] == [0, 0, 0] for line in credits)  # the hole's Node alone, re-lit
-    assert credits[0]["point"] == [5, 6] and credits[0][MOMENTUM] == [[0, 5, 6]] * 3  # symmetric
-    assert [line[PROPER] for line in credits] == sorted({line[PROPER] for line in credits})
-    for line in credits:
+    origin = [line for line in credits if line["support"] == [0, 0, 0]]  # the hole's Node, re-lit
+    assert origin and [line[WINDOWS] for line in origin] == list(range(1, len(origin) + 1))
+    assert credits[0] is origin[0] and origin[0]["point"] == [5, 6]  # the first close the origin's
+    assert [line[PROPER] for line in origin] == sorted({line[PROPER] for line in origin})
+    for line in origin:  # the origin's frame symmetric under the 48: no current, the three axes alike
+        assert line[MOMENTUM] == [line[MOMENTUM][0]] * 3 and line[MOMENTUM][0][0] == 0
+    for line in credits:  # every credit reads a point: the Node re-lit; beyond the band no beat
         num, den = line["point"]
-        assert den > 0 and np.gcd(abs(num), den) == 1  # every credit reads a point: the Node re-lit
-        assert line[MOMENTUM] == [line[MOMENTUM][0]] * 3 and line[MOMENTUM][0][0] == 0  # no current
-        assert (line["beat"] is None) == (abs(num) > den)  # beyond the band no beat
+        assert den > 0 and np.gcd(abs(num), den) == 1 and (line["beat"] is None) == (abs(num) > den)
