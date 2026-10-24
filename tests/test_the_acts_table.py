@@ -323,6 +323,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
     ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
+    (
+        "slabs.py",
+        "slabs_of",
+        "division_forward",
+    ): "D",  # the axis's layers among the slabs, once, no law's number
+    ("slabs.py", "wrapped", "division_forward"): "D",  # a layer's index on the torus, the halo's layer
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):

@@ -40,7 +40,7 @@ def run(folder: Path, shape: list[int], intervals: int, processes: int) -> Run:
     assert slabs.count == processes
     states = []
     for _ in range(intervals):
-        slabs.step()
+        slabs.advanced()
         states.append([np.asarray(a, dtype=object).copy() for a in arrays_of(board)])
     slabs.close()
     return states, lines, list(board.swaps)
@@ -83,7 +83,7 @@ def test_the_run_back_from_the_board_the_slabs_stepped_is_exact(tmp_path: Path) 
     board = board_of(tmp_path, [3, 3, 3], 30, lines)
     slabs, snapshots = Slabs(board, 3), {0: snapshot(board)}
     for interval in range(1, 17):
-        slabs.step()
+        slabs.advanced()
         snapshots[interval] = snapshot(board)
     slabs.close()
     assert any(line["event"] == "birth" for line in lines)

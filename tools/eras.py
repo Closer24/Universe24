@@ -302,7 +302,7 @@ def run(
             time_line = board.states[board.held[0]].lines[0] if board.held else None
             before = (whole(time_line.now), whole(time_line.before)) if time_line is not None else None
             try:
-                stepper.step()
+                stepper.advanced()
             except (ValueError, RuntimeError) as refusal:
                 line = {
                     "interval": board.interval,

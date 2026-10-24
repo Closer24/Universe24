@@ -186,7 +186,7 @@ def served(board: Lattice, axis: int, slab: range, pipe: Connection) -> None:
 
 
 class Slabs:
-    """The board stepped by slabs in processes (the module's sentence): the slabs along the longest axis, the count the fewer of the axis's layers and the machine's cores (`processes` where a caller names the count, the tests of the gate), one process per slab forked from the board at the call; `step` is one interval of the board with every act, the same integers and the same lines as `Lattice.step`; `close` ends the processes."""
+    """The board stepped by slabs in processes (the module's sentence): the slabs along the longest axis, the count the fewer of the axis's layers and the machine's cores (`processes` where a caller names the count, the tests of the gate), one process per slab forked from the board at the call; `advanced` is one interval of the board with every act, the same integers and the same lines as `Lattice.step` (the step's act list is the lattice's one list, so the runner's interval bears another name); `close` ends the processes."""
 
     def __init__(self, board: Lattice, processes: int | None = None) -> None:
         self.board, self.axis = board, axis_of(board.shape)
@@ -211,7 +211,7 @@ class Slabs:
         """The slabs' count, the processes' where above one."""
         return len(self.slabs)
 
-    def step(self) -> None:
+    def advanced(self) -> None:
         """One interval of the board through the slabs: the halo layers (or every layer after a refusal tried) sent to every slab, the answers gathered, the slabs' layers written onto the board, the board's clocks advanced as `Lattice.step` advances them, the swaps' count logged, the lines given in the board's order and the lays logged in the books, the seed's count read, the observers called; a refusal in any slab tried on the board itself; the one slab stepped by the board itself."""
         board, extent = self.board, self.board.shape[self.axis]
         if not self.pipes:
