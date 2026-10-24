@@ -171,7 +171,16 @@ def write_sources(
     for row in range(family.records):
         sources = row_sources(families, held, row)
         forms = {source: bookings.get(source, 0) for source in sources}
-        time, scale, weighed = scaled_sum(held, families, forms, rulers, gamma, intervals, row=row)
+        time, scale, weighed = scaled_sum(
+            held,
+            families,
+            forms,
+            rulers,
+            gamma,
+            intervals,
+            write.factors if family.wronskian else None,
+            row=row,
+        )  # the sign holder's charge factors: the Wronskian per quantum (The constants, 2026-10-24)
         if trace:
             time = time - pressure_term(held, families, stresses, rulers, gamma, intervals, row) * scale
         found.append(time)

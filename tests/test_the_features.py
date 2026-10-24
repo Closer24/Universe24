@@ -227,12 +227,15 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     assert paced_read == 0  # the rotation: no level in the content
     rows = (rule := json.loads(UNIVERSE.read_text(encoding="utf-8")))["families"]
     rule["integers"]["quantum_action"] = (
-        36_000  # T at which the law's alpha E_h T num / (Gamma den) is 4
+        36_000  # T at which the law's alpha E_h T / Gamma is 6 (the charge's universality, 2026-10-24; E_h T num / (Gamma den) = 4 under the sentence of 2026-10-23, kept by name)
     )
     charge = next(
         f for f in universe_of({**rule, "families": [*rows, CHARGED]})[1] if f.name == "charge"
     )
-    assert (charge.write_weight, charge.write_wall) == (4, 1)  # alpha carried inside the write, no gate
+    assert (charge.write_weight, charge.write_wall) == (
+        6,
+        1,
+    )  # alpha carried inside the write, no pair in it, no gate
     for name in ("rule", "light", "pair", "deuteron", TUBE, TURN):
         integers, shipped = universe_of(json.loads((UNIVERSE.parent / f"{name}.json").read_text()))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
@@ -242,19 +245,16 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
             if not (f.held and f.wronskian):
                 assert f.write_weight == (1 if f.held else None), (name, f.name)
                 continue
-            pairs = {  # the moving planes reading the holder of the sign: one pair, the law's alpha its ratio
-                g.pair
-                for g in shipped
-                if g.plane and g.pair[0] and any(r.family == index for r in g.reads)
-            }
+            planes = any(  # the planes reading the holder of the sign: one alpha per holder with any pairs under it (the charge's universality, 2026-10-24; E_h T num / (Gamma den) of 2026-10-23 kept by name)
+                g.plane and any(r.family == index for r in g.reads) for g in shipped
+            )
             alpha = Fraction(1)
-            if pairs:
-                (num, den), e_h = pairs.pop(), f.level_weight
-                alpha = Fraction(e_h * integers["quantum_action"] * num, integers["node_clock"] * den)
+            if planes:
+                alpha = Fraction(f.level_weight * integers["quantum_action"], integers["node_clock"])
             assert Fraction(f.write_weight, f.write_wall) == alpha, (
                 name,
                 f.name,
-            )  # E_h T num / (Gamma den)
+            )  # E_h T / Gamma, no pair in it
 
 
 def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair():
@@ -269,7 +269,13 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         families = universe_of(universe(*rows, quantum_action=15_000))[1]
         assert [f.pair[0] == 0 for f in families] == zeros and all(f.plane for f in families[1:])
     moving = {**plane, "name": "slower", "pair": [3000, 6000]}
-    refused("one ratio per holder", universe_of, universe(SIGN, plane, moving, quantum_action=15_000))
+    integers, families = universe_of(
+        universe(SIGN, plane, moving, quantum_action=15_000)
+    )  # two moving planes of different pairs under one holder load (the charge's universality, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
+    assert (families[0].write_weight, families[0].write_wall) == (
+        3,
+        2,
+    )  # alpha = E_h T / Gamma = 15,000 / 10,000 reduced, no pair in it
     universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane, frozen))
 
 

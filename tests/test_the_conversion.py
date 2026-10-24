@@ -89,9 +89,12 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
     }
     added = universe_with()
     added["families"].append(muon)
-    refused(
-        "one ratio per holder", universe_of, added
-    )  # a second pair reading the sign: no second list (the one Node's alpha, 2026-10-23)
+    _integers, with_muon = universe_of(
+        added
+    )  # a second pair reading the sign loads: one alpha per holder with any pairs under it, the charge the Wronskian per quantum (The constants, 2026-10-24; the refusal "one ratio per holder" of 2026-10-23 kept by name)
+    assert not next(
+        f for f in with_muon if f.name == "muon"
+    ).converts  # the muon [4800, 6000]: no list of the shipped pairs sums to it
     added = universe_with()
     added["families"].append(neutral)
     assert table_of(added, "neutron") == [
