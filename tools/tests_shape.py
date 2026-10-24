@@ -225,6 +225,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
     ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_under_the_gapped_holder_runs_the_same_by_five_one_layer_slabs": (
+        9,
+        "the slabs' gate under the gapped holder (2026-10-24, the gravity-top hand's finding, the re-imposed halo): the 5-cube hole seed with the volume's pair gapped through loader/universe.volume_pair, 12 intervals, one process against five one-layer slabs, every array, line and swap count equal",
+    ),
     "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_hole_seed_runs_the_same_by_two_and_by_five_slabs": (
         7,
         "the slabs' gate (slabs.py, the board stepped in slabs by processes with one-Link halos, 2026-10-24): the 5-cube hole seed "

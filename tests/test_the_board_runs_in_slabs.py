@@ -10,10 +10,11 @@ import pytest
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.meeting_back import first_difference, snapshot
 from event_universe.slabs import Slabs, arrays_of, axis_of, slabs_of
 from event_universe.world_files import load_world
-from tests.laws_universe import small_universe
+from tests.laws_universe import SMALL, small_universe
 
 Run = tuple[list[list[Any]], list[dict[str, Any]], list[tuple[int, int, int]]]
 CUBE, TUBE = (
@@ -58,6 +59,17 @@ def parting(single: Run, slabs: Run) -> str | None:
     if len(single[1]) != len(slabs[1]):
         return f"{len(slabs[1])} lines against the single process's {len(single[1])}"
     return None if single[2] == slabs[2] else f"the swaps {slabs[2]} against {single[2]}"
+
+
+def test_the_5_cube_under_the_gapped_holder_runs_the_same_by_five_one_layer_slabs(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The gravity-top hand's finding of 2026-10-24 held by the re-imposed halo (slabs.py's principle: the halo is the board's state as the previous act left it, re-imposed before every act that reads across a face): the 5-cube hole seed at den 1,021 with the holder of the volume at the gapped pair (den - den div Gamma, den) through loader/universe.volume_pair, 12 intervals, one process against five one-layer slabs along x, where the close's take and refusals read the neighbours' post-step state across both faces of every Node; every array, every line and the swaps' count equal (before the fix the runs parted at the interval 10 in a row born during the run, a point's birth at another interval)."""
+    gamma = SMALL["integers"]["node_clock"]
+    monkeypatch.setattr(universe, "volume_pair", lambda den: (den - den // gamma, den))
+    single, five = run(tmp_path / "one", CUBE, 12, 1), run(tmp_path / "five", CUBE, 12, 5)
+    assert parting(single, five) is None
+    assert any(line["event"] == "birth" for line in single[1]) and single[2]  # births and turns met
 
 
 @pytest.mark.parametrize("processes", [2, 5])
