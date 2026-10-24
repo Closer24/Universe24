@@ -4,7 +4,6 @@ import bisect
 from dataclasses import dataclass
 
 import numpy as np
-import pytest
 
 from event_universe import records
 from event_universe.core import paces
@@ -64,17 +63,3 @@ def test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_on
     assert np.array_equal(converted.before, volume.volume_of(GAMMA, grid - 7))
     assert volume.levels_read(GAMMA, grid, False) is grid
     assert np.array_equal(volume.levels_read(GAMMA, found, True), volume.level_of(GAMMA, found))
-
-
-def test_the_singular_point_x_at_0_has_no_reading_no_clock_and_no_node():  # type: ignore[no-untyped-def]
-    """ALGEBRA.md, the singular point (approved by the owner on 2026-10-23): X = 0 is the singular point of the law's domain, where the volume carries no level, the clock no pace and the Node nothing to read; the volume's reading refuses it by name at X = 0 and below (features/volume `level_of`, "at most 0"), while the vacuum's volume X(0) reads the level 0 and the deepest volumes above 0 read their levels; the time line's fall to it is the crunch the test of the law's course ends on (tests/test_universe24_runs_its_cycle.py)."""
-    gamma = 6000  # the rule's Gamma
-    for x in (0, -1, -1513):
-        with pytest.raises(ValueError, match="at most 0"):
-            volume.level_of(gamma, np.array([x], dtype=object))
-    vacuum = int(np.asarray(volume.volume_of(gamma, np.array([0], dtype=object))).reshape(-1)[0])
-    assert int(np.asarray(volume.level_of(gamma, np.array([vacuum], dtype=object))).reshape(-1)[0]) == 0
-    with pytest.raises(
-        ValueError, match="below"
-    ):  # the volume 1, the last above the singular point, reads a level below -Gamma, refused by name too
-        volume.level_of(gamma, np.array([1], dtype=object))

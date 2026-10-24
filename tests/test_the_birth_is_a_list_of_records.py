@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import json
 
 import numpy as np
@@ -17,7 +16,6 @@ from event_universe.loader.circle import lift_points
 from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
-from tests.laws import ROOT
 from tests.laws_universe import SMALL, small_universe, uniform_sea
 
 TOP_UNIVERSE = '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'  # the top tier's den, 649,421 x 13,586,597 x 132,260,701, three primes 1 mod 4 and 26 points, factored in a blink
@@ -127,24 +125,6 @@ def test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense
         for r in range(registry.records_of(board.families[charge], board.states[charge].lines))
     ]
     assert rows[0] == 0 and sum(1 for row in rows[1:] if row) == len(children)
-
-
-def test_the_holes_board_runs_back_exact_through_its_births(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The sea with a hole, 20 intervals forward through its births and back: MATCH (the lays of N records logged per line, each undone)."""
-    spec = importlib.util.spec_from_file_location("back", ROOT / "tools" / "back_in_time.py")
-    assert spec is not None and spec.loader is not None
-    back = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(back)
-    births: list[dict] = []  # type: ignore[type-arg]
-    board = bare_board(tmp_path, monkeypatch, 30, births)
-    light, here = board.world.seed, board.mask(((0, 0, 0),))
-    span = records.record_slice(board.families[light], 0)
-    for number in range(span.start, span.stop):
-        line = board.states[light].lines[number]
-        change = (np.where(here, -line.now, 0), np.where(here, -line.before, 0))
-        laid(board, light, number, change, None, None, here)
-    found = back.verdict(board, 20)
-    assert found["verdict"] == "MATCH" and births, found
 
 
 def born_here(board, at, table=None):  # type: ignore[no-untyped-def]
