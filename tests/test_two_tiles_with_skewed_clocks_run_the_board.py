@@ -12,7 +12,10 @@ from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws_universe import UNIVERSE, bare_torus
 
-INTERVALS, SIDE = 32, 3  # through the births at 29 (28 before them on the 5-cube to 2026-10-24)
+INTERVALS, SIDE = (
+    30,
+    3,
+)  # through the births at 29 and one past (28 before them on the 5-cube to 2026-10-24; 32 shortened under the suite's bound)
 TILES = (
     {"x": [0, 1]},
     {"x": [2]},
@@ -120,7 +123,7 @@ def differences(whole: list[Any], board: Lattice) -> list[tuple[Any, ...]]:
 def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_births(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Equal bit for bit over 32 intervals in either order of the tiles' ticks, through the first meeting at 29: every birth pays by the hole at its own Node and no act reads beyond one Link (the owner's word, everything local, 2026-10-24), so the tiles' interiors are the board's every line, write remainder and phase line; the births read from the board's lines, a proton pair at every one of the 27 Nodes at the senses -1 and 1. To 2026-10-24 the test ran the 5-cube to 28 and named the births' count summed over the board as the one non-local act; that act left with the fold's local births."""
+    """Equal bit for bit over 30 intervals in either order of the tiles' ticks, through the first meeting at 29: every birth pays by the hole at its own Node and no act reads beyond one Link (the owner's word, everything local, 2026-10-24), so the tiles' interiors are the board's every line, write remainder and phase line; the births read from the board's lines, a proton pair at every one of the 27 Nodes at the senses -1 and 1. To 2026-10-24 the test ran the 5-cube to 28 and named the births' count summed over the board as the one non-local act; that act left with the fold's local births."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, object]] = []
     board = Lattice(load_world(bare_torus(tmp_path, SIDE, INTERVALS)), output=lines.append)

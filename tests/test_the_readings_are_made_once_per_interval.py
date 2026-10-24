@@ -35,42 +35,40 @@ def stepped(path: Path, intervals: int) -> tuple[list[Any], list[dict[str, objec
         states.append(board_state(board))
         sizes.append(len(read.READS))  # the memo's entries after the interval
         for index in board.order:  # the share, the eras line's quanta and the nodes line's quanta
-            share, quanta, again = (
-                board.share_of(index)[0],
-                board.quanta(index)[0],
-                board.quanta(index)[0],
-            )
-            assert (quanta == again).all()
+            share, quanta = board.share_of(index)[0], board.quanta(index)[0]
             lines.append({"event": "read", "share": share.tolist(), "quanta": quanta.tolist()})
     return states, lines, sizes
 
 
-@pytest.mark.parametrize("holder", [node, share])
 def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, holder: Any
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births at 29 among them, the memo bounded (one entry per key)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path)
-    monkeypatch.setattr(holder, "READS", Unkept())  # the names as the module holds them
+    for holder in (node, share):
+        monkeypatch.setattr(holder, "READS", Unkept())  # the names as the module holds them
     made, made_lines, _sizes = stepped(path, INTERVALS)
     monkeypatch.undo()
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    hits = {"again": 0, "made": 0}
     again = read.read_again
+    for holder in (node, share):
+        hits = {"again": 0, "made": 0}
 
-    def counted(key: Any, taken: Any) -> Any:
-        found = again(key, taken)
-        hits["again" if found is not None else "made"] += 1
-        return found
+        def counted(key: Any, taken: Any, hits: dict[str, int] = hits) -> Any:
+            found = again(key, taken)
+            hits["again" if found is not None else "made"] += 1
+            return found
 
-    monkeypatch.setattr(holder, "read_again", counted)
-    kept, kept_lines, sizes = stepped(path, INTERVALS)
-    assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
-    assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
-    assert hits["again"] > hits["made"] > 0
-    assert (
-        sizes[INTERVALS // 4] == sizes[-1] > 0
-    )  # the memo bounded: one entry per key, the states compared by identity
+        monkeypatch.setattr(holder, "read_again", counted)
+        kept, kept_lines, sizes = stepped(path, INTERVALS)
+        monkeypatch.setattr(holder, "read_again", again)
+        assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
+        assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
+        assert hits["again"] > hits["made"] > 0, holder.__name__
+        assert (
+            sizes[INTERVALS // 4] == sizes[-1] > 0
+        )  # the memo bounded: one entry per key, the states compared by identity
 
 
 def test_the_nodes_line_is_the_reading_node_by_node(
