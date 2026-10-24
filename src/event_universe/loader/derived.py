@@ -36,7 +36,7 @@ class Row:
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
     motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the volume form (every board's interval unobservable) alone on the held row of the content sourced by the tensions, massless or gapped (`axes`), that is not the sign's holder (loader/interval.volume_rows; the clause of 2026-10-23), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
-    write_wall: int = 1  # the sign holder's wall multiplier Gamma under the charge's universality (2026-10-24; Gamma den under the law of one Node of 2026-10-23, kept by name): alpha carried inside the one write, the numerator times E_h T (`write_weight` set by the loader, `alpha_of`) and every wall of the row times Gamma and the charge multiple (`held_write_of`), the remainder keeping the fraction; 1 on every holder of the content, whose write weight is the file's
+    write_wall: int = 1  # the sign holder's wall multiplier Gamma under the charge's universality (2026-10-24; Gamma den under the law of one Node of 2026-10-23, kept by name): alpha carried inside the one write, the numerator times E_h T (`write_weight` set by the loader, `alpha_of`) and every wall of the row times Gamma (`held_write_of`; the charge multiple of the count units, 2026-10-24 to the same day, kept by name as the defect), the remainder keeping the fraction; 1 on every holder of the content, whose write weight is the file's
     fill: int = 0  # the time line's value beyond a face and on a grown layer, the Link to the fill (core/ports.arrival): the row's rest, or under the volume form the rest's volume X(rest), the rest beyond the face fixing the clock's unit (ALGEBRA.md, The board's interval is no observable; loader/interval.volume_rows, features/volume.fill_of); 0 for a row with no rest
 
 
@@ -215,7 +215,7 @@ def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
 
 
 def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: int) -> tuple[int, int]:
-    """The law's alpha of a holder of the sign carried inside its one write (the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; ALGEBRA.md, The constants: the law's alpha is the ratio of the file's E_h T to Gamma, one per holder with any pairs under it; the old kept by name: "the ratio of the file's E_h T num to Gamma den, [num, den] the pair the moving planes reading the holder share, two moving planes of different num / den asking one holder for two alphas refused by name: one holder, one alpha", the law of one Node, 2026-10-23): the pair (E_h T, Gamma) reduced by their greatest common divisor, the numerator's multiplier and the walls' multiplier of every line of the holder's rows; no reader's pair enters it, the charge per quantum made one across the readers by their count units at the write (`held_write_of`, the charge factors); (1, 1) where no plane of quanta reads the holder (light's own row on the gate worlds), the write of no source."""
+    """The law's alpha of a holder of the sign carried inside its one write (the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; ALGEBRA.md, The constants: the law's alpha is the ratio of the file's E_h T to Gamma, one per holder with any pairs under it; the old kept by name: "the ratio of the file's E_h T num to Gamma den, [num, den] the pair the moving planes reading the holder share, two moving planes of different num / den asking one holder for two alphas refused by name: one holder, one alpha", the law of one Node, 2026-10-23): the pair (E_h T, Gamma) reduced by their greatest common divisor, the numerator's multiplier and the walls' multiplier of every line of the holder's rows; no reader's pair enters it, the charge the Wronskian over T div 2 for every reader at the write (`held_write_of`, The constants, the sentence of 2026-10-24; the charge factors of that morning, 3 T den over each count unit, kept by name as the defect); (1, 1) where no plane of quanta reads the holder (light's own row on the gate worlds), the write of no source."""
     holder = families[index]
     assert holder.level_weight is not None
     if not any(family.plane and weight_of(index, family) > 0 for family in families):
@@ -292,30 +292,16 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
         row[1:] = [SIDES * family.level_weight * measure] * AXES
-    charge: int = 1
-    units: dict[
-        int, int
-    ] = {}  # the sign holder's charge multiple: the readers' count units brought to one wall
-    if (
-        family.wronskian
-    ):  # the charge factors and the charge multiple (loader/charge.py; The constants, 2026-10-24)
-        from event_universe.loader.charge import (
-            charge_factors,  # charge reads this module: imported here
-        )
-
-        units, charge = charge_factors(families, index, action)
     row = [
-        wall * family.write_wall * charge for wall in row
-    ]  # the sign holder's Gamma (alpha inside the write) and its charge multiple
+        wall * family.write_wall for wall in row
+    ]  # the sign holder's Gamma (alpha inside the write); the charge the Wronskian over T div 2 for every reader, no count unit in any wall (The constants, 2026-10-24)
     walls = (
         row * family.records
     )  # one wall per line of every row, the rows of a holder of the sign alike
     factors = {
-        other: units[other]
-        if family.wronskian
-        else (1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0]))
+        other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
         for other in sources
-    }
+    }  # the sign's sources at 1, the Wronskian as it stands (the holder of the sign rotates)
     return HeldWrite(tuple(walls), factors)
 
 
