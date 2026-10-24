@@ -64,13 +64,30 @@ def fill_of(gamma: int, rest: int) -> int:
     return int(volume_of(gamma, np.array([rest], dtype=object)).reshape(-1)[0])
 
 
+LEVELS: dict[
+    int, dict[int, int]
+] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), cleared at a run's start with the paces' (resonance.clear_memo)
+
+
 def level_of(gamma: int, volume: Any) -> Any:
-    """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found at every Node by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root: from the deepest hill -Gamma upward by doubling steps while the volume is reached (the probes within twice the level's distance from -Gamma, so the clocks' memo fills only as deep as the records stand and never to the clock's last pace for a shallow board), then halving between the last probe reached and the first not (the halving the division act on a count as `rule3.largest_below` has it), never beyond the clock's last pace; refused by name where X is at most 0 at a Node or below the deepest hill's volume; at the clock's last pace the reading rests while the record grows (the pole never reached by a finite record)."""
+    """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root (`searched_levels`); the level is one function of the one volume, so the search runs once per distinct volume of the run (the memo `LEVELS`, filled on the volumes not yet read and read back at every Node that holds a read volume): the same integers Node by Node as the search at every Node gave (the architect's round of 2026-10-24: the reading re-read many times per interval, the vacuum's one volume on most Nodes of a large board), refused by name where X is at most 0 at a Node."""
     volumes = np.asarray(volume, dtype=object).reshape(-1)
     if (volumes <= 0).any():
         raise ValueError(
             "the volume X is at most 0 at a Node: the level has no reading, refused by name"
         )
+    found = LEVELS.setdefault(gamma, {})
+    distinct, inverse = np.unique(volumes, return_inverse=True)
+    unread = [int(x) for x in distinct.tolist() if int(x) not in found]
+    if unread:
+        levels = searched_levels(gamma, np.array(unread, dtype=object))
+        found.update(zip(unread, (int(a) for a in levels.reshape(-1)), strict=True))
+    table = np.array([found[int(x)] for x in distinct.tolist()], dtype=object)
+    return table[np.asarray(inverse).reshape(-1)].reshape(np.asarray(volume).shape)
+
+
+def searched_levels(gamma: int, volumes: Any) -> Any:
+    """The level a of each volume X of `volumes` (every X above 0), the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root: from the deepest hill -Gamma upward by doubling steps while the volume is reached (the probes within twice the level's distance from -Gamma, so the clocks' memo fills only as deep as the records stand and never to the clock's last pace for a shallow board), then halving between the last probe reached and the first not (the halving the division act on a count as `rule3.largest_below` has it), never beyond the clock's last pace, each volume's search its own (the probes per volume the same whatever the other volumes beside it); refused by name where X lies below the deepest hill's volume; at the clock's last pace the reading rests while the record grows (the pole never reached by a finite record)."""
     target = gamma ** (EXPONENT + 1)
 
     def reached(levels: Any) -> Any:
@@ -99,7 +116,7 @@ def level_of(gamma: int, volume: Any) -> Any:
         )
         good = reached(middle)
         low, high = np.where(good, middle, low), np.where(good, high, middle)
-    return np.array([int(a) for a in low], dtype=object).reshape(np.asarray(volume).shape)
+    return np.array([int(a) for a in low], dtype=object)
 
 
 def at_start[Row: DataclassInstance](families: tuple[Row, ...]) -> tuple[Row, ...]:
