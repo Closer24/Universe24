@@ -1,4 +1,4 @@
-"""The click's view, the readings on the credit line (ALGEBRA.md, Readings and measurements, the click's view, 2026-10-24; the owner's frame: the Nodes are the event space, the clicks are what is seen from the hidden layer, all measurements go to the clicks): the point (the credited record's cosine at the credited Node, read from its three levels around the step as the reduced pair), the kind (the rank of the lines credited), the sense (the Wronskian's sign), the support (the shell Node the credit left through), the beat (W_c sin omega at the point read), the identity (the record's family and index); with them the credit line's former keys read in place of constants, the momentum (the piece's p_a with the fan and the recoil, Part F and G) and the proper (the Node's own clock at the close in whole intervals, with the windows its count of its own closes; The paces compose, The clock near matter); the birth line's children's records and points; readings and no act (`reports.READINGS`, `reports.point_of`, `meeting_board.readings_at`, `meeting_board.Clock`)."""
+"""The click's view, the readings on the credit line (ALGEBRA.md, Readings and measurements, the click's view, 2026-10-24; the owner's frame: the Nodes are the event space, the clicks are what is seen from the hidden layer, all measurements go to the clicks): the point (the credited record's cosine at the credited Node, read from its three levels around the step as the reduced pair), the kind (the rank of the lines credited), the sense (the Wronskian's sign), the support (the shell Node the credit left through), the beat (W_c sin omega at the point read), the identity (the record's family and index); with them the credit line's former keys read in place of constants, the momentum (the frame's running cosine along each axis with the Link current's sign, [sign_a, num_a, den_a] per axis, p_a = T sin k_a per Link, Part F; the fan and the recoil struck 2026-10-24) and the proper (the Node's own clock at the close in whole intervals, with the windows its count of its own closes; The paces compose, The clock near matter); the birth line's children's records and points; readings and no act (`reports.READINGS`, `reports.point_of`, `meeting_board.readings_at`, `meeting_board.Clock`)."""
 
 from __future__ import annotations
 
@@ -10,8 +10,9 @@ import numpy as np
 from event_universe import meeting_board, node, readings, records, seed, swap, world_files
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
+from event_universe.core.ports import arrival
 from event_universe.lattice import Lattice
-from event_universe.reports import BORN_KEYS, FAN, MOMENTUM, PROPER, READINGS, RECOIL, WINDOWS, point_of
+from event_universe.reports import BORN_KEYS, MOMENTUM, PROPER, READINGS, WINDOWS, point_of
 from event_universe.world_files import load_world
 from tests.laws_universe import small_universe, uniform_sea
 
@@ -43,7 +44,7 @@ def test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels() ->
 
 
 def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The uniform sea by name, two intervals stepped and a third with its start kept, before any birth: the point at a Node is the pair the massless line reads from its level before and now at the start and the level the step left, the beat its integer sine times 3 T, the kind the line's rank, the sense 0 for a real line, the support the Node, the identity the seed's record; the fan the record's lattice momentum over the board, the momentum the piece's p_a = P_a(region) x W_rec div (num x W(region)) at the Node, the recoil -p, the proper the floor of the clock summed over the intervals (summed here apart from the engine), the windows the Node's closes (none)."""
+    """The uniform sea by name, two intervals stepped and a third with its start kept, before any birth: the point at a Node is the pair the massless line reads from its level before and now at the start and the level the step left, the beat its integer sine times 3 T, the kind the line's rank, the sense 0 for a real line, the support the Node, the identity the seed's record; the momentum per axis the Link current's sign with the pair point_of reads along the axis from the Node's level now and its two neighbours' at the start, [0, 1, 1] on every axis of the uniform sea (no current, the double root); the proper the floor of the clock summed over the intervals (summed here apart from the engine), the windows the Node's closes (none)."""
     monkeypatch.setattr(seed, "uniform_seed", uniform_sea)
     board = bare_board(tmp_path, monkeypatch, [])
     light, at = board.world.seed, (1, 2, 0)
@@ -68,12 +69,19 @@ def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_pa
         list(at),
         [light, 0],
     )
-    lines, num, unit = board.lines_of(light, 0), board.families[light].pair[0], board.credit.units[light]
-    assert clock.fan == list(readings.momentum_of(num, lines, board.wrap))
-    terms = readings.momentum_of(num, lines, board.wrap, board.mask((at,)))
-    share = int(board.share_of(light, 1, board.mask((at,)))[0][at])
-    assert share > 0 and clock.momentum == [term * unit // (num * share) for term in terms]
-    assert clock.recoil == [-term for term in clock.momentum] and clock.windows == 0
+    lines, num = board.lines_of(light, 0), board.families[light].pair[0]
+    terms = readings.momentum_of(num, lines, board.wrap, board.mask((at,)))  # the step's currents
+    frame = [
+        point_of(
+            int(arrival(start.now, a, -1, board.wrap)[at]),
+            now,
+            int(arrival(start.now, a, 1, board.wrap)[at]),
+        )
+        for a in range(3)
+    ]
+    assert terms == (0, 0, 0) and frame == [(1, 1)] * 3  # the uniform sea: no current, the double root
+    assert clock.momentum == [[int(np.sign(t)), *pair] for t, pair in zip(terms, frame, strict=True)]
+    assert clock.momentum == [[0, 1, 1]] * 3 and clock.windows == 0
     gamma = board.world.node_clock
     assert clock.proper == int(summed[at]) // gamma == int(board.proper_count[at]) // gamma
 
@@ -81,7 +89,7 @@ def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_pa
 def test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_birth_its_childrens_records_and_points(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The uniform cube by name at its first meeting: every credit line carries the six keys, the support the credited Node (the node_detector's index unravelled), the identity the seed's record, the kind 1 and the sense 0 (a real line), the point a reduced pair with den above 0 and the beat its sine times 3 T; its momentum, fan and recoil [0, 0, 0] exactly (the uniform sea's P_a 0, a reading and not null), its windows 1 and its proper the floor of the Node's clock summed over the intervals since the start, summed here apart from the engine (The paces compose; The clock near matter); every birth line its children's records (one record per child, distinct identities) and points (each child's point its family's pair, the pair of the one point family born)."""
+    """The uniform cube by name at its first meeting: every credit line carries the six keys, the support the credited Node (the node_detector's index unravelled), the identity the seed's record, the kind 1 and the sense 0 (a real line), the point a reduced pair with den above 0 and the beat its sine times 3 T; its momentum [0, 1, 1] on every axis exactly (the uniform sea: no Link current, the double root along every axis, a reading and not null), no fan and no recoil key (struck 2026-10-24), its windows 1 and its proper the floor of the Node's clock summed over the intervals since the start, summed here apart from the engine (The paces compose; The clock near matter); every birth line its children's records (one record per child, distinct identities) and points (each child's point its family's pair, the pair of the one point family born)."""
     lines: list[dict] = []  # type: ignore[type-arg]
     monkeypatch.setattr(seed, "uniform_seed", uniform_sea)
     board = bare_board(tmp_path, monkeypatch, lines)
@@ -96,13 +104,13 @@ def test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_
     births = [line for line in lines if line.get("event") == "birth"]
     assert len(credits) == len(births) == int(np.prod(board.shape))
     for line in credits:
-        assert all(key in line for key in READINGS)
+        assert all(key in line for key in READINGS) and not {"fan", "recoil"} & set(line)
         at = [int(a) for a in np.unravel_index(int(line["node_detector"]), board.shape)]
         assert (line["support"], line["identity"], line["kind"], line["sense"]) == (at, [light, 0], 1, 0)
         num, den = line["point"]
         assert den > 0 and np.gcd(abs(num), den) == 1
         assert line["beat"] == sine_den(abs(num), den, 3 * board.world.quantum_action)
-        assert line[MOMENTUM] == line[FAN] == line[RECOIL] == [0, 0, 0]  # the uniform sea, P_a 0 exactly
+        assert line[MOMENTUM] == [[0, 1, 1]] * 3  # the uniform sea: no current, the double root per axis
         assert line[WINDOWS] == 1 and line[PROPER] == int(summed[tuple(at)]) // gamma
     assert 0 < credits[0][PROPER] < credits[0]["interval"]  # the pace below the vacuum's after the bang
     for line in births:
@@ -119,7 +127,7 @@ def test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_
 def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volume_differs(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The sea with a hole, the law's seed (the massless point at every Node but the origin): the board's own clicks fall at several intervals; every credit's proper is the floor of its Node's clock summed to its interval (summed here apart from the engine) and its windows the Node's closes so far; two credits read different proper where their Nodes' clocks differ (The clock near matter)."""
+    """The sea with a hole, the law's seed (the massless point at every Node but the origin): the board's own clicks fall at several intervals; every credit's proper is the floor of its Node's clock summed to its interval (summed here apart from the engine) and its windows the Node's closes so far; two credits read different proper where their Nodes' clocks differ (The clock near matter); every momentum None with the point or three axes of [sign, num, den], the sign -1, 0 or 1 and the pair reduced with den above 0."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(tmp_path, monkeypatch, lines)
     gamma = board.world.node_clock
@@ -136,19 +144,23 @@ def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volum
         at = tuple(int(a) for a in np.unravel_index(int(line["node_detector"]), board.shape))
         closes[at] = closes.get(at, 0) + 1
         assert line[PROPER] == floors[line["interval"]][at] and line[WINDOWS] == closes[at]
-        assert line[RECOIL] == [-p for p in line[MOMENTUM]] and len(line[FAN]) == 3
+        momentum = line[MOMENTUM]
+        assert (momentum is None) == (line["point"] is None)
+        assert momentum is None or all(
+            axis[0] in (-1, 0, 1) and axis[2] > 0 and math.gcd(abs(axis[1]), axis[2]) == 1
+            for axis in momentum
+        )
     assert len({line[PROPER] for line in credits}) > 1
 
 
-def test_the_momentums_unit_is_the_region_formulas_at_the_one_node_and_a_second_credit_reads_no_point(
+def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The key's unit, named (the clicks reader's finding of 2026-10-24): for a plane wave of the massless record at k = 2 pi / 3 on the 3-cube the formula P_a x W_rec div (num x W) reads 2 T exactly (2 T sin k / sin omega, sin k = sin omega there); on the hole seed's first three closes the hole's own credit reads 0 (its inflow symmetric), its six neighbours one axis each, the two sides of the hole opposite in sign and equal in size to the unit, the size above T (the ratio of one Node's two Link currents to its share, no plane wave's quantum), the fan 0 over the torus; a Node's second credit reads no point and no beat (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
+    """The frame's running cosine along each axis with the Link current's sign, the blind of 2026-10-24 measured: the travelling plane wave of the massless record at k = 2 pi / 3 along x on the 3-cube reads [1, -1, 2] on x (cos k_x = -1/2, p_x = T sin k_x = 0.866 T toward +x, the lay's direction) and [0, 1, 1] on y and z (no current, the double root) on every credit of its step, its point [1, 2]; on the hole seed's first three closes the hole's own credit reads [0, 5, 6] on every axis (its inflow symmetric, its spatial cosine its temporal point), its six neighbours [-1, 1, 2] at the coordinate 1 and [1, 1, 2] at the coordinate 2 on the axis to the hole (cos k = 1/2, the sign toward the hole on both sides, opposite across it) and [0, 25, 26] on the two cross axes (their neighbours there the edge Nodes at one level); a Node's second credit reads no point, no beat and no momentum (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(tmp_path, monkeypatch, lines)
-    light, T = board.world.seed, board.world.quantum_action
-    num, unit, gamma = board.families[light].pair[0], board.credit.units[light], board.world.node_clock
-    rule = node.rule_of(board.families[light], gamma, 0, None, board.unit)
+    light = board.world.seed
+    rule = node.rule_of(board.families[light], board.world.node_clock, 0, None, board.unit)
     read, self_coefficient, wall = (
         int(np.asarray(v).reshape(-1)[0]) for v in (rule[0][0], rule[1], rule[2])
     )
@@ -157,36 +169,33 @@ def test_the_momentums_unit_is_the_region_formulas_at_the_one_node_and_a_second_
         math.acos((self_coefficient + 2 * read * math.cos(k) + 4 * read) / (2 * wall)),
         np.indices(board.shape)[0],
     )
-    wave = records.Record(
+    board.states[light].lines[0] = records.Record(
         np.rint(1000 * np.cos(k * x)).astype(object),
         np.rint(1000 * np.cos(k * x + omega)).astype(object),
         np.zeros(board.shape, dtype=object),
     )
-    board.states[light].lines[0] = wave
-    along = readings.momentum_of(num, [wave], board.wrap)
-    share = int(np.asarray(board.share_of(light)[0], dtype=object).sum())
-    assert along[0] * unit // (num * share) == 2 * T and along[1:] == (
-        0,
-        0,
-    )  # the two-Link sum per quantum over sin omega, 2 T here
+    board.step()
+    credits = [line for line in lines if line.get("event") == "credit"]
+    assert len(credits) == int(np.prod(board.shape))  # two whole quanta at every Node of the wave
+    assert all(line[MOMENTUM] == [[1, -1, 2], [0, 1, 1], [0, 1, 1]] for line in credits)
+    assert all(line["point"] == [1, 2] for line in credits)  # omega = pi / 3 = k at the lay's dispersion
+    lines.clear()
     board = bare_board(tmp_path, monkeypatch, lines)  # the hole seed afresh
     while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 3:
         board.step()
     credits = [line for line in lines if line.get("event") == "credit"]
     closes = sorted({line["interval"] for line in credits})[:3]
-    first = [line for line in credits if line["interval"] == closes[0]]
-    assert len(first) == 1 and first[0][MOMENTUM] == [0, 0, 0] and first[0]["support"] == [0, 0, 0]
+    (first,) = [line for line in credits if line["interval"] == closes[0]]
+    assert first["support"] == [0, 0, 0] and first["point"] == [5, 6]
+    assert first[MOMENTUM] == [[0, 5, 6]] * 3  # the symmetric inflow: no current, the point's cosine
     sides = [line for line in credits if line["interval"] == closes[1] and line[WINDOWS] == 1]
-    assert len(sides) == 6 and all(line[FAN] == [0, 0, 0] for line in sides)
-    sizes = {abs(p) for line in sides for p in line[MOMENTUM] if p}
-    assert (
-        len(sizes) <= 2 and max(sizes) - min(sizes) <= 1 and min(sizes) > T
-    )  # one axis each, the unit's size, above T
-    assert all(sum(1 for p in line[MOMENTUM] if p) == 1 for line in sides)
-    assert (
-        sum(np.sign(p) for line in sides for p in line[MOMENTUM] if p) == 0
-    )  # opposite across the hole
+    assert len(sides) == 6
+    for line in sides:
+        (axis,) = [a for a in range(3) if line["support"][a]]  # the one coordinate off the hole
+        toward = -1 if line["support"][axis] == 1 else 1  # toward the hole, through the wrap from 2
+        assert line[MOMENTUM][axis] == [toward, 1, 2]
+        assert all(line[MOMENTUM][other] == [0, 25, 26] for other in range(3) if other != axis)
     for line in credits:
         if line["interval"] in closes:
             again = line[WINDOWS] > 1
-            assert (line["point"] is None) == again and (line["beat"] is None) == again
+            assert (line["point"] is None) == (line["beat"] is None) == (line[MOMENTUM] is None) == again

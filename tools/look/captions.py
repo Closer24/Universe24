@@ -444,7 +444,7 @@ def legend_of(
         ats = sorted({int(c["interval"]) for c in credits})
         null = [
             key
-            for key in ("momentum", "fan", "lost", "source", "recoil", "kept", "left")
+            for key in ("momentum", "lost", "source", "kept", "left")
             if all(c.get(key) is None for c in credits)
         ]
         words = (

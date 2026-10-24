@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, cast
 
 import numpy as np
 
 from event_universe import credit, records, swap
 from event_universe.act import born_items, born_table, click
 from event_universe.core.paces import sine_den
+from event_universe.core.ports import AXES, arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import drawn_from
@@ -113,8 +114,6 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     seed,
                     names[0],
                     momentum=clock.momentum,
-                    fan=clock.fan,
-                    recoil=clock.recoil,
                     readings=found,
                 )
             )
@@ -138,49 +137,71 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
 
 
 class Clock(NamedTuple):
-    """The credit line's former keys read at the board's own click (the click's view, 2026-10-24; `reports.MOMENTUM`, `FAN`, `RECOIL`, `PROPER`, `WINDOWS`): the piece's p_a per axis, the record's P_a over the board, the recoil -p, the taker's own clock at the close in whole intervals, its count of its own closes."""
+    """The credit line's former keys read at the board's own click (the click's view, 2026-10-24; `reports.MOMENTUM`, `PROPER`, `WINDOWS`): the momentum, the frame's running cosine along each axis with the Link current's sign, [sign_a, num_a, den_a] per axis, None at a level now 0; the taker's own clock at the close in whole intervals; its count of its own closes. The fan and the recoil struck from the line on 2026-10-24: the fan read the record over the whole board and no click reads the board, the recoil was -p, redundant with the momentum."""
 
-    momentum: list[int]
-    fan: list[int]
-    recoil: list[int]
+    momentum: object
     proper: int
     windows: int
+
+
+def agreed(found: list[tuple[int, int] | None]) -> object:
+    """One reading where every line of the record reads the same at the Node, else the lines' readings in order (the click's view's rule for a record of several lines, the point's and the momentum's): a pair as a list of two integers, None for a line at a level now 0."""
+    first = found[0]
+    if all(reading == first for reading in found):
+        return None if first is None else list(first)
+    return [None if reading is None else list(reading) for reading in found]
 
 
 def readings_at(
     board: Lattice, begun: swap.Kept, index: int, record: int, at: Node
 ) -> tuple[dict[str, object], Clock]:
-    """The click's view at the credited Node, the six readings of the credit line (`reports.READINGS`; ALGEBRA.md, Readings and measurements, the click's view, 2026-10-24): the point, the credited record's cosine read from its lines' three levels around the step at the Node, the level before and the level now at the interval's start (`begun`) and the level the step left, as the reduced pair (num, den) (`reports.point_of`; one pair where every line reads the same, else the lines' pairs in order; None at a level now 0: a Node credited again reads no point, its level taken to 0 by the hole at its last close and standing so at the interval's start, the reading refused by name and no number, the beat None with it); the kind, the rank of the lines credited, the record's lines per part (one a real line, two a plane); the sense, the Wronskian's sign at the Node (0 for real lines); the support, the shell Node the credit left through, the hole's own Node here; the beat, W_rec of the point read, the quantum's own wall 3 T den sin omega = W_c sin omega, 3 T times the integer sine of the pair (`paces.sine_den`, `derived.count_wall` at the pair read; 0 at the uniform mode's double root, None where no point or a mode beyond the band); the identity, the record's family and index; and the credit line's former keys read here and no longer constants (the clicks derivation of 2026-10-24, sections 1a, 2 (v), 4 (a)): the momentum, the piece's p_a per axis read at the close from the record's lattice momentum terms at the credited Node over its share there, scaled to one credited count, p_a = P_a(region) x W_rec div (num x W(region)), one division (ALGEBRA.md, The lattice momentum, Part F; `readings.momentum_of`), the region the one Node: the unit the key carries is that formula's and not T sin k_a per Link, for a plane wave of the massless point's record the reading 2 T sin k / sin omega per quantum, the two-Link sum over the quantum's own sine (2 T exactly at k = 2 pi / 3 on the 3-cube, where sin k = sin omega: 73,512,000 / 1,021 = 72,000 at den 1,021, measured), and at one Node of a record that is no plane wave the ratio of the Node's two Link currents to its share there, which the law bounds by nothing (the hole seed at den 1,021: 0 at the hole, whose inflow is symmetric; 12.4 T along the one axis to the hole at its six neighbours at the close 3, opposite in sign across the hole; 20.1 T at the twelve edge Nodes at 4; 1.24 T at the eight corners at 5), with the fan, the record's P_a over the board at the close, and the recoil, -p owed to the giver (Part G; on the uniform seed every one 0 exactly, a reading and not null); the proper, the credited Node's own composed clock at the close in whole intervals, the Node's clock p_0 summed over the intervals since the start over Gamma (ALGEBRA.md, The paces compose; The clock near matter, the pace e^(-U) = (Gamma / X)^(1 / 4) at the Node; `Lattice.proper_count`), with the windows, the Node's count of its own closes (`Lattice.closes`). Readings and no act: nothing of the board moves here."""
+    """DOCSTRING_PLACEHOLDER"""
     family = board.families[index]
     span = records.record_slice(family, record)
     where = (int(at[0]), int(at[1]), int(at[2]))
-    points = [
-        point_of(int(start.before[where]), int(start.now[where]), int(left.now[where]))
-        for start, left in zip(begun[0][index][span], board.states[index].lines[span], strict=True)
-    ]
-    point: object = points[0] if all(found == points[0] for found in points) else points
+    starts, lefts = begun[0][index][span], board.states[index].lines[span]
+    point = agreed(
+        [
+            point_of(int(start.before[where]), int(start.now[where]), int(left.now[where]))
+            for start, left in zip(starts, lefts, strict=True)
+        ]
+    )
     wronskian = records.wronskian(board.lines_of(index, record), family.plane)
     value = int(np.asarray(wronskian, dtype=object)[where]) if family.plane else 0
     beat = None
-    if isinstance(point, tuple) and abs(point[0]) <= point[1]:
+    if isinstance(point, list) and all(isinstance(v, int) for v in point) and abs(point[0]) <= point[1]:
         beat = int(sine_den(abs(point[0]), point[1], 3 * board.world.quantum_action))
     found = (
-        list(point) if isinstance(point, tuple) else point,
+        point,
         family.width,
         0 if value == 0 else (1 if value > 0 else -1),
         list(where),
         beat,
         [index, record],
     )
-    lines = board.lines_of(index, record)  # the state the step left
-    num, unit, gamma = family.pair[0], board.credit.units[index], board.world.node_clock
-    fan = list(momentum_of(num, lines, board.wrap))
-    here = board.mask((where,))
-    share = int(board.share_of(index, 1, here)[0][where])  # the record's share at the credited Node
-    piece = [
-        int(division_forward(term * unit, num * share, 0)[0]) if share else 0
-        for term in momentum_of(num, lines, board.wrap, here)
-    ]  # p_a = P_a(region) x W_rec div (num x W(region)), one division, Part F
+    lines = board.lines_of(index, record)  # the state the step left: its currents the step's own
+    num, gamma = family.pair[0], board.world.node_clock
+    terms = momentum_of(num, lines, board.wrap, board.mask((where,)))  # the Node's two Link currents
+    frame = [
+        agreed(
+            [
+                point_of(
+                    int(arrival(start.now, axis, -1, board.wrap)[where]),
+                    int(start.now[where]),
+                    int(arrival(start.now, axis, 1, board.wrap)[where]),
+                )
+                for start in starts
+            ]
+        )
+        for axis in range(AXES)
+    ]  # the running cosine along each axis at the interval's start, the frame the click reads
+    momentum: object = None
+    if point is not None:
+        momentum = [
+            None
+            if cosine is None
+            else [0 if term == 0 else (1 if term > 0 else -1), *cast(list[object], cosine)]
+            for term, cosine in zip(terms, frame, strict=True)
+        ]
     proper = int(division_forward(int(board.proper_count[where]), gamma, 0)[0])
-    clock = Clock(piece, fan, [-term for term in piece], proper, int(board.closes[where]))
-    return dict(zip(READINGS, found, strict=True)), clock
+    return dict(zip(READINGS, found, strict=True)), Clock(momentum, proper, int(board.closes[where]))

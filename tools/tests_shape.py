@@ -46,38 +46,39 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the reader of the clicks log alone on the committed record (2026-10-24, the owner's word that every measurement goes to the clicks): "
         "125 credits in one window, the count's floor 1, the where 5 Links on every axis, the momentum and the clock unreadable with their keys named",
     ),
-    "tests/test_the_clicks_reader.py::test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_by_hand": (
-        53,
-        "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
-        "the dilation ratio and the Delta x Delta p product, each number computed by hand",
+    "tests/test_the_clicks_reader.py::test_a_log_with_the_click_views_keys_gives_velocity_verdict_dilation_rest_and_product_by_hand": (
+        89,
+        "the same reader on a log with the click's view's keys, the momentum the frame's running cosine with the Link current's sign (2026-10-24): "
+        "the velocity in Links per board and per proper interval, the bound and the free verdicts, p in T's unit, the rest point from the four pairs "
+        "(1 for the massless record, None at a one-Node lay), the dilation ratio and the Delta x Delta p product in Links x T against the floor T / 2, each number computed by hand",
     ),
     "tests/test_the_click_readings.py::test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels": (
         7,
         "the click's view (2026-10-24, the owner's frame, the builder's six readings): the point the reduced pair of the cosine read from three levels",
     ),
     "tests/test_the_click_readings.py::test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start": (
-        30,
+        41,
         "the click's view: the six readings at a Node equal to the board's own levels at the interval's start and the level the step left",
     ),
     "tests/test_the_click_readings.py::test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_birth_its_childrens_records_and_points": (
-        32,
+        36,
         "the click's view on the uniform cube's first meeting: every credit's six keys as the board reads them, every birth's children's records and points",
     ),
     "tests/test_the_click_readings.py::test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volume_differs": (
-        26,
+        27,
         "the click's view on the sea with a hole: every credit's proper the floor of its Node's clock summed to its interval, its windows the Node's closes, two propers differing where the clocks differ",
     ),
-    "tests/test_the_click_readings.py::test_the_momentums_unit_is_the_region_formulas_at_the_one_node_and_a_second_credit_reads_no_point": (
-        36,
-        "the click's view, the clicks reader's two findings named (2026-10-24): the momentum's unit the region formula's at the one Node, 2 T for the plane wave at k = 2 pi / 3, "
-        "the hole's 0 and its neighbours' one axis each above T with opposite signs; a second credit's point and beat None, its windows 2",
+    "tests/test_the_click_readings.py::test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point": (
+        46,
+        "the click's view, the momentum as the frame's running cosine with the Link current's sign (2026-10-24, the Boss's blind measured): the plane wave at k = 2 pi / 3 reads [1, -1, 2] on x, "
+        "the hole's [0, 5, 6], its neighbours' [sign toward the hole, 1, 2] on the axis to it and [0, 25, 26] across; a second credit's point, beat and momentum None, its windows 2",
     ),
     "tests/test_the_click_readings.py::clock_of": (
-        6,
+        7,
         "the helper: the Node's composed clock at every Node from the seed's read, the time count's term summed by the tests apart from the engine",
     ),
     "tests/test_the_click_readings.py::bare_board": (
-        8,
+        7,
         "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
     ),
     "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
