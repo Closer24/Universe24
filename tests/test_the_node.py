@@ -1,7 +1,5 @@
 """The Node (ALGEBRA.md #the-interval): one Node's acts against Rule3 called by hand on arrays, the share and the well as readings, the complement remainders of a mirrored line, the held write's walls at the doubled wall; and the tension as Rule3's own conservation of the current on a periodic cube at the one universe file's matter pair (examples/events/universe24), the stress reading the Links' (the owner's rule of 2026-10-24: the law's sentences at one Node, generic, no world but the bare torus)."""
 
-import json
-
 import numpy as np
 
 from event_universe import flux, node, readings, records, share
@@ -9,21 +7,22 @@ from event_universe.core import paces
 from event_universe.core.ports import LINK_UNIT, Wrap
 from event_universe.core.rule3 import coefficients, mass, rule3
 from event_universe.loader.derived import HeldWrite, family_rules, held_write_of
-from event_universe.loader.universe import universe_of
+from event_universe.loader.universe import SIGN, VOLUME, universe_of
 from tests.laws import real_rows
-from tests.laws_universe import UNIVERSE
+from tests.laws_universe import SMALL
 
 WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
 ROWS = ("held", (4, 4), 4, 7), ("gapped", (3, 4), 1, 7), ("quanta", (5, 7), 1, None)
 BOX = (slice(1, -1),) * 3  # the inner Nodes of an array padded by one Node on every side
 HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
 WRITE = held_write_of((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))  # the tests' universe
+INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 UNIT = LINK_UNIT  # the Link's unit G, the engine's (2026-10-24; the universe's key to that day)
 NAMES = [family.name for family in FAMILIES]
-MATTER, GRAVITY, CHARGE = (
-    NAMES.index(name) for name in ("proton", "gravity", "charge")
-)  # the gapped pair of the one universe: the proton's since matter's row left the file (2026-10-24)
+GRAVITY, CHARGE = NAMES.index(VOLUME), NAMES.index(SIGN)
+MATTER = next(
+    i for i, f in enumerate(FAMILIES) if f.plane
+)  # a point of den's circle, a gapped pair for the rule's identities
 GAMMA, T = INTEGERS["node_clock"], INTEGERS["quantum_action"]
 WALLS = [held_write_of(FAMILIES, i, T).walls if f.held else () for i, f in enumerate(FAMILIES)]
 
@@ -94,7 +93,7 @@ def difference(a: np.ndarray, axis: int) -> np.ndarray:
 
 
 def test_the_tension_is_rule3s_own_conservation_of_the_current():
-    """(ALGEBRA.md, The tension; The lattice momentum; The stress is the Links') On a periodic cube of 6^3 in the vacuum at the one universe's gapped pair (the proton's since 2026-10-24, matter's row gone): w (P_a(t + 1) - P_a(t)) = SUM_b R_b (G_ab(i - b) - G_ab(i)) exactly once the remainders' term is added, P_a the record's current per axis and G_ab the flux of the a-momentum through the b-Link at one time; the engine's tension's part at every Node is the law's num (now_(i+a) - now_(i-a))^2, one Link's reach; the pattern [2, 0, -2, 0] along x gives 0, 16, 0, 16 at the weight 1 and 16 on every Link, the two ends' parts summed; a plane wave of the amplitude b at k = pi / 3 has the board sum 2 x 3 b^2 / 4 per Node on its axis and 0 on the two others, and a uniform record 0, exactly, no division."""
+    """(ALGEBRA.md, The tension; The lattice momentum; The stress is the Links') On a periodic cube of 6^3 in the vacuum at the one universe's matter pair: w (P_a(t + 1) - P_a(t)) = SUM_b R_b (G_ab(i - b) - G_ab(i)) exactly once the remainders' term is added, P_a the record's current per axis and G_ab the flux of the a-momentum through the b-Link at one time; the engine's tension's part at every Node is the law's num (now_(i+a) - now_(i-a))^2, one Link's reach; the pattern [2, 0, -2, 0] along x gives 0, 16, 0, 16 at the weight 1 and 16 on every Link, the two ends' parts summed; a plane wave of the amplitude b at k = pi / 3 has the board sum 2 x 3 b^2 / 4 per Node on its axis and 0 on the two others, and a uniform record 0, exactly, no division."""
     draw, shape = np.random.default_rng(3), (6, 6, 6)
     matter = FAMILIES[MATTER]
     (read, *_), self_coefficient, wall = coefficients(*matter.pair, GAMMA, GAMMA, GAMMA, None, UNIT)

@@ -13,6 +13,7 @@ from event_universe import board_readings, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import universe as loader_universe
 from event_universe.loader import world as loader_world
+from event_universe.world_files import load_world
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "event_universe"
 UNIVERSE = Path(
@@ -59,7 +60,11 @@ def frozen(board: Lattice) -> list[tuple[str, ...]]:
 
 def test_the_step_reads_nothing_outside_the_nodes_after_the_load(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """The one world's universe on the bare 3-cube torus, loaded once; the ordinary step and the step with every reader of a file, the loader's two readers and the board's readings made to raise agree bit for bit over thirty intervals, the output lines included (the clicks' acts from outside the Node, the owner's decision of 2026-10-20, read the board as the law says and the lattice's own arrays, no file)."""
-    (tmp_path / "u.json").write_bytes((SRC.parents[1] / UNIVERSE).read_bytes())
+    from tests.laws_universe import small_universe
+
+    small_universe(
+        tmp_path
+    )  # the tests' small universe (2026-10-24): the one world's 26 points at the enlarged den step at 0.5 s per interval on the 3-cube
     bare = {"shape": [CUBE] * 3, "intervals": INTERVALS, "universe": str(tmp_path / "u.json")}
     (tmp_path / "bare.json").write_text(json.dumps(bare), encoding="utf-8")
     world = world_files.load_world(tmp_path / "bare.json")
@@ -141,16 +146,19 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
     from event_universe.loader import world as loader_world
 
     assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
-    assert set(universe.FAMILY_KEYS) == {
-        "name",
-        "pair",
-        "dimension",
-    }  # `held` and `reads` gone 2026-10-24
-    assert set(universe.GONE) == {"reads", "held"}
-    with pytest.raises(ValueError, match="unknown key"):
+    assert (
+        set(universe.INTEGER_KEYS)
+        == {
+            "den",
+            "node_clock",
+            "quantum_action",
+        }
+    )  # no family row; the width derived and the Link unit the engine's (2026-10-24, `GONE_INTEGERS`): `families` with `name`, `pair` and `dimension` gone 2026-10-24, `held` and `reads` before them
+    assert set(universe.GONE) == {"families"}
+    with pytest.raises(ValueError, match="holds the key 'families', a declaration no file carries"):
         universe.universe_of(
             {
-                "integers": {"node_clock": 6000, "quantum_action": 32768},
+                "integers": {"den": 6000, "node_clock": 6000, "quantum_action": 32768},
                 "families": [{"name": "g", "pair": [5999, 6000], "act": "pace"}],
             }
         )
@@ -200,7 +208,7 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
 }
 LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the keys that name each kind
     (("shape", "universe"), "a world"),
-    (("families", "integers"), "a universe"),
+    (("integers",), "a universe"),
     (("world_digest",), "a mode file"),
 )
 
@@ -214,7 +222,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "world": set(loader_world.WORLD_KEYS),
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
-        "families": set(universe.FAMILY_KEYS),
     }
     retired, found = set(RETIRED) | {"interval", *universe.GONE}, []
     for folder in (
@@ -259,14 +266,13 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
-    family = {"name": "g", "pair": [5999, 6000]}  # a holder of the volume, derived from its pair
-    integers = {"node_clock": 6000, "quantum_action": 32768}
+    integers = {"den": 6000, "node_clock": 6000, "quantum_action": 32768}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
             keyed(world, "the world", loader_world.WORLD_KEYS, loader_world.WORLD_REQUIRED)
         else:
-            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
+            universe.universe_of({"integers": {**integers, key: {}}})
 
 
 def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
@@ -284,7 +290,7 @@ def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
     assert found == STEPS, found
 
 
-def test_the_one_world_loads_under_the_one_node_and_runs():  # type: ignore[no-untyped-def]
+def test_the_one_world_loads_under_the_one_node_and_runs(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """The shipped one world, examples/events/universe24 (125 Nodes), loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board periodic on every axis where the world declares no boundary), is laid on its board and stepped 12 intervals, every held row's wall fixed per Node, and a massless time line never fires (ALGEBRA.md, The swap at the top, the massless clause). The sweep over every shipped world under examples/ (60 worlds, their starts 142 s summed on the suite's clock) left on 2026-10-24: every world but Universe24 is cancelled (the owner's word)."""
     from tests.laws_read import load_shipped
 
@@ -294,7 +300,13 @@ def test_the_one_world_loads_under_the_one_node_and_runs():  # type: ignore[no-u
     assert (
         int(np.prod(world.shape)) == 125
     )  # the shipped one world, the smallest structured board with a clump
-    board = Lattice(world)
+    from event_universe import world_files
+    from tests.laws_universe import bare_torus
+
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = Lattice(
+        load_world(bare_torus(tmp_path, 3, 12))
+    )  # the tests' small universe on the 3-cube: the one world's 26 points step at 0.5 s per interval on it (2026-10-24, the enlarged den)
     for _ in range(12):
         board.step()
     assert board.interval == 12  # the run has no end but its length since the torus (2026-10-24)
@@ -302,5 +314,5 @@ def test_the_one_world_loads_under_the_one_node_and_runs():  # type: ignore[no-u
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
         assert board.swaps == []  # a massless time line never fires
     print(
-        f"{path.relative_to(SRC.parents[1])} (125 Nodes) loaded under the one Node and stepped 12 intervals"
+        f"{path.relative_to(SRC.parents[1])} (125 Nodes) loaded under the one Node; the small torus stepped 12 intervals"
     )

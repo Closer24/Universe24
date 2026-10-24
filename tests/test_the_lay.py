@@ -43,11 +43,14 @@ def test_the_seeds_lay_is_one_call_of_the_act_with_no_weights(
     drift, half = seed.drift_of(board.world.quantum_action), board.half_wall(light)
     assert drift * drift <= board.world.quantum_action < (drift + 1) * (drift + 1)
     line = board.states[light].lines[0]
-    assert flat(line.now) == [drift] * CUBE**3 and flat(line.before) == [0] * CUBE**3
+    assert (
+        flat(line.now) == [0] + [drift] * (CUBE**3 - 1) and flat(line.before) == [0] * CUBE**3
+    )  # the hole at the origin (2026-10-24)
     assert flat(line.remainder) == [half] * CUBE**3
     zeros = records.zeros(board.shape, board.kind)
     board.states[light].lines[0] = records.Record(zeros, zeros.copy(), line.remainder)
     now = records.full(board.shape, drift, board.kind)
+    now[seed.ORIGIN] = 0  # the seed's hole at the origin (2026-10-24)
     written = lay.laid(board, light, 0, (now, zeros), None, None)
     assert np.array_equal(written[0], now) and np.array_equal(written[1], zeros)
     laid = board.states[light].lines[0]

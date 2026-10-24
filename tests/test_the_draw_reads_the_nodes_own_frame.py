@@ -7,13 +7,14 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import digits, records, seed
+from event_universe import digits, records, seed, world_files
 from event_universe.emission import emitted_lines
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
 from event_universe.world_files import load_world
+from tests.laws_universe import small_universe
 
-UNIVERSE, SIDE, INTERVALS, DRAWN = "examples/events/universe24/universe_universe24.json", 3, 8, 3
+SIDE, INTERVALS, DRAWN = 3, 8, 3
 
 
 def sea_plus_one(at: tuple[int, int, int]) -> Any:
@@ -76,9 +77,11 @@ def test_the_frame_is_the_node_and_its_six_ports_in_the_port_order() -> None:
 def test_a_seed_rolled_one_link_gives_the_rolled_board_bit_for_bit(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    small_universe(tmp_path)  # the tests' small universe, den 1,021 with its two points
     world = tmp_path / "w.json"
     world.write_text(
-        json.dumps({"universe": UNIVERSE, "shape": [SIDE] * 3, "intervals": INTERVALS}), encoding="utf-8"
+        json.dumps({"universe": "u.json", "shape": [SIDE] * 3, "intervals": INTERVALS}), encoding="utf-8"
     )
     runs = []
     for at in ((0, 0, 0), (1, 0, 0)):

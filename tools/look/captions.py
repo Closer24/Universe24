@@ -9,6 +9,8 @@ import json
 from collections import Counter
 from typing import Any
 
+from event_universe.loader.circle import vector_of
+
 
 def spans_of(counts: list[tuple[int, int]]) -> list[tuple[int, int, int]]:
     """Runs of intervals with a count above 0, each (first, last, the largest count), from (interval, count) pairs in order."""
@@ -252,6 +254,29 @@ def families_of(eras: list[dict[str, Any]]) -> tuple[list[str], list[str], str |
     return quanta, holders, seeded[0] if len(seeded) == 1 else None
 
 
+def captions_for(header: dict[str, Any] | None) -> dict[str, str]:
+    """The pages' captions read from the header's integers alone (the owner's word of 2026-10-24: the names become labels of the record's pages, never input): the seed row, the massless point, captioned "light"; among the points of den's circle (the header's `points`, each row's num and s under its vector label) the least leg captioned "electron" and the heaviest prime's own point, the vector with twice the prime's exponent at the last of den's primes 1 mod 4 and 0 elsewhere, captioned "proton"; every other row its label alone; a log with no points (the record to 2026-10-24, its rows named) captions nothing."""
+    header = header or {}
+    found: dict[str, str] = {}
+    if header.get("seed"):
+        found[str(header["seed"])] = "light"
+    points = {name: pair for name, pair in (header.get("points") or {}).items() if vector_of(name)}
+    primes = header.get("primes") or []
+    if points:
+        found[min(points, key=lambda name: points[name][1])] = "electron"
+    if points and primes:
+        heaviest = tuple([0] * (len(primes) - 1) + [2 * int(primes[-1][1])])
+        for name in points:
+            if vector_of(name) == heaviest:
+                found[name] = "proton"
+    return found
+
+
+def shown(name: str, captions: dict[str, str]) -> str:
+    """A row's name on the pages, its caption beside it where the integers give one ("point 0 0 2 (proton)"), the name alone otherwise."""
+    return f"{name} ({captions[name]})" if name in captions else name
+
+
 def n(value: Any) -> str:
     """A whole number with its thousands marked, anything else written out."""
     return f"{value:,}" if isinstance(value, int) and not isinstance(value, bool) else str(value)
@@ -283,6 +308,7 @@ def legend_of(
     """The legend of kinds: every kind of thing the law can show, as {"reached", "declared", "rows": [{"kind", "law", "count", "words"}]}, the count an integer read from the logs (None where the logs cannot name it) and the words its reading with the cause where it is 0; nothing declared."""
     lines, rows = held_rows(eras)
     quanta, holders, seed = families_of(eras)
+    captions = captions_for(eras[0] if eras else None)
     reached = lines[-1]["interval"] if lines else None
     last_nodes = nodes[-1] if nodes else None
     found: list[dict[str, Any]] = []
@@ -369,12 +395,12 @@ def legend_of(
             senses = sorted({tuple(b["senses"]) for b in born})
             words = f"{n(len(born))} births at {', '.join(n(a) for a in ats)}, at {n(len(places))} Nodes, the senses {' and '.join(str(list(s)) for s in senses)} (matter and antimatter)"
         elif births:
-            words = f"none born: every birth line's children are {' or '.join(children)}, the heaviest list within the two meeting quanta's energy at every Node (the law's sentence)"
+            words = f"none born: every birth line's children are {' or '.join(shown(c, captions) for c in children)}, the heaviest list within the two meeting quanta's energy at every Node (the law's sentence)"
         else:
             words = "none born: no birth line in the clicks log"
         found.append(
             {
-                "kind": f"{family} births",
+                "kind": f"{shown(family, captions)} births",
                 "law": "two whole quanta of the seed family meeting at one Node make the heaviest exact list of children within their energy, one record each, the two quanta taken by the hole at that Node",
                 "count": len(born),
                 "words": words,
@@ -472,9 +498,9 @@ def legend_of(
         else:
             words = f"0 from {n(gone)}: standing from {n(since)}, spent at the holes"
         kind = (
-            f"standing {family} (the seed family: light left)"
+            f"standing {shown(family, captions)} (the seed family: light left)"
             if family == seed
-            else f"standing {family}"
+            else f"standing {shown(family, captions)}"
             if family in quanta
             else f"standing {family} (a holder, beside the families of quanta: the held row writes none of it)"
         )

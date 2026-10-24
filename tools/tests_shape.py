@@ -42,12 +42,12 @@ HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
-        26,
+        22,
         "the digits' read made once per record per interval (the branch record-speed, 2026-10-24): digits.ruled and flux.pairs_of asked at "
         "every Node's frame of a close give the same integers memoized and not, and node.rule_of is called once per record over every frame",
     ),
     "tests/test_the_readings_are_made_once_per_interval.py::test_the_turned_room_is_computed_once_per_pair_at_load": (
-        15,
+        14,
         "plane.turned_room under functools.cache at load (the branch record-speed, 2026-10-24): the same room cold and warm per turned pair, "
         "every warm call a hit, the amplitude bound the world's",
     ),

@@ -1,4 +1,4 @@
-"""The circle of den: its Pythagorean points from den's primes and the lightest among them (the owner's word of 2026-10-24, 09:1x UTC, "the charged plane family at rest is the lightest point of the circle"; ALGEBRA.md, The lightest point is derived): the primes by Miller and Rabin's witnesses and Pollard's rho (`is_prime`, `split`, `factors`), a prime 1 mod 4 as two squares by Fermat and Hermite and Serret's act (`two_squares`), every point of the circle from them and the least leg (`lightest_point`), every division the division act and no root; the loader's tool for the labels of the born pairs, writing no row (the owner's word of 09:4x UTC, declaring a family is forbidden)."""
+"""The circle of den: its Pythagorean points from den's primes and the lightest among them (the owner's word of 2026-10-24, 09:1x UTC, "the charged plane family at rest is the lightest point of the circle"; ALGEBRA.md, The lightest point is derived): the primes by Miller and Rabin's witnesses and Pollard's rho (`is_prime`, `split`, `factors`), a prime 1 mod 4 as two squares by Fermat and Hermite and Serret's act (`two_squares`), every point of the circle from them and the least leg (`lightest_point`), every division the division act and no root; the loader's tool for the labels of the born pairs, writing no row (the owner's word of 09:4x UTC, declaring a family is forbidden). Beside the lightest point, every point of the circle with its label (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md, A family's declaration, The circle of den): the file holds den and no family row, and the loader derives from den's integers the Pythagorean points num^2 + s^2 = den^2 of the open quadrant (num > 0, s > 0), every one a product of den's Gaussian primes turned into the quadrant by the units and labelled by its exponent vector over den's primes 1 mod 4 and nothing else (`circle_points`, `label_of`, `vector_of`): for the primes 1 mod 4 with their exponents e_i every vector v with v_i in {-2 e_i, ..., 2 e_i} by twos, the point z = scale x PROD g_i^k_i conj(g_i)^(2 e_i - k_i) with k_i = (v_i + 2 e_i) / 2, g_i = a + i b the prime's two squares with a > b (`two_squares`, `gaussian_of`) and scale the part of den outside those primes (the twos and the primes 3 mod 4, no angle, `angled`), rotated by i until both legs are positive (`quadrant`), so that the vectors and the points of the quadrant correspond one to one (3^n - 1 points for n primes 1 mod 4 each once; 242 at den 53,567,765 = 5 x 17 x 73 x 89 x 97, 26 at the three-prime den 1,166,991,900,949,580,266,237) and the vector -v is the point with the legs swapped; the zero vector is the axis (den, 0), the massless point, no row of the circle."""
 
 from __future__ import annotations
 
@@ -116,3 +116,82 @@ def lightest_point(den: int) -> tuple[int, int]:
         )
     s, num = found[0]
     return num, s
+
+
+Gauss = tuple[int, int]  # a Gaussian integer a + i b
+Point = tuple[tuple[int, ...], int, int]  # a point of the circle: its exponent vector, num and s
+
+
+def gaussian_of(prime: int) -> Gauss:
+    """The Gaussian prime a + i b above a prime 1 mod 4 with a > b > 0, its two squares (`two_squares`) ordered."""
+    legs = two_squares(prime)
+    return max(legs), min(legs)
+
+
+def times(left: Gauss, right: Gauss) -> Gauss:
+    """The product of two Gaussian integers."""
+    return left[0] * right[0] - left[1] * right[1], left[0] * right[1] + left[1] * right[0]
+
+
+def quadrant(point: Gauss) -> Gauss:
+    """A Gaussian integer off the axes turned by i into the open first quadrant, both legs positive."""
+    assert point[0] != 0 and point[1] != 0, f"{point} lies on an axis"
+    while point[0] <= 0 or point[1] <= 0:
+        point = -point[1], point[0]
+    return point
+
+
+def angled(den: int) -> tuple[list[tuple[int, int]], int]:
+    """Den's primes 1 mod 4 with their exponents in rising order, the ones that carry an angle (`factors`), and the scale, den's part outside them (the twos and the primes 3 mod 4), which carries none."""
+    primes = sorted(
+        (prime, power)
+        for prime, power in factors(den).items()
+        if division_forward(prime, SIDES + SIDES, 0)[1] == 1
+    )
+    scale = den
+    for prime, power in primes:
+        scale = int(division_forward(scale, prime**power, 0)[0])
+    return primes, scale
+
+
+def circle_points(den: int) -> list[Point]:
+    """Every point of den's circle in the open quadrant with its exponent vector over den's primes 1 mod 4 (the module's sentence), in the vectors' order; none where den has no prime 1 mod 4."""
+    primes, scale = angled(den)
+    gaussians = {prime: gaussian_of(prime) for prime, _power in primes}  # each prime split once
+    vectors: list[tuple[int, ...]] = [()]
+    for _prime, power in primes:
+        vectors = [v + (step,) for v in vectors for step in range(-2 * power, 2 * power + 1, 2)]
+    found = []
+    for vector in vectors:
+        if not any(vector):
+            continue  # the axis, the massless point (den, 0)
+        point: Gauss = (scale, 0)
+        for (prime, power), step in zip(primes, vector, strict=True):
+            gauss = gaussians[prime]
+            lift = int(division_forward(step + 2 * power, 2, 0)[0])
+            for _ in range(lift):
+                point = times(point, gauss)
+            for _ in range(2 * power - lift):
+                point = times(point, (gauss[0], -gauss[1]))
+        if point[0] == 0 or point[1] == 0:
+            continue
+        num, sine = quadrant(point)
+        assert num * num + sine * sine == den * den, f"{vector}: no point of den {den}"
+        found.append((vector, num, sine))
+    return found
+
+
+def label_of(vector: tuple[int, ...]) -> str:
+    """A point's label, read from its integers alone: the word point and its exponents over den's primes 1 mod 4 in rising order, "point 0 2 0" the least leg's at the three-prime den (the lift of its middle prime), "point 0 0 2" the heaviest prime's."""
+    return "point " + " ".join(str(step) for step in vector)
+
+
+def vector_of(label: str) -> tuple[int, ...] | None:
+    """The exponent vector a label names (`label_of`), None for a name that is no point's."""
+    words = label.split()
+    if len(words) < 2 or words[0] != "point":
+        return None
+    try:
+        return tuple(int(word) for word in words[1:])
+    except ValueError:
+        return None
