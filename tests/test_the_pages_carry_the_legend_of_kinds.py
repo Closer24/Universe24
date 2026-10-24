@@ -66,7 +66,7 @@ def logs() -> tuple[list[dict], list[dict], list[dict]]:
 
 
 def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothing_new_after_bang_1():
-    """(1) The record's legend at the enlarged den on the merged engine (2026-10-24; the former dens' numbers in the folder's notes): 7 bangs, 6 tops, 0 black holes, 0 turns at the floor, 750 Node turns, 125 proton pairs at 30 at 125 Nodes, 0 electron pairs with the cause (matter's row gone), 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 4 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
+    """(1) The record's legend at the enlarged den on the merged engine (2026-10-24; the former dens' numbers in the folder's notes): 7 bangs, 6 tops, 0 black holes, 0 turns at the floor, 750 Node turns, 125 proton births at 30 at 125 Nodes, 0 electron births with the cause (matter's row gone), 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 4 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
     eras, nodes, clicks = logs()
     floor = ERAS_PAGE.least_of(nodes, eras[0]["node_clock"])["floor"]
     legend = CAPTIONS.legend_of(eras, nodes, clicks, floor)
@@ -79,8 +79,8 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
         "black holes": 0,
         "turns at the floor (the crunch)": 0,
         "Node turns (the swap at the top)": 750,
-        "proton pairs born": 125,
-        "electron pairs born": 0,
+        "proton births": 125,
+        "electron births": 0,
         "conversions": 0,
         "clicks": 125,
         "lays (the records laid)": 625,
@@ -99,11 +99,11 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
     assert rows["turns at the floor (the crunch)"]["words"] == (
         "0 Node turns at or under the floor 19; the least X over the run 1,003"
     )
-    assert rows["proton pairs born"]["words"] == (
-        "125 pairs at 30, at 125 Nodes, the senses [-1, 1] (matter and antimatter)"
+    assert rows["proton births"]["words"] == (
+        "125 births at 30, at 125 Nodes, the senses [-1, 1] (matter and antimatter)"
     )
-    assert rows["electron pairs born"]["words"].startswith(
-        "none born: every birth line's children are proton and proton, the heaviest pair within the two meeting quanta's energy"
+    assert rows["electron births"]["words"].startswith(
+        "none born: every birth line's children are proton and proton, the heaviest list within the two meeting quanta's energy"
     )
     assert rows["clicks"]["words"].startswith("125 at 30, 125 the board's own")
     assert rows["clicks"]["words"].endswith("every click counted whole, no part drawn")

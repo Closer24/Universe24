@@ -155,7 +155,12 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
         assert differences(whole, board) == [], interval
     born = [line for line in lines if line["event"] == "birth"]
     assert len(born) == SIDE**3 and all(line["interval"] == BIRTH for line in born)  # every Node alike
-    assert all(line["children"] == ["proton"] * 2 and line["senses"] == [-1, 1] for line in born)
+    assert all(
+        line["children"] == born[0]["children"]
+        and sum(line["senses"]) == 0
+        and "proton" in line["children"]
+        for line in born
+    )  # one list at every Node, the proton pair among its children, the senses summing to 0 (N children one record each, 2026-10-24)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
 
 

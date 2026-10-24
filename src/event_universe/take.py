@@ -28,6 +28,7 @@ class Item:
     pair: tuple[int, int] | None = None
     sense: int = 0
     ports: tuple[tuple[int, ...], ...] = ()  # C6 (i): per Node named, the Ports the quantum entered by
+    record: int = 0  # the record of the family the item is laid on: a born child's position among its family's children in the list the meeting selected (`act.born_items`; ALGEBRA.md, Matter's birth from light, N records of the write step, 2026-10-24), 0 otherwise
 
 
 def faced(board: Lattice, item: Item) -> list[tuple[Node, tuple[int, ...]]]:

@@ -1,4 +1,4 @@
-"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_pair, meeting_board.child_of): the chooser on the one universe file, exact in the integers; the board's births stand in tests/test_universe24_runs_its_cycle.py."""
+"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_list, meeting_board.child_of): the chooser on the one universe file, exact in the integers; the board's births stand in tests/test_universe24_runs_its_cycle.py."""
 
 import json
 

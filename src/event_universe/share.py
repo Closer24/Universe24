@@ -134,17 +134,12 @@ def half_action(action: int) -> int:
     return int(division_forward(action, 2, 0)[0])
 
 
-def charge_at(board: Lattice, index: int) -> np.ndarray:
-    """A plane family's charge density at every Node, the Wronskian re_now im_before - im_now re_before summed over its records' planes (`records.wronskian`, the sign holder's own read, no new reading), signed, in the units of the levels' product."""
-    total: Any = 0
-    for record in quanta_records(board.families, index):
-        total = total + wronskian(board.lines_of(index, record), True)
-    return np.asarray(np.broadcast_to(np.asarray(total, dtype=object), board.shape), dtype=object)
-
-
 def charge_of(board: Lattice, index: int) -> int:
-    """A plane family's charge over the board, |SUM over the Nodes of W_i| (`charge_at`): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
-    return abs(int(charge_at(board, index).sum(dtype=object)))
+    """A plane family's charge over the board, SUM over its records of |SUM over the Nodes of W_i| (`records.wronskian` per record; every record one quantum of its own sense, ALGEBRA.md, No record reads its own write of the sign; the born pair's two records of opposite sense each counted, the clause of 2026-10-24 under Matter's birth from light, where the family's one total read the pair as 0): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
+    return sum(
+        abs(int(np.asarray(wronskian(board.lines_of(index, record), True), dtype=object).sum()))
+        for record in quanta_records(board.families, index)
+    )
 
 
 def charged(family: FamilyRule) -> bool:

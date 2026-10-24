@@ -65,11 +65,13 @@ def digits_of(board: Lattice, index: int, at: Frame) -> Iterator[tuple[int, int,
 
 
 def at_origin(board: Lattice, reads: Reads) -> bool:
-    """Whether every digit the read would take stands at the lay's origin w div 2 (the digits of `digits_of` over `reads`, each family at its Nodes): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close; where light stands at the body the emission's hazard is read from the board; `meeting.emission_drawn`)."""
+    """Whether every digit the read would take stands at the lay's origin w div 2 (the digits of `digits_of` over `reads`, each family at its Nodes): the condition `read_of` refuses on, read here without a refusal for the emission's draw alone (ALGEBRA.md, the exact dark: a body whose read finds every digit at the lay's origin at its emission's draw does not draw; The board reads itself: no draw where the Node's read finds every digit at the origin). A digit is its line's remainder at the Node over the lattice F, and the origin's digit is the remainder w div 2 whatever F, so the remainders alone are read here, the same records and the same Nodes as `digits_of` (every record of quanta of the family, `loader/derived.quanta_records`, every line of it, the frame's Nodes), and no rule, Link pair or lattice is made for a comparison that reads none of them (the economy of 2026-10-24, every answer the same)."""
     return all(
-        remainder == board.half_wall(index)
+        int(remainder) == board.half_wall(index)
         for index, at in reads
-        for remainder, _found, _wall, _place in digits_of(board, index, at)
+        for record in quanta_records(board.families, index)
+        for line in board.lines_of(index, record)
+        for remainder in picked(line.remainder, at)
     )
 
 
