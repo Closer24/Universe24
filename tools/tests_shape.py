@@ -70,8 +70,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_click_readings.py::test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point": (
         49,
-        "the click's view, the momentum as the frame's running cosine with the Link current's sign at the interval's start (2026-10-24, the blind measured, the Boss's ruling): the plane wave at k = 2 pi / 3 reads [1, -1, 2] on x, "
-        "the hole's [0, 5, 6], its neighbours' [0, 1, 2] toward it and [0, 25, 26] across, the edges' and the corners' at the closes 4 and 5; a second credit's point, beat and momentum None, its windows 2",
+        "the click's view, the momentum as the frame's running cosine with the Link current's sign at the interval's start (2026-10-24, the blind measured, the Boss's ruling): the plane wave at k = "
+        "2 pi / 3 reads [1, -1, 2] on x and [0, 1, 1] across; on the hole seed under the hole the frame's level with no drift (the Boss's ruling of 2026-10-24) the hole's Node alone re-lit at every close, "
+        "its first credit [0, 5, 6] on every axis and every later credit a point with the momentum alike on the three axes at the sign 0, the beat None beyond the band",
     ),
     "tests/test_the_click_readings.py::clock_of": (
         7,
@@ -212,6 +213,26 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         74,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
+    ),
+    "tests/test_the_hole_is_the_frames_level.py::test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube": (
+        17,
+        "the board's own hole the frame's level with no drift (the Boss's ruling of 2026-10-24 on the bound-click hand's measurement): conservation at the click on the 3-cube, nothing made at the Links, at most one hole per close, the light never spent",
+    ),
+    "tests/test_the_hole_is_the_frames_level.py::test_the_5_cube_keeps_its_light_above_zero_under_the_holes": (
+        10,
+        "the same hole on the 5-cube: the light above zero through 20 intervals where the write to (0, 0) spent it by 8, no close holing every Node",
+    ),
+    "tests/test_the_hole_is_the_frames_level.py::test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin": (
+        17,
+        "the hole's form is the seed's: frame_at at the seed's origin (0, 0), on the uniform sea the level before twice, the seed's kink exactly",
+    ),
+    "tests/test_the_hole_is_the_frames_level.py::test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit": (
+        30,
+        "the Born side on the hole seed: the first meeting met by the draw at one whole quantum with a remainder, the weights the remainder against the unit, the credit and birth lines at that Node",
+    ),
+    "tests/test_the_hole_is_the_frames_level.py::test_the_run_back_is_exact_through_the_closes_that_hole": (
+        14,
+        "the hole's lay logged and undone by the run back, eight intervals forward through the births and eight back bit for bit",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")
