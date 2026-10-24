@@ -14,7 +14,6 @@ import event_universe.readings as readings
 import event_universe.records as records
 from event_universe import (
     credit,
-    front,
     meeting,
     meeting_board,
     node,
@@ -22,7 +21,6 @@ from event_universe import (
     share,
     shear,
     swap,
-    take,
 )
 from event_universe.board_readings import Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
@@ -209,7 +207,6 @@ class Lattice:
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
         kept_state = swap.kept(self)
         node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
-        stresses = board_readings.stresses(self)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
         if (
             self.world.seed is not None
@@ -228,15 +225,12 @@ class Lattice:
                 for held, gained in zip((forms, turns), booked, strict=True):
                     held.update(gained)
             state.lines = lines
-        if acts:
-            take.faces_reported(self)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
         swap.stepped(self, kept_state)
         if acts:
             self.tick += 1
             meeting_board.closed(self, kept_state)
-            front.advanced_fronts(self)
         else:
             meeting_back.logged(self, 1)
         self.passes, self.heading = self.passes + (self.heading < 0), 1
@@ -318,18 +312,18 @@ class Lattice:
         rulers, ended = self.rulers(-1), [s.lines for s in self.states]
         kept_state = swap.kept(self)
         books: dict[int, list[records.Record]] = {}
-        pending = list(self.held)
+        queued = list(self.held)
         while True:
             for index in self.order:
-                if index not in books and (index not in self.held or index not in pending):
+                if index not in books and (index not in self.held or index not in queued):
                     self.booked_back(index, books, forms, turns, stresses, senses)
-            ready = [h for h in pending if all(i in books for i in readers_of(self.families, h))]
-            if not pending:
+            ready = [h for h in queued if all(i in books for i in readers_of(self.families, h))]
+            if not queued:
                 break
             assert ready, "the held rows' sources form a cycle"
             for held in ready:
                 self.held_write(held, forms, turns, -1, stresses, senses, rulers)
-            pending = [held for held in pending if held not in ready]
+            queued = [held for held in queued if held not in ready]
         for index in (held for held in self.held if held not in books):
             books[index] = self.stepped(index, -1)[0]
         for index, lines in books.items():

@@ -14,22 +14,11 @@ MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
     "LATTICE",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CLICK, DENSITY, PARTS, CREDIT, ERASURE, LAY, FACE = (
-    "click",
-    "density",
-    "parts",
+CREDIT, LAY = (
     "credit",
-    "erasure",
     "lay",
-    "face",
-)  # the output's seven lines: the node_detector's report, the lattice reading, the parts' levels, the click written (every reader's, the region's credit and a record's absorption and emission alike), the front's shell, one line laid at one Node, one value presented at one Port
+)  # the output's two lines beside the birth's: the click written, one line laid at one Node
 REPORT_KEYS = ("event", "label", "interval", "family", "node_detector")  # every line's first keys
-CONVERSION, INTO, SENSES = (
-    "conversion",
-    "into",
-    "senses",
-)  # the conversion line: its event and its own keys, the families of the records out and their senses as laid (conversion.py)
-MET = " + "  # the conversion line's `family` where several families' quanta met at one Node: their names joined (conversion.line)
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 EXCHANGED = (
     "absorbed",
@@ -40,22 +29,7 @@ MOMENTUM, LOST = (
     "lost",
 )  # the momentum as the click's view reads it (2026-10-24, meeting_board.readings_at): per axis [sign_a, num_a, den_a], the frame's running cosine along the axis, 2 cos k_a = (a_{+a} + a_{-a}) / a_i, as the reduced pair with the Link current's sign, p_a = T sin k_a per Link (ALGEBRA.md, The lattice momentum, Part F), None at a level now 0; and what the write books and does not give (None where nothing was lost): the write moves the count and writes nothing for the piece's momentum (ALGEBRA.md, The click's algebra beyond the law). The former keys `fan` (the record's P_a over the whole board at the click) and `recoil` (-p_a owed by the source, Part G) struck from the credit line on 2026-10-24: no click reads the board (the click reads the Node and its six neighbours, the owner's rule of the local law), and the recoil is -p, redundant with the momentum
 SOURCE = "source"  # Part G: the piece's source, the emitting body by its number in the world's order or the lay (both hands' lines of 2026-10-10, 6091663984 and 6091670073); the recoil it owed had its own key to 2026-10-24 (`MOMENTUM`)
-WRITTEN_AS_PHASE = "P written as the part's phase"  # the recoil as the per-Node phase (2026-10-21): the piece's P written into the entered part over a bound record of two Nodes or more standing free in its well as the phase k . (x - c) per Node (`act.parted`, `take.recoil_phases`), the light's piece gone with the hole; a body held at declared Nodes keeps `LOST_TO_TAKER`
-LOST_TO_TAKER = "P lost to the taker"  # Part F: the piece's P booked on the credit line and written into no part, the recoil of a body held at declared Nodes the declaration's (the two hands' lines of 2026-10-09); Part F2 dropped the pair's "no back-to-back region", a declared tolerance's miss: the two pieces' p stand in their two credit lines and the test judges their sum against the lays' floor
-LOST_TO_SOURCE, LOST_TO_LAY, BOOKED_AT_EMISSION = (
-    "recoil lost to the source",
-    "recoil lost to the lay",
-    "recoil booked at the emission",
-)  # Part G: the source's three readings in `lost` (both hands): the recoil owed by a body booked and written into no part, no body emitted the piece (the file's lay, no receiver), or the recoil booked at the lay, the directed packet's emission line (`emission.laid_packet`, the direction drawn there; `act.written`)
-THE_LAY = "the lay"  # Part G: the `source` of a piece no body emitted, the file's lay (one_photon, the two slits, bell)
-LOST_TO_REGION, UNPAID_BY_REGION = (
-    "P lost to the region",
-    "unpaid by the region",
-)  # Part H, MUST 5 (both hands' lines of 2026-10-10 on the whole trial): a region taker (the two slits' screens, bell's sides) has no part of its own, so it takes no +p and books no recoil to the source: `lost` reads the piece's P lost to the region and `recoil` the one word, unpaid, the emitter still drawn and its outstanding count down by one (`lists.credited_node`, `take.unpaid`); the region's +p OPEN by name
-NO_DRAW = "no draw: every digit at the lay's origin, the emission at the window's close"  # the exact dark (the reader's re-ruling of 2026-10-20, (c)): a body whose read finds every digit at the lay's origin at its emission's draw does not draw; its emission falls at its window's close, the detector's declared when, this reading on its credit line
 BIAS_BOUND = "bias_bound"  # the click's line: the bound g / T of the read's first draw, the reader's F, 2026-10-20
-NO_SIDE = "no side: booked, not faced"  # C6: the hole's Node two-sided on every axis, its face set empty, the quantum taken in the books by the deficit path and the levels standing (`take.faced`, `act.written`)
-LARGEST_ENTRY = "the where by the largest raw entry of the shell's book: every shell Node below G^2 while the row fell"  # (5), the reader's word of 04:21: no weight, no draw, the reading named; the first of a tie (max over the range takes the first index; the reachable tie the all-zero book, the where then the shell's first Node by order)
 ORDER, SCALE, BOARD_COUNT = (
     "order",
     "scale",
@@ -79,27 +53,13 @@ CREDIT_KEYS = (
     LOST,
     SOURCE,
 )  # the credit line's own keys, the one click line kind's
-ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
-LINE, BEFORE, AFTER, PORT_SET, VALUE = (
-    "line",
-    "before",
-    "after",
-    "ports",
-    "value",
-)  # the two acts' words
+LINE, BEFORE, AFTER = ("line", "before", "after")  # the lay's words
 LAY_KEYS = (
     LINE,
     BEFORE,
     AFTER,
     "node",
 )  # the lay line's own keys: the line laid, its levels before and after
-FACE_KEYS = (
-    LINE,
-    PORT_SET,
-    VALUE,
-    "node",
-)  # the face line's own keys: the line, the Ports and the value presented
-BODY = "body"  # a NodeDetector with a record of its own in the output, by its number among the world's bodies
 AT = "at"  # the one Node written, a lattice diagnostic beside the credit's result
 OUTPUT = (
     *REPORT_KEYS,
@@ -108,12 +68,8 @@ OUTPUT = (
     WELL,
     LEVELS,
     *CREDIT_KEYS,
-    *ERASURE_KEYS,
     *LAY_KEYS[:3],
-    PORT_SET,
-    VALUE,
 )  # the lines' keys
-PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
 BOOKS = (
     "share",
     "quanta",
@@ -148,7 +104,7 @@ def credit(
     bias: list[int] | None = None,
     readings: dict[str, object] | None = None,
 ) -> dict[str, object]:
-    """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeDetector is one declaration kind for every world; features/click), labelled NODEDETECTOR, the world's reading and nothing else (the owner's word: we read only the node_detector's content, the clicks it emits to a file, minding its clock against the board's): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a NodeDetector), the reader credited or clicking by name (a declared region's, or `body n` for a record declared a NodeDetector, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's intervals, `credit.clocked_regions`, `node_detector.clock_advanced`; the board's `interval` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's absorption, emission or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `absorbed` from or `emitted` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `absorbed` (the arriving family whose quantum was taken, or the probe's at its click) and `emitted` (the light a whole quantum was given to, or the probe's given back), None where none; Part F (the two hands' lines of 2026-10-09, momentum from Rule3) as the click's view reads it (2026-10-24, `meeting_board.readings_at`): `momentum`, the frame's running cosine along each axis, 2 cos k_a = (a_{+a} + a_{-a}) / a_i, with the Link current's sign, p_a = T sin k_a per Link, per axis [sign_a, num_a, den_a] (the reduced pair as the point's, den above 0, the lines' pairs in order where they differ), None at a level now 0; `lost`, the readings of what the write books and does not give, in order (`LOST_TO_TAKER`; Part G: `LOST_TO_SOURCE`, `LOST_TO_LAY`, `BOOKED_AT_EMISSION`), None where nothing: the write moves the count by one and writes nothing for the piece's momentum, the recoil of a body held at declared Nodes being the declaration's (ALGEBRA.md, The click's algebra beyond the law); Part G (both hands' lines of 2026-10-10): `source`, the piece's source drawn among the emitters by the quanta each still holds in the record, `body n` by its number in the world's order, or `THE_LAY` where no body emitted it; the former keys `fan` (the record's P_a over the whole board at the close, `readings.momentum_of`) and `recoil` (-p_a owed by the source, `take.recoiled`, with the words `BOOKED_AT_EMISSION` and `UNPAID_BY_REGION`) struck from the line on 2026-10-24: no click reads the board (the click reads the Node and its six neighbours, the owner's rule of the local law), and the recoil is -p, redundant with the momentum; each None where the click has no such reading; no Node (the owner's word: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). For a side of a record of several parts the line carries three words more (`ORDER`, `SCALE`, `BOARD_COUNT`; `meeting_back`): the side's order among the sides' draws, 1 the first side to N the last, the record's scale after the side's write (the norm's square of the coefficients standing on its parts, `credit.scale_of`) and the record's count read from the board at the close (`Lattice.count`; ALGEBRA.md, The count on the board, 2026-10-20); on no line of a record of one part, so that every line of such a world stands as built. The null window's re-lay that changed a level writes the same line labelled LATTICE (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
+    """The credit line, the one click line kind of every reader (ALGEBRA.md, The NodeDetector is one declaration kind for every world; features/click), labelled NODEDETECTOR, the world's reading and nothing else (the owner's word: "we read only the node_detector's content, the clicks it emits to a file, minding its clock against the board's"): the result is the family (the record: the region's credited record, or the clicking record's own for a record declared a NodeDetector), the reader credited or clicking by name (a declared region's, or `body n` for a record declared a NodeDetector, by its number in the world's order), the window [first, last] it was drawn over in the board's intervals, `proper`, the reader's own proper time at the close in whole intervals (its clock the carried sum of its Nodes' composed clocks over the board's intervals, `credit.clocked_regions`, `node_detector.clock_advanced`; the board's `interval` beside it is the board's clock, a diagnostic), `windows`, the index of the window closed, the reader's event clock, the part before and after where the record has parts (`before` and `realised` by their declared names for a record's absorption, emission or probe's click; for a region's credit of a record of several parts `realised` is the port realised with the parts `kept`, the others ended; None for one part), the count moved (one quantum; 0 at the null window's re-lay) and the count left in the books of the record moved (the credited record's; the family `absorbed` from or `emitted` to for a record's click; None where none), the count conserved and read by the credit, and the families exchanged, `absorbed` (the arriving family whose quantum was taken, or the probe's at its click) and `emitted` (the light a whole quantum was given to, or the probe's given back), None where none; Part F (the two hands' lines of 2026-10-09, momentum from Rule3) as the click's view reads it (2026-10-24, `meeting_board.readings_at`): `momentum`, the frame's running cosine along each axis, 2 cos k_a = (a_{+a} + a_{-a}) / a_i, with the Link current's sign, p_a = T sin k_a per Link, per axis [sign_a, num_a, den_a] (the reduced pair as the point's, den above 0, the lines' pairs in order where they differ), None at a level now 0; `lost`, the readings of what the write books and does not give, in order (`LOST_TO_TAKER`; Part G: `LOST_TO_SOURCE`, `LOST_TO_LAY`, `BOOKED_AT_EMISSION`), None where nothing: the write moves the count by one and writes nothing for the piece's momentum, the recoil of a body held at declared Nodes being the declaration's (ALGEBRA.md, The click's algebra beyond the law); Part G (both hands' lines of 2026-10-10): `source`, the piece's source drawn among the emitters by the quanta each still holds in the record, `body n` by its number in the world's order, or `THE_LAY` where no body emitted it; the former keys `fan` (the record's P_a over the whole board at the close, `readings.momentum_of`) and `recoil` (-p_a owed by the source, `take.recoiled`, with the words `BOOKED_AT_EMISSION` and `UNPAID_BY_REGION`) struck from the line on 2026-10-24: no click reads the board (the click reads the Node and its six neighbours, the owner's rule of the local law), and the recoil is -p, redundant with the momentum; each None where the click has no such reading; no Node (the owner's word: the reader writes at one Node and gives no result for one Node, the uncertainty principle; the Node written stands in the `lay` and `face` lines, the host's tool's). For a side of a record of several parts the line carries three words more (`ORDER`, `SCALE`, `BOARD_COUNT`; `meeting_back`): the side's order among the sides' draws, 1 the first side to N the last, the record's scale after the side's write (the norm's square of the coefficients standing on its parts, `credit.scale_of`) and the record's count read from the board at the close (`Lattice.count`; ALGEBRA.md, The count on the board, 2026-10-20); on no line of a record of one part, so that every line of such a world stands as built. The null window's re-lay that changed a level writes the same line labelled LATTICE (no `quantum` passed, no measurement), the levels laid in the `lay` lines beside it."""
     label = MEASUREMENT if count else DIAGNOSTIC  # the null window's line (count 0) is the board's
     line = dict(zip(REPORT_KEYS, (CREDIT, label, interval, family, node_detector), strict=True))
     own = (window, proper, windows, before, realised, kept, count, left, absorbed, emitted)
@@ -176,29 +132,6 @@ def lay(
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     found.update(zip(LAY_KEYS, (line, before, after, written), strict=True))
     return found
-
-
-def face(
-    interval: int, family: str, line: int, node: list[int], ports: list[int], value: int
-) -> dict[str, object]:
-    """The face line, one value presented at the Ports of one Node's set for one interval's step (features/click, `Face`; the mathematician's hand with the advisor's second, the face value logged per line per interval; the click's plan, C6: the set in place of one Port), labelled LATTICE, a diagnostic for the host's tool and no result: the interval at whose step it is presented, the record's family, no node_detector, the line, the Ports, the set in Port order, and the value Rule3 read through each of them in the place of the neighbour's level (the click's hole and the front's shells alike), the one Node under `node`; the inverse presents the same value at the same Ports, so the tool crosses the click from the lines and not from the books' log."""
-    found: dict[str, object] = dict(
-        zip(REPORT_KEYS, (FACE, DIAGNOSTIC, interval, family, None), strict=True)
-    )
-    found.update(zip(FACE_KEYS, (line, ports, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
-    return found
-
-
-def erasure(
-    interval: int, family: str, origin: list[int], distance: int, nodes: int, take: int, unit: int
-) -> dict[str, object]:
-    """The erasure line, the front's shell of one interval (src/event_universe/front.py; the owner's word, the past going out at the speed of light), labelled LATTICE, a diagnostic beside the click line for the host's tool and no result: the interval, the clicked record's family, the click's Node at the file's coordinates (`origin`), the shell's Link-metric distance from it, the shell's Nodes, the record's share standing on the shell as the front reaches it in the current's units (`take`, what the shell's faces book for removal) and the record's quantum W_rec (`unit`), so that take over unit is the faces' take in quanta."""
-    line: dict[str, object] = dict(
-        zip(REPORT_KEYS, (ERASURE, DIAGNOSTIC, interval, family, None), strict=True)
-    )
-    for key, value in zip(ERASURE_KEYS, (origin, distance, nodes, take, unit), strict=True):
-        line[key] = value
-    return line
 
 
 def book(

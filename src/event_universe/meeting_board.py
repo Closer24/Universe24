@@ -186,9 +186,9 @@ def readings_at(
         agreed(
             [
                 point_of(
-                    int(arrival(start.now, axis, -1, board.wrap)[where]),
+                    int(arrival(start.now, axis, -1)[where]),
                     int(start.now[where]),
-                    int(arrival(start.now, axis, 1, board.wrap)[where]),
+                    int(arrival(start.now, axis, 1)[where]),
                 )
                 for start in starts
             ]

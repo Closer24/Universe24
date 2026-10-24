@@ -22,10 +22,8 @@ LINES = (
     "parts",
     "credit",
     "conversion",
-    "erasure",
     "lay",
-    "face",
-)  # the lines written: the clicks, the field readings, the parts' levels, the clicks written (the regions' and the records'), the conversion lines beside the credits', the fronts' shells, the lines laid and the values presented from outside the Node
+)  # the lines written: the clicks, the births, the field readings, the parts' levels, the clicks written and the lines laid (the erasure and face lines of the declared taker struck 2026-10-24)
 
 
 def run_input(path: str, out_dir: str) -> dict[str, object]:

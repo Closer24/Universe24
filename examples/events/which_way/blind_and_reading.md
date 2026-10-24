@@ -1,6 +1,6 @@
 # The which-way world: the blind and the reading
 
-The experiment of the heart (the owner's word of 2026-10-03, 01:52 UTC, experiments that test that it
+The trial of the heart (the owner's word of 2026-10-03, 01:52 UTC, trials that test that it
 works in the engine; the advisor's matrix, #1563 comment 5964151108, T2): the two slits of
 `examples/events/two_slits` with a declared region at one gap backed by a face. Behind the lower gap
 (the rows 17 to 19) a channel of the rows 16 to 19 runs from the wall's far side to the screen's

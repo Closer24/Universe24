@@ -322,7 +322,7 @@ def main(argv: list[str]) -> int:
         written = rep["b_faces"]["count_keyed_to_%d" % rep["world"]["intervals"]]
         check("9,279 = the sum of the shells", sum(shells) == wiped == 9279 and shells[:9] == [6, 18, 38, 64, 90, 110, 122, 127, 128] and all(v == 128 for v in shells[9:]), f"{len(shells)} shells, {fmt(sum(shells))}")
         check("18,560 = 2 x 9,279 + 2", named == 2 * wiped + 2 == 18560 and "18560" in text_n, fmt(named))
-        check("18,176 = 18,560 - 256 - 128, the 384 named and not yet written", written == named - 256 - 128 == 18176 and named - written == 384 and "18176" in text_n and "384 named" in text, fmt(written))
+        check("18,176 = 18,560 - 256 - 128, the 384 named and unwritten", written == named - 256 - 128 == 18176 and named - written == 384 and "18176" in text_n and "384 named" in text, fmt(written))
         # (t) the momentum at the click: the quarter turn 9,424 = floor(q_0 pi/2) acts of the angle 1/q_0, the twist; the taker carried 31,560 of the piece's 33,812 along the board, 2,252 left (run_momentum.json, read on the board by tools/run_momentum.py)
         mom_file = Path(__file__).resolve().parent.parent / "run_momentum.json"
         if mom_file.exists():

@@ -73,9 +73,9 @@ def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_pa
     terms = readings.momentum_of(num, lines, board.wrap, board.mask((at,)))  # the step's currents
     frame = [
         point_of(
-            int(arrival(start.now, a, -1, board.wrap)[at]),
+            int(arrival(start.now, a, -1)[at]),
             now,
-            int(arrival(start.now, a, 1, board.wrap)[at]),
+            int(arrival(start.now, a, 1)[at]),
         )
         for a in range(3)
     ]
