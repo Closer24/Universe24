@@ -35,7 +35,7 @@ def frame_of(at: Node, shape: tuple[int, int, int], periodic: Sequence[bool]) ->
             if 0 <= there[axis] < shape[axis]:
                 found.append((there[0], there[1], there[2]))
             elif periodic[axis]:
-                there[axis] %= shape[axis]
+                there[axis] = int(division_forward(there[axis], shape[axis], 0)[1])  # the wrap, an index
                 found.append((there[0], there[1], there[2]))
     return found
 
