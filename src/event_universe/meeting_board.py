@@ -161,7 +161,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     body_readings = {}
     for k, r, at, _found in clicks:
         board.closes[at] += (
-            1  # the body's own close counted at its Node, each record's credit reading the count as it stands
+            1  # the body's own close counted at its Node, each record's credit reading the count the close leaves
         )
         body_readings[(k, r, at)] = readings_at(board, begun, k, r, at)
     readings = {
