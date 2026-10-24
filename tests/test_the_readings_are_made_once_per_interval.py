@@ -61,6 +61,15 @@ def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
     assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
     assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
     assert hits["again"] > hits["made"] > 0
+    board = Lattice(load_world(WORLD), output=lambda line: None)
+    for _ in range(INTERVALS):
+        board.step()
+        board.quanta(board.order[0])
+        if board.interval == INTERVALS // 4:
+            entries = len(read.READS)
+    assert (
+        len(read.READS) == entries
+    )  # the memo bounded: one entry per key, the states compared by identity
 
 
 def test_the_nodes_line_is_the_reading_node_by_node(

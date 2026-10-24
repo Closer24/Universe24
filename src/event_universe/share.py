@@ -85,7 +85,7 @@ def board_share(
 ) -> tuple[np.ndarray, np.ndarray]:
     """A family of quanta's share at every Node of a board and its frozen Nodes (`Lattice.share_of`): each record's share at the paces of its own read in `direction` (`family_share` on the records' lines, `board.read`), summed over the records, and the frozen mask, a Node frozen where any record's read freezes it; computed at the Nodes `at` names, or over the whole board where `at` is None, and then read once per interval on the records as they stand and given again to every reader of the same records (features/read READS under the key `share`, the very record objects held, a record never written in place; the architect's second round of 2026-10-24): the same integers, read once."""
     family, gamma = board.families[index], board.world.node_clock
-    key = ("share", id(board.states), index, direction, gamma)
+    key = ("share", index, direction, gamma)
     taken = (board.families, board.states, *(line for state in board.states for line in state.lines))
     if at is None and (kept := read_again(key, taken)) is not None:
         return kept[0], kept[1][0]

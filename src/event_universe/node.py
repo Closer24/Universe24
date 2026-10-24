@@ -45,9 +45,9 @@ Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order
 def read_key(
     name: str, index: int, families: Families, states: States, direction: int, gamma: int, record: int
 ) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
-    """The read memo's key for one reading (`name`: the lines, the read or the rulers) of one record of a family in a direction on a board (features/read READS), and the objects the reading takes: the families, the states and every record of the rows the family reads (every record the same object means every integer the same, a record never written in place)."""
+    """The read memo's key for one reading (`name`: the lines, the read or the rulers) of one record of a family in a direction (features/read READS; one entry per key, so the memo holds one board's records and grows with no interval), and the objects the reading takes, compared by identity: the families, the states and every record of the rows the family reads (every record the same object means every integer the same, a record never written in place)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
-    key = (name, id(states), index, record, direction, gamma)
+    key = (name, index, record, direction, gamma)
     return key, (families, states, *(line for r in reads for line in states[r.family].lines))
 
 

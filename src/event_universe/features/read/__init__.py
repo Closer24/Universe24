@@ -13,7 +13,7 @@ from event_universe.core.rule3 import division_forward, largest_below, link_fact
 
 READS: dict[
     tuple[Any, ...], tuple[tuple[Any, ...], tuple[Any, list[Any]]]
-] = {}  # the read's memo: per (the reading's name, the board's states, the family, the record, the direction) the records the read took, held so that the same records read again give the read already made (node.read_lines), cleared at a run's start with the paces' (resonance.clear_memo)
+] = {}  # the read's memo: per (the reading's name, the family, the record, the direction) the states and the records the read took, held and compared by identity, one entry per key, so that the same records read again give the read already made (node.read_lines), cleared at a run's start with the paces' (resonance.clear_memo)
 
 
 def read_again(key: tuple[Any, ...], taken: tuple[Any, ...]) -> tuple[Any, list[Any]] | None:

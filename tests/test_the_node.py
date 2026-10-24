@@ -520,11 +520,11 @@ def test_a_receding_face_grows_the_gameboard_before_the_front_and_the_run_return
     assert (volume.level_of(GAMMA, board.states[gravity].lines[0].now) == 60).all()
     assert board.shape[0] == 24
     assert all(line["reading"] == 0 for line in lines if line["event"] == "density")
-    well, post = board.states[gravity].lines[0], board.mask(((14, 0, 0), (15, 0, 0), (16, 0, 0)))
+    masks = board.mask(((14, 0, 0), (15, 0, 0), (16, 0, 0))), board.mask(((19, 0, 0), (20, 0, 0)))
     frozen = int(volume.volume_of(GAMMA, np.array(paces.frozen_content(GAMMA))))  # the volume at it
-    well.now[post] = well.before[post] = frozen  # a frozen clock at three Nodes
-    for axis_level in (board.states[gravity].lines[1].now, board.states[gravity].lines[1].before):
-        axis_level[19:21, 0, 0] = GAMMA - 2 * 60  # a standing tension on xx: the Link 19-20's factor 0
+    for n, (mask, value) in enumerate(zip(masks, (frozen, GAMMA - 2 * 60), strict=True)):
+        rows, r = board.states[gravity].lines, board.states[gravity].lines[n]  # the record replaced
+        rows[n] = records.Record(*(np.where(mask, value, a) for a in (r.now, r.before)), r.remainder)
     frozen_books = dict(share=None, quanta=None, count=0, deficit=0, drift=None, pace=0, frozen=3)
     assert board.books() == {"charge": frozen_books}
     board.step()
